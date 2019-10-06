@@ -1,1 +1,1 @@
-% RNA2Drawer 2
+# RNA2Drawer 2
