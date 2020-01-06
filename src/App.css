@@ -1,0 +1,26 @@
+.menu-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-dropdown button {
+  background-color: whitesmoke;
+}
+
+.menu-dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.menu-dropdown-content button {
+  display: block;
+}
+
+.menu-dropdown-content button:hover {
+  background-color: gainsboro;
+}
+
+.menu-dropdown:hover .menu-dropdown-content {
+  display: block;
+}
