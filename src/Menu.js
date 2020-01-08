@@ -8,7 +8,7 @@ let _stylesTopButton = {
   paddingTop: 4,
   paddingBottom: 4,
   margin: 0,
-  fontFamily: 'verdana',
+  fontFamily: 'Segoe UI',
   fontSize: 12,
   color: 'black',
   border: 'none',

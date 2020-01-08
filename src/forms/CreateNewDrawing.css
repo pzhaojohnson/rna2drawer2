@@ -1,3 +1,21 @@
+.create-new-drawing-input::placeholder {
+  font-style: italic;
+}
+
+/* Edge */
+.create-new-drawing-input::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+.create-new-drawing-textarea::placeholder {
+  font-style: italic;
+}
+
+/* Edge */
+.create-new-drawing-textarea::-webkit-input-placeholder {
+  font-style: italic;
+}
+
 #create-new-drawing-submit-button:hover {
   background-color: blue;
   -webkit-transition-duration: 0.4s;

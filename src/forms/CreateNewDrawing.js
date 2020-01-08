@@ -3,7 +3,7 @@ import './CreateNewDrawing.css';
 
 let _contentMarginHorizontal = 24;
 
-let _fontFamily = 'verdana';
+let _fontFamily = 'Segoe UI';
 
 let _sequenceIdPlaceholder = ' ...the name of your sequence';
 let _sequencePlaceholder = ' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"';
@@ -34,7 +34,7 @@ class CreateNewDrawing extends React.Component {
   stylesLabel() {
     return {
       ...this.stylesItem(),
-      fontFamily: 'verdana',
+      fontFamily: 'Segoe UI, Verdana, Arial',
       fontSize: 14,
       userSelect: 'none',
       cursor: 'default'
@@ -76,7 +76,7 @@ class CreateNewDrawing extends React.Component {
 
   stylesExampleInputSelect() {
     return {
-      fontFamily: 'verdana',
+      fontFamily: 'Segoe UI',
       fontSize: 14
     };
   }
@@ -102,8 +102,9 @@ class CreateNewDrawing extends React.Component {
 
   stylesSequenceIdInput() {
     return {
+      padding: 2,
       flexGrow: 1,
-      fontFamily: 'verdana',
+      fontFamily: 'Segoe UI',
       fontSize: 14
     };
   }
@@ -119,8 +120,9 @@ class CreateNewDrawing extends React.Component {
     return {
       ...this.stylesItem(),
       marginTop: 4,
+      padding: 4,
       flexGrow: 1,
-      fontFamily: 'verdana',
+      fontFamily: 'Segoe UI',
       fontSize: 14,
       resize: 'none'
     };
@@ -137,8 +139,9 @@ class CreateNewDrawing extends React.Component {
     return {
       ...this.stylesItem(),
       marginTop: 4,
+      padding: 4,
       flexGrow: 1,
-      fontFamily: 'verdana',
+      fontFamily: 'Segoe UI',
       fontSize: 14,
       resize: 'none'
     };
@@ -158,11 +161,11 @@ class CreateNewDrawing extends React.Component {
       paddingRight: 28,
       paddingTop: 8,
       paddingBottom: 8,
-      backgroundColor: 'aliceblue',
-      fontFamily: 'verdana',
+      backgroundColor: 'whitesmoke',
+      fontFamily: 'Segoe UI',
       fontSize: 12,
       borderWidth: 0.75,
-      border: '2 solid blue',
+      border: '0.75 solid gray',
       boxShadow: 'none'
     };
   }
@@ -182,14 +185,33 @@ class CreateNewDrawing extends React.Component {
         </div>
         <div style={this.stylesSequenceIdDiv()} >
           <p style={this.stylesSequenceIdLabel()} >Sequence ID:</p>
-          <input type={'text'} style={this.stylesSequenceIdInput()} spellcheck={'false'} placeholder={_sequenceIdPlaceholder} />
+          <input
+            class={'create-new-drawing-input'}
+            type={'text'}
+            style={this.stylesSequenceIdInput()}
+            spellcheck={'false'}
+            placeholder={_sequenceIdPlaceholder}
+          />
         </div>
         <p style={this.stylesSequenceLabel()} >Sequence:</p>
-        <textarea style={this.stylesSequenceTextarea()} spellcheck={'false'} placeholder={_sequencePlaceholder} />
+        <textarea
+          class={'create-new-drawing-textarea'}
+          style={this.stylesSequenceTextarea()}
+          spellcheck={'false'}
+          placeholder={_sequencePlaceholder}
+        />
         <p style={this.stylesStructureLabel()} >Structure (optional):</p>
-        <textarea style={this.stylesStructureTextarea()} spellCheck={'false'} placeholder={_structurePlaceholder} />
+        <textarea
+          class={'create-new-drawing-textarea'}
+          style={this.stylesStructureTextarea()}
+          spellCheck={'false'}
+          placeholder={_structurePlaceholder}
+        />
         <div style={this.stylesSubmitDiv()} >
-          <button id={'create-new-drawing-submit-button'} style={this.stylesSubmitButton()} >Submit</button>
+          <button
+            id={'create-new-drawing-submit-button'}
+            style={this.stylesSubmitButton()}
+          >Submit</button>
         </div>
       </div>
     );
