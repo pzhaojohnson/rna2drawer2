@@ -34,7 +34,7 @@ class CreateNewDrawing extends React.Component {
   stylesLabel() {
     return {
       ...this.stylesItem(),
-      fontFamily: 'Segoe UI, Verdana, Arial',
+      //fontFamily: 'Segoe UI, Verdana, Arial',
       fontSize: 14,
       userSelect: 'none',
       cursor: 'default'
