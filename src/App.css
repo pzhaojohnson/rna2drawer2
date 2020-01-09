@@ -4,7 +4,68 @@
 }
 
 body {
-  font-family: 'Segoe UI';
+  font-family: 'Segoe UI', Verdana, Arial;
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: normal;
+  font-style: normal;
+}
+
+p {
+  font-size: 14px;
+}
+
+input {
+  padding: 2px 4px 2px 4px;
+  font-family: 'Segoe UI', Verdana, Arial;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  border: 0.75px solid lightgray;
+}
+
+input::placeholder {
+  font-style: italic;
+}
+
+/* Edge */
+input::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+textarea {
+  padding: 2px 4px 2px 4px;
+  font-family: 'Segoe UI', Verdana, Arial;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  border: 0.75px solid lightgray;
+  resize: none;
+}
+
+textarea::placeholder {
+  font-style: italic;
+}
+
+/* Edge */
+textarea::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+button {
+  background-color: whitesmoke;
+  border: 0.75px solid lightgray;
+}
+
+button:hover {
+  background-color: aliceblue;
+  border-color: blue;
+  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s;
 }
 
 .menu-dropdown {

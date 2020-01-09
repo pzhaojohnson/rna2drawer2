@@ -34,8 +34,6 @@ class CreateNewDrawing extends React.Component {
   stylesLabel() {
     return {
       ...this.stylesItem(),
-      //fontFamily: 'Segoe UI, Verdana, Arial',
-      fontSize: 14,
       userSelect: 'none',
       cursor: 'default'
     };
@@ -46,7 +44,6 @@ class CreateNewDrawing extends React.Component {
       ...this.stylesLabel(),
       marginLeft: 20,
       marginTop: 12,
-      fontSize: 28
     };
   }
 
@@ -62,7 +59,7 @@ class CreateNewDrawing extends React.Component {
 
   stylesExampleInputDiv() {
     return {
-      marginTop: 16
+      marginTop: 18
     };
   }
 
@@ -84,7 +81,7 @@ class CreateNewDrawing extends React.Component {
   stylesSequenceIdDiv() {
     return {
       ...this.stylesItem(),
-      marginTop: 16,
+      marginTop: 18,
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center'
@@ -102,70 +99,60 @@ class CreateNewDrawing extends React.Component {
 
   stylesSequenceIdInput() {
     return {
-      padding: 2,
-      flexGrow: 1,
-      fontFamily: 'Segoe UI',
-      fontSize: 14
+      flexGrow: 1
     };
   }
 
   stylesSequenceLabel() {
     return {
       ...this.stylesLabel(),
-      marginTop: 16
+      marginTop: 18
     };
   }
 
   stylesSequenceTextarea() {
     return {
-      ...this.stylesItem(),
+      marginLeft: 24,
+      marginRight: 24,
       marginTop: 4,
-      padding: 4,
-      flexGrow: 1,
-      fontFamily: 'Segoe UI',
-      fontSize: 14,
-      resize: 'none'
+      marginBottom: 0,
+      flexGrow: 1
     };
   }
 
   stylesStructureLabel() {
     return {
       ...this.stylesLabel(),
-      marginTop: 16
+      marginTop: 18
     };
   }
 
   stylesStructureTextarea() {
     return {
-      ...this.stylesItem(),
+      marginLeft: 24,
+      marginRight: 24,
       marginTop: 4,
-      padding: 4,
+      marginBottom: 0,
       flexGrow: 1,
-      fontFamily: 'Segoe UI',
-      fontSize: 14,
-      resize: 'none'
     };
   }
 
   stylesSubmitDiv() {
     return {
       ...this.stylesItem(),
-      marginTop: 16,
-      marginBottom: 16
+      marginTop: 18,
+      marginBottom: 18
     };
   }
 
   stylesSubmitButton() {
     return {
-      paddingLeft: 28,
-      paddingRight: 28,
-      paddingTop: 8,
-      paddingBottom: 8,
-      backgroundColor: 'whitesmoke',
+      paddingLeft: 56,
+      paddingRight: 56,
+      paddingTop: 6,
+      paddingBottom: 6,
       fontFamily: 'Segoe UI',
       fontSize: 12,
-      borderWidth: 0.75,
-      border: '0.75 solid gray',
       boxShadow: 'none'
     };
   }
@@ -173,7 +160,7 @@ class CreateNewDrawing extends React.Component {
   render() {
     return (
       <div style={this.stylesOutermostDiv()} >
-        <p style={this.stylesTitle()} >Create a New Drawing</p>
+        <h1 style={this.stylesTitle()} >Create a New Drawing</h1>
         <div style={this.stylesTitleUnderline()} ></div>
         <div style={this.stylesExampleInputDiv()} >
           <p style={this.stylesExampleInputLabel()} >Example Input:</p>
@@ -195,7 +182,6 @@ class CreateNewDrawing extends React.Component {
         </div>
         <p style={this.stylesSequenceLabel()} >Sequence:</p>
         <textarea
-          class={'create-new-drawing-textarea'}
           style={this.stylesSequenceTextarea()}
           spellcheck={'false'}
           placeholder={_sequencePlaceholder}
