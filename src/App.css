@@ -25,7 +25,7 @@ input {
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
-  border: 1.5px solid lightgray;
+  border: 0.75px solid lightgray;
 }
 
 input:hover {
@@ -53,7 +53,7 @@ textarea {
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
-  border: 1.5px solid lightgray;
+  border: 0.75px solid lightgray;
   resize: none;
 }
 
@@ -97,7 +97,7 @@ select {
   min-width: 160px;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 14px;
-  border: 1.5px solid lightgray;
+  border: 0.75px solid lightgray;
 }
 
 select:hover {
