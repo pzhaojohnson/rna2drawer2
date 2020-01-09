@@ -141,7 +141,9 @@ class CreateNewDrawing extends React.Component {
     return {
       ...this.stylesItem(),
       marginTop: 18,
-      marginBottom: 18
+      marginBottom: 18,
+      display: 'flex',
+      flexDirection: 'row'
     };
   }
 
@@ -149,8 +151,8 @@ class CreateNewDrawing extends React.Component {
     return {
       paddingLeft: 56,
       paddingRight: 56,
-      paddingTop: 6,
-      paddingBottom: 6,
+      paddingTop: 8,
+      paddingBottom: 8,
       fontFamily: 'Segoe UI',
       fontSize: 12,
       boxShadow: 'none'
@@ -194,6 +196,7 @@ class CreateNewDrawing extends React.Component {
           placeholder={_structurePlaceholder}
         />
         <div style={this.stylesSubmitDiv()} >
+          <div style={{ flexGrow: 1 }} ></div>
           <button
             id={'create-new-drawing-submit-button'}
             style={this.stylesSubmitButton()}

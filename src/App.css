@@ -68,6 +68,12 @@ button:hover {
   -webkit-transition-duration: 0.4s;
 }
 
+select {
+  font-family: 'Segoe UI', Verdana, Arial;
+  font-size: 14px;
+  border: 0.75px solid lightgray;
+}
+
 .menu-dropdown {
   position: relative;
   display: inline-block;
