@@ -23,8 +23,8 @@ class CreateNewDrawing extends React.Component {
 
   stylesItem() {
     return {
-      marginLeft: 24,
-      marginRight: 24,
+      marginLeft: 28,
+      marginRight: 28,
       marginTop: 0,
       marginBottom: 0,
       padding: 0
@@ -42,18 +42,18 @@ class CreateNewDrawing extends React.Component {
   stylesTitle() {
     return {
       ...this.stylesLabel(),
-      marginLeft: 20,
+      marginLeft: 24,
       marginTop: 12,
     };
   }
 
   stylesTitleUnderline() {
     return {
-      marginLeft: 12,
-      marginRight: 12,
+      marginLeft: 16,
+      marginRight: 16,
       marginTop: 8,
       height: 0.75,
-      backgroundColor: 'gainsboro'
+      backgroundColor: 'lightgray'
     };
   }
 
@@ -112,8 +112,8 @@ class CreateNewDrawing extends React.Component {
 
   stylesSequenceTextarea() {
     return {
-      marginLeft: 24,
-      marginRight: 24,
+      marginLeft: 28,
+      marginRight: 28,
       marginTop: 4,
       marginBottom: 0,
       flexGrow: 1
@@ -129,8 +129,8 @@ class CreateNewDrawing extends React.Component {
 
   stylesStructureTextarea() {
     return {
-      marginLeft: 24,
-      marginRight: 24,
+      marginLeft: 28,
+      marginRight: 28,
       marginTop: 4,
       marginBottom: 0,
       flexGrow: 1,
@@ -196,7 +196,7 @@ class CreateNewDrawing extends React.Component {
           placeholder={_structurePlaceholder}
         />
         <div style={this.stylesSubmitDiv()} >
-          <div style={{ flexGrow: 1 }} ></div>
+          <div style={{ flexGrow: 0 }} ></div>
           <button
             id={'create-new-drawing-submit-button'}
             style={this.stylesSubmitButton()}
