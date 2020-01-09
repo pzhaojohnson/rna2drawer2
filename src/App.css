@@ -25,7 +25,17 @@ input {
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
-  border: 0.75px solid lightgray;
+  border: 1.5px solid lightgray;
+}
+
+input:hover {
+  border-color: gray;
+  transition-duration: 0.25s;
+}
+
+input:focus {
+  outline: none;
+  border-color: gray;
 }
 
 input::placeholder {
@@ -43,8 +53,18 @@ textarea {
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
-  border: 0.75px solid lightgray;
+  border: 1.5px solid lightgray;
   resize: none;
+}
+
+textarea:hover {
+  border-color: gray;
+  transition-duration: 0.25s;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: gray;
 }
 
 textarea::placeholder {
@@ -57,21 +77,37 @@ textarea::-webkit-input-placeholder {
 }
 
 button {
-  background-color: whitesmoke;
-  border: 0.75px solid lightgray;
+  background-color: white;
+  border: 1.5px solid gray;
 }
 
 button:hover {
   background-color: aliceblue;
-  border-color: blue;
-  transition-duration: 0.4s;
-  -webkit-transition-duration: 0.4s;
+  border-color: midnightblue;
+  transition-duration: 0.25s;
+  -webkit-transition-duration: 0.25s;
+}
+
+button:focus {
+  outline: none;
+  border-color: midnightblue;
 }
 
 select {
+  min-width: 160px;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 14px;
-  border: 0.75px solid lightgray;
+  border: 1.5px solid lightgray;
+}
+
+select:hover {
+  border-color: gray;
+  transition-duration: 0.25s;
+}
+
+select:focus {
+  outline: none;
+  border-color: gray;
 }
 
 .menu-dropdown {
