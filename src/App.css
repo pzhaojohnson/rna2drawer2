@@ -83,14 +83,14 @@ button {
 
 button:hover {
   background-color: aliceblue;
-  border-color: midnightblue;
+  border-color: #0078d7;
   transition-duration: 0.25s;
   -webkit-transition-duration: 0.25s;
 }
 
 button:focus {
   outline: none;
-  border-color: midnightblue;
+  border-color: navy;
 }
 
 select {
