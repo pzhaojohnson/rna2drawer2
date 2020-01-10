@@ -149,8 +149,8 @@ class CreateNewDrawing extends React.Component {
 
   stylesSubmitButton() {
     return {
-      paddingLeft: 56,
-      paddingRight: 56,
+      paddingLeft: 64,
+      paddingRight: 64,
       paddingTop: 8,
       paddingBottom: 8,
       fontFamily: 'Segoe UI',
@@ -196,7 +196,7 @@ class CreateNewDrawing extends React.Component {
           placeholder={_structurePlaceholder}
         />
         <div style={this.stylesSubmitDiv()} >
-          <div style={{ flexGrow: 0 }} ></div>
+          <div style={{ flexGrow: 1 }} ></div>
           <button
             id={'create-new-drawing-submit-button'}
             style={this.stylesSubmitButton()}
