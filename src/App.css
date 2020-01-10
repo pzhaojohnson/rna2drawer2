@@ -25,11 +25,11 @@ input {
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
-  border: 0.75px solid #a6a6a6;
+  border: 0.75px solid #808080;
 }
 
 input:hover {
-  border-color: #4d4d4d;
+  border-color: #404040;
   transition-duration: 0.25s;
 }
 
@@ -53,12 +53,12 @@ textarea {
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
-  border: 0.75px solid #a6a6a6;
+  border: 0.75px solid #808080;
   resize: none;
 }
 
 textarea:hover {
-  border-color: #4d4d4d;
+  border-color: #404040;
   transition-duration: 0.25s;
 }
 
@@ -78,7 +78,7 @@ textarea::-webkit-input-placeholder {
 
 button {
   background-color: #ebebeb;
-  border: 0.75px solid #a6a6a6;
+  border: 0.75px solid #808080;
 }
 
 button:hover {
@@ -97,11 +97,11 @@ select {
   min-width: 160px;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 14px;
-  border: 0.75px solid #a6a6a6;
+  border: 0.75px solid #808080;
 }
 
 select:hover {
-  border-color: #4d4d4d;
+  border-color: #404040;
   transition-duration: 0.25s;
 }
 

@@ -21,7 +21,7 @@ let _stylesDropdownContent = {
   borderRightWidth: 0.75,
   borderBottomWidth: 0.75,
   borderLeftWidth: 0.75,
-  borderColor: 'lightgray'
+  borderColor: '#bfbfbf'
 };
 
 let _stylesDroppedButton = { ..._stylesTopButton };
@@ -53,7 +53,7 @@ let _stylesDropdownSeparator = {
   height: 0.75,
   marginLeft: 4,
   marginRight: 4,
-  backgroundColor: 'lightgray'
+  backgroundColor: '#bfbfbf'
 };
 
 function _dropdownSeparator() {
@@ -197,7 +197,7 @@ class Menu extends React.Component {
   stylesBorder() {
     return {
       height: 0.75,
-      backgroundColor: 'lightgray'
+      backgroundColor: '#bfbfbf'
     }
   }
 

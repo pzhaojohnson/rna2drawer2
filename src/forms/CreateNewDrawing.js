@@ -53,7 +53,7 @@ class CreateNewDrawing extends React.Component {
       marginRight: 16,
       marginTop: 8,
       height: 0.75,
-      backgroundColor: 'lightgray'
+      backgroundColor: '#bfbfbf'
     };
   }
 
