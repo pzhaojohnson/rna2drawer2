@@ -130,7 +130,7 @@ select:focus {
 }
 
 .menu-dropdown-content button:hover {
-  background-color: #d6d6d6;
+  background-color: gainsboro;
 }
 
 .menu-dropdown:hover .menu-dropdown-content {
