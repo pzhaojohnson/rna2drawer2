@@ -35,7 +35,7 @@ input:hover {
 
 input:focus {
   outline: none;
-  border-color: gray;
+  border-color: #808080;
 }
 
 input::placeholder {
@@ -64,7 +64,7 @@ textarea:hover {
 
 textarea:focus {
   outline: none;
-  border-color: gray;
+  border-color: #808080;
 }
 
 textarea::placeholder {
@@ -90,7 +90,7 @@ button:hover {
 
 button:focus {
   outline: none;
-  border-color: navy;
+  border-color: mediumblue;
 }
 
 select {
@@ -107,7 +107,7 @@ select:hover {
 
 select:focus {
   outline: none;
-  border-color: gray;
+  border-color: #808080;
 }
 
 .menu-dropdown {
@@ -116,7 +116,7 @@ select:focus {
 }
 
 .menu-dropdown button {
-  background-color: whitesmoke;
+  background-color: #f5f5f5;
 }
 
 .menu-dropdown-content {
