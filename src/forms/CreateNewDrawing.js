@@ -8,7 +8,7 @@ class CreateNewDrawing extends React.Component {
     };
   }
 
-  stylesDiv0() {
+  stylesOutermostDiv() {
     return {
       width: this.props.width,
       height: this.props.height,
@@ -147,7 +147,7 @@ class CreateNewDrawing extends React.Component {
 
   render() {
     return (
-      <div style={this.stylesDiv0()} >
+      <div style={this.stylesOutermostDiv()} >
         <p style={this.stylesTitle()} >Create a New Drawing</p>
         <div style={this.stylesTitleUnderline()} ></div>
         <div style={this.stylesExampleInputDiv()} >
