@@ -173,6 +173,10 @@ class CreateNewDrawing extends React.Component {
       </div>
     );
   }
+
+  onExampleInputChange() {}
+
+  submit() {}
 }
 
 CreateNewDrawing.defaultProps = {
