@@ -153,7 +153,7 @@ class CreateNewDrawing extends React.Component {
         <div style={this.stylesExampleInputDiv()} >
           <p style={this.stylesExampleInputLabel()} >Example Input:</p>
           <select style={this.stylesExampleInputSelect()} >
-            <option> --- None --- </option>
+            <option selected > --- None --- </option>
             <option> kl-TSS and PTE </option>
             <option> PEMV-2 3' UTR </option>
           </select>
