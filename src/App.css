@@ -4,28 +4,32 @@
 }
 
 body {
-  font-family: 'Segoe UI', Verdana, Arial;
-  font-weight: normal;
-  font-style: normal;
+  margin: 0px;
+  padding: 0px;
 }
 
-h1 {
-  font-size: 28px;
-  font-weight: normal;
-  font-style: normal;
+div {
+  margin: 0px;
+  padding: 0px;
 }
 
 p {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Segoe UI', Verdana, Arial;
   font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
 }
 
 input {
+  border: 0.75px solid #808080;
+  margin: 0px;
   padding: 2px 4px 2px 4px;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
-  border: 0.75px solid #808080;
 }
 
 input:hover {
@@ -48,12 +52,13 @@ input::-webkit-input-placeholder {
 }
 
 textarea {
+  border: 0.75px solid #808080;
+  margin: 0px;
   padding: 2px 4px 2px 4px;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 14px;
   font-weight: normal;
   font-style: normal;
-  border: 0.75px solid #808080;
   resize: none;
 }
 
@@ -77,15 +82,21 @@ textarea::-webkit-input-placeholder {
 }
 
 button {
-  background-color: #ebebeb;
   border: 0.75px solid #404040;
+  margin: 0px;
+  background-color: #ebebeb;
+  font-family: 'Segoe UI', Verdana, Arial;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  box-shadow: none;
 }
 
 button:hover {
-  background-color: aliceblue;
   border-color: mediumblue;
   transition-duration: 0.25s;
   -webkit-transition-duration: 0.25s;
+  background-color: aliceblue;
 }
 
 button:focus {
@@ -95,9 +106,12 @@ button:focus {
 
 select {
   min-width: 160px;
+  border: 0.75px solid #808080;
+  margin: 0px;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 14px;
-  border: 0.75px solid #808080;
+  font-weight: normal;
+  font-style: normal;
 }
 
 select:hover {

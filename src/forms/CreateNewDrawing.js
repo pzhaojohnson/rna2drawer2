@@ -1,87 +1,64 @@
 import React from 'react';
-import './CreateNewDrawing.css';
-
-let _contentMarginHorizontal = 24;
-
-let _fontFamily = 'Segoe UI';
-
-let _sequenceIdPlaceholder = ' ...the name of your sequence';
-let _sequencePlaceholder = ' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"';
-let _structurePlaceholder = ' ...the secondary structure in dot-bracket notation, e.g "((((....))))"';
 
 class CreateNewDrawing extends React.Component {
-  stylesOutermostDiv() {
+  stylesUnselectableText() {
     return {
-      width: this.props.width,
-      height: this.props.height,
-      margin: 0,
-      display: 'flex',
-      flexDirection: 'column',
-      backgroundColor: 'whitesmoke'
-    };
-  }
-
-  stylesItem() {
-    return {
-      marginLeft: 28,
-      marginRight: 28,
-      marginTop: 0,
-      marginBottom: 0,
-      padding: 0
-    };
-  }
-
-  stylesLabel() {
-    return {
-      ...this.stylesItem(),
       userSelect: 'none',
       cursor: 'default'
     };
   }
 
+  stylesDiv0() {
+    return {
+      width: this.props.width,
+      height: this.props.height,
+      backgroundColor: '#f5f5f5',
+      display: 'flex',
+      flexDirection: 'column'
+    };
+  }
+
   stylesTitle() {
     return {
-      ...this.stylesLabel(),
-      marginLeft: 24,
-      marginTop: 12,
+      ...this.stylesUnselectableText(),
+      margin: '12px 24px 0px 24px',
+      fontSize: '28px'
     };
   }
 
   stylesTitleUnderline() {
     return {
-      marginLeft: 16,
-      marginRight: 16,
-      marginTop: 8,
-      height: 0.75,
+      height: '0.75px',
+      margin: '8px 16px 0px 16px',
       backgroundColor: '#bfbfbf'
     };
   }
 
   stylesExampleInputDiv() {
     return {
-      marginTop: 18
+      margin: '18px 28px 0px 28px',
+      alignItems: 'center'
     };
   }
 
   stylesExampleInputLabel() {
     return {
-      ...this.stylesLabel(),
-      display: 'inline-block',
-      marginRight: 8
+      ...this.stylesUnselectableText(),
+      margin: '0px 8px 0px 0px',
+      fontSize: '14px',
+      display: 'inline-block'
     };
   }
 
   stylesExampleInputSelect() {
     return {
-      fontFamily: 'Segoe UI',
-      fontSize: 14
+      fontSize: '14px'
     };
   }
 
   stylesSequenceIdDiv() {
     return {
-      ...this.stylesItem(),
-      marginTop: 18,
+      margin: '18px 28px 0px 28px',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center'
@@ -90,117 +67,108 @@ class CreateNewDrawing extends React.Component {
 
   stylesSequenceIdLabel() {
     return {
-      ...this.stylesLabel(),
-      display: 'inline-block',
-      marginLeft: 0,
-      marginRight: 8
+      ...this.stylesUnselectableText(),
+      margin: '0px 8px 0px 0px',
+      fontSize: '14px',
+      display: 'inline-block'
     };
   }
 
   stylesSequenceIdInput() {
     return {
-      flexGrow: 1
+      flexGrow: '1'
     };
+  }
+
+  get sequenceIdPlaceholder() {
+    return ' ...the name of your sequence';
   }
 
   stylesSequenceLabel() {
     return {
-      ...this.stylesLabel(),
-      marginTop: 18
+      ...this.stylesUnselectableText(),
+      margin: '18px 28px 0px 28px',
+      fontSize: '14px'
     };
   }
 
   stylesSequenceTextarea() {
     return {
-      marginLeft: 28,
-      marginRight: 28,
-      marginTop: 4,
-      marginBottom: 0,
-      flexGrow: 1
+      flexGrow: '1',
+      margin: '4px 28px 0px 28px',
+      fontSize: '14px'
     };
+  }
+
+  get sequencePlaceholder() {
+    return ' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"';
   }
 
   stylesStructureLabel() {
     return {
-      ...this.stylesLabel(),
-      marginTop: 18
+      ...this.stylesUnselectableText(),
+      margin: '18px 28px 0px 28px',
+      fontSize: '14px'
     };
   }
 
   stylesStructureTextarea() {
     return {
-      marginLeft: 28,
-      marginRight: 28,
-      marginTop: 4,
-      marginBottom: 0,
-      flexGrow: 1,
+      flexGrow: '1',
+      margin: '4px 28px 0px 28px',
+      fontSize: '14px'
     };
   }
 
-  stylesSubmitDiv() {
+  get structurePlaceholder() {
+    return ' ...the secondary structure in dot-bracket notation, e.g "((((....))))"';
+  }
+
+  stylesSubmitOuterDiv() {
     return {
-      ...this.stylesItem(),
-      marginTop: 18,
-      marginBottom: 18,
+      margin: '18px 28px 18px 28px',
       display: 'flex',
       flexDirection: 'row'
     };
   }
 
+  stylesSubmitInnerDiv() {
+    return {
+      flexGrow: '1'
+    };
+  }
+
   stylesSubmitButton() {
     return {
-      paddingLeft: 64,
-      paddingRight: 64,
-      paddingTop: 8,
-      paddingBottom: 8,
-      fontFamily: 'Segoe UI',
-      fontSize: 12,
-      boxShadow: 'none'
+      padding: '8px 64px 8px 64px',
+      fontSize: '12px'
     };
   }
 
   render() {
     return (
-      <div style={this.stylesOutermostDiv()} >
-        <h1 style={this.stylesTitle()} >Create a New Drawing</h1>
+      <div style={this.stylesDiv0()} >
+        <p style={this.stylesTitle()} >Create a New Drawing</p>
         <div style={this.stylesTitleUnderline()} ></div>
         <div style={this.stylesExampleInputDiv()} >
           <p style={this.stylesExampleInputLabel()} >Example Input:</p>
           <select style={this.stylesExampleInputSelect()} >
-            <option>  --- None ---  </option>
-            <option>  kl-TSS and PTE  </option>
-            <option>  PEMV-2 3' UTR  </option>
+            <option> --- None --- </option>
+            <option> kl-TSS and PTE </option>
+            <option> PEMV-2 3' UTR </option>
           </select>
         </div>
         <div style={this.stylesSequenceIdDiv()} >
           <p style={this.stylesSequenceIdLabel()} >Sequence ID:</p>
-          <input
-            class={'create-new-drawing-input'}
-            type={'text'}
-            style={this.stylesSequenceIdInput()}
-            spellcheck={'false'}
-            placeholder={_sequenceIdPlaceholder}
-          />
+          <input type={'text'} style={this.stylesSequenceIdInput()} spellcheck={'false'} placeholder={this.sequenceIdPlaceholder} />
         </div>
         <p style={this.stylesSequenceLabel()} >Sequence:</p>
-        <textarea
-          style={this.stylesSequenceTextarea()}
-          spellcheck={'false'}
-          placeholder={_sequencePlaceholder}
-        />
+        <textarea style={this.stylesSequenceTextarea()} spellcheck={'false'} placeholder={this.sequencePlaceholder} />
         <p style={this.stylesStructureLabel()} >Structure (optional):</p>
-        <textarea
-          class={'create-new-drawing-textarea'}
-          style={this.stylesStructureTextarea()}
-          spellCheck={'false'}
-          placeholder={_structurePlaceholder}
-        />
-        <div style={this.stylesSubmitDiv()} >
-          <div style={{ flexGrow: 1 }} ></div>
-          <button
-            id={'create-new-drawing-submit-button'}
-            style={this.stylesSubmitButton()}
-          >Submit</button>
+        <textarea style={this.stylesStructureTextarea()} spellCheck={'false'} placeholder={this.structurePlaceholder} />
+        <div style={this.stylesSubmitOuterDiv()} >
+          <div style={this.stylesSubmitInnerDiv()} ></div>
+          <button style={this.stylesSubmitButton()} >Submit</button>
         </div>
       </div>
     );
