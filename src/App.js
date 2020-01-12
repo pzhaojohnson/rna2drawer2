@@ -19,6 +19,16 @@ class App {
     //ReactDOM.render(<Infobar />, document.getElementById('InfobarContainer'));
   }
 
+  /**
+   * Fills in the body element of the app with permanent elements.
+   * 
+   * It is preferrable to specify these elements here rather than in dist/index.html
+   * since using an HTML file with the Jest testing framework does not seem very
+   * straightforward... and this allows rendering of the app in testing.
+   * 
+   * The body element in dist/index.html is otherwise empty except for the script tag
+   * to bundle.js. This method assumes that the body element is empty prior to its calling.
+   */
   _fillInBody() {
     let outermostDiv = document.createElement('div');
     outermostDiv.style.cssText = 'height: 100vh; display: flex; flex-direction: column;';
