@@ -152,18 +152,18 @@ class CreateNewDrawing extends React.Component {
         <div style={this.stylesTitleUnderline()} ></div>
         <div style={this.stylesExampleInputDiv()} >
           <p style={this.stylesExampleInputLabel()} >Example Input:</p>
-          <select style={this.stylesExampleInputSelect()} >
-            <option selected > --- None --- </option>
-            <option> kl-TSS and PTE </option>
-            <option> PEMV-2 3' UTR </option>
+          <select defaultValue={'--- None ---'} onChange={() => null} style={this.stylesExampleInputSelect()} >
+            <option value={'--- None ---'} >--- None ---</option>
+            <option value={'kl-TSS and PTE'} >kl-TSS and PTE</option>
+            <option value={"PEMV-2 3' UTR"} >PEMV-2 3' UTR</option>
           </select>
         </div>
         <div style={this.stylesSequenceIdDiv()} >
           <p style={this.stylesSequenceIdLabel()} >Sequence ID:</p>
-          <input type={'text'} style={this.stylesSequenceIdInput()} spellcheck={'false'} placeholder={this.sequenceIdPlaceholder} />
+          <input type={'text'} style={this.stylesSequenceIdInput()} spellCheck={'false'} placeholder={this.sequenceIdPlaceholder} />
         </div>
         <p style={this.stylesSequenceLabel()} >Sequence:</p>
-        <textarea style={this.stylesSequenceTextarea()} spellcheck={'false'} placeholder={this.sequencePlaceholder} />
+        <textarea style={this.stylesSequenceTextarea()} spellCheck={'false'} placeholder={this.sequencePlaceholder} />
         <p style={this.stylesStructureLabel()} >Structure (optional):</p>
         <textarea style={this.stylesStructureTextarea()} spellCheck={'false'} placeholder={this.structurePlaceholder} />
         <div style={this.stylesSubmitOuterDiv()} >

@@ -65,9 +65,9 @@ function _dropdownSeparator() {
 class _FileMenu extends React.Component {
   render() {
     return (
-      <div class={'menu-dropdown'} >
+      <div className={'menu-dropdown'} >
         <button style={_stylesTopButton} >File</button>
-        <div class={'menu-dropdown-content'} style={_stylesDropdownContent} >
+        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
           <button style={_stylesDroppedButton} onClick={() => alert('blah')} >New</button>
           {_dropdownSeparator()}
           {_droppedButton('Open Sequence', () => 'blah', true)}
@@ -86,9 +86,9 @@ class _FileMenu extends React.Component {
 class _ModeMenu extends React.Component {
   render() {
     return (
-      <div class={'menu-dropdown'} >
+      <div className={'menu-dropdown'} >
         <button style={_stylesTopButton} >Mode</button>
-        <div class={'menu-dropdown-content'} style={_stylesDropdownContent} >
+        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
           {_droppedButton('Fold')}
           {_droppedButton('Pivot Stems')}
         </div>
@@ -100,9 +100,9 @@ class _ModeMenu extends React.Component {
 class _EditMenu extends React.Component {
   render() {
     return (
-      <div class={'menu-dropdown'} >
+      <div className={'menu-dropdown'} >
         <button style={_stylesTopButton} >Edit</button>
-        <div class={'menu-dropdown-content'} style={_stylesDropdownContent} >
+        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
           {_droppedButton('Undo')}
           {_droppedButton('Redo')}
           {_dropdownSeparator()}
@@ -120,9 +120,9 @@ class _EditMenu extends React.Component {
 class _ExportMenu extends React.Component {
   render() {
     return (
-      <div class={'menu-dropdown'} >
+      <div className={'menu-dropdown'} >
         <button style={_stylesTopButton} >Export</button>
-        <div class={'menu-dropdown-content'} style={_stylesDropdownContent} >
+        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
           {_droppedButton('SVG')}
           {_droppedButton('PowerPoint (PPTX)')}
         </div>
@@ -134,9 +134,9 @@ class _ExportMenu extends React.Component {
 class _SettingsMenu extends React.Component {
   render() {
     return (
-      <div class={'menu-dropdown'} >
+      <div className={'menu-dropdown'} >
         <button style={_stylesTopButton} >Settings</button>
-        <div class={'menu-dropdown-content'} style={_stylesDropdownContent} >
+        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
           {_droppedButton('App Styles')}
         </div>
       </div>
