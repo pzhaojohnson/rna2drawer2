@@ -1,6 +1,43 @@
 import React from 'react';
 
 class CreateNewDrawing extends React.Component {
+  constructor(props) {
+    super(props);
+
+    let dei = this.defaultExampleInput();
+
+    this.state = {
+      exampleInput: dei.exampleInput,
+      sequenceId: dei.sequenceId,
+      sequence: dei.sequence,
+      structure: dei.structure
+    };
+  }
+
+  defaultExampleInput() {
+    return {
+      exampleInput: '--- None --- ',
+      sequenceId: '',
+      sequence: '',
+      structure: ''
+    };
+  }
+
+  /**
+   * @returns {object} Example inputs keyed by sequence ID.
+   */
+  exampleInputs() {
+    return [
+      this.defaultExampleInput(),
+      {
+        exampleInput: 'A Hairpin',
+        sequenceId: 'A Hairpin',
+        sequence: 'AUGCAUGGUAGCAU',
+        structure: '((((......))))'
+      }
+    ];
+  }
+
   stylesUnselectableText() {
     return {
       userSelect: 'none',
@@ -56,6 +93,29 @@ class CreateNewDrawing extends React.Component {
     };
   }
 
+  _exampleInputSelect() {
+    function option(ei) {
+      return <option key={ei.exampleInput} value={ei.exampleInput}>{ei.exampleInput}</option>
+    }
+
+    return (
+      <select value={this.state.exampleInput} onChange={event => this._onExampleInputSelectChange(event)} style={this.stylesExampleInputSelect()} >
+        {this.exampleInputs().map(ei => option(ei))}
+      </select>
+    );
+  }
+
+  _onExampleInputSelectChange(event) {
+    let ei = this.exampleInputs().find(ei => ei.exampleInput === event.target.value);
+
+    this.setState({
+      exampleInput: ei.exampleInput,
+      sequenceId: ei.sequenceId,
+      sequence: ei.sequence,
+      structure: ei.structure
+    });
+  }
+
   stylesSequenceIdDiv() {
     return {
       margin: '18px 28px 0px 28px',
@@ -78,6 +138,25 @@ class CreateNewDrawing extends React.Component {
     return {
       flexGrow: '1'
     };
+  }
+
+  _sequenceIdInput() {
+    return (
+      <input
+        type={'text'}
+        value={this.state.sequenceId}
+        onChange={event => this._onSequenceIdInputChange(event)}
+        spellCheck={'false'}
+        placeholder={this.sequenceIdPlaceholder}
+        style={this.stylesSequenceIdInput()}
+      />
+    );
+  }
+
+  _onSequenceIdInputChange(event) {
+    this.setState({
+      sequenceId: event.target.value
+    });
   }
 
   get sequenceIdPlaceholder() {
@@ -104,6 +183,24 @@ class CreateNewDrawing extends React.Component {
     return ' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"';
   }
 
+  _sequenceTextarea() {
+    return (
+      <textarea
+        value={this.state.sequence}
+        onChange={event => this._onSequenceTextareaChange(event)}
+        spellCheck={'false'}
+        placeholder={this.sequencePlaceholder}
+        style={this.stylesSequenceTextarea()}
+      />
+    );
+  }
+
+  _onSequenceTextareaChange(event) {
+    this.setState({
+      sequence: event.target.value
+    });
+  }
+
   stylesStructureLabel() {
     return {
       ...this.stylesUnselectableText(),
@@ -122,6 +219,24 @@ class CreateNewDrawing extends React.Component {
 
   get structurePlaceholder() {
     return ' ...the secondary structure in dot-bracket notation, e.g "((((....))))"';
+  }
+
+  _structureTextarea() {
+    return (
+      <textarea
+        value={this.state.structure}
+        onChange={event => this._onStructureTextareaChange(event)}
+        spellCheck={'false'}
+        placeholder={this.structurePlaceholder}
+        style={this.stylesStructureTextarea()}
+      />
+    );
+  }
+
+  _onStructureTextareaChange(event) {
+    this.setState({
+      structure: event.target.value
+    });
   }
 
   stylesSubmitOuterDiv() {
@@ -152,31 +267,32 @@ class CreateNewDrawing extends React.Component {
         <div style={this.stylesTitleUnderline()} ></div>
         <div style={this.stylesExampleInputDiv()} >
           <p style={this.stylesExampleInputLabel()} >Example Input:</p>
-          <select defaultValue={'--- None ---'} onChange={() => null} style={this.stylesExampleInputSelect()} >
-            <option value={'--- None ---'} >--- None ---</option>
-            <option value={'kl-TSS and PTE'} >kl-TSS and PTE</option>
-            <option value={"PEMV-2 3' UTR"} >PEMV-2 3' UTR</option>
-          </select>
+          {this._exampleInputSelect()}
         </div>
         <div style={this.stylesSequenceIdDiv()} >
           <p style={this.stylesSequenceIdLabel()} >Sequence ID:</p>
-          <input type={'text'} style={this.stylesSequenceIdInput()} spellCheck={'false'} placeholder={this.sequenceIdPlaceholder} />
+          {this._sequenceIdInput()}
         </div>
         <p style={this.stylesSequenceLabel()} >Sequence:</p>
-        <textarea style={this.stylesSequenceTextarea()} spellCheck={'false'} placeholder={this.sequencePlaceholder} />
+        {this._sequenceTextarea()}
         <p style={this.stylesStructureLabel()} >Structure (optional):</p>
-        <textarea style={this.stylesStructureTextarea()} spellCheck={'false'} placeholder={this.structurePlaceholder} />
+        {this._structureTextarea()}
         <div style={this.stylesSubmitOuterDiv()} >
           <div style={this.stylesSubmitInnerDiv()} ></div>
-          <button style={this.stylesSubmitButton()} >Submit</button>
+          <button onClick={() => this._submit()} style={this.stylesSubmitButton()} >Submit</button>
         </div>
       </div>
     );
   }
 
-  onExampleInputChange() {}
-
-  submit() {}
+  _submit() {
+    console.log([
+      this.state.exampleInput,
+      this.state.sequenceId,
+      this.state.sequence,
+      this.state.structure
+    ].toString());
+  }
 }
 
 CreateNewDrawing.defaultProps = {
