@@ -34,63 +34,76 @@ class CreateNewDrawing extends React.Component {
         sequenceId: 'A Hairpin',
         sequence: 'AUGCAUGGUAGCAU',
         structure: '((((......))))'
+      },
+      {
+        exampleInput: 'Two Hairpins',
+        sequenceId: 'Two Hairpins',
+        sequence: 'AACCGGAAUUCCGGAAUUCCGGAAUUCCGGUU',
+        structure: '..((((....))))....((((....))))..'
       }
     ];
   }
 
-  stylesUnselectableText() {
+  _stylesUnselectableText() {
     return {
       userSelect: 'none',
       cursor: 'default'
     };
   }
 
-  stylesOutermostDiv() {
-    return {
-      width: this.props.width,
-      height: this.props.height,
-      backgroundColor: '#f5f5f5',
-      display: 'flex',
-      flexDirection: 'column'
-    };
+  _title() {
+    return (
+      <p
+        style={{
+          ...this._stylesUnselectableText(),
+          margin: '12px 24px 0px 24px',
+          fontSize: '28px'
+        }}
+      >
+        Create a New Drawing
+      </p>
+    );
   }
 
-  stylesTitle() {
-    return {
-      ...this.stylesUnselectableText(),
-      margin: '12px 24px 0px 24px',
-      fontSize: '28px'
-    };
+  _titleUnderline() {
+    return (
+      <div
+        style={{
+          height: '0.75px',
+          margin: '8px 16px 0px 16px',
+          backgroundColor: '#bfbfbf'
+        }}
+      ></div>
+    );
   }
 
-  stylesTitleUnderline() {
-    return {
-      height: '0.75px',
-      margin: '8px 16px 0px 16px',
-      backgroundColor: '#bfbfbf'
-    };
+  _exampleInputDiv() {
+    return (
+      <div
+        style={{
+          margin: '18px 28px 0px 28px',
+          alignItems: 'center'
+        }}
+      >
+        {this._exampleInputLabel()}
+        {this._exampleInputSelect()}
+      </div>
+    );
   }
 
-  stylesExampleInputDiv() {
-    return {
-      margin: '18px 28px 0px 28px',
-      alignItems: 'center'
-    };
-  }
-
-  stylesExampleInputLabel() {
-    return {
-      ...this.stylesUnselectableText(),
-      margin: '0px 8px 0px 0px',
-      fontSize: '14px',
-      display: 'inline-block'
-    };
-  }
-
-  stylesExampleInputSelect() {
-    return {
-      fontSize: '14px'
-    };
+  _exampleInputLabel() {
+    return (
+      <p
+        style={{
+          ...this._stylesUnselectableText(),
+          margin: '0px 8px 0px 0px',
+          fontSize: '14px',
+          display: 'inline-block'
+        }}
+      >
+        Example Input:
+      </p>
+    );
   }
 
   _exampleInputSelect() {
@@ -99,7 +112,13 @@ class CreateNewDrawing extends React.Component {
     }
 
     return (
-      <select value={this.state.exampleInput} onChange={event => this._onExampleInputSelectChange(event)} style={this.stylesExampleInputSelect()} >
+      <select
+        value={this.state.exampleInput}
+        onChange={event => this._onExampleInputSelectChange(event)}
+        style={{
+          fontSize: '14px'
+        }}
+      >
         {this.exampleInputs().map(ei => option(ei))}
       </select>
     );
@@ -116,28 +135,33 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
-  stylesSequenceIdDiv() {
-    return {
-      margin: '18px 28px 0px 28px',
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center'
-    };
+  _sequenceIdDiv() {
+    return (
+      <div
+        style={{
+          margin: '18px 28px 0px 28px',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center'
+        }}
+      >
+        {this._sequenceIdLabel()}
+        {this._sequenceIdInput()}
+      </div>
+    );
   }
 
-  stylesSequenceIdLabel() {
-    return {
-      ...this.stylesUnselectableText(),
-      margin: '0px 8px 0px 0px',
-      fontSize: '14px',
-      display: 'inline-block'
-    };
-  }
-
-  stylesSequenceIdInput() {
-    return {
-      flexGrow: '1'
-    };
+  _sequenceIdLabel() {
+    return (
+      <p
+        style={{
+          ...this._stylesUnselectableText(),
+          margin: '0px 8px 0px 0px',
+          fontSize: '14px',
+          display: 'inline-block'
+        }}
+      >Sequence ID:</p>
+    );
   }
 
   _sequenceIdInput() {
@@ -147,8 +171,10 @@ class CreateNewDrawing extends React.Component {
         value={this.state.sequenceId}
         onChange={event => this._onSequenceIdInputChange(event)}
         spellCheck={'false'}
-        placeholder={this.sequenceIdPlaceholder}
-        style={this.stylesSequenceIdInput()}
+        placeholder={' ...the name of your sequence'}
+        style={{
+          flexGrow: '1'
+        }}
       />
     );
   }
@@ -159,28 +185,18 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
-  get sequenceIdPlaceholder() {
-    return ' ...the name of your sequence';
-  }
-
-  stylesSequenceLabel() {
-    return {
-      ...this.stylesUnselectableText(),
-      margin: '18px 28px 0px 28px',
-      fontSize: '14px'
-    };
-  }
-
-  stylesSequenceTextarea() {
-    return {
-      flexGrow: '1',
-      margin: '4px 28px 0px 28px',
-      fontSize: '14px'
-    };
-  }
-
-  get sequencePlaceholder() {
-    return ' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"';
+  _sequenceLabel() {
+    return (
+      <p
+        style={{
+          ...this._stylesUnselectableText(),
+          margin: '18px 28px 0px 28px',
+          fontSize: '14px'
+        }}
+      >
+        Sequence:
+      </p>
+    );
   }
 
   _sequenceTextarea() {
@@ -189,8 +205,12 @@ class CreateNewDrawing extends React.Component {
         value={this.state.sequence}
         onChange={event => this._onSequenceTextareaChange(event)}
         spellCheck={'false'}
-        placeholder={this.sequencePlaceholder}
-        style={this.stylesSequenceTextarea()}
+        placeholder={' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"'}
+        style={{
+          flexGrow: '1',
+          margin: '4px 28px 0px 28px',
+          fontSize: '14px'
+        }}
       />
     );
   }
@@ -201,24 +221,17 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
-  stylesStructureLabel() {
-    return {
-      ...this.stylesUnselectableText(),
-      margin: '18px 28px 0px 28px',
-      fontSize: '14px'
-    };
-  }
-
-  stylesStructureTextarea() {
-    return {
-      flexGrow: '1',
-      margin: '4px 28px 0px 28px',
-      fontSize: '14px'
-    };
-  }
-
-  get structurePlaceholder() {
-    return ' ...the secondary structure in dot-bracket notation, e.g "((((....))))"';
+  _structureLabel() {
+    return (
+      <p style={{
+        ...this._stylesUnselectableText(),
+        margin: '18px 28px 0px 28px',
+        fontSize: '14px'
+      }}
+      >
+        Structure (optional):
+      </p>
+    );
   }
 
   _structureTextarea() {
@@ -227,8 +240,12 @@ class CreateNewDrawing extends React.Component {
         value={this.state.structure}
         onChange={event => this._onStructureTextareaChange(event)}
         spellCheck={'false'}
-        placeholder={this.structurePlaceholder}
-        style={this.stylesStructureTextarea()}
+        placeholder={' ...the secondary structure in dot-bracket notation, e.g "((((....))))"'}
+        style={{
+          flexGrow: '1',
+          margin: '4px 28px 0px 28px',
+          fontSize: '14px'
+        }}
       />
     );
   }
@@ -239,48 +256,65 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
-  stylesSubmitOuterDiv() {
-    return {
-      margin: '18px 28px 18px 28px',
-      display: 'flex',
-      flexDirection: 'row'
-    };
+  _submitOuterDiv() {
+    return (
+      <div
+        style={{
+          margin: '18px 28px 18px 28px',
+          display: 'flex',
+          flexDirection: 'row'
+        }}
+      >
+        {this._submitSpacerDiv()}
+        {this._submitButton()}
+      </div>
+    );
   }
 
-  stylesSubmitInnerDiv() {
-    return {
-      flexGrow: '1'
-    };
+  _submitSpacerDiv() {
+    return (
+      <div
+        style={{
+          flexGrow: '1'
+        }}
+      ></div>
+    );
   }
 
-  stylesSubmitButton() {
-    return {
-      padding: '8px 64px 8px 64px',
-      fontSize: '12px'
-    };
+  _submitButton() {
+    return (
+      <button
+        onClick={() => this._submit()}
+        style={{
+          padding: '8px 64px 8px 64px',
+          fontSize: '12px'
+        }}
+      >
+        Submit
+      </button>
+    );
   }
 
   render() {
     return (
-      <div style={this.stylesOutermostDiv()} >
-        <p style={this.stylesTitle()} >Create a New Drawing</p>
-        <div style={this.stylesTitleUnderline()} ></div>
-        <div style={this.stylesExampleInputDiv()} >
-          <p style={this.stylesExampleInputLabel()} >Example Input:</p>
-          {this._exampleInputSelect()}
-        </div>
-        <div style={this.stylesSequenceIdDiv()} >
-          <p style={this.stylesSequenceIdLabel()} >Sequence ID:</p>
-          {this._sequenceIdInput()}
-        </div>
-        <p style={this.stylesSequenceLabel()} >Sequence:</p>
+      <div
+        style={{
+          width: this.props.width,
+          height: this.props.height,
+          backgroundColor: '#f5f5f5',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        {this._title()}
+        {this._titleUnderline()}
+        {this._exampleInputDiv()}
+        {this._sequenceIdDiv()}
+        {this._sequenceLabel()}
         {this._sequenceTextarea()}
-        <p style={this.stylesStructureLabel()} >Structure (optional):</p>
+        {this._structureLabel()}
         {this._structureTextarea()}
-        <div style={this.stylesSubmitOuterDiv()} >
-          <div style={this.stylesSubmitInnerDiv()} ></div>
-          <button onClick={() => this._submit()} style={this.stylesSubmitButton()} >Submit</button>
-        </div>
+        {this._submitOuterDiv()}
       </div>
     );
   }
