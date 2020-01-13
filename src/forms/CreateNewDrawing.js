@@ -16,7 +16,7 @@ class CreateNewDrawing extends React.Component {
 
   defaultExampleInput() {
     return {
-      exampleInput: '--- None --- ',
+      exampleInput: '--- None ---',
       sequenceId: '',
       sequence: '',
       structure: ''
