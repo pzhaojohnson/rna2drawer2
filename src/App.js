@@ -58,6 +58,20 @@ class App {
     infobarContainer.id = 'InfobarContainer';
     outermostDiv.appendChild(infobarContainer);
   }
+
+  actionCallback() {
+    return action => {
+      switch (action.type) {
+        case 'createDrawing':
+          this._createDrawing(action.sequenceId, action.sequence, action.partners);
+          break;
+        default:
+          throw new Error('Unrecognized action type: ' + action.type);
+      }
+    };
+  }
+
+  _createDrawing(sequenceId, sequence, partners) {}
 }
 
 export default App;
