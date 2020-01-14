@@ -28,6 +28,9 @@ class App {
    * 
    * The body element in dist/index.html is otherwise empty except for the script tag
    * to bundle.js. This method assumes that the body element is empty prior to its calling.
+   * 
+   * Use of document.body.innerHTML is also discouraged given its association with
+   * XSS attacks.
    */
   _fillInBody() {
     let outermostDiv = document.createElement('div');
