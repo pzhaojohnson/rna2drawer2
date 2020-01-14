@@ -74,5 +74,33 @@ it('selecting example input', () => {
 });
 
 it('selecting example input with prior input', () => {
+  let exampleInputSelect;
+  let sequenceIdInput;
+  let sequenceTextarea;
+  let structureTextarea;
 
+  act(() => {
+    render(<CreateNewDrawing />, container);
+
+    sequenceIdInput = getSequenceIdInput();
+    sequenceIdInput.value = 'a sequence id';
+    sequenceIdInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+    sequenceTextarea = getSequenceTextarea();
+    sequenceTextarea.value = 'AAAGGGGGGUUUCC';
+    sequenceTextarea.dispatchEvent(new Event('change', { bubbles: true }));
+
+    structureTextarea = getStructureTextarea();
+    structureTextarea.value = '(((......)))..';
+    structureTextarea.dispatchEvent(new Event('change', { bubbles: true }));
+
+    exampleInputSelect = getExampleInputSelect();
+    exampleInputSelect.value = 'A Hairpin';
+    exampleInputSelect.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+
+  expect(exampleInputSelect.value).toBe('A Hairpin');
+  expect(getSequenceIdInput().value).toBe('A Hairpin');
+  expect(getSequenceTextarea().value).toBe('AUGCAUGGUAGCAU');
+  expect(getStructureTextarea().value).toBe('((((......))))');
 });
