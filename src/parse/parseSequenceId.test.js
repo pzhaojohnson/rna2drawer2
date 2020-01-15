@@ -1,5 +1,4 @@
 import parseSequenceId from './parseSequenceId';
-import { parse } from '@babel/core';
 
 it('parseSequenceId', () => {
 

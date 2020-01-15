@@ -1,0 +1,1 @@
+import parseSequence from './parseSequence';

@@ -1,4 +1,6 @@
 /**
+ * Right now this function simply trims leading and trailing whitespace.
+ * 
  * @param {string} unparsed What the user input.
  * 
  * @returns {string} The parsed sequence ID.
