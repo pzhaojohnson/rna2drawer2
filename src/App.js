@@ -15,7 +15,12 @@ class App {
     this._fillInBody();
 
     ReactDOM.render(<Menu />, document.getElementById('MenuContainer'));
-    ReactDOM.render(<CreateNewDrawing />, document.getElementById('DrawingContainer'));
+
+    ReactDOM.render(
+      <CreateNewDrawing actionCallback={this.actionCallback()} />,
+      document.getElementById('DrawingContainer')
+    );
+    
     //ReactDOM.render(<Infobar />, document.getElementById('InfobarContainer'));
   }
 
