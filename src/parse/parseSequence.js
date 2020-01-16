@@ -1,3 +1,5 @@
+import isAllWhitespace from './isAllWhitespace';
+
 function _checkForContradictoryOptions(options) {
   if (options.toUpperCase && options.toLowerCase) {
     throw new Error('toUpperCase and toLowerCase options cannot both be true.');
@@ -6,15 +8,6 @@ function _checkForContradictoryOptions(options) {
   if (options.t2u && options.u2t) {
     throw new Error('t2u and u2t options cannot both be true.');
   }
-}
-
-/**
- * @param {string} c A character.
- * 
- * @returns {boolean} True if the character is a whitespace character.
- */
-function _isWhitespace(c) {
-  return c.trim().length === 0;
 }
 
 function _isNumber(c) {
@@ -88,7 +81,7 @@ function parseSequence(unparsed, options={}) {
 
     let toBeIgnored = false;
 
-    if (_isWhitespace(c)) {
+    if (isAllWhitespace(c)) {
       toBeIgnored = true;
     } else if (_isNumber(c) && options.ignoreNumbers) {
       toBeIgnored = true;
