@@ -19,15 +19,19 @@ function _removeNonDotBracketChars(dotBracket) {
  * 
  * Characters indicating tertiary pairings include [ '['|']' | '{'|'}' | '<'|'>' ].
  * 
+ * By default:
+ *  Tertiary pairings are not ignored.
+ * 
  * @param {string} dotBracket The dot-bracket notation input by the user.
- * @param {boolean} [ignoreTertiaryPairings=false] True if positions represented by a tertiary
+ * @param {object} options 
+ * @param {boolean} options.ignoreTertiaryPairings True if positions represented by a tertiary
  *  pairing character are to be treated as unpaired.
  * 
  * @returns {Array<number|null>} The partners notation of the structure.
  * 
  * @throws {Error} If there are unmatched partners in the dot-bracket notation.
  */
-function parseDotBracket(dotBracket, ignoreTertiaryPairings=false) {
+function parseDotBracket(dotBracket, options={}) {
   dotBracket = _removeNonDotBracketChars(dotBracket);
   let partners = [];
 
@@ -75,7 +79,7 @@ function parseDotBracket(dotBracket, ignoreTertiaryPairings=false) {
 
     if (c === '.') {
       // nothing to do
-    } else if (ignoreTertiaryPairings && isTertiaryChar(c)) {
+    } else if (options.ignoreTertiaryPairings && isTertiaryChar(c)) {
       // nothing to do
     } else if (isUpChar(c)) {
       addUp(c, p);

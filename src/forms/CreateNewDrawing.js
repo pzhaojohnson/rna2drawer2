@@ -336,7 +336,10 @@ class CreateNewDrawing extends React.Component {
         ignoreNonAlphanumerics: true
       });
       
-      let partners = parseDotBracket(this.state.structure, true);
+      let partners = parseDotBracket(
+        this.state.structure,
+        { ignoreTertiaryPairings: true }
+      );
       
       checkSequenceAndPartnersCompatibility(sequence, partners);
 

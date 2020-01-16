@@ -62,25 +62,25 @@ it('ignoreTertiaryPairings', () => {
   // a pseudoknot
   
   expect(
-    parseDotBracket('((([[[)))]]]', true)
+    parseDotBracket('((([[[)))]]]', { ignoreTertiaryPairings: true })
   ).toEqual([9, 8, 7, null, null, null, 3, 2, 1, null, null, null]);
 
   expect(
-    parseDotBracket('((({{{)))}}}', true)
+    parseDotBracket('((({{{)))}}}', { ignoreTertiaryPairings: true })
   ).toEqual([9, 8, 7, null, null, null, 3, 2, 1, null, null, null]);
 
   expect(
-    parseDotBracket('(((<<<)))>>>', true)
+    parseDotBracket('(((<<<)))>>>', { ignoreTertiaryPairings: true })
   ).toEqual([9, 8, 7, null, null, null, 3, 2, 1, null, null, null]);
 
   // knotted pseudoknots
 
   expect(
-    parseDotBracket('(((.[[[.))).{{{.]]].}}}.', true)
+    parseDotBracket('(((.[[[.))).{{{.]]].}}}.', { ignoreTertiaryPairings: true })
   ).toEqual([11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null]);
 
   expect(
-    parseDotBracket('(((.<<<.))).{{{.>>>.}}}.', true)
+    parseDotBracket('(((.<<<.))).{{{.>>>.}}}.', { ignoreTertiaryPairings: true })
   ).toEqual([11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null]);
 });
 
