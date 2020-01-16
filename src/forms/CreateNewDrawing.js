@@ -1,5 +1,10 @@
 import React from 'react';
 
+import parseSequenceId from '../parse/parseSequenceId';
+import parseSequence from '../parse/parseSequence';
+import parseDotBracket from '../parse/parseDotBracket';
+import checkSequenceAndPartnersCompatibility from '../parse/checkSequenceAndPartnersCompatibility';
+
 class CreateNewDrawing extends React.Component {
   constructor(props) {
     super(props);
@@ -320,12 +325,30 @@ class CreateNewDrawing extends React.Component {
   }
 
   _submit() {
-    console.log([
-      this.state.exampleInput,
-      this.state.sequenceId,
-      this.state.sequence,
-      this.state.structure
-    ].toString());
+    try {
+      let sequenceId = parseSequenceId(this.state.sequenceId);
+
+      let sequence = parseSequence(this.state.sequence, {
+        toUpperCase: true,
+        t2u: true,
+        ignoreNumbers: true,
+        ignoreNonAUGCTLetters: true,
+        ignoreNonAlphanumerics: true
+      });
+      
+      let partners = parseDotBracket(this.state.structure, true);
+      
+      checkSequenceAndPartnersCompatibility(sequence, partners);
+
+      this.props.actionCallback({
+        type: 'createDrawing',
+        sequenceId: sequenceId,
+        sequence: sequence,
+        partners: partners
+      });
+    } catch (e) {
+      alert(e.message);
+    }
   }
 }
 
