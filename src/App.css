@@ -124,6 +124,15 @@ select:focus {
   border-color: #404040;
 }
 
+svg text {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  cursor: default;
+}
+
 .menu-dropdown {
   position: relative;
   display: inline-block;

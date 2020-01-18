@@ -342,13 +342,20 @@ class CreateNewDrawing extends React.Component {
       );
       
       checkSequenceAndPartnersCompatibility(sequence, partners);
+      
+      this.props.actionCallback({
+        type: 'initializeDrawing'
+      });
 
+      /*
       this.props.actionCallback({
         type: 'createDrawing',
         sequenceId: sequenceId,
         sequence: sequence,
         partners: partners
       });
+      */
+    
     } catch (e) {
       alert(e.message);
     }

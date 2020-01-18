@@ -19,6 +19,8 @@ class Drawing {
     };
 
     this._initializeDefaults();
+
+    Sequence.createHorizontalLine(this._svg, 'blah', 'ASDF', 2000, 2000, 20);
   }
 
   /**
@@ -32,6 +34,7 @@ class Drawing {
    */
   _initializeSVG(container) {
     this._svg = SVG().addTo(container);
+    this._svg.attr({ 'position': 'absolute', 'width': 10000, 'height': 10000, 'overflow': 'scroll' });
 
     this._zSeparators = {
       bondsAndBaseOutlines: null,

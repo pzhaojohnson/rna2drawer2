@@ -4,7 +4,7 @@ class InfoBar extends React.Component {
   borderStyles() {
     return {
       height: 0.75,
-      backgroundColor: 'gainsboro'
+      backgroundColor: '#bfbfbf'
     };
   }
 
@@ -27,9 +27,8 @@ class InfoBar extends React.Component {
       paddingRight: 12,
       paddingTop: 4,
       paddingBottom: 4,
-      fontFamily: 'verdana',
-      fontSize: 12,
-      fontColor: 'black'
+      fontFamily: 'Segoe UI',
+      fontSize: 12
     };
   }
 

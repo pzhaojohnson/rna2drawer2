@@ -6,6 +6,8 @@ import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
 
+import TrackedDrawing from './draw/TrackedDrawing';
+
 class App {
   constructor() {
     this._render();
@@ -16,9 +18,11 @@ class App {
 
     ReactDOM.render(<Menu />, document.getElementById('MenuContainer'));
 
+    this._trackedDrawing = new TrackedDrawing(this._getDrawingContainer());
+
     ReactDOM.render(
-      <CreateNewDrawing actionCallback={this.actionCallback()} />,
-      document.getElementById('DrawingContainer')
+      <CreateNewDrawing width={'100vw'} actionCallback={this.actionCallback()} />,
+      document.getElementById('TaskPaneContainer')
     );
     
     //ReactDOM.render(<Infobar />, document.getElementById('InfobarContainer'));
@@ -44,10 +48,12 @@ class App {
 
     let menuContainer = document.createElement('div');
     menuContainer.id = 'MenuContainer';
+    //menuContainer.style.cssText = 'width: 100vw; height: 5vh;';
     outermostDiv.appendChild(menuContainer);
 
     let drawingAndTaskPaneDiv = document.createElement('div');
-    drawingAndTaskPaneDiv.style.cssText = 'flex-grow: 1; display: flex; flex-direction: row;';
+    drawingAndTaskPaneDiv.style.cssText = 'min-height: 0; flex-grow: 1; display: flex; flex-direction: row;';
+    //drawingAndTaskPaneDiv.style.cssText = 'width: 100vw; height: 90vh; display: flex; flex-direction: row;';
     outermostDiv.appendChild(drawingAndTaskPaneDiv);
 
     let drawingContainer = document.createElement('div');
@@ -57,26 +63,55 @@ class App {
 
     let taskPaneContainer = document.createElement('div');
     taskPaneContainer.id = 'TaskPaneContainer';
+    //taskPaneContainer.style.cssText = 'border-style: solid; border-width: 0px 0px 0px 0.75px; border-color: #bfbfbf;';
     drawingAndTaskPaneDiv.appendChild(taskPaneContainer);
 
     let infobarContainer = document.createElement('div');
     infobarContainer.id = 'InfobarContainer';
+    //infobarContainer.style.cssText = 'width: 100vw; height: 5vh';
     outermostDiv.appendChild(infobarContainer);
+  }
+
+  infoCallback() {
+    return query => {
+      switch (query.type) {
+        default:
+          throw new Error('Unrecognized query type: ' + query.type + '.');
+      }
+    };
   }
 
   actionCallback() {
     return action => {
       switch (action.type) {
-        case 'createDrawing':
-          this._createDrawing(action.sequenceId, action.sequence, action.partners);
+        case 'initializeDrawing':
+          this._initializeDrawing();
+          break;
+        case 'addStructure':
+          this._addStructure(action.sequenceId, action.sequence, action.partners);
           break;
         default:
-          throw new Error('Unrecognized action type: ' + action.type);
+          throw new Error('Unrecognized action type: ' + action.type + '.');
       }
     };
   }
 
-  _createDrawing(sequenceId, sequence, partners) {}
+  _getDrawingContainer() {
+    return document.getElementById('DrawingContainer');
+  }
+
+  _getTaskPaneContainer() {
+    return document.getElementById('TaskPaneContainer');
+  }
+
+  /**
+   * @throws {Error} If the drawing is already initialized.
+   */
+  _initializeDrawing() {
+    ReactDOM.unmountComponentAtNode(this._getTaskPaneContainer());
+  }
+
+  _addStructure(sequenceId, sequence, partners) {}
 }
 
 export default App;
