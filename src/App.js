@@ -46,9 +46,9 @@ class App {
     drawingContainer.style.cssText = 'flex-grow: 1; overflow: auto;';
     drawingAndTaskPaneDiv.appendChild(drawingContainer);
 
-    let taskPaneContainer = document.createElement('div');
-    taskPaneContainer.id = 'TaskPaneContainer';
-    drawingAndTaskPaneDiv.appendChild(taskPaneContainer);
+    let formContainer = document.createElement('div');
+    formContainer.id = 'FormContainer';
+    drawingAndTaskPaneDiv.appendChild(formContainer);
 
     let infobarContainer = document.createElement('div');
     infobarContainer.id = 'InfobarContainer';
@@ -72,8 +72,8 @@ class App {
   /**
    * @returns {Element} The container element for any task panes.
    */
-  _getTaskPaneContainer() {
-    return document.getElementById('TaskPaneContainer');
+  _getFormContainer() {
+    return document.getElementById('FormContainer');
   }
 
   /**
@@ -116,7 +116,7 @@ class App {
           this._addStructure(action.sequenceId, action.sequence, action.partners);
           break;
         case 'closeThisForm':
-          this._closeTaskPane();
+          this._closeCurrForm();
           break;
         default:
           throw new Error('Unrecognized action type: ' + action.type + '.');
@@ -125,12 +125,12 @@ class App {
   }
 
   _openForm(tp) {
-    this._closeTaskPane();
-    ReactDOM.render(tp, this._getTaskPaneContainer());
+    this._closeCurrForm();
+    ReactDOM.render(tp, this._getFormContainer());
   }
 
-  _closeTaskPane() {
-    ReactDOM.unmountComponentAtNode(this._getTaskPaneContainer());
+  _closeCurrForm() {
+    ReactDOM.unmountComponentAtNode(this._getFormContainer());
   }
 
   _openCreateNewDrawingForm() {
