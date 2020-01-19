@@ -4,28 +4,15 @@ import './App.css';
 import Menu from './Menu';
 import Infobar from './Infobar';
 
-import CreateNewDrawing from './forms/CreateNewDrawing';
-
 import TrackedDrawing from './draw/TrackedDrawing';
+
+import CreateNewDrawing from './forms/CreateNewDrawing';
 
 class App {
   constructor() {
-    this._render();
-  }
-
-  _render() {
     this._fillInBody();
-
-    ReactDOM.render(<Menu />, document.getElementById('MenuContainer'));
-
-    this._trackedDrawing = new TrackedDrawing(this._getDrawingContainer());
-
-    ReactDOM.render(
-      <CreateNewDrawing width={'100vw'} actionCallback={this.actionCallback()} />,
-      document.getElementById('TaskPaneContainer')
-    );
-    
-    //ReactDOM.render(<Infobar />, document.getElementById('InfobarContainer'));
+    this._renderPermanentComponents();
+    this._openCreateNewDrawingForm();
   }
 
   /**
@@ -48,12 +35,10 @@ class App {
 
     let menuContainer = document.createElement('div');
     menuContainer.id = 'MenuContainer';
-    //menuContainer.style.cssText = 'width: 100vw; height: 5vh;';
     outermostDiv.appendChild(menuContainer);
 
     let drawingAndTaskPaneDiv = document.createElement('div');
     drawingAndTaskPaneDiv.style.cssText = 'min-height: 0; flex-grow: 1; display: flex; flex-direction: row;';
-    //drawingAndTaskPaneDiv.style.cssText = 'width: 100vw; height: 90vh; display: flex; flex-direction: row;';
     outermostDiv.appendChild(drawingAndTaskPaneDiv);
 
     let drawingContainer = document.createElement('div');
@@ -63,13 +48,56 @@ class App {
 
     let taskPaneContainer = document.createElement('div');
     taskPaneContainer.id = 'TaskPaneContainer';
-    //taskPaneContainer.style.cssText = 'border-style: solid; border-width: 0px 0px 0px 0.75px; border-color: #bfbfbf;';
     drawingAndTaskPaneDiv.appendChild(taskPaneContainer);
 
     let infobarContainer = document.createElement('div');
     infobarContainer.id = 'InfobarContainer';
-    //infobarContainer.style.cssText = 'width: 100vw; height: 5vh';
     outermostDiv.appendChild(infobarContainer);
+  }
+
+  /**
+   * @returns {Element} The container element for the menu.
+   */
+  _getMenuContainer() {
+    return document.getElementById('MenuContainer');
+  }
+
+  /**
+   * @returns {Element} The container element for the SVG document of the drawing.
+   */
+  _getDrawingContainer() {
+    return document.getElementById('DrawingContainer');
+  }
+
+  /**
+   * @returns {Element} The container element for any task panes.
+   */
+  _getTaskPaneContainer() {
+    return document.getElementById('TaskPaneContainer');
+  }
+
+  /**
+   * @returns {Element} The container element for the infobar.
+   */
+  _getInfobarContainer() {
+    return document.getElementById('InfobarContainer');
+  }
+
+  /**
+   * Initializes and renders the menu, drawing, and infobar components and stores references to them
+   * in the _menu, _trackedDrawing, and _infobar properties, respectively.
+   * 
+   * These instances of the menu, drawing, and infobar components will remain throughout the lifetime
+   * of the application.
+   */
+  _renderPermanentComponents() {
+    this._menu = <Menu infoCallback={this.infoCallback()} actionCallback={this.actionCallback()} />;
+    ReactDOM.render(this._menu, this._getMenuContainer());
+
+    this._trackedDrawing = new TrackedDrawing(this._getDrawingContainer());
+    
+    this._infobar = <Infobar infoCallback={this.infoCallback()} />
+    ReactDOM.render(this._infobar, this._getInfobarContainer());
   }
 
   infoCallback() {
@@ -84,11 +112,11 @@ class App {
   actionCallback() {
     return action => {
       switch (action.type) {
-        case 'initializeDrawing':
-          this._initializeDrawing();
-          break;
         case 'addStructure':
           this._addStructure(action.sequenceId, action.sequence, action.partners);
+          break;
+        case 'closeThisForm':
+          this._closeTaskPane();
           break;
         default:
           throw new Error('Unrecognized action type: ' + action.type + '.');
@@ -96,19 +124,23 @@ class App {
     };
   }
 
-  _getDrawingContainer() {
-    return document.getElementById('DrawingContainer');
+  _openForm(tp) {
+    this._closeTaskPane();
+    ReactDOM.render(tp, this._getTaskPaneContainer());
   }
 
-  _getTaskPaneContainer() {
-    return document.getElementById('TaskPaneContainer');
-  }
-
-  /**
-   * @throws {Error} If the drawing is already initialized.
-   */
-  _initializeDrawing() {
+  _closeTaskPane() {
     ReactDOM.unmountComponentAtNode(this._getTaskPaneContainer());
+  }
+
+  _openCreateNewDrawingForm() {
+    this._openForm(
+      <CreateNewDrawing
+        width={'100vw'}
+        height={'100%'}
+        actionCallback={this.actionCallback()}
+      />
+    );
   }
 
   _addStructure(sequenceId, sequence, partners) {}

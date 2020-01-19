@@ -344,7 +344,7 @@ class CreateNewDrawing extends React.Component {
       checkSequenceAndPartnersCompatibility(sequence, partners);
       
       this.props.actionCallback({
-        type: 'initializeDrawing'
+        type: 'closeThisForm'
       });
 
       /*
@@ -363,7 +363,10 @@ class CreateNewDrawing extends React.Component {
 }
 
 CreateNewDrawing.defaultProps = {
-  width: '100%',
+
+  // set width to 100vw to block view of empty drawing
+  width: '100vw',
+
   height: '100%'
 };
 
