@@ -9,7 +9,15 @@ import TrackedDrawing from './draw/TrackedDrawing';
 import CreateNewDrawing from './forms/CreateNewDrawing';
 
 class App {
-  constructor() {
+
+  /**
+   * @param {object} options 
+   * @param {boolean} options.testing Set to True to tell the application that it is running in a test via Node.js.
+   * @param {Element} options.testingDrawingContainer Container for the drawing of this application when testing.
+   */
+  constructor(options={}) {
+    this._options = options;
+
     this._fillInBody();
     this._renderPermanentComponents();
     this._openCreateNewDrawingForm();
@@ -66,7 +74,11 @@ class App {
    * @returns {Element} The container element for the SVG document of the drawing.
    */
   _getDrawingContainer() {
-    return document.getElementById('DrawingContainer');
+    if (this._options.testing) {
+      return this._options.testingDrawingContainer;
+    } else {
+      return document.getElementById('DrawingContainer');
+    }
   }
 
   /**
