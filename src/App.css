@@ -82,26 +82,25 @@ textarea::-webkit-input-placeholder {
 }
 
 button {
-  border: 0.75px solid #404040;
+  border: none;
   margin: 0px;
-  background-color: #ebebeb;
+  background-color: navy;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
+  color: white;
   box-shadow: none;
 }
 
 button:hover {
-  border-color: mediumblue;
+  background-color: #660073;
   transition-duration: 0.25s;
   -webkit-transition-duration: 0.25s;
-  background-color: aliceblue;
 }
 
 button:focus {
   outline: none;
-  border-color: mediumblue;
 }
 
 select {

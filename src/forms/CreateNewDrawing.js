@@ -291,7 +291,7 @@ class CreateNewDrawing extends React.Component {
       <button
         onClick={() => this._submit()}
         style={{
-          padding: '8px 64px 8px 64px',
+          padding: '4px 40px 4px 40px',
           fontSize: '12px'
         }}
       >
