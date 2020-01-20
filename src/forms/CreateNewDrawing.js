@@ -261,28 +261,15 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
-  _submitOuterDiv() {
+  _submitDiv() {
     return (
       <div
         style={{
-          margin: '16px 28px 16px 28px',
-          display: 'flex',
-          flexDirection: 'row'
+          margin: '16px 28px 16px 28px'
         }}
       >
-        {this._submitSpacerDiv()}
         {this._submitButton()}
       </div>
-    );
-  }
-
-  _submitSpacerDiv() {
-    return (
-      <div
-        style={{
-          flexGrow: '1'
-        }}
-      ></div>
     );
   }
 
@@ -319,7 +306,7 @@ class CreateNewDrawing extends React.Component {
         {this._sequenceTextarea()}
         {this._structureLabel()}
         {this._structureTextarea()}
-        {this._submitOuterDiv()}
+        {this._submitDiv()}
       </div>
     );
   }
