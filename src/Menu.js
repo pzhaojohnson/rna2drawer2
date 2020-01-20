@@ -163,9 +163,8 @@ class Menu extends React.Component {
 
   stylesLogo() {
     return {
-      height: 16,
-      paddingLeft: 8,
-      paddingRight: 8
+      height: 18,
+      padding: '2px 8px 2px 8px'
     };
   }
 
