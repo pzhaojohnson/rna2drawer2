@@ -86,7 +86,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
-          margin: '18px 28px 0px 28px',
+          margin: '16px 28px 0px 28px',
           alignItems: 'center'
         }}
       >
@@ -144,7 +144,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
-          margin: '18px 28px 0px 28px',
+          margin: '16px 28px 0px 28px',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center'
@@ -195,7 +195,7 @@ class CreateNewDrawing extends React.Component {
       <p
         style={{
           ...this._stylesUnselectableText(),
-          margin: '18px 28px 0px 28px',
+          margin: '16px 28px 0px 28px',
           fontSize: '12px'
         }}
       >
@@ -230,7 +230,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <p style={{
         ...this._stylesUnselectableText(),
-        margin: '18px 28px 0px 28px',
+        margin: '16px 28px 0px 28px',
         fontSize: '12px'
       }}
       >
@@ -265,7 +265,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
-          margin: '18px 28px 18px 28px',
+          margin: '16px 28px 16px 28px',
           display: 'flex',
           flexDirection: 'row'
         }}
