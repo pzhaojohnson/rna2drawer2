@@ -157,7 +157,7 @@ class Menu extends React.Component {
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: 'whitesmoke'
+      backgroundColor: '#fafafa'
     };
   }
 

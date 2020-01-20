@@ -40,7 +40,7 @@ class InfoBar extends React.Component {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: 'whitesmoke' }} >
+      <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#fafafa' }} >
         <div style={this.borderStyles()} ></div>
         <div style={this.infoStyles()} >
           <div style={this.actionStyles()} >Select Position 12</div>

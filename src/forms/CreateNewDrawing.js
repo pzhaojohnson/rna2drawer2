@@ -306,7 +306,7 @@ class CreateNewDrawing extends React.Component {
         style={{
           width: this.props.width,
           height: this.props.height,
-          backgroundColor: '#f5f5f5',
+          backgroundColor: '#fcfcfc',
           display: 'flex',
           flexDirection: 'column'
         }}
