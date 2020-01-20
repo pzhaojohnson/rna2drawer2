@@ -94,7 +94,7 @@ button {
 }
 
 button:hover {
-  background-color: #ff0066;
+  background-color: #ff0080;
   transition-duration: 0.25s;
   -webkit-transition-duration: 0.25s;
 }
