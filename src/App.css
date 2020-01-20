@@ -84,7 +84,7 @@ textarea::-webkit-input-placeholder {
 button {
   border: none;
   margin: 0px;
-  background-color: mediumblue;
+  background-color: navy;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 12px;
   font-weight: normal;
@@ -94,7 +94,7 @@ button {
 }
 
 button:hover {
-  background-color: navy;
+  background-color: #ff0066;
   transition-duration: 0.25s;
   -webkit-transition-duration: 0.25s;
 }
