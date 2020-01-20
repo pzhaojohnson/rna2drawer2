@@ -62,7 +62,7 @@ class CreateNewDrawing extends React.Component {
         style={{
           ...this._stylesUnselectableText(),
           margin: '12px 24px 0px 24px',
-          fontSize: '28px'
+          fontSize: '24px'
         }}
       >
         Create a New Drawing
@@ -102,7 +102,7 @@ class CreateNewDrawing extends React.Component {
         style={{
           ...this._stylesUnselectableText(),
           margin: '0px 8px 0px 0px',
-          fontSize: '14px',
+          fontSize: '12px',
           display: 'inline-block'
         }}
       >
@@ -121,7 +121,7 @@ class CreateNewDrawing extends React.Component {
         value={this.state.exampleInput}
         onChange={event => this._onExampleInputSelectChange(event)}
         style={{
-          fontSize: '14px'
+          fontSize: '12px'
         }}
       >
         {this.exampleInputs().map(ei => option(ei))}
@@ -162,7 +162,7 @@ class CreateNewDrawing extends React.Component {
         style={{
           ...this._stylesUnselectableText(),
           margin: '0px 8px 0px 0px',
-          fontSize: '14px',
+          fontSize: '12px',
           display: 'inline-block'
         }}
       >Sequence ID:</p>
@@ -196,7 +196,7 @@ class CreateNewDrawing extends React.Component {
         style={{
           ...this._stylesUnselectableText(),
           margin: '18px 28px 0px 28px',
-          fontSize: '14px'
+          fontSize: '12px'
         }}
       >
         Sequence:
@@ -214,7 +214,7 @@ class CreateNewDrawing extends React.Component {
         style={{
           flexGrow: '1',
           margin: '4px 28px 0px 28px',
-          fontSize: '14px'
+          fontSize: '12px'
         }}
       />
     );
@@ -231,7 +231,7 @@ class CreateNewDrawing extends React.Component {
       <p style={{
         ...this._stylesUnselectableText(),
         margin: '18px 28px 0px 28px',
-        fontSize: '14px'
+        fontSize: '12px'
       }}
       >
         Structure (optional):
@@ -249,7 +249,7 @@ class CreateNewDrawing extends React.Component {
         style={{
           flexGrow: '1',
           margin: '4px 28px 0px 28px',
-          fontSize: '14px'
+          fontSize: '12px'
         }}
       />
     );
