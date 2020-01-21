@@ -115,10 +115,19 @@ class App {
   infoCallback() {
     return query => {
       switch (query.type) {
+        case 'drawingIsEmpty':
+          return this.drawingIsEmpty();
         default:
           throw new Error('Unrecognized query type: ' + query.type + '.');
       }
     };
+  }
+
+  /**
+   * @returns {boolean} True if the drawing of this app is empty.
+   */
+  drawingIsEmpty() {
+    return this._trackedDrawing.isEmpty();
   }
 
   actionCallback() {
