@@ -145,9 +145,9 @@ class App {
     };
   }
 
-  _openForm(tp) {
+  _openForm(form) {
     this._closeCurrForm();
-    ReactDOM.render(tp, this._getFormContainer());
+    ReactDOM.render(form, this._getFormContainer());
   }
 
   _closeCurrForm() {
