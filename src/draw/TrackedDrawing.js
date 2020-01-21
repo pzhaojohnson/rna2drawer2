@@ -8,6 +8,13 @@ class TrackedDrawing {
   constructor(container) {
     this._interactiveDrawing = new InteractiveDrawing(container);
   }
+
+  /**
+   * @returns {boolean} True if this drawing is empty.
+   */
+  isEmpty() {
+    return this._interactiveDrawing.isEmpty();
+  }
 }
 
 export default TrackedDrawing;

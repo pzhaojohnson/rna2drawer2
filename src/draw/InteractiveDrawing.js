@@ -8,6 +8,13 @@ class InteractiveDrawing {
   constructor(container) {
     this._drawing = new Drawing(container);
   }
+
+  /**
+   * @returns {boolean} True if this drawing is empty.
+   */
+  isEmpty() {
+    return this._drawing.isEmpty();
+  }
 }
 
 export default InteractiveDrawing;

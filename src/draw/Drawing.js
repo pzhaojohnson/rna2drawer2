@@ -81,6 +81,13 @@ class Drawing {
   }
 
   /**
+   * @returns {boolean} True if this drawing is empty.
+   */
+  isEmpty() {
+    return this._sequences.length === 0;
+  }
+
+  /**
    * Adds the given structure to this drawing.
    * 
    * @param {string} id The sequence ID.
