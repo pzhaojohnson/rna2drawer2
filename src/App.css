@@ -132,6 +132,15 @@ svg text {
   cursor: default;
 }
 
+.unselectable-text {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  cursor: default;
+}
+
 .menu-dropdown {
   position: relative;
   display: inline-block;
