@@ -49,18 +49,11 @@ class CreateNewDrawing extends React.Component {
     ];
   }
 
-  _stylesUnselectableText() {
-    return {
-      userSelect: 'none',
-      cursor: 'default'
-    };
-  }
-
   _title() {
     return (
       <p
+        className={'unselectable-text'}
         style={{
-          ...this._stylesUnselectableText(),
           margin: '12px 24px 0px 24px',
           fontSize: '24px'
         }}
@@ -99,8 +92,8 @@ class CreateNewDrawing extends React.Component {
   _exampleInputLabel() {
     return (
       <p
+        className={'unselectable-text'}
         style={{
-          ...this._stylesUnselectableText(),
           margin: '0px 8px 0px 0px',
           fontSize: '12px',
           display: 'inline-block'
@@ -159,8 +152,8 @@ class CreateNewDrawing extends React.Component {
   _sequenceIdLabel() {
     return (
       <p
+        className={'unselectable-text'}
         style={{
-          ...this._stylesUnselectableText(),
           margin: '0px 8px 0px 0px',
           fontSize: '12px',
           display: 'inline-block'
@@ -193,8 +186,8 @@ class CreateNewDrawing extends React.Component {
   _sequenceLabel() {
     return (
       <p
+        className={'unselectable-text'}
         style={{
-          ...this._stylesUnselectableText(),
           margin: '16px 28px 0px 28px',
           fontSize: '12px'
         }}
@@ -228,11 +221,12 @@ class CreateNewDrawing extends React.Component {
 
   _structureLabel() {
     return (
-      <p style={{
-        ...this._stylesUnselectableText(),
-        margin: '16px 28px 0px 28px',
-        fontSize: '12px'
-      }}
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: '16px 28px 0px 28px',
+          fontSize: '12px'
+        }}
       >
         Structure (optional):
       </p>
