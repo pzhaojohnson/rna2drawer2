@@ -322,6 +322,10 @@ class CreateNewDrawing extends React.Component {
         ignoreNonAUGCTLetters: true,
         ignoreNonAlphanumerics: true
       });
+
+      if (sequence.length === 0) {
+        throw new Error('Sequence length cannot be zero.');
+      }
       
       let partners = parseDotBracket(
         this.state.structure,
