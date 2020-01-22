@@ -63,6 +63,9 @@ class App {
     outermostDiv.appendChild(infobarContainer);
   }
 
+  /**
+   * @returns {string} The ID of the container element for the menu.
+   */
   get _menuContainerId() {
     return 'MenuContainer';
   }
@@ -74,6 +77,9 @@ class App {
     return document.getElementById(this._menuContainerId);
   }
 
+  /**
+   * @returns {string} The ID of the container element for the SVG document of the drawing.
+   */
   get _drawingContainerId() {
     return 'DrawingContainer';
   }
@@ -89,6 +95,9 @@ class App {
     }
   }
 
+  /**
+   * @returns {string} The ID of the container element for forms.
+   */
   get _formContainerId() {
     return 'FormContainer';
   }
@@ -100,6 +109,9 @@ class App {
     return document.getElementById(this._formContainerId);
   }
 
+  /**
+   * @returns {string} The ID of the container element for the infobar.
+   */
   get _infobarContainerId() {
     return 'InfobarContainer';
   }
