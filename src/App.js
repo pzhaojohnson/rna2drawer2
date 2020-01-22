@@ -144,18 +144,11 @@ class App {
     return query => {
       switch (query.type) {
         case 'drawingIsEmpty':
-          return this.drawingIsEmpty();
+          return this._trackedDrawing.IsEmpty();
         default:
           throw new Error('Unrecognized query type: ' + query.type + '.');
       }
     };
-  }
-
-  /**
-   * @returns {boolean} True if the drawing of this app is empty.
-   */
-  drawingIsEmpty() {
-    return this._trackedDrawing.isEmpty();
   }
 
   actionCallback() {
