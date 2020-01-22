@@ -42,7 +42,7 @@ class App {
     document.body.appendChild(outermostDiv);
 
     let menuContainer = document.createElement('div');
-    menuContainer.id = 'MenuContainer';
+    menuContainer.id = this._menuContainerId;
     outermostDiv.appendChild(menuContainer);
 
     let drawingAndTaskPaneDiv = document.createElement('div');
@@ -50,24 +50,32 @@ class App {
     outermostDiv.appendChild(drawingAndTaskPaneDiv);
 
     let drawingContainer = document.createElement('div');
-    drawingContainer.id = 'DrawingContainer';
+    drawingContainer.id = this._drawingContainerId;
     drawingContainer.style.cssText = 'flex-grow: 1; overflow: auto;';
     drawingAndTaskPaneDiv.appendChild(drawingContainer);
 
     let formContainer = document.createElement('div');
-    formContainer.id = 'FormContainer';
+    formContainer.id = this._formContainerId;
     drawingAndTaskPaneDiv.appendChild(formContainer);
 
     let infobarContainer = document.createElement('div');
-    infobarContainer.id = 'InfobarContainer';
+    infobarContainer.id = this._infobarContainerId;
     outermostDiv.appendChild(infobarContainer);
   }
 
+  get _menuContainerId() {
+    return 'MenuContainer';
+  }
+  
   /**
    * @returns {Element} The container element for the menu.
    */
   _getMenuContainer() {
-    return document.getElementById('MenuContainer');
+    return document.getElementById(this._menuContainerId);
+  }
+
+  get _drawingContainerId() {
+    return 'DrawingContainer';
   }
 
   /**
@@ -77,22 +85,30 @@ class App {
     if (this._options.testing) {
       return this._options.testingDrawingContainer;
     } else {
-      return document.getElementById('DrawingContainer');
+      return document.getElementById(this._drawingContainerId);
     }
+  }
+
+  get _formContainerId() {
+    return 'FormContainer';
   }
 
   /**
    * @returns {Element} The container element for any task panes.
    */
   _getFormContainer() {
-    return document.getElementById('FormContainer');
+    return document.getElementById(this._formContainerId);
+  }
+
+  get _infobarContainerId() {
+    return 'InfobarContainer';
   }
 
   /**
    * @returns {Element} The container element for the infobar.
    */
   _getInfobarContainer() {
-    return document.getElementById('InfobarContainer');
+    return document.getElementById(this._infobarContainerId);
   }
 
   /**
