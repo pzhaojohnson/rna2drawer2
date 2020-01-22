@@ -125,7 +125,7 @@ class App {
 
   /**
    * Initializes and renders the menu, drawing, and infobar components and stores references to them
-   * in the _menu, _trackedDrawing, and _infobar properties, respectively.
+   * in the _menu, _drawing, and _infobar properties, respectively.
    * 
    * These instances of the menu, drawing, and infobar components will remain throughout the lifetime
    * of the application.
@@ -134,7 +134,7 @@ class App {
     this._menu = <Menu infoCallback={this.infoCallback()} actionCallback={this.actionCallback()} />;
     ReactDOM.render(this._menu, this._getMenuContainer());
 
-    this._trackedDrawing = new TrackedDrawing(this._getDrawingContainer());
+    this._drawing = new TrackedDrawing(this._getDrawingContainer());
     
     this._infobar = <Infobar infoCallback={this.infoCallback()} />
     ReactDOM.render(this._infobar, this._getInfobarContainer());
@@ -144,7 +144,7 @@ class App {
     return query => {
       switch (query.type) {
         case 'drawingIsEmpty':
-          return this._trackedDrawing.IsEmpty();
+          return this._drawing.IsEmpty();
         default:
           throw new Error('Unrecognized query type: ' + query.type + '.');
       }
