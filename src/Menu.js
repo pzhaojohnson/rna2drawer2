@@ -18,9 +18,9 @@ let _stylesTopButton = {
 let _stylesDropdownContent = {
   borderStyle: 'solid',
   borderTopWidth: 0,
-  borderRightWidth: 0.75,
-  borderBottomWidth: 0.75,
-  borderLeftWidth: 0.75,
+  borderRightWidth: 1,
+  borderBottomWidth: 1,
+  borderLeftWidth: 1,
   borderColor: '#bfbfbf'
 };
 
@@ -50,7 +50,7 @@ function _droppedButton(text, onClick, checkmark=false) {
 }
 
 let _stylesDropdownSeparator = {
-  height: 0.75,
+  height: 1,
   marginLeft: 4,
   marginRight: 4,
   backgroundColor: '#bfbfbf'
