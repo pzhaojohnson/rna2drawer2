@@ -155,7 +155,7 @@ class App {
     return action => {
       switch (action.type) {
         case 'addStructure':
-          this._addStructure(action.sequenceId, action.sequence, action.partners);
+          this._drawing.edit(action);
           break;
         case 'closeThisForm':
           this._closeCurrForm();
@@ -184,8 +184,6 @@ class App {
       />
     );
   }
-
-  _addStructure(sequenceId, sequence, partners) {}
 }
 
 export default App;
