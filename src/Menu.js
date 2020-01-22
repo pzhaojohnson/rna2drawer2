@@ -195,7 +195,7 @@ class Menu extends React.Component {
 
   stylesBorder() {
     return {
-      height: 0.75,
+      height: 1,
       backgroundColor: '#bfbfbf'
     }
   }

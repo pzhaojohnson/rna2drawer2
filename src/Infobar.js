@@ -3,7 +3,7 @@ import React from 'react';
 class InfoBar extends React.Component {
   borderStyles() {
     return {
-      height: 0.75,
+      height: 1,
       backgroundColor: '#bfbfbf'
     };
   }

@@ -67,7 +67,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
-          height: '0.75px',
+          height: '1px',
           margin: '8px 16px 0px 16px',
           backgroundColor: '#bfbfbf'
         }}

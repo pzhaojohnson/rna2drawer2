@@ -23,7 +23,7 @@ p {
 }
 
 input {
-  border: 0.75px solid #808080;
+  border: 1px solid #808080;
   margin: 0px;
   padding: 2px 4px 2px 4px;
   font-family: 'Segoe UI', Verdana, Arial;
@@ -52,7 +52,7 @@ input::-webkit-input-placeholder {
 }
 
 textarea {
-  border: 0.75px solid #808080;
+  border: 1px solid #808080;
   margin: 0px;
   padding: 2px 4px 2px 4px;
   font-family: 'Segoe UI', Verdana, Arial;
@@ -105,7 +105,7 @@ button:focus {
 
 select {
   min-width: 160px;
-  border: 0.75px solid #808080;
+  border: 1px solid #808080;
   margin: 0px;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 12px;
