@@ -139,6 +139,7 @@ class App {
   _renderMenu() {
     this._menu = (
       <Menu
+        openFormCreateNewDrawingCallback={this._openFormCreateNewDrawingCallback()}
         infoCallback={this.infoCallback()}
         actionCallback={this.actionCallback()}
       />
@@ -196,8 +197,8 @@ class App {
     ReactDOM.unmountComponentAtNode(this._getFormContainer());
   }
 
-  _openCreateNewDrawingForm() {
-    this._openForm(
+  _openFormCreateNewDrawingCallback() {
+    return () => this._openForm(
       <CreateNewDrawing
         width={'100vw'}
         height={'100%'}
