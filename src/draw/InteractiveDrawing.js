@@ -15,6 +15,10 @@ class InteractiveDrawing {
   isEmpty() {
     return this._drawing.isEmpty();
   }
+
+  addStructure(id, sequence, partners) {
+    this._drawing.addStructure(id, sequence, partners);
+  }
 }
 
 export default InteractiveDrawing;

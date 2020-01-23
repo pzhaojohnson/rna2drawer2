@@ -19,8 +19,6 @@ class Drawing {
     };
 
     this._initializeDefaults();
-
-    Sequence.createHorizontalLine(this._svg, 'blah', 'ASDF', 2000, 2000, 20);
   }
 
   /**
@@ -53,7 +51,7 @@ class Drawing {
 
   _initializeDefaults() {
     this.defaults = {
-      baseWidth: 8,
+      baseWidth: 12,
       baseHeight: 12,
 
       baseLetterFontFamily: 'Arial',

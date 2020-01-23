@@ -20,7 +20,8 @@ class App {
 
     this._fillInBody();
     this._renderPermanentComponents();
-    this._openCreateNewDrawingForm();
+    
+    (this._openFormCreateNewDrawingCallback())();
   }
 
   /**
@@ -213,8 +214,8 @@ class App {
   }
 
   _addStructureCallback() {
-    return (sequenceId, sequence, partners) => {
-      this._drawing.addStructure(sequenceId, sequence, partners);
+    return (id, sequence, partners) => {
+      this._drawing.addStructure(id, sequence, partners);
     }
   }
 }

@@ -15,6 +15,10 @@ class TrackedDrawing {
   isEmpty() {
     return this._interactiveDrawing.isEmpty();
   }
+
+  addStructure(id, sequence, partners) {
+    this._interactiveDrawing.addStructure(id, sequence, partners);
+  }
 }
 
 export default TrackedDrawing;
