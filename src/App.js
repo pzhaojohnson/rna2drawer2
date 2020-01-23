@@ -20,8 +20,8 @@ class App {
 
     this._fillInBody();
     this._renderPermanentComponents();
-    
-    (this._openFormCreateNewDrawingCallback())();
+
+    (this.openFormCreateNewDrawingCallback())();
   }
 
   /**
@@ -140,7 +140,7 @@ class App {
   _renderMenu() {
     this._menu = (
       <Menu
-        openFormCreateNewDrawingCallback={this._openFormCreateNewDrawingCallback()}
+        openFormCreateNewDrawingCallback={this.openFormCreateNewDrawingCallback()}
         infoCallback={this.infoCallback()}
         actionCallback={this.actionCallback()}
       />
@@ -198,22 +198,22 @@ class App {
     ReactDOM.unmountComponentAtNode(this._getFormContainer());
   }
 
-  _closeFormCallback() {
+  closeFormCallback() {
     return () => this._closeCurrForm();
   }
 
-  _openFormCreateNewDrawingCallback() {
+  openFormCreateNewDrawingCallback() {
     return () => this._openForm(
       <CreateNewDrawing
         width={'100vw'}
         height={'100%'}
-        addStructureCallback={this._addStructureCallback()}
-        closeCallback={this._closeFormCallback()}
+        addStructureCallback={this.addStructureCallback()}
+        closeCallback={this.closeFormCallback()}
       />
     );
   }
 
-  _addStructureCallback() {
+  addStructureCallback() {
     return (id, sequence, partners) => {
       this._drawing.addStructure(id, sequence, partners);
     }
