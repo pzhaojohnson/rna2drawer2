@@ -197,14 +197,25 @@ class App {
     ReactDOM.unmountComponentAtNode(this._getFormContainer());
   }
 
+  _closeFormCallback() {
+    return () => this._closeCurrForm();
+  }
+
   _openFormCreateNewDrawingCallback() {
     return () => this._openForm(
       <CreateNewDrawing
         width={'100vw'}
         height={'100%'}
-        actionCallback={this.actionCallback()}
+        addStructureCallback={this._addStructureCallback()}
+        closeCallback={this._closeFormCallback()}
       />
     );
+  }
+
+  _addStructureCallback() {
+    return (sequenceId, sequence, partners) => {
+      this._drawing.addStructure(sequenceId, sequence, partners);
+    }
   }
 }
 

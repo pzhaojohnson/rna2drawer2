@@ -328,9 +328,7 @@ class CreateNewDrawing extends React.Component {
       
       checkSequenceAndPartnersCompatibility(sequence, partners);
       
-      this.props.actionCallback({
-        type: 'closeThisForm'
-      });
+      this.props.closeCallback();
 
       /*
       this.props.actionCallback({
