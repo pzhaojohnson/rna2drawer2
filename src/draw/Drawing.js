@@ -97,8 +97,8 @@ class Drawing {
       this._svg,
       id,
       sequence,
-      0,
-      0,
+      10,
+      10,
       this.defaults.baseWidth
     );
 

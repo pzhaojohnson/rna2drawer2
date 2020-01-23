@@ -14,14 +14,14 @@ class Base {
    * @returns {Base} The newly created base.
    */
   static create(svg, letter, xCenter, yCenter) {
-    let text = svg.text(letter);
+    let text = svg.text((add) => add.tspan(letter));
 
     text.attr({
       'id': createUUIDforSVG(),
       'x': xCenter,
       'y': yCenter,
       'text-anchor': 'middle',
-      'dy': '0.4em'
+      'dy': '0.4em',
     });
 
     return new Base(text);
