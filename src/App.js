@@ -131,12 +131,33 @@ class App {
    * of the application.
    */
   _renderPermanentComponents() {
-    this._menu = <Menu infoCallback={this.infoCallback()} actionCallback={this.actionCallback()} />;
-    ReactDOM.render(this._menu, this._getMenuContainer());
+    this._renderMenu();
+    this._renderDrawing();
+    this._renderInfobar();
+  }
 
-    this._drawing = new TrackedDrawing(this._getDrawingContainer());
+  _renderMenu() {
+    this._menu = (
+      <Menu
+        infoCallback={this.infoCallback()}
+        actionCallback={this.actionCallback()}
+      />
+    );
     
-    this._infobar = <Infobar infoCallback={this.infoCallback()} />
+    ReactDOM.render(this._menu, this._getMenuContainer());
+  }
+
+  _renderDrawing() {
+    this._drawing = new TrackedDrawing(this._getDrawingContainer());
+  }
+
+  _renderInfobar() {
+    this._infobar = (
+      <Infobar
+        infoCallback={this.infoCallback()}
+      />
+    );
+    
     ReactDOM.render(this._infobar, this._getInfobarContainer());
   }
 
