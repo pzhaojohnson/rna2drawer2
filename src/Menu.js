@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import checkmark from './checkmark.svg';
 
@@ -247,6 +248,11 @@ class Menu extends React.Component {
       </div>
     );
   }
+}
+
+Menu.propTypes = {
+  drawingIsEmptyCallback: PropTypes.func,
+  openFormCreateNewDrawingCallback: PropTypes.func,
 }
 
 export default Menu;

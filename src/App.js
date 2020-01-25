@@ -140,9 +140,8 @@ class App {
   _renderMenu() {
     this._menu = (
       <Menu
+        drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
         openFormCreateNewDrawingCallback={this.openFormCreateNewDrawingCallback()}
-        infoCallback={this.infoCallback()}
-        actionCallback={this.actionCallback()}
       />
     );
     
@@ -156,11 +155,22 @@ class App {
   _renderInfobar() {
     this._infobar = (
       <Infobar
-        infoCallback={this.infoCallback()}
       />
     );
     
     ReactDOM.render(this._infobar, this._getInfobarContainer());
+  }
+
+  /**
+   * @callback App~drawingIsEmptyCallback 
+   * @returns {boolean} True if the drawing of this app is currently empty.
+   */
+  
+  /**
+   * @returns {App~drawingIsEmptyCallback} 
+   */
+  drawingIsEmptyCallback() {
+    return () => this._drawing.isEmpty();
   }
 
   _openForm(form) {
