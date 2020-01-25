@@ -137,106 +137,90 @@ class Menu extends React.Component {
     );
   }
 
-  _fileMenu() {
+  _dropdownMenu(topButton, droppedItems) {
     return (
       <div className={'dropdown-menu'} >
-        {this._topButton('File')}
+        {topButton}
         <div
           className={'dropdown-menu-content'}
           style={this._stylesDropdownContent()}
         >
-          {this._droppedButton('New')}
-          {this._dropdownSeparator()}
-          {this._droppedButton('Open Sequence')}
-          {this._droppedButton('Open FASTA')}
-          {this._droppedButton('Open Dot-Bracket')}
-          {this._droppedButton('Open CT')}
-          {this._droppedButton('Open RNA2Drawer')}
-          {this._dropdownSeparator()}
-          {this._droppedButton('Save')}
+          {droppedItems}
         </div>
       </div>
+    );
+  }
+
+  _fileMenu() {
+    return this._dropdownMenu(
+      this._topButton('File'),
+      [
+        this._droppedButton('New'),
+        this._dropdownSeparator(),
+        this._droppedButton('Open Sequence'),
+        this._droppedButton('Open FASTA'),
+        this._droppedButton('Open Dot-Bracket'),
+        this._droppedButton('Open CT'),
+        this._droppedButton('Open RNA2Drawer'),
+        this._dropdownSeparator(),
+        this._droppedButton('Save'),
+      ],
     );
   }
 
   _modeMenu() {
-    return (
-      <div className={'dropdown-menu'} >
-        {this._topButton('Mode')}
-        <div
-          className={'dropdown-menu-content'}
-          style={this._stylesDropdownContent()}
-        >
-          {this._droppedButton('Fold', {
-            checkmark: true
-          })}
-          {this._droppedButton('Pivot Stems')}
-        </div>
-      </div>
+    return this._dropdownMenu(
+      this._topButton('Mode'),
+      [
+        this._droppedButton('Fold', {
+          checkmark: true
+        }),
+        this._droppedButton('Pivot Stems'),
+      ],
     );
   }
 
   _editMenu() {
-    return (
-      <div className={'dropdown-menu'} >
-        {this._topButton('Edit')}
-        <div
-          className={'dropdown-menu-content'}
-          style={this._stylesDropdownContent()}
-        >
-          {this._droppedButton('Undo')}
-          {this._droppedButton('Redo')}
-          {this._dropdownSeparator()}
-          {this._droppedButton('Add a Sequence')}
-          {this._droppedButton('Delete a Sequence')}
-          {this._droppedButton('Delete a Subsequence')}
-          {this._dropdownSeparator()}
-          {this._droppedButton('Edit Numbering Offsets')}
-        </div>
-      </div>
+    return this._dropdownMenu(
+      this._topButton('Edit'),
+      [
+        this._droppedButton('Undo'),
+        this._droppedButton('Redo'),
+        this._dropdownSeparator(),
+        this._droppedButton('Add a Sequence'),
+        this._droppedButton('Delete a Sequence'),
+        this._droppedButton('Delete a Subsequence'),
+        this._dropdownSeparator(),
+        this._droppedButton('Edit Numbering Offsets'),
+      ],
     );
   }
 
   _exportMenu() {
-    return (
-      <div className={'dropdown-menu'} >
-        {this._topButton('Export')}
-        <div
-          className={'dropdown-menu-content'}
-          style={this._stylesDropdownContent()}
-        >
-          {this._droppedButton('SVG')}
-          {this._droppedButton('PowerPoint (PPTX)')}
-        </div>
-      </div>
+    return this._dropdownMenu(
+      this._topButton('Export'),
+      [
+        this._droppedButton('SVG'),
+        this._droppedButton('PowerPoint (PPTX)'),
+      ],
     );
   }
 
   _settingsMenu() {
-    return (
-      <div className={'dropdown-menu'} >
-        {this._topButton('Settings')}
-        <div
-          className={'dropdown-menu-content'}
-          style={this._stylesDropdownContent()}
-        >
-          {this._droppedButton('App Styles')}
-        </div>
-      </div>
+    return this._dropdownMenu(
+      this._topButton('Settings'),
+      [
+        this._droppedButton('App Styles'),
+      ],
     );
   }
 
   _helpMenu() {
-    return (
-      <div className={'dropdown-menu'} >
-        {this._topButton('Help')}
-        <div
-          className={'dropdown-menu-content'}
-          style={this._stylesDropdownContent()}
-        >
-          {this._droppedButton('About')}
-        </div>
-      </div>
+    return this._dropdownMenu(
+      this._topButton('Help'),
+      [
+        this._droppedButton('About'),
+      ],
     );
   }
 
