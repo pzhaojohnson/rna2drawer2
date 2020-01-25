@@ -70,17 +70,37 @@ class Menu extends React.Component {
     );
   }
 
-  _droppedButton(text) {
+  /**
+   * @param {string} text The text of the button.
+   * @param {object} options 
+   * @param {callback} onClick The callback to call when the button is clicked.
+   * @param {boolean} checkmark Set to true to give the button a checkmark.
+   * 
+   * @returns {React.Component} The dropped button.
+   */
+  _droppedButton(text, options={}) {
+    let onClick;
+
+    if (!options.onClick) {
+      onClick = () => null;
+    }
+
     return (
       <button
         className={'menu-dropped-button'}
+        onClick={onClick}
         style={{
           ...this._stylesButton(),
           minWidth: '200px',
           textAlign: 'left',
         }}
       >
-        {text}
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
+          <div style={{ flexGrow: '1' }} >
+            {text}
+          </div>
+          {options.checkmark ? this._checkmark() : null}
+        </div>
       </button>
     );
   }
@@ -138,7 +158,9 @@ class Menu extends React.Component {
           className={'dropdown-menu-content'}
           style={this._stylesDropdownContent()}
         >
-          {this._droppedButton('Fold')}
+          {this._droppedButton('Fold', {
+            checkmark: true
+          })}
           {this._droppedButton('Pivot Stems')}
         </div>
       </div>
