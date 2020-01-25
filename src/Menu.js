@@ -97,6 +97,7 @@ class Menu extends React.Component {
       >
         <div
           style={{
+            height: '0px',
             borderWidth: '0px 0px thin 0px',
             borderStyle: 'solid',
             borderColor: this.state.borderColor,
