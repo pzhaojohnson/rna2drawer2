@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import checkmark from './checkmark.svg';
+const uuidv1 = require('uuid/v1');
 
 class Menu extends React.Component {
   constructor(props) {
@@ -115,6 +116,7 @@ class Menu extends React.Component {
 
     return (
       <button
+        key={uuidv1()}
         className={'menu-dropped-button'}
         onClick={onClick}
         style={style}
@@ -132,6 +134,7 @@ class Menu extends React.Component {
   _dropdownSeparator() {
     return (
       <div
+        key={uuidv1()}
         style={{
           width: '100%',
           backgroundColor: this.state.backgroundColor,
