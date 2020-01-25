@@ -1,217 +1,233 @@
 import React from 'react';
 import logo from './logo.svg';
-import checkmarkIcon from './checkmark.svg';
-
-let _stylesTopButton = {
-  paddingLeft: 8,
-  paddingRight: 8,
-  paddingTop: 4,
-  paddingBottom: 4,
-  margin: 0,
-  fontFamily: 'Segoe UI',
-  fontSize: 12,
-  color: 'black',
-  border: 'none',
-  outline: 'none'
-};
-
-let _stylesDropdownContent = {
-  borderStyle: 'solid',
-  borderTopWidth: 0,
-  borderRightWidth: 1,
-  borderBottomWidth: 1,
-  borderLeftWidth: 1,
-  borderColor: '#bfbfbf'
-};
-
-let _stylesDroppedButton = { ..._stylesTopButton };
-_stylesDroppedButton.minWidth = 200;
-_stylesDroppedButton.textAlign = 'left';
-
-let _stylesCheckmark = {
-  height: 16,
-  paddingRight: 8,
-  paddingLeft: 8
-};
-
-function _droppedButton(text, onClick, checkmark=false) {
-  let cm = checkmark ? <img src={checkmarkIcon} alt={'Checkmark'} style={_stylesCheckmark} /> : null;
-
-  return (
-    <button style={_stylesDroppedButton} >
-      <div style={{ display: 'flex', flexDirection: 'row' }} >
-        <div style={{ flexGrow: 1 }} >
-          {text}
-        </div>
-        {cm}
-      </div>
-    </button>
-  );
-}
-
-let _stylesDropdownSeparator = {
-  height: 1,
-  marginLeft: 4,
-  marginRight: 4,
-  backgroundColor: '#bfbfbf'
-};
-
-function _dropdownSeparator() {
-  return (
-    <div style={_stylesDropdownSeparator} ></div>
-  );
-}
-
-class _FileMenu extends React.Component {
-  render() {
-    return (
-      <div className={'menu-dropdown'} >
-        <button style={_stylesTopButton} >File</button>
-        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
-          <button style={_stylesDroppedButton} onClick={() => alert('blah')} >New</button>
-          {_dropdownSeparator()}
-          {_droppedButton('Open Sequence', () => 'blah', true)}
-          {_droppedButton('Open FASTA')}
-          {_droppedButton('Open Dot-Bracket')}
-          {_droppedButton('Open CT')}
-          {_droppedButton('Open RNA2Drawer')}
-          {_dropdownSeparator()}
-          {_droppedButton('Save')}
-        </div>
-      </div>
-    );
-  }
-}
-
-class _ModeMenu extends React.Component {
-  render() {
-    return (
-      <div className={'menu-dropdown'} >
-        <button style={_stylesTopButton} >Mode</button>
-        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
-          {_droppedButton('Fold')}
-          {_droppedButton('Pivot Stems')}
-        </div>
-      </div>
-    );
-  }
-}
-
-class _EditMenu extends React.Component {
-  render() {
-    return (
-      <div className={'menu-dropdown'} >
-        <button style={_stylesTopButton} >Edit</button>
-        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
-          {_droppedButton('Undo')}
-          {_droppedButton('Redo')}
-          {_dropdownSeparator()}
-          {_droppedButton('Add a Sequence')}
-          {_droppedButton('Delete a Sequence')}
-          {_droppedButton('Delete a Subsequence')}
-          {_dropdownSeparator()}
-          {_droppedButton('Edit Numbering Offsets')}
-        </div>
-      </div>
-    );
-  }
-}
-
-class _ExportMenu extends React.Component {
-  render() {
-    return (
-      <div className={'menu-dropdown'} >
-        <button style={_stylesTopButton} >Export</button>
-        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
-          {_droppedButton('SVG')}
-          {_droppedButton('PowerPoint (PPTX)')}
-        </div>
-      </div>
-    )
-  }
-}
-
-class _SettingsMenu extends React.Component {
-  render() {
-    return (
-      <div className={'menu-dropdown'} >
-        <button style={_stylesTopButton} >Settings</button>
-        <div className={'menu-dropdown-content'} style={_stylesDropdownContent} >
-          {_droppedButton('App Styles')}
-        </div>
-      </div>
-    );
-  }
-}
+import checkmark from './checkmark.svg';
 
 class Menu extends React.Component {
-  stylesDiv0() {
-    return {
-      display: 'flex',
-      flexDirection: 'column',
-    }
-  }
+  constructor(props) {
+    super(props);
 
-  stylesDiv1() {
-    return {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      backgroundColor: '#fafafa'
+    this.state = {
+      borderColor: '#bfbfbf',
+      backgroundColor: '#fafafa',
+      buttonColor: 'black'
     };
   }
 
-  stylesLogo() {
+  _logo() {
+    return (
+      <img
+        src={logo}
+        alt={'Logo'}
+        style={{
+          height: '18px',
+          padding: '4px 8px 4px 8px'
+        }}
+      />
+    );
+  }
+
+  _stylesDropdownContent() {
     return {
-      height: 18,
-      padding: '4px 8px 4px 8px'
+      borderWidth: '0px thin thin thin',
+      borderStyle: 'solid',
+      borderColor: this.state.borderColor,
     };
   }
 
-  stylesItem() {
+  _stylesButton() {
     return {
-      paddingLeft: 8,
-      paddingRight: 8,
-      paddingTop: 4,
-      paddingBottom: 4,
-      margin: 0,
-      fontFamily: 'verdana',
-      fontSize: 12,
-      fontColor: 'darkgray'
-    }
+      border: 'none',
+      margin: '0px',
+      padding: '4px 8px 4px 8px',
+      fontSize: '12px',
+      color: this.state.buttonColor,
+    };
   }
 
-  stylesDropDown() {
-    let styles = this.stylesItem();
-
-
-
-    return styles;
+  _topButton(text) {
+    return (
+      <button
+        style={{
+          ...this._stylesButton(),
+          backgroundColor: this.state.backgroundColor,
+        }}
+      >
+        {text}
+      </button>
+    );
   }
 
-  stylesDropRight() {
-    return {};
+  _checkmark() {
+    return (
+      <img
+        src={checkmark}
+        alt={'Checkmark'}
+        style={{
+          height: '16px',
+          padding: '0px 8px 0px 8px',
+        }}
+      />
+    );
   }
 
-  stylesBorder() {
-    return {
-      height: 1,
-      backgroundColor: '#bfbfbf'
-    }
+  _droppedButton(text) {
+    return (
+      <button
+        className={'menu-dropped-button'}
+        style={{
+          ...this._stylesButton(),
+          minWidth: '200px',
+          textAlign: 'left',
+        }}
+      >
+        {text}
+      </button>
+    );
+  }
+
+  _dropdownSeparator() {
+    return (
+      <div
+        style={{
+          width: '100%',
+          backgroundColor: this.state.backgroundColor,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <div
+          style={{
+            borderWidth: '0px 0px thin 0px',
+            borderStyle: 'solid',
+            borderColor: this.state.borderColor,
+            margin: '0px 4px 0px 4px',
+          }}
+        ></div>
+      </div>
+    );
+  }
+
+  _fileMenu() {
+    return (
+      <div className={'dropdown-menu'} >
+        {this._topButton('File')}
+        <div
+          className={'dropdown-menu-content'}
+          style={this._stylesDropdownContent()}
+        >
+          {this._droppedButton('New')}
+          {this._dropdownSeparator()}
+          {this._droppedButton('Open Sequence')}
+          {this._droppedButton('Open FASTA')}
+          {this._droppedButton('Open Dot-Bracket')}
+          {this._droppedButton('Open CT')}
+          {this._droppedButton('Open RNA2Drawer')}
+          {this._dropdownSeparator()}
+          {this._droppedButton('Save')}
+        </div>
+      </div>
+    );
+  }
+
+  _modeMenu() {
+    return (
+      <div className={'dropdown-menu'} >
+        {this._topButton('Mode')}
+        <div
+          className={'dropdown-menu-content'}
+          style={this._stylesDropdownContent()}
+        >
+          {this._droppedButton('Fold')}
+          {this._droppedButton('Pivot Stems')}
+        </div>
+      </div>
+    );
+  }
+
+  _editMenu() {
+    return (
+      <div className={'dropdown-menu'} >
+        {this._topButton('Edit')}
+        <div
+          className={'dropdown-menu-content'}
+          style={this._stylesDropdownContent()}
+        >
+          {this._droppedButton('Undo')}
+          {this._droppedButton('Redo')}
+          {this._dropdownSeparator()}
+          {this._droppedButton('Add a Sequence')}
+          {this._droppedButton('Delete a Sequence')}
+          {this._droppedButton('Delete a Subsequence')}
+          {this._dropdownSeparator()}
+          {this._droppedButton('Edit Numbering Offsets')}
+        </div>
+      </div>
+    );
+  }
+
+  _exportMenu() {
+    return (
+      <div className={'dropdown-menu'} >
+        {this._topButton('Export')}
+        <div
+          className={'dropdown-menu-content'}
+          style={this._stylesDropdownContent()}
+        >
+          {this._droppedButton('SVG')}
+          {this._droppedButton('PowerPoint (PPTX)')}
+        </div>
+      </div>
+    );
+  }
+
+  _settingsMenu() {
+    return (
+      <div className={'dropdown-menu'} >
+        {this._topButton('Settings')}
+        <div
+          className={'dropdown-menu-content'}
+          style={this._stylesDropdownContent()}
+        >
+          {this._droppedButton('App Styles')}
+        </div>
+      </div>
+    );
+  }
+
+  _helpMenu() {
+    return (
+      <div className={'dropdown-menu'} >
+        {this._topButton('Help')}
+        <div
+          className={'dropdown-menu-content'}
+          style={this._stylesDropdownContent()}
+        >
+          {this._droppedButton('About')}
+        </div>
+      </div>
+    );
   }
 
   render() {
     return (
-      <div style={this.stylesDiv0()} >
-        <div style={this.stylesDiv1()} >
-          <img src={logo} alt={'Logo'} style={this.stylesLogo()} />
-          <_FileMenu />
-          <_ModeMenu />
-          <_EditMenu />
-          <_ExportMenu />
-          <_SettingsMenu />
-        </div>
-        <div style={this.stylesBorder()} ></div>
+      <div
+        style={{
+          borderWidth: '0px 0px thin 0px',
+          borderStyle: 'solid',
+          borderColor: this.state.borderColor,
+          backgroundColor: this.state.backgroundColor,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center'
+        }}
+      >
+        {this._logo()}
+        {this._fileMenu()}
+        {this._modeMenu()}
+        {this._editMenu()}
+        {this._exportMenu()}
+        {this._settingsMenu()}
+        {this._helpMenu()}
       </div>
     );
   }

@@ -46,7 +46,6 @@ input::placeholder {
   font-style: italic;
 }
 
-/* Edge */
 input::-webkit-input-placeholder {
   font-style: italic;
 }
@@ -76,7 +75,6 @@ textarea::placeholder {
   font-style: italic;
 }
 
-/* Edge */
 textarea::-webkit-input-placeholder {
   font-style: italic;
 }
@@ -84,6 +82,7 @@ textarea::-webkit-input-placeholder {
 button {
   border: none;
   margin: 0px;
+  padding: 4px 32px 4px 32px;
   background-color: navy;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 12px;
@@ -141,29 +140,37 @@ svg text {
   cursor: default;
 }
 
-.menu-dropdown {
+.dropdown-menu {
   position: relative;
   display: inline-block;
 }
 
-.menu-dropdown button {
-  background-color: #fafafa;
-}
-
-.menu-dropdown-content {
+.dropdown-menu-content {
   display: none;
   position: absolute;
   z-index: 1;
 }
 
-.menu-dropdown-content button {
+.dropdown-menu-content button {
   display: block;
 }
 
-.menu-dropdown-content button:hover {
+.dropdown-menu:hover .dropdown-menu-content {
+  display: block;
+}
+
+/* Override the background-color on hover setting for all buttons above. */
+.menu-top-button:hover {
+  background-color: #fafafa;
+}
+
+/* Must be specified here, as specifying this in the Menu component itself
+overrides the background-color on hover setting below. */
+.menu-dropped-button {
+  background-color: #fafafa;
+}
+
+/* Could not find a straightforward way to do this in React. */
+.menu-dropped-button:hover {
   background-color: gainsboro;
-}
-
-.menu-dropdown:hover .menu-dropdown-content {
-  display: block;
 }
