@@ -47,12 +47,14 @@ class Menu extends React.Component {
   }
 
   /**
+   * Disabling a top button simply changes its color to this.state.disabledButtonColor.
+   * 
    * @param {string} text The text of the button.
    * @param {object} options 
-   * @param {string} options.color A custom color for the button.
+   * @param {boolean} options.disabled Set to true to disable the button.
    */
   _topButton(text, options={}) {
-    let color = options.color ? options.color : this.state.buttonColor;
+    let color = options.disabled ? this.state.disabledButtonColor : this.state.buttonColor;
 
     return (
       <button
@@ -81,28 +83,41 @@ class Menu extends React.Component {
   }
 
   /**
+   * Disabling a dropped button prevents any onClick callback from being called,
+   * changes the color of the button to this.state.disabledButtenColor, and prevents
+   * the background color of the button from changing on hover.
+   * 
    * @param {string} text The text of the button.
    * @param {object} options 
-   * @param {callback} onClick The callback to call when the button is clicked.
-   * @param {string} color A custom color for the button.
-   * @param {boolean} checkmark Set to true to give the button a checkmark.
+   * @param {callback} options.onClick The callback to call when the button is clicked.
+   * @param {boolean} options.disabled Set to true to disable the button.
+   * @param {boolean} options.checkmark Set to true to give the button a checkmark.
    * 
    * @returns {React.Component} The dropped button.
    */
   _droppedButton(text, options={}) {
     let onClick = options.onClick ? options.onClick : () => null;
-    let color = options.color ? options.color : this.state.buttonColor;
+    
+    let style = {
+      ...this._stylesButton(),
+      minWidth: '200px',
+      textAlign: 'left',
+      color: this.state.buttonColor,
+    };
+
+    if (options.disabled) {
+      onClick = () => null;
+      style.color = this.state.disabledButtonColor;
+      
+      // prevents the background color from changing on hover as defined in App.css
+      style.backgroundColor = this.state.backgroundColor;
+    }
 
     return (
       <button
         className={'menu-dropped-button'}
         onClick={onClick}
-        style={{
-          ...this._stylesButton(),
-          minWidth: '200px',
-          textAlign: 'left',
-          color: color,
-        }}
+        style={style}
       >
         <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
           <div style={{ flexGrow: '1' }} >
@@ -137,7 +152,11 @@ class Menu extends React.Component {
     );
   }
 
-  _dropdownMenu(topButton, droppedItems) {
+  /**
+   * @param {React.Component} topButton The top button.
+   * @param {Array<React.Component>} droppedItems The dropped items.
+   */
+  _dropdownMenu(topButton, droppedItems, options={}) {
     return (
       <div className={'dropdown-menu'} >
         {topButton}
@@ -163,46 +182,72 @@ class Menu extends React.Component {
         this._droppedButton('Open CT'),
         this._droppedButton('Open RNA2Drawer'),
         this._dropdownSeparator(),
-        this._droppedButton('Save'),
+        this._droppedButton('Save', {
+          disabled: this.props.drawingIsEmptyCallback(),
+        }),
       ],
     );
   }
 
   _modeMenu() {
+    let droppedItems = [
+      this._droppedButton('Fold', {
+        checkmark: true
+      }),
+      this._droppedButton('Pivot Stems'),
+    ];
+
+    if (this.props.drawingIsEmptyCallback()) {
+      droppedItems = [];
+    }
+
     return this._dropdownMenu(
-      this._topButton('Mode'),
-      [
-        this._droppedButton('Fold', {
-          checkmark: true
-        }),
-        this._droppedButton('Pivot Stems'),
-      ],
+      this._topButton('Mode', {
+        disabled: this.props.drawingIsEmptyCallback(),
+      }),
+      droppedItems,
     );
   }
 
   _editMenu() {
+    let droppedItems = [
+      this._droppedButton('Undo'),
+      this._droppedButton('Redo'),
+      this._dropdownSeparator(),
+      this._droppedButton('Add a Sequence'),
+      this._droppedButton('Delete a Sequence'),
+      this._droppedButton('Delete a Subsequence'),
+      this._dropdownSeparator(),
+      this._droppedButton('Edit Numbering Offsets'),
+    ];
+
+    if (this.props.drawingIsEmptyCallback()) {
+      droppedItems = [];
+    }
+
     return this._dropdownMenu(
-      this._topButton('Edit'),
-      [
-        this._droppedButton('Undo'),
-        this._droppedButton('Redo'),
-        this._dropdownSeparator(),
-        this._droppedButton('Add a Sequence'),
-        this._droppedButton('Delete a Sequence'),
-        this._droppedButton('Delete a Subsequence'),
-        this._dropdownSeparator(),
-        this._droppedButton('Edit Numbering Offsets'),
-      ],
+      this._topButton('Edit', {
+        disabled: this.props.drawingIsEmptyCallback(),
+      }),
+      droppedItems,
     );
   }
 
   _exportMenu() {
+    let droppedItems = [
+      this._droppedButton('SVG'),
+      this._droppedButton('PowerPoint (PPTX)'),
+    ];
+
+    if (this.props.drawingIsEmptyCallback()) {
+      droppedItems = [];
+    }
+
     return this._dropdownMenu(
-      this._topButton('Export'),
-      [
-        this._droppedButton('SVG'),
-        this._droppedButton('PowerPoint (PPTX)'),
-      ],
+      this._topButton('Export', {
+        disabled: this.props.drawingIsEmptyCallback(),
+      }),
+      droppedItems,
     );
   }
 

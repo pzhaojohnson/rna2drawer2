@@ -125,19 +125,28 @@ class App {
   }
 
   /**
-   * Initializes and renders the menu, drawing, and infobar components and stores references to them
-   * in the _menu, _drawing, and _infobar properties, respectively.
+   * Initializes and renders the drawing, menu, and infobar components and stores references to them
+   * in the _drawing, _menu, and _infobar properties, respectively.
+   * 
+   * The drawing must be initialized and rendered before the menu and infobar, since the rendering of
+   * the menu and infobar depends on the state of the drawing.
    * 
    * These instances of the menu, drawing, and infobar components will remain throughout the lifetime
    * of the application.
    */
   _renderPermanentComponents() {
-    this._renderMenu();
     this._renderDrawing();
+    this._renderMenu();
     this._renderInfobar();
   }
 
+  _renderDrawing() {
+    this._drawing = new TrackedDrawing(this._getDrawingContainer());
+  }
+
   _renderMenu() {
+    ReactDOM.unmountComponentAtNode(this._getMenuContainer())
+    
     this._menu = (
       <Menu
         drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
@@ -148,11 +157,9 @@ class App {
     ReactDOM.render(this._menu, this._getMenuContainer());
   }
 
-  _renderDrawing() {
-    this._drawing = new TrackedDrawing(this._getDrawingContainer());
-  }
-
   _renderInfobar() {
+    ReactDOM.unmountComponentAtNode(this._getInfobarContainer())
+    
     this._infobar = (
       <Infobar
       />
@@ -197,9 +204,15 @@ class App {
     );
   }
 
+  _updatePeripherals() {
+    this._renderMenu();
+    this._renderInfobar();
+  }
+
   addStructureCallback() {
     return (id, sequence, partners) => {
       this._drawing.addStructure(id, sequence, partners);
+      this._updatePeripherals();
     }
   }
 }

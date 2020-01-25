@@ -335,6 +335,7 @@ class CreateNewDrawing extends React.Component {
       this.props.closeCallback();
     } catch (e) {
       alert(e.message);
+      console.log(e.stack);
     }
   }
 }
