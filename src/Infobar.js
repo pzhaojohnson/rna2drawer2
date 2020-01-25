@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-class InfoBar extends React.Component {
+class Infobar extends React.Component {
   borderStyles() {
     return {
       height: 1,
@@ -39,17 +40,37 @@ class InfoBar extends React.Component {
   }
 
   render() {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', backgroundColor: '#fafafa' }} >
-        <div style={this.borderStyles()} ></div>
+    let content = null;
+
+    if (!this.props.drawingIsEmptyCallback()) {
+      content = (
         <div style={this.infoStyles()} >
           <div style={this.actionStyles()} >Select Position 12</div>
           <div style={this.pieceStyles()} >5 Pairables</div>
           <div style={this.pieceStyles()} >Range 1 to 20</div>
         </div>
+      );
+    }
+
+    return (
+      <div
+        style={{
+          borderWidth: 'thin 0px 0px 0px',
+          borderStyle: 'solid',
+          borderColor: '#bfbfbf',
+          display: 'flex',
+          flexDirection: 'column',
+          backgroundColor: '#fafafa',
+        }}
+      >
+        {content}
       </div>
     );
   }
 }
 
-export default InfoBar;
+Infobar.propTypes = {
+  drawingIsEmptyCallback: PropTypes.func,
+};
+
+export default Infobar;

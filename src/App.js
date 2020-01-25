@@ -162,6 +162,7 @@ class App {
     
     this._infobar = (
       <Infobar
+        drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
       />
     );
     

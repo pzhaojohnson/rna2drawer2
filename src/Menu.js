@@ -299,6 +299,6 @@ class Menu extends React.Component {
 Menu.propTypes = {
   drawingIsEmptyCallback: PropTypes.func,
   openFormCreateNewDrawingCallback: PropTypes.func,
-}
+};
 
 export default Menu;
