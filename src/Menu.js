@@ -174,7 +174,9 @@ class Menu extends React.Component {
     return this._dropdownMenu(
       this._topButton('File'),
       [
-        this._droppedButton('New'),
+        this._droppedButton('New', {
+          onClick: this.props.openFormCreateNewDrawingCallback,
+        }),
         this._dropdownSeparator(),
         this._droppedButton('Open Sequence'),
         this._droppedButton('Open FASTA'),
