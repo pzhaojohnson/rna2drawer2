@@ -163,32 +163,6 @@ class App {
     ReactDOM.render(this._infobar, this._getInfobarContainer());
   }
 
-  infoCallback() {
-    return query => {
-      switch (query.type) {
-        case 'drawingIsEmpty':
-          return this._drawing.IsEmpty();
-        default:
-          throw new Error('Unrecognized query type: ' + query.type + '.');
-      }
-    };
-  }
-
-  actionCallback() {
-    return action => {
-      switch (action.type) {
-        case 'addStructure':
-          this._drawing.edit(action);
-          break;
-        case 'closeThisForm':
-          this._closeCurrForm();
-          break;
-        default:
-          throw new Error('Unrecognized action type: ' + action.type + '.');
-      }
-    };
-  }
-
   _openForm(form) {
     this._closeCurrForm();
     ReactDOM.render(form, this._getFormContainer());
