@@ -84,16 +84,14 @@ class Menu extends React.Component {
    * @param {string} text The text of the button.
    * @param {object} options 
    * @param {callback} onClick The callback to call when the button is clicked.
+   * @param {string} color A custom color for the button.
    * @param {boolean} checkmark Set to true to give the button a checkmark.
    * 
    * @returns {React.Component} The dropped button.
    */
   _droppedButton(text, options={}) {
-    let onClick;
-
-    if (!options.onClick) {
-      onClick = () => null;
-    }
+    let onClick = options.onClick ? options.onClick : () => null;
+    let color = options.color ? options.color : this.state.buttonColor;
 
     return (
       <button
@@ -103,6 +101,7 @@ class Menu extends React.Component {
           ...this._stylesButton(),
           minWidth: '200px',
           textAlign: 'left',
+          color: color,
         }}
       >
         <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
