@@ -159,7 +159,7 @@ class Menu extends React.Component {
    * @param {React.Component} topButton The top button.
    * @param {Array<React.Component>} droppedItems The dropped items.
    */
-  _dropdownMenu(topButton, droppedItems, options={}) {
+  _dropdownMenu(topButton, droppedItems) {
     return (
       <div className={'dropdown-menu'} >
         {topButton}
