@@ -9,7 +9,8 @@ class Menu extends React.Component {
     this.state = {
       borderColor: '#bfbfbf',
       backgroundColor: '#fafafa',
-      buttonColor: 'black'
+      buttonColor: 'black',
+      disabledButtonColor: 'gray',
     };
   }
 
@@ -44,12 +45,20 @@ class Menu extends React.Component {
     };
   }
 
-  _topButton(text) {
+  /**
+   * @param {string} text The text of the button.
+   * @param {object} options 
+   * @param {string} options.color A custom color for the button.
+   */
+  _topButton(text, options={}) {
+    let color = options.color ? options.color : this.state.buttonColor;
+
     return (
       <button
         style={{
           ...this._stylesButton(),
           backgroundColor: this.state.backgroundColor,
+          color: color,
         }}
       >
         {text}
