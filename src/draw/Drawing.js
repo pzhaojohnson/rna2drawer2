@@ -8,7 +8,9 @@ class Drawing {
    * @param {Element} container The DOM element to place the SVG document of the drawing in.
    */
   constructor(container) {
-    this._initializeSVG(container);
+    this._container = container;
+
+    this._initializeSVG();
 
     this._sequences = [];
       
@@ -30,9 +32,15 @@ class Drawing {
    * 
    * @param {Element} container The DOM element to place the SVG document of this drawing in.
    */
-  _initializeSVG(container) {
-    this._svg = SVG().addTo(container);
-    this._svg.attr({ 'position': 'absolute', 'width': 10000, 'height': 10000, 'overflow': 'scroll' });
+  _initializeSVG() {
+    this._svg = SVG().addTo(this._container);
+
+    this._svg.attr({
+      'position': 'absolute',
+      'width': 2 * window.screen.width,
+      'height': 2 * window.screen.height,
+      'overflow': 'scroll'
+    });
 
     this._zSeparators = {
       bondsAndBaseOutlines: null,
@@ -85,6 +93,17 @@ class Drawing {
     return this._sequences.length === 0;
   }
 
+  centerView() {
+    
+    console.log(this._container.scrollHeight);
+    console.log(this._container.offsetWidth);
+    /* Using window.innerWidth is not totally precise, but container.innerWidth
+    always seems to return 0. */
+    this._container.scrollLeft = (this._container.scrollWidth - this._container.clientWidth) / 2;
+    
+    this._container.scrollTop = (this._container.scrollHeight - this._container.clientHeight) / 2;
+  }
+
   /**
    * Adds the given structure to this drawing.
    * 
@@ -97,8 +116,8 @@ class Drawing {
       this._svg,
       id,
       sequence,
-      10,
-      10,
+      window.screen.width,
+      window.screen.height,
       this.defaults.baseWidth
     );
 
@@ -116,6 +135,8 @@ class Drawing {
         ));
       }
     }
+
+    this.centerView();
   }
 }
 
