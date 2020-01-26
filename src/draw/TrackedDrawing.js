@@ -19,6 +19,10 @@ class TrackedDrawing {
   addStructure(id, sequence, partners) {
     this._interactiveDrawing.addStructure(id, sequence, partners);
   }
+
+  applyStrictLayout() {
+    this._interactiveDrawing.applyStrictLayout();
+  }
 }
 
 export default TrackedDrawing;

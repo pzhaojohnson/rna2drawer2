@@ -19,6 +19,10 @@ class InteractiveDrawing {
   addStructure(id, sequence, partners) {
     this._drawing.addStructure(id, sequence, partners);
   }
+
+  applyStrictLayout() {
+    this._drawing.applyStrictLayout();
+  }
 }
 
 export default InteractiveDrawing;

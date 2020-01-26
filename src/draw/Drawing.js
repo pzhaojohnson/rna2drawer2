@@ -2,6 +2,8 @@ import { SVG } from '@svgdotjs/svg.js';
 import Sequence from './Sequence';
 import StraightBond from './StraightBond';
 
+import StrictLayout from './layout/singleseq/strict/StrictLayout';
+
 class Drawing {
 
   /**
@@ -135,6 +137,13 @@ class Drawing {
     }
 
     this.centerView();
+  }
+
+  /**
+   * Applies a strict layout to the drawing.
+   */
+  applyStrictLayout() {
+    // TODO
   }
 }
 
