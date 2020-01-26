@@ -182,6 +182,23 @@ class App {
     return () => this._drawing.isEmpty();
   }
 
+  /**
+   * Centers the scrollbars of the drawing container to center the view of the drawing.
+   * 
+   * @callback App~centerDrawingViewCallback
+   */
+
+  /**
+   * @returns {App~centerDrawingViewCallback}
+   */
+  centerDrawingViewCallback() {
+    return () => {
+      let dc = this._getDrawingContainer();
+      dc.scrollLeft = (dc.scrollWidth - dc.clientWidth) / 2;
+      dc.scrollTop = (dc.scrollHeight - dc.clientHeight) / 2;
+    };
+  }
+
   _openForm(form) {
     this._closeCurrForm();
     ReactDOM.render(form, this._getFormContainer());
