@@ -12,8 +12,8 @@ class App {
 
   /**
    * @param {object} options 
-   * @param {boolean} options.testing Set to True to tell the application that it is running in a test via Node.js.
-   * @param {Element} options.testingDrawingContainer Container for the drawing of this application when testing.
+   * @param {boolean} options.testing Set to True to tell the app that it is running in a test via Node.js.
+   * @param {Element} options.testingDrawingContainer Container for the drawing of the app when testing.
    */
   constructor(options={}) {
     this._options = options;
@@ -25,11 +25,11 @@ class App {
   }
 
   /**
-   * Fills in the body element of the app with permanent elements.
+   * Fills in the body element of this app with permanent elements.
    * 
    * It is preferrable to specify these elements here rather than in dist/index.html
    * since using an HTML file with the Jest testing framework does not seem very
-   * straightforward... and this allows rendering of the app in testing.
+   * straightforward... and this allows rendering of this app in testing.
    * 
    * The body element in dist/index.html is otherwise empty except for the script tag
    * to bundle.js. This method assumes that the body element is empty prior to its calling.
@@ -132,7 +132,7 @@ class App {
    * the menu and infobar depends on the state of the drawing.
    * 
    * These instances of the menu, drawing, and infobar components will remain throughout the lifetime
-   * of the application.
+   * of this app.
    */
   _renderPermanentComponents() {
     this._renderDrawing();
