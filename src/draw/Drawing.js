@@ -2,6 +2,7 @@ import { SVG } from '@svgdotjs/svg.js';
 import Sequence from './Sequence';
 import StraightBond from './StraightBond';
 
+import StrictLayoutDrawingProps from './layout/singleseq/strict/StrictLayoutDrawingProps';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
 
 class Drawing {
@@ -23,6 +24,7 @@ class Drawing {
     };
 
     this._initializeDefaults();
+    this._strictLayoutProps = new StrictLayoutDrawingProps();
   }
 
   /**
@@ -141,7 +143,31 @@ class Drawing {
    * Applies a strict layout to the drawing.
    */
   applyStrictLayout() {
-    // TODO
+    let layout = new StrictLayout(
+      this.strictLayoutPartners(),
+      this.strictLayoutProps(),
+      this.strictLayoutBaseProps(),
+    );
+
+    let x = 500;
+    let y = 500;
+
+    let p = 1;
+
+    this._sequences.forEach(seq => {
+      for (let q = 1; q <= seq.length; q++) {
+        let b = seq.getBase(q);
+        let cs = layout.baseCoordinates(p);
+        console.log(cs.xCenter, cs.yCenter, p);
+
+        b.move(
+          (cs.xCenter * this.defaults.baseWidth) + 500,
+          (cs.yCenter * this.defaults.baseHeight) + 500,
+        );
+
+        p++;
+      }
+    });
   }
 
   strictLayoutPartners() {
@@ -157,7 +183,7 @@ class Drawing {
     });
 
     let partners = [];
-    baseIdsToPositions.keys().forEach(k => partners.push(null));
+    Object.keys(baseIdsToPositions).forEach(k => partners.push(null));
 
     this._bonds.watsonCrick.forEach(wcb => {
       let r = baseIdsToPositions[wcb.base1.id];
@@ -167,6 +193,23 @@ class Drawing {
     });
 
     return partners;
+  }
+
+  strictLayoutProps() {
+    return { ...this._strictLayoutProps };
+  }
+
+  strictLayoutBaseProps() {
+    let baseProps = [];
+
+    this._sequences.forEach(seq => {
+      for (let p = 1; p <= seq.length; p++) {
+        let b = seq.getBase(p);
+        baseProps.push(b.strictLayoutProps());
+      }
+    });
+
+    return baseProps;
   }
 }
 
