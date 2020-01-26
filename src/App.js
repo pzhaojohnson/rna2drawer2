@@ -170,6 +170,11 @@ class App {
     ReactDOM.render(this._infobar, this._getInfobarContainer());
   }
 
+  _updatePeripherals() {
+    this._renderMenu();
+    this._renderInfobar();
+  }
+
   /**
    * @callback App~drawingIsEmptyCallback 
    * @returns {boolean} True if the drawing of this app is currently empty.
@@ -231,11 +236,6 @@ class App {
         closeCallback={this.closeFormCallback()}
       />
     );
-  }
-
-  _updatePeripherals() {
-    this._renderMenu();
-    this._renderInfobar();
   }
 
   addStructureCallback() {
