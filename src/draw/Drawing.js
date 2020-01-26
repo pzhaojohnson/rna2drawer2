@@ -145,6 +145,31 @@ class Drawing {
   applyStrictLayout() {
     // TODO
   }
+
+  strictLayoutPartners() {
+    let baseIdsToPositions = {};
+    let p = 1;
+
+    this._sequences.forEach(seq => {
+      for (let q = 1; q <= seq.length; q++) {
+        let b = seq.getBase(q);
+        baseIdsToPositions[b.id] = p;
+        p++;
+      }
+    });
+
+    let partners = [];
+    baseIdsToPositions.keys().forEach(k => partners.push(null));
+
+    this._bonds.watsonCrick.forEach(wcb => {
+      let r = baseIdsToPositions[wcb.base1.id];
+      let s = baseIdsToPositions[wcb.base2.id];
+      partners[r - 1] = s;
+      partners[s - 1] = r;
+    });
+
+    return partners;
+  }
 }
 
 export default Drawing;
