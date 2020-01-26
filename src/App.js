@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
-import Menu from './Menu';
-import Infobar from './Infobar';
 
 import TrackedDrawing from './draw/TrackedDrawing';
+
+import Menu from './Menu';
+import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
 
