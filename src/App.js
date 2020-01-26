@@ -194,7 +194,15 @@ class App {
   centerDrawingViewCallback() {
     return () => {
       let dc = this._getDrawingContainer();
-      dc.scrollLeft = (dc.scrollWidth - dc.clientWidth) / 2;
+      
+      /* This would be more straightforward if it was possible to use dc.clientWidth,
+      but dc.clientWidth always seems to return 0.
+      
+      This is also a little less precise than using dc.clientWidth. */
+      let fc = this._getFormContainer();
+      let dcWidth = document.body.clientWidth - fc.clientWidth;
+      dc.scrollLeft = (dc.scrollWidth - dcWidth) / 2;
+      
       dc.scrollTop = (dc.scrollHeight - dc.clientHeight) / 2;
     };
   }

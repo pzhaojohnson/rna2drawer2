@@ -332,10 +332,9 @@ class CreateNewDrawing extends React.Component {
       checkSequenceAndPartnersCompatibility(sequence, partners);
       
       this.props.addStructureCallback(sequenceId, sequence, partners);
-
-      this.props.centerDrawingViewCallback();
       
       this.props.closeCallback();
+      this.props.centerDrawingViewCallback();
     } catch (e) {
       alert(e.message);
       console.log(e.stack);
