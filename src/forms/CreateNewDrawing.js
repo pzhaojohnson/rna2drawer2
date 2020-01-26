@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import parseSequenceId from '../parse/parseSequenceId';
 import parseSequence from '../parse/parseSequence';
@@ -339,6 +340,14 @@ class CreateNewDrawing extends React.Component {
     }
   }
 }
+
+CreateNewDrawing.propTypes = {
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  addStructureCallback: PropTypes.func,
+  applyStrictLayoutCallback: PropTypes.func,
+  closeCallback: PropTypes.func,
+};
 
 CreateNewDrawing.defaultProps = {
 
