@@ -94,12 +94,10 @@ class Drawing {
   }
 
   centerView() {
-    
-    console.log(this._container.scrollHeight);
-    console.log(this._container.offsetWidth);
-    /* Using window.innerWidth is not totally precise, but container.innerWidth
+
+    /* Using window.innerWidth is not perfectly precise, but this._container.innerWidth
     always seems to return 0. */
-    this._container.scrollLeft = (this._container.scrollWidth - this._container.clientWidth) / 2;
+    this._container.scrollLeft = (this._container.scrollWidth - window.innerWidth) / 2;
     
     this._container.scrollTop = (this._container.scrollHeight - this._container.clientHeight) / 2;
   }
