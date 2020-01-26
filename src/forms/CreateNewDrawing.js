@@ -332,6 +332,8 @@ class CreateNewDrawing extends React.Component {
       checkSequenceAndPartnersCompatibility(sequence, partners);
       
       this.props.addStructureCallback(sequenceId, sequence, partners);
+
+      this.props.centerDrawingViewCallback();
       
       this.props.closeCallback();
     } catch (e) {
@@ -344,6 +346,7 @@ class CreateNewDrawing extends React.Component {
 CreateNewDrawing.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  centerDrawingViewCallback: PropTypes.func,
   addStructureCallback: PropTypes.func,
   applyStrictLayoutCallback: PropTypes.func,
   closeCallback: PropTypes.func,
