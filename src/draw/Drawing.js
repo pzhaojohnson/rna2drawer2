@@ -135,8 +135,6 @@ class Drawing {
         ));
       }
     }
-
-    this.centerView();
   }
 
   /**
