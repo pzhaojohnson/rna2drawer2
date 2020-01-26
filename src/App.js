@@ -200,6 +200,7 @@ class App {
         width={'100vw'}
         height={'100%'}
         addStructureCallback={this.addStructureCallback()}
+        applyStrictLayoutCallback={this.applyStrictLayoutCallback()}
         closeCallback={this.closeFormCallback()}
       />
     );
@@ -215,6 +216,17 @@ class App {
       this._drawing.addStructure(id, sequence, partners);
       this._updatePeripherals();
     }
+  }
+
+  /**
+   * @callback App~applyStrictLayoutCallback Applies a strict layout to the drawing of this app.
+   */
+
+  /**
+   * @returns {App~applyStrictLayoutCallback} 
+   */
+  applyStrictLayoutCallback() {
+    return () => this._drawing.applyStrictLayout();
   }
 }
 
