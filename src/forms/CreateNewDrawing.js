@@ -16,7 +16,9 @@ class CreateNewDrawing extends React.Component {
       exampleInput: dei.exampleInput,
       sequenceId: dei.sequenceId,
       sequence: dei.sequence,
-      structure: dei.structure
+      structure: dei.structure,
+
+      errorMessage: '',
     };
   }
 
@@ -258,11 +260,26 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
+  _errorMessageP() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: '10px 28px 0px 28px',
+          fontSize: '14px',
+          color: 'red',
+        }}
+      >
+        {this.state.errorMessage}
+      </p>
+    );
+  }
+
   _submitDiv() {
     return (
       <div
         style={{
-          margin: '16px 28px 16px 28px'
+          margin: '6px 28px 16px 28px'
         }}
       >
         {this._submitButton()}
@@ -276,7 +293,7 @@ class CreateNewDrawing extends React.Component {
         onClick={() => this._submit()}
         style={{
           padding: '4px 32px 4px 32px',
-          fontSize: '12px'
+          fontSize: '12px',
         }}
       >
         Submit
@@ -303,6 +320,7 @@ class CreateNewDrawing extends React.Component {
         {this._sequenceTextarea()}
         {this._structureLabel()}
         {this._structureTextarea()}
+        {this._errorMessageP()}
         {this._submitDiv()}
       </div>
     );
@@ -336,8 +354,11 @@ class CreateNewDrawing extends React.Component {
       this.props.closeCallback();
       this.props.centerDrawingViewCallback();
     } catch (e) {
-      alert(e.message);
       console.log(e.stack);
+
+      this.setState({
+        errorMessage: e.message,
+      });
     }
   }
 }
