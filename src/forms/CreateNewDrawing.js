@@ -18,6 +18,8 @@ class CreateNewDrawing extends React.Component {
       sequence: dei.sequence,
       structure: dei.structure,
 
+      showSequenceParsingDetails: false,
+
       showStructureParsingDetails: false,
 
       errorMessage: '',
@@ -190,13 +192,47 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
+  _sequenceSection() {
+    let sequenceParsingDetails = null;
+
+    if (this.state.showSequenceParsingDetails) {
+      sequenceParsingDetails = this._sequenceParsingDetails();
+    }
+
+    return (
+      <div
+        style={{
+          margin: '16px 28px 0px 28px',
+          flexGrow: '1',
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <div style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
+          {this._sequenceHeader()}
+          {this._sequenceTextarea()}
+        </div>
+        {sequenceParsingDetails}
+      </div>
+    );
+  }
+
+  _sequenceHeader() {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'row' }} >
+        {this._sequenceLabel()}
+        {this._sequenceParsingDetailsToggle()}
+      </div>
+    );
+  }
+
   _sequenceLabel() {
     return (
       <p
         className={'unselectable-text'}
         style={{
-          margin: '16px 28px 0px 28px',
-          fontSize: '12px'
+          flexGrow: '1',
+          fontSize: '12px',
         }}
       >
         Sequence:
@@ -204,16 +240,40 @@ class CreateNewDrawing extends React.Component {
     );
   }
 
+  _sequenceParsingDetailsToggle() {
+    return (
+      <p
+        className={'unselectable-text'}
+        onClick={() => this._toggleSequenceParsingDetails()}
+        style={{
+          marginRight: '4px',
+          fontSize: '12px',
+          color: 'blue',
+          cursor: 'pointer',
+        }}
+      >
+        {'Details'}
+      </p>
+    );
+  }
+
+  _toggleSequenceParsingDetails() {
+    this.setState({
+      showSequenceParsingDetails: !this.state.showSequenceParsingDetails,
+    });
+  }
+
   _sequenceTextarea() {
     return (
       <textarea
+        id={'seqtextarea'}
         value={this.state.sequence}
         onChange={event => this._onSequenceTextareaChange(event)}
         spellCheck={'false'}
         placeholder={' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"'}
         style={{
           flexGrow: '1',
-          margin: '4px 28px 0px 28px',
+          margin: '4px 0px 0px 0px',
           fontSize: '12px'
         }}
       />
@@ -226,10 +286,25 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
+  _sequenceParsingDetails() {
+    return (
+      <div style={{ width: '360px', marginLeft: '8px' }} >
+        <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
+          {'Sequence Parsing Details:'}
+        </p>
+        <div style={{ marginLeft: '8px' }} >
+          <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }}>
+            {'All whitespace is ignored.'}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   _structureSection() {
     let structureParsingDetails = null;
 
-    if (this.props.showStructureParsingDetails) {
+    if (this.state.showStructureParsingDetails) {
       structureParsingDetails = this._structureParsingDetails();
     }
 
@@ -402,8 +477,7 @@ class CreateNewDrawing extends React.Component {
         {this._titleUnderline()}
         {this._exampleInputDiv()}
         {this._sequenceIdDiv()}
-        {this._sequenceLabel()}
-        {this._sequenceTextarea()}
+        {this._sequenceSection()}
         {this._structureSection()}
         {this._errorMessageP()}
         {this._submitDiv()}
