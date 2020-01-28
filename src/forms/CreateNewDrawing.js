@@ -513,8 +513,6 @@ class CreateNewDrawing extends React.Component {
       this.props.closeCallback();
       this.props.centerDrawingViewCallback();
     } catch (e) {
-      console.log(e.stack);
-
       this.setState({
         errorMessage: e.message,
       });
