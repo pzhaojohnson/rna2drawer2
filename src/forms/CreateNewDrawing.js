@@ -18,6 +18,8 @@ class CreateNewDrawing extends React.Component {
       sequence: dei.sequence,
       structure: dei.structure,
 
+      showStructureParsingDetails: false,
+
       errorMessage: '',
     };
   }
@@ -224,18 +226,81 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
+  _structureSection() {
+    let structureParsingDetails = null;
+
+    if (this.props.showStructureParsingDetails) {
+      structureParsingDetails = this._structureParsingDetails();
+    }
+
+    return (
+      <div
+        style={{
+          margin: '16px 28px 0px 28px',
+          flexGrow: '1',
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <div
+          style={{
+            flexGrow: '1',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {this._structureHeader()}
+          {this._structureTextarea()}
+        </div>
+        {structureParsingDetails}
+      </div>
+    );
+  }
+
+  _structureHeader() {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'row' }} >
+        {this._structureLabel()}
+        {this._structureParsingDetailsToggle()}
+      </div>
+    );
+  }
+
   _structureLabel() {
     return (
       <p
         className={'unselectable-text'}
         style={{
-          margin: '16px 28px 0px 28px',
-          fontSize: '12px'
+          flexGrow: '1',
+          fontSize: '12px',
         }}
       >
         Structure (optional):
       </p>
     );
+  }
+
+  _structureParsingDetailsToggle() {
+    return (
+      <p
+        className={'unselectable-text'}
+        onClick={() => this._toggleStructureParsingDetails()}
+        style={{
+          marginRight: '4px',
+          fontSize: '12px',
+          color: 'blue',
+          cursor: 'pointer',
+        }}
+      >
+        {'Details'}
+      </p>
+    );
+  }
+
+  _toggleStructureParsingDetails() {
+    this.setState({
+      showStructureParsingDetails: !this.state.showStructureParsingDetails,
+    })
   }
 
   _structureTextarea() {
@@ -247,7 +312,7 @@ class CreateNewDrawing extends React.Component {
         placeholder={' ...the secondary structure in dot-bracket notation, e.g "((((....))))"'}
         style={{
           flexGrow: '1',
-          margin: '4px 28px 0px 28px',
+          margin: '4px 0px 0px 0px',
           fontSize: '12px'
         }}
       />
@@ -258,6 +323,27 @@ class CreateNewDrawing extends React.Component {
     this.setState({
       structure: event.target.value
     });
+  }
+
+  _structureParsingDetails() {
+    return (
+      <div style={{ width: '360px', marginLeft: '8px' }} >
+        <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
+          {'Structure Parsing Details:'}
+        </p>
+        <div style={{ marginLeft: '8px' }} >
+          <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }}>
+            {'Periods "." indicate unpaired bases. Matching parentheses "()" indicate base pairs in the secondary structure.'}
+          </p>
+          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
+            {'Pseudoknots (specified by "[]", "{}", or "<>") are ignored and bases in pseudoknots are left unpaired.'}
+          </p>
+          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
+            {'All other characters and whitespace are ignored.'}
+          </p>
+        </div>
+      </div>
+    );
   }
 
   _errorMessageP() {
@@ -318,8 +404,7 @@ class CreateNewDrawing extends React.Component {
         {this._sequenceIdDiv()}
         {this._sequenceLabel()}
         {this._sequenceTextarea()}
-        {this._structureLabel()}
-        {this._structureTextarea()}
+        {this._structureSection()}
         {this._errorMessageP()}
         {this._submitDiv()}
       </div>
