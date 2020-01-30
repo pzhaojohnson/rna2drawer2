@@ -468,16 +468,16 @@ class CreateNewDrawing extends React.Component {
           {'Structure Parsing Details:'}
         </p>
         <div style={{ marginLeft: '8px' }} >
-          <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }}>
+          <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }} >
             {'Periods "." indicate unpaired bases.'}
           </p>
-          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
+          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }} >
             {'Matching parentheses "( )" indicate base pairs in the secondary structure.'}
           </p>
-          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
+          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }} >
             {'Pseudoknots (specified by "[ ]", "{ }", or "< >") are ignored and bases in pseudoknots are left unpaired.'}
           </p>
-          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
+          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }} >
             {'All other characters and whitespace are ignored.'}
           </p>
         </div>
