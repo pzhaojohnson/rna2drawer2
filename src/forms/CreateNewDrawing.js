@@ -506,7 +506,7 @@ class CreateNewDrawing extends React.Component {
     );
   }
 
-  _errorMessageP() {
+  _errorMessageSection() {
     return (
       <p
         className={'unselectable-text'}
@@ -551,7 +551,7 @@ class CreateNewDrawing extends React.Component {
         {this._sequenceIdDiv()}
         {this._sequenceSection()}
         {this._structureSection()}
-        {this._errorMessageP()}
+        {this._errorMessageSection()}
         {this._submitButton()}
       </div>
     );
