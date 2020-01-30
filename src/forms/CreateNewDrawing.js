@@ -274,7 +274,6 @@ class CreateNewDrawing extends React.Component {
   _sequenceTextarea() {
     return (
       <textarea
-        id={'seqtextarea'}
         value={this.state.sequence}
         onChange={event => this._onSequenceTextareaChange(event)}
         spellCheck={'false'}
