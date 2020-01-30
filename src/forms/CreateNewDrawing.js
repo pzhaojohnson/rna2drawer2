@@ -212,7 +212,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceAndStructureSection() {
     return (
-      <div style={{ margin: '16px 28px 0px 28px', flexGrow: '1' }} >
+      <div style={{ margin: '16px 28px 10px 28px', flexGrow: '1' }} >
         {this._sequenceSection()}
         {this._structureSection()}
       </div>
@@ -493,7 +493,7 @@ class CreateNewDrawing extends React.Component {
         <p
           className={'unselectable-text'}
           style={{
-            margin: '10px 28px 0px 28px',
+            margin: '0px 28px 0px 28px',
             fontSize: '14px',
             color: 'red',
           }}
