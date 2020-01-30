@@ -521,29 +521,16 @@ class CreateNewDrawing extends React.Component {
     );
   }
 
-  _submitDiv() {
-    return (
-      <div
-        style={{
-          margin: '6px 28px 16px 28px'
-        }}
-      >
-        {this._submitButton()}
-      </div>
-    );
-  }
-
   _submitButton() {
     return (
-      <button
-        onClick={() => this._submit()}
-        style={{
-          padding: '4px 32px 4px 32px',
-          fontSize: '12px',
-        }}
-      >
-        Submit
-      </button>
+      <div style={{ margin: '6px 28px 16px 28px' }} >
+        <button
+          onClick={() => this._submit()}
+          style={{ padding: '4px 32px 4px 32px', fontSize: '12px' }}
+        >
+          Submit
+        </button>
+      </div>
     );
   }
 
@@ -565,7 +552,7 @@ class CreateNewDrawing extends React.Component {
         {this._sequenceSection()}
         {this._structureSection()}
         {this._errorMessageP()}
-        {this._submitDiv()}
+        {this._submitButton()}
       </div>
     );
   }
