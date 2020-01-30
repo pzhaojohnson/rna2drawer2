@@ -19,6 +19,9 @@ class CreateNewDrawing extends React.Component {
       structure: dei.structure,
 
       showSequenceParsingDetails: false,
+      ignoreNumbers: true,
+      ignoreNonAUGCTLetters: true,
+      ignoreNonAlphanumerics: true,
 
       showStructureParsingDetails: false,
 
@@ -192,6 +195,19 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
+  _sequenceStructureSection() {
+    return (
+      <div
+        style={{
+          flexGrow: '1',
+        }}
+      >
+        {this._sequenceSection()}
+        {this._structureSection()}
+      </div>
+    );
+  }
+
   _sequenceSection() {
     let sequenceParsingDetails = null;
 
@@ -202,8 +218,8 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
+          height: '50%',
           margin: '16px 28px 0px 28px',
-          flexGrow: '1',
           display: 'flex',
           flexDirection: 'row',
         }}
@@ -288,17 +304,83 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceParsingDetails() {
     return (
-      <div style={{ width: '360px', marginLeft: '8px' }} >
+      <div style={{ width: '360px', minHeight: '0px', marginLeft: '8px' }} >
         <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
           {'Sequence Parsing Details:'}
         </p>
         <div style={{ marginLeft: '8px' }} >
-          <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }}>
+          {this._ignoreNumbersCheckbox()}
+          {this._ignoreNonAUGCTLettersCheckbox()}
+          {this._ignoreNonAlphanumericsCheckbox()}
+          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
             {'All whitespace is ignored.'}
           </p>
         </div>
       </div>
     );
+  }
+
+  _ignoreNumbersCheckbox() {
+    return (
+      <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+        <input
+          type={'checkbox'}
+          checked={this.state.ignoreNumbers}
+          onChange={() => this._toggleIgnoreNumbers()}
+        />
+        <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
+          {'Ignore numbers.'}
+        </p>
+      </div>
+    );
+  }
+
+  _toggleIgnoreNumbers() {
+    this.setState({
+      ignoreNumbers: !this.state.ignoreNumbers,
+    });
+  }
+
+  _ignoreNonAUGCTLettersCheckbox() {
+    return (
+      <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+        <input
+          type={'checkbox'}
+          checked={this.state.ignoreNonAUGCTLetters}
+          onChange={() => this._toggleIgnoreNonAUGCTLetters()}
+        />
+        <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
+          {'Ignore non-AUGCT letters.'}
+        </p>
+      </div>
+    );
+  }
+
+  _toggleIgnoreNonAUGCTLetters() {
+    this.setState({
+      ignoreNonAUGCTLetters: !this.state.ignoreNonAUGCTLetters,
+    });
+  }
+
+  _ignoreNonAlphanumericsCheckbox() {
+    return (
+      <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+        <input
+          type={'checkbox'}
+          checked={this.state.ignoreNonAlphanumerics}
+          onChange={() => this._toggleIgnoreNonAlphanumerics()}
+        />
+        <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
+          {'Ignore non-alphanumeric characters.'}
+        </p>
+      </div>
+    );
+  }
+
+  _toggleIgnoreNonAlphanumerics() {
+    this.setState({
+      ignoreNonAlphanumerics: !this.state.ignoreNonAlphanumerics,
+    });
   }
 
   _structureSection() {
@@ -311,8 +393,8 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
+          height: '50%',
           margin: '16px 28px 0px 28px',
-          flexGrow: '1',
           display: 'flex',
           flexDirection: 'row',
         }}
@@ -384,7 +466,7 @@ class CreateNewDrawing extends React.Component {
         value={this.state.structure}
         onChange={event => this._onStructureTextareaChange(event)}
         spellCheck={'false'}
-        placeholder={' ...the secondary structure in dot-bracket notation, e.g "((((....))))"'}
+        placeholder={' ...the secondary structure in dot-bracket notation, e.g. "((((....))))"'}
         style={{
           flexGrow: '1',
           margin: '4px 0px 0px 0px',
@@ -402,16 +484,19 @@ class CreateNewDrawing extends React.Component {
 
   _structureParsingDetails() {
     return (
-      <div style={{ width: '360px', marginLeft: '8px' }} >
+      <div style={{ width: '360px', minHeight: '0px', marginLeft: '8px' }} >
         <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
           {'Structure Parsing Details:'}
         </p>
         <div style={{ marginLeft: '8px' }} >
           <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }}>
-            {'Periods "." indicate unpaired bases. Matching parentheses "()" indicate base pairs in the secondary structure.'}
+            {'Periods "." indicate unpaired bases.'}
           </p>
           <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
-            {'Pseudoknots (specified by "[]", "{}", or "<>") are ignored and bases in pseudoknots are left unpaired.'}
+            {'Matching parentheses "( )" indicate base pairs in the secondary structure.'}
+          </p>
+          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
+            {'Pseudoknots (specified by "[ ]", "{ }", or "< >") are ignored and bases in pseudoknots are left unpaired.'}
           </p>
           <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
             {'All other characters and whitespace are ignored.'}
@@ -490,11 +575,9 @@ class CreateNewDrawing extends React.Component {
       let sequenceId = parseSequenceId(this.state.sequenceId);
 
       let sequence = parseSequence(this.state.sequence, {
-        toUpperCase: true,
-        t2u: true,
-        ignoreNumbers: true,
-        ignoreNonAUGCTLetters: true,
-        ignoreNonAlphanumerics: true
+        ignoreNumbers: this.state.ignoreNumbers,
+        ignoreNonAUGCTLetters: this.state.ignoreNonAUGCTLetters,
+        ignoreNonAlphanumerics: this.state.ignoreNonAlphanumerics,
       });
 
       if (sequence.length === 0) {
