@@ -34,7 +34,7 @@ class CreateNewDrawing extends React.Component {
       exampleInput: '--- None ---',
       sequenceId: '',
       sequence: '',
-      structure: ''
+      structure: '',
     };
   }
 
@@ -48,26 +48,50 @@ class CreateNewDrawing extends React.Component {
         exampleInput: 'A Hairpin',
         sequenceId: 'A Hairpin',
         sequence: 'AUGCAUGGUAGCAU',
-        structure: '((((......))))'
+        structure: '((((......))))',
       },
       {
         exampleInput: 'Two Hairpins',
         sequenceId: 'Two Hairpins',
         sequence: 'AACCGGAAUUCCGGAAUUCCGGAAUUCCGGUU',
-        structure: '..((((....))))....((((....))))..'
+        structure: '..((((....))))....((((....))))..',
       }
     ];
   }
 
-  _title() {
+  render() {
     return (
-      <p
-        className={'unselectable-text'}
+      <div
         style={{
-          margin: '12px 24px 0px 24px',
-          fontSize: '24px'
+          width: this.props.width,
+          height: this.props.height,
+          backgroundColor: '#fcfcfc',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
+        {this._titleSection()}
+        {this._exampleInputSection()}
+        {this._sequenceIdSection()}
+        {this._sequenceAndStructureSection()}
+        {this._errorMessageSection()}
+        {this._submitButton()}
+      </div>
+    );
+  }
+
+  _titleSection() {
+    return (
+      <div style={{ marginTop: '12px' }} >
+        {this._title()}
+        {this._titleUnderline()}
+      </div>
+    );
+  }
+
+  _title() {
+    return (
+      <p className={'unselectable-text'} style={{ margin: '0px 24px 0px 24px', fontSize: '24px' }} >
         Create a New Drawing
       </p>
     );
@@ -87,14 +111,9 @@ class CreateNewDrawing extends React.Component {
     );
   }
 
-  _exampleInputDiv() {
+  _exampleInputSection() {
     return (
-      <div
-        style={{
-          margin: '16px 28px 0px 28px',
-          alignItems: 'center'
-        }}
-      >
+      <div style={{ margin: '16px 28px 0px 28px', alignItems: 'center' }} >
         {this._exampleInputLabel()}
         {this._exampleInputSelect()}
       </div>
@@ -105,11 +124,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <p
         className={'unselectable-text'}
-        style={{
-          margin: '0px 8px 0px 0px',
-          fontSize: '12px',
-          display: 'inline-block'
-        }}
+        style={{ margin: '0px 8px 0px 0px', fontSize: '12px', display: 'inline-block' }}
       >
         Example Input:
       </p>
@@ -118,16 +133,18 @@ class CreateNewDrawing extends React.Component {
 
   _exampleInputSelect() {
     function option(ei) {
-      return <option key={ei.exampleInput} value={ei.exampleInput}>{ei.exampleInput}</option>
+      return (
+        <option key={ei.exampleInput} value={ei.exampleInput}>
+          {ei.exampleInput}
+        </option>
+      );
     }
 
     return (
       <select
         value={this.state.exampleInput}
         onChange={event => this._onExampleInputSelectChange(event)}
-        style={{
-          fontSize: '12px'
-        }}
+        style={{ fontSize: '12px' }}
       >
         {this.exampleInputs().map(ei => option(ei))}
       </select>
@@ -135,7 +152,9 @@ class CreateNewDrawing extends React.Component {
   }
 
   _onExampleInputSelectChange(event) {
-    let ei = this.exampleInputs().find(ei => ei.exampleInput === event.target.value);
+    let ei = this.exampleInputs().find(
+      ei => ei.exampleInput === event.target.value
+    );
 
     this.setState({
       exampleInput: ei.exampleInput,
@@ -145,14 +164,14 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
-  _sequenceIdDiv() {
+  _sequenceIdSection() {
     return (
       <div
         style={{
           margin: '16px 28px 0px 28px',
           display: 'flex',
           flexDirection: 'row',
-          alignItems: 'center'
+          alignItems: 'center',
         }}
       >
         {this._sequenceIdLabel()}
@@ -165,12 +184,10 @@ class CreateNewDrawing extends React.Component {
     return (
       <p
         className={'unselectable-text'}
-        style={{
-          margin: '0px 8px 0px 0px',
-          fontSize: '12px',
-          display: 'inline-block'
-        }}
-      >Sequence ID:</p>
+        style={{ margin: '0px 8px 0px 0px', fontSize: '12px', display: 'inline-block' }}
+      >
+        Sequence ID:
+      </p>
     );
   }
 
@@ -182,26 +199,20 @@ class CreateNewDrawing extends React.Component {
         onChange={event => this._onSequenceIdInputChange(event)}
         spellCheck={'false'}
         placeholder={' ...the name of your sequence'}
-        style={{
-          flexGrow: '1'
-        }}
+        style={{ flexGrow: '1' }}
       />
     );
   }
 
   _onSequenceIdInputChange(event) {
     this.setState({
-      sequenceId: event.target.value
+      sequenceId: event.target.value,
     });
   }
 
-  _sequenceStructureSection() {
+  _sequenceAndStructureSection() {
     return (
-      <div
-        style={{
-          flexGrow: '1',
-        }}
-      >
+      <div style={{ margin: '16px 28px 0px 28px', flexGrow: '1' }} >
         {this._sequenceSection()}
         {this._structureSection()}
       </div>
@@ -209,26 +220,13 @@ class CreateNewDrawing extends React.Component {
   }
 
   _sequenceSection() {
-    let sequenceParsingDetails = null;
-
-    if (this.state.showSequenceParsingDetails) {
-      sequenceParsingDetails = this._sequenceParsingDetails();
-    }
-
     return (
-      <div
-        style={{
-          height: '50%',
-          margin: '16px 28px 0px 28px',
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
+      <div style={{ height: '50%', display: 'flex', flexDirection: 'row' }} >
         <div style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
           {this._sequenceHeader()}
           {this._sequenceTextarea()}
         </div>
-        {sequenceParsingDetails}
+        {this._sequenceParsingDetails()}
       </div>
     );
   }
@@ -244,13 +242,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceLabel() {
     return (
-      <p
-        className={'unselectable-text'}
-        style={{
-          flexGrow: '1',
-          fontSize: '12px',
-        }}
-      >
+      <p className={'unselectable-text'} style={{ flexGrow: '1', fontSize: '12px' }} >
         Sequence:
       </p>
     );
@@ -290,7 +282,7 @@ class CreateNewDrawing extends React.Component {
         style={{
           flexGrow: '1',
           margin: '4px 0px 0px 0px',
-          fontSize: '12px'
+          fontSize: '12px',
         }}
       />
     );
@@ -303,33 +295,40 @@ class CreateNewDrawing extends React.Component {
   }
 
   _sequenceParsingDetails() {
-    return (
-      <div style={{ width: '360px', minHeight: '0px', marginLeft: '8px' }} >
-        <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
-          {'Sequence Parsing Details:'}
-        </p>
-        <div style={{ marginLeft: '8px' }} >
-          {this._ignoreNumbersCheckbox()}
-          {this._ignoreNonAUGCTLettersCheckbox()}
-          {this._ignoreNonAlphanumericsCheckbox()}
-          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
-            {'All whitespace is ignored.'}
+    if (!this.state.showSequenceParsingDetails) {
+      return null;
+    } else {
+      return (
+        <div style={{ width: '360px', minHeight: '0px', marginLeft: '8px' }} >
+          <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
+            Sequence Parsing Details:
           </p>
+          <div style={{ marginLeft: '8px' }} >
+            <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }} >
+              All letters, numbers, and non-alphanumeric characters are read in as individual bases, unless specified to be ignored below:
+            </p>
+            {this._ignoreNumbersCheckbox()}
+            {this._ignoreNonAUGCTLettersCheckbox()}
+            {this._ignoreNonAlphanumericsCheckbox()}
+            <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
+              All whitespace is ignored.
+            </p>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
   _ignoreNumbersCheckbox() {
     return (
-      <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type={'checkbox'}
           checked={this.state.ignoreNumbers}
           onChange={() => this._toggleIgnoreNumbers()}
         />
         <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
-          {'Ignore numbers.'}
+          Ignore numbers.
         </p>
       </div>
     );
@@ -350,7 +349,7 @@ class CreateNewDrawing extends React.Component {
           onChange={() => this._toggleIgnoreNonAUGCTLetters()}
         />
         <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
-          {'Ignore non-AUGCT letters.'}
+          Ignore non-AUGCT letters.
         </p>
       </div>
     );
@@ -371,7 +370,7 @@ class CreateNewDrawing extends React.Component {
           onChange={() => this._toggleIgnoreNonAlphanumerics()}
         />
         <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
-          {'Ignore non-alphanumeric characters.'}
+          Ignore non-alphanumeric characters.
         </p>
       </div>
     );
@@ -391,21 +390,8 @@ class CreateNewDrawing extends React.Component {
     }
 
     return (
-      <div
-        style={{
-          height: '50%',
-          margin: '16px 28px 0px 28px',
-          display: 'flex',
-          flexDirection: 'row',
-        }}
-      >
-        <div
-          style={{
-            flexGrow: '1',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
+      <div style={{ height: '50%', display: 'flex', flexDirection: 'row' }} >
+        <div style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
           {this._structureHeader()}
           {this._structureTextarea()}
         </div>
@@ -416,7 +402,7 @@ class CreateNewDrawing extends React.Component {
 
   _structureHeader() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row' }} >
+      <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'row' }} >
         {this._structureLabel()}
         {this._structureParsingDetailsToggle()}
       </div>
@@ -425,13 +411,7 @@ class CreateNewDrawing extends React.Component {
 
   _structureLabel() {
     return (
-      <p
-        className={'unselectable-text'}
-        style={{
-          flexGrow: '1',
-          fontSize: '12px',
-        }}
-      >
+      <p className={'unselectable-text'} style={{ flexGrow: '1', fontSize: '12px' }} >
         Structure (optional):
       </p>
     );
@@ -449,7 +429,7 @@ class CreateNewDrawing extends React.Component {
           cursor: 'pointer',
         }}
       >
-        {'Details'}
+        Details
       </p>
     );
   }
@@ -484,7 +464,7 @@ class CreateNewDrawing extends React.Component {
 
   _structureParsingDetails() {
     return (
-      <div style={{ width: '360px', minHeight: '0px', marginLeft: '8px' }} >
+      <div style={{ width: '360px', minHeight: '0px', margin: '16px 0px 0px 8px' }} >
         <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
           {'Structure Parsing Details:'}
         </p>
@@ -507,18 +487,22 @@ class CreateNewDrawing extends React.Component {
   }
 
   _errorMessageSection() {
-    return (
-      <p
-        className={'unselectable-text'}
-        style={{
-          margin: '10px 28px 0px 28px',
-          fontSize: '14px',
-          color: 'red',
-        }}
-      >
-        {this.state.errorMessage}
-      </p>
-    );
+    if (this.state.errorMessage.length === 0) {
+      return null;
+    } else {
+      return (
+        <p
+          className={'unselectable-text'}
+          style={{
+            margin: '10px 28px 0px 28px',
+            fontSize: '14px',
+            color: 'red',
+          }}
+        >
+          {this.state.errorMessage}
+        </p>
+      );
+    }
   }
 
   _submitButton() {
@@ -534,49 +518,11 @@ class CreateNewDrawing extends React.Component {
     );
   }
 
-  render() {
-    return (
-      <div
-        style={{
-          width: this.props.width,
-          height: this.props.height,
-          backgroundColor: '#fcfcfc',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        {this._title()}
-        {this._titleUnderline()}
-        {this._exampleInputDiv()}
-        {this._sequenceIdDiv()}
-        {this._sequenceSection()}
-        {this._structureSection()}
-        {this._errorMessageSection()}
-        {this._submitButton()}
-      </div>
-    );
-  }
-
   _submit() {
     try {
-      let sequenceId = parseSequenceId(this.state.sequenceId);
-
-      let sequence = parseSequence(this.state.sequence, {
-        ignoreNumbers: this.state.ignoreNumbers,
-        ignoreNonAUGCTLetters: this.state.ignoreNonAUGCTLetters,
-        ignoreNonAlphanumerics: this.state.ignoreNonAlphanumerics,
-      });
-
-      if (sequence.length === 0) {
-        throw new Error('Sequence length cannot be zero.');
-      }
-      
-      let partners = parseDotBracket(
-        this.state.structure,
-        { ignoreTertiaryPairings: true }
-      );
-      
-      checkSequenceAndPartnersCompatibility(sequence, partners);
+      let sequenceId = this._parseSequenceId();
+      let sequence = this._parseSequence();
+      let partners = this._parseStructure(sequence);
       
       this.props.addStructureCallback(sequenceId, sequence, partners);
       this.props.applyStrictLayoutCallback();
@@ -587,6 +533,54 @@ class CreateNewDrawing extends React.Component {
         errorMessage: e.message,
       });
     }
+  }
+
+  _parseSequenceId() {
+    return parseSequenceId(this.state.sequenceId);
+  }
+
+  _parseSequence() {
+    let sequence = parseSequence(this.state.sequence, {
+      ignoreNumbers: this.state.ignoreNumbers,
+      ignoreNonAUGCTLetters: this.state.ignoreNonAUGCTLetters,
+      ignoreNonAlphanumerics: this.state.ignoreNonAlphanumerics,
+    });
+
+    if (sequence.length === 0) {
+      throw new Error('Sequence length cannot be zero.');
+    }
+
+    return sequence;
+  }
+
+  /**
+   * Parses the secondary structure and checks for compatibility with the parsed
+   * sequence.
+   * 
+   * If no structure was entered by the user, this method will return an entirely
+   * unpaired partners notation.
+   * 
+   * @param {string} sequence The parsed sequence.
+   * 
+   * @returns {Array<number|null>} The partners notation of the secondary structure.
+   */
+  _parseStructure(sequence) {
+    let partners = parseDotBracket(
+      this.state.structure,
+      { ignoreTertiaryPairings: true }
+    );
+
+    if (partners.length === 0) {
+      partners = [];
+
+      for (let i = 0; i < sequence.length; i++) {
+        partners.push(null);
+      }
+    }
+
+    checkSequenceAndPartnersCompatibility(sequence, partners);
+
+    return partners;
   }
 }
 
