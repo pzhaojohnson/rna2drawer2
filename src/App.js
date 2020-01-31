@@ -8,8 +8,6 @@ import Menu from './Menu';
 import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
-import OpenSequence from './forms/OpenSequence';
-import OpenFASTA from './forms/OpenFASTA';
 
 class App {
 
@@ -154,8 +152,6 @@ class App {
       <Menu
         drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
         openFormCreateNewDrawingCallback={this.openFormCreateNewDrawingCallback()}
-        openFormOpenSequenceCallback={this.openFormOpenSequenceCallback()}
-        openFormOpenFASTACallback={this.openFormOpenFASTACallback()}
       />
     );
     
@@ -237,22 +233,6 @@ class App {
         centerDrawingViewCallback={this.centerDrawingViewCallback()}
         addStructureCallback={this.addStructureCallback()}
         applyStrictLayoutCallback={this.applyStrictLayoutCallback()}
-        closeCallback={this.closeFormCallback()}
-      />
-    );
-  }
-
-  openFormOpenSequenceCallback() {
-    return () => this._openForm(
-      <OpenSequence
-        closeCallback={this.closeFormCallback()}
-      />
-    )
-  }
-
-  openFormOpenFASTACallback() {
-    return () => this._openForm(
-      <OpenFASTA
         closeCallback={this.closeFormCallback()}
       />
     );
