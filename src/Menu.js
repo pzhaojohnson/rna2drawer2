@@ -181,7 +181,6 @@ class Menu extends React.Component {
           onClick: this.props.openFormCreateNewDrawingCallback,
         }),
         this._dropdownSeparator(),
-        this._droppedButton('Open Dot-Bracket'),
         this._droppedButton('Open CT'),
         this._droppedButton('Open RNA2Drawer'),
         this._dropdownSeparator(),
