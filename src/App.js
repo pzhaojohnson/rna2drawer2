@@ -9,6 +9,7 @@ import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
 import OpenSequence from './forms/OpenSequence';
+import OpenFASTA from './forms/OpenFASTA';
 
 class App {
 
@@ -154,6 +155,7 @@ class App {
         drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
         openFormCreateNewDrawingCallback={this.openFormCreateNewDrawingCallback()}
         openFormOpenSequenceCallback={this.openFormOpenSequenceCallback()}
+        openFormOpenFASTACallback={this.openFormOpenFASTACallback()}
       />
     );
     
@@ -246,6 +248,14 @@ class App {
         closeCallback={this.closeFormCallback()}
       />
     )
+  }
+
+  openFormOpenFASTACallback() {
+    return () => this._openForm(
+      <OpenFASTA
+        closeCallback={this.closeFormCallback()}
+      />
+    );
   }
 
   addStructureCallback() {
