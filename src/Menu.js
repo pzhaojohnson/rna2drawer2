@@ -181,7 +181,9 @@ class Menu extends React.Component {
           onClick: this.props.openFormCreateNewDrawingCallback,
         }),
         this._dropdownSeparator(),
-        this._droppedButton('Open Sequence'),
+        this._droppedButton('Open a Sequence', {
+          onClick: this.props.openFormOpenSequenceCallback,
+        }),
         this._droppedButton('Open FASTA'),
         this._droppedButton('Open Dot-Bracket'),
         this._droppedButton('Open CT'),
@@ -302,6 +304,7 @@ class Menu extends React.Component {
 Menu.propTypes = {
   drawingIsEmptyCallback: PropTypes.func,
   openFormCreateNewDrawingCallback: PropTypes.func,
+  openFormOpenSequenceCallback: PropTypes.func,
 };
 
 export default Menu;

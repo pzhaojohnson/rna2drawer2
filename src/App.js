@@ -8,6 +8,7 @@ import Menu from './Menu';
 import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
+import OpenSequence from './forms/OpenSequence';
 
 class App {
 
@@ -152,6 +153,7 @@ class App {
       <Menu
         drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
         openFormCreateNewDrawingCallback={this.openFormCreateNewDrawingCallback()}
+        openFormOpenSequenceCallback={this.openFormOpenSequenceCallback()}
       />
     );
     
@@ -236,6 +238,14 @@ class App {
         closeCallback={this.closeFormCallback()}
       />
     );
+  }
+
+  openFormOpenSequenceCallback() {
+    return () => this._openForm(
+      <OpenSequence
+        closeCallback={this.closeFormCallback()}
+      />
+    )
   }
 
   addStructureCallback() {
