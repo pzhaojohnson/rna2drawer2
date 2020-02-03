@@ -32,4 +32,10 @@ it('invalid', () => {
   // mismatched
   ps = [9, 7, 8, null, null, null, 3, 2, 1];
   expect(() => validatePartners(ps)).toThrow();
+
+  // unrecognized types
+  ps = [null, null, undefined];
+  expect(() => validatePartners(ps)).toThrow();
+  ps = ['9', 8, 7, null, null, null, 3, 2, 1];
+  expect(() => validatePartners(ps)).toThrow();
 });
