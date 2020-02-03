@@ -2,7 +2,7 @@ import UnpairedRegion from './UnpairedRegion';
 import Stem from './Stem';
 import StrictLayoutDrawingProps from './StrictLayoutDrawingProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
-import validatePartners from './validatePartners';
+import validatePartners from '../../../../parse/validatePartners';
 import polarizeLength from './polarizeLength';
 
 it('bounding stem getters', () => {

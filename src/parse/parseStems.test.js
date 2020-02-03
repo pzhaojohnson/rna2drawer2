@@ -1,5 +1,5 @@
 import parseStems from './parseStems';
-import validatePartners from '../draw/layout/singleseq/strict/validatePartners';
+import validatePartners from './validatePartners';
 
 let cases = [
 
