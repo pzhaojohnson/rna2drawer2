@@ -9,11 +9,11 @@ function validatePartners(partners) {
     let q = partners[p - 1];
 
     if (typeof(q) !== 'number' && q !== null) {
-      throw new Error('Unrecognized type in partners notation.');
+      throw new Error('Unrecognized type in partners notation at position: ' + p + '.');
     }
 
     if (q !== null && partners[q - 1] !== p) {
-      throw new Error('Inconsistent partners.');
+      throw new Error('Inconsistent partners for positions: ' + p + ' and ' + q + '.');
     }
   }
 }
