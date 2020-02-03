@@ -1,7 +1,8 @@
 /**
  * @param {Array<number|null>} parters The partners notation.
  * 
- * @throws {Error} If the partners notation is invalid.
+ * @throws {Error} If an element in the partners notation is neither a number nor null.
+ * @throws {Error} If the entries for any two positions are inconsistent with one another.
  */
 function validatePartners(partners) {
   for (let p = 1; p <= partners.length; p++) {
@@ -12,7 +13,7 @@ function validatePartners(partners) {
     }
 
     if (q !== null && partners[q - 1] !== p) {
-      throw new Error('Invalid partners notation.');
+      throw new Error('Inconsistent partners.');
     }
   }
 }
