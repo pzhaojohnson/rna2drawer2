@@ -18,31 +18,29 @@ afterEach(() => {
 });
 
 function getExampleInputSelect() {
-  let outermostDiv = container.childNodes[0];
-  let exampleInputDiv = outermostDiv.childNodes[2];
-  return exampleInputDiv.childNodes[1]
+  let exampleInputSection = container.childNodes[0].childNodes[1];
+  return exampleInputSection.childNodes[1];
 }
 
 function getSequenceIdInput() {
-  let outermostDiv = container.childNodes[0];
-  let sequenceIdDiv = outermostDiv.childNodes[3];
-  return sequenceIdDiv.childNodes[1];
+  let sequenceIdSection = container.childNodes[0].childNodes[2];
+  return sequenceIdSection.childNodes[1];
 }
 
 function getSequenceTextarea() {
-  let outermostDiv = container.childNodes[0];
-  return outermostDiv.childNodes[5];
+  let sequenceAndStructureSection = container.childNodes[0].childNodes[3];
+  let sequenceSection = sequenceAndStructureSection.childNodes[0];
+  return sequenceSection.childNodes[0].childNodes[1];
 }
 
 function getStructureTextarea() {
-  let outermostDiv = container.childNodes[0];
-  return outermostDiv.childNodes[7];
+  let sequenceAndStructureSection = container.childNodes[0].childNodes[3];
+  let structureSection = sequenceAndStructureSection.childNodes[1];
+  return structureSection.childNodes[0].childNodes[1];
 }
 
 function getSubmitButton() {
-  let outermostDiv = container.childNodes[0];
-  let submitOuterDiv = outermostDiv.childNodes[8];
-  return submitOuterDiv.childNodes[1];
+  return container.childNodes[0].childNodes[5].childNodes[0].childNodes[0];
 }
 
 it('default example input', () => {
