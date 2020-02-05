@@ -13,30 +13,33 @@ function _removeNonDotBracketChars(dotBracket) {
 }
 
 /**
+ * @typedef {object} ParsedDotBracket 
+ * @property {Array<number|null>} allPartners The partners notation of all pairs in the structure.
+ * @property {Array<number|null>} secondaryPartners The partners notation of the secondary structure.
+ * @property {Array<number|null>} tertiaryPartners The partners notation of the tertiary structure.
+ */
+
+/**
  * Whitespace is always ignored.
  * 
  * Characters that are not [ '('|')' | '['|']' | '{'|'}' | '<'|'>' | '.' ] are always ignored.
  * 
- * Characters indicating tertiary pairings include [ '['|']' | '{'|'}' | '<'|'>' ].
- * 
- * By default:
- *  Tertiary pairings are not ignored.
+ * Characters indicating tertiary pairs include [ '['|']' | '{'|'}' | '<'|'>' ].
  * 
  * @param {string} dotBracket The dot-bracket notation input by the user.
- * @param {object} options 
- * @param {boolean} options.ignoreTertiaryPairings True if positions represented by a tertiary
- *  pairing character are to be treated as unpaired.
  * 
- * @returns {Array<number|null>} The partners notation of the structure.
+ * @returns {ParsedDotBracket} 
  * 
  * @throws {Error} If there are unmatched partners in the dot-bracket notation.
  */
-function parseDotBracket(dotBracket, options={}) {
+function parseDotBracket(dotBracket) {
   dotBracket = _removeNonDotBracketChars(dotBracket);
-  let partners = [];
+  let secondaryPartners = [];
+  let tertiaryPartners = [];
 
   for (let p = 1; p <= dotBracket.length; p++) {
-    partners.push(null);
+    secondaryPartners.push(null);
+    tertiaryPartners.push(null);
   }
   
   let up = { '(': [], '[': [], '{': [], '<': [] };
@@ -69,6 +72,7 @@ function parseDotBracket(dotBracket, options={}) {
       throw new Error('Unmatched "' + downChar + '" downstream partner at position ' + pDown + '.');
     } else {
       let pUp = up[upChar].pop();
+      let partners = isTertiaryChar(downChar) ? tertiaryPartners : secondaryPartners;
       partners[pUp - 1] = pDown;
       partners[pDown - 1] = pUp;
     }
@@ -78,8 +82,6 @@ function parseDotBracket(dotBracket, options={}) {
     let c = dotBracket.charAt(p - 1);
 
     if (c === '.') {
-      // nothing to do
-    } else if (options.ignoreTertiaryPairings && isTertiaryChar(c)) {
       // nothing to do
     } else if (isUpChar(c)) {
       addUp(c, p);
@@ -95,7 +97,22 @@ function parseDotBracket(dotBracket, options={}) {
     }
   });
 
-  return partners;
+  let allPartners = [...secondaryPartners];
+
+  for (let p = 1; p <= tertiaryPartners.length; p++) {
+    let q = tertiaryPartners[p - 1];
+
+    if (q !== null) {
+      allPartners[p - 1] = q;
+      allPartners[q - 1] = p;
+    }
+  }
+
+  return {
+    allPartners: allPartners,
+    secondaryPartners: secondaryPartners,
+    tertiaryPartners: tertiaryPartners,
+  };
 }
 
 export default parseDotBracket;
