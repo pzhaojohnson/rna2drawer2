@@ -42,7 +42,7 @@ function parseDotBracket(dotBracket) {
     tertiaryPartners.push(null);
   }
   
-  let up = { '(': [], '[': [], '{': [], '<': [] };
+  let ups = { '(': [], '[': [], '{': [], '<': [] };
   
   function isUpChar(c) {
     return ['(', '[', '{', '<'].includes(c);
@@ -57,7 +57,7 @@ function parseDotBracket(dotBracket) {
   }
 
   function addUp(upChar, pUp) {
-    up[upChar].push(pUp);
+    ups[upChar].push(pUp);
   }
 
   function addPair(downChar, pDown) {
@@ -68,10 +68,10 @@ function parseDotBracket(dotBracket) {
       '>': '<'
     }[downChar];
 
-    if (up[upChar].length === 0) {
+    if (ups[upChar].length === 0) {
       throw new Error('Unmatched "' + downChar + '" downstream partner at position ' + pDown + '.');
     } else {
-      let pUp = up[upChar].pop();
+      let pUp = ups[upChar].pop();
       let partners = isTertiaryChar(downChar) ? tertiaryPartners : secondaryPartners;
       partners[pUp - 1] = pDown;
       partners[pDown - 1] = pUp;
@@ -91,8 +91,8 @@ function parseDotBracket(dotBracket) {
   }
 
   ['(', '[', '{', '<'].forEach(upChar => {
-    if (up[upChar].length > 0) {
-      let p = up[upChar].pop();
+    if (ups[upChar].length > 0) {
+      let p = ups[upChar].pop();
       throw new Error('Unmatched "' + upChar + '" upstream partner at position ' + p + '.');
     }
   });
