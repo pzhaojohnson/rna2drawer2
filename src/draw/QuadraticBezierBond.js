@@ -59,9 +59,6 @@ class QuadraticBezierBond extends MultiBond {
       throw new Error('The Q segment of the curve is invalid.');
     }
   }
-  
-  _validateSides() {
-  }
 }
 
 export default QuadraticBezierBond;
