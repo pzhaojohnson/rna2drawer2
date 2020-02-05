@@ -10,11 +10,11 @@
  * The partners notation of the secondary structure will not contain any knots,
  * while the partners notation of the tertiary structure may contain knots.
  * 
- * @param {Array<number|null>} bothPartners The partners notation containing both secondary and tertiary pairs.
+ * @param {Array<number|null>} allPartners The partners notation containing both secondary and tertiary pairs.
  * 
  * @returns {SecondaryAndTertiaryPartners} 
  */
-function secondaryAndTertiaryPartners(bothPartners) {
+function secondaryAndTertiaryPartners(allPartners) {
 
   // the partners notation of the secondary structure
   let secondaryPartners = [];
@@ -23,7 +23,7 @@ function secondaryAndTertiaryPartners(bothPartners) {
   let tertiaryPartners = [];
 
   // initialize with all nulls
-  bothPartners.forEach(p => {
+  allPartners.forEach(p => {
     secondaryPartners.push(null);
     tertiaryPartners.push(null);
   });
@@ -61,7 +61,7 @@ function secondaryAndTertiaryPartners(bothPartners) {
     let ct = 0;
     
     for (let r = u + 1; r < d; r++) {
-      let s = bothPartners[r - 1];
+      let s = allPartners[r - 1];
       
       if (s !== null) {
         if (s < u || s > d) {
@@ -79,11 +79,11 @@ function secondaryAndTertiaryPartners(bothPartners) {
   function handleDown(d) {
 
     // the position of the upstream parter
-    let u = bothPartners[d - 1];
+    let u = allPartners[d - 1];
 
     // the pair whose upstream partner is at the top of ups
     let p = ups[ups.length - 1];
-    let q = bothPartners[p - 1];
+    let q = allPartners[p - 1];
 
     if (!ups.includes(u)) {
       // u and d pair has already been added
@@ -96,7 +96,7 @@ function secondaryAndTertiaryPartners(bothPartners) {
     } else {
       while (ups[ups.length - 1] !== u) {
         let r = ups.pop();
-        let s = bothPartners[r - 1];
+        let s = allPartners[r - 1];
         addPair(tertiaryPartners, r, s);
       }
 
@@ -105,8 +105,8 @@ function secondaryAndTertiaryPartners(bothPartners) {
     }
   }
 
-  for (let p = 1; p <= bothPartners.length; p++) {
-    let q = bothPartners[p - 1];
+  for (let p = 1; p <= allPartners.length; p++) {
+    let q = allPartners[p - 1];
 
     if (q === null) {
       // nothing to do
