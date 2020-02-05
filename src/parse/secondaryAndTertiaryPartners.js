@@ -10,11 +10,11 @@
  * The partners notation for secondary pairs will no longer contain knots, while
  * the partners notation for tertiary pairs may still contain knots.
  * 
- * @param {Array<number|null>} partners The partners notation of the structure.
+ * @param {Array<number|null>} both The partners notation of the structure.
  * 
  * @returns {SecondaryAndTertiaryPartners} 
  */
-function secondaryAndTertiaryPartners(partners) {
+function secondaryAndTertiaryPartners(both) {
 
   // the partners notation of the secondary structure
   let secondary = [];
@@ -23,7 +23,7 @@ function secondaryAndTertiaryPartners(partners) {
   let tertiary = [];
 
   // initialize with all nulls
-  partners.forEach(p => {
+  both.forEach(p => {
     secondary.push(null);
     tertiary.push(null);
   });
@@ -61,7 +61,7 @@ function secondaryAndTertiaryPartners(partners) {
     let ct = 0;
     
     for (let r = u + 1; r < d; r++) {
-      let s = partners[r - 1];
+      let s = both[r - 1];
       
       if (s !== null) {
         if (s < u || s > d) {
@@ -79,11 +79,11 @@ function secondaryAndTertiaryPartners(partners) {
   function handleDown(d) {
 
     // the position of the upstream parter
-    let u = partners[d - 1];
+    let u = both[d - 1];
 
     // the pair whose upstream partner is at the top of ups
     let p = ups[ups.length - 1];
-    let q = partners[p - 1];
+    let q = both[p - 1];
 
     if (!ups.includes(u)) {
       // u and d pair has already been added
@@ -96,7 +96,7 @@ function secondaryAndTertiaryPartners(partners) {
     } else {
       while (ups[ups.length - 1] !== u) {
         let r = ups.pop();
-        let s = partners[r - 1];
+        let s = both[r - 1];
         addPair(tertiary, r, s);
       }
 
@@ -105,8 +105,8 @@ function secondaryAndTertiaryPartners(partners) {
     }
   }
 
-  for (let p = 1; p <= partners.length; p++) {
-    let q = partners[p - 1];
+  for (let p = 1; p <= both.length; p++) {
+    let q = both[p - 1];
 
     if (q === null) {
       // nothing to do
