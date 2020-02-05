@@ -1,5 +1,5 @@
 import isKnotless from './isKnotless';
-import validatePartners from '../../../../parse/validatePartners';
+import validatePartners from './validatePartners';
 
 let knotlessCases = [
 

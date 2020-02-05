@@ -1,6 +1,6 @@
 import Stem from './Stem';
 import { StemLayout } from './StemLayout';
-import isKnotless from './isKnotless';
+import isKnotless from '../../../../parse/isKnotless';
 
 class StrictLayout {
 

@@ -1,7 +1,7 @@
 import StrictLayout from './StrictLayout';
 import StrictLayoutDrawingProps from './StrictLayoutDrawingProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
-import { knotlessCases, knottedCases } from './isKnotless.test';
+import { knotlessCases, knottedCases } from '../../../../parse/isKnotless.test';
 
 it('_validatePartners', () => {
 
