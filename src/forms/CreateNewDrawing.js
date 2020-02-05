@@ -564,10 +564,8 @@ class CreateNewDrawing extends React.Component {
    * @returns {Array<number|null>} The partners notation of the secondary structure.
    */
   _parseStructure(sequence) {
-    let partners = parseDotBracket(
-      this.state.structure,
-      { ignoreTertiaryPairings: true }
-    );
+    let parsed = parseDotBracket(this.state.structure);
+    let partners = parsed.secondaryPartners;
 
     if (partners.length === 0) {
       partners = [];
