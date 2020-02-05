@@ -22,6 +22,42 @@ class QuadraticBezierBond extends MultiBond {
   }
   
   _validatePaths() {
+    this._validateCurve();
+  }
+
+  /**
+   * Validates the curve of this quadratic bezier bond.
+   * 
+   * @throws {Error} If the curve is not composed of a proper M segment followed by a proper Q segment.
+   */
+  _validateCurve() {
+    let segments = this._curve.array();
+
+    if (segments.length !== 2) {
+      throw new Error('The path of the curve should only have two segments.');
+    }
+
+    let m = segments[0];
+
+    let mSegmentInvalid = m.length !== 3
+      || m[0] !== 'M'
+      || typeof(m[1]) !== 'number'
+      || typeof(m[2]) !== 'number';
+
+    if (mSegmentInvalid) {
+      throw new Error('The M segment of the curve is invalid.');
+    }
+
+    let q = segments[1];
+
+    let qSegmentInvalid = q.length !== 3
+      || q[0] !== 'Q'
+      || typeof(q[1]) !== 'number'
+      || typeof(q[2]) !== 'number';
+
+    if (qSegmentInvalid) {
+      throw new Error('The Q segment of the curve is invalid.');
+    }
   }
   
   _validateSides() {
