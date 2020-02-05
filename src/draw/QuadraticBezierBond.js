@@ -61,6 +61,36 @@ class QuadraticBezierBond extends MultiBond {
       throw new Error('The Q segment of the curve is invalid.');
     }
   }
+
+  get xCurveEnd1() {
+    let m = this._curve.array()[0];
+    return m[1];
+  }
+
+  get yCurveEnd1() {
+    let m = this._curve.array()[0];
+    return m[2];
+  }
+
+  get xCurveEnd2() {
+    let q = this._curve.array()[1];
+    return q[3];
+  }
+
+  get yCurveEnd2() {
+    let q = this._curve.array()[1];
+    return q[4];
+  }
+
+  get xCurveControlPoint() {
+    let q = this._curve.array()[1];
+    return q[1];
+  }
+
+  get yCurveControlPoint() {
+    let q = this._curve.array()[1];
+    return q[2];
+  }
 }
 
 export default QuadraticBezierBond;
