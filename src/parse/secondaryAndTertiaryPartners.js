@@ -1,16 +1,16 @@
 /**
  * @typedef {object} SecondaryAndTertiaryPartners 
- * @property {Array<number|null>} secondary The partners notation for secondary pairs.
- * @property {Array<number|null>} tertiary The partners notation for tertiary pairs.
+ * @property {Array<number|null>} secondary The partners notation of the secondary structure.
+ * @property {Array<number|null>} tertiary The partners notation of the tertiary structure.
  */
 
 /**
- * Separates secondary and tertiary pairs into two different partners notations.
+ * .
  * 
- * The partners notation for secondary pairs will no longer contain knots, while
- * the partners notation for tertiary pairs may still contain knots.
+ * The partners notation of the secondary structure will not contain any knots,
+ * while the partners notation of the tertiary structure may contain knots.
  * 
- * @param {Array<number|null>} both The partners notation of the structure.
+ * @param {Array<number|null>} both The partners notation containing both secondary and tertiary pairs.
  * 
  * @returns {SecondaryAndTertiaryPartners} 
  */
