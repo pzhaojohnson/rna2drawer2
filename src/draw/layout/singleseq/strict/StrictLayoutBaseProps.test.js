@@ -1,6 +1,6 @@
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 
-it('can instantiate', () => {
+it('can be instantiated', () => {
   let bps = new StrictLayoutBaseProps();
 });
 
