@@ -14,6 +14,8 @@ it('can be copied using the spread operator', () => {
 
   let dps1 = {...dps0};
 
+  expect(Object.keys(dps1).length).toBe(Object.keys(dps0).length);
+
   Object.keys(dps0).forEach(k => {
     expect(dps1[k]).toBe(dps0[k]);
   });
