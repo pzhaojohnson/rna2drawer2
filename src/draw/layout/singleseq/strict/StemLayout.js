@@ -11,10 +11,20 @@ class RoundLoop {
   static circumference(st) {
     let c = st.polarWidth;
     let it = st.loopIterator();
+
+    // first unpaired region
     let next = it.next();
+    c += next.value.polarLength;
+    next = it.next();
 
     while (!next.done) {
+
+      // a stem
       c += next.value.polarWidth;
+      next = it.next();
+
+      // an unpaired region
+      c += next.value.polarLength;
       next = it.next();
     }
     
@@ -91,7 +101,7 @@ class RoundLoop {
     let circumference = RoundLoop.circumference(st);
     let xCenter = RoundLoop.xCenter(st);
     let yCenter = RoundLoop.yCenter(st);
-
+    
     // the distance between the center of the loop and the bottom center point of an inner stem
     let stemDistance = distanceBetween(xCenter, yCenter, st.xTopCenter, st.yTopCenter);
     
