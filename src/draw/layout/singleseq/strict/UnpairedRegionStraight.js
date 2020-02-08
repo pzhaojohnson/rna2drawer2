@@ -11,7 +11,11 @@ function _positiveStretch(ur, baseProps) {
   let ps = 0;
 
   for (let p = ur.boundingPosition5; p < ur.boundingPosition3; p++) {
-    ps += Math.max(0, baseProps[p - 1].stretch3);
+
+    // in case the 5' bounding position is zero
+    if (p > 0) {
+      ps += Math.max(0, baseProps[p - 1].stretch3);
+    }
   }
 
   return ps;
@@ -30,7 +34,7 @@ function baseCoordinatesStraight(ur, baseProps) {
   let cbp3 = ur.baseCoordinatesBounding3();
   let a = cbp5.angleBetweenCenters(cbp3);
 
-  let positiveStretch = _positiveStretch(ur);
+  let positiveStretch = _positiveStretch(ur, baseProps);
   let excessDistance = (cbp5.distanceBetweenCenters(cbp3) - 1) - ur.size;
   
   let x = cbp5.xLeft;
