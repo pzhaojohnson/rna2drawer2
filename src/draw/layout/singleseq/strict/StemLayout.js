@@ -59,7 +59,13 @@ class RoundLoop {
     let cpTop5 = st.baseCoordinatesTop5();
     let cpTop3 = st.baseCoordinatesTop3();
     let a = Math.asin((cpTop5.distanceBetweenCenters(cpTop3) / 2) / radius);
-    return cpTop5.xCenter + (radius * Math.cos(st.angle + a));
+
+    // the width of the stem is too big for the radius of its loop
+    if (isNaN(a)) {
+      return (cpTop5.xCenter + cpTop3.xCenter) / 2;
+    } else {
+      return cpTop5.xCenter + (radius * Math.cos(st.angle + a));
+    }
   }
 
   /**
@@ -72,7 +78,13 @@ class RoundLoop {
     let cpTop5 = st.baseCoordinatesTop5();
     let cpTop3 = st.baseCoordinatesTop3();
     let a = Math.asin((cpTop5.distanceBetweenCenters(cpTop3) / 2) / radius);
-    return cpTop5.yBottom + (radius * Math.sin(st.angle + a));
+
+    // the width of the stem is too big for the radius of its loop
+    if (isNaN(a)) {
+      return (cpTop5.yCenter + cpTop3.yCenter) / 2;
+    } else {
+      return cpTop5.yBottom + (radius * Math.sin(st.angle + a));
+    }
   }
 
   /**
