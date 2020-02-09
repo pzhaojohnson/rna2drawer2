@@ -17,8 +17,18 @@ function baseCoordinatesHairpin(ur) {
   let cbp3 = ur.baseCoordinatesBounding3();
   let o = cbp5.distanceBetweenCenters(cbp3) / 2;
   let angle = ur.boundingStem5.angle + Math.asin(o / radius);
-  let xCenter = cbp5.xCenter + (radius * Math.cos(angle));
-  let yCenter = cbp5.yBottom + (radius * Math.sin(angle));
+
+  let xCenter;
+  let yCenter;
+
+  // the width of the stem is too big for the radius of the hairpin
+  if (isNaN(angle)) {
+    xCenter = (cbp5.xCenter + cbp3.xCenter) / 2;
+    yCenter = (cbp5.yCenter + cbp3.yCenter) / 2;
+  } else {
+    xCenter = cbp5.xCenter + (radius * Math.cos(angle));
+    yCenter = cbp5.yBottom + (radius * Math.sin(angle));
+  }
 
   angle = ur.boundingStem5.angle + Math.PI;
   angle += (2 * Math.PI) * ((ur.boundingStem5.polarWidth / 2) / circumference);
