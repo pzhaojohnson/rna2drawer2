@@ -20,10 +20,10 @@ it('_initializePosition3', () => {
   ];
 
   cases.forEach(cs => {
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-    let st = new Stem(cs.position5, cs.partners, dps, bps);
+    let st = new Stem(cs.position5, cs.partners, gps, bps);
     expect(st.position3).toEqual(cs.position3);
   });
 });
@@ -55,10 +55,10 @@ it('_initializeSize', () => {
     // check that manually typed partners notation is valid
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-    let st = new Stem(cs.position5, cs.partners, dps, bps);
+    let st = new Stem(cs.position5, cs.partners, gps, bps);
     expect(st.size).toEqual(cs.size);
   });
 });
@@ -122,10 +122,10 @@ it('_initializeLoop', () => {
     // check that manually typed in partners notation is valid
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-    let st = new Stem(cs.position5, cs.partners, dps, bps);
+    let st = new Stem(cs.position5, cs.partners, gps, bps);
     
     let it = st.loopIterator();
     let onUnpairedRegion = true;
@@ -174,10 +174,10 @@ it('position and size getters', () => {
     // check that manually typed in partners notation is valid
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-    let st = new Stem(cs.position5, cs.partners, dps, bps);
+    let st = new Stem(cs.position5, cs.partners, gps, bps);
     expect([
       st.position5, st.position3, st.positionTop5, st.positionTop3, st.size
     ]).toEqual([
@@ -249,23 +249,23 @@ it('numBranches', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-    let st = new Stem(cs.position5, cs.partners, dps, bps);
+    let st = new Stem(cs.position5, cs.partners, gps, bps);
     expect(st.numBranches).toEqual(cs.numBranches);
   });
 });
 
 it('coordinates getters and setters', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   
   // outermost stem
-  dps.terminiGap = 6;
-  let ost = new Stem(0, partners, dps, bps);
+  gps.terminiGap = 6;
+  let ost = new Stem(0, partners, gps, bps);
   ost.xBottomCenter = 1;
   ost.yBottomCenter = 2;
   ost.angle = Math.PI / 3;
@@ -289,8 +289,8 @@ it('coordinates getters and setters', () => {
   expect(ost.yTopRight).toBeCloseTo(ost.yTopCenter + ((ost.width / 2) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
 
   // inner stem
-  dps.watsonCrickBondLength = 2;
-  let ist = new Stem(2, partners, dps, bps);
+  gps.watsonCrickBondLength = 2;
+  let ist = new Stem(2, partners, gps, bps);
   ist.xBottomCenter = 1;
   ist.yBottomCenter = 2;
   ist.angle = Math.PI / 3;
@@ -316,10 +316,10 @@ it('coordinates getters and setters', () => {
 
 it('angle getters and setters', () => {
   let partners = [6, 5, null, null, 2, 1];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-  let st = new Stem(1, partners, dps, bps);
+  let st = new Stem(1, partners, gps, bps);
   
   st.angle = Math.PI;
   expect(normalizeAngle(st.angle, 0)).toBeCloseTo(Math.PI, 6);
@@ -332,18 +332,18 @@ it('angle getters and setters', () => {
 
 it('width and height getters', () => {
   let partners = [6, 5, null, null, 2, 1];
-  let dps = new StrictLayoutGeneralProps();
-  dps.terminiGap = 6;
-  dps.watsonCrickBondLength = 2;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 6;
+  gps.watsonCrickBondLength = 2;
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
-  let outermostStem = new Stem(0, partners, dps, bps);
+  let outermostStem = new Stem(0, partners, gps, bps);
   expect(outermostStem.width).toBeCloseTo(6, 6);
   expect(outermostStem.polarWidth).toBeCloseTo(polarizeLength(6), 6);
   expect(outermostStem.height).toBeCloseTo(1, 6);
 
-  let innerStem = new Stem(1, partners, dps, bps);
+  let innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.width).toBeCloseTo(4, 6);
   expect(innerStem.polarWidth).toBeCloseTo(polarizeLength(4), 6);
   expect(innerStem.height).toBeCloseTo(2);
@@ -351,13 +351,13 @@ it('width and height getters', () => {
 
 it('corner base coordinates', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   
   // outermost stem
-  dps.terminiGap = 6;
-  let ost = new Stem(0, partners, dps, bps);
+  gps.terminiGap = 6;
+  let ost = new Stem(0, partners, gps, bps);
   ost.xBottomCenter = 1;
   ost.yBottomCenter = 2;
   ost.angle = Math.PI / 3;
@@ -379,8 +379,8 @@ it('corner base coordinates', () => {
   expect(bct3.yTop).toBeCloseTo(bct5.yTop + ((ost.width - 1) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
 
   // inner stem
-  dps.watsonCrickBondLength = 2;
-  let ist = new Stem(2, partners, dps, bps);
+  gps.watsonCrickBondLength = 2;
+  let ist = new Stem(2, partners, gps, bps);
   ist.xBottomCenter = 1;
   ist.yBottomCenter = 2;
   ist.angle = Math.PI / 3;
@@ -460,69 +460,69 @@ it('isOuterTo', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-    let st1 = new Stem(cs.firstPosition5, cs.partners, dps, bps);
-    let st2 = new Stem(cs.secondPosition5, cs.partners, dps, bps);
+    let st1 = new Stem(cs.firstPosition5, cs.partners, gps, bps);
+    let st2 = new Stem(cs.secondPosition5, cs.partners, gps, bps);
     expect(st1.isOuterTo(st2)).toEqual(cs.isOuterTo);
   });
 });
 
 it('isOutermostStem', () => {
   let partners = [6, 5, null, null, 2, 1];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   
-  let outermostStem = new Stem(0, partners, dps, bps);
+  let outermostStem = new Stem(0, partners, gps, bps);
   expect(outermostStem.isOutermostStem()).toBeTruthy();
 
-  let innerStem = new Stem(1, partners, dps, bps);
+  let innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.isOutermostStem()).toBeFalsy();
 });
 
 it('loop shape', () => {
   let partners = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
-  dps.flatOutermostLoop = false;
-  let outermostStem = new Stem(0, partners, dps, bps);
+  gps.flatOutermostLoop = false;
+  let outermostStem = new Stem(0, partners, gps, bps);
   expect(outermostStem.hasRoundLoop()).toBeTruthy();
   expect(outermostStem.hasTriangleLoop()).toBeFalsy();
 
-  dps.flatOutermostLoop = true;
-  outermostStem = new Stem(0, partners, dps, bps);
+  gps.flatOutermostLoop = true;
+  outermostStem = new Stem(0, partners, gps, bps);
   expect(outermostStem.hasRoundLoop()).toBeFalsy();
   expect(outermostStem.hasTriangleLoop()).toBeFalsy();
 
   bps[0].loopShape = 'round';
-  let innerStem = new Stem(1, partners, dps, bps);
+  let innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.hasRoundLoop()).toBeTruthy();
   expect(innerStem.hasTriangleLoop()).toBeFalsy();
 
   bps[0].loopShape = 'triangle';
-  innerStem = new Stem(1, partners, dps, bps);
+  innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.hasRoundLoop()).toBeFalsy();
   expect(innerStem.hasTriangleLoop()).toBeTruthy();
 });
 
 it('isFlipped', () => {
   let partners = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
-  let outermostStem = new Stem(0, partners, dps, bps);
+  let outermostStem = new Stem(0, partners, gps, bps);
   expect(outermostStem.isFlipped()).toBeFalsy();
 
   bps[0].flipStem = false;
-  let innerStem = new Stem(1, partners, dps, bps);
+  let innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.isFlipped()).toBeFalsy();
   
   bps[0].flipStem = true;
-  innerStem = new Stem(1, partners, dps, bps);
+  innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.isFlipped()).toBeTruthy();
 });
