@@ -2,7 +2,6 @@ import { SVG } from '@svgdotjs/svg.js';
 import Sequence from './Sequence';
 import StraightBond from './StraightBond';
 
-import StrictLayoutDrawingProps from './layout/singleseq/strict/StrictLayoutDrawingProps';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
 
 class Drawing {
@@ -24,7 +23,6 @@ class Drawing {
     };
 
     this._initializeDefaults();
-    this._strictLayoutProps = new StrictLayoutDrawingProps();
   }
 
   /**
