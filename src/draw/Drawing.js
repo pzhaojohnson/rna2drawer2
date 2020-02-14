@@ -179,10 +179,6 @@ class Drawing {
     return partners;
   }
 
-  strictLayoutProps() {
-    return { ...this._strictLayoutProps };
-  }
-
   strictLayoutBaseProps() {
     let baseProps = [];
 
