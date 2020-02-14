@@ -15,10 +15,10 @@ function defaultBaseProps(length) {
 
 it('empty hairpin', () => {
   let partners = [6, 5, 4, 3, 2, 1];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
 
-  let st = new Stem(1, partners, dps, bps);
+  let st = new Stem(1, partners, gps, bps);
   let it = st.loopIterator();
   let ur = it.next().value;
 
@@ -28,10 +28,10 @@ it('empty hairpin', () => {
 
 it('one base hairpin', () => {
   let partners = [7, 6, 5, null, 3, 2, 1];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
 
-  let st = new Stem(1, partners, dps, bps);
+  let st = new Stem(1, partners, gps, bps);
   st.xBottomCenter = 10;
   st.yBottomCenter = 11;
   st.angle = Math.PI / 2;
