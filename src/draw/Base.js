@@ -34,8 +34,6 @@ class Base {
     this._text = text;
     this._validateText();
     
-    this._strictLayoutProps = new StrictLayoutBaseProps();
-
     this._highlighting = null;
     this._outline = null;
     this._numbering = null;
@@ -116,13 +114,6 @@ class Base {
       'x': xCenter,
       'y': yCenter
     });
-  }
-
-  /**
-   * @returns {StrictLayoutBaseProps} A copy of the strict layout properties of this base.
-   */
-  strictLayoutProps() {
-    return { ...this._strictLayoutProps };
   }
 
   /**
