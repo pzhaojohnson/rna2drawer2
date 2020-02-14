@@ -223,7 +223,7 @@ class Stem {
     if (this.isOutermostStem()) {
       return this._drawingProps.terminiGap;
     } else {
-      return 2 + this._drawingProps.watsonCrickBondLength;
+      return 2 + this._drawingProps.basePairBondLength;
     }
   }
 

@@ -289,7 +289,7 @@ it('coordinates getters and setters', () => {
   expect(ost.yTopRight).toBeCloseTo(ost.yTopCenter + ((ost.width / 2) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
 
   // inner stem
-  gps.watsonCrickBondLength = 2;
+  gps.basePairBondLength = 2;
   let ist = new Stem(2, partners, gps, bps);
   ist.xBottomCenter = 1;
   ist.yBottomCenter = 2;
@@ -334,7 +334,7 @@ it('width and height getters', () => {
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 6;
-  gps.watsonCrickBondLength = 2;
+  gps.basePairBondLength = 2;
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
@@ -379,7 +379,7 @@ it('corner base coordinates', () => {
   expect(bct3.yTop).toBeCloseTo(bct5.yTop + ((ost.width - 1) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
 
   // inner stem
-  gps.watsonCrickBondLength = 2;
+  gps.basePairBondLength = 2;
   let ist = new Stem(2, partners, gps, bps);
   ist.xBottomCenter = 1;
   ist.yBottomCenter = 2;

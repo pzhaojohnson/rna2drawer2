@@ -10,7 +10,7 @@ class StrictLayoutGeneralProps {
     this.flatOutermostLoop = false;
     this.rotation = 0.0;
 
-    this.watsonCrickBondLength = 1.2;
+    this.basePairBondLength = 1.2;
 
     // the virtual distance between the 5' and 3' termini with a round outermost loop
     this.terminiGap = 4;
