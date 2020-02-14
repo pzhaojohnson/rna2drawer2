@@ -43,13 +43,6 @@ class Drawing {
       'height': 2 * window.screen.height,
       'overflow': 'scroll'
     });
-
-    this._zSeparators = {
-      bondsAndBaseOutlines: null,
-      baseOutlinesAndBaseHighlighting: null,
-      baseHighlightingAndBaseNumbering: null,
-      baseNumberingAndBaseLetters: null
-    };
   }
 
   /**
