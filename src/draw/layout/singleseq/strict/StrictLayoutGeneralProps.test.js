@@ -1,40 +1,40 @@
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 
 it('can be instantiated', () => {
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
 });
 
 it('can be copied using the spread operator', () => {
-  let dps0 = new StrictLayoutGeneralProps();
-  dps0.flatOutermostLoop = !dps0.flatOutermostLoop;
-  dps0.rotation = 0.5;
-  dps0.watsonCrickBondLength = 2;
-  dps0.terminiGap = 9;
-  dps0.maxTriangleLoopAngle = 0.3;
+  let gps0 = new StrictLayoutGeneralProps();
+  gps0.flatOutermostLoop = !gps0.flatOutermostLoop;
+  gps0.rotation = 0.5;
+  gps0.watsonCrickBondLength = 2;
+  gps0.terminiGap = 9;
+  gps0.maxTriangleLoopAngle = 0.3;
 
-  let dps1 = {...dps0};
+  let gps1 = {...gps0};
 
-  expect(Object.keys(dps1).length).toBe(Object.keys(dps0).length);
+  expect(Object.keys(gps1).length).toBe(Object.keys(gps0).length);
 
-  Object.keys(dps0).forEach(k => {
-    expect(dps1[k]).toBe(dps0[k]);
+  Object.keys(gps0).forEach(k => {
+    expect(gps1[k]).toBe(gps0[k]);
   });
 });
 
 it('can be converted to and parsed from a JSON string', () => {
-  let dps0 = new StrictLayoutGeneralProps();
-  dps0.flatOutermostLoop = !dps0.flatOutermostLoop;
-  dps0.rotation = 0.5;
-  dps0.watsonCrickBondLength = 2;
-  dps0.terminiGap = 9;
-  dps0.maxTriangleLoopAngle = 0.3;
+  let gps0 = new StrictLayoutGeneralProps();
+  gps0.flatOutermostLoop = !gps0.flatOutermostLoop;
+  gps0.rotation = 0.5;
+  gps0.watsonCrickBondLength = 2;
+  gps0.terminiGap = 9;
+  gps0.maxTriangleLoopAngle = 0.3;
 
-  let s = JSON.stringify(dps0);
-  let dps1 = JSON.parse(s);
+  let s = JSON.stringify(gps0);
+  let gps1 = JSON.parse(s);
 
-  expect(Object.keys(dps1).length).toBe(Object.keys(dps0).length);
+  expect(Object.keys(gps1).length).toBe(Object.keys(gps0).length);
 
-  Object.keys(dps0).forEach(k => {
-    expect(dps1[k]).toBe(dps0[k]);
+  Object.keys(gps0).forEach(k => {
+    expect(gps1[k]).toBe(gps0[k]);
   });
 });
