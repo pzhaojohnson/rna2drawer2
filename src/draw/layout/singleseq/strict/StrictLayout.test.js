@@ -10,17 +10,17 @@ it('_validatePartners', () => {
 
   knotlessCases.forEach(cs => {
     if (cs.length > 0) {
-      let dps = new StrictLayoutGeneralProps();
+      let gps = new StrictLayoutGeneralProps();
       let bps = [];
       cs.forEach(position => bps.push(new StrictLayoutBaseProps()));
-      expect(() => new StrictLayout(cs, dps, bps)).not.toThrow();
+      expect(() => new StrictLayout(cs, gps, bps)).not.toThrow();
     }
   });
 
   knottedCases.forEach(cs => {
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.forEach(position => bps.push(new StrictLayoutBaseProps()));
-    expect(() => new StrictLayout(cs, dps, bps)).toThrow();
+    expect(() => new StrictLayout(cs, gps, bps)).toThrow();
   })
 });
