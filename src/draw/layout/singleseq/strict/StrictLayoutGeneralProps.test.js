@@ -1,11 +1,11 @@
-import StrictLayoutDrawingProps from './StrictLayoutDrawingProps';
+import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 
 it('can be instantiated', () => {
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
 });
 
 it('can be copied using the spread operator', () => {
-  let dps0 = new StrictLayoutDrawingProps();
+  let dps0 = new StrictLayoutGeneralProps();
   dps0.flatOutermostLoop = !dps0.flatOutermostLoop;
   dps0.rotation = 0.5;
   dps0.watsonCrickBondLength = 2;
@@ -22,7 +22,7 @@ it('can be copied using the spread operator', () => {
 });
 
 it('can be converted to and parsed from a JSON string', () => {
-  let dps0 = new StrictLayoutDrawingProps();
+  let dps0 = new StrictLayoutGeneralProps();
   dps0.flatOutermostLoop = !dps0.flatOutermostLoop;
   dps0.rotation = 0.5;
   dps0.watsonCrickBondLength = 2;

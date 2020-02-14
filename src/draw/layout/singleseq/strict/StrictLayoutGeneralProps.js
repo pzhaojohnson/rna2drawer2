@@ -5,7 +5,7 @@
  * Instances of this class can also be converted to and parsed from
  * a JSON string via the JSON.stringify and JSON.parse methods, respectively.
  */
-class StrictLayoutDrawingProps {
+class StrictLayoutGeneralProps {
   constructor() {
     this.flatOutermostLoop = false;
     this.rotation = 0.0;
@@ -19,4 +19,4 @@ class StrictLayoutDrawingProps {
   }
 }
 
-export default StrictLayoutDrawingProps;
+export default StrictLayoutGeneralProps;

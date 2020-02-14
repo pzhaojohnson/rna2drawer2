@@ -1,5 +1,5 @@
 import baseCoordinatesHairpin from './UnpairedRegionHairpin';
-import StrictLayoutDrawingProps from './StrictLayoutDrawingProps';
+import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
 
@@ -15,7 +15,7 @@ function defaultBaseProps(length) {
 
 it('empty hairpin', () => {
   let partners = [6, 5, 4, 3, 2, 1];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
 
   let st = new Stem(1, partners, dps, bps);
@@ -28,7 +28,7 @@ it('empty hairpin', () => {
 
 it('one base hairpin', () => {
   let partners = [7, 6, 5, null, 3, 2, 1];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
 
   let st = new Stem(1, partners, dps, bps);

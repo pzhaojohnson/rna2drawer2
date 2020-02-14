@@ -1,13 +1,13 @@
 import UnpairedRegion from './UnpairedRegion';
 import Stem from './Stem';
-import StrictLayoutDrawingProps from './StrictLayoutDrawingProps';
+import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
 import polarizeLength from './polarizeLength';
 
 it('bounding stem getters', () => {
   let partners = [6, 5, null, null, 2, 1];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   
@@ -94,7 +94,7 @@ it('bounding positions and base coordinates', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
@@ -150,7 +150,7 @@ it('size', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
@@ -202,7 +202,7 @@ it('isHairpinLoop', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
@@ -222,7 +222,7 @@ it('isHairpinLoop', () => {
 
 it('is dangling', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null, 11, null, 9];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   let outermostStem = new Stem(0, partners, dps, bps);
@@ -245,7 +245,7 @@ it('is dangling', () => {
 
 it('minLength', () => {
   let partners = [8, 7, null, null, null, null, 2, 1, null, 12, null, 10, null, null, null, null];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   let outermostStem = new Stem(0, partners, dps, bps);
@@ -269,7 +269,7 @@ it('minLength', () => {
 
 it('length', () => {
   let partners = [8, 7, null, null, null, null, 2, 1, null, 12, null, 10, null, null, null, null];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
@@ -303,7 +303,7 @@ it('length', () => {
 
 it('polarLength', () => {
   let partners = [null, null, null];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   let outermostStem = new Stem(0, partners, dps, bps);

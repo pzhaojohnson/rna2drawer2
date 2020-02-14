@@ -1,16 +1,16 @@
 import StrictLayout from './StrictLayout';
-import StrictLayoutDrawingProps from './StrictLayoutDrawingProps';
+import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import { knotlessCases, knottedCases } from '../../../../parse/isKnotless.test';
 
 it('_validatePartners', () => {
 
   // empty
-  expect(() => new StrictLayout([], new StrictLayoutDrawingProps(), [])).toThrow();
+  expect(() => new StrictLayout([], new StrictLayoutGeneralProps(), [])).toThrow();
 
   knotlessCases.forEach(cs => {
     if (cs.length > 0) {
-      let dps = new StrictLayoutDrawingProps();
+      let dps = new StrictLayoutGeneralProps();
       let bps = [];
       cs.forEach(position => bps.push(new StrictLayoutBaseProps()));
       expect(() => new StrictLayout(cs, dps, bps)).not.toThrow();
@@ -18,7 +18,7 @@ it('_validatePartners', () => {
   });
 
   knottedCases.forEach(cs => {
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.forEach(position => bps.push(new StrictLayoutBaseProps()));
     expect(() => new StrictLayout(cs, dps, bps)).toThrow();

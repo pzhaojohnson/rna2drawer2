@@ -1,5 +1,5 @@
 import Stem from './Stem';
-import StrictLayoutDrawingProps from './StrictLayoutDrawingProps';
+import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
 import normalizeAngle from '../../../normalizeAngle';
@@ -20,7 +20,7 @@ it('_initializePosition3', () => {
   ];
 
   cases.forEach(cs => {
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
     let st = new Stem(cs.position5, cs.partners, dps, bps);
@@ -55,7 +55,7 @@ it('_initializeSize', () => {
     // check that manually typed partners notation is valid
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
     let st = new Stem(cs.position5, cs.partners, dps, bps);
@@ -122,7 +122,7 @@ it('_initializeLoop', () => {
     // check that manually typed in partners notation is valid
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
     let st = new Stem(cs.position5, cs.partners, dps, bps);
@@ -174,7 +174,7 @@ it('position and size getters', () => {
     // check that manually typed in partners notation is valid
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
     let st = new Stem(cs.position5, cs.partners, dps, bps);
@@ -249,7 +249,7 @@ it('numBranches', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
     let st = new Stem(cs.position5, cs.partners, dps, bps);
@@ -259,7 +259,7 @@ it('numBranches', () => {
 
 it('coordinates getters and setters', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   
@@ -316,7 +316,7 @@ it('coordinates getters and setters', () => {
 
 it('angle getters and setters', () => {
   let partners = [6, 5, null, null, 2, 1];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   let st = new Stem(1, partners, dps, bps);
@@ -332,7 +332,7 @@ it('angle getters and setters', () => {
 
 it('width and height getters', () => {
   let partners = [6, 5, null, null, 2, 1];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   dps.terminiGap = 6;
   dps.watsonCrickBondLength = 2;
   let bps = [];
@@ -351,7 +351,7 @@ it('width and height getters', () => {
 
 it('corner base coordinates', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   
@@ -460,7 +460,7 @@ it('isOuterTo', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutDrawingProps();
+    let dps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
     let st1 = new Stem(cs.firstPosition5, cs.partners, dps, bps);
@@ -471,7 +471,7 @@ it('isOuterTo', () => {
 
 it('isOutermostStem', () => {
   let partners = [6, 5, null, null, 2, 1];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   
@@ -484,7 +484,7 @@ it('isOutermostStem', () => {
 
 it('loop shape', () => {
   let partners = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
@@ -511,7 +511,7 @@ it('loop shape', () => {
 
 it('isFlipped', () => {
   let partners = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
-  let dps = new StrictLayoutDrawingProps();
+  let dps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
