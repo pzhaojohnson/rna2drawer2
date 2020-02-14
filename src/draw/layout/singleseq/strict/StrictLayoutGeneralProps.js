@@ -11,6 +11,7 @@ class StrictLayoutGeneralProps {
     this.rotation = 0.0;
 
     this.basePairBondLength = 1.2;
+    this.basePairPadding = 0;
 
     // the virtual distance between the 5' and 3' termini with a round outermost loop
     this.terminiGap = 4;
