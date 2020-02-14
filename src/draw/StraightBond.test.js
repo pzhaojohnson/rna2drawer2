@@ -57,10 +57,10 @@ it('opacity static', () => {
 it('createStrand', () => {
   let svg = createNodeSVG();
   let drawing = new Drawing(svg);
-  let b1 = Base.create(drawing.svg, 'A', 1, 2);
-  let b2 = Base.create(drawing.svg, 'A', 2, 2);
+  let b1 = Base.create(drawing._svg, 'A', 1, 2);
+  let b2 = Base.create(drawing._svg, 'A', 2, 2);
 
-  let strandBond = StraightBond.createStrand(drawing.svg, b1, b2, drawing.defaults);
+  let strandBond = StraightBond.createStrand(drawing._svg, b1, b2, drawing.defaults);
   expect(strandBond.padding1).toBeCloseTo(drawing.defaults.strandBondPadding, 6);
   expect(strandBond.padding2).toBeCloseTo(drawing.defaults.strandBondPadding, 6);
   expect(strandBond.stroke).toEqual(drawing.defaults.strandBondStroke);
@@ -71,25 +71,25 @@ it('createWatsonCrick', () => {
   let svg = createNodeSVG();
   let drawing = new Drawing(svg);
 
-  let ba = Base.create(drawing.svg, 'A', 1, 2);
-  let bu = Base.create(drawing.svg, 'u', 4, 5);
-  let bg = Base.create(drawing.svg, 'g', 9, 9);
-  let bc = Base.create(drawing.svg, 'C', 6, 8);
-  let bt = Base.create(drawing.svg, 't', -2, -3);
+  let ba = Base.create(drawing._svg, 'A', 1, 2);
+  let bu = Base.create(drawing._svg, 'u', 4, 5);
+  let bg = Base.create(drawing._svg, 'g', 9, 9);
+  let bc = Base.create(drawing._svg, 'C', 6, 8);
+  let bt = Base.create(drawing._svg, 't', -2, -3);
 
-  let auBond = StraightBond.createWatsonCrick(drawing.svg, ba, bu, drawing.defaults);
+  let auBond = StraightBond.createWatsonCrick(drawing._svg, ba, bu, drawing.defaults);
   expect(auBond.padding1).toBeCloseTo(drawing.defaults.watsonCrickBondPadding, 6);
   expect(auBond.padding2).toBeCloseTo(drawing.defaults.watsonCrickBondPadding, 6);
   expect(auBond.stroke).toEqual(drawing.defaults.watsonCrickAUTBondStroke);
   expect(auBond.strokeWidth).toBeCloseTo(drawing.defaults.watsonCrickBondStrokeWidth, 6);
 
-  let gcBond = StraightBond.createWatsonCrick(drawing.svg, bg, bc, drawing.defaults);
+  let gcBond = StraightBond.createWatsonCrick(drawing._svg, bg, bc, drawing.defaults);
   expect(gcBond.stroke).toEqual(drawing.defaults.watsonCrickGCBondStroke);
 
-  let taBond = StraightBond.createWatsonCrick(drawing.svg, bt, ba, drawing.defaults);
+  let taBond = StraightBond.createWatsonCrick(drawing._svg, bt, ba, drawing.defaults);
   expect(taBond.stroke).toEqual(drawing.defaults.watsonCrickGCBondStroke);
 
-  let tgBond = StraightBond.createWatsonCrick(drawing.svg, bt, bg, drawing.defaults);
+  let tgBond = StraightBond.createWatsonCrick(drawing._svg, bt, bg, drawing.defaults);
   expect(tgBond.stroke).toEqual(drawing.defaults.watsonCrickGUTBondStroke);
 });
 

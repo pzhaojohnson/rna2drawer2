@@ -45,13 +45,6 @@ class Drawing {
     });
   }
 
-  /**
-   * @returns {SVG.Doc} The SVG document of this drawing.
-   */
-  get svg() {
-    return this._svg;
-  }
-
   _initializeDefaults() {
     this.defaults = {
       baseWidth: 12,
