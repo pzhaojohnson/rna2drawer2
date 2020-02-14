@@ -178,19 +178,6 @@ class Drawing {
 
     return partners;
   }
-
-  strictLayoutBaseProps() {
-    let baseProps = [];
-
-    this._sequences.forEach(seq => {
-      for (let p = 1; p <= seq.length; p++) {
-        let b = seq.getBase(p);
-        baseProps.push(b.strictLayoutProps());
-      }
-    });
-
-    return baseProps;
-  }
 }
 
 export default Drawing;
