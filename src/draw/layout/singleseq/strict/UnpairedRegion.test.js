@@ -7,11 +7,11 @@ import polarizeLength from './polarizeLength';
 
 it('bounding stem getters', () => {
   let partners = [6, 5, null, null, 2, 1];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
   
-  let st = new Stem(1, partners, dps, bps);
+  let st = new Stem(1, partners, gps, bps);
   let it = st.loopIterator();
   let ur = it.next().value;
   expect(Object.is(ur.boundingStem5, st)).toBeTruthy();
@@ -94,20 +94,20 @@ it('bounding positions and base coordinates', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
-    let st1 = new Stem(cs.firstPosition5, cs.partners, dps, bps);
+    let st1 = new Stem(cs.firstPosition5, cs.partners, gps, bps);
     let st2;
     
     if (cs.firstPosition5 === cs.secondPosition5) {
       st2 = st1;
     } else {
-      st2 = new Stem(cs.secondPosition5, cs.partners, dps, bps);
+      st2 = new Stem(cs.secondPosition5, cs.partners, gps, bps);
     }
 
-    let ur = new UnpairedRegion(st1, st2, dps, bps);
+    let ur = new UnpairedRegion(st1, st2, gps, bps);
     
     expect(ur.boundingPosition5).toEqual(st1[cs.boundingPosition5]);
     expect(ur.boundingPosition3).toEqual(st2[cs.boundingPosition3]);
@@ -150,20 +150,20 @@ it('size', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
-    let st1 = new Stem(cs.firstPosition5, cs.partners, dps, bps);
+    let st1 = new Stem(cs.firstPosition5, cs.partners, gps, bps);
     let st2;
 
     if (cs.firstPosition5 === cs.secondPosition5) {
       st2 = st1;
     } else {
-      st2 = new Stem(cs.secondPosition5, cs.partners, dps, bps);
+      st2 = new Stem(cs.secondPosition5, cs.partners, gps, bps);
     }
 
-    let ur = new UnpairedRegion(st1, st2, dps, bps);
+    let ur = new UnpairedRegion(st1, st2, gps, bps);
     expect(ur.size).toEqual(cs.size);
   });
 });
@@ -202,30 +202,30 @@ it('isHairpinLoop', () => {
     // validate manually typed in partners notation
     validatePartners(cs.partners);
 
-    let dps = new StrictLayoutGeneralProps();
+    let gps = new StrictLayoutGeneralProps();
     let bps = [];
     cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
-    let st1 = new Stem(cs.firstPosition5, cs.partners, dps, bps);
+    let st1 = new Stem(cs.firstPosition5, cs.partners, gps, bps);
     let st2;
 
     if (cs.firstPosition5 === cs.secondPosition5) {
       st2 = st1;
     } else {
-      st2 = new Stem(cs.secondPosition5, cs.partners, dps, bps);
+      st2 = new Stem(cs.secondPosition5, cs.partners, gps, bps);
     }
 
-    let ur = new UnpairedRegion(st1, st2, dps, bps);
+    let ur = new UnpairedRegion(st1, st2, gps, bps);
     expect(ur.isHairpinLoop()).toEqual(cs.isHairpinLoop);
   });
 });
 
 it('is dangling', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null, 11, null, 9];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-  let outermostStem = new Stem(0, partners, dps, bps);
+  let outermostStem = new Stem(0, partners, gps, bps);
   let it = outermostStem.loopIterator();
 
   let ur = it.next().value;
@@ -245,10 +245,10 @@ it('is dangling', () => {
 
 it('minLength', () => {
   let partners = [8, 7, null, null, null, null, 2, 1, null, 12, null, 10, null, null, null, null];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-  let outermostStem = new Stem(0, partners, dps, bps);
+  let outermostStem = new Stem(0, partners, gps, bps);
   let it = outermostStem.loopIterator();
 
   // size of zero
@@ -269,7 +269,7 @@ it('minLength', () => {
 
 it('length', () => {
   let partners = [8, 7, null, null, null, null, 2, 1, null, 12, null, 10, null, null, null, null];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
 
@@ -281,7 +281,7 @@ it('length', () => {
   bps[13].stretch3 = -8;
   bps[14].stretch3 = -8;
 
-  let outermostStem = new Stem(0, partners, dps, bps);
+  let outermostStem = new Stem(0, partners, gps, bps);
   let it = outermostStem.loopIterator();
 
   // empty
@@ -303,10 +303,10 @@ it('length', () => {
 
 it('polarLength', () => {
   let partners = [null, null, null];
-  let dps = new StrictLayoutGeneralProps();
+  let gps = new StrictLayoutGeneralProps();
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-  let outermostStem = new Stem(0, partners, dps, bps);
+  let outermostStem = new Stem(0, partners, gps, bps);
   let it = outermostStem.loopIterator();
 
   let ur = it.next().value;
