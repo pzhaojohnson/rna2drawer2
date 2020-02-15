@@ -73,6 +73,11 @@ it('validating curve', () => {
   expect(() => createBondWithCurve(
     svg.path('M 1 2 Q 3 4 5 6')
   )).not.toThrow();
+
+  // handles floating point and negative numbers
+  expect(() => createBondWithCurve(
+    svg.path('M 1.001765 -2 Q 3 -0.237654 5 6')
+  )).not.toThrow();
   
   // too few segments
   expect(() => createBondWithCurve(
@@ -185,6 +190,16 @@ it('validating brackets', () => {
   // valid bracket 2
   expect(() => createBondWithBracket2AndSide2(
     svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10'), [b1]
+  )).not.toThrow();
+
+  // bracket 1 handles floating point and negative numbers
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1.1 2 L 3 4 L -5.99 6 L 7 8.7 L 9 10 L -0.7511 12'), [b1, b2]
+  )).not.toThrow();
+
+  // bracket 2 handles floating point and negative numbers
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 -0.86154 L 5 6.009 L 7 8 L 9 -10'), [b1]
   )).not.toThrow();
 
   // too few segments in bracket 1
