@@ -1,3 +1,7 @@
+import distanceBetween from './distanceBetween';
+import angleBetween from './angleBetween';
+import normalizeAngle from './normalizeAngle';
+
 class QuadraticBezierBond {
 
   /**
@@ -142,6 +146,109 @@ class QuadraticBezierBond {
   get yCurveControlPoint() {
     let q = this._curve.array()[1];
     return q[2];
+  }
+
+  get curveHeight() {
+    let d = distanceBetween(this.xCurveEnd1, this.yCurveEnd1, this.xCurveEnd2, this.yCurveEnd2);
+    
+    let midx = (this.xCurveEnd2 + this.xCurveEnd1) / 2;
+    let midy = (this.yCurveEnd2 + this.yCurveEnd1) / 2;
+    let h = distanceBetween(midx, midy, this.xCurveControlPoint, this.yCurveControlPoint);
+    
+    // prevent division by zero and number overflow
+    d = Math.max(d, 0.00001);
+
+    return h / d;
+  }
+
+  get curveAngle() {
+    let endsAngle = angleBetween(this.xCurveEnd1, this.yCurveEnd1, this.xCurveEnd2, this.yCurveEnd2);
+
+    let midx = (this.xCurveEnd2 + this.xCurveEnd1) / 2;
+    let midy = (this.yCurveEnd2 + this.yCurveEnd1) / 2;
+    let controlAngle = angleBetween(midx, midy, this.xCurveControlPoint, this.yCurveControlPoint);
+    
+    controlAngle = normalizeAngle(controlAngle, endsAngle);
+    return controlAngle - endsAngle;
+  }
+
+  get topPadding1() {
+    let b = this._side1[0];
+    let l = this._bracket1.array()[2];
+    return distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
+  }
+
+  get sidePadding1() {
+    let segments = this._bracket1.array();
+    let l1 = segments[1];
+    let l2 = segments[2];
+    return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
+  }
+
+  get sideLength1() {
+    let segments = this._bracket1.array();
+    let m = segments[0];
+    let l = segments[1];
+    return distanceBetween(m[1], m[2], l[1], l[2]);
+  }
+
+  get topPadding2() {
+    let b = this._side2[0];
+    let l = this._bracket2.array()[2];
+    return distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
+  }
+
+  get sidePadding2() {
+    let segments = this._bracket2.array();
+    let l1 = segments[1];
+    let l2 = segments[2];
+    return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
+  }
+
+  get sideLength2() {
+    let segments = this._bracket2.array();
+    let m = segments[0];
+    let l = segments[1];
+    return distanceBetween(m[1], m[2], l[1], l[2]);
+  }
+
+  _bracketMidpoint(bracket) {
+    let segments = bracket.array();
+    let lefti;
+    let righti;
+
+    // even number of segments
+    if (segments.length % 2 === 0) {
+      lefti = (segments.length / 2) - 1;
+      righti = segments.length / 2;
+    } else {
+      lefti = Math.floor(segments.length / 2);
+      righti = Math.floor(segments.length / 2);
+    }
+
+    let left = segments[lefti];
+    let right = segments[righti];
+    
+    return {
+      x: (left[1] + right[1]) / 2,
+      y: (left[2] + right[2]) / 2,
+    };
+  }
+
+  get xMiddleBracket1() {
+    return this._bracketMidpoint(this._bracket1).x;
+  }
+
+  get yMiddleBracket1() {
+    return this._bracketMidpoint(this._bracket1).y;
+  }
+
+  get xMiddleBracket2() {
+    return this._bracketMidpoint(this._bracket2).x;
+  }
+
+  get yMiddleBracket2() {
+    return this._bracketMidpoint(this._bracket2).y;
   }
 }
 
