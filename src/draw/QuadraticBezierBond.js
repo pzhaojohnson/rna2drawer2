@@ -1,6 +1,6 @@
 import MultiBond from './MultiBond';
 
-class QuadraticBezierBond extends MultiBond {
+class QuadraticBezierBond {
 
   /**
    * This constructor cannot verify if the bases stored in the side1 and side2
@@ -13,7 +13,11 @@ class QuadraticBezierBond extends MultiBond {
    * @param {Array<Base>} side2 The consecutive bases of the other side of the bond in ascending order by position.
    */
   constructor(curve, bracket1, bracket2, side1, side2) {
-    super(side1, side2);
+    
+    // make shallow copies
+    this._side1 = [...side1];
+    this._side2 = [...side2];
+    this._validateSides();
 
     this._curve = curve;
     this._bracket1 = bracket1;
@@ -21,6 +25,19 @@ class QuadraticBezierBond extends MultiBond {
     this._validatePaths();
   }
   
+  /**
+   * @throws {Error} If either side of this bond contains no bases.
+   */
+  _validateSides() {
+    if (this._side1.length === 0) {
+      throw new Error('Side 1 cannot be empty.');
+    }
+
+    if (this._side2.length === 0) {
+      throw new Error('Side 2 cannot be empty.');
+    }
+  }
+
   _validatePaths() {
     this._validateCurve();
   }
