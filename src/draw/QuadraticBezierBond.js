@@ -38,11 +38,11 @@ class QuadraticBezierBond extends MultiBond {
     }
 
     let m = segments[0];
-
-    let mSegmentInvalid = m.length !== 3
-      || m[0] !== 'M'
-      || typeof(m[1]) !== 'number'
-      || typeof(m[2]) !== 'number';
+    
+    let mSegmentInvalid = m[0] !== 'M'
+      || m.length !== 3
+      || (typeof(m[1]) !== 'number' || !isFinite(m[1]))
+      || (typeof(m[2]) !== 'number' || !isFinite(m[2]));
 
     if (mSegmentInvalid) {
       throw new Error('The M segment of the curve is invalid.');
@@ -50,12 +50,12 @@ class QuadraticBezierBond extends MultiBond {
 
     let q = segments[1];
 
-    let qSegmentInvalid = q.length !== 5
-      || q[0] !== 'Q'
-      || typeof(q[1]) !== 'number'
-      || typeof(q[2]) !== 'number'
-      || typeof(q[3]) !== 'number'
-      || typeof(q[4]) !== 'number';
+    let qSegmentInvalid = q[0] !== 'Q'
+      || q.length !== 5
+      || (typeof(q[1]) !== 'number' || !isFinite(q[1]))
+      || (typeof(q[2]) !== 'number' || !isFinite(q[2]))
+      || (typeof(q[3]) !== 'number' || !isFinite(q[3]))
+      || (typeof(q[4]) !== 'number' || !isFinite(q[4]));
 
     if (qSegmentInvalid) {
       throw new Error('The Q segment of the curve is invalid.');
