@@ -91,25 +91,25 @@ class RoundLoop {
    * Sets the coordinates and angles for all stems of a layout given its outermost stem.
    * 
    * @param {Stem} outermostStem The outermost stem of the layout.
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    */
-  static setCoordinatesAndAngles(outermostStem, drawingProps, baseProps) {
+  static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
     outermostStem.xBottomCenter = 0;
     outermostStem.yBottomCenter = 0;
-    outermostStem.angle = drawingProps.rotation - (Math.PI / 2);
+    outermostStem.angle = generalProps.rotation - (Math.PI / 2);
 
-    RoundLoop.setInnerCoordinatesAndAngles(outermostStem, drawingProps, baseProps);
+    RoundLoop.setInnerCoordinatesAndAngles(outermostStem, generalProps, baseProps);
   }
 
   /**
    * Recursively sets the coordinates and angles of stems inner to a given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    */
-  static setInnerCoordinatesAndAngles(st, drawingProps, baseProps) {
+  static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
     let circumference = RoundLoop.circumference(st);
     let xCenter = RoundLoop.xCenter(st);
     let yCenter = RoundLoop.yCenter(st);
@@ -131,7 +131,7 @@ class RoundLoop {
       ist.xBottomCenter = xCenter + (stemDistance * Math.cos(angle));
       ist.yBottomCenter = yCenter + (stemDistance * Math.sin(angle));
       ist.angle = angle;
-      StemLayout.setInnerCoordinatesAndAngles(ist, drawingProps, baseProps);
+      StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
 
       angle += (2 * Math.PI) * ((ist.polarWidth / 2) / circumference);
       
@@ -185,19 +185,19 @@ class TriangleLoop {
    * of its outer stem and the bottom of the platform of the triangle loop.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * 
    * @returns {number} The height of the triangle loop of a given stem.
    * 
    * @throws {Error} If the stem has a hairpin loop.
    */
-  static height(st, drawingProps) {
+  static height(st, generalProps) {
     if (st.hasHairpinLoop()) {
       throw new Error("The given stem has a hairpin loop.");
     } else if (st.numBranches === 1) {
       return TriangleLoop._heightOneBranch(st);
     } else {
-      return TriangleLoop._heightMultipleBranches(st, drawingProps);
+      return TriangleLoop._heightMultipleBranches(st, generalProps);
     }
   }
 
@@ -225,12 +225,12 @@ class TriangleLoop {
 
   /**
    * @param {Stem} st 
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * 
    * @returns {number} The height of the triangle loop of a given stem
    *  that has multiple stems in its loop.
    */
-  static _heightMultipleBranches(st, drawingProps) {
+  static _heightMultipleBranches(st, generalProps) {
     let it = st.loopIterator();
     let urFirst = it.next().value;
     let next = it.next();
@@ -248,7 +248,7 @@ class TriangleLoop {
     // should not be greater than Math.PI / 2
     let maxAngle = Math.min(
       Math.PI / 2,
-      Math.abs(drawingProps.maxTriangleLoopAngle) / 2
+      Math.abs(generalProps.maxTriangleLoopAngle) / 2
     );
 
     // should not be too small either
@@ -263,15 +263,15 @@ class TriangleLoop {
    * Recursively sets the coordinates and angles of stems inner to a given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    */
-  static setInnerCoordinatesAndAngles(st, drawingProps, baseProps) {
+  static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
     if (!st.hasHairpinLoop()) {
       let x = st.xTopCenter;
       let y = st.yTopCenter;
 
-      let height = TriangleLoop.height(st, drawingProps);
+      let height = TriangleLoop.height(st, generalProps);
       x += height * Math.cos(st.angle);
       y += height * Math.sin(st.angle);
 
@@ -293,7 +293,7 @@ class TriangleLoop {
         ist.xBottomLeft = x;
         ist.yBottomLeft = y;
         ist.angle = st.angle;
-        StemLayout.setInnerCoordinatesAndAngles(ist, drawingProps, baseProps);
+        StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
 
         let ur = it.next().value;
         x += ((ist.width / 2) + ur.length) * Math.cos(st.angle + (Math.PI / 2));
@@ -407,10 +407,10 @@ class FlatOutermostLoop {
    * Sets the coordinates and angles for all stems in the layout.
    * 
    * @param {Stem} outermostStem The outermost stem of the layout.
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    */
-  static setCoordinatesAndAngles(outermostStem, drawingProps, baseProps) {
+  static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
     let it = outermostStem.loopIterator();
     
     // skip the first unpaired region
@@ -423,8 +423,8 @@ class FlatOutermostLoop {
       let st = next.value;
       st.xBottomCenter = 0;
       st.yBottomCenter = 0;
-      st.angle = drawingProps.rotation - (Math.PI / 2);
-      StemLayout.setInnerCoordinatesAndAngles(st, drawingProps, baseProps);
+      st.angle = generalProps.rotation - (Math.PI / 2);
+      StemLayout.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
 
       ur = it.next().value;
       next = it.next();
@@ -432,7 +432,7 @@ class FlatOutermostLoop {
 
     while (!next.done) {
       FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, baseProps);
-      StemLayout.setInnerCoordinatesAndAngles(ur.boundingStem3, drawingProps, baseProps);
+      StemLayout.setInnerCoordinatesAndAngles(ur.boundingStem3, generalProps, baseProps);
       
       ur = it.next().value;
       next = it.next();
@@ -446,16 +446,16 @@ class StemLayout {
    * Sets the coordinates and angles for all stems in the layout.
    * 
    * @param {Stem} outermostStem The outermost stem of the layout.
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    * 
    * @throws {Error} If the loop of the outermost stem is not flat or round.
    */
-  static setCoordinatesAndAngles(outermostStem, drawingProps, baseProps) {
-    if (drawingProps.flatOutermostLoop) {
-      FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, drawingProps, baseProps);
+  static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
+    if (generalProps.flatOutermostLoop) {
+      FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, generalProps, baseProps);
     } else if (outermostStem.hasRoundLoop()) {
-      RoundLoop.setCoordinatesAndAngles(outermostStem, drawingProps, baseProps);
+      RoundLoop.setCoordinatesAndAngles(outermostStem, generalProps, baseProps);
     } else {
       throw new Error("The loop of the outermost stem must be either flat or round.");
     }
@@ -465,16 +465,16 @@ class StemLayout {
    * Recursively sets the coordinates and angles for stems inner to the given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    * 
    * @throws {Error} If the loop of the stem is not round or triangular.
    */
-  static setInnerCoordinatesAndAngles(st, drawingProps, baseProps) {
+  static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
     if (st.hasRoundLoop()) {
-      RoundLoop.setInnerCoordinatesAndAngles(st, drawingProps, baseProps);
+      RoundLoop.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
     } else if (st.hasTriangleLoop()) {
-      TriangleLoop.setInnerCoordinatesAndAngles(st, drawingProps, baseProps);
+      TriangleLoop.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
     } else {
       throw new Error("Stem has an unrecognized loop shape.");
     }

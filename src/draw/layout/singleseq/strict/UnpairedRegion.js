@@ -14,12 +14,12 @@ class UnpairedRegion {
    * @param {Stem} bs5 The stem immediately 5' to this unpaired region.
    * @param {Stem} bs3 The stem immediately 3' to this unpaired region.
    * @param {Array<number|null>} partners The partners notation of the secondary structure.
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    */
-  constructor(bs5, bs3, partners, drawingProps, baseProps) {
+  constructor(bs5, bs3, partners, generalProps, baseProps) {
     this._partners = partners;
-    this._drawingProps = drawingProps;
+    this._generalProps = generalProps;
     this._baseProps = baseProps;
 
     this._boundingStem5 = bs5;
@@ -162,7 +162,7 @@ class UnpairedRegion {
    * @returns {Array<VirtualBaseCoordinates>} The base coordinates of all positions in this unpaired region.
    */
   baseCoordinates(inOutermostLoop) {
-    if (inOutermostLoop && this._drawingProps.flatOutermostLoop) {
+    if (inOutermostLoop && this._generalProps.flatOutermostLoop) {
       return baseCoordinatesFlatOutermostLoop(this, this._baseProps);
     } else if (this.isHairpinLoop()) {
       return baseCoordinatesHairpin(this);

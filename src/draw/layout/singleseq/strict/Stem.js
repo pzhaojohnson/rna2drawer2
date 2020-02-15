@@ -14,12 +14,12 @@ class Stem {
   /**
    * @param {number} p5 The 5' most position of this stem.
    * @param {Array<number|null>} partners The partners notation of the secondary structure.
-   * @param {StrictLayoutDrawingProps} drawingProps The drawing properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    */
-  constructor(p5, partners, drawingProps, baseProps) {
+  constructor(p5, partners, generalProps, baseProps) {
     this._partners = partners;
-    this._drawingProps = drawingProps;
+    this._generalProps = generalProps;
     this._baseProps = baseProps;
     
     this._position5 = p5;
@@ -86,8 +86,8 @@ class Stem {
     }
 
     while (p < this.positionTop3) {
-      let bst3 = new Stem(p, this._partners, this._drawingProps, this._baseProps);
-      this._loop.push(new UnpairedRegion(bst5, bst3, this._partners, this._drawingProps, this._baseProps));
+      let bst3 = new Stem(p, this._partners, this._generalProps, this._baseProps);
+      this._loop.push(new UnpairedRegion(bst5, bst3, this._partners, this._generalProps, this._baseProps));
       this._loop.push(bst3);
 
       bst5 = bst3;
@@ -99,7 +99,7 @@ class Stem {
     }
 
     // add the last unpaired region
-    this._loop.push(new UnpairedRegion(bst5, this, this._partners, this._drawingProps, this._baseProps));
+    this._loop.push(new UnpairedRegion(bst5, this, this._partners, this._generalProps, this._baseProps));
   }
 
   /**
@@ -221,9 +221,9 @@ class Stem {
    */
   get width() {
     if (this.isOutermostStem()) {
-      return this._drawingProps.terminiGap;
+      return this._generalProps.terminiGap;
     } else {
-      return 2 + this._drawingProps.basePairBondLength;
+      return 2 + this._generalProps.basePairBondLength;
     }
   }
 
@@ -376,7 +376,7 @@ class Stem {
    */
   hasRoundLoop() {
     if (this.isOutermostStem()) {
-      return !this._drawingProps.flatOutermostLoop;
+      return !this._generalProps.flatOutermostLoop;
     } else {
       return this._baseProps[this.position5 - 1].loopShape === 'round';
     }
