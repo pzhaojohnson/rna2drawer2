@@ -2,7 +2,7 @@ import QuadraticBezierBond from './QuadraticBezierBond';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 
-it('validate sides', () => {
+it('validating sides', () => {
   let svg = createNodeSVG();
   
   function createBondWithSides(side1, side2) {
