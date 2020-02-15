@@ -98,3 +98,10 @@ it('validating curve', () => {
     svg.path('M 1 2 Q 3 4 5 a')
   )).toThrow();
 });
+
+it('validating brackets', () => {
+  let svg = createNodeSVG();
+  let curve = svg.path('M 1 2 Q 3 4 5 6');
+  let side1 = [Base.create(svg, 'A', 1, 2)];
+  let side2 = [Base.create(svg, 'U', 3, 4)];
+});

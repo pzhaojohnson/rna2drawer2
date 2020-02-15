@@ -62,6 +62,14 @@ class QuadraticBezierBond extends MultiBond {
     }
   }
 
+  /**
+   * Validates the bracket with respect to its side.
+   * 
+   * @param {SVG.Path} bracket 
+   * @param {Array<Base>} side 
+   */
+  _validateBracket(bracket, side) {}
+
   get xCurveEnd1() {
     let m = this._curve.array()[0];
     return m[1];
