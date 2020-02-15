@@ -1,5 +1,3 @@
-import MultiBond from './MultiBond';
-
 class QuadraticBezierBond {
 
   /**
@@ -22,7 +20,9 @@ class QuadraticBezierBond {
     this._curve = curve;
     this._bracket1 = bracket1;
     this._bracket2 = bracket2;
-    this._validatePaths();
+    this._validateCurve();
+    this._validateBracket(this._bracket1, this._side1);
+    this._validateBracket(this._bracket2, this._side2);
   }
   
   /**
@@ -36,10 +36,6 @@ class QuadraticBezierBond {
     if (this._side2.length === 0) {
       throw new Error('Side 2 cannot be empty.');
     }
-  }
-
-  _validatePaths() {
-    this._validateCurve();
   }
 
   /**
@@ -83,9 +79,40 @@ class QuadraticBezierBond {
    * Validates the bracket with respect to its side.
    * 
    * @param {SVG.Path} bracket 
-   * @param {Array<Base>} side 
+   * @param {Array<Base>} side The side that the bracket belongs to.
+   * 
+   * @throws {Error} If the first segment of the bracket is not a valid M segment.
+   * @throws {Error} If any trailing segments are not valid L segments.
+   * @throws {Error} If the total number of segments is not four plus the number of bases in the side.
    */
-  _validateBracket(bracket, side) {}
+  _validateBracket(bracket, side) {
+    let segments = bracket.array();
+
+    if (segments.length !== side.length + 4) {
+      throw new Error('The bracket does not have the correct number of segments.');
+    }
+
+    let m = segments[0];
+
+    let mSegmentInvalid = m[0] !== 'M'
+      || m.length != 3
+      || (typeof(m[1]) !== 'number' || !isFinite(m[1]))
+      || (typeof(m[2]) !== 'number' || !isFinite(m[2]));
+
+    if (mSegmentInvalid) {
+      throw new Error('The M segment of the bracket is invalid.');
+    }
+
+    segments.slice(1).forEach(l => {
+      let lSegmentInvalid = l[0] !== 'L'
+        || (typeof(l[1]) !== 'number' || !isFinite(l[1]))
+        || (typeof(l[2]) !== 'number' || !isFinite(l[2]));
+
+      if (lSegmentInvalid) {
+        throw new Error('The bracket contains an invalid L segment.');
+      }
+    });
+  }
 
   get xCurveEnd1() {
     let m = this._curve.array()[0];

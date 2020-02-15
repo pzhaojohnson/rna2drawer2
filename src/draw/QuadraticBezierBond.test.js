@@ -157,7 +157,153 @@ it('validating curve', () => {
 
 it('validating brackets', () => {
   let svg = createNodeSVG();
-  let curve = svg.path('M 1 2 Q 3 4 5 6');
-  let side1 = [Base.create(svg, 'A', 1, 2)];
-  let side2 = [Base.create(svg, 'U', 3, 4)];
+  
+  function createBondWithBracket1AndSide1(bracket1, side1) {
+    let curve = svg.path('M 1 2 Q 3 4 5 6');
+    let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+    let side2 = [Base.create(svg, 'A', 1, 2)];
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  }
+
+  function createBondWithBracket2AndSide2(bracket2, side2) {
+    let curve = svg.path('M 1 2 Q 3 4 5 6');
+    let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+    let side1 = [Base.create(svg, 'A', 1, 2)];
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  }
+
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 2, 3);
+  let b3 = Base.create(svg, 'G', 3, 5);
+  let b4 = Base.create(svg, 'C', 2, 8);
+
+  // valid bracket 1
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10 L 11 12'), [b1, b2]
+  )).not.toThrow();
+
+  // valid bracket 2
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10'), [b1]
+  )).not.toThrow();
+
+  // too few segments in bracket 1
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8'), [b2]
+  )).toThrow();
+
+  // too few segments in bracket 2
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10'), [b1, b2]
+  )).toThrow();
+
+  // too many segments in bracket 1
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10 L 11 12 L 13 14'), [b1]
+  )).toThrow();
+
+  // too many segments in bracket 2
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10 L 11 12'), [b2]
+  )).toThrow();
+
+  // the first segment of bracket 1 is not an M segment
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('L 1 2 L 3 4 L 5 6 L 7 8 L 9 10'), [b1]
+  )).toThrow();
+
+  // the first segment of bracket 2 is not an M segment
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('L 1 2 L 3 4 L 5 6 L 7 8 L 9 10 L 11 12'), [b2, b3]
+  )).toThrow();
+
+  // too few elements in M segment of bracket 1
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 L 3 4 L 5 6 L 7 8 L 9 10'), [b4]
+  )).toThrow();
+
+  // too few elements in M segment of bracket 2
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M L 3 4 L 5 6 L 7 8 L 9 10'), [b4]
+  )).toThrow();
+
+  // the second element of the M segment of bracket 1 is not a number
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M a 2 L 3 4 L 5 6 L 7 8 L 9 10'), [b2]
+  )).toThrow();
+
+  // the second element of the M segment of bracket 2 is not a number
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M b 2 L 3 4 L 5 6 L 7 8 L 9 10 L 11 12'), [b2, b3]
+  )).toThrow();
+
+  // the third element of the M segment of bracket 1 is not a number
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 2 a L 3 4 L 5 6 L 7 8 L 9 10 L 11 12'), [b2, b3]
+  )).toThrow();
+
+  // the third element of the M segment of bracket 2 is not a number
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 c L 3 4 L 5 6 L 7 8 L 9 10'), [b2]
+  )).toThrow();
+
+  // the second segment of bracket 1 is not an L segment
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 1 M 3 4 L 5 6 L 7 8 L 9 10'), [b2]
+  )).toThrow();
+
+  // the second segment of bracket 2 is not an L segment
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 1 m 3 4 L 5 6 L 7 8 L 9 10 L 11 12'), [b2, b1]
+  )).toThrow();
+
+  // a trailing segment of bracket 1 is not an L segment
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 2 L 3 4 L 5 6 M 7 8 L 9 10 L 11 12'), [b1, b2]
+  )).toThrow();
+
+  // a trailing segment of bracket 2 is not an L segment
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 m 9 10'), [b1]
+  )).toThrow();
+
+  // Z command at the end of bracket 1
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10 L 11 12 Z'), [b1, b2]
+  )).toThrow();
+
+  // Z command at the end of bracket 2
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10 Z'), [b1]
+  )).toThrow();
+
+  // z command at the end of bracket 1
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10 z'), [b1]
+  )).toThrow();
+
+  // z command at the end of bracket 2
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10 L 11 12 z'), [b1, b2]
+  )).toThrow();
+
+  // the second element of an L segment in bracket 1 is not a number
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 2 L 3 4 L b 6 L 7 8 L 9 10 L 11 12'), [b1, b2]
+  )).toThrow();
+
+  // the second element of an L segment in bracket 2 is not a number
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10 L h 12'), [b1, b2]
+  )).toThrow();
+
+  // the third element of an L segment in bracket 1 is not a number
+  expect(() => createBondWithBracket1AndSide1(
+    svg.path('M 1 2 L 3 g L 5 6 L 7 8 L 9 10'), [b1]
+  )).toThrow();
+
+  // the third element of an L segment in bracket 2 is not a number
+  expect(() => createBondWithBracket2AndSide2(
+    svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 k'), [b1]
+  )).toThrow();
 });
