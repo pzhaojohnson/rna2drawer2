@@ -118,49 +118,77 @@ class QuadraticBezierBond {
     });
   }
 
+  /**
+   * @returns {number} The X coordinate of the end of the curve attached to side 1.
+   */
   get xCurveEnd1() {
     let m = this._curve.array()[0];
     return m[1];
   }
 
+  /**
+   * @returns {number} The Y coordinate of the end of the curve attached to side 1.
+   */
   get yCurveEnd1() {
     let m = this._curve.array()[0];
     return m[2];
   }
 
+  /**
+   * @returns {number} The X coordinate of the end of the curve attached to side 2.
+   */
   get xCurveEnd2() {
     let q = this._curve.array()[1];
     return q[3];
   }
 
+  /**
+   * @returns {number} The Y coordinate of the end of the curve attached to side 2.
+   */
   get yCurveEnd2() {
     let q = this._curve.array()[1];
     return q[4];
   }
 
+  /**
+   * @returns {number} The X coordinate of the control point of the curve.
+   */
   get xCurveControlPoint() {
     let q = this._curve.array()[1];
     return q[1];
   }
 
+  /**
+   * @returns {number} The Y coordinate of the control point of the curve.
+   */
   get yCurveControlPoint() {
     let q = this._curve.array()[1];
     return q[2];
   }
 
+  /**
+   * @returns {number} The distance between the control point of the curve and the midpoint of the line
+   *  connecting the two ends of the curve.
+   */
   get curveHeight() {
-    let d = distanceBetween(this.xCurveEnd1, this.yCurveEnd1, this.xCurveEnd2, this.yCurveEnd2);
-    
     let midx = (this.xCurveEnd2 + this.xCurveEnd1) / 2;
     let midy = (this.yCurveEnd2 + this.yCurveEnd1) / 2;
-    let h = distanceBetween(midx, midy, this.xCurveControlPoint, this.yCurveControlPoint);
-    
-    // prevent division by zero and number overflow
-    d = Math.max(d, 0.00001);
-
-    return h / d;
+    return distanceBetween(midx, midy, this.xCurveControlPoint, this.yCurveControlPoint);
   }
 
+  /**
+   * The angle of the control point of the curve is calculated as the angle from the midpoint
+   * of the line connecting the two ends of the curve to the control point of the curve.
+   * 
+   * The angle between the two ends of the curve is calculated as the angle from end 1 of the
+   * curve to end 2.
+   * 
+   * The returned difference is normalized to be greater than or equal to zero and less
+   * than 2 * Math.PI.
+   * 
+   * @returns {number} The difference between the angle of the control point of the curve
+   *  and the angle between the two ends of the curve.
+   */
   get curveAngle() {
     let endsAngle = angleBetween(this.xCurveEnd1, this.yCurveEnd1, this.xCurveEnd2, this.yCurveEnd2);
 
@@ -172,46 +200,79 @@ class QuadraticBezierBond {
     return controlAngle - endsAngle;
   }
 
-  get topPadding1() {
+  /**
+   * @returns {number} The distance between the top of bracket 1 and the centers
+   *  of the bases of side 1.
+   */
+  get topPaddingBracket1() {
     let b = this._side1[0];
     let l = this._bracket1.array()[2];
     return distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
   }
 
-  get sidePadding1() {
+  /**
+   * @returns {number} The distance between the overhangs of bracket 1 and the centers
+   *  of the bases they are hanging over.
+   */
+  get overhangPaddingBracket1() {
     let segments = this._bracket1.array();
     let l1 = segments[1];
     let l2 = segments[2];
     return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
   }
 
-  get sideLength1() {
+  /**
+   * @returns {number} The length of the overhangs of bracket 1.
+   */
+  get overhangLengthBracket1() {
     let segments = this._bracket1.array();
     let m = segments[0];
     let l = segments[1];
     return distanceBetween(m[1], m[2], l[1], l[2]);
   }
 
-  get topPadding2() {
+  /**
+   * @returns {number} The distance between the top of bracket 2 and the centers
+   *  of the bases of side 2.
+   */
+  get topPaddingBracket2() {
     let b = this._side2[0];
     let l = this._bracket2.array()[2];
     return distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
   }
 
-  get sidePadding2() {
+  /**
+   * @returns {number} The distance between the overhangs of bracket 2 and the centers
+   *  of the bases they are hanging over.
+   */
+  get overhangPaddingBracket2() {
     let segments = this._bracket2.array();
     let l1 = segments[1];
     let l2 = segments[2];
     return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
   }
 
-  get sideLength2() {
+  /**
+   * @returns {number} The length of the overhangs of bracket 2.
+   */
+  get overhangLengthBracket2() {
     let segments = this._bracket2.array();
     let m = segments[0];
     let l = segments[1];
     return distanceBetween(m[1], m[2], l[1], l[2]);
   }
 
+  /**
+   * @typedef {Object} QuadraticBezierBond~BracketMidPoint 
+   * @property {number} x The X coordinate of the midpoint.
+   * @property {number} y The Y coordinate of the midpoint.
+   */
+
+  /**
+   * @param {SVG.Path} bracket One of the brackets of this bond.
+   * 
+   * @returns {QuadraticBezierBond~BracketMidPoint} The midpoint of the bracket.
+   */
   _bracketMidpoint(bracket) {
     let segments = bracket.array();
     let lefti;
@@ -235,18 +296,30 @@ class QuadraticBezierBond {
     };
   }
 
+  /**
+   * @returns {number} The X coordinate of the midpoint of bracket 1.
+   */
   get xMiddleBracket1() {
     return this._bracketMidpoint(this._bracket1).x;
   }
 
+  /**
+   * @returns {number} The Y coordinate of the midpoint of bracket 1.
+   */
   get yMiddleBracket1() {
     return this._bracketMidpoint(this._bracket1).y;
   }
 
+  /**
+   * @returns {number} The X coordinate of the midpoint of bracket 2.
+   */
   get xMiddleBracket2() {
     return this._bracketMidpoint(this._bracket2).x;
   }
 
+  /**
+   * @returns {number} The Y coordinate of the midpoint of bracket 2.
+   */
   get yMiddleBracket2() {
     return this._bracketMidpoint(this._bracket2).y;
   }
