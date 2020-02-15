@@ -2,7 +2,7 @@ import QuadraticBezierBond from './QuadraticBezierBond';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 
-it('_validateCurve', () => {
+it('validating curve', () => {
   let svg = createNodeSVG();
   let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8');
   let bracket2 = svg.path('M 9 10 L 11 12 L 13 14 L 15 16');
