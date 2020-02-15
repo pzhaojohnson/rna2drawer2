@@ -60,8 +60,8 @@ it('validating sides', () => {
 
 it('validating curve', () => {
   let svg = createNodeSVG();
-  let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8');
-  let bracket2 = svg.path('M 9 10 L 11 12 L 13 14 L 15 16');
+  let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  let bracket2 = svg.path('M 9 10 L 11 12 L 13 14 L 15 16 L 17 18');
   let side1 = [Base.create(svg, 'A', 1, 2)];
   let side2 = [Base.create(svg, 'U', 3, 4)];
 
