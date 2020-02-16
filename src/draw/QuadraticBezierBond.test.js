@@ -322,3 +322,48 @@ it('validating brackets', () => {
     svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 k'), [b1]
   )).toThrow();
 });
+
+it('curve property getters', () => {
+  let svg = createNodeSVG();
+  let curve = svg.path('M 1.1 -2 Q 3 0.4 5 -0.86');
+  let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  let side1 = [Base.create(svg, 'A', 1, 2)];
+  let side2 = [Base.create(svg, 'U', 3, 4)];
+  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+
+  expect(qbb.xCurveEnd1).toBe(1.1);
+  expect(qbb.yCurveEnd1).toBe(-2);
+  expect(qbb.xCurveEnd2).toBe(5);
+  expect(qbb.yCurveEnd2).toBe(-0.86);
+  expect(qbb.xCurveControlPoint).toBe(3);
+  expect(qbb.yCurveControlPoint).toBe(0.4);
+
+  expect(qbb.curveHeight).toBeCloseTo(1.8306829326784035, 6);
+  expect(qbb.curveAngle).toBeCloseTo(1.3137271587657995, 6);
+
+  // curve height of zero
+  curve = svg.path('M 0 0 Q 1 1 2 2');
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  expect(qbb.curveHeight).toBeCloseTo(0, 6);
+  expect(typeof(qbb.curveAngle)).toBe('number');
+  expect(isFinite(qbb.curveAngle)).toBeTruthy();
+  
+  // zero distance between ends
+  curve = svg.path('M 0 0 Q 0 1 0 0');
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  expect(qbb.curveHeight).toBeCloseTo(1, 6);
+  expect(typeof(qbb.curveAngle)).toBe('number');
+  expect(isFinite(qbb.curveAngle)).toBeTruthy();
+  
+  // curve height of zero and zero distance between ends
+  curve = svg.path('M 1.1 1.1 Q 1.1 1.1 1.1 1.1');
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  expect(qbb.curveHeight).toBe(0);
+  expect(typeof(qbb.curveAngle)).toBe('number');
+  expect(isFinite(qbb.curveAngle)).toBeTruthy();
+});
+
+it('bracket property getters', () => {
+
+});
