@@ -74,6 +74,14 @@ it('validating curve', () => {
     svg.path('M 1 2 Q 3 4 5 6')
   )).not.toThrow();
 
+  // curve with an ID that is not a string
+  let curve = svg.path('M 1 2 Q 3 4 5 6');
+  curve.id(2);
+  expect(() => createBondWithCurve(curve)).toThrow();
+
+  /* It does not seem to be possible to set the ID of an element to an empty string
+  using the SVG.js framework. */
+
   // handles floating point and negative numbers
   expect(() => createBondWithCurve(
     svg.path('M 1.001765 -2 Q 3 -0.237654 5 6')
@@ -191,6 +199,18 @@ it('validating brackets', () => {
   expect(() => createBondWithBracket2AndSide2(
     svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10'), [b1]
   )).not.toThrow();
+
+  // bracket 1 with an ID that is not a string
+  let bracket = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  bracket.id(3);
+  let side = [b1];
+  expect(() => createBondWithBracket1AndSide1(bracket, side)).toThrow();
+
+  // bracket 2 with an ID that is not a string
+  expect(() => createBondWithBracket2AndSide2(bracket, side)).toThrow();
+
+  /* It does not seem to be possible to set the ID of an element to an empty string
+  using the SVG.js framework. */
 
   // bracket 1 handles floating point and negative numbers
   expect(() => createBondWithBracket1AndSide1(

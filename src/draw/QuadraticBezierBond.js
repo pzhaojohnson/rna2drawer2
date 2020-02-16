@@ -45,9 +45,14 @@ class QuadraticBezierBond {
   /**
    * Validates the curve of this quadratic bezier bond.
    * 
+   * @throws {Error} If the ID of the curve has not been set to non-empty string.
    * @throws {Error} If the curve is not composed of a proper M segment followed by a proper Q segment.
    */
   _validateCurve() {
+    if (typeof(this._curve.id()) !== 'string' || this._curve.id().length === 0) {
+      throw new Error('The ID of the curve must be set to a non-empty string.');
+    }
+
     let segments = this._curve.array();
 
     if (segments.length !== 2) {
@@ -85,11 +90,16 @@ class QuadraticBezierBond {
    * @param {SVG.Path} bracket 
    * @param {Array<Base>} side The side that the bracket belongs to.
    * 
+   * @throws {Error} If the ID of the bracket has not been set to a non-empty string.
    * @throws {Error} If the first segment of the bracket is not a valid M segment.
    * @throws {Error} If any trailing segments are not valid L segments.
    * @throws {Error} If the total number of segments is not four plus the number of bases in the side.
    */
   _validateBracket(bracket, side) {
+    if (typeof(bracket.id()) !== 'string' || bracket.id().length === 0) {
+      throw new Error('The ID of the bracket must be set to a non-empty string.');
+    }
+
     let segments = bracket.array();
 
     if (segments.length !== side.length + 4) {
