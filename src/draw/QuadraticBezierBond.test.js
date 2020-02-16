@@ -365,5 +365,71 @@ it('curve property getters', () => {
 });
 
 it('bracket property getters', () => {
+  let svg = createNodeSVG();
+  
+  function createBondWithBracket1AndSide1(bracket1, side1) {
+    let curve = svg.path('M 1 2 Q 3 4 5 6');
+    let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+    let side2 = [Base.create(svg, 'U', 3, 4)];
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  }
 
+  function createBondWithBracket2AndSide2(bracket2, side2) {
+    let curve = svg.path('M 1 2 Q 3 4 5 6');
+    let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+    let side1 = [Base.create(svg, 'A', 1, 2)];
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  }
+
+  let b1 = Base.create(svg, 'A', -0.1, 2);
+  let b2 = Base.create(svg, 'U', 2, -3.2);
+  let b3 = Base.create(svg, 'G', 3.5, 5);
+  
+  let qbb1 = createBondWithBracket1AndSide1(
+    svg.path('M -1.1 2 L -1.1 3 L -0.1 3 L 0.9 3 L 0.9 2'), [b1]
+  );
+
+  // for bracket 1
+  expect(qbb1.topPaddingBracket1).toBeCloseTo(1, 6);
+  expect(qbb1.overhangPaddingBracket1).toBeCloseTo(1, 6);
+  expect(qbb1.overhangLengthBracket1).toBeCloseTo(1, 6);
+
+  let qbb2 = createBondWithBracket2AndSide2(
+    svg.path('M 1.7 -3.9 L 2.5 -4.7 L 3 -4.2 L 4.5 6 L 4 6.5 L 3.2 5.7'), [b2, b3]
+  );
+
+  // for bracket 2
+  expect(qbb2.topPaddingBracket2).toBeCloseTo(2 ** 0.5, 6);
+  expect(qbb2.overhangPaddingBracket2).toBeCloseTo(0.5 ** 0.5, 6);
+  expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
+
+  // bracket midpoint for side with one base
+  let bracket = svg.path('M 0.5 1 L 3.5 -0.9 L 0.999 42 L 1 3 L 0.8 0.88');
+  let side = [b1];
+  qbb1 = createBondWithBracket1AndSide1(bracket, side);
+  expect(qbb1.xMiddleBracket1).toBeCloseTo(0.999, 6);
+  expect(qbb1.yMiddleBracket1).toBeCloseTo(42, 6);
+  qbb2 = createBondWithBracket2AndSide2(bracket, side);
+  expect(qbb2.xMiddleBracket2).toBeCloseTo(0.999, 6);
+  expect(qbb2.yMiddleBracket2).toBeCloseTo(42, 6);
+
+  // bracket midpoint for side with even number of bases
+  bracket = svg.path('M 1 2 L 0.9 2.0 L -3.4 5.555 L 6.8 7 L -7 -7 L 0 0');
+  side = [b2, b3];
+  qbb1 = createBondWithBracket1AndSide1(bracket, side);
+  expect(qbb1.xMiddleBracket1).toBeCloseTo((-3.4 + 6.8) / 2, 6);
+  expect(qbb1.yMiddleBracket1).toBeCloseTo((5.555 + 7) / 2, 6);
+  qbb2 = createBondWithBracket2AndSide2(bracket, side);
+  expect(qbb2.xMiddleBracket2).toBeCloseTo((-3.4 + 6.8) / 2, 6);
+  expect(qbb2.yMiddleBracket2).toBeCloseTo((5.555 + 7) / 2, 6);
+
+  // bracket midpoint for side with odd number of bases (greater than one)
+  bracket = svg.path('M 1 2 L 3 4 L 5 6 L 7.996 -0.889 L 0 0 L 3 4 L 2 1');
+  side = [b1, b2, b3];
+  qbb1 = createBondWithBracket1AndSide1(bracket, side);
+  expect(qbb1.xMiddleBracket1).toBeCloseTo(7.996, 6);
+  expect(qbb1.yMiddleBracket1).toBeCloseTo(-0.889, 6);
+  qbb2 = createBondWithBracket2AndSide2(bracket, side);
+  expect(qbb2.xMiddleBracket2).toBeCloseTo(7.996, 6);
+  expect(qbb2.yMiddleBracket2).toBeCloseTo(-0.889, 6);
 });
