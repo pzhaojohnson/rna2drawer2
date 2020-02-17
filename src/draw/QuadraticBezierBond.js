@@ -152,7 +152,7 @@ class QuadraticBezierBond {
     this._validateCurve();
     this._validateBracket(this._bracket1, this._side1);
     this._validateBracket(this._bracket2, this._side2);
-    this._setBracketTopPaddings();
+    this._storeBracketTopPaddings();
   }
   
   /**
@@ -313,6 +313,22 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @param {number} h The new curve height.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  setCurveHeight(h, baseCounterClockwiseNormalAngleCallback) {
+    let curveProps = this._curveProps();
+    curveProps.height = h;
+    
+    this._reposition(
+      curveProps,
+      this._bracketProps1(),
+      this._bracketProps2(),
+      baseCounterClockwiseNormalAngleCallback,
+    );
+  }
+
+  /**
    * The angle of the control point of the curve is calculated as the angle from the midpoint
    * of the line connecting the two ends of the curve to the control point of the curve.
    * 
@@ -337,13 +353,45 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @param {number} a The new curve angle.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  setCurveAngle(a, baseCounterClockwiseNormalAngleCallback) {
+    let curveProps = this._curveProps();
+    curveProps.angle = a;
+
+    this._reposition(
+      curveProps,
+      this._bracketProps1(),
+      this._bracketProps2(),
+      baseCounterClockwiseNormalAngleCallback,
+    );
+  }
+
+  /**
+   * @typedef {Object} QuadraticBezierBond~CurveProps 
+   * @property {number} height 
+   * @property {number} angle 
+   */
+
+  /**
+   * @returns {QuadraticBezierBond~CurveProps} The current curve properties.
+   */
+  _curveProps() {
+    return {
+      height: this.curveHeight,
+      angle: this.curveAngle,
+    };
+  }
+
+  /**
    * Sets the _topPaddingBracket1 and _topPaddingBracket2 properties based on the current
-   * positions of the brackets and bases of the sides.
+   * positions of the brackets and the bases of their sides.
    * 
    * The _topPaddingBracket1 and _topPaddingBracket2 properties are necessary for the
    * reposition method to work.
    */
-  _setBracketTopPaddings() {
+  _storeBracketTopPaddings() {
     let b1 = this._side1[0];
     let l1 = this._bracket1.array()[2];
     this._topPaddingBracket1 = distanceBetween(b1.xCenter, b1.yCenter, l1[1], l1[2]);
@@ -362,11 +410,43 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @param {number} tp The top padding for bracket 1.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  setTopPaddingBracket1(tp, baseCounterClockwiseNormalAngleCallback) {
+    let bracketProps1 = this._bracketProps1();
+    bracketProps1.topPadding = tp;
+
+    this._reposition(
+      this._curveProps(),
+      bracketProps1,
+      this._bracketProps2(),
+      baseCounterClockwiseNormalAngleCallback,
+    );
+  }
+
+  /**
    * @returns {number} The distance between the top of bracket 2 and the centers
    *  of the bases of side 2.
    */
   get topPaddingBracket2() {
     return this._topPaddingBracket2;
+  }
+
+  /**
+   * @param {number} tp The new top padding for bracket 2.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  setTopPaddingBracket2(tp, baseCounterClockwiseNormalAngleCallback) {
+    let bracketProps2 = this._bracketProps2();
+    bracketProps2.topPadding = tp;
+
+    this._reposition(
+      this._curveProps(),
+      this._bracketProps1(),
+      bracketProps2,
+      baseCounterClockwiseNormalAngleCallback,
+    );
   }
 
   /**
@@ -381,6 +461,22 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @param {number} ohp The new overhang padding for bracket 1.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  setOverhangPaddingBracket1(ohp, baseCounterClockwiseNormalAngleCallback) {
+    let bracketProps1 = this._bracketProps1();
+    bracketProps1.overhangPadding = ohp;
+
+    this._reposition(
+      this._curveProps(),
+      bracketProps1,
+      this._bracketProps2(),
+      baseCounterClockwiseNormalAngleCallback,
+    );
+  }
+
+  /**
    * @returns {number} The distance between the overhangs of bracket 2 and the centers
    *  of the bases they are hanging over.
    */
@@ -389,6 +485,22 @@ class QuadraticBezierBond {
     let l1 = segments[1];
     let l2 = segments[2];
     return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
+  }
+
+  /**
+   * @param {number} ohp The new overhang padding for bracket 2.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  setOverhangPaddingBracket2(ohp, baseCounterClockwiseNormalAngleCallback) {
+    let bracketProps2 = this._bracketProps2();
+    bracketProps2.overhangPadding = ohp;
+
+    this._reposition(
+      this._curveProps(),
+      this._bracketProps1(),
+      bracketProps2,
+      baseCounterClockwiseNormalAngleCallback,
+    );
   }
 
   /**
@@ -402,6 +514,22 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @param {number} ohl The new overhang length for bracket 1.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  setOverhangLengthBracket1(ohl, baseCounterClockwiseNormalAngleCallback) {
+    let bracketProps1 = this._bracketProps1();
+    bracketProps1.overhangLength = ohl;
+
+    this._reposition(
+      this._curveProps(),
+      bracketProps1,
+      this._bracketProps2(),
+      baseCounterClockwiseNormalAngleCallback,
+    );
+  }
+
+  /**
    * @returns {number} The length of the overhangs of bracket 2.
    */
   get overhangLengthBracket2() {
@@ -409,6 +537,51 @@ class QuadraticBezierBond {
     let m = segments[0];
     let l = segments[1];
     return distanceBetween(m[1], m[2], l[1], l[2]);
+  }
+
+  /**
+   * @param {number} ohl The new overhang length for bracket 2.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  setOverhangLengthBracket2(ohl, baseCounterClockwiseNormalAngleCallback) {
+    let bracketProps2 = this._bracketProps2();
+    bracketProps2.overhangLength = ohl;
+
+    this._reposition(
+      this._curveProps(),
+      this._bracketProps1(),
+      bracketProps2,
+      baseCounterClockwiseNormalAngleCallback,
+    );
+  }
+
+  /**
+   * @typedef {Object} QuadraticBezierBond~BracketProps 
+   * @property {number} topPadding 
+   * @property {number} overhangPadding 
+   * @property {number} overhangLength 
+   */
+
+  /**
+   * @returns {QuadraticBezierBond~BracketProps} The current properties of bracket 1.
+   */
+  _bracketProps1() {
+    return {
+      topPadding: this.topPaddingBracket1,
+      overhangPadding: this.overhangPaddingBracket1,
+      overhangLength: this.overhangLengthBracket1,
+    };
+  }
+
+  /**
+   * @returns {QuadraticBezierBond~BracketProps} The current properties of bracket 2.
+   */
+  _bracketProps2() {
+    return {
+      topPadding: this.topPaddingBracket2,
+      overhangPadding: this.overhangPaddingBracket2,
+      overhangLength: this.overhangLengthBracket2,
+    };
   }
 
   /**
@@ -474,36 +647,56 @@ class QuadraticBezierBond {
   }
 
   /**
-   * Repositions the curve and brackets of this quadratic bezier bond
-   * based on the current positions of the bases of its sides.
+   * Repositions the curve and brackets of this quadratic bezier bond based on
+   * the current positions of the bases of its sides and the previous properties
+   * of its curve and brackets.
    * 
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   reposition(baseCounterClockwiseNormalAngleCallback) {
+    this._reposition(
+      this._curveProps(),
+      this._bracketProps1(),
+      this._bracketProps2(),
+      baseCounterClockwiseNormalAngleCallback,
+    );
+  }
+
+  /**
+   * Repositions the curve and brackets of this quadratic bezier curve based on
+   * the current positions of the bases of its sides and the given properties for
+   * its curve and brackets.
+   * 
+   * @param {QuadraticBezierBond~CurveProps} curveProps 
+   * @param {QuadraticBezierBond~BracketProps} bracketProps1 
+   * @param {QuadraticBezierBond~BracketProps} bracketProps2 
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  _reposition(curveProps, bracketProps1, bracketProps2, baseCounterClockwiseNormalAngleCallback) {
     this._bracket1.plot(QuadraticBezierBond._dBracket(
       this._side1,
-      this._topPaddingBracket1,
-      this.overhangPaddingBracket1,
-      this.overhangLengthBracket1,
+      bracketProps1.topPadding,
+      bracketProps1.overhangPadding,
+      bracketProps1.overhangLength,
       baseCounterClockwiseNormalAngleCallback,
     ));
 
     this._bracket2.plot(QuadraticBezierBond._dBracket(
       this._side2,
-      this._topPaddingBracket2,
-      this.overhangPaddingBracket2,
-      this.overhangLengthBracket2,
+      bracketProps2.topPadding,
+      bracketProps2.overhangPadding,
+      bracketProps2.overhangLength,
       baseCounterClockwiseNormalAngleCallback,
     ));
 
     this._curve.plot(QuadraticBezierBond._dCurve(
       this._bracket1,
       this._bracket2,
-      this.curveHeight,
-      this.curveAngle,
+      curveProps.height,
+      curveProps.angle,
     ));
 
-    this._setBracketTopPaddings();
+    this._storeBracketTopPaddings();
   }
 }
 
