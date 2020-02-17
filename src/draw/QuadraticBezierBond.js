@@ -341,13 +341,13 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   setCurveHeight(h, baseCounterClockwiseNormalAngleCallback) {
-    let curveProps = this._curveProps();
+    let curveProps = this._curvePositionalProps();
     curveProps.height = h;
     
     this._reposition(
       curveProps,
-      this._bracketProps1(),
-      this._bracketProps2(),
+      this._bracketPositionalProps1(),
+      this._bracketPositionalProps2(),
       baseCounterClockwiseNormalAngleCallback,
     );
   }
@@ -381,27 +381,27 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   setCurveAngle(a, baseCounterClockwiseNormalAngleCallback) {
-    let curveProps = this._curveProps();
+    let curveProps = this._curvePositionalProps();
     curveProps.angle = a;
 
     this._reposition(
       curveProps,
-      this._bracketProps1(),
-      this._bracketProps2(),
+      this._bracketPositionalProps1(),
+      this._bracketPositionalProps2(),
       baseCounterClockwiseNormalAngleCallback,
     );
   }
 
   /**
-   * @typedef {Object} QuadraticBezierBond~CurveProps 
+   * @typedef {Object} QuadraticBezierBond~CurvePositionalProps 
    * @property {number} height 
    * @property {number} angle 
    */
 
   /**
-   * @returns {QuadraticBezierBond~CurveProps} The current curve properties.
+   * @returns {QuadraticBezierBond~CurvePositionalProps} The current curve properties.
    */
-  _curveProps() {
+  _curvePositionalProps() {
     return {
       height: this.curveHeight,
       angle: this.curveAngle,
@@ -438,13 +438,13 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   setTopPaddingBracket1(tp, baseCounterClockwiseNormalAngleCallback) {
-    let bracketProps1 = this._bracketProps1();
+    let bracketProps1 = this._bracketPositionalProps1();
     bracketProps1.topPadding = tp;
 
     this._reposition(
-      this._curveProps(),
+      this._curvePositionalProps(),
       bracketProps1,
-      this._bracketProps2(),
+      this._bracketPositionalProps2(),
       baseCounterClockwiseNormalAngleCallback,
     );
   }
@@ -462,12 +462,12 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   setTopPaddingBracket2(tp, baseCounterClockwiseNormalAngleCallback) {
-    let bracketProps2 = this._bracketProps2();
+    let bracketProps2 = this._bracketPositionalProps2();
     bracketProps2.topPadding = tp;
 
     this._reposition(
-      this._curveProps(),
-      this._bracketProps1(),
+      this._curvePositionalProps(),
+      this._bracketPositionalProps1(),
       bracketProps2,
       baseCounterClockwiseNormalAngleCallback,
     );
@@ -489,13 +489,13 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   setOverhangPaddingBracket1(ohp, baseCounterClockwiseNormalAngleCallback) {
-    let bracketProps1 = this._bracketProps1();
+    let bracketProps1 = this._bracketPositionalProps1();
     bracketProps1.overhangPadding = ohp;
 
     this._reposition(
-      this._curveProps(),
+      this._curvePositionalProps(),
       bracketProps1,
-      this._bracketProps2(),
+      this._bracketPositionalProps2(),
       baseCounterClockwiseNormalAngleCallback,
     );
   }
@@ -516,12 +516,12 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   setOverhangPaddingBracket2(ohp, baseCounterClockwiseNormalAngleCallback) {
-    let bracketProps2 = this._bracketProps2();
+    let bracketProps2 = this._bracketPositionalProps2();
     bracketProps2.overhangPadding = ohp;
 
     this._reposition(
-      this._curveProps(),
-      this._bracketProps1(),
+      this._curvePositionalProps(),
+      this._bracketPositionalProps1(),
       bracketProps2,
       baseCounterClockwiseNormalAngleCallback,
     );
@@ -542,13 +542,13 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   setOverhangLengthBracket1(ohl, baseCounterClockwiseNormalAngleCallback) {
-    let bracketProps1 = this._bracketProps1();
+    let bracketProps1 = this._bracketPositionalProps1();
     bracketProps1.overhangLength = ohl;
 
     this._reposition(
-      this._curveProps(),
+      this._curvePositionalProps(),
       bracketProps1,
-      this._bracketProps2(),
+      this._bracketPositionalProps2(),
       baseCounterClockwiseNormalAngleCallback,
     );
   }
@@ -568,74 +568,43 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   setOverhangLengthBracket2(ohl, baseCounterClockwiseNormalAngleCallback) {
-    let bracketProps2 = this._bracketProps2();
+    let bracketProps2 = this._bracketPositionalProps2();
     bracketProps2.overhangLength = ohl;
 
     this._reposition(
-      this._curveProps(),
-      this._bracketProps1(),
+      this._curvePositionalProps(),
+      this._bracketPositionalProps1(),
       bracketProps2,
       baseCounterClockwiseNormalAngleCallback,
     );
   }
 
   /**
-   * @returns {number} The opacity of bracket1.
-   */
-  get opacityBracket1() {
-    return this._bracket1.attr('opacity');
-  }
-
-  /**
-   * @param {number} o 
-   */
-  set opacityBracket1(o) {
-    this._bracket1.attr({ 'opacity': o });
-  }
-
-  /**
-   * @returns {number} The opacity of bracket 2.
-   */
-  get opacityBracket2() {
-    return this._bracket2.attr('opacity');
-  }
-
-  /**
-   * @param {number} o 
-   */
-  set opacityBracket2(o) {
-    this._bracket2.attr({ 'opacity': o });
-  }
-
-  /**
-   * @typedef {Object} QuadraticBezierBond~BracketProps 
+   * @typedef {Object} QuadraticBezierBond~BracketPositionalProps 
    * @property {number} topPadding 
    * @property {number} overhangPadding 
    * @property {number} overhangLength 
-   * @property {number} opacity 
    */
 
   /**
-   * @returns {QuadraticBezierBond~BracketProps} The current properties of bracket 1.
+   * @returns {QuadraticBezierBond~BracketPositionalProps} The current properties of bracket 1.
    */
-  _bracketProps1() {
+  _bracketPositionalProps1() {
     return {
       topPadding: this.topPaddingBracket1,
       overhangPadding: this.overhangPaddingBracket1,
       overhangLength: this.overhangLengthBracket1,
-      opacity: this.opacityBracket1,
     };
   }
 
   /**
-   * @returns {QuadraticBezierBond~BracketProps} The current properties of bracket 2.
+   * @returns {QuadraticBezierBond~BracketPositionalProps} The current properties of bracket 2.
    */
-  _bracketProps2() {
+  _bracketPositionalProps2() {
     return {
       topPadding: this.topPaddingBracket2,
       overhangPadding: this.overhangPaddingBracket2,
       overhangLength: this.overhangLengthBracket2,
-      opacity: this.opacityBracket2,
     };
   }
 
@@ -648,9 +617,9 @@ class QuadraticBezierBond {
    */
   reposition(baseCounterClockwiseNormalAngleCallback) {
     this._reposition(
-      this._curveProps(),
-      this._bracketProps1(),
-      this._bracketProps2(),
+      this._curvePositionalProps(),
+      this._bracketPositionalProps1(),
+      this._bracketPositionalProps2(),
       baseCounterClockwiseNormalAngleCallback,
     );
   }
@@ -660,9 +629,9 @@ class QuadraticBezierBond {
    * the current positions of the bases of its sides and the given properties for
    * its curve and brackets.
    * 
-   * @param {QuadraticBezierBond~CurveProps} curveProps 
-   * @param {QuadraticBezierBond~BracketProps} bracketProps1 
-   * @param {QuadraticBezierBond~BracketProps} bracketProps2 
+   * @param {QuadraticBezierBond~CurvePositionalProps} curveProps 
+   * @param {QuadraticBezierBond~BracketPositionalProps} bracketProps1 
+   * @param {QuadraticBezierBond~BracketPositionalProps} bracketProps2 
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    */
   _reposition(curveProps, bracketProps1, bracketProps2, baseCounterClockwiseNormalAngleCallback) {
@@ -722,6 +691,34 @@ class QuadraticBezierBond {
     this._curve.attr({ 'stroke-width': sw });
     this._bracket1.attr({ 'stroke-width': sw });
     this._bracket2.attr({ 'stroke-width': sw });
+  }
+
+  /**
+   * @returns {number} The opacity of bracket1.
+   */
+  get opacityBracket1() {
+    return this._bracket1.attr('opacity');
+  }
+
+  /**
+   * @param {number} o 
+   */
+  set opacityBracket1(o) {
+    this._bracket1.attr({ 'opacity': o });
+  }
+
+  /**
+   * @returns {number} The opacity of bracket 2.
+   */
+  get opacityBracket2() {
+    return this._bracket2.attr('opacity');
+  }
+
+  /**
+   * @param {number} o 
+   */
+  set opacityBracket2(o) {
+    this._bracket2.attr({ 'opacity': o });
   }
 
   /**
