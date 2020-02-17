@@ -692,6 +692,34 @@ class QuadraticBezierBond {
     this._bracket1.attr({ 'stroke-width': sw });
     this._bracket2.attr({ 'stroke-width': sw });
   }
+
+  /**
+   * @returns {number} The opacity of bracket1.
+   */
+  get opacityBracket1() {
+    return this._bracket1.attr('opacity');
+  }
+
+  /**
+   * @param {number} o 
+   */
+  set opacityBracket1(o) {
+    this._bracket1.attr({ 'opacity': o });
+  }
+
+  /**
+   * @returns {number} The opacity of bracket 2.
+   */
+  get opacityBracket2() {
+    return this._bracket2.attr('opacity');
+  }
+
+  /**
+   * @param {number} o 
+   */
+  set opacityBracket2(o) {
+    this._bracket2.attr({ 'opacity': o });
+  }
 }
 
 export default QuadraticBezierBond;
