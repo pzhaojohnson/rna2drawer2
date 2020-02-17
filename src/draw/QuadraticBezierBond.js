@@ -303,6 +303,30 @@ class QuadraticBezierBond {
   }
 
   /**
+   * Shifts theX and Y coordinates of the control point of the curve by the given amounts.
+   * 
+   * @param {number} xShift 
+   * @param {number} yShift 
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  shiftCurveControlPoint(xShift, yShift, baseCounterClockwiseNormalAngleCallback) {
+    let xControl = this.xCurveControlPoint + xShift;
+    let yControl = this.yCurveControlPoint + yShift;
+
+    let emx = (this.xCurveEnd1 + this.xCurveEnd2) / 2;
+    let emy = (this.yCurveEnd1 + this.yCurveEnd2) / 2;
+
+    let height = distanceBetween(emx, emy, xControl, yControl);
+
+    let endsAngle = angleBetween(this.xCurveEnd1, this.yCurveEnd1, this.xCurveEnd2, this.yCurveEnd2);
+    let a = angleBetween(emx, emy, xControl, yControl);
+    angle = normalizeAngle(a, endsAngle) - endsAngle;
+
+    this.setCurveHeight(height, baseCounterClockwiseNormalAngleCallback);
+    this.setCurveAngle(angle, baseCounterClockwiseNormalAngleCallback);
+  }
+
+  /**
    * @returns {number} The distance between the control point of the curve and the midpoint of the line
    *  connecting the two ends of the curve.
    */
