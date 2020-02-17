@@ -5,6 +5,131 @@ import normalizeAngle from './normalizeAngle';
 class QuadraticBezierBond {
 
   /**
+   * @callback QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback 
+   * @param {Base} base 
+   * 
+   * @returns {number} The counterclockwise normal angle to the curve created by the given base
+   *  and its neighboring bases.
+   */
+
+  /**
+   * @param {Array<Base>} side The side that the bracket is attached to.
+   * @param {number} topPadding The top padding of the bracket.
+   * @param {number} overhangPadding The overhang padding of the bracket.
+   * @param {number} overhangLength The overhang length of the bracket.
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   * 
+   * @returns {string} The d attribute of the path of the bracket.
+   */
+  static _dBracket(side, topPadding, overhangPadding, overhangLength, baseCounterClockwiseNormalAngleCallback) {
+    let bFirst = side[0];
+    let angle = baseCounterClockwiseNormalAngleCallback(bFirst);
+    let x = bFirst.xCenter + (topPadding * Math.cos(angle));
+    let y = bFirst.yCenter + (topPadding * Math.sin(angle));
+    d = 'L ' + x + ' ' + y + ' ';
+
+    angle -= Math.PI / 2;
+    x += overhangPadding * Math.cos(angle);
+    y += overhangPadding * Math.sin(angle);
+    d = 'L ' + x + ' ' + y + ' ' + d;
+
+    angle -= Math.PI / 2;
+    x += overhangLength * Math.cos(angle);
+    y += overhangLength * Math.sin(angle);
+    d = 'M ' + x + ' ' + y + ' ' + d;
+
+    side.slice(1, side.length - 1).forEach(b => {
+      angle = baseCounterClockwiseNormalAngleCallback(b);
+      x = b.xCenter + (topPadding * Math.cos(angle));
+      y = b.yCenter + (topPadding * Math.sin(angle));
+      d += 'L ' + x + ' ' + y + ' ';
+    });
+
+    let bLast = side[side.length - 1];
+    angle = baseCounterClockwiseNormalAngleCallback(bLast);
+    x = bLast.xCenter + (topPadding * Math.cos(angle));
+    y = bLast.yCenter + (topPadding * Math.sin(angle));
+    d += 'L ' + x + ' ' + y + ' ';
+
+    angle += Math.PI / 2;
+    x += overhangPadding * Math.cos(angle);
+    y += overhangPadding * Math.sin(angle);
+    d += 'L ' + x + ' ' + y + ' ';
+
+    angle += Math.PI / 2;
+    x += overhangLength * Math.cos(angle);
+    y += overhangLength * Math.sin(angle);
+    d += 'L ' + x + ' ' + y;
+    
+    return d;
+  }
+
+  /**
+   * @typedef {Object} QuadraticBezierBond~BracketMidPoint 
+   * @property {number} x The X coordinate of the midpoint.
+   * @property {number} y The Y coordinate of the midpoint.
+   */
+
+  /**
+   * @param {SVG.Path} bracket A bracket of a quadratic bezier bond.
+   * 
+   * @returns {QuadraticBezierBond~BracketMidPoint} The midpoint of the bracket.
+   */
+  static _bracketMidpoint(bracket) {
+    let segments = bracket.array();
+    let lefti;
+    let righti;
+
+    // even number of segments
+    if (segments.length % 2 === 0) {
+      lefti = (segments.length / 2) - 1;
+      righti = segments.length / 2;
+    } else {
+      lefti = Math.floor(segments.length / 2);
+      righti = Math.floor(segments.length / 2);
+    }
+
+    let left = segments[lefti];
+    let right = segments[righti];
+    
+    return {
+      x: (left[1] + right[1]) / 2,
+      y: (left[2] + right[2]) / 2,
+    };
+  }
+
+  /**
+   * @param {SVG.Path} bracket1 Bracket 1 of the quadratic bezier bond.
+   * @param {SVG.Path} bracket2 Bracket 2 of the quadratic bezier bond.
+   * @param {number} height The height of the curve.
+   * @param {number} angle The height of the curve.
+   * 
+   * @returns {string} The d attribute of the path of the curve of the quadratic bezier bond.
+   */
+  static _dCurve(bracket1, bracket2, height, angle) {
+    let bmp1 = QuadraticBezierBond._bracketMidpoint(bracket1);
+    let bmx1 = bmp1.x;
+    let bmy1 = bmp1.y;
+    let d = 'M ' + bmx1 + ' ' + bmy1 + ' ';
+
+    let bmp2 = QuadraticBezierBond._bracketMidpoint(bracket2);
+    let bmx2 = bmp2.x;
+    let bmy2 = bmp2.y;
+
+    let emx = (bmx1 + bmx2) / 2;
+    let emy = (bmy1 + bmy2) / 2;
+    let endsAngle = angleBetween(bmx1, bmy1, bmx2, bmy2);
+    let a = endsAngle + angle;
+
+    let xControl = emx + (height * Math.cos(a));
+    let yControl = emy + (height * Math.sin(a));
+
+    d += 'Q ' + xControl + ' ' + yControl + ' ' + bmx2 + ' ' + bmy2;
+
+    return d;
+  }
+
+  /**
    * This constructor cannot verify if the bases stored in the side1 and side2
    * arguments are consecutive and in ascending order by position.
    * 
