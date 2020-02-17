@@ -472,6 +472,37 @@ class QuadraticBezierBond {
   get yMiddleBracket2() {
     return this._bracketMidpoint(this._bracket2).y;
   }
+
+  /**
+   * Repositions the curve and brackets of this quadratic bezier bond
+   * based on the current positions of the bases of its sides.
+   * 
+   * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
+   */
+  reposition(baseCounterClockwiseNormalAngleCallback) {
+    this._bracket1.plot(QuadraticBezierBond._dBracket(
+      this._side1,
+      this._topPaddingBracket1,
+      this.overhangPaddingBracket1,
+      this.overhangLengthBracket1,
+      baseCounterClockwiseNormalAngleCallback,
+    ));
+
+    this._bracket2.plot(QuadraticBezierBond._dBracket(
+      this._side2,
+      this._topPaddingBracket2,
+      this.overhangPaddingBracket2,
+      this.overhangLengthBracket2,
+      baseCounterClockwiseNormalAngleCallback,
+    ));
+
+    this._curve.plot(QuadraticBezierBond._dCurve(
+      this._bracket1,
+      this._bracket2,
+      this.curveHeight,
+      this.curveAngle,
+    ));
+  }
 }
 
 export default QuadraticBezierBond;
