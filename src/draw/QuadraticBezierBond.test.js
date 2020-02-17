@@ -2,6 +2,28 @@ import QuadraticBezierBond from './QuadraticBezierBond';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 
+it('_bracketMidpoint', () => {
+  let svg = createNodeSVG();
+  
+  // bracket midpoint for side with one base
+  let bracket = svg.path('M 0.5 1 L 3.5 -0.9 L 0.999 42 L 1 3 L 0.8 0.88');
+  let mp = QuadraticBezierBond._bracketMidpoint(bracket);
+  expect(mp.x).toBeCloseTo(0.999, 6);
+  expect(mp.y).toBeCloseTo(42, 6);
+  
+  // bracket midpoint for side with even number of bases
+  bracket = svg.path('M 1 2 L 0.9 2.0 L -3.4 5.555 L 6.8 7 L -7 -7 L 0 0');
+  mp = QuadraticBezierBond._bracketMidpoint(bracket);
+  expect(mp.x).toBeCloseTo((-3.4 + 6.8) / 2, 6);
+  expect(mp.y).toBeCloseTo((5.555 + 7) / 2, 6);
+  
+  // bracket midpoint for side with odd number of bases (greater than one)
+  bracket = svg.path('M 1 2 L 3 4 L 5 6 L 7.996 -0.889 L 0 0 L 3 4 L 2 1');
+  mp = QuadraticBezierBond._bracketMidpoint(bracket);
+  expect(mp.x).toBeCloseTo(7.996, 6);
+  expect(mp.y).toBeCloseTo(-0.889, 6);
+});
+
 it('validating sides', () => {
   let svg = createNodeSVG();
   
@@ -422,34 +444,4 @@ it('bracket property getters', () => {
   expect(qbb2.topPaddingBracket2).toBeCloseTo(2 ** 0.5, 6);
   expect(qbb2.overhangPaddingBracket2).toBeCloseTo(0.5 ** 0.5, 6);
   expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
-
-  // bracket midpoint for side with one base
-  let bracket = svg.path('M 0.5 1 L 3.5 -0.9 L 0.999 42 L 1 3 L 0.8 0.88');
-  let side = [b1];
-  qbb1 = createBondWithBracket1AndSide1(bracket, side);
-  expect(qbb1.xMiddleBracket1).toBeCloseTo(0.999, 6);
-  expect(qbb1.yMiddleBracket1).toBeCloseTo(42, 6);
-  qbb2 = createBondWithBracket2AndSide2(bracket, side);
-  expect(qbb2.xMiddleBracket2).toBeCloseTo(0.999, 6);
-  expect(qbb2.yMiddleBracket2).toBeCloseTo(42, 6);
-
-  // bracket midpoint for side with even number of bases
-  bracket = svg.path('M 1 2 L 0.9 2.0 L -3.4 5.555 L 6.8 7 L -7 -7 L 0 0');
-  side = [b2, b3];
-  qbb1 = createBondWithBracket1AndSide1(bracket, side);
-  expect(qbb1.xMiddleBracket1).toBeCloseTo((-3.4 + 6.8) / 2, 6);
-  expect(qbb1.yMiddleBracket1).toBeCloseTo((5.555 + 7) / 2, 6);
-  qbb2 = createBondWithBracket2AndSide2(bracket, side);
-  expect(qbb2.xMiddleBracket2).toBeCloseTo((-3.4 + 6.8) / 2, 6);
-  expect(qbb2.yMiddleBracket2).toBeCloseTo((5.555 + 7) / 2, 6);
-
-  // bracket midpoint for side with odd number of bases (greater than one)
-  bracket = svg.path('M 1 2 L 3 4 L 5 6 L 7.996 -0.889 L 0 0 L 3 4 L 2 1');
-  side = [b1, b2, b3];
-  qbb1 = createBondWithBracket1AndSide1(bracket, side);
-  expect(qbb1.xMiddleBracket1).toBeCloseTo(7.996, 6);
-  expect(qbb1.yMiddleBracket1).toBeCloseTo(-0.889, 6);
-  qbb2 = createBondWithBracket2AndSide2(bracket, side);
-  expect(qbb2.xMiddleBracket2).toBeCloseTo(7.996, 6);
-  expect(qbb2.yMiddleBracket2).toBeCloseTo(-0.889, 6);
 });
