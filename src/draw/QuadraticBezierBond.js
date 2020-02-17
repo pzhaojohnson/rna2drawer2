@@ -237,11 +237,30 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @returns {number} The distance between the top of bracket 2 and the centers
+   *  of the bases of side 2.
+   */
+  get topPaddingBracket2() {
+    return this._topPaddingBracket2;
+  }
+
+  /**
    * @returns {number} The distance between the overhangs of bracket 1 and the centers
    *  of the bases they are hanging over.
    */
   get overhangPaddingBracket1() {
     let segments = this._bracket1.array();
+    let l1 = segments[1];
+    let l2 = segments[2];
+    return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
+  }
+
+  /**
+   * @returns {number} The distance between the overhangs of bracket 2 and the centers
+   *  of the bases they are hanging over.
+   */
+  get overhangPaddingBracket2() {
+    let segments = this._bracket2.array();
     let l1 = segments[1];
     let l2 = segments[2];
     return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
@@ -255,25 +274,6 @@ class QuadraticBezierBond {
     let m = segments[0];
     let l = segments[1];
     return distanceBetween(m[1], m[2], l[1], l[2]);
-  }
-
-  /**
-   * @returns {number} The distance between the top of bracket 2 and the centers
-   *  of the bases of side 2.
-   */
-  get topPaddingBracket2() {
-    return this._topPaddingBracket2;
-  }
-
-  /**
-   * @returns {number} The distance between the overhangs of bracket 2 and the centers
-   *  of the bases they are hanging over.
-   */
-  get overhangPaddingBracket2() {
-    let segments = this._bracket2.array();
-    let l1 = segments[1];
-    let l2 = segments[2];
-    return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
   }
 
   /**
