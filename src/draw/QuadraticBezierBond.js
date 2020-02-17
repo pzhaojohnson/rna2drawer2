@@ -27,6 +27,7 @@ class QuadraticBezierBond {
     this._validateCurve();
     this._validateBracket(this._bracket1, this._side1);
     this._validateBracket(this._bracket2, this._side2);
+    this._setTopPaddingBrackets();
   }
   
   /**
@@ -211,13 +212,28 @@ class QuadraticBezierBond {
   }
 
   /**
+   * Sets the _topPaddingBracket1 and _topPaddingBracket2 properties based on the current
+   * positions of the brackets and bases of the sides.
+   * 
+   * The _topPaddingBracket1 and _topPaddingBracket2 properties are necessary for the
+   * reposition method to work.
+   */
+  _setTopPaddingBrackets() {
+    let b1 = this._side1[0];
+    let l1 = this._bracket1.array()[2];
+    this._topPaddingBracket1 = distanceBetween(b1.xCenter, b1.yCenter, l1[1], l1[2]);
+
+    let b2 = this._side2[0];
+    let l2 = this._bracket2.array()[2];
+    this._topPaddingBracket2 = distanceBetween(b2.xCenter, b2.yCenter, l2[1], l2[2]);
+  }
+
+  /**
    * @returns {number} The distance between the top of bracket 1 and the centers
    *  of the bases of side 1.
    */
   get topPaddingBracket1() {
-    let b = this._side1[0];
-    let l = this._bracket1.array()[2];
-    return distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
+    return this._topPaddingBracket1;
   }
 
   /**
@@ -246,9 +262,7 @@ class QuadraticBezierBond {
    *  of the bases of side 2.
    */
   get topPaddingBracket2() {
-    let b = this._side2[0];
-    let l = this._bracket2.array()[2];
-    return distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
+    return this._topPaddingBracket2;
   }
 
   /**
