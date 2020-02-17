@@ -152,7 +152,7 @@ class QuadraticBezierBond {
     this._validateCurve();
     this._validateBracket(this._bracket1, this._side1);
     this._validateBracket(this._bracket2, this._side2);
-    this._setTopPaddingBrackets();
+    this._setBracketTopPaddings();
   }
   
   /**
@@ -343,7 +343,7 @@ class QuadraticBezierBond {
    * The _topPaddingBracket1 and _topPaddingBracket2 properties are necessary for the
    * reposition method to work.
    */
-  _setTopPaddingBrackets() {
+  _setBracketTopPaddings() {
     let b1 = this._side1[0];
     let l1 = this._bracket1.array()[2];
     this._topPaddingBracket1 = distanceBetween(b1.xCenter, b1.yCenter, l1[1], l1[2]);
@@ -502,6 +502,8 @@ class QuadraticBezierBond {
       this.curveHeight,
       this.curveAngle,
     ));
+
+    this._setBracketTopPaddings();
   }
 }
 
