@@ -723,6 +723,30 @@ class QuadraticBezierBond {
     this._bracket1.attr({ 'stroke-width': sw });
     this._bracket2.attr({ 'stroke-width': sw });
   }
+
+  /**
+   * Binds the given callback function to clicking on the curve or either of
+   * the brackets of this quadratic bezier bond.
+   * 
+   * @param {function} cb A callback function.
+   */
+  bindClick(cb) {
+    this._curve.click(cb);
+    this._bracket1.click(cb);
+    this._bracket2.click(cb);
+  }
+
+  /**
+   * Binds the given callback function to double-clicking on the curve or either of
+   * the brackets of this quadratic bezier bond.
+   * 
+   * @param {function} cb A callback function.
+   */
+  bindDblclick(cb) {
+    this._curve.dblclick(cb);
+    this._bracket1.dblclick(cb);
+    this._bracket2.dblclick(cb);
+  }
 }
 
 export default QuadraticBezierBond;
