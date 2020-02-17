@@ -130,6 +130,41 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @param {SVG.Doc} svg 
+   * @param {Array<Base>} side1 
+   * @param {Array<Base>} side2 
+   * @param {Object} drawingDefaults 
+   * 
+   * @returns {QuadraticBezierBond} 
+   */
+  static createTertiary(svg, side1, side2, drawingDefaults, baseCounterClockwiseNormalAngleCallback) {
+    let bracket1 = svg.path(QuadraticBezierBond._dBracket(
+      side1,
+      drawingDefaults.tertiaryBondTopPadding,
+      drawingDefaults.tertiaryBondOverhangPadding,
+      drawingDefaults.tertiaryBondOverhangLength,
+      baseCounterClockwiseNormalAngleCallback,
+    ));
+
+    let bracket2 = svg.path(QuadraticBezierBond._dBracket(
+      side2,
+      drawingDefaults.tertiaryBondTopPadding,
+      drawingDefaults.tertiaryBondOverhangPadding,
+      drawingDefaults.tertiaryBondOverhangLength,
+      baseCounterClockwiseNormalAngleCallback,
+    ));
+
+    let curve = svg.path(QuadraticBezierBond._dCurve(
+      bracket1,
+      bracket2,
+      100,
+      3 * Math.PI / 2,
+    ));
+
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  }
+
+  /**
    * This constructor cannot verify if the bases stored in the side1 and side2
    * arguments are consecutive and in ascending order by position.
    * 

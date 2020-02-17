@@ -68,9 +68,11 @@ class Drawing {
       watsonCrickOtherBondStroke: '#808080',
       watsonCrickBondStrokeWidth: 2,
       
-      tertiaryBondPadding: 6,
+      tertiaryBondTopPadding: 6,
+      tertiaryBondOverhangPadding: 6,
+      tertiaryBondOverhangLength: 6,
       tertiaryBondStroke: '#0000FF',
-      tertiaryBondStrokeWidth: 1
+      tertiaryBondStrokeWidth: 1,
     };
   }
 
