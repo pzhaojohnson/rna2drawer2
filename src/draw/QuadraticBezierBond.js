@@ -660,6 +660,38 @@ class QuadraticBezierBond {
 
     this._storeBracketTopPaddings();
   }
+
+  /**
+   * @returns {string} The stroke color of this quadratic bezier bond.
+   */
+  get stroke() {
+    return this._curve.attr('stroke');
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set stroke(s) {
+    this._curve.attr({ 'stroke': s });
+    this._bracket1.attr({ 'stroke': s });
+    this._bracket2.attr({ 'stroke': s });
+  }
+
+  /**
+   * @returns {number} The stroke width of this quadratic bezier bond.
+   */
+  get strokeWidth() {
+    return this._curve.attr('stroke-width');
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set strokeWidth(sw) {
+    this._curve.attr({ 'stroke-width': sw });
+    this._bracket1.attr({ 'stroke-width': sw });
+    this._bracket2.attr({ 'stroke-width': sw });
+  }
 }
 
 export default QuadraticBezierBond;
