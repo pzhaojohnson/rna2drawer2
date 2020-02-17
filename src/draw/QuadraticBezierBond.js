@@ -585,68 +585,6 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @typedef {Object} QuadraticBezierBond~BracketMidPoint 
-   * @property {number} x The X coordinate of the midpoint.
-   * @property {number} y The Y coordinate of the midpoint.
-   */
-
-  /**
-   * @param {SVG.Path} bracket One of the brackets of this bond.
-   * 
-   * @returns {QuadraticBezierBond~BracketMidPoint} The midpoint of the bracket.
-   */
-  _bracketMidpoint(bracket) {
-    let segments = bracket.array();
-    let lefti;
-    let righti;
-
-    // even number of segments
-    if (segments.length % 2 === 0) {
-      lefti = (segments.length / 2) - 1;
-      righti = segments.length / 2;
-    } else {
-      lefti = Math.floor(segments.length / 2);
-      righti = Math.floor(segments.length / 2);
-    }
-
-    let left = segments[lefti];
-    let right = segments[righti];
-    
-    return {
-      x: (left[1] + right[1]) / 2,
-      y: (left[2] + right[2]) / 2,
-    };
-  }
-
-  /**
-   * @returns {number} The X coordinate of the midpoint of bracket 1.
-   */
-  get xMiddleBracket1() {
-    return this._bracketMidpoint(this._bracket1).x;
-  }
-
-  /**
-   * @returns {number} The Y coordinate of the midpoint of bracket 1.
-   */
-  get yMiddleBracket1() {
-    return this._bracketMidpoint(this._bracket1).y;
-  }
-
-  /**
-   * @returns {number} The X coordinate of the midpoint of bracket 2.
-   */
-  get xMiddleBracket2() {
-    return this._bracketMidpoint(this._bracket2).x;
-  }
-
-  /**
-   * @returns {number} The Y coordinate of the midpoint of bracket 2.
-   */
-  get yMiddleBracket2() {
-    return this._bracketMidpoint(this._bracket2).y;
-  }
-
-  /**
    * Repositions the curve and brackets of this quadratic bezier bond based on
    * the current positions of the bases of its sides and the previous properties
    * of its curve and brackets.
