@@ -580,10 +580,39 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @returns {number} The opacity of bracket1.
+   */
+  get opacityBracket1() {
+    return this._bracket1.attr('opacity');
+  }
+
+  /**
+   * @param {number} o 
+   */
+  set opacityBracket1(o) {
+    this._bracket1.attr({ 'opacity': o });
+  }
+
+  /**
+   * @returns {number} The opacity of bracket 2.
+   */
+  get opacityBracket2() {
+    return this._bracket2.attr('opacity');
+  }
+
+  /**
+   * @param {number} o 
+   */
+  set opacityBracket2(o) {
+    this._bracket2.attr({ 'opacity': o });
+  }
+
+  /**
    * @typedef {Object} QuadraticBezierBond~BracketProps 
    * @property {number} topPadding 
    * @property {number} overhangPadding 
    * @property {number} overhangLength 
+   * @property {number} opacity 
    */
 
   /**
@@ -594,6 +623,7 @@ class QuadraticBezierBond {
       topPadding: this.topPaddingBracket1,
       overhangPadding: this.overhangPaddingBracket1,
       overhangLength: this.overhangLengthBracket1,
+      opacity: this.opacityBracket1,
     };
   }
 
@@ -605,6 +635,7 @@ class QuadraticBezierBond {
       topPadding: this.topPaddingBracket2,
       overhangPadding: this.overhangPaddingBracket2,
       overhangLength: this.overhangLengthBracket2,
+      opacity: this.opacityBracket2,
     };
   }
 
@@ -691,34 +722,6 @@ class QuadraticBezierBond {
     this._curve.attr({ 'stroke-width': sw });
     this._bracket1.attr({ 'stroke-width': sw });
     this._bracket2.attr({ 'stroke-width': sw });
-  }
-
-  /**
-   * @returns {number} The opacity of bracket1.
-   */
-  get opacityBracket1() {
-    return this._bracket1.attr('opacity');
-  }
-
-  /**
-   * @param {number} o 
-   */
-  set opacityBracket1(o) {
-    this._bracket1.attr({ 'opacity': o });
-  }
-
-  /**
-   * @returns {number} The opacity of bracket 2.
-   */
-  get opacityBracket2() {
-    return this._bracket2.attr('opacity');
-  }
-
-  /**
-   * @param {number} o 
-   */
-  set opacityBracket2(o) {
-    this._bracket2.attr({ 'opacity': o });
   }
 }
 
