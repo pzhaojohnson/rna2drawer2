@@ -779,6 +779,22 @@ class QuadraticBezierBond {
     this._bracket1.dblclick(cb);
     this._bracket2.dblclick(cb);
   }
+
+  /**
+   * @returns {string} The cursor style attribute of this bond.
+   */
+  get cursor() {
+    return this._curve.style('cursor');
+  }
+
+  /**
+   * @param {string} c 
+   */
+  set cursor(c) {
+    this._curve.style({ 'cursor': c });
+    this._bracket1.style({ 'cursor': c });
+    this._bracket2.style({ 'cursor': c });
+  }
 }
 
 export default QuadraticBezierBond;
