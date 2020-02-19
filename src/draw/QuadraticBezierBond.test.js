@@ -466,6 +466,29 @@ it('bracket property getters', () => {
   expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
 });
 
+it('strokeWidth getter and setter', () => {
+  let qbb = createExampleBond();
+  
+  qbb.strokeWidth = 0.5;
+  
+  // test getter
+  expect(qbb.strokeWidth).toBe(0.5);
+  
+  // check actual values
+  expect(qbb._curve.attr('stroke-width')).toBe(0.5);
+  expect(qbb._bracket1.attr('stroke-width')).toBe(0.5);
+  expect(qbb._bracket2.attr('stroke-width')).toBe(0.5);
+  qbb.strokeWidth = 2;
+
+  // test getter
+  expect(qbb.strokeWidth).toBe(2);
+
+  // check actual values
+  expect(qbb._curve.attr('stroke-width')).toBe(2);
+  expect(qbb._bracket1.attr('stroke-width')).toBe(2);
+  expect(qbb._bracket2.attr('stroke-width')).toBe(2);
+});
+
 it('bracket 1 opacity getter and setter', () => {
   let qbb = createExampleBond();
   qbb.opacityBracket1 = 0.5;
