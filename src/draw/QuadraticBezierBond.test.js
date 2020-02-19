@@ -466,6 +466,26 @@ it('bracket property getters', () => {
   expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
 });
 
+it('bracket 1 opacity getter and setter', () => {
+  let qbb = createExampleBond();
+  qbb.opacityBracket1 = 0.5;
+  expect(qbb.opacityBracket1).toBe(0.5);
+  qbb.opacityBracket1 = 0;
+  expect(qbb.opacityBracket1).toBe(0);
+  qbb.opacityBracket1 = 1;
+  expect(qbb.opacityBracket1).toBe(1);
+});
+
+it('bracket 2 opacity getter and setter', () => {
+  let qbb = createExampleBond();
+  qbb.opacityBracket2 = 0.5;
+  expect(qbb.opacityBracket2).toBe(0.5);
+  qbb.opacityBracket2 = 0;
+  expect(qbb.opacityBracket2).toBe(0);
+  qbb.opacityBracket2 = 1;
+  expect(qbb.opacityBracket2).toBe(1);
+});
+
 it('binding mousedown', () => {
   let qbb = createExampleBond();
 
