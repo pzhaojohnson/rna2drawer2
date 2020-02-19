@@ -759,10 +759,10 @@ class QuadraticBezierBond {
    * 
    * @param {function} cb A callback function.
    */
-  bindClick(cb) {
-    this._curve.click(cb);
-    this._bracket1.click(cb);
-    this._bracket2.click(cb);
+  bindMousedown(cb) {
+    this._curve.mousedown(cb);
+    this._bracket1.mousedown(cb);
+    this._bracket2.mousedown(cb);
   }
 
   /**

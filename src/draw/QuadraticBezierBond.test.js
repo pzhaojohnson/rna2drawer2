@@ -10,6 +10,18 @@ function tertiaryBondDefaults() {
   };
 }
 
+function createExampleBond() {
+  let svg = createNodeSVG();
+  
+  return QuadraticBezierBond.createTertiary(
+    svg,
+    [Base.create(svg, 'A', 1, 2)],
+    [Base.create(svg, 'U', 10, 11)],
+    tertiaryBondDefaults(),
+    b => Math.PI / 4,
+  );
+}
+
 it('_bracketMidpoint', () => {
   let svg = createNodeSVG();
   
@@ -454,16 +466,48 @@ it('bracket property getters', () => {
   expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
 });
 
-it('cursor getter and setter', () => {
-  let svg = createNodeSVG();
+it('binding mousedown', () => {
+  let qbb = createExampleBond();
+
+  let mousedownedCursor = false;
+  let mousedownedBracket1 = false;
+  let mousedownedBracket2 = false;
+
+  qbb.bindMousedown(() => mousedownedCursor = true);
+  qbb._curve.fire('mousedown');
+  expect(mousedownedCursor).toBeTruthy();
+
+  qbb.bindMousedown(() => mousedownedBracket1 = true);
+  qbb._bracket1.fire('mousedown');
+  expect(mousedownedBracket1).toBeTruthy();
   
-  let qbb = QuadraticBezierBond.createTertiary(
-    svg,
-    [Base.create(svg, 'A', 1, 2)],
-    [Base.create(svg, 'U', 10, 11)],
-    tertiaryBondDefaults(),
-    b => Math.PI / 4,
-  );
+  qbb.bindMousedown(() => mousedownedBracket2 = true);
+  qbb._bracket2.fire('mousedown');
+  expect(mousedownedBracket2).toBeTruthy();
+});
+
+it('binding dblclick', () => {
+  let qbb = createExampleBond();
+
+  let dblclickedCursor = false;
+  let dblclickedBracket1 = false;
+  let dblclickedBracket2 = false;
+
+  qbb.bindDblclick(() => dblclickedCursor = true);
+  qbb._curve.fire('dblclick');
+  expect(dblclickedCursor).toBeTruthy();
+
+  qbb.bindDblclick(() => dblclickedBracket1 = true);
+  qbb._bracket1.fire('dblclick');
+  expect(dblclickedBracket1).toBeTruthy();
+  
+  qbb.bindDblclick(() => dblclickedBracket2 = true);
+  qbb._bracket2.fire('dblclick');
+  expect(dblclickedBracket2).toBeTruthy();
+});
+
+it('cursor getter and setter', () => {
+  let qbb = createExampleBond();
 
   qbb.cursor = 'pointer';
   expect(qbb.cursor).toBe('pointer');
