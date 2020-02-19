@@ -24,7 +24,7 @@ class QuadraticBezierBond {
     let angle = baseCounterClockwiseNormalAngleCallback(bFirst);
     let x = bFirst.xCenter + (positionalProps.topPadding * Math.cos(angle));
     let y = bFirst.yCenter + (positionalProps.topPadding * Math.sin(angle));
-    d = 'L ' + x + ' ' + y + ' ';
+    let d = 'L ' + x + ' ' + y + ' ';
 
     angle -= Math.PI / 2;
     x += positionalProps.overhangPadding * Math.cos(angle);
@@ -36,7 +36,7 @@ class QuadraticBezierBond {
     y += positionalProps.overhangLength * Math.sin(angle);
     d = 'M ' + x + ' ' + y + ' ' + d;
 
-    side.slice(1, side.length - 1).forEach(b => {
+    side.slice(1, side.length).forEach(b => {
       angle = baseCounterClockwiseNormalAngleCallback(b);
       x = b.xCenter + (positionalProps.topPadding * Math.cos(angle));
       y = b.yCenter + (positionalProps.topPadding * Math.sin(angle));
@@ -47,8 +47,7 @@ class QuadraticBezierBond {
     angle = baseCounterClockwiseNormalAngleCallback(bLast);
     x = bLast.xCenter + (positionalProps.topPadding * Math.cos(angle));
     y = bLast.yCenter + (positionalProps.topPadding * Math.sin(angle));
-    d += 'L ' + x + ' ' + y + ' ';
-
+    
     angle += Math.PI / 2;
     x += positionalProps.overhangPadding * Math.cos(angle);
     y += positionalProps.overhangPadding * Math.sin(angle);
@@ -782,16 +781,16 @@ class QuadraticBezierBond {
    * @returns {string} The cursor style attribute of this bond.
    */
   get cursor() {
-    return this._curve.style('cursor');
+    return this._curve.css('cursor');
   }
 
   /**
    * @param {string} c 
    */
   set cursor(c) {
-    this._curve.style({ 'cursor': c });
-    this._bracket1.style({ 'cursor': c });
-    this._bracket2.style({ 'cursor': c });
+    this._curve.css({ 'cursor': c });
+    this._bracket1.css({ 'cursor': c });
+    this._bracket2.css({ 'cursor': c });
   }
 }
 

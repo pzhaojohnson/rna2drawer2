@@ -2,6 +2,14 @@ import QuadraticBezierBond from './QuadraticBezierBond';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 
+function tertiaryBondDefaults() {
+  return {
+    bracketTopPadding: 6,
+    bracketOverhangPadding: 6,
+    bracketOverhangLength: 6,
+  };
+}
+
 it('_bracketMidpoint', () => {
   let svg = createNodeSVG();
   
@@ -444,4 +452,22 @@ it('bracket property getters', () => {
   expect(qbb2.topPaddingBracket2).toBeCloseTo(2 ** 0.5, 6);
   expect(qbb2.overhangPaddingBracket2).toBeCloseTo(0.5 ** 0.5, 6);
   expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
+});
+
+it('cursor getter and setter', () => {
+  let svg = createNodeSVG();
+  
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [Base.create(svg, 'A', 1, 2)],
+    [Base.create(svg, 'U', 10, 11)],
+    tertiaryBondDefaults(),
+    b => Math.PI / 4,
+  );
+
+  qbb.cursor = 'pointer';
+  expect(qbb.cursor).toBe('pointer');
+
+  qbb.cursor = 'default';
+  expect(qbb.cursor).toBe('default');
 });
