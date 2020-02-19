@@ -99,12 +99,11 @@ class QuadraticBezierBond {
   /**
    * @param {SVG.Path} bracket1 Bracket 1 of the quadratic bezier bond.
    * @param {SVG.Path} bracket2 Bracket 2 of the quadratic bezier bond.
-   * @param {number} height The height of the curve.
-   * @param {number} angle The height of the curve.
+   * @param {QuadraticBezierBond~CurvePositionalProps} positionalProps The positional properties of the curve.
    * 
    * @returns {string} The d attribute of the path of the curve of the quadratic bezier bond.
    */
-  static _dCurve(bracket1, bracket2, height, angle) {
+  static _dCurve(bracket1, bracket2, positionalProps) {
     let bmp1 = QuadraticBezierBond._bracketMidpoint(bracket1);
     let bmx1 = bmp1.x;
     let bmy1 = bmp1.y;
@@ -117,10 +116,10 @@ class QuadraticBezierBond {
     let emx = (bmx1 + bmx2) / 2;
     let emy = (bmy1 + bmy2) / 2;
     let endsAngle = angleBetween(bmx1, bmy1, bmx2, bmy2);
-    let a = endsAngle + angle;
+    let a = endsAngle + positionalProps.angle;
 
-    let xControl = emx + (height * Math.cos(a));
-    let yControl = emy + (height * Math.sin(a));
+    let xControl = emx + (positionalProps.height * Math.cos(a));
+    let yControl = emy + (positionalProps.height * Math.sin(a));
 
     d += 'Q ' + xControl + ' ' + yControl + ' ' + bmx2 + ' ' + bmy2;
 
@@ -154,11 +153,15 @@ class QuadraticBezierBond {
       baseCounterClockwiseNormalAngleCallback,
     ));
 
+    let curvePositionalProps = {
+      height: 100,
+      angle: 3 * Math.PI / 2,
+    };
+
     let curve = svg.path(QuadraticBezierBond._dCurve(
       bracket1,
       bracket2,
-      100,
-      3 * Math.PI / 2,
+      curvePositionalProps,
     ));
 
     return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
@@ -685,8 +688,7 @@ class QuadraticBezierBond {
     this._curve.plot(QuadraticBezierBond._dCurve(
       this._bracket1,
       this._bracket2,
-      curveProps.height,
-      curveProps.angle,
+      curveProps,
     ));
 
     this._storeBracketTopPaddings();
