@@ -490,17 +490,16 @@ it('binding mousedown', () => {
   let qbb = createExampleBond();
 
   let mousedownedCursor = false;
-  let mousedownedBracket1 = false;
-  let mousedownedBracket2 = false;
-
   qbb.bindMousedown(() => mousedownedCursor = true);
   qbb._curve.fire('mousedown');
   expect(mousedownedCursor).toBeTruthy();
 
+  let mousedownedBracket1 = false;
   qbb.bindMousedown(() => mousedownedBracket1 = true);
   qbb._bracket1.fire('mousedown');
   expect(mousedownedBracket1).toBeTruthy();
   
+  let mousedownedBracket2 = false;
   qbb.bindMousedown(() => mousedownedBracket2 = true);
   qbb._bracket2.fire('mousedown');
   expect(mousedownedBracket2).toBeTruthy();
@@ -510,17 +509,16 @@ it('binding dblclick', () => {
   let qbb = createExampleBond();
 
   let dblclickedCursor = false;
-  let dblclickedBracket1 = false;
-  let dblclickedBracket2 = false;
-
   qbb.bindDblclick(() => dblclickedCursor = true);
   qbb._curve.fire('dblclick');
   expect(dblclickedCursor).toBeTruthy();
 
+  let dblclickedBracket1 = false;
   qbb.bindDblclick(() => dblclickedBracket1 = true);
   qbb._bracket1.fire('dblclick');
   expect(dblclickedBracket1).toBeTruthy();
   
+  let dblclickedBracket2 = false;
   qbb.bindDblclick(() => dblclickedBracket2 = true);
   qbb._bracket2.fire('dblclick');
   expect(dblclickedBracket2).toBeTruthy();
