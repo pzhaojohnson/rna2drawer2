@@ -14,51 +14,49 @@ class QuadraticBezierBond {
 
   /**
    * @param {Array<Base>} side The side that the bracket is attached to.
-   * @param {number} topPadding The top padding of the bracket.
-   * @param {number} overhangPadding The overhang padding of the bracket.
-   * @param {number} overhangLength The overhang length of the bracket.
+   * @param {QuadraticBezierBond~BracketPositionalProps} positionalProps The positional properties of the bracket.
    * @param {QuadraticBezierBond~baseCounterClockwiseNormalAngleCallback} baseCounterClockwiseNormalAngleCallback 
    * 
    * @returns {string} The d attribute of the path of the bracket.
    */
-  static _dBracket(side, topPadding, overhangPadding, overhangLength, baseCounterClockwiseNormalAngleCallback) {
+  static _dBracket(side, positionalProps, baseCounterClockwiseNormalAngleCallback) {
     let bFirst = side[0];
     let angle = baseCounterClockwiseNormalAngleCallback(bFirst);
-    let x = bFirst.xCenter + (topPadding * Math.cos(angle));
-    let y = bFirst.yCenter + (topPadding * Math.sin(angle));
+    let x = bFirst.xCenter + (positionalProps.topPadding * Math.cos(angle));
+    let y = bFirst.yCenter + (positionalProps.topPadding * Math.sin(angle));
     d = 'L ' + x + ' ' + y + ' ';
 
     angle -= Math.PI / 2;
-    x += overhangPadding * Math.cos(angle);
-    y += overhangPadding * Math.sin(angle);
+    x += positionalProps.overhangPadding * Math.cos(angle);
+    y += positionalProps.overhangPadding * Math.sin(angle);
     d = 'L ' + x + ' ' + y + ' ' + d;
 
     angle -= Math.PI / 2;
-    x += overhangLength * Math.cos(angle);
-    y += overhangLength * Math.sin(angle);
+    x += positionalProps.overhangLength * Math.cos(angle);
+    y += positionalProps.overhangLength * Math.sin(angle);
     d = 'M ' + x + ' ' + y + ' ' + d;
 
     side.slice(1, side.length - 1).forEach(b => {
       angle = baseCounterClockwiseNormalAngleCallback(b);
-      x = b.xCenter + (topPadding * Math.cos(angle));
-      y = b.yCenter + (topPadding * Math.sin(angle));
+      x = b.xCenter + (positionalProps.topPadding * Math.cos(angle));
+      y = b.yCenter + (positionalProps.topPadding * Math.sin(angle));
       d += 'L ' + x + ' ' + y + ' ';
     });
 
     let bLast = side[side.length - 1];
     angle = baseCounterClockwiseNormalAngleCallback(bLast);
-    x = bLast.xCenter + (topPadding * Math.cos(angle));
-    y = bLast.yCenter + (topPadding * Math.sin(angle));
+    x = bLast.xCenter + (positionalProps.topPadding * Math.cos(angle));
+    y = bLast.yCenter + (positionalProps.topPadding * Math.sin(angle));
     d += 'L ' + x + ' ' + y + ' ';
 
     angle += Math.PI / 2;
-    x += overhangPadding * Math.cos(angle);
-    y += overhangPadding * Math.sin(angle);
+    x += positionalProps.overhangPadding * Math.cos(angle);
+    y += positionalProps.overhangPadding * Math.sin(angle);
     d += 'L ' + x + ' ' + y + ' ';
 
     angle += Math.PI / 2;
-    x += overhangLength * Math.cos(angle);
-    y += overhangLength * Math.sin(angle);
+    x += positionalProps.overhangLength * Math.cos(angle);
+    y += positionalProps.overhangLength * Math.sin(angle);
     d += 'L ' + x + ' ' + y;
     
     return d;
@@ -133,24 +131,26 @@ class QuadraticBezierBond {
    * @param {SVG.Doc} svg 
    * @param {Array<Base>} side1 
    * @param {Array<Base>} side2 
-   * @param {Object} drawingDefaults 
+   * @param {Object} defaults 
    * 
    * @returns {QuadraticBezierBond} 
    */
-  static createTertiary(svg, side1, side2, drawingDefaults, baseCounterClockwiseNormalAngleCallback) {
+  static createTertiary(svg, side1, side2, defaults, baseCounterClockwiseNormalAngleCallback) {
+    let bracketPositionalProps = {
+      topPadding: defaults.bracketTopPadding,
+      overhangPadding: defaults.bracketOverhangPadding,
+      overhangLength: defaults.bracketOverhangLength,
+    };
+
     let bracket1 = svg.path(QuadraticBezierBond._dBracket(
       side1,
-      drawingDefaults.tertiaryBondTopPadding,
-      drawingDefaults.tertiaryBondOverhangPadding,
-      drawingDefaults.tertiaryBondOverhangLength,
+      bracketPositionalProps,
       baseCounterClockwiseNormalAngleCallback,
     ));
 
     let bracket2 = svg.path(QuadraticBezierBond._dBracket(
       side2,
-      drawingDefaults.tertiaryBondTopPadding,
-      drawingDefaults.tertiaryBondOverhangPadding,
-      drawingDefaults.tertiaryBondOverhangLength,
+      bracketPositionalProps,
       baseCounterClockwiseNormalAngleCallback,
     ));
 
@@ -672,17 +672,13 @@ class QuadraticBezierBond {
   _reposition(curveProps, bracketProps1, bracketProps2, baseCounterClockwiseNormalAngleCallback) {
     this._bracket1.plot(QuadraticBezierBond._dBracket(
       this._side1,
-      bracketProps1.topPadding,
-      bracketProps1.overhangPadding,
-      bracketProps1.overhangLength,
+      bracketProps1,
       baseCounterClockwiseNormalAngleCallback,
     ));
 
     this._bracket2.plot(QuadraticBezierBond._dBracket(
       this._side2,
-      bracketProps2.topPadding,
-      bracketProps2.overhangPadding,
-      bracketProps2.overhangLength,
+      bracketProps2,
       baseCounterClockwiseNormalAngleCallback,
     ));
 
