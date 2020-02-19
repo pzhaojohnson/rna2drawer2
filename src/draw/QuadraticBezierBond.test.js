@@ -466,6 +466,41 @@ it('bracket property getters', () => {
   expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
 });
 
+it('bracket 1 topPadding getter and setter', () => {
+  let svg = createNodeSVG();
+  let curve = svg.path('M 1.1 -2 Q 3 0.4 5 -0.86');
+  let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  let side1 = [Base.create(svg, 'A', 1, 2)];
+  let side2 = [Base.create(svg, 'U', 3, 4)];
+  
+  // positive top padding
+  let bracket1 = svg.path('M 0 1 L -1 2 L 0 3 L 1 4 L 2 3');
+  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  
+  // test getter
+  expect(qbb.topPaddingBracket1).toBeCloseTo(2 ** 0.5, 6);
+
+  // check actual values
+  let segments = qbb._bracket1.array();
+  let m = segments[0];
+  expect(m[0]).toBe('M');
+  
+  // test setter and zero top padding
+  qbb.setTopPaddingBracket1(0, base => 5 * Math.PI / 4);
+  
+  // test getter
+  expect(qbb.topPaddingBracket1).toBeCloseTo(0, 6);
+
+  // check actual values
+
+  // test setter and negative top padding
+
+  // test getter
+
+  // check actual values
+
+});
+
 it('stroke getter and setter', () => {
   let qbb = createExampleBond();
 
