@@ -360,8 +360,16 @@ class QuadraticBezierBond {
     let a = angleBetween(emx, emy, xControl, yControl);
     angle = normalizeAngle(a, endsAngle) - endsAngle;
 
-    this.setCurveHeight(height, baseClockwiseNormalAngleCallback);
-    this.setCurveAngle(angle, baseClockwiseNormalAngleCallback);
+    let curvePositionalProps = this._curvePositionalProps();
+    curvePositionalProps.height = height;
+    curvePositionalProps.angle = angle;
+
+    this._reposition(
+      curvePositionalProps,
+      this._bracketPositionalProps1(),
+      this._bracketPositionalProps2(),
+      baseClockwiseNormalAngleCallback,
+    );
   }
 
   /**
@@ -372,22 +380,6 @@ class QuadraticBezierBond {
     let midx = (this.xCurveEnd2 + this.xCurveEnd1) / 2;
     let midy = (this.yCurveEnd2 + this.yCurveEnd1) / 2;
     return distanceBetween(midx, midy, this.xCurveControlPoint, this.yCurveControlPoint);
-  }
-
-  /**
-   * @param {number} h The new curve height.
-   * @param {QuadraticBezierBond~baseClockwiseNormalAngleCallback} baseClockwiseNormalAngleCallback 
-   */
-  setCurveHeight(h, baseClockwiseNormalAngleCallback) {
-    let curveProps = this._curvePositionalProps();
-    curveProps.height = h;
-    
-    this._reposition(
-      curveProps,
-      this._bracketPositionalProps1(),
-      this._bracketPositionalProps2(),
-      baseClockwiseNormalAngleCallback,
-    );
   }
 
   /**
@@ -412,22 +404,6 @@ class QuadraticBezierBond {
     
     controlAngle = normalizeAngle(controlAngle, endsAngle);
     return controlAngle - endsAngle;
-  }
-
-  /**
-   * @param {number} a The new curve angle.
-   * @param {QuadraticBezierBond~baseClockwiseNormalAngleCallback} baseClockwiseNormalAngleCallback 
-   */
-  setCurveAngle(a, baseClockwiseNormalAngleCallback) {
-    let curveProps = this._curvePositionalProps();
-    curveProps.angle = a;
-
-    this._reposition(
-      curveProps,
-      this._bracketPositionalProps1(),
-      this._bracketPositionalProps2(),
-      baseClockwiseNormalAngleCallback,
-    );
   }
 
   /**
