@@ -664,39 +664,202 @@ it('bracket property getters', () => {
   expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
 });
 
-it('bracket 1 topPadding getter and setter', () => {
+it('bracket 1 top padding getter and setter', () => {
   let svg = createNodeSVG();
-  let curve = svg.path('M 1.1 -2 Q 3 0.4 5 -0.86');
-  let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
-  let side1 = [Base.create(svg, 'A', 1, 2)];
-  let side2 = [Base.create(svg, 'U', 3, 4)];
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 3, 4);
+  let b3 = Base.create(svg, 'G', 5, 6);
+  let b4 = Base.create(svg, 'C', 7, 8);
+
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [b1, b2],
+    [b3, b4],
+    { bracketTopPadding: 5, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
+    base => Math.PI / 4,
+  );
+
+  expect(qbb.topPaddingBracket1).toBeCloseTo(5, 6);
   
-  // positive top padding
-  let bracket1 = svg.path('M 0 1 L -1 2 L 0 3 L 1 4 L 2 3');
-  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  qbb.setTopPaddingBracket1(2, base => Math.PI / 4);
+  expect(qbb.topPaddingBracket1).toBeCloseTo(2, 6);
+
+  dBracketCheck(
+    qbb._bracket1.attr('d'),
+    [
+      ['M', -4.656854249492381, 4.828427124746191],
+      ['L', -1.8284271247461898, 7.656854249492381],
+      ['L', 2.414213562373095, 3.414213562373095],
+      ['L', 4.414213562373095, 5.414213562373095],
+      ['L', 8.65685424949238, 1.1715728752538093],
+      ['L', 5.828427124746189, -1.6568542494923806],
+    ],
+  );
+});
+
+it('bracket 2 top padding getter and setter', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 3, 4);
+  let b3 = Base.create(svg, 'G', 5, 6);
+  let b4 = Base.create(svg, 'C', 7, 8);
+
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [b3, b4],
+    [b1, b2],
+    { bracketTopPadding: 5, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
+    base => Math.PI / 4,
+  );
+
+  expect(qbb.topPaddingBracket2).toBeCloseTo(5, 6);
   
-  // test getter
-  //expect(qbb.topPaddingBracket1).toBeCloseTo(2 ** 0.5, 6);
+  qbb.setTopPaddingBracket2(2, base => Math.PI / 4);
+  expect(qbb.topPaddingBracket2).toBeCloseTo(2, 6);
 
-  // check actual values
-  let segments = qbb._bracket1.array();
-  let m = segments[0];
-  expect(m[0]).toBe('M');
+  dBracketCheck(
+    qbb._bracket2.attr('d'),
+    [
+      ['M', -4.656854249492381, 4.828427124746191],
+      ['L', -1.8284271247461898, 7.656854249492381],
+      ['L', 2.414213562373095, 3.414213562373095],
+      ['L', 4.414213562373095, 5.414213562373095],
+      ['L', 8.65685424949238, 1.1715728752538093],
+      ['L', 5.828427124746189, -1.6568542494923806],
+    ],
+  );
+});
+
+it('bracket 1 overhang padding getter and setter', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 3, 4);
+  let b3 = Base.create(svg, 'G', 5, 6);
+  let b4 = Base.create(svg, 'C', 7, 8);
+
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [b1, b2],
+    [b3, b4],
+    { bracketTopPadding: 2, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
+    base => Math.PI / 4,
+  );
+
+  expect(qbb.overhangPaddingBracket1).toBeCloseTo(6, 6);
   
-  // test setter and zero top padding
-  qbb.setTopPaddingBracket1(0, base => 5 * Math.PI / 4);
+  qbb.setOverhangPaddingBracket1(3.5, base => Math.PI / 4);
+  expect(qbb.overhangPaddingBracket1).toBeCloseTo(3.5, 6);
+
+  dBracketCheck(
+    qbb._bracket1.attr('d'),
+    [
+      ['M', -2.8890872965260117, 3.060660171779821],
+      ['L', -0.06066017177982097, 5.889087296526011],
+      ['L', 2.414213562373095, 3.414213562373095],
+      ['L', 4.414213562373095, 5.414213562373095],
+      ['L', 6.889087296526011, 2.939339828220178],
+      ['L', 4.06066017177982, 0.1109127034739883],
+    ],
+  );
+});
+
+it('bracket 2 overhang padding getter and setter', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 3, 4);
+  let b3 = Base.create(svg, 'G', 5, 6);
+  let b4 = Base.create(svg, 'C', 7, 8);
+
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [b3, b4],
+    [b1, b2],
+    { bracketTopPadding: 2, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
+    base => Math.PI / 4,
+  );
+
+  expect(qbb.overhangPaddingBracket2).toBeCloseTo(6, 6);
   
-  // test getter
-  //expect(qbb.topPaddingBracket1).toBeCloseTo(0, 6);
+  qbb.setOverhangPaddingBracket2(3.5, base => Math.PI / 4);
+  expect(qbb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
 
-  // check actual values
+  dBracketCheck(
+    qbb._bracket2.attr('d'),
+    [
+      ['M', -2.8890872965260117, 3.060660171779821],
+      ['L', -0.06066017177982097, 5.889087296526011],
+      ['L', 2.414213562373095, 3.414213562373095],
+      ['L', 4.414213562373095, 5.414213562373095],
+      ['L', 6.889087296526011, 2.939339828220178],
+      ['L', 4.06066017177982, 0.1109127034739883],
+    ],
+  );
+});
 
-  // test setter and negative top padding
+it('bracket 1 overhang length getter and setter', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 3, 4);
+  let b3 = Base.create(svg, 'G', 5, 6);
+  let b4 = Base.create(svg, 'C', 7, 8);
 
-  // test getter
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [b1, b2],
+    [b3, b4],
+    { bracketTopPadding: 2, bracketOverhangPadding: 3.5, bracketOverhangLength: 4 },
+    base => Math.PI / 4,
+  );
 
-  // check actual values
+  expect(qbb.overhangLengthBracket1).toBeCloseTo(4, 6);
+  
+  qbb.setOverhangLengthBracket1(1, base => Math.PI / 4);
+  expect(qbb.overhangLengthBracket1).toBeCloseTo(1, 6);
 
+  dBracketCheck(
+    qbb._bracket1.attr('d'),
+    [
+      ['M', -0.7677669529663687, 5.181980515339463],
+      ['L', -0.06066017177982097, 5.889087296526011],
+      ['L', 2.414213562373095, 3.414213562373095],
+      ['L', 4.414213562373095, 5.414213562373095],
+      ['L', 6.889087296526011, 2.939339828220178],
+      ['L', 6.181980515339463, 2.2322330470336307],
+    ],
+  );
+});
+
+it('bracket 2 overhang length getter and setter', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 3, 4);
+  let b3 = Base.create(svg, 'G', 5, 6);
+  let b4 = Base.create(svg, 'C', 7, 8);
+
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [b3, b4],
+    [b1, b2],
+    { bracketTopPadding: 2, bracketOverhangPadding: 3.5, bracketOverhangLength: 4 },
+    base => Math.PI / 4,
+  );
+
+  expect(qbb.overhangLengthBracket2).toBeCloseTo(4, 6);
+  
+  qbb.setOverhangLengthBracket2(1, base => Math.PI / 4);
+  expect(qbb.overhangLengthBracket2).toBeCloseTo(1, 6);
+
+  dBracketCheck(
+    qbb._bracket2.attr('d'),
+    [
+      ['M', -0.7677669529663687, 5.181980515339463],
+      ['L', -0.06066017177982097, 5.889087296526011],
+      ['L', 2.414213562373095, 3.414213562373095],
+      ['L', 4.414213562373095, 5.414213562373095],
+      ['L', 6.889087296526011, 2.939339828220178],
+      ['L', 6.181980515339463, 2.2322330470336307],
+    ],
+  );
 });
 
 it('stroke getter and setter', () => {
