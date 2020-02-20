@@ -624,46 +624,6 @@ it('curve property getters', () => {
   expect(isFinite(qbb.curveAngle)).toBeTruthy();
 });
 
-it('bracket property getters', () => {
-  let svg = createNodeSVG();
-  
-  function createBondWithBracket1AndSide1(bracket1, side1) {
-    let curve = svg.path('M 1 2 Q 3 4 5 6');
-    let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
-    let side2 = [Base.create(svg, 'U', 3, 4)];
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
-  }
-
-  function createBondWithBracket2AndSide2(bracket2, side2) {
-    let curve = svg.path('M 1 2 Q 3 4 5 6');
-    let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
-    let side1 = [Base.create(svg, 'A', 1, 2)];
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
-  }
-
-  let b1 = Base.create(svg, 'A', -0.1, 2);
-  let b2 = Base.create(svg, 'U', 2, -3.2);
-  let b3 = Base.create(svg, 'G', 3.5, 5);
-  
-  let qbb1 = createBondWithBracket1AndSide1(
-    svg.path('M -1.1 2 L -1.1 3 L -0.1 3 L 0.9 3 L 0.9 2'), [b1]
-  );
-
-  // for bracket 1
-  expect(qbb1.topPaddingBracket1).toBeCloseTo(1, 6);
-  expect(qbb1.overhangPaddingBracket1).toBeCloseTo(1, 6);
-  expect(qbb1.overhangLengthBracket1).toBeCloseTo(1, 6);
-
-  let qbb2 = createBondWithBracket2AndSide2(
-    svg.path('M 1.7 -3.9 L 2.5 -4.7 L 3 -4.2 L 4.5 6 L 4 6.5 L 3.2 5.7'), [b2, b3]
-  );
-
-  // for bracket 2
-  expect(qbb2.topPaddingBracket2).toBeCloseTo(2 ** 0.5, 6);
-  expect(qbb2.overhangPaddingBracket2).toBeCloseTo(0.5 ** 0.5, 6);
-  expect(qbb2.overhangLengthBracket2).toBeCloseTo(1.28 ** 0.5, 6);
-});
-
 it('bracket 1 top padding getter and setter', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
