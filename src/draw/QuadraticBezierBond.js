@@ -358,7 +358,7 @@ class QuadraticBezierBond {
 
     let endsAngle = angleBetween(this.xCurveEnd1, this.yCurveEnd1, this.xCurveEnd2, this.yCurveEnd2);
     let a = angleBetween(emx, emy, xControl, yControl);
-    angle = normalizeAngle(a, endsAngle) - endsAngle;
+    let angle = normalizeAngle(a, endsAngle) - endsAngle;
 
     let curvePositionalProps = this._curvePositionalProps();
     curvePositionalProps.height = height;

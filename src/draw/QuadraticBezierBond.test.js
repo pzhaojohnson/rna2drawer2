@@ -624,6 +624,32 @@ it('curve property getters', () => {
   expect(isFinite(qbb.curveAngle)).toBeTruthy();
 });
 
+it('shiftCurveControlPoint', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 3, 4);
+  let b3 = Base.create(svg, 'G', 5, 6);
+  let b4 = Base.create(svg, 'C', 7, 8);
+
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [b1, b2],
+    [b3, b4],
+    { bracketTopPadding: 5, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
+    base => Math.PI / 3,
+  );
+
+  let segments = qbb._curve.array();
+  qbb.shiftCurveControlPoint(10, -10, base => Math.PI / 3);
+  let q = segments[1];
+  q[1] += 10;
+  q[2] -= 10;
+
+  dCurveCheck(qbb._curve.attr('d'), segments);
+  expect(qbb.xCurveControlPoint).toBeCloseTo(q[1], 6);
+  expect(qbb.yCurveControlPoint).toBeCloseTo(q[2], 6);
+});
+
 it('bracket 1 top padding getter and setter', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
