@@ -141,7 +141,7 @@ class StraightBond extends SingleBond {
 
     this._line = line;
     this._validateLine();
-    this._initializePaddings();
+    this._storePaddings();
   }
 
   /**
@@ -164,7 +164,7 @@ class StraightBond extends SingleBond {
    * The _padding1 and _padding2 properties are necessary for the reposition method
    * to work.
    */
-  _initializePaddings() {
+  _storePaddings() {
     this._padding1 = distanceBetween(
       this.base1.xCenter,
       this.base1.yCenter,
