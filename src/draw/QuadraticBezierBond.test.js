@@ -26,7 +26,6 @@ function dBracketCheck(d, expectedSegments) {
   let svg = createNodeSVG();
   let bracket = svg.path(d);
   let segments = bracket.array();
-  
   expect(segments.length).toBe(expectedSegments.length);
 
   let m = segments[0];
@@ -144,6 +143,16 @@ it('_bracketMidpoint', () => {
   expect(mp.x).toBeCloseTo(7.996, 6);
   expect(mp.y).toBeCloseTo(-0.889, 6);
 });
+
+function dCurveCheck(d, expectedSegments) {
+  let svg = createNodeSVG();
+  let curve = svg.path(d);
+  let segments = curve.array();
+  expect(segments.length).toBe(expectedSegments.length);
+
+}
+
+it('_dCurve', () => {});
 
 it('validating sides', () => {
   let svg = createNodeSVG();
