@@ -163,7 +163,7 @@ class QuadraticBezierBond {
       curvePositionalProps,
     ));
 
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, baseClockwiseNormalAngleCallback);
   }
 
   /**
@@ -452,15 +452,28 @@ class QuadraticBezierBond {
    * 
    * The _topPaddingBracket1 and _topPaddingBracket2 properties are necessary for the
    * reposition method to work.
+   * 
+   * @param {QuadraticBezierBond~baseClockwiseNormalAngleCallback} baseClockwiseNormalAngleCallback 
    */
-  _storeBracketTopPaddings() {
-    let b1 = this._side1[0];
-    let l1 = this._bracket1.array()[2];
-    this._topPaddingBracket1 = distanceBetween(b1.xCenter, b1.yCenter, l1[1], l1[2]);
+  _storeBracketTopPaddings(baseClockwiseNormalAngleCallback) {
+    function topPadding(bracket, side) {
+      let l = bracket.array()[2];
+      let b = side[0];
+      let d = distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
+      let a = angleBetween(b.xCenter, b.yCenter, l[1], l[2]);
+      let na = baseClockwiseNormalAngleCallback(b);
+      let angleDiff = normalizeAngle(a, na) - na;
 
-    let b2 = this._side2[0];
-    let l2 = this._bracket2.array()[2];
-    this._topPaddingBracket2 = distanceBetween(b2.xCenter, b2.yCenter, l2[1], l2[2]);
+      // if not for imprecision in floating point arithmetic, angleDiff would either be zero or Math.PI
+      if (angleDiff > Math.PI / 2 && angleDiff < 3 * Math.PI / 2) {
+        d *= -1;
+      }
+      
+      return d;
+    }
+
+    this._topPaddingBracket1 = topPadding(this._bracket1, this._side1);
+    this._topPaddingBracket2 = topPadding(this._bracket2, this._side2);
   }
 
   /**
@@ -691,7 +704,7 @@ class QuadraticBezierBond {
       curveProps,
     ));
 
-    this._storeBracketTopPaddings();
+    this._storeBracketTopPaddings(baseClockwiseNormalAngleCallback);
   }
 
   /**
