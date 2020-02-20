@@ -862,6 +862,82 @@ it('bracket 2 overhang length getter and setter', () => {
   );
 });
 
+it('reposition', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 2, 3);
+  let b3 = Base.create(svg, 'G', 3, 4);
+  let b4 = Base.create(svg, 'C', 4, 5);
+
+  let qbb = QuadraticBezierBond.createTertiary(
+    svg,
+    [b1, b2],
+    [b3, b4],
+    { bracketTopPadding: 2, bracketOverhangPadding: 3.5, bracketOverhangLength: 4 },
+    base => Math.PI / 3,
+  );
+
+  let xCurveControlPointPrev = qbb.xCurveControlPoint;
+  let yCurveControlPointPrev = qbb.yCurveControlPoint;
+  let curveHeightPrev = qbb.curveHeight;
+  let curveAnglePrev = qbb.curveAngle;
+
+  b1.move(1.5, 2.5);
+  b2.move(2.5, 3.5);
+  b3.move(3.5, 4.5);
+  b4.move(4.5, 5.5);
+  qbb.reposition(base => Math.PI / 3);
+
+  dCurveCheck(
+    qbb._curve.attr('d'),
+    [
+      ['M', 3, 4.732050807568877],
+      ['Q', xCurveControlPointPrev + 0.5, yCurveControlPointPrev + 0.5, 5, 6.732050807568877],
+    ],
+  );
+
+  expect(qbb.xCurveEnd1).toBeCloseTo(3, 6);
+  expect(qbb.yCurveEnd1).toBeCloseTo(4.732050807568877, 6);
+  expect(qbb.xCurveEnd2).toBeCloseTo(5, 6);
+  expect(qbb.yCurveEnd2).toBeCloseTo(6.732050807568877, 6);
+  expect(qbb.xCurveControlPoint).toBeCloseTo(xCurveControlPointPrev + 0.5, 6);
+  expect(qbb.yCurveControlPoint).toBeCloseTo(yCurveControlPointPrev + 0.5, 6);
+  expect(qbb.curveHeight).toBeCloseTo(curveHeightPrev, 6);
+  expect(qbb.curveAngle).toBeCloseTo(curveAnglePrev, 6);
+
+  dBracketCheck(
+    qbb._bracket1.attr('d'),
+    [
+      ['M', -2.5310889132455374, 2.517949192431123],
+      ['L', -0.5310889132455356, 5.982050807568877],
+      ['L', 2.5, 4.232050807568877],
+      ['L', 3.5, 5.232050807568877],
+      ['L', 6.531088913245536, 3.4820508075688767],
+      ['L', 4.531088913245534, 0.017949192431122807],
+    ],
+  );
+
+  expect(qbb.topPaddingBracket1).toBeCloseTo(2, 6);
+  expect(qbb.overhangPaddingBracket1).toBeCloseTo(3.5, 6);
+  expect(qbb.overhangLengthBracket1).toBeCloseTo(4, 6);
+
+  dBracketCheck(
+    qbb._bracket2.attr('d'),
+    [
+      ['M', -0.5310889132455374, 4.517949192431123],
+      ['L', 1.4689110867544644, 7.982050807568877],
+      ['L', 4.5, 6.232050807568877],
+      ['L', 5.5, 7.232050807568877],
+      ['L', 8.531088913245536, 5.4820508075688767],
+      ['L', 6.531088913245534, 2.017949192431122807],
+    ],
+  );
+
+  expect(qbb.topPaddingBracket2).toBeCloseTo(2, 6);
+  expect(qbb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
+  expect(qbb.overhangLengthBracket2).toBeCloseTo(4, 6);
+});
+
 it('stroke getter and setter', () => {
   let qbb = createExampleBond();
 
