@@ -1,6 +1,7 @@
 import QuadraticBezierBond from './QuadraticBezierBond';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
+import distanceBetween from './distanceBetween';
 
 function tertiaryBondDefaults() {
   return {
@@ -148,11 +149,98 @@ function dCurveCheck(d, expectedSegments) {
   let svg = createNodeSVG();
   let curve = svg.path(d);
   let segments = curve.array();
-  expect(segments.length).toBe(expectedSegments.length);
+  expect(segments.length).toBe(2);
 
+  let m = segments[0];
+  expect(m.length).toBe(3);
+  let em = expectedSegments[0];
+  expect(m[1]).toBeCloseTo(em[1], 6);
+  expect(m[2]).toBeCloseTo(em[2], 6);
+
+  let q = segments[1];
+  expect(q.length).toBe(5);
+  let eq = expectedSegments[1];
+  expect(q[1]).toBeCloseTo(eq[1], 6);
+  expect(q[2]).toBeCloseTo(eq[2], 6);
+  expect(q[3]).toBeCloseTo(eq[3], 6);
+  expect(q[4]).toBeCloseTo(eq[4], 6);
 }
 
-it('_dCurve', () => {});
+it('_dCurve', () => {
+  let svg = createNodeSVG();
+  
+  // ordinary case
+  let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  let bracket2 = svg.path('M 11 12 L 13 14 L 15 16 L 17 18 L 19 20');
+  let positionalProps = { height: 5, angle: Math.PI / 2 };
+
+  dCurveCheck(
+    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
+    [
+      ['M', 5, 6],
+      ['Q', 6.464466094067262, 14.535533905932738, 15, 16],
+    ],
+  );
+
+  // curve ends zero distance apart
+  bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  positionalProps = { height: 5, angle: Math.PI / 2 };
+  let d = QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps);
+  let curve = svg.path(d);
+  let segments = curve.array();
+  expect(segments.length).toBe(2);
+  let m = segments[0];
+  expect(m.length).toBe(3);
+  expect(m[0]).toBe('M');
+  expect(m[1]).toBeCloseTo(5, 6);
+  expect(m[2]).toBeCloseTo(6, 6);
+  let q = segments[1];
+  expect(q.length).toBe(5);
+  expect(q[0]).toBe('Q');
+  expect(q[3]).toBeCloseTo(5, 6);
+  expect(q[4]).toBeCloseTo(6, 6);
+  expect(distanceBetween(q[1], q[2], q[3], q[4])).toBeCloseTo(5, 6);
+  
+  // zero curve height and curve angle
+  bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  bracket2 = svg.path('M 11 12 L 13 14 L 15 16 L 17 18 L 19 20');
+  positionalProps = { height: 0, angle: 0 };
+
+  dCurveCheck(
+    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
+    [
+      ['M', 5, 6],
+      ['Q', 10, 11, 15, 16],
+    ],
+  );
+
+  // curve ends zero distance apart and zero curve height and curve angle
+  bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  positionalProps = { height: 0, angle: 0 };
+
+  dCurveCheck(
+    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
+    [
+      ['M', 5, 6],
+      ['Q', 5, 6, 5, 6],
+    ],
+  );
+
+  // negative curve height and curve angle
+  bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
+  bracket2 = svg.path('M 11 12 L 13 14 L 15 16 L 17 18 L 19 20');
+  positionalProps = { height: -1.1, angle: -Math.PI / 2 };
+
+  dCurveCheck(
+    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
+    [
+      ['M', 5, 6],
+      ['Q', 9.222182540694797, 11.777817459305203, 15, 16],
+    ],
+  );
+});
 
 it('validating sides', () => {
   let svg = createNodeSVG();
