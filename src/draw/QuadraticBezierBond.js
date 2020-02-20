@@ -175,8 +175,9 @@ class QuadraticBezierBond {
    * @param {SVG.Path} bracket2 The bracket over side 2.
    * @param {Array<Base>} side1 The consecutive bases of one side of the bond in ascending order by position.
    * @param {Array<Base>} side2 The consecutive bases of the other side of the bond in ascending order by position.
+   * @param {QuadraticBezierBond~baseClockwiseNormalAngleCallback} baseClockwiseNormalAngleCallback 
    */
-  constructor(curve, bracket1, bracket2, side1, side2) {
+  constructor(curve, bracket1, bracket2, side1, side2, baseClockwiseNormalAngleCallback) {
     
     // make shallow copies
     this._side1 = [...side1];
@@ -189,7 +190,7 @@ class QuadraticBezierBond {
     this._validateCurve();
     this._validateBracket(this._bracket1, this._side1);
     this._validateBracket(this._bracket2, this._side2);
-    this._storeBracketTopPaddings();
+    this._storeBracketTopPaddings(baseClockwiseNormalAngleCallback);
   }
   
   /**

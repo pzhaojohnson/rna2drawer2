@@ -61,7 +61,7 @@ it('validating sides', () => {
     let bracket1 = svg.path(dBracket1);
     let bracket2 = svg.path(dBracket2);
 
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
   
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -108,7 +108,7 @@ it('validating curve', () => {
   let side2 = [Base.create(svg, 'U', 3, 4)];
 
   function createBondWithCurve(curve) {
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   // a valid curve
@@ -217,14 +217,14 @@ it('validating brackets', () => {
     let curve = svg.path('M 1 2 Q 3 4 5 6');
     let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
     let side2 = [Base.create(svg, 'A', 1, 2)];
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   function createBondWithBracket2AndSide2(bracket2, side2) {
     let curve = svg.path('M 1 2 Q 3 4 5 6');
     let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
     let side1 = [Base.create(svg, 'A', 1, 2)];
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -392,7 +392,7 @@ it('curve property getters', () => {
   let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
   let side1 = [Base.create(svg, 'A', 1, 2)];
   let side2 = [Base.create(svg, 'U', 3, 4)];
-  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
 
   expect(qbb.xCurveEnd1).toBe(1.1);
   expect(qbb.yCurveEnd1).toBe(-2);
@@ -406,21 +406,21 @@ it('curve property getters', () => {
 
   // curve height of zero
   curve = svg.path('M 0 0 Q 1 1 2 2');
-  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   expect(qbb.curveHeight).toBeCloseTo(0, 6);
   expect(typeof(qbb.curveAngle)).toBe('number');
   expect(isFinite(qbb.curveAngle)).toBeTruthy();
   
   // zero distance between ends
   curve = svg.path('M 0 0 Q 0 1 0 0');
-  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   expect(qbb.curveHeight).toBeCloseTo(1, 6);
   expect(typeof(qbb.curveAngle)).toBe('number');
   expect(isFinite(qbb.curveAngle)).toBeTruthy();
   
   // curve height of zero and zero distance between ends
   curve = svg.path('M 1.1 1.1 Q 1.1 1.1 1.1 1.1');
-  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   expect(qbb.curveHeight).toBe(0);
   expect(typeof(qbb.curveAngle)).toBe('number');
   expect(isFinite(qbb.curveAngle)).toBeTruthy();
@@ -433,14 +433,14 @@ it('bracket property getters', () => {
     let curve = svg.path('M 1 2 Q 3 4 5 6');
     let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
     let side2 = [Base.create(svg, 'U', 3, 4)];
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   function createBondWithBracket2AndSide2(bracket2, side2) {
     let curve = svg.path('M 1 2 Q 3 4 5 6');
     let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
     let side1 = [Base.create(svg, 'A', 1, 2)];
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   let b1 = Base.create(svg, 'A', -0.1, 2);
@@ -475,7 +475,7 @@ it('bracket 1 topPadding getter and setter', () => {
   
   // positive top padding
   let bracket1 = svg.path('M 0 1 L -1 2 L 0 3 L 1 4 L 2 3');
-  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2);
+  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   
   // test getter
   expect(qbb.topPaddingBracket1).toBeCloseTo(2 ** 0.5, 6);
