@@ -26,12 +26,12 @@ class QuadraticBezierBond {
     let y = bFirst.yCenter + (positionalProps.topPadding * Math.sin(angle));
     let d = 'L ' + x + ' ' + y + ' ';
 
-    angle -= Math.PI / 2;
+    angle += Math.PI / 2;
     x += positionalProps.overhangPadding * Math.cos(angle);
     y += positionalProps.overhangPadding * Math.sin(angle);
     d = 'L ' + x + ' ' + y + ' ' + d;
 
-    angle -= Math.PI / 2;
+    angle += (positionalProps.topPadding < 0) ? (-Math.PI / 2) : (Math.PI / 2);
     x += positionalProps.overhangLength * Math.cos(angle);
     y += positionalProps.overhangLength * Math.sin(angle);
     d = 'M ' + x + ' ' + y + ' ' + d;
@@ -48,12 +48,12 @@ class QuadraticBezierBond {
     x = bLast.xCenter + (positionalProps.topPadding * Math.cos(angle));
     y = bLast.yCenter + (positionalProps.topPadding * Math.sin(angle));
     
-    angle += Math.PI / 2;
+    angle -= Math.PI / 2;
     x += positionalProps.overhangPadding * Math.cos(angle);
     y += positionalProps.overhangPadding * Math.sin(angle);
     d += 'L ' + x + ' ' + y + ' ';
 
-    angle += Math.PI / 2;
+    angle += (positionalProps.topPadding < 0) ? (Math.PI / 2) : (-Math.PI / 2);
     x += positionalProps.overhangLength * Math.cos(angle);
     y += positionalProps.overhangLength * Math.sin(angle);
     d += 'L ' + x + ' ' + y;

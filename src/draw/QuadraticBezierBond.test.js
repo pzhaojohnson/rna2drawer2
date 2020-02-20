@@ -22,6 +22,107 @@ function createExampleBond() {
   );
 }
 
+function dBracketCheck(d, expectedSegments) {
+  let svg = createNodeSVG();
+  let bracket = svg.path(d);
+  let segments = bracket.array();
+  
+  expect(segments.length).toBe(expectedSegments.length);
+
+  let m = segments[0];
+  expect(m.length).toBe(3);
+  let em = expectedSegments[0];
+  expect(m[0]).toBe('M');
+  expect(m[1]).toBeCloseTo(em[1], 6);
+  expect(m[2]).toBeCloseTo(em[2], 6);
+
+  for (let i = 1; i < expectedSegments.length; i++) {
+    let l = segments[i];
+    expect(l.length).toBe(3);
+    let el = expectedSegments[i];
+    expect(l[0]).toBe('L');
+    expect(l[1]).toBeCloseTo(el[1], 6);
+    expect(l[2]).toBeCloseTo(el[2], 6);
+  }
+}
+
+it('_dBracket', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'U', 2, 3);
+
+  // positive positional properties
+  let positivePositionalProps = {
+    topPadding: 5.5,
+    overhangPadding: 3.2,
+    overhangLength: 1,
+  };
+
+  // side of length one
+  dBracketCheck(
+    QuadraticBezierBond._dBracket([b1], positivePositionalProps, base => Math.PI / 4),
+    [
+      ['M', 1.919238815542512, 7.444722215136416],
+      ['L', 2.6263455967290597, 8.151828996322964],
+      ['L', 4.889087296526012, 5.889087296526011],
+      ['L', 7.151828996322964, 3.6263455967290583],
+      ['L', 6.444722215136416, 2.919238815542511],
+    ],
+  );
+
+  // side of length greater than one
+  dBracketCheck(
+    QuadraticBezierBond._dBracket([b1, b2], positivePositionalProps, base => Math.PI / 4),
+    [
+      ['M', 1.919238815542512, 7.444722215136416],
+      ['L', 2.6263455967290597, 8.151828996322964],
+      ['L', 4.889087296526012, 5.889087296526011],
+      ['L', 5.889087296526012, 6.889087296526011],
+      ['L', 8.151828996322964, 4.626345596729058],
+      ['L', 7.444722215136416, 3.9192388155425104],
+    ],
+  );
+
+  // positional properties of zero
+  let positionalPropsOfZero = {
+    topPadding: 0,
+    overhangPadding: 0,
+    overhangLength: 0,
+  };
+
+  // and baseClockwiseNormalAngleCallback that returns zero
+  dBracketCheck(
+    QuadraticBezierBond._dBracket([b1, b2], positionalPropsOfZero, base => 0),
+    [
+      ['M', 1, 2],
+      ['L', 1, 2],
+      ['L', 1, 2],
+      ['L', 2, 3],
+      ['L', 2, 3],
+      ['L', 2, 3],
+    ],
+  );
+
+  // negative bracket top padding
+  let negativePositionalProps = {
+    topPadding: -8.1,
+    overhangPadding: 1.111,
+    overhangLength: 2.45,
+  };
+
+  dBracketCheck(
+    QuadraticBezierBond._dBracket([b1, b2], negativePositionalProps, base => Math.PI / 4),
+    [
+      ['M', -3.7807489476022482, -1.2095576798057384],
+      ['L', -5.51316056150929, -2.9419692937127797],
+      ['L', -4.727564927611035, -3.7275649276110343],
+      ['L', -3.727564927611035, -2.7275649276110343],
+      ['L', -2.941969293712781, -3.513160561509289],
+      ['L', -1.2095576798057395, -1.7807489476022476],
+    ],
+  );
+});
+
 it('_bracketMidpoint', () => {
   let svg = createNodeSVG();
   
