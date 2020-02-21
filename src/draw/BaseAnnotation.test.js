@@ -2,6 +2,23 @@ import { CircleBaseAnnotation } from './BaseAnnotation';
 import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 
+it('circle createNondisplaced', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
+
+  // check position getters
+  expect(cba.xCenter).toBeCloseTo(5, 6);
+  expect(cba.yCenter).toBeCloseTo(8, 6);
+
+  // check actual position
+  expect(cba._circle.attr('cx')).toBeCloseTo(5, 6);
+  expect(cba._circle.attr('cy')).toBeCloseTo(8, 6);
+
+  expect(cba.displacementLength).toBeCloseTo(0, 6);
+  expect(typeof(cba.displacementAngle)).toBe('number');
+  expect(isFinite(cba.displacementAngle)).toBeTruthy();
+})
+
 it('circle constructor', () => {
   let svg = createNodeSVG();
 
