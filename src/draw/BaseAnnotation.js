@@ -5,8 +5,16 @@ import createUUIDforSVG from './createUUIDforSVG';
 
 class CircleBaseAnnotation {
   
-  create(svg, zCeiling,) {
+  createNondisplaced(svg, xCenterBase, yCenterBase) {
+    let circle = svg.circle(10);
 
+    circle.attr({
+      'id': createUUIDforSVG(),
+      'cx': xCenterBase,
+      'cy': yCenterBase
+    });
+    
+    return new CircleBaseAnnotation(circle, xCenterBase, yCenterBase, 0);
   }
 
   constructor(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
