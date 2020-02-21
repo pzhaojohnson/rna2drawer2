@@ -40,10 +40,16 @@ class CircleBaseAnnotation {
     }
   }
 
+  /**
+   * @returns {number} 
+   */
   get xCenter() {
     return this._circle.attr('cx');
   }
 
+  /**
+   * @returns {number} 
+   */
   get yCenter() {
     return this._circle.attr('cy');
   }
