@@ -17,6 +17,12 @@ class CircleBaseAnnotation {
     return new CircleBaseAnnotation(circle, xCenterBase, yCenterBase, 0);
   }
 
+  /**
+   * @param {SVG.Circle} circle 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} baseClockwiseNormalAngle 
+   */
   constructor(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     this._circle = circle;
     this._validateCircle();

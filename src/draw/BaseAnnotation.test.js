@@ -25,4 +25,5 @@ it('circle _validateCircle', () => {
 
   /* It does not seem possible to create an element without an ID with the
   SVG.js framework. */
+  
 });
