@@ -52,6 +52,10 @@ class CircleBaseAnnotation {
     });
   }
 
+  insertBefore(ele) {
+    this._circle.insertBefore(ele);
+  }
+
   get xCenter() {
     return this._circle.attr('cx');
   }
