@@ -56,6 +56,10 @@ class CircleBaseAnnotation {
     this._circle.insertBefore(ele);
   }
 
+  insertAfter(ele) {
+    this._circle.insertAfter(ele);
+  }
+
   get xCenter() {
     return this._circle.attr('cx');
   }

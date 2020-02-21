@@ -286,6 +286,10 @@ class StraightBond {
     this._line.insertBefore(ele);
   }
 
+  insertAfter(ele) {
+    this._line.insertAfter(ele);
+  }
+
   /**
    * @returns {string} The stroke color of the SVG line object of this straight bond.
    */

@@ -163,6 +163,11 @@ class Numbering {
     this._line.insertBefore(ele);
   }
 
+  insertAfter(ele) {
+    this._text.insertAfter(ele);
+    this._line.insertAfter(ele);
+  }
+
   /**
    * @returns {number} The integer that this numbering shows.
    */
