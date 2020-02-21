@@ -111,10 +111,20 @@ class CircleBaseAnnotation {
     });
   }
 
+  /**
+   * Inserts the circle of this base annotation before the given element.
+   * 
+   * @param {SVG.Element} ele 
+   */
   insertBefore(ele) {
     this._circle.insertBefore(ele);
   }
 
+  /**
+   * Inserts the circle of this base annotation after the given element.
+   * 
+   * @param {SVG.Element} ele 
+   */
   insertAfter(ele) {
     this._circle.insertAfter(ele);
   }
