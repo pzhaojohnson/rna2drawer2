@@ -77,7 +77,7 @@ it('circle reposition with some displacement', () => {
   expect(cba._circle.attr('cy')).toBeCloseTo(16.200000000000003, 6);
 });
 
-it('circle shift', () => {
+it('circle displacement getters and shift method', () => {
   let svg = createNodeSVG();
 
   // starting with no displacement
