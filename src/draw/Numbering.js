@@ -121,6 +121,13 @@ class Numbering {
 
   _validateText() {}
 
+  /**
+   * @returns {string} 
+   */
+  get id() {
+    return this._text.id();
+  }
+
   _validateLine() {}
 
   _storeBasePadding(xCenterBase, yCenterBase) {
