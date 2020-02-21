@@ -58,7 +58,7 @@ it('circle displacement getters', () => {
   expect(cba.displacementLength).toBeCloseTo(0);
   expect(typeof(cba.displacementAngle)).toBe('number');
   expect(isFinite(cba.displacementAngle)).toBeTruthy();
-})
+});
 
 it('circle shift', () => {
   let svg = createNodeSVG();

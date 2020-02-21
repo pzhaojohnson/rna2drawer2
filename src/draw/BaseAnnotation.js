@@ -143,28 +143,88 @@ class CircleBaseAnnotation {
     this._circle.insertAfter(ele);
   }
 
+  /**
+   * @returns {number} 
+   */
   get radius() {
     return this._circle.attr('r');
   }
 
+  /**
+   * @param {number} r 
+   */
+  set radius(r) {
+    this._circle.attr({ 'r': r });
+  }
+
+  /**
+   * @returns {string} 
+   */
   get fill() {
     return this._circle.attr('fill');
   }
 
+  /**
+   * @param {string} f 
+   */
+  set fill(f) {
+    this._circle.attr({ 'fill': f });
+  }
+
+  /**
+   * @returns {number} 
+   */
   get fillOpacity() {
     return this._circle.attr('fill-opacity');
   }
 
+  /**
+   * @param {number} fo 
+   */
+  set fillOpacity(fo) {
+    this._circle.attr({ 'fill-opacity': fo });
+  }
+
+  /**
+   * @returns {string} 
+   */
   get stroke() {
     return this._circle.attr('stroke');
   }
 
+  /**
+   * @param {string} s 
+   */
+  set stroke(s) {
+    this._circle.attr({ 'stroke': s });
+  }
+
+  /**
+   * @returns {number} 
+   */
   get strokeWidth() {
     return this._circle.attr('stroke-width');
   }
 
+  /**
+   * @param {number} sw 
+   */
+  set strokeWidth(sw) {
+    this._circle.attr({ 'stroke-width': sw });
+  }
+
+  /**
+   * @returns {number} 
+   */
   get strokeOpacity() {
     return this._circle.attr('stroke-opacity');
+  }
+
+  /**
+   * @param {number} so 
+   */
+  set strokeOpacity(so) {
+    this._circle.attr({ 'stroke-opacity': so });
   }
 }
 
