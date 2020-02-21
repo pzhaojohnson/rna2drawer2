@@ -683,10 +683,10 @@ class QuadraticBezierBond {
     this._storeBracketTopPaddings(baseClockwiseNormalAngleCallback);
   }
 
-  insertBefore(ele) {
-    this._curve.insertBefore(ele);
-    this._bracket1.insertBefore(ele);
-    this._bracket2.insertBefore(ele);
+  insertAfter(ele) {
+    this._curve.insertAfter(ele);
+    this._bracket1.insertAfter(ele);
+    this._bracket2.insertAfter(ele);
   }
 
   /**
