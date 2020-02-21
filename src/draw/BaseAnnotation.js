@@ -40,6 +40,14 @@ class CircleBaseAnnotation {
     }
   }
 
+  get xCenter() {
+    return this._circle.attr('cx');
+  }
+
+  get yCenter() {
+    return this._circle.attr('cy');
+  }
+
   /**
    * Sets the _displacementLength and _displacementAngle properties.
    * 
@@ -51,15 +59,15 @@ class CircleBaseAnnotation {
     this._displacementLength = distanceBetween(
       xCenterBase,
       yCenterBase,
-      this._circle.attr('cx'),
-      this._circle.attr('cy'),
+      this.xCenter,
+      this.yCenter,
     );
 
     let angle = angleBetween(
       xCenterBase,
       yCenterBase,
-      this._circle.attr('cx'),
-      this._circle.attr('cy'),
+      this.xCenter,
+      this.yCenter,
     );
 
     this._displacementAngle = normalizeAngle(angle, baseClockwiseNormalAngle) - baseClockwiseNormalAngle;
@@ -127,14 +135,6 @@ class CircleBaseAnnotation {
    */
   insertAfter(ele) {
     this._circle.insertAfter(ele);
-  }
-
-  get xCenter() {
-    return this._circle.attr('cx');
-  }
-
-  get yCenter() {
-    return this._circle.attr('cy');
   }
 
   get radius() {
