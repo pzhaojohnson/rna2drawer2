@@ -5,7 +5,7 @@ import createUUIDforSVG from './createUUIDforSVG';
 
 class CircleBaseAnnotation {
   
-  createNondisplaced(svg, xCenterBase, yCenterBase) {
+  static createNondisplaced(svg, xCenterBase, yCenterBase) {
     let circle = svg.circle(10);
 
     circle.attr({
@@ -58,6 +58,14 @@ class CircleBaseAnnotation {
     this._displacementAngle = normalizeAngle(angle, baseClockwiseNormalAngle) - baseClockwiseNormalAngle;
   }
 
+  /**
+   * Repositions the circle of this base annotation based on the given base coordinates
+   * and clockwise normal angle and the stored displacement of the circle.
+   * 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} baseClockwiseNormalAngle 
+   */
   reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     let angle = baseClockwiseNormalAngle + this._displacementAngle;
 
@@ -81,6 +89,21 @@ class CircleBaseAnnotation {
 
   get yCenter() {
     return this._circle.attr('cy');
+  }
+
+  /**
+   * Shifts the circle of this base annotation and updates the displacement of the circle.
+   * 
+   * @param {number} xShift 
+   * @param {number} yShift 
+   */
+  shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+    this._circle.attr({
+      'cx': this.xCenter + xShift,
+      'cy': this.yCenter + yShift,
+    });
+
+    this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
   }
 
   get radius() {
