@@ -1,6 +1,6 @@
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
-import normalizeAngle from ',/normalizeAngle';
+import normalizeAngle from './normalizeAngle';
 import createUUIDforSVG from './createUUIDforSVG';
 
 class CircleBaseAnnotation {
