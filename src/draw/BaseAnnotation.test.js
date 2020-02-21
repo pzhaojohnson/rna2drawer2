@@ -76,3 +76,48 @@ it('circle reposition with some displacement', () => {
   expect(cba._circle.attr('cx')).toBeCloseTo(9.500000000000002, 6);
   expect(cba._circle.attr('cy')).toBeCloseTo(16.200000000000003, 6);
 });
+
+it('circle shift', () => {
+  let svg = createNodeSVG();
+
+  // starting with no displacement
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 4);
+
+  // check position getters
+  expect(cba.xCenter).toBeCloseTo(5, 6);
+  expect(cba.yCenter).toBeCloseTo(4, 6);
+
+  // check actual position
+  expect(cba._circle.attr('cx')).toBeCloseTo(5, 6);
+  expect(cba._circle.attr('cy')).toBeCloseTo(4, 6);
+
+  expect(cba.displacementLength).toBeCloseTo(0, 6);
+  expect(typeof(cba.displacementAngle)).toBe('number');
+  expect(isFinite(cba.displacementAngle)).toBeTruthy();
+
+  cba.shift(-5, 0.5, 5, 4, 0);
+
+  // check position getters
+  expect(cba.xCenter).toBeCloseTo(0, 6);
+  expect(cba.yCenter).toBeCloseTo(4.5, 6);
+
+  // check actual position
+  expect(cba._circle.attr('cx')).toBeCloseTo(0, 6);
+  expect(cba._circle.attr('cy')).toBeCloseTo(4.5, 6);
+
+  expect(cba.displacementLength).toBeCloseTo(5.024937810560445, 6);
+  expect(cba.displacementAngle).toBeCloseTo(3.0419240010986313, 6);
+
+  cba.shift(2, -4, -2, 8, Math.PI / 3);
+
+  // check position getters
+  expect(cba.xCenter).toBeCloseTo(2, 6);
+  expect(cba.yCenter).toBeCloseTo(0.5, 6);
+
+  // check actual position
+  expect(cba._circle.attr('cx')).toBeCloseTo(2, 6);
+  expect(cba._circle.attr('cy')).toBeCloseTo(0.5, 6);
+
+  expect(cba.displacementLength).toBeCloseTo(8.5, 6);
+  expect(cba.displacementAngle).toBeCloseTo(4.155148755441821, 6);
+});

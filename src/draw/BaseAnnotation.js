@@ -58,6 +58,14 @@ class CircleBaseAnnotation {
     this._displacementAngle = normalizeAngle(angle, baseClockwiseNormalAngle) - baseClockwiseNormalAngle;
   }
 
+  get displacementLength() {
+    return this._displacementLength;
+  }
+
+  get displacementAngle() {
+    return this._displacementAngle;
+  }
+
   /**
    * Repositions the circle of this base annotation based on the given base coordinates
    * and clockwise normal angle and the stored displacement of the circle.
