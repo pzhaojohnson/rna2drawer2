@@ -45,6 +45,15 @@ it('circle _validateCircle', () => {
 
 });
 
+it('circle id getter', () => {
+  let svg = createNodeSVG();
+  let circle = svg.circle(8);
+  let id = createUUIDforSVG();
+  circle.id(id);
+  let cba = new CircleBaseAnnotation(circle, 0, 0, 0);
+  expect(cba.id).toBe(id);
+});
+
 it('circle xCenter and yCenter', () => {
   let svg = createNodeSVG();
   let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 4);

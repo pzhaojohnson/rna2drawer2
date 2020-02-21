@@ -41,6 +41,13 @@ class CircleBaseAnnotation {
   }
 
   /**
+   * @returns {string} 
+   */
+  get id() {
+    return this._circle.id();
+  }
+
+  /**
    * @returns {number} 
    */
   get xCenter() {
