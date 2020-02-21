@@ -9,15 +9,15 @@ class CircleBaseAnnotation {
 
   }
 
-  constructor(circle, xCenterBase, yCenterBase, baseOutwardNormalAngle) {
+  constructor(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     this._circle = circle;
     this._validateCircle();
-    this._storeDisplacement(xCenterBase, yCenterBase, baseOutwardNormalAngle);
+    this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
   }
 
   _validateCircle() {}
 
-  _storeDisplacement(xCenterBase, yCenterBase, baseOutwardNormalAngle) {
+  _storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     this._displacementLength = distanceBetween(
       xCenterBase,
       yCenterBase,
@@ -32,11 +32,11 @@ class CircleBaseAnnotation {
       this._circle.attr('cy'),
     );
 
-    this._displacementAngle = normalizeAngle(angle, baseOutwardNormalAngle) - baseOutwardNormalAngle;
+    this._displacementAngle = normalizeAngle(angle, baseClockwiseNormalAngle) - baseClockwiseNormalAngle;
   }
 
-  reposition(xCenterBase, yCenterBase, baseOutwardNormalAngle) {
-    let angle = baseOutwardNormalAngle + this._displacementAngle;
+  reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+    let angle = baseClockwiseNormalAngle + this._displacementAngle;
 
     this._circle.attr({
       'cx': xCenterBase + (this._displacementLength * Math.cos(angle)),
