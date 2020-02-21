@@ -40,6 +40,13 @@ class CircleBaseAnnotation {
     }
   }
 
+  /**
+   * Sets the _displacementLength and _displacementAngle properties.
+   * 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} baseClockwiseNormalAngle 
+   */
   _storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     this._displacementLength = distanceBetween(
       xCenterBase,
@@ -58,10 +65,16 @@ class CircleBaseAnnotation {
     this._displacementAngle = normalizeAngle(angle, baseClockwiseNormalAngle) - baseClockwiseNormalAngle;
   }
 
+  /**
+   * @returns {number} 
+   */
   get displacementLength() {
     return this._displacementLength;
   }
 
+  /**
+   * @returns {number} 
+   */
   get displacementAngle() {
     return this._displacementAngle;
   }
