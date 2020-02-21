@@ -23,7 +23,16 @@ class CircleBaseAnnotation {
     this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
   }
 
-  _validateCircle() {}
+  /**
+   * Validates the circle of this base annotation.
+   * 
+   * @throws {Error} If the ID of the circle is not a string or an empty string.
+   */
+  _validateCircle() {
+    if (typeof(this._circle.id()) !== 'string' || this._circle.id().length === 0) {
+      throw new Error('The circle must have a unique ID.');
+    }
+  }
 
   _storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     this._displacementLength = distanceBetween(
