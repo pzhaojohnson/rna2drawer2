@@ -138,3 +138,20 @@ it('circle displacement getters and shift method', () => {
   expect(cba.displacementLength).toBeCloseTo(8.5, 6);
   expect(cba.displacementAngle).toBeCloseTo(4.155148755441821, 6);
 });
+
+it('insertBefore and insertAfter', () => {
+  let svg = createNodeSVG();
+  
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  let rect = svg.rect(10);
+  expect(cba._circle.position()).toBeLessThan(rect.position());
+
+  cba.insertAfter(rect);
+  expect(cba._circle.position()).toBeGreaterThan(rect.position());
+
+  let circle = svg.circle(5);
+  let line = svg.line(1, 2, 3, 4);
+  cba.insertAfter(circle);
+  expect(cba._circle.position()).toBeGreaterThan(circle.position());
+  expect(cba._circle.position()).toBeLessThan(line.position());
+});
