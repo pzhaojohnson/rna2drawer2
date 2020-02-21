@@ -170,3 +170,75 @@ it('insertBefore and insertAfter', () => {
   expect(cba._circle.position()).toBeGreaterThan(circle.position());
   expect(cba._circle.position()).toBeLessThan(line.position());
 });
+
+it('circle radius getter and setter', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  cba.radius = 8;
+  
+  // check getter
+  expect(cba.radius).toBeCloseTo(8, 6);
+  
+  // check actual value
+  expect(cba._circle.attr('r')).toBeCloseTo(8, 6);
+});
+
+it('circle fill getter and setter', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  cba.fill = '#654321';
+  
+  // check getter
+  expect(cba.fill).toBe('#654321');
+  
+  // check actual value
+  expect(cba._circle.attr('fill')).toBe('#654321');
+});
+
+it('circle fillOpacity getter and setter', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  cba.fillOpacity = 0.6;
+  
+  // check getter
+  expect(cba.fillOpacity).toBeCloseTo(0.6, 6);
+  
+  // check actual value
+  expect(cba._circle.attr('fill-opacity')).toBeCloseTo(0.6, 6);
+});
+
+it('circle stroke getter and setter', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  cba.stroke = '#abcdef';
+  
+  // check getter
+  expect(cba.stroke).toBe('#abcdef');
+  
+  // check actual value
+  expect(cba._circle.attr('stroke')).toBe('#abcdef');
+});
+
+it('circle strokeWidth getter and setter', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  cba.strokeWidth = 5;
+  
+  // check getter
+  expect(cba.strokeWidth).toBeCloseTo(5, 6);
+  
+  // check actual value
+  expect(cba._circle.attr('stroke-width')).toBeCloseTo(5, 6);
+});
+
+it('circle strokeOpacity getter and setter', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  cba.strokeOpacity = 0.3;
+  
+  // check getter
+  expect(cba.strokeOpacity).toBeCloseTo(0.3, 6);
+  
+  // check actual value
+  expect(cba._circle.attr('stroke-opacity')).toBeCloseTo(0.3, 6);
+});
