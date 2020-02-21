@@ -45,7 +45,22 @@ it('circle _validateCircle', () => {
 
 });
 
-it('circle displacement getters and shift method', () => {
+it('circle xCenter and yCenter', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 4);
+  expect(cba.xCenter).toBeCloseTo(3, 6);
+  expect(cba.yCenter).toBeCloseTo(4, 6);
+});
+
+it('circle displacement getters', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 4);
+  expect(cba.displacementLength).toBeCloseTo(0);
+  expect(typeof(cba.displacementAngle)).toBe('number');
+  expect(isFinite(cba.displacementAngle)).toBeTruthy();
+})
+
+it('circle shift', () => {
   let svg = createNodeSVG();
 
   // starting with no displacement
@@ -90,7 +105,7 @@ it('circle displacement getters and shift method', () => {
   expect(cba.displacementAngle).toBeCloseTo(4.155148755441821, 6);
 });
 
-it('reposition with zero displacement', () => {
+it('circle reposition with zero displacement', () => {
   let svg = createNodeSVG();
   let cba = CircleBaseAnnotation.createNondisplaced(svg, 10, 8);
 
