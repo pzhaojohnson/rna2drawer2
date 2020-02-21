@@ -158,6 +158,11 @@ class Numbering {
     this._storeBasePadding(xCenterBase, yCenterBase);
   }
 
+  insertBefore(ele) {
+    this._text.insertBefore(ele);
+    this._line.insertBefore(ele);
+  }
+
   /**
    * @returns {number} The integer that this numbering shows.
    */
