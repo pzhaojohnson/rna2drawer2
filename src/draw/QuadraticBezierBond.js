@@ -683,6 +683,12 @@ class QuadraticBezierBond {
     this._storeBracketTopPaddings(baseClockwiseNormalAngleCallback);
   }
 
+  insertBefore(ele) {
+    this._curve.insertBefore(ele);
+    this._bracket1.insertBefore(ele);
+    this._bracket2.insertBefore(ele);
+  }
+
   /**
    * @returns {string} The stroke color of this quadratic bezier bond.
    */
