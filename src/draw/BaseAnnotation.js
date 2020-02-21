@@ -80,6 +80,21 @@ class CircleBaseAnnotation {
   }
 
   /**
+   * Shifts the circle of this base annotation and updates the displacement of the circle.
+   * 
+   * @param {number} xShift 
+   * @param {number} yShift 
+   */
+  shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+    this._circle.attr({
+      'cx': this.xCenter + xShift,
+      'cy': this.yCenter + yShift,
+    });
+
+    this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
+  }
+
+  /**
    * Repositions the circle of this base annotation based on the given base coordinates
    * and clockwise normal angle and the stored displacement of the circle.
    * 
@@ -110,21 +125,6 @@ class CircleBaseAnnotation {
 
   get yCenter() {
     return this._circle.attr('cy');
-  }
-
-  /**
-   * Shifts the circle of this base annotation and updates the displacement of the circle.
-   * 
-   * @param {number} xShift 
-   * @param {number} yShift 
-   */
-  shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
-    this._circle.attr({
-      'cx': this.xCenter + xShift,
-      'cy': this.yCenter + yShift,
-    });
-
-    this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
   }
 
   get radius() {
