@@ -1,6 +1,33 @@
-import { CircleBaseAnnotation } from './BaseAnnotation';
+import { CircleBaseAnnotation, BaseAnnotation } from './BaseAnnotation';
 import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
+
+it('check that BaseAnnotation class members are unimplemented', () => {
+  let svg = createNodeSVG();
+
+  expect(() => BaseAnnotation.createNondisplaced(svg, 1, 2)).toThrow();
+
+  let ba = new BaseAnnotation();
+  expect(() => ba.id).toThrow();
+  expect(() => ba.xCenter).toThrow();
+  expect(() => ba.yCenter).toThrow();
+  expect(() => ba.displacementLength).toThrow();
+  expect(() => ba.displacementAngle).toThrow();
+  expect(() => ba.shift(1, 2, 3, 4, 5)).toThrow();
+  expect(() => ba.reposition(7, 8, 9)).toThrow();
+  expect(() => ba.insertBefore(svg.rect(10))).toThrow();
+  expect(() => ba.insertAfter(svg.rect(10))).toThrow();
+  expect(() => ba.fill).toThrow();
+  expect(() => { ba.fill = '#123456'; }).toThrow();
+  expect(() => ba.fillOpacity).toThrow();
+  expect(() => { ba.fillOpacity = 0.5; }).toThrow();
+  expect(() => ba.stroke).toThrow();
+  expect(() => { ba.stroke = '#123456'; }).toThrow();
+  expect(() => ba.strokeWidth).toThrow();
+  expect(() => { ba.strokeWidth = 2; }).toThrow();
+  expect(() => ba.strokeOpacity).toThrow();
+  expect(() => { ba.strokeOpacity = 0.5; }).toThrow();
+});
 
 it('circle createNondisplaced', () => {
   let svg = createNodeSVG();

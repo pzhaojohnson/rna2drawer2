@@ -50,8 +50,13 @@ class BaseAnnotation {
   }
 
   /**
+   * Shifts the shape of this base annotation.
+   * 
    * @param {number} xShift 
    * @param {number} yShift 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} baseClockwiseNormalAngle 
    */
   shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     throw new Error('Not implemented');
@@ -256,10 +261,11 @@ class CircleBaseAnnotation extends BaseAnnotation {
   }
 
   /**
-   * Shifts the circle of this base annotation and updates the displacement of the circle.
-   * 
    * @param {number} xShift 
    * @param {number} yShift 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} baseClockwiseNormalAngle 
    */
   shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     this._circle.attr({
