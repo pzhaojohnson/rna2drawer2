@@ -3,8 +3,161 @@ import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 import createUUIDforSVG from './createUUIDforSVG';
 
-class CircleBaseAnnotation {
+class BaseAnnotation {
   
+  /**
+   * @param {SVG.Doc} svg 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   */
+  static createNondisplaced(svg, xCenterBase, yCenterBase) {
+    throw new Error('Not implemented.');
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get id() {
+    throw new Error('Not implemented.');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get xCenter() {
+    throw new Error('Not implemented.');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get yCenter() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get displacementLength() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get displacementAngle() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {number} xShift 
+   * @param {number} yShift 
+   */
+  shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} baseClockwiseNormalAngle 
+   */
+  reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {SVG.Element} ele 
+   */
+  insertBefore(ele) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {SVG.Element} ele 
+   */
+  insertAfter(ele) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get fill() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {string} f 
+   */
+  set fill(f) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get fillOpacity() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {number} fo 
+   */
+  set fillOpacity(fo) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get stroke() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set stroke(s) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get strokeWidth() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set strokeWidth(sw) {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get strokeOpacity() {
+    throw new Error('Not implemented');
+  }
+
+  /**
+   * @param {number} so 
+   */
+  set strokeOpacity(so) {
+    throw new Error('Not implemented');
+  }
+}
+
+class CircleBaseAnnotation extends BaseAnnotation {
+  
+  /**
+   * @param {SVG.Doc} svg 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   */
   static createNondisplaced(svg, xCenterBase, yCenterBase) {
     let circle = svg.circle(10);
 
@@ -24,6 +177,8 @@ class CircleBaseAnnotation {
    * @param {number} baseClockwiseNormalAngle 
    */
   constructor(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+    super();
+
     this._circle = circle;
     this._validateCircle();
     this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
@@ -236,5 +391,6 @@ class CircleBaseAnnotation {
 }
 
 export {
+  BaseAnnotation,
   CircleBaseAnnotation,
 };
