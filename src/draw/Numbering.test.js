@@ -159,7 +159,7 @@ it('_validateLine', () => {
 it('basePadding getter and setter', () => {
   let svg = createNodeSVG();
   let n = Numbering.create(svg, 2, 1.1, -5, Math.PI / 3);
-  n.setBasePadding(20);
+  n.basePadding = 20;
 
   // check getter
   expect(n.basePadding).toBeCloseTo(20, 6);
@@ -179,7 +179,7 @@ it('lineLength getter and setter', () => {
   let x1 = n._line.attr('x1');
   let y1 = n._line.attr('y1');
 
-  n.setLineLength(24.4);
+  n.lineLength = 24.4;
 
   // check getter
   expect(n.lineLength).toBeCloseTo(24.4, 6);
@@ -210,8 +210,8 @@ it('lineLength getter and setter', () => {
 it('reposition', () => {
   let svg = createNodeSVG();
   let n = Numbering.create(svg, -5, 2, 3, Math.PI / 3);
-  n.setBasePadding(5);
-  n.setLineLength(2.5);
+  n.basePadding = 5;
+  n.lineLength = 2.5;
 
   n.reposition(-2.3, -8, -Math.PI / 5);
 
@@ -236,8 +236,8 @@ it('reposition', () => {
 it('_reposition', () => {
   let svg = createNodeSVG();
   let n = Numbering.create(svg, -2, -2.22, -0.1, -Math.PI / 6);
-  n.setBasePadding(5.666);
-  n.setLineLength(9.01);
+  n.basePadding = 5.666;
+  n.lineLength = 9.01;
 
   n.reposition(0.2, -8.2, -8 * Math.PI / 5);
 

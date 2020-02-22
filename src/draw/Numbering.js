@@ -182,7 +182,7 @@ class Numbering {
   /**
    * @param {number} bp The new base padding.
    */
-  setBasePadding(bp) {
+  set basePadding(bp) {
     let angle = angleBetween(
       this._line.attr('x1'),
       this._line.attr('y1'),
@@ -217,7 +217,7 @@ class Numbering {
   /**
    * @param {number} ll The new line length.
    */
-  setLineLength(ll) {
+  set lineLength(ll) {
     let angle = angleBetween(
       this._line.attr('x1'),
       this._line.attr('y1'),
