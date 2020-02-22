@@ -2,6 +2,8 @@ import Numbering from './Numbering';
 import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import angleBetween from './angleBetween';
+import distanceBetween from './distanceBetween';
+import normalizeAngle from './normalizeAngle';
 
 it('_lineCoordinates', () => {
   let lcs = Numbering._lineCoordinates(1.1, -2, 4 * Math.PI / 3, 4.6, 8.05);
@@ -152,4 +154,234 @@ it('_validateLine', () => {
   line = svg.line(-1, -2, 3, 4);
   line.id(3);
   expect(() => new Numbering(text, line, -1, 0)).toThrow();
+});
+
+it('basePadding getter and setter', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 2, 1.1, -5, Math.PI / 3);
+  n.setBasePadding(20);
+
+  // check getter
+  expect(n.basePadding).toBeCloseTo(20, 6);
+
+  // check actual values
+  let x1 = n._line.attr('x1');
+  let y1 = n._line.attr('y1');
+  expect(distanceBetween(1.1, -5, x1, y1)).toBeCloseTo(20, 6);
+  let angle = angleBetween(1.1, -5, x1, y1);
+  angle = normalizeAngle(angle, 0);
+  expect(angle).toBeCloseTo(Math.PI / 3, 6);
+});
+
+it('lineLength getter and setter', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, -1, 2.3, 4.3, 4 * Math.PI / 3);
+  let x1 = n._line.attr('x1');
+  let y1 = n._line.attr('y1');
+
+  n.setLineLength(24.4);
+
+  // check getter
+  expect(n.lineLength).toBeCloseTo(24.4, 6);
+
+  // check actual values
+
+  expect(distanceBetween(
+    n._line.attr('x1'),
+    n._line.attr('y1'),
+    n._line.attr('x2'),
+    n._line.attr('y2'),
+  )).toBeCloseTo(24.4, 6);
+
+  let angle = angleBetween(
+    n._line.attr('x1'),
+    n._line.attr('y1'),
+    n._line.attr('x2'),
+    n._line.attr('y2'),
+  );
+
+  angle = normalizeAngle(angle, 0);
+  expect(angle).toBeCloseTo(4 * Math.PI / 3, 6);
+
+  expect(n._line.attr('x1')).toBeCloseTo(x1, 6);
+  expect(n._line.attr('y1')).toBeCloseTo(y1, 6);
+});
+
+it('reposition', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, -5, 2, 3, Math.PI / 3);
+  n.setBasePadding(5);
+  n.setLineLength(2.5);
+
+  n.reposition(-2.3, -8, -Math.PI / 5);
+
+  // check getters
+  expect(n.basePadding).toBeCloseTo(5, 6);
+  expect(n.lineLength).toBeCloseTo(2.5, 6);
+
+  // check actual values
+
+  expect(n._line.attr('x1')).toBeCloseTo(1.7450849718747374, 6);
+  expect(n._line.attr('y1')).toBeCloseTo(-10.938926261462367, 6);
+  expect(n._line.attr('x2')).toBeCloseTo(3.767627457812106, 6);
+  expect(n._line.attr('y2')).toBeCloseTo(-12.40838939219355, 6);
+
+  // assumes that text padding is 4
+  expect(n._text.attr('x')).toBeCloseTo(7.767627457812106, 6);
+  expect(n._text.attr('y')).toBeCloseTo(-12.40838939219355, 6);
+  expect(n._text.attr('text-anchor')).toBe('start');
+  expect(n._text.attr('dy')).toBe('0.4em');
+});
+
+it('_reposition', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, -2, -2.22, -0.1, -Math.PI / 6);
+  n.setBasePadding(5.666);
+  n.setLineLength(9.01);
+
+  n.reposition(0.2, -8.2, -8 * Math.PI / 5);
+
+  // check getters
+  expect(n.basePadding).toBeCloseTo(5.666, 6);
+  expect(n.lineLength).toBeCloseTo(9.01, 6);
+
+  // check actual values
+
+  expect(n._line.attr('x1')).toBeCloseTo(1.950890290128451, 6);
+  expect(n._line.attr('y1')).toBeCloseTo(-2.811313778671658, 6);
+  expect(n._line.attr('x2')).toBeCloseTo(4.735133409446726, 6);
+  expect(n._line.attr('y2')).toBeCloseTo(5.7577054331476765, 6);
+
+  // assumes that text padding is 4
+  expect(n._text.attr('x')).toBeCloseTo(4.735133409446726, 6);
+  expect(n._text.attr('y')).toBeCloseTo(9.7577054331476765, 6);
+  expect(n._text.attr('text-anchor')).toBe('middle');
+  expect(n._text.attr('dy')).toBe('0.8em');
+});
+
+it('insertBefore', () => {
+  let svg = createNodeSVG();
+  let circle = svg.circle(1);
+  let n = Numbering.create(svg, 1, 3, 4, 0);
+  expect(n._text.position()).toBeGreaterThan(circle.position());
+  expect(n._line.position()).toBeGreaterThan(circle.position());
+
+  n.insertBefore(circle);
+  expect(n._text.position()).toBeLessThan(circle.position());
+  expect(n._line.position()).toBeLessThan(circle.position());
+
+  let rect = svg.rect(10);
+  n.insertBefore(rect);
+  expect(n._text.position()).toBeGreaterThan(circle.position());
+  expect(n._line.position()).toBeGreaterThan(circle.position());
+  expect(n._text.position()).toBeLessThan(rect.position());
+  expect(n._line.position()).toBeLessThan(rect.position());
+});
+
+it('insertAfter', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 1, 3, 4, 0);
+  let circle = svg.circle(1);
+  let rect = svg.rect(10);
+  expect(n._text.position()).toBeLessThan(circle.position());
+  expect(n._line.position()).toBeLessThan(circle.position());
+  expect(n._text.position()).toBeLessThan(rect.position());
+  expect(n._line.position()).toBeLessThan(rect.position());
+
+  n.insertAfter(circle);
+  expect(n._text.position()).toBeGreaterThan(circle.position());
+  expect(n._line.position()).toBeGreaterThan(circle.position());
+  expect(n._text.position()).toBeLessThan(rect.position());
+  expect(n._line.position()).toBeLessThan(rect.position());
+});
+
+it('number getter and setter', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, -10, -1.1, 4.5, 9);
+  n.number = 0;
+  expect(n.number).toBe(0);
+
+  // not a number
+  expect(() => { n.number = null; }).toThrow();
+
+  // a string of a number
+  expect(() => { n.number = '1'; }).toThrow();
+
+  // not an integer
+  expect(() => { n.number = 1.1; }).toThrow();
+
+  // not finite
+  expect(() => { n.number = NaN; }).toThrow();
+  expect(() => { n.number = Infinity; }).toThrow();
+  expect(() => { n.number = -Infinity; }).toThrow();
+});
+
+it('textFontFamily getter and setter', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 7, 0, 0, 0);
+  n.textFontFamily = 'Consolas';
+
+  // check getter
+  expect(n.textFontFamily).toBe('Consolas');
+
+  // check actual value
+  expect(n._text.attr('font-family')).toBe('Consolas');
+});
+
+it('textFontSize', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, -2, 4, 5, 6);
+  n.textFontSize = 20;
+
+  // check getter
+  expect(n.textFontSize).toBeCloseTo(20, 6);
+
+  // check actual value
+  expect(n._text.attr('font-size')).toBeCloseTo(20, 6);
+});
+
+it('textFontWeight getter and setter', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 9, 10, 12.2, 100);
+  n.textFontWeight = 'bold';
+
+  // check getter
+  expect(n.textFontWeight).toBe('bold');
+
+  // check actual value
+  expect(n._text.attr('font-weight')).toBe('bold');
+
+  // setting to a number
+  n.textFontWeight = 200;
+
+  // check getter
+  expect(n.textFontWeight).toBeCloseTo(200, 6);
+
+  // check actual value
+  expect(n._text.attr('font-weight')).toBeCloseTo(200, 6);
+});
+
+it('color getter and setter', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 19999, 0.3, 0.2, 0.00001);
+  n.color = '#192865';
+
+  // check getter
+  expect(n.color).toBe('#192865');
+
+  // check actual values
+  expect(n._text.attr('fill')).toBe('#192865');
+  expect(n._line.attr('stroke')).toBe('#192865');
+});
+
+it('lineStrokeWidth getter and setter', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 2, 1, 8, 7);
+  n.lineStrokeWidth = 12.2;
+
+  // check getter
+  expect(n.lineStrokeWidth).toBeCloseTo(12.2, 6);
+
+  // check actual value
+  expect(n._line.attr('stroke-width')).toBeCloseTo(12.2, 6);
 });

@@ -92,7 +92,7 @@ class Numbering {
    * @returns {Numbering} 
    */
   static create(svg, number, xCenterBase, yCenterBase, angle) {
-    let lc = Numbering._lineCoordinates(xCenterBase, yCenterBase, angle, 8);
+    let lc = Numbering._lineCoordinates(xCenterBase, yCenterBase, angle, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     line.id(createUUIDforSVG());
     
@@ -181,11 +181,18 @@ class Numbering {
 
   /**
    * @param {number} bp The new base padding.
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
-   * @param {number} angle 
    */
-  setBasePadding(bp, xCenterBase, yCenterBase, angle) {
+  setBasePadding(bp) {
+    let angle = angleBetween(
+      this._line.attr('x1'),
+      this._line.attr('y1'),
+      this._line.attr('x2'),
+      this._line.attr('y2'),
+    );
+
+    let xCenterBase = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
+    let yCenterBase = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
+
     this._reposition(
       xCenterBase,
       yCenterBase,
@@ -209,11 +216,18 @@ class Numbering {
 
   /**
    * @param {number} ll The new line length.
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
-   * @param {number} angle 
    */
-  setLineLength(ll, xCenterBase, yCenterBase, angle) {
+  setLineLength(ll) {
+    let angle = angleBetween(
+      this._line.attr('x1'),
+      this._line.attr('y1'),
+      this._line.attr('x2'),
+      this._line.attr('y2'),
+    );
+
+    let xCenterBase = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
+    let yCenterBase = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
+
     this._reposition(
       xCenterBase,
       yCenterBase,
@@ -256,10 +270,10 @@ class Numbering {
       yCenterBase,
       angle,
       basePadding,
-      lineLength
+      lineLength,
     );
 
-    this._line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x1, 'y2': lc.x2 });
+    this._line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
 
     let tp = Numbering._textPositioning(this._line);
 
