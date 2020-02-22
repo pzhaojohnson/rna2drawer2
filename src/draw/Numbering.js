@@ -22,7 +22,7 @@ class Numbering {
    * 
    * @returns {Numbering~LineCoordinates} The coordinates for the line.
    */
-  _lineCoordinates(xCenterBase, yCenterBase, angle, basePadding, length) {
+  static _lineCoordinates(xCenterBase, yCenterBase, angle, basePadding, length) {
     let x1 = xCenterBase + (basePadding * Math.cos(angle));
     let y1 = yCenterBase + (basePadding * Math.sin(angle));
 
@@ -45,7 +45,7 @@ class Numbering {
    * 
    * @returns {Numbering~TextPositioning} The positioning of the text of the numbering.
    */
-  _textPositioning(line) {
+  static _textPositioning(line) {
     let lineAngle = angleBetween(
       line.attr('x1'),
       line.attr('y1'),
@@ -91,14 +91,14 @@ class Numbering {
    * 
    * @returns {Numbering} 
    */
-  create(svg, number, xCenterBase, yCenterBase, angle) {
-    let lc = this._lineCoordinates(xCenterBase, yCenterBase, angle, 8);
+  static create(svg, number, xCenterBase, yCenterBase, angle) {
+    let lc = Numbering._lineCoordinates(xCenterBase, yCenterBase, angle, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     line.id(createUUIDforSVG());
     
     let text = svg.text((add) => add.tspan(number.toString()));
     text.id(createUUIDforSVG());
-    let tp = this._textPositioning(line);
+    let tp = Numbering._textPositioning(line);
 
     text.attr({
       'x': tp.x,
