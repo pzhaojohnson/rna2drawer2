@@ -1,5 +1,4 @@
 import createUUIDforSVG from './createUUIDforSVG';
-import StrictLayoutBaseProps from './layout/singleseq/strict/StrictLayoutBaseProps';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 
