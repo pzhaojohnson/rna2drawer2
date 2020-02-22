@@ -82,34 +82,40 @@ class Numbering {
     return tp;
   }
 
-  create(svg, number, xCenterBase, yCenterBase, angle, defaults) {
-    let lc = this._lineCoordinates(xCenterBase, yCenterBase, angle, defaults.lineLength);
+  /**
+   * @param {SVG.Doc} svg 
+   * @param {number} number 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} angle 
+   * 
+   * @returns {Numbering} 
+   */
+  create(svg, number, xCenterBase, yCenterBase, angle) {
+    let lc = this._lineCoordinates(xCenterBase, yCenterBase, angle, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
+    line.id(createUUIDforSVG());
     
-    line.attr({
-      'id': createUUIDforSVG(),
-      'stroke': defaults.color,
-      'stroke-width': defaults.lineStrokeWidth,
-    });
-
     let text = svg.text((add) => add.tspan(number));
+    text.id(createUUIDforSVG());
     let tp = this._textPositioning(line);
 
     text.attr({
-      'id': createUUIDforSVG(),
       'x': tp.x,
       'y': tp.y,
       'text-anchor': tp.textAnchor,
       'dy': tp.dy,
-      'font-family': defaults.textFontFamily,
-      'font-size': defaults.textFontSize,
-      'font-weight': defaults.textFontWeight,
-      'fill': defaults.color,
     });
     
     return new Numbering(text, line, xCenterBase, yCenterBase);
   }
 
+  /**
+   * @param {SVG.Text} text 
+   * @param {SVG.Line} line 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   */
   constructor(text, line, xCenterBase, yCenterBase) {
     this._text = text;
     this._validateText();
@@ -119,7 +125,15 @@ class Numbering {
     this._storeBasePadding(xCenterBase, yCenterBase);
   }
 
-  _validateText() {}
+  /**
+   * @throws {Error} If the ID of the text is not a string or is an empty string.
+   * @throws {Error} If the text cannot be parsed as an integer.
+   */
+  _validateText() {
+    if (typeof(this._text.id()) !== 'string' || this._text.id().length === 0) {
+      throw new Error('Invalid text ID.');
+    }
+  }
 
   /**
    * @returns {string} 
@@ -128,8 +142,21 @@ class Numbering {
     return this._text.id();
   }
 
-  _validateLine() {}
+  /**
+   * @throws {Error} If the ID of the line is not a string or is an empty string.
+   */
+  _validateLine() {
+    if (typeof(this._line.id()) !== 'string' || this._line.id().length === 0) {
+      throw new Error('Invalid line ID.');
+    }
+  }
 
+  /**
+   * Sets the _basePadding property.
+   * 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   */
   _storeBasePadding(xCenterBase, yCenterBase) {
     this._basePadding = distanceBetween(
       xCenterBase,
@@ -139,19 +166,94 @@ class Numbering {
     );
   }
 
+  /**
+   * @returns {number} 
+   */
   get basePadding() {
     return this._basePadding;
   }
 
-  reposition(xCenterBase, yCenterBase, angle) {
-    let lc = Numbering._lineCoordinates(xCenterBase, yCenterBase, angle, this.basePadding, this.lineLength);
+  /**
+   * @param {number} bp The new base padding.
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} angle 
+   */
+  setBasePadding(bp, xCenterBase, yCenterBase, angle) {
+    this._reposition(
+      xCenterBase,
+      yCenterBase,
+      angle,
+      bp,
+      this.lineLength,
+    );
+  }
 
-    this._line.attr({
-      'x1': lc.x1,
-      'y1': lc.y1,
-      'x2': lc.x1,
-      'y2': lc.x2,
-    });
+  /**
+   * @returns {number} 
+   */
+  get lineLength() {
+    return distanceBetween(
+      this._line.attr('x1'),
+      this._line.attr('y1'),
+      this._line.attr('x2'),
+      this._line.attr('y2'),
+    );
+  }
+
+  /**
+   * @param {number} ll The new line length.
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} angle 
+   */
+  setLineLength(ll, xCenterBase, yCenterBase, angle) {
+    this._reposition(
+      xCenterBase,
+      yCenterBase,
+      angle,
+      this.basePadding,
+      ll,
+    );
+  }
+
+  /**
+   * Repositions this numbering based on the provided base coordinates and angle,
+   * maintaining the previous base padding and line length.
+   * 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} angle 
+   */
+  reposition(xCenterBase, yCenterBase, angle) {
+    this._reposition(
+      xCenterBase,
+      yCenterBase,
+      angle,
+      this.basePadding,
+      this.lineLength,
+    );
+  }
+
+  /**
+   * Repositions this numbering based on the provided parameters.
+   * 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} angle 
+   * @param {number} basePadding 
+   * @param {number} lineLength 
+   */
+  _reposition(xCenterBase, yCenterBase, angle, basePadding, lineLength) {
+    let lc = Numbering._lineCoordinates(
+      xCenterBase,
+      yCenterBase,
+      angle,
+      basePadding,
+      lineLength
+    );
+
+    this._line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x1, 'y2': lc.x2 });
 
     let tp = Numbering._textPositioning(this._line);
 
@@ -165,11 +267,21 @@ class Numbering {
     this._storeBasePadding(xCenterBase, yCenterBase);
   }
 
+  /**
+   * Inserts the text and line of this numbering before the given element.
+   * 
+   * @param {SVG.Element} ele 
+   */
   insertBefore(ele) {
     this._text.insertBefore(ele);
     this._line.insertBefore(ele);
   }
 
+  /**
+   * Inserts the text and line of this numbering after the given element.
+   * 
+   * @param {SVG.Element} ele 
+   */
   insertAfter(ele) {
     this._text.insertAfter(ele);
     this._line.insertAfter(ele);
@@ -215,17 +327,12 @@ class Numbering {
     this._line.attr({ 'stroke': c });
   }
 
-  get lineLength() {
-    return distanceBetween(
-      this._line.attr('x1'),
-      this._line.attr('y1'),
-      this._line.attr('x2'),
-      this._line.attr('y2'),
-    );
-  }
-
   get lineStrokeWidth() {
     return this._line.attr('stroke-width');
+  }
+
+  set lineStrokeWidth(lsw) {
+    this._line.attr({ 'stroke-width': lsw });
   }
 }
 
