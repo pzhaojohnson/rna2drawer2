@@ -12,13 +12,68 @@ it('_lineCoordinates', () => {
 });
 
 it('_textPositioning', () => {
+  let svg = createNodeSVG();
 
   /* These tests assume that the text padding is 4. */
 
-  /* A line inside each quadrant. */
+  /* A line with an angle inside each quadrant. */
 
-  /* A line at each quadrant border. */
+  let tp = Numbering._textPositioning(svg.line(1, 2.2, 4, 6.2));
+  expect(tp.x).toBeCloseTo(4, 6);
+  expect(tp.y).toBeCloseTo(10.2, 6);
+  expect(tp.textAnchor).toBe('middle');
+  expect(tp.dy).toBe('0.8em');
+
+  tp = Numbering._textPositioning(svg.line(-2.2, 1, -6.2, 4));
+  expect(tp.x).toBeCloseTo(-10.2, 6);
+  expect(tp.y).toBeCloseTo(4, 6);
+  expect(tp.textAnchor).toBe('end');
+  expect(tp.dy).toBe('0.4em');
+
+  tp = Numbering._textPositioning(svg.line(-1, -2.2, -4, -6.2));
+  expect(tp.x).toBeCloseTo(-4, 6);
+  expect(tp.y).toBeCloseTo(-10.2, 6);
+  expect(tp.textAnchor).toBe('middle');
+  expect(tp.dy).toBe('0em');
+
+  // a line with an angle above 7 * Math.PI / 4
+  tp = Numbering._textPositioning(svg.line(2.2, -1, 6.2, -4));
+  expect(tp.x).toBeCloseTo(10.2, 6);
+  expect(tp.y).toBeCloseTo(-4, 6);
+  expect(tp.textAnchor).toBe('start');
+  expect(tp.dy).toBe('0.4em');
   
+  // a line with an angle below Math.PI / 4
+  tp = Numbering._textPositioning(svg.line(2.2, 1, 6.2, 4));
+  expect(tp.x).toBeCloseTo(10.2, 6);
+  expect(tp.y).toBeCloseTo(4, 6);
+  expect(tp.textAnchor).toBe('start');
+  expect(tp.dy).toBe('0.4em');
+
+  /* A line with an angle at each quadrant border. */
+  tp = Numbering._textPositioning(svg.line(1, 2, 3, 4));
+  expect(tp.x).toBeCloseTo(3, 6);
+  expect(tp.y).toBeCloseTo(8, 6);
+  expect(tp.textAnchor).toBe('middle');
+  expect(tp.dy).toBe('0.8em');
+
+  tp = Numbering._textPositioning(svg.line(-1, 2, -3, 4));
+  expect(tp.x).toBeCloseTo(-7, 6);
+  expect(tp.y).toBeCloseTo(4, 6);
+  expect(tp.textAnchor).toBe('end');
+  expect(tp.dy).toBe('0.4em');
+
+  tp = Numbering._textPositioning(svg.line(-1, -2, -3, -4));
+  expect(tp.x).toBeCloseTo(-3, 6);
+  expect(tp.y).toBeCloseTo(-8, 6);
+  expect(tp.textAnchor).toBe('middle');
+  expect(tp.dy).toBe('0em');
+
+  tp = Numbering._textPositioning(svg.line(1, -2, 3, -4));
+  expect(tp.x).toBeCloseTo(3, 6);
+  expect(tp.y).toBeCloseTo(-8, 6);
+  expect(tp.textAnchor).toBe('middle');
+  expect(tp.dy).toBe('0em');
 });
 
 it('basic test of create static method', () => {

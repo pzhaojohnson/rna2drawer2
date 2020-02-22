@@ -64,7 +64,7 @@ class Numbering {
       tp.dy = '0.4em';
     } else if (lineAngle >= Math.PI / 4 && lineAngle < 3 * Math.PI / 4) {
       tp.x = line.attr('x2');
-      tp.y = line.attr('y2') - textPadding;
+      tp.y = line.attr('y2') + textPadding;
       tp.textAnchor = 'middle';
       tp.dy = '0.8em';
     } else if (lineAngle >= 3 * Math.PI / 4 && lineAngle < 5 * Math.PI / 4) {
@@ -74,7 +74,7 @@ class Numbering {
       tp.dy = '0.4em';
     } else {
       tp.x = line.attr('x2');
-      tp.y = line.attr('y2') + textPadding;
+      tp.y = line.attr('y2') - textPadding;
       tp.textAnchor = 'middle';
       tp.dy = '0em';
     }
