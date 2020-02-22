@@ -17,6 +17,13 @@ class BaseAnnotation {
   /**
    * @returns {string} 
    */
+  get type() {
+    throw new Error('Not implemented.');
+  }
+
+  /**
+   * @returns {string} 
+   */
   get id() {
     throw new Error('Not implemented.');
   }
@@ -50,7 +57,7 @@ class BaseAnnotation {
   }
 
   /**
-   * Shifts the shape of this base annotation.
+   * Shifts the element of this base annotation.
    * 
    * @param {number} xShift 
    * @param {number} yShift 
@@ -187,6 +194,13 @@ class CircleBaseAnnotation extends BaseAnnotation {
     this._circle = circle;
     this._validateCircle();
     this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get type() {
+    return 'circle';
   }
 
   /**

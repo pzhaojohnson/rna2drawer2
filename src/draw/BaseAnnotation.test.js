@@ -8,6 +8,7 @@ it('check that BaseAnnotation class members are unimplemented', () => {
   expect(() => BaseAnnotation.createNondisplaced(svg, 1, 2)).toThrow();
 
   let ba = new BaseAnnotation();
+  expect(() => ba.type).toThrow();
   expect(() => ba.id).toThrow();
   expect(() => ba.xCenter).toThrow();
   expect(() => ba.yCenter).toThrow();
@@ -53,6 +54,12 @@ it('circle constructor', () => {
   let circle = svg.circle(10);
   expect(() => new CircleBaseAnnotation(circle, 0, 0, 0)).not.toThrow();
 });
+
+it('type getter', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  expect(cba.type).toBe('circle');
+})
 
 it('circle _validateCircle', () => {
   let svg = createNodeSVG();
