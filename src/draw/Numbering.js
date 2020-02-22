@@ -96,7 +96,7 @@ class Numbering {
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     line.id(createUUIDforSVG());
     
-    let text = svg.text((add) => add.tspan(number));
+    let text = svg.text((add) => add.tspan(number.toString()));
     text.id(createUUIDforSVG());
     let tp = this._textPositioning(line);
 
@@ -132,6 +132,12 @@ class Numbering {
   _validateText() {
     if (typeof(this._text.id()) !== 'string' || this._text.id().length === 0) {
       throw new Error('Invalid text ID.');
+    }
+
+    let n = Number.parseFloat(this._text.text());
+
+    if (!isFinite(n) || Math.floor(n) !== n) {
+      throw new Error('Text cannot be parsed as an integer.');
     }
   }
 
@@ -294,43 +300,87 @@ class Numbering {
     return Number.parseInt(this._text.text());
   }
 
+  /**
+   * @param {number} n 
+   * 
+   * @throws {Error} If the given number is not an integer.
+   */
+  set number(n) {
+    if (!isFinite(n) || Math.floor(n) !== n) {
+      throw new Error('Number must be an integer.');
+    }
+
+    this._text.clear();
+    this._text.tspan(n.toString());
+  }
+
+  /**
+   * @returns {string} 
+   */
   get textFontFamily() {
     return this._text.attr('font-family');
   }
 
+  /**
+   * @param {string} ff 
+   */
   set textFontFamily(ff) {
     this._text.attr({ 'font-family': ff });
   }
 
+  /**
+   * @returns {number} 
+   */
   get textFontSize() {
     return this._text.attr('font-size');
   }
 
+  /**
+   * @param {number} fs 
+   */
   set textFontSize(fs) {
     this._text.attr({ 'font-size': fs });
   }
 
+  /**
+   * @returns {number} 
+   */
   get textFontWeight() {
     return this._text.attr('font-weight');
   }
 
+  /**
+   * @param {number} fw 
+   */
   set textFontWeight(fw) {
     this._text.attr({ 'font-weight': fw });
   }
 
+  /**
+   * @returns {string} 
+   */
   get color() {
     return this._text.attr('fill');
   }
 
+  /**
+   * @param {string} c 
+   */
   set color(c) {
     this._text.attr({ 'fill': c });
     this._line.attr({ 'stroke': c });
   }
 
+  /**
+   * @returns {number} 
+   */
   get lineStrokeWidth() {
     return this._line.attr('stroke-width');
   }
 
+  /**
+   * @param {number} lsw 
+   */
   set lineStrokeWidth(lsw) {
     this._line.attr({ 'stroke-width': lsw });
   }
