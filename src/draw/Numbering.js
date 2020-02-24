@@ -6,6 +6,18 @@ import createUUIDforSVG from './createUUIDforSVG';
 class Numbering {
 
   /**
+   * @param {Object} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   */
+  static fromSavedState(savedState, svg, xCenterBase, yCenterBase) {
+    let text = svg.findOne(savedState.text);
+    let line = svg.findOne(savedState.line);
+    return new Numbering(text, line, xCenterBase, yCenterBase);
+  }
+
+  /**
    * @typedef {Object} Numbering~LineCoordinates 
    * @property {number} x1 
    * @property {number} y1 
@@ -397,6 +409,17 @@ class Numbering {
    */
   set lineStrokeWidth(lsw) {
     this._line.attr({ 'stroke-width': lsw });
+  }
+
+  /**
+   * @returns {Object} 
+   */
+  savableState() {
+    return {
+      className: 'Numbering',
+      text: this._text.id(),
+      line: this._line.id(),
+    };
   }
 }
 
