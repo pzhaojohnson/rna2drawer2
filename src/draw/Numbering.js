@@ -250,7 +250,7 @@ class Numbering {
   }
 
   /**
-   * Repositions this numbering based on the provided base coordinates and angle,
+   * Repositions this numbering based on the given base coordinates and angle,
    * maintaining the previous base padding and line length.
    * 
    * @param {number} xCenterBase 
@@ -268,7 +268,8 @@ class Numbering {
   }
 
   /**
-   * Repositions this numbering based on the provided parameters.
+   * Repositions this numbering based on the given base coordinates, angle, base padding,
+   * and line length.
    * 
    * @param {number} xCenterBase 
    * @param {number} yCenterBase 
@@ -300,8 +301,6 @@ class Numbering {
   }
 
   /**
-   * Inserts the text and line of this numbering before the given element.
-   * 
    * @param {SVG.Element} ele 
    */
   insertBefore(ele) {
@@ -310,8 +309,6 @@ class Numbering {
   }
 
   /**
-   * Inserts the text and line of this numbering after the given element.
-   * 
    * @param {SVG.Element} ele 
    */
   insertAfter(ele) {
