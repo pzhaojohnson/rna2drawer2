@@ -250,8 +250,6 @@ class CircleBaseAnnotation extends BaseAnnotation {
   }
 
   /**
-   * Inserts the circle of this base annotation before the given element.
-   * 
    * @param {SVG.Element} ele 
    */
   insertBefore(ele) {
@@ -259,8 +257,6 @@ class CircleBaseAnnotation extends BaseAnnotation {
   }
 
   /**
-   * Inserts the circle of this base annotation after the given element.
-   * 
    * @param {SVG.Element} ele 
    */
   insertAfter(ele) {
