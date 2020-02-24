@@ -7,7 +7,7 @@ import Numbering from './Numbering';
 class Base {
 
   /**
-   * @param {Object} savedState 
+   * @param {Base~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} clockwiseNormalAngle 
    */
@@ -431,7 +431,17 @@ class Base {
   }
 
   /**
-   * @returns {Object} 
+   * @typedef {Object} Base~SavableState 
+   * @property {string} className 
+   * @property {string} text 
+   * @property {CircleBaseAnnotation~SavableState|undefined} highlighting 
+   * @property {CircleBaseAnnotation~SavableState|undefined} outline 
+   * @property {Numbering~SavableState|undefined} numbering 
+   * @property {Array<CircleBaseAnnotation~SavableState>} annotations 
+   */
+
+  /**
+   * @returns {Base~SavableState} 
    */
   savableState() {
     let savableState = {
