@@ -14,8 +14,14 @@ class StraightBond {
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBase} getBase 
+   * 
+   * @throws {Error} If the saved state is not for a straight bond.
    */
   static fromSavedState(savedState, svg, getBase) {
+    if (savedState.className !== 'StraightBond') {
+      throw new Error('Saved state is not for a straight bond.');
+    }
+    
     let line = svg.findOne(savedState.line);
     let b1 = getBase(savedState.base1);
     let b2 = getBase(savedState.base2);
