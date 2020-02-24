@@ -4,6 +4,25 @@ import createUUIDforSVG from './createUUIDforSVG';
 class StraightBond {
 
   /**
+   * @callback StraightBond~getBase 
+   * @param {string} id 
+   * 
+   * @returns {Base} 
+   */
+
+  /**
+   * @param {Object} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {StraightBond~getBase} getBase 
+   */
+  static fromSavedState(savedState, svg, getBase) {
+    let line = svg.findOne(savedState.line);
+    let b1 = getBase(savedState.base1);
+    let b2 = getBase(savedState.base2);
+    return new StraightBond(line, b1, b2);
+  }
+
+  /**
    * @typedef {Object} StraightBond~Coordinates 
    * @property {number} x1 
    * @property {number} y1 
@@ -221,6 +240,18 @@ class StraightBond {
    */
   set strokeWidth(sw) {
     this._line.attr({ 'stroke-width': sw });
+  }
+
+  /**
+   * @returns {Object} 
+   */
+  savableState() {
+    return {
+      className: 'StraightBond',
+      line: this._line.id(),
+      base1: this.base1.id,
+      base2: this.base2.id,
+    };
   }
 }
 
