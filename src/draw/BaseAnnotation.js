@@ -101,8 +101,14 @@ class CircleBaseAnnotation extends BaseAnnotation {
    * @param {number} xCenterBase 
    * @param {number} yCenterBase 
    * @param {number} baseClockwiseNormalAngle 
+   * 
+   * @throws {Error} If the saved state is not for a circle base annotation.
    */
   static fromSavedState(savedState, svg, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+    if (savedState.className !== 'CircleBaseAnnotation') {
+      throw new Error('Saved state is not for a circle base annotation.');
+    }
+    
     let circle = svg.findOne(savedState.circle);
     return new CircleBaseAnnotation(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle);
   }
