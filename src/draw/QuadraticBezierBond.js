@@ -12,7 +12,7 @@ class QuadraticBezierBond {
    */
   
    /**
-   * @param {Object} savedState 
+   * @param {QuadraticBezierBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {QuadraticBezierBond~getBase} getBase 
    * @param {QuadraticBezierBond~baseClockwiseNormalAngleCallback} baseClockwiseNormalAngleCallback 
@@ -830,7 +830,17 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @returns {Object} 
+   * @typedef {Object} QuadraticBezierBond~SavableState 
+   * @property {string} className 
+   * @property {string} curve 
+   * @property {string} bracket1 
+   * @property {string} bracket2 
+   * @property {Array<string>} side1 
+   * @property {Array<string>} side2 
+   */
+
+  /**
+   * @returns {QuadraticBezierBond~SavableState} 
    */
   savableState() {
     let savableState = {
