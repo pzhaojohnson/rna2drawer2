@@ -21,7 +21,7 @@ class StraightBond {
     if (savedState.className !== 'StraightBond') {
       throw new Error('Saved state is not for a straight bond.');
     }
-    
+
     let line = svg.findOne(savedState.line);
     let b1 = getBase(savedState.base1);
     let b2 = getBase(savedState.base2);
@@ -39,8 +39,8 @@ class StraightBond {
   /**
    * @param {Base} b1 
    * @param {Base} b2 
-   * @param {numbering} padding1 
-   * @param {numbering} padding2 
+   * @param {number} padding1 
+   * @param {number} padding2 
    * 
    * @returns {StraightBond~Coordinates} The coordinates of the line of a straight bond.
    */
