@@ -94,6 +94,18 @@ class BaseAnnotation {
 }
 
 class CircleBaseAnnotation extends BaseAnnotation {
+
+  /**
+   * @param {Object} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} baseClockwiseNormalAngle 
+   */
+  static fromSavedState(savedState, svg, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+    let circle = svg.findOne(savedState.circle);
+    return new CircleBaseAnnotation(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle);
+  }
   
   /**
    * @param {SVG.Doc} svg 
@@ -337,6 +349,16 @@ class CircleBaseAnnotation extends BaseAnnotation {
    */
   set strokeOpacity(so) {
     this._circle.attr({ 'stroke-opacity': so });
+  }
+
+  /**
+   * @returns {Object} 
+   */
+  savableState() {
+    return {
+      className: 'CircleBaseAnnotation',
+      circle: this._circle.id(),
+    };
   }
 }
 

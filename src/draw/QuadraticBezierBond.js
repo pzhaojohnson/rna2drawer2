@@ -5,6 +5,40 @@ import normalizeAngle from './normalizeAngle';
 class QuadraticBezierBond {
 
   /**
+   * @callback QuadraticBezierBond~getBase 
+   * @param {string} id 
+   * 
+   * @returns {Base} 
+   */
+  
+   /**
+   * @param {Object} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {QuadraticBezierBond~getBase} getBase 
+   * @param {QuadraticBezierBond~baseClockwiseNormalAngleCallback} baseClockwiseNormalAngleCallback 
+   */
+  static fromSavedState(savedState, svg, getBase, baseClockwiseNormalAngleCallback) {
+    let curve = svg.findOne(savedState.curve);
+    let bracket1 = svg.findOne(savedState.bracket1);
+    let bracket2 = svg.findOne(savedState.bracket2);
+
+    let side1 = [];
+    savedState.side1.forEach(id => side1.push(getBase(id)));
+
+    let side2 = [];
+    savedState.side2.forEach(id => side2.push(getBase(id)));
+
+    return new QuadraticBezierBond(
+      curve,
+      bracket1,
+      bracket2,
+      side1,
+      side2,
+      baseClockwiseNormalAngleCallback
+    );
+  }
+
+  /**
    * @callback QuadraticBezierBond~baseClockwiseNormalAngleCallback 
    * @param {Base} base 
    * 
@@ -793,6 +827,30 @@ class QuadraticBezierBond {
     this._curve.css({ 'cursor': c });
     this._bracket1.css({ 'cursor': c });
     this._bracket2.css({ 'cursor': c });
+  }
+
+  /**
+   * @returns {Object} 
+   */
+  savableState() {
+    let savableState = {
+      className: 'QuadraticBezierBond',
+      curve: this._curve.id(),
+      bracket1: this._bracket1.id(),
+      bracket2: this._bracket2.id(),
+      side1: [],
+      side2: [],
+    };
+
+    this._side1.forEach(
+      b => savableState.side1.push(b.id)
+    );
+
+    this._side2.forEach(
+      b => savableState.side2.push(b.id)
+    );
+
+    return savableState;
   }
 }
 
