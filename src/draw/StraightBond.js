@@ -11,7 +11,7 @@ class StraightBond {
    */
 
   /**
-   * @param {Object} savedState 
+   * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBase} getBase 
    */
@@ -241,6 +241,14 @@ class StraightBond {
   set strokeWidth(sw) {
     this._line.attr({ 'stroke-width': sw });
   }
+
+  /**
+   * @typedef {Object} StraightBond~SavableState 
+   * @property {string} className 
+   * @property {string} line 
+   * @property {string} base1 
+   * @property {string} base2 
+   */
 
   /**
    * @returns {Object} 
