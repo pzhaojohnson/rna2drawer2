@@ -5,7 +5,7 @@ import normalizeAngle from './normalizeAngle';
 class QuadraticBezierBond {
 
   /**
-   * @callback QuadraticBezierBond~getBase 
+   * @callback QuadraticBezierBond~getBaseById 
    * @param {string} id 
    * 
    * @returns {Base} 
@@ -14,19 +14,19 @@ class QuadraticBezierBond {
    /**
    * @param {QuadraticBezierBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {QuadraticBezierBond~getBase} getBase 
+   * @param {QuadraticBezierBond~getBaseById} getBaseById 
    * @param {QuadraticBezierBond~baseClockwiseNormalAngleCallback} baseClockwiseNormalAngleCallback 
    */
-  static fromSavedState(savedState, svg, getBase, baseClockwiseNormalAngleCallback) {
+  static fromSavedState(savedState, svg, getBaseById, baseClockwiseNormalAngleCallback) {
     let curve = svg.findOne(savedState.curve);
     let bracket1 = svg.findOne(savedState.bracket1);
     let bracket2 = svg.findOne(savedState.bracket2);
 
     let side1 = [];
-    savedState.side1.forEach(id => side1.push(getBase(id)));
+    savedState.side1.forEach(id => side1.push(getBaseById(id)));
 
     let side2 = [];
-    savedState.side2.forEach(id => side2.push(getBase(id)));
+    savedState.side2.forEach(id => side2.push(getBaseById(id)));
 
     return new QuadraticBezierBond(
       curve,

@@ -4,7 +4,7 @@ import createUUIDforSVG from './createUUIDforSVG';
 class StraightBond {
 
   /**
-   * @callback StraightBond~getBase 
+   * @callback StraightBond~getBaseById 
    * @param {string} id 
    * 
    * @returns {Base} 
@@ -13,18 +13,18 @@ class StraightBond {
   /**
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {StraightBond~getBase} getBase 
+   * @param {StraightBond~getBaseById} getBaseById 
    * 
    * @throws {Error} If the saved state is not for a straight bond.
    */
-  static fromSavedState(savedState, svg, getBase) {
+  static fromSavedState(savedState, svg, getBaseById) {
     if (savedState.className !== 'StraightBond') {
       throw new Error('Saved state is not for a straight bond.');
     }
 
     let line = svg.findOne(savedState.line);
-    let b1 = getBase(savedState.base1);
-    let b2 = getBase(savedState.base2);
+    let b1 = getBaseById(savedState.base1);
+    let b2 = getBaseById(savedState.base2);
     return new StraightBond(line, b1, b2);
   }
 
