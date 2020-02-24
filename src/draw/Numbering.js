@@ -10,8 +10,14 @@ class Numbering {
    * @param {SVG.Doc} svg 
    * @param {number} xCenterBase 
    * @param {number} yCenterBase 
+   * 
+   * @throws {Error} If the saved state is not for a numbering.
    */
   static fromSavedState(savedState, svg, xCenterBase, yCenterBase) {
+    if (savedState.className !== 'Numbering') {
+      throw new Error('Saved state is not for a numbering.');
+    }
+
     let text = svg.findOne(savedState.text);
     let line = svg.findOne(savedState.line);
     return new Numbering(text, line, xCenterBase, yCenterBase);
