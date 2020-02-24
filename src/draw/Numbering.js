@@ -6,7 +6,7 @@ import createUUIDforSVG from './createUUIDforSVG';
 class Numbering {
 
   /**
-   * @param {Object} savedState 
+   * @param {Numbering~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} xCenterBase 
    * @param {number} yCenterBase 
@@ -26,13 +26,13 @@ class Numbering {
    */
 
   /**
-   * @param {number} xCenterBase The X coordinate of the center of the base the numbering belongs to.
-   * @param {number} yCenterBase The Y coordinate of the center of the base the numbering belongs to.
-   * @param {number} angle The angle at which the line should emanate from the base.
-   * @param {number} basePadding The padding between the line and the center of the base.
-   * @param {number} length How long the line should be.
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * @param {number} angle 
+   * @param {number} basePadding 
+   * @param {number} length 
    * 
-   * @returns {Numbering~LineCoordinates} The coordinates for the line.
+   * @returns {Numbering~LineCoordinates} 
    */
   static _lineCoordinates(xCenterBase, yCenterBase, angle, basePadding, length) {
     let x1 = xCenterBase + (basePadding * Math.cos(angle));
@@ -53,9 +53,9 @@ class Numbering {
    */
 
   /**
-   * @param {SVG.Line} line The line of the numbering.
+   * @param {SVG.Line} line 
    * 
-   * @returns {Numbering~TextPositioning} The positioning of the text of the numbering.
+   * @returns {Numbering~TextPositioning} 
    */
   static _textPositioning(line) {
     let lineAngle = angleBetween(
@@ -192,7 +192,7 @@ class Numbering {
   }
 
   /**
-   * @param {number} bp The new base padding.
+   * @param {number} bp 
    */
   set basePadding(bp) {
     let angle = angleBetween(
@@ -227,7 +227,7 @@ class Numbering {
   }
 
   /**
-   * @param {number} ll The new line length.
+   * @param {number} ll 
    */
   set lineLength(ll) {
     let angle = angleBetween(
@@ -320,7 +320,7 @@ class Numbering {
   }
 
   /**
-   * @returns {number} The integer that this numbering shows.
+   * @returns {number} 
    */
   get number() {
     return Number.parseInt(this._text.text());
@@ -412,7 +412,14 @@ class Numbering {
   }
 
   /**
-   * @returns {Object} 
+   * @typedef {Object} Numbering~SavableState 
+   * @property {string} className 
+   * @property {string} text 
+   * @property {string} line 
+   */
+
+  /**
+   * @returns {Numbering~SavableState} 
    */
   savableState() {
     return {
