@@ -7,6 +7,38 @@ import Numbering from './Numbering';
 class Base {
 
   /**
+   * @param {Object} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {number} clockwiseNormalAngle 
+   */
+  static fromSavedState(savedState, svg, clockwiseNormalAngle) {
+    if (savedState.className !== 'Base') {
+      throw new Error('Saved state is not for a base.');
+    }
+
+    let text = svg.findOne(savedState.text);
+    let b = new Base(text);
+
+    if (savedState.highlighting) {
+      b.addCircleHighlightingFromSavedState(savedState.highlighting, svg, clockwiseNormalAngle);
+    }
+
+    if (savedState.outline) {
+      b.addCircleOutlineFromSavedState(savedState.outline, svg, clockwiseNormalAngle);
+    }
+
+    if (savedState.numbering) {
+      b.addNumberingFromSavedState(savedState.numbering, svg);
+    }
+
+    savedState.annotations.forEach(
+      ann => b.addCircleAnnotationFromSavedState(ann, svg, clockwiseNormalAngle)
+    );
+
+    return b;
+  }
+
+  /**
    * @param {SVG.Doc} svg 
    * @param {string} letter 
    * @param {number} xCenter 
@@ -405,10 +437,6 @@ class Base {
     let savableState = {
       className: 'Base',
       text: this._text.id(),
-      highlighting: null,
-      outline: null,
-      numbering: null,
-      annotations: [],
     };
 
     if (this._highlighting !== null) {
@@ -422,6 +450,8 @@ class Base {
     if (this._numbering !== null) {
       savableState.numbering = this._numbering.savableState();
     }
+
+    savableState.annotations = [];
 
     this._annotations.forEach(
       ann => savableState.annotations.push(ann.savableState())
