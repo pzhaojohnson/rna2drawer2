@@ -262,6 +262,23 @@ class Base {
     );
   }
 
+  /**
+   * @param {CircleBaseAnnotation~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {number} clockwiseNormalAngle 
+   */
+  addCircleHighlightingFromSavedState(savedState, svg, clockwiseNormalAngle) {
+    this.removeHighlighting();
+
+    this._highlighting = CircleBaseAnnotation.fromSavedState(
+      savedState,
+      svg,
+      this.xCenter,
+      this.yCenter,
+      clockwiseNormalAngle,
+    );
+  }
+
   removeHighlighting() {
     if (this._highlighting !== null) {
       this._highlighting.remove();
@@ -277,6 +294,23 @@ class Base {
 
     this._outline = CircleBaseAnnotation.createNondisplaced(
       svg, this.xCenter, this.yCenter
+    );
+  }
+
+  /**
+   * @param {CircleBaseAnnotation~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {number} clockwiseNormalAngle 
+   */
+  addCircleOutlineFromSavedState(savedState, svg, clockwiseNormalAngle) {
+    this.removeOutline();
+
+    this._outline = CircleBaseAnnotation.fromSavedState(
+      savedState,
+      svg,
+      this.xCenter,
+      this.yCenter,
+      clockwiseNormalAngle,
     );
   }
 
@@ -300,6 +334,21 @@ class Base {
     );
   }
 
+  /**
+   * @param {Numbering~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   */
+  addNumberingFromSavedState(savedState, svg) {
+    this.removeNumbering();
+
+    this._numbering = Numbering.fromSavedState(
+      savedState,
+      svg,
+      this.xCenter,
+      this.yCenter,
+    );
+  }
+
   removeNumbering() {
     if (this._numbering !== null) {
       this._numbering.remove();
@@ -313,6 +362,21 @@ class Base {
   addCircleAnnotation(svg) {
     this._annotations.push(CircleBaseAnnotation.createNondisplaced(
       svg, this.xCenter, this.yCenter
+    ));
+  }
+
+  /**
+   * @param {CircleBaseAnnotation~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {number} clockwiseNormalAngle 
+   */
+  addCircleAnnotationFromSavedState(savedState, svg, clockwiseNormalAngle) {
+    this._annotations.push(CircleBaseAnnotation.fromSavedState(
+      savedState,
+      svg,
+      this.xCenter,
+      this.yCenter,
+      clockwiseNormalAngle,
     ));
   }
 
