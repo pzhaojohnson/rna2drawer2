@@ -96,7 +96,7 @@ class BaseAnnotation {
 class CircleBaseAnnotation extends BaseAnnotation {
 
   /**
-   * @param {Object} savedState 
+   * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} xCenterBase 
    * @param {number} yCenterBase 
@@ -352,7 +352,13 @@ class CircleBaseAnnotation extends BaseAnnotation {
   }
 
   /**
-   * @returns {Object} 
+   * @typedef {Object} CircleBaseAnnotation~SavableState 
+   * @property {string} className 
+   * @property {string} circle 
+   */
+
+  /**
+   * @returns {CircleBaseAnnotation~SavableState} 
    */
   savableState() {
     return {
