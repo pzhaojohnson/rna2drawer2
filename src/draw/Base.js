@@ -559,6 +559,118 @@ class Base {
   }
 
   /**
+   * @returns {number} 
+   */
+  get numberingBasePadding() {
+    return this._numbering.basePadding;
+  }
+
+  /**
+   * @param {number} bp 
+   */
+  set numberingBasePadding(bp) {
+    this._numbering.basePadding = bp;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get numberingLineLength() {
+    return this._numbering.lineLength;
+  }
+
+  /**
+   * @param {number} ll 
+   */
+  set numberingLineLength(ll) {
+    this._numbering.lineLength = ll;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get numberingNumber() {
+    return this._numbering.number;
+  }
+
+  /**
+   * @param {number} n 
+   */
+  set numberingNumber(n) {
+    this._numbering.number = n;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get numberingTextFontFamily() {
+    return this._numbering.textFontFamily;
+  }
+
+  /**
+   * @param {string} ff 
+   */
+  set numberingTextFontFamily(ff) {
+    this._numbering.textFontFamily = ff;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get numberingTextFontSize() {
+    return this._numbering.textFontSize;
+  }
+
+  /**
+   * @param {number} fs 
+   */
+  set numberingTextFontSize(fs) {
+    this._numbering.textFontSize = fs;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get numberingTextFontWeight() {
+    return this._numbering.textFontWeight;
+  }
+
+  /**
+   * @param {string} fw 
+   */
+  set numberingTextFontWeight(fw) {
+    this._numbering.textFontWeight = fw;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get numberingColor() {
+    return this._numbering.color;
+  }
+
+  /**
+   * @param {string} c 
+   */
+  set numberingColor(c) {
+    this._numbering.color = c;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get numberingLineStrokeWidth() {
+    return this._numbering.lineStrokeWidth;
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set numberingLineStrokeWidth(sw) {
+    this._numbering.lineStrokeWidth = sw;
+  }
+
+  /**
    * @param {SVG.Doc} svg 
    */
   addCircleAnnotation(svg) {
