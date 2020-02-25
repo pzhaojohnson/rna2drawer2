@@ -597,15 +597,15 @@ class Base {
       text: this._text.id(),
     };
 
-    if (this._highlighting !== null) {
+    if (this.hasHighlighting()) {
       savableState.highlighting = this._highlighting.savableState();
     }
 
-    if (this._outline !== null) {
+    if (this.hasOutline()) {
       savableState.outline = this._outline.savableState();
     }
 
-    if (this._numbering !== null) {
+    if (this.hasNumbering()) {
       savableState.numbering = this._numbering.savableState();
     }
 
