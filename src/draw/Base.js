@@ -321,6 +321,48 @@ class Base {
   }
 
   /**
+   * @returns {number} 
+   */
+  get highlightingRadius() {
+    return this._highlighting.radius;
+  }
+
+  /**
+   * @param {number} r 
+   */
+  set highlightingRadius(r) {
+    this._highlighting.radius = r;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get highlightingFill() {
+    return this._highlighting.fill;
+  }
+
+  /**
+   * @param {string} f 
+   */
+  set highlightingFill(f) {
+    this._highlighting.fill = f;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get highlightingFillOpacity() {
+    return this._highlighting.fillOpacity;
+  }
+
+  /**
+   * @param {number} fo 
+   */
+  set highlightingFillOpacity(fo) {
+    this._highlighting.fillOpacity = fo;
+  }
+
+  /**
    * @param {SVG.Doc} svg 
    */
   addCircleOutline(svg) {
