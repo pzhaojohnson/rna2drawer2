@@ -10,6 +10,8 @@ class Base {
    * @param {Base~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} clockwiseNormalAngle 
+   * 
+   * @throws {Error} If the saved state is not for a base.
    */
   static fromSavedState(savedState, svg, clockwiseNormalAngle) {
     if (savedState.className !== 'Base') {
