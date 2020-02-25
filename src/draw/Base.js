@@ -4,6 +4,26 @@ import angleBetween from './angleBetween';
 import CircleBaseAnnotation from './BaseAnnotation';
 import Numbering from './Numbering';
 
+const _CIRCLE_BASE_ANNOTATION_ATTRS = [
+  'radius',
+  'fill',
+  'fillOpacity',
+  'stroke',
+  'strokeWidth',
+  'strokeOpacity',
+];
+
+const _NUMBERING_ATTRS = [
+  'basePadding',
+  'lineLength',
+  'number',
+  'textFontFamily',
+  'textFontSize',
+  'textFontWeight',
+  'color',
+  'lineStrokeWidth',
+];
+
 class Base {
 
   /**
@@ -313,95 +333,59 @@ class Base {
     );
   }
 
-  removeHighlighting() {
-    if (this._highlighting !== null) {
-      this._highlighting.remove();
-      this._highlighting = null;
+  /**
+   * @returns {boolean} 
+   */
+  hasHighlighting() {
+    return this._highlighting !== null;
+  }
+
+  /**
+   * @param {string} attr 
+   * 
+   * @throws {Error} If this base has no highlighting.
+   * @throws {Error} If the attribute is unrecognized.
+   */
+  getHighlightingAttr(attr) {
+    if (!this.hasHighlighting()) {
+      throw new Error('This base has no highlighting.');
+    } else {
+      if (_CIRCLE_BASE_ANNOTATION_ATTRS.includes(attr)) {
+        return this._highlighting[attr];
+      } else {
+        throw new Error('Unrecognized highlighting attribute: ' + attr + '.');
+      }
     }
   }
 
   /**
-   * @returns {number} 
+   * @param {Object} attrs 
+   * 
+   * @throws {Error} If this base has no highlighting.
+   * @throws {Error} If an attribute is unrecognized.
    */
-  get highlightingRadius() {
-    return this._highlighting.radius;
+  setHighlightingAttrs(attrs) {
+    if (!this.hasHighlighting()) {
+      throw new Error('This base has no highlighting.');
+    } else {
+      Object.keys(attrs).forEach(attr => {
+        if (_CIRCLE_BASE_ANNOTATION_ATTRS.includes(attr)) {
+          this._highlighting[attr] = attrs[attr];
+        } else {
+          throw new Error('Unrecognized highlighting attribute: ' + attr + '.');
+        }
+      });
+    }
   }
 
   /**
-   * @param {number} r 
+   * Has no effect if this base has no highlighting.
    */
-  set highlightingRadius(r) {
-    this._highlighting.radius = r;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get highlightingFill() {
-    return this._highlighting.fill;
-  }
-
-  /**
-   * @param {string} f 
-   */
-  set highlightingFill(f) {
-    this._highlighting.fill = f;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get highlightingFillOpacity() {
-    return this._highlighting.fillOpacity;
-  }
-
-  /**
-   * @param {number} fo 
-   */
-  set highlightingFillOpacity(fo) {
-    this._highlighting.fillOpacity = fo;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get highlightingStroke() {
-    return this._highlighting.stroke;
-  }
-
-  /**
-   * @param {string} s 
-   */
-  set highlightingStroke(s) {
-    this._highlighting.stroke = s;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get highlightingStrokeWidth() {
-    return this._highlighting.strokeWidth;
-  }
-
-  /**
-   * @param {number} sw 
-   */
-  set highlightingStrokeWidth(sw) {
-    this._highlighting.strokeWidth = sw;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get highlightingStrokeOpacity() {
-    return this._highlighting.strokeOpacity;
-  }
-
-  /**
-   * @param {number} so 
-   */
-  set highlightingStrokeOpacity(so) {
-    this._highlighting.strokeOpacity = so;
+  removeHighlighting() {
+    if (this.hasHighlighting()) {
+      this._highlighting.remove();
+      this._highlighting = null;
+    }
   }
 
   /**
@@ -432,95 +416,59 @@ class Base {
     );
   }
 
-  removeOutline() {
-    if (this._outline !== null) {
-      this._outline.remove();
-      this._outline = null;
+  /**
+   * @returns {boolean} 
+   */
+  hasOutline() {
+    return this._outline !== null;
+  }
+
+  /**
+   * @param {string} attr 
+   * 
+   * @throws {Error} If this base has no outline.
+   * @throws {Error} If the attribute is unrecognized.
+   */
+  getOutlineAttr(attr) {
+    if (!this.hasOutline()) {
+      throw new Error('This base has no outline.');
+    } else {
+      if (_CIRCLE_BASE_ANNOTATION_ATTRS.includes(attr)) {
+        return this._outline[attr];
+      } else {
+        throw new Error('Unrecognized outline attribute: ' + attr + '.');
+      }
     }
   }
 
   /**
-   * @returns {number} 
+   * @param {Object} attrs 
+   * 
+   * @throws {Error} If this base has no outline.
+   * @throws {Error} If an attribute is unrecognized.
    */
-  get outlineRadius() {
-    return this._outline.radius;
+  setOutlineAttrs(attrs) {
+    if (!this.hasOutline()) {
+      throw new Error('This base has no outline.');
+    } else {
+      Object.keys(attrs).forEach(attr => {
+        if (_CIRCLE_BASE_ANNOTATION_ATTRS.includes(attr)) {
+          this._outline[attr] = attrs[attr];
+        } else {
+          throw new Error('Unrecognized outline attribute: ' + attr + '.');
+        }
+      });
+    }
   }
 
   /**
-   * @param {number} r 
+   * Has no effect if this base has no outline.
    */
-  set outlineRadius(r) {
-    this._outline.radius = r;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get outlineFill() {
-    return this._outline.fill;
-  }
-
-  /**
-   * @param {string} f 
-   */
-  set outlineFill(f) {
-    this._outline.fill = f;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get outlineFillOpacity() {
-    return this._outline.fillOpacity;
-  }
-
-  /**
-   * @param {number} fo 
-   */
-  set outlineFillOpacity(fo) {
-    this._outline.fillOpacity = fo;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get outlineStroke() {
-    return this._outline.stroke;
-  }
-
-  /**
-   * @param {string} s 
-   */
-  set outlineStroke(s) {
-    this._outline.stroke = s;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get outlineStrokeWidth() {
-    return this._outline.strokeWidth;
-  }
-
-  /**
-   * @param {number} sw 
-   */
-  set outlineStrokeWidth(sw) {
-    this._outline.strokeWidth = sw;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get outlineStrokeOpacity() {
-    return this._outline.strokeOpacity;
-  }
-
-  /**
-   * @param {number} so 
-   */
-  set outlineStrokeOpacity(so) {
-    this._outline.strokeOpacity = so;
+  removeOutline() {
+    if (this.hasOutline()) {
+      this._outline.remove();
+      this._outline = null;
+    }
   }
 
   /**
@@ -551,123 +499,59 @@ class Base {
     );
   }
 
-  removeNumbering() {
-    if (this._numbering !== null) {
-      this._numbering.remove();
-      this._numbering = null;
+  /**
+   * @returns {boolean} 
+   */
+  hasNumbering() {
+    return this._numbering !== null;
+  }
+
+  /**
+   * @param {string} attr 
+   * 
+   * @throws {Error} If this base has no numbering.
+   * @throws {Error} If the attribute is unrecognized.
+   */
+  getNumberingAttr(attr) {
+    if (!this.hasNumbering()) {
+      throw new Error('This base has no numbering.');
+    } else {
+      if (_NUMBERING_ATTRS.includes(attr)) {
+        return this._numbering[attr];
+      } else {
+        throw new Error('Unrecognized numbering attribute: ' + attr + '.');
+      }
     }
   }
 
   /**
-   * @returns {number} 
+   * @param {Object} attrs 
+   * 
+   * @throws {Error} If this base has no numbering.
+   * @throws {Error} If an attribute is unrecognized.
    */
-  get numberingBasePadding() {
-    return this._numbering.basePadding;
+  setNumberingAttrs(attrs) {
+    if (!this.hasNumbering()) {
+      throw new Error('This base has no numbering.');
+    } else {
+      Object.keys(attrs).forEach(attr => {
+        if (_NUMBERING_ATTRS.includes(attr)) {
+          this._numbering[attr] = attrs[attr];
+        } else {
+          throw new Error('Unrecognized numbering attribute: ' + attr + '.');
+        }
+      });
+    }
   }
 
   /**
-   * @param {number} bp 
+   * Has no effect if this base has no numbering.
    */
-  set numberingBasePadding(bp) {
-    this._numbering.basePadding = bp;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get numberingLineLength() {
-    return this._numbering.lineLength;
-  }
-
-  /**
-   * @param {number} ll 
-   */
-  set numberingLineLength(ll) {
-    this._numbering.lineLength = ll;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get numberingNumber() {
-    return this._numbering.number;
-  }
-
-  /**
-   * @param {number} n 
-   */
-  set numberingNumber(n) {
-    this._numbering.number = n;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get numberingTextFontFamily() {
-    return this._numbering.textFontFamily;
-  }
-
-  /**
-   * @param {string} ff 
-   */
-  set numberingTextFontFamily(ff) {
-    this._numbering.textFontFamily = ff;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get numberingTextFontSize() {
-    return this._numbering.textFontSize;
-  }
-
-  /**
-   * @param {number} fs 
-   */
-  set numberingTextFontSize(fs) {
-    this._numbering.textFontSize = fs;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get numberingTextFontWeight() {
-    return this._numbering.textFontWeight;
-  }
-
-  /**
-   * @param {string} fw 
-   */
-  set numberingTextFontWeight(fw) {
-    this._numbering.textFontWeight = fw;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get numberingColor() {
-    return this._numbering.color;
-  }
-
-  /**
-   * @param {string} c 
-   */
-  set numberingColor(c) {
-    this._numbering.color = c;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get numberingLineStrokeWidth() {
-    return this._numbering.lineStrokeWidth;
-  }
-
-  /**
-   * @param {number} sw 
-   */
-  set numberingLineStrokeWidth(sw) {
-    this._numbering.lineStrokeWidth = sw;
+  removeNumbering() {
+    if (this.hasNumbering()) {
+      this._numbering.remove();
+      this._numbering = null;
+    }
   }
 
   /**
