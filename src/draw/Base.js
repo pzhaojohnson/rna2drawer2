@@ -439,7 +439,89 @@ class Base {
     }
   }
 
+  /**
+   * @returns {number} 
+   */
+  get outlineRadius() {
+    return this._outline.radius;
+  }
 
+  /**
+   * @param {number} r 
+   */
+  set outlineRadius(r) {
+    this._outline.radius = r;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get outlineFill() {
+    return this._outline.fill;
+  }
+
+  /**
+   * @param {string} f 
+   */
+  set outlineFill(f) {
+    this._outline.fill = f;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get outlineFillOpacity() {
+    return this._outline.fillOpacity;
+  }
+
+  /**
+   * @param {number} fo 
+   */
+  set outlineFillOpacity(fo) {
+    this._outline.fillOpacity = fo;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get outlineStroke() {
+    return this._outline.stroke;
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set outlineStroke(s) {
+    this._outline.stroke = s;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get outlineStrokeWidth() {
+    return this._outline.strokeWidth;
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set outlineStrokeWidth(sw) {
+    this._outline.strokeWidth = sw;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get outlineStrokeOpacity() {
+    return this._outline.strokeOpacity;
+  }
+
+  /**
+   * @param {number} so 
+   */
+  set outlineStrokeOpacity(so) {
+    this._outline.strokeOpacity = so;
+  }
 
   /**
    * @param {SVG.Doc} svg 
