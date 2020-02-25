@@ -363,6 +363,48 @@ class Base {
   }
 
   /**
+   * @returns {string} 
+   */
+  get highlightingStroke() {
+    return this._highlighting.stroke;
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set highlightingStroke(s) {
+    this._highlighting.stroke = s;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get highlightingStrokeWidth() {
+    return this._highlighting.strokeWidth;
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set highlightingStrokeWidth(sw) {
+    this._highlighting.strokeWidth = sw;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get highlightingStrokeOpacity() {
+    return this._highlighting.strokeOpacity;
+  }
+
+  /**
+   * @param {number} so 
+   */
+  set highlightingStrokeOpacity(so) {
+    this._highlighting.strokeOpacity = so;
+  }
+
+  /**
    * @param {SVG.Doc} svg 
    */
   addCircleOutline(svg) {
@@ -396,6 +438,8 @@ class Base {
       this._outline = null;
     }
   }
+
+
 
   /**
    * @param {SVG.Doc} svg 
