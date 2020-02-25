@@ -579,24 +579,6 @@ class Base {
   }
 
   /**
-   * @param {string} id 
-   */
-  removeAnnotation(id) {
-    let i = null;
-
-    for (let j = 0; j < this._annotations.length; j++) {
-      if (this._annotations[j].id === id) {
-        i = j;
-      }
-    }
-
-    if (i !== null) {
-      this._annotations[i].remove();
-      this._annotations.splice(i, 1);
-    }
-  }
-
-  /**
    * @typedef {Object} Base~SavableState 
    * @property {string} className 
    * @property {string} text 
