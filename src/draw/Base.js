@@ -4,26 +4,6 @@ import angleBetween from './angleBetween';
 import CircleBaseAnnotation from './BaseAnnotation';
 import Numbering from './Numbering';
 
-const _CIRCLE_BASE_ANNOTATION_ATTRS = [
-  'radius',
-  'fill',
-  'fillOpacity',
-  'stroke',
-  'strokeWidth',
-  'strokeOpacity',
-];
-
-const _NUMBERING_ATTRS = [
-  'basePadding',
-  'lineLength',
-  'number',
-  'textFontFamily',
-  'textFontSize',
-  'textFontWeight',
-  'color',
-  'lineStrokeWidth',
-];
-
 class Base {
 
   /**
