@@ -109,10 +109,19 @@ it('id', () => {
   expect(b.id).toEqual(id);
 });
 
-it('letter', () => {
+it('letter getter and setter', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1, 2);
-  expect(b.letter).toEqual('A');
+  expect(b.letter).toBe('A');
+
+  b.letter = 'i';
+  expect(b.letter).toBe('i');
+
+  // empty string
+  expect(() => { b.letter = ''; }).toThrow();
+
+  // more than one character
+  expect(() => { b.letter = 'abc'; }).toThrow();
 });
 
 it('move', () => {

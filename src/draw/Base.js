@@ -127,6 +127,20 @@ class Base {
   }
 
   /**
+   * @param {string} l 
+   * 
+   * @throws {Error} If the length of the given string is not one.
+   */
+  set letter(l) {
+    if (l.length !== 1) {
+      throw new Error('Letter must be a single character.');
+    }
+
+    this._text.clear();
+    this._text.tspan(l);
+  }
+
+  /**
    * @returns {number} 
    */
   get xCenter() {
