@@ -364,6 +364,10 @@ class CircleBaseAnnotation extends BaseAnnotation {
     this._circle.attr({ 'stroke-opacity': so });
   }
 
+  remove() {
+    this._circle.remove();
+  }
+
   /**
    * @typedef {Object} CircleBaseAnnotation~SavableState 
    * @property {string} className 

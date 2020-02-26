@@ -277,3 +277,14 @@ it('circle strokeOpacity getter and setter', () => {
   // check actual value
   expect(cba._circle.attr('stroke-opacity')).toBeCloseTo(0.3, 6);
 });
+
+it('remove method', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  let circleId = cba._circle.id();
+  expect(svg.findOne('#' + circleId)).not.toBe(null);
+
+  cba.remove();
+
+  expect(svg.findOne('#' + circleId)).toBe(null);
+});
