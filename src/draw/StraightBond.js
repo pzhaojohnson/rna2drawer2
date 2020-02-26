@@ -22,7 +22,7 @@ class StraightBond {
       throw new Error('Saved state is not for a straight bond.');
     }
 
-    let line = svg.findOne(savedState.line);
+    let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
     return new StraightBond(line, b1, b2);

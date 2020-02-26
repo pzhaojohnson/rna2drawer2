@@ -3,6 +3,61 @@ import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import Base from './Base';
 
+it('fromSavedState static method valid saved state', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1.1, 1.2);
+  let b2 = Base.create(svg, 'U', 2.1, 2.2);
+  let sb1 = StraightBond.create(svg, b1, b2);
+
+  let savableState = sb1.savableState();
+
+  let getBaseById = (id) => {
+    if (id === b1.id) {
+      return b1;
+    } else {
+      return b2;
+    }
+  };
+
+  let sb2 = StraightBond.fromSavedState(savableState, svg, getBaseById);
+
+  expect(sb2._line.id()).toBe(sb1._line.id());
+  expect(sb2.base1).toBe(sb1.base1);
+  expect(sb2.base2).toBe(sb1.base2);
+});
+
+it('fromSavedState static method invalid saved state', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1.1, 1.2);
+  let b2 = Base.create(svg, 'U', 2.1, 2.2);
+  let sb1 = StraightBond.create(svg, b1, b2);
+
+  let getBaseById = (id) => {
+    if (id === b1.id) {
+      return b1;
+    } else {
+      return b2;
+    }
+  };
+
+  // no class name defined
+  let savableState = sb1.savableState();
+  delete savableState.className;
+  expect(() => StraightBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
+
+  // class name is not a string
+  savableState.className = 2;
+  expect(() => StraightBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
+
+  // class name is an empty string
+  savableState.className = '';
+  expect(() => StraightBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
+
+  // class name is not StraightBond
+  savableState.className = 'StraightBnd';
+  expect(() => StraightBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
+});
+
 function checkCoordinates(cs, ecs) {
   expect(cs.x1).toBeCloseTo(ecs.x1, 6);
   expect(cs.y1).toBeCloseTo(ecs.y1, 6);
@@ -306,4 +361,17 @@ it('strokeWidth getter and setter', () => {
 
   // check actual value
   expect(sb._line.attr('stroke-width')).toBeCloseTo(2.3, 6);
+});
+
+it('savableState method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1.1, 1.2);
+  let b2 = Base.create(svg, 'U', 2.1, 2.2);
+  let sb = StraightBond.create(svg, b1, b2);
+
+  let savableState = sb.savableState();
+  expect(savableState.className).toBe('StraightBond');
+  expect(savableState.line).toBe(sb._line.id());
+  expect(savableState.base1).toBe(b1.id);
+  expect(savableState.base2).toBe(b2.id);
 });
