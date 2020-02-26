@@ -18,9 +18,9 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~baseClockwiseNormalAngleCallback} baseClockwiseNormalAngleCallback 
    */
   static fromSavedState(savedState, svg, getBaseById, baseClockwiseNormalAngleCallback) {
-    let curve = svg.findOne(savedState.curve);
-    let bracket1 = svg.findOne(savedState.bracket1);
-    let bracket2 = svg.findOne(savedState.bracket2);
+    let curve = svg.findOne('#' + savedState.curve);
+    let bracket1 = svg.findOne('#' + savedState.bracket1);
+    let bracket2 = svg.findOne('#' + savedState.bracket2);
 
     let side1 = [];
     savedState.side1.forEach(id => side1.push(getBaseById(id)));
