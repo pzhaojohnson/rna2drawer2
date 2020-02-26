@@ -2,6 +2,7 @@ import Base from './Base';
 import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import normalizeAngle from './normalizeAngle';
+import Numbering from './Numbering';
 
 it('fromSavedState static method valid saved state', () => {
   let svg = createNodeSVG();
@@ -124,17 +125,57 @@ it('letter getter and setter', () => {
   expect(() => { b.letter = 'abc'; }).toThrow();
 });
 
-it('move', () => {
+it('move with no highlighting, outline, numbering, or annotations', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 0, 0);
   
-  b.move(1, 2);
+  b.move(1, 2, Math.PI / 3, 4 * Math.PI / 3);
   expect(b.xCenter).toEqual(1);
   expect(b.yCenter).toEqual(2);
 
-  b.move(5, 8);
+  b.move(5, 8, Math.PI / 3, 4 * Math.PI / 3);
   expect(b.xCenter).toEqual(5);
   expect(b.yCenter).toEqual(8);
+});
+
+it('move with highlighting, outline, numbering, and annotations', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'G', 0.2, -0.5);
+  let highlighting = b.addCircleHighlighting(svg);
+  let outline = b.addCircleOutline(svg);
+  let numbering = b.addNumbering(svg, 0, 4 * Math.PI / 3);
+  let eNumbering = Numbering.create(svg, 0, b.xCenter, b.yCenter, 4 * Math.PI / 3);
+  let annotation1 = b.addCircleAnnotation(svg);
+  annotation1.shift(1, 2, b.xCenter, b.yCenter, Math.PI / 3);
+  let annotation2 = b.addCircleAnnotation(svg);
+
+  b.move(100.5, 300.111, 2 * Math.PI / 3, 5 * Math.PI / 3);
+  eNumbering.reposition(100.5, 300.111, 5 * Math.PI / 3);
+  
+  expect(b.xCenter).toBeCloseTo(100.5, 6);
+  expect(b.yCenter).toBeCloseTo(300.111, 6);
+
+  expect(highlighting.xCenter).toBeCloseTo(100.5, 6);
+  expect(highlighting.yCenter).toBeCloseTo(300.111, 6);
+
+  expect(outline.xCenter).toBeCloseTo(100.5, 6);
+  expect(outline.yCenter).toBeCloseTo(300.111, 6);
+
+  expect(numbering._text.attr('x')).toBeCloseTo(eNumbering._text.attr('x'), 6);
+  expect(numbering._text.attr('y')).toBeCloseTo(eNumbering._text.attr('y'), 6);
+  expect(numbering._text.attr('text-anchor')).toBe(eNumbering._text.attr('text-anchor'));
+  expect(numbering._text.attr('dy')).toBe(eNumbering._text.attr('dy'));
+
+  expect(numbering._line.attr('x1')).toBeCloseTo(eNumbering._line.attr('x1'), 6);
+  expect(numbering._line.attr('y1')).toBeCloseTo(eNumbering._line.attr('y1'), 6);
+  expect(numbering._line.attr('x2')).toBeCloseTo(eNumbering._line.attr('x2'), 6);
+  expect(numbering._line.attr('y2')).toBeCloseTo(eNumbering._line.attr('y2'), 6);
+
+  expect(annotation1.xCenter).toBeCloseTo(99.26794919243112, 6);
+  expect(annotation1.yCenter).toBeCloseTo(301.9770254037844, 6);
+
+  expect(annotation2.xCenter).toBeCloseTo(100.5, 6);
+  expect(annotation2.yCenter).toBeCloseTo(300.111, 6);
 });
 
 it('distanceBetweenCenters', () => {
