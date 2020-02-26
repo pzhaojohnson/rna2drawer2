@@ -18,6 +18,8 @@ it('check that BaseAnnotation class members are unimplemented', () => {
   expect(() => ba.reposition(7, 8, 9)).toThrow();
   expect(() => ba.insertBefore(svg.rect(10))).toThrow();
   expect(() => ba.insertAfter(svg.rect(10))).toThrow();
+  expect(() => ba.remove()).toThrow();
+  expect(() => ba.savableState()).toThrow();
 });
 
 it('circle createNondisplaced', () => {
