@@ -538,6 +538,7 @@ class Base {
 
   removeAnnotations() {
     this._annotations.forEach(ann => ann.remove());
+    this._annotations = [];
   }
 
   remove() {
