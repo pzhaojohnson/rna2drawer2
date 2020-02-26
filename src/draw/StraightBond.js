@@ -248,6 +248,10 @@ class StraightBond {
     this._line.attr({ 'stroke-width': sw });
   }
 
+  remove() {
+    this._line.remove();
+  }
+
   /**
    * @typedef {Object} StraightBond~SavableState 
    * @property {string} className 

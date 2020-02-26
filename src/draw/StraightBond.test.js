@@ -363,6 +363,28 @@ it('strokeWidth getter and setter', () => {
   expect(sb._line.attr('stroke-width')).toBeCloseTo(2.3, 6);
 });
 
+it('remove method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1.1, 1.2);
+  let b2 = Base.create(svg, 'U', 2.1, 2.2);
+  let sb = StraightBond.create(svg, b1, b2);
+  let lineId = sb._line.id();
+  let baseTextId1 = b1._text.id();
+  let baseTextId2 = b2._text.id();
+
+  expect(svg.findOne('#' + lineId)).not.toBe(null);
+  expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
+  expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
+
+  sb.remove();
+
+  expect(svg.findOne('#' + lineId)).toBe(null);
+
+  // does not remove the bases
+  expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
+  expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
+});
+
 it('savableState method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1.1, 1.2);
