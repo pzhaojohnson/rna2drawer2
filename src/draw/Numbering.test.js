@@ -421,6 +421,21 @@ it('lineStrokeWidth getter and setter', () => {
   expect(n._line.attr('stroke-width')).toBeCloseTo(12.2, 6);
 });
 
+it('remove method', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 2, 1, 8, 7);
+  
+  let textId = n._text.id();
+  expect(svg.findOne('#' + textId)).not.toBe(null);
+  let lineId = n._line.id();
+  expect(svg.findOne('#' + lineId)).not.toBe(null);
+
+  n.remove();
+  
+  expect(svg.findOne('#' + textId)).toBe(null);
+  expect(svg.findOne('#' + lineId)).toBe(null);
+});
+
 it('savableState method', () => {
   let svg = createNodeSVG();
   let n = Numbering.create(svg, 2, 1, 8, 7);

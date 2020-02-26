@@ -414,6 +414,11 @@ class Numbering {
     this._line.attr({ 'stroke-width': lsw });
   }
 
+  remove() {
+    this._text.remove();
+    this._line.remove();
+  }
+
   /**
    * @typedef {Object} Numbering~SavableState 
    * @property {string} className 
