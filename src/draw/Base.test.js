@@ -247,6 +247,18 @@ it('bindDblclick method', () => {
   expect(v).toBeTruthy();
 });
 
+it('cursor getter and setter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  b.cursor = 'pointer';
+
+  // check getter
+  expect(b.cursor).toBe('pointer');
+
+  // check actual value
+  expect(b._text.css('cursor')).toBe('pointer');
+});
+
 it('numAnnotations getter', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1.3, 1.4);
