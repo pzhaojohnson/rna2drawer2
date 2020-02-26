@@ -22,6 +22,53 @@ it('check that BaseAnnotation class members are unimplemented', () => {
   expect(() => ba.savableState()).toThrow();
 });
 
+it('circle fromSavedState static method valid saved state', () => {
+  let svg = createNodeSVG();
+  let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
+  cba1.shift(2, 3, 5, 8, Math.PI / 3);
+  let savableState = cba1.savableState();
+  let cba2 = CircleBaseAnnotation.fromSavedState(savableState, svg, 5, 8, Math.PI / 3);
+
+  expect(cba2._circle.id()).toBe(cba1._circle.id());
+  expect(cba2.displacementLength).toBeCloseTo(cba1.displacementLength, 6);
+  expect(cba2.displacementAngle).toBeCloseTo(cba1.displacementAngle, 6);
+});
+
+it('circle fromSavedState static method invalid saved state', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
+  cba.shift(2, 3, 5, 8, Math.PI / 3);
+  let savableState = cba.savableState();
+  
+  // no class name defined
+  delete savableState.className;
+  
+  expect(() => CircleBaseAnnotation.fromSavedState(
+    savableState, svg, 5, 8, Math.PI / 3)
+  ).toThrow();
+
+  // class name is not a string
+  savableState.className = -19;
+
+  expect(() => CircleBaseAnnotation.fromSavedState(
+    savableState, svg, 5, 8, Math.PI / 3)
+  ).toThrow();
+
+  // class name is an empty string
+  savableState.className = '';
+
+  expect(() => CircleBaseAnnotation.fromSavedState(
+    savableState, svg, 5, 8, Math.PI / 3)
+  ).toThrow();
+
+  // class name is not CircleBaseAnnotation
+  savableState.className = 'CircleBseAnnotation';
+
+  expect(() => CircleBaseAnnotation.fromSavedState(
+    savableState, svg, 5, 8, Math.PI / 3)
+  ).toThrow();
+});
+
 it('circle createNondisplaced', () => {
   let svg = createNodeSVG();
   let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
