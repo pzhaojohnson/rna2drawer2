@@ -211,6 +211,42 @@ it('fontStyle getter and setter', () => {
   expect(b._text.attr('font-style')).toBe('italic');
 });
 
+it('bindMouseover method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  let v = false;
+  b.bindMouseover(e => { v = true; });
+  b._text.fire('mouseover');
+  expect(v).toBeTruthy();
+});
+
+it('bindMouseout method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  let v = false;
+  b.bindMouseout(e => { v = true; });
+  b._text.fire('mouseout');
+  expect(v).toBeTruthy();
+});
+
+it('bindMousedown method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  let v = false;
+  b.bindMousedown(e => { v = true; });
+  b._text.fire('mousedown');
+  expect(v).toBeTruthy();
+});
+
+it('bindDblclick method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  let v = false;
+  b.bindDblclick(e => { v = true; });
+  b._text.fire('dblclick');
+  expect(v).toBeTruthy();
+});
+
 it('numAnnotations getter', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1.3, 1.4);
