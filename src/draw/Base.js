@@ -33,9 +33,11 @@ class Base {
       b.addNumberingFromSavedState(savedState.numbering, svg);
     }
 
-    savedState.annotations.forEach(
-      ann => b.addCircleAnnotationFromSavedState(ann, svg, clockwiseNormalAngle)
-    );
+    if (savedState.annotations) {
+      savedState.annotations.forEach(
+        ann => b.addCircleAnnotationFromSavedState(ann, svg, clockwiseNormalAngle)
+      );
+    }
 
     return b;
   }
@@ -463,6 +465,43 @@ class Base {
       this.yCenter,
       clockwiseNormalAngle,
     ));
+  }
+
+  /**
+   * Returns null if no annotation has the given ID.
+   * 
+   * @param {string} id 
+   * 
+   * @returns {CircleBaseAnnotation|null} 
+   */
+  getAnnotationById(id) {
+    this._annotations.forEach(ann => {
+      if (ann.id === id) {
+        return ann;
+      }
+    });
+
+    return null;
+  }
+
+  /**
+   * Has no effect if no annotation has the given ID.
+   * 
+   * @param {string} id 
+   */
+  removeAnnotationById(id) {
+    let i = null;
+
+    for (let j = 0; j < this._annotations.length; j++) {
+      if (this._annotations[j].id === id) {
+        i = j;
+      }
+    }
+
+    if (i !== null) {
+      this._annotations[i].remove();
+      this._annotations.splice(i, 1);
+    }
   }
 
   /**
