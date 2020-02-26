@@ -3,6 +3,60 @@ import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import normalizeAngle from './normalizeAngle';
 
+it('fromSavedState static method valid saved state', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+
+  // no highlighting, outline, numbering, or annotations
+  let savableState = b1.savableState();
+  let b2 = Base.fromSavedState(savableState, svg, Math.PI / 3);
+  expect(b2._text.id()).toBe(b1._text.id());
+  expect(b2.letter).toBe(b1.letter);
+  expect(b2.hasHighlighting()).toBeFalsy();
+  expect(b2.hasOutline()).toBeFalsy();
+  expect(b2.hasNumbering()).toBeFalsy();
+  expect(b2._annotations.length).toBe(0);
+
+  // with highlighting, outline, numbering, and annotations
+  let highlighting = b1.addCircleHighlighting(svg);
+  let outline = b1.addCircleOutline(svg);
+  let numbering = b1.addNumbering(svg, 3, Math.PI / 3);
+  let annotation1 = b1.addCircleAnnotation(svg);
+  let annotation2 = b1.addCircleAnnotation(svg);
+  savableState = b1.savableState();
+  let b3 = Base.fromSavedState(savableState, svg, Math.PI / 3);
+  expect(b3._text.id()).toBe(b1._text.id());
+  expect(b3.letter).toBe(b1.letter);
+  expect(b3.highlighting._circle.id()).toBe(highlighting._circle.id());
+  expect(b3.outline._circle.id()).toBe(outline._circle.id());
+  expect(b3.numbering._text.id()).toBe(numbering._text.id());
+  expect(b3.numbering._line.id()).toBe(numbering._line.id());
+  expect(b3._annotations[0]._circle.id()).toBe(annotation1._circle.id());
+  expect(b3._annotations[1]._circle.id()).toBe(annotation2._circle.id());
+});
+
+it('fromSavedState static method invalid class name', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1, 2);
+  let savableState = b.savableState();
+
+  // no class name defined
+  delete savableState.className;
+  expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
+
+  // class name is not a string
+  savableState.className = 5;
+  expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
+
+  // class name is an empty string
+  savableState.className = '';
+  expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
+
+  // class name is not Base
+  savableState.className = 'Bse';
+  expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
+});
+
 it('create', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1, 2);

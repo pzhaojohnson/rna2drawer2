@@ -18,7 +18,7 @@ class Base {
       throw new Error('Saved state is not for a base.');
     }
 
-    let text = svg.findOne(savedState.text);
+    let text = svg.findOne('#' + savedState.text);
     let b = new Base(text);
 
     if (savedState.highlighting) {
