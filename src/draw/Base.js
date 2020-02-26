@@ -536,6 +536,19 @@ class Base {
     }
   }
 
+  removeAnnotations() {
+    this._annotations.forEach(ann => ann.remove());
+  }
+
+  remove() {
+    this.removeHighlighting();
+    this.removeOutline();
+    this.removeNumbering();
+    this.removeAnnotations();
+
+    this._text.remove();
+  }
+
   /**
    * @typedef {Object} Base~SavableState 
    * @property {string} className 
