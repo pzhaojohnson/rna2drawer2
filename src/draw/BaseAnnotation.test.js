@@ -288,3 +288,11 @@ it('remove method', () => {
 
   expect(svg.findOne('#' + circleId)).toBe(null);
 });
+
+it('savableState method', () => {
+  let svg = createNodeSVG();
+  let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+  let savableState = cba.savableState();
+  expect(savableState.className).toBe('CircleBaseAnnotation');
+  expect(savableState.circle).toBe(cba._circle.id());
+});
