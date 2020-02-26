@@ -152,6 +152,65 @@ it('angleBetweenCenters', () => {
   expect(normalizeAngle(a, 0)).toBeCloseTo(Math.PI / 4);
 });
 
+it('fontFamily getter and setter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 0.5, 1.9);
+  b.fontFamily = 'Consolas';
+
+  // check getter
+  expect(b.fontFamily).toBe('Consolas');
+
+  // check actual value
+  expect(b._text.attr('font-family')).toBe('Consolas');
+});
+
+it('fontSize getter and setter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  b.fontSize = 22.5;
+
+  // check getter
+  expect(b.fontSize).toBeCloseTo(22.5, 6);
+
+  // check actual value
+  expect(b._text.attr('font-size')).toBeCloseTo(22.5, 6);
+});
+
+it('fontWeight getter and setter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  
+  // settings to a string
+  b.fontWeight = 'bold';
+
+  // check getter
+  expect(b.fontWeight).toBe('bold');
+
+  // check actual value
+  expect(b._text.attr('font-weight')).toBe('bold');
+
+  // setting to a number
+  b.fontWeight = 200;
+
+  // check getter
+  expect(b.fontWeight).toBeCloseTo(200, 6);
+
+  // check actual value
+  expect(b._text.attr('font-weight')).toBeCloseTo(200, 6);
+});
+
+it('fontStyle getter and setter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  b.fontStyle = 'italic';
+
+  // check getter
+  expect(b.fontStyle).toBe('italic');
+
+  // check actual value
+  expect(b._text.attr('font-style')).toBe('italic');
+});
+
 it('numAnnotations getter', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1.3, 1.4);
