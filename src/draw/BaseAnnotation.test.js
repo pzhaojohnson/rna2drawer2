@@ -278,7 +278,7 @@ it('circle strokeOpacity getter and setter', () => {
   expect(cba._circle.attr('stroke-opacity')).toBeCloseTo(0.3, 6);
 });
 
-it('remove method', () => {
+it('circle remove method', () => {
   let svg = createNodeSVG();
   let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
   let circleId = cba._circle.id();
@@ -289,7 +289,7 @@ it('remove method', () => {
   expect(svg.findOne('#' + circleId)).toBe(null);
 });
 
-it('savableState method', () => {
+it('circle savableState method', () => {
   let svg = createNodeSVG();
   let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
   let savableState = cba.savableState();
