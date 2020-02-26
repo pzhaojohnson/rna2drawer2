@@ -18,8 +18,8 @@ class Numbering {
       throw new Error('Saved state is not for a numbering.');
     }
 
-    let text = svg.findOne(savedState.text);
-    let line = svg.findOne(savedState.line);
+    let text = svg.findOne('#' + savedState.text);
+    let line = svg.findOne('#' + savedState.line);
     return new Numbering(text, line, xCenterBase, yCenterBase);
   }
 
