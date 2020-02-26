@@ -351,46 +351,46 @@ it('number getter and setter', () => {
   expect(() => { n.number = -Infinity; }).toThrow();
 });
 
-it('textFontFamily getter and setter', () => {
+it('fontFamily getter and setter', () => {
   let svg = createNodeSVG();
   let n = Numbering.create(svg, 7, 0, 0, 0);
-  n.textFontFamily = 'Consolas';
+  n.fontFamily = 'Consolas';
 
   // check getter
-  expect(n.textFontFamily).toBe('Consolas');
+  expect(n.fontFamily).toBe('Consolas');
 
   // check actual value
   expect(n._text.attr('font-family')).toBe('Consolas');
 });
 
-it('textFontSize', () => {
+it('fontSize', () => {
   let svg = createNodeSVG();
   let n = Numbering.create(svg, -2, 4, 5, 6);
-  n.textFontSize = 20;
+  n.fontSize = 20;
 
   // check getter
-  expect(n.textFontSize).toBeCloseTo(20, 6);
+  expect(n.fontSize).toBeCloseTo(20, 6);
 
   // check actual value
   expect(n._text.attr('font-size')).toBeCloseTo(20, 6);
 });
 
-it('textFontWeight getter and setter', () => {
+it('fontWeight getter and setter', () => {
   let svg = createNodeSVG();
   let n = Numbering.create(svg, 9, 10, 12.2, 100);
-  n.textFontWeight = 'bold';
+  n.fontWeight = 'bold';
 
   // check getter
-  expect(n.textFontWeight).toBe('bold');
+  expect(n.fontWeight).toBe('bold');
 
   // check actual value
   expect(n._text.attr('font-weight')).toBe('bold');
 
   // setting to a number
-  n.textFontWeight = 200;
+  n.fontWeight = 200;
 
   // check getter
-  expect(n.textFontWeight).toBeCloseTo(200, 6);
+  expect(n.fontWeight).toBeCloseTo(200, 6);
 
   // check actual value
   expect(n._text.attr('font-weight')).toBeCloseTo(200, 6);

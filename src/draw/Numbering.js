@@ -346,42 +346,42 @@ class Numbering {
   /**
    * @returns {string} 
    */
-  get textFontFamily() {
+  get fontFamily() {
     return this._text.attr('font-family');
   }
 
   /**
    * @param {string} ff 
    */
-  set textFontFamily(ff) {
+  set fontFamily(ff) {
     this._text.attr({ 'font-family': ff });
   }
 
   /**
    * @returns {number} 
    */
-  get textFontSize() {
+  get fontSize() {
     return this._text.attr('font-size');
   }
 
   /**
    * @param {number} fs 
    */
-  set textFontSize(fs) {
+  set fontSize(fs) {
     this._text.attr({ 'font-size': fs });
   }
 
   /**
    * @returns {string} 
    */
-  get textFontWeight() {
+  get fontWeight() {
     return this._text.attr('font-weight');
   }
 
   /**
    * @param {string} fw 
    */
-  set textFontWeight(fw) {
+  set fontWeight(fw) {
     this._text.attr({ 'font-weight': fw });
   }
 
