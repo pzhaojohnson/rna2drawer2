@@ -341,41 +341,10 @@ class Base {
   }
 
   /**
-   * @param {string} attr 
-   * 
-   * @throws {Error} If this base has no highlighting.
-   * @throws {Error} If the attribute is unrecognized.
+   * @returns {CircleBaseAnnotation|null} 
    */
-  getHighlightingAttr(attr) {
-    if (!this.hasHighlighting()) {
-      throw new Error('This base has no highlighting.');
-    } else {
-      if (_CIRCLE_BASE_ANNOTATION_ATTRS.includes(attr)) {
-        return this._highlighting[attr];
-      } else {
-        throw new Error('Unrecognized highlighting attribute: ' + attr + '.');
-      }
-    }
-  }
-
-  /**
-   * @param {Object} attrs 
-   * 
-   * @throws {Error} If this base has no highlighting.
-   * @throws {Error} If an attribute is unrecognized.
-   */
-  setHighlightingAttrs(attrs) {
-    if (!this.hasHighlighting()) {
-      throw new Error('This base has no highlighting.');
-    } else {
-      Object.keys(attrs).forEach(attr => {
-        if (_CIRCLE_BASE_ANNOTATION_ATTRS.includes(attr)) {
-          this._highlighting[attr] = attrs[attr];
-        } else {
-          throw new Error('Unrecognized highlighting attribute: ' + attr + '.');
-        }
-      });
-    }
+  get highlighting() {
+    return this._highlighting;
   }
 
   /**
@@ -424,41 +393,10 @@ class Base {
   }
 
   /**
-   * @param {string} attr 
-   * 
-   * @throws {Error} If this base has no outline.
-   * @throws {Error} If the attribute is unrecognized.
+   * @returns {CircleBaseAnnotation|null} 
    */
-  getOutlineAttr(attr) {
-    if (!this.hasOutline()) {
-      throw new Error('This base has no outline.');
-    } else {
-      if (_CIRCLE_BASE_ANNOTATION_ATTRS.includes(attr)) {
-        return this._outline[attr];
-      } else {
-        throw new Error('Unrecognized outline attribute: ' + attr + '.');
-      }
-    }
-  }
-
-  /**
-   * @param {Object} attrs 
-   * 
-   * @throws {Error} If this base has no outline.
-   * @throws {Error} If an attribute is unrecognized.
-   */
-  setOutlineAttrs(attrs) {
-    if (!this.hasOutline()) {
-      throw new Error('This base has no outline.');
-    } else {
-      Object.keys(attrs).forEach(attr => {
-        if (_CIRCLE_BASE_ANNOTATION_ATTRS.includes(attr)) {
-          this._outline[attr] = attrs[attr];
-        } else {
-          throw new Error('Unrecognized outline attribute: ' + attr + '.');
-        }
-      });
-    }
+  get outline() {
+    return this._outline;
   }
 
   /**
@@ -507,41 +445,10 @@ class Base {
   }
 
   /**
-   * @param {string} attr 
-   * 
-   * @throws {Error} If this base has no numbering.
-   * @throws {Error} If the attribute is unrecognized.
+   * @returns {Numbering|null} 
    */
-  getNumberingAttr(attr) {
-    if (!this.hasNumbering()) {
-      throw new Error('This base has no numbering.');
-    } else {
-      if (_NUMBERING_ATTRS.includes(attr)) {
-        return this._numbering[attr];
-      } else {
-        throw new Error('Unrecognized numbering attribute: ' + attr + '.');
-      }
-    }
-  }
-
-  /**
-   * @param {Object} attrs 
-   * 
-   * @throws {Error} If this base has no numbering.
-   * @throws {Error} If an attribute is unrecognized.
-   */
-  setNumberingAttrs(attrs) {
-    if (!this.hasNumbering()) {
-      throw new Error('This base has no numbering.');
-    } else {
-      Object.keys(attrs).forEach(attr => {
-        if (_NUMBERING_ATTRS.includes(attr)) {
-          this._numbering[attr] = attrs[attr];
-        } else {
-          throw new Error('Unrecognized numbering attribute: ' + attr + '.');
-        }
-      });
-    }
+  get numbering() {
+    return this._numbering;
   }
 
   /**
