@@ -11,6 +11,13 @@ it('create', () => {
   expect(b.yCenter).toEqual(2);
 });
 
+it('createOutOfView static method', () => {
+  let svg = createNodeSVG();
+  let b = Base.createOutOfView(svg, 'I');
+  expect(b.letter).toBe('I');
+  expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
+});
+
 it('_validateText', () => {
   let svg = createNodeSVG();
   

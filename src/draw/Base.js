@@ -65,6 +65,14 @@ class Base {
   }
 
   /**
+   * @param {SVG.Doc} svg 
+   * @param {string} letter 
+   */
+  static createOutOfView(svg, letter) {
+    return Base.create(svg, letter, 0, -200);
+  }
+
+  /**
    * @param {SVG.Text} text 
    */
   constructor(text) {
