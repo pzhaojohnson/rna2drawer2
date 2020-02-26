@@ -39,21 +39,21 @@ class BaseAnnotation {
    * @returns {number} 
    */
   get yCenter() {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented.');
   }
 
   /**
    * @returns {number} 
    */
   get displacementLength() {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented.');
   }
 
   /**
    * @returns {number} 
    */
   get displacementAngle() {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -66,7 +66,7 @@ class BaseAnnotation {
    * @param {number} baseClockwiseNormalAngle 
    */
   shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -75,21 +75,32 @@ class BaseAnnotation {
    * @param {number} baseClockwiseNormalAngle 
    */
   reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented.');
   }
 
   /**
    * @param {SVG.Element} ele 
    */
   insertBefore(ele) {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented.');
   }
 
   /**
    * @param {SVG.Element} ele 
    */
   insertAfter(ele) {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented.');
+  }
+
+  remove() {
+    throw new Error('Not implemented.');
+  }
+
+  /**
+   * @returns {Object} 
+   */
+  savableState() {
+    throw new Error('Not implemented.');
   }
 }
 
