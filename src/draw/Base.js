@@ -1,7 +1,7 @@
 import createUUIDforSVG from './createUUIDforSVG';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
-import CircleBaseAnnotation from './BaseAnnotation';
+import { CircleBaseAnnotation } from './BaseAnnotation';
 import Numbering from './Numbering';
 
 class Base {
@@ -572,6 +572,8 @@ class Base {
     this._annotations.forEach(
       ann => savableState.annotations.push(ann.savableState())
     );
+
+    return savableState;
   }
 }
 

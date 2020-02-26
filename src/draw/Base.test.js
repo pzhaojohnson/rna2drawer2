@@ -81,3 +81,32 @@ it('angleBetweenCenters', () => {
   let a = b0.angleBetweenCenters(b1);
   expect(normalizeAngle(a, 0)).toBeCloseTo(Math.PI / 4);
 });
+
+it('savableState method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  
+  // no highlighting, outline, numbering, or annotations
+  let savableState = b.savableState();
+  expect(savableState.className).toBe('Base');
+  expect(savableState.text).toBe(b._text.id());
+  expect(savableState.highlighting).toBe(undefined);
+  expect(savableState.outline).toBe(undefined);
+  expect(savableState.numbering).toBe(undefined);
+  expect(savableState.annotations.length).toBe(0);
+
+  // with highlighting, outline, numbering, and annotations
+  let highlighting = b.addCircleHighlighting(svg);
+  let outline = b.addCircleOutline(svg);
+  let numbering = b.addNumbering(svg, 2, Math.PI / 3);
+  let annotation1 = b.addCircleAnnotation(svg);
+  let annotation2 = b.addCircleAnnotation(svg);
+  savableState = b.savableState();
+  expect(savableState.className).toBe('Base');
+  expect(savableState.text).toBe(b._text.id());
+  expect(savableState.highlighting.className).toBe('CircleBaseAnnotation');
+  expect(savableState.outline.className).toBe('CircleBaseAnnotation');
+  expect(savableState.numbering.className).toBe('Numbering');
+  expect(savableState.annotations[0].className).toBe('CircleBaseAnnotation');
+  expect(savableState.annotations[1].className).toBe('CircleBaseAnnotation');
+});
