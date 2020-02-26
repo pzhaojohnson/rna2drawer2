@@ -372,14 +372,14 @@ class Numbering {
   }
 
   /**
-   * @returns {string} 
+   * @returns {string|number} 
    */
   get fontWeight() {
     return this._text.attr('font-weight');
   }
 
   /**
-   * @param {string} fw 
+   * @param {string|number} fw 
    */
   set fontWeight(fw) {
     this._text.attr({ 'font-weight': fw });
