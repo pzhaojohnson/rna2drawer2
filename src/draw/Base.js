@@ -289,6 +289,8 @@ class Base {
 
   /**
    * @param {SVG.Doc} svg 
+   * 
+   * @returns {CircleBaseAnnotation} 
    */
   addCircleHighlighting(svg) {
     this.removeHighlighting();
@@ -296,12 +298,16 @@ class Base {
     this._highlighting = CircleBaseAnnotation.createNondisplaced(
       svg, this.xCenter, this.yCenter
     );
+
+    return this._highlighting;
   }
 
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} clockwiseNormalAngle 
+   * 
+   * @returns {CircleBaseAnnotation} 
    */
   addCircleHighlightingFromSavedState(savedState, svg, clockwiseNormalAngle) {
     this.removeHighlighting();
@@ -313,6 +319,8 @@ class Base {
       this.yCenter,
       clockwiseNormalAngle,
     );
+
+    return this._highlighting;
   }
 
   /**
@@ -341,6 +349,8 @@ class Base {
 
   /**
    * @param {SVG.Doc} svg 
+   * 
+   * @returns {CircleBaseAnnotation} 
    */
   addCircleOutline(svg) {
     this.removeOutline();
@@ -348,12 +358,16 @@ class Base {
     this._outline = CircleBaseAnnotation.createNondisplaced(
       svg, this.xCenter, this.yCenter
     );
+
+    return this._outline;
   }
 
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} clockwiseNormalAngle 
+   * 
+   * @returns {CircleBaseAnnotation} 
    */
   addCircleOutlineFromSavedState(savedState, svg, clockwiseNormalAngle) {
     this.removeOutline();
@@ -365,6 +379,8 @@ class Base {
       this.yCenter,
       clockwiseNormalAngle,
     );
+
+    return this._outline;
   }
 
   /**
@@ -395,6 +411,8 @@ class Base {
    * @param {SVG.Doc} svg 
    * @param {number} number 
    * @param {number} outerNormalAngle 
+   * 
+   * @returns {Numbering} 
    */
   addNumbering(svg, number, outerNormalAngle) {
     this.removeNumbering();
@@ -402,11 +420,15 @@ class Base {
     this._numbering = Numbering.create(
       svg, number, this.xCenter, this.yCenter, outerNormalAngle
     );
+
+    return this._numbering;
   }
 
   /**
    * @param {Numbering~SavableState} savedState 
    * @param {SVG.Doc} svg 
+   * 
+   * @returns {Numbering} 
    */
   addNumberingFromSavedState(savedState, svg) {
     this.removeNumbering();
@@ -417,6 +439,8 @@ class Base {
       this.xCenter,
       this.yCenter,
     );
+
+    return this._numbering;
   }
 
   /**
@@ -445,17 +469,23 @@ class Base {
 
   /**
    * @param {SVG.Doc} svg 
+   * 
+   * @returns {CircleBaseAnnotation} 
    */
   addCircleAnnotation(svg) {
     this._annotations.push(CircleBaseAnnotation.createNondisplaced(
       svg, this.xCenter, this.yCenter
     ));
+
+    return this._annotations[this._annotations.length - 1];
   }
 
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} clockwiseNormalAngle 
+   * 
+   * @returns {CircleBaseAnnotation} 
    */
   addCircleAnnotationFromSavedState(savedState, svg, clockwiseNormalAngle) {
     this._annotations.push(CircleBaseAnnotation.fromSavedState(
@@ -465,6 +495,8 @@ class Base {
       this.yCenter,
       clockwiseNormalAngle,
     ));
+
+    return this._annotations[this._annotations.length - 1];
   }
 
   /**
