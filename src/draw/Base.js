@@ -508,6 +508,20 @@ class Base {
   }
 
   /**
+   * @returns {number} 
+   */
+  get numAnnotations() {
+    return this._annotations.length;
+  }
+
+  /**
+   * @returns {boolean} 
+   */
+  hasNoAnnotations() {
+    return this.numAnnotations === 0;
+  }
+
+  /**
    * Returns null if no annotation has the given ID.
    * 
    * @param {string} id 

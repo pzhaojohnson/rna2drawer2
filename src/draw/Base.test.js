@@ -15,7 +15,7 @@ it('fromSavedState static method valid saved state', () => {
   expect(b2.hasHighlighting()).toBeFalsy();
   expect(b2.hasOutline()).toBeFalsy();
   expect(b2.hasNumbering()).toBeFalsy();
-  expect(b2._annotations.length).toBe(0);
+  expect(b2.hasNoAnnotations()).toBeTruthy();
 
   // with highlighting, outline, numbering, and annotations
   let highlighting = b1.addCircleHighlighting(svg);
@@ -141,6 +141,34 @@ it('angleBetweenCenters', () => {
   let b1 = Base.create(svg, 'U', 4, 5);
   let a = b0.angleBetweenCenters(b1);
   expect(normalizeAngle(a, 0)).toBeCloseTo(Math.PI / 4);
+});
+
+it('numAnnotations getter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  expect(b.numAnnotations).toBe(0);
+  b.addCircleAnnotation(svg);
+  let ann2 = b.addCircleAnnotation(svg);
+  b.addCircleAnnotation(svg);
+  expect(b.numAnnotations).toBe(3);
+  b.removeAnnotationById(ann2.id);
+  expect(b.numAnnotations).toBe(2);
+  b.removeAnnotations();
+  expect(b.numAnnotations).toBe(0);
+});
+
+it('hasNoAnnotations method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', 1.3, 1.4);
+  expect(b.hasNoAnnotations()).toBeTruthy();
+  b.addCircleAnnotation(svg);
+  let ann2 = b.addCircleAnnotation(svg);
+  b.addCircleAnnotation(svg);
+  expect(b.hasNoAnnotations()).toBeFalsy();
+  b.removeAnnotationById(ann2.id);
+  expect(b.hasNoAnnotations()).toBeFalsy();
+  b.removeAnnotations();
+  expect(b.hasNoAnnotations()).toBeTruthy();
 });
 
 it('savableState method', () => {
