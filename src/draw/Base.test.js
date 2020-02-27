@@ -153,6 +153,17 @@ it('letter getter and setter', () => {
   expect(() => { b.letter = 'abc'; }).toThrow();
 });
 
+it('xCenter and yCenter getters', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'A', -1, -2);
+  expect(b.xCenter).toBeCloseTo(-1, 6);
+  expect(b.yCenter).toBeCloseTo(-2, 6);
+
+  b.move(10.111, 12.4, Math.PI / 3, Math.PI / 5);
+  expect(b.xCenter).toBeCloseTo(10.111, 6);
+  expect(b.yCenter).toBeCloseTo(12.4, 6);
+});
+
 it('move with no highlighting, outline, numbering, or annotations', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 0, 0);
