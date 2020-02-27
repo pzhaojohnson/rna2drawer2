@@ -162,15 +162,14 @@ class QuadraticBezierBond {
    * @param {SVG.Doc} svg 
    * @param {Array<Base>} side1 
    * @param {Array<Base>} side2 
-   * @param {Object} defaults 
    * 
    * @returns {QuadraticBezierBond} 
    */
-  static createTertiary(svg, side1, side2, defaults, getBaseClockwiseNormalAngle) {
+  static create(svg, side1, side2, getBaseClockwiseNormalAngle) {
     let bracketPositionalProps = {
-      topPadding: defaults.bracketTopPadding,
-      overhangPadding: defaults.bracketOverhangPadding,
-      overhangLength: defaults.bracketOverhangLength,
+      topPadding: 10,
+      overhangPadding: 8,
+      overhangLength: 10,
     };
 
     let bracket1 = svg.path(QuadraticBezierBond._dBracket(

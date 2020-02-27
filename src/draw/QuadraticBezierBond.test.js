@@ -3,22 +3,13 @@ import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 import distanceBetween from './distanceBetween';
 
-function tertiaryBondDefaults() {
-  return {
-    bracketTopPadding: 6,
-    bracketOverhangPadding: 6,
-    bracketOverhangLength: 6,
-  };
-}
-
 function createExampleBond() {
   let svg = createNodeSVG();
   
-  return QuadraticBezierBond.createTertiary(
+  return QuadraticBezierBond.create(
     svg,
     [Base.create(svg, 'A', 1, 2)],
     [Base.create(svg, 'U', 10, 11)],
-    tertiaryBondDefaults(),
     b => Math.PI / 4,
   );
 }
@@ -631,11 +622,10 @@ it('shiftCurveControlPoint', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.createTertiary(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
-    { bracketTopPadding: 5, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
     base => Math.PI / 3,
   );
 
@@ -657,11 +647,10 @@ it('bracket 1 top padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.createTertiary(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
-    { bracketTopPadding: 5, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
     base => Math.PI / 4,
   );
 
@@ -690,11 +679,10 @@ it('bracket 2 top padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.createTertiary(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b3, b4],
     [b1, b2],
-    { bracketTopPadding: 5, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
     base => Math.PI / 4,
   );
 
@@ -723,11 +711,10 @@ it('bracket 1 overhang padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.createTertiary(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
-    { bracketTopPadding: 2, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
     base => Math.PI / 4,
   );
 
@@ -756,11 +743,10 @@ it('bracket 2 overhang padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.createTertiary(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b3, b4],
     [b1, b2],
-    { bracketTopPadding: 2, bracketOverhangPadding: 6, bracketOverhangLength: 4 },
     base => Math.PI / 4,
   );
 
@@ -789,11 +775,10 @@ it('bracket 1 overhang length getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.createTertiary(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
-    { bracketTopPadding: 2, bracketOverhangPadding: 3.5, bracketOverhangLength: 4 },
     base => Math.PI / 4,
   );
 
@@ -822,11 +807,10 @@ it('bracket 2 overhang length getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.createTertiary(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b3, b4],
     [b1, b2],
-    { bracketTopPadding: 2, bracketOverhangPadding: 3.5, bracketOverhangLength: 4 },
     base => Math.PI / 4,
   );
 
@@ -855,11 +839,10 @@ it('reposition', () => {
   let b3 = Base.create(svg, 'G', 3, 4);
   let b4 = Base.create(svg, 'C', 4, 5);
 
-  let qbb = QuadraticBezierBond.createTertiary(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
-    { bracketTopPadding: 2, bracketOverhangPadding: 3.5, bracketOverhangLength: 4 },
     base => Math.PI / 3,
   );
 
