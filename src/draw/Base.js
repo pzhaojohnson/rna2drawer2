@@ -93,9 +93,7 @@ class Base {
    */
   _validateText() {
 
-    /* Use this._text.attr('id') instead of this._text.id() since this._text.id()
-    will automatically set the ID if it is undefined. */
-    if (typeof(this._text.attr('id')) !== 'string' || this._text.attr('id').length === 0) {
+    if (typeof(this._text.id()) !== 'string' || this._text.id().length === 0) {
       throw new Error('Invalid ID.');
     }
 

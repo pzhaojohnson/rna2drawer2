@@ -92,28 +92,40 @@ it('basic test of constructor', () => {
 it('_validateText method', () => {
   let svg = createNodeSVG();
   
+  // valid case
   let text1 = svg.text('A');
-  text1.attr({ 'id': createUUIDforSVG(), 'text-anchor': 'middle', 'dy': '0.4em' });
+  text1.id(createUUIDforSVG());
+  text1.attr({ 'text-anchor': 'middle', 'dy': '0.4em' });
   expect(() => new Base(text1)).not.toThrow();
 
+  // more than one character
   let text2 = svg.text('UG');
-  text2.attr({ 'id': createUUIDforSVG(), 'text-anchor': 'middle', 'dy': '0.4em' });
+  text2.id(createUUIDforSVG());
+  text2.attr({ 'text-anchor': 'middle', 'dy': '0.4em' });
   expect(() => new Base(text2)).toThrow();
 
+  // empty string
   let text3 = svg.text('');
-  text3.attr({ 'id': createUUIDforSVG(), 'text-anchor': 'middle', 'dy': '0.4em' });
+  text3.id(createUUIDforSVG());
+  text3.attr({ 'text-anchor': 'middle', 'dy': '0.4em' });
   expect(() => new Base(text3)).toThrow();
 
+  // ID is not a string
   let text4 = svg.text('C');
+  text4.id(0.1234);
   text4.attr({ 'text-anchor': 'middle', 'dy': '0.4em' });
   expect(() => new Base(text4)).toThrow();
 
+  // text-anchor is not middle
   let text5 = svg.text('A');
-  text5.attr({ 'id': createUUIDforSVG(), 'dy': '0.4em' });
+  text5.id(createUUIDforSVG());
+  text5.attr({ 'dy': '0.4em' });
   expect(() => new Base(text5)).toThrow();
 
+  // dy is not 0.4em
   let text6 = svg.text('U');
-  text6.attr({ 'id': createUUIDforSVG(), 'text-anchor': 'middle' });
+  text6.id(createUUIDforSVG());
+  text6.attr({ 'text-anchor': 'middle' });
   expect(() => new Base(text6)).toThrow();
 });
 
