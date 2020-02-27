@@ -59,7 +59,7 @@ it('fromSavedState static method invalid class name', () => {
   expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
 });
 
-it('create', () => {
+it('create static method', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1, 2);
   expect(b.letter).toEqual('A');
@@ -74,7 +74,7 @@ it('createOutOfView static method', () => {
   expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
 });
 
-it('_validateText', () => {
+it('_validateText method', () => {
   let svg = createNodeSVG();
   
   let text1 = svg.text('A');
@@ -102,7 +102,7 @@ it('_validateText', () => {
   expect(() => new Base(text6)).toThrow();
 });
 
-it('id', () => {
+it('id getter', () => {
   let svg = createNodeSVG();
   let id = createUUIDforSVG();
   let text = svg.text('A');
@@ -179,14 +179,14 @@ it('move with highlighting, outline, numbering, and annotations', () => {
   expect(annotation2.yCenter).toBeCloseTo(300.111, 6);
 });
 
-it('distanceBetweenCenters', () => {
+it('distanceBetweenCenters method', () => {
   let svg = createNodeSVG();
   let b0 = Base.create(svg, 'A', 1, 2);
   let b1 = Base.create(svg, 'U', 4, 6);
   expect(b0.distanceBetweenCenters(b1)).toBeCloseTo(5);
 });
 
-it('angleBetweenCenters', () => {
+it('angleBetweenCenters method', () => {
   let svg = createNodeSVG();
   let b0 = Base.create(svg, 'A', 1, 2);
   let b1 = Base.create(svg, 'U', 4, 5);
