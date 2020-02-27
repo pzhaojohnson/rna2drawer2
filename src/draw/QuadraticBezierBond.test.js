@@ -639,7 +639,7 @@ it('shiftCurveControlPoint', () => {
   expect(qbb.xCurveControlPoint).toBeCloseTo(q[1], 6);
   expect(qbb.yCurveControlPoint).toBeCloseTo(q[2], 6);
 });
-
+/*
 it('bracket 1 top padding getter and setter', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -906,7 +906,7 @@ it('reposition', () => {
   expect(qbb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
   expect(qbb.overhangLengthBracket2).toBeCloseTo(4, 6);
 });
-
+*/
 it('stroke getter and setter', () => {
   let qbb = createExampleBond();
 
@@ -1020,4 +1020,26 @@ it('cursor getter and setter', () => {
 
   qbb.cursor = 'default';
   expect(qbb.cursor).toBe('default');
+});
+
+it('savableState method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'u', 1.1, 2.2);
+  let b3 = Base.create(svg, 'k', -1, -0.55);
+  let b4 = Base.create(svg, 'm', 0, 0);
+  let qbb = QuadraticBezierBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
+
+  let savableState = qbb.savableState();
+
+  expect(savableState.className).toBe('QuadraticBezierBond');
+  expect(savableState.curve).toBe(qbb._curve.id());
+  expect(savableState.bracket1).toBe(qbb._bracket1.id());
+  expect(savableState.bracket2).toBe(qbb._bracket2.id());
+  expect(savableState.side1.length).toBe(2);
+  expect(savableState.side1[0]).toBe(b1.id);
+  expect(savableState.side1[1]).toBe(b2.id);
+  expect(savableState.side2.length).toBe(2);
+  expect(savableState.side2[0]).toBe(b3.id);
+  expect(savableState.side2[1]).toBe(b4.id);
 });
