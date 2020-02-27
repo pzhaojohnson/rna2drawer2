@@ -14,6 +14,89 @@ function createExampleBond() {
   );
 }
 
+it('fromSavedState static method valid saved state', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'u', 1.1, 2.2);
+  let b3 = Base.create(svg, 'k', -1, -0.55);
+  let b4 = Base.create(svg, 'm', 0, 0);
+  let qbb1 = QuadraticBezierBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
+
+  function getBaseById(id) {
+    switch (id) {
+      case b1.id:
+        return b1;
+      case b2.id:
+        return b2;
+      case b3.id:
+        return b3;
+      default:
+        return b4;
+    }
+  }
+
+  let savableState = qbb1.savableState();
+  let qbb2 = QuadraticBezierBond.fromSavedState(savableState, svg, getBaseById, b => Math.PI / 3);
+
+  expect(qbb2._curve.id()).toBe(qbb1._curve.id());
+  expect(qbb2._bracket1.id()).toBe(qbb1._bracket1.id());
+  expect(qbb2._bracket2.id()).toBe(qbb1._bracket2.id());
+  expect(qbb2._side1.length).toBe(2);
+  expect(qbb2._side1[0].id).toBe(b1.id);
+  expect(qbb2._side1[1].id).toBe(b2.id);
+  expect(qbb2._side2.length).toBe(2);
+  expect(qbb2._side2[0].id).toBe(b3.id);
+  expect(qbb2._side2[1].id).toBe(b4.id);
+});
+
+it('fromSavedState static method invalid class name', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'q', 1, 2);
+  let b2 = Base.create(svg, 'o', 3, 4);
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], b => Math.PI / 5);
+  let savableState = qbb.savableState();
+
+  function getBaseById(id) {
+    if (id === b1.id) {
+      return b1;
+    } else {
+      return b2;
+    }
+  }
+
+  expect(() => QuadraticBezierBond.fromSavedState(
+    savableState, svg, getBaseById, b => Math.PI / 5)
+  ).not.toThrow();
+
+  // no class name defined
+  delete savableState.className;
+
+  expect(() => QuadraticBezierBond.fromSavedState(
+    savableState, svg, getBaseById, b => Math.PI / 5
+  )).toThrow();
+
+  // class name is not a string
+  savableState.className = 0.1234;
+  
+  expect(() => QuadraticBezierBond.fromSavedState(
+    savableState, svg, getBaseById, b => Math.PI / 5
+  )).toThrow();
+
+  // class name is an empty string
+  savableState.className = '';
+
+  expect(() => QuadraticBezierBond.fromSavedState(
+    savableState, svg, getBaseById, b => Math.PI / 5
+  )).toThrow();
+
+  // class name is not QuadraticBezierBond
+  savableState.className = 'QuadraticBezierBnd';
+
+  expect(() => QuadraticBezierBond.fromSavedState(
+    savableState, svg, getBaseById, b => Math.PI / 5
+  )).toThrow();
+});
+
 function dBracketCheck(d, expectedSegments) {
   let svg = createNodeSVG();
   let bracket = svg.path(d);

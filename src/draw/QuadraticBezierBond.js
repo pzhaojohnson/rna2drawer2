@@ -16,8 +16,14 @@ class QuadraticBezierBond {
    * @param {SVG.Doc} svg 
    * @param {QuadraticBezierBond~getBaseById} getBaseById 
    * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * 
+   * @throws {Error} If the saved state is not for a quadratic bezier bond.
    */
   static fromSavedState(savedState, svg, getBaseById, getBaseClockwiseNormalAngle) {
+    if (savedState.className !== 'QuadraticBezierBond') {
+      throw new Error('Saved state is not for a quadratic bezier bond.');
+    }
+    
     let curve = svg.findOne('#' + savedState.curve);
     let bracket1 = svg.findOne('#' + savedState.bracket1);
     let bracket2 = svg.findOne('#' + savedState.bracket2);
