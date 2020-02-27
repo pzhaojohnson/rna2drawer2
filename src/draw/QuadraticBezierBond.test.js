@@ -3,14 +3,14 @@ import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 import distanceBetween from './distanceBetween';
 
-function createExampleBond() {
+function exampleBond() {
   let svg = createNodeSVG();
   
   return QuadraticBezierBond.create(
     svg,
     [Base.create(svg, 'A', 1, 2)],
     [Base.create(svg, 'U', 10, 11)],
-    b => Math.PI / 4,
+    b => Math.PI / 3,
   );
 }
 
@@ -991,7 +991,7 @@ it('reposition', () => {
 });
 */
 it('stroke getter and setter', () => {
-  let qbb = createExampleBond();
+  let qbb = exampleBond();
 
   qbb.stroke = '#123456';
 
@@ -1015,7 +1015,7 @@ it('stroke getter and setter', () => {
 });
 
 it('strokeWidth getter and setter', () => {
-  let qbb = createExampleBond();
+  let qbb = exampleBond();
   
   qbb.strokeWidth = 0.5;
   
@@ -1038,7 +1038,7 @@ it('strokeWidth getter and setter', () => {
 });
 
 it('bracket 1 opacity getter and setter', () => {
-  let qbb = createExampleBond();
+  let qbb = exampleBond();
   qbb.opacityBracket1 = 0.5;
   expect(qbb.opacityBracket1).toBe(0.5);
   qbb.opacityBracket1 = 0;
@@ -1048,7 +1048,7 @@ it('bracket 1 opacity getter and setter', () => {
 });
 
 it('bracket 2 opacity getter and setter', () => {
-  let qbb = createExampleBond();
+  let qbb = exampleBond();
   qbb.opacityBracket2 = 0.5;
   expect(qbb.opacityBracket2).toBe(0.5);
   qbb.opacityBracket2 = 0;
@@ -1058,7 +1058,7 @@ it('bracket 2 opacity getter and setter', () => {
 });
 
 it('binding mousedown', () => {
-  let qbb = createExampleBond();
+  let qbb = exampleBond();
 
   let mousedownedCursor = false;
   qbb.bindMousedown(() => mousedownedCursor = true);
@@ -1077,7 +1077,7 @@ it('binding mousedown', () => {
 });
 
 it('binding dblclick', () => {
-  let qbb = createExampleBond();
+  let qbb = exampleBond();
 
   let dblclickedCursor = false;
   qbb.bindDblclick(() => dblclickedCursor = true);
@@ -1096,7 +1096,7 @@ it('binding dblclick', () => {
 });
 
 it('cursor getter and setter', () => {
-  let qbb = createExampleBond();
+  let qbb = exampleBond();
 
   qbb.cursor = 'pointer';
   expect(qbb.cursor).toBe('pointer');
