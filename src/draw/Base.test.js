@@ -74,6 +74,21 @@ it('createOutOfView static method', () => {
   expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
 });
 
+it('basic test of constructor', () => {
+  let svg = createNodeSVG();
+  let text = svg.text(add => add.tspan('e'));
+  text.id(createUUIDforSVG());
+
+  text.attr({
+    'x': 4.4,
+    'y': 5.5,
+    'text-anchor': 'middle',
+    'dy': '0.4em',
+  });
+  
+  expect(() => new Base(text)).not.toThrow();
+});
+
 it('_validateText method', () => {
   let svg = createNodeSVG();
   
