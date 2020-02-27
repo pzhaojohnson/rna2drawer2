@@ -543,12 +543,12 @@ class Base {
    * @returns {CircleBaseAnnotation|null} 
    */
   getAnnotationById(id) {
-    this._annotations.forEach(ann => {
-      if (ann.id === id) {
-        return ann;
+    for (let i = 0; i < this._annotations.length; i++) {
+      if (this._annotations[i].id === id) {
+        return this._annotations[i];
       }
-    });
-
+    }
+    
     return null;
   }
 

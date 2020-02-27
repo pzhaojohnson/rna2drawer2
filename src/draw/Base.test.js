@@ -3,6 +3,7 @@ import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import normalizeAngle from './normalizeAngle';
 import Numbering from './Numbering';
+import { CircleBaseAnnotation } from './BaseAnnotation';
 
 it('fromSavedState static method valid saved state', () => {
   let svg = createNodeSVG();
@@ -298,6 +299,256 @@ it('cursor getter and setter', () => {
 
   // check actual value
   expect(b._text.css('cursor')).toBe('pointer');
+});
+
+it('addCircleHighlighting method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+
+  // no previous highlighting
+  let highlighting1 = b.addCircleHighlighting(svg);
+  let circleId1 = highlighting1._circle.id();
+  expect(svg.findOne('#' + circleId1)).not.toBe(null);
+
+  // removes previous highlighting
+  let highlighting2 = b.addCircleHighlighting(svg);
+  let circleId2 = highlighting2._circle.id();
+  expect(svg.findOne('#' + circleId2)).not.toBe(null);
+  expect(svg.findOne('#' + circleId1)).toBe(null);
+});
+
+it('addCircleHighlightingFromSavedState method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+
+  // no previous highlighting
+  let cba1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+  let savedState1 = cba1.savableState();
+  let highlighting1 = b.addCircleHighlightingFromSavedState(savedState1, svg, Math.PI / 3);
+  let circleId1 = highlighting1._circle.id();
+  expect(svg.findOne('#' + circleId1)).not.toBe(null);
+
+  // removes previous highlighting
+  let cba2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+  let savedState2 = cba2.savableState();
+  let highlighting2 = b.addCircleHighlightingFromSavedState(savedState2, svg, Math.PI / 3);
+  let circleId2 = highlighting2._circle.id();
+  expect(svg.findOne('#' + circleId2)).not.toBe(null);
+  expect(svg.findOne('#' + circleId1)).toBe(null);
+});
+
+it('hasHighlighting method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  expect(b.hasHighlighting()).toBeFalsy();
+  b.addCircleHighlighting(svg);
+  expect(b.hasHighlighting()).toBeTruthy();
+  b.removeHighlighting();
+  expect(b.hasHighlighting()).toBeFalsy();
+});
+
+it('highlighting getter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  expect(b.highlighting).toBe(null);
+  let highlighting = b.addCircleHighlighting(svg);
+  expect(b.highlighting.id).toBe(highlighting.id);
+  b.removeHighlighting();
+  expect(b.highlighting).toBe(null);
+});
+
+it('removeHighlighting method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  
+  b.addCircleHighlighting(svg);
+  expect(b.hasHighlighting()).toBeTruthy();
+  b.removeHighlighting();
+  expect(b.hasHighlighting()).toBeFalsy();
+
+  // remove when there is no highlighting
+  expect(() => b.removeHighlighting()).not.toThrow();
+  expect(b.hasHighlighting()).toBeFalsy();
+});
+
+it('addCircleOutline method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+
+  // no previous outline
+  let outline1 = b.addCircleOutline(svg);
+  let circleId1 = outline1._circle.id();
+  expect(svg.findOne('#' + circleId1)).not.toBe(null);
+
+  // removes previous outline
+  let outline2 = b.addCircleOutline(svg);
+  let circleId2 = outline2._circle.id();
+  expect(svg.findOne('#' + circleId2)).not.toBe(null);
+  expect(svg.findOne('#' + circleId1)).toBe(null);
+});
+
+it('addCircleOutlineFromSavedState method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+
+  // no previous outline
+  let cba1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+  let savedState1 = cba1.savableState();
+  let outline1 = b.addCircleOutlineFromSavedState(savedState1, svg, Math.PI / 3);
+  let circleId1 = outline1._circle.id();
+  expect(svg.findOne('#' + circleId1)).not.toBe(null);
+
+  // removes previous outline
+  let cba2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+  let savedState2 = cba2.savableState();
+  let outline2 = b.addCircleOutlineFromSavedState(savedState2, svg, Math.PI / 3);
+  let circleId2 = outline2._circle.id();
+  expect(svg.findOne('#' + circleId2)).not.toBe(null);
+  expect(svg.findOne('#' + circleId1)).toBe(null);
+});
+
+it('hasOutline method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  expect(b.hasOutline()).toBeFalsy();
+  b.addCircleOutline(svg);
+  expect(b.hasOutline()).toBeTruthy();
+  b.removeOutline();
+  expect(b.hasOutline()).toBeFalsy();
+});
+
+it('outline getter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  expect(b.outline).toBe(null);
+  let outline = b.addCircleOutline(svg);
+  expect(b.outline.id).toBe(outline.id);
+  b.removeOutline();
+  expect(b.outline).toBe(null);
+});
+
+it('removeOutline method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  
+  b.addCircleOutline(svg);
+  expect(b.hasOutline()).toBeTruthy();
+  b.removeOutline();
+  expect(b.hasOutline()).toBeFalsy();
+
+  // remove when there is no outline
+  expect(() => b.removeOutline()).not.toThrow();
+  expect(b.hasOutline()).toBeFalsy();
+});
+
+it('addNumbering method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+
+  // no previous numbering
+  let numbering1 = b.addNumbering(svg, 5, Math.PI / 3);
+  let textId1 = numbering1._text.id();
+  expect(svg.findOne('#' + textId1)).not.toBe(null);
+
+  // removes previous numbering
+  let numbering2 = b.addNumbering(svg, 10, 4 * Math.PI / 3);
+  let textId2 = numbering2._text.id();
+  expect(svg.findOne('#' + textId2)).not.toBe(null);
+  expect(svg.findOne('#' + textId1)).toBe(null);
+});
+
+it('addNumberingFromSavedState method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+
+  // no previous numbering
+  let n1 = Numbering.create(svg, 0, b.xCenter, b.yCenter, 0);
+  let savedState1 = n1.savableState();
+  let numbering1 = b.addNumberingFromSavedState(savedState1, svg);
+  let textId1 = numbering1._text.id();
+  expect(svg.findOne('#' + textId1)).not.toBe(null);
+
+  // removes previous numbering
+  let n2 = Numbering.create(svg, 1, b.xCenter, b.yCenter, 0);
+  let savedState2 = n2.savableState();
+  let numbering2 = b.addNumberingFromSavedState(savedState2, svg);
+  let textId2 = numbering2._text.id();
+  expect(svg.findOne('#' + textId2)).not.toBe(null);
+  expect(svg.findOne('#' + textId1)).toBe(null);
+});
+
+it('hasNumbering method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  expect(b.hasNumbering()).toBeFalsy();
+  b.addNumbering(svg, 12, Math.PI / 6);
+  expect(b.hasNumbering()).toBeTruthy();
+  b.removeNumbering();
+  expect(b.hasNumbering()).toBeFalsy();
+});
+
+it('numbering getter', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  expect(b.numbering).toBe(null);
+  let numbering = b.addNumbering(svg, -9, Math.PI / 7);
+  expect(b.numbering.id).toBe(numbering.id);
+  b.removeNumbering();
+  expect(b.numbering).toBe(null);
+});
+
+it('removeNumbering method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'C', 0.99, 100.2357);
+  
+  b.addNumbering(svg, -10000, Math.PI);
+  expect(b.hasNumbering()).toBeTruthy();
+  b.removeNumbering();
+  expect(b.hasNumbering()).toBeFalsy();
+
+  // remove when there is no numbering
+  expect(() => b.removeNumbering()).not.toThrow();
+  expect(b.hasNumbering()).toBeFalsy();
+});
+
+it('addCircleAnnotation method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'k', 1, 2.22);
+
+  let ann1 = b.addCircleAnnotation(svg);
+  expect(b.numAnnotations).toBe(1);
+  
+  // can add multiple annotations
+  let ann2 = b.addCircleAnnotation(svg);
+  expect(b.numAnnotations).toBe(2);
+
+  let annotation1 = b.getAnnotationById(ann1.id);
+  expect(annotation1.id).toBe(ann1.id);
+  let annotation2 = b.getAnnotationById(ann2.id);
+  expect(annotation2.id).toBe(ann2.id);
+});
+
+it('addCircleAnnotationFromSavedState method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'k', 1, 2.22);
+
+  let cba1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+  let savedState1 = cba1.savableState();
+  let ann1 = b.addCircleAnnotationFromSavedState(savedState1, svg, Math.PI / 3);
+  expect(b.numAnnotations).toBe(1);
+
+  // can add multiple annotations
+  let cba2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+  let savedState2 = cba2.savableState();
+  let ann2 = b.addCircleAnnotationFromSavedState(savedState2, svg, Math.PI / 3);
+  expect(b.numAnnotations).toBe(2);
+
+  let annotation1 = b.getAnnotationById(ann1.id);
+  let annotation2 = b.getAnnotationById(ann2.id);
+  expect(annotation1.id).toBe(ann1.id);
+  expect(annotation1._circle.id()).toBe(cba1._circle.id());
+  expect(annotation2.id).toBe(ann2.id);
+  expect(annotation2._circle.id()).toBe(cba2._circle.id());
 });
 
 it('numAnnotations getter', () => {
