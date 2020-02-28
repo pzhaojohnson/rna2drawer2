@@ -47,7 +47,7 @@ class Sequence {
     let cna = Sequence._baseClockwiseNormalAngle(cs, cs5, cs3);
     
     if (cs5 === null || cs3 === null) {
-      return ca;
+      return cna;
     } else {
       let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
       let a3 = Sequence._angleBetweenBaseCenters(cs, cs3);
