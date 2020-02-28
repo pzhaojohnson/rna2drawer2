@@ -10,24 +10,6 @@ it('id', () => {
   expect(seq.id).toEqual(id);
 });
 
-it('createHorizontalLine', () => {
-  let svg = createNodeSVG();
-  
-  let seq0 = Sequence.createHorizontalLine(svg, createUUIDforSVG(), 'AUGC', 1, 1, 2);
-  expect(seq0.length).toEqual(4);
-  let b1 = seq0.getBase(1);
-  expect([b1.letter, b1.xCenter, b1.yCenter]).toEqual(['A', 1, 1]);
-  let b2 = seq0.getBase(2);
-  expect([b2.letter, b2.xCenter, b2.yCenter]).toEqual(['U', 3, 1]);
-  let b3 = seq0.getBase(3);
-  expect([b3.letter, b3.xCenter, b3.yCenter]).toEqual(['G', 5, 1]);
-  let b4 = seq0.getBase(4);
-  expect([b4.letter, b4.xCenter, b4.yCenter]).toEqual(['C', 7, 1]);
-
-  let seq1 = Sequence.createHorizontalLine(svg, createUUIDforSVG(), '', 2, 2, 1);
-  expect(seq1.length).toEqual(0);
-});
-
 it('length', () => {
   let seq = new Sequence(createUUIDforSVG());
   expect(seq.length).toEqual(0);

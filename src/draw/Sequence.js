@@ -4,30 +4,16 @@ import normalizeAngle from './normalizeAngle';
 class Sequence {
 
   /**
-   * Draws a sequence in a horizontal line on an SVG document.
-   * 
-   * @param {SVG.Doc} svg The SVG document to draw the sequence on.
-   * @param {string} id The ID of the sequence.
-   * @param {string} seqString The sequence to draw.
-   * @param {number} xFirst The X coordinate of the center of the first base.
-   * @param {number} yFirst The Y coordinate of the center of the first base.
-   * @param {number} spacing The distance between neighboring bases.
-   * 
-   * @returns {Sequence} The newly created sequence.
+   * @param {SVG.Doc} svg 
+   * @param {string} id 
+   * @param {string} letters 
    */
-  static createHorizontalLine(svg, id, seqString, xFirst, yFirst, spacing) {
+  static createOutOfView(svg, id, letters) {
     let seq = new Sequence(id);
-    let x = xFirst;
 
-    for (let i = 0; i < seqString.length; i++) {
-      seq.appendBase(Base.create(
-        svg,
-        seqString.charAt(i),
-        x,
-        yFirst
-      ));
-
-      x += spacing;
+    for (let i = 0; i < letters.length; i++) {
+      let c = letters.charAt(i);
+      seq.appendBase(Base.createOutOfView(svg, c));
     }
 
     return seq;
