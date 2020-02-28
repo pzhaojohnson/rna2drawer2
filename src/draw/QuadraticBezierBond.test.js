@@ -124,6 +124,7 @@ it('_dBracket', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
   let b2 = Base.create(svg, 'U', 2, 3);
+  let b3 = Base.create(svg, 'l', -1, -3.3);
 
   // positive positional properties
   let positivePositionalProps = {
@@ -134,26 +135,38 @@ it('_dBracket', () => {
 
   // side of length one
   dBracketCheck(
-    QuadraticBezierBond._dBracket([b1], positivePositionalProps, base => Math.PI / 4),
+    QuadraticBezierBond._dBracket([b1], positivePositionalProps, base => Math.PI / 3),
     [
-      ['M', 1.919238815542512, 7.444722215136416],
-      ['L', 2.6263455967290597, 8.151828996322964],
-      ['L', 4.889087296526012, 5.889087296526011],
-      ['L', 7.151828996322964, 3.6263455967290583],
-      ['L', 6.444722215136416, 2.919238815542511],
+      ['M', 0.47871870788979676, 7.4971143170299746],
+      ['L', 0.9787187078897972, 8.363139720814413],
+      ['L', 3.7500000000000004, 6.763139720814412],
+      ['L', 6.521281292110205, 5.163139720814412],
+      ['L', 6.021281292110205, 4.2971143170299735],
     ],
   );
 
-  // side of length greater than one
+  let getBaseClockwiseAngle = (b) => {
+    switch (b.id) {
+      case b1.id:
+        return Math.PI / 3;
+      case b2.id:
+        return 2 * Math.PI / 3;
+      default:
+        return Math.PI;
+    }
+  };
+
+  // side of length greater than one and different angles for each base
   dBracketCheck(
-    QuadraticBezierBond._dBracket([b1, b2], positivePositionalProps, base => Math.PI / 4),
+    QuadraticBezierBond._dBracket([b1, b2, b3], positivePositionalProps, getBaseClockwiseAngle),
     [
-      ['M', 1.919238815542512, 7.444722215136416],
-      ['L', 2.6263455967290597, 8.151828996322964],
-      ['L', 4.889087296526012, 5.889087296526011],
-      ['L', 5.889087296526012, 6.889087296526011],
-      ['L', 8.151828996322964, 4.626345596729058],
-      ['L', 7.444722215136416, 3.9192388155425104],
+      ['M', 0.47871870788979676, 7.4971143170299746],
+      ['L', 0.9787187078897972, 8.363139720814413],
+      ['L', 3.7500000000000004, 6.763139720814412],
+      ['L', -0.7499999999999987, 7.763139720814413],
+      ['L', -6.5, -3.3],
+      ['L', -6.5, -0.1],
+      ['L', -5.5, -0.1],
     ],
   );
 
@@ -392,9 +405,6 @@ it('validating curve', () => {
   let curve = svg.path('M 1 2 Q 3 4 5 6');
   curve.id(2);
   expect(() => createBondWithCurve(curve)).toThrow();
-
-  /* It does not seem to be possible to set the ID of an element to an empty string
-  using the SVG.js framework. */
 
   // handles floating point and negative numbers
   expect(() => createBondWithCurve(
@@ -722,7 +732,7 @@ it('shiftCurveControlPoint', () => {
   expect(qbb.xCurveControlPoint).toBeCloseTo(q[1], 6);
   expect(qbb.yCurveControlPoint).toBeCloseTo(q[2], 6);
 });
-/*
+
 it('bracket 1 top padding getter and setter', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -737,8 +747,9 @@ it('bracket 1 top padding getter and setter', () => {
     base => Math.PI / 4,
   );
 
-  expect(qbb.topPaddingBracket1).toBeCloseTo(5, 6);
-  
+  qbb.setOverhangPaddingBracket1(6, base => Math.PI / 4);
+  qbb.setOverhangLengthBracket1(4, base => Math.PI / 4);
+
   qbb.setTopPaddingBracket1(2, base => Math.PI / 4);
   expect(qbb.topPaddingBracket1).toBeCloseTo(2, 6);
 
@@ -769,8 +780,9 @@ it('bracket 2 top padding getter and setter', () => {
     base => Math.PI / 4,
   );
 
-  expect(qbb.topPaddingBracket2).toBeCloseTo(5, 6);
-  
+  qbb.setOverhangPaddingBracket2(6, base => Math.PI / 4);
+  qbb.setOverhangLengthBracket2(4, base => Math.PI / 4);
+
   qbb.setTopPaddingBracket2(2, base => Math.PI / 4);
   expect(qbb.topPaddingBracket2).toBeCloseTo(2, 6);
 
@@ -801,8 +813,9 @@ it('bracket 1 overhang padding getter and setter', () => {
     base => Math.PI / 4,
   );
 
-  expect(qbb.overhangPaddingBracket1).toBeCloseTo(6, 6);
-  
+  qbb.setTopPaddingBracket1(2, base => Math.PI / 4);
+  qbb.setOverhangLengthBracket1(4, base => Math.PI / 4);
+
   qbb.setOverhangPaddingBracket1(3.5, base => Math.PI / 4);
   expect(qbb.overhangPaddingBracket1).toBeCloseTo(3.5, 6);
 
@@ -833,8 +846,9 @@ it('bracket 2 overhang padding getter and setter', () => {
     base => Math.PI / 4,
   );
 
-  expect(qbb.overhangPaddingBracket2).toBeCloseTo(6, 6);
-  
+  qbb.setTopPaddingBracket2(2, base => Math.PI / 4);
+  qbb.setOverhangLengthBracket2(4, base => Math.PI / 4);
+
   qbb.setOverhangPaddingBracket2(3.5, base => Math.PI / 4);
   expect(qbb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
 
@@ -865,8 +879,9 @@ it('bracket 1 overhang length getter and setter', () => {
     base => Math.PI / 4,
   );
 
-  expect(qbb.overhangLengthBracket1).toBeCloseTo(4, 6);
-  
+  qbb.setTopPaddingBracket1(2, base => Math.PI / 4);
+  qbb.setOverhangPaddingBracket1(3.5, base => Math.PI / 4);
+
   qbb.setOverhangLengthBracket1(1, base => Math.PI / 4);
   expect(qbb.overhangLengthBracket1).toBeCloseTo(1, 6);
 
@@ -897,8 +912,9 @@ it('bracket 2 overhang length getter and setter', () => {
     base => Math.PI / 4,
   );
 
-  expect(qbb.overhangLengthBracket2).toBeCloseTo(4, 6);
-  
+  qbb.setTopPaddingBracket2(2, base => Math.PI / 4);
+  qbb.setOverhangPaddingBracket2(3.5, base => Math.PI / 4);
+
   qbb.setOverhangLengthBracket2(1, base => Math.PI / 4);
   expect(qbb.overhangLengthBracket2).toBeCloseTo(1, 6);
 
@@ -928,6 +944,13 @@ it('reposition', () => {
     [b3, b4],
     base => Math.PI / 3,
   );
+
+  qbb.setTopPaddingBracket1(2, base => Math.PI / 3);
+  qbb.setTopPaddingBracket2(2, base => Math.PI / 3);
+  qbb.setOverhangPaddingBracket1(3.5, base => Math.PI / 3);
+  qbb.setOverhangPaddingBracket2(3.5, base => Math.PI / 3);
+  qbb.setOverhangLengthBracket1(4, base => Math.PI / 3);
+  qbb.setOverhangLengthBracket2(4, base => Math.PI / 3);
 
   let xCurveControlPointPrev = qbb.xCurveControlPoint;
   let yCurveControlPointPrev = qbb.yCurveControlPoint;
@@ -989,7 +1012,7 @@ it('reposition', () => {
   expect(qbb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
   expect(qbb.overhangLengthBracket2).toBeCloseTo(4, 6);
 });
-*/
+
 it('stroke getter and setter', () => {
   let qbb = exampleBond();
 
