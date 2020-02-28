@@ -56,6 +56,17 @@ class Drawing {
         fontStyle: 'normal',
         fill: '#000000',
       },
+      numbering: {
+        anchor: 0,
+        increment: 20,
+        basePadding: 12,
+        lineLength: 8,
+        fontFamily: 'Arial',
+        fontSize: 7,
+        fontWeight: 'normal',
+        color: '#808080',
+        lineStrokeWidth: 1,
+      },
       bond: {
         strand: {
           padding: 6,
