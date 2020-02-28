@@ -46,33 +46,39 @@ class Drawing {
   }
 
   _initializeDefaults() {
-    this.defaults = {
-      baseWidth: 12,
-      baseHeight: 12,
-
-      baseLetterFontFamily: 'Arial',
-      baseLetterFontSize: 9,
-      baseLetterFontWieght: 'bold',
-      baseLetterFontStyle: 'normal',
-      baseLetterFill: '#000000',
-
-      strandBondPadding: 6,
-      strandBondStroke: '#808080',
-      strandBondStrokeWidth: 1,
-      strandBondDistanceThreshold: 6,
-
-      watsonCrickBondPadding: 6,
-      watsonCrickAUTBondStroke: '#000000',
-      watsonCrickGCBondStroke: '#000000',
-      watsonCrickGUTBondStroke: '#808080',
-      watsonCrickOtherBondStroke: '#808080',
-      watsonCrickBondStrokeWidth: 2,
-      
-      tertiaryBondTopPadding: 6,
-      tertiaryBondOverhangPadding: 6,
-      tertiaryBondOverhangLength: 6,
-      tertiaryBondStroke: '#0000FF',
-      tertiaryBondStrokeWidth: 1,
+    this._defaults = {
+      base: {
+        width: 12,
+        height: 12,
+        fontFamily: 'Arial',
+        fontSize: 9,
+        fontWeight: 'bold',
+        fontStyle: 'normal',
+        fill: '#000000',
+      },
+      bond: {
+        strand: {
+          padding: 6,
+          stroke: '#808080',
+          strokeWidth: 1,
+          distanceThreshold: 6,
+        },
+        watsonCrick: {
+          padding: 6,
+          autStroke: '#000000',
+          gcStroke: '#000000',
+          gutStroke: '#808080',
+          otherStroke: '#808080',
+          strokeWidth: 2,
+        },
+        tertiary: {
+          topPadding: 6,
+          overhangPadding: 6,
+          overhangLength: 6,
+          stroke: '#0000FF',
+          strokeWidth: 1,
+        },
+      },
     };
   }
 
