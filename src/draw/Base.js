@@ -43,6 +43,28 @@ class Base {
   }
 
   /**
+   * @param {Base~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * 
+   * @returns {number} 
+   */
+  static xCenterFromSavedState(savedState, svg) {
+    let text = svg.findOne('#' + savedState.text);
+    return text.attr('x');
+  }
+
+  /**
+   * @param {Base~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * 
+   * @returns {number} 
+   */
+  static yCenterFromSavedState(savedState, svg) {
+    let text = svg.findOne('#' + savedState.text);
+    return text.attr('y');
+  }
+
+  /**
    * @param {SVG.Doc} svg 
    * @param {string} letter 
    * @param {number} xCenter 
