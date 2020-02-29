@@ -127,6 +127,8 @@ class Sequence {
     this._id = id;
     this._bases = [];
     this._numberingOffset = 0;
+    this._numberingAnchor = 0;
+    this._numberingIncrement = 20;
   }
 
   /**
@@ -154,6 +156,49 @@ class Sequence {
     }
 
     this._numberingOffset = no;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get numberingAnchor() {
+    return this._numberingAnchor;
+  }
+
+  /**
+   * @param {number} na 
+   * 
+   * @throws {Error} If the given numbering anchor is not an integer.
+   */
+  set numberingAnchor(na) {
+    if (!isFinite(na) || Math.floor(na) !== na) {
+      throw new Error('Numbering anchor must be an integer.');
+    }
+
+    this._numberingAnchor = na;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get numberingIncrement() {
+    return this._numberingIncrement;
+  }
+
+  /**
+   * @param {number} ni 
+   * 
+   * @throws {Error} If the given numbering increment is not an integer.
+   * @throws {Error} If the given numbering increment is not positive.
+   */
+  set numberingIncrement(ni) {
+    if (!isFinite(ni) || Math.floor(ni) !== ni) {
+      throw new Error('Numbering increment must be an integer.');
+    } else if (ni < 1) {
+      throw new Error('Numbering increment must be positive.');
+    }
+
+    this._numberingIncrement = ni;
   }
 
   /**
