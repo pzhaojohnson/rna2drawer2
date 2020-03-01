@@ -115,6 +115,7 @@ class Sequence {
    */
   static createOutOfView(svg, id, letters) {
     let seq = new Sequence(id);
+    seq.applyDefaults();
 
     for (let i = 0; i < letters.length; i++) {
       let c = letters.charAt(i);
@@ -241,6 +242,21 @@ class Sequence {
 
     this._numberingIncrement = ni;
     this._updateBaseNumberings(svg);
+  }
+
+  /**
+   * @param {SVG.Doc} svg 
+   */
+  applyDefaults(svg) {
+    this.setNumberingAnchor(
+      Sequence.defaults.numberingAnchor,
+      svg
+    );
+    
+    this.setNumberingIncrement(
+      Sequence.defaults.numberingIncrement,
+      svg
+    );
   }
 
   /**
@@ -521,5 +537,10 @@ class Sequence {
     return savableState;
   }
 }
+
+Sequence.defaults = {
+  numberingAnchor: 0,
+  numberingIncrement: 20,
+};
 
 export default Sequence;
