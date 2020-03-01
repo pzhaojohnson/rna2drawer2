@@ -351,6 +351,7 @@ class Base {
     this.fontWeight = Base.defaults.fontWeight;
     this.fontStyle = Base.defaults.fontStyle;
     this.fill = Base.defaults.fill;
+    this.cursor = Base.detaults.cursor;
   }
 
   /**
@@ -677,6 +678,7 @@ Base.defaults = {
   fontWeight: 'bold',
   fontStyle: 'normal',
   fill: '#000000',
+  cursor: 'pointer',
 };
 
 export default Base;
