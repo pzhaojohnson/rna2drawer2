@@ -68,9 +68,9 @@ class Sequence {
    */
   static fromSavedState(savedState, svg) {
     let seq = new Sequence(savedState.id);
-    seq.numberingOffset = savedState.numberingOffset;
-    seq.numberingAnchor = savedState.numberingAnchor;
-    seq.numberingIncrement = savedState.numberingIncrement;
+    seq.setNumberingOffset(savedState.numberingOffset, svg);
+    seq.setNumberingAnchor(savedState.numberingAnchor, svg);
+    seq.setNumberingIncrement(savedState.numberingIncrement, svg);
 
     for (let p = 1; p <= savedState.bases.length; p++) {
       let sb = savedState.bases[p - 1];
