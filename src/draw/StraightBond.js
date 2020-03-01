@@ -68,10 +68,7 @@ class StraightBond {
    * @returns {StraightBond} 
    */
   static create(svg, b1, b2) {
-    let cs = StraightBond.coordinates(b1, b2, 8, 8);
-    let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
-    line.id(createUUIDforSVG());
-    return new StraightBond(line, b1, b2);
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -150,7 +147,7 @@ class StraightBond {
    * @param {number} p 
    */
   set padding1(p) {
-    this._reposition(p, this.padding2);
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -164,7 +161,7 @@ class StraightBond {
    * @param {number} p 
    */
   set padding2(p) {
-    this._reposition(this.padding1, p);
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -257,23 +254,54 @@ class StraightBond {
    * @returns {Object} 
    */
   savableState() {
-    return {
-      className: 'StraightBond',
-      line: this._line.id(),
-      base1: this.base1.id,
-      base2: this.base2.id,
-    };
+    throw new Error('Not implemented.');
   }
 }
 
 class StrandBond extends StraightBond {
   
   /**
+   * @typedef {Object} StrandBond~MostRecentProps 
+   * @property {number} padding1 
+   * @property {number} padding2 
+   * @property {string} stroke 
+   * @property {number} strokeWidth 
+   */
+
+  /**
+   * @returns {StrandBond~MostRecentProps} 
+   */
+  static mostRecentProps() {
+    return { ...StrandBond._mostRecentProps };
+  }
+
+  /**
+   * @param {StrandBond} sb 
+   */
+  static _applyMostRecentProps(sb) {
+    let props = StrandBond.mostRecentProps();
+    sb.padding1 = props.padding1;
+    sb.padding2 = props.padding2;
+    sb.stroke = props.stroke;
+    sb.strokeWidth = props.strokeWidth;
+  }
+
+  /**
+   * @param {StrandBond} sb 
+   */
+  static _copyPropsToMostRecent(sb) {
+    StrandBond._mostRecentProps.padding1 = sb.padding1;
+    StrandBond._mostRecentProps.padding2 = sb.padding2;
+    StrandBond._mostRecentProps.stroke = sb.stroke;
+    StrandBond._mostRecentProps.strokeWidth = sb.strokeWidth;
+  }
+
+  /**
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBaseById} getBaseById 
    * 
-   * @throws {Error} If the saved state is not for a straight bond.
+   * @throws {Error} If the saved state is not for a strand bond.
    */
   static fromSavedState(savedState, svg, getBaseById) {
     if (savedState.className !== 'StrandBond') {
@@ -283,7 +311,59 @@ class StrandBond extends StraightBond {
     let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
-    return new StrandBond(line, b1, b2);
+    let sb = new StrandBond(line, b1, b2);
+
+    StrandBond._copyPropsToMostRecent(sb);
+
+    return sb;
+  }
+
+  /**
+   * @param {SVG.Doc} svg 
+   * @param {Base} b1 
+   * @param {Base} b2 
+   * 
+   * @returns {StrandBond} 
+   */
+  static create(svg, b1, b2) {
+    let cs = StraightBond.coordinates(b1, b2, 8, 8);
+    let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
+    line.id(createUUIDforSVG());
+    let sb = new StrandBond(line, b1, b2);
+    StrandBond._applyMostRecentProps(sb);
+    return sb;
+  }
+
+  /**
+   * @param {number} p 
+   */
+  set padding1(p) {
+    this._reposition(p, this.padding2);
+    StrandBond._mostRecentProps.padding1 = p;
+  }
+
+  /**
+   * @param {number} p 
+   */
+  set padding2(p) {
+    this._reposition(this.padding1, p);
+    StrandBond._mostRecentProps.padding2 = p;
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set stroke(s) {
+    this._line.attr({ 'stroke': s });
+    StrandBond._mostRecentProps.stroke = this.s;
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set strokeWidth(sw) {
+    this._line.attr({ 'stroke-width': sw });
+    StrandBond._mostRecentProps.strokeWidth = sw;
   }
 
   /**
@@ -309,11 +389,68 @@ StrandBond._mostRecentProps = {
 class WatsonCrickBond extends StraightBond {
 
   /**
+   * @typedef {Object} WatsonCrickBond~MostRecentProps 
+   * @property {number} padding1 
+   * @property {number} padding2 
+   * @property {string} autStroke 
+   * @property {string} gcStroke 
+   * @property {string} gutStroke 
+   * @property {number} strokeWidth 
+   */
+
+  /**
+   * @returns {WatsonCrickBond~MostRecentProps} 
+   */
+  static mostRecentProps() {
+    return { ...WatsonCrickBond._mostRecentProps };
+  }
+
+  /**
+   * @param {WatsonCrickBond} wcb 
+   */
+  static _applyMostRecentProps(wcb) {
+    let props = WatsonCrickBond.mostRecentProps();
+
+    wcb.padding1 = props.padding1;
+    wcb.padding2 = props.padding2;
+    wcb.strokeWidth = props.strokeWidth;
+
+    if (wcb.isAUT()) {
+      wcb.stroke = props.autStroke;
+    } else if (wcb.isGC()) {
+      wcb.stroke = props.gcStroke;
+    } else if (wcb.isGUT()) {
+      wcb.stroke = props.gutStroke;
+    } else {
+      wcb.stroke = props.otherStroke;
+    }
+  }
+
+  /**
+   * @param {WatsonCrickBond} wcb 
+   */
+  static _copyPropsToMostRecent(wcb) {
+    WatsonCrickBond._mostRecentProps.padding1 = wcb.padding1;
+    WatsonCrickBond._mostRecentProps.padding2 = wcb.padding2;
+    WatsonCrickBond._mostRecentProps.strokeWidth = wcb.strokeWidth;
+    
+    if (wcb.isAUT()) {
+      WatsonCrickBond._mostRecentProps.autStroke = wcb.stroke;
+    } else if (wcb.isGC()) {
+      WatsonCrickBond._mostRecentProps.gcStroke = wcb.stroke;
+    } else if (wcb.isGUT()) {
+      WatsonCrickBond._mostRecentProps.gutStroke = wcb.stroke;
+    } else {
+      WatsonCrickBond._mostRecentProps.otherStroke = wcb.stroke;
+    }
+  }
+
+  /**
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBaseById} getBaseById 
    * 
-   * @throws {Error} If the saved state is not for a straight bond.
+   * @throws {Error} If the saved state is not for a Watson-Crick bond.
    */
   static fromSavedState(savedState, svg, getBaseById) {
     if (savedState.className !== 'WatsonCrickBond') {
@@ -324,6 +461,22 @@ class WatsonCrickBond extends StraightBond {
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
     return new WatsonCrickBond(line, b1, b2);
+  }
+
+  /**
+   * @param {SVG.Doc} svg 
+   * @param {Base} b1 
+   * @param {Base} b2 
+   * 
+   * @returns {WatsonCrickBond} 
+   */
+  static create(svg, b1, b2) {
+    let cs = StraightBond.coordinates(b1, b2, 8, 8);
+    let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
+    line.id(createUUIDforSVG());
+    let wcb = new WatsonCrickBond(line, b1, b2);
+    WatsonCrickBond._applyMostRecentProps(wcb);
+    return wcb;
   }
 
   /**
@@ -372,6 +525,30 @@ class WatsonCrickBond extends StraightBond {
     } else {
       return false;
     }
+  }
+
+  /**
+   * @param {number} p 
+   */
+  set padding1(p) {
+    this._reposition(p, this.padding2);
+    WatsonCrickBond._mostRecentProps.padding1 = p;
+  }
+
+  /**
+   * @param {number} p 
+   */
+  set padding2(p) {
+    this._reposition(this.padding1, p);
+    WatsonCrickBond._mostRecentProps.padding2 = p;
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set strokeWidth(sw) {
+    this._line.attr({ 'stroke-width': sw });
+    WatsonCrickBond._mostRecentProps.strokeWidth = sw;
   }
 
   /**
