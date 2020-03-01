@@ -168,40 +168,37 @@ class QuadraticBezierBond {
    * @param {SVG.Doc} svg 
    * @param {Array<Base>} side1 
    * @param {Array<Base>} side2 
+   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
    * 
    * @returns {QuadraticBezierBond} 
    */
   static create(svg, side1, side2, getBaseClockwiseNormalAngle) {
-    let bracketPositionalProps = {
-      topPadding: 10,
-      overhangPadding: 8,
-      overhangLength: 10,
-    };
-
     let bracket1 = svg.path(QuadraticBezierBond._dBracket(
       side1,
-      bracketPositionalProps,
+      { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
       getBaseClockwiseNormalAngle,
     ));
 
     let bracket2 = svg.path(QuadraticBezierBond._dBracket(
       side2,
-      bracketPositionalProps,
+      { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
       getBaseClockwiseNormalAngle,
     ));
-
-    let curvePositionalProps = {
-      height: 100,
-      angle: 3 * Math.PI / 2,
-    };
 
     let curve = svg.path(QuadraticBezierBond._dCurve(
       bracket1,
       bracket2,
-      curvePositionalProps,
+      { height: 100, angle: 3 * Math.PI / 2 },
     ));
 
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, getBaseClockwiseNormalAngle);
+    return new QuadraticBezierBond(
+      curve,
+      bracket1,
+      bracket2,
+      side1,
+      side2,
+      getBaseClockwiseNormalAngle
+    );
   }
 
   /**
