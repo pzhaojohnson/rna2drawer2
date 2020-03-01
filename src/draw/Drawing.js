@@ -21,8 +21,6 @@ class Drawing {
       watsonCrick: [],
       tertiary: []
     };
-
-    this._initializeDefaults();
   }
 
   /**
@@ -43,19 +41,6 @@ class Drawing {
       'height': 2 * window.screen.height,
       'overflow': 'scroll'
     });
-  }
-
-  _initializeDefaults() {
-    this._defaults = {
-      base: {
-        width: 12,
-        height: 12,
-      },
-      numbering: {
-        anchor: 0,
-        increment: 20,
-      },
-    };
   }
 
   /**
