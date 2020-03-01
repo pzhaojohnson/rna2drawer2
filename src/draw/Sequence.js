@@ -23,7 +23,7 @@ class Sequence {
    * @param {Sequence~BaseCoordinates|null} cs5 
    * @param {Sequence~BaseCoordinates|null} cs3 
    */
-  static _baseClockwiseNormalAngle(cs, cs5, cs3) {
+  static _clockwiseNormalAngleOfBase(cs, cs5, cs3) {
     if (cs5 === null && cs3 === null) {
       return Math.PI / 2;
     } else if (cs5 === null) {
@@ -43,8 +43,8 @@ class Sequence {
    * @param {Sequence~BaseCoordinates|null} cs5 
    * @param {Sequence~BaseCoordinates|null} cs3 
    */
-  static _baseInnerNormalAngle(cs, cs5, cs3) {
-    let cna = Sequence._baseClockwiseNormalAngle(cs, cs5, cs3);
+  static _innerNormalAngleOfBase(cs, cs5, cs3) {
+    let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
     
     if (cs5 === null || cs3 === null) {
       return cna;
@@ -101,7 +101,7 @@ class Sequence {
         };
       }
 
-      let cna = Sequence._baseClockwiseNormalAngle(cs, cs5, cs3);
+      let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
       seq.appendBase(Base.fromSavedState(sb, svg, cna));
     }
   }
@@ -158,7 +158,7 @@ class Sequence {
       b.addNumbering(
         svg,
         p + this.numberingOffset,
-        this.positionOuterNormalAngle(p)
+        this.outerNormalAngleOfPosition(p)
       );
     }
 
@@ -167,7 +167,7 @@ class Sequence {
       b.addNumbering(
         svg,
         p + this.numberingOffset,
-        this.positionOuterNormalAngle(p)
+        this.outerNormalAngleOfPosition(p)
       );
     }
   }
@@ -333,7 +333,7 @@ class Sequence {
    * 
    * @returns {number} 
    */
-  basePosition(b) {
+  positionOfBase(b) {
     for (let p = 1; p <= this.length; p++) {
       if (this.getBaseByPosition(p).id === b.id) {
         return p;
@@ -351,8 +351,8 @@ class Sequence {
    * 
    * @returns {number} 
    */
-  baseOffsetPosition(b) {
-    return this.basePosition + this.numberingOffset;
+  offsetPositionOfBase(b) {
+    return this.positionOfBase(b) + this.numberingOffset;
   }
 
   /**
@@ -362,7 +362,7 @@ class Sequence {
    * 
    * @returns {number|null} 
    */
-  positionClockwiseNormalAngle(p) {
+  clockwiseNormalAngleOfPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
@@ -382,15 +382,15 @@ class Sequence {
         cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
       }
 
-      return Sequence._baseClockwiseNormalAngle(cs, cs5, cs3);
+      return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
     }
   }
 
-  positionCounterClockwiseNormalAngle(p) {
+  counterClockwiseNormalAngleOfPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
-      return Math.PI + this.positionClockwiseNormalAngle(p);
+      return Math.PI + this.clockwiseNormalAngleOfPosition(p);
     }
   }
 
@@ -401,7 +401,7 @@ class Sequence {
    * 
    * @returns {number|null} 
    */
-  positionInnerNormalAngle(p) {
+  innerNormalAngleOfPosition(p) {
     if (this.positionOutOfRange()) {
       return null;
     } else {
@@ -421,7 +421,7 @@ class Sequence {
         cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
       }
 
-      return Sequence._baseInnerNormalAngle(cs, cs5, cs3);
+      return Sequence._innerNormalAngleOfBase(cs, cs5, cs3);
     }
   }
 
@@ -432,11 +432,11 @@ class Sequence {
    * 
    * @returns {number|null} 
    */
-  positionOuterNormalAngle(p) {
+  outerNormalAngleOfPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
-      return Math.PI + this.positionInnerNormalAngle(p);
+      return Math.PI + this.innerNormalAngleOfPosition(p);
     }
   }
 
