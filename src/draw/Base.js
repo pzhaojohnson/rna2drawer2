@@ -134,14 +134,6 @@ class Base {
     }
   }
 
-  applyDefaults() {
-    this.fontFamily = Base.defaults.fontFamily;
-    this.fontSize = Base.defaults.fontSize;
-    this.fontWeight = Base.defaults.fontWeight;
-    this.fontStyle = Base.defaults.fontStyle;
-    this.fill = Base.defaults.fill;
-  }
-
   /**
    * @returns {string} 
    */
@@ -351,6 +343,14 @@ class Base {
    */
   set cursor(c) {
     this._text.css({ 'cursor': c });
+  }
+
+  applyDefaults() {
+    this.fontFamily = Base.defaults.fontFamily;
+    this.fontSize = Base.defaults.fontSize;
+    this.fontWeight = Base.defaults.fontWeight;
+    this.fontStyle = Base.defaults.fontStyle;
+    this.fill = Base.defaults.fill;
   }
 
   /**

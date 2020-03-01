@@ -177,16 +177,6 @@ class Numbering {
     }
   }
 
-  applyDefaults() {
-    this.basePadding = Numbering.defaults.basePadding;
-    this.lineLength = Numbering.defaults.lineLength;
-    this.fontFamily = Numbering.defaults.fontFamily;
-    this.fontSize = Numbering.defaults.fontSize;
-    this.fontWeight = Numbering.defaults.fontWeight;
-    this.color = Numbering.defaults.color;
-    this.lineStrokeWidth = Numbering.defaults.lineStrokeWidth;
-  }
-
   /**
    * Sets the _basePadding property.
    * 
@@ -424,6 +414,16 @@ class Numbering {
    */
   set lineStrokeWidth(lsw) {
     this._line.attr({ 'stroke-width': lsw });
+  }
+
+  applyDefaults() {
+    this.basePadding = Numbering.defaults.basePadding;
+    this.lineLength = Numbering.defaults.lineLength;
+    this.fontFamily = Numbering.defaults.fontFamily;
+    this.fontSize = Numbering.defaults.fontSize;
+    this.fontWeight = Numbering.defaults.fontWeight;
+    this.color = Numbering.defaults.color;
+    this.lineStrokeWidth = Numbering.defaults.lineStrokeWidth;
   }
 
   remove() {

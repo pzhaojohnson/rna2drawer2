@@ -329,45 +329,6 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
-   */
-  applyDefaults(getBaseClockwiseNormalAngle) {
-    this.setTopPaddingBracket1(
-      QuadraticBezierBond.defaults.topPaddingBracket1,
-      getBaseClockwiseNormalAngle
-    );
-
-    this.setTopPaddingBracket2(
-      QuadraticBezierBond.defaults.topPaddingBracket2,
-      getBaseClockwiseNormalAngle
-    );
-    
-    this.setOverhangPaddingBracket1(
-      QuadraticBezierBond.defaults.overhangPaddingBracket1,
-      getBaseClockwiseNormalAngle
-    );
-    
-    this.setOverhangPaddingBracket2(
-      QuadraticBezierBond.defaults.overhangPaddingBracket2,
-      getBaseClockwiseNormalAngle
-    );
-    
-    this.setOverhangLengthBracket1(
-      QuadraticBezierBond.defaults.overhangLengthBracket1,
-      getBaseClockwiseNormalAngle
-    );
-    
-    this.setOverhangLengthBracket2(
-      QuadraticBezierBond.defaults.overhangLengthBracket2,
-      getBaseClockwiseNormalAngle
-    );
-    
-    this.stroke = QuadraticBezierBond.defaults.stroke;
-    this.strokeWidth = QuadraticBezierBond.defaults.strokeWidth;
-    this.curveStrokeDasharray = QuadraticBezierBond.defaults.curveStrokeDasharray;
-  }
-
-  /**
    * @returns {number} 
    */
   get xCurveEnd1() {
@@ -871,6 +832,45 @@ class QuadraticBezierBond {
     this._curve.css({ 'cursor': c });
     this._bracket1.css({ 'cursor': c });
     this._bracket2.css({ 'cursor': c });
+  }
+
+  /**
+   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   */
+  applyDefaults(getBaseClockwiseNormalAngle) {
+    this.setTopPaddingBracket1(
+      QuadraticBezierBond.defaults.topPaddingBracket1,
+      getBaseClockwiseNormalAngle
+    );
+
+    this.setTopPaddingBracket2(
+      QuadraticBezierBond.defaults.topPaddingBracket2,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.setOverhangPaddingBracket1(
+      QuadraticBezierBond.defaults.overhangPaddingBracket1,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.setOverhangPaddingBracket2(
+      QuadraticBezierBond.defaults.overhangPaddingBracket2,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.setOverhangLengthBracket1(
+      QuadraticBezierBond.defaults.overhangLengthBracket1,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.setOverhangLengthBracket2(
+      QuadraticBezierBond.defaults.overhangLengthBracket2,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.stroke = QuadraticBezierBond.defaults.stroke;
+    this.strokeWidth = QuadraticBezierBond.defaults.strokeWidth;
+    this.curveStrokeDasharray = QuadraticBezierBond.defaults.curveStrokeDasharray;
   }
 
   /**

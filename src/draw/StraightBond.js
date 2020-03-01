@@ -131,28 +131,6 @@ class StraightBond {
     }
   }
 
-  applyStrandDefaults() {
-    this.padding = StraightBond.defaults.strand.padding;
-    this.stroke = StraightBond.defaults.strand.stroke;
-    this.strokeWidth = StraightBond.defaults.strand.strokeWidth;
-  }
-
-  applyWatsonCrickDefaults() {
-    this.padding = StraightBond.defaults.watsonCrick.padding;
-    
-    if (sb.isAUT()) {
-      this.stroke = StraightBond.defaults.watsonCrick.autStroke;
-    } else if (sb.isGC()) {
-      this.stroke = StraightBond.defaults.watsonCrick.gcStroke;
-    } else if (sb.isGUT()) {
-      this.stroke = StraightBond.defaults.watsonCrick.gutStroke;
-    } else {
-      this.stroke = StraightBond.defaults.watsonCrick.otherStroke;
-    }
-
-    this.strokeWidth = StraightBond.defaults.watsonCrick.strokeWidth;
-  }
-
   /**
    * @returns {Base} 
    */
@@ -342,6 +320,28 @@ class StraightBond {
    */
   set strokeWidth(sw) {
     this._line.attr({ 'stroke-width': sw });
+  }
+
+  applyStrandDefaults() {
+    this.padding = StraightBond.defaults.strand.padding;
+    this.stroke = StraightBond.defaults.strand.stroke;
+    this.strokeWidth = StraightBond.defaults.strand.strokeWidth;
+  }
+
+  applyWatsonCrickDefaults() {
+    this.padding = StraightBond.defaults.watsonCrick.padding;
+    
+    if (sb.isAUT()) {
+      this.stroke = StraightBond.defaults.watsonCrick.autStroke;
+    } else if (sb.isGC()) {
+      this.stroke = StraightBond.defaults.watsonCrick.gcStroke;
+    } else if (sb.isGUT()) {
+      this.stroke = StraightBond.defaults.watsonCrick.gutStroke;
+    } else {
+      this.stroke = StraightBond.defaults.watsonCrick.otherStroke;
+    }
+
+    this.strokeWidth = StraightBond.defaults.watsonCrick.strokeWidth;
   }
 
   remove() {
