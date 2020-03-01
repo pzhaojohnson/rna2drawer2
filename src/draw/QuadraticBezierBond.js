@@ -871,6 +871,7 @@ class QuadraticBezierBond {
     this.stroke = QuadraticBezierBond.defaults.stroke;
     this.strokeWidth = QuadraticBezierBond.defaults.strokeWidth;
     this.curveStrokeDasharray = QuadraticBezierBond.defaults.curveStrokeDasharray;
+    this.cursor = QuadraticBezierBond.defaults.cursor;
   }
 
   /**
@@ -918,6 +919,7 @@ QuadraticBezierBond.defaults = {
   stroke: '#0000FF',
   strokeWidth: 1,
   curveStrokeDasharray: '3 1',
+  cursor: 'pointer',
 };
 
 export default QuadraticBezierBond;
