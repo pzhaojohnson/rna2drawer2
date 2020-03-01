@@ -110,6 +110,8 @@ class Sequence {
    * @param {SVG.Doc} svg 
    * @param {string} id 
    * @param {string} letters 
+   * 
+   * @returns {Sequence} 
    */
   static createOutOfView(svg, id, letters) {
     let seq = new Sequence(id);
