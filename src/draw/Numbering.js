@@ -6,21 +6,48 @@ import createUUIDforSVG from './createUUIDforSVG';
 class Numbering {
 
   /**
-   * @param {Numbering~SavableState} savedState 
-   * @param {SVG.Doc} svg 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
-   * 
-   * @throws {Error} If the saved state is not for a numbering.
+   * @typedef {Object} Numbering~MostRecentProps 
+   * @property {number} basePadding 
+   * @property {number} lineLength 
+   * @property {string} fontFamily 
+   * @property {number} fontSize 
+   * @property {string|number} fontWeight 
+   * @property {string} color 
+   * @property {number} lineStrokeWidth 
    */
-  static fromSavedState(savedState, svg, xCenterBase, yCenterBase) {
-    if (savedState.className !== 'Numbering') {
-      throw new Error('Saved state is not for a numbering.');
-    }
 
-    let text = svg.findOne('#' + savedState.text);
-    let line = svg.findOne('#' + savedState.line);
-    return new Numbering(text, line, xCenterBase, yCenterBase);
+  /**
+   * @returns {Numbering~MostRecentProps} 
+   */
+  static mostRecentProps() {
+    return { ...Numbering._mostRecentProps };
+  }
+
+  /**
+   * @param {Numbering} n 
+   */
+  static _applyMostRecentProps(n) {
+    let props = Numbering.mostRecentProps();
+    n.basePadding = props.basePadding;
+    n.lineLength = props.lineLength;
+    n.fontFamily = props.fontFamily;
+    n.fontSize = props.fontSize;
+    n.fontWeight = props.fontWeight;
+    n.color = props.color;
+    n.lineStrokeWidth = props.lineStrokeWidth;
+  }
+
+  /**
+   * @param {Numbering} n 
+   */
+  static _copyPropsToMostRecent(n) {
+    Numbering._mostRecentProps.basePadding = n.basePadding;
+    Numbering._mostRecentProps.lineLength = n.lineLength;
+    Numbering._mostRecentProps.fontFamily = n.fontFamily;
+    Numbering._mostRecentProps.fontSize = n.fontSize;
+    Numbering._mostRecentProps.fontWeight = n.fontWeight;
+    Numbering._mostRecentProps.color = n.color;
+    Numbering._mostRecentProps.lineStrokeWidth = n.lineStrokeWidth;
   }
 
   /**
@@ -101,6 +128,26 @@ class Numbering {
   }
 
   /**
+   * @param {Numbering~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {number} xCenterBase 
+   * @param {number} yCenterBase 
+   * 
+   * @throws {Error} If the saved state is not for a numbering.
+   */
+  static fromSavedState(savedState, svg, xCenterBase, yCenterBase) {
+    if (savedState.className !== 'Numbering') {
+      throw new Error('Saved state is not for a numbering.');
+    }
+
+    let text = svg.findOne('#' + savedState.text);
+    let line = svg.findOne('#' + savedState.line);
+    let n = new Numbering(text, line, xCenterBase, yCenterBase);
+    Numbering._copyPropsToMostRecent(n);
+    return n;
+  }
+
+  /**
    * @param {SVG.Doc} svg 
    * @param {number} number 
    * @param {number} xCenterBase 
@@ -125,7 +172,9 @@ class Numbering {
       'dy': tp.dy,
     });
     
-    return new Numbering(text, line, xCenterBase, yCenterBase);
+    let n = new Numbering(text, line, xCenterBase, yCenterBase);
+    Numbering._applyMostRecentProps(n);
+    return n;
   }
 
   /**
@@ -141,8 +190,6 @@ class Numbering {
     this._line = line;
     this._validateLine();
     this._storeBasePadding(xCenterBase, yCenterBase);
-
-    this.applyDefaults();
   }
 
   /**
@@ -416,16 +463,6 @@ class Numbering {
     this._line.attr({ 'stroke-width': lsw });
   }
 
-  applyDefaults() {
-    this.basePadding = Numbering.defaults.basePadding;
-    this.lineLength = Numbering.defaults.lineLength;
-    this.fontFamily = Numbering.defaults.fontFamily;
-    this.fontSize = Numbering.defaults.fontSize;
-    this.fontWeight = Numbering.defaults.fontWeight;
-    this.color = Numbering.defaults.color;
-    this.lineStrokeWidth = Numbering.defaults.lineStrokeWidth;
-  }
-
   remove() {
     this._text.remove();
     this._line.remove();
@@ -450,7 +487,7 @@ class Numbering {
   }
 }
 
-Numbering.defaults = {
+Numbering._mostRecentProps = {
   basePadding: 12,
   lineLength: 8,
   fontFamily: 'Arial',
