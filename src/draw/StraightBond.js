@@ -321,4 +321,21 @@ class StraightBond {
   }
 }
 
+StraightBond.defaults = {
+  strand: {
+    padding: 6,
+    stroke: '#808080',
+    strokeWidth: 1,
+    distanceThreshold: 6,
+  },
+  watsonCrick: {
+    padding: 6,
+    autStroke: '#000000',
+    gcStroke: '#000000',
+    gutStroke: '#808080',
+    otherStroke: '#808080',
+    strokeWidth: 2,
+  },
+};
+
 export default StraightBond;
