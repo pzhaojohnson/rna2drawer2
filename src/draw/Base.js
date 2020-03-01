@@ -83,7 +83,15 @@ class Base {
       'dy': '0.4em',
     });
 
-    return new Base(text);
+    let b = new Base(text);
+
+    b.fontFamily = Base.defaults.fontFamily;
+    b.fontSize = Base.defaults.fontSize;
+    b.fontWeight = Base.defaults.fontWeight;
+    b.fontStyle = Base.defaults.fontStyle;
+    b.fill = Base.defaults.fill;
+
+    return b;
   }
 
   /**
@@ -660,5 +668,13 @@ class Base {
     return savableState;
   }
 }
+
+Base.defaults = {
+  fontFamily: 'Arial',
+  fontSize: 9,
+  fontWeight: 'bold',
+  fontStyle: 'normal',
+  fill: '#000000',
+};
 
 export default Base;
