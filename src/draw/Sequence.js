@@ -139,6 +139,38 @@ class Sequence {
   }
 
   /**
+   * @param {SVG.Doc} svg 
+   */
+  _updateBaseNumberings(svg) {
+    this._bases.forEach(b => {
+      if (b.hasNumbering()) {
+        b.removeNumbering();
+      }
+    });
+
+    let anchor = this.numberingAnchor;
+    let increment = this.numberingIncrement;
+    
+    for (let p = anchor; p > 0; p -= increment) {
+      let b = this.getBaseByPosition(p);
+      b.addNumbering(
+        svg,
+        p + this.numberingOffset,
+        this.positionOuterNormalAngle(p)
+      );
+    }
+
+    for (let p = anchor + increment; p <= this.length; p += increment) {
+      let b = this.getBaseByPosition(p);
+      b.addNumbering(
+        svg,
+        p + this.numberingOffset,
+        this.positionOuterNormalAngle(p)
+      );
+    }
+  }
+
+  /**
    * @returns {number} 
    */
   get numberingOffset() {
@@ -156,6 +188,7 @@ class Sequence {
     }
 
     this._numberingOffset = no;
+    this._updateBaseNumberings();
   }
 
   /**
@@ -176,6 +209,7 @@ class Sequence {
     }
 
     this._numberingAnchor = na;
+    this._updateBaseNumberings();
   }
 
   /**
@@ -199,6 +233,7 @@ class Sequence {
     }
 
     this._numberingIncrement = ni;
+    this._updateBaseNumberings();
   }
 
   /**
@@ -410,6 +445,7 @@ class Sequence {
    */
   appendBase(b) {
     this._bases.push(b);
+    this._updateBaseNumberings();
   }
 
   /**
@@ -426,6 +462,8 @@ class Sequence {
     } else if (this.positionInRange(p)) {
       this._bases.splice(p - 1, 0, b);
     }
+
+    this._updateBaseNumberings();
   }
 
   /**
@@ -439,6 +477,8 @@ class Sequence {
       b.remove();
       this._bases.splice(p - 1, 1);
     }
+
+    this._updateBaseNumberings();
   }
 
   /**
