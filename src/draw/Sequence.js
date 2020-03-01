@@ -69,6 +69,8 @@ class Sequence {
   static fromSavedState(savedState, svg) {
     let seq = new Sequence(savedState.id);
     seq.numberingOffset = savedState.numberingOffset;
+    seq.numberingAnchor = savedState.numberingAnchor;
+    seq.numberingIncrement = savedState.numberingIncrement;
 
     for (let p = 1; p <= savedState.bases.length; p++) {
       let sb = savedState.bases[p - 1];
@@ -487,6 +489,8 @@ class Sequence {
    * @property {string} id 
    * @property {Array<Base~SavableState>} bases 
    * @property {number} numberingOffset 
+   * @property {number} numberingAnchor 
+   * @property {number} numberingIncrement 
    */
 
   /**
@@ -498,6 +502,8 @@ class Sequence {
       id: this.id,
       bases: [],
       numberingOffset: this.numberingOffset,
+      numberingAnchor: this.numberingAnchor,
+      numberingIncrement: this.numberingIncrement,
     };
 
     this._bases.forEach(
