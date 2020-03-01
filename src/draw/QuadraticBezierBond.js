@@ -201,7 +201,9 @@ class QuadraticBezierBond {
       curvePositionalProps,
     ));
 
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, getBaseClockwiseNormalAngle);
+    let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, getBaseClockwiseNormalAngle);
+    qbb.applyDefaults(getBaseClockwiseNormalAngle);
+    return qbb;
   }
 
   /**
@@ -324,6 +326,45 @@ class QuadraticBezierBond {
         throw new Error('Invalid L segment.');
       }
     });
+  }
+
+  /**
+   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   */
+  applyDefaults(getBaseClockwiseNormalAngle) {
+    this.setTopPaddingBracket1(
+      QuadraticBezierBond.defaults.topPaddingBracket1,
+      getBaseClockwiseNormalAngle
+    );
+
+    this.setTopPaddingBracket2(
+      QuadraticBezierBond.defaults.topPaddingBracket2,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.setOverhangPaddingBracket1(
+      QuadraticBezierBond.defaults.overhangPaddingBracket1,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.setOverhangPaddingBracket2(
+      QuadraticBezierBond.defaults.overhangPaddingBracket2,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.setOverhangLengthBracket1(
+      QuadraticBezierBond.defaults.overhangLengthBracket1,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.setOverhangLengthBracket2(
+      QuadraticBezierBond.defaults.overhangLengthBracket2,
+      getBaseClockwiseNormalAngle
+    );
+    
+    this.stroke = QuadraticBezierBond.defaults.stroke;
+    this.strokeWidth = QuadraticBezierBond.defaults.strokeWidth;
+    this.curveStrokeDasharray = QuadraticBezierBond.defaults.curveStrokeDasharray;
   }
 
   /**
@@ -866,5 +907,17 @@ class QuadraticBezierBond {
     return savableState;
   }
 }
+
+QuadraticBezierBond.defaults = {
+  topPaddingBracket1: 6,
+  topPaddingBracket2: 6,
+  overhangPaddingBracket1: 6,
+  overhangPaddingBracket2: 6,
+  overhangLengthBracket1: 6,
+  overhangLengthBracket2: 6,
+  stroke: '#0000FF',
+  strokeWidth: 1,
+  curveStrokeDasharray: '3 1',
+};
 
 export default QuadraticBezierBond;
