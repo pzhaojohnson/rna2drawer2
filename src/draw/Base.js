@@ -288,6 +288,20 @@ class Base {
   }
 
   /**
+   * @returns {string} 
+   */
+  get fill() {
+    return this._text.attr('fill');
+  }
+
+  /**
+   * @param {string} f 
+   */
+  set fill(f) {
+    this._text.attr({ 'fill': f });
+  }
+
+  /**
    * @param {function} callback 
    */
   bindMouseover(callback) {
