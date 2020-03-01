@@ -874,6 +874,12 @@ class QuadraticBezierBond {
     this.cursor = QuadraticBezierBond.defaults.cursor;
   }
 
+  remove() {
+    this._curve.remove();
+    this._bracket1.remove();
+    this._bracket2.remove();
+  }
+
   /**
    * @typedef {Object} QuadraticBezierBond~SavableState 
    * @property {string} className 
