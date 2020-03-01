@@ -146,54 +146,6 @@ class StraightBond {
   }
 
   /**
-   * @returns {boolean} 
-   */
-  isAUT() {
-    let l1 = this.base1.letter.toUpperCase();
-    let l2 = this.base2.letter.toUpperCase();
-
-    if (l1 === 'A') {
-      return l2 === 'U' || l2 === 'T';
-    } else if (l1 === 'U' || l1 === 'T') {
-      return l2 === 'A';
-    } else {
-      return false;
-    }
-  }
-
-  /**
-   * @returns {boolean} 
-   */
-  isGC() {
-    let l1 = this.base1.letter.toUpperCase();
-    let l2 = this.base2.letter.toUpperCase();
-
-    if (l1 === 'G') {
-      return this.l2 === 'C';
-    } else if (l1 === 'C') {
-      return l2 === 'G';
-    } else {
-      return false;
-    }
-  }
-
-  /**
-   * @returns {boolean} 
-   */
-  isGUT() {
-    let l1 = this.base1.letter.toUpperCase();
-    let l2 = this.base2.letter.toUpperCase();
-
-    if (l1 === 'G') {
-      return l2 === 'U' || l2 === 'T';
-    } else if (l1 === 'U' || l1 === 'T') {
-      return l2 === 'G';
-    } else {
-      return false;
-    }
-  }
-
-  /**
    * @returns {string} 
    */
   get id() {
@@ -384,5 +336,119 @@ StraightBond.defaults = {
     strokeWidth: 2,
   },
 };
+
+class StrandBond extends StraightBond {
+  
+  /**
+   * @param {StraightBond~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {StraightBond~getBaseById} getBaseById 
+   * 
+   * @throws {Error} If the saved state is not for a straight bond.
+   */
+  static fromSavedState(savedState, svg, getBaseById) {
+    if (savedState.className !== 'StrandBond') {
+      throw new Error('Saved state is not for a strand bond.');
+    }
+
+    let line = svg.findOne('#' + savedState.line);
+    let b1 = getBaseById(savedState.base1);
+    let b2 = getBaseById(savedState.base2);
+    return new StrandBond(line, b1, b2);
+  }
+
+  /**
+   * @returns {StraightBond~SavableState} 
+   */
+  savableState() {
+    return {
+      className: 'StrandBond',
+      line: this._line.id(),
+      base1: this.base1.id,
+      base2: this.base2.id,
+    };
+  }
+}
+
+class WatsonCrickBond extends StraightBond {
+
+  /**
+   * @param {StraightBond~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {StraightBond~getBaseById} getBaseById 
+   * 
+   * @throws {Error} If the saved state is not for a straight bond.
+   */
+  static fromSavedState(savedState, svg, getBaseById) {
+    if (savedState.className !== 'WatsonCrickBond') {
+      throw new Error('Saved state is not for a Watson-Crick bond.');
+    }
+
+    let line = svg.findOne('#' + savedState.line);
+    let b1 = getBaseById(savedState.base1);
+    let b2 = getBaseById(savedState.base2);
+    return new WatsonCrickBond(line, b1, b2);
+  }
+
+  /**
+   * @returns {boolean} 
+   */
+  isAUT() {
+    let l1 = this.base1.letter.toUpperCase();
+    let l2 = this.base2.letter.toUpperCase();
+
+    if (l1 === 'A') {
+      return l2 === 'U' || l2 === 'T';
+    } else if (l1 === 'U' || l1 === 'T') {
+      return l2 === 'A';
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * @returns {boolean} 
+   */
+  isGC() {
+    let l1 = this.base1.letter.toUpperCase();
+    let l2 = this.base2.letter.toUpperCase();
+
+    if (l1 === 'G') {
+      return this.l2 === 'C';
+    } else if (l1 === 'C') {
+      return l2 === 'G';
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * @returns {boolean} 
+   */
+  isGUT() {
+    let l1 = this.base1.letter.toUpperCase();
+    let l2 = this.base2.letter.toUpperCase();
+
+    if (l1 === 'G') {
+      return l2 === 'U' || l2 === 'T';
+    } else if (l1 === 'U' || l1 === 'T') {
+      return l2 === 'G';
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * @returns {StraightBond~SavableState} 
+   */
+  savableState() {
+    return {
+      className: 'WatsonCrickBond',
+      line: this._line.id(),
+      base1: this.base1.id,
+      base2: this.base2.id,
+    };
+  }
+}
 
 export default StraightBond;
