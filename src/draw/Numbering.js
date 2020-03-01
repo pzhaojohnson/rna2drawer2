@@ -134,6 +134,8 @@ class Numbering {
     n.fontWeight = Numbering.defaults.fontWeight;
     n.color = Numbering.defaults.color;
     n.lineStrokeWidth = Numbering.defaults.lineStrokeWidth;
+
+    return n;
   }
 
   /**
