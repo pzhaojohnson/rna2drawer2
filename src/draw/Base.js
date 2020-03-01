@@ -7,6 +7,45 @@ import Numbering from './Numbering';
 class Base {
 
   /**
+   * @typedef {Object} Base~MostRecentProps 
+   * @property {string} fontFamily 
+   * @property {number} fontSize 
+   * @property {string|number} fontWeight 
+   * @property {string} fontStyle 
+   * @property {string} fill 
+   */
+
+  /**
+   * @returns {Base~MostRecentProps} 
+   */
+  static mostRecentProps() {
+    return { ...Base._mostRecentProps };
+  }
+
+  /**
+   * @param {Base} b 
+   */
+  static _applyMostRecentProps(b) {
+    let props = Base.mostRecentProps();
+    b.fontFamily = props.fontFamily;
+    b.fontSize = props.fontSize;
+    b.fontWeight = props.fontWeight;
+    b.fontStyle = props.fontStyle;
+    b.fill = props.fill;
+  }
+
+  /**
+   * @param {Base} b 
+   */
+  static _copyPropsToMostRecent(b) {
+    Base._mostRecentProps.fontFamily = b.fontFamily;
+    Base._mostRecentProps.fontSize = b.fontSize;
+    Base._mostRecentProps.fontWeight = b.fontWeight;
+    Base._mostRecentProps.fontStyle = b.fontStyle;
+    Base._mostRecentProps.fill = b.fill;
+  }
+
+  /**
    * @param {Base~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} clockwiseNormalAngle 
@@ -38,6 +77,8 @@ class Base {
         ann => b.addCircleAnnotationFromSavedState(ann, svg, clockwiseNormalAngle)
       );
     }
+
+    Base._copyPropsToMostRecent(b);
 
     return b;
   }
@@ -81,9 +122,12 @@ class Base {
       'y': yCenter,
       'text-anchor': 'middle',
       'dy': '0.4em',
+      'cursor': 'pointer',
     });
 
-    return new Base(text);
+    let b = new Base(text);
+    Base._applyMostRecentProps(b);
+    return b;
   }
 
   /**
@@ -105,8 +149,6 @@ class Base {
     this._outline = null;
     this._numbering = null;
     this._annotations = [];
-
-    this.applyDefaults();
   }
 
   /**
@@ -343,15 +385,6 @@ class Base {
    */
   set cursor(c) {
     this._text.css({ 'cursor': c });
-  }
-
-  applyDefaults() {
-    this.fontFamily = Base.defaults.fontFamily;
-    this.fontSize = Base.defaults.fontSize;
-    this.fontWeight = Base.defaults.fontWeight;
-    this.fontStyle = Base.defaults.fontStyle;
-    this.fill = Base.defaults.fill;
-    this.cursor = Base.detaults.cursor;
   }
 
   /**
@@ -672,13 +705,12 @@ class Base {
   }
 }
 
-Base.defaults = {
+Base._mostRecentProps = {
   fontFamily: 'Arial',
   fontSize: 9,
   fontWeight: 'bold',
   fontStyle: 'normal',
   fill: '#000000',
-  cursor: 'pointer',
 };
 
 export default Base;
