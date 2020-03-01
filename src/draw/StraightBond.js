@@ -15,17 +15,10 @@ class StraightBond {
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBaseById} getBaseById 
    * 
-   * @throws {Error} If the saved state is not for a straight bond.
+   * @throws {Error} If the saved state is not for the correct straight bond.
    */
   static fromSavedState(savedState, svg, getBaseById) {
-    if (savedState.className !== 'StraightBond') {
-      throw new Error('Saved state is not for a straight bond.');
-    }
-
-    let line = svg.findOne('#' + savedState.line);
-    let b1 = getBaseById(savedState.base1);
-    let b2 = getBaseById(savedState.base2);
-    return new StraightBond(line, b1, b2);
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -79,32 +72,6 @@ class StraightBond {
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id(createUUIDforSVG());
     return new StraightBond(line, b1, b2);
-  }
-
-  /**
-   * @param {SVG.Doc} svg 
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * 
-   * @returns {StraightBond} 
-   */
-  static createStrand(svg, b1, b2) {
-    let sb = StraightBond.create(svg, b1, b2);
-    sb.applyStrandDefaults();
-    return sb;
-  }
-
-  /**
-   * @param {SVG.Doc} svg 
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * 
-   * @returns {StraightBond} 
-   */
-  static createWatsonCrick(svg, b1, b2) {
-    let sb = StraightBond.create(svg, b1, b2);
-    sb.applyWatsonCrickDefaults();
-    return sb;
   }
 
   /**
@@ -257,7 +224,7 @@ class StraightBond {
    * @param {string} s 
    */
   set stroke(s) {
-    this._line.attr({ 'stroke': s });
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -271,29 +238,7 @@ class StraightBond {
    * @param {number} sw 
    */
   set strokeWidth(sw) {
-    this._line.attr({ 'stroke-width': sw });
-  }
-
-  applyStrandDefaults() {
-    this.padding = StraightBond.defaults.strand.padding;
-    this.stroke = StraightBond.defaults.strand.stroke;
-    this.strokeWidth = StraightBond.defaults.strand.strokeWidth;
-  }
-
-  applyWatsonCrickDefaults() {
-    this.padding = StraightBond.defaults.watsonCrick.padding;
-    
-    if (sb.isAUT()) {
-      this.stroke = StraightBond.defaults.watsonCrick.autStroke;
-    } else if (sb.isGC()) {
-      this.stroke = StraightBond.defaults.watsonCrick.gcStroke;
-    } else if (sb.isGUT()) {
-      this.stroke = StraightBond.defaults.watsonCrick.gutStroke;
-    } else {
-      this.stroke = StraightBond.defaults.watsonCrick.otherStroke;
-    }
-
-    this.strokeWidth = StraightBond.defaults.watsonCrick.strokeWidth;
+    throw new Error('Not implemented.');
   }
 
   remove() {
@@ -320,22 +265,6 @@ class StraightBond {
     };
   }
 }
-
-StraightBond.defaults = {
-  strand: {
-    padding: 6,
-    stroke: '#808080',
-    strokeWidth: 1,
-  },
-  watsonCrick: {
-    padding: 6,
-    autStroke: '#000000',
-    gcStroke: '#000000',
-    gutStroke: '#808080',
-    otherStroke: '#808080',
-    strokeWidth: 2,
-  },
-};
 
 class StrandBond extends StraightBond {
   
@@ -369,6 +298,13 @@ class StrandBond extends StraightBond {
     };
   }
 }
+
+StrandBond._mostRecentProps = {
+  padding1: 6,
+  padding2: 6,
+  stroke: '#808080',
+  strokeWidth: 1,
+};
 
 class WatsonCrickBond extends StraightBond {
 
@@ -450,5 +386,14 @@ class WatsonCrickBond extends StraightBond {
     };
   }
 }
+
+WatsonCrickBond._mostRecentProps = {
+  padding: 6,
+  autStroke: '#000000',
+  gcStroke: '#000000',
+  gutStroke: '#808080',
+  otherStroke: '#808080',
+  strokeWidth: 2,
+};
 
 export default StraightBond;
