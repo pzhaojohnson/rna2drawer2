@@ -82,6 +82,50 @@ class StraightBond {
   }
 
   /**
+   * @param {SVG.Doc} svg 
+   * @param {Base} b1 
+   * @param {Base} b2 
+   * 
+   * @returns {StraightBond} 
+   */
+  static createStrand(svg, b1, b2) {
+    let sb = StraightBond.create(svg, b1, b2);
+
+    sb.padding = StraightBond.defaults.strand.padding;
+    sb.stroke = StraightBond.defaults.strand.stroke;
+    sb.strokeWidth = StraightBond.defaults.strand.strokeWidth;
+
+    return sb;
+  }
+
+  /**
+   * @param {SVG.Doc} svg 
+   * @param {Base} b1 
+   * @param {Base} b2 
+   * 
+   * @returns {StraightBond} 
+   */
+  static createWatsonCrick(svg, b1, b2) {
+    let sb = StraightBond.create(svg, b1, b2);
+
+    sb.padding = StraightBond.defaults.watsonCrick.padding;
+    
+    if (sb.isAUT()) {
+      sb.stroke = StraightBond.defaults.watsonCrick.autStroke;
+    } else if (sb.isGC()) {
+      sb.stroke = StraightBond.defaults.watsonCrick.gcStroke;
+    } else if (sb.isGUT()) {
+      sb.stroke = StraightBond.defaults.watsonCrick.gutStroke;
+    } else {
+      sb.stroke = StraightBond.defaults.watsonCrick.otherStroke;
+    }
+
+    sb.strokeWidth = StraightBond.defaults.watsonCrick.strokeWidth;
+
+    return sb;
+  }
+
+  /**
    * @param {SVG.Line} line 
    * @param {Base} b1 One base of the straight bond.
    * @param {Base} b2 The other base of the straight bond.
@@ -326,7 +370,6 @@ StraightBond.defaults = {
     padding: 6,
     stroke: '#808080',
     strokeWidth: 1,
-    distanceThreshold: 6,
   },
   watsonCrick: {
     padding: 6,

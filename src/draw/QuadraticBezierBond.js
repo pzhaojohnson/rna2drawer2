@@ -757,6 +757,20 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @returns {string} 
+   */
+  get curveStrokeDasharray() {
+    return this._curve.attr('stroke-dasharray');
+  }
+
+  /**
+   * @param {string} sd 
+   */
+  set curveStrokeDasharray(sd) {
+    this._curve.attr({ 'stroke-dasharray': sd });
+  }
+
+  /**
    * @returns {number} 
    */
   get opacityBracket1() {
