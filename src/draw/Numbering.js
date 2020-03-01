@@ -126,15 +126,7 @@ class Numbering {
     });
     
     let n = new Numbering(text, line, xCenterBase, yCenterBase);
-
-    n.basePadding = Numbering.defaults.basePadding;
-    n.lineLength = Numbering.defaults.lineLength;
-    n.fontFamily = Numbering.defaults.fontFamily;
-    n.fontSize = Numbering.defaults.fontSize;
-    n.fontWeight = Numbering.defaults.fontWeight;
-    n.color = Numbering.defaults.color;
-    n.lineStrokeWidth = Numbering.defaults.lineStrokeWidth;
-
+    n.applyDefaults();
     return n;
   }
 
@@ -183,6 +175,16 @@ class Numbering {
     if (typeof(this._line.id()) !== 'string' || this._line.id().length === 0) {
       throw new Error('Invalid line ID.');
     }
+  }
+
+  applyDefaults() {
+    this.basePadding = Numbering.defaults.basePadding;
+    this.lineLength = Numbering.defaults.lineLength;
+    this.fontFamily = Numbering.defaults.fontFamily;
+    this.fontSize = Numbering.defaults.fontSize;
+    this.fontWeight = Numbering.defaults.fontWeight;
+    this.color = Numbering.defaults.color;
+    this.lineStrokeWidth = Numbering.defaults.lineStrokeWidth;
   }
 
   /**

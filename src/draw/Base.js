@@ -84,13 +84,7 @@ class Base {
     });
 
     let b = new Base(text);
-
-    b.fontFamily = Base.defaults.fontFamily;
-    b.fontSize = Base.defaults.fontSize;
-    b.fontWeight = Base.defaults.fontWeight;
-    b.fontStyle = Base.defaults.fontStyle;
-    b.fill = Base.defaults.fill;
-
+    b.applyDefaults();
     return b;
   }
 
@@ -138,6 +132,14 @@ class Base {
     if (this._text.attr('dy') !== '0.4em') {
       throw new Error('The dy property must be 0.4em.');
     }
+  }
+
+  applyDefaults() {
+    this.fontFamily = Base.defaults.fontFamily;
+    this.fontSize = Base.defaults.fontSize;
+    this.fontWeight = Base.defaults.fontWeight;
+    this.fontStyle = Base.defaults.fontStyle;
+    this.fill = Base.defaults.fill;
   }
 
   /**

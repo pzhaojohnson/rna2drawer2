@@ -55,15 +55,6 @@ class Drawing {
         anchor: 0,
         increment: 20,
       },
-      bond: {
-        tertiary: {
-          topPadding: 6,
-          overhangPadding: 6,
-          overhangLength: 6,
-          stroke: '#0000FF',
-          strokeWidth: 1,
-        },
-      },
     };
   }
 
