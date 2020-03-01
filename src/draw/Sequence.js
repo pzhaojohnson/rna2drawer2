@@ -115,8 +115,7 @@ class Sequence {
    */
   static createOutOfView(svg, id, letters) {
     let seq = new Sequence(id);
-    seq.applyDefaults();
-
+    
     for (let i = 0; i < letters.length; i++) {
       let c = letters.charAt(i);
       seq.appendBase(Base.createOutOfView(svg, c));
@@ -134,6 +133,8 @@ class Sequence {
     this._numberingOffset = 0;
     this._numberingAnchor = 0;
     this._numberingIncrement = 20;
+
+    this.applyDefaults();
   }
 
   /**

@@ -83,9 +83,7 @@ class Base {
       'dy': '0.4em',
     });
 
-    let b = new Base(text);
-    b.applyDefaults();
-    return b;
+    return new Base(text);
   }
 
   /**
@@ -107,6 +105,8 @@ class Base {
     this._outline = null;
     this._numbering = null;
     this._annotations = [];
+
+    this.applyDefaults();
   }
 
   /**

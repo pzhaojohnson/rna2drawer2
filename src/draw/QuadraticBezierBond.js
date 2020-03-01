@@ -201,9 +201,7 @@ class QuadraticBezierBond {
       curvePositionalProps,
     ));
 
-    let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, getBaseClockwiseNormalAngle);
-    qbb.applyDefaults(getBaseClockwiseNormalAngle);
-    return qbb;
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, getBaseClockwiseNormalAngle);
   }
 
   /**
@@ -231,6 +229,8 @@ class QuadraticBezierBond {
     this._validateBracket(this._bracket1, this._side1);
     this._validateBracket(this._bracket2, this._side2);
     this._storeBracketTopPaddings(getBaseClockwiseNormalAngle);
+
+    this.applyDefaults(getBaseClockwiseNormalAngle);
   }
   
   /**

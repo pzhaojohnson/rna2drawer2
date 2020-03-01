@@ -125,9 +125,7 @@ class Numbering {
       'dy': tp.dy,
     });
     
-    let n = new Numbering(text, line, xCenterBase, yCenterBase);
-    n.applyDefaults();
-    return n;
+    return new Numbering(text, line, xCenterBase, yCenterBase);
   }
 
   /**
@@ -143,6 +141,8 @@ class Numbering {
     this._line = line;
     this._validateLine();
     this._storeBasePadding(xCenterBase, yCenterBase);
+
+    this.applyDefaults();
   }
 
   /**
