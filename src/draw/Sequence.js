@@ -181,16 +181,17 @@ class Sequence {
 
   /**
    * @param {number} no 
+   * @param {SVG.Doc} svg 
    * 
    * @throws {Error} If the given numbering offset is not an integer.
    */
-  set numberingOffset(no) {
+  set numberingOffset(no, svg) {
     if (!isFinite(no) || Math.floor(no) !== no) {
       throw new Error('Numbering offset must be an integer.');
     }
 
     this._numberingOffset = no;
-    this._updateBaseNumberings();
+    this._updateBaseNumberings(svg);
   }
 
   /**
@@ -202,16 +203,17 @@ class Sequence {
 
   /**
    * @param {number} na 
+   * @param {SVG.Doc} svg 
    * 
    * @throws {Error} If the given numbering anchor is not an integer.
    */
-  set numberingAnchor(na) {
+  setNumberingAnchor(na, svg) {
     if (!isFinite(na) || Math.floor(na) !== na) {
       throw new Error('Numbering anchor must be an integer.');
     }
 
     this._numberingAnchor = na;
-    this._updateBaseNumberings();
+    this._updateBaseNumberings(svg);
   }
 
   /**
@@ -223,11 +225,12 @@ class Sequence {
 
   /**
    * @param {number} ni 
+   * @param {SVG.Doc} svg 
    * 
    * @throws {Error} If the given numbering increment is not an integer.
    * @throws {Error} If the given numbering increment is not positive.
    */
-  set numberingIncrement(ni) {
+  setNumberingIncrement(ni, svg) {
     if (!isFinite(ni) || Math.floor(ni) !== ni) {
       throw new Error('Numbering increment must be an integer.');
     } else if (ni < 1) {
@@ -235,7 +238,7 @@ class Sequence {
     }
 
     this._numberingIncrement = ni;
-    this._updateBaseNumberings();
+    this._updateBaseNumberings(svg);
   }
 
   /**
@@ -444,10 +447,11 @@ class Sequence {
    * Appends the given base to the end of this sequence.
    * 
    * @param {Base} b 
+   * @param {SVG.Doc} svg 
    */
-  appendBase(b) {
+  appendBase(b, svg) {
     this._bases.push(b);
-    this._updateBaseNumberings();
+    this._updateBaseNumberings(svg);
   }
 
   /**
@@ -457,30 +461,32 @@ class Sequence {
    * 
    * @param {Base} b 
    * @param {number} p 
+   * @param {SVG.Doc} svg 
    */
-  insertBaseAtPosition(b, p) {
+  insertBaseAtPosition(b, p, svg) {
     if (p === this.length + 1) {
       this.appendBase(b);
     } else if (this.positionInRange(p)) {
       this._bases.splice(p - 1, 0, b);
     }
 
-    this._updateBaseNumberings();
+    this._updateBaseNumberings(svg);
   }
 
   /**
    * Has no effect if the given position is out of range.
    * 
    * @param {number} p 
+   * @param {SVG.Doc} svg 
    */
-  removeBaseByPosition(p) {
+  removeBaseByPosition(p, svg) {
     if (this.positionInRange(p)) {
       let b = this.getBaseByPosition(p);
       b.remove();
       this._bases.splice(p - 1, 1);
     }
 
-    this._updateBaseNumberings();
+    this._updateBaseNumberings(svg);
   }
 
   /**
