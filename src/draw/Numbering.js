@@ -125,7 +125,15 @@ class Numbering {
       'dy': tp.dy,
     });
     
-    return new Numbering(text, line, xCenterBase, yCenterBase);
+    let n = new Numbering(text, line, xCenterBase, yCenterBase);
+
+    n.basePadding = Numbering.defaults.basePadding;
+    n.lineLength = Numbering.defaults.lineLength;
+    n.fontFamily = Numbering.defaults.fontFamily;
+    n.fontSize = Numbering.defaults.fontSize;
+    n.fontWeight = Numbering.defaults.fontWeight;
+    n.color = Numbering.defaults.color;
+    n.lineStrokeWidth = Numbering.defaults.lineStrokeWidth;
   }
 
   /**
@@ -437,5 +445,15 @@ class Numbering {
     };
   }
 }
+
+Numbering.defaults = {
+  basePadding: 12,
+  lineLength: 8,
+  fontFamily: 'Arial',
+  fontSize: 7,
+  fontWeight: 'normal',
+  color: '#808080',
+  lineStrokeWidth: 1,
+};
 
 export default Numbering;

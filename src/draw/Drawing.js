@@ -50,22 +50,10 @@ class Drawing {
       base: {
         width: 12,
         height: 12,
-        fontFamily: 'Arial',
-        fontSize: 9,
-        fontWeight: 'bold',
-        fontStyle: 'normal',
-        fill: '#000000',
       },
       numbering: {
         anchor: 0,
         increment: 20,
-        basePadding: 12,
-        lineLength: 8,
-        fontFamily: 'Arial',
-        fontSize: 7,
-        fontWeight: 'normal',
-        color: '#808080',
-        lineStrokeWidth: 1,
       },
       bond: {
         strand: {
