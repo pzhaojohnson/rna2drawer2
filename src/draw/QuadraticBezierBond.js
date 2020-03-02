@@ -218,6 +218,7 @@ class QuadraticBezierBond {
     qbb.setOverhangLengthBracket2(8, getClockwiseNormalAngleOfBase);
     qbb.stroke = '#0000ff';
     qbb.strokeWidth = 2;
+    qbb.curveStrokeDasharray = '3 1';
     qbb.cursor = 'pointer';
   }
 
