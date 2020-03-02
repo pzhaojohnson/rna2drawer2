@@ -15,11 +15,11 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {QuadraticBezierBond~getBaseById} getBaseById 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    * 
    * @throws {Error} If the saved state is not for a quadratic bezier bond.
    */
-  static fromSavedState(savedState, svg, getBaseById, getBaseClockwiseNormalAngle) {
+  static fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase) {
     if (savedState.className !== 'QuadraticBezierBond') {
       throw new Error('Saved state is not for a quadratic bezier bond.');
     }
@@ -40,12 +40,12 @@ class QuadraticBezierBond {
       bracket2,
       side1,
       side2,
-      getBaseClockwiseNormalAngle
+      getClockwiseNormalAngleOfBase
     );
   }
 
   /**
-   * @callback QuadraticBezierBond~getBaseClockwiseNormalAngle 
+   * @callback QuadraticBezierBond~getClockwiseNormalAngleOfBase 
    * @param {Base} base 
    * 
    * @returns {number} 
@@ -54,13 +54,13 @@ class QuadraticBezierBond {
   /**
    * @param {Array<Base>} side 
    * @param {QuadraticBezierBond~BracketPositionalProps} positionalProps 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    * 
    * @returns {string} 
    */
-  static _dBracket(side, positionalProps, getBaseClockwiseNormalAngle) {
+  static _dBracket(side, positionalProps, getClockwiseNormalAngleOfBase) {
     let bFirst = side[0];
-    let angle = getBaseClockwiseNormalAngle(bFirst);
+    let angle = getClockwiseNormalAngleOfBase(bFirst);
     let x = bFirst.xCenter + (positionalProps.topPadding * Math.cos(angle));
     let y = bFirst.yCenter + (positionalProps.topPadding * Math.sin(angle));
     let d = 'L ' + x + ' ' + y + ' ';
@@ -76,14 +76,14 @@ class QuadraticBezierBond {
     d = 'M ' + x + ' ' + y + ' ' + d;
 
     side.slice(1, side.length).forEach(b => {
-      angle = getBaseClockwiseNormalAngle(b);
+      angle = getClockwiseNormalAngleOfBase(b);
       x = b.xCenter + (positionalProps.topPadding * Math.cos(angle));
       y = b.yCenter + (positionalProps.topPadding * Math.sin(angle));
       d += 'L ' + x + ' ' + y + ' ';
     });
 
     let bLast = side[side.length - 1];
-    angle = getBaseClockwiseNormalAngle(bLast);
+    angle = getClockwiseNormalAngleOfBase(bLast);
     x = bLast.xCenter + (positionalProps.topPadding * Math.cos(angle));
     y = bLast.yCenter + (positionalProps.topPadding * Math.sin(angle));
     
@@ -168,21 +168,21 @@ class QuadraticBezierBond {
    * @param {SVG.Doc} svg 
    * @param {Array<Base>} side1 
    * @param {Array<Base>} side2 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    * 
    * @returns {QuadraticBezierBond} 
    */
-  static create(svg, side1, side2, getBaseClockwiseNormalAngle) {
+  static create(svg, side1, side2, getClockwiseNormalAngleOfBase) {
     let bracket1 = svg.path(QuadraticBezierBond._dBracket(
       side1,
       { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     ));
 
     let bracket2 = svg.path(QuadraticBezierBond._dBracket(
       side2,
       { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     ));
 
     let curve = svg.path(QuadraticBezierBond._dCurve(
@@ -197,25 +197,25 @@ class QuadraticBezierBond {
       bracket2,
       side1,
       side2,
-      getBaseClockwiseNormalAngle
+      getClockwiseNormalAngleOfBase
     );
 
-    QuadraticBezierBond._applyDefaults(qbb, getBaseClockwiseNormalAngle);
+    QuadraticBezierBond._applyDefaults(qbb, getClockwiseNormalAngleOfBase);
     return qbb;
   }
 
   /**
    * 
    * @param {QuadraticBezierBond} qbb 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  static _applyDefaults(qbb, getBaseClockwiseNormalAngle) {
-    qbb.setTopPaddingBracket1(10, getBaseClockwiseNormalAngle);
-    qbb.setTopPaddingBracket2(10, getBaseClockwiseNormalAngle);
-    qbb.setOverhangPaddingBracket1(8, getBaseClockwiseNormalAngle);
-    qbb.setOverhangPaddingBracket2(8, getBaseClockwiseNormalAngle);
-    qbb.setOverhangLengthBracket1(8, getBaseClockwiseNormalAngle);
-    qbb.setOverhangLengthBracket2(8, getBaseClockwiseNormalAngle);
+  static _applyDefaults(qbb, getClockwiseNormalAngleOfBase) {
+    qbb.setTopPaddingBracket1(10, getClockwiseNormalAngleOfBase);
+    qbb.setTopPaddingBracket2(10, getClockwiseNormalAngleOfBase);
+    qbb.setOverhangPaddingBracket1(8, getClockwiseNormalAngleOfBase);
+    qbb.setOverhangPaddingBracket2(8, getClockwiseNormalAngleOfBase);
+    qbb.setOverhangLengthBracket1(8, getClockwiseNormalAngleOfBase);
+    qbb.setOverhangLengthBracket2(8, getClockwiseNormalAngleOfBase);
     qbb.stroke = '#0000ff';
     qbb.strokeWidth = 2;
     qbb.cursor = 'pointer';
@@ -230,9 +230,9 @@ class QuadraticBezierBond {
    * @param {SVG.Path} bracket2 
    * @param {Array<Base>} side1 
    * @param {Array<Base>} side2 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  constructor(curve, bracket1, bracket2, side1, side2, getBaseClockwiseNormalAngle) {
+  constructor(curve, bracket1, bracket2, side1, side2, getClockwiseNormalAngleOfBase) {
     
     // make shallow copies
     this._side1 = [...side1];
@@ -245,7 +245,7 @@ class QuadraticBezierBond {
     this._validateCurve();
     this._validateBracket(this._bracket1, this._side1);
     this._validateBracket(this._bracket2, this._side2);
-    this._storeBracketTopPaddings(getBaseClockwiseNormalAngle);
+    this._storeBracketTopPaddings(getClockwiseNormalAngleOfBase);
   }
   
   /**
@@ -394,9 +394,9 @@ class QuadraticBezierBond {
   /**
    * @param {number} xShift 
    * @param {number} yShift 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  shiftCurveControlPoint(xShift, yShift, getBaseClockwiseNormalAngle) {
+  shiftCurveControlPoint(xShift, yShift, getClockwiseNormalAngleOfBase) {
     let xControl = this.xCurveControlPoint + xShift;
     let yControl = this.yCurveControlPoint + yShift;
 
@@ -417,7 +417,7 @@ class QuadraticBezierBond {
       curvePositionalProps,
       this._bracketPositionalProps1(),
       this._bracketPositionalProps2(),
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     );
   }
 
@@ -474,15 +474,15 @@ class QuadraticBezierBond {
   /**
    * Sets the _topPaddingBracket1 and _topPaddingBracket2 properties.
    * 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  _storeBracketTopPaddings(getBaseClockwiseNormalAngle) {
+  _storeBracketTopPaddings(getClockwiseNormalAngleOfBase) {
     function topPadding(bracket, side) {
       let l = bracket.array()[2];
       let b = side[0];
       let d = distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
       let a = angleBetween(b.xCenter, b.yCenter, l[1], l[2]);
-      let na = getBaseClockwiseNormalAngle(b);
+      let na = getClockwiseNormalAngleOfBase(b);
       let angleDiff = normalizeAngle(a, na) - na;
 
       // if not for imprecision in floating point arithmetic, angleDiff would either be zero or Math.PI
@@ -506,9 +506,9 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} tp 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  setTopPaddingBracket1(tp, getBaseClockwiseNormalAngle) {
+  setTopPaddingBracket1(tp, getClockwiseNormalAngleOfBase) {
     let bracketProps1 = this._bracketPositionalProps1();
     bracketProps1.topPadding = tp;
 
@@ -516,7 +516,7 @@ class QuadraticBezierBond {
       this._curvePositionalProps(),
       bracketProps1,
       this._bracketPositionalProps2(),
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     );
   }
 
@@ -529,9 +529,9 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} tp 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  setTopPaddingBracket2(tp, getBaseClockwiseNormalAngle) {
+  setTopPaddingBracket2(tp, getClockwiseNormalAngleOfBase) {
     let bracketProps2 = this._bracketPositionalProps2();
     bracketProps2.topPadding = tp;
 
@@ -539,7 +539,7 @@ class QuadraticBezierBond {
       this._curvePositionalProps(),
       this._bracketPositionalProps1(),
       bracketProps2,
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     );
   }
 
@@ -555,9 +555,9 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} ohp 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  setOverhangPaddingBracket1(ohp, getBaseClockwiseNormalAngle) {
+  setOverhangPaddingBracket1(ohp, getClockwiseNormalAngleOfBase) {
     let bracketProps1 = this._bracketPositionalProps1();
     bracketProps1.overhangPadding = ohp;
 
@@ -565,7 +565,7 @@ class QuadraticBezierBond {
       this._curvePositionalProps(),
       bracketProps1,
       this._bracketPositionalProps2(),
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     );
   }
 
@@ -581,9 +581,9 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} ohp 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  setOverhangPaddingBracket2(ohp, getBaseClockwiseNormalAngle) {
+  setOverhangPaddingBracket2(ohp, getClockwiseNormalAngleOfBase) {
     let bracketProps2 = this._bracketPositionalProps2();
     bracketProps2.overhangPadding = ohp;
 
@@ -591,7 +591,7 @@ class QuadraticBezierBond {
       this._curvePositionalProps(),
       this._bracketPositionalProps1(),
       bracketProps2,
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     );
   }
 
@@ -607,9 +607,9 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} ohl 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  setOverhangLengthBracket1(ohl, getBaseClockwiseNormalAngle) {
+  setOverhangLengthBracket1(ohl, getClockwiseNormalAngleOfBase) {
     let bracketProps1 = this._bracketPositionalProps1();
     bracketProps1.overhangLength = ohl;
 
@@ -617,7 +617,7 @@ class QuadraticBezierBond {
       this._curvePositionalProps(),
       bracketProps1,
       this._bracketPositionalProps2(),
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     );
   }
 
@@ -633,9 +633,9 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} ohl 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  setOverhangLengthBracket2(ohl, getBaseClockwiseNormalAngle) {
+  setOverhangLengthBracket2(ohl, getClockwiseNormalAngleOfBase) {
     let bracketProps2 = this._bracketPositionalProps2();
     bracketProps2.overhangLength = ohl;
 
@@ -643,7 +643,7 @@ class QuadraticBezierBond {
       this._curvePositionalProps(),
       this._bracketPositionalProps1(),
       bracketProps2,
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     );
   }
 
@@ -680,14 +680,14 @@ class QuadraticBezierBond {
    * Repositions the curve and brackets of this quadratic bezier bond based on the
    * current positions of the bases of its sides.
    * 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  reposition(getBaseClockwiseNormalAngle) {
+  reposition(getClockwiseNormalAngleOfBase) {
     this._reposition(
       this._curvePositionalProps(),
       this._bracketPositionalProps1(),
       this._bracketPositionalProps2(),
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     );
   }
 
@@ -699,19 +699,19 @@ class QuadraticBezierBond {
    * @param {QuadraticBezierBond~CurvePositionalProps} curveProps 
    * @param {QuadraticBezierBond~BracketPositionalProps} bracketProps1 
    * @param {QuadraticBezierBond~BracketPositionalProps} bracketProps2 
-   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
-  _reposition(curveProps, bracketProps1, bracketProps2, getBaseClockwiseNormalAngle) {
+  _reposition(curveProps, bracketProps1, bracketProps2, getClockwiseNormalAngleOfBase) {
     this._bracket1.plot(QuadraticBezierBond._dBracket(
       this._side1,
       bracketProps1,
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     ));
 
     this._bracket2.plot(QuadraticBezierBond._dBracket(
       this._side2,
       bracketProps2,
-      getBaseClockwiseNormalAngle,
+      getClockwiseNormalAngleOfBase,
     ));
 
     this._curve.plot(QuadraticBezierBond._dCurve(
@@ -720,7 +720,7 @@ class QuadraticBezierBond {
       curveProps,
     ));
 
-    this._storeBracketTopPaddings(getBaseClockwiseNormalAngle);
+    this._storeBracketTopPaddings(getClockwiseNormalAngleOfBase);
   }
 
   /**
