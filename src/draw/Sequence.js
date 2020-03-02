@@ -5,6 +5,36 @@ import normalizeAngle from './normalizeAngle';
 class Sequence {
 
   /**
+   * @typedef {Object} Sequence~MostRecentProps 
+   * @property {number} numberingAnchor 
+   * @property {number} numberingIncrement 
+   */
+
+  /**
+   * @returns {Sequence~MostRecentProps} 
+   */
+  static mostRecentProps() {
+    return { ...Sequence._mostRecentProps };
+  }
+
+  /**
+   * @param {Sequence} seq 
+   */
+  static _applyMostRecentProps(seq, svg) {
+    let props = Sequence.mostRecentProps();
+    seq.setNumberingAnchor(props.numberingAnchor, svg);
+    seq.setNumberingIncrement(props.numberingIncrement, svg);
+  }
+
+  /**
+   * @param {Sequence} seq 
+   */
+  static _copyPropsToMostRecent(seq) {
+    Sequence._mostRecentProps.numberingAnchor = seq.numberingAnchor;
+    Sequence._mostRecentProps.numberingIncrement = seq.numberingIncrement;
+  }
+
+  /**
    * @typedef {Object} Sequence~BaseCoordinates 
    * @property {number} xCenter 
    * @property {number} yCenter 
@@ -65,6 +95,8 @@ class Sequence {
   /**
    * @param {Sequence~SavableState} savedState 
    * @param {SVG.Doc} svg 
+   * 
+   * @returns {Sequence} 
    */
   static fromSavedState(savedState, svg) {
     let seq = new Sequence(savedState.id);
@@ -104,6 +136,9 @@ class Sequence {
       let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
       seq.appendBase(Base.fromSavedState(sb, svg, cna));
     }
+
+    Sequence._copyPropsToMostRecent(seq);
+    return seq;
   }
 
   /**
@@ -121,6 +156,7 @@ class Sequence {
       seq.appendBase(Base.createOutOfView(svg, c));
     }
 
+    Sequence._applyMostRecentProps(seq, svg);
     return seq;
   }
 
@@ -133,8 +169,6 @@ class Sequence {
     this._numberingOffset = 0;
     this._numberingAnchor = 0;
     this._numberingIncrement = 20;
-
-    this.applyDefaults();
   }
 
   /**
@@ -218,6 +252,7 @@ class Sequence {
 
     this._numberingAnchor = na;
     this._updateBaseNumberings(svg);
+    Sequence._mostRecentProps.numberingAnchor = na;
   }
 
   /**
@@ -243,21 +278,7 @@ class Sequence {
 
     this._numberingIncrement = ni;
     this._updateBaseNumberings(svg);
-  }
-
-  /**
-   * @param {SVG.Doc} svg 
-   */
-  applyDefaults(svg) {
-    this.setNumberingAnchor(
-      Sequence.defaults.numberingAnchor,
-      svg
-    );
-    
-    this.setNumberingIncrement(
-      Sequence.defaults.numberingIncrement,
-      svg
-    );
+    Sequence._mostRecentProps.numberingIncrement = ni;
   }
 
   /**
@@ -539,7 +560,7 @@ class Sequence {
   }
 }
 
-Sequence.defaults = {
+Sequence._mostRecentProps = {
   numberingAnchor: 0,
   numberingIncrement: 20,
 };
