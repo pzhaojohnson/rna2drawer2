@@ -192,21 +192,27 @@ class Sequence {
     let increment = this.numberingIncrement;
     
     for (let p = anchor; p > 0; p -= increment) {
-      let b = this.getBaseByPosition(p);
-      b.addNumbering(
-        svg,
-        p + this.numberingOffset,
-        this.outerNormalAngleOfPosition(p)
-      );
+      if (p <= this.length) {
+        let b = this.getBaseAtPosition(p);
+        
+        b.addNumbering(
+          svg,
+          p + this.numberingOffset,
+          this.outerNormalAngleOfPosition(p)
+        );
+      }
     }
 
     for (let p = anchor + increment; p <= this.length; p += increment) {
-      let b = this.getBaseByPosition(p);
-      b.addNumbering(
-        svg,
-        p + this.numberingOffset,
-        this.outerNormalAngleOfPosition(p)
-      );
+      if (p > 0) {
+        let b = this.getBaseAtPosition(p);
+        
+        b.addNumbering(
+          svg,
+          p + this.numberingOffset,
+          this.outerNormalAngleOfPosition(p)
+        );
+      }
     }
   }
 
@@ -223,7 +229,7 @@ class Sequence {
    * 
    * @throws {Error} If the given numbering offset is not an integer.
    */
-  set numberingOffset(no, svg) {
+  setNumberingOffset(no, svg) {
     if (!isFinite(no) || Math.floor(no) !== no) {
       throw new Error('Numbering offset must be an integer.');
     }
@@ -291,6 +297,24 @@ class Sequence {
   /**
    * @param {number} p 
    * 
+   * @returns {number} 
+   */
+  offsetPosition(p) {
+    return p + this.numberingOffset;
+  }
+
+  /**
+   * @param {number} op 
+   * 
+   * @returns {number} 
+   */
+  reversePositionOffset(op) {
+    return op - this.numberingOffset;
+  }
+
+  /**
+   * @param {number} p 
+   * 
    * @returns {boolean} 
    */
   positionOutOfRange(p) {
@@ -312,7 +336,8 @@ class Sequence {
    * @returns {boolean} 
    */
   offsetPositionOutOfRange(op) {
-    return this.positionOutOfRange(op - this.numberingOffset);
+    let p = this.reversePositionOffset(op);
+    return this.positionOutOfRange(p);
   }
 
   /**
@@ -321,7 +346,8 @@ class Sequence {
    * @returns {boolean} 
    */
   offsetPositionInRange(op) {
-    return this.positionInRange(p - this.numberingOffset);
+    let p = this.reversePositionOffset(op);
+    return this.positionInRange(p);
   }
 
   /**
@@ -331,7 +357,7 @@ class Sequence {
    * 
    * @returns {Base|null} 
    */
-  getBaseByPosition(p) {
+  getBaseAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
@@ -346,8 +372,9 @@ class Sequence {
    * 
    * @returns {Base|null} 
    */
-  getBaseByOffsetPosition(op) {
-    return this.getBaseByPosition(op - this.numberingOffset);
+  getBaseAtOffsetPosition(op) {
+    let p = this.reversePositionOffset(op);
+    return this.getBaseAtPosition(p);
   }
 
   /**
@@ -359,7 +386,7 @@ class Sequence {
    */
   getBaseById(id) {
     for (let p = 1; p <= this.length; p++) {
-      let b = this.getBaseByPosition(p);
+      let b = this.getBaseAtPosition(p);
       
       if (b.id === id) {
         return b;
@@ -370,7 +397,7 @@ class Sequence {
   }
 
   /**
-   * Returns negative one if the given base is not in this sequence.
+   * Returns zero if the given base is not in this sequence.
    * 
    * @param {Base} b 
    * 
@@ -378,12 +405,12 @@ class Sequence {
    */
   positionOfBase(b) {
     for (let p = 1; p <= this.length; p++) {
-      if (this.getBaseByPosition(p).id === b.id) {
+      if (this.getBaseAtPosition(p).id === b.id) {
         return p;
       }
     }
 
-    return -1;
+    return 0;
   }
 
   /**
@@ -395,7 +422,17 @@ class Sequence {
    * @returns {number} 
    */
   offsetPositionOfBase(b) {
-    return this.positionOfBase(b) + this.numberingOffset;
+    let p = this.positionOfBase(b);
+    return this.offsetPosition(p);
+  }
+
+  /**
+   * @param {Base} b 
+   * 
+   * @returns {boolean} 
+   */
+  containsBase(b) {
+    return this.positionOfBase(b) !== 0;
   }
 
   /**
@@ -409,19 +446,19 @@ class Sequence {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
-      let b = this.getBaseByPosition(p);
+      let b = this.getBaseAtPosition(p);
       let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
       
       let cs5 = null;
       let cs3 = null;
       
       if (p > 1) {
-        b5 = this.getBaseByPosition(p - 1);
+        b5 = this.getBaseAtPosition(p - 1);
         cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
       }
 
       if (p < this.length) {
-        b3 = this.getBaseByPosition(p + 1);
+        b3 = this.getBaseAtPosition(p + 1);
         cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
       }
 
@@ -448,19 +485,19 @@ class Sequence {
     if (this.positionOutOfRange()) {
       return null;
     } else {
-      let b = this.getBaseByPosition(p);
+      let b = this.getBaseAtPosition(p);
       let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
       
       let cs5 = null;
       let cs3 = null;
       
       if (p > 1) {
-        b5 = this.getBaseByPosition(p - 1);
+        let b5 = this.getBaseAtPosition(p - 1);
         cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
       }
 
       if (p < this.length) {
-        b3 = this.getBaseByPosition(p + 1);
+        let b3 = this.getBaseAtPosition(p + 1);
         cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
       }
 
@@ -488,22 +525,36 @@ class Sequence {
    * 
    * @param {Base} b 
    * @param {SVG.Doc} svg 
+   * 
+   * @throws {Error} If the given base is already in this sequence.
    */
   appendBase(b, svg) {
+    if (this.containsBase(b)) {
+      throw new Error('Base is already in this sequence.');
+    }
+
     this._bases.push(b);
     this._updateBaseNumberings(svg);
   }
 
   /**
    * If the position is one plus the length of this sequence, the base will
-   * be appended to the end of this sequence. If the position is otherwise
-   * out of the range of this sequence, this method will have no effect.
+   * be appended to the end of this sequence.
    * 
    * @param {Base} b 
    * @param {number} p 
    * @param {SVG.Doc} svg 
+   * 
+   * @throws {Error} If the given base is already in this sequence.
+   * @throws {Error} If the given position is out of range.
    */
   insertBaseAtPosition(b, p, svg) {
+    if (this.containsBase(b)) {
+      throw new Error('Base is already in this sequence.');
+    } else if (this.positionOutOfRange(p) && p !== this.length + 1) {
+      throw new Error('Position is out of range.');
+    }
+
     if (p === this.length + 1) {
       this.appendBase(b);
     } else if (this.positionInRange(p)) {
@@ -519,9 +570,9 @@ class Sequence {
    * @param {number} p 
    * @param {SVG.Doc} svg 
    */
-  removeBaseByPosition(p, svg) {
+  removeBaseAtPosition(p, svg) {
     if (this.positionInRange(p)) {
-      let b = this.getBaseByPosition(p);
+      let b = this.getBaseAtPosition(p);
       b.remove();
       this._bases.splice(p - 1, 1);
     }
