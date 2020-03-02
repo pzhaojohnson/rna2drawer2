@@ -5,46 +5,6 @@ import normalizeAngle from './normalizeAngle';
 class QuadraticBezierBond {
 
   /**
-   * @callback QuadraticBezierBond~getBaseById 
-   * @param {string} id 
-   * 
-   * @returns {Base} 
-   */
-  
-   /**
-   * @param {QuadraticBezierBond~SavableState} savedState 
-   * @param {SVG.Doc} svg 
-   * @param {QuadraticBezierBond~getBaseById} getBaseById 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
-   * 
-   * @throws {Error} If the saved state is not for a quadratic bezier bond.
-   */
-  static fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase) {
-    if (savedState.className !== 'QuadraticBezierBond') {
-      throw new Error('Saved state is not for a quadratic bezier bond.');
-    }
-    
-    let curve = svg.findOne('#' + savedState.curve);
-    let bracket1 = svg.findOne('#' + savedState.bracket1);
-    let bracket2 = svg.findOne('#' + savedState.bracket2);
-
-    let side1 = [];
-    savedState.side1.forEach(id => side1.push(getBaseById(id)));
-
-    let side2 = [];
-    savedState.side2.forEach(id => side2.push(getBaseById(id)));
-
-    return new QuadraticBezierBond(
-      curve,
-      bracket1,
-      bracket2,
-      side1,
-      side2,
-      getClockwiseNormalAngleOfBase
-    );
-  }
-
-  /**
    * @callback QuadraticBezierBond~getClockwiseNormalAngleOfBase 
    * @param {Base} base 
    * 
@@ -162,6 +122,46 @@ class QuadraticBezierBond {
     d += 'Q ' + xControl + ' ' + yControl + ' ' + bmx2 + ' ' + bmy2;
 
     return d;
+  }
+
+  /**
+   * @callback QuadraticBezierBond~getBaseById 
+   * @param {string} id 
+   * 
+   * @returns {Base} 
+   */
+  
+   /**
+   * @param {QuadraticBezierBond~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {QuadraticBezierBond~getBaseById} getBaseById 
+   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * 
+   * @throws {Error} If the saved state is not for a quadratic bezier bond.
+   */
+  static fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase) {
+    if (savedState.className !== 'QuadraticBezierBond') {
+      throw new Error('Saved state is not for a quadratic bezier bond.');
+    }
+    
+    let curve = svg.findOne('#' + savedState.curve);
+    let bracket1 = svg.findOne('#' + savedState.bracket1);
+    let bracket2 = svg.findOne('#' + savedState.bracket2);
+
+    let side1 = [];
+    savedState.side1.forEach(id => side1.push(getBaseById(id)));
+
+    let side2 = [];
+    savedState.side2.forEach(id => side2.push(getBaseById(id)));
+
+    return new QuadraticBezierBond(
+      curve,
+      bracket1,
+      bracket2,
+      side1,
+      side2,
+      getClockwiseNormalAngleOfBase
+    );
   }
 
   /**
