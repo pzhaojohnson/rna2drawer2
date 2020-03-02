@@ -191,7 +191,7 @@ class QuadraticBezierBond {
       { height: 100, angle: 3 * Math.PI / 2 },
     ));
 
-    return new QuadraticBezierBond(
+    let qbb = new QuadraticBezierBond(
       curve,
       bracket1,
       bracket2,
@@ -199,6 +199,26 @@ class QuadraticBezierBond {
       side2,
       getBaseClockwiseNormalAngle
     );
+
+    QuadraticBezierBond._applyDefaults(qbb, getBaseClockwiseNormalAngle);
+    return qbb;
+  }
+
+  /**
+   * 
+   * @param {QuadraticBezierBond} qbb 
+   * @param {QuadraticBezierBond~getBaseClockwiseNormalAngle} getBaseClockwiseNormalAngle 
+   */
+  static _applyDefaults(qbb, getBaseClockwiseNormalAngle) {
+    qbb.setTopPaddingBracket1(10, getBaseClockwiseNormalAngle);
+    qbb.setTopPaddingBracket2(10, getBaseClockwiseNormalAngle);
+    qbb.setOverhangPaddingBracket1(8, getBaseClockwiseNormalAngle);
+    qbb.setOverhangPaddingBracket2(8, getBaseClockwiseNormalAngle);
+    qbb.setOverhangLengthBracket1(8, getBaseClockwiseNormalAngle);
+    qbb.setOverhangLengthBracket2(8, getBaseClockwiseNormalAngle);
+    qbb.stroke = '#0000ff';
+    qbb.strokeWidth = 2;
+    qbb.cursor = 'pointer';
   }
 
   /**
