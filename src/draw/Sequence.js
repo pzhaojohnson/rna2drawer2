@@ -43,6 +43,8 @@ class Sequence {
   /**
    * @param {Sequence~BaseCoordinates} cs1 
    * @param {Sequence~BaseCoordinates} cs2 
+   * 
+   * @returns {number} 
    */
   static _angleBetweenBaseCenters(cs1, cs2) {
     return angleBetween(cs1.xCenter, cs1.yCenter, cs2.xCenter, cs2.yCenter);
@@ -52,6 +54,8 @@ class Sequence {
    * @param {Sequence~BaseCoordinates} cs 
    * @param {Sequence~BaseCoordinates|null} cs5 
    * @param {Sequence~BaseCoordinates|null} cs3 
+   * 
+   * @returns {number} 
    */
   static _clockwiseNormalAngleOfBase(cs, cs5, cs3) {
     if (cs5 === null && cs3 === null) {
@@ -69,9 +73,50 @@ class Sequence {
   }
 
   /**
+   * @param {number} p 
+   * @param {Sequence~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * 
+   * @returns {number} 
+   */
+  static _clockwiseNormalAngleOfPositionFromSavedState(p, savedState, svg) {
+    let sb = savedState.bases[p - 1];
+    
+    let cs = {
+      xCenter: Base.xCenterFromSavedState(sb, svg),
+      yCenter: Base.yCenterFromSavedState(sb, svg),
+    };
+    
+    let cs5 = null;
+    let cs3 = null;
+
+    if (p > 1) {
+      let sb5 = savedState.bases[p - 2];
+      
+      cs5 = {
+        xCenter: Base.xCenterFromSavedState(sb5, svg),
+        yCenter: Base.yCenterFromSavedState(sb5, svg),
+      };
+    }
+
+    if (p < savedState.bases.length) {
+      let sb3 = savedState.bases[p];
+
+      cs3 = {
+        xCenter: Base.xCenterFromSavedState(sb3, svg),
+        yCenter: Base.yCenterFromSavedState(sb3, svg),
+      };
+    }
+
+    return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
+  }
+
+  /**
    * @param {Sequence~BaseCoordinates} cs 
    * @param {Sequence~BaseCoordinates|null} cs5 
    * @param {Sequence~BaseCoordinates|null} cs3 
+   * 
+   * @returns {number} 
    */
   static _innerNormalAngleOfBase(cs, cs5, cs3) {
     let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
@@ -105,36 +150,13 @@ class Sequence {
     seq.setNumberingIncrement(savedState.numberingIncrement, svg);
 
     for (let p = 1; p <= savedState.bases.length; p++) {
-      let sb = savedState.bases[p - 1];
-      
-      let cs = {
-        xCenter: Base.xCenterFromSavedState(sb),
-        yCenter: Base.yCenterFromSavedState(sb),
-      };
-      
-      let cs5 = null;
-      let cs3 = null;
+      let b = Base.fromSavedState(
+        savedState.bases[p - 1],
+        svg,
+        Sequence._clockwiseNormalAngleOfPositionFromSavedState(p, savedState, svg),
+      );
 
-      if (p > 1) {
-        let sb5 = savedState.bases[p - 2];
-        
-        cs5 = {
-          xCenter: Base.xCenterFromSavedState(sb5),
-          yCenter: Base.yCenterFromSavedState(sb5),
-        };
-      }
-
-      if (p < savedState.bases.length) {
-        let sb3 = savedState.bases[p];
-
-        cs3 = {
-          xCenter: Base.xCenterFromSavedState(sb3),
-          yCenter: Base.yCenterFromSavedState(sb3),
-        };
-      }
-
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
-      seq.appendBase(Base.fromSavedState(sb, svg, cna));
+      seq.appendBase(b, svg);
     }
 
     Sequence._copyPropsToMostRecent(seq);

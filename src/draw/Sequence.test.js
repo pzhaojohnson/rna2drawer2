@@ -91,6 +91,71 @@ it('_clockwiseNormalAngleOfBase static method', () => {
   expect(normalizeAngle(cna, 0)).toBeCloseTo(2.549054537296585, 6);
 });
 
+it('_clockwiseNormalAngleOfPositionFromSavedState static method', () => {
+  let svg = createNodeSVG();
+  let seq = new Sequence(createUUIDforSVG());
+
+  // no 5' or 3' bases
+  let b1 = Base.create(svg, 'g', 4, 5);
+  seq.appendBase(b1, svg);
+  let savedState = seq.savableState();
+
+  expect(
+    Sequence._clockwiseNormalAngleOfPositionFromSavedState(1, savedState, svg)
+  ).toBeCloseTo(
+    Sequence._clockwiseNormalAngleOfBase(
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+      null,
+    ),
+    6,
+  );
+  
+  // only a 3' base
+  let b2 = Base.create(svg, 'e', -1, 0);
+  seq.appendBase(b2, svg);
+  savedState = seq.savableState();
+
+  expect(
+    Sequence._clockwiseNormalAngleOfPositionFromSavedState(1, savedState, svg)
+  ).toBeCloseTo(
+    Sequence._clockwiseNormalAngleOfBase(
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+    ),
+    6,
+  );
+
+  // only a 5' base
+  expect(
+    Sequence._clockwiseNormalAngleOfPositionFromSavedState(2, savedState, svg)
+  ).toBeCloseTo(
+    Sequence._clockwiseNormalAngleOfBase(
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+    ),
+    6,
+  );
+
+  // both a 5' and 3' base
+  let b3 = Base.create(svg, 'r', 5, 5);
+  seq.appendBase(b3, svg);
+  savedState = seq.savableState();
+
+  expect(
+    Sequence._clockwiseNormalAngleOfPositionFromSavedState(2, savedState, svg)
+  ).toBeCloseTo(
+    Sequence._clockwiseNormalAngleOfBase(
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      { xCenter: b3.xCenter, yCenter: b3.yCenter },
+    ),
+    6,
+  );
+});
+
 it('_innerNormalAngleOfBase static method', () => {
   expect(Sequence._innerNormalAngleOfBase(
     { xCenter: 2.2, yCenter: 3.3 },
@@ -150,14 +215,144 @@ it('_innerNormalAngleOfBase static method', () => {
   expect(normalizeAngle(ina, 0)).toBeCloseTo(5.644232109890168, 6);
 });
 
+it('fromSavedState static method on an empty sequence', () => {
+  let svg = createNodeSVG();
+  let seq1 = new Sequence(createUUIDforSVG());
+  let savableState = seq1.savableState();
+  let seq2 = Sequence.fromSavedState(savableState, svg);
+  expect(seq2.length).toBe(0);
+});
+
+it('fromSavedState static method on a sequence of length one', () => {
+  let svg = createNodeSVG();
+  let seq1 = new Sequence(createUUIDforSVG());
+  
+  let b1 = Base.create(svg, 't', 4, 5);
+  seq1.appendBase(b1, svg);
+  
+  let savableState = seq1.savableState();
+  let seq2 = Sequence.fromSavedState(savableState, svg);
+  expect(seq2.length).toBe(1);
+
+  expect(
+    JSON.stringify(seq2.getBaseAtPosition(1).savableState())
+  ).toBe(
+    JSON.stringify(b1.savableState())
+  );
+});
+
+it('fromSavedState static method on a sequence of length greater than one', () => {
+  let svg = createNodeSVG();
+  let seq1 = new Sequence(createUUIDforSVG());
+  
+  let b1 = Base.create(svg, 't', 4, 5);
+  seq1.appendBase(b1, svg);
+  let b2 = Base.create(svg, 'r', 3, 4);
+  seq1.appendBase(b2, svg);
+  let b3 = Base.create(svg, 'q', 5, 6);
+  seq1.appendBase(b3, svg);
+  
+  let savableState = seq1.savableState();
+  let seq2 = Sequence.fromSavedState(savableState, svg);
+  expect(seq2.length).toBe(3);
+
+  expect(
+    JSON.stringify(seq2.getBaseAtPosition(1).savableState())
+  ).toBe(
+    JSON.stringify(b1.savableState())
+  );
+  
+  expect(
+    JSON.stringify(seq2.getBaseAtPosition(2).savableState())
+  ).toBe(
+    JSON.stringify(b2.savableState())
+  );
+
+  expect(
+    JSON.stringify(seq2.getBaseAtPosition(3).savableState())
+  ).toBe(
+    JSON.stringify(b3.savableState())
+  );
+});
+
+it('fromSavedState static method passes clockwise normal angle to bases', () => {
+  
+  // check by including a base with a circle annotation
+  let svg = createNodeSVG();
+  let seq1 = new Sequence(createUUIDforSVG());
+  let b1 = Base.create(svg, 'g', 4, 5);
+  let ca1 = b1.addCircleAnnotation(svg);
+  seq1.appendBase(b1, svg);
+
+  let savableState = seq1.savableState();
+  let seq2 = Sequence.fromSavedState(savableState, svg);
+  expect(seq2.length).toBe(1);
+  let b2 = seq2.getBaseAtPosition(1);
+  expect(b1._text.id()).toBe(b2._text.id());
+  expect(b2.numAnnotations).toBe(1);
+  expect(b2.getAnnotationById(ca1.id)).not.toBe(null);
+});
+
+it('fromSavedState static method sets numbering properties', () => {
+  let svg = createNodeSVG();
+  let seq1 = new Sequence(createUUIDforSVG());
+  seq1.setNumberingOffset(4, svg);
+  seq1.setNumberingAnchor(-2, svg);
+  seq1.setNumberingIncrement(3, svg);
+
+  let savableState = seq1.savableState();
+  let seq2 = Sequence.fromSavedState(savableState, svg);
+  expect(seq2.numberingOffset).toBe(4);
+  expect(seq2.numberingAnchor).toBe(-2);
+  expect(seq2.numberingIncrement).toBe(3);
+});
+
+it('fromSavedState static method updates most recent properties', () => {
+  let svg = createNodeSVG();
+  let seq1 = new Sequence(createUUIDforSVG());
+  seq1.setNumberingAnchor(3, svg);
+  seq1.setNumberingIncrement(8, svg);
+
+  Sequence._mostRecentProps.numberingAnchor = 0;
+  Sequence._mostRecentProps.numberingIncrement = 0;
+
+  let savableState = seq1.savableState();
+  let seq2 = Sequence.fromSavedState(savableState, svg);
+  let mrps = Sequence.mostRecentProps();
+  expect(mrps.numberingAnchor).toBe(3);
+  expect(mrps.numberingIncrement).toBe(8);
+});
+
 it('createOutOfView static method', () => {
+  let svg = createNodeSVG();
 
   // empty sequence
+  let seq = Sequence.createOutOfView(svg, createUUIDforSVG(), '');
+  expect(seq.length).toBe(0);
+
+  function baseIsOutOfView(b) {
+    return b.xCenter <= -50 || b.yCenter <= -50;
+  }
 
   // one letter
-
+  seq = Sequence.createOutOfView(svg, createUUIDforSVG(), 'o');
+  expect(seq.length).toBe(1);
+  let b1 = seq.getBaseAtPosition(1);
+  expect(b1.letter).toBe('o');
+  expect(baseIsOutOfView(b1)).toBeTruthy();
+  
   // multiple letters
-
+  seq = Sequence.createOutOfView(svg, createUUIDforSVG(), 'aqt');
+  expect(seq.length).toBe(3);
+  b1 = seq.getBaseAtPosition(1);
+  expect(b1.letter).toBe('a');
+  expect(baseIsOutOfView(b1)).toBeTruthy();
+  let b2 = seq.getBaseAtPosition(2);
+  expect(b2.letter).toBe('q');
+  expect(baseIsOutOfView(b2)).toBeTruthy();
+  let b3 = seq.getBaseAtPosition(3);
+  expect(b3.letter).toBe('t');
+  expect(baseIsOutOfView(b3)).toBeTruthy();
 });
 
 it('basic test of constructor', () => {
