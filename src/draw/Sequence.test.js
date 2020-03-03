@@ -91,7 +91,7 @@ it('_clockwiseNormalAngleOfBase static method', () => {
   expect(normalizeAngle(cna, 0)).toBeCloseTo(2.549054537296585, 6);
 });
 
-it('_clockwiseNormalAngleOfPositionFromSavedState static method', () => {
+it('_clockwiseNormalAngleAtPositionFromSavedState static method', () => {
   let svg = createNodeSVG();
   let seq = new Sequence(createUUIDforSVG());
 
@@ -101,7 +101,7 @@ it('_clockwiseNormalAngleOfPositionFromSavedState static method', () => {
   let savedState = seq.savableState();
 
   expect(
-    Sequence._clockwiseNormalAngleOfPositionFromSavedState(1, savedState, svg)
+    Sequence._clockwiseNormalAngleAtPositionFromSavedState(1, savedState, svg)
   ).toBeCloseTo(
     Sequence._clockwiseNormalAngleOfBase(
       { xCenter: b1.xCenter, yCenter: b1.yCenter },
@@ -117,7 +117,7 @@ it('_clockwiseNormalAngleOfPositionFromSavedState static method', () => {
   savedState = seq.savableState();
 
   expect(
-    Sequence._clockwiseNormalAngleOfPositionFromSavedState(1, savedState, svg)
+    Sequence._clockwiseNormalAngleAtPositionFromSavedState(1, savedState, svg)
   ).toBeCloseTo(
     Sequence._clockwiseNormalAngleOfBase(
       { xCenter: b1.xCenter, yCenter: b1.yCenter },
@@ -129,7 +129,7 @@ it('_clockwiseNormalAngleOfPositionFromSavedState static method', () => {
 
   // only a 5' base
   expect(
-    Sequence._clockwiseNormalAngleOfPositionFromSavedState(2, savedState, svg)
+    Sequence._clockwiseNormalAngleAtPositionFromSavedState(2, savedState, svg)
   ).toBeCloseTo(
     Sequence._clockwiseNormalAngleOfBase(
       { xCenter: b2.xCenter, yCenter: b2.yCenter },
@@ -145,7 +145,7 @@ it('_clockwiseNormalAngleOfPositionFromSavedState static method', () => {
   savedState = seq.savableState();
 
   expect(
-    Sequence._clockwiseNormalAngleOfPositionFromSavedState(2, savedState, svg)
+    Sequence._clockwiseNormalAngleAtPositionFromSavedState(2, savedState, svg)
   ).toBeCloseTo(
     Sequence._clockwiseNormalAngleOfBase(
       { xCenter: b2.xCenter, yCenter: b2.yCenter },
@@ -1083,7 +1083,7 @@ it('containsBase method', () => {
   expect(seq.containsBase(b4)).toBeFalsy();
 });
 
-it('clockwiseNormalAngleOfPosition method', () => {
+it('clockwiseNormalAngleAtPosition method', () => {
   let svg = createNodeSVG();
   let seq = new Sequence(createUUIDforSVG());
   
@@ -1095,7 +1095,7 @@ it('clockwiseNormalAngleOfPosition method', () => {
   seq.appendBase(b1);
   
   expect(
-    seq.clockwiseNormalAngleOfPosition(1)
+    seq.clockwiseNormalAngleAtPosition(1)
   ).toBeCloseTo(
     Sequence._clockwiseNormalAngleOfBase(
       { xCenter: b1.xCenter, yCenter: b1.yCenter },
@@ -1109,7 +1109,7 @@ it('clockwiseNormalAngleOfPosition method', () => {
   seq.appendBase(b2);
 
   expect(
-    seq.clockwiseNormalAngleOfPosition(1)
+    seq.clockwiseNormalAngleAtPosition(1)
   ).toBeCloseTo(
     Sequence._clockwiseNormalAngleOfBase(
       { xCenter: b1.xCenter, yCenter: b1.yCenter },
@@ -1121,7 +1121,7 @@ it('clockwiseNormalAngleOfPosition method', () => {
 
   // only a 5' base
   expect(
-    seq.clockwiseNormalAngleOfPosition(2)
+    seq.clockwiseNormalAngleAtPosition(2)
   ).toBeCloseTo(
     Sequence._clockwiseNormalAngleOfBase(
       { xCenter: b2.xCenter, yCenter: b2.yCenter },
@@ -1135,7 +1135,7 @@ it('clockwiseNormalAngleOfPosition method', () => {
   seq.appendBase(b3);
 
   expect(
-    seq.clockwiseNormalAngleOfPosition(2)
+    seq.clockwiseNormalAngleAtPosition(2)
   ).toBeCloseTo(
     Sequence._clockwiseNormalAngleOfBase(
       { xCenter: b2.xCenter, yCenter: b2.yCenter },
@@ -1147,11 +1147,11 @@ it('clockwiseNormalAngleOfPosition method', () => {
 
   // position out of range
   expect(
-    seq.clockwiseNormalAngleOfPosition(4)
+    seq.clockwiseNormalAngleAtPosition(4)
   ).toBe(null);
 });
 
-it('counterClockwiseNormalAngleOfPosition method', () => {
+it('counterClockwiseNormalAngleAtPosition method', () => {
   let svg = createNodeSVG();
   let seq = new Sequence(createUUIDforSVG());
   
@@ -1164,19 +1164,19 @@ it('counterClockwiseNormalAngleOfPosition method', () => {
 
   // just check that it returns Math.PI plus the clockwise normal angle
   expect(
-    seq.counterClockwiseNormalAngleOfPosition(2)
+    seq.counterClockwiseNormalAngleAtPosition(2)
   ).toBeCloseTo(
-    seq.clockwiseNormalAngleOfPosition(2) + Math.PI,
+    seq.clockwiseNormalAngleAtPosition(2) + Math.PI,
     6,
   );
 
   // position out of range
   expect(
-    seq.counterClockwiseNormalAngleOfPosition(4)
+    seq.counterClockwiseNormalAngleAtPosition(4)
   ).toBe(null);
 });
 
-it('innerNormalAngleOfPosition method', () => {
+it('innerNormalAngleAtPosition method', () => {
   let svg = createNodeSVG();
   let seq = new Sequence(createUUIDforSVG());
 
@@ -1188,7 +1188,7 @@ it('innerNormalAngleOfPosition method', () => {
   seq.appendBase(b1);
 
   expect(
-    seq.innerNormalAngleOfPosition(1)
+    seq.innerNormalAngleAtPosition(1)
   ).toBeCloseTo(
     Sequence._innerNormalAngleOfBase(
       { xCenter: b1.xCenter, yCenter: b1.yCenter },
@@ -1202,7 +1202,7 @@ it('innerNormalAngleOfPosition method', () => {
   seq.appendBase(b2);
 
   expect(
-    seq.innerNormalAngleOfPosition(1)
+    seq.innerNormalAngleAtPosition(1)
   ).toBeCloseTo(
     Sequence._innerNormalAngleOfBase(
       { xCenter: b1.xCenter, yCenter: b1.yCenter },
@@ -1214,7 +1214,7 @@ it('innerNormalAngleOfPosition method', () => {
 
   // only a 5' base
   expect(
-    seq.innerNormalAngleOfPosition(2)
+    seq.innerNormalAngleAtPosition(2)
   ).toBeCloseTo(
     Sequence._innerNormalAngleOfBase(
       { xCenter: b2.xCenter, yCenter: b2.yCenter },
@@ -1228,7 +1228,7 @@ it('innerNormalAngleOfPosition method', () => {
   seq.appendBase(b3);
 
   expect(
-    seq.innerNormalAngleOfPosition(2)
+    seq.innerNormalAngleAtPosition(2)
   ).toBeCloseTo(
     Sequence._innerNormalAngleOfBase(
       { xCenter: b2.xCenter, yCenter: b2.yCenter },
@@ -1240,11 +1240,11 @@ it('innerNormalAngleOfPosition method', () => {
 
   // position out of range
   expect(
-    seq.innerNormalAngleOfPosition(4)
+    seq.innerNormalAngleAtPosition(4)
   ).toBe(null);
 });
 
-it('outerNormalAngleOfPosition method', () => {
+it('outerNormalAngleAtPosition method', () => {
   let svg = createNodeSVG();
   let seq = new Sequence(createUUIDforSVG());
 
@@ -1257,15 +1257,15 @@ it('outerNormalAngleOfPosition method', () => {
 
   // just check that it returns Math.PI plus the inner normal angle
   expect(
-    seq.outerNormalAngleOfPosition(2)
+    seq.outerNormalAngleAtPosition(2)
   ).toBeCloseTo(
-    seq.innerNormalAngleOfPosition(2) + Math.PI,
+    seq.innerNormalAngleAtPosition(2) + Math.PI,
     6,
   );
 
   // position out of range
   expect(
-    seq.outerNormalAngleOfPosition(4)
+    seq.outerNormalAngleAtPosition(4)
   ).toBe(null);
 });
 

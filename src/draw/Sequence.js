@@ -79,7 +79,7 @@ class Sequence {
    * 
    * @returns {number} 
    */
-  static _clockwiseNormalAngleOfPositionFromSavedState(p, savedState, svg) {
+  static _clockwiseNormalAngleAtPositionFromSavedState(p, savedState, svg) {
     let sb = savedState.bases[p - 1];
     
     let cs = {
@@ -153,7 +153,7 @@ class Sequence {
       let b = Base.fromSavedState(
         savedState.bases[p - 1],
         svg,
-        Sequence._clockwiseNormalAngleOfPositionFromSavedState(p, savedState, svg),
+        Sequence._clockwiseNormalAngleAtPositionFromSavedState(p, savedState, svg),
       );
 
       seq.appendBase(b, svg);
@@ -220,7 +220,7 @@ class Sequence {
         b.addNumbering(
           svg,
           p + this.numberingOffset,
-          this.outerNormalAngleOfPosition(p)
+          this.outerNormalAngleAtPosition(p)
         );
       }
     }
@@ -232,7 +232,7 @@ class Sequence {
         b.addNumbering(
           svg,
           p + this.numberingOffset,
-          this.outerNormalAngleOfPosition(p)
+          this.outerNormalAngleAtPosition(p)
         );
       }
     }
@@ -464,7 +464,7 @@ class Sequence {
    * 
    * @returns {number|null} 
    */
-  clockwiseNormalAngleOfPosition(p) {
+  clockwiseNormalAngleAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
@@ -488,11 +488,11 @@ class Sequence {
     }
   }
 
-  counterClockwiseNormalAngleOfPosition(p) {
+  counterClockwiseNormalAngleAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
-      return Math.PI + this.clockwiseNormalAngleOfPosition(p);
+      return Math.PI + this.clockwiseNormalAngleAtPosition(p);
     }
   }
 
@@ -503,7 +503,7 @@ class Sequence {
    * 
    * @returns {number|null} 
    */
-  innerNormalAngleOfPosition(p) {
+  innerNormalAngleAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
@@ -534,11 +534,11 @@ class Sequence {
    * 
    * @returns {number|null} 
    */
-  outerNormalAngleOfPosition(p) {
+  outerNormalAngleAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
     } else {
-      return Math.PI + this.innerNormalAngleOfPosition(p);
+      return Math.PI + this.innerNormalAngleAtPosition(p);
     }
   }
 
