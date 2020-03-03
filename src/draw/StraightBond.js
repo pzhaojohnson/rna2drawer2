@@ -140,7 +140,7 @@ class StraightBond {
    * @returns {number} 
    */
   get padding1() {
-    return this._padding1;
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -154,7 +154,7 @@ class StraightBond {
    * @returns {number} 
    */
   get padding2() {
-    return this._padding2;
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -214,7 +214,7 @@ class StraightBond {
    * @returns {string} 
    */
   get stroke() {
-    return this._line.attr('stroke');
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -228,7 +228,7 @@ class StraightBond {
    * @returns {number} 
    */
   get strokeWidth() {
-    return this._line.attr('stroke-width');
+    throw new Error('Not implemented.');
   }
 
   /**
@@ -335,11 +335,25 @@ class StrandBond extends StraightBond {
   }
 
   /**
+   * @returns {number} 
+   */
+  get padding1() {
+    return this._padding1;
+  }
+
+  /**
    * @param {number} p 
    */
   set padding1(p) {
     this._reposition(p, this.padding2);
     StrandBond._mostRecentProps.padding1 = p;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get padding2() {
+    return this._padding2;
   }
 
   /**
@@ -351,11 +365,25 @@ class StrandBond extends StraightBond {
   }
 
   /**
+   * @returns {string} 
+   */
+  get stroke() {
+    return this._line.attr('stroke');
+  }
+
+  /**
    * @param {string} s 
    */
   set stroke(s) {
     this._line.attr({ 'stroke': s });
     StrandBond._mostRecentProps.stroke = this.s;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get strokeWidth() {
+    return this._line.attr('stroke-width');
   }
 
   /**
@@ -528,6 +556,13 @@ class WatsonCrickBond extends StraightBond {
   }
 
   /**
+   * @returns {number} 
+   */
+  get padding1() {
+    return this._padding1;
+  }
+
+  /**
    * @param {number} p 
    */
   set padding1(p) {
@@ -536,11 +571,49 @@ class WatsonCrickBond extends StraightBond {
   }
 
   /**
+   * @returns {number} 
+   */
+  get padding2() {
+    return this._padding2;
+  }
+
+  /**
    * @param {number} p 
    */
   set padding2(p) {
     this._reposition(this.padding1, p);
     WatsonCrickBond._mostRecentProps.padding2 = p;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get stroke() {
+    return this._line.attr('stroke');
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set stroke(s) {
+    this._line.attr({ 'stroke': s });
+
+    if (this.isAUT()) {
+      WatsonCrickBond._mostRecentProps.autStroke = s;
+    } else if (this.isGC()) {
+      WatsonCrickBond._mostRecentProps.gcStroke = s;
+    } else if (this.isGUT()) {
+      WatsonCrickBond._mostRecentProps.gutStroke = s;
+    } else {
+      WatsonCrickBond._mostRecentProps.otherStroke = s;
+    }
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get strokeWidth() {
+    return this._line.attr('stroke-width');
   }
 
   /**
@@ -573,4 +646,8 @@ WatsonCrickBond._mostRecentProps = {
   strokeWidth: 2,
 };
 
-export default StraightBond;
+export {
+  StraightBond,
+  StrandBond,
+  WatsonCrickBond,
+};
