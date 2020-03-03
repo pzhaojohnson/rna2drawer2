@@ -150,6 +150,16 @@ it('_innerNormalAngleOfBase static method', () => {
   expect(normalizeAngle(ina, 0)).toBeCloseTo(5.644232109890168, 6);
 });
 
+it('createOutOfView static method', () => {
+
+  // empty sequence
+
+  // one letter
+
+  // multiple letters
+
+});
+
 it('basic test of constructor', () => {
   let id = createUUIDforSVG();
   expect(() => new Sequence(id)).not.toThrow();
@@ -849,15 +859,219 @@ it('offsetPositionOfBase method', () => {
   expect(seq.offsetPositionOfBase(b4)).toBe(8);
 });
 
-it('clockwiseNormalAngleOfPosition method', () => {});
+it('containsBase method', () => {
+  let svg = createNodeSVG();
+  let seq = new Sequence(createUUIDforSVG());
 
-it('counterClockwiseNormalAngleOfPosition method', () => {});
+  let b1 = Base.create(svg, 'a', 1, 2);
+  let b2 = Base.create(svg, 'g', 3, 4);
+  let b3 = Base.create(svg, 'v', 1, 5);
+  let b4 = Base.create(svg, 'q', -0.1, -1);
 
-it('innerNormalAngleOfPosition method', () => {});
+  // on empty sequence
+  expect(seq.containsBase(b1)).toBeFalsy();
+
+  seq.appendBase(b1);
+  seq.appendBase(b2);
+  seq.appendBase(b3);
+
+  // the first base
+  expect(seq.containsBase(b1)).toBeTruthy();
+
+  // middle base
+  expect(seq.containsBase(b2)).toBeTruthy();
+
+  // the last base
+  expect(seq.containsBase(b3)).toBeTruthy();
+
+  // not in the sequence
+  expect(seq.containsBase(b4)).toBeFalsy();
+});
+
+it('clockwiseNormalAngleOfPosition method', () => {
+  let svg = createNodeSVG();
+  let seq = new Sequence(createUUIDforSVG());
+  
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'G', 3, 4);
+  let b3 = Base.create(svg, 't', -0.5, -0.6);
+
+  // no 5' or 3' bases
+  seq.appendBase(b1);
+  
+  expect(
+    seq.clockwiseNormalAngleOfPosition(1)
+  ).toBeCloseTo(
+    Sequence._clockwiseNormalAngleOfBase(
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+      null,
+    ),
+    6,
+  );
+
+  // only a 3' base
+  seq.appendBase(b2);
+
+  expect(
+    seq.clockwiseNormalAngleOfPosition(1)
+  ).toBeCloseTo(
+    Sequence._clockwiseNormalAngleOfBase(
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+    ),
+    6,
+  );
+
+  // only a 5' base
+  expect(
+    seq.clockwiseNormalAngleOfPosition(2)
+  ).toBeCloseTo(
+    Sequence._clockwiseNormalAngleOfBase(
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+    ),
+    6,
+  );
+
+  // both a 5' and 3' base
+  seq.appendBase(b3);
+
+  expect(
+    seq.clockwiseNormalAngleOfPosition(2)
+  ).toBeCloseTo(
+    Sequence._clockwiseNormalAngleOfBase(
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      { xCenter: b3.xCenter, yCenter: b3.yCenter },
+    ),
+    6,
+  );
+
+  // position out of range
+  expect(
+    seq.clockwiseNormalAngleOfPosition(4)
+  ).toBe(null);
+});
+
+it('counterClockwiseNormalAngleOfPosition method', () => {
+  let svg = createNodeSVG();
+  let seq = new Sequence(createUUIDforSVG());
+  
+  let b1 = Base.create(svg, 'A', 1, 2);
+  seq.appendBase(b1);
+  let b2 = Base.create(svg, 'G', 3, 4);
+  seq.appendBase(b2);
+  let b3 = Base.create(svg, 't', -0.5, -0.6);
+  seq.appendBase(b3);
+
+  // just check that it returns Math.PI plus the clockwise normal angle
+  expect(
+    seq.counterClockwiseNormalAngleOfPosition(2)
+  ).toBeCloseTo(
+    seq.clockwiseNormalAngleOfPosition(2) + Math.PI,
+    6,
+  );
+
+  // position out of range
+  expect(
+    seq.counterClockwiseNormalAngleOfPosition(4)
+  ).toBe(null);
+});
+
+it('innerNormalAngleOfPosition method', () => {
+  let svg = createNodeSVG();
+  let seq = new Sequence(createUUIDforSVG());
+
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'G', 3, 4);
+  let b3 = Base.create(svg, 't', -0.5, -0.6);
+
+  // no 5' or 3' bases
+  seq.appendBase(b1);
+
+  expect(
+    seq.innerNormalAngleOfPosition(1)
+  ).toBeCloseTo(
+    Sequence._innerNormalAngleOfBase(
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+      null,
+    ),
+    6,
+  );
+
+  // only a 3' base
+  seq.appendBase(b2);
+
+  expect(
+    seq.innerNormalAngleOfPosition(1)
+  ).toBeCloseTo(
+    Sequence._innerNormalAngleOfBase(
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+    ),
+    6,
+  );
+
+  // only a 5' base
+  expect(
+    seq.innerNormalAngleOfPosition(2)
+  ).toBeCloseTo(
+    Sequence._innerNormalAngleOfBase(
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      null,
+    ),
+    6,
+  );
+
+  // both a 5' and 3' base
+  seq.appendBase(b3);
+
+  expect(
+    seq.innerNormalAngleOfPosition(2)
+  ).toBeCloseTo(
+    Sequence._innerNormalAngleOfBase(
+      { xCenter: b2.xCenter, yCenter: b2.yCenter },
+      { xCenter: b1.xCenter, yCenter: b1.yCenter },
+      { xCenter: b3.xCenter, yCenter: b3.yCenter },
+    ),
+    6,
+  );
+
+  // position out of range
+  expect(
+    seq.innerNormalAngleOfPosition(4)
+  ).toBe(null);
+});
 
 it('outerNormalAngleOfPosition method', () => {
   let svg = createNodeSVG();
   let seq = new Sequence(createUUIDforSVG());
+
+  let b1 = Base.create(svg, 'A', 1, 2);
+  seq.appendBase(b1);
+  let b2 = Base.create(svg, 'G', 3, 4);
+  seq.appendBase(b2);
+  let b3 = Base.create(svg, 't', -0.5, -0.6);
+  seq.appendBase(b3);
+
+  // just check that it returns Math.PI plus the inner normal angle
+  expect(
+    seq.outerNormalAngleOfPosition(2)
+  ).toBeCloseTo(
+    seq.innerNormalAngleOfPosition(2) + Math.PI,
+    6,
+  );
+
+  // position out of range
+  expect(
+    seq.outerNormalAngleOfPosition(4)
+  ).toBe(null);
 });
 
 it('appendBase method', () => {

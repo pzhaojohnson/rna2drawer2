@@ -453,12 +453,12 @@ class Sequence {
       let cs3 = null;
       
       if (p > 1) {
-        b5 = this.getBaseAtPosition(p - 1);
+        let b5 = this.getBaseAtPosition(p - 1);
         cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
       }
 
       if (p < this.length) {
-        b3 = this.getBaseAtPosition(p + 1);
+        let b3 = this.getBaseAtPosition(p + 1);
         cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
       }
 
@@ -482,7 +482,7 @@ class Sequence {
    * @returns {number|null} 
    */
   innerNormalAngleOfPosition(p) {
-    if (this.positionOutOfRange()) {
+    if (this.positionOutOfRange(p)) {
       return null;
     } else {
       let b = this.getBaseAtPosition(p);
