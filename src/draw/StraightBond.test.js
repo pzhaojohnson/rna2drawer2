@@ -117,6 +117,96 @@ it('WatsonCrickBond fromSavedState static method invalid saved state', () => {
   expect(() => WatsonCrickBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
 });
 
+it('StrandBond fromSavedState static method updates most recent properties', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'a', 5, 6);
+  let b2 = Base.create(svg, 'e', 0, 0);
+  let sb1 = StrandBond.create(svg, b1, b2);
+  sb1.padding1 = 5;
+  sb1.padding2 = 0.5;
+  sb1.stroke = '#abc654';
+  sb1.strokeWidth = 1.65;
+  let savableState = sb1.savableState();
+
+  function getBaseById(id) {
+    if (id === b1.id) {
+      return b1;
+    } else if (id === b2.id) {
+      return b2;
+    }
+  }
+
+  let sb2 = StrandBond.fromSavedState(savableState, svg, getBaseById);
+  let mrps = StrandBond.mostRecentProps();
+  expect(mrps.padding1).toBeCloseTo(5, 6);
+  expect(mrps.padding2).toBeCloseTo(0.5, 6);
+  expect(mrps.stroke).toBe('#abc654');
+  expect(mrps.strokeWidth).toBeCloseTo(1.65, 6);
+});
+
+it('WatsonCrickBond fromSavedState static method updates most recent properties', () => {
+  let svg = createNodeSVG();
+  let ba = Base.create(svg, 'a', 4, 1);
+  let bu = Base.create(svg, 'U', 7, 100);
+  let bg = Base.create(svg, 'G', -10, 5);
+  let bc = Base.create(svg, 'c', 11, 33);
+  let bt = Base.create(svg, 't', 4, 99);
+
+  let wcbau = WatsonCrickBond.create(svg, ba, bu);
+  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
+  let wcbgu = WatsonCrickBond.create(svg, bu, bg);
+  let wcbat = WatsonCrickBond.create(svg, bt, ba);
+  let wcbgt = WatsonCrickBond.create(svg, bg, bt);
+  let wcbOther = WatsonCrickBond.create(svg, bg, ba);
+
+  function getBaseById(id) {
+    let dict = {};
+    dict[ba.id] = ba;
+    dict[bu.id] = bu;
+    dict[bg.id] = bg;
+    dict[bc.id] = bc;
+    dict[bt.id] = bt;
+    return dict[id];
+  }
+
+  wcbau.padding1 = 0;
+  wcbau.padding2 = 0.1;
+  wcbau.stroke = '#445522';
+  wcbau.strokeWidth = 1.289;
+  let auSavableState = wcbau.savableState();
+  WatsonCrickBond.fromSavedState(auSavableState, svg, getBaseById);
+  let mrps = WatsonCrickBond.mostRecentProps();
+  expect(mrps.padding1).toBeCloseTo(0, 6);
+  expect(mrps.padding2).toBeCloseTo(0.1, 6);
+  expect(mrps.autStroke).toBe('#445522');
+  expect(mrps.strokeWidth).toBeCloseTo(1.289, 6);
+
+  wcbgc.stroke = '#aabcde';
+  let gcSavableState = wcbgc.savableState();
+  WatsonCrickBond.fromSavedState(gcSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().gcStroke).toBe('#aabcde');
+
+  wcbgu.stroke = '#aaabbb';
+  let guSavablestate = wcbgu.savableState();
+  WatsonCrickBond.fromSavedState(guSavablestate, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#aaabbb');
+
+  wcbat.stroke = '#654321';
+  let atSavableState = wcbat.savableState();
+  WatsonCrickBond.fromSavedState(atSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#654321');
+
+  wcbgt.stroke = '#987654';
+  let gtSavableState = wcbgt.savableState();
+  WatsonCrickBond.fromSavedState(gtSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#987654');
+
+  wcbOther.stroke = '#a1b2c3';
+  let otherSavableState = wcbOther.savableState();
+  WatsonCrickBond.fromSavedState(otherSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
+});
+
 function checkCoordinates(cs, ecs) {
   expect(cs.x1).toBeCloseTo(ecs.x1, 6);
   expect(cs.y1).toBeCloseTo(ecs.y1, 6);

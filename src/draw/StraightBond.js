@@ -314,7 +314,6 @@ class StrandBond extends StraightBond {
     let sb = new StrandBond(line, b1, b2);
 
     StrandBond._copyPropsToMostRecent(sb);
-
     return sb;
   }
 
@@ -488,7 +487,10 @@ class WatsonCrickBond extends StraightBond {
     let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
-    return new WatsonCrickBond(line, b1, b2);
+    let wcb = new WatsonCrickBond(line, b1, b2);
+
+    WatsonCrickBond._copyPropsToMostRecent(wcb);
+    return wcb;
   }
 
   /**
