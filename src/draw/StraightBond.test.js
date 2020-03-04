@@ -181,14 +181,16 @@ it('StrandBond basic test of create static method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 1);
   let b2 = Base.create(svg, 'U', 4, 4);
-  expect(() => StrandBond.create(svg, b1, b2)).not.toThrow();
+  let sb = StrandBond.create(svg, b1, b2);
+  expect(typeof(sb) === 'object' && sb !== null).toBeTruthy();
 });
 
 it('WatsonCrickBond basic test of create static method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 1);
   let b2 = Base.create(svg, 'U', 4, 4);
-  expect(() => WatsonCrickBond.create(svg, b1, b2)).not.toThrow();
+  let wcb = WatsonCrickBond.create(svg, b1, b2);
+  expect(typeof(wcb) === 'object' && wcb !== null).toBeTruthy();
 });
 
 it('StrandBond basic test of constructor', () => {
