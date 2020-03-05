@@ -250,6 +250,18 @@ it('StraightBond _lineCoordinates static method', () => {
   );
 });
 
+it('_opacity static method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'q', 0, 0);
+  let b2 = Base.create(svg, 'w', 10, 10);
+
+  // paddings are greater than distance between bases
+  expect(StraightBond._opacity(b1, b2, 20, 20)).toBe(0);
+
+  // paddings are less than distance between bases
+  expect(StraightBond._opacity(b1, b2, 1, 1)).toBe(1);
+});
+
 it('basic test of create static method', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
