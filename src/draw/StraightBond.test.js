@@ -577,6 +577,9 @@ it('opacity getter and private setter', () => {
     // check actual value
     expect(sb._line.attr('opacity')).toBeCloseTo(0.4567, 6);
   }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
 it('remove method', () => {
