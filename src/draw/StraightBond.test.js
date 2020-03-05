@@ -172,7 +172,24 @@ it('WatsonCrickBond fromSavedState updates most recent stroke properties', () =>
   WatsonCrickBond.fromSavedState(otherSavableState, svg, getBaseById);
   expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
 });
-
+/*
+it('StrandBond _applyMostRecentProps static method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 5, 6);
+  let b2 = Base.create(svg, 'g', 1, 3);
+  let sb = StrandBond.create(svg, b1, b2);
+  
+  StrandBond._mostRecentProps.padding1 = 5.111;
+  StrandBond._mostRecentProps.padding2 = 1.222;
+  StrandBond._mostRecentProps.stroke = '#453423';
+  StrandBond._mostRecentProps.strokeWidth = 5.432;
+  StrandBond._applyMostRecentProps(sb);
+  expect(sb.padding1).toBeCloseTo(5.111, 6);
+  expect(sb.padding2).toBeCloseTo(1.222, 6);
+  expect(sb.stroke).toBe('#453423');
+  expect(sb.strokeWidth).toBeCloseTo(5.432, 6);
+});
+*/
 function checkCoordinates(cs, ecs) {
   expect(cs.x1).toBeCloseTo(ecs.x1, 6);
   expect(cs.y1).toBeCloseTo(ecs.y1, 6);

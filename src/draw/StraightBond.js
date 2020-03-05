@@ -279,11 +279,11 @@ class StrandBond extends StraightBond {
    * @param {StrandBond} sb 
    */
   static _applyMostRecentProps(sb) {
-    let props = StrandBond.mostRecentProps();
-    sb.padding1 = props.padding1;
-    sb.padding2 = props.padding2;
-    sb.stroke = props.stroke;
-    sb.strokeWidth = props.strokeWidth;
+    let mrps = StrandBond.mostRecentProps();
+    sb.padding1 = mrps.padding1;
+    sb.padding2 = mrps.padding2;
+    sb.stroke = mrps.stroke;
+    sb.strokeWidth = mrps.strokeWidth;
   }
 
   /**
@@ -436,20 +436,20 @@ class WatsonCrickBond extends StraightBond {
    * @param {WatsonCrickBond} wcb 
    */
   static _applyMostRecentProps(wcb) {
-    let props = WatsonCrickBond.mostRecentProps();
+    let mrps = WatsonCrickBond.mostRecentProps();
 
-    wcb.padding1 = props.padding1;
-    wcb.padding2 = props.padding2;
-    wcb.strokeWidth = props.strokeWidth;
+    wcb.padding1 = mrps.padding1;
+    wcb.padding2 = mrps.padding2;
+    wcb.strokeWidth = mrps.strokeWidth;
 
     if (wcb.isAUT()) {
-      wcb.stroke = props.autStroke;
+      wcb.stroke = mrps.autStroke;
     } else if (wcb.isGC()) {
-      wcb.stroke = props.gcStroke;
+      wcb.stroke = mrps.gcStroke;
     } else if (wcb.isGUT()) {
-      wcb.stroke = props.gutStroke;
+      wcb.stroke = mrps.gutStroke;
     } else {
-      wcb.stroke = props.otherStroke;
+      wcb.stroke = mrps.otherStroke;
     }
   }
 
