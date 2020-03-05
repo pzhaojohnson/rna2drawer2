@@ -238,6 +238,20 @@ class StraightBond {
     throw new Error('Not implemented.');
   }
 
+  /**
+   * @returns {number} 
+   */
+  get opacity() {
+    return this._line.attr('opacity');
+  }
+
+  /**
+   * @param {number} o 
+   */
+  _setOpacity(o) {
+    this._line.attr({ 'opacity': o });
+  }
+
   remove() {
     this._line.remove();
   }
