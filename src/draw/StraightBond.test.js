@@ -562,6 +562,23 @@ it('strokeWidth getter and setter', () => {
   runFor(WatsonCrickBond);
 });
 
+it('opacity getter and private setter', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'e', 4, 5);
+    let b2 = Base.create(svg, 'r', 1, 4);
+    let sb = StraightBondClass.create(svg, b1, b2);
+
+    sb._setOpacity(0.4567);
+
+    // check getter
+    expect(sb.opacity).toBeCloseTo(0.4567, 6);
+
+    // check actual value
+    expect(sb._line.attr('opacity')).toBeCloseTo(0.4567, 6);
+  }
+});
+
 it('remove method', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
