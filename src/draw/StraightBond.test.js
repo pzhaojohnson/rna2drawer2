@@ -3,148 +3,121 @@ import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import Base from './Base';
 
-it('StrandBond fromSavedState static method valid saved state', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1.1, 1.2);
-  let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let sb1 = StrandBond.create(svg, b1, b2);
+it('fromSavedState static method valid saved state', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1.1, 1.2);
+    let b2 = Base.create(svg, 'U', 2.1, 2.2);
+    let sb1 = StraightBondClass.create(svg, b1, b2);
 
-  let savableState = sb1.savableState();
+    let savableState = sb1.savableState();
 
-  let getBaseById = (id) => {
-    if (id === b1.id) {
-      return b1;
-    } else if (id === b2.id) {
-      return b2;
-    }
-  };
+    let getBaseById = (id) => {
+      let dict = {};
+      dict[b1.id] = b1;
+      dict[b2.id] = b2;
+      return dict[id];
+    };
 
-  let sb2 = StrandBond.fromSavedState(savableState, svg, getBaseById);
+    let sb2 = StraightBondClass.fromSavedState(savableState, svg, getBaseById);
 
-  expect(sb2._line.id()).toBe(sb1._line.id());
-  expect(sb2.base1).toBe(sb1.base1);
-  expect(sb2.base2).toBe(sb1.base2);
+    expect(sb2._line.id()).toBe(sb1._line.id());
+    expect(sb2.base1).toBe(sb1.base1);
+    expect(sb2.base2).toBe(sb1.base2);
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond fromSavedState static method valid saved state', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1.1, 1.2);
-  let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let wcb1 = WatsonCrickBond.create(svg, b1, b2);
+it('fromSavedState static method invalid saved state', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1.1, 1.2);
+    let b2 = Base.create(svg, 'U', 2.1, 2.2);
+    let sb1 = StraightBondClass.create(svg, b1, b2);
 
-  let savableState = wcb1.savableState();
+    let getBaseById = (id) => {
+      let dict = {};
+      dict[b1.id] = b1;
+      dict[b2.id] = b2;
+      return dict[id];
+    };
 
-  let getBaseById = (id) => {
-    if (id === b1.id) {
-      return b1;
-    } else if (id === b2.id) {
-      return b2;
-    }
-  };
+    let savableState = sb1.savableState();
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).not.toThrow();
 
-  let wcb2 = WatsonCrickBond.fromSavedState(savableState, svg, getBaseById);
+    // no class name defined
+    delete savableState.className;
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
 
-  expect(wcb2._line.id()).toBe(wcb1._line.id());
-  expect(wcb2.base1).toBe(wcb1.base1);
-  expect(wcb2.base2).toBe(wcb1.base2);
+    // class name is not a string
+    savableState.className = 2;
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
+
+    // class name is an empty string
+    savableState.className = '';
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
+
+    // class name is nonempty and incorrect
+    savableState.className = 'StraightBnd';
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('StrandBond fromSavedState static method invalid saved state', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1.1, 1.2);
-  let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let sb1 = StrandBond.create(svg, b1, b2);
+it('fromSavedState updates most recent padding1, padding2, and strokeWidth properties', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', 5, 6);
+    let b2 = Base.create(svg, 'e', 0, 0);
+    let sb1 = StraightBondClass.create(svg, b1, b2);
+    sb1.padding1 = 5;
+    sb1.padding2 = 0.5;
+    sb1.strokeWidth = 1.65;
+    let savableState = sb1.savableState();
 
-  let getBaseById = (id) => {
-    if (id === b1.id) {
-      return b1;
-    } else if (id === b2.id) {
-      return b2;
+    function getBaseById(id) {
+      let dict = {};
+      dict[b1.id] = b1;
+      dict[b2.id] = b2;
+      return dict[id];
     }
-  };
 
-  let savableState = sb1.savableState();
-  expect(() => StrandBond.fromSavedState(savableState, svg, getBaseById)).not.toThrow();
+    let sb2 = StraightBondClass.fromSavedState(savableState, svg, getBaseById);
+    let mrps = StraightBondClass.mostRecentProps();
+    expect(mrps.padding1).toBeCloseTo(5, 6);
+    expect(mrps.padding2).toBeCloseTo(0.5, 6);
+    expect(mrps.strokeWidth).toBeCloseTo(1.65, 6);
+  }
 
-  // no class name defined
-  delete savableState.className;
-  expect(() => StrandBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-  // class name is not a string
-  savableState.className = 2;
-  expect(() => StrandBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-  // class name is an empty string
-  savableState.className = '';
-  expect(() => StrandBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-  // class name is not StraightBond
-  savableState.className = 'StraightBnd';
-  expect(() => StrandBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond fromSavedState static method invalid saved state', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1.1, 1.2);
-  let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let wcb1 = WatsonCrickBond.create(svg, b1, b2);
-
-  let getBaseById = (id) => {
-    if (id === b1.id) {
-      return b1;
-    } else if (id === b2.id) {
-      return b2;
-    }
-  };
-
-  let savableState = wcb1.savableState();
-  expect(() => WatsonCrickBond.fromSavedState(savableState, svg, getBaseById)).not.toThrow();
-
-  // no class name defined
-  delete savableState.className;
-  expect(() => WatsonCrickBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-  // class name is not a string
-  savableState.className = 2;
-  expect(() => WatsonCrickBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-  // class name is an empty string
-  savableState.className = '';
-  expect(() => WatsonCrickBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-  // class name is not StraightBond
-  savableState.className = 'StraightBnd';
-  expect(() => WatsonCrickBond.fromSavedState(savableState, svg, getBaseById)).toThrow();
-});
-
-it('StrandBond fromSavedState static method updates most recent properties', () => {
+it('StrandBond fromSavedState updates most recent stroke property', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'a', 5, 6);
   let b2 = Base.create(svg, 'e', 0, 0);
   let sb1 = StrandBond.create(svg, b1, b2);
-  sb1.padding1 = 5;
-  sb1.padding2 = 0.5;
-  sb1.stroke = '#abc654';
-  sb1.strokeWidth = 1.65;
+  sb1.stroke = '#433221';
   let savableState = sb1.savableState();
 
   function getBaseById(id) {
-    if (id === b1.id) {
-      return b1;
-    } else if (id === b2.id) {
-      return b2;
-    }
+    let dict = {};
+    dict[b1.id] = b1;
+    dict[b2.id] = b2;
+    return dict[id];
   }
 
   let sb2 = StrandBond.fromSavedState(savableState, svg, getBaseById);
   let mrps = StrandBond.mostRecentProps();
-  expect(mrps.padding1).toBeCloseTo(5, 6);
-  expect(mrps.padding2).toBeCloseTo(0.5, 6);
-  expect(mrps.stroke).toBe('#abc654');
-  expect(mrps.strokeWidth).toBeCloseTo(1.65, 6);
+  expect(mrps.stroke).toBe('#433221');
 });
 
-it('WatsonCrickBond fromSavedState static method updates most recent properties', () => {
+it('WatsonCrickBond fromSavedState updates most recent stroke properties', () => {
   let svg = createNodeSVG();
   let ba = Base.create(svg, 'a', 4, 1);
   let bu = Base.create(svg, 'U', 7, 100);
@@ -169,18 +142,11 @@ it('WatsonCrickBond fromSavedState static method updates most recent properties'
     return dict[id];
   }
 
-  wcbau.padding1 = 0;
-  wcbau.padding2 = 0.1;
   wcbau.stroke = '#445522';
-  wcbau.strokeWidth = 1.289;
   let auSavableState = wcbau.savableState();
   WatsonCrickBond.fromSavedState(auSavableState, svg, getBaseById);
-  let mrps = WatsonCrickBond.mostRecentProps();
-  expect(mrps.padding1).toBeCloseTo(0, 6);
-  expect(mrps.padding2).toBeCloseTo(0.1, 6);
-  expect(mrps.autStroke).toBe('#445522');
-  expect(mrps.strokeWidth).toBeCloseTo(1.289, 6);
-
+  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#445522');
+  
   wcbgc.stroke = '#aabcde';
   let gcSavableState = wcbgc.savableState();
   WatsonCrickBond.fromSavedState(gcSavableState, svg, getBaseById);
@@ -267,539 +233,374 @@ it('StraightBond coordinates static method', () => {
   );
 });
 
-it('StrandBond basic test of create static method', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1, 1);
-  let b2 = Base.create(svg, 'U', 4, 4);
-  let sb = StrandBond.create(svg, b1, b2);
-  expect(typeof(sb) === 'object' && sb !== null).toBeTruthy();
+it('basic test of create static method', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1, 1);
+    let b2 = Base.create(svg, 'U', 4, 4);
+    let sb = StraightBondClass.create(svg, b1, b2);
+    expect(typeof(sb) === 'object' && sb !== null).toBeTruthy();
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond basic test of create static method', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1, 1);
-  let b2 = Base.create(svg, 'U', 4, 4);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
-  expect(typeof(wcb) === 'object' && wcb !== null).toBeTruthy();
+it('basic test of constructor', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let line = svg.line(0, 0.22, 2.45, -1);
+    line.id(createUUIDforSVG());
+    let b1 = Base.create(svg, 'G', -1, -2);
+    let b2 = Base.create(svg, 'C', 10, 0.002);
+    expect(() => new StraightBondClass(line, b1, b2)).not.toThrow();
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('StrandBond basic test of constructor', () => {
-  let svg = createNodeSVG();
-  let line = svg.line(0, 0.22, 2.45, -1);
-  line.id(createUUIDforSVG());
-  let b1 = Base.create(svg, 'G', -1, -2);
-  let b2 = Base.create(svg, 'C', 10, 0.002);
-  expect(() => new StrandBond(line, b1, b2)).not.toThrow();
+it('_validateLine method', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1, 2);
+    let b2 = Base.create(svg, 'U', 2, 3);
+
+    let line1 = svg.line(1, 1, 2, 2);
+    line1.id(createUUIDforSVG());
+    expect(() => new StraightBondClass(line1, b1, b2)).not.toThrow();
+    
+    // ID is not a string
+    let line2 = svg.line(-1, -2, 0, 0);
+    line2.id(22);
+    expect(() => new StraightBondClass(line2, b0, b1)).toThrow();
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond basic test of constructor', () => {
-  let svg = createNodeSVG();
-  let line = svg.line(0, 0.22, 2.45, -1);
-  line.id(createUUIDforSVG());
-  let b1 = Base.create(svg, 'G', -1, -2);
-  let b2 = Base.create(svg, 'C', 10, 0.002);
-  expect(() => new WatsonCrickBond(line, b1, b2)).not.toThrow();
-});
+it('base1 and base2 getters', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 4.5, 6);
+    let b2 = Base.create(svg, 'u', -10, -4);
+    let sb = StraightBondClass.create(svg, b1, b2);
+    expect(sb.base1).toBe(b1);
+    expect(sb.base2).toBe(b2);
+  }
 
-it('StrandBond _validateLine', () => {
-  let svg = createNodeSVG();
-  let b0 = Base.create(svg, 'A', 1, 2);
-  let b1 = Base.create(svg, 'U', 2, 3);
-
-  let line0 = svg.line(1, 1, 2, 2);
-  line0.id(createUUIDforSVG());
-  expect(() => new StrandBond(line0, b0, b1)).not.toThrow();
-
-  // line with ID that is not a string
-  let line2 = svg.line(-1, -2, 0, 0);
-  line2.id(22);
-  expect(() => new StrandBond(line2, b0, b1)).toThrow();
-});
-
-it('WatsonCrickBond _validateLine', () => {
-  let svg = createNodeSVG();
-  let b0 = Base.create(svg, 'A', 1, 2);
-  let b1 = Base.create(svg, 'U', 2, 3);
-
-  let line0 = svg.line(1, 1, 2, 2);
-  line0.id(createUUIDforSVG());
-  expect(() => new WatsonCrickBond(line0, b0, b1)).not.toThrow();
-
-  // line with ID that is not a string
-  let line2 = svg.line(-1, -2, 0, 0);
-  line2.id(22);
-  expect(() => new WatsonCrickBond(line2, b0, b1)).toThrow();
-});
-
-it('StrandBond base1 and base2 getters', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 4.5, 6);
-  let b2 = Base.create(svg, 'u', -10, -4);
-  let sb = StrandBond.create(svg, b1, b2);
-  expect(sb.base1).toBe(b1);
-  expect(sb.base2).toBe(b2);
-});
-
-it('WatsonCrickBond base1 and base2 getters', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 4.5, 6);
-  let b2 = Base.create(svg, 'u', -10, -4);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
-  expect(wcb.base1).toBe(b1);
-  expect(wcb.base2).toBe(b2);
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
 it('StrandBond id getter', () => {
-  let svg = createNodeSVG();
-  let b0 = Base.create(svg, 'A', 1, 2);
-  let b1 = Base.create(svg, 'U', 2, 3);
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b0 = Base.create(svg, 'A', 1, 2);
+    let b1 = Base.create(svg, 'U', 2, 3);
 
-  let line = svg.line(1, 2, 3, 4);
-  let id = createUUIDforSVG();
-  line.attr({ 'id': id });
-  let sb = new StrandBond(line, b0, b1);
-  
-  // check getter
-  expect(sb.id).toBe(id);
+    let line = svg.line(1, 2, 3, 4);
+    let id = createUUIDforSVG();
+    line.attr({ 'id': id });
+    let sb = new StraightBondClass(line, b0, b1);
+    
+    // check getter
+    expect(sb.id).toBe(id);
 
-  // check actual value
-  expect(sb._line.id()).toBe(id);
+    // check actual value
+    expect(sb._line.id()).toBe(id);
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond id getter', () => {
-  let svg = createNodeSVG();
-  let b0 = Base.create(svg, 'A', 1, 2);
-  let b1 = Base.create(svg, 'U', 2, 3);
+it('padding1 getter and setter', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', 40.3, 4.9);
+    let b2 = Base.create(svg, 'T', 1, 4);
+    let sb = StraightBondClass.create(svg, b1, b2);
+    sb.padding1 = 8;
+    sb.padding2 = 8;
 
-  let line = svg.line(1, 2, 3, 4);
-  let id = createUUIDforSVG();
-  line.attr({ 'id': id });
-  let wcb = new WatsonCrickBond(line, b0, b1);
-  
-  // check getter
-  expect(wcb.id).toBe(id);
+    let x2 = sb._line.attr('x2');
+    let y2 = sb._line.attr('y2');
 
-  // check actual value
-  expect(wcb._line.id()).toBe(id);
-});
+    sb.padding1 = 0.25;
 
-it('StrandBond padding1 getter and setter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 40.3, 4.9);
-  let b2 = Base.create(svg, 'T', 1, 4);
-  let sb = StrandBond.create(svg, b1, b2);
-  sb.padding1 = 8;
-  sb.padding2 = 8;
+    // check getter
+    expect(sb.padding1).toBeCloseTo(0.25, 6);
 
-  let x2 = sb._line.attr('x2');
-  let y2 = sb._line.attr('y2');
+    // check actual line coordinates
+    checkCoordinates(
+      {
+        x1: sb._line.attr('x1'),
+        y1: sb._line.attr('y1'),
+        x2: sb._line.attr('x2'),
+        y2: sb._line.attr('y2'),
+      },
+      {
+        x1: 40.05006552984633,
+        y1: 4.89427630984381,
+        x2: x2,
+        y2: y2,
+      },
+    );
+  }
 
-  sb.padding1 = 0.25;
-
-  // check getter
-  expect(sb.padding1).toBeCloseTo(0.25, 6);
-
-  // check actual line coordinates
-  checkCoordinates(
-    {
-      x1: sb._line.attr('x1'),
-      y1: sb._line.attr('y1'),
-      x2: sb._line.attr('x2'),
-      y2: sb._line.attr('y2'),
-    },
-    {
-      x1: 40.05006552984633,
-      y1: 4.89427630984381,
-      x2: x2,
-      y2: y2,
-    },
-  );
-});
-
-it('WatsonCrickBond padding1 getter and setter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 40.3, 4.9);
-  let b2 = Base.create(svg, 'T', 1, 4);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
-  wcb.padding1 = 8;
-  wcb.padding2 = 8;
-
-  let x2 = wcb._line.attr('x2');
-  let y2 = wcb._line.attr('y2');
-
-  wcb.padding1 = 0.25;
-  
-  // check getter
-  expect(wcb.padding1).toBeCloseTo(0.25, 6);
-
-  // check actual line coordinates
-  checkCoordinates(
-    {
-      x1: wcb._line.attr('x1'),
-      y1: wcb._line.attr('y1'),
-      x2: wcb._line.attr('x2'),
-      y2: wcb._line.attr('y2'),
-    },
-    {
-      x1: 40.05006552984633,
-      y1: 4.89427630984381,
-      x2: x2,
-      y2: y2,
-    },
-  );
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
 it('StrandBond padding2 getter and setter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 0.2, -3);
-  let b2 = Base.create(svg, 'T', 120.5, 8);
-  let sb = StrandBond.create(svg, b1, b2);
-  sb.padding1 = 8;
-  sb.padding2 = 8;
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', 0.2, -3);
+    let b2 = Base.create(svg, 'T', 120.5, 8);
+    let sb = StraightBondClass.create(svg, b1, b2);
+    sb.padding1 = 8;
+    sb.padding2 = 8;
 
-  let x1 = sb._line.attr('x1');
-  let y1 = sb._line.attr('y1');
+    let x1 = sb._line.attr('x1');
+    let y1 = sb._line.attr('y1');
 
-  sb.padding2 = 0.5;
+    sb.padding2 = 0.5;
 
-  // check getter
-  expect(sb.padding2).toBeCloseTo(0.5, 6);
+    // check getter
+    expect(sb.padding2).toBeCloseTo(0.5, 6);
 
-  // check actual line coordinates
-  checkCoordinates(
-    {
-      x1: sb._line.attr('x1'),
-      y1: sb._line.attr('y1'),
-      x2: sb._line.attr('x2'),
-      y2: sb._line.attr('y2'),
-    },
-    {
-      x1: x1,
-      y1: y1,
-      x2: 120.00207721370248,
-      y2: 7.954470900671049,
-    },
-  );
+    // check actual line coordinates
+    checkCoordinates(
+      {
+        x1: sb._line.attr('x1'),
+        y1: sb._line.attr('y1'),
+        x2: sb._line.attr('x2'),
+        y2: sb._line.attr('y2'),
+      },
+      {
+        x1: x1,
+        y1: y1,
+        x2: 120.00207721370248,
+        y2: 7.954470900671049,
+      },
+    );
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond padding2 getter and setter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 0.2, -3);
-  let b2 = Base.create(svg, 'T', 120.5, 8);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
-  wcb.padding1 = 8;
-  wcb.padding2 = 8;
+it('reposition method', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', 0.2, -3);
+    let b2 = Base.create(svg, 'T', 120.5, 8);
+    let sb = StraightBondClass.create(svg, b1, b2);
 
-  let x1 = wcb._line.attr('x1');
-  let y1 = wcb._line.attr('y1');
+    sb.padding1 = 5;
+    sb.padding2 = 0.99;
 
-  wcb.padding2 = 0.5;
+    b1.move(-10, 0.5);
+    b2.move(1000, 980.2);
 
-  // check getter
-  expect(wcb.padding2).toBeCloseTo(0.5, 6);
+    sb.reposition();
 
-  // check actual line coordinates
-  checkCoordinates(
-    {
-      x1: wcb._line.attr('x1'),
-      y1: wcb._line.attr('y1'),
-      x2: wcb._line.attr('x2'),
-      y2: wcb._line.attr('y2'),
-    },
-    {
-      x1: x1,
-      y1: y1,
-      x2: 120.00207721370248,
-      y2: 7.954470900671049,
-    },
-  );
+    checkCoordinates(
+      {
+        x1: sb._line.attr('x1'),
+        y1: sb._line.attr('y1'),
+        x2: sb._line.attr('x2'),
+        y2: sb._line.attr('y2'),
+      },
+      {
+        x1: -6.411041600732329,
+        y1: 3.981289647289641,
+        x2: 999.289386236945,
+        y2: 979.5107046498367,
+      },
+    );
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('StrandBond reposition', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 0.2, -3);
-  let b2 = Base.create(svg, 'T', 120.5, 8);
-  let sb = StrandBond.create(svg, b1, b2);
+it('_reposition method', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', 0.2, -3);
+    let b2 = Base.create(svg, 'T', 120.5, 8);
+    let sb = StraightBondClass.create(svg, b1, b2);
 
-  sb.padding1 = 5;
-  sb.padding2 = 0.99;
+    b1.move(-10, 0.5);
+    b2.move(1000, 980.2);
 
-  b1.move(-10, 0.5);
-  b2.move(1000, 980.2);
+    sb._reposition(5, 0.99);
 
-  sb.reposition();
+    checkCoordinates(
+      {
+        x1: sb._line.attr('x1'),
+        y1: sb._line.attr('y1'),
+        x2: sb._line.attr('x2'),
+        y2: sb._line.attr('y2'),
+      },
+      {
+        x1: -6.411041600732329,
+        y1: 3.981289647289641,
+        x2: 999.289386236945,
+        y2: 979.5107046498367,
+      },
+    );
+  }
 
-  checkCoordinates(
-    {
-      x1: sb._line.attr('x1'),
-      y1: sb._line.attr('y1'),
-      x2: sb._line.attr('x2'),
-      y2: sb._line.attr('y2'),
-    },
-    {
-      x1: -6.411041600732329,
-      y1: 3.981289647289641,
-      x2: 999.289386236945,
-      y2: 979.5107046498367,
-    },
-  );
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond reposition', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 0.2, -3);
-  let b2 = Base.create(svg, 'T', 120.5, 8);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
+it('insertBefore method', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', -0.445, 0.56);
+    let b2 = Base.create(svg, 'T', 1, 2);
+    let sb = StraightBondClass.create(svg, b1, b2);
 
-  wcb.padding1 = 5;
-  wcb.padding2 = 0.99;
+    let circle = svg.circle(100);
+    let rect = svg.rect(2);
 
-  b1.move(-10, 0.5);
-  b2.move(1000, 980.2);
+    expect(sb._line.position()).toBeLessThan(circle.position());
+    expect(sb._line.position()).toBeLessThan(rect.position());
 
-  wcb.reposition();
+    sb.insertBefore(rect);
 
-  checkCoordinates(
-    {
-      x1: wcb._line.attr('x1'),
-      y1: wcb._line.attr('y1'),
-      x2: wcb._line.attr('x2'),
-      y2: wcb._line.attr('y2'),
-    },
-    {
-      x1: -6.411041600732329,
-      y1: 3.981289647289641,
-      x2: 999.289386236945,
-      y2: 979.5107046498367,
-    },
-  );
+    expect(sb._line.position()).toBeGreaterThan(circle.position());
+    expect(sb._line.position()).toBeLessThan(rect.position());
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('_reposition', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 0.2, -3);
-  let b2 = Base.create(svg, 'T', 120.5, 8);
-  let sb = StrandBond.create(svg, b1, b2);
+it('insertAfter method', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', -0.445, 0.56);
+    let b2 = Base.create(svg, 'T', 1, 2);
+    let sb = StraightBondClass.create(svg, b1, b2);
 
-  b1.move(-10, 0.5);
-  b2.move(1000, 980.2);
+    let circle = svg.circle(100);
+    let rect = svg.rect(2);
 
-  sb._reposition(5, 0.99);
+    expect(sb._line.position()).toBeLessThan(circle.position());
+    expect(sb._line.position()).toBeLessThan(rect.position());
 
-  checkCoordinates(
-    {
-      x1: sb._line.attr('x1'),
-      y1: sb._line.attr('y1'),
-      x2: sb._line.attr('x2'),
-      y2: sb._line.attr('y2'),
-    },
-    {
-      x1: -6.411041600732329,
-      y1: 3.981289647289641,
-      x2: 999.289386236945,
-      y2: 979.5107046498367,
-    },
-  );
+    sb.insertAfter(circle);
+
+    expect(sb._line.position()).toBeGreaterThan(circle.position());
+    expect(sb._line.position()).toBeLessThan(rect.position());
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('StrandBond insertBefore', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', -0.445, 0.56);
-  let b2 = Base.create(svg, 'T', 1, 2);
-  let sb = StrandBond.create(svg, b1, b2);
+it('stroke getter and setter', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1, 1);
+    let b2 = Base.create(svg, 'U', 4, 4);
+    let sb = StrandBond.create(svg, b1, b2);
 
-  let circle = svg.circle(100);
-  let rect = svg.rect(2);
+    sb.stroke = '#456abc';
+    
+    // check getter
+    expect(sb.stroke).toBe('#456abc');
 
-  expect(sb._line.position()).toBeLessThan(circle.position());
-  expect(sb._line.position()).toBeLessThan(rect.position());
+    // check actual value
+    expect(sb._line.attr('stroke')).toBe('#456abc');
+  }
 
-  sb.insertBefore(rect);
-
-  expect(sb._line.position()).toBeGreaterThan(circle.position());
-  expect(sb._line.position()).toBeLessThan(rect.position());
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond insertBefore', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', -0.445, 0.56);
-  let b2 = Base.create(svg, 'T', 1, 2);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
+it('strokeWidth getter and setter', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1, 1);
+    let b2 = Base.create(svg, 'U', 4, 4);
+    let sb = StraightBondClass.create(svg, b1, b2);
 
-  let circle = svg.circle(100);
-  let rect = svg.rect(2);
+    sb.strokeWidth = 2.3;
 
-  expect(wcb._line.position()).toBeLessThan(circle.position());
-  expect(wcb._line.position()).toBeLessThan(rect.position());
+    // check getter
+    expect(sb.strokeWidth).toBeCloseTo(2.3, 6);
 
-  wcb.insertBefore(rect);
+    // check actual value
+    expect(sb._line.attr('stroke-width')).toBeCloseTo(2.3, 6);
+  }
 
-  expect(wcb._line.position()).toBeGreaterThan(circle.position());
-  expect(wcb._line.position()).toBeLessThan(rect.position());
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('StrandBond insertAfter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', -0.445, 0.56);
-  let b2 = Base.create(svg, 'T', 1, 2);
-  let sb = StrandBond.create(svg, b1, b2);
+it('remove method', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1.1, 1.2);
+    let b2 = Base.create(svg, 'U', 2.1, 2.2);
+    let sb = StraightBondClass.create(svg, b1, b2);
+    let lineId = sb._line.id();
+    let baseTextId1 = b1._text.id();
+    let baseTextId2 = b2._text.id();
 
-  let circle = svg.circle(100);
-  let rect = svg.rect(2);
+    expect(svg.findOne('#' + lineId)).not.toBe(null);
+    expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
+    expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
 
-  expect(sb._line.position()).toBeLessThan(circle.position());
-  expect(sb._line.position()).toBeLessThan(rect.position());
+    sb.remove();
 
-  sb.insertAfter(circle);
+    expect(svg.findOne('#' + lineId)).toBe(null);
 
-  expect(sb._line.position()).toBeGreaterThan(circle.position());
-  expect(sb._line.position()).toBeLessThan(rect.position());
+    // does not remove the bases
+    expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
+    expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('WatsonCrickBond insertAfter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', -0.445, 0.56);
-  let b2 = Base.create(svg, 'T', 1, 2);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
+it('savableState method all properties except className', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1.1, 1.2);
+    let b2 = Base.create(svg, 'U', 2.1, 2.2);
+    let sb = StraightBondClass.create(svg, b1, b2);
 
-  let circle = svg.circle(100);
-  let rect = svg.rect(2);
+    let savableState = sb.savableState();
+    expect(savableState.line).toBe(sb._line.id());
+    expect(savableState.base1).toBe(b1.id);
+    expect(savableState.base2).toBe(b2.id);
+  }
 
-  expect(wcb._line.position()).toBeLessThan(circle.position());
-  expect(wcb._line.position()).toBeLessThan(rect.position());
-
-  wcb.insertAfter(circle);
-
-  expect(wcb._line.position()).toBeGreaterThan(circle.position());
-  expect(wcb._line.position()).toBeLessThan(rect.position());
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
 });
 
-it('StrandBond stroke getter and setter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1, 1);
-  let b2 = Base.create(svg, 'U', 4, 4);
-  let sb = StrandBond.create(svg, b1, b2);
-
-  sb.stroke = '#456abc';
-  
-  // check getter
-  expect(sb.stroke).toBe('#456abc');
-
-  // check actual value
-  expect(sb._line.attr('stroke')).toBe('#456abc');
-});
-
-it('WatsonCrickBond stroke getter and setter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1, 1);
-  let b2 = Base.create(svg, 'U', 4, 4);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
-
-  wcb.stroke = '#456abc';
-  
-  // check getter
-  expect(wcb.stroke).toBe('#456abc');
-
-  // check actual value
-  expect(wcb._line.attr('stroke')).toBe('#456abc');
-});
-
-it('StrandBond strokeWidth getter and setter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1, 1);
-  let b2 = Base.create(svg, 'U', 4, 4);
-  let sb = StrandBond.create(svg, b1, b2);
-
-  sb.strokeWidth = 2.3;
-
-  // check getter
-  expect(sb.strokeWidth).toBeCloseTo(2.3, 6);
-
-  // check actual value
-  expect(sb._line.attr('stroke-width')).toBeCloseTo(2.3, 6);
-});
-
-it('WatsonCrickBond strokeWidth getter and setter', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1, 1);
-  let b2 = Base.create(svg, 'U', 4, 4);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
-
-  wcb.strokeWidth = 2.3;
-
-  // check getter
-  expect(wcb.strokeWidth).toBeCloseTo(2.3, 6);
-
-  // check actual value
-  expect(wcb._line.attr('stroke-width')).toBeCloseTo(2.3, 6);
-});
-
-it('StrandBond remove method', () => {
+it('StrandBond savableState method className property', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1.1, 1.2);
   let b2 = Base.create(svg, 'U', 2.1, 2.2);
   let sb = StrandBond.create(svg, b1, b2);
-  let lineId = sb._line.id();
-  let baseTextId1 = b1._text.id();
-  let baseTextId2 = b2._text.id();
-
-  expect(svg.findOne('#' + lineId)).not.toBe(null);
-  expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
-  expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
-
-  sb.remove();
-
-  expect(svg.findOne('#' + lineId)).toBe(null);
-
-  // does not remove the bases
-  expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
-  expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
+  expect(sb.savableState().className).toBe('StrandBond');
 });
 
-it('WatsonCrickBond remove method', () => {
+it('WatsonCrickBond savableState method className property', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1.1, 1.2);
   let b2 = Base.create(svg, 'U', 2.1, 2.2);
   let wcb = WatsonCrickBond.create(svg, b1, b2);
-  let lineId = wcb._line.id();
-  let baseTextId1 = b1._text.id();
-  let baseTextId2 = b2._text.id();
-
-  expect(svg.findOne('#' + lineId)).not.toBe(null);
-  expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
-  expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
-
-  wcb.remove();
-
-  expect(svg.findOne('#' + lineId)).toBe(null);
-
-  // does not remove the bases
-  expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
-  expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
-});
-
-it('StrandBond savableState method', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1.1, 1.2);
-  let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let sb = StrandBond.create(svg, b1, b2);
-
-  let savableState = sb.savableState();
-  expect(savableState.className).toBe('StrandBond');
-  expect(savableState.line).toBe(sb._line.id());
-  expect(savableState.base1).toBe(b1.id);
-  expect(savableState.base2).toBe(b2.id);
-});
-
-it('WatsonCrickBond savableState method', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1.1, 1.2);
-  let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
-
-  let savableState = wcb.savableState();
-  expect(savableState.className).toBe('WatsonCrickBond');
-  expect(savableState.line).toBe(wcb._line.id());
-  expect(savableState.base1).toBe(b1.id);
-  expect(savableState.base2).toBe(b2.id);
+  expect(wcb.savableState().className).toBe('WatsonCrickBond');
 });
