@@ -172,7 +172,7 @@ it('WatsonCrickBond fromSavedState updates most recent stroke properties', () =>
   WatsonCrickBond.fromSavedState(otherSavableState, svg, getBaseById);
   expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
 });
-/*
+
 it('StrandBond _applyMostRecentProps static method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 5, 6);
@@ -189,7 +189,7 @@ it('StrandBond _applyMostRecentProps static method', () => {
   expect(sb.stroke).toBe('#453423');
   expect(sb.strokeWidth).toBeCloseTo(5.432, 6);
 });
-*/
+
 function checkCoordinates(cs, ecs) {
   expect(cs.x1).toBeCloseTo(ecs.x1, 6);
   expect(cs.y1).toBeCloseTo(ecs.y1, 6);
@@ -242,10 +242,10 @@ it('StraightBond coordinates static method', () => {
   checkCoordinates(
     StraightBond.coordinates(b1, b2, 60, 60),
     {
-      x1: -6.25,
-      y1: -50.5,
-      x2: -6.25,
-      y2: -50.5,
+      x1: -7.132631785660548,
+      y1: -60.78006432710513,
+      x2: -5.367368214339452,
+      y2: -40.21993567289487,
     },
   );
 });

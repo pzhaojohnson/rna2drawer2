@@ -38,25 +38,29 @@ class StraightBond {
    * @returns {StraightBond~Coordinates} The coordinates of the line of a straight bond.
    */
   static coordinates(b1, b2, padding1, padding2) {
-    if (padding1 + padding2 >= b1.distanceBetweenCenters(b2)) {
-      let x = (b1.xCenter + b2.xCenter) / 2;
-      let y = (b1.yCenter + b2.yCenter) / 2;
+    let angle = b1.angleBetweenCenters(b2);
 
-      return {
-        x1: x,
-        y1: y,
-        x2: x,
-        y2: y,
-      };
+    return {
+      x1: b1.xCenter + (padding1 * Math.cos(angle)),
+      y1: b1.yCenter + (padding1 * Math.sin(angle)),
+      x2: b2.xCenter - (padding2 * Math.cos(angle)),
+      y2: b2.yCenter - (padding2 * Math.sin(angle)),
+    };
+  }
+
+  /**
+   * @param {Base} b1 
+   * @param {Base} b2 
+   * @param {number} padding1 
+   * @param {number} padding2 
+   * 
+   * @returns {number} 
+   */
+  static _opacity(b1, b2, padding1, padding2) {
+    if (padding1 + padding2 > b1.distanceBetweenCenters(b2)) {
+      return 0;
     } else {
-      let angle = b1.angleBetweenCenters(b2);
-
-      return {
-        x1: b1.xCenter + (padding1 * Math.cos(angle)),
-        y1: b1.yCenter + (padding1 * Math.sin(angle)),
-        x2: b2.xCenter - (padding2 * Math.cos(angle)),
-        y2: b2.yCenter - (padding2 * Math.sin(angle)),
-      };
+      return 1;
     }
   }
 
@@ -189,6 +193,10 @@ class StraightBond {
       'y2': cs.y2,
     });
 
+    this._setOpacity(
+      StraightBond._opacity(this.base1, this.base2, padding1, padding2)
+    );
+    
     this._storePaddings();
   }
 
