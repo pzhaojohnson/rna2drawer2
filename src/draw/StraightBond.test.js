@@ -197,14 +197,14 @@ function checkCoordinates(cs, ecs) {
   expect(cs.y2).toBeCloseTo(ecs.y2, 6);
 }
 
-it('StraightBond coordinates static method', () => {
+it('StraightBond _lineCoordinates static method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
   let b2 = Base.create(svg, 'U', 5, 6);
   
   // basic test
   checkCoordinates(
-    StraightBond.coordinates(b1, b2, 1, 2),
+    StraightBond._lineCoordinates(b1, b2, 1, 2),
     {
       x1: 1 + (2 ** -0.5),
       y1: 2 + (2 ** -0.5),
@@ -215,7 +215,7 @@ it('StraightBond coordinates static method', () => {
 
   // paddings of zero
   checkCoordinates(
-    StraightBond.coordinates(b1, b2, 0, 0),
+    StraightBond._lineCoordinates(b1, b2, 0, 0),
     {
       x1: 1,
       y1: 2,
@@ -229,7 +229,7 @@ it('StraightBond coordinates static method', () => {
   b2.move(-10.5, -100);
   
   checkCoordinates(
-    StraightBond.coordinates(b1, b2, 2.5, 1.111),
+    StraightBond._lineCoordinates(b1, b2, 2.5, 1.111),
     {
       x1: -2.2138596577358562,
       y1: -3.49083601362938,
@@ -240,7 +240,7 @@ it('StraightBond coordinates static method', () => {
 
   // paddings greater than distance between bases
   checkCoordinates(
-    StraightBond.coordinates(b1, b2, 60, 60),
+    StraightBond._lineCoordinates(b1, b2, 60, 60),
     {
       x1: -7.132631785660548,
       y1: -60.78006432710513,

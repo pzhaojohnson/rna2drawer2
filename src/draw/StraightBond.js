@@ -22,7 +22,7 @@ class StraightBond {
   }
 
   /**
-   * @typedef {Object} StraightBond~Coordinates 
+   * @typedef {Object} StraightBond~LineCoordinates 
    * @property {number} x1 
    * @property {number} y1 
    * @property {number} x2 
@@ -35,9 +35,9 @@ class StraightBond {
    * @param {number} padding1 
    * @param {number} padding2 
    * 
-   * @returns {StraightBond~Coordinates} The coordinates of the line of a straight bond.
+   * @returns {StraightBond~LineCoordinates} 
    */
-  static coordinates(b1, b2, padding1, padding2) {
+  static _lineCoordinates(b1, b2, padding1, padding2) {
     let angle = b1.angleBetweenCenters(b2);
 
     return {
@@ -184,7 +184,7 @@ class StraightBond {
    * @param {number} padding2 
    */
   _reposition(padding1, padding2) {
-    let cs = StraightBond.coordinates(this.base1, this.base2, padding1, padding2);
+    let cs = StraightBond._lineCoordinates(this.base1, this.base2, padding1, padding2);
     
     this._line.attr({
       'x1': cs.x1,
@@ -347,7 +347,7 @@ class StrandBond extends StraightBond {
    * @returns {StrandBond} 
    */
   static create(svg, b1, b2) {
-    let cs = StraightBond.coordinates(b1, b2, 8, 8);
+    let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id(createUUIDforSVG());
     let sb = new StrandBond(line, b1, b2);
@@ -523,7 +523,7 @@ class WatsonCrickBond extends StraightBond {
    * @returns {WatsonCrickBond} 
    */
   static create(svg, b1, b2) {
-    let cs = StraightBond.coordinates(b1, b2, 8, 8);
+    let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id(createUUIDforSVG());
     let wcb = new WatsonCrickBond(line, b1, b2);
