@@ -239,6 +239,78 @@ it('WatsonCrickBond _applyMostRecentProps stroke', () => {
   expect(wcbOther.stroke).toBe('#998877');
 });
 
+it('StrandBond _copyPropsToMostRecent', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'b', 1, 3);
+  let b2 = Base.create(svg, 'n', 5, 7);
+  let sb = StrandBond.create(svg, b1, b2);
+  
+  sb.padding1 = 5.6789;
+  sb.padding2 = 4.365;
+  sb.stroke = '#9a8c7b';
+  sb.strokeWidth = 3.222;
+  StrandBond._copyPropsToMostRecent(sb);
+
+  let mrps = StrandBond.mostRecentProps();
+  expect(mrps.padding1).toBeCloseTo(5.6789, 6);
+  expect(mrps.padding2).toBeCloseTo(4.365, 6);
+  expect(mrps.stroke).toBe('#9a8c7b');
+  expect(mrps.strokeWidth).toBeCloseTo(3.222, 6);
+});
+
+it('WatsonCrickBond _copyPropsToMostRecent padding1, padding2, and strokeWidth', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'e', 5.5, 4);
+  let b2 = Base.create(svg, 'w', 4, 3);
+  let wcb = WatsonCrickBond.create(svg, b1, b2);
+
+  wcb.padding1 = 8.777;
+  wcb.padding2 = 6.578;
+  wcb.strokeWidth = 35;
+  WatsonCrickBond._copyPropsToMostRecent(wcb);
+
+  let mrps = WatsonCrickBond.mostRecentProps();
+  expect(mrps.padding1).toBeCloseTo(8.777, 6);
+  expect(mrps.padding2).toBeCloseTo(6.578, 6);
+  expect(mrps.strokeWidth).toBeCloseTo(35, 6);
+});
+
+it('WatsonCrickBond _copyPropsToMostRecent stroke', () => {
+  let svg = createNodeSVG();
+  let ba = Base.create(svg, 'A', 3, 5);
+  let bu = Base.create(svg, 'U', 4, 3);
+  let bg = Base.create(svg, 'g', 3, 2);
+  let bc = Base.create(svg, 'c', 2, 2);
+  let bt = Base.create(svg, 't', 5.5, -5.5);
+
+  let wcbau = WatsonCrickBond.create(svg, bu, ba);
+  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
+  let wcbgu = WatsonCrickBond.create(svg, bg, bu);
+  let wcbat = WatsonCrickBond.create(svg, bt, ba);
+  let wcbgt = WatsonCrickBond.create(svg, bt, bg);
+  let wcbOther = WatsonCrickBond.create(svg, ba, bc);
+  
+  wcbau.stroke = '#123456';
+  wcbgc.stroke = '#234567';
+  wcbgu.stroke = '#345678';
+  wcbat.stroke = '#456789';
+  wcbgt.stroke = '#567890';
+  wcbOther.stroke = '#678900';
+
+  WatsonCrickBond._copyPropsToMostRecent(wcbau);
+  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#123456');
+  WatsonCrickBond._copyPropsToMostRecent(wcbgc);
+  expect(WatsonCrickBond.mostRecentProps().gcStroke).toBe('#234567');
+  WatsonCrickBond._copyPropsToMostRecent(wcbgu);
+  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#345678');
+  WatsonCrickBond._copyPropsToMostRecent(wcbat);
+  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#456789');
+  WatsonCrickBond._copyPropsToMostRecent(wcbgt);
+  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#567890');
+  WatsonCrickBond._copyPropsToMostRecent(wcbOther);
+  expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#678900');
+});
+
 function checkCoordinates(cs, ecs) {
   expect(cs.x1).toBeCloseTo(ecs.x1, 6);
   expect(cs.y1).toBeCloseTo(ecs.y1, 6);
