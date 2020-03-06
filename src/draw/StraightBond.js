@@ -4,24 +4,6 @@ import createUUIDforSVG from './createUUIDforSVG';
 class StraightBond {
 
   /**
-   * @callback StraightBond~getBaseById 
-   * @param {string} id 
-   * 
-   * @returns {Base} 
-   */
-
-  /**
-   * @param {StraightBond~SavableState} savedState 
-   * @param {SVG.Doc} svg 
-   * @param {StraightBond~getBaseById} getBaseById 
-   * 
-   * @throws {Error} If the saved state is not for the correct straight bond.
-   */
-  static fromSavedState(savedState, svg, getBaseById) {
-    throw new Error('Not implemented.');
-  }
-
-  /**
    * @typedef {Object} StraightBond~LineCoordinates 
    * @property {number} x1 
    * @property {number} y1 
@@ -62,6 +44,24 @@ class StraightBond {
     } else {
       return 1;
     }
+  }
+
+  /**
+   * @callback StraightBond~getBaseById 
+   * @param {string} id 
+   * 
+   * @returns {Base} 
+   */
+
+  /**
+   * @param {StraightBond~SavableState} savedState 
+   * @param {SVG.Doc} svg 
+   * @param {StraightBond~getBaseById} getBaseById 
+   * 
+   * @throws {Error} If the saved state is not for the correct straight bond.
+   */
+  static fromSavedState(savedState, svg, getBaseById) {
+    throw new Error('Not implemented.');
   }
 
   /**
