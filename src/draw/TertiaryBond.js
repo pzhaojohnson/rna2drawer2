@@ -2,10 +2,10 @@ import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
-class QuadraticBezierBond {
+class TertiaryBond {
 
   /**
-   * @callback QuadraticBezierBond~getClockwiseNormalAngleOfBase 
+   * @callback TertiaryBond~getClockwiseNormalAngleOfBase 
    * @param {Base} base 
    * 
    * @returns {number} 
@@ -13,8 +13,8 @@ class QuadraticBezierBond {
 
   /**
    * @param {Array<Base>} side 
-   * @param {QuadraticBezierBond~BracketPositionalProps} positionalProps 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~BracketPositionalProps} positionalProps 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    * 
    * @returns {string} 
    */
@@ -61,7 +61,7 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @typedef {Object} QuadraticBezierBond~BracketMidPoint 
+   * @typedef {Object} TertiaryBond~BracketMidPoint 
    * @property {number} x 
    * @property {number} y 
    */
@@ -69,7 +69,7 @@ class QuadraticBezierBond {
   /**
    * @param {SVG.Path} bracket 
    * 
-   * @returns {QuadraticBezierBond~BracketMidPoint} 
+   * @returns {TertiaryBond~BracketMidPoint} 
    */
   static _bracketMidpoint(bracket) {
     let segments = bracket.array();
@@ -97,17 +97,17 @@ class QuadraticBezierBond {
   /**
    * @param {SVG.Path} bracket1 
    * @param {SVG.Path} bracket2 
-   * @param {QuadraticBezierBond~CurvePositionalProps} positionalProps 
+   * @param {TertiaryBond~CurvePositionalProps} positionalProps 
    * 
    * @returns {string} 
    */
   static _dCurve(bracket1, bracket2, positionalProps) {
-    let bmp1 = QuadraticBezierBond._bracketMidpoint(bracket1);
+    let bmp1 = TertiaryBond._bracketMidpoint(bracket1);
     let bmx1 = bmp1.x;
     let bmy1 = bmp1.y;
     let d = 'M ' + bmx1 + ' ' + bmy1 + ' ';
 
-    let bmp2 = QuadraticBezierBond._bracketMidpoint(bracket2);
+    let bmp2 = TertiaryBond._bracketMidpoint(bracket2);
     let bmx2 = bmp2.x;
     let bmy2 = bmp2.y;
 
@@ -125,22 +125,22 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @callback QuadraticBezierBond~getBaseById 
+   * @callback TertiaryBond~getBaseById 
    * @param {string} id 
    * 
    * @returns {Base} 
    */
   
    /**
-   * @param {QuadraticBezierBond~SavableState} savedState 
+   * @param {TertiaryBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {QuadraticBezierBond~getBaseById} getBaseById 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getBaseById} getBaseById 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    * 
    * @throws {Error} If the saved state is not for a quadratic bezier bond.
    */
   static fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase) {
-    if (savedState.className !== 'QuadraticBezierBond') {
+    if (savedState.className !== 'TertiaryBond') {
       throw new Error('Saved state is not for a quadratic bezier bond.');
     }
     
@@ -154,7 +154,7 @@ class QuadraticBezierBond {
     let side2 = [];
     savedState.side2.forEach(id => side2.push(getBaseById(id)));
 
-    return new QuadraticBezierBond(
+    return new TertiaryBond(
       curve,
       bracket1,
       bracket2,
@@ -168,30 +168,30 @@ class QuadraticBezierBond {
    * @param {SVG.Doc} svg 
    * @param {Array<Base>} side1 
    * @param {Array<Base>} side2 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    * 
-   * @returns {QuadraticBezierBond} 
+   * @returns {TertiaryBond} 
    */
   static create(svg, side1, side2, getClockwiseNormalAngleOfBase) {
-    let bracket1 = svg.path(QuadraticBezierBond._dBracket(
+    let bracket1 = svg.path(TertiaryBond._dBracket(
       side1,
       { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
       getClockwiseNormalAngleOfBase,
     ));
 
-    let bracket2 = svg.path(QuadraticBezierBond._dBracket(
+    let bracket2 = svg.path(TertiaryBond._dBracket(
       side2,
       { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
       getClockwiseNormalAngleOfBase,
     ));
 
-    let curve = svg.path(QuadraticBezierBond._dCurve(
+    let curve = svg.path(TertiaryBond._dCurve(
       bracket1,
       bracket2,
       { height: 100, angle: 3 * Math.PI / 2 },
     ));
 
-    let qbb = new QuadraticBezierBond(
+    let qbb = new TertiaryBond(
       curve,
       bracket1,
       bracket2,
@@ -200,14 +200,14 @@ class QuadraticBezierBond {
       getClockwiseNormalAngleOfBase
     );
 
-    QuadraticBezierBond._applyDefaults(qbb, getClockwiseNormalAngleOfBase);
+    TertiaryBond._applyDefaults(qbb, getClockwiseNormalAngleOfBase);
     return qbb;
   }
 
   /**
    * 
-   * @param {QuadraticBezierBond} qbb 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond} qbb 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   static _applyDefaults(qbb, getClockwiseNormalAngleOfBase) {
     qbb.setTopPaddingBracket1(10, getClockwiseNormalAngleOfBase);
@@ -231,7 +231,7 @@ class QuadraticBezierBond {
    * @param {SVG.Path} bracket2 
    * @param {Array<Base>} side1 
    * @param {Array<Base>} side2 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   constructor(curve, bracket1, bracket2, side1, side2, getClockwiseNormalAngleOfBase) {
     
@@ -395,7 +395,7 @@ class QuadraticBezierBond {
   /**
    * @param {number} xShift 
    * @param {number} yShift 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   shiftCurveControlPoint(xShift, yShift, getClockwiseNormalAngleOfBase) {
     let xControl = this.xCurveControlPoint + xShift;
@@ -457,13 +457,13 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @typedef {Object} QuadraticBezierBond~CurvePositionalProps 
+   * @typedef {Object} TertiaryBond~CurvePositionalProps 
    * @property {number} height 
    * @property {number} angle 
    */
 
   /**
-   * @returns {QuadraticBezierBond~CurvePositionalProps} 
+   * @returns {TertiaryBond~CurvePositionalProps} 
    */
   _curvePositionalProps() {
     return {
@@ -475,7 +475,7 @@ class QuadraticBezierBond {
   /**
    * Sets the _topPaddingBracket1 and _topPaddingBracket2 properties.
    * 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   _storeBracketTopPaddings(getClockwiseNormalAngleOfBase) {
     function topPadding(bracket, side) {
@@ -507,7 +507,7 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} tp 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   setTopPaddingBracket1(tp, getClockwiseNormalAngleOfBase) {
     let bracketProps1 = this._bracketPositionalProps1();
@@ -530,7 +530,7 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} tp 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   setTopPaddingBracket2(tp, getClockwiseNormalAngleOfBase) {
     let bracketProps2 = this._bracketPositionalProps2();
@@ -556,7 +556,7 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} ohp 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   setOverhangPaddingBracket1(ohp, getClockwiseNormalAngleOfBase) {
     let bracketProps1 = this._bracketPositionalProps1();
@@ -582,7 +582,7 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} ohp 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   setOverhangPaddingBracket2(ohp, getClockwiseNormalAngleOfBase) {
     let bracketProps2 = this._bracketPositionalProps2();
@@ -608,7 +608,7 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} ohl 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   setOverhangLengthBracket1(ohl, getClockwiseNormalAngleOfBase) {
     let bracketProps1 = this._bracketPositionalProps1();
@@ -634,7 +634,7 @@ class QuadraticBezierBond {
 
   /**
    * @param {number} ohl 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   setOverhangLengthBracket2(ohl, getClockwiseNormalAngleOfBase) {
     let bracketProps2 = this._bracketPositionalProps2();
@@ -649,14 +649,14 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @typedef {Object} QuadraticBezierBond~BracketPositionalProps 
+   * @typedef {Object} TertiaryBond~BracketPositionalProps 
    * @property {number} topPadding 
    * @property {number} overhangPadding 
    * @property {number} overhangLength 
    */
 
   /**
-   * @returns {QuadraticBezierBond~BracketPositionalProps} 
+   * @returns {TertiaryBond~BracketPositionalProps} 
    */
   _bracketPositionalProps1() {
     return {
@@ -667,7 +667,7 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @returns {QuadraticBezierBond~BracketPositionalProps} 
+   * @returns {TertiaryBond~BracketPositionalProps} 
    */
   _bracketPositionalProps2() {
     return {
@@ -681,7 +681,7 @@ class QuadraticBezierBond {
    * Repositions the curve and brackets of this quadratic bezier bond based on the
    * current positions of the bases of its sides.
    * 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   reposition(getClockwiseNormalAngleOfBase) {
     this._reposition(
@@ -697,25 +697,25 @@ class QuadraticBezierBond {
    * current positions of the bases of its sides and the given positional properties
    * for its curve and brackets.
    * 
-   * @param {QuadraticBezierBond~CurvePositionalProps} curveProps 
-   * @param {QuadraticBezierBond~BracketPositionalProps} bracketProps1 
-   * @param {QuadraticBezierBond~BracketPositionalProps} bracketProps2 
-   * @param {QuadraticBezierBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   * @param {TertiaryBond~CurvePositionalProps} curveProps 
+   * @param {TertiaryBond~BracketPositionalProps} bracketProps1 
+   * @param {TertiaryBond~BracketPositionalProps} bracketProps2 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    */
   _reposition(curveProps, bracketProps1, bracketProps2, getClockwiseNormalAngleOfBase) {
-    this._bracket1.plot(QuadraticBezierBond._dBracket(
+    this._bracket1.plot(TertiaryBond._dBracket(
       this._side1,
       bracketProps1,
       getClockwiseNormalAngleOfBase,
     ));
 
-    this._bracket2.plot(QuadraticBezierBond._dBracket(
+    this._bracket2.plot(TertiaryBond._dBracket(
       this._side2,
       bracketProps2,
       getClockwiseNormalAngleOfBase,
     ));
 
-    this._curve.plot(QuadraticBezierBond._dCurve(
+    this._curve.plot(TertiaryBond._dCurve(
       this._bracket1,
       this._bracket2,
       curveProps,
@@ -857,7 +857,7 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @typedef {Object} QuadraticBezierBond~SavableState 
+   * @typedef {Object} TertiaryBond~SavableState 
    * @property {string} className 
    * @property {string} curve 
    * @property {string} bracket1 
@@ -867,11 +867,11 @@ class QuadraticBezierBond {
    */
 
   /**
-   * @returns {QuadraticBezierBond~SavableState} 
+   * @returns {TertiaryBond~SavableState} 
    */
   savableState() {
     let savableState = {
-      className: 'QuadraticBezierBond',
+      className: 'TertiaryBond',
       curve: this._curve.id(),
       bracket1: this._bracket1.id(),
       bracket2: this._bracket2.id(),
@@ -891,4 +891,4 @@ class QuadraticBezierBond {
   }
 }
 
-export default QuadraticBezierBond;
+export default TertiaryBond;

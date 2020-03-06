@@ -1,4 +1,4 @@
-import QuadraticBezierBond from './QuadraticBezierBond';
+import TertiaryBond from './TertiaryBond';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 import distanceBetween from './distanceBetween';
@@ -6,7 +6,7 @@ import distanceBetween from './distanceBetween';
 function exampleBond() {
   let svg = createNodeSVG();
   
-  return QuadraticBezierBond.create(
+  return TertiaryBond.create(
     svg,
     [Base.create(svg, 'A', 1, 2)],
     [Base.create(svg, 'U', 10, 11)],
@@ -20,7 +20,7 @@ it('fromSavedState static method valid saved state', () => {
   let b2 = Base.create(svg, 'u', 1.1, 2.2);
   let b3 = Base.create(svg, 'k', -1, -0.55);
   let b4 = Base.create(svg, 'm', 0, 0);
-  let qbb1 = QuadraticBezierBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
+  let qbb1 = TertiaryBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
 
   function getBaseById(id) {
     switch (id) {
@@ -36,7 +36,7 @@ it('fromSavedState static method valid saved state', () => {
   }
 
   let savableState = qbb1.savableState();
-  let qbb2 = QuadraticBezierBond.fromSavedState(savableState, svg, getBaseById, b => Math.PI / 3);
+  let qbb2 = TertiaryBond.fromSavedState(savableState, svg, getBaseById, b => Math.PI / 3);
 
   expect(qbb2._curve.id()).toBe(qbb1._curve.id());
   expect(qbb2._bracket1.id()).toBe(qbb1._bracket1.id());
@@ -53,7 +53,7 @@ it('fromSavedState static method invalid class name', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'q', 1, 2);
   let b2 = Base.create(svg, 'o', 3, 4);
-  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], b => Math.PI / 5);
+  let qbb = TertiaryBond.create(svg, [b1], [b2], b => Math.PI / 5);
   let savableState = qbb.savableState();
 
   function getBaseById(id) {
@@ -64,35 +64,35 @@ it('fromSavedState static method invalid class name', () => {
     }
   }
 
-  expect(() => QuadraticBezierBond.fromSavedState(
+  expect(() => TertiaryBond.fromSavedState(
     savableState, svg, getBaseById, b => Math.PI / 5)
   ).not.toThrow();
 
   // no class name defined
   delete savableState.className;
 
-  expect(() => QuadraticBezierBond.fromSavedState(
+  expect(() => TertiaryBond.fromSavedState(
     savableState, svg, getBaseById, b => Math.PI / 5
   )).toThrow();
 
   // class name is not a string
   savableState.className = 0.1234;
   
-  expect(() => QuadraticBezierBond.fromSavedState(
+  expect(() => TertiaryBond.fromSavedState(
     savableState, svg, getBaseById, b => Math.PI / 5
   )).toThrow();
 
   // class name is an empty string
   savableState.className = '';
 
-  expect(() => QuadraticBezierBond.fromSavedState(
+  expect(() => TertiaryBond.fromSavedState(
     savableState, svg, getBaseById, b => Math.PI / 5
   )).toThrow();
 
-  // class name is not QuadraticBezierBond
+  // class name is not TertiaryBond
   savableState.className = 'QuadraticBezierBnd';
 
-  expect(() => QuadraticBezierBond.fromSavedState(
+  expect(() => TertiaryBond.fromSavedState(
     savableState, svg, getBaseById, b => Math.PI / 5
   )).toThrow();
 });
@@ -135,7 +135,7 @@ it('_dBracket', () => {
 
   // side of length one
   dBracketCheck(
-    QuadraticBezierBond._dBracket([b1], positivePositionalProps, base => Math.PI / 3),
+    TertiaryBond._dBracket([b1], positivePositionalProps, base => Math.PI / 3),
     [
       ['M', 0.47871870788979676, 7.4971143170299746],
       ['L', 0.9787187078897972, 8.363139720814413],
@@ -158,7 +158,7 @@ it('_dBracket', () => {
 
   // side of length greater than one and different angles for each base
   dBracketCheck(
-    QuadraticBezierBond._dBracket([b1, b2, b3], positivePositionalProps, getBaseClockwiseAngle),
+    TertiaryBond._dBracket([b1, b2, b3], positivePositionalProps, getBaseClockwiseAngle),
     [
       ['M', 0.47871870788979676, 7.4971143170299746],
       ['L', 0.9787187078897972, 8.363139720814413],
@@ -179,7 +179,7 @@ it('_dBracket', () => {
 
   // and baseClockwiseNormalAngleCallback that returns zero
   dBracketCheck(
-    QuadraticBezierBond._dBracket([b1, b2], positionalPropsOfZero, base => 0),
+    TertiaryBond._dBracket([b1, b2], positionalPropsOfZero, base => 0),
     [
       ['M', 1, 2],
       ['L', 1, 2],
@@ -198,7 +198,7 @@ it('_dBracket', () => {
   };
 
   dBracketCheck(
-    QuadraticBezierBond._dBracket([b1, b2], negativePositionalProps, base => Math.PI / 4),
+    TertiaryBond._dBracket([b1, b2], negativePositionalProps, base => Math.PI / 4),
     [
       ['M', -3.7807489476022482, -1.2095576798057384],
       ['L', -5.51316056150929, -2.9419692937127797],
@@ -215,19 +215,19 @@ it('_bracketMidpoint', () => {
   
   // bracket midpoint for side with one base
   let bracket = svg.path('M 0.5 1 L 3.5 -0.9 L 0.999 42 L 1 3 L 0.8 0.88');
-  let mp = QuadraticBezierBond._bracketMidpoint(bracket);
+  let mp = TertiaryBond._bracketMidpoint(bracket);
   expect(mp.x).toBeCloseTo(0.999, 6);
   expect(mp.y).toBeCloseTo(42, 6);
   
   // bracket midpoint for side with even number of bases
   bracket = svg.path('M 1 2 L 0.9 2.0 L -3.4 5.555 L 6.8 7 L -7 -7 L 0 0');
-  mp = QuadraticBezierBond._bracketMidpoint(bracket);
+  mp = TertiaryBond._bracketMidpoint(bracket);
   expect(mp.x).toBeCloseTo((-3.4 + 6.8) / 2, 6);
   expect(mp.y).toBeCloseTo((5.555 + 7) / 2, 6);
   
   // bracket midpoint for side with odd number of bases (greater than one)
   bracket = svg.path('M 1 2 L 3 4 L 5 6 L 7.996 -0.889 L 0 0 L 3 4 L 2 1');
-  mp = QuadraticBezierBond._bracketMidpoint(bracket);
+  mp = TertiaryBond._bracketMidpoint(bracket);
   expect(mp.x).toBeCloseTo(7.996, 6);
   expect(mp.y).toBeCloseTo(-0.889, 6);
 });
@@ -262,7 +262,7 @@ it('_dCurve', () => {
   let positionalProps = { height: 5, angle: Math.PI / 2 };
 
   dCurveCheck(
-    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
+    TertiaryBond._dCurve(bracket1, bracket2, positionalProps),
     [
       ['M', 5, 6],
       ['Q', 6.464466094067262, 14.535533905932738, 15, 16],
@@ -273,7 +273,7 @@ it('_dCurve', () => {
   bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
   bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
   positionalProps = { height: 5, angle: Math.PI / 2 };
-  let d = QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps);
+  let d = TertiaryBond._dCurve(bracket1, bracket2, positionalProps);
   let curve = svg.path(d);
   let segments = curve.array();
   expect(segments.length).toBe(2);
@@ -295,7 +295,7 @@ it('_dCurve', () => {
   positionalProps = { height: 0, angle: 0 };
 
   dCurveCheck(
-    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
+    TertiaryBond._dCurve(bracket1, bracket2, positionalProps),
     [
       ['M', 5, 6],
       ['Q', 10, 11, 15, 16],
@@ -308,7 +308,7 @@ it('_dCurve', () => {
   positionalProps = { height: 0, angle: 0 };
 
   dCurveCheck(
-    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
+    TertiaryBond._dCurve(bracket1, bracket2, positionalProps),
     [
       ['M', 5, 6],
       ['Q', 5, 6, 5, 6],
@@ -321,7 +321,7 @@ it('_dCurve', () => {
   positionalProps = { height: -1.1, angle: -Math.PI / 2 };
 
   dCurveCheck(
-    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
+    TertiaryBond._dCurve(bracket1, bracket2, positionalProps),
     [
       ['M', 5, 6],
       ['Q', 9.222182540694797, 11.777817459305203, 15, 16],
@@ -346,7 +346,7 @@ it('validating sides', () => {
     let bracket1 = svg.path(dBracket1);
     let bracket2 = svg.path(dBracket2);
 
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+    return new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
   
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -393,7 +393,7 @@ it('validating curve', () => {
   let side2 = [Base.create(svg, 'U', 3, 4)];
 
   function createBondWithCurve(curve) {
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+    return new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   // a valid curve
@@ -499,14 +499,14 @@ it('validating brackets', () => {
     let curve = svg.path('M 1 2 Q 3 4 5 6');
     let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
     let side2 = [Base.create(svg, 'A', 1, 2)];
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+    return new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   function createBondWithBracket2AndSide2(bracket2, side2) {
     let curve = svg.path('M 1 2 Q 3 4 5 6');
     let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
     let side1 = [Base.create(svg, 'A', 1, 2)];
-    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+    return new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -674,7 +674,7 @@ it('curve property getters', () => {
   let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
   let side1 = [Base.create(svg, 'A', 1, 2)];
   let side2 = [Base.create(svg, 'U', 3, 4)];
-  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  let qbb = new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
 
   expect(qbb.xCurveEnd1).toBe(1.1);
   expect(qbb.yCurveEnd1).toBe(-2);
@@ -688,21 +688,21 @@ it('curve property getters', () => {
 
   // curve height of zero
   curve = svg.path('M 0 0 Q 1 1 2 2');
-  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  qbb = new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
   expect(qbb.curveHeight).toBeCloseTo(0, 6);
   expect(typeof(qbb.curveAngle)).toBe('number');
   expect(isFinite(qbb.curveAngle)).toBeTruthy();
   
   // zero distance between ends
   curve = svg.path('M 0 0 Q 0 1 0 0');
-  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  qbb = new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
   expect(qbb.curveHeight).toBeCloseTo(1, 6);
   expect(typeof(qbb.curveAngle)).toBe('number');
   expect(isFinite(qbb.curveAngle)).toBeTruthy();
   
   // curve height of zero and zero distance between ends
   curve = svg.path('M 1.1 1.1 Q 1.1 1.1 1.1 1.1');
-  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  qbb = new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
   expect(qbb.curveHeight).toBe(0);
   expect(typeof(qbb.curveAngle)).toBe('number');
   expect(isFinite(qbb.curveAngle)).toBeTruthy();
@@ -715,7 +715,7 @@ it('shiftCurveControlPoint', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.create(
+  let qbb = TertiaryBond.create(
     svg,
     [b1, b2],
     [b3, b4],
@@ -740,7 +740,7 @@ it('bracket 1 top padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.create(
+  let qbb = TertiaryBond.create(
     svg,
     [b1, b2],
     [b3, b4],
@@ -773,7 +773,7 @@ it('bracket 2 top padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.create(
+  let qbb = TertiaryBond.create(
     svg,
     [b3, b4],
     [b1, b2],
@@ -806,7 +806,7 @@ it('bracket 1 overhang padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.create(
+  let qbb = TertiaryBond.create(
     svg,
     [b1, b2],
     [b3, b4],
@@ -839,7 +839,7 @@ it('bracket 2 overhang padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.create(
+  let qbb = TertiaryBond.create(
     svg,
     [b3, b4],
     [b1, b2],
@@ -872,7 +872,7 @@ it('bracket 1 overhang length getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.create(
+  let qbb = TertiaryBond.create(
     svg,
     [b1, b2],
     [b3, b4],
@@ -905,7 +905,7 @@ it('bracket 2 overhang length getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let qbb = QuadraticBezierBond.create(
+  let qbb = TertiaryBond.create(
     svg,
     [b3, b4],
     [b1, b2],
@@ -938,7 +938,7 @@ it('reposition', () => {
   let b3 = Base.create(svg, 'G', 3, 4);
   let b4 = Base.create(svg, 'C', 4, 5);
 
-  let qbb = QuadraticBezierBond.create(
+  let qbb = TertiaryBond.create(
     svg,
     [b1, b2],
     [b3, b4],
@@ -1134,11 +1134,11 @@ it('savableState method', () => {
   let b2 = Base.create(svg, 'u', 1.1, 2.2);
   let b3 = Base.create(svg, 'k', -1, -0.55);
   let b4 = Base.create(svg, 'm', 0, 0);
-  let qbb = QuadraticBezierBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
+  let qbb = TertiaryBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
 
   let savableState = qbb.savableState();
 
-  expect(savableState.className).toBe('QuadraticBezierBond');
+  expect(savableState.className).toBe('TertiaryBond');
   expect(savableState.curve).toBe(qbb._curve.id());
   expect(savableState.bracket1).toBe(qbb._bracket1.id());
   expect(savableState.bracket2).toBe(qbb._bracket2.id());
