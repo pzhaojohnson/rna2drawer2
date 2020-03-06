@@ -190,6 +190,55 @@ it('StrandBond _applyMostRecentProps static method', () => {
   expect(sb.strokeWidth).toBeCloseTo(5.432, 6);
 });
 
+it('WatsonCrickBond _applyMostRecentProps padding1, padding2, and strokeWidth', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'g', 1, 3);
+  let b2 = Base.create(svg, 't', 6, 6);
+  let wcb = new WatsonCrickBond(svg, b1, b2);
+
+  WatsonCrickBond._mostRecentProps.padding1 = 66.5;
+  WatsonCrickBond._mostRecentProps.padding2 = 12.33;
+  WatsonCrickBond._mostRecentProps.strokeWidth = 1.222;
+  WatsonCrickBond._applyMostRecentProps(wcb);
+  expect(wcb.padding1).toBeCloseTo(66.5, 6);
+  expect(wcb.padding2).toBeCloseTo(12.33, 6);
+  expect(wcb.strokeWidth).toBeCloseTo(1.222, 6);
+});
+
+it('WatsonCrickBond _applyMostRecentProps stroke', () => {
+  let svg = createNodeSVG();
+  let ba = Base.create(svg, 'A', 3, 5);
+  let bu = Base.create(svg, 'U', 4, 3);
+  let bg = Base.create(svg, 'g', 3, 2);
+  let bc = Base.create(svg, 'c', 2, 2);
+  let bt = Base.create(svg, 't', 5.5, -5.5);
+
+  let wcbau = WatsonCrickBond.create(svg, bu, ba);
+  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
+  let wcbgu = WatsonCrickBond.create(svg, bg, bu);
+  let wcbat = WatsonCrickBond.create(svg, bt, ba);
+  let wcbgt = WatsonCrickBond.create(svg, bt, bg);
+  let wcbOther = WatsonCrickBond.create(svg, ba, bc);
+  
+  WatsonCrickBond._mostRecentProps.autStroke = '#aabbcc';
+  WatsonCrickBond._mostRecentProps.gcStroke = '#ccbbaa';
+  WatsonCrickBond._mostRecentProps.gutStroke = '#112233';
+  WatsonCrickBond._mostRecentProps.otherStroke = '#998877';
+
+  WatsonCrickBond._applyMostRecentProps(wcbau);
+  expect(wcbau.stroke).toBe('#aabbcc');
+  WatsonCrickBond._applyMostRecentProps(wcbgc);
+  expect(wcbgc.stroke).toBe('#ccbbaa');
+  WatsonCrickBond._applyMostRecentProps(wcbgu);
+  expect(wcbgu.stroke).toBe('#112233');
+  WatsonCrickBond._applyMostRecentProps(wcbat);
+  expect(wcbat.stroke).toBe('#aabbcc');
+  WatsonCrickBond._applyMostRecentProps(wcbgt);
+  expect(wcbgt.stroke).toBe('#112233');
+  WatsonCrickBond._applyMostRecentProps(wcbOther);
+  expect(wcbOther.stroke).toBe('#998877');
+});
+
 function checkCoordinates(cs, ecs) {
   expect(cs.x1).toBeCloseTo(ecs.x1, 6);
   expect(cs.y1).toBeCloseTo(ecs.y1, 6);
