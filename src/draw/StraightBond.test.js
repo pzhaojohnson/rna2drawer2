@@ -488,6 +488,29 @@ it('_reposition method', () => {
   runFor(WatsonCrickBond);
 });
 
+it('_reposition method updates opacity', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'b', 0, 1);
+    let b2 = Base.create(svg, 'n', -100.5, -101.6);
+    let sb = StraightBondClass.create(svg, b1, b2);
+
+    expect(sb.opacity).toBe(1);
+    b1.move(100, 100.5);
+    b2.move(200.1, 200.011);
+    sb._reposition(1000, 999);
+    expect(sb.opacity).toBe(0);
+
+    b1.move(0, 0);
+    b2.move(10000, 100009);
+    sb._reposition(1000, 999);
+    expect(sb.opacity).toBe(1);
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
+});
+
 it('insertBefore method', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
