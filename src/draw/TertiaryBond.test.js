@@ -268,6 +268,13 @@ it('mostRecentProps static method', () => {
 });
 
 it('_applyMostRecentProps static method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'q', 1, 3);
+  let b2 = Base.create(svg, 'w', 5, 6);
+  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
+  
+  /* Set after creating tertiary bond since the create static method itself
+  applies the most recent properties. */
   TertiaryBond._mostRecentProps.topPaddingBracket1 = 0.887;
   TertiaryBond._mostRecentProps.topPaddingBracket2 = 9.009;
   TertiaryBond._mostRecentProps.overhangPaddingBracket1 = 1.463;
@@ -278,10 +285,6 @@ it('_applyMostRecentProps static method', () => {
   TertiaryBond._mostRecentProps.strokeWidth = 1.334;
   TertiaryBond._mostRecentProps.curveStrokeDasharray = '1 2 3';
 
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'q', 1, 3);
-  let b2 = Base.create(svg, 'w', 5, 6);
-  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
   TertiaryBond._applyMostRecentProps(tb, b => 0);
   expect(tb.topPaddingBracket1).toBeCloseTo(0.887, 6);
   expect(tb.topPaddingBracket2).toBeCloseTo(9.009, 6);

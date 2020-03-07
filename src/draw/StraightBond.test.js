@@ -189,10 +189,13 @@ it('StrandBond _applyMostRecentProps static method', () => {
   let b2 = Base.create(svg, 'g', 1, 3);
   let sb = StrandBond.create(svg, b1, b2);
   
+  /* Set after creating the strand bond since the create static method itself
+  applies the most recent properties. */
   StrandBond._mostRecentProps.padding1 = 5.111;
   StrandBond._mostRecentProps.padding2 = 1.222;
   StrandBond._mostRecentProps.stroke = '#453423';
   StrandBond._mostRecentProps.strokeWidth = 5.432;
+  
   StrandBond._applyMostRecentProps(sb);
   expect(sb.padding1).toBeCloseTo(5.111, 6);
   expect(sb.padding2).toBeCloseTo(1.222, 6);
@@ -206,9 +209,12 @@ it('WatsonCrickBond _applyMostRecentProps padding1, padding2, and strokeWidth', 
   let b2 = Base.create(svg, 't', 6, 6);
   let wcb = new WatsonCrickBond(svg, b1, b2);
 
+  /* Set after creating the strand bond since the create static method itself
+  applies the most recent properties. */
   WatsonCrickBond._mostRecentProps.padding1 = 66.5;
   WatsonCrickBond._mostRecentProps.padding2 = 12.33;
   WatsonCrickBond._mostRecentProps.strokeWidth = 1.222;
+  
   WatsonCrickBond._applyMostRecentProps(wcb);
   expect(wcb.padding1).toBeCloseTo(66.5, 6);
   expect(wcb.padding2).toBeCloseTo(12.33, 6);
@@ -230,6 +236,8 @@ it('WatsonCrickBond _applyMostRecentProps stroke', () => {
   let wcbgt = WatsonCrickBond.create(svg, bt, bg);
   let wcbOther = WatsonCrickBond.create(svg, ba, bc);
   
+  /* Set after creating the strand bond since the create static method itself
+  applies the most recent properties. */
   WatsonCrickBond._mostRecentProps.autStroke = '#aabbcc';
   WatsonCrickBond._mostRecentProps.gcStroke = '#ccbbaa';
   WatsonCrickBond._mostRecentProps.gutStroke = '#112233';
