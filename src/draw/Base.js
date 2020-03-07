@@ -119,7 +119,6 @@ class Base {
       'y': yCenter,
       'text-anchor': 'middle',
       'dy': '0.4em',
-      'cursor': 'pointer',
     });
 
     let b = new Base(text);
