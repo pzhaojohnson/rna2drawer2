@@ -284,6 +284,7 @@ class Base {
    */
   set fontFamily(ff) {
     this._text.attr({ 'font-family': ff });
+    Base._mostRecentProps.fontFamily = ff;
   }
 
   /**
@@ -298,6 +299,7 @@ class Base {
    */
   set fontSize(fs) {
     this._text.attr({ 'font-size': fs });
+    Base._mostRecentProps.fontSize = fs;
   }
 
   /**
@@ -312,6 +314,7 @@ class Base {
    */
   set fontWeight(fw) {
     this._text.attr({ 'font-weight': fw });
+    Base._mostRecentProps.fontWeight = fw;
   }
 
   /**
@@ -326,6 +329,7 @@ class Base {
    */
   set fontStyle(fs) {
     this._text.attr({ 'font-style': fs });
+    Base._mostRecentProps.fontStyle = fs;
   }
 
   /**

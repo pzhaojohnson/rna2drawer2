@@ -5,6 +5,53 @@ import normalizeAngle from './normalizeAngle';
 import Numbering from './Numbering';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 
+it('mostRecentProps static method', () => {
+  Base._mostRecentProps.fontFamily = 'Tahoe';
+  Base._mostRecentProps.fontSize = 4.567;
+  Base._mostRecentProps.fontWeight = 'bolder';
+  Base._mostRecentProps.fontStyle = 'oblique';
+
+  let mrps = Base.mostRecentProps();
+  expect(mrps).not.toBe(Base._mostRecentProps);
+  expect(mrps.fontFamily).toBe('Tahoe');
+  expect(mrps.fontSize).toBeCloseTo(4.567, 6);
+  expect(mrps.fontWeight).toBe('bolder');
+  expect(mrps.fontStyle).toBe('oblique');
+});
+
+it('_applyMostRecentProps static method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'G', 3, 4);
+
+  // set after creating base since create static method itself applies most recent properties
+  Base._mostRecentProps.fontFamily = 'Tahoe';
+  Base._mostRecentProps.fontSize = 4.567;
+  Base._mostRecentProps.fontWeight = 'bolder';
+  Base._mostRecentProps.fontStyle = 'oblique';
+
+  Base._applyMostRecentProps(b);
+  expect(b.fontFamily).toBe('Tahoe');
+  expect(b.fontSize).toBeCloseTo(4.567, 6);
+  expect(b.fontWeight).toBe('bolder');
+  expect(b.fontStyle).toBe('oblique');
+});
+
+it('_copyPropsToMostRecent static method', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'G', 4, 6);
+  b.fontFamily = 'Impact';
+  b.fontSize = 4.447;
+  b.fontWeight = 'lighter';
+  b.fontStyle = 'oblique';
+
+  Base._copyPropsToMostRecent(b);
+  let mrps = Base.mostRecentProps();
+  expect(mrps.fontFamily).toBe('Impact');
+  expect(mrps.fontSize).toBeCloseTo(4.447, 6);
+  expect(mrps.fontWeight).toBe('lighter');
+  expect(mrps.fontStyle).toBe('oblique');
+});
+
 it('fromSavedState static method valid saved state', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -59,12 +106,43 @@ it('fromSavedState static method invalid class name', () => {
   expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
 });
 
+it('fromSavedState static method updates most recent properties', () => {
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'G', 4, 6);
+  b.fontFamily = 'Impact';
+  b.fontSize = 4.447;
+  b.fontWeight = 'lighter';
+  b.fontStyle = 'oblique';
+
+  let savedState = b.savableState();
+  Base.fromSavedState(savedState, svg, 0);
+  let mrps = Base.mostRecentProps();
+  expect(mrps.fontFamily).toBe('Impact');
+  expect(mrps.fontSize).toBeCloseTo(4.447, 6);
+  expect(mrps.fontWeight).toBe('lighter');
+  expect(mrps.fontStyle).toBe('oblique');
+});
+
 it('create static method', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1, 2);
   expect(b.letter).toEqual('A');
   expect(b.xCenter).toEqual(1);
   expect(b.yCenter).toEqual(2);
+});
+
+it('create static method applies most recent properties', () => {
+  Base._mostRecentProps.fontFamily = 'Tahoe';
+  Base._mostRecentProps.fontSize = 4.567;
+  Base._mostRecentProps.fontWeight = 'bolder';
+  Base._mostRecentProps.fontStyle = 'oblique';
+
+  let svg = createNodeSVG();
+  let b = Base.create(svg, 'G', 3, 4);
+  expect(b.fontFamily).toBe('Tahoe');
+  expect(b.fontSize).toBeCloseTo(4.567, 6);
+  expect(b.fontWeight).toBe('bolder');
+  expect(b.fontStyle).toBe('oblique');
 });
 
 it('createOutOfView static method', () => {
@@ -242,6 +320,9 @@ it('fontFamily getter and setter', () => {
 
   // check actual value
   expect(b._text.attr('font-family')).toBe('Consolas');
+
+  // updates most recent property
+  expect(Base.mostRecentProps().fontFamily).toBe('Consolas');
 });
 
 it('fontSize getter and setter', () => {
@@ -254,6 +335,9 @@ it('fontSize getter and setter', () => {
 
   // check actual value
   expect(b._text.attr('font-size')).toBeCloseTo(22.5, 6);
+
+  // updates most recent property
+  expect(Base.mostRecentProps().fontSize).toBeCloseTo(22.5, 6);
 });
 
 it('fontWeight getter and setter', () => {
@@ -277,6 +361,9 @@ it('fontWeight getter and setter', () => {
 
   // check actual value
   expect(b._text.attr('font-weight')).toBeCloseTo(200, 6);
+
+  // updates most recent property
+  expect(Base.mostRecentProps().fontWeight).toBe(200);
 });
 
 it('fontStyle getter and setter', () => {
@@ -289,6 +376,9 @@ it('fontStyle getter and setter', () => {
 
   // check actual value
   expect(b._text.attr('font-style')).toBe('italic');
+
+  // updates most recent property
+  expect(Base.mostRecentProps().fontStyle).toBe('italic');
 });
 
 it('bindMouseover method', () => {
