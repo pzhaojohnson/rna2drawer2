@@ -189,11 +189,11 @@ class TertiaryBond {
    * @param {TertiaryBond~getBaseById} getBaseById 
    * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
    * 
-   * @throws {Error} If the saved state is not for a quadratic bezier bond.
+   * @throws {Error} If the saved state is not for a tertiary bond.
    */
   static fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase) {
     if (savedState.className !== 'TertiaryBond') {
-      throw new Error('Saved state is not for a quadratic bezier bond.');
+      throw new Error('Saved state is not for a tertiary bond.');
     }
     
     let curve = svg.findOne('#' + savedState.curve);
@@ -261,7 +261,7 @@ class TertiaryBond {
 
   /**
    * The bases of a side should be consecutive and in ascending order, though
-   * this cannot be verified by a quadratic bezier bond.
+   * this cannot be verified by a tertiary bond.
    * 
    * @param {SVG.Path} curve 
    * @param {SVG.Path} bracket1 
@@ -727,7 +727,7 @@ class TertiaryBond {
   }
 
   /**
-   * Repositions the curve and brackets of this quadratic bezier bond based on the
+   * Repositions the curve and brackets of this tertiary bond based on the
    * current positions of the bases of its sides.
    * 
    * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
@@ -742,7 +742,7 @@ class TertiaryBond {
   }
 
   /**
-   * Repositions the curve and brackets of this quadratic bezier curve based on the
+   * Repositions the curve and brackets of this tertiary bond based on the
    * current positions of the bases of its sides and the given positional properties
    * for its curve and brackets.
    * 
