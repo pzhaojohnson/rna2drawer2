@@ -76,7 +76,6 @@ class Base {
     }
 
     Base._copyPropsToMostRecent(b);
-
     return b;
   }
 
