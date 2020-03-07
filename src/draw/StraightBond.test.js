@@ -3,176 +3,6 @@ import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import Base from './Base';
 
-it('fromSavedState static method valid saved state', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1.1, 1.2);
-    let b2 = Base.create(svg, 'U', 2.1, 2.2);
-    let sb1 = StraightBondClass.create(svg, b1, b2);
-
-    let savableState = sb1.savableState();
-
-    let getBaseById = (id) => {
-      let dict = {};
-      dict[b1.id] = b1;
-      dict[b2.id] = b2;
-      return dict[id];
-    };
-
-    let sb2 = StraightBondClass.fromSavedState(savableState, svg, getBaseById);
-
-    expect(sb2._line.id()).toBe(sb1._line.id());
-    expect(sb2.base1).toBe(sb1.base1);
-    expect(sb2.base2).toBe(sb1.base2);
-  }
-
-  runFor(StrandBond);
-  runFor(WatsonCrickBond);
-});
-
-it('fromSavedState static method invalid saved state', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1.1, 1.2);
-    let b2 = Base.create(svg, 'U', 2.1, 2.2);
-    let sb1 = StraightBondClass.create(svg, b1, b2);
-
-    let getBaseById = (id) => {
-      let dict = {};
-      dict[b1.id] = b1;
-      dict[b2.id] = b2;
-      return dict[id];
-    };
-
-    let savableState = sb1.savableState();
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).not.toThrow();
-
-    // no class name defined
-    delete savableState.className;
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-    // class name is not a string
-    savableState.className = 2;
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-    // class name is an empty string
-    savableState.className = '';
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-    // class name is nonempty and incorrect
-    savableState.className = 'StraightBnd';
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
-  }
-
-  runFor(StrandBond);
-  runFor(WatsonCrickBond);
-});
-
-it('fromSavedState updates most recent padding1, padding2, and strokeWidth properties', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'a', 5, 6);
-    let b2 = Base.create(svg, 'e', 0, 0);
-    let sb1 = StraightBondClass.create(svg, b1, b2);
-    sb1.padding1 = 5;
-    sb1.padding2 = 0.5;
-    sb1.strokeWidth = 1.65;
-    let savableState = sb1.savableState();
-
-    function getBaseById(id) {
-      let dict = {};
-      dict[b1.id] = b1;
-      dict[b2.id] = b2;
-      return dict[id];
-    }
-
-    let sb2 = StraightBondClass.fromSavedState(savableState, svg, getBaseById);
-    let mrps = StraightBondClass.mostRecentProps();
-    expect(mrps.padding1).toBeCloseTo(5, 6);
-    expect(mrps.padding2).toBeCloseTo(0.5, 6);
-    expect(mrps.strokeWidth).toBeCloseTo(1.65, 6);
-  }
-
-  runFor(StrandBond);
-  runFor(WatsonCrickBond);
-});
-
-it('StrandBond fromSavedState updates most recent stroke property', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 5, 6);
-  let b2 = Base.create(svg, 'e', 0, 0);
-  let sb1 = StrandBond.create(svg, b1, b2);
-  sb1.stroke = '#433221';
-  let savableState = sb1.savableState();
-
-  function getBaseById(id) {
-    let dict = {};
-    dict[b1.id] = b1;
-    dict[b2.id] = b2;
-    return dict[id];
-  }
-
-  let sb2 = StrandBond.fromSavedState(savableState, svg, getBaseById);
-  let mrps = StrandBond.mostRecentProps();
-  expect(mrps.stroke).toBe('#433221');
-});
-
-it('WatsonCrickBond fromSavedState updates most recent stroke properties', () => {
-  let svg = createNodeSVG();
-  let ba = Base.create(svg, 'a', 4, 1);
-  let bu = Base.create(svg, 'U', 7, 100);
-  let bg = Base.create(svg, 'G', -10, 5);
-  let bc = Base.create(svg, 'c', 11, 33);
-  let bt = Base.create(svg, 't', 4, 99);
-
-  let wcbau = WatsonCrickBond.create(svg, ba, bu);
-  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
-  let wcbgu = WatsonCrickBond.create(svg, bu, bg);
-  let wcbat = WatsonCrickBond.create(svg, bt, ba);
-  let wcbgt = WatsonCrickBond.create(svg, bg, bt);
-  let wcbOther = WatsonCrickBond.create(svg, bg, ba);
-
-  function getBaseById(id) {
-    let dict = {};
-    dict[ba.id] = ba;
-    dict[bu.id] = bu;
-    dict[bg.id] = bg;
-    dict[bc.id] = bc;
-    dict[bt.id] = bt;
-    return dict[id];
-  }
-
-  wcbau.stroke = '#445522';
-  let auSavableState = wcbau.savableState();
-  WatsonCrickBond.fromSavedState(auSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#445522');
-  
-  wcbgc.stroke = '#aabcde';
-  let gcSavableState = wcbgc.savableState();
-  WatsonCrickBond.fromSavedState(gcSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().gcStroke).toBe('#aabcde');
-
-  wcbgu.stroke = '#aaabbb';
-  let guSavablestate = wcbgu.savableState();
-  WatsonCrickBond.fromSavedState(guSavablestate, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#aaabbb');
-
-  wcbat.stroke = '#654321';
-  let atSavableState = wcbat.savableState();
-  WatsonCrickBond.fromSavedState(atSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#654321');
-
-  wcbgt.stroke = '#987654';
-  let gtSavableState = wcbgt.savableState();
-  WatsonCrickBond.fromSavedState(gtSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#987654');
-
-  wcbOther.stroke = '#a1b2c3';
-  let otherSavableState = wcbOther.savableState();
-  WatsonCrickBond.fromSavedState(otherSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
-});
-
 it('mostRecentProps static method returns a new object', () => {
   function runFor(StraightBondClass) {
     let mrps = StraightBondClass.mostRecentProps();
@@ -399,6 +229,176 @@ it('_opacity static method', () => {
 
   // paddings are less than distance between bases
   expect(StraightBond._opacity(b1, b2, 1, 1)).toBe(1);
+});
+
+it('fromSavedState static method valid saved state', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1.1, 1.2);
+    let b2 = Base.create(svg, 'U', 2.1, 2.2);
+    let sb1 = StraightBondClass.create(svg, b1, b2);
+
+    let savableState = sb1.savableState();
+
+    let getBaseById = (id) => {
+      let dict = {};
+      dict[b1.id] = b1;
+      dict[b2.id] = b2;
+      return dict[id];
+    };
+
+    let sb2 = StraightBondClass.fromSavedState(savableState, svg, getBaseById);
+
+    expect(sb2._line.id()).toBe(sb1._line.id());
+    expect(sb2.base1).toBe(sb1.base1);
+    expect(sb2.base2).toBe(sb1.base2);
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
+});
+
+it('fromSavedState static method invalid saved state', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 1.1, 1.2);
+    let b2 = Base.create(svg, 'U', 2.1, 2.2);
+    let sb1 = StraightBondClass.create(svg, b1, b2);
+
+    let getBaseById = (id) => {
+      let dict = {};
+      dict[b1.id] = b1;
+      dict[b2.id] = b2;
+      return dict[id];
+    };
+
+    let savableState = sb1.savableState();
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).not.toThrow();
+
+    // no class name defined
+    delete savableState.className;
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
+
+    // class name is not a string
+    savableState.className = 2;
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
+
+    // class name is an empty string
+    savableState.className = '';
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
+
+    // class name is nonempty and incorrect
+    savableState.className = 'StraightBnd';
+    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
+});
+
+it('fromSavedState updates most recent padding1, padding2, and strokeWidth properties', () => {
+  function runFor(StraightBondClass) {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', 5, 6);
+    let b2 = Base.create(svg, 'e', 0, 0);
+    let sb1 = StraightBondClass.create(svg, b1, b2);
+    sb1.padding1 = 5;
+    sb1.padding2 = 0.5;
+    sb1.strokeWidth = 1.65;
+    let savableState = sb1.savableState();
+
+    function getBaseById(id) {
+      let dict = {};
+      dict[b1.id] = b1;
+      dict[b2.id] = b2;
+      return dict[id];
+    }
+
+    let sb2 = StraightBondClass.fromSavedState(savableState, svg, getBaseById);
+    let mrps = StraightBondClass.mostRecentProps();
+    expect(mrps.padding1).toBeCloseTo(5, 6);
+    expect(mrps.padding2).toBeCloseTo(0.5, 6);
+    expect(mrps.strokeWidth).toBeCloseTo(1.65, 6);
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
+});
+
+it('StrandBond fromSavedState updates most recent stroke property', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'a', 5, 6);
+  let b2 = Base.create(svg, 'e', 0, 0);
+  let sb1 = StrandBond.create(svg, b1, b2);
+  sb1.stroke = '#433221';
+  let savableState = sb1.savableState();
+
+  function getBaseById(id) {
+    let dict = {};
+    dict[b1.id] = b1;
+    dict[b2.id] = b2;
+    return dict[id];
+  }
+
+  let sb2 = StrandBond.fromSavedState(savableState, svg, getBaseById);
+  let mrps = StrandBond.mostRecentProps();
+  expect(mrps.stroke).toBe('#433221');
+});
+
+it('WatsonCrickBond fromSavedState updates most recent stroke properties', () => {
+  let svg = createNodeSVG();
+  let ba = Base.create(svg, 'a', 4, 1);
+  let bu = Base.create(svg, 'U', 7, 100);
+  let bg = Base.create(svg, 'G', -10, 5);
+  let bc = Base.create(svg, 'c', 11, 33);
+  let bt = Base.create(svg, 't', 4, 99);
+
+  let wcbau = WatsonCrickBond.create(svg, ba, bu);
+  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
+  let wcbgu = WatsonCrickBond.create(svg, bu, bg);
+  let wcbat = WatsonCrickBond.create(svg, bt, ba);
+  let wcbgt = WatsonCrickBond.create(svg, bg, bt);
+  let wcbOther = WatsonCrickBond.create(svg, bg, ba);
+
+  function getBaseById(id) {
+    let dict = {};
+    dict[ba.id] = ba;
+    dict[bu.id] = bu;
+    dict[bg.id] = bg;
+    dict[bc.id] = bc;
+    dict[bt.id] = bt;
+    return dict[id];
+  }
+
+  wcbau.stroke = '#445522';
+  let auSavableState = wcbau.savableState();
+  WatsonCrickBond.fromSavedState(auSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#445522');
+  
+  wcbgc.stroke = '#aabcde';
+  let gcSavableState = wcbgc.savableState();
+  WatsonCrickBond.fromSavedState(gcSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().gcStroke).toBe('#aabcde');
+
+  wcbgu.stroke = '#aaabbb';
+  let guSavablestate = wcbgu.savableState();
+  WatsonCrickBond.fromSavedState(guSavablestate, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#aaabbb');
+
+  wcbat.stroke = '#654321';
+  let atSavableState = wcbat.savableState();
+  WatsonCrickBond.fromSavedState(atSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#654321');
+
+  wcbgt.stroke = '#987654';
+  let gtSavableState = wcbgt.savableState();
+  WatsonCrickBond.fromSavedState(gtSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#987654');
+
+  wcbOther.stroke = '#a1b2c3';
+  let otherSavableState = wcbOther.savableState();
+  WatsonCrickBond.fromSavedState(otherSavableState, svg, getBaseById);
+  expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
 });
 
 it('basic test of create static method', () => {
