@@ -10,9 +10,7 @@ class Drawing {
    * @param {Element} container The DOM element to place the SVG document of the drawing in.
    */
   constructor(container) {
-    this._container = container;
-
-    this._initializeSVG();
+    this._initializeSVG(container);
 
     this._sequences = [];
       
@@ -21,42 +19,122 @@ class Drawing {
       watsonCrick: [],
       tertiary: []
     };
+
+    this._baseWidth = 12;
+    this._baseHeight = 16;
   }
 
   /**
-   * Creates the SVG document for this drawing and adds it to
-   * the given container element.
-   * 
-   * Also initializes the Z separators for this drawing, which separate
-   * different kinds of elements along the Z axis.
-   * 
-   * @param {Element} container The DOM element to place the SVG document of this drawing in.
+   * @param {Element} container 
    */
-  _initializeSVG() {
-    this._svg = SVG().addTo(this._container);
+  _initializeSVG(container) {
+    this._svgDiv = document.createElement('div');
+    this._svgDiv.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
+    container.appendChild(this._svgDiv);
+
+    this._svg = SVG().addTo(this._svgDiv);
 
     this._svg.attr({
-      'position': 'absolute',
       'width': 2 * window.screen.width,
       'height': 2 * window.screen.height,
-      'overflow': 'scroll'
     });
-  }
-
-  /**
-   * @returns {boolean} True if this drawing is empty.
-   */
-  isEmpty() {
-    return this._sequences.length === 0;
   }
 
   centerView() {
 
     /* Using window.innerWidth is not perfectly precise, but this._container.innerWidth
     always seems to return 0. */
-    this._container.scrollLeft = (this._container.scrollWidth - window.innerWidth) / 2;
+    this._svgDiv.scrollLeft = (this._svgDiv.scrollWidth - window.innerWidth) / 2;
     
-    this._container.scrollTop = (this._container.scrollHeight - this._container.clientHeight) / 2;
+    this._svgDiv.scrollTop = (this._svgDiv.scrollHeight - this._svgDiv.clientHeight) / 2;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get baseWidth() {
+    return this._baseWidth;
+  }
+
+  /**
+   * @param {number} bw 
+   */
+  set baseWidth(bw) {
+    this._baseWidth = bw;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get baseHeight() {
+    return this._baseHeight;
+  }
+
+  /**
+   * @param {number} bh 
+   */
+  set baseHeight(bh) {
+    this._baseHeight = bh;
+  }
+
+  /**
+   * @returns {boolean} 
+   */
+  isEmpty() {
+    return this._sequences.length === 0;
+  }
+
+  /**
+   * Returns null if the given ID does not match any sequence.
+   * 
+   * @param {string} id 
+   * 
+   * @returns {Sequence|null} 
+   */
+  getSequenceById(id) {
+    for (let i = 0; i < this._sequences.length; i++) {
+      if (this._sequences[i].id === id) {
+        return this._sequences[i];
+      }
+    }
+    return null;
+  }
+
+  /**
+   * @returns {Array<string>} 
+   */
+  sequenceIds() {
+    let ids = [];
+    this._sequences.forEach(seq => ids.push(seq.id));
+    return ids;
+  }
+
+  /**
+   * @param {callback} cb 
+   */
+  forEachSequence(cb) {
+    this._sequences.forEach(seq => cb(seq));
+  }
+
+  /**
+   * @param {callback} cb 
+   */
+  forEachStrandBond(cb) {
+    this._bonds.strand.forEach(sb => cb(sb));
+  }
+
+  /**
+   * @param {callback} cb 
+   */
+  forEachWatsonCrickBond(cb) {
+    this._bonds.watsonCrick.forEach(wcb => cb(wcb));
+  }
+
+  /**
+   * @param {callback} cb 
+   */
+  forEachTertiaryBond(cb) {
+    this._bonds.tertiary.forEach(tb => cb(tb));
   }
 
   /**
@@ -146,6 +224,48 @@ class Drawing {
     });
 
     return partners;
+  }
+
+  /**
+   * @typedef {Object} Drawing~SavableState 
+   * @property {string} svg 
+   * @property {Array<Sequence~SavableState>} sequences 
+   * @property {Drawing~BondsSavableState} bonds 
+   */
+
+  /**
+   * @typedef {Object} Drawing~BondsSavableState 
+   * @property {Array<StraightBond~SavableState} strand 
+   * @property {Array<StraightBond~SavableState} watsonCrick 
+   * @property {Array<TertiaryBond~SavableState} tertiary 
+   */
+
+  /**
+   * @returns {Drawing~SavableState} 
+   */
+  savableState() {
+    let savableState = {
+      svg: this._svg.svg(),
+      sequences: [],
+      bonds: {
+        strand: [],
+        watsonCrick: [],
+        tertiary: [],
+      },
+    };
+    this._sequences.forEach(
+      seq => savableState.sequences.push(seq.savableState())
+    );
+    this._bonds.strand.forEach(
+      sb => savableState.bonds.strand.push(sb.savableState())
+    );
+    this._bonds.watsonCrick.forEach(
+      wcb => savableState.bonds.watsonCrick.push(wcb.savableState())
+    );
+    this._bonds.tertiary.forEach(
+      tb => savableState.bonds.tertiary.push(tb.savableState())
+    );
+    return savableState;
   }
 }
 
