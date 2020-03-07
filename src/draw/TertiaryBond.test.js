@@ -14,89 +14,6 @@ function exampleBond() {
   );
 }
 
-it('fromSavedState static method valid saved state', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1, 2);
-  let b2 = Base.create(svg, 'u', 1.1, 2.2);
-  let b3 = Base.create(svg, 'k', -1, -0.55);
-  let b4 = Base.create(svg, 'm', 0, 0);
-  let tb1 = TertiaryBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
-
-  function getBaseById(id) {
-    switch (id) {
-      case b1.id:
-        return b1;
-      case b2.id:
-        return b2;
-      case b3.id:
-        return b3;
-      default:
-        return b4;
-    }
-  }
-
-  let savableState = tb1.savableState();
-  let tb2 = TertiaryBond.fromSavedState(savableState, svg, getBaseById, b => Math.PI / 3);
-
-  expect(tb2._curve.id()).toBe(tb1._curve.id());
-  expect(tb2._bracket1.id()).toBe(tb1._bracket1.id());
-  expect(tb2._bracket2.id()).toBe(tb1._bracket2.id());
-  expect(tb2._side1.length).toBe(2);
-  expect(tb2._side1[0].id).toBe(b1.id);
-  expect(tb2._side1[1].id).toBe(b2.id);
-  expect(tb2._side2.length).toBe(2);
-  expect(tb2._side2[0].id).toBe(b3.id);
-  expect(tb2._side2[1].id).toBe(b4.id);
-});
-
-it('fromSavedState static method invalid class name', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'q', 1, 2);
-  let b2 = Base.create(svg, 'o', 3, 4);
-  let tb = TertiaryBond.create(svg, [b1], [b2], b => Math.PI / 5);
-  let savableState = tb.savableState();
-
-  function getBaseById(id) {
-    if (id === b1.id) {
-      return b1;
-    } else {
-      return b2;
-    }
-  }
-
-  expect(() => TertiaryBond.fromSavedState(
-    savableState, svg, getBaseById, b => Math.PI / 5)
-  ).not.toThrow();
-
-  // no class name defined
-  delete savableState.className;
-
-  expect(() => TertiaryBond.fromSavedState(
-    savableState, svg, getBaseById, b => Math.PI / 5
-  )).toThrow();
-
-  // class name is not a string
-  savableState.className = 0.1234;
-  
-  expect(() => TertiaryBond.fromSavedState(
-    savableState, svg, getBaseById, b => Math.PI / 5
-  )).toThrow();
-
-  // class name is an empty string
-  savableState.className = '';
-
-  expect(() => TertiaryBond.fromSavedState(
-    savableState, svg, getBaseById, b => Math.PI / 5
-  )).toThrow();
-
-  // class name is not TertiaryBond
-  savableState.className = 'QuadraticBezierBnd';
-
-  expect(() => TertiaryBond.fromSavedState(
-    savableState, svg, getBaseById, b => Math.PI / 5
-  )).toThrow();
-});
-
 function dBracketCheck(d, expectedSegments) {
   let svg = createNodeSVG();
   let bracket = svg.path(d);
@@ -146,14 +63,11 @@ it('_dBracket', () => {
   );
 
   let getBaseClockwiseAngle = (b) => {
-    switch (b.id) {
-      case b1.id:
-        return Math.PI / 3;
-      case b2.id:
-        return 2 * Math.PI / 3;
-      default:
-        return Math.PI;
-    }
+    let dict = {};
+    dict[b1.id] = Math.PI / 3;
+    dict[b2.id] = 2 * Math.PI / 3;
+    dict[b3.id] = Math.PI;
+    return dict[b.id];
   };
 
   // side of length greater than one and different angles for each base
@@ -177,7 +91,7 @@ it('_dBracket', () => {
     overhangLength: 0,
   };
 
-  // and baseClockwiseNormalAngleCallback that returns zero
+  // clockwise normal angle of zero
   dBracketCheck(
     TertiaryBond._dBracket([b1, b2], positionalPropsOfZero, base => 0),
     [
@@ -190,7 +104,7 @@ it('_dBracket', () => {
     ],
   );
 
-  // negative bracket top padding
+  // negative top padding
   let negativePositionalProps = {
     topPadding: -8.1,
     overhangPadding: 1.111,
@@ -327,6 +241,262 @@ it('_dCurve', () => {
       ['Q', 9.222182540694797, 11.777817459305203, 15, 16],
     ],
   );
+});
+
+it('mostRecentProps static method', () => {
+  TertiaryBond._mostRecentProps.topPaddingBracket1 = 0.887;
+  TertiaryBond._mostRecentProps.topPaddingBracket2 = 9.009;
+  TertiaryBond._mostRecentProps.overhangPaddingBracket1 = 1.463;
+  TertiaryBond._mostRecentProps.overhangPaddingBracket2 = 55.4;
+  TertiaryBond._mostRecentProps.overhangLengthBracket1 = 1478;
+  TertiaryBond._mostRecentProps.overhangLengthBracket2 = 9.6;
+  TertiaryBond._mostRecentProps.stroke = '#243546';
+  TertiaryBond._mostRecentProps.strokeWidth = 1.334;
+  TertiaryBond._mostRecentProps.curveStrokeDasharray = '1 2 3';
+
+  let mrps = TertiaryBond.mostRecentProps();
+  expect(mrps.topPaddingBracket1).toBe(0.887);
+  expect(mrps.topPaddingBracket2).toBe(9.009);
+  expect(mrps.overhangPaddingBracket1).toBe(1.463);
+  expect(mrps.overhangPaddingBracket2).toBe(55.4);
+  expect(mrps.overhangLengthBracket1).toBe(1478);
+  expect(mrps.overhangLengthBracket2).toBe(9.6);
+  expect(mrps.stroke).toBe('#243546');
+  expect(mrps.strokeWidth).toBe(1.334);
+  expect(mrps.curveStrokeDasharray).toBe('1 2 3');
+});
+
+it('_applyMostRecentProps static method', () => {
+  TertiaryBond._mostRecentProps.topPaddingBracket1 = 0.887;
+  TertiaryBond._mostRecentProps.topPaddingBracket2 = 9.009;
+  TertiaryBond._mostRecentProps.overhangPaddingBracket1 = 1.463;
+  TertiaryBond._mostRecentProps.overhangPaddingBracket2 = 55.4;
+  TertiaryBond._mostRecentProps.overhangLengthBracket1 = 1478;
+  TertiaryBond._mostRecentProps.overhangLengthBracket2 = 9.6;
+  TertiaryBond._mostRecentProps.stroke = '#243546';
+  TertiaryBond._mostRecentProps.strokeWidth = 1.334;
+  TertiaryBond._mostRecentProps.curveStrokeDasharray = '1 2 3';
+
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'q', 1, 3);
+  let b2 = Base.create(svg, 'w', 5, 6);
+  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
+  TertiaryBond._applyMostRecentProps(tb, b => 0);
+  expect(tb.topPaddingBracket1).toBeCloseTo(0.887, 6);
+  expect(tb.topPaddingBracket2).toBeCloseTo(9.009, 6);
+  expect(tb.overhangPaddingBracket1).toBeCloseTo(1.463, 6);
+  expect(tb.overhangPaddingBracket2).toBeCloseTo(55.4, 6);
+  expect(tb.overhangLengthBracket1).toBeCloseTo(1478, 6);
+  expect(tb.overhangLengthBracket2).toBeCloseTo(9.6, 6);
+  expect(tb.stroke).toBe('#243546');
+  expect(tb.strokeWidth).toBeCloseTo(1.334, 6);
+  expect(tb.curveStrokeDasharray).toBe('1 2 3');
+});
+
+it('_copyPropsToMostRecent static method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'j', 5, 6);
+  let b2 = Base.create(svg, 'a', 4, 5);
+  let b3 = Base.create(svg, 'A', 5.55, 6.66);
+  let tb = TertiaryBond.create(svg, [b1, b2], [b3], b => 0);
+  
+  tb.setTopPaddingBracket1(0.8855, b => 0);
+  tb.setTopPaddingBracket2(12345, b => 0);
+  tb.setOverhangPaddingBracket1(5.43, b => 0);
+  tb.setOverhangPaddingBracket2(3.567, b => 0);
+  tb.setOverhangLengthBracket1(9.999, b => 0);
+  tb.setOverhangLengthBracket2(7.543, b => 0);
+  tb.stroke = '#645342';
+  tb.strokeWidth = 1.445;
+  tb.curveStrokeDasharray = '3 3 2';
+
+  TertiaryBond._copyPropsToMostRecent(tb);
+  let mrps = TertiaryBond.mostRecentProps();
+  expect(mrps.topPaddingBracket1).toBeCloseTo(0.8855, 6);
+  expect(mrps.topPaddingBracket2).toBeCloseTo(12345, 6);
+  expect(mrps.overhangPaddingBracket1).toBeCloseTo(5.43, 6);
+  expect(mrps.overhangPaddingBracket2).toBeCloseTo(3.567, 6);
+  expect(mrps.overhangLengthBracket1).toBeCloseTo(9.999, 6);
+  expect(mrps.overhangLengthBracket2).toBeCloseTo(7.543, 6);
+  expect(mrps.stroke).toBe('#645342');
+  expect(mrps.strokeWidth).toBeCloseTo(1.445, 6);
+  expect(mrps.curveStrokeDasharray).toBe('3 3 2');
+});
+
+it('fromSavedState static method valid saved state', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'A', 1, 2);
+  let b2 = Base.create(svg, 'u', 1.1, 2.2);
+  let b3 = Base.create(svg, 'k', -1, -0.55);
+  let b4 = Base.create(svg, 'm', 0, 0);
+  
+  function getBaseById(id) {
+    let dict = {};
+    dict[b1.id] = b1;
+    dict[b2.id] = b2;
+    dict[b3.id] = b3;
+    dict[b4.id] = b4;
+    return dict[id];
+  }
+
+  function getClockwiseNormalAngleOfBase(b) {
+    return Math.PI / 3;
+  }
+
+  let tb1 = TertiaryBond.create(svg, [b1, b2], [b3, b4], getClockwiseNormalAngleOfBase);
+
+  let savedState = tb1.savableState();
+  let tb2 = TertiaryBond.fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase);
+
+  expect(tb2._curve.id()).toBe(tb1._curve.id());
+  expect(tb2._bracket1.id()).toBe(tb1._bracket1.id());
+  expect(tb2._bracket2.id()).toBe(tb1._bracket2.id());
+  expect(tb2._side1.length).toBe(2);
+  expect(tb2._side1[0].id).toBe(b1.id);
+  expect(tb2._side1[1].id).toBe(b2.id);
+  expect(tb2._side2.length).toBe(2);
+  expect(tb2._side2[0].id).toBe(b3.id);
+  expect(tb2._side2[1].id).toBe(b4.id);
+});
+
+it('fromSavedState static method invalid class name', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'q', 1, 2);
+  let b2 = Base.create(svg, 'o', 3, 4);
+
+  function getBaseById(id) {
+    let dict = {};
+    dict[b1.id] = b1;
+    dict[b2.id] = b2;
+    return dict[id];
+  }
+
+  function getClockwiseNormalAngleOfBase(b) {
+    return Math.PI / 5;
+  }
+
+  let tb = TertiaryBond.create(svg, [b1], [b2], getClockwiseNormalAngleOfBase);
+  let savableState = tb.savableState();
+
+  expect(() => TertiaryBond.fromSavedState(
+    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase)
+  ).not.toThrow();
+
+  // no class name defined
+  delete savableState.className;
+
+  expect(() => TertiaryBond.fromSavedState(
+    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
+  )).toThrow();
+
+  // class name is not a string
+  savableState.className = 0.1234;
+  
+  expect(() => TertiaryBond.fromSavedState(
+    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
+  )).toThrow();
+
+  // class name is an empty string
+  savableState.className = '';
+
+  expect(() => TertiaryBond.fromSavedState(
+    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
+  )).toThrow();
+
+  // class name is not TertiaryBond
+  savableState.className = 'TertiaryBnd';
+
+  expect(() => TertiaryBond.fromSavedState(
+    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
+  )).toThrow();
+});
+
+it('fromSavedState static method updates most recent properties', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'a', 1, 2);
+  let b2 = Base.create(svg, 'j', 3, 4);
+
+  function getBaseById(id) {
+    let dict = {};
+    dict[b1.id] = b1;
+    dict[b2.id] = b2;
+    return dict[id];
+  }
+
+  function getClockwiseNormalAngleOfBase(b) {
+    return 0;
+  }
+
+  let tb = TertiaryBond.create(svg, [b1], [b2], getClockwiseNormalAngleOfBase);
+  tb.setTopPaddingBracket1(2.222, getClockwiseNormalAngleOfBase);
+  tb.setTopPaddingBracket2(3.333, getClockwiseNormalAngleOfBase);
+  tb.setOverhangPaddingBracket1(1.45, getClockwiseNormalAngleOfBase);
+  tb.setOverhangPaddingBracket2(4.44, getClockwiseNormalAngleOfBase);
+  tb.setOverhangLengthBracket1(3.24, getClockwiseNormalAngleOfBase);
+  tb.setOverhangLengthBracket2(5.446, getClockwiseNormalAngleOfBase);
+  tb.stroke = '#abbccd';
+  tb.strokeWidth = 5.66;
+  tb.curveStrokeDasharray = '1 5 4';
+
+  let savedState = tb.savableState();
+  TertiaryBond.fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase);
+  let mrps = TertiaryBond.mostRecentProps();
+  expect(mrps.topPaddingBracket1).toBeCloseTo(2.222, 6);
+  expect(mrps.topPaddingBracket2).toBeCloseTo(3.333, 6);
+  expect(mrps.overhangPaddingBracket1).toBeCloseTo(1.45, 6);
+  expect(mrps.overhangPaddingBracket2).toBeCloseTo(4.44, 6);
+  expect(mrps.overhangLengthBracket1).toBeCloseTo(3.24, 6);
+  expect(mrps.overhangLengthBracket2).toBeCloseTo(5.446, 6);
+  expect(mrps.stroke).toBe('#abbccd');
+  expect(mrps.strokeWidth).toBeCloseTo(5.66, 6);
+  expect(mrps.curveStrokeDasharray).toBe('1 5 4');
+});
+
+it('basic test of create static method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'g', 0, 1);
+  let b2 = Base.create(svg, 'c', 5, 32);
+  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
+  expect(typeof(tb) === 'object' && tb !== null).toBeTruthy();
+});
+
+it('create static method applies most recent properties', () => {
+  TertiaryBond._mostRecentProps.topPaddingBracket1 = 5.664;
+  TertiaryBond._mostRecentProps.topPaddingBracket2 = -1.5767;
+  TertiaryBond._mostRecentProps.overhangPaddingBracket1 = 1.434;
+  TertiaryBond._mostRecentProps.overhangPaddingBracket2 = 12.243;
+  TertiaryBond._mostRecentProps.overhangLengthBracket1 = 12.325;
+  TertiaryBond._mostRecentProps.overhangLengthBracket2 = 13.3476;
+  TertiaryBond._mostRecentProps.stroke = '#113355';
+  TertiaryBond._mostRecentProps.strokeWidth = 1.558;
+  TertiaryBond._mostRecentProps.curveStrokeDasharray = '4 5 5 3';
+
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'g', 1, 3);
+  let b2 = Base.create(svg, 'a', 2, 2);
+  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
+  expect(tb.topPaddingBracket1).toBeCloseTo(5.664, 6);
+  expect(tb.topPaddingBracket2).toBeCloseTo(-1.5767, 6);
+  expect(tb.overhangPaddingBracket1).toBeCloseTo(1.434, 6);
+  expect(tb.overhangPaddingBracket2).toBeCloseTo(12.243, 6);
+  expect(tb.overhangLengthBracket1).toBeCloseTo(12.325, 6);
+  expect(tb.overhangLengthBracket2).toBeCloseTo(13.3476, 6);
+  expect(tb.stroke).toBe('#113355');
+  expect(tb.strokeWidth).toBeCloseTo(1.558, 6);
+  expect(tb.curveStrokeDasharray).toBe('4 5 5 3');
+});
+
+it('basic test of constructor', () => {
+  let svg = createNodeSVG();
+  let curve = svg.path('M 3 3 Q 1 2 3 4');
+  let bracket1 = svg.path('M 2 2 L 3 4 L 3 3 L 1 2 L 5 6');
+  let bracket2 = svg.path('M 5 6 L 7 7 L 8 9 L 10 9 L 5 6');
+  let b1 = Base.create(svg, 'a', 3, 4);
+  let b2 = Base.create(svg, 'g', 7, 7);
+
+  expect(
+    () => new TertiaryBond(curve, bracket1, bracket2, [b1], [b2], b => 0)
+  ).not.toThrow();
 });
 
 it('validating sides', () => {
@@ -764,6 +934,10 @@ it('bracket 1 top padding getter and setter', () => {
       ['L', 5.828427124746189, -1.6568542494923806],
     ],
   );
+
+  // updates most recent property
+  tb.setTopPaddingBracket1(8.887, base => Math.PI / 4);
+  expect(TertiaryBond.mostRecentProps().topPaddingBracket1).toBeCloseTo(8.887, 6);
 });
 
 it('bracket 2 top padding getter and setter', () => {
@@ -797,6 +971,10 @@ it('bracket 2 top padding getter and setter', () => {
       ['L', 5.828427124746189, -1.6568542494923806],
     ],
   );
+
+  // updates most recent property
+  tb.setTopPaddingBracket2(4.332, base => Math.PI / 4);
+  expect(TertiaryBond.mostRecentProps().topPaddingBracket2).toBeCloseTo(4.332, 6);
 });
 
 it('bracket 1 overhang padding getter and setter', () => {
@@ -830,6 +1008,10 @@ it('bracket 1 overhang padding getter and setter', () => {
       ['L', 4.06066017177982, 0.1109127034739883],
     ],
   );
+
+  // updates most recent property
+  tb.setOverhangPaddingBracket1(5.667, base => Math.PI / 4);
+  expect(TertiaryBond.mostRecentProps().overhangPaddingBracket1).toBeCloseTo(5.667, 6);
 });
 
 it('bracket 2 overhang padding getter and setter', () => {
@@ -863,6 +1045,10 @@ it('bracket 2 overhang padding getter and setter', () => {
       ['L', 4.06066017177982, 0.1109127034739883],
     ],
   );
+
+  // updates most recent property
+  tb.setOverhangPaddingBracket2(1.335, base => Math.PI / 4);
+  expect(TertiaryBond.mostRecentProps().overhangPaddingBracket2).toBeCloseTo(1.335, 6);
 });
 
 it('bracket 1 overhang length getter and setter', () => {
@@ -896,6 +1082,10 @@ it('bracket 1 overhang length getter and setter', () => {
       ['L', 6.181980515339463, 2.2322330470336307],
     ],
   );
+
+  // updates most recent property
+  tb.setOverhangLengthBracket1(3.445, base => Math.PI / 4);
+  expect(TertiaryBond.mostRecentProps().overhangLengthBracket1).toBeCloseTo(3.445, 6);
 });
 
 it('bracket 2 overhang length getter and setter', () => {
@@ -929,9 +1119,13 @@ it('bracket 2 overhang length getter and setter', () => {
       ['L', 6.181980515339463, 2.2322330470336307],
     ],
   );
+
+  // updates most recent property
+  tb.setOverhangLengthBracket2(1.345, base => Math.PI / 4);
+  expect(TertiaryBond.mostRecentProps().overhangLengthBracket2).toBeCloseTo(1.345, 6);
 });
 
-it('reposition', () => {
+it('reposition method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
   let b2 = Base.create(svg, 'U', 2, 3);
@@ -1035,6 +1229,9 @@ it('stroke getter and setter', () => {
   expect(tb._curve.attr('stroke')).toBe('blue');
   expect(tb._bracket1.attr('stroke')).toBe('blue');
   expect(tb._bracket2.attr('stroke')).toBe('blue');
+
+  // updates most recent property
+  expect(TertiaryBond.mostRecentProps().stroke).toBe('blue');
 });
 
 it('strokeWidth getter and setter', () => {
@@ -1058,6 +1255,26 @@ it('strokeWidth getter and setter', () => {
   expect(tb._curve.attr('stroke-width')).toBe(2);
   expect(tb._bracket1.attr('stroke-width')).toBe(2);
   expect(tb._bracket2.attr('stroke-width')).toBe(2);
+
+  // updates most recent property
+  expect(TertiaryBond.mostRecentProps().strokeWidth).toBe(2);
+});
+
+it('curveStrokeDasharray getter and setter', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'a', 1, 3);
+  let b2 = Base.create(svg, 'G', 5, 6);
+  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
+  tb.curveStrokeDasharray = '1 3 3 5';
+
+  // check getter
+  expect(tb.curveStrokeDasharray).toBe('1 3 3 5');
+
+  // check actual value
+  expect(tb._curve.attr('stroke-dasharray')).toBe('1 3 3 5');
+
+  // update most recent property
+  expect(TertiaryBond.mostRecentProps().curveStrokeDasharray).toBe('1 3 3 5');
 });
 
 it('bracket 1 opacity getter and setter', () => {
@@ -1126,6 +1343,25 @@ it('cursor getter and setter', () => {
 
   tb.cursor = 'default';
   expect(tb.cursor).toBe('default');
+});
+
+it('remove method', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'q', 1, 3);
+  let b2 = Base.create(svg, 'c', 1.11, 2.3);
+  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
+
+  let curveId = tb._curve.id();
+  expect(svg.findOne('#' + curveId)).not.toBe(null);
+  let bracketId1 = tb._bracket1.id();
+  expect(svg.findOne('#' + bracketId1)).not.toBe(null);
+  let bracketId2 = tb._bracket2.id();
+  expect(svg.findOne('#' + bracketId2)).not.toBe(null);
+
+  tb.remove();
+  expect(svg.findOne('#' + curveId)).toBe(null);
+  expect(svg.findOne('#' + bracketId1)).toBe(null);
+  expect(svg.findOne('#' + bracketId2)).toBe(null);
 });
 
 it('savableState method', () => {
