@@ -12,7 +12,6 @@ class Base {
    * @property {number} fontSize 
    * @property {string|number} fontWeight 
    * @property {string} fontStyle 
-   * @property {string} fill 
    */
 
   /**
@@ -31,7 +30,6 @@ class Base {
     b.fontSize = props.fontSize;
     b.fontWeight = props.fontWeight;
     b.fontStyle = props.fontStyle;
-    b.fill = props.fill;
   }
 
   /**
@@ -42,7 +40,6 @@ class Base {
     Base._mostRecentProps.fontSize = b.fontSize;
     Base._mostRecentProps.fontWeight = b.fontWeight;
     Base._mostRecentProps.fontStyle = b.fontStyle;
-    Base._mostRecentProps.fill = b.fill;
   }
 
   /**
@@ -710,7 +707,6 @@ Base._mostRecentProps = {
   fontSize: 9,
   fontWeight: 'bold',
   fontStyle: 'normal',
-  fill: '#000000',
 };
 
 export default Base;
