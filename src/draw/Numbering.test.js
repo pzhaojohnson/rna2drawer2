@@ -78,6 +78,72 @@ it('_textPositioning', () => {
   expect(tp.dy).toBe('0em');
 });
 
+it('mostRecentProps static method', () => {
+  Numbering._mostRecentProps.basePadding = 5.798;
+  Numbering._mostRecentProps.lineLength = 10.23;
+  Numbering._mostRecentProps.fontFamily = 'Tahoe';
+  Numbering._mostRecentProps.fontSize = 3.567;
+  Numbering._mostRecentProps.fontWeight = 'lighter';
+  Numbering._mostRecentProps.color = '#456123';
+  Numbering._mostRecentProps.lineStrokeWidth = 3.5678;
+
+  let mrps = Numbering.mostRecentProps();
+  expect(mrps).not.toBe(Numbering._mostRecentProps);
+  expect(mrps.basePadding).toBeCloseTo(5.798, 6);
+  expect(mrps.lineLength).toBeCloseTo(10.23, 6);
+  expect(mrps.fontFamily).toBe('Tahoe');
+  expect(mrps.fontSize).toBeCloseTo(3.567, 6);
+  expect(mrps.fontWeight).toBe('lighter');
+  expect(mrps.color).toBe('#456123');
+  expect(mrps.lineStrokeWidth).toBeCloseTo(3.5678, 6);
+});
+
+it('_applyMostRecentProps static method', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 9, 1.1, 2.2, 0);
+
+  /* Set after creating the numbering since the create static method itself
+  applies the most recent properties. */
+  Numbering._mostRecentProps.basePadding = 5.798;
+  Numbering._mostRecentProps.lineLength = 10.23;
+  Numbering._mostRecentProps.fontFamily = 'Tahoe';
+  Numbering._mostRecentProps.fontSize = 3.567;
+  Numbering._mostRecentProps.fontWeight = 'lighter';
+  Numbering._mostRecentProps.color = '#456123';
+  Numbering._mostRecentProps.lineStrokeWidth = 3.5678;
+
+  Numbering._applyMostRecentProps(n);
+  expect(n.basePadding).toBeCloseTo(5.798, 6);
+  expect(n.lineLength).toBeCloseTo(10.23, 6);
+  expect(n.fontFamily).toBe('Tahoe');
+  expect(n.fontSize).toBeCloseTo(3.567, 6);
+  expect(n.fontWeight).toBe('lighter');
+  expect(n.color).toBe('#456123');
+  expect(n.lineStrokeWidth).toBeCloseTo(3.5678, 6);
+});
+
+it('_copyPropsToMostRecent static method', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 9, 1.1, 2.2, 0);
+  n.basePadding = 5.798;
+  n.lineLength = 10.23;
+  n.fontFamily = 'Tahoe';
+  n.fontSize = 3.567;
+  n.fontWeight = 'lighter';
+  n.color = '#456123';
+  n.lineStrokeWidth = 3.5678;
+
+  Numbering._copyPropsToMostRecent(n);
+  let mrps = Numbering.mostRecentProps();
+  expect(mrps.basePadding).toBeCloseTo(5.798, 6);
+  expect(mrps.lineLength).toBeCloseTo(10.23, 6);
+  expect(mrps.fontFamily).toBe('Tahoe');
+  expect(mrps.fontSize).toBeCloseTo(3.567, 6);
+  expect(mrps.fontWeight).toBe('lighter');
+  expect(mrps.color).toBe('#456123');
+  expect(mrps.lineStrokeWidth).toBeCloseTo(3.5678, 6);
+});
+
 it('fromSavedState static method valid saved state', () => {
   let svg = createNodeSVG();
   let n1 = Numbering.create(svg, 2, 1, 8, 7);
@@ -113,6 +179,29 @@ it('fromSavedState static method invalid saved state', () => {
   expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
 });
 
+it('fromSavedState static method updates most recent properties', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 9, 1.1, 2.2, 0);
+  n.basePadding = 5.798;
+  n.lineLength = 10.23;
+  n.fontFamily = 'Tahoe';
+  n.fontSize = 3.567;
+  n.fontWeight = 'lighter';
+  n.color = '#456123';
+  n.lineStrokeWidth = 3.5678;
+
+  let savedState = n.savableState();
+  Numbering.fromSavedState(savedState, svg, 1.1, 2.2);
+  let mrps = Numbering.mostRecentProps();
+  expect(mrps.basePadding).toBeCloseTo(5.798, 6);
+  expect(mrps.lineLength).toBeCloseTo(10.23, 6);
+  expect(mrps.fontFamily).toBe('Tahoe');
+  expect(mrps.fontSize).toBeCloseTo(3.567, 6);
+  expect(mrps.fontWeight).toBe('lighter');
+  expect(mrps.color).toBe('#456123');
+  expect(mrps.lineStrokeWidth).toBeCloseTo(3.5678, 6);
+});
+
 it('basic test of create static method', () => {
   let svg = createNodeSVG();
   let n = Numbering.create(svg, 10, 2, 3, Math.PI / 3);
@@ -123,6 +212,26 @@ it('basic test of create static method', () => {
   let x1 = n._line.attr('x1');
   let y1 = n._line.attr('y1');
   expect(angleBetween(2, 3, x1, y1)).toBeCloseTo(Math.PI / 3, 6);
+});
+
+it('create static method applies most recent properties', () => {
+  Numbering._mostRecentProps.basePadding = 5.798;
+  Numbering._mostRecentProps.lineLength = 10.23;
+  Numbering._mostRecentProps.fontFamily = 'Tahoe';
+  Numbering._mostRecentProps.fontSize = 3.567;
+  Numbering._mostRecentProps.fontWeight = 'lighter';
+  Numbering._mostRecentProps.color = '#456123';
+  Numbering._mostRecentProps.lineStrokeWidth = 3.5678;
+
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 9, 1.1, 2.2, 0);
+  expect(n.basePadding).toBeCloseTo(5.798, 6);
+  expect(n.lineLength).toBeCloseTo(10.23, 6);
+  expect(n.fontFamily).toBe('Tahoe');
+  expect(n.fontSize).toBeCloseTo(3.567, 6);
+  expect(n.fontWeight).toBe('lighter');
+  expect(n.color).toBe('#456123');
+  expect(n.lineStrokeWidth).toBeCloseTo(3.5678, 6);
 });
 
 it('basic test of constructor', () => {
@@ -206,6 +315,9 @@ it('basePadding getter and setter', () => {
   let angle = angleBetween(1.1, -5, x1, y1);
   angle = normalizeAngle(angle, 0);
   expect(angle).toBeCloseTo(Math.PI / 3, 6);
+
+  // updates most recent property
+  expect(Numbering.mostRecentProps().basePadding).toBeCloseTo(20, 6);
 });
 
 it('lineLength getter and setter', () => {
@@ -240,6 +352,9 @@ it('lineLength getter and setter', () => {
 
   expect(n._line.attr('x1')).toBeCloseTo(x1, 6);
   expect(n._line.attr('y1')).toBeCloseTo(y1, 6);
+
+  // updates most recent property
+  expect(Numbering.mostRecentProps().lineLength).toBeCloseTo(24.4, 6);
 });
 
 it('reposition', () => {
@@ -361,6 +476,9 @@ it('fontFamily getter and setter', () => {
 
   // check actual value
   expect(n._text.attr('font-family')).toBe('Consolas');
+
+  // updates most recent property
+  expect(Numbering.mostRecentProps().fontFamily).toBe('Consolas');
 });
 
 it('fontSize', () => {
@@ -373,6 +491,9 @@ it('fontSize', () => {
 
   // check actual value
   expect(n._text.attr('font-size')).toBeCloseTo(20, 6);
+
+  // updates most recent property
+  expect(Numbering.mostRecentProps().fontSize).toBeCloseTo(20, 6);
 });
 
 it('fontWeight getter and setter', () => {
@@ -394,6 +515,9 @@ it('fontWeight getter and setter', () => {
 
   // check actual value
   expect(n._text.attr('font-weight')).toBeCloseTo(200, 6);
+
+  // updatest most recent property
+  expect(Numbering.mostRecentProps().fontWeight).toBe(200);
 });
 
 it('color getter and setter', () => {
@@ -407,6 +531,9 @@ it('color getter and setter', () => {
   // check actual values
   expect(n._text.attr('fill')).toBe('#192865');
   expect(n._line.attr('stroke')).toBe('#192865');
+
+  // updates most recent property
+  expect(Numbering.mostRecentProps().color).toBe('#192865');
 });
 
 it('lineStrokeWidth getter and setter', () => {
@@ -419,6 +546,9 @@ it('lineStrokeWidth getter and setter', () => {
 
   // check actual value
   expect(n._line.attr('stroke-width')).toBeCloseTo(12.2, 6);
+
+  // updates most recent property
+  expect(Numbering.mostRecentProps().lineStrokeWidth).toBeCloseTo(12.2, 6);
 });
 
 it('remove method', () => {

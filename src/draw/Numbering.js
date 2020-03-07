@@ -267,6 +267,8 @@ class Numbering {
       bp,
       this.lineLength,
     );
+
+    Numbering._mostRecentProps.basePadding = bp;
   }
 
   /**
@@ -302,6 +304,8 @@ class Numbering {
       this.basePadding,
       ll,
     );
+
+    Numbering._mostRecentProps.lineLength = ll;
   }
 
   /**
@@ -404,6 +408,7 @@ class Numbering {
    */
   set fontFamily(ff) {
     this._text.attr({ 'font-family': ff });
+    Numbering._mostRecentProps.fontFamily = ff;
   }
 
   /**
@@ -418,6 +423,7 @@ class Numbering {
    */
   set fontSize(fs) {
     this._text.attr({ 'font-size': fs });
+    Numbering._mostRecentProps.fontSize = fs;
   }
 
   /**
@@ -432,6 +438,7 @@ class Numbering {
    */
   set fontWeight(fw) {
     this._text.attr({ 'font-weight': fw });
+    Numbering._mostRecentProps.fontWeight = fw;
   }
 
   /**
@@ -447,6 +454,7 @@ class Numbering {
   set color(c) {
     this._text.attr({ 'fill': c });
     this._line.attr({ 'stroke': c });
+    Numbering._mostRecentProps.color = c;
   }
 
   /**
@@ -461,6 +469,7 @@ class Numbering {
    */
   set lineStrokeWidth(lsw) {
     this._line.attr({ 'stroke-width': lsw });
+    Numbering._mostRecentProps.lineStrokeWidth = lsw;
   }
 
   remove() {
