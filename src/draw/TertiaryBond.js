@@ -125,6 +125,58 @@ class TertiaryBond {
   }
 
   /**
+   * @typedef {Object} TertiaryBond~MostRecentProps 
+   * @property {number} topPaddingBracket1 
+   * @property {number} topPaddingBracket2 
+   * @property {number} overhangPaddingBracket1 
+   * @property {number} overhangPaddingBracket2 
+   * @property {number} overhangLengthBracket1 
+   * @property {number} overhangLengthBracket2 
+   * @property {string} stroke 
+   * @property {number} strokeWidth 
+   * @property {string} curveStrokeDasharray 
+   */
+
+  /**
+   * @returns {TertiaryBond~MostRecentProps} 
+   */
+  static mostRecentProps() {
+    return { ...TertiaryBond._mostRecentProps };
+  }
+
+  /**
+   * @param {TertiaryBond} tb 
+   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
+   */
+  static _applyMostRecentProps(tb, getClockwiseNormalAngleOfBase) {
+    let mrps = TertiaryBond.mostRecentProps();
+    tb.setTopPaddingBracket1(mrps.topPaddingBracket1, getClockwiseNormalAngleOfBase);
+    tb.setTopPaddingBracket2(mrps.topPaddingBracket2, getClockwiseNormalAngleOfBase);
+    tb.setOverhangPaddingBracket1(mrps.overhangPaddingBracket1, getClockwiseNormalAngleOfBase);
+    tb.setOverhangPaddingBracket2(mrps.overhangPaddingBracket2, getClockwiseNormalAngleOfBase);
+    tb.setOverhangLengthBracket1(mrps.overhangLengthBracket1, getClockwiseNormalAngleOfBase);
+    tb.setOverhangLengthBracket2(mrps.overhangLengthBracket2, getClockwiseNormalAngleOfBase);
+    tb.stroke = mrps.stroke;
+    tb.strokeWidth = mrps.strokeWidth;
+    tb.curveStrokeDasharray = mrps.curveStrokeDasharray;
+  }
+
+  /**
+   * @param {TertiaryBond} tb 
+   */
+  static _copyPropsToMostRecent(tb) {
+    TertiaryBond._mostRecentProps.topPaddingBracket1 = tb.topPaddingBracket1;
+    TertiaryBond._mostRecentProps.topPaddingBracket2 = tb.topPaddingBracket2;
+    TertiaryBond._mostRecentProps.overhangPaddingBracket1 = tb.overhangPaddingBracket1;
+    TertiaryBond._mostRecentProps.overhangPaddingBracket2 = tb.overhangPaddingBracket2;
+    TertiaryBond._mostRecentProps.overhangLengthBracket1 = tb.overhangLengthBracket1;
+    TertiaryBond._mostRecentProps.overhangLengthBracket2 = tb.overhangLengthBracket2;
+    TertiaryBond._mostRecentProps.stroke = tb.stroke;
+    TertiaryBond._mostRecentProps.strokeWidth = tb.strokeWidth;
+    TertiaryBond._mostRecentProps.curveStrokeDasharray = tb.curveStrokeDasharray;
+  }
+
+  /**
    * @callback TertiaryBond~getBaseById 
    * @param {string} id 
    * 
@@ -154,7 +206,7 @@ class TertiaryBond {
     let side2 = [];
     savedState.side2.forEach(id => side2.push(getBaseById(id)));
 
-    return new TertiaryBond(
+    let tb = new TertiaryBond(
       curve,
       bracket1,
       bracket2,
@@ -162,6 +214,9 @@ class TertiaryBond {
       side2,
       getClockwiseNormalAngleOfBase
     );
+
+    TertiaryBond._copyPropsToMostRecent(tb);
+    return tb;
   }
 
   /**
@@ -200,26 +255,8 @@ class TertiaryBond {
       getClockwiseNormalAngleOfBase
     );
 
-    TertiaryBond._applyDefaults(qbb, getClockwiseNormalAngleOfBase);
+    TertiaryBond._applyMostRecentProps(qbb, getClockwiseNormalAngleOfBase);
     return qbb;
-  }
-
-  /**
-   * 
-   * @param {TertiaryBond} qbb 
-   * @param {TertiaryBond~getClockwiseNormalAngleOfBase} getClockwiseNormalAngleOfBase 
-   */
-  static _applyDefaults(qbb, getClockwiseNormalAngleOfBase) {
-    qbb.setTopPaddingBracket1(10, getClockwiseNormalAngleOfBase);
-    qbb.setTopPaddingBracket2(10, getClockwiseNormalAngleOfBase);
-    qbb.setOverhangPaddingBracket1(8, getClockwiseNormalAngleOfBase);
-    qbb.setOverhangPaddingBracket2(8, getClockwiseNormalAngleOfBase);
-    qbb.setOverhangLengthBracket1(8, getClockwiseNormalAngleOfBase);
-    qbb.setOverhangLengthBracket2(8, getClockwiseNormalAngleOfBase);
-    qbb.stroke = '#0000ff';
-    qbb.strokeWidth = 2;
-    qbb.curveStrokeDasharray = '3 1';
-    qbb.cursor = 'pointer';
   }
 
   /**
@@ -519,6 +556,8 @@ class TertiaryBond {
       this._bracketPositionalProps2(),
       getClockwiseNormalAngleOfBase,
     );
+
+    TertiaryBond._mostRecentProps.topPaddingBracket1 = tp;
   }
 
   /**
@@ -542,6 +581,8 @@ class TertiaryBond {
       bracketProps2,
       getClockwiseNormalAngleOfBase,
     );
+
+    TertiaryBond._mostRecentProps.topPaddingBracket2 = tp;
   }
 
   /**
@@ -568,6 +609,8 @@ class TertiaryBond {
       this._bracketPositionalProps2(),
       getClockwiseNormalAngleOfBase,
     );
+
+    TertiaryBond._mostRecentProps.overhangPaddingBracket1 = ohp;
   }
 
   /**
@@ -594,6 +637,8 @@ class TertiaryBond {
       bracketProps2,
       getClockwiseNormalAngleOfBase,
     );
+
+    TertiaryBond._mostRecentProps.overhangPaddingBracket2 = ohp;
   }
 
   /**
@@ -620,6 +665,8 @@ class TertiaryBond {
       this._bracketPositionalProps2(),
       getClockwiseNormalAngleOfBase,
     );
+
+    TertiaryBond._mostRecentProps.overhangLengthBracket1 = ohl;
   }
 
   /**
@@ -646,6 +693,8 @@ class TertiaryBond {
       bracketProps2,
       getClockwiseNormalAngleOfBase,
     );
+
+    TertiaryBond._mostRecentProps.overhangLengthBracket2 = ohl;
   }
 
   /**
@@ -756,6 +805,8 @@ class TertiaryBond {
     this._curve.attr({ 'stroke': s });
     this._bracket1.attr({ 'stroke': s });
     this._bracket2.attr({ 'stroke': s });
+
+    TertiaryBond._mostRecentProps.stroke = s;
   }
 
   /**
@@ -772,6 +823,8 @@ class TertiaryBond {
     this._curve.attr({ 'stroke-width': sw });
     this._bracket1.attr({ 'stroke-width': sw });
     this._bracket2.attr({ 'stroke-width': sw });
+
+    TertiaryBond._mostRecentProps.strokeWidth = sw;
   }
 
   /**
@@ -786,6 +839,8 @@ class TertiaryBond {
    */
   set curveStrokeDasharray(sd) {
     this._curve.attr({ 'stroke-dasharray': sd });
+
+    TertiaryBond._mostRecentProps.curveStrokeDasharray = sd;
   }
 
   /**
@@ -890,5 +945,17 @@ class TertiaryBond {
     return savableState;
   }
 }
+
+TertiaryBond._mostRecentProps = {
+  topPaddingBracket1: 10,
+  topPaddingBracket2: 10,
+  overhangPaddingBracket1: 8,
+  overhangPaddingBracket2: 8,
+  overhangLengthBracket1: 8,
+  overhangLengthBracket2: 8,
+  stroke: '#0000ff',
+  strokeWidth: 2,
+  curveStrokeDasharray: '3 1',
+};
 
 export default TertiaryBond;
