@@ -173,6 +173,16 @@ it('WatsonCrickBond fromSavedState updates most recent stroke properties', () =>
   expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
 });
 
+it('mostRecentProps static method returns a new object', () => {
+  function runFor(StraightBondClass) {
+    let mrps = StraightBondClass.mostRecentProps();
+    expect(mrps).not.toBe(StraightBondClass._mostRecentProps);
+  }
+
+  runFor(StrandBond);
+  runFor(WatsonCrickBond);
+});
+
 it('StrandBond _applyMostRecentProps static method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 5, 6);
