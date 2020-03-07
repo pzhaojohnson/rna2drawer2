@@ -397,7 +397,7 @@ class StrandBond extends StraightBond {
    */
   set stroke(s) {
     this._line.attr({ 'stroke': s });
-    StrandBond._mostRecentProps.stroke = this.s;
+    StrandBond._mostRecentProps.stroke = s;
   }
 
   /**
@@ -662,7 +662,8 @@ class WatsonCrickBond extends StraightBond {
 }
 
 WatsonCrickBond._mostRecentProps = {
-  padding: 6,
+  padding1: 6,
+  padding2: 6,
   autStroke: '#000000',
   gcStroke: '#000000',
   gutStroke: '#808080',

@@ -444,7 +444,7 @@ it('base1 and base2 getters', () => {
   runFor(WatsonCrickBond);
 });
 
-it('StrandBond id getter', () => {
+it('id getter', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
     let b0 = Base.create(svg, 'A', 1, 2);
@@ -498,13 +498,16 @@ it('padding1 getter and setter', () => {
         y2: y2,
       },
     );
+
+    // updates most recent property
+    expect(StraightBondClass.mostRecentProps().padding1).toBeCloseTo(0.25, 6);
   }
 
   runFor(StrandBond);
   runFor(WatsonCrickBond);
 });
 
-it('StrandBond padding2 getter and setter', () => {
+it('padding2 getter and setter', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
     let b1 = Base.create(svg, 'a', 0.2, -3);
@@ -536,6 +539,9 @@ it('StrandBond padding2 getter and setter', () => {
         y2: 7.954470900671049,
       },
     );
+
+    // updates most recent property
+    expect(StraightBondClass.mostRecentProps().padding2).toBeCloseTo(0.5, 6);
   }
 
   runFor(StrandBond);
@@ -698,6 +704,44 @@ it('stroke getter and setter', () => {
   runFor(WatsonCrickBond);
 });
 
+it('StrandBond stroke setter updates most recent property', () => {
+  let svg = createNodeSVG();
+  let b1 = Base.create(svg, 'a', 3, 5);
+  let b2 = Base.create(svg, 'j', 1, 1);
+  let sb = StrandBond.create(svg, b1, b2);
+  sb.stroke = '#445566';
+  expect(StrandBond.mostRecentProps().stroke).toBe('#445566');
+});
+
+it('WatsonCrickBond stroke setter updates most recent property', () => {
+  let svg = createNodeSVG();
+  let ba = Base.create(svg, 'A', 3, 5);
+  let bu = Base.create(svg, 'U', 4, 3);
+  let bg = Base.create(svg, 'g', 3, 2);
+  let bc = Base.create(svg, 'c', 2, 2);
+  let bt = Base.create(svg, 't', 5.5, -5.5);
+
+  let wcbau = WatsonCrickBond.create(svg, bu, ba);
+  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
+  let wcbgu = WatsonCrickBond.create(svg, bg, bu);
+  let wcbat = WatsonCrickBond.create(svg, bt, ba);
+  let wcbgt = WatsonCrickBond.create(svg, bt, bg);
+  let wcbOther = WatsonCrickBond.create(svg, ba, bc);
+  
+  wcbau.stroke = '#123456';
+  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#123456');
+  wcbgc.stroke = '#234567';
+  expect(WatsonCrickBond.mostRecentProps().gcStroke).toBe('#234567');
+  wcbgu.stroke = '#345678';
+  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#345678');
+  wcbat.stroke = '#456789';
+  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#456789');
+  wcbgt.stroke = '#567890';
+  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#567890');
+  wcbOther.stroke = '#678900';
+  expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#678900');
+});
+
 it('strokeWidth getter and setter', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
@@ -712,6 +756,9 @@ it('strokeWidth getter and setter', () => {
 
     // check actual value
     expect(sb._line.attr('stroke-width')).toBeCloseTo(2.3, 6);
+
+    // updates most recent property
+    expect(StraightBondClass.mostRecentProps().strokeWidth).toBeCloseTo(2.3, 6);
   }
 
   runFor(StrandBond);
