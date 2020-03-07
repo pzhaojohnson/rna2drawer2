@@ -774,24 +774,6 @@ class TertiaryBond {
   }
 
   /**
-   * @param {SVG.Element} ele 
-   */
-  insertBefore(ele) {
-    this._curve.insertBefore(ele);
-    this._bracket1.insertBefore(ele);
-    this._bracket2.insertBefore(ele);
-  }
-
-  /**
-   * @param {SVG.Element} ele 
-   */
-  insertAfter(ele) {
-    this._curve.insertAfter(ele);
-    this._bracket1.insertAfter(ele);
-    this._bracket2.insertAfter(ele);
-  }
-
-  /**
    * @returns {string} 
    */
   get stroke() {
