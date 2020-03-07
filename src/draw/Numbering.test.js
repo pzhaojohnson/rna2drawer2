@@ -5,41 +5,6 @@ import angleBetween from './angleBetween';
 import distanceBetween from './distanceBetween';
 import normalizeAngle from './normalizeAngle';
 
-it('fromSavedState static method valid saved state', () => {
-  let svg = createNodeSVG();
-  let n1 = Numbering.create(svg, 2, 1, 8, 7);
-  let savableState = n1.savableState();
-  let n2 = Numbering.fromSavedState(savableState, svg, 1, 8);
-
-  expect(n2._text.id()).toBe(n1._text.id());
-  expect(n2._line.id()).toBe(n1._line.id());
-  expect(n2.number).toBe(n1.number);
-  expect(n2.basePadding).toBeCloseTo(n1.basePadding, 6);
-  expect(n2.lineLength).toBeCloseTo(n1.lineLength, 6);
-});
-
-it('fromSavedState static method invalid saved state', () => {
-  let svg = createNodeSVG();
-  let n = Numbering.create(svg, 2, 1, 8, 7);
-  let savableState = n.savableState();
-  
-  // no class name defined
-  delete savableState.className;
-  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
-
-  // class name is not a string
-  savableState.className = 0.1234;
-  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
-
-  // class name is an empty string
-  savableState.className = '';
-  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
-
-  // class name is not Numbering
-  savableState.className = 'Nmbering';
-  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
-});
-
 it('_lineCoordinates', () => {
   let lcs = Numbering._lineCoordinates(1.1, -2, 4 * Math.PI / 3, 4.6, 8.05);
   expect(lcs.x1).toBeCloseTo(-1.200000000000002, 6);
@@ -111,6 +76,41 @@ it('_textPositioning', () => {
   expect(tp.y).toBeCloseTo(-8, 6);
   expect(tp.textAnchor).toBe('middle');
   expect(tp.dy).toBe('0em');
+});
+
+it('fromSavedState static method valid saved state', () => {
+  let svg = createNodeSVG();
+  let n1 = Numbering.create(svg, 2, 1, 8, 7);
+  let savableState = n1.savableState();
+  let n2 = Numbering.fromSavedState(savableState, svg, 1, 8);
+
+  expect(n2._text.id()).toBe(n1._text.id());
+  expect(n2._line.id()).toBe(n1._line.id());
+  expect(n2.number).toBe(n1.number);
+  expect(n2.basePadding).toBeCloseTo(n1.basePadding, 6);
+  expect(n2.lineLength).toBeCloseTo(n1.lineLength, 6);
+});
+
+it('fromSavedState static method invalid saved state', () => {
+  let svg = createNodeSVG();
+  let n = Numbering.create(svg, 2, 1, 8, 7);
+  let savableState = n.savableState();
+  
+  // no class name defined
+  delete savableState.className;
+  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
+
+  // class name is not a string
+  savableState.className = 0.1234;
+  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
+
+  // class name is an empty string
+  savableState.className = '';
+  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
+
+  // class name is not Numbering
+  savableState.className = 'Nmbering';
+  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
 });
 
 it('basic test of create static method', () => {
