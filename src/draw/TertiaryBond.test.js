@@ -255,6 +255,7 @@ it('mostRecentProps static method', () => {
   TertiaryBond._mostRecentProps.curveStrokeDasharray = '1 2 3';
 
   let mrps = TertiaryBond.mostRecentProps();
+  expect(mrps).not.toBe(TertiaryBond._mostRecentProps);
   expect(mrps.topPaddingBracket1).toBe(0.887);
   expect(mrps.topPaddingBracket2).toBe(9.009);
   expect(mrps.overhangPaddingBracket1).toBe(1.463);
