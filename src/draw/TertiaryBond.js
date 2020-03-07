@@ -246,7 +246,7 @@ class TertiaryBond {
       { height: 100, angle: 3 * Math.PI / 2 },
     ));
 
-    let qbb = new TertiaryBond(
+    let tb = new TertiaryBond(
       curve,
       bracket1,
       bracket2,
@@ -255,8 +255,8 @@ class TertiaryBond {
       getClockwiseNormalAngleOfBase
     );
 
-    TertiaryBond._applyMostRecentProps(qbb, getClockwiseNormalAngleOfBase);
-    return qbb;
+    TertiaryBond._applyMostRecentProps(tb, getClockwiseNormalAngleOfBase);
+    return tb;
   }
 
   /**
