@@ -62,7 +62,7 @@ it('_dBracket', () => {
     ],
   );
 
-  let getBaseClockwiseAngle = (b) => {
+  let getClockwiseNormalAngleOfBase = (b) => {
     let dict = {};
     dict[b1.id] = Math.PI / 3;
     dict[b2.id] = 2 * Math.PI / 3;
@@ -72,7 +72,7 @@ it('_dBracket', () => {
 
   // side of length greater than one and different angles for each base
   dBracketCheck(
-    TertiaryBond._dBracket([b1, b2, b3], positivePositionalProps, getBaseClockwiseAngle),
+    TertiaryBond._dBracket([b1, b2, b3], positivePositionalProps, getClockwiseNormalAngleOfBase),
     [
       ['M', 0.47871870788979676, 7.4971143170299746],
       ['L', 0.9787187078897972, 8.363139720814413],
