@@ -6,51 +6,6 @@ import createUUIDforSVG from './createUUIDforSVG';
 class Numbering {
 
   /**
-   * @typedef {Object} Numbering~MostRecentProps 
-   * @property {number} basePadding 
-   * @property {number} lineLength 
-   * @property {string} fontFamily 
-   * @property {number} fontSize 
-   * @property {string|number} fontWeight 
-   * @property {string} color 
-   * @property {number} lineStrokeWidth 
-   */
-
-  /**
-   * @returns {Numbering~MostRecentProps} 
-   */
-  static mostRecentProps() {
-    return { ...Numbering._mostRecentProps };
-  }
-
-  /**
-   * @param {Numbering} n 
-   */
-  static _applyMostRecentProps(n) {
-    let props = Numbering.mostRecentProps();
-    n.basePadding = props.basePadding;
-    n.lineLength = props.lineLength;
-    n.fontFamily = props.fontFamily;
-    n.fontSize = props.fontSize;
-    n.fontWeight = props.fontWeight;
-    n.color = props.color;
-    n.lineStrokeWidth = props.lineStrokeWidth;
-  }
-
-  /**
-   * @param {Numbering} n 
-   */
-  static _copyPropsToMostRecent(n) {
-    Numbering._mostRecentProps.basePadding = n.basePadding;
-    Numbering._mostRecentProps.lineLength = n.lineLength;
-    Numbering._mostRecentProps.fontFamily = n.fontFamily;
-    Numbering._mostRecentProps.fontSize = n.fontSize;
-    Numbering._mostRecentProps.fontWeight = n.fontWeight;
-    Numbering._mostRecentProps.color = n.color;
-    Numbering._mostRecentProps.lineStrokeWidth = n.lineStrokeWidth;
-  }
-
-  /**
    * @typedef {Object} Numbering~LineCoordinates 
    * @property {number} x1 
    * @property {number} y1 
@@ -125,6 +80,51 @@ class Numbering {
     }
 
     return tp;
+  }
+
+  /**
+   * @typedef {Object} Numbering~MostRecentProps 
+   * @property {number} basePadding 
+   * @property {number} lineLength 
+   * @property {string} fontFamily 
+   * @property {number} fontSize 
+   * @property {string|number} fontWeight 
+   * @property {string} color 
+   * @property {number} lineStrokeWidth 
+   */
+
+  /**
+   * @returns {Numbering~MostRecentProps} 
+   */
+  static mostRecentProps() {
+    return { ...Numbering._mostRecentProps };
+  }
+
+  /**
+   * @param {Numbering} n 
+   */
+  static _applyMostRecentProps(n) {
+    let props = Numbering.mostRecentProps();
+    n.basePadding = props.basePadding;
+    n.lineLength = props.lineLength;
+    n.fontFamily = props.fontFamily;
+    n.fontSize = props.fontSize;
+    n.fontWeight = props.fontWeight;
+    n.color = props.color;
+    n.lineStrokeWidth = props.lineStrokeWidth;
+  }
+
+  /**
+   * @param {Numbering} n 
+   */
+  static _copyPropsToMostRecent(n) {
+    Numbering._mostRecentProps.basePadding = n.basePadding;
+    Numbering._mostRecentProps.lineLength = n.lineLength;
+    Numbering._mostRecentProps.fontFamily = n.fontFamily;
+    Numbering._mostRecentProps.fontSize = n.fontSize;
+    Numbering._mostRecentProps.fontWeight = n.fontWeight;
+    Numbering._mostRecentProps.color = n.color;
+    Numbering._mostRecentProps.lineStrokeWidth = n.lineStrokeWidth;
   }
 
   /**
