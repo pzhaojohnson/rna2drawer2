@@ -31,12 +31,12 @@ function _moreThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
  * two points on the periphery of the circle and the tangent to
  * the circle at either point.
  * 
- * Requires that polarDistance < Math.PI * straightDistance / 2 and
- * that straightDistance not be too small.
+ * Requires that polarDistance < Math.PI * straightDistance / 2
+ * and that straightDistance not be too small.
  */
 function _straightTangentAngle(clockwisePolarDistance, straightDistance) {
-  let s = straightDistance / 2;
   let p = clockwisePolarDistance / 2;
+  let s = straightDistance / 2;
   
   /* The angle must be between 0 and (Math.PI / 2).
   (Math.PI / 2) seems to work well as an initial guess. */
