@@ -110,6 +110,7 @@ function _lessThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
  * @returns {CircleCenter} 
  */
 function circleCenter(x1, y1, x2, y2, clockwisePolarDistance) {
+  let straightDistance = distanceBetween(x1, y1, x2, y2);
   
   // clockwise polar distance spans more than half the circle
   if (clockwisePolarDistance > Math.PI * straightDistance / 2) {

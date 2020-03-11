@@ -1,6 +1,9 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
 import polarizeLength from './polarizeLength';
+import circleCenter from './circleCenter';
+import distanceBetween from '../../../distanceBetween';
+import angleBetween from '../../../angleBetween';
 
 /**
  * @param {UnpairedRegion} ur 
@@ -149,44 +152,39 @@ function baseCoordinatesTriangularRound(ur) {
   }
 
   function round() {
-    
-    /**
-     * Uses Newton's method to estimate the angle for the round loop.
-     */
-    function newtonsAngle() {
-      let p = polarLength() / 2;
-      let s = straightDistance() / 2;
-      
-      /* The angle must be between 0 and (Math.PI / 2).
-      (Math.PI / 2) seems to work well as an initial guess. */
-      let a = Math.PI / 2;
-      
-      // 20 iterations seems to work well
-      let iters = 20;
-      
-      for (let i = 0; i < iters; i++) {
-        let y = ((p / s) * Math.sin(a)) - a;
-        let yPrime = ((p / s) * Math.cos(a)) - 1;
-        a -= y / yPrime;
-      }
-      
-      /* Do not return too small a value for the angle
-      to prevent number overflow when calculating the radius. */
-      return Math.max(a, 0.001);
-    }
-    
-    function radius() {
-      return (straightDistance() / 2) / Math.sin(newtonsAngle());
-    }
-    
-    let r = radius();
-    let na = newtonsAngle();
-    let a = bisectingAngle() - na;
-    let xCenter = baseCoordinates(p - 1).xLeft + (r * Math.cos(a + Math.PI));
-    let yCenter = baseCoordinates(p - 1).yTop + (r * Math.sin(a + Math.PI));
-    
-    let aincr = (2 * na) / (p - q + 2);
-    a += aincr;
+    let cc = circleCenter(
+      baseCoordinates(p - 1).xLeft,
+      baseCoordinates(p - 1).yTop,
+      baseCoordinates(q + 1).xLeft,
+      baseCoordinates(q + 1).yTop,
+      polarLength(),
+    );
+    let xCenter = cc.x;
+    let yCenter = cc.y;
+
+    let r = distanceBetween(
+      xCenter,
+      yCenter,
+      baseCoordinates(p - 1).xLeft,
+      baseCoordinates(p - 1).yTop,
+    );
+
+    let angle5 = angleBetween(
+      xCenter,
+      yCenter,
+      baseCoordinates(p - 1).xLeft,
+      baseCoordinates(p - 1).yTop,
+    );
+    let angle3 = angleBetween(
+      xCenter,
+      yCenter,
+      baseCoordinates(q + 1).xLeft,
+      baseCoordinates(q + 1).yTop,
+    );
+    angle5 = normalizeAngle(angle5, angle3);
+
+    let aincr = (angle3 - angle5) / (p - q + 2);
+    let a = angle5 + aincr;
     
     for (let s = p; s <= q; s++) {
       setBaseCoordinates(
@@ -194,7 +192,6 @@ function baseCoordinatesTriangularRound(ur) {
         xCenter + (r * Math.cos(a)),
         yCenter + (r * Math.sin(a))
       );
-      
       a += aincr;
     }
   }

@@ -265,7 +265,7 @@ class Stem {
    * @returns {number} 
    */
   get loopPolarLength() {
-    return polarizeLength(this.loopPolarLength);
+    return polarizeLength(this.loopLength);
   }
 
   /**
