@@ -1,5 +1,4 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
-import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
 import circleCenter from './circleCenter';
 
