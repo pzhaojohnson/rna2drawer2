@@ -235,6 +235,40 @@ class Stem {
   }
 
   /**
+   * @returns {number} 
+   */
+  get loopLength() {
+    let it = this.loopIterator();
+    let ll = 0;
+
+    // first unpaired region
+    let next = it.next();
+    ll += next.value.polarLength;
+    next = it.next();
+
+    while (!next.done) {
+
+      // stem
+      ll += next.value.polarWidth;
+
+      // unpaired region
+      next = it.next();
+      ll += next.value.polarLength;
+
+      next = it.next();
+    }
+
+    return ll;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get loopPolarLength() {
+    return polarizeLength(this.loopPolarLength);
+  }
+
+  /**
    * For now this is simply the size of this stem, but this may depend on other properties in the future.
    * 
    * @returns {number} The distance between the bottom and top sides of this stem.
