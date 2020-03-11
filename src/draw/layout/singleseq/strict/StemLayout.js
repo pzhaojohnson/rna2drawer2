@@ -1,53 +1,9 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import distanceBetween from '../../../distanceBetween';
+import angleBetween from '../../../angleBetween';
+import circleCenter from './circleCenter';
 
 class RoundLoop {
-
-  /**
-   * @param {Stem} st 
-   * 
-   * @returns {number} The circumference of the round loop of a given stem.
-   */
-  static circumference(st) {
-    let c = st.polarWidth;
-    let it = st.loopIterator();
-
-    // first unpaired region
-    let next = it.next();
-    c += next.value.polarLength;
-    next = it.next();
-
-    while (!next.done) {
-
-      // a stem
-      c += next.value.polarWidth;
-      next = it.next();
-
-      // an unpaired region
-      c += next.value.polarLength;
-      next = it.next();
-    }
-    
-    return c;
-  }
-
-  /**
-   * @param {Stem} st 
-   * 
-   * @returns {number} The diameter of the round loop of a given stem.
-   */
-  static diameter(st) {
-    return RoundLoop.circumference(st) / Math.PI;
-  }
-
-  /**
-   * @param {Stem} st 
-   * 
-   * @returns {number} The radius of the round loop of a given stem.
-   */
-  static radius(st) {
-    return RoundLoop.diameter(st) / 2;
-  }
 
   /**
    * @param {Stem} st 
@@ -55,17 +11,14 @@ class RoundLoop {
    * @returns {number} The X coordinate of the center of the round loop of a given stem.
    */
   static xCenter(st) {
-    let radius = RoundLoop.radius(st);
-    let cpTop5 = st.baseCoordinatesTop5();
-    let cpTop3 = st.baseCoordinatesTop3();
-    let a = Math.asin((cpTop5.distanceBetweenCenters(cpTop3) / 2) / radius);
-
-    // the width of the stem is too big for the radius of its loop
-    if (isNaN(a)) {
-      return (cpTop5.xCenter + cpTop3.xCenter) / 2;
-    } else {
-      return cpTop5.xCenter + (radius * Math.cos(st.angle + a));
-    }
+    let cc = circleCenter(
+      st.xTopLeft,
+      st.yTopLeft,
+      st.xTopRight,
+      st.yTopRight,
+      st.loopPolarLength,
+    );
+    return cc.x;
   }
 
   /**
@@ -74,17 +27,14 @@ class RoundLoop {
    * @returns {number} The Y coordinate of the center of the round loop of a given stem.
    */
   static yCenter(st) {
-    let radius = RoundLoop.radius(st);
-    let cpTop5 = st.baseCoordinatesTop5();
-    let cpTop3 = st.baseCoordinatesTop3();
-    let a = Math.asin((cpTop5.distanceBetweenCenters(cpTop3) / 2) / radius);
-
-    // the width of the stem is too big for the radius of its loop
-    if (isNaN(a)) {
-      return (cpTop5.yCenter + cpTop3.yCenter) / 2;
-    } else {
-      return cpTop5.yBottom + (radius * Math.sin(st.angle + a));
-    }
+    let cc = circleCenter(
+      st.xTopLeft,
+      st.yTopLeft,
+      st.xTopRight,
+      st.yTopRight,
+      st.loopPolarLength,
+    );
+    return cc.y;
   }
 
   /**
@@ -110,15 +60,13 @@ class RoundLoop {
    * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
    */
   static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
-    let circumference = RoundLoop.circumference(st);
     let xCenter = RoundLoop.xCenter(st);
     let yCenter = RoundLoop.yCenter(st);
     
-    // the distance between the center of the loop and the bottom center point of an inner stem
-    let stemDistance = distanceBetween(xCenter, yCenter, st.xTopCenter, st.yTopCenter);
-    
-    let angle = st.reverseAngle;
-    angle += (2 * Math.PI) * ((st.polarWidth / 2) / circumference);
+    let circumference = st.loopPolarLength + st.polarWidth;
+    let radius = circumference / (2 * Math.PI);
+
+    let angle = angleBetween(xCenter, yCenter, st.xTopLeft, st.yTopLeft);
     
     let it = st.loopIterator();
     let iur = it.next().value;
@@ -127,9 +75,10 @@ class RoundLoop {
 
     while (!next.done) {
       angle += (2 * Math.PI) * ((iur.polarLength + (ist.polarWidth / 2)) / circumference);
-      
-      ist.xBottomCenter = xCenter + (stemDistance * Math.cos(angle));
-      ist.yBottomCenter = yCenter + (stemDistance * Math.sin(angle));
+      let bottomCenterDistance = radius * Math.cos((2 * Math.PI) * ((ist.polarWidth / 2) / circumference));
+
+      ist.xBottomCenter = xCenter + (bottomCenterDistance * Math.cos(angle));
+      ist.yBottomCenter = yCenter + (bottomCenterDistance * Math.sin(angle));
       ist.angle = angle;
       StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
 
