@@ -1,47 +1,43 @@
 import circleCenter from './circleCenter';
 
-it('', () => {});
+it('more than semicircle - straight and polar distances are normal size', () => {});
 
-// more than semicircle
+it('less than semicircle - straight and polar distances are normal size', () => {});
 
-// normal case
+it('straight and polar distances are zero', () => {});
 
-// distance between points is zero
+it('straight distance is zero and polar distance is negative', () => {});
 
-// clockwise polar distance is zero
-// clockwise polar distance is negative
-// clockwise polar distance is very small
-// clockwise polar distance is normal
+it('straight distance is zero and polar distance is very small', () => {});
 
-// distance between points is very small
-// clockwise polar distance is zero
-// clockwise polar distance is negative
-// clockwise polar distance is very small
-// clockwise polar distance is normal
+it('more than semicircle - straight distance is zero and polar distance is normal size', () => {});
 
-// distance between points is normal
-// clockwise polar distance is zero
-// clockwise polar distance is negative
-// clockwise polar distance is very small
+it('straight distance is very small and polar distance is zero', () => {});
 
-// less than semicircle
+it('straight distance is very small and polar distance is negative', () => {});
 
-// normal case
+it('more than semicircle - straight and polar distances are very small', () => {});
 
-// distance between points is zero
+it('less than semicircle - straight and polar distances are very small', () => {});
 
-// clockwise polar distance is zero
-// clockwise polar distance is negative
-// clockwise polar distance is very small
-// clockwise polar distance is normal
+it('more than semicircle - straight distance is very small and polar distance is normal size', () => {});
 
-// distance between points is very small
-// clockwise polar distance is zero
-// clockwise polar distance is negative
-// clockwise polar distance is very small
-// clockwise polar distance is normal
+it('less than semicircle - straight distance is normal size and polar distance is zero', () => {});
 
-// distance between points is normal
-// clockwise polar distance is zero
-// clockwise polar distance is negative
-// clockwise polar distance is very small
+it('less than semicircle - straight distance is normal size and polar distance is negative', () => {});
+
+it('less than semicircle - straight distance is normal size and polar distance is very small', () => {});
+
+it('exactly (or very close to) a semicircle', () => {});
+
+it('slightly more than a semicircle', () => {});
+
+it('slightly less than a semicircle', () => {});
+
+it('more than semicircle - both distances are normal size but polar is much bigger', () => {});
+
+it('less than semicircle - both distances are normal size but polar is much smaller', () => {});
+
+it('less than semicircle - straight and polar distances are the same', () => {});
+
+it('less than semicircle - polar distance is only slightly larger than straight distance', () => {});
