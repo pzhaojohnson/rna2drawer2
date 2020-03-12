@@ -1,6 +1,17 @@
 import distanceBetween from './../../../distanceBetween';
-import polarizeLength from './polarizeLength';
 import angleBetween from './../../../angleBetween';
+
+/**
+ * This is not perfectly precise, as polar length really depends on the size of a given circle,
+ * but this seems to work well enough in practice.
+ * 
+ * @param {number} straightLength 
+ * 
+ * @returns {number} The polar length of a straight length.
+ */
+function polarizeLength(straightLength) {
+  return 1.15 * straightLength;
+}
 
 function _moreThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
   let straightDistance = Math.max(
@@ -130,4 +141,7 @@ function circleCenter(x1, y1, x2, y2, clockwisePolarDistance) {
   }
 }
 
-export default circleCenter;
+export {
+  polarizeLength,
+  circleCenter,
+};

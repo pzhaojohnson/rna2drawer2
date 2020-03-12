@@ -1,5 +1,5 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
-import polarizeLength from './polarizeLength';
+import { polarizeLength } from './circle';
 
 /**
  * @param {UnpairedRegion} ur 

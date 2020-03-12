@@ -3,7 +3,7 @@ import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
 import normalizeAngle from '../../../normalizeAngle';
-import polarizeLength from './polarizeLength';
+import { polarizeLength } from './circle';
 
 it('_initializePosition3', () => {
 

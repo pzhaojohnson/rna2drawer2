@@ -1,6 +1,6 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import angleBetween from '../../../angleBetween';
-import circleCenter from './circleCenter';
+import { circleCenter } from './circle';
 
 class RoundLoop {
 

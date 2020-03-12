@@ -1,5 +1,5 @@
 import UnpairedRegion from './UnpairedRegion';
-import polarizeLength from './polarizeLength';
+import { polarizeLength } from './circle';
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 
 /**

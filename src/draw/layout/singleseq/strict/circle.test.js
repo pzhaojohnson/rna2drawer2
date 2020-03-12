@@ -1,10 +1,19 @@
-import circleCenter from './circleCenter';
+import { polarizeLength, circleCenter } from './circle';
 
 /* These tests assume that the polarizeLength function works
 by multiplying a straight length by 1.15. */
 
 /* These tests also make assumptions about the values used
 when the straight or polar distances are not normal size. */
+
+it('polarizeLength', () => {
+
+  // basically just check to see if it runs without throwing anything
+  polarizeLength(10);
+
+  // should be able to handle an input length of zero
+  polarizeLength(0);
+});
 
 it('more than semicircle - straight and polar distances are normal size', () => {
   let cc = circleCenter(1.2, 1.5, 2.5, 2.5, 3.8);

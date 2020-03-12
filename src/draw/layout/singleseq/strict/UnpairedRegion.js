@@ -1,4 +1,4 @@
-import polarizeLength from './polarizeLength';
+import { polarizeLength } from './circle';
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import baseCoordinatesHairpin from './UnpairedRegionHairpin';

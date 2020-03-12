@@ -3,7 +3,7 @@ import Stem from './Stem';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
-import polarizeLength from './polarizeLength';
+import { polarizeLength } from './circle';
 
 it('bounding stem getters', () => {
   let partners = [6, 5, null, null, 2, 1];
