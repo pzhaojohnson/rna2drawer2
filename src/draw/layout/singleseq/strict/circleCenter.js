@@ -13,7 +13,11 @@ function _moreThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
     (Math.PI * straightDistance / 2) + 0.001,
   );
 
-  let circumference = clockwisePolarDistance + polarizeLength(straightDistance);
+  let circumference = Math.max(
+    clockwisePolarDistance + polarizeLength(straightDistance),
+    (Math.PI * straightDistance) + 0.001,
+  );
+  
   let radius = circumference / (2 * Math.PI);
   
   let angleToCenter = angleBetween(x1, y1, x2, y2)
@@ -116,9 +120,10 @@ function _lessThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
  */
 function circleCenter(x1, y1, x2, y2, clockwisePolarDistance) {
   let straightDistance = distanceBetween(x1, y1, x2, y2);
+  let circumference = clockwisePolarDistance + polarizeLength(straightDistance);
   
-  // clockwise polar distance spans less than half the circle
-  if (clockwisePolarDistance > Math.PI * straightDistance / 2) {
+  // clockwise polar distance spans more than half the circle
+  if (circumference > Math.PI * straightDistance) {
     return _moreThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance);
   } else {
     return _lessThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance);

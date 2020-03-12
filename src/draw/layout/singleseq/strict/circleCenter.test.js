@@ -72,22 +72,62 @@ it('more than semicircle - straight distance is very small and polar distance is
   expect(cc.y).toBeCloseTo(0.737073, 3);
 });
 
-it('less than semicircle - straight distance is normal size and polar distance is zero', () => {});
+it('less than semicircle - straight distance is normal size and polar distance is zero', () => {
+  let cc = circleCenter(10.1, 11.2, 15.2, 16.3, 0);
+  expect(cc.x).toBeCloseTo(-75.740944, 3);
+  expect(cc.y).toBeCloseTo(102.140944, 3);
+});
 
-it('less than semicircle - straight distance is normal size and polar distance is negative', () => {});
+it('less than semicircle - straight distance is normal size and polar distance is negative', () => {
+  let cc = circleCenter(10.1, 11.2, 15.2, 16.3, -0.5);
+  expect(cc.x).toBeCloseTo(-75.740944, 3);
+  expect(cc.y).toBeCloseTo(102.140944, 3);
+});
 
-it('less than semicircle - straight distance is normal size and polar distance is very small', () => {});
+it('less than semicircle - straight distance is normal size and polar distance is very small', () => {
+  let cc = circleCenter(10.1, 11.2, 15.2, 16.3, 0.000005);
+  expect(cc.x).toBeCloseTo(-75.740944, 3);
+  expect(cc.y).toBeCloseTo(102.140944, 3);
+});
 
-it('exactly (or very close to) a semicircle', () => {});
+it('exactly (or very close to) a semicircle', () => {
+  let cc = circleCenter(1, 2, 2, 2, Math.PI / 2);
+  expect(cc.x).toBeCloseTo(1.5, 3);
+  expect(cc.y).toBeCloseTo(2, 2);
+});
 
-it('slightly more than a semicircle', () => {});
+it('slightly more than a semicircle', () => {
+  let cc = circleCenter(-1, -1.5, -1, -3.5, Math.PI + 0.000001);
+  expect(cc.x).toBeCloseTo(-1, 2);
+  expect(cc.y).toBeCloseTo(-2.5, 3);
+});
 
-it('slightly less than a semicircle', () => {});
+it('slightly less than a semicircle', () => {
+  let cc = circleCenter(-2.2, 3.5, 1.8, 3.5, (2 * Math.PI) + 0.000001);
+  expect(cc.x).toBeCloseTo(-0.2, 3);
+  expect(cc.y).toBeCloseTo(3.5, 2);
+});
 
-it('more than semicircle - both distances are normal size but polar is much bigger', () => {});
+it('more than semicircle - both distances are normal size but polar is much bigger', () => {
+  let cc = circleCenter(1.2, 2.25, 2.5, 2.4, 123456);
+  expect(cc.x).toBeCloseTo(2254.084444, 3);
+  expect(cc.y).toBeCloseTo(-19517.040182, 3);
+});
 
-it('less than semicircle - both distances are normal size but polar is much smaller', () => {});
+it('less than semicircle - both distances are normal size but polar is much smaller', () => {
+  let cc = circleCenter(-1e6, 1e6, 1e6, -1e6, 0.8);
+  expect(cc.x).toBeCloseTo(2278480972.248471, 3);
+  expect(cc.y).toBeCloseTo(2278480972.248471, 3);
+});
 
-it('less than semicircle - straight and polar distances are the same', () => {});
+it('less than semicircle - straight and polar distances are the same', () => {
+  let cc = circleCenter(-0.5, 0.5, 0.5, 0.5, 1);
+  expect(cc.x).toBeCloseTo(-1.110223e-16, 3);
+  expect(cc.y).toBeCloseTo(6.944320, 3);
+});
 
-it('less than semicircle - polar distance is only slightly larger than straight distance', () => {});
+it('less than semicircle - polar distance is only slightly larger than straight distance', () => {
+  let cc = circleCenter(-1, 1, 1, 1, 2.000001);
+  expect(cc.x).toBeCloseTo(1.110223e-15, 3);
+  expect(cc.y).toBeCloseTo(19.242355, 3);
+});
