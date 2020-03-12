@@ -1,18 +1,16 @@
 import { polarizeLength, circleCenter } from './circle';
 
-/* These tests assume that the polarizeLength function works
-by multiplying a straight length by 1.15. */
-
-/* These tests also make assumptions about the values used
-when the straight or polar distances are not normal size. */
+/* These tests make assumptions about the arbitrary values used
+by the polarizeLength and circleCenter functions. */
 
 it('polarizeLength', () => {
+  expect(polarizeLength(10)).toBeCloseTo(11.5, 6);
 
-  // basically just check to see if it runs without throwing anything
-  polarizeLength(10);
+  // input length of zero
+  expect(polarizeLength(0)).toBeCloseTo(0, 6);
 
-  // should be able to handle an input length of zero
-  polarizeLength(0);
+  // negative input length
+  expect(polarizeLength(-5)).toBeCloseTo(-5.75, 6);
 });
 
 it('more than semicircle - straight and polar distances are normal size', () => {
