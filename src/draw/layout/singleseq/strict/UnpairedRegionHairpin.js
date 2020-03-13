@@ -1,5 +1,5 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
-import { polarizeLength, circleCenter } from './circle';
+import { circleCenter } from './circle';
 import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
 import normalizeAngle from '../../../normalizeAngle';
