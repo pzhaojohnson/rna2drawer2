@@ -30,15 +30,21 @@ function _positiveStretch(ur, baseProps) {
  */
 function baseCoordinatesStraight(ur, baseProps) {
   let coordinates = [];
-  let cbp5 = ur.baseCoordinatesBounding5();
-  let cbp3 = ur.baseCoordinatesBounding3();
-  let a = cbp5.angleBetweenCenters(cbp3);
-
-  let positiveStretch = _positiveStretch(ur, baseProps);
-  let excessDistance = (cbp5.distanceBetweenCenters(cbp3) - 1) - ur.size;
+  let bcb5 = ur.baseCoordinatesBounding5();
+  let bcb3 = ur.baseCoordinatesBounding3();
   
-  let x = cbp5.xLeft;
-  let y = cbp5.yTop;
+  let positiveStretch = Math.max(
+    _positiveStretch(ur, baseProps),
+    0.001,
+  );
+  
+  let totalDistance = bcb5.distanceBetweenCenters(bcb3);
+  let excessDistance = totalDistance - (ur.size + 1);
+  
+  let angle = bcb5.angleBetweenCenters(bcb3);
+
+  let x = bcb5.xLeft;
+  let y = bcb5.yTop;
 
   for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
     let s;
@@ -53,8 +59,8 @@ function baseCoordinatesStraight(ur, baseProps) {
     }
 
     let d = 1 + s;
-    x += d * Math.cos(a);
-    y += d * Math.sin(a);
+    x += d * Math.cos(angle);
+    y += d * Math.sin(angle);
     coordinates.push(new VirtualBaseCoordinates(x, y));
   }
 
