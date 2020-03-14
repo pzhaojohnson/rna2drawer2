@@ -39,7 +39,11 @@ function baseCoordinatesStraight(ur, baseProps) {
   );
   
   let totalDistance = bcb5.distanceBetweenCenters(bcb3);
-  let excessDistance = totalDistance - (ur.size + 1);
+
+  let excessDistance = Math.max(
+    totalDistance - (ur.size + 1),
+    0,
+  );
   
   let angle = bcb5.angleBetweenCenters(bcb3);
 
