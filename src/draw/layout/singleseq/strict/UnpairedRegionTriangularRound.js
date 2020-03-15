@@ -82,11 +82,11 @@ function baseCoordinatesTriangularRound(ur) {
     
     let hyp;
     let opp;
-    if (p - q + 1 % 2 === 0) {
-      hyp = (p - q + 1) / 2;
+    if (q - p + 1 % 2 === 0) {
+      hyp = (q - p + 1) / 2;
       opp = obc.distanceBetweenCenters(rbc) - 1;
     } else {
-      hyp = (p - q + 2) / 2;
+      hyp = (q - p + 2) / 2;
       opp = obc.distanceBetweenCenters(rbc);
     }
     opp = Math.min(opp, hyp - 0.001);
@@ -100,7 +100,7 @@ function baseCoordinatesTriangularRound(ur) {
       obc = baseCoordinates(p - 1);
       rbc = baseCoordinates(q + 1);
       return p > q
-        || polarizeLength(p - q + 2) <= (a5 - a3) * (obc.distanceBetweenCenters(rbc) / 2);
+        || polarizeLength(q - p + 2) <= (a5 - a3) * (obc.distanceBetweenCenters(rbc) / 2);
     }
 
     while (!done()) {
@@ -127,7 +127,7 @@ function baseCoordinatesTriangularRound(ur) {
       baseCoordinates(p - 1).yTop,
       baseCoordinates(q + 1).xLeft,
       baseCoordinates(q + 1).yTop,
-      polarizeLength(p - q + 2),
+      polarizeLength(q - p + 2),
     );
     let xCenter = cc.x;
     let yCenter = cc.y;
@@ -153,7 +153,7 @@ function baseCoordinatesTriangularRound(ur) {
     );
     angle3 = normalizeAngle(angle3, angle5);
 
-    let aincr = (angle3 - angle5) / (p - q + 2);
+    let aincr = (angle3 - angle5) / (q - p + 2);
     let a = angle5 + aincr;
     
     for (let s = p; s <= q; s++) {
