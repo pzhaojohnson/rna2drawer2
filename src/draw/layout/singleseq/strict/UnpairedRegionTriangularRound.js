@@ -1,6 +1,6 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
-import { polarizeLength, circleCenter } from './circle';
+import { circleCenter } from './circle';
 import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
 
@@ -39,26 +39,35 @@ function baseCoordinatesTriangularRound(ur) {
 
     let bcb5 = ur.baseCoordinatesBounding5();
     let bcb3 = ur.baseCoordinatesBounding3();
-    let o = bcb5.distanceBetweenCenters(bcb3) / 2;
-    let radius = o / Math.sin(bisectingAngle - angle5);
-
+    let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
+    let a = Math.min(bisectingAngle - angle5, Math.PI - 0.001);
+    let radius = opp / Math.sin(a);
+    let circumference = 2 * Math.PI * radius;
+    
     let xCenter = bcb5.xLeft + (radius * Math.cos(angle5 + Math.PI));
     let yCenter = bcb5.yTop + (radius * Math.sin(angle5 + Math.PI));
 
-    let circumference = 2 * Math.PI * radius;
-    let a5 = angle5 + ((2 * Math.PI) * ((ur.boundingStem5.polarWidth / 2) / circumference));
-    let a3 = angle3 - ((2 * Math.PI) * ((ur.boundingStem3.polarWidth / 2) / circumference));
-    let aincr = (2 * Math.PI) * (polarizeLength(1) / circumference);
+    let a5 = angleBetween(xCenter, yCenter, bcb5.xLeft, bcb5.yTop);
+    let a3 = angleBetween(xCenter, yCenter, bcb3.xLeft, bcb3.yTop);
+    a3 = normalizeAngle(a3, a5);
+    let aincr = (2 * Math.PI) * (1 / circumference);
     a5 += aincr;
     a3 += aincr;
 
     function done() {
       return p > q
         || a3 - a5 <= Math.PI
-        || polarizeLength(q - p + 2) <= (a3 - a5) * radius;
+        || q - p + 1 <= (a3 - a5) * radius;
     }
 
-    while (!done()) {
+    function addingFirstCirclePair() {
+      return p <= q
+        && p === ur.boundingPosition5 + 1
+        && q === ur.boundingPosition3 - 1
+        && q - p + 1 > (a3 - a5) * radius;
+    }
+
+    while (!done() || addingFirstCirclePair()) {
       setBaseCoordinates(
         p,
         xCenter + (radius * Math.cos(a5)),
@@ -80,41 +89,36 @@ function baseCoordinatesTriangularRound(ur) {
     let obc = baseCoordinates(p - 1);
     let rbc = baseCoordinates(q + 1);
     
-    let hyp;
-    let opp;
-    if (q - p + 1 % 2 === 0) {
-      hyp = (q - p + 1) / 2;
-      opp = obc.distanceBetweenCenters(rbc) - 1;
-    } else {
-      hyp = (q - p + 2) / 2;
-      opp = obc.distanceBetweenCenters(rbc);
-    }
+    let hyp = (q - p + 2) / 2;
+    let opp = obc.distanceBetweenCenters(rbc) / 2;
+    hyp = Math.max(hyp, 0.002);
     opp = Math.min(opp, hyp - 0.001);
     
     let bisectingAngle = obc.angleBetweenCenters(rbc) - (Math.PI / 2);
-    let a = Math.asin(opp / hyp);
+    let a = Math.asin(opp / hyp) / 2;
     let a5 = bisectingAngle + a;
     let a3 = bisectingAngle - a;
 
     function done() {
-      obc = baseCoordinates(p - 1);
-      rbc = baseCoordinates(q + 1);
-      return p > q
-        || polarizeLength(q - p + 2) <= (a5 - a3) * (obc.distanceBetweenCenters(rbc) / 2);
+      let bc5 = baseCoordinates(p - 1);
+      let bc3 = baseCoordinates(q + 1);
+      let radius = (bc5.distanceBetweenCenters(bc3) / 2) / Math.cos(a);
+      return p >= q
+        || q - p + 2 <= (Math.PI - (2 * a)) * radius;
     }
 
     while (!done()) {
-      obc = baseCoordinates(p - 1);
+      let bc5 = baseCoordinates(p - 1);
       setBaseCoordinates(
         p,
-        obc.xLeft + Math.cos(a5),
-        obc.yTop + Math.sin(a5)
+        bc5.xLeft + Math.cos(a5),
+        bc5.yTop + Math.sin(a5)
       );
-      rbc = baseCoordinates(q + 1);
+      let bc3 = baseCoordinates(q + 1);
       setBaseCoordinates(
         q,
-        rbc.xLeft + Math.cos(a3),
-        rbc.yTop + Math.sin(a3)
+        bc3.xLeft + Math.cos(a3),
+        bc3.yTop + Math.sin(a3)
       );
       p++;
       q--;
@@ -127,7 +131,7 @@ function baseCoordinatesTriangularRound(ur) {
       baseCoordinates(p - 1).yTop,
       baseCoordinates(q + 1).xLeft,
       baseCoordinates(q + 1).yTop,
-      polarizeLength(q - p + 2),
+      q - p + 2,
     );
     let xCenter = cc.x;
     let yCenter = cc.y;
