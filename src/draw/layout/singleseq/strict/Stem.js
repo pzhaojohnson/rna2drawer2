@@ -1,5 +1,4 @@
 import UnpairedRegion from './UnpairedRegion';
-import { polarizeLength } from './circle';
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 
 /**
@@ -228,13 +227,6 @@ class Stem {
   }
 
   /**
-   * @returns {number} The polar width of this stem.
-   */
-  get polarWidth() {
-    return polarizeLength(this.width);
-  }
-
-  /**
    * @returns {number} 
    */
   get loopLength() {
@@ -243,29 +235,22 @@ class Stem {
 
     // first unpaired region
     let next = it.next();
-    ll += next.value.polarLength;
+    ll += next.value.length;
     next = it.next();
 
     while (!next.done) {
 
       // stem
-      ll += next.value.polarWidth;
+      ll += next.value.width;
 
       // unpaired region
       next = it.next();
-      ll += next.value.polarLength;
+      ll += next.value.length;
 
       next = it.next();
     }
 
     return ll;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get loopPolarLength() {
-    return polarizeLength(this.loopLength);
   }
 
   /**

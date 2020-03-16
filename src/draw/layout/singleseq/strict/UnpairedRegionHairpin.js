@@ -23,7 +23,7 @@ function baseCoordinatesHairpin(ur) {
     bcb5.yTop,
     bcb3.xLeft,
     bcb3.yTop,
-    ur.polarLength,
+    ur.length,
   );
 
   let xCenter = cc.x;

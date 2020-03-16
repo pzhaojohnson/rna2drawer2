@@ -1,18 +1,6 @@
 import distanceBetween from './../../../distanceBetween';
 import angleBetween from './../../../angleBetween';
 
-/**
- * This is not perfectly precise, as polar length really depends on the size of a given circle,
- * but this seems to work well enough in practice.
- * 
- * @param {number} straightLength 
- * 
- * @returns {number} The polar length of a straight length.
- */
-function polarizeLength(straightLength) {
-  return 1.15 * straightLength;
-}
-
 function _moreThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
   let straightDistance = Math.max(
     distanceBetween(x1, y1, x2, y2),
@@ -25,7 +13,7 @@ function _moreThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
   );
 
   let circumference = Math.max(
-    clockwisePolarDistance + polarizeLength(straightDistance),
+    clockwisePolarDistance + straightDistance,
     (Math.PI * straightDistance) + 0.001,
   );
   
@@ -131,7 +119,7 @@ function _lessThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
  */
 function circleCenter(x1, y1, x2, y2, clockwisePolarDistance) {
   let straightDistance = distanceBetween(x1, y1, x2, y2);
-  let circumference = clockwisePolarDistance + polarizeLength(straightDistance);
+  let circumference = clockwisePolarDistance + straightDistance;
   
   // clockwise polar distance spans more than half the circle
   if (circumference > Math.PI * straightDistance) {
@@ -142,6 +130,5 @@ function circleCenter(x1, y1, x2, y2, clockwisePolarDistance) {
 }
 
 export {
-  polarizeLength,
   circleCenter,
 };

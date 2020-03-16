@@ -1,4 +1,3 @@
-import { polarizeLength } from './circle';
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import baseCoordinatesHairpin from './UnpairedRegionHairpin';
@@ -144,15 +143,6 @@ class UnpairedRegion {
     }
 
     return Math.max(length, this.minLength);
-  }
-
-  /**
-   * Accessing this property may take greater than constant time.
-   * 
-   * @returns {number} The polar length of this unpaired region.
-   */
-  get polarLength() {
-    return polarizeLength(this.length);
   }
 
   /**

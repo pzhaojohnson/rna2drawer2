@@ -1,22 +1,9 @@
-import { polarizeLength, circleCenter } from './circle';
-
-/* These tests make assumptions about the arbitrary values used
-by the polarizeLength and circleCenter functions. */
-
-it('polarizeLength', () => {
-  expect(polarizeLength(10)).toBeCloseTo(11.5, 6);
-
-  // input length of zero
-  expect(polarizeLength(0)).toBeCloseTo(0, 6);
-
-  // negative input length
-  expect(polarizeLength(-5)).toBeCloseTo(-5.75, 6);
-});
+import { circleCenter } from './circle';
 
 it('more than semicircle - straight and polar distances are normal size', () => {
   let cc = circleCenter(1.2, 1.5, 2.5, 2.5, 3.8);
-  expect(cc.x).toBeCloseTo(2.08335595985288, 3);
-  expect(cc.y).toBeCloseTo(1.6966372521912565, 3);
+  expect(cc.x).toBeCloseTo(2.0193506658286244, 3);
+  expect(cc.y).toBeCloseTo(1.7798441344227882, 3);
 });
 
 it('less than semicircle - straight and polar distances are normal size', () => {
@@ -117,8 +104,8 @@ it('slightly less than a semicircle', () => {
 
 it('more than semicircle - both distances are normal size but polar is much bigger', () => {
   let cc = circleCenter(1.2, 2.25, 2.5, 2.4, 123456);
-  expect(cc.x).toBeCloseTo(2254.084444, 3);
-  expect(cc.y).toBeCloseTo(-19517.040182, 3);
+  expect(cc.x).toBeCloseTo(2254.0808631254235, 3);
+  expect(cc.y).toBeCloseTo(-19517.00914708702, 3);
 });
 
 it('less than semicircle - both distances are normal size but polar is much smaller', () => {

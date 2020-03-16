@@ -15,7 +15,7 @@ class RoundLoop {
       st.yTopLeft,
       st.xTopRight,
       st.yTopRight,
-      st.loopPolarLength,
+      st.loopLength,
     );
     return cc.x;
   }
@@ -31,7 +31,7 @@ class RoundLoop {
       st.yTopLeft,
       st.xTopRight,
       st.yTopRight,
-      st.loopPolarLength,
+      st.loopLength,
     );
     return cc.y;
   }
@@ -62,7 +62,7 @@ class RoundLoop {
     let xCenter = RoundLoop.xCenter(st);
     let yCenter = RoundLoop.yCenter(st);
     
-    let circumference = st.loopPolarLength + st.polarWidth;
+    let circumference = st.loopLength + st.width;
     let radius = circumference / (2 * Math.PI);
 
     let angle = angleBetween(xCenter, yCenter, st.xTopLeft, st.yTopLeft);
@@ -73,15 +73,15 @@ class RoundLoop {
     let ist = next.value;
 
     while (!next.done) {
-      angle += (2 * Math.PI) * ((iur.polarLength + (ist.polarWidth / 2)) / circumference);
-      let bottomCenterDistance = radius * Math.cos((2 * Math.PI) * ((ist.polarWidth / 2) / circumference));
+      angle += (2 * Math.PI) * ((iur.length + (ist.width / 2)) / circumference);
+      let bottomCenterDistance = radius * Math.cos((2 * Math.PI) * ((ist.width / 2) / circumference));
 
       ist.xBottomCenter = xCenter + (bottomCenterDistance * Math.cos(angle));
       ist.yBottomCenter = yCenter + (bottomCenterDistance * Math.sin(angle));
       ist.angle = angle;
       StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
 
-      angle += (2 * Math.PI) * ((ist.polarWidth / 2) / circumference);
+      angle += (2 * Math.PI) * ((ist.width / 2) / circumference);
       
       iur = it.next().value;
       next = it.next();
@@ -161,8 +161,8 @@ class TriangleLoop {
     let ist = it.next().value;
     let ur3 = it.next().value;
 
-    let greater = Math.max(ur5.polarLength, ur3.polarLength);
-    let halfCircumference = greater + (st.polarWidth / 2) + (ist.polarwidth / 2);
+    let greater = Math.max(ur5.length, ur3.length);
+    let halfCircumference = greater + (st.width / 2) + (ist.width / 2);
     let circumference = 2 * halfCircumference;
     let diameter = circumference / Math.PI;
 

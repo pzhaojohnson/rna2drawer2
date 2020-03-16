@@ -3,7 +3,6 @@ import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
 import normalizeAngle from '../../../normalizeAngle';
-import { polarizeLength } from './circle';
 
 it('_initializePosition3', () => {
 
@@ -340,12 +339,10 @@ it('width and height getters', () => {
 
   let outermostStem = new Stem(0, partners, gps, bps);
   expect(outermostStem.width).toBeCloseTo(6, 6);
-  expect(outermostStem.polarWidth).toBeCloseTo(polarizeLength(6), 6);
   expect(outermostStem.height).toBeCloseTo(1, 6);
 
   let innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.width).toBeCloseTo(4, 6);
-  expect(innerStem.polarWidth).toBeCloseTo(polarizeLength(4), 6);
   expect(innerStem.height).toBeCloseTo(2);
 });
 

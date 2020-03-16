@@ -3,7 +3,6 @@ import Stem from './Stem';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
-import { polarizeLength } from './circle';
 
 it('bounding stem getters', () => {
   let partners = [6, 5, null, null, 2, 1];
@@ -299,16 +298,4 @@ it('length', () => {
   // smaller than minimum length
   let ur = it.next().value;
   expect(ur.length).toBeCloseTo(ur.minLength);
-});
-
-it('polarLength', () => {
-  let partners = [null, null, null];
-  let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
-
-  let ur = it.next().value;
-  expect(ur.polarLength).toEqual(polarizeLength(3));
 });
