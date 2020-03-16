@@ -31,41 +31,53 @@ function baseCoordinatesTriangularRound(ur) {
     coordinates[position - ur.boundingPosition5 - 1] = new VirtualBaseCoordinates(xLeft, yTop);
   }
 
-  function circlePairs() {
-    let angle5 = ur.boundingStem5.angle;
-    let angle3 = ur.boundingStem3.angle;
-    angle3 = normalizeAngle(angle3, angle5);
-    let bisectingAngle = (angle5 + angle3) / 2;
+  function radiusFromStems() {
+    let a5 = ur.boundingStem5.angle;
+    let a3 = ur.boundingStem3.angle;
+    a3 = normalizeAngle(a3, a5);
+    let bisectingAngle = (a5 + a3) / 2;
     
     let bcb5 = ur.baseCoordinatesBounding5();
     let bcb3 = ur.baseCoordinatesBounding3();
     let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
-    let sin = Math.sin(Math.PI - (bisectingAngle - angle5));
-    sin = Math.max(sin, 0.001);
-    let radius = opp / sin;
+
+    return opp / Math.max(
+      Math.sin(Math.PI - (bisectingAngle - a5)),
+      0.001,
+    );
+  }
+
+  function polarLengthFromStems() {
+    let a5 = ur.boundingStem5.angle;
+    let a3 = ur.boundingStem3.angle;
+    a3 = normalizeAngle(a3, a5);
+    return radiusFromStems() * (a3 - a5);
+  }
+
+  function circlePairs() {
+    let radius = radiusFromStems();
+    
+    let angleToCenter = ur.boundingStem5.angle + Math.PI;
+    let bcb5 = ur.baseCoordinatesBounding5();
+    let xCenter = bcb5.xLeft + (radius * Math.cos(angleToCenter));
+    let yCenter = bcb5.yTop + (radius * Math.sin(angleToCenter));
+    
     let circumference = 2 * Math.PI * radius;
-    
-    let xCenter = bcb5.xLeft + (radius * Math.cos(angle5 + Math.PI));
-    let yCenter = bcb5.yTop + (radius * Math.sin(angle5 + Math.PI));
-    
     let aincr = (2 * Math.PI) * (1 / circumference);
-    let a5 = angle5 + aincr;
-    let a3 = angle3 - aincr;
+    let a5 = ur.boundingStem5.angle + aincr;
+    let a3 = ur.boundingStem3.angle - aincr;
+    a3 = normalizeAngle(a3, a5);
     
     function done() {
-      return p > q
-        || a3 - a5 <= Math.PI
-        || q - p + 2 <= (a3 - a5 + (2 * aincr)) * radius;
+      return p > q || a3 - a5 <= Math.PI;
     }
 
     function addingFirstCirclePair() {
-      return p <= q
-        && p === ur.boundingPosition5 + 1
+      return p === ur.boundingPosition5 + 1
         && q === ur.boundingPosition3 - 1
-        && q - p + 2 > (a3 - a5 + (2 * aincr)) * radius;
+        && q - p + 2 > polarLengthFromStems();
     }
 
-    console.log('a5', a5, 'a3', a3, 'radius', radius);
     while (!done() || addingFirstCirclePair()) {
       setBaseCoordinates(
         p,
@@ -169,9 +181,14 @@ function baseCoordinatesTriangularRound(ur) {
     }
   }
 
-  circlePairs();
-  trianglePairs();
-  smushedRoundPairs();
+  if (q - p + 2 <= polarLengthFromStems()) {
+    smushedRoundPairs();
+  } else {
+    circlePairs();
+    trianglePairs();
+    smushedRoundPairs();
+  }
+
   return coordinates;
 }
 
