@@ -40,8 +40,9 @@ function baseCoordinatesTriangularRound(ur) {
     let bcb5 = ur.baseCoordinatesBounding5();
     let bcb3 = ur.baseCoordinatesBounding3();
     let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
-    let a = Math.max(bisectingAngle - angle5, 0.001);
-    let radius = Math.abs(opp / Math.sin(a));
+    let sin = Math.sin(Math.PI - (bisectingAngle - angle5));
+    sin = Math.max(sin, 0.001);
+    let radius = opp / sin;
     let circumference = 2 * Math.PI * radius;
     
     let xCenter = bcb5.xLeft + (radius * Math.cos(angle5 + Math.PI));
@@ -54,16 +55,17 @@ function baseCoordinatesTriangularRound(ur) {
     function done() {
       return p > q
         || a3 - a5 <= Math.PI
-        || q - p <= Math.abs(a3 - a5) * radius;
+        || q - p + 2 <= (a3 - a5 + (2 * aincr)) * radius;
     }
 
     function addingFirstCirclePair() {
       return p <= q
         && p === ur.boundingPosition5 + 1
         && q === ur.boundingPosition3 - 1
-        && q - p > Math.abs(a3 - a5) * radius;
+        && q - p + 2 > (a3 - a5 + (2 * aincr)) * radius;
     }
 
+    console.log('a5', a5, 'a3', a3, 'radius', radius);
     while (!done() || addingFirstCirclePair()) {
       setBaseCoordinates(
         p,
