@@ -36,35 +36,32 @@ function baseCoordinatesTriangularRound(ur) {
     let angle3 = ur.boundingStem3.angle;
     angle3 = normalizeAngle(angle3, angle5);
     let bisectingAngle = (angle5 + angle3) / 2;
-
+    
     let bcb5 = ur.baseCoordinatesBounding5();
     let bcb3 = ur.baseCoordinatesBounding3();
     let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
-    let a = Math.min(bisectingAngle - angle5, Math.PI - 0.001);
-    let radius = opp / Math.sin(a);
+    let a = Math.max(bisectingAngle - angle5, 0.001);
+    let radius = Math.abs(opp / Math.sin(a));
     let circumference = 2 * Math.PI * radius;
     
     let xCenter = bcb5.xLeft + (radius * Math.cos(angle5 + Math.PI));
     let yCenter = bcb5.yTop + (radius * Math.sin(angle5 + Math.PI));
-
-    let a5 = angleBetween(xCenter, yCenter, bcb5.xLeft, bcb5.yTop);
-    let a3 = angleBetween(xCenter, yCenter, bcb3.xLeft, bcb3.yTop);
-    a3 = normalizeAngle(a3, a5);
+    
     let aincr = (2 * Math.PI) * (1 / circumference);
-    a5 += aincr;
-    a3 += aincr;
-
+    let a5 = angle5 + aincr;
+    let a3 = angle3 - aincr;
+    
     function done() {
       return p > q
         || a3 - a5 <= Math.PI
-        || q - p + 1 <= (a3 - a5) * radius;
+        || q - p <= Math.abs(a3 - a5) * radius;
     }
 
     function addingFirstCirclePair() {
       return p <= q
         && p === ur.boundingPosition5 + 1
         && q === ur.boundingPosition3 - 1
-        && q - p + 1 > (a3 - a5) * radius;
+        && q - p > Math.abs(a3 - a5) * radius;
     }
 
     while (!done() || addingFirstCirclePair()) {

@@ -22,9 +22,6 @@ function checkCoords(coords, expectedCoords) {
   }
 }
 
-it('', () => {});
-
-
 it('empty unpaired region', () => {
   let partners = [3, null, 1, 6, null, 4];
   let gps = new StrictLayoutGeneralProps();
@@ -160,6 +157,74 @@ it('big unpaired region (of length 50)', () => {
 });
 
 it('negative total stretch - length zero', () => {
+  let partners = [3, null, 1, 6, null, 4];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = zeroStretch3(partners.length);
+  bps[2].stretch3 = -20;
+
+  let st = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(st, gps, bps);
+
+  let it = st.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  
+  let coords = baseCoordinatesTriangularRound(ur);
+  expect(coords.length).toBe(0);
+});
+
+it('negative total stretch - length one', () => {
+  let partners = [3, null, 1, null, 7, null, 5];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = zeroStretch3(partners.length);
+  bps[2].stretch3 = -10;
+  bps[3].stretch3 = -10;
+
+  let st = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(st, gps, bps);
+
+  let it = st.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  
+  checkCoords(
+    baseCoordinatesTriangularRound(ur),
+    [
+      [0.9417320272094623, -3.359258709918983],
+    ],
+  )
+});
+
+it('negative total stretch - length four', () => {
+  let partners = [3, null, 1, null, null, null, null, 10, null, 8];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = zeroStretch3(partners.length);
+  bps[4].stretch3 = -15.5;
+  bps[5].stretch3 = -7.5;
+  bps[3].stretch3 = 1;
+  
+  let st = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(st, gps, bps);
+
+  let it = st.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+
+  checkCoords(
+    baseCoordinatesTriangularRound(ur),
+    [
+      [0.7836933414273406, -3.522932519852037],
+      [1.423768188382813, -4.291245080139143],
+      [1.8806761891846724, -4.006293484540546],
+      [1.4723103540483482, -3.0934751320226903],
+    ],
+  );
+});
+
+it('negative total stretch - length 50', () => {
 
   /*
   let coords = baseCoordinatesTriangularRound(ur);
@@ -171,8 +236,8 @@ it('negative total stretch - length zero', () => {
     xs += vbc.xCenter + '\n';
     ys += vbc.yCenter + '\n';
   });
-  xs += ur.baseCoordinatesBounding3().xCenter;
-  ys += ur.baseCoordinatesBounding3().yCenter;
+  xs += ur.baseCoordinatesBounding3().xCenter + '\n';
+  ys += ur.baseCoordinatesBounding3().yCenter + '\n';
   console.log(xs);
   console.log(ys);
 
@@ -185,12 +250,6 @@ it('negative total stretch - length zero', () => {
   console.log(s);
   */
 });
-
-it('negative total stretch - length one', () => {});
-
-it('negative total stretch - length four', () => {});
-
-it('negative total stretch - length 50', () => {});
 
 it('as compressed as possible - length zero', () => {});
 
