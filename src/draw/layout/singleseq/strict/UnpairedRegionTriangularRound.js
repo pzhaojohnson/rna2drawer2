@@ -7,10 +7,13 @@ import angleBetween from '../../../angleBetween';
 /**
  * @param {UnpairedRegion} ur 
  * 
- * @returns {Array<VirtualBaseCoordinates>} The base coordinates of all positions in the given unpaired region
- *  drawn in a triangular round manner.
+ * @returns {Array<VirtualBaseCoordinates>} 
  */
 function baseCoordinatesTriangularRound(ur) {
+  if (ur.size === 0) {
+    return [];
+  }
+
   let coordinates = new Array(ur.size);
   let p = ur.boundingPosition5 + 1;
   let q = ur.boundingPosition3 - 1;
@@ -54,7 +57,7 @@ function baseCoordinatesTriangularRound(ur) {
     return radiusFromStems() * (a3 - a5);
   }
 
-  function circlePairs() {
+  function circlePairsFromStems() {
     let radius = radiusFromStems();
     
     let angleToCenter = ur.boundingStem5.angle + Math.PI;
@@ -73,7 +76,8 @@ function baseCoordinatesTriangularRound(ur) {
     }
 
     function addingFirstCirclePair() {
-      return p === ur.boundingPosition5 + 1
+      return p <= q
+        && p === ur.boundingPosition5 + 1
         && q === ur.boundingPosition3 - 1
         && q - p + 2 > polarLengthFromStems();
     }
@@ -137,45 +141,22 @@ function baseCoordinatesTriangularRound(ur) {
   }
 
   function smushedRoundPairs() {
-    let cc = circleCenter(
-      baseCoordinates(p - 1).xLeft,
-      baseCoordinates(p - 1).yTop,
-      baseCoordinates(q + 1).xLeft,
-      baseCoordinates(q + 1).yTop,
-      q - p + 2,
-    );
-    let xCenter = cc.x;
-    let yCenter = cc.y;
+    let obc = baseCoordinates(p - 1);
+    let rbc = baseCoordinates(q + 1);
 
-    let r = distanceBetween(
-      xCenter,
-      yCenter,
-      baseCoordinates(p - 1).xLeft,
-      baseCoordinates(p - 1).yTop,
-    );
-
-    let angle5 = angleBetween(
-      xCenter,
-      yCenter,
-      baseCoordinates(p - 1).xLeft,
-      baseCoordinates(p - 1).yTop,
-    );
-    let angle3 = angleBetween(
-      xCenter,
-      yCenter,
-      baseCoordinates(q + 1).xLeft,
-      baseCoordinates(q + 1).yTop,
-    );
-    angle3 = normalizeAngle(angle3, angle5);
-
-    let aincr = (angle3 - angle5) / (q - p + 2);
-    let a = angle5 + aincr;
+    let cc = circleCenter(obc.xLeft, obc.yTop, rbc.xLeft, rbc.yTop, q - p + 2);
+    let radius = distanceBetween(cc.x, cc.y, obc.xLeft, obc.yTop);
+    let a5 = angleBetween(cc.x, cc.y, obc.xLeft, obc.yTop);
+    let a3 = angleBetween(cc.x, cc.y, rbc.xLeft, rbc.yTop);
+    a3 = normalizeAngle(a3, a5);
+    let aincr = (a3 - a5) / (q - p + 2);
+    let a = a5 + aincr;
     
-    for (let s = p; s <= q; s++) {
+    for (let z = p; z <= q; z++) {
       setBaseCoordinates(
-        s,
-        xCenter + (r * Math.cos(a)),
-        yCenter + (r * Math.sin(a))
+        z,
+        cc.x + (radius * Math.cos(a)),
+        cc.y + (radius * Math.sin(a))
       );
       a += aincr;
     }
@@ -184,7 +165,8 @@ function baseCoordinatesTriangularRound(ur) {
   if (q - p + 2 <= polarLengthFromStems()) {
     smushedRoundPairs();
   } else {
-    circlePairs();
+    circlePairsFromStems();
+    console.log(coordinates);
     trianglePairs();
     smushedRoundPairs();
   }
