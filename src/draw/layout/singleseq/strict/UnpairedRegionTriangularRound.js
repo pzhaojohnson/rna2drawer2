@@ -65,11 +65,16 @@ function baseCoordinatesTriangularRound(ur) {
     let xCenter = bcb5.xLeft + (radius * Math.cos(angleToCenter));
     let yCenter = bcb5.yTop + (radius * Math.sin(angleToCenter));
     
-    let circumference = 2 * Math.PI * radius;
-    let aincr = (2 * Math.PI) * (1 / circumference);
-    let a5 = ur.boundingStem5.angle + aincr;
-    let a3 = ur.boundingStem3.angle - aincr;
+    let a5 = ur.boundingStem5.angle;
+    let a3 = ur.boundingStem3.angle;
     a3 = normalizeAngle(a3, a5);
+    let circumference = 2 * Math.PI * radius;
+    let aincr = Math.min(
+      (2 * Math.PI) * (1 / circumference),
+      (a3 - a5) / (q === p ? 2 : 3),
+    );
+    a5 += aincr;
+    a3 -= aincr;
     
     function done() {
       return p > q || a3 - a5 <= Math.PI;
@@ -105,9 +110,10 @@ function baseCoordinatesTriangularRound(ur) {
     let rbc = baseCoordinates(q + 1);
     
     let hyp = (q - p + 2) / 2;
-    let opp = obc.distanceBetweenCenters(rbc) / 2;
-    hyp = Math.max(hyp, 0.002);
-    opp = Math.min(opp, hyp - 0.001);
+    hyp = Math.max(hyp, 0.001);
+    let opp = (obc.distanceBetweenCenters(rbc) / 2) - 0.5;
+    opp = Math.max(opp, 0);
+    opp = Math.min(opp, hyp - 0.00001);
     
     let bisectingAngle = obc.angleBetweenCenters(rbc) - (Math.PI / 2);
     let a = Math.asin(opp / hyp) / 2;
@@ -118,7 +124,7 @@ function baseCoordinatesTriangularRound(ur) {
       let bc5 = baseCoordinates(p - 1);
       let bc3 = baseCoordinates(q + 1);
       let radius = (bc5.distanceBetweenCenters(bc3) / 2) / Math.cos(a);
-      return p >= q
+      return q - p + 1 <= 2
         || q - p + 2 <= (Math.PI - (2 * a)) * radius;
     }
 
@@ -166,7 +172,6 @@ function baseCoordinatesTriangularRound(ur) {
     smushedRoundPairs();
   } else {
     circlePairsFromStems();
-    console.log(coordinates);
     trianglePairs();
     smushedRoundPairs();
   }
