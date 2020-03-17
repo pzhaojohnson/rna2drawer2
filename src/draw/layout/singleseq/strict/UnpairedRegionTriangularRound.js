@@ -19,9 +19,7 @@ function baseCoordinatesTriangularRound(ur) {
   let q = ur.boundingPosition3 - 1;
   
   function baseCoordinates(position) {
-    if (position < ur.boundingPosition5 || position > ur.boundingPosition3) {
-      throw new Error("Position is out of range.");
-    } else if (position === ur.boundingPosition5) {
+    if (position === ur.boundingPosition5) {
       return ur.baseCoordinatesBounding5();
     } else if (position === ur.boundingPosition3) {
       return ur.baseCoordinatesBounding3();
@@ -31,7 +29,8 @@ function baseCoordinatesTriangularRound(ur) {
   }
   
   function setBaseCoordinates(position, xLeft, yTop) {
-    coordinates[position - ur.boundingPosition5 - 1] = new VirtualBaseCoordinates(xLeft, yTop);
+    let i = position - ur.boundingPosition5 - 1;
+    coordinates[i] = new VirtualBaseCoordinates(xLeft, yTop);
   }
 
   function radiusFromStems() {
@@ -59,7 +58,6 @@ function baseCoordinatesTriangularRound(ur) {
 
   function circlePairsFromStems() {
     let radius = radiusFromStems();
-    
     let angleToCenter = ur.boundingStem5.angle + Math.PI;
     let bcb5 = ur.baseCoordinatesBounding5();
     let xCenter = bcb5.xLeft + (radius * Math.cos(angleToCenter));
