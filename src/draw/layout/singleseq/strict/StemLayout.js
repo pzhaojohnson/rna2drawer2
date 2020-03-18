@@ -260,9 +260,9 @@ class FlatOutermostLoop {
    * of the unpaired region as a starting point.
    * 
    * @param {UnpairedRegion} ur 
-   * @param {Array<StrictLayoutBaseProps} baseProps The base properties of the layout.
+   * @param {Array<StrictLayoutBaseProps} baseProps 
    * 
-   * @returns {Array<VirtualBaseCoordinates>} The base coordinates of all positions in the given unpaired region.
+   * @returns {Array<VirtualBaseCoordinates>} The coordinates for the bases in the unpaired region.
    */
   static traverseUnpairedRegion53(ur, baseProps) {
     let coordinates = [];
@@ -286,9 +286,9 @@ class FlatOutermostLoop {
    * of the unpaired region as a starting point.
    * 
    * @param {UnpairedRegion} ur 
-   * @param {Array<StrictLayoutBaseProps} baseProps The base properties of the layout.
+   * @param {Array<StrictLayoutBaseProps} baseProps 
    * 
-   * @returns {Array<VirtualBaseCoordinates>} The base coordinates of all positions in the given unpaired region.
+   * @returns {Array<VirtualBaseCoordinates>} The coordinates for the bases in the unpaired region.
    */
   static traverseUnpairedRegion35(ur, baseProps) {
     let coordinates = new Array(ur.size);

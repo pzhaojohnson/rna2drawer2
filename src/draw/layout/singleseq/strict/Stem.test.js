@@ -4,6 +4,14 @@ import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
 import normalizeAngle from '../../../normalizeAngle';
 
+function defaultBaseProps(length) {
+  let bps = [];
+  for (let i = 0; i < length; i++) {
+    bps.push(new StrictLayoutBaseProps());
+  }
+  return bps;
+}
+
 it('_initializePosition3', () => {
 
   let cases = [
@@ -346,57 +354,88 @@ it('width and height getters', () => {
   expect(innerStem.height).toBeCloseTo(2);
 });
 
-it('corner base coordinates', () => {
-  let partners = [null, 7, 6, null, null, 3, 2, null];
+it('baseCoordinates5 method', () => {
+  let partners = [9, 8, 7, null, null, null, 3, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
+  gps.basePairBondLength = 1.4;
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(1, partners, gps, bps);
+  st.xBottomCenter = 1.2;
+  st.yBottomCenter = -1.6;
   
-  // outermost stem
-  gps.terminiGap = 6;
-  let ost = new Stem(0, partners, gps, bps);
-  ost.xBottomCenter = 1;
-  ost.yBottomCenter = 2;
-  ost.angle = Math.PI / 3;
+  // pointed straight up
+  st.angle = -Math.PI / 2;
+  let bc5 = st.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(0, 3);
+  expect(bc5.yCenter).toBeCloseTo(-2.1, 3);
 
-  let bc5 = ost.baseCoordinates5();
-  expect(bc5.xLeft).toBeCloseTo(0.5 + (((ost.width / 2) - 0.5) * Math.cos((Math.PI / 3) - (Math.PI / 2))), 6);
-  expect(bc5.yTop).toBeCloseTo(1 + (((ost.width / 2) - 0.5) * Math.sin((Math.PI / 3) - (Math.PI / 2))), 6);
+  // pointed straight down
+  st.angle = Math.PI / 2;
+  bc5 = st.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(2.4, 3);
+  expect(bc5.yCenter).toBeCloseTo(-1.1, 3);
 
-  let bct5 = ost.baseCoordinatesTop5();
-  expect(bct5.xLeft).toBeCloseTo(bc5.xLeft, 6);
-  expect(bct5.yTop).toBeCloseTo(bc5.yTop, 6);
+  // pointed to the bottom right
+  st.angle = Math.PI / 6;
+  bc5 = st.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(2.2330127018922195, 3);
+  expect(bc5.yCenter).toBeCloseTo(-2.3892304845413266, 3);
 
-  let bc3 = ost.baseCoordinates3();
-  expect(bc3.xLeft).toBeCloseTo(bc5.xLeft + ((ost.width - 1) * Math.cos((Math.PI / 3) + (Math.PI / 2))), 6);
-  expect(bc3.yTop).toBeCloseTo(bc5.yTop + ((ost.width - 1) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
+  // pointed to the top left
+  st.angle = 7 * Math.PI / 5;
+  bc5 = st.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(-0.09577631674165787, 3);
+  expect(bc5.yCenter).toBeCloseTo(-1.70470786489764, 3);
+});
 
-  let bct3 = ost.baseCoordinatesTop3();
-  expect(bct3.xLeft).toBeCloseTo(bct5.xLeft + ((ost.width - 1) * Math.cos((Math.PI / 3) + (Math.PI / 2))), 6);
-  expect(bct3.yTop).toBeCloseTo(bct5.yTop + ((ost.width - 1) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
+it('baseCoordinatesTop5 method', () => {
+  let partners = [9, 8, 7, null, null, null, 3, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 0.9;
+  gps.basePairPadding = 0.1;
+  let bps = defaultBaseProps(partners.length);
 
-  // inner stem
-  gps.basePairBondLength = 2;
-  let ist = new Stem(2, partners, gps, bps);
-  ist.xBottomCenter = 1;
-  ist.yBottomCenter = 2;
-  ist.angle = Math.PI / 3;
+  let st = new Stem(1, partners, gps, bps);
+  st.angle = Math.PI / 3;
+  st.xBottomCenter = 1.11;
+  st.yBottomCenter = 2.2;
 
-  bc5 = ist.baseCoordinates5();
-  expect(bc5.xLeft).toBeCloseTo(0.5 + (((ist.width / 2) - 0.5) * Math.cos((Math.PI / 3) - (Math.PI / 2))), 6);
-  expect(bc5.yTop).toBeCloseTo(1 + (((ist.width / 2) - 0.5) * Math.sin((Math.PI / 3) - (Math.PI / 2))), 6);
+  let bct5 = st.baseCoordinatesTop5();
+  expect(bct5.xLeft).toBeCloseTo(2.7827240000000004, 3);
+  expect(bct5.yTop).toBeCloseTo(3.563267888325765, 3);
+});
 
-  bct5 = ist.baseCoordinatesTop5();
-  expect(bct5.xLeft).toBeCloseTo(bc5.xLeft + Math.cos(Math.PI / 3), 6);
-  expect(bct5.yTop).toBeCloseTo(bc5.yTop + Math.sin(Math.PI / 3), 6);
+it('baseCoordinates3 method', () => {
+  let partners = [9, 8, 7, null, null, null, 3, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 1.8;
+  let bps = defaultBaseProps(partners.length);
 
-  bc3 = ist.baseCoordinates3();
-  expect(bc3.xLeft).toBeCloseTo(bc5.xLeft + ((ist.width - 1) * Math.cos((Math.PI / 3) + (Math.PI / 2))), 6);
-  expect(bc3.yTop).toBeCloseTo(bc5.yTop + ((ist.width - 1) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
+  let st = new Stem(1, partners, gps, bps);
+  st.angle = 2 * Math.PI / 3;
+  st.xBottomCenter = -0.2;
+  st.yBottomCenter = -3.2;
 
-  bct3 = ist.baseCoordinatesTop3();
-  expect(bct3.xLeft).toBeCloseTo(bct5.xLeft + ((ist.width - 1) * Math.cos((Math.PI / 3) + (Math.PI / 2))), 6);
-  expect(bct3.yTop).toBeCloseTo(bct5.yTop + ((ist.width - 1) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
+  let bc3 = st.baseCoordinates3();
+  expect(bc3.xLeft).toBeCloseTo(-2.1624361305964284, 3);
+  expect(bc3.yTop).toBeCloseTo(-3.9669869999999996, 3);
+});
+
+it('baseCoordinatesTop3 method', () => {
+  let partners = [9, 8, 7, null, null, null, 3, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 2.2;
+  gps.basePairPadding = 0.25;
+  let bps = defaultBaseProps(partners.length);
+
+  let st = new Stem(1, partners, gps, bps);
+  st.angle = -Math.PI / 3;
+  st.xBottomCenter = 1.32;
+  st.yBottomCenter = -5;
+
+  let bct3 = st.baseCoordinatesTop3();
+  expect(bct3.xLeft).toBeCloseTo(3.70564, 3);
+  expect(bct3.yTop).toBeCloseTo(-7.298075509461096, 3);
 });
 
 it('isOuterTo', () => {

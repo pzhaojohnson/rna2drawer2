@@ -259,7 +259,7 @@ class Stem {
    * @returns {number} The distance between the bottom and top sides of this stem.
    */
   get height() {
-    return this.size;
+    return this.size + ((this.size - 1) * this._generalProps.basePairPadding);
   }
 
   /**
@@ -336,20 +336,21 @@ class Stem {
    * @returns {VirtualBaseCoordinates} The base coordinates of the 5' most position of this stem.
    */
   baseCoordinates5() {
-    let xBottomCenter = this.xBottomCenter + (((this.width / 2) - 0.5) * Math.cos(this.angle - (Math.PI / 2)));
-    let yBottomCenter = this.yBottomCenter + (((this.width / 2) - 0.5) * Math.sin(this.angle - (Math.PI / 2)));
-    return new VirtualBaseCoordinates(xBottomCenter - 0.5, yBottomCenter - 1);
+    let x = this.xBottomCenter + (0.5 * Math.cos(this.angle));
+    let y = this.yBottomCenter + (0.5 * Math.sin(this.angle));
+    x += ((this.width / 2) - 0.5) * Math.cos(this.angle - (Math.PI / 2));
+    y += ((this.width / 2) - 0.5) * Math.sin(this.angle - (Math.PI / 2));
+    return new VirtualBaseCoordinates(x - 0.5, y - 0.5);
   }
 
   /**
    * @returns {VirtualBaseCoordinates} The base coordinates of the 5' position of the top base pair of this stem.
    */
   baseCoordinatesTop5() {
-    let cp5 = this.baseCoordinates5();
-    
+    let bc5 = this.baseCoordinates5();
     return new VirtualBaseCoordinates(
-      cp5.xLeft + ((this.height - 1) * Math.cos(this.angle)),
-      cp5.yTop + ((this.height - 1) * Math.sin(this.angle))
+      bc5.xLeft + ((this.height - 1) * Math.cos(this.angle)),
+      bc5.yTop + ((this.height - 1) * Math.sin(this.angle)),
     );
   }
 
@@ -357,20 +358,21 @@ class Stem {
    * @returns {VirtualBaseCoordinates} The base coordinates of the 3' most position of this stem.
    */
   baseCoordinates3() {
-    let xBottomCenter = this.xBottomCenter + (((this.width / 2) - 0.5) * Math.cos(this.angle + (Math.PI / 2)));
-    let yBottomCenter = this.yBottomCenter + (((this.width / 2) - 0.5) * Math.sin(this.angle + (Math.PI / 2)));
-    return new VirtualBaseCoordinates(xBottomCenter - 0.5, yBottomCenter - 1);
+    let bc5 = this.baseCoordinates5();
+    return new VirtualBaseCoordinates(
+      bc5.xLeft + ((this.width - 1) * Math.cos(this.angle + (Math.PI / 2))),
+      bc5.yTop + ((this.width - 1) * Math.sin(this.angle + (Math.PI / 2))),
+    );
   }
 
   /**
    * @returns {VirtualBaseCoordinates} The base coordinates of the 3' position of the top base pair of this stem.
    */
   baseCoordinatesTop3() {
-    let cp3 = this.baseCoordinates3();
-
+    let bc3 = this.baseCoordinates3();
     return new VirtualBaseCoordinates(
-      cp3.xLeft + ((this.height - 1) * Math.cos(this.angle)),
-      cp3.yTop + ((this.height - 1) * Math.sin(this.angle))
+      bc3.xLeft + ((this.height - 1) * Math.cos(this.angle)),
+      bc3.yTop + ((this.height - 1) * Math.sin(this.angle)),
     );
   }
 
