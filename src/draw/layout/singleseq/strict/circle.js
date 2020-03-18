@@ -1,91 +1,53 @@
 import distanceBetween from './../../../distanceBetween';
 import angleBetween from './../../../angleBetween';
 
-function _moreThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
-  let straightDistance = Math.max(
-    distanceBetween(x1, y1, x2, y2),
-    0.001,
-  );
-
-  clockwisePolarDistance = Math.max(
-    clockwisePolarDistance,
-    (Math.PI * straightDistance / 2) + 0.001,
-  );
-
-  let circumference = Math.max(
-    clockwisePolarDistance + straightDistance,
-    (Math.PI * straightDistance) + 0.001,
-  );
-  
-  let radius = circumference / (2 * Math.PI);
-  
-  let angleToCenter = angleBetween(x1, y1, x2, y2)
-    - (Math.PI / 2)
-    + Math.asin((straightDistance / 2) / radius);
-
-  return {
-    x: x1 + (radius * Math.cos(angleToCenter)),
-    y: y1 + (radius * Math.sin(angleToCenter)),
-  };
-}
-
 /**
  * Calculates the angle between the straight line connecting the
  * two points on the periphery of the circle and the tangent to
  * the circle at either point.
- * 
- * Requires that polarDistance < Math.PI * straightDistance / 2
- * and that straightDistance not be too small.
  */
 function _straightTangentAngle(clockwisePolarDistance, straightDistance) {
   let p = clockwisePolarDistance / 2;
   let s = straightDistance / 2;
   
-  /* The angle must be between 0 and (Math.PI / 2).
-  (Math.PI / 2) seems to work well as an initial guess. */
-  let a = Math.PI / 2;
-  
   // 20 iterations seems to work well
   let iters = 20;
   
-  // Newton's method of approximation
-  for (let i = 0; i < iters; i++) {
-    let y = ((p / s) * Math.sin(a)) - a;
-    let yPrime = ((p / s) * Math.cos(a)) - 1;
-    a -= y / yPrime;
+  function moreThanSemicircle() {
+
+    // Math.PI seems to work well as an initial guess
+    let b = Math.PI;
+
+    // Newton's method of approximation
+    for (let i = 0; i < iters; i++) {
+      let y = ((p / s) * Math.sin(Math.PI - b)) - b;
+      let yPrime = -((p / s) * Math.cos(Math.PI - b)) - 1;
+      b -= y / yPrime;
+    }
+
+    return Math.PI - b;
   }
-  
-  return a;
-}
 
-function _lessThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
-  let straightDistance = Math.max(
-    distanceBetween(x1, y1, x2, y2),
-    0.002,
-  );
-  
-  clockwisePolarDistance = Math.min(
-    clockwisePolarDistance,
-    (Math.PI * straightDistance / 2) - 0.001,
-  );
-  
-  clockwisePolarDistance = Math.max(
-    clockwisePolarDistance,
-    straightDistance + 0.001,
-  );
+  function lessThanSemicircle() {
+    
+    // Math.PI / 2 seems to work well as an initial guess.
+    let a = Math.PI / 2;
+    
+    // Newton's method of approximation
+    for (let i = 0; i < iters; i++) {
+      let y = ((p / s) * Math.sin(a)) - a;
+      let yPrime = ((p / s) * Math.cos(a)) - 1;
+      a -= y / yPrime;
+    }
+    
+    return a;
+  }
 
-  let sta = _straightTangentAngle(clockwisePolarDistance, straightDistance);
-  
-  let angleToCenter = angleBetween(x1, y1, x2, y2)
-    + (Math.PI / 2)
-    - sta;
-  
-  let radius = (straightDistance / 2) / Math.sin(sta);
-
-  return {
-    x: x1 + (radius * Math.cos(angleToCenter)),
-    y: y1 + (radius * Math.sin(angleToCenter)),
-  };
+  if (clockwisePolarDistance > Math.PI * (straightDistance / 2)) {
+    return moreThanSemicircle();
+  } else {
+    return lessThanSemicircle();
+  }
 }
 
 /**
@@ -118,15 +80,28 @@ function _lessThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance) {
  * @returns {CircleCenter} 
  */
 function circleCenter(x1, y1, x2, y2, clockwisePolarDistance) {
-  let straightDistance = distanceBetween(x1, y1, x2, y2);
-  let circumference = clockwisePolarDistance + straightDistance;
-  
-  // clockwise polar distance spans more than half the circle
-  if (circumference > Math.PI * straightDistance) {
-    return _moreThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance);
+  let straightDistance = Math.max(
+    distanceBetween(x1, y1, x2, y2),
+    0.001,
+  );
+  clockwisePolarDistance = Math.max(
+    clockwisePolarDistance,
+    straightDistance + 0.001,
+  );
+
+  let angleToCenter = angleBetween(x1, y1, x2, y2);
+  let sta = _straightTangentAngle(clockwisePolarDistance, straightDistance);
+  if (clockwisePolarDistance > Math.PI * (straightDistance / 2)) {
+    angleToCenter -= (Math.PI / 2) - sta;
   } else {
-    return _lessThanSemicircle(x1, y1, x2, y2, clockwisePolarDistance);
+    angleToCenter += (Math.PI / 2) - sta;
   }
+  
+  let radius = (straightDistance / 2) / Math.sin(sta);
+  return {
+    x: x1 + (radius * Math.cos(angleToCenter)),
+    y: y1 + (radius * Math.sin(angleToCenter)),
+  };
 }
 
 export {
