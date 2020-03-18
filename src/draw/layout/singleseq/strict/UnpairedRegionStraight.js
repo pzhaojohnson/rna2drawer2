@@ -2,7 +2,7 @@ import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
+ * @param {Array<StrictLayoutBaseProps>} baseProps 
  * 
  * @returns {number} The sum of the positive 3' stretches that contribute to the length
  *  of the given unpaired region.
@@ -23,10 +23,9 @@ function _positiveStretch(ur, baseProps) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
+ * @param {Array<StrictLayoutBaseProps>} baseProps 
  * 
- * @returns {Array<VirtualBaseCoordinates>} The base coordinates of all positions in the given unpaired region
- *  in a straight line connecting the bounding positions of the given unpaired region.
+ * @returns {Array<VirtualBaseCoordinates>} 
  */
 function baseCoordinatesStraight(ur, baseProps) {
   let coordinates = [];
