@@ -2,10 +2,9 @@ import { FlatOutermostLoop } from './StemLayout';
 
 /**
  * @param {UnpairdRegion} ur 
- * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
+ * @param {Array<StrictLayoutBaseProps>} baseProps 
  * 
- * @returns {Array<VirtualBaseCoordinates>} The base coordinates of all positions in the given unpaired region
- *  as part of a flat outermost loop.
+ * @returns {Array<VirtualBaseCoordinates>} 
  */
 function baseCoordinatesFlatOutermostLoop(ur, baseProps) {
   if (ur.isDangling5()) {
