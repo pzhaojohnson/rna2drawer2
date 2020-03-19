@@ -125,3 +125,23 @@ it("FlatOutermost traverseUnpairedRegion53 - 5' dangling unpaired region", () =>
     ],
   );
 });
+
+it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of zero', () => {});
+
+it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of one', () => {});
+
+it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of four', () => {});
+
+it("FlatOutermostLoop setNextCoordinatesAndAngle53 - 5' dangling unpaired region", () => {});
+
+it("FlatOutermostLoop setNextCoordinatesAndAngle53 - negative 3' stretch", () => {});
+
+it('FlatOutermostLoop setCoordinatesAndAngles - uses rotation general property', () => {});
+
+it('FlatOutermostLoop setCoordinatesAndAngles - sequence of length zero', () => {});
+
+it('FlatOutermostLoop setCoordinatesAndAngles - zero stems', () => {});
+
+it('FlatOutermostLoop setCoordinatesAndAngles - one stem', () => {});
+
+it('FlatOutermostLoop setCoordinatesAndAngles - multiple stems', () => {});
