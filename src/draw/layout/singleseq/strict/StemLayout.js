@@ -102,14 +102,8 @@ class TriangleLoop {
    * @param {Stem} st 
    * 
    * @returns {number} The platform length of the triangle loop of a given stem.
-   * 
-   * @throws {Error} If the stem has a hairpin loop.
    */
   static platformLength(st) {
-    if (st.hasHairpinLoop()) {
-      throw new Error("A hairpin loop cannot have a platform.");
-    }
-
     let length = 0;
     let it = st.loopIterator();
     
@@ -142,12 +136,10 @@ class TriangleLoop {
    * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * 
    * @returns {number} The height of the triangle loop of a given stem.
-   * 
-   * @throws {Error} If the stem has a hairpin loop.
    */
   static height(st, generalProps) {
     if (st.hasHairpinLoop()) {
-      throw new Error("The given stem has a hairpin loop.");
+      return 0;
     } else if (st.numBranches === 1) {
       return TriangleLoop._heightOneBranch(st);
     } else {
