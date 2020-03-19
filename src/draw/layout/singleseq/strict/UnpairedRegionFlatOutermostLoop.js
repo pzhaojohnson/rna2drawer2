@@ -7,11 +7,7 @@ import { FlatOutermostLoop } from './StemLayout';
  * @returns {Array<VirtualBaseCoordinates>} 
  */
 function baseCoordinatesFlatOutermostLoop(ur, baseProps) {
-  if (ur.isDangling5()) {
-    return FlatOutermostLoop.traverseUnpairedRegion35(ur, baseProps);
-  } else {
-    return FlatOutermostLoop.traverseUnpairedRegion53(ur, baseProps);
-  }
+  return FlatOutermostLoop.traverseUnpairedRegion53(ur, baseProps);
 }
 
 export default baseCoordinatesFlatOutermostLoop;

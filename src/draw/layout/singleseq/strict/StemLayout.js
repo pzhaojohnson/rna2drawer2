@@ -271,37 +271,14 @@ class FlatOutermostLoop {
     let angle = ur.boundingStem5.angle + (Math.PI / 2);
 
     for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
-      angle += baseProps[p - 2].flatOutermostLoopAngle3;
-      let d = 1 + Math.max(0, baseProps[p - 2].stretch3);
+      let d = 1;
+      if (p > 1) {
+        d += Math.max(0, baseProps[p - 2].stretch3);
+        angle += baseProps[p - 2].flatOutermostLoopAngle3;
+      }
       x += d * Math.cos(angle);
       y += d * Math.sin(angle);
       coordinates.push(new VirtualBaseCoordinates(x, y));
-    }
-
-    return coordinates;
-  }
-
-  /**
-   * Traverses the given unpaired region 3' to 5', using the coordinates and angle of the 3' bounding stem
-   * of the unpaired region as a starting point.
-   * 
-   * @param {UnpairedRegion} ur 
-   * @param {Array<StrictLayoutBaseProps} baseProps 
-   * 
-   * @returns {Array<VirtualBaseCoordinates>} The coordinates for the bases in the unpaired region.
-   */
-  static traverseUnpairedRegion35(ur, baseProps) {
-    let coordinates = new Array(ur.size);
-    let x = ur.baseCoordinatesBounding3().xLeft;
-    let y = ur.baseCoordinatesBounding3().yTop;
-    let angle = ur.boundingStem3.angle - (Math.PI / 2);
-
-    for (let p = ur.boundingPosition3 - 1; p > ur.boundingPosition5; p--) {
-      angle -= baseProps[p - 1].flatOutermostLoopAngle3;
-      let d = 1 + Math.max(0, baseProps[p - 1].stretch3);
-      x += d * Math.cos(angle);
-      y += d * Math.sin(angle);
-      coordinates[p - ur.boundingPosition5 - 1] = new VirtualBaseCoordinates(x, y);
     }
 
     return coordinates;
@@ -312,39 +289,42 @@ class FlatOutermostLoop {
    * based on the coordinates and angle of the 5' bounding stem of the unpaired region.
    * 
    * @param {UnpairedRegion} ur 
-   * @param {Array<StrictLayoutBaseProps} baseProps The base properties of the layout.
+   * @param {Array<StrictLayoutBaseProps} baseProps 
    */
   static setNextCoordinatesAndAngle53(ur, baseProps) {
     let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur);
+    
     let x;
     let y;
+    if (coordinates.length === 0) {
+      x = ur.baseCoordinatesBounding5().xCenter;
+      y = ur.baseCoordinatesBounding5().yCenter;
+    } else {
+      x = coordinates[ur.size - 1].xCenter;
+      y = coordinates[ur.size - 1].yCenter;
+    }
+
     let angle;
-
     if (coordinates.length === 0) {
-      x = ur.baseCoordinatesBounding5().xLeft;
-      y = ur.baseCoordinatesBounding5().yBottom;
-    } else {
-      x = coordinates[ur.size - 1].xLeft;
-      y = coordinates[ur.size - 1].yBottom;
-    }
-
-    if (coordinates.length === 0) {
-      angle = ur.boundingStem5.angle + (Math.PI / 2)
-        + baseProps[ur.boundingPosition5 - 1].flatOutermostLoopAngle3;
+      angle = ur.boundingStem5.angle + (Math.PI / 2);
     } else if (coordinates.length === 1) {
-      angle = ur.baseCoordinatesBounding5().angleBetweenCenters(coordinates[0])
-        + baseProps[ur.boundingPosition5].flatOutermostLoopAngle3;
+      angle = ur.baseCoordinatesBounding5().angleBetweenCenters(coordinates[0]);
     } else {
-      angle = coordinates[ur.size - 2].angleBetweenCenters(coordinates[ur.size - 1])
-        + baseProps[ur.boundingPosition3 - 2].flatOutermostLoopAngle3;
+      angle = coordinates[ur.size - 2].angleBetweenCenters(coordinates[ur.size - 1]);
+    }
+    if (ur.boundingPosition3 > 1) {
+      angle += baseProps[ur.boundingPosition3 - 2].flatOutermostLoopAngle3;
     }
 
-    let d = 1
-      + Math.max(0, baseProps[ur.boundingPosition3 - 2].stretch3)
-      + (ur.boundingStem3.width / 2);
+    let d = 1 + (ur.boundingStem3.width / 2);
+    if (ur.boundingPosition3 > 1) {
+      Math.max(0, baseProps[ur.boundingPosition3 - 2].stretch3);
+    }
     
     x += d * Math.cos(angle);
     y += d * Math.sin(angle);
+    x += 0.5 * Math.cos(angle + (Math.PI / 2));
+    y += 0.5 * Math.sin(angle + (Math.PI / 2));
 
     ur.boundingStem3.xBottomCenter = x;
     ur.boundingStem3.yBottomCenter = y;
@@ -354,34 +334,23 @@ class FlatOutermostLoop {
   /**
    * Sets the coordinates and angles for all stems in the layout.
    * 
-   * @param {Stem} outermostStem The outermost stem of the layout.
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
-   * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
+   * @param {Stem} outermostStem 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
+    outermostStem.xBottomCenter = 0;
+    outermostStem.yBottomCenter = 0;
+    outermostStem.angle = generalProps.rotation - (Math.PI / 2);
+
     let it = outermostStem.loopIterator();
-    
-    // skip the first unpaired region
-    it.next();
-
+    let ur = it.next().value;
     let next = it.next();
-    let ur;
-
-    if (!next.done) {
-      let st = next.value;
-      st.xBottomCenter = 0;
-      st.yBottomCenter = 0;
-      st.angle = generalProps.rotation - (Math.PI / 2);
-      StemLayout.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
-
-      ur = it.next().value;
-      next = it.next();
-    }
 
     while (!next.done) {
+      let st = next.value;
       FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, baseProps);
-      StemLayout.setInnerCoordinatesAndAngles(ur.boundingStem3, generalProps, baseProps);
-      
+      StemLayout.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
       ur = it.next().value;
       next = it.next();
     }
@@ -433,5 +402,5 @@ export {
   RoundLoop,
   TriangleLoop,
   FlatOutermostLoop,
-  StemLayout
-}
+  StemLayout,
+};

@@ -20,30 +20,7 @@ function checkCoords(coords, expectedCoords) {
   }
 }
 
-it("5' dangling unpaired region", () => {
-  let partners = [null, null, 5, null, 3, null, null];
-  let gps = new StrictLayoutGeneralProps();
-  gps.flatOutermostLoop = true;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].stretch3 = 5.5;
-  bps[0].flatOutermostLoopAngle3 = Math.PI / 3;
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
-  let ur = it.next().value;
-  let st3 = it.next().value;
-  
-  st3.angle = 6 * Math.PI / 5;
-  st3.xBottomCenter = -3.2;
-  st3.yBottomCenter = -2.4;
-
-  checkCoords(
-    baseCoordinatesFlatOutermostLoop(ur, bps),
-    FlatOutermostLoop.traverseUnpairedRegion35(ur, bps),
-  );
-});
-
-it("not a 5' dangling unpaired region", () => {
+it('basic case', () => {
   let partners = [null, null, 5, null, 3, null, null];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
@@ -62,6 +39,28 @@ it("not a 5' dangling unpaired region", () => {
   st5.angle = Math.PI / 8;
   st5.xBottomCenter = 22.4;
   st5.yBottomCenter = 35.7;
+
+  checkCoords(
+    baseCoordinatesFlatOutermostLoop(ur, bps),
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, bps),
+  );
+});
+
+it("5' dangling unpaired region", () => {
+  let partners = [null, null, 5, null, 3, null, null];
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].stretch3 = 5.5;
+  bps[0].flatOutermostLoopAngle3 = Math.PI / 3;
+
+  let outermostStem = new Stem(0, partners, gps, bps);
+  let it = outermostStem.loopIterator();
+  let ur = it.next().value;
+  
+  outermostStem.angle = 6 * Math.PI / 5;
+  outermostStem.xBottomCenter = -3.2;
+  outermostStem.yBottomCenter = -2.4;
 
   checkCoords(
     baseCoordinatesFlatOutermostLoop(ur, bps),
