@@ -285,6 +285,36 @@ it('RoundLoop setInnerCoordinatesAndAngles - given stem is not the outermost ste
   expect(ist2.angle).toBeCloseTo(3.1415926535897922, 3);
 });
 
+it('TriangleLoop platformLength - hairpin', () => {});
+
+it('TriangleLoop platformLength - one branch', () => {});
+
+it('TriangleLoop platformLength - multiple branches', () => {});
+
+it('TriangleLoop height - hairpin', () => {});
+
+it('TriangleLoop height - one branch', () => {});
+
+it('TriangleLoop height - multiple branches', () => {});
+
+it("TriangleLoop _heightOneBranch - 5' side is greater", () => {});
+
+it("TriangleLoop _heightOneBranch - 3' side is greater", () => {});
+
+it("TriangleLoop _heightMultipleBranches - 5' side is greater", () => {});
+
+it("TriangleLoop _heightMultipleBranches - 3' side is greater", () => {});
+
+it("TriangleLoop _heightMultipleBranches - platform length is too large for either side", () => {});
+
+it('TriangleLoop _heightMultipleBranches - uses maxTriangleLoopAngle general property', () => {});
+
+it('TriangleLoop setInnerCoordinatesAndAngles - hairpin', () => {});
+
+it('TriangleLoop setInnerCoordinatesAndAngles - one branch', () => {});
+
+it('TriangleLoop setInnerCoordinatesAndAngles - multiple branches', () => {});
+
 it('FlatOutermostLoop traverseUnpairedRegion53 - size of zero', () => {
   let partners = [3, null, 1, null];
   let gps = new StrictLayoutGeneralProps();
