@@ -14,7 +14,7 @@ function _positiveStretch(ur, baseProps) {
 
     // in case the 5' bounding position is zero
     if (p > 0) {
-      ps += Math.max(0, baseProps[p - 1].stretch3);
+      ps += Math.max(0.0001, baseProps[p - 1].stretch3);
     }
   }
 
@@ -37,7 +37,6 @@ function baseCoordinatesStraight(ur, baseProps) {
   excessDistance = Math.max(excessDistance, 0);
   
   let positiveStretch = _positiveStretch(ur, baseProps);
-  positiveStretch = Math.max(positiveStretch, 0.001);
   
   let x = bcb5.xLeft;
   let y = bcb5.yTop;
@@ -48,7 +47,7 @@ function baseCoordinatesStraight(ur, baseProps) {
     if (p === 1) {
       s5 = 0;
     } else {
-      let os3 = Math.max(baseProps[p - 2].stretch3, 0);
+      let os3 = Math.max(baseProps[p - 2].stretch3, 0.0001);
       s5 = excessDistance * (os3 / positiveStretch);
     }
 
