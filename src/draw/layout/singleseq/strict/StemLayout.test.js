@@ -285,13 +285,25 @@ it('RoundLoop setInnerCoordinatesAndAngles - given stem is not the outermost ste
   expect(ist2.angle).toBeCloseTo(3.1415926535897922, 3);
 });
 
-it('TriangleLoop platformLength - hairpin', () => {});
+it('TriangleLoop platformLength - a hairpin', () => {
+  let partners = [6, 5, null, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(1, partners, gps, bps);
+  expect(TriangleLoop.platformLength(st)).toBe(0);
+});
 
-it('TriangleLoop platformLength - one branch', () => {});
+it('TriangleLoop platformLength - multiple branches', () => {
+  let partners = [12, 11, null, 6, null, 4, 9, null, 7, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 0.9;
+  let bps = defaultBaseProps(partners.length);
+  bps[5].stretch3 = 5.5;
+  let st = new Stem(1, partners, gps, bps);
+  expect(TriangleLoop.platformLength(st)).toBeCloseTo(11.3, 3);
+});
 
-it('TriangleLoop platformLength - multiple branches', () => {});
-
-it('TriangleLoop height - hairpin', () => {});
+it('TriangleLoop height - a hairpin', () => {});
 
 it('TriangleLoop height - one branch', () => {});
 
@@ -309,7 +321,7 @@ it("TriangleLoop _heightMultipleBranches - platform length is too large for eith
 
 it('TriangleLoop _heightMultipleBranches - uses maxTriangleLoopAngle general property', () => {});
 
-it('TriangleLoop setInnerCoordinatesAndAngles - hairpin', () => {});
+it('TriangleLoop setInnerCoordinatesAndAngles - a hairpin', () => {});
 
 it('TriangleLoop setInnerCoordinatesAndAngles - one branch', () => {});
 

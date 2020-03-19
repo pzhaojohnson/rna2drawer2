@@ -101,30 +101,22 @@ class TriangleLoop {
   /**
    * @param {Stem} st 
    * 
-   * @returns {number} The platform length of the triangle loop of a given stem.
+   * @returns {number} 
    */
   static platformLength(st) {
     let length = 0;
     let it = st.loopIterator();
-    
-    // skip first unpaired region
     it.next();
-
     let next = it.next();
-    
     while (!next.done) {
-      let st = next.value;
-      length += st.width;
-      
+      let ist = next.value;
+      length += ist.width;
       let ur = it.next().value;
-
       if (ur.boundingPosition3 < st.positionTop3) {
         length += ur.length;
       }
-
       next = it.next();
     }
-
     return length;
   }
 
