@@ -152,7 +152,7 @@ class TriangleLoop {
     let ur3 = it.next().value;
 
     let greater = Math.max(ur5.length, ur3.length);
-    let halfCircumference = greater + (st.width / 2) + (ist.width / 2);
+    let halfCircumference = greater + 1;
     let circumference = 2 * halfCircumference;
     let diameter = circumference / Math.PI;
 
@@ -173,32 +173,25 @@ class TriangleLoop {
     let urFirst = it.next().value;
     let next = it.next();
     let urLast = null;
-
     while (!next.done) {
       urLast = it.next().value;
       next = it.next();
     }
 
     let platformLength = TriangleLoop.platformLength(st);
+    let opp = (platformLength - st.width) / 2;
     let hyp = Math.max(
-      urFirst.length,
-      urLast.length,
-      ((platformLength - st.width) / 2) + 0.001,
+      urFirst.length + 1,
+      urLast.length + 1,
+      opp + 0.001,
     );
-    let height = (hyp ** 2 - ((platformLength - st.width) / 2) ** 2) ** 0.5;
+    let height = ((hyp ** 2) - (opp ** 2)) ** 0.5;
 
-    // should not be greater than Math.PI / 2
-    let maxAngle = Math.min(
-      Math.PI / 2,
-      Math.abs(generalProps.maxTriangleLoopAngle) / 2
-    );
-
-    // should not be too small either
-    maxAngle = Math.max(maxAngle, Math.PI / 16);
-    
-    let minHeight = Math.cos(maxAngle) * (((platformLength - st.width) / 2) / Math.sin(maxAngle));
-
-    return Math.max(height, minHeight);
+    let maxAngle = Math.max(0.001, generalProps.maxTriangleLoopAngle / 2);
+    maxAngle = Math.min(Math.PI / 2 - 0.001, maxAngle);
+    let minHyp = opp / Math.sin(maxAngle);
+    let minHeight = ((minHyp ** 2) - (opp ** 2)) ** 0.5;
+    return Math.max(height, minHeight) - 1;
   }
 
   /**
