@@ -66,6 +66,32 @@ class UnpairedRegion {
   }
 
   /**
+   * @returns {number} 
+   */
+  get boundingStemOutwardAngle5() {
+    if (this.isHairpinLoop()) {
+      return this.boundingStem5.reverseAngle;
+    } else if (this.boundingStem5.isOuterTo(this.boundingStem3)) {
+      return this.boundingStem5.reverseAngle;
+    } else {
+      return this.boundingStem5.angle;
+    }
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get boundingStemOutwardAngle3() {
+    if (this.isHairpinLoop()) {
+      return this.boundingStem3.reverseAngle;
+    } else if (this.boundingStem3.isOuterTo(this.boundingStem5)) {
+      return this.boundingStem3.reverseAngle;
+    } else {
+      return this.boundingStem3.angle;
+    }
+  }
+
+  /**
    * @returns {VirtualBaseCoordinates} The base coordinates of the 5' bounding position of this unpaired region.
    */
   baseCoordinatesBounding5() {
@@ -73,6 +99,8 @@ class UnpairedRegion {
       return this.boundingStem5.baseCoordinatesTop5();
     } else if (this.boundingStem5.isOuterTo(this.boundingStem3)) {
       return this.boundingStem5.baseCoordinatesTop5();
+    } else if (this.boundingStem3.isOuterTo(this.boundingStem5)) {
+      return this.boundingStem5.baseCoordinates3();
     } else {
       return this.boundingStem5.baseCoordinates3();
     }
@@ -84,6 +112,8 @@ class UnpairedRegion {
   baseCoordinatesBounding3() {
     if (this.isHairpinLoop()) {
       return this.boundingStem5.baseCoordinatesTop3();
+    } else if (this.boundingStem5.isOuterTo(this.boundingStem3)) {
+      return this.boundingStem3.baseCoordinates5();
     } else if (this.boundingStem3.isOuterTo(this.boundingStem5)) {
       return this.boundingStem3.baseCoordinatesTop3();
     } else {

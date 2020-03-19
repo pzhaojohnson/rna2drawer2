@@ -34,8 +34,8 @@ function baseCoordinatesTriangularRound(ur) {
   }
 
   function radiusFromStems() {
-    let a5 = ur.boundingStem5.angle;
-    let a3 = ur.boundingStem3.angle;
+    let a5 = ur.boundingStemOutwardAngle5;
+    let a3 = ur.boundingStemOutwardAngle3;
     a3 = normalizeAngle(a3, a5);
     let bisectingAngle = (a5 + a3) / 2;
     
@@ -50,21 +50,21 @@ function baseCoordinatesTriangularRound(ur) {
   }
 
   function polarLengthFromStems() {
-    let a5 = ur.boundingStem5.angle;
-    let a3 = ur.boundingStem3.angle;
+    let a5 = ur.boundingStemOutwardAngle5;
+    let a3 = ur.boundingStemOutwardAngle3;
     a3 = normalizeAngle(a3, a5);
     return radiusFromStems() * (a3 - a5);
   }
 
   function circlePairsFromStems() {
     let radius = radiusFromStems();
-    let angleToCenter = ur.boundingStem5.angle + Math.PI;
+    let angleToCenter = ur.boundingStemOutwardAngle5 + Math.PI;
     let bcb5 = ur.baseCoordinatesBounding5();
     let xCenter = bcb5.xLeft + (radius * Math.cos(angleToCenter));
     let yCenter = bcb5.yTop + (radius * Math.sin(angleToCenter));
     
-    let a5 = ur.boundingStem5.angle;
-    let a3 = ur.boundingStem3.angle;
+    let a5 = ur.boundingStemOutwardAngle5;
+    let a3 = ur.boundingStemOutwardAngle3;
     a3 = normalizeAngle(a3, a5);
     let circumference = 2 * Math.PI * radius;
     let aincr = Math.min(

@@ -62,9 +62,12 @@ class RoundLoop {
   static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
     let xCenter = RoundLoop.xCenter(st);
     let yCenter = RoundLoop.yCenter(st);
+
+    let bottomCenterDistance = distanceBetween(xCenter, yCenter, st.xTopCenter, st.yTopCenter);
     
     let circumference = st.loopLength + st.width;
-    let angle = angleBetween(xCenter, yCenter, st.xTopLeft, st.yTopLeft);
+    let angle = angleBetween(xCenter, yCenter, st.xTopCenter, st.yTopCenter);
+    angle += (2 * Math.PI) * ((st.width / 2) / circumference);
     
     let it = st.loopIterator();
     let iur = it.next().value;
@@ -74,9 +77,11 @@ class RoundLoop {
     while (!next.done) {
       angle += (2 * Math.PI) * ((iur.length + (ist.width / 2)) / circumference);
       
+      /*
       let bottomCenterDistance = distanceBetween(xCenter, yCenter, st.xTopLeft, st.yTopLeft)
         * Math.cos((2 * Math.PI) * ((ist.width / 2) / circumference));
-
+      */
+      
       ist.xBottomCenter = xCenter + (bottomCenterDistance * Math.cos(angle));
       ist.yBottomCenter = yCenter + (bottomCenterDistance * Math.sin(angle));
       ist.angle = angle;

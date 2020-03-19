@@ -437,19 +437,17 @@ class Stem {
   }
 
   /**
-   * @returns {Array<VirtualBaseCoordinates>} The base coordinates of all positions encompassed by this stem,
-   *  including positions in the loop of this stem.
+   * @returns {Array<VirtualBaseCoordinates>} 
    */
   baseCoordinates() {
     let coordinates = [];
 
     if (!this.isOutermostStem()) {
       coordinates.push(this.baseCoordinates5());
-
       for (let p = this.position5 + 1; p <= this.positionTop5; p++) {
         coordinates.push(new VirtualBaseCoordinates(
           coordinates[p - this.position5 - 1].xLeft + Math.cos(this.angle),
-          coordinates[p - this.position5 - 1].yTop + Math.sin(this.angle)
+          coordinates[p - this.position5 - 1].yTop + Math.sin(this.angle),
         ));
       }
     }
@@ -457,15 +455,12 @@ class Stem {
     let it = this.loopIterator();
     let inOutermostLoop = this.isOutermostStem();
     
-    // first unpaired region
     let ur = it.next().value;
     coordinates = coordinates.concat(ur.baseCoordinates(inOutermostLoop));
     
     let next = it.next();
-    
     while (!next.done) {
       let st = next.value;
-
       if (st.isFlipped()) {
         coordinates = coordinates.concat(st.flippedBaseCoordinates());
       } else {
@@ -480,11 +475,10 @@ class Stem {
 
     if (!this.isOutermostStem()) {
       coordinates.push(this.baseCoordinatesTop3());
-      
       for (let p = this.positionTop3 + 1; p <= this.position3; p++) {
         coordinates.push(new VirtualBaseCoordinates(
           coordinates[p - this.position5 - 1].xLeft + Math.cos(this.reverseAngle),
-          coordinates[p - this.position5 - 1].yTop + Math.sin(this.reverseAngle)
+          coordinates[p - this.position5 - 1].yTop + Math.sin(this.reverseAngle),
         ));
       }
     }
