@@ -1,4 +1,5 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
+import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
 import { circleCenter } from './circle';
 
@@ -55,16 +56,14 @@ class RoundLoop {
    * Recursively sets the coordinates and angles of stems inner to a given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
-   * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
     let xCenter = RoundLoop.xCenter(st);
     let yCenter = RoundLoop.yCenter(st);
     
     let circumference = st.loopLength + st.width;
-    let radius = circumference / (2 * Math.PI);
-
     let angle = angleBetween(xCenter, yCenter, st.xTopLeft, st.yTopLeft);
     
     let it = st.loopIterator();
@@ -74,13 +73,15 @@ class RoundLoop {
 
     while (!next.done) {
       angle += (2 * Math.PI) * ((iur.length + (ist.width / 2)) / circumference);
-      let bottomCenterDistance = radius * Math.cos((2 * Math.PI) * ((ist.width / 2) / circumference));
+      
+      let bottomCenterDistance = distanceBetween(xCenter, yCenter, st.xTopLeft, st.yTopLeft)
+        * Math.cos((2 * Math.PI) * ((ist.width / 2) / circumference));
 
       ist.xBottomCenter = xCenter + (bottomCenterDistance * Math.cos(angle));
       ist.yBottomCenter = yCenter + (bottomCenterDistance * Math.sin(angle));
       ist.angle = angle;
       StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
-
+      
       angle += (2 * Math.PI) * ((ist.width / 2) / circumference);
       
       iur = it.next().value;
