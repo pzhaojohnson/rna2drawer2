@@ -2,6 +2,7 @@ import { RoundLoop, TriangleLoop, FlatOutermostLoop, StemLayout } from './StemLa
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
+import normalizeAngle from '../../../normalizeAngle';
 
 function defaultBaseProps(length) {
   let bps = [];
@@ -126,15 +127,143 @@ it("FlatOutermost traverseUnpairedRegion53 - 5' dangling unpaired region", () =>
   );
 });
 
-it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of zero', () => {});
+it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of zero', () => {
+  let partners = [3, null, 1, 6, null, 4];
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  gps.basePairBondLength = 2.3;
+  let bps = defaultBaseProps(partners.length);
+  bps[2].stretch3 = 2.6;
+  bps[2].flatOutermostLoopAngle3 = Math.PI / 7;
 
-it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of one', () => {});
+  let outermostStem = new Stem(0, partners, gps, bps);
+  let it = outermostStem.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  let st3 = it.next().value;
 
-it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of four', () => {});
+  st5.angle = Math.PI / 3;
+  st5.xBottomCenter = 2.2;
+  st5.yBottomCenter = 3.2;
 
-it("FlatOutermostLoop setNextCoordinatesAndAngle53 - 5' dangling unpaired region", () => {});
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  expect(st3.angle).toBeCloseTo((Math.PI / 3) + (Math.PI / 7), 3);
+  let bc5 = st3.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(-2.5688756698522486, 3);
+  expect(bc5.yCenter).toBeCloseTo(4.727040336911129, 3);
+});
 
-it("FlatOutermostLoop setNextCoordinatesAndAngle53 - negative 3' stretch", () => {});
+it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of one', () => {
+  let partners = [3, null, 1, null, 7, null, 5];
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  gps.basePairBondLength = 0.77;
+  let bps = defaultBaseProps(partners.length);
+  bps[2].stretch3 = 0.5;
+  bps[2].flatOutermostLoopAngle3 = Math.PI / 3;
+  bps[3].stretch3 = 10;
+  bps[3].flatOutermostLoopAngle3 = -Math.PI / 6;
+
+  let outermostStem = new Stem(0, partners, gps, bps);
+  let it = outermostStem.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  let st3 = it.next().value;
+
+  st5.angle = -Math.PI / 5;
+  st5.xBottomCenter = -2.1;
+  st5.yBottomCenter = 2.44;
+  
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  expect(st3.angle).toBeCloseTo((-Math.PI / 5) + (Math.PI / 6), 3);
+  let bc5 = st3.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(-0.6355929040558095, 3);
+  expect(bc5.yCenter).toBeCloseTo(15.172145849051006, 3);
+});
+
+it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of four', () => {
+  let partners = [3, null, 1, null, null, null, null, 10, null, 8];
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  gps.basePairBondLength = 3.5;
+  let bps = defaultBaseProps(partners.length);
+  bps[4].stretch3 = 2.2;
+  bps[5].flatOutermostLoopAngle3 = 5 * Math.PI / 3;
+  bps[6].stretch3 = 5.4;
+  bps[6].flatOutermostLoopAngle3 = -Math.PI / 3;
+
+  let outermostStem = new Stem(0, partners, gps, bps);
+  let it = outermostStem.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  let st3 = it.next().value;
+
+  st5.angle = -4 * Math.PI / 9;
+  st5.xBottomCenter = 1.33;
+  st5.yBottomCenter = -5.4;
+
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  expect(normalizeAngle(st3.angle, 0)).toBeCloseTo(2.7925268031909276, 3);
+  let bc5 = st3.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(7.20750008271572, 3);
+  expect(bc5.yCenter).toBeCloseTo(-11.378801773029814, 3);
+});
+
+it("FlatOutermostLoop setNextCoordinatesAndAngle53 - 5' dangling unpaired region", () => {
+  let partners = [null, 4, null, 2];
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].stretch3 = 2.4;
+  bps[0].flatOutermostLoopAngle3 = Math.PI / 6;
+
+  let outermostStem = new Stem(0, partners, gps, bps);
+  let it = outermostStem.loopIterator();
+  let ur = it.next().value;
+  let st3 = it.next().value;
+
+  outermostStem.angle = -Math.PI / 2;
+  outermostStem.xBottomCenter = 0;
+  outermostStem.yBottomCenter = 0;
+
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  expect(st3.angle).toBeCloseTo((Math.PI / 6) - (Math.PI / 2), 3);
+  let bc5 = st3.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(2.4444863728670914, 3);
+  expect(bc5.yCenter).toBeCloseTo(1.1999999999999997, 3);
+});
+
+it("FlatOutermostLoop setNextCoordinatesAndAngle53 - negative 3' stretch", () => {
+  let partners = [3, null, 1, null, null, null, null, 10, null, 8];
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  gps.basePairBondLength = 3.5;
+  let bps = defaultBaseProps(partners.length);
+  bps[4].stretch3 = 2.2;
+  bps[5].flatOutermostLoopAngle3 = 5 * Math.PI / 3;
+  bps[6].stretch3 = -8.8;
+  bps[6].flatOutermostLoopAngle3 = -Math.PI / 5;
+
+  let outermostStem = new Stem(0, partners, gps, bps);
+  let it = outermostStem.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  let st3 = it.next().value;
+
+  st5.angle = -4 * Math.PI / 9;
+  st5.xBottomCenter = 1.33;
+  st5.yBottomCenter = -5.4;
+
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  expect(normalizeAngle(st3.angle, 0)).toBeCloseTo(3.2114058236695664, 3);
+  let bc5 = st3.baseCoordinates5();
+  expect(bc5.xCenter).toBeCloseTo(9.466185473744124, 3);
+  expect(bc5.yCenter).toBeCloseTo(-6.362333050259824, 3);
+});
 
 it('FlatOutermostLoop setCoordinatesAndAngles - uses rotation general property', () => {});
 

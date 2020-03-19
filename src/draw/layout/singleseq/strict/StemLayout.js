@@ -292,7 +292,7 @@ class FlatOutermostLoop {
    * @param {Array<StrictLayoutBaseProps} baseProps 
    */
   static setNextCoordinatesAndAngle53(ur, baseProps) {
-    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur);
+    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, baseProps);
     
     let x;
     let y;
@@ -316,9 +316,9 @@ class FlatOutermostLoop {
       angle += baseProps[ur.boundingPosition3 - 2].flatOutermostLoopAngle3;
     }
 
-    let d = 1 + (ur.boundingStem3.width / 2);
+    let d = 0.5 + (ur.boundingStem3.width / 2);
     if (ur.boundingPosition3 > 1) {
-      Math.max(0, baseProps[ur.boundingPosition3 - 2].stretch3);
+      d += Math.max(0, baseProps[ur.boundingPosition3 - 2].stretch3);
     }
     
     x += d * Math.cos(angle);
