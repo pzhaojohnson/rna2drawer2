@@ -189,9 +189,13 @@ class TriangleLoop {
       next = it.next();
     }
 
-    let greater = Math.max(urFirst.length(), urLast.length());
     let platformLength = TriangleLoop.platformLength(st);
-    let height = (greater ** 2 - ((platformLength - st.width) / 2) ** 2) ** 0.5;
+    let hyp = Math.max(
+      urFirst.length,
+      urLast.length,
+      ((platformLength - st.width) / 2) + 0.001,
+    );
+    let height = (hyp ** 2 - ((platformLength - st.width) / 2) ** 2) ** 0.5;
 
     // should not be greater than Math.PI / 2
     let maxAngle = Math.min(
@@ -238,8 +242,8 @@ class TriangleLoop {
         let ist = next.value;
         x += (ist.width / 2) * Math.cos(st.angle + (Math.PI / 2));
         y += (ist.width / 2) * Math.sin(st.angle + (Math.PI / 2));
-        ist.xBottomLeft = x;
-        ist.yBottomLeft = y;
+        ist.xBottomCenter = x;
+        ist.yBottomCenter = y;
         ist.angle = st.angle;
         StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
 

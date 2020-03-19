@@ -393,6 +393,13 @@ class Stem {
   }
 
   /**
+   * @returns {boolean} 
+   */
+  hasHairpinLoop() {
+    return this.numBranches === 0;
+  }
+
+  /**
    * @returns {boolean} True if this stem has a round loop.
    */
   hasRoundLoop() {
