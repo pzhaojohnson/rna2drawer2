@@ -1,14 +1,35 @@
 import UnpairedRegion from './UnpairedRegion';
-import Stem from './Stem';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
-import validatePartners from '../../../../parse/validatePartners';
+import Stem from './Stem';
+import baseCoordinatesHairpin from './UnpairedRegionHairpin';
+import baseCoordinatesStraight from './UnpairedRegionStraight';
+import baseCoordinatesTriangularRound from './UnpairedRegionTriangularRound';
+import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
+
+function defaultBaseProps(length) {
+  let bps = [];
+  for (let i = 0; i < length; i++) {
+    bps.push(new StrictLayoutBaseProps());
+  }
+  return bps;
+}
+
+it('basic test of constructor', () => {
+  let partners = [3, null, 1, 6, null, 4];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(6);
+  let st5 = new Stem(1, partners, gps, bps);
+  let st3 = new Stem(4, partners, gps, bps);
+  expect(
+    () => new UnpairedRegion(st5, st3, partners, gps, bps)
+  ).not.toThrow();
+});
 
 it('bounding stem getters', () => {
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
+  let bps = defaultBaseProps(6);
   
   let st = new Stem(1, partners, gps, bps);
   let it = st.loopIterator();
@@ -17,213 +38,245 @@ it('bounding stem getters', () => {
   expect(Object.is(ur.boundingStem3, st)).toBeTruthy();
 });
 
-it('bounding positions and base coordinates', () => {
-
-  let cases = [
-
-    // hairpin loop
-    {
-      partners: [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1],
-      firstPosition5: 4,
-      secondPosition5: 4,
-      boundingPosition5: 'positionTop5',
-      boundingPosition3: 'positionTop3',
-      baseCoordinatesBounding5: 'baseCoordinatesTop5',
-      baseCoordinatesBounding3: 'baseCoordinatesTop3'
-    },
-
-    // 5' bounding stem is outer
-    {
-      partners: [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1],
-      firstPosition5: 1,
-      secondPosition5: 4,
-      boundingPosition5: 'positionTop5',
-      boundingPosition3: 'position5',
-      baseCoordinatesBounding5: 'baseCoordinatesTop5',
-      baseCoordinatesBounding3: 'baseCoordinates5'
-    },
-
-    // 3' bounding stem is outer
-    {
-      partners: [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1],
-      firstPosition5: 4,
-      secondPosition5: 1,
-      boundingPosition5: 'position3',
-      boundingPosition3: 'positionTop3',
-      baseCoordinatesBounding5: 'baseCoordinates3',
-      baseCoordinatesBounding3: 'baseCoordinatesTop3'
-    },
-
-    // bounding stems are siblings
-    {
-      partners: [4, null, null, 1, null, 11, 10, null, null, 7, 6, null],
-      firstPosition5: 1,
-      secondPosition5: 6,
-      boundingPosition5: 'position3',
-      boundingPosition3: 'position5',
-      baseCoordinatesBounding5: 'baseCoordinates3',
-      baseCoordinatesBounding3: 'baseCoordinates5'
-    },
-
-    // outermost loop is a bounding stem
-    {
-      partners: [6, 5, null, null, 2, 1],
-      firstPosition5: 0,
-      secondPosition5: 1,
-      boundingPosition5: 'positionTop5',
-      boundingPosition3: 'position5',
-      baseCoordinatesBounding5: 'baseCoordinatesTop5',
-      baseCoordinatesBounding3: 'baseCoordinates5'
-    },
-
-    // hairpin loop of outermost stem
-    {
-      partners: [null, null, null],
-      firstPosition5: 0,
-      secondPosition5: 0,
-      boundingPosition5: 'positionTop5',
-      boundingPosition3: 'positionTop3',
-      baseCoordinatesBounding5: 'baseCoordinatesTop5',
-      baseCoordinatesBounding3: 'baseCoordinatesTop3'
-    }
-  ];
-
-  cases.forEach(cs => {
-
-    // validate manually typed in partners notation
-    validatePartners(cs.partners);
-
-    let gps = new StrictLayoutGeneralProps();
-    let bps = [];
-    cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-
-    let st1 = new Stem(cs.firstPosition5, cs.partners, gps, bps);
-    let st2;
-    
-    if (cs.firstPosition5 === cs.secondPosition5) {
-      st2 = st1;
-    } else {
-      st2 = new Stem(cs.secondPosition5, cs.partners, gps, bps);
-    }
-
-    let ur = new UnpairedRegion(st1, st2, gps, bps);
-    
-    expect(ur.boundingPosition5).toEqual(st1[cs.boundingPosition5]);
-    expect(ur.boundingPosition3).toEqual(st2[cs.boundingPosition3]);
-    
-    let bcb5 = ur.baseCoordinatesBounding5();
-    let ebcb5 = st1[cs.baseCoordinatesBounding5]();
-    expect(bcb5.xLeft).toBeCloseTo(ebcb5.xLeft, 6);
-    expect(bcb5.yTop).toBeCloseTo(ebcb5.yTop, 6);
-
-    let bcb3 = ur.baseCoordinatesBounding3();
-    let ebcb3 = st2[cs.baseCoordinatesBounding3]();
-    expect(bcb3.xLeft).toBeCloseTo(ebcb3.xLeft, 6);
-    expect(bcb3.yTop).toBeCloseTo(ebcb3.yTop, 6);
-  });
+it("5' and 3' bounding position getters - hairpin loop", () => {
+  let partners = [6, 5, null, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(6);
+  let st = new Stem(1, partners, gps, bps);
+  let it = st.loopIterator();
+  let ur = it.next().value;
+  expect(ur.boundingPosition5).toBe(2);
+  expect(ur.boundingPosition3).toBe(5);
 });
 
-it('size', () => {
-
-  let cases = [
-    
-    // size of zero
-    {
-      partners: [6, 5, null, null, 2, 1, 10, null, null, 7, null],
-      firstPosition5: 1,
-      secondPosition5: 7,
-      size: 0
-    },
-
-    // size greater than zero (and a hairpin loop)
-    {
-      partners: [6, 5, null, null, 2, 1],
-      firstPosition5: 1,
-      secondPosition5: 1,
-      size: 2
-    }
-  ];
-
-  cases.forEach(cs => {
-
-    // validate manually typed in partners notation
-    validatePartners(cs.partners);
-
-    let gps = new StrictLayoutGeneralProps();
-    let bps = [];
-    cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-
-    let st1 = new Stem(cs.firstPosition5, cs.partners, gps, bps);
-    let st2;
-
-    if (cs.firstPosition5 === cs.secondPosition5) {
-      st2 = st1;
-    } else {
-      st2 = new Stem(cs.secondPosition5, cs.partners, gps, bps);
-    }
-
-    let ur = new UnpairedRegion(st1, st2, gps, bps);
-    expect(ur.size).toEqual(cs.size);
-  });
+it("5' and 3' bounding position getters - 5' stem is outer", () => {
+  let partners = [11, 10, null, 8, 7, null, 5, 4, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(11);
+  let ost = new Stem(1, partners, gps, bps);
+  let it = ost.loopIterator();
+  let ur = it.next().value;
+  expect(ur.boundingPosition5).toBe(2);
+  expect(ur.boundingPosition3).toBe(4);
 });
 
-it('isHairpinLoop', () => {
-
-  let cases = [
-
-    // hairpin loop
-    {
-      partners: [6, 5, null, null, 2, 1],
-      firstPosition5: 1,
-      secondPosition5: 1,
-      isHairpinLoop: true
-    },
-
-    // not a hairpin loop
-    {
-      partners: [3, null, 1, 6, null, 4],
-      firstPosition5: 1,
-      secondPosition5: 4,
-      isHairpinLoop: false
-    },
-
-    // hairpin loop of outermost stem
-    {
-      partners: [null],
-      firstPosition5: 0,
-      secondPosition5: 0,
-      isHairpinLoop: true
-    }
-  ];
-
-  cases.forEach(cs => {
-
-    // validate manually typed in partners notation
-    validatePartners(cs.partners);
-
-    let gps = new StrictLayoutGeneralProps();
-    let bps = [];
-    cs.partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-
-    let st1 = new Stem(cs.firstPosition5, cs.partners, gps, bps);
-    let st2;
-
-    if (cs.firstPosition5 === cs.secondPosition5) {
-      st2 = st1;
-    } else {
-      st2 = new Stem(cs.secondPosition5, cs.partners, gps, bps);
-    }
-
-    let ur = new UnpairedRegion(st1, st2, gps, bps);
-    expect(ur.isHairpinLoop()).toEqual(cs.isHairpinLoop);
-  });
+it("5' and 3' bounding position getters - 3' stem is outer", () => {
+  let partners = [11, 10, null, 8, 7, null, 5, 4, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(11);
+  let ost = new Stem(1, partners, gps, bps);
+  let it = ost.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(ur.boundingPosition5).toBe(8);
+  expect(ur.boundingPosition3).toBe(10);
 });
 
-it('is dangling', () => {
+it("5' and 3' bounding position getters - neither stem is outer", () => {
+  let partners = [5, 4, null, 2, 1, null, 11, 10, null, 8, 7];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(11);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(ur.boundingPosition5).toBe(5);
+  expect(ur.boundingPosition3).toBe(7);
+});
+
+it("5' and 3' bounding stem outward angle getters - hairpin loop", () => {
+  let partners = [3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(3);
+  let st = new Stem(1, partners, gps, bps);
+  st.angle = Math.PI / 3;
+  
+  let it = st.loopIterator();
+  let ur = it.next().value;
+  expect(ur.boundingStemOutwardAngle5).toBeCloseTo(st.reverseAngle, 3);
+  expect(ur.boundingStemOutwardAngle3).toBeCloseTo(st.reverseAngle, 3);
+});
+
+it("5' and 3' bounding stem outward angle getters - 5' stem is outer", () => {
+  let partners = [8, null, 6, null, null, 3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(8);
+  let ost = new Stem(1, partners, gps, bps);
+  ost.angle = -Math.PI / 8;
+  let it = ost.loopIterator();
+  let ur = it.next().value;
+  let ist = it.next().value;
+  expect(ur.boundingStemOutwardAngle5).toBeCloseTo(ost.reverseAngle, 3);
+  expect(ur.boundingStemOutwardAngle3).toBeCloseTo(ist.angle, 3);
+});
+
+it("5' and 3' bounding stem outward angle getters - 3' stem is outer", () => {
+  let partners = [8, null, 6, null, null, 3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(8);
+  let ost = new Stem(1, partners, gps, bps);
+  let it = ost.loopIterator();
+  it.next();
+  let ist = it.next().value;
+  let ur = it.next().value;
+  
+  ost.angle = -Math.PI / 8;
+  ist.angle = -Math.PI / 8;
+  expect(ur.boundingStemOutwardAngle5).toBeCloseTo(ist.angle, 3);
+  expect(ur.boundingStemOutwardAngle3).toBeCloseTo(ost.reverseAngle, 3);
+});
+
+it("5' and 3' bounding stem outward angle getters - neither stem is outer", () => {
+  let partners = [3, null, 1, 6, null, 4];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(6);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  let st3 = it.next().value;
+
+  st5.angle = -2 * Math.PI / 3;
+  st3.angle = -Math.PI / 3;
+  expect(ur.boundingStemOutwardAngle5).toBeCloseTo(st5.angle, 3);
+  expect(ur.boundingStemOutwardAngle3).toBeCloseTo(st3.angle, 3);
+});
+
+it("5' and 3' bounding base coordinates - hairpin loop", () => {
+  let partners = [6, 5, null, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(6);
+  let st = new Stem(1, partners, gps, bps);
+  let it = st.loopIterator();
+  let ur = it.next().value;
+  
+  let bcb5 = ur.baseCoordinatesBounding5();
+  let ebcb5 = st.baseCoordinatesTop5();
+  expect(bcb5.xLeft).toBeCloseTo(ebcb5.xLeft, 3);
+  expect(bcb5.yTop).toBeCloseTo(ebcb5.yTop, 3);
+
+  let bcb3 = ur.baseCoordinatesBounding3();
+  let ebcb3 = st.baseCoordinatesTop3();
+  expect(bcb3.xLeft).toBeCloseTo(ebcb3.xLeft, 3);
+  expect(bcb3.yTop).toBeCloseTo(ebcb3.yTop, 3);
+});
+
+it("5' and 3' bounding base coordinates - 5' stem is outer", () => {
+  let partners = [11, 10, null, 8, 7, null, 5, 4, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(11);
+  let ost = new Stem(1, partners, gps, bps);
+  let it = ost.loopIterator();
+  let ur = it.next().value;
+  let ist = it.next().value;
+
+  let bcb5 = ur.baseCoordinatesBounding5();
+  let ebcb5 = ost.baseCoordinatesTop5();
+  expect(bcb5.xLeft).toBeCloseTo(ebcb5.xLeft, 3);
+  expect(bcb5.yTop).toBeCloseTo(ebcb5.yTop, 3);
+
+  let bcb3 = ur.baseCoordinatesBounding3();
+  let ebcb3 = ist.baseCoordinates5();
+  expect(bcb3.xLeft).toBeCloseTo(ebcb3.xLeft, 3);
+  expect(bcb3.yTop).toBeCloseTo(ebcb3.yTop, 3);
+});
+
+it("5' and 3' bounding base coordinates - 3' stem is outer", () => {
+  let partners = [11, 10, null, 8, 7, null, 5, 4, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(11);
+  let ost = new Stem(1, partners, gps, bps);
+  let it = ost.loopIterator();
+  it.next();
+  let ist = it.next().value;
+  let ur = it.next().value;
+  
+  let bcb5 = ur.baseCoordinatesBounding5();
+  let ebcb5 = ist.baseCoordinates3();
+  expect(bcb5.xLeft).toBeCloseTo(ebcb5.xLeft, 3);
+  expect(bcb5.yTop).toBeCloseTo(ebcb5.yTop, 3);
+
+  let bcb3 = ur.baseCoordinatesBounding3();
+  let ebcb3 = ost.baseCoordinatesTop3();
+  expect(bcb3.xLeft).toBeCloseTo(ebcb3.xLeft, 3);
+  expect(bcb3.yTop).toBeCloseTo(ebcb3.yTop, 3);
+});
+
+it("5' and 3' bounding base coordinates - neither stem is outer", () => {
+  let partners = [5, 4, null, 2, 1, null, 11, 10, null, 8, 7];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(11);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  let st3 = it.next().value;
+
+  let bcb5 = ur.baseCoordinatesBounding5();
+  let ebcb5 = st5.baseCoordinates3();
+  expect(bcb5.xLeft).toBeCloseTo(ebcb5.xLeft, 3);
+  expect(bcb5.yTop).toBeCloseTo(ebcb5.yTop, 3);
+
+  let bcb3 = ur.baseCoordinatesBounding3();
+  let ebcb3 = st3.baseCoordinates5();
+  expect(bcb3.xLeft).toBeCloseTo(ebcb3.xLeft, 3);
+  expect(bcb3.yTop).toBeCloseTo(ebcb3.yTop, 3);
+});
+
+it('size getter - size of zero', () => {
+  let partners = [3, null, 1, 6, null, 4];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(6);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(ur.size).toBe(0);
+});
+
+it('size getter - size greater than zero', () => {
+  let partners = [3, null, 1, null, null, 8, null, 6];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(8);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(ur.size).toBe(2);
+});
+
+it('isHairpinLoop method - is a hairpin loop', () => {
+  let partners = [3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(3);
+  let st = new Stem(1, partners, gps, bps);
+  let it = st.loopIterator();
+  let ur = it.next().value;
+  expect(ur.isHairpinLoop()).toBeTruthy();
+});
+
+it('isHairpinLoop method - is not a hairpin loop', () => {
+  let partners = [3, null, 1, null, 7, null, 5];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(7);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(ur.isHairpinLoop()).toBeFalsy();
+});
+
+it('isDangling5 and isDangling3 methods', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null, 11, null, 9];
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
+  let bps = defaultBaseProps(11);
   let outermostStem = new Stem(0, partners, gps, bps);
   let it = outermostStem.loopIterator();
 
@@ -242,60 +295,226 @@ it('is dangling', () => {
   expect(ur.isDangling3()).toBeTruthy();
 });
 
-it('minLength', () => {
+it('minLength getter', () => {
   let partners = [8, 7, null, null, null, null, 2, 1, null, 12, null, 10, null, null, null, null];
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
+  let bps = defaultBaseProps(partners.length);
   let outermostStem = new Stem(0, partners, gps, bps);
   let it = outermostStem.loopIterator();
 
   // size of zero
-  expect(it.next().value.minLength).toEqual(0);
+  let ur = it.next().value;
+  expect(ur.minLength).toBe(0);
 
   // hairpin loop
-  let innerIt = it.next().value.loopIterator();
-  expect(innerIt.next().value.minLength).toEqual(4);
+  let st = it.next().value;
+  let stit = st.loopIterator();
+  ur = stit.next().value;
+  expect(ur.minLength).toBe(4);
 
   // size of one
-  expect(it.next().value.minLength).toEqual(1);
-
-  it.next();
+  ur = it.next().value;
+  expect(ur.minLength).toBe(1);
 
   // size greater than one
-  expect(it.next().value.minLength).toEqual(2);
+  it.next();
+  ur = it.next().value;
+  expect(ur.minLength).toBe(2);
 });
 
-it('length', () => {
-  let partners = [8, 7, null, null, null, null, 2, 1, null, 12, null, 10, null, null, null, null];
+it('length getter - size of zero', () => {
+  let partners = [];
   let gps = new StrictLayoutGeneralProps();
   let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-
-  // bigger than minimum length
-  bps[7].stretch3 = 5;
-  bps[8].stretch3 = 5;
-
-  // smaller than minimum length
-  bps[13].stretch3 = -8;
-  bps[14].stretch3 = -8;
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
-
-  // empty
-  expect(it.next().value.length).toBeCloseTo(0, 6);
-
-  // hairpin loop
-  let innerIt = it.next().value.loopIterator();
-  expect(innerIt.next().value.length).toBeCloseTo(4, 6);
-
-  // bigger than minimum length
-  expect(it.next().value.length).toBeCloseTo(11);
-
-  it.next();
-  
-  // smaller than minimum length
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
   let ur = it.next().value;
-  expect(ur.length).toBeCloseTo(ur.minLength);
+  expect(ur.length).toBe(0);
+});
+
+it('length getter - positive size', () => {
+  let partners = [3, null, 1, null, null, 8, null, 6];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(8);
+  bps[3].stretch3 = 5;
+  bps[4].stretch3 = 6;
+  bps[5].stretch3 = 8;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(ur.length).toBeCloseTo(13, 3);
+});
+
+it("length getter - includes 3' stretch of 5' bounding position", () => {
+  let partners = [3, null, 1, null, null, 8, null, 6];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(8);
+  bps[2].stretch3 = 1.5;
+  bps[3].stretch3 = 5;
+  bps[4].stretch3 = 6;
+  bps[5].stretch3 = 8;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(ur.length).toBeCloseTo(14.5, 3);
+});
+
+it("length getter - 5' bounding position is zero", () => {
+  let partners = [null, null, null];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(3);
+  bps[0].stretch3 = 0.5;
+  bps[1].stretch3 = 1.9;
+  bps[2].stretch3 = -0.2;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  expect(ur.length).toBeCloseTo(5.2, 3);
+});
+
+it('length getter - length is smaller than minimum length', () => {
+  let partners = [3, null, 1, null, null, 8, null, 6];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(8);
+  bps[2].stretch3 = 1.5;
+  bps[3].stretch3 = 5;
+  bps[4].stretch3 = -600;
+  bps[5].stretch3 = 8;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(ur.length).toBeCloseTo(ur.minLength, 3);
+});
+
+function checkCoords(coords, expectedCoords) {
+  expect(coords.length).toBe(expectedCoords.length);
+  for (let i = 0; i < expectedCoords.length; i++) {
+    expect(coords[i].xLeft).toBeCloseTo(expectedCoords[i].xLeft);
+    expect(coords[i].yTop).toBeCloseTo(expectedCoords[i].yTop);
+  }
+}
+
+it('baseCoordinates method - in a flat outermost loop', () => {
+  let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(11);
+  bps[2].stretch3 = 2;
+  bps[2].flatOutermostLoopAngle3 = Math.PI / 3;
+  bps[3].stretch3 = 0;
+  bps[4].stretch3 = 4;
+  bps[5].flatOutermostLoopAngle3 = -Math.PI / 5;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next();
+  let ur = it.next().value;
+  
+  st5.xBottomCenter = 1;
+  st5.yBottomCenter = 2;
+  st5.angle = -5 * Math.PI / 9;
+  checkCoords(
+    ur.baseCoordinates(true),
+    baseCoordinatesFlatOutermostLoop(ur, bps),
+  );
+});
+
+it('baseCoordinates method - in a round outermost loop', () => {
+  let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = false;
+  let bps = defaultBaseProps(11);
+  bps[2].stretch3 = 2;
+  bps[2].flatOutermostLoopAngle3 = Math.PI / 3;
+  bps[3].stretch3 = 0;
+  bps[4].stretch3 = 4;
+  bps[5].flatOutermostLoopAngle3 = -Math.PI / 5;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next();
+  let ur = it.next().value;
+  let st3 = it.next().value;
+  
+  st5.xBottomCenter = 1;
+  st5.yBottomCenter = 2;
+  st5.angle = -5 * Math.PI / 9;
+  st3.xBottomCenter = 7;
+  st3.yBottomCenter = 2;
+  st3.angle = -4 * Math.PI / 9;
+  checkCoords(
+    ur.baseCoordinates(true),
+    baseCoordinatesTriangularRound(ur),
+  );
+});
+
+it('baseCoordinates method - hairpin loop', () => {
+  let partners = [6, 5, null, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(6);
+  let st = new Stem(1, partners, gps, bps);
+  let it = st.loopIterator();
+  let ur = it.next().value;
+  checkCoords(
+    ur.baseCoordinates(false),
+    baseCoordinatesHairpin(ur),
+  );
+});
+
+it('baseCoordinates method - enough distance to draw straight', () => {
+  let partners = [3, null, 1, null, null, 8, null, 6];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(8);
+  bps[2].stretch3 = 2;
+  bps[3].stretch3 = 0;
+  bps[4].stretch3 = 4;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next();
+  let ur = it.next().value;
+  let st3 = it.next().value;
+
+  st5.xBottomCenter = 1;
+  st5.yBottomCenter = 2;
+  st5.angle = -5 * Math.PI / 9;
+  st3.xBottomCenter = 200;
+  st3.yBottomCenter = 2;
+  st3.angle = -4 * Math.PI / 9;
+  checkCoords(
+    ur.baseCoordinates(true),
+    baseCoordinatesStraight(ur, bps),
+  );
+});
+
+it('baseCoordinates method - not enough distance to draw straight', () => {
+  let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(11);
+  bps[2].stretch3 = 2;
+  bps[3].stretch3 = 0;
+  bps[4].stretch3 = 4;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next();
+  let ur = it.next().value;
+  let st3 = it.next().value;
+
+  st5.xBottomCenter = 1;
+  st5.yBottomCenter = 2;
+  st5.angle = -5 * Math.PI / 9;
+  st3.xBottomCenter = 6;
+  st3.yBottomCenter = 2;
+  st3.angle = -4 * Math.PI / 9;
+  checkCoords(
+    ur.baseCoordinates(true),
+    baseCoordinatesTriangularRound(ur),
+  );
 });

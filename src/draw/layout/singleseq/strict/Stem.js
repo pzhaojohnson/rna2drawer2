@@ -340,7 +340,9 @@ class Stem {
     let y = this.yBottomCenter + (0.5 * Math.sin(this.angle));
     x += ((this.width / 2) - 0.5) * Math.cos(this.angle - (Math.PI / 2));
     y += ((this.width / 2) - 0.5) * Math.sin(this.angle - (Math.PI / 2));
-    return new VirtualBaseCoordinates(x - 0.5, y - 0.5);
+    x -= 0.5;
+    y -= 0.5;
+    return new VirtualBaseCoordinates(x, y);
   }
 
   /**
