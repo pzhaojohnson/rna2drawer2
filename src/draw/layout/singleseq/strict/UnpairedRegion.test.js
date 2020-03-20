@@ -400,6 +400,16 @@ function checkCoords(coords, expectedCoords) {
   }
 }
 
+it('baseCoordinates method - size of zero', () => {
+  let partners = [];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = [];
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  checkCoords(ur.baseCoordinates(), []);
+});
+
 it('baseCoordinates method - in a flat outermost loop', () => {
   let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
   let gps = new StrictLayoutGeneralProps();
