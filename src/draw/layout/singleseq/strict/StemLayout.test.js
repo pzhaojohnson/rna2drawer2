@@ -34,12 +34,14 @@ it('RoundLoop xCenter and yCenter', () => {
   st.xBottomCenter = 1.3;
   st.yBottomCenter = -3.4;
 
+  let bct5 = st.baseCoordinatesTop5();
+  let bct3 = st.baseCoordinatesTop3();
   let cc = circleCenter(
-    st.xTopLeft,
-    st.yTopLeft,
-    st.xTopRight,
-    st.yTopRight,
-    st.loopLength,
+    bct5.xCenter,
+    bct5.yCenter,
+    bct3.xCenter,
+    bct3.yCenter,
+    st.loopLength + 1,
   );
   expect(RoundLoop.xCenter(st)).toBeCloseTo(cc.x, 3);
   expect(RoundLoop.yCenter(st)).toBeCloseTo(cc.y, 3);
@@ -120,7 +122,7 @@ it('RoundLoop setInnerCoordinatesAndAngles - zero inner stems', () => {
 it('RoundLoop setInnerCoordinatesAndAngles - one inner stem', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null, null];
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 2;
+  gps.terminiGap = 2.2;
   gps.basePairBondLength = 0.8;
   let bps = defaultBaseProps(partners.length);
   bps[6].stretch3 = 2;
@@ -136,15 +138,15 @@ it('RoundLoop setInnerCoordinatesAndAngles - one inner stem', () => {
   let it = outermostStem.loopIterator();
   it.next();
   let st = it.next().value;
-  expect(st.xBottomCenter).toBeCloseTo(1.442663503481902, 3);
-  expect(st.yBottomCenter).toBeCloseTo(4.016626161970667, 3);
-  expect(st.angle).toBeCloseTo(0.5008336114418507, 3);
+  expect(st.xBottomCenter).toBeCloseTo(1.2181069433674652, 3);
+  expect(st.yBottomCenter).toBeCloseTo(3.571496034205696, 3);
+  expect(st.angle).toBeCloseTo(0.5252759249385027, 3);
 });
 
 it('RoundLoop setInnerCoordinatesAndAngles - multiple inner stems', () => {
   let partners = [6, 5, null, null, 2, 1, null, null, 14, 13, null, null, 10, 9];
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 1;
+  gps.terminiGap = 6;
   gps.basePairBondLength = 0.9;
   let bps = defaultBaseProps(partners.length);
   bps[5].stretch3 = 1;
@@ -160,15 +162,15 @@ it('RoundLoop setInnerCoordinatesAndAngles - multiple inner stems', () => {
   let it = outermostStem.loopIterator();
   it.next();
   let st1 = it.next().value;
-  expect(st1.xBottomCenter).toBeCloseTo(2.3506926083092474, 3);
-  expect(st1.yBottomCenter).toBeCloseTo(-2.166633719881043, 3);
-  expect(st1.angle).toBeCloseTo(3.7872165675690517, 3);
+  expect(st1.xBottomCenter).toBeCloseTo(2.4706848860252015, 3);
+  expect(st1.yBottomCenter).toBeCloseTo(-2.8587735005617327, 3);
+  expect(st1.angle).toBeCloseTo(-1.7791734325722932, 3);
 
   it.next();
   let st2 = it.next().value;
-  expect(st2.xBottomCenter).toBeCloseTo(3.545703942072025, 3);
-  expect(st2.yBottomCenter).toBeCloseTo(0.7183788492786163, 3);
-  expect(st2.angle).toBeCloseTo(7.993755883392673, 3);
+  expect(st2.xBottomCenter).toBeCloseTo(4.1199680277832815, 3);
+  expect(st2.yBottomCenter).toBeCloseTo(1.1229482284639303, 3);
+  expect(st2.angle).toBeCloseTo(0.9937752691748445, 3);
 });
 
 it('RoundLoop setInnerCoordinatesAndAngles - inner stems have inner stems (round loop)', () => {
@@ -274,15 +276,15 @@ it('RoundLoop setInnerCoordinatesAndAngles - given stem is not the outermost ste
   let it = st.loopIterator();
   it.next();
   let ist1 = it.next().value;
-  expect(ist1.xBottomCenter).toBeCloseTo(3.298887217047535, 3);
-  expect(ist1.yBottomCenter).toBeCloseTo(-1.0768310285201184, 3);
-  expect(ist1.angle).toBeCloseTo(0.8144869842640198, 3);
+  expect(ist1.xBottomCenter).toBeCloseTo(3.2682495536265685, 3);
+  expect(ist1.yBottomCenter).toBeCloseTo(-1.3573929791062203, 3);
+  expect(ist1.angle).toBeCloseTo(0.8219584142294999, 3);
 
   it.next();
   let ist2 = it.next().value;
-  expect(ist2.xBottomCenter).toBeCloseTo(0.5927465485065604, 3);
-  expect(ist2.yBottomCenter).toBeCloseTo(-2.2441461679881654, 3);
-  expect(ist2.angle).toBeCloseTo(3.1415926535897922, 3);
+  expect(ist2.xBottomCenter).toBeCloseTo(0.8581038679252124, 3);
+  expect(ist2.yBottomCenter).toBeCloseTo(-2.398970536792506, 3);
+  expect(ist2.angle).toBeCloseTo(3.1354796654362183, 3);
 });
 
 it('TriangleLoop platformLength - a hairpin', () => {

@@ -3,6 +3,7 @@ import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
 import normalizeAngle from '../../../normalizeAngle';
+import { RoundLoop, StemLayout } from './StemLayout';
 
 function defaultBaseProps(length) {
   let bps = [];
@@ -578,3 +579,57 @@ it('isFlipped', () => {
   innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.isFlipped()).toBeTruthy();
 });
+
+function checkCoords(coords, expectedCoords) {
+  expect(coords.length).toBe(expectedCoords.length);
+  for (let i = 0; i < expectedCoords.length; i++) {
+    expect(coords[i].xLeft).toBeCloseTo(expectedCoords[i].xLeft, 3);
+    expect(coords[i].yTop).toBeCloseTo(expectedCoords[i].yTop, 3);
+  }
+}
+
+it('baseCoordinates method - the outermost stem', () => {
+  /*
+  let partners = [null, 10, 9, 8, null, null, null, 4, 3, 2, null];
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 2.5;
+  let bps = defaultBaseProps(11);
+  let omst = new Stem(0, partners, gps, bps);
+  StemLayout.setCoordinatesAndAngles(omst, gps, bps);
+  console.log(RoundLoop.xCenter(omst), RoundLoop.yCenter(omst));
+  
+  let coords = omst.baseCoordinates();
+  let xs = '';
+  let ys = '';
+  xs += omst.baseCoordinates5().xCenter + '\n';
+  ys += omst.baseCoordinates5().yCenter + '\n';
+  let s = '';
+  coords.forEach(bc => {
+    xs += bc.xCenter + '\n';
+    ys += bc.yCenter + '\n';
+    s += '[';
+    s += bc.xLeft + ', ';
+    s += bc.yTop + '],\n';
+  });
+  xs += omst.baseCoordinates3().xCenter + '\n';
+  ys += omst.baseCoordinates3().yCenter + '\n';
+  console.log(xs);
+  console.log(ys);
+  console.log(s);
+  //console.log(omst);
+  let it = omst.loopIterator();
+  it.next();
+  let st = it.next().value;
+  //console.log(st);
+  */
+});
+
+it('baseCoordinates method - not the outermost stem', () => {});
+
+it('baseCoordinates method - a hairpin', () => {});
+
+it('baseCoordinates method - has inner stems', () => {});
+
+it('baseCoordinates method - has a flipped inner stem', () => {});
+
+it('flippedBaseCoordinates method', () => {});
