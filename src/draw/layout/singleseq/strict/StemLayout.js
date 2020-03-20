@@ -77,11 +77,6 @@ class RoundLoop {
     while (!next.done) {
       angle += (2 * Math.PI) * ((iur.length + (ist.width / 2)) / circumference);
       
-      /*
-      let bottomCenterDistance = distanceBetween(xCenter, yCenter, st.xTopLeft, st.yTopLeft)
-        * Math.cos((2 * Math.PI) * ((ist.width / 2) / circumference));
-      */
-      
       ist.xBottomCenter = xCenter + (bottomCenterDistance * Math.cos(angle));
       ist.yBottomCenter = yCenter + (bottomCenterDistance * Math.sin(angle));
       ist.angle = angle;
