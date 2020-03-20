@@ -148,7 +148,7 @@ class TriangleLoop {
   static _heightOneBranch(st) {
     let it = st.loopIterator();
     let ur5 = it.next().value;
-    let ist = it.next().value;
+    it.next();
     let ur3 = it.next().value;
 
     let greater = Math.max(ur5.length, ur3.length);

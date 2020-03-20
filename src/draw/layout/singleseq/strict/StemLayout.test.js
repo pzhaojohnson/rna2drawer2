@@ -4,7 +4,7 @@ import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
 import normalizeAngle from '../../../normalizeAngle';
 import { circleCenter } from './circle';
-import baseCoordinatesTriangularRound from './UnpairedRegionTriangularRound';
+import validatePartners from '../../../../parse/validatePartners';
 
 function defaultBaseProps(length) {
   let bps = [];
@@ -401,11 +401,145 @@ it('TriangleLoop _heightMultipleBranches - uses maxTriangleLoopAngle general pro
   expect(TriangleLoop._heightMultipleBranches(st, gps)).toBeCloseTo(8.354146326584052, 3);
 });
 
-it('TriangleLoop setInnerCoordinatesAndAngles - a hairpin', () => {});
+it('TriangleLoop setInnerCoordinatesAndAngles - a hairpin', () => {
+  let partners = [6, 5, null, null, 2, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  bps[0].loopShape = 'triangle';
+  let st = new Stem(1, partners, gps, bps);
+  expect(
+    () => TriangleLoop.setInnerCoordinatesAndAngles(st, gps, bps)
+  ).not.toThrow();
+});
 
-it('TriangleLoop setInnerCoordinatesAndAngles - one branch', () => {});
+it('TriangleLoop setInnerCoordinatesAndAngles - one branch', () => {
+  let partners = [8, null, 6, null, null, 3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 1.29;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].loopShape = 'triangle';
+  bps[1].stretch3 = 4.8;
+  
+  let ost = new Stem(1, partners, gps, bps);
+  ost.xBottomCenter = 1.2;
+  ost.yBottomCenter = 3.4;
+  ost.angle = Math.PI / 6;
+  TriangleLoop.setInnerCoordinatesAndAngles(ost, gps, bps);
+  
+  let it = ost.loopIterator();
+  it.next();
+  let ist = it.next().value;
+  let h = TriangleLoop.height(ost, gps);
+  expect(ist.xBottomCenter).toBeCloseTo(ost.xTopCenter + (h * Math.cos(Math.PI / 6)));
+  expect(ist.yBottomCenter).toBeCloseTo(ost.yTopCenter + (h * Math.sin(Math.PI / 6)));
+  expect(ist.angle).toBeCloseTo(Math.PI / 6 , 3);
+});
 
-it('TriangleLoop setInnerCoordinatesAndAngles - multiple branches', () => {});
+it('TriangleLoop setInnerCoordinatesAndAngles - multiple branches', () => {
+  let partners = [12, null, 5, null, 3, null, null, 10, null, 8, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 1.2;
+  gps.maxTriangleLoopAngle = 8 * Math.PI / 9;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].loopShape = 'triangle';
+  bps[1].stretch3 = 15;
+  
+  let ost = new Stem(1, partners, gps, bps);
+  ost.xBottomCenter = 5.6;
+  ost.yBottomCenter = 7.8;
+  ost.angle = -Math.PI / 3;
+  TriangleLoop.setInnerCoordinatesAndAngles(ost, gps, bps);
+
+  let it = ost.loopIterator();
+  it.next();
+  let ist1 = it.next().value;
+  it.next();
+  let ist2 = it.next().value;
+  let height = TriangleLoop.height(ost, gps);
+  let hyp = ((height ** 2) + (2.6 ** 2)) ** 0.5;
+  let a = Math.acos(height / hyp);
+  expect(ist1.xBottomCenter).toBeCloseTo(ost.xTopCenter + (hyp * Math.cos((-Math.PI / 3) - a)));
+  expect(ist1.yBottomCenter).toBeCloseTo(ost.yTopCenter + (hyp * Math.sin((-Math.PI / 3) - a)));
+  expect(ist1.angle).toBeCloseTo(-Math.PI / 3, 3);
+  expect(ist2.xBottomCenter).toBeCloseTo(ost.xTopCenter + (hyp * Math.cos((-Math.PI / 3) + a)));
+  expect(ist2.yBottomCenter).toBeCloseTo(ost.yTopCenter + (hyp * Math.sin((-Math.PI / 3) + a)));
+  expect(ist2.angle).toBeCloseTo(-Math.PI / 3, 3);
+});
+
+it('TriangleLoop setInnerCoordinatesAndAngles - inner stems have inner stems (round loop)', () => {
+  let partners = [16, null, 14, 13, 7, null, 5, null, 11, null, 9, null, 4, 3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 1.6;
+  let bps = defaultBaseProps(partners.length);
+  bps[2].loopShape = 'round';
+  
+  let ost = new Stem(1, partners, gps, bps);
+  ost.xBottomCenter = -1.2;
+  ost.yBottomCenter = 3.5;
+  ost.angle = Math.PI / 5;
+  TriangleLoop.setInnerCoordinatesAndAngles(ost, gps, bps);
+
+  let oit = ost.loopIterator();
+  oit.next();
+  let ist1 = oit.next().value;
+  expect(ist1.hasRoundLoop()).toBeTruthy();
+
+  let ist2 = new Stem(3, partners, gps, bps);
+  ist2.xBottomCenter = ist1.xBottomCenter;
+  ist2.yBottomCenter = ist1.yBottomCenter;
+  ist2.angle = ist1.angle;
+  RoundLoop.setInnerCoordinatesAndAngles(ist2, gps, bps);
+
+  let it1 = ist1.loopIterator();
+  let it2 = ist2.loopIterator();
+  for (let i = 0; i < 2; i++) {
+    it1.next();
+    let st1 = it1.next().value;
+    it2.next();
+    let st2 = it2.next().value;
+    expect(st1.xBottomCenter).toBeCloseTo(st2.xBottomCenter, 3);
+    expect(st1.yBottomCenter).toBeCloseTo(st2.yBottomCenter, 3);
+    expect(st1.angle).toBeCloseTo(st2.angle, 3);
+  }
+});
+
+it('TriangleLoop setInnerCoordinatesAndAngles - inner stems have inner stems (triangle loop)', () => {
+  let partners = [16, null, 14, 13, 7, null, 5, null, 11, null, 9, null, 4, 3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 0.6;
+  gps.maxTriangleLoopAngle = 8 * Math.PI / 9;
+  let bps = defaultBaseProps(partners.length);
+  bps[2].loopShape = 'triangle';
+  
+  let ost = new Stem(1, partners, gps, bps);
+  ost.xBottomCenter = -10;
+  ost.yBottomCenter = -3;
+  ost.angle = -Math.PI / 5;
+  TriangleLoop.setInnerCoordinatesAndAngles(ost, gps, bps);
+
+  let oit = ost.loopIterator();
+  oit.next();
+  let ist1 = oit.next().value;
+  expect(ist1.hasTriangleLoop()).toBeTruthy();
+
+  let ist2 = new Stem(3, partners, gps, bps);
+  ist2.xBottomCenter = ist1.xBottomCenter;
+  ist2.yBottomCenter = ist1.yBottomCenter;
+  ist2.angle = ist1.angle;
+  TriangleLoop.setInnerCoordinatesAndAngles(ist2, gps, bps);
+
+  let it1 = ist1.loopIterator();
+  let it2 = ist2.loopIterator();
+  for (let i = 0; i < 2; i++) {
+    it1.next();
+    let st1 = it1.next().value;
+    it2.next();
+    let st2 = it2.next().value;
+    expect(st1.xBottomCenter).toBeCloseTo(st2.xBottomCenter, 3);
+    expect(st1.yBottomCenter).toBeCloseTo(st2.yBottomCenter, 3);
+    expect(st1.angle).toBeCloseTo(st2.angle, 3);
+  }
+});
 
 it('FlatOutermostLoop traverseUnpairedRegion53 - size of zero', () => {
   let partners = [3, null, 1, null];
