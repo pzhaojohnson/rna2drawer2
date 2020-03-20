@@ -518,6 +518,22 @@ it('isOutermostStem', () => {
   expect(innerStem.isOutermostStem()).toBeFalsy();
 });
 
+it('hasHairpinLoop method - a hairpin', () => {
+  let partners = [3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(3);
+  let st = new Stem(1, partners, gps, bps);
+  expect(st.hasHairpinLoop()).toBeTruthy();
+});
+
+it('hasHairpinLoop method - not a hairpin', () => {
+  let partners = [8, null, 6, null, null, 3, null, 1];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(8);
+  let st = new Stem(1, partners, gps, bps);
+  expect(st.hasHairpinLoop()).toBeFalsy();
+});
+
 it('loop shape', () => {
   let partners = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
