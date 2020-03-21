@@ -84,15 +84,15 @@ class RoundLoop {
     let ist = next.value;
     while (!next.done) {
       a += angleSpan * (1 / polarLength);
-      let x5 = xCenter + (radius * Math.cos(a));
-      let y5 = yCenter + (radius * Math.sin(a));
+      let xbc5 = xCenter + (radius * Math.cos(a));
+      let ybc5 = yCenter + (radius * Math.sin(a));
       a += angleSpan * (((ist.width / 2) - 0.5) / polarLength);
       ist.angle = a;
       a += angleSpan * (((ist.width / 2) - 0.5) / polarLength);
-      let x3 = xCenter + (radius * Math.cos(a));
-      let y3 = yCenter + (radius * Math.sin(a));
-      let xMiddle = (x5 + x3) / 2;
-      let yMiddle = (y5 + y3) / 2;
+      let xbc3 = xCenter + (radius * Math.cos(a));
+      let ybc3 = yCenter + (radius * Math.sin(a));
+      let xMiddle = (xbc5 + xbc3) / 2;
+      let yMiddle = (ybc5 + ybc3) / 2;
       ist.xBottomCenter = xMiddle + (0.5 * Math.cos(ist.angle + Math.PI));
       ist.yBottomCenter = yMiddle + (0.5 * Math.sin(ist.angle + Math.PI));
       StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
