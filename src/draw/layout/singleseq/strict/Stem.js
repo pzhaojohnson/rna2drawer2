@@ -425,6 +425,14 @@ class Stem {
     }
   }
 
+  get maxTriangleLoopAngle() {
+    if (this.isOutermostStem()) {
+      return Math.PI / 4;
+    } else {
+      return this._baseProps[this.position5 - 1].maxTriangleLoopAngle;
+    }
+  }
+
   /**
    * The outermost stem is never flipped.
    * 

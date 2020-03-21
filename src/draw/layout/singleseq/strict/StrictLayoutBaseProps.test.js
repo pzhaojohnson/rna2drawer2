@@ -10,6 +10,7 @@ it('can be copied using the spread operator', () => {
   bps0.flatOutermostLoopAngle3 = 0.5;
   bps0.flipStem = !bps0.flipStem;
   bps0.loopShape = 'triangle';
+  bps0.maxTriangleLoopAngle = 0.27 * Math.PI;
 
   let bps1 = {...bps0};
 
@@ -26,6 +27,7 @@ it('can be converted to a JSON string and parsed from a JSON string', () => {
   bps0.flatOutermostLoopAngle3 = 0.5;
   bps0.flipStem = !bps0.flipStem;
   bps0.loopShape = 'triangle';
+  bps0.maxTriangleLoopAngle = 0.68 * Math.PI;
 
   let s = JSON.stringify(bps0);
   let bps1 = JSON.parse(s);

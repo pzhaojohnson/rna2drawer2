@@ -144,7 +144,7 @@ class TriangleLoop {
     } else if (st.numBranches === 1) {
       return TriangleLoop._heightOneBranch(st);
     } else {
-      return TriangleLoop._heightMultipleBranches(st, generalProps);
+      return TriangleLoop._heightMultipleBranches(st);
     }
   }
 
@@ -172,12 +172,11 @@ class TriangleLoop {
 
   /**
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * 
    * @returns {number} The height of the triangle loop of a given stem
    *  that has multiple stems in its loop.
    */
-  static _heightMultipleBranches(st, generalProps) {
+  static _heightMultipleBranches(st) {
     let it = st.loopIterator();
     let urFirst = it.next().value;
     let next = it.next();
@@ -196,7 +195,7 @@ class TriangleLoop {
     );
     let height = ((hyp ** 2) - (opp ** 2)) ** 0.5;
 
-    let maxAngle = Math.max(0.001, generalProps.maxTriangleLoopAngle / 2);
+    let maxAngle = Math.max(0.001, st.maxTriangleLoopAngle / 2);
     maxAngle = Math.min(Math.PI / 2 - 0.001, maxAngle);
     let minHyp = opp / Math.sin(maxAngle);
     let minHeight = ((minHyp ** 2) - (opp ** 2)) ** 0.5;

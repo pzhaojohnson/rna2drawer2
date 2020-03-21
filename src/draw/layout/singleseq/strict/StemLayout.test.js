@@ -342,7 +342,7 @@ it('TriangleLoop height - multiple branches', () => {
   let st = new Stem(1, partners, gps, bps);
   expect(
     TriangleLoop.height(st, gps),
-  ).toBeCloseTo(TriangleLoop._heightMultipleBranches(st, gps), 3);
+  ).toBeCloseTo(TriangleLoop._heightMultipleBranches(st), 3);
 });
 
 it("TriangleLoop _heightOneBranch - 5' side is greater", () => {
@@ -376,7 +376,7 @@ it("TriangleLoop _heightMultipleBranches - 5' side is greater", () => {
   bps[0].loopShape = 'triangle';
   bps[1].stretch3 = 18.8;
   let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._heightMultipleBranches(st, gps)).toBeCloseTo(19.61740769350017, 3);
+  expect(TriangleLoop._heightMultipleBranches(st)).toBeCloseTo(19.61740769350017, 3);
 });
 
 it("TriangleLoop _heightMultipleBranches - 3' side is greater", () => {
@@ -388,19 +388,19 @@ it("TriangleLoop _heightMultipleBranches - 3' side is greater", () => {
   bps[0].loopShape = 'triangle';
   bps[9].stretch3 = 15.6;
   let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._heightMultipleBranches(st, gps)).toBeCloseTo(16.38382869220702, 3);
+  expect(TriangleLoop._heightMultipleBranches(st)).toBeCloseTo(16.38382869220702, 3);
 });
 
-it('TriangleLoop _heightMultipleBranches - uses maxTriangleLoopAngle general property', () => {
+it('TriangleLoop _heightMultipleBranches - uses maxTriangleLoopAngle base property', () => {
   let partners = [12, null, 5, null, 3, null, null, 10, null, 8, null, 1];
   let gps = new StrictLayoutGeneralProps();
   gps.basePairBondLength = 1.5;
-  gps.maxTriangleLoopAngle = 8 * Math.PI / 9;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
+  bps[0].maxTriangleLoopAngle = 8 * Math.PI / 9;
   bps[5].stretch3 = 100.6;
   let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._heightMultipleBranches(st, gps)).toBeCloseTo(8.354146326584052, 3);
+  expect(TriangleLoop._heightMultipleBranches(st)).toBeCloseTo(8.354146326584052, 3);
 });
 
 it('TriangleLoop setInnerCoordinatesAndAngles - a hairpin', () => {

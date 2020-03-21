@@ -10,8 +10,7 @@ it('can be copied using the spread operator', () => {
   gps0.rotation = 0.5;
   gps0.watsonCrickBondLength = 2;
   gps0.terminiGap = 9;
-  gps0.maxTriangleLoopAngle = 0.3;
-
+  
   let gps1 = {...gps0};
 
   expect(Object.keys(gps1).length).toBe(Object.keys(gps0).length);
@@ -27,8 +26,7 @@ it('can be converted to and parsed from a JSON string', () => {
   gps0.rotation = 0.5;
   gps0.watsonCrickBondLength = 2;
   gps0.terminiGap = 9;
-  gps0.maxTriangleLoopAngle = 0.3;
-
+  
   let s = JSON.stringify(gps0);
   let gps1 = JSON.parse(s);
 
