@@ -447,21 +447,21 @@ class Stem {
    */
   baseCoordinates() {
     let coordinates = [];
+    let step = 1 + this._generalProps.basePairPadding;
 
     if (!this.isOutermostStem()) {
       coordinates.push(this.baseCoordinates5());
       for (let p = this.position5 + 1; p <= this.positionTop5; p++) {
         coordinates.push(new VirtualBaseCoordinates(
-          coordinates[p - this.position5 - 1].xLeft + Math.cos(this.angle),
-          coordinates[p - this.position5 - 1].yTop + Math.sin(this.angle),
+          coordinates[p - this.position5 - 1].xLeft + (step * Math.cos(this.angle)),
+          coordinates[p - this.position5 - 1].yTop + (step * Math.sin(this.angle)),
         ));
       }
     }
 
     let it = this.loopIterator();
-    let inOutermostLoop = this.isOutermostStem();
-    
     let ur = it.next().value;
+    let inOutermostLoop = this.isOutermostStem();
     coordinates = coordinates.concat(ur.baseCoordinates(inOutermostLoop));
     
     let next = it.next();
@@ -475,7 +475,6 @@ class Stem {
 
       ur = it.next().value;
       coordinates = coordinates.concat(ur.baseCoordinates(inOutermostLoop));
-
       next = it.next();
     }
 
@@ -483,8 +482,8 @@ class Stem {
       coordinates.push(this.baseCoordinatesTop3());
       for (let p = this.positionTop3 + 1; p <= this.position3; p++) {
         coordinates.push(new VirtualBaseCoordinates(
-          coordinates[p - this.position5 - 1].xLeft + Math.cos(this.reverseAngle),
-          coordinates[p - this.position5 - 1].yTop + Math.sin(this.reverseAngle),
+          coordinates[p - this.position5 - 1].xLeft + (step * Math.cos(this.reverseAngle)),
+          coordinates[p - this.position5 - 1].yTop + (step * Math.sin(this.reverseAngle)),
         ));
       }
     }
