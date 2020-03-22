@@ -186,7 +186,10 @@ class UnpairedRegion {
     } else {
       let bcb5 = this.baseCoordinatesBounding5();
       let bcb3 = this.baseCoordinatesBounding3();
-      if (bcb5.distanceBetweenCenters(bcb3) - 1 >= this.size) {
+      let enoughDistance = bcb5.distanceBetweenCenters(bcb3) - 1 >= this.size;
+      let bs5 = this.boundingStem5;
+      let bs3 = this.boundingStem3;
+      if (enoughDistance && !bs5.isOutermostStem() && !bs3.isOutermostStem()) {
         return baseCoordinatesStraight(this, this._baseProps);
       } else {
         return baseCoordinatesTriangularRound(this, this._generalProps);
