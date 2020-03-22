@@ -3,13 +3,15 @@ import normalizeAngle from '../../../normalizeAngle';
 import { circleCenter } from './circle';
 import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
+import { RoundLoop } from './StemLayout';
 
 /**
  * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
  * 
  * @returns {Array<VirtualBaseCoordinates>} 
  */
-function baseCoordinatesTriangularRound(ur) {
+function baseCoordinatesTriangularRound(ur, generalProps) {
   if (ur.size === 0) {
     return [];
   }
@@ -33,73 +35,127 @@ function baseCoordinatesTriangularRound(ur) {
     coordinates[i] = new VirtualBaseCoordinates(xLeft, yTop);
   }
 
-  function radiusFromStems() {
-    let a5 = ur.boundingStemOutwardAngle5;
-    let a3 = ur.boundingStemOutwardAngle3;
-    a3 = normalizeAngle(a3, a5);
-    let bisectingAngle = (a5 + a3) / 2;
-    
-    let bcb5 = ur.baseCoordinatesBounding5();
-    let bcb3 = ur.baseCoordinatesBounding3();
-    let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
+  function circularRadius() {
+    if (ur.boundingStem5.isOutermostStem()) {
+      let center = RoundLoop.center(ur.boundingStem5, generalProps);
+      let bcb3 = ur.baseCoordinatesBounding3();
+      return distanceBetween(center.x, center.y, bcb3.xCenter, bcb3.yCenter);
+    } else if (ur.boundingStem3.isOutermostStem()) {
+      let center = RoundLoop.center(ur.boundingStem3, generalProps);
+      let bcb5 = ur.baseCoordinatesBounding5();
+      return distanceBetween(center.x, center.y, bcb5.xCenter, bcb5.yCenter);
+    } else {
+      let a5 = ur.boundingStemOutwardAngle5;
+      let a3 = ur.boundingStemOutwardAngle3;
+      a3 = normalizeAngle(a3, a5);
+      let bisectingAngle = (a5 + a3) / 2;
+      
+      let bcb5 = ur.baseCoordinatesBounding5();
+      let bcb3 = ur.baseCoordinatesBounding3();
+      let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
 
-    return opp / Math.max(
-      Math.sin(Math.PI - (bisectingAngle - a5)),
-      0.001,
-    );
+      let sin = Math.sin(Math.PI - (bisectingAngle - a5));
+      sin = Math.max(sin, 0.001);
+      return opp / sin;
+    }
   }
 
-  function polarLengthFromStems() {
-    let a5 = ur.boundingStemOutwardAngle5;
-    let a3 = ur.boundingStemOutwardAngle3;
-    a3 = normalizeAngle(a3, a5);
-    return radiusFromStems() * (a3 - a5);
+  function circularCircumference() {
+    return 2 * Math.PI * circularRadius();
   }
 
-  function circlePairsFromStems() {
-    let radius = radiusFromStems();
-    let angleToCenter = ur.boundingStemOutwardAngle5 + Math.PI;
-    let bcb5 = ur.baseCoordinatesBounding5();
-    let xCenter = bcb5.xLeft + (radius * Math.cos(angleToCenter));
-    let yCenter = bcb5.yTop + (radius * Math.sin(angleToCenter));
-    
-    let a5 = ur.boundingStemOutwardAngle5;
-    let a3 = ur.boundingStemOutwardAngle3;
+  function circularCenter() {
+    if (ur.boundingStem5.isOutermostStem()) {
+      return RoundLoop.center(ur.boundingStem5, generalProps);
+    } else if (ur.boundingStem3.isOutermostStem()) {
+      return RoundLoop.center(ur.boundingStem3, generalProps);
+    } else {
+      let radius = circularRadius();
+      let bcb5 = ur.baseCoordinatesBounding5();
+      return {
+        x: bcb5.xCenter + (radius * Math.cos(ur.boundingStem5.reverseAngle)),
+        y: bcb5.yCenter + (radius * Math.sin(ur.boundingStem5.reverseAngle)),
+      };
+    }
+  }
+
+  function circularAngle5() {
+    if (ur.boundingStem5.isOutermostStem()) {
+      return generalProps.rotation + Math.PI
+        + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circularCircumference()));
+    } else if (ur.boundingStem3.isOutermostStem()) {
+      let center = circularCenter();
+      let bcb5 = ur.baseCoordinatesBounding5();
+      return angleBetween(center.x, center.y, bcb5.xCenter, bcb5.yCenter);
+    } else {
+      return ur.boundingStem5.angle;
+    }
+  }
+
+  function circularAngle3() {
+    if (ur.boundingStem5.isOutermostStem()) {
+      let center = circularCenter();
+      let bcb3 = ur.baseCoordinatesBounding3();
+      return angleBetween(center.x, center.y, bcb3.xCenter, bcb3.yCenter);
+    } else if (ur.boundingStem3.isOutermostStem()) {
+      return generalProps.rotation + Math.PI
+        + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circularCircumference()));
+    } else {
+      return ur.boundingStem3.angle;
+    }
+  }
+
+  function circularPolarLength() {
+    let a5 = circularAngle5();
+    let a3 = circularAngle3();
     a3 = normalizeAngle(a3, a5);
-    let circumference = 2 * Math.PI * radius;
-    let aincr = Math.min(
-      (2 * Math.PI) * (1 / circumference),
-      (a3 - a5) / (q === p ? 2 : 3),
-    );
-    a5 += aincr;
-    a3 -= aincr;
+    return circularRadius() * (a3 - a5);
+  }
+
+  function circularPairs() {
+    let radius = circularRadius();
+    let circumference = circularCircumference();
+    let center = circularCenter();
+    let a5 = circularAngle5();
+    let a3 = circularAngle3();
+    a3 = normalizeAngle(a3, a5);
+    if (ur.boundingStem5.isOutermostStem()) {
+      a5 += (2 * Math.PI) * (0.5 / circumference);
+      a3 -= (2 * Math.PI) * (1 / circumference);
+    } else if (ur.boundingStem3.isOutermostStem()) {
+      a5 += (2 * Math.PI) * (1 / circumference);
+      a3 -= (2 * Math.PI) * (0.5 / circumference);
+    } else {
+      a5 += (2 * Math.PI) * (1 / circumference);
+      a3 -= (2 * Math.PI) * (1 / circumference);
+    }
     
     function done() {
       return p > q || a3 - a5 <= Math.PI;
     }
 
     function addingFirstCirclePair() {
-      return p <= q
-        && p === ur.boundingPosition5 + 1
+      return p === ur.boundingPosition5 + 1
         && q === ur.boundingPosition3 - 1
-        && q - p + 2 > polarLengthFromStems();
+        && p <= q
+        && q - p + 2 > circularPolarLength();
     }
 
     while (!done() || addingFirstCirclePair()) {
       setBaseCoordinates(
         p,
-        xCenter + (radius * Math.cos(a5)),
-        yCenter + (radius * Math.sin(a5)),
+        center.x + (radius * Math.cos(a5)) - 0.5,
+        center.y + (radius * Math.sin(a5)) - 0.5,
       );
       setBaseCoordinates(
         q,
-        xCenter + (radius * Math.cos(a3)),
-        yCenter + (radius * Math.sin(a3)),
+        center.x + (radius * Math.cos(a3)) - 0.5,
+        center.y + (radius * Math.sin(a3)) - 0.5,
       );
       p++;
       q--;
-      a5 += aincr;
-      a3 -= aincr;
+      a5 += (2 * Math.PI) * (1 / circumference);
+      a3 -= (2 * Math.PI) * (1 / circumference);
     }
   }
 
@@ -166,14 +222,13 @@ function baseCoordinatesTriangularRound(ur) {
     }
   }
 
-  if (q - p + 2 <= polarLengthFromStems()) {
+  if (q - p + 2 <= circularPolarLength()) {
     smushedRoundPairs();
   } else {
-    circlePairsFromStems();
+    circularPairs();
     trianglePairs();
     smushedRoundPairs();
   }
-
   return coordinates;
 }
 

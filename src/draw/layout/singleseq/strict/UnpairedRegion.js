@@ -189,7 +189,7 @@ class UnpairedRegion {
       if (bcb5.distanceBetweenCenters(bcb3) - 1 >= this.size) {
         return baseCoordinatesStraight(this, this._baseProps);
       } else {
-        return baseCoordinatesTriangularRound(this);
+        return baseCoordinatesTriangularRound(this, this._generalProps);
       }
     }
   }
