@@ -58,10 +58,6 @@ class RoundLoop {
    * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
-    outermostStem.xBottomCenter = 0;
-    outermostStem.yBottomCenter = 0;
-    outermostStem.angle = generalProps.rotation - (Math.PI / 2);
-
     RoundLoop.setInnerCoordinatesAndAngles(outermostStem, generalProps, baseProps);
   }
 
@@ -350,10 +346,6 @@ class FlatOutermostLoop {
    * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
-    outermostStem.xBottomCenter = 0;
-    outermostStem.yBottomCenter = 0;
-    outermostStem.angle = generalProps.rotation - (Math.PI / 2);
-
     let it = outermostStem.loopIterator();
     let ur = it.next().value;
     let next = it.next();
