@@ -211,6 +211,7 @@ it("uses 3' stretch of 5' bounding position", () => {
   );
 });
 
+/*
 it("5' bounding position is zero and 3' bounding position one greater than the sequence length", () => {
   let partners = [null, null, null, null];
   let gps = new StrictLayoutGeneralProps();
@@ -234,6 +235,7 @@ it("5' bounding position is zero and 3' bounding position one greater than the s
     ],
   );
 });
+*/
 
 it("some negative 3' stretches that sum to less than the positive 3' stretches", () => {
   let partners = [3, null, 1, null, null, null, null, 10, null, 8];

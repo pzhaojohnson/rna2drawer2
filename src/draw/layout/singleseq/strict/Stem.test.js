@@ -341,18 +341,12 @@ it('angle getters and setters', () => {
 it('width and height getters', () => {
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 6;
   gps.basePairBondLength = 2;
   let bps = [];
   partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  expect(outermostStem.width).toBeCloseTo(6, 6);
-  expect(outermostStem.height).toBeCloseTo(1, 6);
-
-  let innerStem = new Stem(1, partners, gps, bps);
-  expect(innerStem.width).toBeCloseTo(4, 6);
-  expect(innerStem.height).toBeCloseTo(2);
+  let st = new Stem(1, partners, gps, bps);
+  expect(st.width).toBeCloseTo(4, 6);
+  expect(st.height).toBeCloseTo(2);
 });
 
 it('baseCoordinates5 method', () => {

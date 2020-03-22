@@ -219,11 +219,7 @@ class Stem {
    * @returns {number} The distance between the 5' and 3' sides of this stem.
    */
   get width() {
-    if (this.isOutermostStem()) {
-      return this._generalProps.terminiGap;
-    } else {
-      return 2 + this._generalProps.basePairBondLength;
-    }
+    return 2 + this._generalProps.basePairBondLength;
   }
 
   /**
