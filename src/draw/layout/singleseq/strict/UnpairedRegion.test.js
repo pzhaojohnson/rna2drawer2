@@ -431,7 +431,7 @@ it('baseCoordinates method - in a flat outermost loop', () => {
   st5.angle = -5 * Math.PI / 9;
   checkCoords(
     ur.baseCoordinates(true),
-    baseCoordinatesFlatOutermostLoop(ur, bps),
+    baseCoordinatesFlatOutermostLoop(ur, gps, bps),
   );
 });
 

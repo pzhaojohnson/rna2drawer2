@@ -258,15 +258,25 @@ class FlatOutermostLoop {
    * of the unpaired region as a starting point.
    * 
    * @param {UnpairedRegion} ur 
+   * @param {StrictLayoutGeneralProps} generalProps 
    * @param {Array<StrictLayoutBaseProps} baseProps 
    * 
    * @returns {Array<VirtualBaseCoordinates>} The coordinates for the bases in the unpaired region.
    */
-  static traverseUnpairedRegion53(ur, baseProps) {
+  static traverseUnpairedRegion53(ur, generalProps, baseProps) {
     let coordinates = [];
-    let x = ur.baseCoordinatesBounding5().xLeft;
-    let y = ur.baseCoordinatesBounding5().yTop;
-    let angle = ur.boundingStem5.angle + (Math.PI / 2);
+    let x;
+    let y;
+    let angle;
+    if (ur.boundingStem5.isOutermostStem()) {
+      x = 0;
+      y = 0;
+      angle = generalProps.rotation;
+    } else {
+      x = ur.baseCoordinatesBounding5().xLeft;
+      y = ur.baseCoordinatesBounding5().yTop;
+      angle = ur.boundingStem5.angle + (Math.PI / 2);
+    }
 
     for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
       let d = 1;
@@ -287,10 +297,11 @@ class FlatOutermostLoop {
    * based on the coordinates and angle of the 5' bounding stem of the unpaired region.
    * 
    * @param {UnpairedRegion} ur 
+   * @param {StrictLayoutGeneralProps} generalProps 
    * @param {Array<StrictLayoutBaseProps} baseProps 
    */
-  static setNextCoordinatesAndAngle53(ur, baseProps) {
-    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, baseProps);
+  static setNextCoordinatesAndAngle53(ur, generalProps, baseProps) {
+    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, baseProps);
     
     let x;
     let y;
@@ -303,7 +314,9 @@ class FlatOutermostLoop {
     }
 
     let angle;
-    if (coordinates.length === 0) {
+    if (ur.boundingStem5.isOutermostStem() && coordinates.length < 2) {
+      angle = generalProps.rotation;
+    } else if (coordinates.length === 0) {
       angle = ur.boundingStem5.angle + (Math.PI / 2);
     } else if (coordinates.length === 1) {
       angle = ur.baseCoordinatesBounding5().angleBetweenCenters(coordinates[0]);
@@ -347,7 +360,7 @@ class FlatOutermostLoop {
 
     while (!next.done) {
       let st = next.value;
-      FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, baseProps);
+      FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, generalProps, baseProps);
       StemLayout.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
       ur = it.next().value;
       next = it.next();

@@ -41,8 +41,8 @@ it('basic case', () => {
   st5.yBottomCenter = 35.7;
 
   checkCoords(
-    baseCoordinatesFlatOutermostLoop(ur, bps),
-    FlatOutermostLoop.traverseUnpairedRegion53(ur, bps),
+    baseCoordinatesFlatOutermostLoop(ur, gps, bps),
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
   );
 });
 
@@ -63,7 +63,7 @@ it("5' dangling unpaired region", () => {
   outermostStem.yBottomCenter = -2.4;
 
   checkCoords(
-    baseCoordinatesFlatOutermostLoop(ur, bps),
-    FlatOutermostLoop.traverseUnpairedRegion53(ur, bps),
+    baseCoordinatesFlatOutermostLoop(ur, gps, bps),
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
   );
 });

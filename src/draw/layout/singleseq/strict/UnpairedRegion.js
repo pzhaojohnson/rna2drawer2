@@ -180,7 +180,7 @@ class UnpairedRegion {
    */
   baseCoordinates(inOutermostLoop) {
     if (inOutermostLoop && this._generalProps.flatOutermostLoop) {
-      return baseCoordinatesFlatOutermostLoop(this, this._baseProps);
+      return baseCoordinatesFlatOutermostLoop(this, this._generalProps, this._baseProps);
     } else if (this.isHairpinLoop()) {
       return baseCoordinatesHairpin(this);
     } else {

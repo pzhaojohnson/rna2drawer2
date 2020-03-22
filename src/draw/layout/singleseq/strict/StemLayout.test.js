@@ -547,7 +547,7 @@ it('FlatOutermostLoop traverseUnpairedRegion53 - size of zero', () => {
   st3.yBottomCenter = 0;
 
   expect(
-    FlatOutermostLoop.traverseUnpairedRegion53(ur, bps).length
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps).length
   ).toBe(0);
 });
 
@@ -570,7 +570,7 @@ it('FlatoutermostLoop traverseUnpairedRegion53 - size of one', () => {
   st5.yBottomCenter = 3.77;
   
   checkCoords(
-    FlatOutermostLoop.traverseUnpairedRegion53(ur, bps),
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
     [
       [-3.1936791509797766, 4.492148299476559],
     ],
@@ -600,7 +600,7 @@ it('FlatOutermostLoop traverseUnpairedRegion53 - size of four', () => {
   st5.yBottomCenter = 1.4;
 
   checkCoords(
-    FlatOutermostLoop.traverseUnpairedRegion53(ur, bps),
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
     [
       [3.528912231189045, 3.3970473189814863],
       [4.137673660197765, 4.190400659272721],
@@ -629,11 +629,11 @@ it("FlatOutermost traverseUnpairedRegion53 - 5' dangling unpaired region", () =>
   outermostStem.yBottomCenter = -5;
 
   checkCoords(
-    FlatOutermostLoop.traverseUnpairedRegion53(ur, bps),
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
     [
-      [-1.6830127018922192, -6.18301270189222],
-      [-1.6830127018922183, -3.1830127018922196],
-      [9.316987298107781, -3.1830127018922223],
+      [1, 0],
+      [2.5000000000000004, 2.598076211353316],
+      [12.026279441628825, -2.901923788646684],
     ],
   );
 });
@@ -658,7 +658,7 @@ it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of zero', () => {
   st5.xBottomCenter = 2.2;
   st5.yBottomCenter = 3.2;
 
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
   expect(st3.angle).toBeCloseTo((Math.PI / 3) + (Math.PI / 7), 3);
   let bc5 = st3.baseCoordinates5();
   expect(bc5.xCenter).toBeCloseTo(-2.5688756698522486, 3);
@@ -687,7 +687,7 @@ it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of one', () => {
   st5.xBottomCenter = -2.1;
   st5.yBottomCenter = 2.44;
   
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
   expect(st3.angle).toBeCloseTo((-Math.PI / 5) + (Math.PI / 6), 3);
   let bc5 = st3.baseCoordinates5();
   expect(bc5.xCenter).toBeCloseTo(-0.6355929040558095, 3);
@@ -716,7 +716,7 @@ it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of four', () => {
   st5.xBottomCenter = 1.33;
   st5.yBottomCenter = -5.4;
 
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
   expect(normalizeAngle(st3.angle, 0)).toBeCloseTo(2.7925268031909276, 3);
   let bc5 = st3.baseCoordinates5();
   expect(bc5.xCenter).toBeCloseTo(7.20750008271572, 3);
@@ -736,15 +736,11 @@ it("FlatOutermostLoop setNextCoordinatesAndAngle53 - 5' dangling unpaired region
   let ur = it.next().value;
   let st3 = it.next().value;
 
-  outermostStem.angle = -Math.PI / 2;
-  outermostStem.xBottomCenter = 0;
-  outermostStem.yBottomCenter = 0;
-
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
   expect(st3.angle).toBeCloseTo((Math.PI / 6) - (Math.PI / 2), 3);
   let bc5 = st3.baseCoordinates5();
-  expect(bc5.xCenter).toBeCloseTo(2.4444863728670914, 3);
-  expect(bc5.yCenter).toBeCloseTo(1.1999999999999997, 3);
+  expect(bc5.xCenter).toBeCloseTo(4.444486372867091, 3);
+  expect(bc5.yCenter).toBeCloseTo(2.1999999999999997, 3);
 });
 
 it("FlatOutermostLoop setNextCoordinatesAndAngle53 - negative 3' stretch", () => {
@@ -769,7 +765,7 @@ it("FlatOutermostLoop setNextCoordinatesAndAngle53 - negative 3' stretch", () =>
   st5.xBottomCenter = 1.33;
   st5.yBottomCenter = -5.4;
 
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, bps);
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
   expect(normalizeAngle(st3.angle, 0)).toBeCloseTo(3.2114058236695664, 3);
   let bc5 = st3.baseCoordinates5();
   expect(bc5.xCenter).toBeCloseTo(9.466185473744124, 3);
@@ -859,7 +855,7 @@ it('FlatOutermostLoop setCoordinatesAndAngles - one stem', () => {
   omst2.xBottomCenter = omst1.xBottomCenter;
   omst2.yBottomCenter = omst1.yBottomCenter;
   omst2.angle = omst1.angle;
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur2, bps);
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur2, gps, bps);
   expect(st1.xBottomCenter).toBeCloseTo(st2.xBottomCenter, 3);
   expect(st1.yBottomCenter).toBeCloseTo(st2.yBottomCenter, 3);
   expect(st1.angle).toBeCloseTo(st2.angle, 3);
@@ -893,7 +889,7 @@ it('FlatOutermostLoop setCoordinatesAndAngles - multiple stems', () => {
   
   for (let i = 0; i < 3; i++) {
     let ur2 = it2.next().value;
-    FlatOutermostLoop.setNextCoordinatesAndAngle53(ur2, bps);
+    FlatOutermostLoop.setNextCoordinatesAndAngle53(ur2, gps, bps);
     
     it1.next();
     let st1 = it1.next().value;
