@@ -3,8 +3,6 @@ import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
 import normalizeAngle from '../../../normalizeAngle';
-import { circleCenter } from './circle';
-import validatePartners from '../../../../parse/validatePartners';
 
 function defaultBaseProps(length) {
   let bps = [];
