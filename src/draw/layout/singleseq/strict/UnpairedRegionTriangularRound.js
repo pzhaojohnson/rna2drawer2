@@ -45,13 +45,11 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
       let a3 = ur.boundingStemOutwardAngle3;
       a3 = normalizeAngle(a3, a5);
       let bisectingAngle = (a5 + a3) / 2;
-      
+      let sin = Math.sin(Math.PI - (bisectingAngle - a5));
+      sin = Math.max(sin, 0.001);
       let bcb5 = ur.baseCoordinatesBounding5();
       let bcb3 = ur.baseCoordinatesBounding3();
       let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
-
-      let sin = Math.sin(Math.PI - (bisectingAngle - a5));
-      sin = Math.max(sin, 0.001);
       return opp / sin;
     }
   }
@@ -211,7 +209,7 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
   let bs5 = ur.boundingStem5;
   let bs3 = ur.boundingStem3;
   let neitherStemIsOutermost = !bs5.isOutermostStem() && !bs3.isOutermostStem();
-  
+
   if (neitherStemIsOutermost && q - p + 1 <= circularPolarLength()) {
     roundCoordinates();
   } else {
