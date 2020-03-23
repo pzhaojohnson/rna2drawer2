@@ -11,7 +11,7 @@ import { RoundLoop } from './StemLayout';
  * 
  * @returns {Array<VirtualBaseCoordinates>} 
  */
-function baseCoordinatesTriangularRound(ur, generalProps) {
+function baseCoordinatesRound(ur, generalProps) {
   if (ur.size === 0) {
     return [];
   }
@@ -220,4 +220,4 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
   return coordinates;
 }
 
-export default baseCoordinatesTriangularRound;
+export default baseCoordinatesRound;

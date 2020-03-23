@@ -1,4 +1,4 @@
-import baseCoordinatesTriangularRound from './UnpairedRegionTriangularRound';
+import baseCoordinatesRound from './UnpairedRegionRound';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
@@ -39,7 +39,7 @@ it('length zero', () => {
   bs3.xBottomCenter = -0.5;
   bs3.yBottomCenter = 0.5;
 
-  let coords = baseCoordinatesTriangularRound(ur, gps);
+  let coords = baseCoordinatesRound(ur, gps);
   expect(coords.length).toBe(0);
 });
 
@@ -63,7 +63,7 @@ it('length one - positive total stretch', () => {
   bs3.yBottomCenter = -3.8000000000000007;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [-4.389662067667558, -4.412736672491484],
     ],
@@ -90,7 +90,7 @@ it('length one - stems are very far apart', () => {
   bs3.yBottomCenter = -400;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [-41.252042379259365, 3.1804836542193016e-11],
     ],
@@ -118,7 +118,7 @@ it('length one - polar length from stems is close to 2', () => {
   bs3.yBottomCenter = 4.613436144653296;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [6.2516348495846294, 3.481741501501645],
     ],
@@ -145,7 +145,7 @@ it('length one - polar length from stems is less than 2', () => {
   bs3.yBottomCenter = 1.730733729460359;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [5.198232897818633, -0.07469370367214268],
     ],
@@ -172,7 +172,7 @@ it('length one - stems are completely overlapping', () => {
   bs3.yBottomCenter = 1;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [0.5287247715014267, 1],
     ],
@@ -199,7 +199,7 @@ it('length one - angle span is greater than Math.PI', () => {
   bs3.yBottomCenter = 3.5063390977709217;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [-1.2056761059313246, 2.487511019184538],
     ],
@@ -226,7 +226,7 @@ it('length four - positive total stretch', () => {
   bs3.yBottomCenter = 8.500000000000004;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [2.7261520426284083, 9.753857645774303],
       [-0.6912506521201671, 9.77947321614738],
@@ -256,7 +256,7 @@ it('length four - stems are very far apart', () => {
   bs3.yBottomCenter = 503.50000000000034;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [517.1452418920186, 505.21838692208985],
       [170.78177929739417, 505.4762664824957],
@@ -286,7 +286,7 @@ it('length four - negative total stretch', () => {
   bs3.yBottomCenter = 3;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [1.1825392675060398, -1.222375791587458],
       [1.8302480570910384, -0.4891640988607182],
@@ -317,7 +317,7 @@ it('length four - polar length from stems is close to 3', () => {
   bs3.yBottomCenter = 5.221088436188455;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [6.379531993355736, 3.490258533656494],
       [7.226341256094986, 3.793951409749537],
@@ -347,7 +347,7 @@ it('length four - polar length from stems is less than 3', () => {
   bs3.yBottomCenter = 1;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [1.7101862715174772, -0.06768876660019263],
       [2.473528095413631, -0.42045692897577214],
@@ -377,7 +377,7 @@ it('length four - stems are completely overlapping', () => {
   bs3.yBottomCenter = 2;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [-1.2354234164871214, 2.1692625370519023],
       [-1.0101313097606885, 1.2230575842252862],
@@ -407,7 +407,7 @@ it('length four - angle span is greater than Math.PI', () => {
   bs3.yBottomCenter = 3.5063390977709217;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [-2.6987784069805016, 1.4240096177862824],
       [-1.701151860859376, 2.129893642385028],
@@ -439,7 +439,7 @@ it('length 50 - positive total stretch', () => {
   bs3.yBottomCenter = 50;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [1.568816906480798, 1.047517739645233],
       [1.9210104641015917, 1.9834349137166143],
@@ -517,7 +517,7 @@ it('length 50 - stems are very far apart', () => {
   bs3.yBottomCenter = 5000;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [1.3081524702720344, 98.15157814222448],
       [1.4094560164958239, 196.18617343893902],
@@ -595,7 +595,7 @@ it('length 50 - negative total stretch (first pair is a circle pair)', () => {
   bs3.yBottomCenter = 0;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [4.409052860606921, 1.4414304459589147],
       [4.329019539828665, 2.4382226347150286],
@@ -674,7 +674,7 @@ it('length 50 - polar length from stems is close to 3', () => {
   bs3.yBottomCenter = 5.221088436188455;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [6.379531993355736, 3.490258533656494],
       [7.318904706203115, 3.8331563411119456],
@@ -752,7 +752,7 @@ it('length 50 - polar length from stems is less than 3', () => {
   bs3.yBottomCenter = 1;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [1.7101862715174772, -0.06768876660019263],
       [2.710186271517477, -0.06768876660019263],
@@ -830,7 +830,7 @@ it('length 50 - stems are completely overlapping', () => {
   bs3.yBottomCenter = 0;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [-7.9586485099503115, -0.7706472384373111],
       [-8.632391484371606, -1.5088266325571258],
@@ -908,7 +908,7 @@ it('angle span is greater than Math.PI and first pairs are circle pairs', () => 
   bs3.yBottomCenter = 3.3179618662659234;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [-0.9403608685703395, 2.6048134537661856],
       [-1.5806572063180786, 1.8396460869351845],
@@ -986,7 +986,7 @@ it('angle span is greater than Math.PI but first pairs are not circle pairs', ()
   bs3.yBottomCenter = 3.3179618662659234;
 
   checkCoords(
-    baseCoordinatesTriangularRound(ur, gps),
+    baseCoordinatesRound(ur, gps),
     [
       [-1.0629631256732823, 3.325055600457574],
       [-1.9785533307914225, 2.9242843734620987],
@@ -1043,7 +1043,7 @@ it('angle span is greater than Math.PI but first pairs are not circle pairs', ()
 });
 
 /*
-let coords = baseCoordinatesTriangularRound(ur, gps);
+let coords = baseCoordinatesRound(ur, gps);
 let xs = '';
 let ys = '';
 xs += ur.baseCoordinatesBounding5().xCenter + '\n';

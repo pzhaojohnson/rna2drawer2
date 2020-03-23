@@ -2,7 +2,7 @@ import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import baseCoordinatesHairpin from './UnpairedRegionHairpin';
 import baseCoordinatesStraight from './UnpairedRegionStraight';
-import baseCoordinatesTriangularRound from './UnpairedRegionTriangularRound';
+import baseCoordinatesRound from './UnpairedRegionRound';
 
 class UnpairedRegion {
 
@@ -193,7 +193,7 @@ class UnpairedRegion {
       if (enoughDistance && neitherStemIsOutermost) {
         return baseCoordinatesStraight(this, this._baseProps);
       } else {
-        return baseCoordinatesTriangularRound(this, this._generalProps);
+        return baseCoordinatesRound(this, this._generalProps);
       }
     }
   }

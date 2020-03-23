@@ -4,7 +4,7 @@ import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
 import baseCoordinatesHairpin from './UnpairedRegionHairpin';
 import baseCoordinatesStraight from './UnpairedRegionStraight';
-import baseCoordinatesTriangularRound from './UnpairedRegionTriangularRound';
+import baseCoordinatesRound from './UnpairedRegionRound';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 
 function defaultBaseProps(length) {
@@ -460,7 +460,7 @@ it('baseCoordinates method - in a round outermost loop', () => {
   st3.angle = -4 * Math.PI / 9;
   checkCoords(
     ur.baseCoordinates(true),
-    baseCoordinatesTriangularRound(ur),
+    baseCoordinatesRound(ur),
   );
 });
 
@@ -525,6 +525,6 @@ it('baseCoordinates method - not enough distance to draw straight', () => {
   st3.angle = -4 * Math.PI / 9;
   checkCoords(
     ur.baseCoordinates(true),
-    baseCoordinatesTriangularRound(ur),
+    baseCoordinatesRound(ur),
   );
 });
