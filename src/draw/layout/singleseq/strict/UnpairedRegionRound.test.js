@@ -19,7 +19,8 @@ function checkCoords(coords, expectedCoords) {
     expect(coords[i].yCenter).toBeCloseTo(expectedCoords[i][1]);
   }
 }
-
+it('', () => {});
+/*
 it('length zero', () => {
   let partners = [3, null, 1, 6, null, 4];
   let gps = new StrictLayoutGeneralProps();
@@ -1041,7 +1042,7 @@ it('angle span is greater than Math.PI but first pairs are not circle pairs', ()
     ],
   );
 });
-
+*/
 /*
 let coords = baseCoordinatesRound(ur, gps);
 let xs = '';
