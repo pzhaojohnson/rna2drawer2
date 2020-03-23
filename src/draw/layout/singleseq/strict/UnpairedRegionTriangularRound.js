@@ -37,13 +37,9 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
 
   function circularRadius() {
     if (ur.boundingStem5.isOutermostStem()) {
-      let center = RoundLoop.center(ur.boundingStem5, generalProps);
-      let bcb3 = ur.baseCoordinatesBounding3();
-      return distanceBetween(center.x, center.y, bcb3.xCenter, bcb3.yCenter);
+      return RoundLoop.radius(ur.boundingStem5, generalProps);
     } else if (ur.boundingStem3.isOutermostStem()) {
-      let center = RoundLoop.center(ur.boundingStem3, generalProps);
-      let bcb5 = ur.baseCoordinatesBounding5();
-      return distanceBetween(center.x, center.y, bcb5.xCenter, bcb5.yCenter);
+      return RoundLoop.radius(ur.boundingStem3, generalProps);
     } else {
       let a5 = ur.boundingStemOutwardAngle5;
       let a3 = ur.boundingStemOutwardAngle3;
@@ -73,8 +69,8 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
       let radius = circularRadius();
       let bcb5 = ur.baseCoordinatesBounding5();
       return {
-        x: bcb5.xCenter + (radius * Math.cos(ur.boundingStem5.reverseAngle)),
-        y: bcb5.yCenter + (radius * Math.sin(ur.boundingStem5.reverseAngle)),
+        x: bcb5.xCenter + (radius * Math.cos(ur.boundingStemOutwardAngle5 + Math.PI)),
+        y: bcb5.yCenter + (radius * Math.sin(ur.boundingStemOutwardAngle5 + Math.PI)),
       };
     }
   }
@@ -83,25 +79,17 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
     if (ur.boundingStem5.isOutermostStem()) {
       return generalProps.rotation + Math.PI
         + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circularCircumference()));
-    } else if (ur.boundingStem3.isOutermostStem()) {
-      let center = circularCenter();
-      let bcb5 = ur.baseCoordinatesBounding5();
-      return angleBetween(center.x, center.y, bcb5.xCenter, bcb5.yCenter);
     } else {
-      return ur.boundingStem5.angle;
+      return ur.boundingStemOutwardAngle5;
     }
   }
 
   function circularAngle3() {
-    if (ur.boundingStem5.isOutermostStem()) {
-      let center = circularCenter();
-      let bcb3 = ur.baseCoordinatesBounding3();
-      return angleBetween(center.x, center.y, bcb3.xCenter, bcb3.yCenter);
-    } else if (ur.boundingStem3.isOutermostStem()) {
+    if (ur.boundingStem3.isOutermostStem()) {
       return generalProps.rotation + Math.PI
-        + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circularCircumference()));
+        - ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circularCircumference()));
     } else {
-      return ur.boundingStem3.angle;
+      return ur.boundingStemOutwardAngle3;
     }
   }
 
@@ -121,9 +109,9 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
     a3 = normalizeAngle(a3, a5);
     if (ur.boundingStem5.isOutermostStem()) {
       a5 += (2 * Math.PI) * (0.5 / circumference);
-      a3 -= (2 * Math.PI) * (1 / circumference);
+      a3 -= (2 * Math.PI) * (((ur.boundingStem3.width / 2) + 0.5) / circumference);
     } else if (ur.boundingStem3.isOutermostStem()) {
-      a5 += (2 * Math.PI) * (1 / circumference);
+      a5 += (2 * Math.PI) * (((ur.boundingStem5.width / 2) + 0.5) / circumference);
       a3 -= (2 * Math.PI) * (0.5 / circumference);
     } else {
       a5 += (2 * Math.PI) * (1 / circumference);
@@ -137,8 +125,7 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
     function addingFirstCirclePair() {
       return p === ur.boundingPosition5 + 1
         && q === ur.boundingPosition3 - 1
-        && p <= q
-        && q - p + 2 > circularPolarLength();
+        && p <= q;
     }
 
     while (!done() || addingFirstCirclePair()) {
@@ -222,7 +209,10 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
     }
   }
 
-  if (q - p + 2 <= circularPolarLength()) {
+  let bs5 = ur.boundingStem5;
+  let bs3 = ur.boundingStem3;
+  let neitherStemIsOutermost = !bs5.isOutermostStem() && !bs3.isOutermostStem();
+  if (q - p + 2 <= circularPolarLength() && neitherStemIsOutermost) {
     smushedRoundPairs();
   } else {
     circularPairs();

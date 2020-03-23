@@ -4,6 +4,8 @@ import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import validatePartners from '../../../../parse/validatePartners';
 import normalizeAngle from '../../../normalizeAngle';
 import { RoundLoop, StemLayout } from './StemLayout';
+import parseDotBracket from '../../../../parse/parseDotBracket';
+import { parse } from '@babel/core';
 
 function defaultBaseProps(length) {
   let bps = [];
@@ -583,30 +585,33 @@ function checkCoords(coords, expectedCoords) {
 }
 
 it('baseCoordinates method - the outermost stem', () => {
-  /*
-  let partners = [null, 10, 9, 8, null, null, null, 4, 3, 2, null];
+  
+  //let partners = [null, null, null, null, 13, 12, 11, null, null, null, 7, 6, 5, null, null, null, null];
+  //let partners = [null, 6, 5, null, 3, 2, null]
+  //let partners = parseDotBracket('.(((....))).....(((.....)))...').secondaryPartners;
+  //let partners = parseDotBracket('.(((.......((((.....))))....)))...').secondaryPartners;
+  //let partners = parseDotBracket('((((((...)))(((((...)))))(((...))))))').secondaryPartners;
+  //let partners = parseDotBracket('.(((....)))(((....))).').secondaryPartners;
+  let partners = parseDotBracket('((((((....))).)))').secondaryPartners;
+  //let partners = parseDotBracket('.(((....)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 2.5;
-  let bps = defaultBaseProps(11);
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
   StemLayout.setCoordinatesAndAngles(omst, gps, bps);
-  console.log(RoundLoop.xCenter(omst), RoundLoop.yCenter(omst));
   
   let coords = omst.baseCoordinates();
   let xs = '';
   let ys = '';
-  xs += omst.baseCoordinates5().xCenter + '\n';
-  ys += omst.baseCoordinates5().yCenter + '\n';
   let s = '';
   coords.forEach(bc => {
     xs += bc.xCenter + '\n';
     ys += bc.yCenter + '\n';
-    s += '[';
-    s += bc.xLeft + ', ';
-    s += bc.yTop + '],\n';
+    //s += '[';
+    s += bc.xLeft + '\t';
+    s += bc.yTop + '\n';
   });
-  xs += omst.baseCoordinates3().xCenter + '\n';
-  ys += omst.baseCoordinates3().yCenter + '\n';
   console.log(xs);
   console.log(ys);
   console.log(s);
@@ -615,7 +620,7 @@ it('baseCoordinates method - the outermost stem', () => {
   it.next();
   let st = it.next().value;
   //console.log(st);
-  */
+  
 });
 
 it('baseCoordinates method - not the outermost stem', () => {});

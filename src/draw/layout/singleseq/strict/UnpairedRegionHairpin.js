@@ -27,7 +27,8 @@ function baseCoordinatesHairpin(ur) {
   let semicircleLength = Math.PI * bcb5.distanceBetweenCenters(bcb3) / 2;
 
   if (polarLength < semicircleLength) {
-    radius += 1 - (polarLength / semicircleLength);
+    let diameter = 2 * semicircleLength / Math.PI;
+    radius += 1 - ((polarLength - diameter) / (semicircleLength - diameter));
   }
   
   for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
