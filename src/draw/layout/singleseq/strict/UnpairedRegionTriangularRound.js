@@ -187,7 +187,7 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
     }
   }
 
-  function smushedRoundPairs() {
+  function roundCoordinates() {
     let obc = baseCoordinates(p - 1);
     let rbc = baseCoordinates(q + 1);
     let cc = circleCenter(obc.xLeft, obc.yTop, rbc.xLeft, rbc.yTop, q - p + 2);
@@ -211,11 +211,11 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
   let neitherStemIsOutermost = !ur.boundingStem5.isOutermostStem()
     && !ur.boundingStem3.isOutermostStem();
   if (neitherStemIsOutermost && q - p + 1 <= circularPolarLength()) {
-    smushedRoundPairs();
+    roundCoordinates();
   } else {
     circularPairs();
     trianglePairs();
-    smushedRoundPairs();
+    roundCoordinates();
   }
   return coordinates;
 }
