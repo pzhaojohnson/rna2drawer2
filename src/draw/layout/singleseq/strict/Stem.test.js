@@ -592,10 +592,13 @@ it('baseCoordinates method - the outermost stem', () => {
   //let partners = parseDotBracket('.(((.......((((.....))))....)))...').secondaryPartners;
   //let partners = parseDotBracket('((((((...)))(((((...)))))(((...))))))').secondaryPartners;
   //let partners = parseDotBracket('.(((....)))(((....))).').secondaryPartners;
-  let partners = parseDotBracket('((((((....))).)))').secondaryPartners;
+  //let partners = parseDotBracket('((((((....))).)))').secondaryPartners;
   //let partners = parseDotBracket('.(((....)))').secondaryPartners;
+  let partners = parseDotBracket(
+    '.(((((..((....)).((((((...(((((((((((((..(((((((((((((((((((.....)).))))).)))..)))))))))))))))...((...)).)))))))....))))))..........))))).....(((((.((.(((...((((((....))))))..))).)).((((.((((..((.(((((..(((.....)))...((....))..)))))...((((((((((....(((((((((((....))))))).))))...((.((((((((((.(((.((.....))))))))).)))))).))...))))))..)))).....))..)))).)))).)))))..'
+  ).secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 0;
+  gps.terminiGap = 6;
   gps.basePairBondLength = 1;
   let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
@@ -614,7 +617,7 @@ it('baseCoordinates method - the outermost stem', () => {
   });
   console.log(xs);
   console.log(ys);
-  console.log(s);
+  //console.log(s);
   //console.log(omst);
   let it = omst.loopIterator();
   it.next();
