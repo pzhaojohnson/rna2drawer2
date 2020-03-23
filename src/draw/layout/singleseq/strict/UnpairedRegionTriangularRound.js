@@ -208,9 +208,8 @@ function baseCoordinatesTriangularRound(ur, generalProps) {
     }
   }
 
-  let bs5 = ur.boundingStem5;
-  let bs3 = ur.boundingStem3;
-  let neitherStemIsOutermost = !bs5.isOutermostStem() && !bs3.isOutermostStem();
+  let neitherStemIsOutermost = !ur.boundingStem5.isOutermostStem()
+    && !ur.boundingStem3.isOutermostStem();
   if (neitherStemIsOutermost && q - p + 1 <= circularPolarLength()) {
     smushedRoundPairs();
   } else {
