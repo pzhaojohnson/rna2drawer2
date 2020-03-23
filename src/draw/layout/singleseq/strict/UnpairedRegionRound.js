@@ -9,6 +9,121 @@ import { RoundLoop } from './StemLayout';
  * @param {UnpairedRegion} ur 
  * @param {StrictLayoutGeneralProps} generalProps 
  * 
+ * @returns {number} 
+ */
+function _circularRadius(ur, generalProps) {
+  if (ur.boundingStem5.isOutermostStem()) {
+    return RoundLoop.radius(ur.boundingStem5, generalProps);
+  } else if (ur.boundingStem3.isOutermostStem()) {
+    return RoundLoop.radius(ur.boundingStem3, generalProps);
+  } else {
+    let a5 = ur.boundingStemOutwardAngle5;
+    let a3 = ur.boundingStemOutwardAngle3;
+    a3 = normalizeAngle(a3, a5);
+    let bisectingAngle = (a5 + a3) / 2;
+    let sin = Math.sin(Math.PI - (bisectingAngle - a5));
+    sin = Math.max(sin, 0.001);
+    let bcb5 = ur.baseCoordinatesBounding5();
+    let bcb3 = ur.baseCoordinatesBounding3();
+    let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
+    return opp / sin;
+  }
+}
+
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * 
+ * @returns {number} 
+ */
+function _circularCircumference(ur, generalProps) {
+  return 2 * Math.PI * _circularRadius(ur, generalProps);
+}
+
+/**
+ * @typedef {Object} CircularCenter 
+ * @property {number} x 
+ * @property {number} y 
+ */
+
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * 
+ * @returns {CircularCenter} 
+ */
+function _circularCenter(ur, generalProps) {
+  if (ur.boundingStem5.isOutermostStem()) {
+    return RoundLoop.center(ur.boundingStem5, generalProps);
+  } else if (ur.boundingStem3.isOutermostStem()) {
+    return RoundLoop.center(ur.boundingStem3, generalProps);
+  } else {
+    let radius = _circularRadius(ur, generalProps);
+    let bcb5 = ur.baseCoordinatesBounding5();
+    return {
+      x: bcb5.xCenter + (radius * Math.cos(ur.boundingStemOutwardAngle5 + Math.PI)),
+      y: bcb5.yCenter + (radius * Math.sin(ur.boundingStemOutwardAngle5 + Math.PI)),
+    };
+  }
+}
+
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * 
+ * @returns {number} 
+ */
+function _circularAngle5(ur, generalProps) {
+  let circumference = _circularCircumference(ur, generalProps);
+  if (ur.boundingStem5.isOutermostStem()) {
+    return generalProps.rotation + Math.PI
+      + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference));
+  } else if (ur.boundingStem3.isOutermostStem()) {
+    return ur.boundingStemOutwardAngle5
+      + ((2 * Math.PI) * ((ur.boundingStem5.width / 2) / circumference));
+  } else {
+    return ur.boundingStemOutwardAngle5
+      + ((2 * Math.PI) * (0.5 / circumference));
+  }
+}
+
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * 
+ * @returns {number} 
+ */
+function _circularAngle3(ur, generalProps) {
+  let circumference = _circularCircumference(ur, generalProps);
+  if (ur.boundingStem5.isOutermostStem()) {
+    return ur.boundingStemOutwardAngle3
+      - ((2 * Math.PI) * ((ur.boundingStem3.width / 2) / circumference));
+  } else if (ur.boundingStem3.isOutermostStem()) {
+    return generalProps.rotation + Math.PI
+      - ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference));
+  } else {
+    return ur.boundingStemOutwardAngle3
+      - ((2 * Math.PI) * (0.5 / circumference));
+  }
+}
+
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * 
+ * @returns {number} 
+ */
+function _circularPolarLength(ur, generalProps) {
+  let a5 = _circularAngle5(ur, generalProps);
+  let a3 = _circularAngle3(ur, generalProps);
+  a3 = normalizeAngle(a3, a5);
+  return _circularRadius(ur, generalProps) * (a3 - a5);
+}
+
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * 
  * @returns {Array<VirtualBaseCoordinates>} 
  */
 function baseCoordinatesRound(ur, generalProps) {
@@ -35,83 +150,12 @@ function baseCoordinatesRound(ur, generalProps) {
     coordinates[i] = new VirtualBaseCoordinates(xLeft, yTop);
   }
 
-  function circularRadius() {
-    if (ur.boundingStem5.isOutermostStem()) {
-      return RoundLoop.radius(ur.boundingStem5, generalProps);
-    } else if (ur.boundingStem3.isOutermostStem()) {
-      return RoundLoop.radius(ur.boundingStem3, generalProps);
-    } else {
-      let a5 = ur.boundingStemOutwardAngle5;
-      let a3 = ur.boundingStemOutwardAngle3;
-      a3 = normalizeAngle(a3, a5);
-      let bisectingAngle = (a5 + a3) / 2;
-      let sin = Math.sin(Math.PI - (bisectingAngle - a5));
-      sin = Math.max(sin, 0.001);
-      let bcb5 = ur.baseCoordinatesBounding5();
-      let bcb3 = ur.baseCoordinatesBounding3();
-      let opp = bcb5.distanceBetweenCenters(bcb3) / 2;
-      return opp / sin;
-    }
-  }
-
-  function circularCircumference() {
-    return 2 * Math.PI * circularRadius();
-  }
-
-  function circularCenter() {
-    if (ur.boundingStem5.isOutermostStem()) {
-      return RoundLoop.center(ur.boundingStem5, generalProps);
-    } else if (ur.boundingStem3.isOutermostStem()) {
-      return RoundLoop.center(ur.boundingStem3, generalProps);
-    } else {
-      let radius = circularRadius();
-      let bcb5 = ur.baseCoordinatesBounding5();
-      return {
-        x: bcb5.xCenter + (radius * Math.cos(ur.boundingStemOutwardAngle5 + Math.PI)),
-        y: bcb5.yCenter + (radius * Math.sin(ur.boundingStemOutwardAngle5 + Math.PI)),
-      };
-    }
-  }
-
-  function circularAngle5() {
-    if (ur.boundingStem5.isOutermostStem()) {
-      return generalProps.rotation + Math.PI
-        + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circularCircumference()));
-    } else if (ur.boundingStem3.isOutermostStem()) {
-      return ur.boundingStemOutwardAngle5
-        + ((2 * Math.PI) * ((ur.boundingStem5.width / 2) / circularCircumference()));
-    } else {
-      return ur.boundingStemOutwardAngle5
-        + ((2 * Math.PI) * (0.5 / circularCircumference()));
-    }
-  }
-
-  function circularAngle3() {
-    if (ur.boundingStem5.isOutermostStem()) {
-      return ur.boundingStemOutwardAngle3
-        - ((2 * Math.PI) * ((ur.boundingStem3.width / 2) / circularCircumference()));
-    } else if (ur.boundingStem3.isOutermostStem()) {
-      return generalProps.rotation + Math.PI
-        - ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circularCircumference()));
-    } else {
-      return ur.boundingStemOutwardAngle3
-        - ((2 * Math.PI) * (0.5 / circularCircumference()));
-    }
-  }
-
-  function circularPolarLength() {
-    let a5 = circularAngle5();
-    let a3 = circularAngle3();
-    a3 = normalizeAngle(a3, a5);
-    return circularRadius() * (a3 - a5);
-  }
-
   function circularPairs() {
-    let radius = circularRadius();
-    let circumference = circularCircumference();
-    let center = circularCenter();
-    let a5 = circularAngle5();
-    let a3 = circularAngle3();
+    let radius = _circularRadius(ur, generalProps);
+    let circumference = _circularCircumference(ur, generalProps);
+    let center = _circularCenter(ur, generalProps);
+    let a5 = _circularAngle5(ur, generalProps);
+    let a3 = _circularAngle3(ur, generalProps);
     a3 = normalizeAngle(a3, a5);
     a5 += (2 * Math.PI) * (0.5 / circumference);
     a3 -= (2 * Math.PI) * (0.5 / circumference);
@@ -210,7 +254,7 @@ function baseCoordinatesRound(ur, generalProps) {
   let bs3 = ur.boundingStem3;
   let neitherStemIsOutermost = !bs5.isOutermostStem() && !bs3.isOutermostStem();
 
-  if (neitherStemIsOutermost && q - p + 1 <= circularPolarLength()) {
+  if (neitherStemIsOutermost && q - p + 1 <= _circularPolarLength(ur, generalProps)) {
     roundCoordinates();
   } else {
     circularPairs();

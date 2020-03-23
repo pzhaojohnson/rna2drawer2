@@ -615,8 +615,8 @@ it('baseCoordinates method - the outermost stem', () => {
     s += bc.xLeft + '\t';
     s += bc.yTop + '\n';
   });
-  console.log(xs);
-  console.log(ys);
+  //console.log(xs);
+  //console.log(ys);
   //console.log(s);
   //console.log(omst);
   let it = omst.loopIterator();
