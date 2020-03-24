@@ -1,9 +1,40 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import { circleCenter } from './circle';
+import { circleCircumference } from './circleCircumference';
 import angleBetween from '../../../angleBetween';
 import distanceBetween from '../../../distanceBetween';
+import Stem from './Stem';
 
 class RoundLoop {
+
+  /**
+   * @param {Stem} st 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static circumference(st, generalProps) {
+    let straightLength = Stem.width(generalProps) - 1;
+    let numStraights = st.numBranches;
+    if (!st.isOutermostStem()) {
+      numStraights += 1;
+    }
+    let remainingPolarLength = st.loopLength - (st.numBranches * straightLength);
+    if (st.isOutermostStem()) {
+      remainingPolarLength += generalProps.terminiGap;
+    }
+    return circleCircumference(straightLength, numStraights, remainingPolarLength);
+  }
+
+  /**
+   * @param {Stem} st 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static radius(st, generalProps) {
+    return RoundLoop.circumference(st, generalProps) / (2 * Math.PI);
+  }
 
   /**
    * @typedef {Object} RoundLoop~Center 
@@ -20,7 +51,7 @@ class RoundLoop {
   static center(st, generalProps) {
     if (st.isOutermostStem()) {
       return { x: 0, y: 0 };
-    } else {
+    } else if (st.numBranches === 0) {
       let bct5 = st.baseCoordinatesTop5();
       let bct3 = st.baseCoordinatesTop3();
       return circleCenter(
@@ -30,33 +61,18 @@ class RoundLoop {
         bct3.yCenter,
         st.loopLength + 1,
       );
-    }
-  }
-
-  /**
-   * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
-   * 
-   * @returns {number} 
-   */
-  static radius(st, generalProps) {
-    if (st.isOutermostStem()) {
-      return (generalProps.terminiGap + st.loopLength) / (2 * Math.PI);
     } else {
-      let center = RoundLoop.center(st, generalProps);
+      let radius = RoundLoop.radius(st, generalProps);
       let bct5 = st.baseCoordinatesTop5();
-      return distanceBetween(center.x, center.y, bct5.xCenter, bct5.yCenter);
+      let bct3 = st.baseCoordinatesTop3();
+      let opp = bct5.distanceBetweenCenters(bct3) / 2;
+      let asin = Math.asin(opp / radius);
+      let angle = bct5.angleBetweenCenters(bct3) - (Math.PI / 2) + asin;
+      return {
+        x: bct5.xCenter + (radius * Math.cos(angle)),
+        y: bct5.yCenter + (radius * Math.sin(angle)),
+      };
     }
-  }
-
-  /**
-   * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
-   * 
-   * @returns {number} 
-   */
-  static circumference(st, generalProps) {
-    return 2 * Math.PI * RoundLoop.radius(st, generalProps);
   }
 
   /**
@@ -93,8 +109,13 @@ class RoundLoop {
    */
   static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
     let center = RoundLoop.center(st, generalProps);
-    let circumference = RoundLoop.circumference(st, generalProps);
     let radius = RoundLoop.radius(st, generalProps);
+    let circumference = st.loopLength;
+    if (st.isOutermostStem()) {
+      circumference += generalProps.terminiGap;
+    } else {
+      circumference += Stem.width(generalProps);
+    }
     
     let it = st.loopIterator();
     let iur = it.next().value;

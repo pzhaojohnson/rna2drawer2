@@ -3,6 +3,11 @@ import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
 import normalizeAngle from '../../../normalizeAngle';
+import parseDotBracket from '../../../../parse/parseDotBracket';
+import { circleCircumference } from './circleCircumference';
+import { circleCenter } from './circle';
+import distanceBetween from '../../../distanceBetween';
+import angleBetween from '../../../angleBetween';
 
 function defaultBaseProps(length) {
   let bps = [];
@@ -20,19 +25,107 @@ function checkCoords(coords, expectedCoords) {
   }
 }
 
-it('RoundLoop center', () => {
-  let partners = [12, 11, null, 10, 9, null, null, null, 5, 4, 2, 1];
+it('RoundLoop circumference - an inner stem', () => {
+  let partners = parseDotBracket('(((..(((....)))...(((....))))))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 1.5;
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(1, partners, gps, bps);
+  expect(
+    RoundLoop.circumference(st, gps)
+  ).toBeCloseTo(circleCircumference(2.5, 3, 7), 3);
+});
+
+it('RoundLoop circumference - the outermost stem', () => {
+  let partners = parseDotBracket('..(((.....)))....(((...)))..').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 5.6;
+  gps.basePairBondLength = 0.8;
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(0, partners, gps, bps);
+  expect(
+    RoundLoop.circumference(st, gps)
+  ).toBeCloseTo(circleCircumference(1.8, 2, 15.6), 3);
+});
+
+it('RoundLoop radius', () => {
+  let partners = parseDotBracket('(((..((((.....))))...)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'round';
-  bps[2].stretch3 = 12.5;
+  let st = new Stem(1, partners, gps, bps);
+  expect(
+    RoundLoop.radius(st, gps)
+  ).toBeCloseTo(RoundLoop.circumference(st, gps) / (2 * Math.PI), 3);
+});
 
+it('RoundLoop center - the outermost stem', () => {
+  let partners = parseDotBracket('..((((.....)))).....').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(0, partners, gps, bps);
+  let center = RoundLoop.center(st, gps);
+  expect(center.x).toBe(0);
+  expect(center.y).toBe(0);
+});
+
+it('RoundLoop center - an inner stem with zero branches', () => {
+  let partners = parseDotBracket('(((....)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 1.5;
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(1, partners, gps, bps);
+  st.angle = 2 * Math.PI / 3;
+  let center = RoundLoop.center(st, gps);
+  let bct5 = st.baseCoordinatesTop5();
+  let bct3 = st.baseCoordinatesTop3();
+  let expectedCenter = circleCenter(bct5.xCenter, bct5.yCenter, bct3.xCenter, bct3.yCenter, 5);
+  expect(center.x).toBeCloseTo(expectedCenter.x, 3);
+  expect(center.y).toBeCloseTo(expectedCenter.y, 3);
+});
+
+it('RoundLoop center - an inner stem with multiple branches', () => {
+  let partners = parseDotBracket('((...(((...))).....(((..))).))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(1, partners, gps, bps);
+  st.angle = 5 * Math.PI / 3;
+  let center = RoundLoop.center(st, gps);
+  let expectedRadius = RoundLoop.radius(st, gps);
+  let bct5 = st.baseCoordinatesTop5();
+  let bct3 = st.baseCoordinatesTop3();
+  expect(
+    distanceBetween(center.x, center.y, bct5.xCenter, bct5.yCenter)
+  ).toBeCloseTo(expectedRadius, 3);
+  expect(
+    distanceBetween(center.x, center.y, bct3.xCenter, bct3.yCenter)
+  ).toBeCloseTo(expectedRadius, 3);
+  let xMiddle = (bct5.xCenter + bct3.xCenter) / 2;
+  let yMiddle = (bct5.yCenter + bct3.yCenter) / 2;
+  expect(
+    normalizeAngle(angleBetween(xMiddle, yMiddle, center.x, center.y))
+  ).toBeCloseTo(normalizeAngle(st.angle), 3);
+});
+
+it('RoundLoop originAngle - an inner stem', () => {
+  let partners = parseDotBracket('(((....)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
   let st = new Stem(1, partners, gps, bps);
   st.angle = Math.PI / 3;
-  st.xBottomCenter = 1.3;
-  st.yBottomCenter = -3.4;
-  expect(RoundLoop.center(st).x).toBeCloseTo(3.5389653807800565, 3);
-  expect(RoundLoop.center(st).y).toBeCloseTo(0.4780017958988543, 3);
+  expect(
+    normalizeAngle(RoundLoop.originAngle(st, gps))
+  ).toBeCloseTo(4 * Math.PI / 3, 3);
+});
+
+it('RoundLoop originAngle - the outermost stem', () => {
+  let partners = parseDotBracket('..(((....))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.rotation = -Math.PI / 6;
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(0, partners, gps, bps);
+  expect(
+    normalizeAngle(RoundLoop.originAngle(st, gps))
+  ).toBeCloseTo(5 * Math.PI / 6, 3);
 });
 
 it('RoundLoop setCoordinatesAndAngles - uses rotation of layout', () => {
@@ -115,7 +208,7 @@ it('RoundLoop setInnerCoordinatesAndAngles - one inner stem', () => {
   it.next();
   let st = it.next().value;
   expect(st.xBottomCenter).toBeCloseTo(-3.1745953247848295e-16, 3);
-  expect(st.yBottomCenter).toBeCloseTo(-1.548863464365808, 3);
+  expect(st.yBottomCenter).toBeCloseTo(-1.5565473050067316, 3);
   expect(st.angle).toBeCloseTo(4.71238898038469, 3);
 });
 
@@ -138,14 +231,14 @@ it('RoundLoop setInnerCoordinatesAndAngles - multiple inner stems', () => {
   let it = outermostStem.loopIterator();
   it.next();
   let st1 = it.next().value;
-  expect(st1.xBottomCenter).toBeCloseTo(-0.3964496380838048, 3);
-  expect(st1.yBottomCenter).toBeCloseTo(-2.4776350084379075, 3);
+  expect(st1.xBottomCenter).toBeCloseTo(-0.397882525910829, 3);
+  expect(st1.yBottomCenter).toBeCloseTo(-2.486589924024561, 3);
   expect(st1.angle).toBeCloseTo(4.553722684748841, 3);
 
   it.next();
   let st2 = it.next().value;
-  expect(st2.xBottomCenter).toBeCloseTo(-0.3964496380838085, 3);
-  expect(st2.yBottomCenter).toBeCloseTo(2.477635008437907, 3);
+  expect(st2.xBottomCenter).toBeCloseTo(-0.39788252591083273, 3);
+  expect(st2.yBottomCenter).toBeCloseTo(2.4865899240245604, 3);
   expect(st2.angle).toBeCloseTo(8.01264792961033, 3);
 });
 
@@ -252,15 +345,15 @@ it('RoundLoop setInnerCoordinatesAndAngles - given stem is not the outermost ste
   let it = st.loopIterator();
   it.next();
   let ist1 = it.next().value;
-  expect(ist1.xBottomCenter).toBeCloseTo(3.2682495536265694, 3);
-  expect(ist1.yBottomCenter).toBeCloseTo(-1.3573929791062205, 3);
-  expect(ist1.angle).toBeCloseTo(0.8219584142294993, 3);
+  expect(ist1.xBottomCenter).toBeCloseTo(3.2207204411458337, 3);
+  expect(ist1.yBottomCenter).toBeCloseTo(-1.533527023186709, 3);
+  expect(ist1.angle).toBeCloseTo(0.8633546523943866, 3);
 
   it.next();
   let ist2 = it.next().value;
-  expect(ist2.xBottomCenter).toBeCloseTo(0.8581038679252122, 3);
-  expect(ist2.yBottomCenter).toBeCloseTo(-2.3989705367925036, 3);
-  expect(ist2.angle).toBeCloseTo(3.1354796654362165, 3);
+  expect(ist2.xBottomCenter).toBeCloseTo(1.0499832071574247, 3);
+  expect(ist2.yBottomCenter).toBeCloseTo(-2.598522462803252, 3);
+  expect(ist2.angle).toBeCloseTo(3.190460321720159, 3);
 });
 
 it('TriangleLoop platformLength - a hairpin', () => {

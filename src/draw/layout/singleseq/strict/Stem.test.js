@@ -590,16 +590,16 @@ it('baseCoordinates method - the outermost stem', () => {
   //let partners = [null, 6, 5, null, 3, 2, null]
   //let partners = parseDotBracket('.(((....))).....(((.....)))...').secondaryPartners;
   //let partners = parseDotBracket('.(((.......((((.....))))....)))...').secondaryPartners;
-  //let partners = parseDotBracket('((((((...)))(((((...)))))(((...))))))').secondaryPartners;
+  let partners = parseDotBracket('((((((...)))(((((...)))))(((...))))))').secondaryPartners;
   //let partners = parseDotBracket('.(((....)))(((....))).').secondaryPartners;
   //let partners = parseDotBracket('((((((....))).)))').secondaryPartners;
   //let partners = parseDotBracket('.(((....)))').secondaryPartners;
-  let partners = parseDotBracket(
-    '.(((((..((....)).((((((...(((((((((((((..(((((((((((((((((((.....)).))))).)))..)))))))))))))))...((...)).)))))))....))))))..........))))).....(((((.((.(((...((((((....))))))..))).)).((((.((((..((.(((((..(((.....)))...((....))..)))))...((((((((((....(((((((((((....))))))).))))...((.((((((((((.(((.((.....))))))))).)))))).))...))))))..)))).....))..)))).)))).)))))..'
-  ).secondaryPartners;
+  //let partners = parseDotBracket(
+  //  '.(((((..((....)).((((((...(((((((((((((..(((((((((((((((((((.....)).))))).)))..)))))))))))))))...((...)).)))))))....))))))..........))))).....(((((.((.(((...((((((....))))))..))).)).((((.((((..((.(((((..(((.....)))...((....))..)))))...((((((((((....(((((((((((....))))))).))))...((.((((((((((.(((.((.....))))))))).)))))).))...))))))..)))).....))..)))).)))).)))))..'
+  //).secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 6;
-  gps.basePairBondLength = 1;
+  gps.basePairBondLength = 50;
   let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
   StemLayout.setCoordinatesAndAngles(omst, gps, bps);
@@ -615,8 +615,8 @@ it('baseCoordinates method - the outermost stem', () => {
     s += bc.xLeft + '\t';
     s += bc.yTop + '\n';
   });
-  //console.log(xs);
-  //console.log(ys);
+  console.log(xs);
+  console.log(ys);
   //console.log(s);
   //console.log(omst);
   let it = omst.loopIterator();

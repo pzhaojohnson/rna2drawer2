@@ -11,6 +11,15 @@ import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 class Stem {
 
   /**
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static width(generalProps) {
+    return 2 + generalProps.basePairBondLength;
+  }
+
+  /**
    * @param {number} p5 The 5' most position of this stem.
    * @param {Array<number|null>} partners The partners notation of the secondary structure.
    * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.

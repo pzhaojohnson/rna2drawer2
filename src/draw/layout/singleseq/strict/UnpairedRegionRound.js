@@ -19,7 +19,7 @@ import { RoundLoop } from './StemLayout';
  */
 function _coordinatesBounding5(ur, generalProps) {
   if (ur.boundingStem5.isOutermostStem()) {
-    let center = RoundLoop.center(ur.boundingStem5);
+    let center = RoundLoop.center(ur.boundingStem5, generalProps);
     let radius = RoundLoop.radius(ur.boundingStem5, generalProps);
     let circumference = RoundLoop.circumference(ur.boundingStem5, generalProps);
     let angle = RoundLoop.originAngle(ur.boundingStem5, generalProps);
@@ -42,7 +42,7 @@ function _coordinatesBounding5(ur, generalProps) {
  */
 function _coordinatesBounding3(ur, generalProps) {
   if (ur.boundingStem3.isOutermostStem()) {
-    let center = RoundLoop.center(ur.boundingStem3);
+    let center = RoundLoop.center(ur.boundingStem3, generalProps);
     let radius = RoundLoop.radius(ur.boundingStem3, generalProps);
     let circumference = RoundLoop.circumference(ur.boundingStem3, generalProps);
     let angle = RoundLoop.originAngle(ur.boundingStem3, generalProps);
@@ -83,7 +83,7 @@ function _center(ur, generalProps) {
     && ur.boundingStem3.isOutermostStem();
   
   if (bothStemsAreOutermost && generalProps.terminiGap < 0.001) {
-    return RoundLoop.center(ur);
+    return RoundLoop.center(ur, generalProps);
   } else {
     let cb5 = _coordinatesBounding5(ur, generalProps);
     let cb3 = _coordinatesBounding3(ur, generalProps);
@@ -102,7 +102,7 @@ function _radius(ur, generalProps) {
   let center = _center(ur, generalProps);
   let cb5 = _coordinatesBounding5(ur, generalProps);
   let radius = distanceBetween(center.x, center.y, cb5.x, cb5.y);
-  if (ur.isHairpinLoop()) {
+  if (ur.isHairpinLoop() && !ur.boundingStem5.isOutermostStem()) {
     let angle5 = angleBetween(center.x, center.y, cb5.x, cb5.y);
     let cb3 = _coordinatesBounding3();
     let angle3 = angleBetween(center.x, center.y, cb3.x, cb3.y);

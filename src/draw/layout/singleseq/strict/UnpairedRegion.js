@@ -184,6 +184,8 @@ class UnpairedRegion {
     } else if (this.isHairpinLoop()) {
       return baseCoordinatesHairpin(this);
     } else {
+      return baseCoordinatesRound(this, this._generalProps);
+      /*
       let bcb5 = this.baseCoordinatesBounding5();
       let bcb3 = this.baseCoordinatesBounding3();
       let enoughDistance = bcb5.distanceBetweenCenters(bcb3) - 1 >= this.size;
@@ -195,6 +197,7 @@ class UnpairedRegion {
       } else {
         return baseCoordinatesRound(this, this._generalProps);
       }
+      */
     }
   }
 }

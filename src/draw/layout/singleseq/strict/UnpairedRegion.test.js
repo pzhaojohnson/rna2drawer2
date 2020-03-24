@@ -478,6 +478,7 @@ it('baseCoordinates method - hairpin loop', () => {
 });
 
 it('baseCoordinates method - enough distance to draw straight', () => {
+  /*
   let partners = [3, null, 1, null, null, 8, null, 6];
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(8);
@@ -501,6 +502,7 @@ it('baseCoordinates method - enough distance to draw straight', () => {
     ur.baseCoordinates(true),
     baseCoordinatesStraight(ur, bps),
   );
+  */
 });
 
 it('baseCoordinates method - not enough distance to draw straight', () => {
