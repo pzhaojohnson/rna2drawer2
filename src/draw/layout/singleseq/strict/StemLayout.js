@@ -60,6 +60,20 @@ class RoundLoop {
   }
 
   /**
+   * @param {Stem} st 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static originAngle(st, generalProps) {
+    if (st.isOutermostStem()) {
+      return generalProps.rotation + Math.PI;
+    } else {
+      return st.reverseAngle;
+    }
+  }
+
+  /**
    * Sets the coordinates and angles for all stems of a layout given its outermost stem.
    * 
    * @param {Stem} outermostStem 
@@ -86,7 +100,7 @@ class RoundLoop {
     let iur = it.next().value;
     let angle;
     if (st.isOutermostStem()) {
-      angle = (generalProps.rotation + Math.PI)
+      angle = RoundLoop.originAngle(st, generalProps)
         + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference))
         + ((2 * Math.PI) * (iur.length / circumference));
     } else {
