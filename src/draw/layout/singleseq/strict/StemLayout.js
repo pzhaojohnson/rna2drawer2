@@ -92,6 +92,44 @@ class RoundLoop {
   }
 
   /**
+   * @param {Stem} st 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static polarLengthPerStem(st, generalProps) {
+    let numStems = st.numBranches;
+    if (!st.isOutermostStem()) {
+      numStems++;
+    }
+    if (numStems === 0) {
+      return 0;
+    } else {
+      let radius = RoundLoop.radius(st, generalProps);
+      let basePairWidth = Stem.width(generalProps) - 1;
+      let halfBasePairWidth = basePairWidth / 2;
+      halfBasePairWidth = Math.min(
+        halfBasePairWidth,
+        radius - (0.0001 * halfBasePairWidth),
+      );
+      let basePairAngleSpan = 2 * Math.asin(halfBasePairWidth / radius);
+      return (basePairAngleSpan * radius) + 1;
+    }
+  }
+
+  /**
+   * @param {Stem} st 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static angleSpanPerStem(st, generalProps) {
+    let polarLength = RoundLoop.polarLengthPerStem(st, generalProps);
+    let circumference = RoundLoop.circumference(st, generalProps);
+    return (2 * Math.PI) * (polarLength / circumference);
+  }
+
+  /**
    * @param {Stem} outermostStem 
    * @param {StrictLayoutGeneralProps} generalProps 
    * 
@@ -101,13 +139,11 @@ class RoundLoop {
     if (outermostStem.numBranches === 0) {
       return outermostStem.loopLength;
     } else {
-      let radius = RoundLoop.radius(outermostStem, generalProps);
       let stemWidth = Stem.width(generalProps);
-      let basePairAngleSpan = 2 * Math.asin(((stemWidth - 1) / 2) / radius);
-      let basePairPolarLength = radius * basePairAngleSpan;
+      let stemPolarWidth = RoundLoop.polarLengthPerStem(outermostStem, generalProps);
       return outermostStem.loopLength
-        - (outermostStem.numBranches * (stemWidth - 1))
-        + (outermostStem.numBranches * basePairPolarLength);
+        - (outermostStem.numBranches * stemWidth)
+        + (outermostStem.numBranches * stemPolarWidth);
     }
   }
 
