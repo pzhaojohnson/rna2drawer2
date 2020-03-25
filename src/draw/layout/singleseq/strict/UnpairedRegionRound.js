@@ -21,9 +21,7 @@ function _coordinatesBounding5(ur, generalProps) {
   if (ur.boundingStem5.isOutermostStem()) {
     let center = RoundLoop.center(ur.boundingStem5, generalProps);
     let radius = RoundLoop.radius(ur.boundingStem5, generalProps);
-    let circumference = RoundLoop.circumference(ur.boundingStem5, generalProps);
-    let angle = RoundLoop.originAngle(ur.boundingStem5, generalProps);
-    angle += (2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference);
+    let angle = RoundLoop.terminusAngle5(ur.boundingStem5, generalProps);
     return {
       x: center.x + (radius * Math.cos(angle)),
       y: center.y + (radius * Math.sin(angle)),
@@ -44,9 +42,7 @@ function _coordinatesBounding3(ur, generalProps) {
   if (ur.boundingStem3.isOutermostStem()) {
     let center = RoundLoop.center(ur.boundingStem3, generalProps);
     let radius = RoundLoop.radius(ur.boundingStem3, generalProps);
-    let circumference = RoundLoop.circumference(ur.boundingStem3, generalProps);
-    let angle = RoundLoop.originAngle(ur.boundingStem3, generalProps);
-    angle -= (2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference);
+    let angle = RoundLoop.terminusAngle3(ur.boundingStem3, generalProps);
     return {
       x: center.x + (radius * Math.cos(angle)),
       y: center.y + (radius * Math.sin(angle)),
@@ -62,7 +58,7 @@ function _coordinatesBounding3(ur, generalProps) {
  * 
  * @returns {number} 
  */
-function _polarDistanceIncludingBounds(ur) {
+function _polarLengthWithBounds(ur) {
   if (ur.boundingStem5.isOutermostStem() && ur.boundingStem3.isOutermostStem()) {
     return ur.size;
   } else if (ur.boundingStem5.isOutermostStem() || ur.boundingStem3.isOutermostStem()) {
@@ -87,8 +83,8 @@ function _center(ur, generalProps) {
   } else {
     let cb5 = _coordinatesBounding5(ur, generalProps);
     let cb3 = _coordinatesBounding3(ur, generalProps);
-    let polarDistance = _polarDistanceIncludingBounds(ur);
-    return circleCenter(cb5.x, cb5.y, cb3.x, cb3.y, polarDistance);
+    let polarLength = _polarLengthWithBounds(ur);
+    return circleCenter(cb5.x, cb5.y, cb3.x, cb3.y, polarLength);
   }
 }
 
@@ -101,37 +97,26 @@ function _center(ur, generalProps) {
 function _radius(ur, generalProps) {
   let center = _center(ur, generalProps);
   let cb5 = _coordinatesBounding5(ur, generalProps);
-  let radius = distanceBetween(center.x, center.y, cb5.x, cb5.y);
-  if (ur.isHairpinLoop() && !ur.boundingStem5.isOutermostStem()) {
-    let angle5 = angleBetween(center.x, center.y, cb5.x, cb5.y);
-    let cb3 = _coordinatesBounding3();
-    let angle3 = angleBetween(center.x, center.y, cb3.x, cb3.y);
-    angle3 = normalizeAngle(angle3, angle5);
-    let polarDistance = (angle3 - angle5) * radius;
-    let straightDistance = distanceBetween(cb5.x, cb5.y, cb3.x, cb3.y);
-    let semicircleDistance = Math.PI * straightDistance / 2;
-    if (polarDistance < semicircleDistance) {
-      radius += 1 - ((polarDistance - straightDistance) / (semicircleDistance - straightDistance));
-    }
-  }
-  return radius;
+  return distanceBetween(center.x, center.y, cb5.x, cb5.y);
 }
 
-/**
- * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
- * 
- * @returns {number} 
- */
-function _angleIncrement(ur, generalProps) {
+function _angleBounding5(ur, generalProps) {
   let center = _center(ur, generalProps);
   let cb5 = _coordinatesBounding5(ur, generalProps);
+  return angleBetween(center.x, center.y, cb5.x, cb5.y);
+}
+
+function _angleBounding3(ur, generalProps) {
+  let center = _center(ur, generalProps);
   let cb3 = _coordinatesBounding3(ur, generalProps);
-  let angle5 = angleBetween(center.x, center.y, cb5.x, cb5.y);
-  let angle3 = angleBetween(center.x, center.y, cb3.x, cb3.y);
+  return angleBetween(center.x, center.y, cb3.x, cb3.y);
+}
+
+function _angleSpanWithBounds(ur, generalProps) {
+  let angle5 = _angleBounding5(ur, generalProps);
+  let angle3 = _angleBounding3(ur, generalProps);
   angle3 = normalizeAngle(angle3, angle5);
-  let polarDistance = _polarDistanceIncludingBounds(ur);
-  return (angle3 - angle5) / polarDistance;
+  return angle3 - angle5;
 }
 
 /**
@@ -141,14 +126,32 @@ function _angleIncrement(ur, generalProps) {
  * @returns {number} 
  */
 function _startingAngle(ur, generalProps) {
-  let center = _center(ur, generalProps);
-  let cb5 = _coordinatesBounding5(ur, generalProps);
-  let angle = angleBetween(center.x, center.y, cb5.x, cb5.y);
-  let angleIncrement = _angleIncrement(ur, generalProps);
+  let angle5 = _angleBounding5(ur, generalProps);
+  let angleSpan = _angleSpanWithBounds(ur, generalProps);
+  let polarLength = _polarLengthWithBounds(ur, generalProps);
   if (ur.boundingStem5.isOutermostStem()) {
-    return angle + (0.5 * angleIncrement);
+    return angle5 + (angleSpan * (0.5 / polarLength));
   } else {
-    return angle + angleIncrement;
+    return angle5 + (angleSpan / polarLength);
+  }
+}
+
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * 
+ * @returns {number} 
+ */
+function _angleIncrement(ur, generalProps) {
+  if (ur.boundingStem5.isOutermostStem()) {
+    let startingAngle = _startingAngle(ur, generalProps);
+    let angle3 = _angleBounding3(ur, generalProps);
+    angle3 = normalizeAngle(angle3, startingAngle);
+    return (angle3 - startingAngle) / ur.size;
+  } else {
+    let angleSpan = _angleSpanWithBounds(ur, generalProps);
+    let polarLength = _polarLengthWithBounds(ur, generalProps);
+    return angleSpan / polarLength;
   }
 }
 
@@ -159,11 +162,11 @@ function _startingAngle(ur, generalProps) {
  * @returns {Array<VirtualBaseCoordinates>} 
  */
 function baseCoordinatesRound(ur, generalProps) {
+  let coordinates = [];
   let center = _center(ur, generalProps);
   let radius = _radius(ur, generalProps);
   let angle = _startingAngle(ur, generalProps);
   let angleIncrement = _angleIncrement(ur, generalProps);
-  let coordinates = [];
   for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
     let xCenter = center.x + (radius * Math.cos(angle));
     let yCenter = center.y + (radius * Math.sin(angle));
