@@ -22,6 +22,8 @@ class RoundLoop {
     let remainingPolarLength = st.loopLength - (st.numBranches * straightLength);
     if (st.isOutermostStem()) {
       remainingPolarLength += generalProps.terminiGap;
+    } else {
+      remainingPolarLength += 1;
     }
     return circleCircumference(straightLength, numStraights, remainingPolarLength);
   }
@@ -90,6 +92,66 @@ class RoundLoop {
   }
 
   /**
+   * @param {Stem} outermostStem 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static polarLengthBetweenTermini(outermostStem, generalProps) {
+    if (outermostStem.numBranches === 0) {
+      return outermostStem.loopLength;
+    } else {
+      let radius = RoundLoop.radius(outermostStem, generalProps);
+      let stemWidth = Stem.width(generalProps);
+      let basePairAngleSpan = 2 * Math.asin(((stemWidth - 1) / 2) / radius);
+      let basePairPolarLength = radius * basePairAngleSpan;
+      return outermostStem.loopLength
+        - (outermostStem.numBranches * (stemWidth - 1))
+        + (outermostStem.numBranches * basePairPolarLength);
+    }
+  }
+
+  /**
+   * @param {Stem} outermostStem 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static terminusAngle5(outermostStem, generalProps) {
+    if (outermostStem.numBranches === 0) {
+      let circumference = RoundLoop.circumference(outermostStem, generalProps);
+      return RoundLoop.originAngle(outermostStem, generalProps)
+        + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference));
+    } else {
+      let circumference = RoundLoop.circumference(outermostStem, generalProps);
+      let polarLength = RoundLoop.polarLengthBetweenTermini(outermostStem, generalProps);
+      return RoundLoop.originAngle(outermostStem, generalProps)
+        + Math.PI
+        - ((2 * Math.PI) * ((polarLength / 2) / circumference));
+    }
+  }
+
+  /**
+   * @param {Stem} outermostStem 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * 
+   * @returns {number} 
+   */
+  static terminusAngle3(outermostStem, generalProps) {
+    if (outermostStem.numBranches === 0) {
+      let circumference = RoundLoop.circumference(outermostStem, generalProps);
+      return RoundLoop.originAngle(outermostStem, generalProps)
+        - ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference));
+    } else {
+      let circumference = RoundLoop.circumference(outermostStem, generalProps);
+      let polarLength = RoundLoop.polarLengthBetweenTermini(outermostStem, generalProps);
+      return RoundLoop.originAngle(outermostStem, generalProps)
+        + Math.PI
+        + ((2 * Math.PI) * ((polarLength / 2) / circumference));
+    }
+  }
+
+  /**
    * Sets the coordinates and angles for all stems of a layout given its outermost stem.
    * 
    * @param {Stem} outermostStem 
@@ -108,29 +170,60 @@ class RoundLoop {
    * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
+    if (st.numBranches === 0) {
+      return;
+    } else {
+      let center = RoundLoop.center(st, generalProps);
+      let circumference = RoundLoop.circumference(st, generalProps);
+      let radius = RoundLoop.radius(st, generalProps);
+      let stemWidth = Stem.width(generalProps);
+      let basePairAngleSpan = 2 * Math.asin(((stemWidth - 1) / 2) / radius);
+      let bottomCenterRadius = (radius * Math.cos(basePairAngleSpan / 2)) - 0.5;
+      let angle;
+      if (st.isOutermostStem()) {
+        angle = RoundLoop.terminusAngle5(st, generalProps);
+      } else {
+        let bct5 = st.baseCoordinatesTop5();
+        angle = angleBetween(center.x, center.y, bct5.xCenter, bct5.yCenter)
+          + ((2 * Math.PI) * (0.5 / circumference));
+      }
+      let it = st.loopIterator();
+      let iur = it.next().value;
+      let next = it.next();
+      while (!next.done) {
+        let ist = next.value;
+        angle += ((2 * Math.PI) * (iur.length / circumference));
+        angle += ((2 * Math.PI) * (0.5 / circumference));
+        angle += basePairAngleSpan / 2;
+        ist.xBottomCenter = center.x + (bottomCenterRadius * Math.cos(angle));
+        ist.yBottomCenter = center.y + (bottomCenterRadius * Math.sin(angle));
+        ist.angle = angle;
+        StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
+        angle += basePairAngleSpan / 2;
+        angle += ((2 * Math.PI) * (0.5 / circumference));
+        iur = it.next().value;
+        next = it.next();
+      }
+    }
+    /*
     let center = RoundLoop.center(st, generalProps);
     let radius = RoundLoop.radius(st, generalProps);
-    let circumference = st.loopLength;
-    if (st.isOutermostStem()) {
-      circumference += generalProps.terminiGap;
-    } else {
-      circumference += Stem.width(generalProps);
-    }
+    let circumference = RoundLoop.circumference(st, generalProps);
     
+    let stemWidth = Stem.width(generalProps);
+    let bondAngleSpan = 2 * Math.asin(((stemWidth - 1) / 2) / radius);
     let it = st.loopIterator();
     let iur = it.next().value;
-    let angle;
-    if (st.isOutermostStem()) {
-      angle = RoundLoop.originAngle(st, generalProps)
-        + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference))
-        + ((2 * Math.PI) * (iur.length / circumference));
-    } else {
-      let bct5 = st.baseCoordinatesTop5();
-      angle = angleBetween(center.x, center.y, bct5.xCenter, bct5.yCenter)
-        + ((2 * Math.PI) * (0.5 / circumference))
-        + ((2 * Math.PI) * (iur.length / circumference));
-    }
 
+    let angle = RoundLoop.originAngle(st, generalProps);
+    angle += (2 * Math.PI) * (iur.length / circumference);
+    if (st.isOutermostStem()) {
+      angle += (2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference);
+    } else {
+      angle += bondAngleSpan / 2;
+      angle += (2 * Math.PI) * (0.5 / circumference);
+    }
+    
     let next = it.next();
     let ist = next.value;
     while (!next.done) {
@@ -138,7 +231,7 @@ class RoundLoop {
       let a5 = angle;
       let x5 = center.x + (radius * Math.cos(a5));
       let y5 = center.y + (radius * Math.sin(a5));
-      angle += (2 * Math.PI) * ((ist.width -1 ) / circumference);
+      angle += bondAngleSpan;
       let a3 = angle;
       let x3 = center.x + (radius * Math.cos(a3));
       let y3 = center.y + (radius * Math.sin(a3));
@@ -156,6 +249,7 @@ class RoundLoop {
       next = it.next();
       ist = next.value;
     }
+    */
   }
 }
 

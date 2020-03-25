@@ -598,8 +598,8 @@ it('baseCoordinates method - the outermost stem', () => {
   //  '.(((((..((....)).((((((...(((((((((((((..(((((((((((((((((((.....)).))))).)))..)))))))))))))))...((...)).)))))))....))))))..........))))).....(((((.((.(((...((((((....))))))..))).)).((((.((((..((.(((((..(((.....)))...((....))..)))))...((((((((((....(((((((((((....))))))).))))...((.((((((((((.(((.((.....))))))))).)))))).))...))))))..)))).....))..)))).)))).)))))..'
   //).secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 6;
-  gps.basePairBondLength = 50;
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 2;
   let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
   StemLayout.setCoordinatesAndAngles(omst, gps, bps);
