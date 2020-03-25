@@ -68,6 +68,7 @@ class RoundLoop {
       let bct5 = st.baseCoordinatesTop5();
       let bct3 = st.baseCoordinatesTop3();
       let opp = bct5.distanceBetweenCenters(bct3) / 2;
+      opp = Math.min(opp, 0.9999 * radius);
       let asin = Math.asin(opp / radius);
       let angle = bct5.angleBetweenCenters(bct3) - (Math.PI / 2) + asin;
       return {
@@ -108,10 +109,7 @@ class RoundLoop {
       let radius = RoundLoop.radius(st, generalProps);
       let basePairWidth = Stem.width(generalProps) - 1;
       let halfBasePairWidth = basePairWidth / 2;
-      halfBasePairWidth = Math.min(
-        halfBasePairWidth,
-        radius - (0.0001 * halfBasePairWidth),
-      );
+      halfBasePairWidth = Math.min(halfBasePairWidth, 0.9999 * radius);
       let basePairAngleSpan = 2 * Math.asin(halfBasePairWidth / radius);
       return (basePairAngleSpan * radius) + 1;
     }
