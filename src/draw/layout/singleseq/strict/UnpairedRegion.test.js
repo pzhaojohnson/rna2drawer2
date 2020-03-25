@@ -460,7 +460,7 @@ it('baseCoordinates method - in a round outermost loop', () => {
   st3.angle = -4 * Math.PI / 9;
   checkCoords(
     ur.baseCoordinates(true),
-    baseCoordinatesRound(ur),
+    baseCoordinatesRound(ur, gps),
   );
 });
 
@@ -527,6 +527,6 @@ it('baseCoordinates method - not enough distance to draw straight', () => {
   st3.angle = -4 * Math.PI / 9;
   checkCoords(
     ur.baseCoordinates(true),
-    baseCoordinatesRound(ur),
+    baseCoordinatesRound(ur, gps),
   );
 });
