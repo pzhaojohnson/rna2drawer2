@@ -212,4 +212,19 @@ function baseCoordinatesRound(ur, generalProps) {
   }
 }
 
-export default baseCoordinatesRound;
+export {
+  baseCoordinatesRound,
+
+  // these are only exported to aid testing
+  _coordinatesBounding5,
+  _coordinatesBounding3,
+  _polarLengthToFit,
+  _center,
+  _radius,
+  _angleBounding5,
+  _angleBounding3,
+  _angleSpanBetweenBounds,
+  _polarLengthBetweenBounds,
+  _startingAngle,
+  _angleIncrement,
+};

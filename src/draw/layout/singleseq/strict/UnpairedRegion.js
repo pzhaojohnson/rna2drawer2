@@ -2,7 +2,7 @@ import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import baseCoordinatesHairpin from './UnpairedRegionHairpin';
 import baseCoordinatesStraight from './UnpairedRegionStraight';
-import baseCoordinatesRound from './UnpairedRegionRound';
+import { baseCoordinatesRound } from './UnpairedRegionRound';
 
 class UnpairedRegion {
 

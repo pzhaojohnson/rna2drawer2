@@ -1,4 +1,4 @@
-import baseCoordinatesRound from './UnpairedRegionRound';
+import { baseCoordinatesRound } from './UnpairedRegionRound';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';

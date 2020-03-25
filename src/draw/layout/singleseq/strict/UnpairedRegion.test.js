@@ -4,7 +4,7 @@ import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
 import baseCoordinatesHairpin from './UnpairedRegionHairpin';
 import baseCoordinatesStraight from './UnpairedRegionStraight';
-import baseCoordinatesRound from './UnpairedRegionRound';
+import { baseCoordinatesRound } from './UnpairedRegionRound';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 
 function defaultBaseProps(length) {
