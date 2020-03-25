@@ -198,82 +198,35 @@ class RoundLoop {
       return;
     } else {
       let center = RoundLoop.center(st, generalProps);
-      let circumference = RoundLoop.circumference(st, generalProps);
       let radius = RoundLoop.radius(st, generalProps);
-      let stemWidth = Stem.width(generalProps);
-      let basePairAngleSpan = 2 * Math.asin(((stemWidth - 1) / 2) / radius);
+      let circumference = RoundLoop.circumference(st, generalProps);
+      let stemAngleSpan = RoundLoop.angleSpanPerStem(st, generalProps);
+      let stemPolarWidth = RoundLoop.polarLengthPerStem(st, generalProps);
+      let basePairAngleSpan = (2 * Math.PI) * ((stemPolarWidth - 1) / circumference);
       let bottomCenterRadius = (radius * Math.cos(basePairAngleSpan / 2)) - 0.5;
       let angle;
       if (st.isOutermostStem()) {
         angle = RoundLoop.terminusAngle5(st, generalProps);
+        angle += stemAngleSpan / 2;
       } else {
-        let bct5 = st.baseCoordinatesTop5();
-        angle = angleBetween(center.x, center.y, bct5.xCenter, bct5.yCenter)
-          + ((2 * Math.PI) * (0.5 / circumference));
+        angle = st.reverseAngle;
+        angle += stemAngleSpan;
       }
       let it = st.loopIterator();
       let iur = it.next().value;
       let next = it.next();
       while (!next.done) {
+        angle += (2 * Math.PI) * (iur.length / circumference);
         let ist = next.value;
-        angle += ((2 * Math.PI) * (iur.length / circumference));
-        angle += ((2 * Math.PI) * (0.5 / circumference));
-        angle += basePairAngleSpan / 2;
         ist.xBottomCenter = center.x + (bottomCenterRadius * Math.cos(angle));
         ist.yBottomCenter = center.y + (bottomCenterRadius * Math.sin(angle));
         ist.angle = angle;
         StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
-        angle += basePairAngleSpan / 2;
-        angle += ((2 * Math.PI) * (0.5 / circumference));
+        angle += stemAngleSpan;
         iur = it.next().value;
         next = it.next();
       }
     }
-    /*
-    let center = RoundLoop.center(st, generalProps);
-    let radius = RoundLoop.radius(st, generalProps);
-    let circumference = RoundLoop.circumference(st, generalProps);
-    
-    let stemWidth = Stem.width(generalProps);
-    let bondAngleSpan = 2 * Math.asin(((stemWidth - 1) / 2) / radius);
-    let it = st.loopIterator();
-    let iur = it.next().value;
-
-    let angle = RoundLoop.originAngle(st, generalProps);
-    angle += (2 * Math.PI) * (iur.length / circumference);
-    if (st.isOutermostStem()) {
-      angle += (2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference);
-    } else {
-      angle += bondAngleSpan / 2;
-      angle += (2 * Math.PI) * (0.5 / circumference);
-    }
-    
-    let next = it.next();
-    let ist = next.value;
-    while (!next.done) {
-      angle += (2 * Math.PI) * (0.5 / circumference);
-      let a5 = angle;
-      let x5 = center.x + (radius * Math.cos(a5));
-      let y5 = center.y + (radius * Math.sin(a5));
-      angle += bondAngleSpan;
-      let a3 = angle;
-      let x3 = center.x + (radius * Math.cos(a3));
-      let y3 = center.y + (radius * Math.sin(a3));
-      let aMiddle = (a5 + a3) / 2;
-      let xMiddle = (x5 + x3) / 2;
-      let yMiddle = (y5 + y3) / 2;
-      ist.angle = aMiddle;
-      ist.xBottomCenter = xMiddle + (0.5 * Math.cos(aMiddle + Math.PI));
-      ist.yBottomCenter = yMiddle + (0.5 * Math.sin(aMiddle + Math.PI));
-      StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
-      
-      angle += (2 * Math.PI) * (0.5 / circumference);
-      iur = it.next().value;
-      angle += (2 * Math.PI) * (iur.length / circumference);
-      next = it.next();
-      ist = next.value;
-    }
-    */
   }
 }
 

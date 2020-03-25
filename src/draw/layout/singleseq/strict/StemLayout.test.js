@@ -347,13 +347,13 @@ it('RoundLoop setInnerCoordinatesAndAngles - given stem is not the outermost ste
   let ist1 = it.next().value;
   expect(ist1.xBottomCenter).toBeCloseTo(3.264669808116368, 3);
   expect(ist1.yBottomCenter).toBeCloseTo(-1.3303223543973695, 3);
-  expect(ist1.angle).toBeCloseTo(0.8184178850846706, 3);
+  expect(normalizeAngle(ist1.angle)).toBeCloseTo(0.8184178850846706, 3);
 
   it.next();
   let ist2 = it.next().value;
   expect(ist2.xBottomCenter).toBeCloseTo(0.8350367020812511, 3);
   expect(ist2.yBottomCenter).toBeCloseTo(-2.38403244469219, 3);
-  expect(ist2.angle).toBeCloseTo(3.1415926475728417, 3);
+  expect(normalizeAngle(ist2.angle)).toBeCloseTo(3.1415926475728417, 3);
 });
 
 it('TriangleLoop platformLength - a hairpin', () => {

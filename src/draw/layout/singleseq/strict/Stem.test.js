@@ -590,13 +590,13 @@ it('baseCoordinates method - the outermost stem', () => {
   //let partners = [null, 6, 5, null, 3, 2, null]
   //let partners = parseDotBracket('.(((....))).....(((.....)))...').secondaryPartners;
   //let partners = parseDotBracket('.(((.......((((.....))))....)))...').secondaryPartners;
-  let partners = parseDotBracket('((((((...)))(((((...)))))(((...))))))').secondaryPartners;
+  //let partners = parseDotBracket('((((((...)))(((((...)))))(((...))))))').secondaryPartners;
   //let partners = parseDotBracket('.(((....)))(((....))).').secondaryPartners;
   //let partners = parseDotBracket('((((((....))).)))').secondaryPartners;
   //let partners = parseDotBracket('.(((....)))').secondaryPartners;
-  //let partners = parseDotBracket(
-  //  '.(((((..((....)).((((((...(((((((((((((..(((((((((((((((((((.....)).))))).)))..)))))))))))))))...((...)).)))))))....))))))..........))))).....(((((.((.(((...((((((....))))))..))).)).((((.((((..((.(((((..(((.....)))...((....))..)))))...((((((((((....(((((((((((....))))))).))))...((.((((((((((.(((.((.....))))))))).)))))).))...))))))..)))).....))..)))).)))).)))))..'
-  //).secondaryPartners;
+  let partners = parseDotBracket(
+    '.(((((..((....)).((((((...(((((((((((((..(((((((((((((((((((.....)).))))).)))..)))))))))))))))...((...)).)))))))....))))))..........))))).....(((((.((.(((...((((((....))))))..))).)).((((.((((..((.(((((..(((.....)))...((....))..)))))...((((((((((....(((((((((((....))))))).))))...((.((((((((((.(((.((.....))))))))).)))))).))...))))))..)))).....))..)))).)))).)))))..'
+  ).secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 0;
   gps.basePairBondLength = 2;
@@ -615,8 +615,8 @@ it('baseCoordinates method - the outermost stem', () => {
     s += bc.xLeft + '\t';
     s += bc.yTop + '\n';
   });
-  console.log(xs);
-  console.log(ys);
+  //console.log(xs);
+  //console.log(ys);
   //console.log(s);
   //console.log(omst);
   let it = omst.loopIterator();
