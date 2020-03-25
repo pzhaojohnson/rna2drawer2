@@ -154,17 +154,11 @@ class RoundLoop {
    * @returns {number} 
    */
   static terminusAngle5(outermostStem, generalProps) {
-    if (outermostStem.numBranches === 0) {
-      let circumference = RoundLoop.circumference(outermostStem, generalProps);
-      return RoundLoop.originAngle(outermostStem, generalProps)
-        + ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference));
-    } else {
-      let circumference = RoundLoop.circumference(outermostStem, generalProps);
-      let polarLength = RoundLoop.polarLengthBetweenTermini(outermostStem, generalProps);
-      return RoundLoop.originAngle(outermostStem, generalProps)
-        + Math.PI
-        - ((2 * Math.PI) * ((polarLength / 2) / circumference));
-    }
+    let circumference = RoundLoop.circumference(outermostStem, generalProps);
+    let polarLength = RoundLoop.polarLengthBetweenTermini(outermostStem, generalProps);
+    return RoundLoop.originAngle(outermostStem, generalProps)
+      + Math.PI
+      - ((2 * Math.PI) * ((polarLength / 2) / circumference));
   }
 
   /**
@@ -174,17 +168,11 @@ class RoundLoop {
    * @returns {number} 
    */
   static terminusAngle3(outermostStem, generalProps) {
-    if (outermostStem.numBranches === 0) {
-      let circumference = RoundLoop.circumference(outermostStem, generalProps);
-      return RoundLoop.originAngle(outermostStem, generalProps)
-        - ((2 * Math.PI) * ((generalProps.terminiGap / 2) / circumference));
-    } else {
-      let circumference = RoundLoop.circumference(outermostStem, generalProps);
-      let polarLength = RoundLoop.polarLengthBetweenTermini(outermostStem, generalProps);
-      return RoundLoop.originAngle(outermostStem, generalProps)
-        + Math.PI
-        + ((2 * Math.PI) * ((polarLength / 2) / circumference));
-    }
+    let circumference = RoundLoop.circumference(outermostStem, generalProps);
+    let polarLength = RoundLoop.polarLengthBetweenTermini(outermostStem, generalProps);
+    return RoundLoop.originAngle(outermostStem, generalProps)
+      + Math.PI
+      + ((2 * Math.PI) * ((polarLength / 2) / circumference));
   }
 
   /**
