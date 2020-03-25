@@ -1,13 +1,27 @@
-import { baseCoordinatesRound } from './UnpairedRegionRound';
+import {
+  baseCoordinatesRound,
+  _coordinatesBounding5,
+  _coordinatesBounding3,
+  _polarLengthToFit,
+  _center,
+  _radius,
+  _angleBounding5,
+  _angleBounding3,
+  _angleSpanBetweenBounds,
+  _polarLengthBetweenBounds,
+  _startingAngle,
+  _angleIncrement,
+} from './UnpairedRegionRound';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
+import parseDotBracket from '../../../../parse/parseDotBracket';
+import { RoundLoop } from './StemLayout';
 
-function zeroStretch3(length) {
+function defaultBaseProps(length) {
   let bps = [];
   for (let i = 0; i < length; i++) {
     bps.push(new StrictLayoutBaseProps());
-    bps[i].stretch3 = 0;
   }
   return bps;
 }
@@ -19,7 +33,83 @@ function checkCoords(coords, expectedCoords) {
     expect(coords[i].yCenter).toBeCloseTo(expectedCoords[i][1]);
   }
 }
-it('', () => {});
+
+it('_coordinatesBounding5 - boundingStem5 is the outermost stem', () => {
+  let partners = parseDotBracket('..(((....)))..').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.rotation = Math.PI / 3;
+  gps.terminiGap = 1.5;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  let cb5 = _coordinatesBounding5(ur, gps);
+  expect(cb5.x).toBeCloseTo(-0.0006412282186380958, 3);
+  expect(cb5.y).toBeCloseTo(-1.433619000151573, 3);
+});
+
+it('_coordinatesBounding5 - boundingStem5 is not the outermost stem', () => {
+  let partners = parseDotBracket('(((...((((....))))..(((...))).)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let omit = omst.loopIterator();
+  omit.next();
+  let st = omit.next().value;
+  let stit = st.loopIterator();
+  let ur = stit.next().value;
+  let cb5 = _coordinatesBounding5(ur, gps);
+  expect(cb5.x).toBeCloseTo(2.5488715261690347, 3);
+  expect(cb5.y).toBeCloseTo(-1.1000000000000008, 3);
+});
+
+it('_coordinatesBounding3 - boundingStem3 is the outermost stem', () => {
+  let partners = parseDotBracket('.(((.....)))..').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 15;
+  gps.rotation = Math.PI / 6;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(cb3.x).toBeCloseTo(0.4186567146356723, 3);
+  expect(cb3.y).toBeCloseTo(3.3545540909828073, 3);
+});
+
+it('_coordinatesBounding3 - boundingStem3 is not the outermost stem', () => {
+  let partners = parseDotBracket('(((...((((.....)))).......)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let omit = omst.loopIterator();
+  omit.next();
+  let st = omit.next().value;
+  let stit = st.loopIterator();
+  stit.next();
+  stit.next();
+  let ur = stit.next().value;
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(cb3.x).toBeCloseTo(2.5488715261690356, 3);
+  expect(cb3.y).toBeCloseTo(1.0999999999999994, 3);
+});
+
+it('_polarLengthToFit - both bounding stems are the outermost stem', () => {
+  let partners = parseDotBracket('....').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  expect(_polarLengthToFit(ur)).toBe(4);
+});
+
 /*
 it('length zero', () => {
   let partners = [3, null, 1, 6, null, 4];

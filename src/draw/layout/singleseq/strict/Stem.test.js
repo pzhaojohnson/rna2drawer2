@@ -589,7 +589,7 @@ it('baseCoordinates method - the outermost stem', () => {
   //let partners = [null, null, null, null, 13, 12, 11, null, null, null, 7, 6, 5, null, null, null, null];
   //let partners = [null, 6, 5, null, 3, 2, null]
   //let partners = parseDotBracket('.(((....))).....(((.....)))...').secondaryPartners;
-  let partners = parseDotBracket('.(((.......((((.....))))....)))...').secondaryPartners;
+  let partners = parseDotBracket('.(((.......((((.....))))....))).').secondaryPartners;
   //let partners = parseDotBracket('((((((...)))(((((...)))))(((...))))))').secondaryPartners;
   //let partners = parseDotBracket('.(((....)))(((....))).').secondaryPartners;
   //let partners = parseDotBracket('((((((....))).)))').secondaryPartners;
@@ -598,8 +598,9 @@ it('baseCoordinates method - the outermost stem', () => {
   //  '.(((((..((....)).((((((...(((((((((((((..(((((((((((((((((((.....)).))))).)))..)))))))))))))))...((...)).)))))))....))))))..........))))).....(((((.((.(((...((((((....))))))..))).)).((((.((((..((.(((((..(((.....)))...((....))..)))))...((((((((((....(((((((((((....))))))).))))...((.((((((((((.(((.((.....))))))))).)))))).))...))))))..)))).....))..)))).)))).)))))..'
   //).secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 4;
+  gps.terminiGap = 0;
   gps.basePairBondLength = 1;
+  gps.rotation = Math.PI / 3;
   let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
   StemLayout.setCoordinatesAndAngles(omst, gps, bps);
