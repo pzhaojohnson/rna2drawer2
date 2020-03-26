@@ -201,6 +201,14 @@ class Stem {
   /**
    * @returns {number} 
    */
+  get height() {
+    let basePairPadding = this._generalProps.basePairPadding;
+    return this.size + ((this.size - 1) * basePairPadding);
+  }
+
+  /**
+   * @returns {number} 
+   */
   get loopLength() {
     let ll = 0;
     let it = this.loopIterator();
@@ -214,14 +222,6 @@ class Stem {
       next = it.next();
     }
     return ll;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get height() {
-    let basePairPadding = this._generalProps.basePairPadding;
-    return this.size + ((this.size - 1) * basePairPadding);
   }
 
   /**

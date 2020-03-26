@@ -5,7 +5,6 @@ import validatePartners from '../../../../parse/validatePartners';
 import normalizeAngle from '../../../normalizeAngle';
 import { RoundLoop, StemLayout } from './StemLayout';
 import parseDotBracket from '../../../../parse/parseDotBracket';
-import { parse } from '@babel/core';
 
 function defaultBaseProps(length) {
   let bps = [];
@@ -14,6 +13,30 @@ function defaultBaseProps(length) {
   }
   return bps;
 }
+
+it('width static method', () => {
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 2.2;
+  expect(Stem.width(gps)).toBe(2.2 + 2);
+});
+
+it('basic test of constructor - the outermost stem', () => {
+  let partners = parseDotBracket('..');
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  expect(
+    () => new Stem(0, partners, gps, bps)
+  ).not.toThrow();
+});
+
+it('basic test of constructor - an inner stem', () => {
+  let partners = parseDotBracket('(((...)))');
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  expect(
+    () => new Stem(1, partners, gps, bps)
+  ).not.toThrow();
+});
 
 it('_initializePosition3', () => {
 
@@ -324,7 +347,7 @@ it('coordinates getters and setters', () => {
   expect(ist.yTopRight).toBeCloseTo(ist.yTopCenter + ((ist.width / 2) * Math.sin((Math.PI / 3) + (Math.PI / 2))), 6);
 });
 
-it('angle getters and setters', () => {
+it('angles getters and setters', () => {
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
   let bps = [];
@@ -349,6 +372,26 @@ it('width and height getters', () => {
   let st = new Stem(1, partners, gps, bps);
   expect(st.width).toBeCloseTo(4, 6);
   expect(st.height).toBeCloseTo(2);
+});
+
+it('height getter - positive basePairPadding', () => {
+  let partners = parseDotBracket('(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairPadding = 0.5;
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(1, partners, gps, bps);
+  expect(st.height).toBeCloseTo(4, 3);
+});
+
+it('loopLength - (includes stretch)', () => {
+  let partners = parseDotBracket('..(((...)))..').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 1.25;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].stretch3 = 0.9;
+  bps[11].stretch3 = -0.5;
+  let omst = new Stem(0, partners, gps, bps);
+  expect(omst.loopLength).toBeCloseTo(7.65, 3);
 });
 
 it('baseCoordinates5 method', () => {
@@ -556,6 +599,23 @@ it('loop shape', () => {
   innerStem = new Stem(1, partners, gps, bps);
   expect(innerStem.hasRoundLoop()).toBeFalsy();
   expect(innerStem.hasTriangleLoop()).toBeTruthy();
+});
+
+it('maxTriangleLoopAngle - the outermost stem', () => {
+  let partners = parseDotBracket('...').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  expect(typeof(omst.maxTriangleLoopAngle)).toBe('number');
+});
+
+it('maxTriangleLoopAngle - an inner stem', () => {
+  let partners = parseDotBracket('..(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  bps[2].maxTriangleLoopAngle = 5 * Math.PI / 7;
+  let st = new Stem(3, partners, gps, bps);
+  expect(st.maxTriangleLoopAngle).toBeCloseTo(5 * Math.PI / 7, 3);
 });
 
 it('isFlipped', () => {
