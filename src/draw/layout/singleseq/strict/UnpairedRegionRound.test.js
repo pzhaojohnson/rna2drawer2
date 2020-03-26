@@ -105,9 +105,90 @@ it('_polarLengthToFit - both bounding stems are the outermost stem', () => {
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
   expect(_polarLengthToFit(ur)).toBe(4);
+});
+
+it('_polarLengthToFit - only boundingStem5 is the outermost stem', () => {
+  let partners = parseDotBracket('..(((...))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  expect(_polarLengthToFit(ur)).toBe(2.5);
+});
+
+it('_polarLengthToFit - only boundingStem3 is the outermost stem', () => {
+  let partners = parseDotBracket('..(((...))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(_polarLengthToFit(ur)).toBe(1.5);
+});
+
+it('_polarLengthToFit - neither bounding stem is the outermost stem', () => {
+  let partners = parseDotBracket('..(((.....))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  let omit = omst.loopIterator();
+  omit.next();
+  let st = omit.next().value;
+  let stit = st.loopIterator();
+  let ur = stit.next().value;
+  expect(_polarLengthToFit(ur)).toBe(6);
+});
+
+it('_center - both bounding stems are the outermost stem and the termini gap is very small', () => {
+  let partners = parseDotBracket('......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.rotation = Math.PI / 3;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  let center = _center(ur, gps);
+  expect(center.x).toBeCloseTo(0, 3);
+  expect(center.y).toBeCloseTo(0, 3);
+});
+
+it('_center - else case', () => {
+  let partners = parseDotBracket('..(((....))).....').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 1.5;
+  gps.rotation = -2 * Math.PI / 3;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  let center = _center(ur, gps);
+  expect(center.x).toBeCloseTo(0, 3);
+  expect(center.y).toBeCloseTo(0, 3);
+});
+
+it('_radius', () => {
+  let partners = parseDotBracket('..(((....)))..').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 2;
+  gps.basePairBondLength = (2 * (7 / Math.PI)) - 1;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  expect(_radius(ur, gps)).toBeCloseTo(7 / Math.PI, 2);
 });
 
 /*
