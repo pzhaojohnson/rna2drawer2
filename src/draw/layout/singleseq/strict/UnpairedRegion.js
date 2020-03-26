@@ -1,7 +1,5 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
-import baseCoordinatesHairpin from './UnpairedRegionHairpin';
-import baseCoordinatesStraight from './UnpairedRegionStraight';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 
 class UnpairedRegion {
@@ -89,7 +87,7 @@ class UnpairedRegion {
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} The coordinates of the 5' bounding position.
+   * @returns {VirtualBaseCoordinates} 
    */
   baseCoordinatesBounding5() {
     if (this.isHairpinLoop()) {
@@ -102,7 +100,7 @@ class UnpairedRegion {
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} The coordinates of the 3' bounding position.
+   * @returns {VirtualBaseCoordinates} 
    */
   baseCoordinatesBounding3() {
     if (this.isHairpinLoop()) {
@@ -125,8 +123,6 @@ class UnpairedRegion {
    * @returns {boolean} 
    */
   isHairpinLoop() {
-
-    // the two bounding stems are the same
     return this.boundingStem5.position5 === this.boundingStem3.position5;
   }
 

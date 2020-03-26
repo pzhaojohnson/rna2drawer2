@@ -2,11 +2,10 @@ import UnpairedRegion from './UnpairedRegion';
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 
 /**
- * A stack of consecutive base pairs.
- * 
- * The outermost stem of a layout is an imaginary base pair
- * between positions zero and the sequence length plus one
- * with a width that is the size of the termini gap of the layout.
+ * The outermost stem of a layout is an imaginary base pair between positions
+ * zero and the sequence length plus one and is meant as a convenient way to
+ * store the entire recursive structure in one object. The coordinates and angle
+ * of the outermost stem should have no influence on the rest of the layout.
  */
 class Stem {
 
@@ -21,9 +20,9 @@ class Stem {
 
   /**
    * @param {number} p5 The 5' most position of this stem.
-   * @param {Array<number|null>} partners The partners notation of the secondary structure.
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
-   * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
+   * @param {Array<number|null>} partners 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   constructor(p5, partners, generalProps, baseProps) {
     this._partners = partners;
@@ -41,10 +40,6 @@ class Stem {
     this._angle = 0;
   }
 
-  /**
-   * Initializes the _position3 property of this stem, which is the 3' most position
-   * of this stem.
-   */
   _initializePosition3() {
     if (this.isOutermostStem()) {
       this._position3 = this._partners.length + 1;
@@ -53,61 +48,42 @@ class Stem {
     }
   }
 
-  /**
-   * Initializes the _size property of this stem, which is the number of base pairs
-   * in this stem.
-   */
   _initializeSize() {
     if (this.isOutermostStem()) {
       this._size = 1;
     } else {
       let partners = this._partners;
-      let p = this.position5;
-      let q = this.position3;
-      
-      function nextPair() {
-        let r = p + 1;
-        let s = partners[r - 1];
-        return r < s && s !== null && s === q - 1;
-      }
-
-      while (nextPair()) {
+      let p = this.position5 + 1;
+      let q = this.position3 - 1;
+      while (p < q && partners[p - 1] === q) {
         p++;
         q--;
       }
-
-      this._size = p - this.position5 + 1;
+      this._size = p - this.position5;
     }
   }
 
-  /**
-   * Initializes the _loop property of this stem, which is an array of the unpaired regions and stems
-   * in the loop of this stem sorted in ascending order by position.
-   */
   _initializeLoop() {
     this._loop = [];
+    let partners = this._partners;
+    let gps = this._generalProps;
+    let bps = this._baseProps;
     let bst5 = this;
     let p = this.position5 + this.size;
-
-    while (this._partners[p - 1] === null) {
+    while (partners[p - 1] === null) {
       p++;
     }
-
     while (p < this.positionTop3) {
-      let bst3 = new Stem(p, this._partners, this._generalProps, this._baseProps);
-      this._loop.push(new UnpairedRegion(bst5, bst3, this._partners, this._generalProps, this._baseProps));
+      let bst3 = new Stem(p, partners, gps, bps);
+      this._loop.push(new UnpairedRegion(bst5, bst3, partners, gps, bps));
       this._loop.push(bst3);
-
       bst5 = bst3;
       p = bst5.position3 + 1;
-
-      while (this._partners[p - 1] === null) {
+      while (partners[p - 1] === null) {
         p++;
       }
     }
-
-    // add the last unpaired region
-    this._loop.push(new UnpairedRegion(bst5, this, this._partners, this._generalProps, this._baseProps));
+    this._loop.push(new UnpairedRegion(bst5, this, partners, gps, bps));
   }
 
   /**
@@ -152,40 +128,30 @@ class Stem {
   }
 
   /**
-   * @returns {object} An iterator for the loop of this stem.
+   * @returns {Object} 
    */
   loopIterator() {
     return this._loop[Symbol.iterator]();
   }
 
   /**
-   * Acessing this property takes time linear wrt the size of the loop of this stem.
-   * 
    * @returns {number} The number of stems in the loop of this stem.
    */
   get numBranches() {
     let it = this.loopIterator();
     let num = 0;
-
-    // skip first unpaired region
     it.next();
-
     let next = it.next();
-
     while (!next.done) {
       num++;
-      
-      // skip unpaired region
       it.next();
-
       next = it.next();
     }
-
     return num;
   }
 
   /**
-   * @returns {number} The X coordinate of the bottom center of this stem.
+   * @returns {number} 
    */
   get xBottomCenter() {
     return this._xBottomCenter;
@@ -196,7 +162,7 @@ class Stem {
   }
 
   /**
-   * @returns {number} The Y coordinate of the bottom center of this stem.
+   * @returns {number} 
    */
   get yBottomCenter() {
     return this._yBottomCenter;
@@ -207,7 +173,7 @@ class Stem {
   }
 
   /**
-   * @returns {number} The angle of this stem from bottom to top.
+   * @returns {number} The angle from bottom to top of this stem.
    */
   get angle() {
     return this._angle;
@@ -218,127 +184,117 @@ class Stem {
   }
 
   /**
-   * @returns {number} The angle of this stem from top to bottom.
+   * @returns {number} 
    */
   get reverseAngle() {
     return this.angle + Math.PI;
   }
 
   /**
-   * @returns {number} The distance between the 5' and 3' sides of this stem.
+   * @returns {number} 
    */
   get width() {
-    return 2 + this._generalProps.basePairBondLength;
+    return Stem.width(this._generalProps);
   }
 
   /**
    * @returns {number} 
    */
   get loopLength() {
-    let it = this.loopIterator();
     let ll = 0;
-
-    // first unpaired region
+    let it = this.loopIterator();
     let next = it.next();
     ll += next.value.length;
     next = it.next();
-
     while (!next.done) {
-
-      // stem
       ll += next.value.width;
-
-      // unpaired region
       next = it.next();
       ll += next.value.length;
-
       next = it.next();
     }
-
     return ll;
   }
 
   /**
-   * For now this is simply the size of this stem, but this may depend on other properties in the future.
-   * 
-   * @returns {number} The distance between the bottom and top sides of this stem.
+   * @returns {number} 
    */
   get height() {
-    return this.size + ((this.size - 1) * this._generalProps.basePairPadding);
+    let basePairPadding = this._generalProps.basePairPadding;
+    return this.size + ((this.size - 1) * basePairPadding);
   }
 
   /**
-   * @returns {number} The X coordinate of the top center of this stem.
+   * @returns {number} 
    */
   get xTopCenter() {
     return this.xBottomCenter + (Math.cos(this.angle) * this.height);
   }
 
   /**
-   * @returns {number} The Y coordinate of the top center of this stem.
+   * @returns {number} 
    */
   get yTopCenter() {
     return this.yBottomCenter + (Math.sin(this.angle) * this.height);
   }
 
   /**
-   * @returns {number} The X coordinate of the bottom left corner of this stem.
+   * @returns {number} 
    */
   get xBottomLeft() {
     return this.xBottomCenter + ((this.width / 2) * Math.cos(this.angle - (Math.PI / 2)));
   }
 
   /**
-   * @returns {number} The Y coordinate of the bottom left corner of this stem.
+   * @returns {number} 
    */
   get yBottomLeft() {
     return this.yBottomCenter + ((this.width / 2) * Math.sin(this.angle - (Math.PI / 2)));
   }
 
   /**
-   * @returns {number} The X coordinate of the bottom right corner of this stem.
+   * @returns {number} 
    */
   get xBottomRight() {
     return this.xBottomCenter + ((this.width / 2) * Math.cos(this.angle + (Math.PI / 2)));
   }
 
   /**
-   * @returns {number} The Y coordinate of the bottom right corner of this stem.
+   * @returns {number} 
    */
   get yBottomRight() {
     return this.yBottomCenter + ((this.width / 2) * Math.sin(this.angle + (Math.PI / 2)));
   }
 
   /**
-   * @returns {number} The X coordinate of the top left corner of this stem.
+   * @returns {number} 
    */
   get xTopLeft() {
     return this.xTopCenter + ((this.width / 2) * Math.cos(this.angle - (Math.PI / 2)));
   }
 
   /**
-   * @returns {number} The Y coordinate of the top left corner of this stem.
+   * @returns {number} 
    */
   get yTopLeft() {
     return this.yTopCenter + ((this.width / 2) * Math.sin(this.angle - (Math.PI / 2)));
   }
 
   /**
-   * @returns {number} The X coordinate of the top right corner of this stem.
+   * @returns {number} 
    */
   get xTopRight() {
     return this.xTopCenter + ((this.width / 2) * Math.cos(this.angle + (Math.PI / 2)));
   }
 
   /**
-   * @returns {number} The Y coordinate of the top right corner of this stem.
+   * @returns {number} 
    */
   get yTopRight() {
     return this.yTopCenter + ((this.width / 2) * Math.sin(this.angle + (Math.PI / 2)));
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} The base coordinates of the 5' most position of this stem.
+   * @returns {VirtualBaseCoordinates} 
    */
   baseCoordinates5() {
     let x = this.xBottomCenter + (0.5 * Math.cos(this.angle));
@@ -351,7 +307,7 @@ class Stem {
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} The base coordinates of the 5' position of the top base pair of this stem.
+   * @returns {VirtualBaseCoordinates} 
    */
   baseCoordinatesTop5() {
     let bc5 = this.baseCoordinates5();
@@ -362,7 +318,7 @@ class Stem {
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} The base coordinates of the 3' most position of this stem.
+   * @returns {VirtualBaseCoordinates} 
    */
   baseCoordinates3() {
     let bc5 = this.baseCoordinates5();
@@ -373,7 +329,7 @@ class Stem {
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} The base coordinates of the 3' position of the top base pair of this stem.
+   * @returns {VirtualBaseCoordinates} 
    */
   baseCoordinatesTop3() {
     let bc3 = this.baseCoordinates3();
@@ -386,14 +342,14 @@ class Stem {
   /**
    * @param {Stem} other 
    * 
-   * @returns {boolean} True if this stem is outer to the other stem.
+   * @returns {boolean} 
    */
   isOuterTo(other) {
     return this.position5 < other.position5 && this.position3 > other.position3;
   }
 
   /**
-   * @returns {boolean} True if this stem is the outermost stem of the layout.
+   * @returns {boolean} 
    */
   isOutermostStem() {
     return this.position5 === 0;
@@ -407,7 +363,7 @@ class Stem {
   }
 
   /**
-   * @returns {boolean} True if this stem has a round loop.
+   * @returns {boolean} 
    */
   hasRoundLoop() {
     if (this.isOutermostStem()) {
@@ -420,7 +376,7 @@ class Stem {
   /**
    * The outermost stem never has a triangle loop.
    * 
-   * @returns {boolean} True if this stem has a triangle loop.
+   * @returns {boolean} 
    */
   hasTriangleLoop() {
     if (this.isOutermostStem()) {
@@ -430,6 +386,9 @@ class Stem {
     }
   }
 
+  /**
+   * @returns {number} 
+   */
   get maxTriangleLoopAngle() {
     if (this.isOutermostStem()) {
       return Math.PI / 4;
@@ -441,7 +400,7 @@ class Stem {
   /**
    * The outermost stem is never flipped.
    * 
-   * @returns {boolean} True if this stem is flipped.
+   * @returns {boolean} 
    */
   isFlipped() {
     if (this.isOutermostStem()) {
@@ -457,7 +416,6 @@ class Stem {
   baseCoordinates() {
     let coordinates = [];
     let step = 1 + this._generalProps.basePairPadding;
-
     if (!this.isOutermostStem()) {
       coordinates.push(this.baseCoordinates5());
       for (let p = this.position5 + 1; p <= this.positionTop5; p++) {
@@ -467,12 +425,10 @@ class Stem {
         ));
       }
     }
-
     let it = this.loopIterator();
     let ur = it.next().value;
     let inOutermostLoop = this.isOutermostStem();
     coordinates = coordinates.concat(ur.baseCoordinates(inOutermostLoop));
-    
     let next = it.next();
     while (!next.done) {
       let st = next.value;
@@ -481,12 +437,10 @@ class Stem {
       } else {
         coordinates = coordinates.concat(st.baseCoordinates());
       }
-
       ur = it.next().value;
       coordinates = coordinates.concat(ur.baseCoordinates(inOutermostLoop));
       next = it.next();
     }
-
     if (!this.isOutermostStem()) {
       coordinates.push(this.baseCoordinatesTop3());
       for (let p = this.positionTop3 + 1; p <= this.position3; p++) {
@@ -496,33 +450,30 @@ class Stem {
         ));
       }
     }
-
     return coordinates;
   }
 
   /**
-   * @returns {Array<VirtualBaseCoordinates>} The base coordinates of all positions encompassed by this stem
-   *  flipped along the axis formed by the bottom base pair of this stem.
+   * Base coordinates are flipped across the axis formed by the bottom base pair
+   * of this stem.
+   * 
+   * @returns {Array<VirtualBaseCoordinates>} 
    */
   flippedBaseCoordinates() {
-    let coordinates = this.baseCoordinates();
     let flippedCoordinates = [];
-    
+    let coordinates = this.baseCoordinates();
     let bc5 = this.baseCoordinates5();
     let bc3 = this.baseCoordinates3();
     let axis = bc5.angleBetweenCenters(bc3);
-    
     coordinates.forEach(bc => {
       let angle = normalizeAngle(bc5.angleBetweenCenters(bc), axis);
       let flippedAngle = axis - (angle - axis);
       let distance = bc5.distanceBetweenCenters(bc);
-
       flippedCoordinates.push(new VirtualBaseCoordinates(
         bc5.xLeft + (distance * Math.cos(flippedAngle)),
         bc5.yTop + (distance * Math.sin(flippedAngle))
       ));
     });
-
     return flippedCoordinates;
   }
 }
