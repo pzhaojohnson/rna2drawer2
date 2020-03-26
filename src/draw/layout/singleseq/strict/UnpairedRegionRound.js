@@ -21,12 +21,12 @@ const _VERY_SMALL_THRESHOLD = 0.001;
  */
 function _coordinatesBounding5(ur, generalProps) {
   if (ur.boundingStem5.isOutermostStem()) {
-    let center = RoundLoop.center(ur.boundingStem5, generalProps);
-    let radius = RoundLoop.radius(ur.boundingStem5, generalProps);
+    let c = RoundLoop.center(ur.boundingStem5, generalProps);
+    let r = RoundLoop.radius(ur.boundingStem5, generalProps);
     let angle = RoundLoop.terminusAngle5(ur.boundingStem5, generalProps);
     return {
-      x: center.x + (radius * Math.cos(angle)),
-      y: center.y + (radius * Math.sin(angle)),
+      x: c.x + (r * Math.cos(angle)),
+      y: c.y + (r * Math.sin(angle)),
     };
   } else {
     let bcb5 = ur.baseCoordinatesBounding5();
@@ -42,12 +42,12 @@ function _coordinatesBounding5(ur, generalProps) {
  */
 function _coordinatesBounding3(ur, generalProps) {
   if (ur.boundingStem3.isOutermostStem()) {
-    let center = RoundLoop.center(ur.boundingStem3, generalProps);
-    let radius = RoundLoop.radius(ur.boundingStem3, generalProps);
+    let c = RoundLoop.center(ur.boundingStem3, generalProps);
+    let r = RoundLoop.radius(ur.boundingStem3, generalProps);
     let angle = RoundLoop.terminusAngle3(ur.boundingStem3, generalProps);
     return {
-      x: center.x + (radius * Math.cos(angle)),
-      y: center.y + (radius * Math.sin(angle)),
+      x: c.x + (r * Math.cos(angle)),
+      y: c.y + (r * Math.sin(angle)),
     };
   } else {
     let bcb3 = ur.baseCoordinatesBounding3();

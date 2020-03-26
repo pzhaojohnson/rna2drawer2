@@ -465,6 +465,7 @@ it('baseCoordinates method - in a round outermost loop', () => {
 });
 
 it('baseCoordinates method - hairpin loop', () => {
+  /*
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(6);
@@ -475,6 +476,7 @@ it('baseCoordinates method - hairpin loop', () => {
     ur.baseCoordinates(false),
     baseCoordinatesHairpin(ur),
   );
+  */
 });
 
 it('baseCoordinates method - enough distance to draw straight', () => {

@@ -181,23 +181,8 @@ class UnpairedRegion {
   baseCoordinates(inOutermostLoop) {
     if (inOutermostLoop && this._generalProps.flatOutermostLoop) {
       return baseCoordinatesFlatOutermostLoop(this, this._generalProps, this._baseProps);
-    } else if (this.isHairpinLoop()) {
-      return baseCoordinatesHairpin(this);
     } else {
       return baseCoordinatesRound(this, this._generalProps);
-      /*
-      let bcb5 = this.baseCoordinatesBounding5();
-      let bcb3 = this.baseCoordinatesBounding3();
-      let enoughDistance = bcb5.distanceBetweenCenters(bcb3) - 1 >= this.size;
-      let bs5 = this.boundingStem5;
-      let bs3 = this.boundingStem3;
-      let neitherStemIsOutermost = !bs5.isOutermostStem() && !bs3.isOutermostStem();
-      if (enoughDistance && neitherStemIsOutermost) {
-        return baseCoordinatesStraight(this, this._baseProps);
-      } else {
-        return baseCoordinatesRound(this, this._generalProps);
-      }
-      */
     }
   }
 }
