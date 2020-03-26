@@ -457,24 +457,31 @@ class Stem {
    * Base coordinates are flipped across the axis formed by the bottom base pair
    * of this stem.
    * 
+   * If this stem is the outermost stem, this method simply returns the unflipped
+   * base coordinates.
+   * 
    * @returns {Array<VirtualBaseCoordinates>} 
    */
   flippedBaseCoordinates() {
-    let flippedCoordinates = [];
-    let coordinates = this.baseCoordinates();
-    let bc5 = this.baseCoordinates5();
-    let bc3 = this.baseCoordinates3();
-    let axis = bc5.angleBetweenCenters(bc3);
-    coordinates.forEach(bc => {
-      let angle = normalizeAngle(bc5.angleBetweenCenters(bc), axis);
-      let flippedAngle = axis - (angle - axis);
-      let distance = bc5.distanceBetweenCenters(bc);
-      flippedCoordinates.push(new VirtualBaseCoordinates(
-        bc5.xLeft + (distance * Math.cos(flippedAngle)),
-        bc5.yTop + (distance * Math.sin(flippedAngle))
-      ));
-    });
-    return flippedCoordinates;
+    if (this.isOutermostStem()) {
+      return this.baseCoordinates();
+    } else {
+      let flippedCoordinates = [];
+      let coordinates = this.baseCoordinates();
+      let bc5 = this.baseCoordinates5();
+      let bc3 = this.baseCoordinates3();
+      let axis = bc5.angleBetweenCenters(bc3);
+      coordinates.forEach(bc => {
+        let angle = normalizeAngle(bc5.angleBetweenCenters(bc), axis);
+        let flippedAngle = axis - (angle - axis);
+        let distance = bc5.distanceBetweenCenters(bc);
+        flippedCoordinates.push(new VirtualBaseCoordinates(
+          bc5.xLeft + (distance * Math.cos(flippedAngle)),
+          bc5.yTop + (distance * Math.sin(flippedAngle))
+        ));
+      });
+      return flippedCoordinates;
+    }
   }
 }
 
