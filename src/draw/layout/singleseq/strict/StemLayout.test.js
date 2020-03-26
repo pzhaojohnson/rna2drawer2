@@ -893,17 +893,21 @@ it("FlatOutermostLoop setNextCoordinatesAndAngle53 - negative 3' stretch", () =>
 });
 
 it('FlatOutermostLoop setCoordinatesAndAngles - uses rotation general property', () => {
-  let partners = [null, 4, null, 2, null];
+  let partners = parseDotBracket('.....(((....)))...').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
   gps.rotation = Math.PI / 3;
   let bps = defaultBaseProps(partners.length);
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, gps, bps);
-  //expect(outermostStem.xBottomCenter).toBeCloseTo(0, 3);
-  //expect(outermostStem.yBottomCenter).toBeCloseTo(0, 3);
-  //expect(outermostStem.angle).toBeCloseTo((-Math.PI / 2) + (Math.PI / 3), 3);
+  bps[2].flatOutermostLoopAngle3 = Math.PI / 3;
+  bps[2].stretch3 = 2;
+  let omst = new Stem(0, partners, gps, bps);
+  FlatOutermostLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st = it.next().value;
+  expect(st.xBottomCenter).toBeCloseTo(-1.4830127018922186, 3);
+  expect(st.yBottomCenter).toBeCloseTo(8.130831174438391, 3);
+  expect(normalizeAngle(st.angle)).toBeCloseTo(0.5235987755982991, 3);
 });
 
 it('FlatOutermostLoop setCoordinatesAndAngles - sequence of length zero', () => {
