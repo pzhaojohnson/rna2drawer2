@@ -579,8 +579,8 @@ it('isFlipped', () => {
 function checkCoords(coords, expectedCoords) {
   expect(coords.length).toBe(expectedCoords.length);
   for (let i = 0; i < expectedCoords.length; i++) {
-    expect(coords[i].xLeft).toBeCloseTo(expectedCoords[i].xLeft, 3);
-    expect(coords[i].yTop).toBeCloseTo(expectedCoords[i].yTop, 3);
+    expect(coords[i].xLeft).toBeCloseTo(expectedCoords[i][0], 3);
+    expect(coords[i].yTop).toBeCloseTo(expectedCoords[i][1], 3);
   }
 }
 
@@ -635,4 +635,74 @@ it('baseCoordinates method - has inner stems', () => {});
 
 it('baseCoordinates method - has a flipped inner stem', () => {});
 
-it('flippedBaseCoordinates method', () => {});
+it('flippedBaseCoordinates method - the outermost stem', () => {
+  let partners = parseDotBracket('..((((....((((........)))).)))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  let expectedCoords = [];
+  omst.baseCoordinates().forEach(c => expectedCoords.push([c.xLeft, c.yTop]));
+  checkCoords(
+    omst.flippedBaseCoordinates(),
+    expectedCoords,
+  );
+});
+
+it('flippedBaseCoordinates method -  an inner stem', () => {
+  let partners = parseDotBracket('((((...(((.....))).....(((((.....))))).))))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(1, partners, gps, bps);
+  st.xBottomCenter = 1.5;
+  st.yBottomCenter = -3;
+  st.angle = Math.PI / 5;
+  StemLayout.setInnerCoordinatesAndAngles(st, gps, bps);
+  checkCoords(
+    st.flippedBaseCoordinates(),
+    [
+      [2.051072274709194, -4.096026067666205],
+      [1.2420552803342466, -4.683811319958679],
+      [0.4330382859592994, -5.271596572251152],
+      [-0.37597870841564873, -5.859381824543625],
+      [-0.29293728004523434, -6.851243905980695],
+      [-0.5405459905758958, -7.815285499423539],
+      [-1.0912859522951734, -8.644364362972675],
+      [-1.8839486918305504, -9.246337824821904],
+      [-1.77942023650915, -10.240859721025362],
+      [-1.6748917811877533, -11.235381617228818],
+      [-1.3223856885636942, -12.147327373830995],
+      [-1.6714857100725116, -13.060582422163243],
+      [-2.5424194076249216, -13.504857227649074],
+      [-3.486691036229559, -13.251368175155408],
+      [-4.018038772816052, -12.430651908016635],
+      [-3.862839952835358, -11.4653442189359],
+      [-3.967368408156759, -10.47082232273244],
+      [-4.071896863478161, -9.476300426528981],
+      [-4.972395333850486, -9.052285365150766],
+      [-5.683475483246788, -8.355829129229935],
+      [-6.1261088528383745, -7.464334896190556],
+      [-6.251101785546405, -6.476882095196238],
+      [-6.044562740670752, -5.503214857193273],
+      [-5.529446180402955, -4.651545204830137],
+      [-5.993035027776985, -3.7654947657520763],
+      [-6.456623875151013, -2.8794443266740153],
+      [-6.920212722525044, -1.9933938875959614],
+      [-7.383801569899074, -1.1073434485179061],
+      [-8.047500341584296, -0.38942315434499264],
+      [-8.059430014004676, 0.5882083157078757],
+      [-7.413447286774982, 1.3221101650328944],
+      [-6.442207223437535, 1.434352526421355],
+      [-5.6458593037933245, 0.8671351084940397],
+      [-5.434490603927349, -0.08744798429504375],
+      [-4.970901756553317, -0.9734984233730954],
+      [-4.507312909179285, -1.8595488624511503],
+      [-4.043724061805257, -2.745599301529208],
+      [-3.5801352144312264, -3.631649740607267],
+      [-2.58676187519696, -3.6940649579529437],
+      [-1.6691062634590894, -4.079544436918741],
+      [-0.860089269084142, -3.4917591846262663],
+      [-0.051072274709194954, -2.903973932333794],
+      [0.7579447196657529, -2.3161886800413205],
+    ],
+  );
+});

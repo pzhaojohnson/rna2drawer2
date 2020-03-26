@@ -1,5 +1,6 @@
 import UnpairedRegion from './UnpairedRegion';
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
+import normalizeAngle from '../../../normalizeAngle';
 
 /**
  * The outermost stem of a layout is an imaginary base pair between positions
