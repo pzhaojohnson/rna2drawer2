@@ -5,7 +5,7 @@ import Stem from './Stem';
 import normalizeAngle from '../../../normalizeAngle';
 import parseDotBracket from '../../../../parse/parseDotBracket';
 import { circleCircumference } from './circleCircumference';
-import { circleCenter } from './circle';
+import { circleCenter } from './circleCenter';
 import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
 

@@ -1,6 +1,6 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
-import { circleCenter } from './circle';
+import { circleCenter } from './circleCenter';
 import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
 import { RoundLoop } from './StemLayout';

@@ -1,4 +1,4 @@
-import { circleCenter } from './circle';
+import { circleCenter } from './circleCenter';
 
 const _VERY_SMALL_THRESHOLD = 0.001;
 

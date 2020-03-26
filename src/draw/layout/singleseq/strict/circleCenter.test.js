@@ -1,4 +1,4 @@
-import { circleCenter } from './circle';
+import { circleCenter } from './circleCenter';
 
 it('more than semicircle - straight and polar distances are normal size', () => {
   let cc = circleCenter(

@@ -1,5 +1,5 @@
 import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
-import { circleCenter } from './circle';
+import { circleCenter } from './circleCenter';
 import { circleCircumference } from './circleCircumference';
 import Stem from './Stem';
 
