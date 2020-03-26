@@ -498,8 +498,6 @@ class StemLayout {
       FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, generalProps, baseProps);
     } else if (outermostStem.hasRoundLoop()) {
       RoundLoop.setCoordinatesAndAngles(outermostStem, generalProps, baseProps);
-    } else {
-      throw new Error("The loop of the outermost stem must be either flat or round.");
     }
   }
 
@@ -517,8 +515,6 @@ class StemLayout {
       RoundLoop.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
     } else if (st.hasTriangleLoop()) {
       TriangleLoop.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
-    } else {
-      throw new Error("Stem has an unrecognized loop shape.");
     }
   }
 }
