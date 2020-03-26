@@ -22,11 +22,11 @@ class StrictLayout {
   }
   
   /**
-   * @throws {Error} If the specified secondary structure contains knots.
+   * @throws {Error} If the partners notation contains knots.
    */
   _validatePartners() {
     if (!isKnotless(this._partners)) {
-      throw new Error('The secondary structure of this layout contains knots.');
+      throw new Error('The partners notation cannot contain knots.');
     }
   }
   
