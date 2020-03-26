@@ -349,7 +349,7 @@ it("length getter - 5' bounding position is zero", () => {
   expect(ur.length).toBeCloseTo(5.2, 3);
 });
 
-it('length getter - length is smaller than minimum length', () => {
+it('length getter - does not return a negative length', () => {
   let partners = [3, null, 1, null, null, 8, null, 6];
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(8);
@@ -408,7 +408,7 @@ it('baseCoordinates method - in a flat outermost loop', () => {
   );
 });
 
-it('baseCoordinates method - in a round outermost loop', () => {
+it('baseCoordinates method - round', () => {
   let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = false;
@@ -429,75 +429,6 @@ it('baseCoordinates method - in a round outermost loop', () => {
   st5.yBottomCenter = 2;
   st5.angle = -5 * Math.PI / 9;
   st3.xBottomCenter = 7;
-  st3.yBottomCenter = 2;
-  st3.angle = -4 * Math.PI / 9;
-  checkCoords(
-    ur.baseCoordinates(true),
-    baseCoordinatesRound(ur, gps),
-  );
-});
-
-it('baseCoordinates method - hairpin loop', () => {
-  /*
-  let partners = [6, 5, null, null, 2, 1];
-  let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(6);
-  let st = new Stem(1, partners, gps, bps);
-  let it = st.loopIterator();
-  let ur = it.next().value;
-  checkCoords(
-    ur.baseCoordinates(false),
-    baseCoordinatesHairpin(ur),
-  );
-  */
-});
-
-it('baseCoordinates method - enough distance to draw straight', () => {
-  /*
-  let partners = [3, null, 1, null, null, 8, null, 6];
-  let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(8);
-  bps[2].stretch3 = 2;
-  bps[3].stretch3 = 0;
-  bps[4].stretch3 = 4;
-  let omst = new Stem(0, partners, gps, bps);
-  let it = omst.loopIterator();
-  it.next();
-  let st5 = it.next();
-  let ur = it.next().value;
-  let st3 = it.next().value;
-
-  st5.xBottomCenter = 1;
-  st5.yBottomCenter = 2;
-  st5.angle = -5 * Math.PI / 9;
-  st3.xBottomCenter = 200;
-  st3.yBottomCenter = 2;
-  st3.angle = -4 * Math.PI / 9;
-  checkCoords(
-    ur.baseCoordinates(true),
-    baseCoordinatesStraight(ur, bps),
-  );
-  */
-});
-
-it('baseCoordinates method - not enough distance to draw straight', () => {
-  let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
-  let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(11);
-  bps[2].stretch3 = 2;
-  bps[3].stretch3 = 0;
-  bps[4].stretch3 = 4;
-  let omst = new Stem(0, partners, gps, bps);
-  let it = omst.loopIterator();
-  it.next();
-  let st5 = it.next();
-  let ur = it.next().value;
-  let st3 = it.next().value;
-
-  st5.xBottomCenter = 1;
-  st5.yBottomCenter = 2;
-  st5.angle = -5 * Math.PI / 9;
-  st3.xBottomCenter = 6;
   st3.yBottomCenter = 2;
   st3.angle = -4 * Math.PI / 9;
   checkCoords(
