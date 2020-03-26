@@ -295,33 +295,6 @@ it('isDangling5 and isDangling3 methods', () => {
   expect(ur.isDangling3()).toBeTruthy();
 });
 
-it('minLength getter', () => {
-  let partners = [8, 7, null, null, null, null, 2, 1, null, 12, null, 10, null, null, null, null];
-  let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(partners.length);
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
-
-  // size of zero
-  let ur = it.next().value;
-  expect(ur.minLength).toBe(0);
-
-  // hairpin loop
-  let st = it.next().value;
-  let stit = st.loopIterator();
-  ur = stit.next().value;
-  expect(ur.minLength).toBe(4);
-
-  // size of one
-  ur = it.next().value;
-  expect(ur.minLength).toBe(1);
-
-  // size greater than one
-  it.next();
-  ur = it.next().value;
-  expect(ur.minLength).toBe(2);
-});
-
 it('length getter - size of zero', () => {
   let partners = [];
   let gps = new StrictLayoutGeneralProps();
@@ -389,7 +362,7 @@ it('length getter - length is smaller than minimum length', () => {
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(ur.length).toBeCloseTo(ur.minLength, 3);
+  expect(ur.length).toBeCloseTo(0, 3);
 });
 
 function checkCoords(coords, expectedCoords) {

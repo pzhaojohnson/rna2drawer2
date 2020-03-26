@@ -145,21 +145,6 @@ class UnpairedRegion {
   }
 
   /**
-   * @returns {number} The minimum length of this unpaired region.
-   */
-  get minLength() {
-    if (this.isHairpinLoop()) {
-      return this.size;
-    } else if (this.size === 0) {
-      return 0;
-    } else if (this.size === 1) {
-      return 1;
-    } else {
-      return 2;
-    }
-  }
-
-  /**
    * @returns {number} 
    */
   get length() {
@@ -170,7 +155,7 @@ class UnpairedRegion {
     for (let p = this.boundingPosition5 + 1; p < this.boundingPosition3; p++) {
       length += 1 + this._baseProps[p - 1].stretch3;
     }
-    return Math.max(length, this.minLength);
+    return Math.max(length, 0);
   }
 
   /**
