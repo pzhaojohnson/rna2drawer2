@@ -29,6 +29,13 @@ class StrictLayout {
       throw new Error('The partners notation cannot contain knots.');
     }
   }
+
+  /**
+   * @returns {boolean} 
+   */
+  isEmpty() {
+    return this._partners.length === 0;
+  }
   
   /**
    * @param {number} position 
@@ -43,64 +50,78 @@ class StrictLayout {
    * @returns {number} 
    */
   get xMin() {
-    let xMin = this.baseCoordinates(1).xLeft;
-    for (let p = 2; p <= this.seq.length; p++) {
-      let x = this.baseCoordinates(p).xLeft;
-      if (x < xMin) {
-        xMin = x;
+    if (this.isEmpty()) {
+      return 0;
+    } else {
+      let xMin = this.baseCoordinates(1).xLeft;
+      for (let p = 2; p <= this.seq.length; p++) {
+        let x = this.baseCoordinates(p).xLeft;
+        if (x < xMin) {
+          xMin = x;
+        }
       }
+      return xMin;
     }
-    return xMin;
   }
 
   /**
    * @returns {number} 
    */
   get xMax() {
-    let xMax = this.baseCoordinates(1).xRight;
-    for (let p = 2; p <= this.seq.length; p++) {
-      let x = this.baseCoordinates(p).xRight;
+    if (this.isEmpty()) {
+      let xMax = this.baseCoordinates(1).xRight;
+      for (let p = 2; p <= this.seq.length; p++) {
+        let x = this.baseCoordinates(p).xRight;
 
-      if (x > xMax) {
-        xMax = x;
+        if (x > xMax) {
+          xMax = x;
+        }
       }
+      return xMax;
     }
-    return xMax;
   }
 
   /**
    * @returns {number} 
    */
   get xCenter() {
-    return (this.xMin() + this.xMax()) / 2.0;
+    return (this.xMin + this.xMax) / 2.0;
   }
 
   /**
    * @returns {number} 
    */
   get yMin() {
-    let yMin = this.baseCoordinates(1).yTop;
-    for (let p = 2; p <= this.seq.length; p++) {
-      let y = this.baseCoordinates(p).yTop;
-      if (y < yMin) {
-        yMin = y;
+    if (this.isEmpty()) {
+      return 0;
+    } else {
+      let yMin = this.baseCoordinates(1).yTop;
+      for (let p = 2; p <= this.seq.length; p++) {
+        let y = this.baseCoordinates(p).yTop;
+        if (y < yMin) {
+          yMin = y;
+        }
       }
+      return yMin;
     }
-    return yMin;
   }
 
   /**
    * @returns {number} 
    */
   get yMax() {
-    let yMax = this.baseCoordinates(1).yBottom;
-    for (let p = 2; p <= this.seq.length; p++) {
-      let y = this.baseCoordinates(p).yBottom;
-      if (y > yMax) {
-        yMax = y;
+    if (this.isEmpty()) {
+      return 0;
+    } else {
+      let yMax = this.baseCoordinates(1).yBottom;
+      for (let p = 2; p <= this.seq.length; p++) {
+        let y = this.baseCoordinates(p).yBottom;
+        if (y > yMax) {
+          yMax = y;
+        }
       }
+      return yMax;
     }
-    return yMax;
   }
 
   /**
