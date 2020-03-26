@@ -5,96 +5,59 @@ import isKnotless from '../../../../parse/isKnotless';
 class StrictLayout {
 
   /**
-   * @param {Array<number|null>} partners The partners notation of the secondary structure of the layout.
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
-   * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
+   * @param {Array<number|null>} partners The partners notation of the secondary structure.
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   constructor(partners, generalProps, baseProps) {
     this._partners = partners;
     this._validatePartners();
     
     this._generalProps = generalProps;
-    
     this._baseProps = baseProps;
-    this._validateBaseProps();
     
-    this._outermostStem = new Stem(0, this._partners, this._generalProps, this._baseProps);
-    StemLayout.setCoordinatesAndAngles(this._outermostStem, this._generalProps, this._baseProps);
+    this._outermostStem = new Stem(0, partners, generalProps, baseProps);
+    StemLayout.setCoordinatesAndAngles(this._outermostStem, generalProps, baseProps);
     this._baseCoordinates = this._outermostStem.baseCoordinates();
   }
   
   /**
-   * Validates the _partners property of this layout, which is the partners notation of
-   * the secondary structure of this layout.
-   * 
-   * @throws {Error} If the partners notation has a length of zero.
    * @throws {Error} If the specified secondary structure contains knots.
    */
   _validatePartners() {
-    if (this._partners.length === 0) {
-      throw new Error('Empty partners notation.');
-    }
-    
     if (!isKnotless(this._partners)) {
       throw new Error('The secondary structure of this layout contains knots.');
     }
   }
   
   /**
-   * Validates the _baseProps properties of this layout.
+   * @param {number} position 
    * 
-   * @throws {Error} If the length of the partners notation of this layout does not match
-   *  the number of base properties objects.
+   * @returns {VirtualBaseCoordinates} 
    */
-  _validateBaseProps() {
-    if (this._partners.length !== this._baseProps.length) {
-      throw new Error('Base properties must be given for every position.');
-    }
+  baseCoordinates(position) {
+    return this._baseCoordinates[position - 1];
   }
 
   /**
-   * @param {number} p 
-   * 
-   * @returns {VirtualBaseCoordinates} The base coordinates of a given position.
-   */
-  baseCoordinates(p) {
-    return this._baseCoordinates[p - 1];
-  }
-
-  /**
-   * @returns {Stem} The outermost stem of this layout.
-   */
-  get outermostStem() {
-    return this._outermostStem;
-  }
-
-  /**
-   * Accessing this property is linear wrt the length of the sequence.
-   * 
-   * @returns {number} The minimum X coordinate of the bases in this layout.
+   * @returns {number} 
    */
   get xMin() {
     let xMin = this.baseCoordinates(1).xLeft;
-
     for (let p = 2; p <= this.seq.length; p++) {
       let x = this.baseCoordinates(p).xLeft;
-
       if (x < xMin) {
         xMin = x;
       }
     }
-
     return xMin;
   }
 
   /**
-   * Accessing this property is linear wrt the length of the sequence.
-   * 
-   * @returns {number} The maximum X coordinate of the bases in this layout.
+   * @returns {number} 
    */
   get xMax() {
     let xMax = this.baseCoordinates(1).xRight;
-
     for (let p = 2; p <= this.seq.length; p++) {
       let x = this.baseCoordinates(p).xRight;
 
@@ -102,91 +65,63 @@ class StrictLayout {
         xMax = x;
       }
     }
-
     return xMax;
   }
 
   /**
-   * Accessing this property is linear wrt the length of the sequence.
-   * 
-   * @returns {number} The X coordinate of the center of this layout.
+   * @returns {number} 
    */
   get xCenter() {
     return (this.xMin() + this.xMax()) / 2.0;
   }
 
   /**
-   * Accessing this property is linear wrt the length of the sequence.
-   * 
-   * @returns {number} The minimum Y coordinate of the bases in this layout.
+   * @returns {number} 
    */
   get yMin() {
     let yMin = this.baseCoordinates(1).yTop;
-
     for (let p = 2; p <= this.seq.length; p++) {
       let y = this.baseCoordinates(p).yTop;
-
       if (y < yMin) {
         yMin = y;
       }
     }
-
     return yMin;
   }
 
   /**
-   * Accessing this property is linear wrt the length of the sequence.
-   * 
-   * @returns {number} The maximum Y coordinate of the bases in this layout.
+   * @returns {number} 
    */
   get yMax() {
     let yMax = this.baseCoordinates(1).yBottom;
-
     for (let p = 2; p <= this.seq.length; p++) {
       let y = this.baseCoordinates(p).yBottom;
-
       if (y > yMax) {
         yMax = y;
       }
     }
-
     return yMax;
   }
 
   /**
-   * Accessing this property is linear wrt the length of the sequence.
-   * 
-   * @returns {number} The Y coordinate of the center of this layout.
+   * @returns {number} 
    */
   get yCenter() {
-    return (this.yMin() + this.yMax()) / 2.0;
+    return (this.yMin + this.yMax) / 2.0;
   }
 
   /**
-   * Accessing this property is linear wrt the length of the sequence.
-   * 
-   * @returns {number} The width of this layout.
+   * @returns {number} 
    */
   get width() {
-    return this.xMax() - this.xMin();
+    return this.xMax - this.xMin;
   }
 
   /**
-   * Accessing this property is linear wrt the length of the sequence.
-   * 
-   * @returns {number} The height of this layout.
+   * @returns {number} 
    */
   get height() {
-    return this.yMax() - this.yMin();
-  }
-
-  /**
-   * @param {number} p 
-   * 
-   * @returns {StrictLayoutBaseProps} The base properties for a given position.
-   */
-  baseProps(p) {
-    return this.seq.getBase(p).strictLayoutProps;
+    return this.yMax - this.yMin;
   }
 }
 

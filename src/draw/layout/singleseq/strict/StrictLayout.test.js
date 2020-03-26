@@ -5,9 +5,6 @@ import { knotlessCases, knottedCases } from '../../../../parse/isKnotless.test';
 
 it('_validatePartners', () => {
 
-  // empty
-  expect(() => new StrictLayout([], new StrictLayoutGeneralProps(), [])).toThrow();
-
   knotlessCases.forEach(cs => {
     if (cs.length > 0) {
       let gps = new StrictLayoutGeneralProps();
