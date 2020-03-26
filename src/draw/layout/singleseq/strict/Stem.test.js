@@ -367,32 +367,27 @@ it('isOuterTo - is outer to', () => {
 });
 
 it('isOutermostStem', () => {
-  let partners = [6, 5, null, null, 2, 1];
+  let partners = parseDotBracket('((..))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
-  
-  let outermostStem = new Stem(0, partners, gps, bps);
-  expect(outermostStem.isOutermostStem()).toBeTruthy();
-
-  let innerStem = new Stem(1, partners, gps, bps);
-  expect(innerStem.isOutermostStem()).toBeFalsy();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  expect(omst.isOutermostStem()).toBeTruthy();
+  let it = omst.loopIterator();
+  it.next();
+  let st = it.next().value;
+  expect(st.isOutermostStem()).toBeFalsy();
 });
 
-it('hasHairpinLoop method - a hairpin', () => {
-  let partners = [3, null, 1];
+it('hasHairpinLoop', () => {
+  let partners = parseDotBracket('.(((..(((...))).)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(3);
-  let st = new Stem(1, partners, gps, bps);
-  expect(st.hasHairpinLoop()).toBeTruthy();
-});
-
-it('hasHairpinLoop method - not a hairpin', () => {
-  let partners = [8, null, 6, null, null, 3, null, 1];
-  let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(8);
-  let st = new Stem(1, partners, gps, bps);
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(2, partners, gps, bps);
+  let it = st.loopIterator();
+  it.next();
+  let ist = it.next().value;
   expect(st.hasHairpinLoop()).toBeFalsy();
+  expect(ist.hasHairpinLoop()).toBeTruthy();
 });
 
 it('loop shape', () => {
