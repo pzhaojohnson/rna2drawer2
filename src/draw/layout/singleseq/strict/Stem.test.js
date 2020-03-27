@@ -1,7 +1,6 @@
 import Stem from './Stem';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
-import validatePartners from '../../../../parse/validatePartners';
 import normalizeAngle from '../../../normalizeAngle';
 import { StemLayout } from './StemLayout';
 import parseDotBracket from '../../../../parse/parseDotBracket';
@@ -390,31 +389,51 @@ it('hasHairpinLoop', () => {
   expect(ist.hasHairpinLoop()).toBeTruthy();
 });
 
-it('loop shape', () => {
-  let partners = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
+it('hasRoundLoop - the outermost stem', () => {
+  let partners = parseDotBracket('....').secondaryPartners;
+  let bps = defaultBaseProps(partners.length);
+  let gps1 = new StrictLayoutGeneralProps();
+  gps1.flatOutermostLoop = false;
+  let omst1 = new Stem(0, partners, gps1, bps);
+  expect(omst1.hasRoundLoop()).toBeTruthy();
+  let gps2 = new StrictLayoutGeneralProps();
+  gps2.flatOutermostLoop = true;
+  let omst2 = new Stem(0, partners, gps2, bps);
+  expect(omst2.hasRoundLoop()).toBeFalsy();
+});
+
+it('hasRoundLoop - an inner stem', () => {
+  let partners = parseDotBracket('.(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
+  let bps1 = defaultBaseProps(partners.length);
+  bps1[1].loopShape = 'round';
+  let st1 = new Stem(2, partners, gps, bps1);
+  expect(st1.hasRoundLoop()).toBeTruthy();
+  let bps2 = defaultBaseProps(partners.length);
+  bps2[1].loopShape = 'triangle';
+  let st2 = new Stem(2, partners, gps, bps2);
+  expect(st2.hasRoundLoop()).toBeFalsy();
+});
 
-  gps.flatOutermostLoop = false;
-  let outermostStem = new Stem(0, partners, gps, bps);
-  expect(outermostStem.hasRoundLoop()).toBeTruthy();
-  expect(outermostStem.hasTriangleLoop()).toBeFalsy();
+it('hasTriangleLoop - the outermost stem', () => {
+  let partners = parseDotBracket('..').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  expect(omst.hasTriangleLoop()).toBeFalsy();
+});
 
-  gps.flatOutermostLoop = true;
-  outermostStem = new Stem(0, partners, gps, bps);
-  expect(outermostStem.hasRoundLoop()).toBeFalsy();
-  expect(outermostStem.hasTriangleLoop()).toBeFalsy();
-
-  bps[0].loopShape = 'round';
-  let innerStem = new Stem(1, partners, gps, bps);
-  expect(innerStem.hasRoundLoop()).toBeTruthy();
-  expect(innerStem.hasTriangleLoop()).toBeFalsy();
-
-  bps[0].loopShape = 'triangle';
-  innerStem = new Stem(1, partners, gps, bps);
-  expect(innerStem.hasRoundLoop()).toBeFalsy();
-  expect(innerStem.hasTriangleLoop()).toBeTruthy();
+it('hasTriangleLoop - an inner stem', () => {
+  let partners = parseDotBracket('.(((...)))..').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps1 = defaultBaseProps(partners.length);
+  bps1[1].loopShape = 'triangle';
+  let st1 = new Stem(2, partners, gps, bps1);
+  expect(st1.hasTriangleLoop()).toBeTruthy();
+  let bps2 = defaultBaseProps(partners.length);
+  bps2[1].loopShape = 'round';
+  let st2 = new Stem(2, partners, gps, bps2);
+  expect(st2.hasTriangleLoop()).toBeFalsy();
 });
 
 it('maxTriangleLoopAngle - the outermost stem', () => {
@@ -422,7 +441,7 @@ it('maxTriangleLoopAngle - the outermost stem', () => {
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
-  expect(typeof(omst.maxTriangleLoopAngle)).toBe('number');
+  expect(omst.maxTriangleLoopAngle).toBe(Math.PI / 4);
 });
 
 it('maxTriangleLoopAngle - an inner stem', () => {
@@ -434,22 +453,25 @@ it('maxTriangleLoopAngle - an inner stem', () => {
   expect(st.maxTriangleLoopAngle).toBeCloseTo(5 * Math.PI / 7, 3);
 });
 
-it('isFlipped', () => {
-  let partners = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
+it('isFlipped - the outermost stem', () => {
+  let partners = parseDotBracket('...').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  partners.forEach(position => bps.push(new StrictLayoutBaseProps()));
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  expect(omst.isFlipped()).toBeFalsy();
+});
 
-  let outermostStem = new Stem(0, partners, gps, bps);
-  expect(outermostStem.isFlipped()).toBeFalsy();
-
-  bps[0].flipStem = false;
-  let innerStem = new Stem(1, partners, gps, bps);
-  expect(innerStem.isFlipped()).toBeFalsy();
-  
-  bps[0].flipStem = true;
-  innerStem = new Stem(1, partners, gps, bps);
-  expect(innerStem.isFlipped()).toBeTruthy();
+it('isFlipped - an inner stem', () => {
+  let partners = parseDotBracket('.(((...)))..').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps1 = defaultBaseProps(partners.length);
+  bps1[1].flipStem = true;
+  let st1 = new Stem(2, partners, gps, bps1);
+  expect(st1.isFlipped()).toBeTruthy();
+  let bps2 = defaultBaseProps(partners.length);
+  bps2[1].flipStem = false;
+  let st2 = new Stem(2, partners, gps, bps2);
+  expect(st2.isFlipped()).toBeFalsy();
 });
 
 function checkCoords(coords, expectedCoords) {
