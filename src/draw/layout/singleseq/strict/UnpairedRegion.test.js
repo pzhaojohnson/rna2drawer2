@@ -2,10 +2,10 @@ import UnpairedRegion from './UnpairedRegion';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
 import Stem from './Stem';
-import baseCoordinatesHairpin from './UnpairedRegionHairpin';
-import baseCoordinatesStraight from './UnpairedRegionStraight';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
+import parseDotBracket from '../../../../parse/parseDotBracket';
+import { StemLayout } from './StemLayout';
 
 function defaultBaseProps(length) {
   let bps = [];
@@ -30,7 +30,6 @@ it('bounding stem getters', () => {
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(6);
-  
   let st = new Stem(1, partners, gps, bps);
   let it = st.loopIterator();
   let ur = it.next().value;
@@ -92,7 +91,6 @@ it("5' and 3' bounding stem outward angle getters - hairpin loop", () => {
   let bps = defaultBaseProps(3);
   let st = new Stem(1, partners, gps, bps);
   st.angle = Math.PI / 3;
-  
   let it = st.loopIterator();
   let ur = it.next().value;
   expect(ur.boundingStemOutwardAngle5).toBeCloseTo(st.reverseAngle, 3);
@@ -121,7 +119,6 @@ it("5' and 3' bounding stem outward angle getters - 3' stem is outer", () => {
   it.next();
   let ist = it.next().value;
   let ur = it.next().value;
-  
   ost.angle = -Math.PI / 8;
   ist.angle = -Math.PI / 8;
   expect(ur.boundingStemOutwardAngle5).toBeCloseTo(ist.angle, 3);
@@ -138,7 +135,6 @@ it("5' and 3' bounding stem outward angle getters - neither stem is outer", () =
   let st5 = it.next().value;
   let ur = it.next().value;
   let st3 = it.next().value;
-
   st5.angle = -2 * Math.PI / 3;
   st3.angle = -Math.PI / 3;
   expect(ur.boundingStemOutwardAngle5).toBeCloseTo(st5.angle, 3);
@@ -408,31 +404,52 @@ it('baseCoordinates method - in a flat outermost loop', () => {
   );
 });
 
-it('baseCoordinates method - round', () => {
-  let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
+it('baseCoordinates - in a round outermost loop', () => {
+  let partners = parseDotBracket('....').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = false;
-  let bps = defaultBaseProps(11);
-  bps[2].stretch3 = 2;
-  bps[2].flatOutermostLoopAngle3 = Math.PI / 3;
-  bps[3].stretch3 = 0;
-  bps[4].stretch3 = 4;
-  bps[5].flatOutermostLoopAngle3 = -Math.PI / 5;
+  let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
+  StemLayout.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
-  it.next();
-  let st5 = it.next();
   let ur = it.next().value;
-  let st3 = it.next().value;
-  
-  st5.xBottomCenter = 1;
-  st5.yBottomCenter = 2;
-  st5.angle = -5 * Math.PI / 9;
-  st3.xBottomCenter = 7;
-  st3.yBottomCenter = 2;
-  st3.angle = -4 * Math.PI / 9;
   checkCoords(
-    ur.baseCoordinates(true),
+    ur.baseCoordinates(),
+    baseCoordinatesRound(ur, gps),
+  );
+});
+
+it('baseCoordinates - is not in the flat outermost loop', () => {
+  let partners = parseDotBracket('..(((...))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  StemLayout.setCoordinatesAndAngles(omst, gps, bps);
+  let omit = omst.loopIterator();
+  omit.next();
+  let st = omit.next().value;
+  let stit = st.loopIterator();
+  let ur = stit.next().value;
+  checkCoords(
+    ur.baseCoordinates(),
+    baseCoordinatesRound(ur, gps),
+  );
+});
+
+it('baseCoordinates method - in an inner round loop', () => {
+  let partners = parseDotBracket('.(((...((...)).)))....').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  StemLayout.setCoordinatesAndAngles(omst, gps, bps);
+  let omit = omst.loopIterator();
+  omit.next();
+  let st = omit.next().value;
+  let stit = st.loopIterator();
+  let ur = stit.next().value;
+  checkCoords(
+    ur.baseCoordinates(),
     baseCoordinatesRound(ur, gps),
   );
 });
