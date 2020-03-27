@@ -294,8 +294,11 @@ class TriangleLoop {
     let opp = (platformLength - st.width) / 2;
     let maxAngle = Math.max(0.001, st.maxTriangleLoopAngle / 2);
     maxAngle = Math.min(Math.PI / 2 - 0.001, maxAngle);
-    let minHyp = opp / Math.sin(maxAngle);
-    return ((minHyp ** 2) - (opp ** 2)) ** 0.5;
+    let hyp = opp / Math.sin(maxAngle);
+    return Math.max(
+      (((hyp ** 2) - (opp ** 2)) ** 0.5) - 1,
+      0,
+    );
   }
 
   /**
@@ -319,9 +322,9 @@ class TriangleLoop {
       urLast.length + 1,
       opp + 0.001,
     );
-    let height = ((hyp ** 2) - (opp ** 2)) ** 0.5;
+    let height = (((hyp ** 2) - (opp ** 2)) ** 0.5) - 1;
     let minHeight = TriangleLoop._minHeightMultipleBranches(st);
-    return Math.max(height, minHeight) - 1;
+    return Math.max(height, minHeight);
   }
 
   /**
