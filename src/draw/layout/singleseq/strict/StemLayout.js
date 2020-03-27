@@ -251,15 +251,14 @@ class TriangleLoop {
   }
 
   /**
-   * The height of a triangle loop is defined as the distance between the top center point
-   * of its outer stem and the bottom of the platform of the triangle loop.
+   * The height of a triangle loop is defined as the distance between the top
+   * of the outer stem and the bottom of the platform for the inner stems.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
    * 
-   * @returns {number} The height of the triangle loop of a given stem.
+   * @returns {number} 
    */
-  static height(st, generalProps) {
+  static height(st) {
     if (st.hasHairpinLoop()) {
       return 0;
     } else if (st.numBranches === 1) {
@@ -272,30 +271,37 @@ class TriangleLoop {
   /**
    * @param {Stem} st 
    * 
-   * @returns {number} The height of the triangle loop of a given stem
-   *  that has only one stem in its loop.
+   * @returns {number} 
    */
   static _heightOneBranch(st) {
     let it = st.loopIterator();
     let ur5 = it.next().value;
     it.next();
     let ur3 = it.next().value;
-
     let greater = Math.max(ur5.length, ur3.length);
     let halfCircumference = greater + 1;
-    let circumference = 2 * halfCircumference;
-    let diameter = circumference / Math.PI;
-
-    /* Subtract one since the height is defined as the distance between the top of the outer stem
-    and the bottom of the inner stem. */
+    let diameter = (2 * halfCircumference) / Math.PI;
     return diameter - 1;
   }
 
   /**
    * @param {Stem} st 
    * 
-   * @returns {number} The height of the triangle loop of a given stem
-   *  that has multiple stems in its loop.
+   * @returns {number} 
+   */
+  static _minHeightMultipleBranches(st) {
+    let platformLength = TriangleLoop.platformLength(st);
+    let opp = (platformLength - st.width) / 2;
+    let maxAngle = Math.max(0.001, st.maxTriangleLoopAngle / 2);
+    maxAngle = Math.min(Math.PI / 2 - 0.001, maxAngle);
+    let minHyp = opp / Math.sin(maxAngle);
+    return ((minHyp ** 2) - (opp ** 2)) ** 0.5;
+  }
+
+  /**
+   * @param {Stem} st 
+   * 
+   * @returns {number} 
    */
   static _heightMultipleBranches(st) {
     let it = st.loopIterator();
@@ -306,7 +312,6 @@ class TriangleLoop {
       urLast = it.next().value;
       next = it.next();
     }
-
     let platformLength = TriangleLoop.platformLength(st);
     let opp = (platformLength - st.width) / 2;
     let hyp = Math.max(
@@ -315,11 +320,7 @@ class TriangleLoop {
       opp + 0.001,
     );
     let height = ((hyp ** 2) - (opp ** 2)) ** 0.5;
-
-    let maxAngle = Math.max(0.001, st.maxTriangleLoopAngle / 2);
-    maxAngle = Math.min(Math.PI / 2 - 0.001, maxAngle);
-    let minHyp = opp / Math.sin(maxAngle);
-    let minHeight = ((minHyp ** 2) - (opp ** 2)) ** 0.5;
+    let minHeight = TriangleLoop._minHeightMultipleBranches(st);
     return Math.max(height, minHeight) - 1;
   }
 
@@ -327,29 +328,24 @@ class TriangleLoop {
    * Recursively sets the coordinates and angles of stems inner to a given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
-   * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
-    if (!st.hasHairpinLoop()) {
+    if (st.hasHairpinLoop()) {
+      return;
+    } else {
       let x = st.xTopCenter;
       let y = st.yTopCenter;
-
       let height = TriangleLoop.height(st, generalProps);
       x += height * Math.cos(st.angle);
       y += height * Math.sin(st.angle);
-
       let platformLength = TriangleLoop.platformLength(st);
       x += (platformLength / 2) * Math.cos(st.angle - (Math.PI / 2));
       y += (platformLength / 2) * Math.sin(st.angle - (Math.PI / 2));
-
       let it = st.loopIterator();
-
-      // skip first unpaired region
       it.next();
-
       let next = it.next();
-
       while (!next.done) {
         let ist = next.value;
         x += (ist.width / 2) * Math.cos(st.angle + (Math.PI / 2));
@@ -358,11 +354,9 @@ class TriangleLoop {
         ist.yBottomCenter = y;
         ist.angle = st.angle;
         StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
-
         let ur = it.next().value;
         x += ((ist.width / 2) + ur.length) * Math.cos(st.angle + (Math.PI / 2));
         y += ((ist.width / 2) + ur.length) * Math.sin(st.angle + (Math.PI / 2));
-
         next = it.next();
       }
     }

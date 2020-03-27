@@ -415,13 +415,28 @@ it('TriangleLoop platformLength - multiple branches', () => {
   expect(TriangleLoop.platformLength(st)).toBeCloseTo(11.3, 3);
 });
 
+it('TriangleLoop platformLength - includes stretch', () => {
+  let partners = parseDotBracket('((..(((...)))...((..)).))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].loopShape = 'triangle';
+  bps[12].stretch3 = 2;
+  bps[13].stretch3 = 1;
+  bps[14].stretch3 = 2.5;
+  bps[15].stretch3 = 0.75;
+  bps[16].stretch3 = 1;
+  let st = new Stem(1, partners, gps, bps);
+  expect(TriangleLoop.platformLength(st)).toBeCloseTo(15.25, 3);
+});
+
 it('TriangleLoop height - a hairpin', () => {
-  let partners = [6, 5, null, null, 2, 1];
+  let partners = parseDotBracket('((..))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
   let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop.height(st, gps)).toBe(0);
+  expect(TriangleLoop.height(st)).toBe(0);
 });
 
 it('TriangleLoop height - one branch', () => {
@@ -433,7 +448,7 @@ it('TriangleLoop height - one branch', () => {
   bps[1].stretch3 = 2.8;
   let st = new Stem(1, partners, gps, bps);
   expect(
-    TriangleLoop.height(st, gps),
+    TriangleLoop.height(st),
   ).toBeCloseTo(TriangleLoop._heightOneBranch(st), 3);
 });
 
@@ -449,7 +464,7 @@ it('TriangleLoop height - multiple branches', () => {
   bps[9].stretch3 = -1;
   let st = new Stem(1, partners, gps, bps);
   expect(
-    TriangleLoop.height(st, gps),
+    TriangleLoop.height(st),
   ).toBeCloseTo(TriangleLoop._heightMultipleBranches(st), 3);
 });
 
@@ -539,7 +554,7 @@ it('TriangleLoop setInnerCoordinatesAndAngles - one branch', () => {
   let it = ost.loopIterator();
   it.next();
   let ist = it.next().value;
-  let h = TriangleLoop.height(ost, gps);
+  let h = TriangleLoop.height(ost);
   expect(ist.xBottomCenter).toBeCloseTo(ost.xTopCenter + (h * Math.cos(Math.PI / 6)));
   expect(ist.yBottomCenter).toBeCloseTo(ost.yTopCenter + (h * Math.sin(Math.PI / 6)));
   expect(ist.angle).toBeCloseTo(Math.PI / 6 , 3);
@@ -565,7 +580,7 @@ it('TriangleLoop setInnerCoordinatesAndAngles - multiple branches', () => {
   let ist1 = it.next().value;
   it.next();
   let ist2 = it.next().value;
-  let height = TriangleLoop.height(ost, gps);
+  let height = TriangleLoop.height(ost);
   let hyp = ((height ** 2) + (2.6 ** 2)) ** 0.5;
   let a = Math.acos(height / hyp);
   expect(ist1.xBottomCenter).toBeCloseTo(ost.xTopCenter + (hyp * Math.cos((-Math.PI / 3) - a)));
