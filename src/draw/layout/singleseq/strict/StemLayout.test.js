@@ -721,7 +721,8 @@ it('FlatOutermostLoop traverseUnpairedRegion53 - size of zero', () => {
   ).toBe(0);
 });
 
-it('FlatoutermostLoop traverseUnpairedRegion53 - size of one', () => {
+it("FlatoutermostLoop traverseUnpairedRegion53 - size of one and an inner 5' stem", () => {
+  // and includes stretch and angles
   let partners = [null, 4, null, 2, null];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
@@ -747,7 +748,8 @@ it('FlatoutermostLoop traverseUnpairedRegion53 - size of one', () => {
   );
 });
 
-it('FlatOutermostLoop traverseUnpairedRegion53 - size of four', () => {
+it("FlatOutermostLoop traverseUnpairedRegion53 - size of four and an inner 5' stem", () => {
+  // and includes stretch and angles
   let partners = [null, 4, null, 2, null, null, null, null];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
@@ -781,9 +783,11 @@ it('FlatOutermostLoop traverseUnpairedRegion53 - size of four', () => {
 });
 
 it("FlatOutermost traverseUnpairedRegion53 - 5' dangling unpaired region", () => {
+  // and uses rotation of layout
   let partners = [null, null, null, 6, null, 4, null];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
+  gps.rotation = Math.PI / 6;
   let bps = defaultBaseProps(partners.length);
   bps[0].stretch3 = 2;
   bps[0].flatOutermostLoopAngle3 = Math.PI / 3;
@@ -794,16 +798,12 @@ it("FlatOutermost traverseUnpairedRegion53 - 5' dangling unpaired region", () =>
   let it = outermostStem.loopIterator();
   let ur = it.next().value;
   
-  outermostStem.angle = (Math.PI / 6) - (Math.PI / 2);
-  outermostStem.xBottomCenter = -1;
-  outermostStem.yBottomCenter = -5;
-
   checkCoords(
     FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
     [
-      [1, 0],
-      [2.5000000000000004, 2.598076211353316],
-      [12.026279441628825, -2.901923788646684],
+      [0.8660254037844387, 0.49999999999999994],
+      [0.8660254037844389, 3.5],
+      [11.86602540378444, 3.5],
     ],
   );
 });

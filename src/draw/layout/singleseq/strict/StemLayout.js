@@ -392,7 +392,6 @@ class FlatOutermostLoop {
       y = ur.baseCoordinatesBounding5().yTop;
       angle = ur.boundingStem5.angle + (Math.PI / 2);
     }
-
     for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
       let d = 1;
       if (p > 1) {
@@ -403,7 +402,6 @@ class FlatOutermostLoop {
       y += d * Math.sin(angle);
       coordinates.push(new VirtualBaseCoordinates(x, y));
     }
-
     return coordinates;
   }
 
