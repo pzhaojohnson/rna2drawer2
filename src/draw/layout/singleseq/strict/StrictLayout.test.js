@@ -1,23 +1,27 @@
 import StrictLayout from './StrictLayout';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './StrictLayoutBaseProps';
-import { knotlessCases, knottedCases } from '../../../../parse/isKnotless.test';
 
-it('_validatePartners', () => {
+it('basic test of constructor', () => {});
 
-  knotlessCases.forEach(cs => {
-    if (cs.length > 0) {
-      let gps = new StrictLayoutGeneralProps();
-      let bps = [];
-      cs.forEach(position => bps.push(new StrictLayoutBaseProps()));
-      expect(() => new StrictLayout(cs, gps, bps)).not.toThrow();
-    }
-  });
+it('sequence of length zero', () => {});
 
-  knottedCases.forEach(cs => {
-    let gps = new StrictLayoutGeneralProps();
-    let bps = [];
-    cs.forEach(position => bps.push(new StrictLayoutBaseProps()));
-    expect(() => new StrictLayout(cs, gps, bps)).toThrow();
-  })
-});
+it('_validatePartners - throws when there are knots', () => {});
+
+it('_validatePatners - does not throw when there are no knots', () => {});
+
+it('size', () => {});
+
+it('isEmpty - sequence of length zero', () => {});
+
+it('isEmpty - sequence of length greater than zero', () => {});
+
+it('baseCoordinates', () => {});
+
+it('xMin, xMax, yMin, and yMax - sequence of length zero', () => {});
+
+it('xMin, xMax, yMin, and yMax - sequence of length greater than zero', () => {});
+
+it('xCenter and yCenter', () => {});
+
+it('width and height', () => {});

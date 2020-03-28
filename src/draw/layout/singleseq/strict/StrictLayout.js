@@ -31,10 +31,17 @@ class StrictLayout {
   }
 
   /**
+   * @returns {number} The number of bases in the layout.
+   */
+  get size() {
+    return this._partners.length;
+  }
+
+  /**
    * @returns {boolean} 
    */
   isEmpty() {
-    return this._partners.length === 0;
+    return this.size === 0;
   }
   
   /**
@@ -54,7 +61,7 @@ class StrictLayout {
       return 0;
     } else {
       let xMin = this.baseCoordinates(1).xLeft;
-      for (let p = 2; p <= this.seq.length; p++) {
+      for (let p = 2; p <= this.size; p++) {
         let x = this.baseCoordinates(p).xLeft;
         if (x < xMin) {
           xMin = x;
@@ -70,7 +77,7 @@ class StrictLayout {
   get xMax() {
     if (this.isEmpty()) {
       let xMax = this.baseCoordinates(1).xRight;
-      for (let p = 2; p <= this.seq.length; p++) {
+      for (let p = 2; p <= this.size; p++) {
         let x = this.baseCoordinates(p).xRight;
 
         if (x > xMax) {
@@ -84,19 +91,12 @@ class StrictLayout {
   /**
    * @returns {number} 
    */
-  get xCenter() {
-    return (this.xMin + this.xMax) / 2.0;
-  }
-
-  /**
-   * @returns {number} 
-   */
   get yMin() {
     if (this.isEmpty()) {
       return 0;
     } else {
       let yMin = this.baseCoordinates(1).yTop;
-      for (let p = 2; p <= this.seq.length; p++) {
+      for (let p = 2; p <= this.size; p++) {
         let y = this.baseCoordinates(p).yTop;
         if (y < yMin) {
           yMin = y;
@@ -114,7 +114,7 @@ class StrictLayout {
       return 0;
     } else {
       let yMax = this.baseCoordinates(1).yBottom;
-      for (let p = 2; p <= this.seq.length; p++) {
+      for (let p = 2; p <= this.size; p++) {
         let y = this.baseCoordinates(p).yBottom;
         if (y > yMax) {
           yMax = y;
@@ -127,8 +127,15 @@ class StrictLayout {
   /**
    * @returns {number} 
    */
+  get xCenter() {
+    return (this.xMin + this.xMax) / 2;
+  }
+
+  /**
+   * @returns {number} 
+   */
   get yCenter() {
-    return (this.yMin + this.yMax) / 2.0;
+    return (this.yMin + this.yMax) / 2;
   }
 
   /**
