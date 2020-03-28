@@ -1,20 +1,68 @@
-/**
- * Since instances of this class have no object properties,
- * they can be deep copied using the spread operator.
- * 
- * Instances of this class can also be converted to and parsed from
- * a JSON string via the JSON.stringify and JSON.parse methods, respectively.
- */
 class StrictLayoutGeneralProps {
+  
+  /**
+   * @param {StrictLayoutGeneralProps~SavableState} savedState 
+   * 
+   * @returns {StrictLayoutGeneralProps} 
+   */
+  static fromSavedState(savedState) {
+    let gps = new StrictLayoutGeneralProps();
+    if (savedState.flatOutermostLoop !== undefined) {
+      gps.flatOutermostLoop = savedState.flatOutermostLoop;
+    }
+    if (savedState.rotation !== undefined) {
+      gps.rotation = savedState.rotation;
+    }
+    if (savedState.basePairBondLength !== undefined) {
+      gps.basePairBondLength = savedState.basePairBondLength;
+    }
+    if (savedState.basePairPadding !== undefined) {
+      gps.basePairPadding = savedState.basePairPadding;
+    }
+    if (savedState.terminiGap !== undefined) {
+      gps.terminiGap = savedState.terminiGap;
+    }
+    return gps;
+  }
+
   constructor() {
     this.flatOutermostLoop = false;
     this.rotation = 0.0;
 
     this.basePairBondLength = 1.2;
     this.basePairPadding = 0;
-
-    // the virtual distance between the 5' and 3' termini with a round outermost loop
+    
     this.terminiGap = 4;
+  }
+
+  /**
+   * @returns {StrictLayoutGeneralProps} 
+   */
+  deepCopy() {
+    let savableState = this.savableState();
+    return StrictLayoutGeneralProps.fromSavedState(savableState);
+  }
+
+  /**
+   * @typedef {Object} StrictLayoutGeneralProps~SavableState 
+   * @property {boolean} flatOutermostLoop 
+   * @property {number} rotation 
+   * @property {number} basePairBondLength 
+   * @property {number} basePairPadding 
+   * @property {number} terminiGap 
+   */
+
+  /**
+   * @returns {StrictLayoutGeneralProps~SavableState} 
+   */
+  savableState() {
+    return {
+      flatOutermostLoop: this.flatOutermostLoop,
+      rotation: this.rotation,
+      basePairBondLength: this.basePairBondLength,
+      basePairPadding: this.basePairPadding,
+      terminiGap: this.terminiGap,
+    };
   }
 }
 
