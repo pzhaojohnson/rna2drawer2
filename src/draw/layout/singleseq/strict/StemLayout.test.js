@@ -1123,3 +1123,83 @@ it('FlatOutermostLoop setCoordinatesAndAngles - sets properties of inner stems (
     expect(st1.angle).toBeCloseTo(st2.angle, 3);
   }
 });
+
+it('StemLayout setCoordinatesAndAngles - flat outermost loop', () => {
+  let partners = parseDotBracket('.(((...)))...').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(partners.length);
+  let omst1 = new Stem(0, partners, gps, bps);
+  let omst2 = new Stem(0, partners, gps, bps);
+  StemLayout.setCoordinatesAndAngles(omst1, gps, bps);
+  FlatOutermostLoop.setCoordinatesAndAngles(omst2, gps, bps);
+  let expectedCoords = [];
+  omst2.baseCoordinates().forEach(c => expectedCoords.push([c.xLeft, c.yTop]));
+  checkCoords(
+    omst1.baseCoordinates(),
+    expectedCoords,
+  );
+});
+
+it('StemLayout setCoordinatesAndAngles - round outermost loop', () => {
+  let partners = parseDotBracket('.(((...)))...').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = false;
+  let bps = defaultBaseProps(partners.length);
+  let omst1 = new Stem(0, partners, gps, bps);
+  let omst2 = new Stem(0, partners, gps, bps);
+  StemLayout.setCoordinatesAndAngles(omst1, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst2, gps, bps);
+  let expectedCoords = [];
+  omst2.baseCoordinates().forEach(c => expectedCoords.push([c.xLeft, c.yTop]));
+  checkCoords(
+    omst1.baseCoordinates(),
+    expectedCoords,
+  );
+});
+
+it('StemLayout setInnerCoordinatesAndAngles - round loop', () => {
+  let partners = parseDotBracket('..(((...(((...)))..(((...)))..))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  bps[2].loopShape = 'round';
+  let st1 = new Stem(3, partners, gps, bps);
+  let st2 = new Stem(3, partners, gps, bps);
+  st1.xBottomCenter = 2;
+  st2.xBottomCenter = 2;
+  st1.yBottomCenter = 2.5;
+  st2.yBottomCenter = 2.5;
+  st1.angle = Math.PI / 3;
+  st2.angle = Math.PI / 3;
+  StemLayout.setInnerCoordinatesAndAngles(st1, gps, bps);
+  RoundLoop.setInnerCoordinatesAndAngles(st2, gps, bps);
+  let expectedCoords = [];
+  st2.baseCoordinates().forEach(c => expectedCoords.push([c.xLeft, c.yTop]));
+  checkCoords(
+    st1.baseCoordinates(),
+    expectedCoords,
+  );
+});
+
+it('StemLayout setInnerCoordinatesAndAngles - triangle loop', () => {
+  let partners = parseDotBracket('..(((...(((...)))..(((...)))..))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  bps[2].loopShape = 'triangle';
+  let st1 = new Stem(3, partners, gps, bps);
+  let st2 = new Stem(3, partners, gps, bps);
+  st1.xBottomCenter = 2;
+  st2.xBottomCenter = 2;
+  st1.yBottomCenter = 2.5;
+  st2.yBottomCenter = 2.5;
+  st1.angle = Math.PI / 3;
+  st2.angle = Math.PI / 3;
+  StemLayout.setInnerCoordinatesAndAngles(st1, gps, bps);
+  TriangleLoop.setInnerCoordinatesAndAngles(st2, gps, bps);
+  let expectedCoords = [];
+  st2.baseCoordinates().forEach(c => expectedCoords.push([c.xLeft, c.yTop]));
+  checkCoords(
+    st1.baseCoordinates(),
+    expectedCoords,
+  );
+});
