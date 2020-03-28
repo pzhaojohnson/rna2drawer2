@@ -2,6 +2,11 @@ import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
 
 it('fromSavedState static method', () => {
   let gps1 = new StrictLayoutGeneralProps();
+  gps1.flatOutermostLoop = true;
+  gps1.rotation = Math.PI / 5;
+  gps1.basePairBondLength = 5.4;
+  gps1.basePairPadding = 3.2;
+  gps1.terminiGap = 5.44;
   let savableState1 = gps1.savableState();
   let gps2 = StrictLayoutGeneralProps.fromSavedState(savableState1);
   let savableState2 = gps2.savableState();
@@ -25,13 +30,18 @@ it('basic test of constructor', () => {
 });
 
 it('deepCopy', () => {
-  let gps = new StrictLayoutGeneralProps();
-  let copy = gps.deepCopy();
-  expect(copy).not.toBe(gps);
-  let savableState = gps.savableState();
-  let copySavableState = copy.savableState();
-  Object.keys(savableState).forEach(k => {
-    expect(copySavableState[k]).toBe(savableState[k]);
+  let gps1 = new StrictLayoutGeneralProps();
+  gps1.flatOutermostLoop = true;
+  gps1.rotation = 2 * Math.PI / 3;
+  gps1.basePairBondLength = 0.77;
+  gps1.basePairPadding = 0.1;
+  gps1.terminiGap = 0.8;
+  let gps2 = gps1.deepCopy();
+  expect(gps2).not.toBe(gps1);
+  let savableState1 = gps1.savableState();
+  let savableState2 = gps2.savableState();
+  Object.keys(savableState1).forEach(k => {
+    expect(savableState2[k]).toBe(savableState1[k]);
   });
 });
 
