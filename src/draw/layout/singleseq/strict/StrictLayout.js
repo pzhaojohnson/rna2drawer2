@@ -76,6 +76,8 @@ class StrictLayout {
    */
   get xMax() {
     if (this.isEmpty()) {
+      return 0;
+    } else {
       let xMax = this.baseCoordinates(1).xRight;
       for (let p = 2; p <= this.size; p++) {
         let x = this.baseCoordinates(p).xRight;
