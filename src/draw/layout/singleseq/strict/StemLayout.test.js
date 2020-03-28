@@ -439,7 +439,6 @@ it('TriangleLoop height - multiple branches', () => {
   let partners = parseDotBracket('(.(.)..(.).)').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.basePairBondLength = 2.87;
-  gps.maxTriangleLoopAngle = 8 * Math.PI / 9;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
   bps[1].stretch3 = 8.8;
@@ -477,7 +476,7 @@ it('TriangleLoop _minHeightMultipleBranches - normal case', () => {
   gps.basePairBondLength = 1;
   let bps = defaultBaseProps(partners.length)
   bps[0].loopShape = 'triangle';
-  bps[0].maxTriangleLoopAngle = 2 * Math.PI / 3;
+  bps[0].maxTriangleLoopBranchingAngle = 2 * Math.PI / 3;
   let st = new Stem(1, partners, gps, bps);
   expect(TriangleLoop._minHeightMultipleBranches(st)).toBeCloseTo(0.4433756729740652, 3);
 });
@@ -488,7 +487,7 @@ it('TriangleLoop _minHeightMultipleBranches - max angle is too small', () => {
   gps.basePairBondLength = 1;
   let bps = defaultBaseProps(partners.length)
   bps[0].loopShape = 'triangle';
-  bps[0].maxTriangleLoopAngle = 0;
+  bps[0].maxTriangleLoopBranchingAngle = 0;
   let st = new Stem(1, partners, gps, bps);
   let minHeight = TriangleLoop._minHeightMultipleBranches(st);
   expect(isFinite(minHeight)).toBeTruthy();
@@ -501,7 +500,7 @@ it('TriangleLoop _minHeightMultipleBranches - max angle is too big', () => {
   gps.basePairBondLength = 1;
   let bps = defaultBaseProps(partners.length)
   bps[0].loopShape = 'triangle';
-  bps[0].maxTriangleLoopAngle = Math.PI;
+  bps[0].maxTriangleLoopBranchingAngle = Math.PI;
   let st = new Stem(1, partners, gps, bps);
   expect(TriangleLoop._minHeightMultipleBranches(st)).toBe(0);
 });
@@ -510,7 +509,6 @@ it("TriangleLoop _heightMultipleBranches - 5' side is greater (and includes stre
   let partners = parseDotBracket('(.(.)..(.).)').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.basePairBondLength = 1.5;
-  gps.maxTriangleLoopAngle = 8 * Math.PI / 9;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
   bps[1].stretch3 = 18.8;
@@ -522,7 +520,6 @@ it("TriangleLoop _heightMultipleBranches - 3' side is greater (and includes stre
   let partners = parseDotBracket('(.(.)..(.).)').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.basePairBondLength = 1.5;
-  gps.maxTriangleLoopAngle = 8 * Math.PI / 9;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
   bps[9].stretch3 = 15.6;
@@ -536,7 +533,7 @@ it('TriangleLoop _heightMultipleBranches - both sides are too small and uses min
   gps.basePairBondLength = 1.5;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
-  bps[0].maxTriangleLoopAngle = 8 * Math.PI / 9;
+  bps[0].maxTriangleLoopBranchingAngle = 8 * Math.PI / 9;
   bps[5].stretch3 = 100.6;
   let st = new Stem(1, partners, gps, bps);
   expect(
@@ -579,7 +576,6 @@ it('TriangleLoop setInnerCoordinatesAndAngles - multiple branches', () => {
   let partners = parseDotBracket('(.((...))..(((...))).)').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.basePairBondLength = 1;
-  gps.maxTriangleLoopAngle = 8 * Math.PI / 9;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
   bps[1].stretch3 = 15;
@@ -641,7 +637,6 @@ it('TriangleLoop setInnerCoordinatesAndAngles - inner stems have inner stems (tr
   let partners = parseDotBracket('(.(((.).(.).)).)').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.basePairBondLength = 0.6;
-  gps.maxTriangleLoopAngle = 8 * Math.PI / 9;
   let bps = defaultBaseProps(partners.length);
   bps[2].loopShape = 'triangle';
   let ost = new Stem(1, partners, gps, bps);

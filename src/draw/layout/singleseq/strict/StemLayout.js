@@ -292,7 +292,7 @@ class TriangleLoop {
   static _minHeightMultipleBranches(st) {
     let platformLength = TriangleLoop.platformLength(st);
     let opp = (platformLength - st.width) / 2;
-    let maxAngle = Math.max(0.001, st.maxTriangleLoopAngle / 2);
+    let maxAngle = Math.max(0.001, st.maxTriangleLoopBranchingAngle / 2);
     maxAngle = Math.min(Math.PI / 2 - 0.001, maxAngle);
     let hyp = opp / Math.sin(maxAngle);
     return Math.max(

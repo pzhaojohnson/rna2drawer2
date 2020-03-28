@@ -11,7 +11,7 @@ class StrictLayoutBaseProps {
     this.flatOutermostLoopAngle3 = 0;
     this.flipStem = false;
     this.loopShape = 'round';
-    this.maxTriangleLoopAngle = 0.8 * Math.PI;
+    this.maxTriangleLoopBranchingAngle = 0.8 * Math.PI;
   }
 }
 

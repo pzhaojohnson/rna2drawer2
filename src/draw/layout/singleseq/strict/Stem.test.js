@@ -436,21 +436,21 @@ it('hasTriangleLoop - an inner stem', () => {
   expect(st2.hasTriangleLoop()).toBeFalsy();
 });
 
-it('maxTriangleLoopAngle - the outermost stem', () => {
+it('maxTriangleLoopBranchingAngle - the outermost stem', () => {
   let partners = parseDotBracket('...').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
-  expect(omst.maxTriangleLoopAngle).toBe(Math.PI / 4);
+  expect(omst.maxTriangleLoopBranchingAngle).toBe(Math.PI / 4);
 });
 
-it('maxTriangleLoopAngle - an inner stem', () => {
+it('maxTriangleLoopBranchingAngle - an inner stem', () => {
   let partners = parseDotBracket('..(((...)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
-  bps[2].maxTriangleLoopAngle = 5 * Math.PI / 7;
+  bps[2].maxTriangleLoopBranchingAngle = 5 * Math.PI / 7;
   let st = new Stem(3, partners, gps, bps);
-  expect(st.maxTriangleLoopAngle).toBeCloseTo(5 * Math.PI / 7, 3);
+  expect(st.maxTriangleLoopBranchingAngle).toBeCloseTo(5 * Math.PI / 7, 3);
 });
 
 it('isFlipped - the outermost stem', () => {
