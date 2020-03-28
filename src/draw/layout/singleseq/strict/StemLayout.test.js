@@ -194,7 +194,7 @@ it('RoundLoop polarLengthBetweenTermini - does not use the termini gap', () => {
   gps.basePairBondLength = 10;
   let bps = defaultBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, bps);
-  expect(RoundLoop.polarLengthBetweenTermini(omst, gps)).toBeCloseTo(13.001000000000001, 3);
+  expect(RoundLoop.polarLengthBetweenTermini(omst, gps)).toBeCloseTo(13.000099999999998, 3);
 });
 
 it('RoundLoop terminusAngle5', () => {
@@ -218,7 +218,7 @@ it('RoundLoop terminusAngle5 - does not use termini gap', () => {
   let omst = new Stem(0, partners, gps, bps);
   expect(
     normalizeAngle(RoundLoop.terminusAngle5(omst, gps))
-  ).toBeCloseTo(6.25558524513938, 3);
+  ).toBeCloseTo(6.274457041434643, 3);
 });
 
 it('RoundLoop terminusAngle3', () => {
@@ -242,7 +242,7 @@ it('RoundLoop terminusAngle3 - does not use termini gap', () => {
   let omst = new Stem(0, partners, gps, bps);
   expect(
     normalizeAngle(RoundLoop.terminusAngle3(omst, gps))
-  ).toBeCloseTo(0.027600062040206375, 3);
+  ).toBeCloseTo(0.008728265744943009, 3);
 });
 
 it('RoundLoop setCoordinatesAndAngles - sets inner coordinates and angles', () => {
@@ -328,8 +328,8 @@ it('RoundLoop setInnerCoordinatesAndAngles - the outermost stem (does not use te
   let it = omst.loopIterator();
   it.next();
   let st = it.next().value;
-  expect(st.xBottomCenter).toBeCloseTo(173.75229806916323, 3);
-  expect(st.yBottomCenter).toBeCloseTo(-4.2557039134979516e-14, 3);
+  expect(st.xBottomCenter).toBeCloseTo(550.6250879673996, 3);
+  expect(st.yBottomCenter).toBeCloseTo(-1.3486425030190116e-13, 3);
   expect(normalizeAngle(st.angle)).toBeCloseTo(0, 3);
 });
 
@@ -347,9 +347,9 @@ it('RoundLoop setInnerCoordinatesAndAngles - includes stretch', () => {
   let it = omst.loopIterator();
   it.next();
   let st = it.next().value;
-  expect(st.xBottomCenter).toBeCloseTo(234.94736952943967, 3);
-  expect(st.yBottomCenter).toBeCloseTo(2.493964127282376, 3);
-  expect(normalizeAngle(st.angle)).toBeCloseTo(0.0106145919, 3);
+  expect(st.xBottomCenter).toBeCloseTo(744.1881565508345, 3);
+  expect(st.yBottomCenter).toBeCloseTo(2.4982486268746724, 3);
+  expect(normalizeAngle(st.angle)).toBeCloseTo(0.0033569994634436995, 3);
 });
 
 it('RoundLoop setInnerCoordinatesAndAngles - inner stems have inner stems (round loop)', () => {
@@ -1061,12 +1061,12 @@ it('FlatOutermostLoop setCoordinatesAndAngles - inner stems have inner stems (ro
       [-3.902103935403258, -5.881737794245986],
       [-2.9444051257940784, -6.169510256571971],
       [-1.986706316184899, -6.457282718897956],
-      [-0.971388175862387, -6.875728517625589],
-      [0.047237776307397894, -7.286056413468671],
-      [1.0691066354236227, -7.68824026111713],
-      [2.0941532899536313, -8.082254434184108],
-      [3.1223124258817307, -8.468073826838747],
-      [4.153518530870841, -8.845673855406005],
+      [-0.9647901369916099, -6.859002184274459],
+      [0.0581368674170335, -7.258140693831024],
+      [1.0820681785800161, -7.654695704112726],
+      [2.1069972716366294, -8.048664688127587],
+      [3.1329176153678304, -8.440045135362595],
+      [4.159822672238107, -8.828834551800014],
       [5.187705898436875, -9.21503045993305],
       [6.091582958046115, -9.642822770654217],
       [6.995460017655355, -10.070615081375383],
@@ -1104,10 +1104,10 @@ it('FlatOutermostLoop setCoordinatesAndAngles - inner stems have inner stems (tr
       [1, 0],
       [2, -1.1102230246251565e-16],
       [2, -1],
-      [0.8708893711127921, -1.3352491135847941],
-      [-0.2538489201132421, -1.6848868642287584],
-      [-1.3740315225922615, -2.0488562551516196],
-      [-2.489475827891596, -2.4270979532769275],
+      [0.8770794699266418, -1.3548594600630963],
+      [-0.24439906732510508, -1.7142501162301187],
+      [-1.3644173276065032, -2.0781661091360775],
+      [-2.4829570505766156, -2.4466015056364654],
       [-3.599999999999999, -2.819550298904276],
       [-3.599999999999999, -3.819550298904276],
       [-3.599999999999999, -4.819550298904276],
@@ -1117,11 +1117,11 @@ it('FlatOutermostLoop setCoordinatesAndAngles - inner stems have inner stems (tr
       [-1.3999999999999988, -4.819550298904276],
       [-1.3999999999999988, -3.819550298904276],
       [-1.3999999999999988, -2.819550298904276],
-      [0.09981481755809218, -2.851824901149854],
-      [1.5998518524004872, -2.8711906187509726],
-      [3.099999999999967, -2.877646017330534],
-      [4.600148147599446, -2.8711906187509726],
-      [6.100185182441842, -2.851824901149854],
+      [0.0999814815089084, -2.8297564979758363],
+      [1.599985185190711, -2.8358802476592473],
+      [3.1000000000000862, -2.8379215025937583],
+      [4.600014814809461, -2.8358802476592473],
+      [6.1000185184912645, -2.8297564979758363],
       [7.600000000000001, -2.819550298904276],
       [7.600000000000001, -3.819550298904276],
       [7.600000000000001, -4.819550298904276],
@@ -1132,8 +1132,8 @@ it('FlatOutermostLoop setCoordinatesAndAngles - inner stems have inner stems (tr
       [9.8, -4.819550298904276],
       [9.8, -3.819550298904276],
       [9.8, -2.819550298904276],
-      [7.9463817642245225, -2.1733540064274735],
-      [6.079433304629621, -1.5667456800534012],
+      [7.937429084906967, -2.200476047132895],
+      [6.0707342388039365, -1.593950124777507],
       [4.2, -1],
       [4.2, 0],
       [5.2, -1.1102230246251565e-16],

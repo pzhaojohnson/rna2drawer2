@@ -86,7 +86,7 @@ function circleCenter(x1, y1, x2, y2, clockwisePolarDistance) {
   );
   clockwisePolarDistance = Math.max(
     clockwisePolarDistance,
-    straightDistance + 0.001,
+    straightDistance + 0.0001,
   );
 
   let angleToCenter = angleBetween(x1, y1, x2, y2);
