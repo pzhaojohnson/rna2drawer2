@@ -172,7 +172,7 @@ class RoundLoop {
   }
 
   /**
-   * Sets the coordinates and angles for all stems of a layout given its outermost stem.
+   * Sets the coordinates and angles for all stems in the layout.
    * 
    * @param {Stem} outermostStem 
    * @param {StrictLayoutGeneralProps} generalProps 
@@ -183,7 +183,7 @@ class RoundLoop {
   }
 
   /**
-   * Recursively sets the coordinates and angles of stems inner to a given stem.
+   * Recursively sets the coordinates and angles of stems inner to the given stem.
    * 
    * @param {Stem} st 
    * @param {StrictLayoutGeneralProps} generalProps 
@@ -328,7 +328,7 @@ class TriangleLoop {
   }
 
   /**
-   * Recursively sets the coordinates and angles of stems inner to a given stem.
+   * Recursively sets the coordinates and angles of stems inner to the given stem.
    * 
    * @param {Stem} st 
    * @param {StrictLayoutGeneralProps} generalProps 
@@ -369,14 +369,14 @@ class TriangleLoop {
 class FlatOutermostLoop {
 
   /**
-   * Traverses the unpaired region 5' to 3', using the coordinates and angle of the 5' bounding stem
-   * of the unpaired region as a starting point.
+   * Traverses the unpaired region 5' to 3', starting with the coordinates and angle
+   * of its 5' bounding stem.
    * 
    * @param {UnpairedRegion} ur 
    * @param {StrictLayoutGeneralProps} generalProps 
    * @param {Array<StrictLayoutBaseProps} baseProps 
    * 
-   * @returns {Array<VirtualBaseCoordinates>} The coordinates for the bases in the unpaired region.
+   * @returns {Array<VirtualBaseCoordinates>} The base coordinates for the unpaired region.
    */
   static traverseUnpairedRegion53(ur, generalProps, baseProps) {
     let coordinates = [];
@@ -406,26 +406,15 @@ class FlatOutermostLoop {
   }
 
   /**
-   * Sets the coordinates and angle of the 3' bounding stem of the given unpaired region
-   * based on the coordinates and angle of the 5' bounding stem of the unpaired region.
-   * 
    * @param {UnpairedRegion} ur 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps} baseProps 
+   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * 
+   * @returns {number} The angle leading to the next base after traversing the unpaired region
+   *  5' to 3' starting with the coordinates and angle of its 5' bounding stem.
    */
-  static setNextCoordinatesAndAngle53(ur, generalProps, baseProps) {
+  static unpairedRegionAngle53(ur, generalProps, baseProps) {
     let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, baseProps);
-    
-    let x;
-    let y;
-    if (coordinates.length === 0) {
-      x = ur.baseCoordinatesBounding5().xCenter;
-      y = ur.baseCoordinatesBounding5().yCenter;
-    } else {
-      x = coordinates[ur.size - 1].xCenter;
-      y = coordinates[ur.size - 1].yCenter;
-    }
-
     let angle;
     if (ur.boundingStem5.isOutermostStem() && coordinates.length < 2) {
       angle = generalProps.rotation;
@@ -439,17 +428,37 @@ class FlatOutermostLoop {
     if (ur.boundingPosition3 > 1) {
       angle += baseProps[ur.boundingPosition3 - 2].flatOutermostLoopAngle3;
     }
+    return angle;
+  }
 
+  /**
+   * Sets the coordinates and angle of the 3' bounding stem of the given unpaired region
+   * based on the coordinates and angle of the 5' bounding stem of the unpaired region.
+   * 
+   * @param {UnpairedRegion} ur 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {Array<StrictLayoutBaseProps} baseProps 
+   */
+  static setNextCoordinatesAndAngle53(ur, generalProps, baseProps) {
+    let x;
+    let y;
+    let angle = FlatOutermostLoop.unpairedRegionAngle53(ur, generalProps, baseProps);
+    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, baseProps);
+    if (coordinates.length === 0) {
+      x = ur.baseCoordinatesBounding5().xCenter;
+      y = ur.baseCoordinatesBounding5().yCenter;
+    } else {
+      x = coordinates[ur.size - 1].xCenter;
+      y = coordinates[ur.size - 1].yCenter;
+    }
     let d = 0.5 + (ur.boundingStem3.width / 2);
     if (ur.boundingPosition3 > 1) {
       d += Math.max(0, baseProps[ur.boundingPosition3 - 2].stretch3);
     }
-    
     x += d * Math.cos(angle);
     y += d * Math.sin(angle);
     x += 0.5 * Math.cos(angle + (Math.PI / 2));
     y += 0.5 * Math.sin(angle + (Math.PI / 2));
-
     ur.boundingStem3.xBottomCenter = x;
     ur.boundingStem3.yBottomCenter = y;
     ur.boundingStem3.angle = angle - (Math.PI / 2);
@@ -466,7 +475,6 @@ class FlatOutermostLoop {
     let it = outermostStem.loopIterator();
     let ur = it.next().value;
     let next = it.next();
-
     while (!next.done) {
       let st = next.value;
       FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, generalProps, baseProps);
@@ -482,11 +490,9 @@ class StemLayout {
   /**
    * Sets the coordinates and angles for all stems in the layout.
    * 
-   * @param {Stem} outermostStem The outermost stem of the layout.
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
-   * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
-   * 
-   * @throws {Error} If the loop of the outermost stem is not flat or round.
+   * @param {Stem} outermostStem 
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
     if (generalProps.flatOutermostLoop) {
@@ -497,13 +503,11 @@ class StemLayout {
   }
 
   /**
-   * Recursively sets the coordinates and angles for stems inner to the given stem.
+   * Recursively sets the coordinates and angles of stems inner to the given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps The drawing properties of the layout.
-   * @param {Array<StrictLayoutBaseProps>} baseProps The base properties of the layout.
-   * 
-   * @throws {Error} If the loop of the stem is not round or triangular.
+   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {Array<StrictLayoutBaseProps>} baseProps 
    */
   static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
     if (st.hasRoundLoop()) {

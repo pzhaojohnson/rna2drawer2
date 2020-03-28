@@ -675,274 +675,308 @@ it('TriangleLoop setInnerCoordinatesAndAngles - inner stems have inner stems (tr
 });
 
 it('FlatOutermostLoop traverseUnpairedRegion53 - size of zero', () => {
-  let partners = [3, null, 1, null];
+  let partners = parseDotBracket('((..)).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
   let bps = defaultBaseProps(partners.length);
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
   let ur = it.next().value;
-  let st3 = it.next().value;
-  
-  st3.angle = -Math.PI / 2;
-  st3.xBottomCenter = 0;
-  st3.yBottomCenter = 0;
-
   expect(
     FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps).length
   ).toBe(0);
 });
 
-it("FlatoutermostLoop traverseUnpairedRegion53 - size of one and an inner 5' stem", () => {
-  // and includes stretch and angles
-  let partners = [null, 4, null, 2, null];
+it("FlatOutermostLoop traverseUnpairedRegion53 - uses stretch and 3' angles of bases", () => {
+  let partners = parseDotBracket('...(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
   let bps = defaultBaseProps(partners.length);
-  bps[3].stretch3 = 2.2;
-  bps[3].flatOutermostLoopAngle3 = Math.PI / 7;
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
-  it.next();
-  let st5 = it.next().value;
+  bps[0].stretch3 = 1;
+  bps[0].flatOutermostLoopAngle3 = Math.PI / 6;
+  bps[1].stretch3 = 2;
+  bps[1].flatOutermostLoopAngle3 = Math.PI / 3;
+  bps[2].stretch3 = 0.5;
+  bps[2].flatOutermostLoopAngle3 = -Math.PI / 6;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
   let ur = it.next().value;
-
-  st5.angle = Math.PI / 3;
-  st5.xBottomCenter = 1.2;
-  st5.yBottomCenter = 3.77;
-  
   checkCoords(
     FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
     [
-      [-3.1936791509797766, 4.492148299476559],
+      [1, 0],
+      [2.7320508075688776, 0.9999999999999999],
+      [2.7320508075688776, 4],
     ],
   );
 });
 
-it("FlatOutermostLoop traverseUnpairedRegion53 - size of four and an inner 5' stem", () => {
-  // and includes stretch and angles
-  let partners = [null, 4, null, 2, null, null, null, null];
+it('FlatOutermostLoop traverseUnpairedRegion53 - ignores negative stretch', () => {
+  let partners = parseDotBracket('..(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
   let bps = defaultBaseProps(partners.length);
-  bps[3].stretch3 = 2;
-  bps[3].flatOutermostLoopAngle3 = Math.PI / 8;
-  bps[4].stretch3 = -5;
-  bps[4].flatOutermostLoopAngle3 = 0;
-  bps[5].stretch3 = 5;
-  bps[5].flatOutermostLoopAngle3 = -Math.PI / 8;
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
-  it.next();
-  let st5 = it.next().value;
+  bps[0].stretch3 = -10;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
   let ur = it.next().value;
-
-  st5.angle = -Math.PI / 3;
-  st5.xBottomCenter = 1;
-  st5.yBottomCenter = 1.4;
-
   checkCoords(
     FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
     [
-      [3.528912231189045, 3.3970473189814863],
-      [4.137673660197765, 4.190400659272721],
-      [9.333826082904398, 7.190400659272721],
-      [10.199851486688837, 7.690400659272721],
+      [1, 0],
+      [2, 0],
     ],
   );
 });
 
-it("FlatOutermost traverseUnpairedRegion53 - 5' dangling unpaired region", () => {
-  // and uses rotation of layout
-  let partners = [null, null, null, 6, null, 4, null];
+it("FlatOutermostLoop traverseUnpairedRegion53 - 5' bounding stem is an inner stem", () => {
+  // should use the coordinates and angle of the 5' bounding stem
+  // and the 3' stretch and angle of the 5' bounding position
+  let partners = parseDotBracket('(((...)))...(((...)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  gps.rotation = Math.PI / 6;
   let bps = defaultBaseProps(partners.length);
-  bps[0].stretch3 = 2;
-  bps[0].flatOutermostLoopAngle3 = Math.PI / 3;
-  bps[1].stretch3 = 10;
-  bps[1].flatOutermostLoopAngle3 = -Math.PI / 2;
-  
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
+  bps[8].stretch3 = 5;
+  bps[8].flatOutermostLoopAngle3 = Math.PI / 3;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next().value;
   let ur = it.next().value;
-  
+  st5.xBottomCenter = 2.5;
+  st5.yBottomCenter = -7;
+  st5.angle = Math.PI / 6;
   checkCoords(
     FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
     [
-      [0.8660254037844387, 0.49999999999999994],
-      [0.8660254037844389, 3.5],
-      [11.86602540378444, 3.5],
+      [-4.11698729810778, -6.2973720558371165],
+      [-5.11698729810778, -6.2973720558371165],
+      [-6.11698729810778, -6.2973720558371165],
     ],
   );
+});
+
+it("FlatOutermostLoop traverseUnpairedRegion53 - 5' dangling and uses rotation of layout", () => {
+  let partners = parseDotBracket('..(((...))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  gps.rotation = Math.PI / 3;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  checkCoords(
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
+    [
+      [0.5000000000000001, 0.8660254037844386],
+      [1.0000000000000002, 1.7320508075688772],
+    ],
+  );
+});
+
+it("FlatOutermostLoop unpairedRegionAngle3 - 5' dangling and size less than 2", () => {
+  // should use rotation of layout
+  let partners = parseDotBracket('.(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  gps.rotation = Math.PI / 3;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  expect(
+    FlatOutermostLoop.unpairedRegionAngle53(ur, gps, bps)
+  ).toBeCloseTo(1.0471975511965976, 3);
+});
+
+it("FlatOutermostLoop unpairedRegionAngle53 - 5' inner stem and size of zero", () => {
+  let partners = parseDotBracket('(((...)))(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  st5.angle = Math.PI / 5;
+  expect(
+    FlatOutermostLoop.unpairedRegionAngle53(ur, gps, bps)
+  ).toBeCloseTo((Math.PI / 5) + (Math.PI / 2), 3);
+});
+
+it("FlatOutermostLoop unpairedRegionAngle53 - 5' inner stem and size of one", () => {
+  let partners = parseDotBracket('(((...))).(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(partners.length);
+  bps[8].flatOutermostLoopAngle3 = Math.PI / 6;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  st5.angle = (Math.PI / 6) - (Math.PI / 2);
+  expect(
+    FlatOutermostLoop.unpairedRegionAngle53(ur, gps, bps)
+  ).toBeCloseTo(Math.PI / 3, 3);
+});
+
+it("FlatOutermostLoop unpairedRegionAngle53 - 5' inner stem and size of at least 2", () => {
+  let partners = parseDotBracket('(((...)))..(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(partners.length);
+  bps[9].flatOutermostLoopAngle3 = Math.PI / 10;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  let st5 = it.next().value;
+  let ur = it.next().value;
+  st5.angle = (Math.PI / 5) - (Math.PI / 2);
+  expect(
+    FlatOutermostLoop.unpairedRegionAngle53(ur, gps, bps)
+  ).toBeCloseTo(3 * Math.PI / 10, 6);
+});
+
+it("FlatOutermostLoop unpairedRegionAngle53 - includes 3' angle of last position", () => {
+  let partners = parseDotBracket('.(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  gps.rotation = Math.PI / 5;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].flatOutermostLoopAngle3 = 2 * Math.PI / 5;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  expect(
+    FlatOutermostLoop.unpairedRegionAngle53(ur, gps, bps)
+  ).toBeCloseTo(3 * Math.PI / 5, 3);
+});
+
+it("FlatOutermostLoop unpairedRegionAngle53 - 3' bounding position is less than 2", () => {
+  let partners = parseDotBracket('(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  gps.rotation = -Math.PI / 5;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  expect(
+    FlatOutermostLoop.unpairedRegionAngle53(ur, gps, bps)
+  ).toBeCloseTo(-Math.PI / 5, 3);
 });
 
 it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of zero', () => {
-  let partners = [3, null, 1, 6, null, 4];
+  let partners = parseDotBracket('(.)(.)').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
   gps.basePairBondLength = 2.3;
   let bps = defaultBaseProps(partners.length);
   bps[2].stretch3 = 2.6;
   bps[2].flatOutermostLoopAngle3 = Math.PI / 7;
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
   it.next();
   let st5 = it.next().value;
   let ur = it.next().value;
   let st3 = it.next().value;
-
-  st5.angle = Math.PI / 3;
   st5.xBottomCenter = 2.2;
   st5.yBottomCenter = 3.2;
-
+  st5.angle = Math.PI / 3;
   FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
+  expect(st3.xBottomCenter).toBeCloseTo(-4.251626898238731, 3);
+  expect(st3.yBottomCenter).toBeCloseTo(4.3517437946303605, 3);
   expect(st3.angle).toBeCloseTo((Math.PI / 3) + (Math.PI / 7), 3);
-  let bc5 = st3.baseCoordinates5();
-  expect(bc5.xCenter).toBeCloseTo(-2.5688756698522486, 3);
-  expect(bc5.yCenter).toBeCloseTo(4.727040336911129, 3);
 });
 
-it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of one', () => {
-  let partners = [3, null, 1, null, 7, null, 5];
+it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size greater than zero', () => {
+  let partners = parseDotBracket('....(((...)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  gps.basePairBondLength = 0.77;
+  gps.rotation = -Math.PI / 3;
   let bps = defaultBaseProps(partners.length);
-  bps[2].stretch3 = 0.5;
-  bps[2].flatOutermostLoopAngle3 = Math.PI / 3;
-  bps[3].stretch3 = 10;
-  bps[3].flatOutermostLoopAngle3 = -Math.PI / 6;
+  bps[1].flatOutermostLoopAngle3 = 2;
+  bps[1].stretch3 = 1;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  let st3 = it.next().value;
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
+  expect(st3.xBottomCenter).toBeCloseTo(4.0474251672781865, 3);
+  expect(st3.yBottomCenter).toBeCloseTo(3.2143662913004714, 3);
+  expect(normalizeAngle(st3.angle)).toBeCloseTo(5.665191429, 3);
+});
 
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
+it("FlatOutermostLoop setNextCoordinatesAndAngle53 - includes 3' stretch of last position", () => {
+  let partners = parseDotBracket('(((...)))..(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.flatOutermostLoop = true;
+  let bps = defaultBaseProps(partners.length);
+  bps[10].stretch3 = 5;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
   it.next();
   let st5 = it.next().value;
   let ur = it.next().value;
   let st3 = it.next().value;
-
-  st5.angle = -Math.PI / 5;
-  st5.xBottomCenter = -2.1;
-  st5.yBottomCenter = 2.44;
-  
+  st5.xBottomCenter = 2.6;
+  st5.yBottomCenter = -0.6000000000000001;
+  st5.angle = -1.5707963267948966;
   FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
-  expect(st3.angle).toBeCloseTo((-Math.PI / 5) + (Math.PI / 6), 3);
-  let bc5 = st3.baseCoordinates5();
-  expect(bc5.xCenter).toBeCloseTo(-0.6355929040558095, 3);
-  expect(bc5.yCenter).toBeCloseTo(15.172145849051006, 3);
+  expect(st3.xBottomCenter).toBeCloseTo(12.8, 3);
+  expect(st3.yBottomCenter).toBeCloseTo(-0.6000000000000003, 3);
+  expect(normalizeAngle(st3.angle)).toBeCloseTo(normalizeAngle(st5.angle), 3);
 });
 
-it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of four', () => {
-  let partners = [3, null, 1, null, null, null, null, 10, null, 8];
+it('FlatOutermostLoop setNextCoordinatesAndAngle53 - ignores negative stretch', () => {
+  let partners = parseDotBracket('(((...)))..(((...)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  gps.basePairBondLength = 3.5;
   let bps = defaultBaseProps(partners.length);
-  bps[4].stretch3 = 2.2;
-  bps[5].flatOutermostLoopAngle3 = 5 * Math.PI / 3;
-  bps[6].stretch3 = 5.4;
-  bps[6].flatOutermostLoopAngle3 = -Math.PI / 3;
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
+  bps[10].stretch3 = -10;
+  let omst = new Stem(0, partners, gps, bps);
+  let it = omst.loopIterator();
   it.next();
   let st5 = it.next().value;
   let ur = it.next().value;
   let st3 = it.next().value;
-
-  st5.angle = -4 * Math.PI / 9;
-  st5.xBottomCenter = 1.33;
-  st5.yBottomCenter = -5.4;
-
+  st5.xBottomCenter = 2.6;
+  st5.yBottomCenter = -0.6000000000000001;
+  st5.angle = -1.5707963267948966;
   FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
-  expect(normalizeAngle(st3.angle, 0)).toBeCloseTo(2.7925268031909276, 3);
-  let bc5 = st3.baseCoordinates5();
-  expect(bc5.xCenter).toBeCloseTo(7.20750008271572, 3);
-  expect(bc5.yCenter).toBeCloseTo(-11.378801773029814, 3);
+  expect(st3.xBottomCenter).toBeCloseTo(7.800000000000001, 3);
+  expect(st3.yBottomCenter).toBeCloseTo(-0.6000000000000003, 3);
+  expect(normalizeAngle(st3.angle)).toBeCloseTo(normalizeAngle(st5.angle), 3);
 });
 
-it("FlatOutermostLoop setNextCoordinatesAndAngle53 - 5' dangling unpaired region", () => {
-  let partners = [null, 4, null, 2];
-  let gps = new StrictLayoutGeneralProps();
-  gps.flatOutermostLoop = true;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].stretch3 = 2.4;
-  bps[0].flatOutermostLoopAngle3 = Math.PI / 6;
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
-  let ur = it.next().value;
-  let st3 = it.next().value;
-
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
-  expect(st3.angle).toBeCloseTo((Math.PI / 6) - (Math.PI / 2), 3);
-  let bc5 = st3.baseCoordinates5();
-  expect(bc5.xCenter).toBeCloseTo(4.444486372867091, 3);
-  expect(bc5.yCenter).toBeCloseTo(2.1999999999999997, 3);
-});
-
-it("FlatOutermostLoop setNextCoordinatesAndAngle53 - negative 3' stretch", () => {
-  let partners = [3, null, 1, null, null, null, null, 10, null, 8];
-  let gps = new StrictLayoutGeneralProps();
-  gps.flatOutermostLoop = true;
-  gps.basePairBondLength = 3.5;
-  let bps = defaultBaseProps(partners.length);
-  bps[4].stretch3 = 2.2;
-  bps[5].flatOutermostLoopAngle3 = 5 * Math.PI / 3;
-  bps[6].stretch3 = -8.8;
-  bps[6].flatOutermostLoopAngle3 = -Math.PI / 5;
-
-  let outermostStem = new Stem(0, partners, gps, bps);
-  let it = outermostStem.loopIterator();
-  it.next();
-  let st5 = it.next().value;
-  let ur = it.next().value;
-  let st3 = it.next().value;
-
-  st5.angle = -4 * Math.PI / 9;
-  st5.xBottomCenter = 1.33;
-  st5.yBottomCenter = -5.4;
-
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
-  expect(normalizeAngle(st3.angle, 0)).toBeCloseTo(3.2114058236695664, 3);
-  let bc5 = st3.baseCoordinates5();
-  expect(bc5.xCenter).toBeCloseTo(9.466185473744124, 3);
-  expect(bc5.yCenter).toBeCloseTo(-6.362333050259824, 3);
-});
-
-it('FlatOutermostLoop setCoordinatesAndAngles - uses rotation general property', () => {
-  let partners = parseDotBracket('.....(((....)))...').secondaryPartners;
+it("FlatOutermostLoop setNextCoordinatesAndAngle53 - 3' bounding position is less than 2", () => {
+  let partners = parseDotBracket('(((...)))..').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
   gps.rotation = Math.PI / 3;
   let bps = defaultBaseProps(partners.length);
-  bps[2].flatOutermostLoopAngle3 = Math.PI / 3;
-  bps[2].stretch3 = 2;
   let omst = new Stem(0, partners, gps, bps);
-  FlatOutermostLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
-  it.next();
-  let st = it.next().value;
-  expect(st.xBottomCenter).toBeCloseTo(-1.4830127018922186, 3);
-  expect(st.yBottomCenter).toBeCloseTo(8.130831174438391, 3);
-  expect(normalizeAngle(st.angle)).toBeCloseTo(0.5235987755982991, 3);
+  let ur = it.next().value;
+  let st3 = it.next().value;
+  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, gps, bps);
+  expect(st3.xBottomCenter).toBeCloseTo(1.116987298107781, 3);
+  expect(st3.yBottomCenter).toBeCloseTo(0.9686533479473212, 3);
+  expect(
+    normalizeAngle(st3.angle)
+  ).toBeCloseTo(normalizeAngle((Math.PI / 3) - (Math.PI / 2)), 3);
 });
 
 it('FlatOutermostLoop setCoordinatesAndAngles - sequence of length zero', () => {
   let partners = [];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  gps.rotation = Math.PI / 3;
   let bps = [];
-
-  let outermostStem = new Stem(0, partners, gps, bps);
+  let omst = new Stem(0, partners, gps, bps);
   expect(
-    () => FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, gps, bps)
+    () => FlatOutermostLoop.setCoordinatesAndAngles(omst, gps, bps)
   ).not.toThrow();
 });
 
@@ -950,151 +984,161 @@ it('FlatOutermostLoop setCoordinatesAndAngles - zero stems', () => {
   let partners = [null, null, null];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  gps.rotation = -Math.PI / 6;
   let bps = defaultBaseProps(partners.length);
-  let outermostStem = new Stem(0, partners, gps, bps);
+  let omst = new Stem(0, partners, gps, bps);
   expect(
-    () => FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, gps, bps)
+    () => FlatOutermostLoop.setCoordinatesAndAngles(omst, gps, bps)
   ).not.toThrow();
 });
 
-it('FlatOutermostLoop setCoordinatesAndAngles - one stem', () => {
-  let partners = [null, 4, null, 2, null];
-  let gps = new StrictLayoutGeneralProps();
-  gps.flatOutermostLoop = true;
-  gps.basePairBondLength = 1.5;
-  gps.rotation = -Math.PI / 6;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].stretch3 = 6.5;
-  bps[0].flatOutermostLoopAngle3 = Math.PI / 3;
-
-  let omst1 = new Stem(0, partners, gps, bps);
-  let it1 = omst1.loopIterator();
-  it1.next();
-  let st1 = it1.next().value;
-  FlatOutermostLoop.setCoordinatesAndAngles(omst1, gps, bps);
-  
-  let omst2 = new Stem(0, partners, gps, bps);
-  let it2 = omst2.loopIterator();
-  let ur2 = it2.next().value;
-  let st2 = it2.next().value;
-  FlatOutermostLoop.setNextCoordinatesAndAngle53(ur2, gps, bps);
-  expect(st1.xBottomCenter).toBeCloseTo(st2.xBottomCenter, 3);
-  expect(st1.yBottomCenter).toBeCloseTo(st2.yBottomCenter, 3);
-  expect(st1.angle).toBeCloseTo(st2.angle, 3);
-});
-
 it('FlatOutermostLoop setCoordinatesAndAngles - multiple stems', () => {
-  let partners = [3, null, 1, null, 7, null, 5, 10, null, 8, null];
+  let partners = parseDotBracket('..(((...)))...(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  gps.basePairBondLength = 1.8;
-  gps.rotation = 4 * Math.PI / 9;
+  gps.rotation = Math.PI / 5;
   let bps = defaultBaseProps(partners.length);
-  bps[3].stretch3 = 7.8;
-  bps[3].flatOutermostLoopAngle3 = Math.PI / 6;
-  bps[6].stretch3 = -10.1;
-  bps[6].flatOutermostLoopAngle3 = -Math.PI / 3;
-
-  let omst1 = new Stem(0, partners, gps, bps);
-  FlatOutermostLoop.setCoordinatesAndAngles(omst1, gps, bps);
-  let omst2 = new Stem(0, partners, gps, bps);
-  let it1 = omst1.loopIterator();
-  let it2 = omst2.loopIterator();
-  
-  for (let i = 0; i < 3; i++) {
-    let ur2 = it2.next().value;
-    FlatOutermostLoop.setNextCoordinatesAndAngle53(ur2, gps, bps);
-    
-    it1.next();
-    let st1 = it1.next().value;
-    let st2 = it2.next().value;
-    expect(st1.xBottomCenter).toBeCloseTo(st2.xBottomCenter, 3);
-    expect(st1.yBottomCenter).toBeCloseTo(st2.yBottomCenter, 3);
-    expect(st1.angle).toBeCloseTo(st2.angle, 3);
-  }
+  bps[0].stretch3 = 2.5;
+  bps[1].flatOutermostLoopAngle3 = -Math.PI / 3;
+  bps[11].stretch3 = -5;
+  bps[12].stretch3 = 10;
+  bps[12].flatOutermostLoopAngle3 = Math.PI / 6;
+  let omst = new Stem(0, partners, gps, bps);
+  FlatOutermostLoop.setCoordinatesAndAngles(omst, gps, bps);
+  checkCoords(
+    omst.baseCoordinates(),
+    [
+      [0.8090169943749475, 0.5877852522924731],
+      [3.6405764746872635, 2.6450336353161292],
+      [4.554121932329864, 2.2382969922403286],
+      [4.147385289254064, 1.3247515345977277],
+      [3.740648646178264, 0.4112060769551267],
+      [3.5652866041572926, -0.5401260582883962],
+      [4.193774897349709, -1.275508368824113],
+      [5.160811208885221, -1.2504993804288334],
+      [5.750448652991986, -0.48361453781163366],
+      [6.157185296067786, 0.4299309198309672],
+      [6.563921939143587, 1.343476377473568],
+      [7.477467396786188, 0.9367397343977681],
+      [8.391012854428789, 0.530003091321968],
+      [19.330753703479793, 1.6798161872661566],
+      [20.32527559884807, 1.7843446505338099],
+      [20.42980406211572, 0.7898227551655366],
+      [20.534332525383373, -0.20469914020273672],
+      [20.858130609755463, -1.1162579577706078],
+      [21.77010859290908, -1.438873573592028],
+      [22.595082110883197, -0.9336969985510075],
+      [22.72228069519358, 0.025263478986101262],
+      [22.617752231925927, 1.0197853743543746],
+      [22.513223768658275, 2.014307269722648],
+      [23.507745664026544, 2.1188357329903016],
+    ],
+  );
 });
 
-it('FlatOutermostLoop setCoordinatesAndAngles - sets properties of inner stems (round loop)', () => {
-  let partners = [9, 4, null, 2, null, 8, null, 6, 1];
+it('FlatOutermostLoop setCoordinatesAndAngles - inner stems have inner stems (round loop)', () => {
+  let partners = parseDotBracket('((..(((....)))......(((....))).....)).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  gps.basePairBondLength = 1.8;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'round';
-  bps[3].stretch3 = 5.5;
-
-  let omst1 = new Stem(0, partners, gps, bps);
-  FlatOutermostLoop.setCoordinatesAndAngles(omst1, gps, bps);
-  
-  let omit1 = omst1.loopIterator();
-  omit1.next();
-  let ost1 = omit1.next().value;
-  expect(ost1.hasRoundLoop()).toBeTruthy();
-
-  let omst2 = new Stem(0, partners, gps, bps);
-  let omit2 = omst2.loopIterator();
-  omit2.next();
-  let ost2 = omit2.next().value;
-
-  ost2.xBottomCenter = ost1.xBottomCenter;
-  ost2.yBottomCenter = ost1.yBottomCenter;
-  ost2.angle = ost1.angle;
-  StemLayout.setInnerCoordinatesAndAngles(ost2, gps, bps);
-
-  let oit1 = ost1.loopIterator();
-  let oit2 = ost2.loopIterator();
-
-  for (let i = 0; i < 2; i++) {
-    oit1.next();
-    let st1 = oit1.next().value;
-    oit2.next();
-    let st2 = oit2.next().value;
-    expect(st1.xBottomCenter).toBeCloseTo(st2.xBottomCenter, 3);
-    expect(st1.yBottomCenter).toBeCloseTo(st2.yBottomCenter, 3);
-    expect(st1.angle).toBeCloseTo(st2.angle, 3);
-  }
+  bps[15].stretch3 = 3;
+  let omst = new Stem(0, partners, gps, bps);
+  FlatOutermostLoop.setCoordinatesAndAngles(omst, gps, bps);
+  checkCoords(
+    omst.baseCoordinates(),
+    [
+      [1, -1.6000000000000003],
+      [1, -2.6000000000000005],
+      [0.07922622568568682, -2.983663666631836],
+      [-0.7211993259645095, -3.5789292282292515],
+      [-1.3536068990677315, -4.35034533775776],
+      [-2.311305708676911, -4.062572875431775],
+      [-3.2690045182860903, -3.7748004131057904],
+      [-4.183355863788471, -3.44310482512663],
+      [-5.052541988144789, -3.8796547390348763],
+      [-5.332445696678201, -4.811166553268113],
+      [-4.8478451164214755, -5.6545067122322745],
+      [-3.902103935403258, -5.881737794245986],
+      [-2.9444051257940784, -6.169510256571971],
+      [-1.986706316184899, -6.457282718897956],
+      [-0.971388175862387, -6.875728517625589],
+      [0.047237776307397894, -7.286056413468671],
+      [1.0691066354236227, -7.68824026111713],
+      [2.0941532899536313, -8.082254434184108],
+      [3.1223124258817307, -8.468073826838747],
+      [4.153518530870841, -8.845673855406005],
+      [5.187705898436875, -9.21503045993305],
+      [6.091582958046115, -9.642822770654217],
+      [6.995460017655355, -10.070615081375383],
+      [7.849907070662095, -10.535352189550478],
+      [8.774615266952786, -10.233731404756604],
+      [9.190710168060077, -9.354569656624118],
+      [8.837713167658423, -8.448228956989436],
+      [7.936603101241921, -8.082085550235055],
+      [7.032726041632682, -7.65429323951389],
+      [6.128848982023442, -7.226500928792724],
+      [6.175964114958727, -6.230106269497309],
+      [5.98033311174323, -5.251969948014035],
+      [5.553606876887965, -4.35034537353185],
+      [4.921199309687653, -3.5789292589920296],
+      [4.1207737664426105, -2.9836636858695695],
+      [3.2, -2.6000000000000005],
+      [3.2, -1.6000000000000005],
+      [4.2, -1.6000000000000003],
+    ],
+  );
 });
 
-it('FlatOutermostLoop setCoordinatesAndAngles - sets properties of inner stems (triangle loop)', () => {
-  let partners = [9, 4, null, 2, null, 8, null, 6, 1];
+it('FlatOutermostLoop setCoordinatesAndAngles - inner stems have inner stems (triangle loop)', () => {
+  let partners = parseDotBracket('.((....(((...))).....(((....)))..)).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  gps.basePairBondLength = 1.8;
   let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  bps[3].stretch3 = 15.5;
-
-  let omst1 = new Stem(0, partners, gps, bps);
-  FlatOutermostLoop.setCoordinatesAndAngles(omst1, gps, bps);
-  
-  let omit1 = omst1.loopIterator();
-  omit1.next();
-  let ost1 = omit1.next().value;
-  expect(ost1.hasTriangleLoop()).toBeTruthy();
-
-  let omst2 = new Stem(0, partners, gps, bps);
-  let omit2 = omst2.loopIterator();
-  omit2.next();
-  let ost2 = omit2.next().value;
-
-  ost2.xBottomCenter = ost1.xBottomCenter;
-  ost2.yBottomCenter = ost1.yBottomCenter;
-  ost2.angle = ost1.angle;
-  StemLayout.setInnerCoordinatesAndAngles(ost2, gps, bps);
-
-  let oit1 = ost1.loopIterator();
-  let oit2 = ost2.loopIterator();
-
-  for (let i = 0; i < 2; i++) {
-    oit1.next();
-    let st1 = oit1.next().value;
-    oit2.next();
-    let st2 = oit2.next().value;
-    expect(st1.xBottomCenter).toBeCloseTo(st2.xBottomCenter, 3);
-    expect(st1.yBottomCenter).toBeCloseTo(st2.yBottomCenter, 3);
-    expect(st1.angle).toBeCloseTo(st2.angle, 3);
-  }
+  bps[1].loopShape = 'triangle';
+  bps[18].stretch3 = 3;
+  let omst = new Stem(0, partners, gps, bps);
+  FlatOutermostLoop.setCoordinatesAndAngles(omst, gps, bps);
+  checkCoords(
+    omst.baseCoordinates(),
+    [
+      [1, 0],
+      [2, -1.1102230246251565e-16],
+      [2, -1],
+      [0.8708893711127921, -1.3352491135847941],
+      [-0.2538489201132421, -1.6848868642287584],
+      [-1.3740315225922615, -2.0488562551516196],
+      [-2.489475827891596, -2.4270979532769275],
+      [-3.599999999999999, -2.819550298904276],
+      [-3.599999999999999, -3.819550298904276],
+      [-3.599999999999999, -4.819550298904276],
+      [-3.373259557792105, -5.75996161805996],
+      [-2.499999999999999, -6.176137568895063],
+      [-1.6267404422078933, -5.75996161805996],
+      [-1.3999999999999988, -4.819550298904276],
+      [-1.3999999999999988, -3.819550298904276],
+      [-1.3999999999999988, -2.819550298904276],
+      [0.09981481755809218, -2.851824901149854],
+      [1.5998518524004872, -2.8711906187509726],
+      [3.099999999999967, -2.877646017330534],
+      [4.600148147599446, -2.8711906187509726],
+      [6.100185182441842, -2.851824901149854],
+      [7.600000000000001, -2.819550298904276],
+      [7.600000000000001, -3.819550298904276],
+      [7.600000000000001, -4.819550298904276],
+      [7.54546066836604, -5.790676350151886],
+      [8.213671832476555, -6.497467823123175],
+      [9.186328167523449, -6.497467823123174],
+      [9.854539331633962, -5.790676350151885],
+      [9.8, -4.819550298904276],
+      [9.8, -3.819550298904276],
+      [9.8, -2.819550298904276],
+      [7.9463817642245225, -2.1733540064274735],
+      [6.079433304629621, -1.5667456800534012],
+      [4.2, -1],
+      [4.2, 0],
+      [5.2, -1.1102230246251565e-16],
+    ],
+  );
 });
 
 it('StemLayout setCoordinatesAndAngles - flat outermost loop', () => {
