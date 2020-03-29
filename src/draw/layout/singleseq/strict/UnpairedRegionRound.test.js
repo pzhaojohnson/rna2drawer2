@@ -441,7 +441,38 @@ it('baseCoordinatesRound - inner bounding stems and zero stretch', () => {
   );
 });
 
-it('baseCoordinatesRound - inner bounding stems and positive stretch', () => {
+it('baseCoordinatesRound - inner bounding stems and some positive stretch', () => {
+  let partners = parseDotBracket('.(((...)))......(((...))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 4;
+  gps.basePairBondLength = 1.2;
+  let bps = defaultBaseProps(partners.length);
+  bps[10].stretch3 = 0.5;
+  bps[11].stretch3 = 0.5;
+  bps[12].stretch3 = 0.5;
+  bps[13].stretch3 = 0.5;
+  bps[14].stretch3 = 0.5;
+  bps[15].stretch3 = 0.5;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [0.7202642865479394, -2.4628893954652034],
+      [0.9571313339759069, -1.491961124732778],
+      [1.076417593442466, -0.4997018373652182],
+      [1.076417593442466, 0.4997018373652188],
+      [0.9571313339759069, 1.4919611247327786],
+      [0.7202642865479394, 2.4628893954652042],
+    ],
+  );
+});
+
+it('baseCoordinatesRound - inner bounding stems and excessive positive stretch', () => {
   let partners = parseDotBracket('.(((...)))......(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 4;
@@ -472,7 +503,7 @@ it('baseCoordinatesRound - inner bounding stems and positive stretch', () => {
   );
 });
 
-it('baseCoordinatesRound - inner bounding stems and negative stretch', () => {
+it('baseCoordinatesRound - inner bounding stems and some negative stretch', () => {
   let partners = parseDotBracket('.(((...)))......(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 4;
@@ -526,7 +557,36 @@ it("baseCoordinatesRound - 5' bounding stem is outermost and zero stretch", () =
   );
 });
 
-it("baseCoordinatesRound - 5' bounding stem is outermost and positive stretch", () => {
+it("baseCoordinatesRound - 5' bounding stem is outermost and some positive stretch", () => {
+  let partners = parseDotBracket('......(((...)))...(((...)))...').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].stretch3 = 0.25;
+  bps[1].stretch3 = 0.25;
+  bps[2].stretch3 = 0.25;
+  bps[3].stretch3 = 0.25;
+  bps[4].stretch3 = 0.25;
+  bps[5].stretch3 = 0.25;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [-2.8189792004809333, -0.4026525128459699],
+      [-2.1054755582367304, -1.1005096654708937],
+      [-1.2586021527000808, -1.6286171241952219],
+      [-0.31798019900071406, -1.9622672301210202],
+      [0.6723830350222624, -2.0858500673641474],
+      [1.666153121465857, -1.9935837774452385],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 5' bounding stem is outermost and excessive positive stretch", () => {
   let partners = parseDotBracket('......(((...)))...(((...)))...').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 0;
@@ -555,7 +615,7 @@ it("baseCoordinatesRound - 5' bounding stem is outermost and positive stretch", 
   );
 });
 
-it("baseCoordinatesRound - 5' bounding stem is outermost and negative stretch", () => {
+it("baseCoordinatesRound - 5' bounding stem is outermost and some negative stretch", () => {
   let partners = parseDotBracket('......(((...)))...').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 0;
@@ -609,7 +669,41 @@ it("baseCoordinatesRound - 3' bounding stem is outermost and zero stretch", () =
   );
 });
 
-it("baseCoordinatesRound - 3' bounding stem is outermost and positive stretch", () => {
+it("baseCoordinatesRound - 3' bounding stem is outermost and some positive stretch", () => {
+  let partners = parseDotBracket('...(((...)))...(((...)))......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  bps[23].stretch3 = 0.25;
+  bps[24].stretch3 = 0.25;
+  bps[25].stretch3 = 0.25;
+  bps[26].stretch3 = 0.25;
+  bps[27].stretch3 = 0.25;
+  bps[28].stretch3 = 0.25;
+  bps[29].stretch3 = 0.25;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [1.763044111407586, 1.8424542355856284],
+      [0.7670445525730324, 1.9128686952018379],
+      [-0.2242468224544032, 1.7932245264434457],
+      [-1.1748915586139526, 1.487859330434123],
+      [-2.050424811370597, 1.0078438716840532],
+      [-2.8191048413618502, 0.3705807166104864],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 3' bounding stem is outermost and excessive positive stretch", () => {
   let partners = parseDotBracket('...(((...)))...(((...)))......').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 0;
@@ -643,7 +737,7 @@ it("baseCoordinatesRound - 3' bounding stem is outermost and positive stretch", 
   );
 });
 
-it("baseCoordinatesRound - 3' bounding stem is outermost and negative stretch", () => {
+it("baseCoordinatesRound - 3' bounding stem is outermost and some negative stretch", () => {
   let partners = parseDotBracket('...(((...)))......').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 0;
@@ -684,7 +778,6 @@ it("baseCoordinatesRound - 5' and 3' bounding stems are outermost - some termini
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-
   checkCoords(
     baseCoordinatesRound(ur, gps),
     [
