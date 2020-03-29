@@ -280,10 +280,10 @@ it('_startingAngle - boundingStem5 is the outermost stem', () => {
   expect(normalizeAngle(_startingAngle(ur, gps))).toBeCloseTo(4.817108735504348, 3);
 });
 
-it('_startingAngle - boundingStem5 is not the outermost stem', () => {
-  let partners = parseDotBracket('..(((....)))...').secondaryPartners;
+it('_startingAngle - boundingStem5 is not outermost and boundingStem3 is outermost', () => {
+  let partners = parseDotBracket('...(((....)))....').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 3;
+  gps.terminiGap = 0;
   gps.rotation = Math.PI / 6;
   gps.basePairBondLength = 0.9;
   let bps = defaultBaseProps(partners.length);
@@ -293,7 +293,22 @@ it('_startingAngle - boundingStem5 is not the outermost stem', () => {
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(normalizeAngle(_startingAngle(ur, gps))).toBeCloseTo(1.382085151612082, 3);
+  expect(normalizeAngle(_startingAngle(ur, gps))).toBeCloseTo(1.4737184696867538, 3);
+});
+
+it('_startingAngle - neither boundingStem5 or boundingStem3 are outermost', () => {
+  let partners = parseDotBracket('(((...))).....(((...)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 3;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(normalizeAngle(_startingAngle(ur, gps))).toBeCloseTo(5.394776913533493, 3);
 });
 
 it('_angleIncrement - unpaired region of size zero', () => {
@@ -307,7 +322,7 @@ it('_angleIncrement - unpaired region of size zero', () => {
   expect(_angleIncrement(ur, gps)).toBe(0);
 });
 
-it('_angleIncrement - boundingStem5 is the outermost stem and some positive stretch', () => {
+it('_angleIncrement - boundingStem5 is the outermost stem', () => {
   let partners = parseDotBracket('...(((....))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 0;
@@ -323,7 +338,23 @@ it('_angleIncrement - boundingStem5 is the outermost stem and some positive stre
   expect(_angleIncrement(ur, gps)).toBeCloseTo(0.3207913849843259, 3);
 });
 
-it('_angleIncrement - boundingStem5 is not the outermost stem and some negative stretch', () => {
+it('_angleIncrement - boundingStem5 is not outermost and boundingStem3 is outermost', () => {
+  let partners = parseDotBracket('...(((....)))....').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.rotation = Math.PI / 6;
+  gps.basePairBondLength = 0.9;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  expect(normalizeAngle(_angleIncrement(ur, gps))).toBeCloseTo(0.626135131286097, 3);
+});
+
+it('_angleIncrement - neither boundingStem5 or boundingStem3 are outermost', () => {
   let partners = parseDotBracket('(((...)))...(((...)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 1;
@@ -496,17 +527,17 @@ it("baseCoordinatesRound - 5' bounding stem is outermost and zero stretch", () =
 });
 
 it("baseCoordinatesRound - 5' bounding stem is outermost and positive stretch", () => {
-  let partners = parseDotBracket('......(((...)))...').secondaryPartners;
+  let partners = parseDotBracket('......(((...)))...(((...)))...').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 0;
   gps.basePairBondLength = 1;
   let bps = defaultBaseProps(partners.length);
-  bps[0].stretch3 = 0.5;
-  bps[1].stretch3 = 0.5;
-  bps[2].stretch3 = 0.5;
-  bps[3].stretch3 = 0.5;
-  bps[4].stretch3 = 0.5;
-  bps[5].stretch3 = 0.5;
+  bps[0].stretch3 = 2;
+  bps[1].stretch3 = 2;
+  bps[2].stretch3 = 2;
+  bps[3].stretch3 = 2;
+  bps[4].stretch3 = 2;
+  bps[5].stretch3 = 2;
   let omst = new Stem(0, partners, gps, bps);
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
@@ -514,12 +545,12 @@ it("baseCoordinatesRound - 5' bounding stem is outermost and positive stretch", 
   checkCoords(
     baseCoordinatesRound(ur, gps),
     [
-      [-2.1061168215640187, -0.40510553707085495],
-      [-1.2922965789595555, -0.9714417512770648],
-      [-0.3127442564546823, -1.1247954022590931],
-      [0.6352209963062381, -0.8342752233521304],
-      [1.3606428687007492, -0.15840304472228728],
-      [1.7173937637585588, 0.7666747323698127],
+      [-4.310888166059215, 0.17466710422047527],
+      [-2.9951806908322283, 0.6678147998584336],
+      [-1.680749542637102, 1.1643543921727542],
+      [-0.36760346577412406, 1.6642825779159125],
+      [0.9442488040054968, 2.1675960312979328],
+      [2.254798539557555, 2.6742914040078745],
     ],
   );
 });
