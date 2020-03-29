@@ -360,7 +360,7 @@ it('baseCoordinatesRound - unpaired region of size zero', () => {
   checkCoords(baseCoordinatesRound(ur, gps), []);
 });
 
-it('baseCoordinatesRound - a hairpin loop', () => {
+it('baseCoordinatesRound - a hairpin loop with inner bounding stems', () => {
   let partners = parseDotBracket('(((.....)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 0;
@@ -385,17 +385,12 @@ it('baseCoordinatesRound - a hairpin loop', () => {
   );
 });
 
-it('baseCoordinatesRound - positive stretch', () => {
-  let partners = parseDotBracket('(((....)))....').secondaryPartners;
+it('baseCoordinatesRound - inner bounding stems and zero stretch', () => {
+  let partners = parseDotBracket('.(((...)))......(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 0;
-  gps.basePairBondLength = 1;
+  gps.terminiGap = 4;
+  gps.basePairBondLength = 1.2;
   let bps = defaultBaseProps(partners.length);
-  bps[9].stretch3 = 1;
-  bps[10].stretch3 = 1;
-  bps[11].stretch3 = 1;
-  bps[12].stretch3 = 1;
-  bps[13].stretch3 = 1;
   let omst = new Stem(0, partners, gps, bps);
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
@@ -405,25 +400,28 @@ it('baseCoordinatesRound - positive stretch', () => {
   checkCoords(
     baseCoordinatesRound(ur, gps),
     [
-      [0.23284564697552712, -1.1578242151124867],
-      [0.1635622093570437, -0.18713280565033374],
-      [-0.5846909584166444, 0.435088380141742],
-      [-1.5517377181879737, 0.3261729471323285],
+      [1.9471805025012876, -2.210533610497833],
+      [2.572125437156198, -1.436015838351301],
+      [2.903508612830576, -0.4976027408288817],
+      [2.9035086128305765, 0.49760274082888006],
+      [2.5721254371561986, 1.4360158383512995],
+      [1.947180502501289, 2.210533610497832],
     ],
   );
 });
 
-it('baseCoordinatesRound - negative stretch', () => {
-  let partners = parseDotBracket('(((....)))....').secondaryPartners;
+it('baseCoordinatesRound - inner bounding stems and positive stretch', () => {
+  let partners = parseDotBracket('.(((...)))......(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  gps.terminiGap = 0;
-  gps.basePairBondLength = 1;
+  gps.terminiGap = 4;
+  gps.basePairBondLength = 1.2;
   let bps = defaultBaseProps(partners.length);
-  bps[9].stretch3 = -0.25;
-  bps[10].stretch3 = -0.25;
-  bps[11].stretch3 = -0.25;
-  bps[12].stretch3 = -0.25;
-  bps[13].stretch3 = -0.25;
+  bps[10].stretch3 = 1;
+  bps[11].stretch3 = 1;
+  bps[12].stretch3 = 1;
+  bps[13].stretch3 = 1;
+  bps[14].stretch3 = 1;
+  bps[15].stretch3 = 1;
   let omst = new Stem(0, partners, gps, bps);
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
@@ -433,10 +431,397 @@ it('baseCoordinatesRound - negative stretch', () => {
   checkCoords(
     baseCoordinatesRound(ur, gps),
     [
-      [1.0147663353469702, 0.957626638518049],
-      [0.2554503373204767, 1.5574923270569692],
-      [-0.6896437456474855, 1.3496539199128874],
-      [-1.1272386618473995, 0.48657204751535393],
+      [-0.3758357120963183, -2.767194161612222],
+      [-0.37026976986459204, -1.660323494060175],
+      [-0.3674867899525225, -0.5534423308710776],
+      [-0.3674867899525225, 0.5534423308710755],
+      [-0.37026976986459204, 1.6603234940601732],
+      [-0.3758357120963183, 2.7671941616122204],
+    ],
+  );
+});
+
+it('baseCoordinatesRound - inner bounding stems and negative stretch', () => {
+  let partners = parseDotBracket('.(((...)))......(((...))).').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 4;
+  gps.basePairBondLength = 1.2;
+  let bps = defaultBaseProps(partners.length);
+  bps[10].stretch3 = -0.5;
+  bps[11].stretch3 = -0.5;
+  bps[12].stretch3 = -0.5;
+  bps[13].stretch3 = -0.5;
+  bps[14].stretch3 = -0.5;
+  bps[15].stretch3 = -0.5;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [2.699320377385912, -1.8206389900170503],
+      [3.565264212752332, -1.3446185943409912],
+      [4.068290695318737, -0.49407847127473126],
+      [4.068290695318737, 0.4940784712747293],
+      [3.565264212752332, 1.3446185943409894],
+      [2.6993203773859125, 1.820638990017049],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 5' bounding stem is outermost and zero stretch", () => {
+  let partners = parseDotBracket('......(((...)))...').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [-1.8617037397127891, -0.49440400136399765],
+      [-1.3711161260622107, -1.3529289337867938],
+      [-0.5192182921150033, -1.854936251238434],
+      [0.46950155999698734, -1.868139292500886],
+      [1.3345005187085714, -1.3890588528179322],
+      [1.8478380336988793, -0.5439400079431338],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 5' bounding stem is outermost and positive stretch", () => {
+  let partners = parseDotBracket('......(((...)))...').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].stretch3 = 0.5;
+  bps[1].stretch3 = 0.5;
+  bps[2].stretch3 = 0.5;
+  bps[3].stretch3 = 0.5;
+  bps[4].stretch3 = 0.5;
+  bps[5].stretch3 = 0.5;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [-2.1061168215640187, -0.40510553707085495],
+      [-1.2922965789595555, -0.9714417512770648],
+      [-0.3127442564546823, -1.1247954022590931],
+      [0.6352209963062381, -0.8342752233521304],
+      [1.3606428687007492, -0.15840304472228728],
+      [1.7173937637585588, 0.7666747323698127],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 5' bounding stem is outermost and negative stretch", () => {
+  let partners = parseDotBracket('......(((...)))...').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].stretch3 = -0.5;
+  bps[1].stretch3 = -0.5;
+  bps[2].stretch3 = -0.5;
+  bps[3].stretch3 = -0.5;
+  bps[4].stretch3 = -0.5;
+  bps[5].stretch3 = -0.5;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [-1.7951188217860583, -0.3722107560305913],
+      [-2.0345141262634807, -1.3256119391011272],
+      [-1.6567685299075552, -2.233131741705919],
+      [-0.8115942121180499, -2.735092198550061],
+      [0.1660402919066658, -2.632550966713872],
+      [0.8886684076627236, -1.9661482851428982],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 3' bounding stem is outermost and zero stretch", () => {
+  let partners = parseDotBracket('...(((...)))......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [1.8478380336988796, 0.543940007943132],
+      [1.3345005187085734, 1.38905885281793],
+      [0.4695015599969908, 1.868139292500885],
+      [-0.5192182921150001, 1.8549362512384346],
+      [-1.371116126062209, 1.352928933786796],
+      [-1.8617037397127882, 0.4944040013640007],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 3' bounding stem is outermost and positive stretch", () => {
+  let partners = parseDotBracket('...(((...)))...(((...)))......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  bps[23].stretch3 = 2;
+  bps[24].stretch3 = 2;
+  bps[25].stretch3 = 2;
+  bps[26].stretch3 = 2;
+  bps[27].stretch3 = 2;
+  bps[28].stretch3 = 2;
+  bps[29].stretch3 = 2;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [1.99399727683425, -3.329098237753442],
+      [0.7400493937033161, -2.731752896576154],
+      [-0.5153460071271923, -2.137455716868658],
+      [-1.7721815160418828, -1.5462102063014527],
+      [-3.0304497149255667, -0.9580198545335179],
+      [-4.2901431772069145, -0.3728881331917364],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 3' bounding stem is outermost and negative stretch", () => {
+  let partners = parseDotBracket('...(((...)))......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  gps.basePairBondLength = 1;
+  let bps = defaultBaseProps(partners.length);
+  bps[11].stretch3 = -0.75;
+  bps[12].stretch3 = -0.75;
+  bps[13].stretch3 = -0.75;
+  bps[14].stretch3 = -0.75;
+  bps[15].stretch3 = -0.75;
+  bps[16].stretch3 = -0.75;
+  bps[17].stretch3 = -0.75;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  it.next();
+  it.next();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [-0.870734982268571, 1.9249644765160794],
+      [-1.768095704624689, 2.3004986504777585],
+      [-2.6581385126454427, 1.9079353030660247],
+      [-2.9859025149307055, 0.9920461500313789],
+      [-2.547019785311175, 0.12390783646476489],
+      [-1.6151431735766306, -0.15517667106426192],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 5' and 3' bounding stems are outermost - some termini gap", () => {
+  let partners = parseDotBracket('......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 4;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [-4.440892098500626e-16, -1.5915494309189535],
+      [0.9354892837886386, -1.28759053700121],
+      [1.5136534572813138, -0.4918158215417334],
+      [1.513653457281314, 0.49181582154173265],
+      [0.9354892837886393, 1.2875905370012095],
+      [2.7755575615628914e-16, 1.5915494309189535],
+    ],
+  );
+});
+
+it("baseCoordinatesRound - 5' and 3' bounding stems are outermost - zero termini gap", () => {
+  let partners = parseDotBracket('......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 0;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur, gps),
+    [
+      [-0.8269933431326884, -0.4774648292756858],
+      [-2.220446049250313e-16, -0.954929658551372],
+      [0.8269933431326882, -0.4774648292756858],
+      [0.8269933431326876, 0.4774648292756866],
+      [-1.4432899320127035e-15, 0.9549296585513719],
+      [-0.8269933431326892, 0.4774648292756842],
+    ],
+  );
+});
+
+it('baseCoordinatesRound - one stem in outermost loop and large base pair bond length', () => {
+  // and zero stretch
+  let partners = parseDotBracket('......(((...)))......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 1;
+  gps.basePairBondLength = 15;
+  let bps = defaultBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur5 = it.next().value;
+  it.next();
+  let ur3 = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur5, gps),
+    [
+      [1306.3338231739756, -13.999828718150969],
+      [1306.349085730354, -12.99993001088135],
+      [1306.361392322576, -11.999990553606791],
+      [1306.3707428430928, -11.000019084917447],
+      [1306.377137210189, -10.000024343683226],
+      [1306.3805753679837, -9.000015068977417],
+    ],
+  );
+  checkCoords(
+    baseCoordinatesRound(ur3, gps),
+    [
+      [1306.380575370328, 9.00001387288416],
+      [1306.3771372219494, 10.000021951521665],
+      [1306.370742871341, 11.000015496743256],
+      [1306.3613923743833, 11.999985769506996],
+      [1306.3490858127911, 12.999924030974338],
+      [1306.333823294113, 13.999821542586478],
+    ],
+  );
+});
+
+it('baseCoordinatesRound - one stem in outermost loop and large base pair bond length', () => {
+  // and 5' positive stretch and 3' negative stretch
+  let partners = parseDotBracket('......(((...)))......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 1;
+  gps.basePairBondLength = 15;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].stretch3 = 0.75;
+  bps[1].stretch3 = 0.75;
+  bps[2].stretch3 = 0.75;
+  bps[3].stretch3 = 0.75;
+  bps[4].stretch3 = 0.75;
+  bps[5].stretch3 = 0.75;
+  bps[14].stretch3 = -0.75;
+  bps[15].stretch3 = -0.75;
+  bps[16].stretch3 = -0.75;
+  bps[17].stretch3 = -0.75;
+  bps[18].stretch3 = -0.75;
+  bps[19].stretch3 = -0.75;
+  bps[20].stretch3 = -0.75;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur5 = it.next().value;
+  it.next();
+  let ur3 = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur5, gps),
+    [
+      [1306.3360176231363, -13.624821394817735],
+      [1306.3572643928987, -11.874939529156421],
+      [1306.3743990163857, -10.125012566773812],
+      [1306.387421398977, -8.37505017102146],
+      [1306.3963314687612, -6.625062005446589],
+      [1306.4011291765357, -4.875057733738723],
+    ],
+  );
+  checkCoords(
+    baseCoordinatesRound(ur3, gps),
+    [
+      [1307.1277584213594, 12.300414811908556],
+      [1308.0864443781102, 12.468142676494274],
+      [1308.6303965655763, 13.27519126114083],
+      [1308.4261180279796, 14.226759272008536],
+      [1307.5988518877652, 14.739440589675224],
+      [1306.655794817247, 14.498910421142206],
+    ],
+  );
+});
+
+it('baseCoordinatesRound - one stem in outermost loop and large base pair bond length', () => {
+  // and 5' negative stretch and 3' positive stretch
+  let partners = parseDotBracket('......(((...)))......').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  gps.terminiGap = 1;
+  gps.basePairBondLength = 15;
+  let bps = defaultBaseProps(partners.length);
+  bps[0].stretch3 = -0.75;
+  bps[1].stretch3 = -0.75;
+  bps[2].stretch3 = -0.75;
+  bps[3].stretch3 = -0.75;
+  bps[4].stretch3 = -0.75;
+  bps[5].stretch3 = -0.75;
+  bps[14].stretch3 = 0.75;
+  bps[15].stretch3 = 0.75;
+  bps[16].stretch3 = 0.75;
+  bps[17].stretch3 = 0.75;
+  bps[18].stretch3 = 0.75;
+  bps[19].stretch3 = 0.75;
+  bps[20].stretch3 = 0.75;
+  let omst = new Stem(0, partners, gps, bps);
+  RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
+  let it = omst.loopIterator();
+  let ur5 = it.next().value;
+  it.next();
+  let ur3 = it.next().value;
+  checkCoords(
+    baseCoordinatesRound(ur5, gps),
+    [
+      [1306.7317591851463, -15.154877285249562],
+      [1307.708637470048, -15.212349255890315],
+      [1308.4812392957804, -14.611782332228524],
+      [1308.6665338107296, -13.650918057915378],
+      [1308.1726580222178, -12.806121682187252],
+      [1307.244459479868, -12.496215765978036],
+    ],
+  );
+  checkCoords(
+    baseCoordinatesRound(ur3, gps),
+    [
+      [1306.4004012521464, 4.875054746574598],
+      [1306.3952630153076, 6.625055500854906],
+      [1306.3863998085694, 8.37504135366223],
+      [1306.37381167209, 10.12500437620854],
+      [1306.3574986629026, 11.874936639809253],
+      [1306.337460854918, 13.624830215919133],
     ],
   );
 });
