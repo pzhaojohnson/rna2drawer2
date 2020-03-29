@@ -166,20 +166,6 @@ function _startingAngle(ur, generalProps) {
     }
     return angle5 + (angleSpan / (ur.size + 1));
   }
-
-  /*
-  } else if (ur.boundingStem3.isOutermostStem()) {
-    let angle5 = _angleBounding5(ur, generalProps);
-    let angleSpan = _angleSpanBetweenBounds(ur, generalProps);
-    let polarLengthBetweenBounds = _polarLengthBetweenBounds(ur, generalProps);
-    angleSpan += angleSpan * (0.5 / polarLengthBetweenBounds);
-    return angle5 + (angleSpan / (ur.size + 1));
-  } else {
-    let angle5 = _angleBounding5(ur, generalProps);
-    let angleSpan = _angleSpanBetweenBounds(ur, generalProps);
-    return angle5 + (angleSpan / (ur.size + 1));
-  }
-  */
 }
 
 /**
@@ -202,24 +188,6 @@ function _angleIncrement(ur, generalProps) {
     }
     return (angle3 - startingAngle) / ur.size;
   }
-
-  /*
-  } else if (ur.boundingStem3.isOutermostStem()) {
-    let angle5 = _angleBounding5(ur, generalProps);
-    let startingAngle = _startingAngle(ur, generalProps);
-    startingAngle = normalizeAngle(startingAngle, angle5);
-    let angleSpan = _angleSpanBetweenBounds(ur, generalProps);
-    let polarLengthBetweenBounds = _polarLengthBetweenBounds(ur, generalProps);
-    angleSpan += angleSpan * (0.5 / polarLengthBetweenBounds);
-    angleSpan -= startingAngle - angle5;
-    return angleSpan / ur.size;
-  } else {
-    let startingAngle = _startingAngle(ur, generalProps);
-    let angle3 = _angleBounding3(ur, generalProps);
-    angle3 = normalizeAngle(angle3, startingAngle);
-    return (angle3 - startingAngle) / ur.size;
-  }
-  */
 }
 
 /**
