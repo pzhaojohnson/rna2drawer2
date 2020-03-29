@@ -280,7 +280,7 @@ it('_startingAngle - boundingStem5 is the outermost stem', () => {
   expect(normalizeAngle(_startingAngle(ur, gps))).toBeCloseTo(4.817108735504348, 3);
 });
 
-it('_startingAngle - size is greater than zero and boundingStem5 is not the outermost stem', () => {
+it('_startingAngle - boundingStem5 is not the outermost stem', () => {
   let partners = parseDotBracket('..(((....)))...').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.terminiGap = 3;
