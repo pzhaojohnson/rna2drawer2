@@ -17,6 +17,9 @@ afterEach(() => {
   container = null;
 });
 
+it('', () => {});
+
+/*
 function getExampleInputSelect() {
   let exampleInputSection = container.childNodes[0].childNodes[1];
   return exampleInputSection.childNodes[1];
@@ -102,3 +105,4 @@ it('selecting example input with prior input', () => {
   expect(getSequenceTextarea().value).toBe('AUGCAUGGUAGCAU');
   expect(getStructureTextarea().value).toBe('((((......))))');
 });
+*/

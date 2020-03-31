@@ -45,17 +45,17 @@ class CreateNewDrawing extends React.Component {
     return [
       this.defaultExampleInput(),
       {
-        exampleInput: 'A Hairpin',
-        sequenceId: 'A Hairpin',
-        sequence: 'AUGCAUGGUAGCAU',
-        structure: '((((......))))',
+        exampleInput: 'Several Hairpins',
+        sequenceId: 'Several Hairpins',
+        sequence: 'AGCGCAUACGAUAACCAUCGCCGCGCAUCGGCCAGCAUCGGGCCAAGGCUGCACGCCAUUGCAUGGUGUGUAAAGCU',
+        structure:'.((((...((((....))))..))))...((((.......)))).....(((((((((.....))))))))).....',
       },
       {
-        exampleInput: 'Two Hairpins',
-        sequenceId: 'Two Hairpins',
-        sequence: 'AACCGGAAUUCCGGAAUUCCGGAAUUCCGGUU',
-        structure: '..((((....))))....((((....))))..',
-      }
+        exampleInput: "PEMV2 3'UTR",
+        sequenceId: "PEMV2 3'UTR",
+        sequence: 'UUAACUAGGCGGGCGUGUUGGUUACAGUAGGAGGGGACAGUGCGCAUCGAAACUGAGCCCCACCACAACUCUCAUCCACGGGGUGGUUGGGACGCAGGUGUCGGAGGGAUCGCCAGCCCUCAGGAUAGUGAGCUCCCGCAGAGGGAUAAGCUAUCUCCCUGCGACGUAGUGGUAGAACACGUGGGAUAGGGGAUGACCUUGUCGACCGGUUAUCGGUCCCCUGCUCCUUCGAGCUGGCAAGGCGCUCACAGGUUCUACACUGCUACUAAAGUUGGUGGUGGAUGUCUCGCCCAAAAAGAUCACAAACGCGCGGGACAAGGUCCCUUCCACCUUCGCCGGGUAAGGCUAGAGUCAGCGCUGCAUGACUAUAACUUGCGGCCGAUCCAGUUGCACGACUGGUGGUCCCCCUCAGUGUCUCGGUUGUCUGCCGAGUGGGCGGUGGUCGGAUUCCACCACACCCUGCCACGAGGUGCGUGGAGACUUGGCCAGUCUAGGCUCGUCGUAAUUAGUUGCAGCGACGUUAAUCAACCCGUCCGGGCAUAUAAUAGGACCGGUUGUGCUUCUUCCUCCCUUCUUAGCCAGGUGGUUACCUCCCUGGCGCCC',
+        structure: '.......(((.((((....(((.......(((((((((.....((.(((....))))).(((((((((((((((.((((...)))).)))).((((((.....(((((........))))).(((((((....((((.....))))...))))))).))))))...(((((((((.....(((((((..(((.((.((((((((((((.....)))))....((((....)))).))))))))))))....))))))).))))))))).)))).))))))).((((((((...................))))))))..))))))))))))..))))(((..(((..((((.(..(((((((..((((....(((((((.((.......((..(((((((((((((((((.(((.((((((.....)))))).(((..(((((.((...))))))).)))...))))))).....)).))))..)))))))...))))))))))).)))))))))))........(((((.((((............)))).))))).).)))).))))))......((((((..(....)..))))))))).',
+      },
     ];
   }
 
@@ -64,18 +64,38 @@ class CreateNewDrawing extends React.Component {
       <div
         style={{
           width: this.props.width,
-          height: this.props.height,
+          height: '100%',
           backgroundColor: '#fcfcfc',
           display: 'flex',
           flexDirection: 'column',
+          justifyContent: 'center',
         }}
       >
-        {this._titleSection()}
-        {this._exampleInputSection()}
-        {this._sequenceIdSection()}
-        {this._sequenceAndStructureSection()}
-        {this._errorMessageSection()}
-        {this._submitButton()}
+        <div
+          style={{
+            flexGrow: '1',
+            maxHeight: '800px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            style={{
+              flexGrow: '1',
+              maxWidth: '1200px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {this._titleSection()}
+            {this._exampleInputSection()}
+            {this._sequenceIdSection()}
+            {this._sequenceAndStructureSection()}
+            {this._errorMessageSection()}
+            {this._submitButton()}
+          </div>
+        </div>
       </div>
     );
   }
@@ -113,7 +133,7 @@ class CreateNewDrawing extends React.Component {
 
   _exampleInputSection() {
     return (
-      <div style={{ margin: '16px 28px 0px 28px', alignItems: 'center' }} >
+      <div style={{ margin: '16px 36px 0px 36px', alignItems: 'center' }} >
         {this._exampleInputLabel()}
         {this._exampleInputSelect()}
       </div>
@@ -168,7 +188,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
-          margin: '16px 28px 0px 28px',
+          margin: '16px 36px 0px 36px',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
@@ -212,7 +232,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceAndStructureSection() {
     return (
-      <div style={{ margin: '16px 28px 10px 28px', flexGrow: '1' }} >
+      <div style={{ margin: '16px 36px 10px 36px', flexGrow: '1' }} >
         {this._sequenceSection()}
         {this._structureSection()}
       </div>
@@ -475,7 +495,7 @@ class CreateNewDrawing extends React.Component {
             {'Matching parentheses "( )" indicate base pairs in the secondary structure.'}
           </p>
           <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }} >
-            {'Pseudoknots (specified by "[ ]", "{ }", or "< >") are ignored and bases in pseudoknots are left unpaired.'}
+            {'Pseudoknotted base pairs are specified by "[ ]", "{ }", or "< >".'}
           </p>
           <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }} >
             {'All other characters and whitespace are ignored.'}
@@ -493,7 +513,7 @@ class CreateNewDrawing extends React.Component {
         <p
           className={'unselectable-text'}
           style={{
-            margin: '0px 28px 0px 28px',
+            margin: '0px 36px 0px 36px',
             fontSize: '14px',
             color: 'red',
           }}
@@ -506,7 +526,7 @@ class CreateNewDrawing extends React.Component {
 
   _submitButton() {
     return (
-      <div style={{ margin: '6px 28px 16px 28px' }} >
+      <div style={{ margin: '6px 36px 16px 36px' }} >
         <button
           onClick={() => this._submit()}
           style={{ padding: '4px 32px 4px 32px', fontSize: '12px' }}
@@ -583,7 +603,6 @@ class CreateNewDrawing extends React.Component {
 
 CreateNewDrawing.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   centerDrawingViewCallback: PropTypes.func,
   addStructureCallback: PropTypes.func,
   applyStrictLayoutCallback: PropTypes.func,
@@ -591,11 +610,7 @@ CreateNewDrawing.propTypes = {
 };
 
 CreateNewDrawing.defaultProps = {
-
-  // set width to 100vw to block view of empty drawing
   width: '100vw',
-
-  height: '100%'
 };
 
 export default CreateNewDrawing;
