@@ -89,11 +89,7 @@ class CreateNewDrawing extends React.Component {
             }}
           >
             {this._titleSection()}
-            {this._exampleInputSection()}
-            {this._sequenceIdSection()}
-            {this._sequenceAndStructureSection()}
-            {this._errorMessageSection()}
-            {this._submitButton()}
+            {this._contentSection()}
           </div>
         </div>
       </div>
@@ -102,7 +98,7 @@ class CreateNewDrawing extends React.Component {
 
   _titleSection() {
     return (
-      <div style={{ marginTop: '12px' }} >
+      <div>
         {this._title()}
         {this._titleUnderline()}
       </div>
@@ -111,7 +107,7 @@ class CreateNewDrawing extends React.Component {
 
   _title() {
     return (
-      <p className={'unselectable-text'} style={{ margin: '0px 24px 0px 24px', fontSize: '24px' }} >
+      <p className={'unselectable-text'} style={{ margin: '0px 8px 0px 8px', fontSize: '24px' }} >
         Create a New Drawing
       </p>
     );
@@ -125,15 +121,34 @@ class CreateNewDrawing extends React.Component {
           borderWidth: '0px 0px thin 0px',
           borderStyle: 'solid',
           borderColor: '#bfbfbf',
-          margin: '8px 16px 0px 16px',
+          margin: '8px 0px 0px 0px',
         }}
       ></div>
     );
   }
 
+  _contentSection() {
+    return (
+      <div
+        style={{
+          flexGrow: '1',
+          margin: '16px 20px 0px 20px',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        {this._exampleInputSection()}
+        {this._sequenceIdSection()}
+        {this._sequenceAndStructureSection()}
+        {this._errorMessageSection()}
+        {this._submitButton()}
+      </div>
+    );
+  }
+
   _exampleInputSection() {
     return (
-      <div style={{ margin: '16px 36px 0px 36px', alignItems: 'center' }} >
+      <div style={{ margin: '0px 0px 0px 0px', alignItems: 'center' }} >
         {this._exampleInputLabel()}
         {this._exampleInputSelect()}
       </div>
@@ -188,7 +203,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
-          margin: '16px 36px 0px 36px',
+          margin: '16px 0px 0px 0px',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
@@ -232,7 +247,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceAndStructureSection() {
     return (
-      <div style={{ margin: '16px 36px 10px 36px', flexGrow: '1' }} >
+      <div style={{ margin: '16px 0px 10px 0px', flexGrow: '1' }} >
         {this._sequenceSection()}
         {this._structureSection()}
       </div>
@@ -513,7 +528,7 @@ class CreateNewDrawing extends React.Component {
         <p
           className={'unselectable-text'}
           style={{
-            margin: '0px 36px 0px 36px',
+            margin: '0px 0px 0px 0px',
             fontSize: '14px',
             color: 'red',
           }}
@@ -526,7 +541,7 @@ class CreateNewDrawing extends React.Component {
 
   _submitButton() {
     return (
-      <div style={{ margin: '6px 36px 16px 36px' }} >
+      <div style={{ margin: '6px 0px 16px 0px' }} >
         <button
           onClick={() => this._submit()}
           style={{ padding: '4px 32px 4px 32px', fontSize: '12px' }}
