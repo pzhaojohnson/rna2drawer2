@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 
-import TrackedDrawing from './draw/TrackedDrawing';
+import InteractiveDrawing from './draw/InteractiveDrawing';
 
 import Menu from './Menu';
 import Infobar from './Infobar';
@@ -142,7 +142,7 @@ class App {
   }
 
   _renderDrawing() {
-    this._drawing = new TrackedDrawing(this._getDrawingContainer());
+    this._drawing = new InteractiveDrawing(this._getDrawingContainer());
   }
 
   _renderMenu() {
