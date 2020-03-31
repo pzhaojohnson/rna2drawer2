@@ -75,6 +75,7 @@ class CreateNewDrawing extends React.Component {
           style={{
             flexGrow: '1',
             maxHeight: '800px',
+            margin: '16px',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
@@ -541,7 +542,7 @@ class CreateNewDrawing extends React.Component {
 
   _submitButton() {
     return (
-      <div style={{ margin: '6px 0px 16px 0px' }} >
+      <div style={{ margin: '6px 0px 8px 0px' }} >
         <button
           onClick={() => this._submit()}
           style={{ padding: '4px 32px 4px 32px', fontSize: '12px' }}
