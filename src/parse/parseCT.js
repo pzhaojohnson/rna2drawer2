@@ -37,29 +37,6 @@ function _headerLineIndex(lines) {
 }
 
 /**
- * This will always return at least one.
- * 
- * @param {string} headerLine 
- * 
- * @returns {number} 
- */
-function _numSequences(headerLine) {
-  let items = nonemptySplitByWhitespace(headerLine);
-  if (items.length < 2) {
-    return 1;
-  } else {
-    let num = Number(items[1]);
-    if (num === NaN) {
-      return 1;
-    } else if (!Number.isInteger(num)) {
-      return 1;
-    } else {
-      return Math.max(num, 1);
-    }
-  }
-}
-
-/**
  * Returns null if the letter cannot be parsed.
  * 
  * @param {string} bodyLine 
@@ -119,7 +96,7 @@ function _partner(bodyLine) {
  * 
  * @returns {number} 
  */
-function _numberingOffset() {
+function _numberingOffset(bodyLine) {
   let items = nonemptySplitByWhitespace(bodyLine);
   if (items.length < 6) {
     return 0;
@@ -165,7 +142,9 @@ function _parseSequence(ct) {
 }
 
 /**
- * Returns null if the structure cannot be parsed.
+ * Returns null if:
+ *  The structure cannot be parsed.
+ *  The parsed structure is invalid.
  * 
  * @param {string} ct 
  * 
@@ -183,7 +162,11 @@ function _parsePartners(ct) {
       partners.push(_partner(lines[j]));
       j++;
     }
-    return partners;
+    if (partnersAreValid(partners)) {
+      return partners;
+    } else {
+      return null;
+    }
   }
 }
 
@@ -218,8 +201,8 @@ function _parseNumberingOffset(ct) {
 
 /**
  * Returns null if:
+ *  There are zero or multiple sequences.
  *  The sequence or structure cannot be parsed.
- *  The parsed structure is invalid.
  *  The parsed sequence or structure are different lengths.
  * 
  * @param {string} ct 
@@ -227,12 +210,13 @@ function _parseNumberingOffset(ct) {
  * @returns {ParsedCT|null} 
  */
 function parseCT(ct) {
+  if(numSequencesInCT(ct) !== 1) {
+    return null;
+  }
   let sequence = _parseSequence(ct);
   let partners = _parsePartners(ct);
   let numberingOffset = _parseNumberingOffset(ct);
   if (sequence === null || partners === null) {
-    return null;
-  } else if (!partnersAreValid(partners)) {
     return null;
   } else if (sequence.length !== partners.length) {
     return null;
@@ -242,6 +226,29 @@ function parseCT(ct) {
       partners: partners,
       numberingOffset: numberingOffset,
     };
+  }
+}
+
+/**
+ * This will always return at least one.
+ * 
+ * @param {string} headerLine 
+ * 
+ * @returns {number} 
+ */
+function _numSequences(headerLine) {
+  let items = nonemptySplitByWhitespace(headerLine);
+  if (items.length < 2) {
+    return 1;
+  } else {
+    let num = Number(items[1]);
+    if (num === NaN) {
+      return 1;
+    } else if (!Number.isInteger(num)) {
+      return 1;
+    } else {
+      return Math.max(num, 1);
+    }
   }
 }
 
@@ -267,11 +274,11 @@ export {
   // these are only exported to aid testing
   _lineShouldBeIgnored,
   _headerLineIndex,
-  _numSequences,
   _letter,
   _partner,
   _numberingOffset,
   _parseSequence,
   _parsePartners,
   _parseNumberingOffset,
+  _numSequences,
 };
