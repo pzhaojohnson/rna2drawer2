@@ -74,8 +74,8 @@ class CreateNewDrawing extends React.Component {
         <div
           style={{
             flexGrow: '1',
-            maxHeight: '800px',
-            margin: '16px',
+            maxHeight: '900px',
+            margin: '32px',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
@@ -85,6 +85,8 @@ class CreateNewDrawing extends React.Component {
             style={{
               flexGrow: '1',
               maxWidth: '1200px',
+              border: 'thin solid gray',
+              borderRadius: '32px',
               display: 'flex',
               flexDirection: 'column',
             }}
@@ -108,7 +110,7 @@ class CreateNewDrawing extends React.Component {
 
   _title() {
     return (
-      <p className={'unselectable-text'} style={{ margin: '0px 8px 0px 8px', fontSize: '24px' }} >
+      <p className={'unselectable-text'} style={{ margin: '48px 72px 0px 72px', fontSize: '24px' }} >
         Create a New Drawing
       </p>
     );
@@ -122,7 +124,7 @@ class CreateNewDrawing extends React.Component {
           borderWidth: '0px 0px thin 0px',
           borderStyle: 'solid',
           borderColor: '#bfbfbf',
-          margin: '8px 0px 0px 0px',
+          margin: '8px 64px 0px 64px',
         }}
       ></div>
     );
@@ -133,7 +135,7 @@ class CreateNewDrawing extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '16px 20px 0px 20px',
+          margin: '16px 80px 0px 80px',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -542,7 +544,7 @@ class CreateNewDrawing extends React.Component {
 
   _submitButton() {
     return (
-      <div style={{ margin: '6px 0px 8px 0px' }} >
+      <div style={{ margin: '6px 0px 48px 0px' }} >
         <button
           onClick={() => this._submit()}
           style={{ padding: '4px 32px 4px 32px', fontSize: '12px' }}
