@@ -83,73 +83,6 @@ it('_letter - additional items present', () => {
   expect(_letter('\t2    P\t1   23  \t12\t  34')).toBe('P');
 });
 
-it('_partner - empty string', () => {
-  expect(_partner('')).toBe(null);
-});
-
-it('_partner - partner not present', () => {
-  expect(_partner('1\t2\t3\t4\t')).toBe(null);
-});
-
-it('_partner - not a number', () => {
-  expect(_partner('1\t2\t3\t4\ta')).toBe(null);
-});
-
-it('_partner - parseInt function is not being used', () => {
-  expect(_partner('1\t2\t3\t4\t12a')).toBe(null);
-});
-
-it('_partner - not an integer', () => {
-  expect(_partner('1\t2\t3\t4\t1.1')).toBe(null);
-});
-
-it('_partner - partner is zero', () => {
-  expect(_partner('1\t2\t3\t4\t0')).toBe(null);
-});
-
-it('_partner - returns the correct partner', () => {
-  expect(_partner('1\t2\t3\t4\t10')).toBe(10);
-});
-
-it('_partner - additional items present', () => {
-  expect(_partner('1\t2\t3\t4\t12\t1')).toBe(12);
-});
-
-it('_numberingOffset - empty string', () => {
-  expect(_numberingOffset('')).toBe(0);
-});
-
-it('_numberingOffset - not present', () => {
-  expect(_numberingOffset('1\t2\t3\t4\t5\t')).toBe(0);
-});
-
-it('_numberingOffset - position or offset position are not numbers', () => {
-  expect(_numberingOffset('a\t2\t3\t4\t5\t6')).toBe(0);
-  expect(_numberingOffset('1\t2\t3\t4\t5\tb')).toBe(0);
-});
-
-it('_numberingOffset - parseInt function is not being used', () => {
-  expect(_numberingOffset('34c\t2\t3\t4\t5\t6')).toBe(0);
-  expect(_numberingOffset('1\t2\t3\t4\t5\t10e')).toBe(0);
-});
-
-it('_numberingOffset - position or offset position are not integers', () => {
-  expect(_numberingOffset('6.01\t2\t3\t4\t5\t6')).toBe(0);
-  expect(_numberingOffset('1\t2\t3\t4\t5\t1.02')).toBe(0);
-});
-
-it('_numberingOffset - zero offset', () => {
-  expect(_numberingOffset('7\t2\t3\t4\t5\t7')).toBe(0);
-});
-
-it('_numberingOffset - positive offset', () => {
-  expect(_numberingOffset('7\t2\t3\t4\t5\t17')).toBe(10);
-});
-
-it('_numberingOffset - negative offset', () => {
-  expect(_numberingOffset('12\t2\t3\t4\t5\t5')).toBe(-7);
-});
-
 it('_parseSequence - empty string', () => {
   expect(_parseSequence('')).toBe(null);
 });
@@ -197,6 +130,38 @@ it('_parseSequence - some lines after body', () => {
     + '\n'
     + '3 e\n'
   )).toBe('th');
+});
+
+it('_partner - empty string', () => {
+  expect(_partner('')).toBe(null);
+});
+
+it('_partner - partner not present', () => {
+  expect(_partner('1\t2\t3\t4\t')).toBe(null);
+});
+
+it('_partner - not a number', () => {
+  expect(_partner('1\t2\t3\t4\ta')).toBe(null);
+});
+
+it('_partner - parseInt function is not being used', () => {
+  expect(_partner('1\t2\t3\t4\t12a')).toBe(null);
+});
+
+it('_partner - not an integer', () => {
+  expect(_partner('1\t2\t3\t4\t1.1')).toBe(null);
+});
+
+it('_partner - partner is zero', () => {
+  expect(_partner('1\t2\t3\t4\t0')).toBe(null);
+});
+
+it('_partner - returns the correct partner', () => {
+  expect(_partner('1\t2\t3\t4\t10')).toBe(10);
+});
+
+it('_partner - additional items present', () => {
+  expect(_partner('1\t2\t3\t4\t12\t1')).toBe(12);
 });
 
 it('_parsePartners - empty string', () => {
@@ -265,4 +230,128 @@ it('_parsePartners - some lines after body', () => {
   expect(partners.length).toBe(2);
   expect(partners[0]).toBe(null);
   expect(partners[1]).toBe(null);
+});
+
+it('_numberingOffset - empty string', () => {
+  expect(_numberingOffset('')).toBe(0);
+});
+
+it('_numberingOffset - not present', () => {
+  expect(_numberingOffset('1\t2\t3\t4\t5\t')).toBe(0);
+});
+
+it('_numberingOffset - position or offset position are not numbers', () => {
+  expect(_numberingOffset('a\t2\t3\t4\t5\t6')).toBe(0);
+  expect(_numberingOffset('1\t2\t3\t4\t5\tb')).toBe(0);
+});
+
+it('_numberingOffset - parseInt function is not being used', () => {
+  expect(_numberingOffset('34c\t2\t3\t4\t5\t6')).toBe(0);
+  expect(_numberingOffset('1\t2\t3\t4\t5\t10e')).toBe(0);
+});
+
+it('_numberingOffset - position or offset position are not integers', () => {
+  expect(_numberingOffset('6.01\t2\t3\t4\t5\t6')).toBe(0);
+  expect(_numberingOffset('1\t2\t3\t4\t5\t1.02')).toBe(0);
+});
+
+it('_numberingOffset - zero offset', () => {
+  expect(_numberingOffset('7\t2\t3\t4\t5\t7')).toBe(0);
+});
+
+it('_numberingOffset - positive offset', () => {
+  expect(_numberingOffset('7\t2\t3\t4\t5\t17')).toBe(10);
+});
+
+it('_numberingOffset - negative offset', () => {
+  expect(_numberingOffset('12\t2\t3\t4\t5\t5')).toBe(-7);
+});
+
+it('_parseNumberingOffset - empty string', () => {
+  expect(_parseNumberingOffset('')).toBe(0);
+});
+
+it('_parseNumberingOffset - no header line', () => {
+  expect(_parseNumberingOffset(
+    '#blah\n'
+    + '#qwer\n'
+    + '\n'
+  )).toBe(0);
+});
+
+it('_parseNumberingOffset - no lines after header line', () => {
+  expect(_parseNumberingOffset(
+    '12 dG'
+  )).toBe(0);
+});
+
+it('_parseNumberingOffset - lines after header line are not body lines', () => {
+  expect(_parseNumberingOffset(
+    '12 dG\n'
+    + '#asd 3 4 5 6 7 8 9\n'
+    + '1 e 3 4 5 6\n'
+    + '   '
+  )).toBe(0);
+});
+
+it('_parseNumberingOffset - returns correct offset', () => {
+  expect(_parseNumberingOffset(
+    '12 dG\n'
+    + '5 A 3 4 3 12'
+  )).toBe(7);
+});
+
+it('parseCT - empty string', () => {
+  expect(parseCT('')).toBe(null);
+});
+
+it('parseCT - zero sequeces', () => {
+  expect(parseCT(
+    '#blah\n'
+    + ' #asdf\n'
+    + '   '
+  )).toBe(null);
+});
+
+it('parseCT - multiple sequences', () => {
+  expect(parseCT(
+    '128\t3 dG'
+  )).toBe(null);
+});
+
+it('parseCT - sequence cannot be parsed', () => {
+  expect(parseCT(
+    '128 1  dG\n'
+    + ' 1 a 3 4 0\n'
+    + '2 er 3 4 0'
+  )).toBe(null);
+});
+
+it('parseCT - structure cannot be parsed', () => {
+  expect(parseCT(
+    '11 dG\n'
+    + '1 a 3 4 3\n'
+    + '2 g 3 4 0'
+  )).toBe(null);
+});
+
+it('parseCT - returns correct sequence, structure, and numbering offset', () => {
+  let parsed = parseCT(
+    '34 dG\n'
+    + '1 q 3 4 4 -4\n'
+    + '2 w 3 4 0 -3\n'
+    + '3 e 3 4 0 -2\n'
+    + '4 r 3 4 1 -1'
+  );
+  expect(parsed.sequence).toBe('qwer');
+  expect(parsed.partners.length).toBe(4);
+  expect(parsed.partners[0]).toBe(4);
+  expect(parsed.partners[1]).toBe(null);
+  expect(parsed.partners[2]).toBe(null);
+  expect(parsed.partners[3]).toBe(1);
+  expect(parsed.numberingOffset).toBe(-5);
+});
+
+it('parseCT - a CT file downloaded from Mfold', () => {
+  // TODO
 });

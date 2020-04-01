@@ -58,62 +58,6 @@ function _letter(bodyLine) {
 }
 
 /**
- * Returns null if:
- *  The partner is not specified.
- *  The partner is not a number.
- *  The partner is not an integer.
- *  The partner is zero.
- * 
- * @param {string} bodyLine 
- * 
- * @returns {number|null} 
- */
-function _partner(bodyLine) {
-  let items = nonemptySplitByWhitespace(bodyLine);
-  if (items.length < 5) {
-    return null;
-  } else {
-    let q = Number(items[4]);
-    if (q === NaN) {
-      return null;
-    } else if (!Number.isInteger(q)) {
-      return null;
-    } else if (q === 0) {
-      return null;
-    } else {
-      return q;
-    }
-  }
-}
-
-/**
- * Returns zero if:
- *  The position or offset position not specified.
- *  The position or offset position are not numbers.
- *  The position or offset position are not integers.
- * 
- * @param {string} bodyLine 
- * 
- * @returns {number} 
- */
-function _numberingOffset(bodyLine) {
-  let items = nonemptySplitByWhitespace(bodyLine);
-  if (items.length < 6) {
-    return 0;
-  } else {
-    let p = Number(items[0]);
-    let op = Number(items[5]);
-    if (p === NaN || op === NaN) {
-      return 0;
-    } else if (!Number.isInteger(p) || !Number.isInteger(op)) {
-      return 0;
-    } else {
-      return op - p;
-    }
-  }
-}
-
-/**
  * Returns null if the sequence cannot be parsed.
  * 
  * @param {string} ct 
@@ -143,6 +87,35 @@ function _parseSequence(ct) {
 
 /**
  * Returns null if:
+ *  The partner is not specified.
+ *  The partner is not a number.
+ *  The partner is not an integer.
+ *  The partner is zero.
+ * 
+ * @param {string} bodyLine 
+ * 
+ * @returns {number|null} 
+ */
+function _partner(bodyLine) {
+  let items = nonemptySplitByWhitespace(bodyLine);
+  if (items.length < 5) {
+    return null;
+  } else {
+    let q = Number(items[4]);
+    if (q === NaN) {
+      return null;
+    } else if (!Number.isInteger(q)) {
+      return null;
+    } else if (q === 0) {
+      return null;
+    } else {
+      return q;
+    }
+  }
+}
+
+/**
+ * Returns null if:
  *  The structure cannot be parsed.
  *  The parsed structure is invalid.
  * 
@@ -166,6 +139,33 @@ function _parsePartners(ct) {
       return partners;
     } else {
       return null;
+    }
+  }
+}
+
+/**
+ * Returns zero if:
+ *  The position or offset position not specified.
+ *  The position or offset position are not numbers.
+ *  The position or offset position are not integers.
+ * 
+ * @param {string} bodyLine 
+ * 
+ * @returns {number} 
+ */
+function _numberingOffset(bodyLine) {
+  let items = nonemptySplitByWhitespace(bodyLine);
+  if (items.length < 6) {
+    return 0;
+  } else {
+    let p = Number(items[0]);
+    let op = Number(items[5]);
+    if (p === NaN || op === NaN) {
+      return 0;
+    } else if (!Number.isInteger(p) || !Number.isInteger(op)) {
+      return 0;
+    } else {
+      return op - p;
     }
   }
 }
