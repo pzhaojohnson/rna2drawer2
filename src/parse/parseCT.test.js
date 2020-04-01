@@ -11,6 +11,8 @@ import {
   _parseNumberingOffset,
   _numSequences,
 } from './parseCT';
+const fs = require('fs');
+import parseDotBracket from './parseDotBracket';
 
 it('_lineShouldBeIgnored - an empty line', () => {
   expect(_lineShouldBeIgnored('')).toBeTruthy();
@@ -353,7 +355,15 @@ it('parseCT - returns correct sequence, structure, and numbering offset', () => 
 });
 
 it('parseCT - a CT file downloaded from Mfold', () => {
-  // TODO
+  let data = fs.readFileSync('testinput/ct/ct0.ct', 'utf8');
+  let parsed = parseCT(data);
+  expect(parsed.sequence).toBe('aaagucgcgcuggcacaggacgaagucgca');
+  let epartners = parseDotBracket('......(((((............)).))).').secondaryPartners;
+  expect(parsed.partners.length).toBe(epartners.length);
+  for (let i = 0; i < epartners.length; i++) {
+    expect(parsed.partners[i]).toBe(epartners[i]);
+  }
+  expect(parsed.numberingOffset).toBe(12);
 });
 
 it('_numSequences - empty string', () => {
