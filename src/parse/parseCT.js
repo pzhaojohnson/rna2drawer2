@@ -1,7 +1,7 @@
 import { splitLines } from './splitLines';
 import isAllWhitespace from './isAllWhitespace';
 import { nonemptySplitByWhitespace } from './nonemptySplitByWhitespace';
-import validatePartners from './validatePartners';
+import { partnersAreValid } from './partnersAreValid';
 
 /**
  * @param {string} line 
@@ -13,7 +13,7 @@ function _lineShouldBeIgnored(line) {
     return true;
   } else {
     let items = nonemptySplitByWhitespace(line);
-    return items[0][0] === '#';
+    return items[0].charAt(0) === '#';
   }
 }
 
@@ -60,20 +60,20 @@ function _numSequences(headerLine) {
 }
 
 /**
+ * Returns null if the letter cannot be parsed.
+ * 
  * @param {string} bodyLine 
  * 
- * @returns {string} 
- * 
- * @throws {Error} If the letter cannot be parsed.
+ * @returns {string|null} 
  */
 function _letter(bodyLine) {
   let items = nonemptySplitByWhitespace(bodyLine);
   if (items.length < 2) {
-    throw new Error('Letter cannot be parsed.');
+    return null;
   } else {
     let letter = items[1];
     if (letter.length !== 1) {
-      throw new Error('Letter cannot be parsed.');
+      return null;
     } else {
       return letter;
     }
@@ -81,6 +81,12 @@ function _letter(bodyLine) {
 }
 
 /**
+ * Returns null if:
+ *  The partner is not specified.
+ *  The partner is not a number.
+ *  The partner is not an integer.
+ *  The partner is zero.
+ * 
  * @param {string} bodyLine 
  * 
  * @returns {number|null} 
@@ -95,6 +101,8 @@ function _partner(bodyLine) {
       return null;
     } else if (!Number.isInteger(q)) {
       return null;
+    } else if (q === 0) {
+      return null;
     } else {
       return q;
     }
@@ -102,6 +110,11 @@ function _partner(bodyLine) {
 }
 
 /**
+ * Returns zero if:
+ *  The position or offset position not specified.
+ *  The position or offset position are not numbers.
+ *  The position or offset position are not integers.
+ * 
  * @param {string} bodyLine 
  * 
  * @returns {number} 
@@ -124,6 +137,79 @@ function _numberingOffset() {
 }
 
 /**
+ * Returns null if the sequence cannot be parsed.
+ * 
+ * @param {string} ct 
+ * 
+ * @returns {string|null} 
+ */
+function _parseSequence(ct) {
+  let lines = splitLines(ct);
+  let i = _headerLineIndex(lines);
+  if (i === null) {
+    return null;
+  } else {
+    let sequence = '';
+    let j = i + 1;
+    while (j < lines.length && !_lineShouldBeIgnored(lines[j])) {
+      let letter = _letter(lines[j]);
+      if (letter === null) {
+        return null;
+      } else {
+        sequence += letter;
+      }
+      j++;
+    }
+    return sequence;
+  }
+}
+
+/**
+ * Returns null if the structure cannot be parsed.
+ * 
+ * @param {string} ct 
+ * 
+ * @returns {Array<number|null>|null} 
+ */
+function _parsePartners(ct) {
+  let lines = splitLines(ct);
+  let i = _headerLineIndex(lines);
+  if (i === null) {
+    return null;
+  } else {
+    let partners = [];
+    let j = i + 1;
+    while (j < lines.length && !_lineShouldBeIgnored(lines[j])) {
+      partners.push(_partner(lines[j]));
+      j++;
+    }
+    return partners;
+  }
+}
+
+/**
+ * Returns zero if the numbering offset cannot be parsed.
+ * 
+ * @param {string} ct 
+ * 
+ * @returns {number} 
+ */
+function _parseNumberingOffset(ct) {
+  let lines = splitLines(ct);
+  let i = _headerLineIndex(lines);
+  if (i === null) {
+    return 0;
+  } else {
+    let j = i + 1;
+    if (j === lines.length) {
+      return 0;
+    } else {
+      return _numberingOffset(lines[j]);
+    }
+  }
+}
+
+/**
  * @typedef {Object} ParsedCT 
  * @property {string} sequence 
  * @property {Array<number|null>} partners 
@@ -131,31 +217,26 @@ function _numberingOffset() {
  */
 
 /**
+ * Returns null if:
+ *  The sequence or structure cannot be parsed.
+ *  The parsed structure is invalid.
+ *  The parsed sequence or structure are different lengths.
+ * 
  * @param {string} ct 
  * 
- * @returns {ParsedCT} 
- * 
- * @throws {Error} If a structure cannot be found.
- * @throws {Error} If a letter cannot be parsed.
- * @throws {Error} If the specified structure is invalid.
+ * @returns {ParsedCT|null} 
  */
 function parseCT(ct) {
-  let lines = splitLines(ct);
-  let i = _headerLineIndex(lines);
-  if (i === null) {
-    throw new Error('No structure found.');
+  let sequence = _parseSequence(ct);
+  let partners = _parsePartners(ct);
+  let numberingOffset = _parseNumberingOffset(ct);
+  if (sequence === null || partners === null) {
+    return null;
+  } else if (!partnersAreValid(partners)) {
+    return null;
+  } else if (sequence.length !== partners.length) {
+    return null;
   } else {
-    let partners = [];
-    let numberingOffset = 0;
-    let j = i + 1;
-    while (j < lines.length && !_lineShouldBeIgnored(lines[j])) {
-      let lj = lines[j];
-      sequence += _letter(lj);
-      partners.push(_partner(lj));
-      numberingOffset = _numberingOffset(lj);
-      j++;
-    }
-    validatePartners(partners);
     return {
       sequence: sequence,
       partners: partners,
@@ -182,4 +263,15 @@ function numSequencesInCT(ct) {
 export {
   parseCT,
   numSequencesInCT,
+
+  // these are only exported to aid testing
+  _lineShouldBeIgnored,
+  _headerLineIndex,
+  _numSequences,
+  _letter,
+  _partner,
+  _numberingOffset,
+  _parseSequence,
+  _parsePartners,
+  _parseNumberingOffset,
 };
