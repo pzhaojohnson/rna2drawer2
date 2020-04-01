@@ -355,3 +355,57 @@ it('parseCT - returns correct sequence, structure, and numbering offset', () => 
 it('parseCT - a CT file downloaded from Mfold', () => {
   // TODO
 });
+
+it('_numSequences - empty string', () => {
+  expect(_numSequences('')).toBe(1);
+});
+
+it('_numSequences - no second item', () => {
+  expect(_numSequences('128\t')).toBe(1);
+});
+
+it('_numSequences - second item is not a number', () => {
+  expect(_numSequences('\t128 f')).toBe(1);
+});
+
+it('_numSequences - parseInt function is not used', () => {
+  expect(_numSequences('128\t5a')).toBe(1);
+});
+
+it('_numSequences - second item is not an integer', () => {
+  expect(_numSequences('12\t2.99')).toBe(1);
+});
+
+it('_numSequences - does not return a number less than one', () => {
+  expect(_numSequences('12 0')).toBe(1);
+  expect(_numSequences('12 -1')).toBe(1);
+});
+
+it('_numSequences - returns the correct number', () => {
+  expect(_numSequences('12 3')).toBe(3);
+});
+
+it('_numSequences - more than two items', () => {
+  expect(_numSequences('\t12\t4\tdG [blah]\n')).toBe(4);
+});
+
+it('numSequencesInCT - empty string', () => {
+  expect(numSequencesInCT('')).toBe(0);
+});
+
+it('numSequencesInCT - no header line', () => {
+  expect(numSequencesInCT(
+    '#asdf\n'
+    + '\n'
+    + ' #wer\n'
+    + '\t\t\t'
+  )).toBe(0);
+});
+
+it('numSequencesInCT - returns correct number', () => {
+  expect(numSequencesInCT(
+    '#qwerty\n'
+    + '12\t2 3 4 5 dG\n'
+    + '1 w 3 4 0 1'
+  )).toBe(2);
+});
