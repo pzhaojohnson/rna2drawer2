@@ -75,8 +75,8 @@ function _correspondingUpChar(downChar) {
  * @typedef {Object} TraversedDotBracket 
  * @property {Array<number|null>} secondaryPartners 
  * @property {Array<number|null>} tertiaryPartners 
- * @property {boolean} unmatchedUpstreamPartner True if there is an unmatched upstream partner.
- * @property {boolean} unmatchedDownstreamPartner True if there is an unmatched downstream partner.
+ * @property {boolean} unmatchedUpPartner True if there is an unmatched upstream partner.
+ * @property {boolean} unmatchedDownPartner True if there is an unmatched downstream partner.
  */
 
 /**
@@ -92,8 +92,8 @@ function _traverseDotBracket(dotBracket) {
     secondaryPartners.push(null);
     tertiaryPartners.push(null);
   }
-  let unmatchedUpstreamPartner = false;
-  let unmatchedDownstreamPartner = false;
+  let unmatchedUpPartner = false;
+  let unmatchedDownPartner = false;
 
   let ups = { '(': [], '[': [], '{': [], '<': [] };
   
@@ -104,7 +104,7 @@ function _traverseDotBracket(dotBracket) {
     } else if (_isDownChar(c)) {
       let upChar = _correspondingUpChar(c);
       if (ups[upChar].length === 0) {
-        unmatchedDownstreamPartner = true;
+        unmatchedDownPartner = true;
       } else {
         let pUp = ups[upChar].pop();
         let partners = _isTertiaryChar(c) ? tertiaryPartners : secondaryPartners;
@@ -116,15 +116,15 @@ function _traverseDotBracket(dotBracket) {
 
   ['(', '[', '{', '<'].forEach(upChar => {
     if (ups[upChar].length > 0) {
-      unmatchedUpstreamPartner = true;
+      unmatchedUpPartner = true;
     }
   });
   
   return {
     secondaryPartners: secondaryPartners,
     tertiaryPartners: tertiaryPartners,
-    unmatchedUpstreamPartner: unmatchedUpstreamPartner,
-    unmatchedDownstreamPartner: unmatchedDownstreamPartner,
+    unmatchedUpPartner: unmatchedUpPartner,
+    unmatchedDownPartner: unmatchedDownPartner,
   };
 }
 
@@ -149,7 +149,7 @@ function _traverseDotBracket(dotBracket) {
  */
 function parseDotBracket(dotBracket) {
   let traversed = _traverseDotBracket(dotBracket);
-  if (traversed.unmatchedUpstreamPartner || traversed.unmatchedDownstreamPartner) {
+  if (traversed.unmatchedUpPartner || traversed.unmatchedDownPartner) {
     return null;
   } else {
     return {
@@ -164,9 +164,9 @@ function parseDotBracket(dotBracket) {
  * 
  * @returns {boolean} 
  */
-function hasUnmatchedUpstreamPartner(dotBracket) {
+function hasUnmatchedUpPartner(dotBracket) {
   let traversed = _traverseDotBracket(dotBracket);
-  return traversed.unmatchedUpstreamPartner;
+  return traversed.unmatchedUpPartner;
 }
 
 /**
@@ -174,15 +174,15 @@ function hasUnmatchedUpstreamPartner(dotBracket) {
  * 
  * @returns {boolean} 
  */
-function hasUnmatchedDownstreamPartner(dotBracket) {
+function hasUnmatchedDownPartner(dotBracket) {
   let traversed = _traverseDotBracket(dotBracket);
-  return traversed.unmatchedDownstreamPartner;
+  return traversed.unmatchedDownPartner;
 }
 
 export default parseDotBracket;
 
 export {
   parseDotBracket,
-  hasUnmatchedUpstreamPartner,
-  hasUnmatchedDownstreamPartner,
+  hasUnmatchedUpPartner,
+  hasUnmatchedDownPartner,
 };
