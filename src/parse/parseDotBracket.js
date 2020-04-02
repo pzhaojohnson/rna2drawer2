@@ -185,4 +185,13 @@ export {
   parseDotBracket,
   hasUnmatchedUpPartner,
   hasUnmatchedDownPartner,
+
+  // these are only exported to aid testing
+  _isDotBracketChar,
+  _removeNonDotBracketChars,
+  _isUpChar,
+  _isDownChar,
+  _isTertiaryChar,
+  _correspondingUpChar,
+  _traverseDotBracket,
 };

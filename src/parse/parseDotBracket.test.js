@@ -1,18 +1,79 @@
-import parseDotBracket from './parseDotBracket';
+import {
+  parseDotBracket,
+  hasUnmatchedUpPartner,
+  hasUnmatchedDownPartner,
+  _isDotBracketChar,
+  _removeNonDotBracketChars,
+  _isUpChar,
+  _isDownChar,
+  _isTertiaryChar,
+  _correspondingUpChar,
+  _traverseDotBracket,
+} from './parseDotBracket';
 import validatePartners from './validatePartners';
 
-/**
- * @param {number} length 
- * 
- * @returns {Array<number|null>} Partners notation of the given length containing no pairs.
- */
+it('_isDotBracketChar', () => {
+  ['.', '(', ')', '[', ']', '{', '}', '<', '>'].forEach(c => {
+    expect(_isDotBracketChar(c)).toBeTruthy();
+  });
+  [' ', 'a', 'asdf', '\t', 'q'].forEach(c => {
+    expect(_isDotBracketChar(c)).toBeFalsy();
+  });
+});
+
+it('_removeNonDotBracketChars - empty string', () => {
+  expect(_removeNonDotBracketChars('')).toBe('');
+});
+
+it('_removeNonDotBracketChars - nothing to remove', () => {
+  expect(_removeNonDotBracketChars('(((...)))')).toBe('(((...)))');
+});
+
+it('_removeNonDotBracketChars - removes correct characters', () => {
+  expect(
+    _removeNonDotBracketChars('.. \t\n ..aasd((/))[<>\n]q')
+  ).toBe('....(())[<>]');
+});
+
+it('_isUpChar', () => {
+  ['(', '[', '{', '<'].forEach(c => {
+    expect(_isUpChar(c)).toBeTruthy();
+  });
+  ['.', ')', ']', '}', '>'].forEach(c => {
+    expect(_isUpChar(c)).toBeFalsy();
+  });
+});
+
+it('_isDownChar', () => {
+  [')', ']', '}', '>'].forEach(c => {
+    expect(_isDownChar(c)).toBeTruthy();
+  });
+  ['.', '(', '[', '{', '<'].forEach(c => {
+    expect(_isDownChar(c)).toBeFalsy();
+  });
+});
+
+it('_isTertiaryChar', () => {
+  ['[', ']', '{', '}', '<', '>'].forEach(c => {
+    expect(_isTertiaryChar(c)).toBeTruthy();
+  });
+  ['.', '(', ')'].forEach(c => {
+    expect(_isTertiaryChar(c)).toBeFalsy();
+  });
+});
+
+it('_correspondingUpChar', () => {
+  expect(_correspondingUpChar(')')).toBe('(');
+  expect(_correspondingUpChar(']')).toBe('[');
+  expect(_correspondingUpChar('}')).toBe('{');
+  expect(_correspondingUpChar('>')).toBe('<');
+});
+
 function unstructuredPartners(length) {
   let partners = [];
-
   for (let i = 0; i < length; i++) {
     partners.push(null);
   }
-
   return partners;
 }
 
