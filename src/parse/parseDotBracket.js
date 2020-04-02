@@ -73,7 +73,6 @@ function _correspondingUpChar(downChar) {
 
 /**
  * @typedef {object} ParsedDotBracket 
- * @property {Array<number|null>} allPartners The partners notation of all pairs in the structure.
  * @property {Array<number|null>} secondaryPartners The partners notation of the secondary structure.
  * @property {Array<number|null>} tertiaryPartners The partners notation of the tertiary structure.
  */
@@ -122,16 +121,7 @@ function parseDotBracket(dotBracket) {
       throw new Error('Unmatched "' + upChar + '" upstream partner at position ' + p + '.');
     }
   });
-  let allPartners = [...secondaryPartners];
-  for (let p = 1; p <= tertiaryPartners.length; p++) {
-    let q = tertiaryPartners[p - 1];
-    if (q !== null) {
-      allPartners[p - 1] = q;
-      allPartners[q - 1] = p;
-    }
-  }
   return {
-    allPartners: allPartners,
     secondaryPartners: secondaryPartners,
     tertiaryPartners: tertiaryPartners,
   };
