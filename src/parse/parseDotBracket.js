@@ -75,8 +75,8 @@ function _correspondingUpChar(downChar) {
  * @typedef {Object} TraversedDotBracket 
  * @property {Array<number|null>} secondaryPartners 
  * @property {Array<number|null>} tertiaryPartners 
- * @property {boolean} unmatchedUpPartner True if there is an unmatched upstream partner.
- * @property {boolean} unmatchedDownPartner True if there is an unmatched downstream partner.
+ * @property {boolean} hasUnmatchedUpPartner True if there is an unmatched upstream partner.
+ * @property {boolean} hasUnmatchedDownPartner True if there is an unmatched downstream partner.
  */
 
 /**
@@ -93,8 +93,8 @@ function _traverseDotBracket(dotBracket) {
     secondaryPartners.push(null);
     tertiaryPartners.push(null);
   }
-  let unmatchedUpPartner = false;
-  let unmatchedDownPartner = false;
+  let hasUnmatchedUpPartner = false;
+  let hasUnmatchedDownPartner = false;
 
   let ups = { '(': [], '[': [], '{': [], '<': [] };
   
@@ -107,7 +107,7 @@ function _traverseDotBracket(dotBracket) {
       let upChar = _correspondingUpChar(c);
       
       if (ups[upChar].length === 0) {
-        unmatchedDownPartner = true;
+        hasUnmatchedDownPartner = true;
       } else {
         let pUp = ups[upChar].pop();
         
@@ -124,15 +124,15 @@ function _traverseDotBracket(dotBracket) {
 
   ['(', '[', '{', '<'].forEach(upChar => {
     if (ups[upChar].length > 0) {
-      unmatchedUpPartner = true;
+      hasUnmatchedUpPartner = true;
     }
   });
   
   return {
     secondaryPartners: secondaryPartners,
     tertiaryPartners: tertiaryPartners,
-    unmatchedUpPartner: unmatchedUpPartner,
-    unmatchedDownPartner: unmatchedDownPartner,
+    hasUnmatchedUpPartner: hasUnmatchedUpPartner,
+    hasUnmatchedDownPartner: hasUnmatchedDownPartner,
   };
 }
 
@@ -157,7 +157,7 @@ function _traverseDotBracket(dotBracket) {
  */
 function parseDotBracket(dotBracket) {
   let traversed = _traverseDotBracket(dotBracket);
-  if (traversed.unmatchedUpPartner || traversed.unmatchedDownPartner) {
+  if (traversed.hasUnmatchedUpPartner || traversed.hasUnmatchedDownPartner) {
     return null;
   } else {
     return {
@@ -174,7 +174,7 @@ function parseDotBracket(dotBracket) {
  */
 function hasUnmatchedUpPartner(dotBracket) {
   let traversed = _traverseDotBracket(dotBracket);
-  return traversed.unmatchedUpPartner;
+  return traversed.hasUnmatchedUpPartner;
 }
 
 /**
@@ -184,7 +184,7 @@ function hasUnmatchedUpPartner(dotBracket) {
  */
 function hasUnmatchedDownPartner(dotBracket) {
   let traversed = _traverseDotBracket(dotBracket);
-  return traversed.unmatchedDownPartner;
+  return traversed.hasUnmatchedDownPartner;
 }
 
 export default parseDotBracket;

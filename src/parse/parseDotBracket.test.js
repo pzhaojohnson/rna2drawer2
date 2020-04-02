@@ -77,132 +77,212 @@ function unstructuredPartners(length) {
   return partners;
 }
 
-let validCases = [
+function checkPartners(partners, expectedPartners) {
+  expect(partners.length).toBe(expectedPartners.length);
+  for (let i = 0; i < expectedPartners.length; i++) {
+    expect(partners[i]).toBe(expectedPartners[i]);
+  }
+}
 
-  // empty
-  {
-    dotBracket: '',
-    secondaryPartners: [],
-    tertiaryPartners: [],
-  },
+it('_traverseDotBracket - empty string', () => {
+  let traversed = _traverseDotBracket('');
+  expect(traversed.secondaryPartners.length).toBe(0);
+  expect(traversed.tertiaryPartners.length).toBe(0);
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // unstructured
-  {
-    dotBracket: '....',
-    secondaryPartners: [null, null, null, null],
-    tertiaryPartners: [null, null, null, null],
-  },
+it('_traverseDotBracket - ignores non-dot-bracket characters', () => {
+  let traversed = _traverseDotBracket('( ((.<<aa<.))weo\t\n  fk).{{{!@#  \n$%.\r\n>>>.}}}.');
+  checkPartners(
+    traversed.secondaryPartners,
+    [11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // a hairpin
-  {
-    dotBracket: '((((....))))',
-    secondaryPartners: [12, 11, 10, 9, null, null, null, null, 4, 3, 2, 1],
-    tertiaryPartners: unstructuredPartners(12),
-  },
+it('_traverseDotBracket - unstructured', () => {
+  let traversed = _traverseDotBracket('....');
+  checkPartners(
+    traversed.secondaryPartners,
+    [null, null, null, null],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    [null, null, null, null],
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // an internal loop
-  {
-    dotBracket: '.(((..((...))))).',
-    secondaryPartners: [null, 16, 15, 14, null, null, 13, 12, null, null, null, 8, 7, 4, 3, 2, null],
-    tertiaryPartners: unstructuredPartners(17),
-  },
+it('_traverseDotBracket - secondary hairpin', () => {
+  let traversed = _traverseDotBracket('(((...)))');
+  checkPartners(
+    traversed.secondaryPartners,
+    [9, 8, 7, null, null, null, 3, 2, 1],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    unstructuredPartners(9),
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // a multibranch loop
-  {
-    dotBracket: '((..(((..)))..((....)))).',
-    secondaryPartners: [24, 23, null, null, 12, 11, 10, null, null, 7, 6, 5, null, null, 22, 21, null, null, null, null, 16, 15, 2, 1, null],
-    tertiaryPartners: unstructuredPartners(25),
-  },
+it('_traverseDotBracket - tertiary hairpin with square brackets', () => {
+  let traversed = _traverseDotBracket('[[[...]]]');
+  checkPartners(
+    traversed.secondaryPartners,
+    unstructuredPartners(9),
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    [9, 8, 7, null, null, null, 3, 2, 1],
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // pseudoknots
-  {
-    dotBracket: '((([[[)))]]]',
-    secondaryPartners: [9, 8, 7, null, null, null, 3, 2, 1, null, null, null],
-    tertiaryPartners: [null, null, null, 12, 11, 10, null, null, null, 6, 5, 4],
-  },
-  {
-    dotBracket: '((({{{)))}}}',
-    secondaryPartners: [9, 8, 7, null, null, null, 3, 2, 1, null, null, null],
-    tertiaryPartners: [null, null, null, 12, 11, 10, null, null, null, 6, 5, 4],
-  },
-  {
-    dotBracket: '(((<<<)))>>>',
-    secondaryPartners: [9, 8, 7, null, null, null, 3, 2, 1, null, null, null],
-    tertiaryPartners: [null, null, null, 12, 11, 10, null, null, null, 6, 5, 4],
-  },
+it('_traverseDotBracket - tertiary hairpin with curly brackets', () => {
+  let traversed = _traverseDotBracket('{{{...}}}');
+  checkPartners(
+    traversed.secondaryPartners,
+    unstructuredPartners(9),
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    [9, 8, 7, null, null, null, 3, 2, 1],
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // knotted pseudoknots
-  {
-    dotBracket: '(((.[[[.))).{{{.]]].}}}.',
-    secondaryPartners: [11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null],
-    tertiaryPartners: [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
-  },
-  {
-    dotBracket: '(((.[[[.))).<<<.]]].>>>.',
-    secondaryPartners: [11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null],
-    tertiaryPartners: [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
-  },
-  {
-    dotBracket: '(((.<<<.))).{{{.>>>.}}}.',
-    secondaryPartners: [11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null],
-    tertiaryPartners: [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
-  },
+it('_traverseDotBracket - tertiary hairpin with angle brackets', () => {
+  let traversed = _traverseDotBracket('<<<...>>>');
+  checkPartners(
+    traversed.secondaryPartners,
+    unstructuredPartners(9),
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    [9, 8, 7, null, null, null, 3, 2, 1],
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // ignore whitespace
-  {
-    dotBracket: ' ((\t\t((. \n\r\t ..\t.))))',
-    secondaryPartners: [12, 11, 10, 9, null, null, null, null, 4, 3, 2, 1],
-    tertiaryPartners: unstructuredPartners(12),
-  },
-  {
-    dotBracket: '(((.  \t\t<<<\r\n  \r.))).{{{.\t\t>>>.}}}.',
-    secondaryPartners: [11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null],
-    tertiaryPartners: [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
-  },
+it('_traverseDotBracket - hairpin with empty loop', () => {
+  let traversed = _traverseDotBracket('((()))');
+  checkPartners(
+    traversed.secondaryPartners,
+    [6, 5, 4, 3, 2, 1],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    unstructuredPartners(6),
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // ignore non-dot-bracket characters
-  {
-    dotBracket: '.  #$%^&(((.queyweytqi.((...kon!@#))))).',
-    secondaryPartners: [null, 16, 15, 14, null, null, 13, 12, null, null, null, 8, 7, 4, 3, 2, null],
-    tertiaryPartners: unstructuredPartners(17),
-  },
-  {
-    dotBracket: '(((.<<aa<.))weofk).{{{!@#$%.>>>.}}}.',
-    secondaryPartners: [11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null],
-    tertiaryPartners: [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
-  },
-];
+it('_traverseDotBracket - an internal loop', () => {
+  let traversed = _traverseDotBracket('.(((..((...))))).');
+  checkPartners(
+    traversed.secondaryPartners,
+    [null, 16, 15, 14, null, null, 13, 12, null, null, null, 8, 7, 4, 3, 2, null],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    unstructuredPartners(17),
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-let unmatchedPartnersCases = [
-  
-  // unmatched downstream partners
-  { dotBracket: '((((....)))))' },
-  { dotBracket: '((((....))))}' },
-  { dotBracket: '(<((....))>))' },
-  { dotBracket: '((..(((..))))..((....)))).' },
-  { dotBracket: '((..(((..)))]..((....)))).' },
-  { dotBracket: '(({[(((}.)))..((]]..)))).' },
+it('_traverseDotBracket - a multibranch loop', () => {
+  let traversed = _traverseDotBracket('((..(((..)))..((....)))).');
+  checkPartners(
+    traversed.secondaryPartners,
+    [24, 23, null, null, 12, 11, 10, null, null, 7, 6, 5, null, null, 22, 21, null, null, null, null, 16, 15, 2, 1, null],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    unstructuredPartners(25),
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-  // unmatched upstream partners
-  { dotBracket: '(((((....))))' },
-  { dotBracket: '<((((....))))' },
-  { dotBracket: '((..(((..)))..(((....)))).' },
-  { dotBracket: '([..(((..)))..(((....)))).' },
-];
+it('_traverseDotBracket - a pseudoknot', () => {
+  let traversed = _traverseDotBracket('((([[[)))]]]');
+  checkPartners(
+    traversed.secondaryPartners,
+    [9, 8, 7, null, null, null, 3, 2, 1, null, null, null],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    [null, null, null, 12, 11, 10, null, null, null, 6, 5, 4],
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-it('valid cases', () => {
-  validCases.forEach(cs => {
-    let parsed = parseDotBracket(cs.dotBracket);
+it('_traverseDotBracket - knotted pseudoknots', () => {
+  let traversed = _traverseDotBracket('(((.[[[.))).<<<.]]].>>>.');
+  checkPartners(
+    traversed.secondaryPartners,
+    [11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-    // validate manually typed in partners notation
-    validatePartners(cs.secondaryPartners);
-    validatePartners(cs.tertiaryPartners);
-    expect(cs.tertiaryPartners.length).toBe(cs.secondaryPartners.length);
+it('_traverseDotBracket - more knotted pseudoknots', () => {
+  let traversed = _traverseDotBracket('(((.<<<.))).{{{.>>>.}}}.');
+  checkPartners(
+    traversed.secondaryPartners,
+    [11, 10, 9, null, null, null, null, null, 3, 2, 1, null, null, null, null, null, null, null, null, null, null, null, null, null],
+  );
+  checkPartners(
+    traversed.tertiaryPartners,
+    [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
+  );
+  expect(traversed.hasUnmatchedUpPartner).toBe(false);
+  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+});
 
-    for (let p = 1; p <= cs.secondaryPartners.length; p++) {
-      expect(parsed.secondaryPartners[p - 1]).toBe(cs.secondaryPartners[p - 1]);
-      expect(parsed.tertiaryPartners[p - 1]).toBe(cs.tertiaryPartners[p - 1]);
-    }
+it('_traverseDotBracket - unmatched upstream parters', () => {
+  [
+    '(((((....))))',
+    '<((((....))))',
+    '((..(((..)))..(((....)))).',
+    '([..(((..)))..(((....)))).',
+  ].forEach(dtbr => {
+    let traversed = _traverseDotBracket(dtbr);
+    expect(traversed.hasUnmatchedUpPartner).toBe(true);
+  });
+});
+
+it('_traverseDotBracket - unmatched downstream partners', () => {
+  [
+    '((((....)))))',
+    '((((....))))}',
+    '(<((....))>))',
+    '((..(((..))))..((....)))).',
+    '((..(((..)))]..((....)))).',
+    '(({[(((}.)))..((]]..)))).',
+  ].forEach(dtbr => {
+    let traversed = _traverseDotBracket(dtbr);
+    expect(traversed.hasUnmatchedDownPartner).toBe(true);
   });
 });
 
@@ -218,19 +298,8 @@ it('parseDotBracket - valid dot-bracket notation', () => {
   let dotBracket = '..(((.[[[..)))..]]]..';
   let parsed = parseDotBracket(dotBracket);
   let traversed = _traverseDotBracket(dotBracket);
-  expect(parsed.secondaryPartners.length).toBe(traversed.secondaryPartners.length);
-  expect(parsed.tertiaryPartners.length).toBe(traversed.tertiaryPartners.length);
-  expect(parsed.secondaryPartners.length).toBe(parsed.tertiaryPartners.length);
-  for (let i = 0; i < traversed.secondaryPartners.length; i++) {
-    expect(parsed.secondaryPartners[i]).toBe(traversed.secondaryPartners[i]);
-    expect(parsed.tertiaryPartners[i]).toBe(traversed.tertiaryPartners[i]);
-  }
-});
-
-it('unmatched partners cases', () => {
-  unmatchedPartnersCases.forEach(cs => {
-    expect(parseDotBracket(cs.dotBracket)).toBe(null);
-  });
+  checkPartners(parsed.secondaryPartners, traversed.secondaryPartners);
+  checkPartners(parsed.tertiaryPartners, traversed.tertiaryPartners);
 });
 
 it('hasUnmatchedUpPartner - true case', () => {
