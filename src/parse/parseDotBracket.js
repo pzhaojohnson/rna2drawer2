@@ -79,6 +79,11 @@ function _correspondingUpChar(downChar) {
  * @property {boolean} unmatchedDownstreamPartner True if there is an unmatched downstream partner.
  */
 
+/**
+ * @param {string} dotBracket 
+ * 
+ * @returns {TraversedDotBracket} 
+ */
 function _traverseDotBracket(dotBracket) {
   dotBracket = _removeNonDotBracketChars(dotBracket);
   let secondaryPartners = [];
@@ -154,4 +159,30 @@ function parseDotBracket(dotBracket) {
   }
 }
 
+/**
+ * @param {string} dotBracket 
+ * 
+ * @returns {boolean} 
+ */
+function hasUnmatchedUpstreamPartner(dotBracket) {
+  let traversed = _traverseDotBracket(dotBracket);
+  return traversed.unmatchedUpstreamPartner;
+}
+
+/**
+ * @param {string} dotBracket 
+ * 
+ * @returns {boolean} 
+ */
+function hasUnmatchedDownstreamPartner(dotBracket) {
+  let traversed = _traverseDotBracket(dotBracket);
+  return traversed.unmatchedDownstreamPartner;
+}
+
 export default parseDotBracket;
+
+export {
+  parseDotBracket,
+  hasUnmatchedUpstreamPartner,
+  hasUnmatchedDownstreamPartner,
+};
