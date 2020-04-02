@@ -72,6 +72,58 @@ function _correspondingUpChar(downChar) {
 }
 
 /**
+ * @typedef {Object} TraversedDotBracket 
+ * @property {Array<number|null>} secondaryPartners 
+ * @property {Array<number|null>} tertiaryPartners 
+ * @property {boolean} unmatchedUpstreamPartner True if there is an unmatched upstream partner.
+ * @property {boolean} unmatchedDownstreamPartner True if there is an unmatched downstream partner.
+ */
+
+function _traverseDotBracket(dotBracket) {
+  dotBracket = _removeNonDotBracketChars(dotBracket);
+  let secondaryPartners = [];
+  let tertiaryPartners = [];
+  for (let p = 1; p <= dotBracket.length; p++) {
+    secondaryPartners.push(null);
+    tertiaryPartners.push(null);
+  }
+  let unmatchedUpstreamPartner = false;
+  let unmatchedDownstreamPartner = false;
+
+  let ups = { '(': [], '[': [], '{': [], '<': [] };
+  
+  for (let p = 1; p <= dotBracket.length; p++) {
+    let c = dotBracket.charAt(p - 1);
+    if (_isUpChar(c)) {
+      ups[c].push(p);
+    } else if (_isDownChar(c)) {
+      let upChar = _correspondingUpChar(c);
+      if (ups[upChar].length === 0) {
+        unmatchedDownstreamPartner = true;
+      } else {
+        let pUp = ups[upChar].pop();
+        let partners = _isTertiaryChar(c) ? tertiaryPartners : secondaryPartners;
+        partners[pUp - 1] = p;
+        partners[p - 1] = pUp;
+      }
+    }
+  }
+
+  ['(', '[', '{', '<'].forEach(upChar => {
+    if (ups[upChar].length > 0) {
+      unmatchedUpstreamPartner = true;
+    }
+  });
+  
+  return {
+    secondaryPartners: secondaryPartners,
+    tertiaryPartners: tertiaryPartners,
+    unmatchedUpstreamPartner: unmatchedUpstreamPartner,
+    unmatchedDownstreamPartner: unmatchedDownstreamPartner,
+  };
+}
+
+/**
  * @typedef {object} ParsedDotBracket 
  * @property {Array<number|null>} secondaryPartners The partners notation of the secondary structure.
  * @property {Array<number|null>} tertiaryPartners The partners notation of the tertiary structure.
@@ -84,47 +136,22 @@ function _correspondingUpChar(downChar) {
  * 
  * Characters indicating tertiary pairs include [ '['|']' | '{'|'}' | '<'|'>' ].
  * 
+ * Returns null if the dot-bracket notation is invalid.
+ * 
  * @param {string} dotBracket The dot-bracket notation input by the user.
  * 
- * @returns {ParsedDotBracket} 
- * 
- * @throws {Error} If there are unmatched partners in the dot-bracket notation.
+ * @returns {ParsedDotBracket|null} 
  */
 function parseDotBracket(dotBracket) {
-  dotBracket = _removeNonDotBracketChars(dotBracket);
-  let secondaryPartners = [];
-  let tertiaryPartners = [];
-  for (let p = 1; p <= dotBracket.length; p++) {
-    secondaryPartners.push(null);
-    tertiaryPartners.push(null);
+  let traversed = _traverseDotBracket(dotBracket);
+  if (traversed.unmatchedUpstreamPartner || traversed.unmatchedDownstreamPartner) {
+    return null;
+  } else {
+    return {
+      secondaryPartners: traversed.secondaryPartners,
+      tertiaryPartners: traversed.tertiaryPartners,
+    };
   }
-  let ups = { '(': [], '[': [], '{': [], '<': [] };
-  for (let p = 1; p <= dotBracket.length; p++) {
-    let c = dotBracket.charAt(p - 1);
-    if (_isUpChar(c)) {
-      ups[c].push(p);
-    } else if (_isDownChar(c)) {
-      let upChar = _correspondingUpChar(c);
-      if (ups[upChar].length === 0) {
-        throw new Error('Unmatched "' + c + '" downstream partner at position ' + p + '.');
-      } else {
-        let pUp = ups[upChar].pop();
-        let partners = _isTertiaryChar(c) ? tertiaryPartners : secondaryPartners;
-        partners[pUp - 1] = p;
-        partners[p - 1] = pUp;
-      }
-    }
-  }
-  ['(', '[', '{', '<'].forEach(upChar => {
-    if (ups[upChar].length > 0) {
-      let p = ups[upChar].pop();
-      throw new Error('Unmatched "' + upChar + '" upstream partner at position ' + p + '.');
-    }
-  });
-  return {
-    secondaryPartners: secondaryPartners,
-    tertiaryPartners: tertiaryPartners,
-  };
 }
 
 export default parseDotBracket;

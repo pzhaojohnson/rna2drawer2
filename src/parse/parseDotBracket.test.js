@@ -147,6 +147,6 @@ it('valid cases', () => {
 
 it('unmatched partners cases', () => {
   unmatchedPartnersCases.forEach(cs => {
-    expect(() => parseDotBracket(cs.dotBracket)).toThrow();
+    expect(parseDotBracket(cs.dotBracket)).toBe(null);
   });
 });
