@@ -86,6 +86,7 @@ function _correspondingUpChar(downChar) {
  */
 function _traverseDotBracket(dotBracket) {
   dotBracket = _removeNonDotBracketChars(dotBracket);
+  
   let secondaryPartners = [];
   let tertiaryPartners = [];
   for (let p = 1; p <= dotBracket.length; p++) {
@@ -99,17 +100,24 @@ function _traverseDotBracket(dotBracket) {
   
   for (let p = 1; p <= dotBracket.length; p++) {
     let c = dotBracket.charAt(p - 1);
+
     if (_isUpChar(c)) {
       ups[c].push(p);
     } else if (_isDownChar(c)) {
       let upChar = _correspondingUpChar(c);
+      
       if (ups[upChar].length === 0) {
         unmatchedDownPartner = true;
       } else {
         let pUp = ups[upChar].pop();
-        let partners = _isTertiaryChar(c) ? tertiaryPartners : secondaryPartners;
-        partners[pUp - 1] = p;
-        partners[p - 1] = pUp;
+        
+        if (_isTertiaryChar(c)) {
+          tertiaryPartners[pUp - 1] = p;
+          tertiaryPartners[p - 1] = pUp;
+        } else {
+          secondaryPartners[pUp - 1] = p;
+          secondaryPartners[p - 1] = pUp;
+        }
       }
     }
   }
