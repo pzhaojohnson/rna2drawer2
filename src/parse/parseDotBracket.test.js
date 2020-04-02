@@ -206,8 +206,45 @@ it('valid cases', () => {
   });
 });
 
+it('parseDotBracket - unmatched upstream partner', () => {
+  expect(parseDotBracket('(((...))...')).toBe(null);
+});
+
+it('parseDotBracket - unmatched downstream partner', () => {
+  expect(parseDotBracket('...((....)))..')).toBe(null);
+});
+
+it('parseDotBracket - valid dot-bracket notation', () => {
+  let dotBracket = '..(((.[[[..)))..]]]..';
+  let parsed = parseDotBracket(dotBracket);
+  let traversed = _traverseDotBracket(dotBracket);
+  expect(parsed.secondaryPartners.length).toBe(traversed.secondaryPartners.length);
+  expect(parsed.tertiaryPartners.length).toBe(traversed.tertiaryPartners.length);
+  expect(parsed.secondaryPartners.length).toBe(parsed.tertiaryPartners.length);
+  for (let i = 0; i < traversed.secondaryPartners.length; i++) {
+    expect(parsed.secondaryPartners[i]).toBe(traversed.secondaryPartners[i]);
+    expect(parsed.tertiaryPartners[i]).toBe(traversed.tertiaryPartners[i]);
+  }
+});
+
 it('unmatched partners cases', () => {
   unmatchedPartnersCases.forEach(cs => {
     expect(parseDotBracket(cs.dotBracket)).toBe(null);
   });
+});
+
+it('hasUnmatchedUpPartner - true case', () => {
+  expect(hasUnmatchedUpPartner('((((...)))')).toBeTruthy();
+});
+
+it('hasUnmatchedUpPartner - false case', () => {
+  expect(hasUnmatchedUpPartner('(((...)))')).toBeFalsy();
+});
+
+it('hasUnmatchedDownPartner - true case', () => {
+  expect(hasUnmatchedDownPartner('(((...))))')).toBeTruthy();
+});
+
+it('hasUnmatchedDownPartner - false case', () => {
+  expect(hasUnmatchedDownPartner('(((...)))')).toBeFalsy();
 });
