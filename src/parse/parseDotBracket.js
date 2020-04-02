@@ -129,7 +129,7 @@ function _traverseDotBracket(dotBracket) {
 }
 
 /**
- * @typedef {object} ParsedDotBracket 
+ * @typedef {Object} ParsedDotBracket 
  * @property {Array<number|null>} secondaryPartners The partners notation of the secondary structure.
  * @property {Array<number|null>} tertiaryPartners The partners notation of the tertiary structure.
  */
