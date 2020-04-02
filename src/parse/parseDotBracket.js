@@ -1,15 +1,74 @@
-function _removeNonDotBracketChars(dotBracket) {
-  let result = '';
+const _TERTIARY_UPS = ['[', '{', '<'];
+const _TERTIARY_DOWNS = [']', '}', '>'];
 
+/**
+ * @param {string} c 
+ * 
+ * @returns {boolean} 
+ */
+function _isDotBracketChar(c) {
+  return c === '.'
+    || c === '('
+    || c === ')'
+    || _TERTIARY_UPS.includes(c)
+    || _TERTIARY_DOWNS.includes(c);
+}
+
+/**
+ * @param {string} dotBracket 
+ * 
+ * @returns {string} 
+ */
+function _removeNonDotBracketChars(dotBracket) {
+  let filtered = '';
   for (let i = 0; i < dotBracket.length; i++) {
     let c = dotBracket.charAt(i);
-
-    if (['(', ')', '[', ']', '{', '}', '<', '>', '.'].includes(c)) {
-      result += c;
+    if (_isDotBracketChar(c)) {
+      filtered += c;
     }
   }
+  return filtered;
+}
 
-  return result;
+/**
+ * @param {string} c 
+ * 
+ * @returns {boolean} 
+ */
+function _isUpChar(c) {
+  return c === '(' || _TERTIARY_UPS.includes(c);
+}
+
+/**
+ * @param {string} c 
+ * 
+ * @returns {boolean} 
+ */
+function _isDownChar(c) {
+  return c === ')' || _TERTIARY_DOWNS.includes(c);
+}
+
+/**
+ * @param {string} c 
+ * 
+ * @returns {boolean} 
+ */
+function _isTertiaryChar(c) {
+  return (_isUpChar(c) && c !== '(') || (_isDownChar(c) && c !== ')');
+}
+
+/**
+ * @param {string} downChar 
+ * 
+ * @returns {string} 
+ */
+function _correspondingUpChar(downChar) {
+  return {
+    ')': '(',
+    ']': '[',
+    '}': '{',
+    '>': '<',
+  }[downChar];
 }
 
 /**
@@ -36,78 +95,41 @@ function parseDotBracket(dotBracket) {
   dotBracket = _removeNonDotBracketChars(dotBracket);
   let secondaryPartners = [];
   let tertiaryPartners = [];
-
   for (let p = 1; p <= dotBracket.length; p++) {
     secondaryPartners.push(null);
     tertiaryPartners.push(null);
   }
-  
   let ups = { '(': [], '[': [], '{': [], '<': [] };
-  
-  function isUpChar(c) {
-    return ['(', '[', '{', '<'].includes(c);
-  }
-
-  function isDownChar(c) {
-    return [')', ']', '}', '>'].includes(c);
-  }
-
-  function isTertiaryChar(c) {
-    return (isUpChar(c) && c !== '(') || (isDownChar(c) && c !== ')');
-  }
-
-  function addUp(upChar, pUp) {
-    ups[upChar].push(pUp);
-  }
-
-  function addPair(downChar, pDown) {
-    let upChar = {
-      ')': '(',
-      ']': '[',
-      '}': '{',
-      '>': '<'
-    }[downChar];
-
-    if (ups[upChar].length === 0) {
-      throw new Error('Unmatched "' + downChar + '" downstream partner at position ' + pDown + '.');
-    } else {
-      let pUp = ups[upChar].pop();
-      let partners = isTertiaryChar(downChar) ? tertiaryPartners : secondaryPartners;
-      partners[pUp - 1] = pDown;
-      partners[pDown - 1] = pUp;
-    }
-  }
-
   for (let p = 1; p <= dotBracket.length; p++) {
     let c = dotBracket.charAt(p - 1);
-
-    if (c === '.') {
-      // nothing to do
-    } else if (isUpChar(c)) {
-      addUp(c, p);
-    } else if (isDownChar(c)) {
-      addPair(c, p);
+    if (_isUpChar(c)) {
+      ups[c].push(p);
+    } else if (_isDownChar(c)) {
+      let upChar = _correspondingUpChar(c);
+      if (ups[upChar].length === 0) {
+        throw new Error('Unmatched "' + c + '" downstream partner at position ' + p + '.');
+      } else {
+        let pUp = ups[upChar].pop();
+        let partners = _isTertiaryChar(c) ? tertiaryPartners : secondaryPartners;
+        partners[pUp - 1] = p;
+        partners[p - 1] = pUp;
+      }
     }
   }
-
   ['(', '[', '{', '<'].forEach(upChar => {
     if (ups[upChar].length > 0) {
       let p = ups[upChar].pop();
       throw new Error('Unmatched "' + upChar + '" upstream partner at position ' + p + '.');
     }
   });
-
   let allPartners = [...secondaryPartners];
-
   for (let p = 1; p <= tertiaryPartners.length; p++) {
     let q = tertiaryPartners[p - 1];
-
     if (q !== null) {
       allPartners[p - 1] = q;
       allPartners[q - 1] = p;
     }
   }
-
   return {
     allPartners: allPartners,
     secondaryPartners: secondaryPartners,
