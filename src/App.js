@@ -229,11 +229,7 @@ class App {
     return () => this._openForm(
       <CreateNewDrawing
         width={'100vw'}
-        height={'100%'}
-        centerDrawingViewCallback={this.centerDrawingViewCallback()}
-        addStructureCallback={this.addStructureCallback()}
-        applyStrictLayoutCallback={this.applyStrictLayoutCallback()}
-        closeCallback={this.closeFormCallback()}
+        submit={() => {}}
       />
     );
   }

@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import parseSequenceId from '../parse/parseSequenceId';
 import parseSequence from '../parse/parseSequence';
-import parseDotBracket from '../parse/parseDotBracket';
-import checkSequenceAndPartnersCompatibility from '../parse/checkSequenceAndPartnersCompatibility';
+import {
+  parseDotBracket,
+  hasUnmatchedUpPartner,
+  hasUnmatchedDownPartner,
+} from '../parse/parseDotBracket';
 
 class CreateNewDrawing extends React.Component {
   constructor(props) {
@@ -29,6 +31,9 @@ class CreateNewDrawing extends React.Component {
     };
   }
 
+  /**
+   * @returns {CreateNewDrawing~ExampleInput} 
+   */
   defaultExampleInput() {
     return {
       exampleInput: '--- None ---',
@@ -39,7 +44,15 @@ class CreateNewDrawing extends React.Component {
   }
 
   /**
-   * @returns {object} Example inputs keyed by sequence ID.
+   * @typedef {Object} CreateNewDrawing~ExampleInput 
+   * @property {string} exampleInput 
+   * @property {string} sequenceId 
+   * @property {string} sequence 
+   * @property {string} structure 
+   */
+
+  /**
+   * @returns {Array<CreateNewDrawing~ExampleInput>} 
    */
   exampleInputs() {
     return [
@@ -75,7 +88,6 @@ class CreateNewDrawing extends React.Component {
           style={{
             flexGrow: '1',
             maxHeight: '800px',
-            margin: '20px',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
@@ -85,32 +97,48 @@ class CreateNewDrawing extends React.Component {
             style={{
               flexGrow: '1',
               maxWidth: '1200px',
+              margin: '16px',
               border: 'thin solid #bfbfbf',
               borderRadius: '32px',
               display: 'flex',
               flexDirection: 'column',
             }}
           >
-            {this._titleSection()}
-            {this._contentSection()}
+            {this._titleAndContent()}
           </div>
         </div>
       </div>
     );
   }
 
-  _titleSection() {
+  _titleAndContent() {
     return (
-      <div>
+      <div
+        style={{
+          flexGrow: '1',
+          margin: '32px 64px 32px 64px',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         {this._title()}
-        {this._titleUnderline()}
+        {this._content()}
       </div>
     );
   }
 
   _title() {
     return (
-      <p className={'unselectable-text'} style={{ margin: '36px 80px 0px 80px', fontSize: '24px' }} >
+      <div>
+        {this._titleText()}
+        {this._titleUnderline()}
+      </div>
+    );
+  }
+
+  _titleText() {
+    return (
+      <p className={'unselectable-text'} style={{ margin: '0px 8px 0px 8px', fontSize: '24px' }} >
         Create a New Drawing
       </p>
     );
@@ -124,27 +152,27 @@ class CreateNewDrawing extends React.Component {
           borderWidth: '0px 0px thin 0px',
           borderStyle: 'solid',
           borderColor: '#bfbfbf',
-          margin: '8px 72px 0px 72px',
+          margin: '8px 0px 0px 0px',
         }}
       ></div>
     );
   }
 
-  _contentSection() {
+  _content() {
     return (
       <div
         style={{
           flexGrow: '1',
-          margin: '16px 88px 0px 88px',
+          margin: '16px 16px 0px 16px',
           display: 'flex',
           flexDirection: 'column',
         }}
       >
         {this._exampleInputSection()}
         {this._sequenceIdSection()}
-        {this._sequenceAndStructureSection()}
+        {this._sequenceAndStructureSections()}
         {this._errorMessageSection()}
-        {this._submitButton()}
+        {this._submitSection()}
       </div>
     );
   }
@@ -193,7 +221,6 @@ class CreateNewDrawing extends React.Component {
     let ei = this.exampleInputs().find(
       ei => ei.exampleInput === event.target.value
     );
-
     this.setState({
       exampleInput: ei.exampleInput,
       sequenceId: ei.sequenceId,
@@ -248,9 +275,9 @@ class CreateNewDrawing extends React.Component {
     });
   }
 
-  _sequenceAndStructureSection() {
+  _sequenceAndStructureSections() {
     return (
-      <div style={{ margin: '16px 0px 10px 0px', flexGrow: '1' }} >
+      <div style={{ margin: '0px 0px 10px 0px', flexGrow: '1' }} >
         {this._sequenceSection()}
         {this._structureSection()}
       </div>
@@ -271,7 +298,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceHeader() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row' }} >
+      <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'row' }} >
         {this._sequenceLabel()}
         {this._sequenceParsingDetailsToggle()}
       </div>
@@ -298,7 +325,7 @@ class CreateNewDrawing extends React.Component {
           cursor: 'pointer',
         }}
       >
-        {'Details'}
+        Details
       </p>
     );
   }
@@ -336,7 +363,7 @@ class CreateNewDrawing extends React.Component {
       return null;
     } else {
       return (
-        <div style={{ width: '360px', minHeight: '0px', marginLeft: '8px' }} >
+        <div style={{ width: '360px', minHeight: '0px', margin: '16px 0px 0px 8px' }} >
           <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
             Sequence Parsing Details:
           </p>
@@ -347,7 +374,7 @@ class CreateNewDrawing extends React.Component {
             {this._ignoreNumbersCheckbox()}
             {this._ignoreNonAUGCTLettersCheckbox()}
             {this._ignoreNonAlphanumericsCheckbox()}
-            <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }}>
+            <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }}>
               All whitespace is ignored.
             </p>
           </div>
@@ -358,7 +385,7 @@ class CreateNewDrawing extends React.Component {
 
   _ignoreNumbersCheckbox() {
     return (
-      <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type={'checkbox'}
           checked={this.state.ignoreNumbers}
@@ -379,7 +406,7 @@ class CreateNewDrawing extends React.Component {
 
   _ignoreNonAUGCTLettersCheckbox() {
     return (
-      <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <div style={{ marginTop: '6px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type={'checkbox'}
           checked={this.state.ignoreNonAUGCTLetters}
@@ -400,7 +427,7 @@ class CreateNewDrawing extends React.Component {
 
   _ignoreNonAlphanumericsCheckbox() {
     return (
-      <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <div style={{ marginTop: '6px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type={'checkbox'}
           checked={this.state.ignoreNonAlphanumerics}
@@ -420,19 +447,13 @@ class CreateNewDrawing extends React.Component {
   }
 
   _structureSection() {
-    let structureParsingDetails = null;
-
-    if (this.state.showStructureParsingDetails) {
-      structureParsingDetails = this._structureParsingDetails();
-    }
-
     return (
       <div style={{ height: '50%', display: 'flex', flexDirection: 'row' }} >
         <div style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
           {this._structureHeader()}
           {this._structureTextarea()}
         </div>
-        {structureParsingDetails}
+        {this._structureParsingDetails()}
       </div>
     );
   }
@@ -500,27 +521,31 @@ class CreateNewDrawing extends React.Component {
   }
 
   _structureParsingDetails() {
-    return (
-      <div style={{ width: '360px', minHeight: '0px', margin: '16px 0px 0px 8px' }} >
-        <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
-          {'Structure Parsing Details:'}
-        </p>
-        <div style={{ marginLeft: '8px' }} >
-          <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }} >
-            {'Periods "." indicate unpaired bases.'}
+    if (!this.state.showStructureParsingDetails) {
+      return null;
+    } else {
+      return (
+        <div style={{ width: '360px', minHeight: '0px', margin: '16px 0px 0px 8px' }} >
+          <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
+            Structure Parsing Details:
           </p>
-          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }} >
-            {'Matching parentheses "( )" indicate base pairs in the secondary structure.'}
-          </p>
-          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }} >
-            {'Pseudoknotted base pairs are specified by "[ ]", "{ }", or "< >".'}
-          </p>
-          <p className={'unselectable-text'} style={{ marginTop: '16px', fontSize: '12px' }} >
-            {'All other characters and whitespace are ignored.'}
-          </p>
+          <div style={{ marginLeft: '8px' }} >
+            <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }} >
+              Periods "." indicate unpaired bases.
+            </p>
+            <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }} >
+              Matching parentheses "( )" indicate base pairs in the secondary structure.
+            </p>
+            <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }} >
+              {'Pseudoknotted base pairs are specified by "[ ]", "{ }", or "< >".'}
+            </p>
+            <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }} >
+              All other characters and whitespace are ignored.
+            </p>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
   _errorMessageSection() {
@@ -542,9 +567,9 @@ class CreateNewDrawing extends React.Component {
     }
   }
 
-  _submitButton() {
+  _submitSection() {
     return (
-      <div style={{ margin: '6px 0px 32px 0px' }} >
+      <div style={{ margin: '6px 0px 0px 0px' }} >
         <button
           onClick={() => this._submit()}
           style={{ padding: '4px 36px 4px 32px', fontSize: '12px' }}
@@ -556,75 +581,112 @@ class CreateNewDrawing extends React.Component {
   }
 
   _submit() {
-    try {
-      let sequenceId = this._parseSequenceId();
-      let sequence = this._parseSequence();
-      let partners = this._parseStructure(sequence);
-      
-      this.props.addStructureCallback(sequenceId, sequence, partners);
-      this.props.applyStrictLayoutCallback();
-      this.props.closeCallback();
-      this.props.centerDrawingViewCallback();
-    } catch (e) {
-      this.setState({
-        errorMessage: e.message,
-      });
+    let sequenceId = this._parseSequenceId();
+    if (sequenceId === null) {
+      return;
+    }
+    let sequence = this._parseSequence();
+    if (sequence === null) {
+      return;
+    }
+    let structure = this._parseStructure(sequence);
+    if (structure === null) {
+      return;
+    }
+    this.props.submit(
+      sequenceId,
+      sequence,
+      structure.secondaryPartners,
+      structure.tertiaryPartners,
+    );
+  }
+
+  /**
+   * Returns null if the sequence ID is empty.
+   * 
+   * @returns {string|null} 
+   */
+  _parseSequenceId() {
+    let sequenceId = parseSequenceId(this.state.sequenceId);
+    if (sequenceId.length === 0) {
+      this.setState({ errorMessage: 'Sequence ID is empty.' });
+      return null;
+    } else {
+      return sequenceId;
     }
   }
 
-  _parseSequenceId() {
-    return parseSequenceId(this.state.sequenceId);
-  }
-
+  /**
+   * Returns null if the sequence is empty.
+   * 
+   * @returns {string|null} 
+   */
   _parseSequence() {
     let sequence = parseSequence(this.state.sequence, {
       ignoreNumbers: this.state.ignoreNumbers,
       ignoreNonAUGCTLetters: this.state.ignoreNonAUGCTLetters,
       ignoreNonAlphanumerics: this.state.ignoreNonAlphanumerics,
     });
-
     if (sequence.length === 0) {
-      throw new Error('Sequence length cannot be zero.');
+      this.setState({ errorMessage: 'Sequence is empty.' });
+      return null;
+    } else {
+      return sequence;
     }
-
-    return sequence;
   }
 
   /**
-   * Parses the secondary structure and checks for compatibility with the parsed
-   * sequence.
+   * @typedef {Object} CreateNewDrawing~ParsedStructure 
+   * @property {Array<number|null>} secondaryPartners 
+   * @property {Array<number|null>} tertiaryPartners 
+   */
+
+  /**
+   * Returns null if the structure is invalid.
    * 
-   * If no structure was entered by the user, this method will return an entirely
-   * unpaired partners notation.
+   * Also returns null if the length of the parsed structure does not
+   * match the length of the sequence. However, if the length of the
+   * parsed structure is zero, then this method will return entirely
+   * unpaired partners notations of the same length as the sequence.
    * 
-   * @param {string} sequence The parsed sequence.
+   * @param {string} sequence 
    * 
-   * @returns {Array<number|null>} The partners notation of the secondary structure.
+   * @returns {CreateNewDrawing~ParsedStructure|null} 
    */
   _parseStructure(sequence) {
     let parsed = parseDotBracket(this.state.structure);
-    let partners = parsed.secondaryPartners;
-
-    if (partners.length === 0) {
-      partners = [];
-
-      for (let i = 0; i < sequence.length; i++) {
-        partners.push(null);
+    if (parsed === null) {
+      if (hasUnmatchedUpPartner(this.state.structure)) {
+        this.setState({ errorMessage: 'Unmatched upstream partner.' });
+      } else if (hasUnmatchedDownPartner(this.state.structure)) {
+        this.setState({ errorMessage: 'Unmatched downstream partner.' });
+      } else {
+        this.setState({ errorMessage: 'Invalid structure.' });
       }
+      return null;
     }
 
-    checkSequenceAndPartnersCompatibility(sequence, partners);
-
-    return partners;
+    if (parsed.secondaryPartners.length === 0) {
+      let structure = { secondaryPartners: [], tertiaryPartners: [] };
+      for (let i = 0; i < sequence.length; i++) {
+        structure.secondaryPartners.push(null);
+        structure.tertiaryPartners.push(null);
+      }
+      return structure;
+    } else {
+      if (parsed.secondaryPartners.length !== sequence.length) {
+        this.setState({ errorMessage: 'Structure length does not match sequence length.' });
+        return null;
+      } else {
+        return parsed;
+      }
+    }
   }
 }
 
 CreateNewDrawing.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  centerDrawingViewCallback: PropTypes.func,
-  addStructureCallback: PropTypes.func,
-  applyStrictLayoutCallback: PropTypes.func,
-  closeCallback: PropTypes.func,
+  submit: PropTypes.func,
 };
 
 CreateNewDrawing.defaultProps = {
