@@ -5,11 +5,11 @@ function _isNumber(c) {
 }
 
 function _isLetter(c) {
-  return c.match(/[A-Z|a-z]/)
+  return c.match(/[A-Z]|[a-z]/)
 }
 
 function _isAUGCT(c) {
-  return c.match(/[A|a|U|u|G|g|C|c|T|t]/);
+  return c.match(/A|a|U|u|G|g|C|c|T|t/);
 }
 
 function _isNonAlphanumeric(c) {
@@ -54,3 +54,13 @@ function parseSequence(unparsed, options={}) {
 }
 
 export default parseSequence;
+
+export {
+  parseSequence,
+
+  // these are only exported to aid testing
+  _isNumber,
+  _isLetter,
+  _isAUGCT,
+  _isNonAlphanumeric,
+};
