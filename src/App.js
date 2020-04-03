@@ -8,6 +8,7 @@ import Menu from './Menu';
 import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
+import { OpenCT } from './forms/OpenCT';
 
 class App {
 
@@ -152,6 +153,7 @@ class App {
       <Menu
         drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
         openFormCreateNewDrawingCallback={this.openFormCreateNewDrawingCallback()}
+        openFormOpenCTCallback={this.openFormOpenCTCallback()}
       />
     );
     
@@ -228,6 +230,15 @@ class App {
   openFormCreateNewDrawingCallback() {
     return () => this._openForm(
       <CreateNewDrawing
+        width={'100vw'}
+        submit={() => {}}
+      />
+    );
+  }
+
+  openFormOpenCTCallback() {
+    return () => this._openForm(
+      <OpenCT
         width={'100vw'}
         submit={() => {}}
       />

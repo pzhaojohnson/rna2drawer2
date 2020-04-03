@@ -572,7 +572,7 @@ class CreateNewDrawing extends React.Component {
       <div style={{ margin: '6px 0px 0px 0px' }} >
         <button
           onClick={() => this._submit()}
-          style={{ padding: '4px 36px 4px 32px', fontSize: '12px' }}
+          style={{ padding: '4px 32px 4px 32px', fontSize: '12px' }}
         >
           Submit
         </button>
