@@ -8,17 +8,38 @@ import {
   hasUnmatchedDownPartner,
 } from '../parse/parseDotBracket';
 
+const _EXAMPLE_INPUTS = [
+  {
+    exampleInput: '--- None ---',
+    sequenceId: '',
+    sequence: '',
+    structure: '',
+  },
+  {
+    exampleInput: 'Several Hairpins',
+    sequenceId: 'Several Hairpins',
+    sequence: 'AGCGCAUACGAUAACCAUCGCCGCGCAUCGGCCAGCAUCGGGCCAAGGCUGCACGCCAUUGCAUGGUGUGUAAAGCU',
+    structure:'.((((...((((....))))..))))...((((.......)))).....(((((((((.....))))))))).....',
+  },
+  {
+    exampleInput: "PEMV2 3'UTR",
+    sequenceId: "PEMV2 3'UTR",
+    sequence: 'UUAACUAGGCGGGCGUGUUGGUUACAGUAGGAGGGGACAGUGCGCAUCGAAACUGAGCCCCACCACAACUCUCAUCCACGGGGUGGUUGGGACGCAGGUGUCGGAGGGAUCGCCAGCCCUCAGGAUAGUGAGCUCCCGCAGAGGGAUAAGCUAUCUCCCUGCGACGUAGUGGUAGAACACGUGGGAUAGGGGAUGACCUUGUCGACCGGUUAUCGGUCCCCUGCUCCUUCGAGCUGGCAAGGCGCUCACAGGUUCUACACUGCUACUAAAGUUGGUGGUGGAUGUCUCGCCCAAAAAGAUCACAAACGCGCGGGACAAGGUCCCUUCCACCUUCGCCGGGUAAGGCUAGAGUCAGCGCUGCAUGACUAUAACUUGCGGCCGAUCCAGUUGCACGACUGGUGGUCCCCCUCAGUGUCUCGGUUGUCUGCCGAGUGGGCGGUGGUCGGAUUCCACCACACCCUGCCACGAGGUGCGUGGAGACUUGGCCAGUCUAGGCUCGUCGUAAUUAGUUGCAGCGACGUUAAUCAACCCGUCCGGGCAUAUAAUAGGACCGGUUGUGCUUCUUCCUCCCUUCUUAGCCAGGUGGUUACCUCCCUGGCGCCC',
+    structure: '.......(((.((((....(((.......(((((((((.....((.(((....))))).(((((((((((((((.((((...)))).)))).((((((.....(((((........))))).(((((((....((((.....))))...))))))).))))))...(((((((((.....(((((((..(((.((.((((((((((((.....)))))....((((....)))).))))))))))))....))))))).))))))))).)))).))))))).((((((((...................))))))))..))))))))))))..))))(((..(((..((((.(..(((((((..((((....(((((((.((.......((..(((((((((((((((((.(((.((((((.....)))))).(((..(((((.((...))))))).)))...))))))).....)).))))..)))))))...))))))))))).)))))))))))........(((((.((((............)))).))))).).)))).))))))......((((((..(....)..))))))))).',
+  },
+];
+
 class CreateNewDrawing extends React.Component {
   constructor(props) {
     super(props);
 
-    let dei = this.defaultExampleInput();
+    let ei = _EXAMPLE_INPUTS[0];
 
     this.state = {
-      exampleInput: dei.exampleInput,
-      sequenceId: dei.sequenceId,
-      sequence: dei.sequence,
-      structure: dei.structure,
+      exampleInput: ei.exampleInput,
+      sequenceId: ei.sequenceId,
+      sequence: ei.sequence,
+      structure: ei.structure,
 
       showSequenceParsingDetails: false,
       ignoreNumbers: true,
@@ -29,47 +50,6 @@ class CreateNewDrawing extends React.Component {
 
       errorMessage: '',
     };
-  }
-
-  /**
-   * @returns {CreateNewDrawing~ExampleInput} 
-   */
-  defaultExampleInput() {
-    return {
-      exampleInput: '--- None ---',
-      sequenceId: '',
-      sequence: '',
-      structure: '',
-    };
-  }
-
-  /**
-   * @typedef {Object} CreateNewDrawing~ExampleInput 
-   * @property {string} exampleInput 
-   * @property {string} sequenceId 
-   * @property {string} sequence 
-   * @property {string} structure 
-   */
-
-  /**
-   * @returns {Array<CreateNewDrawing~ExampleInput>} 
-   */
-  exampleInputs() {
-    return [
-      this.defaultExampleInput(),
-      {
-        exampleInput: 'Several Hairpins',
-        sequenceId: 'Several Hairpins',
-        sequence: 'AGCGCAUACGAUAACCAUCGCCGCGCAUCGGCCAGCAUCGGGCCAAGGCUGCACGCCAUUGCAUGGUGUGUAAAGCU',
-        structure:'.((((...((((....))))..))))...((((.......)))).....(((((((((.....))))))))).....',
-      },
-      {
-        exampleInput: "PEMV2 3'UTR",
-        sequenceId: "PEMV2 3'UTR",
-        sequence: 'UUAACUAGGCGGGCGUGUUGGUUACAGUAGGAGGGGACAGUGCGCAUCGAAACUGAGCCCCACCACAACUCUCAUCCACGGGGUGGUUGGGACGCAGGUGUCGGAGGGAUCGCCAGCCCUCAGGAUAGUGAGCUCCCGCAGAGGGAUAAGCUAUCUCCCUGCGACGUAGUGGUAGAACACGUGGGAUAGGGGAUGACCUUGUCGACCGGUUAUCGGUCCCCUGCUCCUUCGAGCUGGCAAGGCGCUCACAGGUUCUACACUGCUACUAAAGUUGGUGGUGGAUGUCUCGCCCAAAAAGAUCACAAACGCGCGGGACAAGGUCCCUUCCACCUUCGCCGGGUAAGGCUAGAGUCAGCGCUGCAUGACUAUAACUUGCGGCCGAUCCAGUUGCACGACUGGUGGUCCCCCUCAGUGUCUCGGUUGUCUGCCGAGUGGGCGGUGGUCGGAUUCCACCACACCCUGCCACGAGGUGCGUGGAGACUUGGCCAGUCUAGGCUCGUCGUAAUUAGUUGCAGCGACGUUAAUCAACCCGUCCGGGCAUAUAAUAGGACCGGUUGUGCUUCUUCCUCCCUUCUUAGCCAGGUGGUUACCUCCCUGGCGCCC',
-        structure: '.......(((.((((....(((.......(((((((((.....((.(((....))))).(((((((((((((((.((((...)))).)))).((((((.....(((((........))))).(((((((....((((.....))))...))))))).))))))...(((((((((.....(((((((..(((.((.((((((((((((.....)))))....((((....)))).))))))))))))....))))))).))))))))).)))).))))))).((((((((...................))))))))..))))))))))))..))))(((..(((..((((.(..(((((((..((((....(((((((.((.......((..(((((((((((((((((.(((.((((((.....)))))).(((..(((((.((...))))))).)))...))))))).....)).))))..)))))))...))))))))))).)))))))))))........(((((.((((............)))).))))).).)))).))))))......((((((..(....)..))))))))).',
-      },
-    ];
   }
 
   render() {
@@ -179,7 +159,7 @@ class CreateNewDrawing extends React.Component {
 
   _exampleInputSection() {
     return (
-      <div style={{ margin: '0px 0px 0px 0px', alignItems: 'center' }} >
+      <div style={{ margin: '0px', alignItems: 'center' }} >
         {this._exampleInputLabel()}
         {this._exampleInputSelect()}
       </div>
@@ -198,27 +178,25 @@ class CreateNewDrawing extends React.Component {
   }
 
   _exampleInputSelect() {
-    function option(ei) {
-      return (
-        <option key={ei.exampleInput} value={ei.exampleInput}>
-          {ei.exampleInput}
-        </option>
-      );
-    }
-
     return (
       <select
         value={this.state.exampleInput}
         onChange={event => this._onExampleInputSelectChange(event)}
         style={{ fontSize: '12px' }}
       >
-        {this.exampleInputs().map(ei => option(ei))}
+        {_EXAMPLE_INPUTS.map(ei => {
+          return (
+            <option key={ei.exampleInput} value={ei.exampleInput}>
+              {ei.exampleInput}
+            </option>
+          );
+        })}
       </select>
     );
   }
 
   _onExampleInputSelectChange(event) {
-    let ei = this.exampleInputs().find(
+    let ei = _EXAMPLE_INPUTS.find(
       ei => ei.exampleInput === event.target.value
     );
     this.setState({
@@ -360,10 +338,10 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceParsingDetails() {
     if (!this.state.showSequenceParsingDetails) {
-      return null;
+      return <div></div>;
     } else {
       return (
-        <div style={{ width: '360px', minHeight: '0px', margin: '16px 0px 0px 8px' }} >
+        <div style={{ width: '360px', margin: '16px 0px 0px 8px' }} >
           <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
             Sequence Parsing Details:
           </p>
@@ -522,10 +500,10 @@ class CreateNewDrawing extends React.Component {
 
   _structureParsingDetails() {
     if (!this.state.showStructureParsingDetails) {
-      return null;
+      return <div></div>;
     } else {
       return (
-        <div style={{ width: '360px', minHeight: '0px', margin: '16px 0px 0px 8px' }} >
+        <div style={{ width: '360px', margin: '16px 0px 0px 8px' }} >
           <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
             Structure Parsing Details:
           </p>
@@ -550,19 +528,21 @@ class CreateNewDrawing extends React.Component {
 
   _errorMessageSection() {
     if (this.state.errorMessage.length === 0) {
-      return null;
+      return <div></div>;
     } else {
       return (
-        <p
-          className={'unselectable-text'}
-          style={{
-            margin: '0px 0px 0px 0px',
-            fontSize: '14px',
-            color: 'red',
-          }}
-        >
-          <b>{this.state.errorMessage}</b>
-        </p>
+        <div>
+          <p
+            className={'unselectable-text'}
+            style={{
+              margin: '0px',
+              fontSize: '14px',
+              color: 'red',
+            }}
+          >
+            <b>{this.state.errorMessage}</b>
+          </p>
+        </div>
       );
     }
   }
@@ -694,3 +674,10 @@ CreateNewDrawing.defaultProps = {
 };
 
 export default CreateNewDrawing;
+
+export {
+  CreateNewDrawing,
+
+  // only exported to aid testing
+  _EXAMPLE_INPUTS,
+};
