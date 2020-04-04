@@ -801,7 +801,7 @@ it('structure length does not match sequence length', () => {
   expect(getErrorMessageP().textContent).toBe('Structure length does not match sequence length.');
 });
 
-it('invalid structure', () => {
+it('unmatched upstream partner', () => {
   let submit = jest.fn();
   act(() => {
     render(<CreateNewDrawing submit={submit} />, container);
@@ -824,7 +824,33 @@ it('invalid structure', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP().textContent).toBe('Unmatched upstream partner.');
+  expect(getErrorMessageP().textContent).toBe('Unmatched "(" in structure.');
+});
+
+it('unmatched downstream partner', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaaaaa' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: '(...)]' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Unmatched "]" in structure.');
 });
 
 it('structure parsing details are not shown by default', () => {

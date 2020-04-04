@@ -5,7 +5,9 @@ import parseSequence from '../parse/parseSequence';
 import {
   parseDotBracket,
   hasUnmatchedUpPartner,
+  lastUnmatchedUpPartner,
   hasUnmatchedDownPartner,
+  lastUnmatchedDownPartner,
 } from '../parse/parseDotBracket';
 
 const _EXAMPLE_INPUTS = [
@@ -637,9 +639,11 @@ class CreateNewDrawing extends React.Component {
     let parsed = parseDotBracket(this.state.structure);
     if (parsed === null) {
       if (hasUnmatchedUpPartner(this.state.structure)) {
-        this.setState({ errorMessage: 'Unmatched upstream partner.' });
+        let c = lastUnmatchedUpPartner(this.state.structure);
+        this.setState({ errorMessage: 'Unmatched "' + c + '" in structure.' });
       } else if (hasUnmatchedDownPartner(this.state.structure)) {
-        this.setState({ errorMessage: 'Unmatched downstream partner.' });
+        let c = lastUnmatchedDownPartner(this.state.structure);
+        this.setState({ errorMessage: 'Unmatched "' + c + '" in structure.' });
       } else {
         this.setState({ errorMessage: 'Invalid structure.' });
       }
