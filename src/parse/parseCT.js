@@ -203,6 +203,7 @@ function _parseNumberingOffset(ct) {
  * Returns null if:
  *  There are zero or multiple sequences.
  *  The sequence or structure cannot be parsed.
+ *  The parsed structure is invalid.
  *  The parsed sequence or structure are different lengths.
  * 
  * @param {string} ct 
