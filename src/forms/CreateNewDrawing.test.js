@@ -177,7 +177,7 @@ it('selecting an example input overwrites existing input', () => {
 
 it('all example inputs (besides the first) are valid', () => {
   _EXAMPLE_INPUTS.slice(1).forEach(ei => {
-    let submit = jest.fn(() => {});
+    let submit = jest.fn();
     act(() => {
       render(<CreateNewDrawing submit={submit} />, container);
       getExampleInputSelect().value = ei.exampleInput;
@@ -195,14 +195,96 @@ it('all example inputs (besides the first) are valid', () => {
   });
 });
 
-it('basic test of submitting a sequence ID', () => {});
+it('basic test of submitting a sequence ID', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'a sequence ID' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaa' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][0]).toBe('a sequence ID');
+});
 
-it('empty sequence ID', () => {});
+it('empty sequence ID', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: '' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaa' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Sequence ID is empty.');
+});
 
-it('sequence ID is all whitespace', () => {});
+it('sequence ID is all whitespace', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: ' \t\t\t   \t ' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaa' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Sequence ID is empty.');
+});
+
+it('trims leading and trailing whitespace from sequence ID', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: ' \tas  dd gh\t' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaa' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][0]).toBe('as  dd gh');
+});
 
 it('basic test of submitting a sequence', () => {
-  let submit = jest.fn(() => {});
+  let submit = jest.fn();
   act(() => {
     render(<CreateNewDrawing submit={submit} />, container);
     fireEvent.change(
@@ -223,11 +305,71 @@ it('basic test of submitting a sequence', () => {
   expect(submit.mock.calls[0][1]).toBe('AGGCCUT');
 });
 
-it('empty sequence', () => {});
+it('empty sequence', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: '' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Sequence is empty.');
+});
 
-it('sequence is all whitespace', () => {});
+it('sequence is all whitespace', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: '\t\t \n\n  \t ' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Sequence is empty.');
+});
 
-it('sequence is all ignored characters', () => {});
+it('sequence is all ignored characters', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: ' 1dd >\n<.. () 345 ' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Sequence is empty.');
+});
 
 it('sequence parsing details are not shown by default', () => {
   act(() => {
@@ -249,35 +391,441 @@ it('default sequence parsing options', () => {
   expect(getIgnoreNonAlphanumericsCheckbox().checked).toBeTruthy();
 });
 
-it('ignores numbers when checked', () => {});
+it('ignores numbers when checked', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aa123gg' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][1]).toBe('aagg');
+});
 
-it('includes numbers when unchecked', () => {});
+it('includes numbers when unchecked', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aa123gg' } },
+    );
+    getSequenceParsingDetailsToggle().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  act(() => {
+    getIgnoreNumbersCheckbox().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][1]).toBe('aa123gg');
+});
 
-it('ignores non-AUGCT letters when checked', () => {});
+it('ignores non-AUGCT letters when checked', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aAhjmUtlpw CC' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][1]).toBe('aAUtCC');
+});
 
-it('includes non-AUGCT letters when unchecked', () => {});
+it('includes non-AUGCT letters when unchecked', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aAhjmUtlpw CC' } },
+    );
+    getSequenceParsingDetailsToggle().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  act(() => {
+    getIgnoreNonAUGCTLettersCheckbox().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][1]).toBe('aAhjmUtlpwCC');
+});
 
-it('ignores non-alphanumerics when checked', () => {});
+it('ignores non-alphanumerics when checked', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: '..Ggca<>()Ct] ' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][1]).toBe('GgcaCt');
+});
 
-it('includes non-alphanumerics when unchecked', () => {});
+it('includes non-alphanumerics when unchecked', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: '..Ggca<>()Ct] ' } },
+    );
+    getSequenceParsingDetailsToggle().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  act(() => {
+    getIgnoreNonAlphanumericsCheckbox().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][1]).toBe('..Ggca<>()Ct]');
+});
 
-it('ignores whitespace', () => {});
+it('ignores whitespace', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: '\taA\n\n\r\n  qqwret \n ct TT\n' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][1]).toBe('aAtctTT');
+});
 
-it('basic test of submitting a structure', () => {});
+function unpairedPartners(length) {
+  let partners = [];
+  for (let i = 0; i < length; i++) {
+    partners.push(null);
+  }
+  return partners;
+}
 
-it('submitted structure includes tertiary pairs', () => {});
+function checkPartners(partners, expectedPartners) {
+  expect(partners.length).toBe(expectedPartners.length);
+  for (let i = 0; i < expectedPartners.length; i++) {
+    expect(partners[i]).toBe(expectedPartners[i]);
+  }
+}
 
-it('empty structure', () => {});
+it('basic test of submitting a structure', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaaaaa' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: '((..))' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  checkPartners(
+    submit.mock.calls[0][2],
+    [6, 5, null, null, 2, 1],
+  );
+  checkPartners(
+    submit.mock.calls[0][3],
+    unpairedPartners(6),
+  );
+});
 
-it('structure is all whitespace', () => {});
+it('submitted structure includes tertiary pairs', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaaaaaaa' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: '(([[))]]' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  checkPartners(
+    submit.mock.calls[0][2],
+    [6, 5, null, null, 2, 1, null, null],
+  );
+  checkPartners(
+    submit.mock.calls[0][3],
+    [null, null, 8, 7, null, null, 4, 3],
+  );
+});
 
-it('structure is all ignored characters', () => {});
+it('empty structure', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaaaaa' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: '' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  checkPartners(
+    submit.mock.calls[0][2],
+    unpairedPartners(6),
+  );
+  checkPartners(
+    submit.mock.calls[0][3],
+    unpairedPartners(6),
+  );
+});
 
-it('sequence and structure are of length zero', () => {});
+it('structure is all whitespace', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaaaaa' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: '  \t\t\n\r\n  \t  ' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  checkPartners(
+    submit.mock.calls[0][2],
+    unpairedPartners(6),
+  );
+  checkPartners(
+    submit.mock.calls[0][3],
+    unpairedPartners(6),
+  );
+});
 
-it('structure length does not match sequence length', () => {});
+it('structure is all ignored characters', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaaaaa' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: ' a  weur \t\t wiej asd' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(1);
+  checkPartners(
+    submit.mock.calls[0][2],
+    unpairedPartners(6),
+  );
+  checkPartners(
+    submit.mock.calls[0][3],
+    unpairedPartners(6),
+  );
+});
 
-it('invalid structure', () => {});
+it('sequence and structure are of length zero', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: '' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: '' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Sequence is empty.');
+});
+
+it('structure length does not match sequence length', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaaaaa' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: '....' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Structure length does not match sequence length.');
+});
+
+it('invalid structure', () => {
+  let submit = jest.fn();
+  act(() => {
+    render(<CreateNewDrawing submit={submit} />, container);
+    fireEvent.change(
+      getSequenceIdInput(),
+      { target: { value: 'asdf' } },
+    );
+    fireEvent.change(
+      getSequenceTextarea(),
+      { target: { value: 'aaaaaa' } },
+    );
+    fireEvent.change(
+      getStructureTextarea(),
+      { target: { value: '((...)' } },
+    );
+  });
+  act(() => {
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP().textContent).toBe('Unmatched upstream partner.');
+});
 
 it('structure parsing details are not shown by default', () => {
   act(() => {
