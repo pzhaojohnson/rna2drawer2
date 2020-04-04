@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {
+  parseCT,
+  numSequencesInCT,
+} from '../parse/parseCT';
+
 class OpenCT extends React.Component {
   constructor(props) {
     super(props);
@@ -8,9 +13,9 @@ class OpenCT extends React.Component {
     this.state = {
       sequenceId: '',
       
-      fileName: '',
-      fileContent: '',
-
+      errorReadingFile: false,
+      fileContents: null,
+      
       errorMessage: '',
     };
   }
@@ -156,9 +161,33 @@ class OpenCT extends React.Component {
   _fileSection() {
     return (
       <div style={{ margin: '32px 0px 26px 0px' }} >
-        <input type={'file'} />
+        <input
+          type={'file'}
+          onChange={event => this._onFileInputChange(event)}
+        />
       </div>
     );
+  }
+
+  _onFileInputChange(event) {
+    if (event.target.files.length > 0) {
+      let fr = new FileReader();
+      fr.onerror = () => {
+        this.setState({
+          errorReadingFile: true,
+          fileContents: null,
+          errorMessage: 'Unable to read selected file.',
+        });
+      };
+      fr.onload = () => {
+        this.setState({
+          errorReadingFile: false,
+          fileContents: fr.result,
+          errorMessage: '',
+        });
+      };
+      fr.readAsText(event.target.files[0]);
+    }
   }
 
   _errorMessageSection() {
@@ -193,7 +222,78 @@ class OpenCT extends React.Component {
     );
   }
 
-  _submit() {}
+  _submit() {
+    let sequenceId = this._parseSequenceId();
+    if (sequenceId === null) {
+      return;
+    }
+    let ct = this._parseCT();
+    if (ct === null) {
+      return;
+    }
+    this.props.submit(
+      sequenceId,
+      ct.sequence,
+      ct.partners,
+      ct.numberingOffset,
+    );
+  }
+
+  /**
+   * Returns null if the sequence ID is empty.
+   * 
+   * @returns {string|null} 
+   */
+  _parseSequenceId() {
+    let id = this.state.sequenceId.trim();
+    if (id.length === 0) {
+      this.setState({ errorMessage: 'Sequence ID is empty.', });
+      return null;
+    } else {
+      return id;
+    }
+  }
+
+  /**
+   * @typedef {Object} OpenCT~ParsedCT 
+   * @property {string} sequence 
+   * @property {Array<number|null>} partners 
+   * @property {number} numberingOffset 
+   */
+
+  /**
+   * Returns null if the user has not uploaded a file, if the file
+   * is unable to be read, if the CT file is invalid, or if the CT
+   * file specifies a structure of length zero.
+   * 
+   * @returns {OpenCT~ParsedCT|null}
+   */
+  _parseCT() {
+    if (this.state.fileContents === null) {
+      if (this.state.errorReadingFile) {
+        this.setState({ errorMessage: 'Unable to read selected file.' });
+      } else {
+        this.setState({ errorMessage: 'No file uploaded.' });
+      }
+      return null;
+    }
+    let ct = parseCT(this.state.fileContents);
+    if (ct === null) {
+      if (numSequencesInCT(this.state.fileContents) === 0) {
+        this.setState({ errorMessage: 'No structure found in CT file.' });
+      } else if (numSequencesInCT(this.state.fileContents) > 1) {
+        this.setState({ errorMessage: 'CT file contains multiple structures.' });
+      } else {
+        this.setState({ errorMessage: 'Invalid CT file.' });
+      }
+      return null;
+    }
+    if (ct.sequence.length === 0) {
+      this.setState({ errorMessage: 'Structure has a length of zero.' });
+      return null;
+    }
+    return ct;
+  }
 }
 
 OpenCT.propTypes = {
@@ -203,6 +303,7 @@ OpenCT.propTypes = {
 
 OpenCT.defaultProps = {
   width: '100vw',
+  submit: () => {},
 };
 
 export {
