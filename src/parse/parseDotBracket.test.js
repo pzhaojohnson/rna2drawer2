@@ -1,7 +1,9 @@
 import {
   parseDotBracket,
   hasUnmatchedUpPartner,
+  lastUnmatchedUpPartner,
   hasUnmatchedDownPartner,
+  lastUnmatchedDownPartner,
   _isDotBracketChar,
   _removeNonDotBracketChars,
   _isUpChar,
@@ -10,7 +12,6 @@ import {
   _correspondingUpChar,
   _traverseDotBracket,
 } from './parseDotBracket';
-import validatePartners from './validatePartners';
 
 it('_isDotBracketChar', () => {
   ['.', '(', ')', '[', ']', '{', '}', '<', '>'].forEach(c => {
@@ -88,8 +89,8 @@ it('_traverseDotBracket - empty string', () => {
   let traversed = _traverseDotBracket('');
   expect(traversed.secondaryPartners.length).toBe(0);
   expect(traversed.tertiaryPartners.length).toBe(0);
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - ignores non-dot-bracket characters', () => {
@@ -102,8 +103,8 @@ it('_traverseDotBracket - ignores non-dot-bracket characters', () => {
     traversed.tertiaryPartners,
     [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - unstructured', () => {
@@ -116,8 +117,8 @@ it('_traverseDotBracket - unstructured', () => {
     traversed.tertiaryPartners,
     [null, null, null, null],
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - secondary hairpin', () => {
@@ -130,8 +131,8 @@ it('_traverseDotBracket - secondary hairpin', () => {
     traversed.tertiaryPartners,
     unstructuredPartners(9),
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - tertiary hairpin with square brackets', () => {
@@ -144,8 +145,8 @@ it('_traverseDotBracket - tertiary hairpin with square brackets', () => {
     traversed.tertiaryPartners,
     [9, 8, 7, null, null, null, 3, 2, 1],
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - tertiary hairpin with curly brackets', () => {
@@ -158,8 +159,8 @@ it('_traverseDotBracket - tertiary hairpin with curly brackets', () => {
     traversed.tertiaryPartners,
     [9, 8, 7, null, null, null, 3, 2, 1],
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - tertiary hairpin with angle brackets', () => {
@@ -172,8 +173,8 @@ it('_traverseDotBracket - tertiary hairpin with angle brackets', () => {
     traversed.tertiaryPartners,
     [9, 8, 7, null, null, null, 3, 2, 1],
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - hairpin with empty loop', () => {
@@ -186,8 +187,8 @@ it('_traverseDotBracket - hairpin with empty loop', () => {
     traversed.tertiaryPartners,
     unstructuredPartners(6),
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - an internal loop', () => {
@@ -200,8 +201,8 @@ it('_traverseDotBracket - an internal loop', () => {
     traversed.tertiaryPartners,
     unstructuredPartners(17),
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - a multibranch loop', () => {
@@ -214,8 +215,8 @@ it('_traverseDotBracket - a multibranch loop', () => {
     traversed.tertiaryPartners,
     unstructuredPartners(25),
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - a pseudoknot', () => {
@@ -228,8 +229,8 @@ it('_traverseDotBracket - a pseudoknot', () => {
     traversed.tertiaryPartners,
     [null, null, null, 12, 11, 10, null, null, null, 6, 5, 4],
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - knotted pseudoknots', () => {
@@ -242,8 +243,8 @@ it('_traverseDotBracket - knotted pseudoknots', () => {
     traversed.tertiaryPartners,
     [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
 it('_traverseDotBracket - more knotted pseudoknots', () => {
@@ -256,34 +257,48 @@ it('_traverseDotBracket - more knotted pseudoknots', () => {
     traversed.tertiaryPartners,
     [null, null, null, null, 19, 18, 17, null, null, null, null, null, 23, 22, 21, null, 7, 6, 5, null, 15, 14, 13, null],
   );
-  expect(traversed.hasUnmatchedUpPartner).toBe(false);
-  expect(traversed.hasUnmatchedDownPartner).toBe(false);
+  expect(traversed.lastUnmatchedUpPartner).toBe(null);
+  expect(traversed.lastUnmatchedDownPartner).toBe(null);
 });
 
-it('_traverseDotBracket - unmatched upstream parters', () => {
-  [
-    '(((((....))))',
-    '<((((....))))',
-    '((..(((..)))..(((....)))).',
-    '([..(((..)))..(((....)))).',
-  ].forEach(dtbr => {
-    let traversed = _traverseDotBracket(dtbr);
-    expect(traversed.hasUnmatchedUpPartner).toBe(true);
-  });
+it('_traverseDotBracket - unmatched (', () => {
+  let traversed = _traverseDotBracket('(((((....))))');
+  expect(traversed.lastUnmatchedUpPartner).toBe('(');
 });
 
-it('_traverseDotBracket - unmatched downstream partners', () => {
-  [
-    '((((....)))))',
-    '((((....))))}',
-    '(<((....))>))',
-    '((..(((..))))..((....)))).',
-    '((..(((..)))]..((....)))).',
-    '(({[(((}.)))..((]]..)))).',
-  ].forEach(dtbr => {
-    let traversed = _traverseDotBracket(dtbr);
-    expect(traversed.hasUnmatchedDownPartner).toBe(true);
-  });
+it('_traverseDotBracket - unmatched [', () => {
+  let traversed = _traverseDotBracket('([..(((..)))..(((....)))).');
+  expect(traversed.lastUnmatchedUpPartner).toBe('[');
+});
+
+it('_traverseDotBracket - unmatched {', () => {
+  let traversed = _traverseDotBracket('(({..))');
+  expect(traversed.lastUnmatchedUpPartner).toBe('{');
+});
+
+it('_traverseDotBracket - unmatched <', () => {
+  let traversed = _traverseDotBracket('(((..<((..))..)))');
+  expect(traversed.lastUnmatchedUpPartner).toBe('<');
+});
+
+it('_traverseDotBracket - unmatched )', () => {
+  let traversed = _traverseDotBracket('((((....)))))');
+  expect(traversed.lastUnmatchedDownPartner).toBe(')');
+});
+
+it('_traverseDotBracket - unmatched ]', () => {
+  let traversed = _traverseDotBracket('((..(((..)))]..((....)))).');
+  expect(traversed.lastUnmatchedDownPartner).toBe(']');
+});
+
+it('_traverseDotBracket - unmatched }', () => {
+  let traversed = _traverseDotBracket('((((....))))}');
+  expect(traversed.lastUnmatchedDownPartner).toBe('}');
+});
+
+it('_traverseDotBracket - unmatched >', () => {
+  let traversed = _traverseDotBracket('((((.....))>))');
+  expect(traversed.lastUnmatchedDownPartner).toBe('>');
 });
 
 it('parseDotBracket - unmatched upstream partner', () => {
@@ -310,10 +325,26 @@ it('hasUnmatchedUpPartner - false case', () => {
   expect(hasUnmatchedUpPartner('(((...)))')).toBeFalsy();
 });
 
+it('lastUnmatchedUpPartner - no unmatched upstream partners', () => {
+  expect(lastUnmatchedUpPartner('.....')).toBe(null);
+});
+
+it('lastUnmatchedUpPartner - unmatched (', () => {
+  expect(lastUnmatchedUpPartner('.((((...)))')).toBe('(');
+});
+
 it('hasUnmatchedDownPartner - true case', () => {
   expect(hasUnmatchedDownPartner('(((...))))')).toBeTruthy();
 });
 
 it('hasUnmatchedDownPartner - false case', () => {
   expect(hasUnmatchedDownPartner('(((...)))')).toBeFalsy();
+});
+
+it('lastUnmatchedDownPartner - no unmatched downstream partners', () => {
+  expect(lastUnmatchedDownPartner('..(((...))).')).toBe(null);
+});
+
+it('lastUnmatchedDownPartner - unmatched ]', () => {
+  expect(lastUnmatchedDownPartner('<<<..>>>]')).toBe(']');
 });
