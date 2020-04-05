@@ -1,124 +1,316 @@
 import React from 'react';
-import { unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
-import { fireEvent } from '@testing-library/react';
 import { shallow, mount, render } from 'enzyme';
+const fs = require('fs');
+
 import { OpenCT } from './OpenCT';
+import { parseCT } from '../parse/parseCT';
 
-
-it('', () => {});
-
-/*
-let container = null;
-beforeEach(() => {
-  container = document.createElement('div');
-  document.body.appendChild(container);
-});
-afterEach(() => {
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
-
-function getTitleAndContent() {
-  return container.childNodes[0].childNodes[0].childNodes[0];
+function getSequenceIdInput(wrapper) {
+  return wrapper.find({ type: 'text' });
 }
 
-function getContent() {
-  return getTitleAndContent().childNodes[1];
+function getFileInput(wrapper) {
+  return wrapper.find({ type: 'file' });
 }
 
-function getSequenceIdInput() {
-  return getContent().childNodes[0].childNodes[1];
+function getErrorMessageP(wrapper) {
+  return wrapper.find('b');
 }
 
-function getFileInput() {
-  return getContent().childNodes[1].childNodes[0];
-}
-
-function getErrorMessageSection() {
-  return getContent().childNodes[2];
-}
-
-function getErrorMessageP() {
-  return getErrorMessageSection().childNodes[0];
-}
-
-function getSubmitButton() {
-  return getContent().childNodes[3].childNodes[0];
+function getSubmitButton(wrapper) {
+  return wrapper.find('button');
 }
 
 it('renders', () => {
-  act(() => {
-    render(<OpenCT />);
-  });
+  mount(<OpenCT />);
 });
 
-it('basic test of submitting sequence ID', () => {});
-
-it('empty sequence ID', () => {});
-
-it('sequence ID is all whitespace', () => {});
-
-it('leading and trailing whitespace is trimmed from sequence ID', () => {});
-
-it('file input change - no files uploaded', () => {
+it('basic test of submitting sequence ID', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: '1 dG\n' + '1 A',
+    };
+  };
   let submit = jest.fn();
-  //act(() => {
-  container = render(<OpenCT />);
-  fireEvent.change(
-    getSequenceIdInput(),
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: 'A Sequence ID' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][0]).toBe('A Sequence ID');
+});
+
+it('empty sequence ID', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: '1 dG\n' + '1 A',
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: '' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP(wrapper).text()).toBe('Sequence ID is empty.');
+});
+
+it('sequence ID is all whitespace', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: '1 dG\n' + '1 A',
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: '  \t\t  \t' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP(wrapper).text()).toBe('Sequence ID is empty.');
+});
+
+it('leading and trailing whitespace is trimmed from sequence ID', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: '1 dG\n' + '1 A',
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: '  \tTrimmed Sequence ID  \t\t' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  expect(submit.mock.calls.length).toBe(1);
+  expect(submit.mock.calls[0][0]).toBe('Trimmed Sequence ID');
+});
+
+it('no file uploaded', () => {
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
     { target: { value: 'asdf' } },
   );
-  fireEvent.change(
-    getFileInput(),
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP(wrapper).text()).toBe('No file uploaded.');
+});
+
+it('files list is empty on file input change', () => {
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />)
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: 'asdf' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
     { target: { files: [] } },
   );
-  //});
-  expect(getErrorMessageSection().childNodes.length).toBe(0);
-  //act(() => {
-  getSubmitButton().dispatchEvent(
-    new Event('click', { bubbles: true }),
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
   );
-  //});
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP().textContent).toBe('No file uploaded.');
+  expect(getErrorMessageP(wrapper).text()).toBe('No file uploaded.');
 });
 
-it('file input change - error loading file', () => {
+it('unable to load file', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: () => {}, // does not actually bind anything
+      readAsText: () => {},
+      result: null,
+    };
+  };
   let submit = jest.fn();
-  act(() => {
-    render(<OpenCT submit={submit} />, container);
-    fireEvent.change(
-      getSequenceIdInput(),
-      { target: { value: 'asdf' } },
-    );
-    getFileInput().files = [new Blob(['asdf'], { type: 'text/plain' })];
-    fireEvent.change(
-      getFileInput(),
-    );
-  });
-  expect(getErrorMessageSection().childNodes.length).toBe(0);
-  act(() => {
-    getSubmitButton().dispatchEvent(
-      new Event('click', { bubbles: true }),
-    );
-  });
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: 'asdf' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['asdf'])] } },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP().textContent).toBe('Unable to read selected file.');
+  expect(getErrorMessageP(wrapper).text()).toBe('Unable to read selected file.');
 });
 
-it('file input change - file loads successfully', () => {});
+it('no structures in CT file', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: '',
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: 'asdf' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP(wrapper).text()).toBe('No structure found in CT file.');
+});
 
-it('submit - no file uploaded', () => {});
+it('multiple structures in CT file', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: '128 3  1 5 9  dG [1234]\n',
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: 'asdf' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP(wrapper).text()).toBe('Multiple structures in CT file.');
+});
 
-it('submit - error loading file', () => {});
+it('structure of length zero', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: '128 1  dG [1234]\n',
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: 'asdf' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageP(wrapper).text()).toBe('Structure has a length of zero.');
+});
 
-it('submit - no structures in CT file', () => {});
+function checkPartners(partners, expectedPartners) {
+  expect(partners.length).toBe(expectedPartners.length);
+  for (let i = 0; i < expectedPartners.length; i++) {
+    expect(partners[i]).toBe(expectedPartners[i]);
+  }
+}
 
-it('submit - multiple structures in CT file', () => {});
-
-it('submit - structure of length zero', () => {});
-
-it('submitting a CT file downloaded from Mfold', () => {});
-*/
+it('handles a CT file downloaded from Mfold', () => {
+  let data = fs.readFileSync('testinput/ct/ct0.ct', 'utf8');
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: data,
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSequenceIdInput(wrapper).simulate(
+    'change',
+    { target: { value: 'asdf' } },
+  );
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+  expect(submit.mock.calls.length).toBe(1);
+  let ct = parseCT(data);
+  expect(submit.mock.calls[0][0]).toBe('asdf');
+  expect(submit.mock.calls[0][1]).toBe(ct.sequence);
+  checkPartners(submit.mock.calls[0][2], ct.partners);
+  expect(submit.mock.calls[0][3]).toBe(ct.numberingOffset);
+});

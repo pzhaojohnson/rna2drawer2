@@ -12,7 +12,7 @@ class OpenCT extends React.Component {
     this.state = {
       sequenceId: '',
       
-      errorReadingFile: false,
+      attemptedFileLoad: false,
       fileContents: null,
       
       errorMessage: '',
@@ -170,21 +170,16 @@ class OpenCT extends React.Component {
 
   _onFileInputChange(event) {
     if (event.target.files.length > 0) {
+      this.setState({
+        attemptedFileLoad: true,
+        errorMessage: '',
+      });
       let fr = new FileReader();
-      fr.onerror = () => {
+      fr.addEventListener('load', () => {
         this.setState({
-          errorReadingFile: true,
-          fileContents: null,
-          errorMessage: '',
-        });
-      };
-      fr.onload = () => {
-        this.setState({
-          errorReadingFile: false,
           fileContents: fr.result,
-          errorMessage: '',
         });
-      };
+      });
       fr.readAsText(event.target.files[0]);
     }
   }
@@ -271,7 +266,7 @@ class OpenCT extends React.Component {
    */
   _parseCT() {
     if (this.state.fileContents === null) {
-      if (this.state.errorReadingFile) {
+      if (this.state.attemptedFileLoad) {
         this.setState({ errorMessage: 'Unable to read selected file.' });
       } else {
         this.setState({ errorMessage: 'No file uploaded.' });
@@ -283,7 +278,7 @@ class OpenCT extends React.Component {
       if (numSequencesInCT(this.state.fileContents) === 0) {
         this.setState({ errorMessage: 'No structure found in CT file.' });
       } else if (numSequencesInCT(this.state.fileContents) > 1) {
-        this.setState({ errorMessage: 'CT file contains multiple structures.' });
+        this.setState({ errorMessage: 'Multiple structures in CT file.' });
       } else {
         this.setState({ errorMessage: 'Invalid CT file.' });
       }
