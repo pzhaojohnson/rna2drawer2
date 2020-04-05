@@ -1,9 +1,14 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent } from '@testing-library/react';
+import { shallow, mount, render } from 'enzyme';
 import { OpenCT } from './OpenCT';
 
+
+it('', () => {});
+
+/*
 let container = null;
 beforeEach(() => {
   container = document.createElement('div');
@@ -16,7 +21,7 @@ afterEach(() => {
 });
 
 function getTitleAndContent() {
-  return container.childNodes[0].childNodes[0].childNodes[0].childNodes[0];
+  return container.childNodes[0].childNodes[0].childNodes[0];
 }
 
 function getContent() {
@@ -45,7 +50,7 @@ function getSubmitButton() {
 
 it('renders', () => {
   act(() => {
-    render(<OpenCT />, container);
+    render(<OpenCT />);
   });
 });
 
@@ -59,28 +64,27 @@ it('leading and trailing whitespace is trimmed from sequence ID', () => {});
 
 it('file input change - no files uploaded', () => {
   let submit = jest.fn();
-  act(() => {
-    render(<OpenCT />, container);
-    fireEvent.change(
-      getSequenceIdInput(),
-      { target: { value: 'asdf' } },
-    );
-    fireEvent.change(
-      getFileInput(),
-      { target: { files: [] } },
-    );
-  });
+  //act(() => {
+  container = render(<OpenCT />);
+  fireEvent.change(
+    getSequenceIdInput(),
+    { target: { value: 'asdf' } },
+  );
+  fireEvent.change(
+    getFileInput(),
+    { target: { files: [] } },
+  );
+  //});
   expect(getErrorMessageSection().childNodes.length).toBe(0);
-  act(() => {
-    getSubmitButton().dispatchEvent(
-      new Event('click', { bubbles: true }),
-    );
-  });
+  //act(() => {
+  getSubmitButton().dispatchEvent(
+    new Event('click', { bubbles: true }),
+  );
+  //});
   expect(submit.mock.calls.length).toBe(0);
   expect(getErrorMessageP().textContent).toBe('No file uploaded.');
 });
 
-/*
 it('file input change - error loading file', () => {
   let submit = jest.fn();
   act(() => {
@@ -103,7 +107,6 @@ it('file input change - error loading file', () => {
   expect(submit.mock.calls.length).toBe(0);
   expect(getErrorMessageP().textContent).toBe('Unable to read selected file.');
 });
-*/
 
 it('file input change - file loads successfully', () => {});
 
@@ -118,3 +121,4 @@ it('submit - multiple structures in CT file', () => {});
 it('submit - structure of length zero', () => {});
 
 it('submitting a CT file downloaded from Mfold', () => {});
+*/
