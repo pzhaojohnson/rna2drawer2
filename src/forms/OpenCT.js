@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {
   parseCT,
   numSequencesInCT,
@@ -176,7 +175,7 @@ class OpenCT extends React.Component {
         this.setState({
           errorReadingFile: true,
           fileContents: null,
-          errorMessage: 'Unable to read selected file.',
+          errorMessage: '',
         });
       };
       fr.onload = () => {
@@ -192,19 +191,21 @@ class OpenCT extends React.Component {
 
   _errorMessageSection() {
     if (this.state.errorMessage.length === 0) {
-      return null;
+      return <div></div>;
     } else {
       return (
-        <p
-          className={'unselectable-text'}
-          style={{
-            margin: '0px 0px 0px 0px',
-            fontSize: '14px',
-            color: 'red',
-          }}
-        >
-          <b>{this.state.errorMessage}</b>
-        </p>
+        <div>
+          <p
+            className={'unselectable-text'}
+            style={{
+              margin: '0px 0px 0px 0px',
+              fontSize: '14px',
+              color: 'red',
+            }}
+          >
+            <b>{this.state.errorMessage}</b>
+          </p>
+        </div>
       );
     }
   }
