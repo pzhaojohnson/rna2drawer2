@@ -167,6 +167,28 @@ it('files list is empty on file input change', () => {
   expect(getErrorMessageP(wrapper).text()).toBe('No file uploaded.');
 });
 
+it('uploading a file clears error message', () => {
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: 'placeholder text',
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(<OpenCT submit={submit} />);
+  getSubmitButton(wrapper).simulate(
+    'click',
+    { target: {} },
+  );
+  expect(getErrorMessageP(wrapper).text()).toBe('Sequence ID is empty.');
+  getFileInput(wrapper).simulate(
+    'change',
+    { target: { files: [new Blob(['placeholder blob'])] } },
+  );
+  expect(getErrorMessageP(wrapper).length).toBe(0);
+});
+
 it('unable to load file', () => {
   window.FileReader = () => {
     return {
