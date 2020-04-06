@@ -659,7 +659,7 @@ class CreateNewDrawing extends React.Component {
       return structure;
     } else {
       if (parsed.secondaryPartners.length !== sequence.length) {
-        this.setState({ errorMessage: 'Structure length does not match sequence length.' });
+        this.setState({ errorMessage: 'Sequence and structure are different lengths.' });
         return null;
       } else {
         return parsed;

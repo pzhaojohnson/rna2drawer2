@@ -798,7 +798,7 @@ it('structure length does not match sequence length', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP().textContent).toBe('Structure length does not match sequence length.');
+  expect(getErrorMessageP().textContent).toBe('Sequence and structure are different lengths.');
 });
 
 it('unmatched upstream partner', () => {
