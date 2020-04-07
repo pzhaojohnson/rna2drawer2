@@ -5,20 +5,36 @@ const fs = require('fs');
 import { OpenCT } from './OpenCT';
 import { parseCT } from '../parse/parseCT';
 
-function getSequenceIdInput(wrapper) {
-  return wrapper.find({ type: 'text' });
+function getTitleAndContent(componentWrapper) {
+  return componentWrapper.getDOMNode().childNodes[0].childNodes[0].childNodes[0];
 }
 
-function getFileInput(wrapper) {
-  return wrapper.find({ type: 'file' });
+function getContent(componentWrapper) {
+  return getTitleAndContent(componentWrapper).childNodes[1];
 }
 
-function getErrorMessageP(wrapper) {
-  return wrapper.find('b');
+function getErrorMessageSection(componentWrapper) {
+  return getContent(componentWrapper).childNodes[2];
 }
 
-function getSubmitButton(wrapper) {
-  return wrapper.find('button');
+function getErrorMessageP(componentWrapper) {
+  return getErrorMessageSection(componentWrapper).childNodes[0];
+}
+
+function getSequenceIdInputWrapper(componentWrapper) {
+  return componentWrapper.find({ type: 'text' });
+}
+
+function getFileInputWrapper(componentWrapper) {
+  return componentWrapper.find({ type: 'file' });
+}
+
+function getErrorMessagePWrapper(componentWrapper) {
+  return componentWrapper.find('b');
+}
+
+function getSubmitButtonWrapper(componentWrapper) {
+  return componentWrapper.find('button');
 }
 
 it('renders', () => {
@@ -35,19 +51,19 @@ it('basic test of submitting sequence ID', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'A Sequence ID' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  getSubmitButton(wrapper).simulate(
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
   expect(submit.mock.calls.length).toBe(1);
   expect(submit.mock.calls[0][0]).toBe('A Sequence ID');
 });
@@ -62,20 +78,21 @@ it('empty sequence ID', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: '' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  getSubmitButton(wrapper).simulate(
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP(wrapper).text()).toBe('Sequence ID is empty.');
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('Sequence ID is empty.');
 });
 
 it('sequence ID is all whitespace', () => {
@@ -88,20 +105,21 @@ it('sequence ID is all whitespace', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: '  \t\t  \t' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  getSubmitButton(wrapper).simulate(
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP(wrapper).text()).toBe('Sequence ID is empty.');
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('Sequence ID is empty.');
 });
 
 it('leading and trailing whitespace is trimmed from sequence ID', () => {
@@ -114,19 +132,19 @@ it('leading and trailing whitespace is trimmed from sequence ID', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: '  \tTrimmed Sequence ID  \t\t' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  getSubmitButton(wrapper).simulate(
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
   expect(submit.mock.calls.length).toBe(1);
   expect(submit.mock.calls[0][0]).toBe('Trimmed Sequence ID');
 });
@@ -134,37 +152,39 @@ it('leading and trailing whitespace is trimmed from sequence ID', () => {
 it('no file uploaded', () => {
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
-  getSubmitButton(wrapper).simulate(
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP(wrapper).text()).toBe('No file uploaded.');
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('No file uploaded.');
 });
 
 it('files list is empty on file input change', () => {
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />)
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [] } },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
-  getSubmitButton(wrapper).simulate(
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP(wrapper).text()).toBe('No file uploaded.');
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('No file uploaded.');
 });
 
 it('uploading a file clears error message', () => {
@@ -177,16 +197,18 @@ it('uploading a file clears error message', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSubmitButton(wrapper).simulate(
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
-  expect(getErrorMessageP(wrapper).text()).toBe('Sequence ID is empty.');
-  getFileInput(wrapper).simulate(
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('Sequence ID is empty.');
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
 });
 
 it('unable to load file', () => {
@@ -199,21 +221,22 @@ it('unable to load file', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['asdf'])] } },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
-  getSubmitButton(wrapper).simulate(
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP(wrapper).text()).toBe('Unable to read selected file.');
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('Unable to read selected file.');
 });
 
 it('no structures in CT file', () => {
@@ -226,21 +249,22 @@ it('no structures in CT file', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
-  getSubmitButton(wrapper).simulate(
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP(wrapper).text()).toBe('No structure found in CT file.');
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('No structure found in CT file.');
 });
 
 it('multiple structures in CT file', () => {
@@ -253,21 +277,22 @@ it('multiple structures in CT file', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
-  getSubmitButton(wrapper).simulate(
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP(wrapper).text()).toBe('Multiple structures in CT file.');
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('Multiple structures in CT file.');
 });
 
 it('structure of length zero', () => {
@@ -280,21 +305,22 @@ it('structure of length zero', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
-  getSubmitButton(wrapper).simulate(
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
   expect(submit.mock.calls.length).toBe(0);
-  expect(getErrorMessageP(wrapper).text()).toBe('Structure has a length of zero.');
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).text()).toBe('Structure has a length of zero.');
 });
 
 function checkPartners(partners, expectedPartners) {
@@ -315,24 +341,30 @@ it('handles a CT file downloaded from Mfold', () => {
   };
   let submit = jest.fn();
   let wrapper = mount(<OpenCT submit={submit} />);
-  getSequenceIdInput(wrapper).simulate(
+  getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
   );
-  getFileInput(wrapper).simulate(
+  getFileInputWrapper(wrapper).simulate(
     'change',
     { target: { files: [new Blob(['placeholder blob'])] } },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
-  getSubmitButton(wrapper).simulate(
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
+  getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
   );
-  expect(getErrorMessageP(wrapper).length).toBe(0);
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
   expect(submit.mock.calls.length).toBe(1);
   let ct = parseCT(data);
   expect(submit.mock.calls[0][0]).toBe('asdf');
   expect(submit.mock.calls[0][1]).toBe(ct.sequence);
   checkPartners(submit.mock.calls[0][2], ct.partners);
   expect(submit.mock.calls[0][3]).toBe(ct.numberingOffset);
+});
+
+it('no error message shown by default', () => {
+  let wrapper = mount(<OpenCT />);
+  expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
+  expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
 });

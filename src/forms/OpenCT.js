@@ -4,6 +4,7 @@ import {
   parseCT,
   numSequencesInCT,
 } from '../parse/parseCT';
+const uuidv1 = require('uuid/v1');
 
 class OpenCT extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class OpenCT extends React.Component {
       attemptedFileLoad: false,
       fileContents: null,
       
+      errorMessageKey: uuidv1(),
       errorMessage: '',
     };
   }
@@ -172,6 +174,7 @@ class OpenCT extends React.Component {
     if (event.target.files.length > 0) {
       this.setState({
         attemptedFileLoad: true,
+        errorMessageKey: uuidv1(),
         errorMessage: '',
       });
       let fr = new FileReader();
@@ -186,16 +189,26 @@ class OpenCT extends React.Component {
 
   _errorMessageSection() {
     if (this.state.errorMessage.length === 0) {
-      return <div></div>;
+      return (
+        <div
+          key={this.state.errorMessageKey}
+          id={this.state.errorMessageKey}
+        ></div>
+      );
     } else {
       return (
-        <div>
+        <div
+          key={this.state.errorMessageKey}
+          id={this.state.errorMessageKey}
+        >
           <p
             className={'unselectable-text'}
             style={{
               margin: '0px 0px 0px 0px',
               fontSize: '14px',
               color: 'red',
+              animationName: 'fadein',
+              animationDuration: '0.75s',
             }}
           >
             <b>{this.state.errorMessage}</b>
@@ -243,7 +256,10 @@ class OpenCT extends React.Component {
   _parseSequenceId() {
     let id = this.state.sequenceId.trim();
     if (id.length === 0) {
-      this.setState({ errorMessage: 'Sequence ID is empty.', });
+      this.setState({
+        errorMessageKey: uuidv1(),
+        errorMessage: 'Sequence ID is empty.',
+      });
       return null;
     } else {
       return id;
@@ -267,25 +283,25 @@ class OpenCT extends React.Component {
   _parseCT() {
     if (this.state.fileContents === null) {
       if (this.state.attemptedFileLoad) {
-        this.setState({ errorMessage: 'Unable to read selected file.' });
+        this.setState({ errorMessageKey: uuidv1(), errorMessage: 'Unable to read selected file.' });
       } else {
-        this.setState({ errorMessage: 'No file uploaded.' });
+        this.setState({ errorMessageKey: uuidv1(), errorMessage: 'No file uploaded.' });
       }
       return null;
     }
     let ct = parseCT(this.state.fileContents);
     if (ct === null) {
       if (numSequencesInCT(this.state.fileContents) === 0) {
-        this.setState({ errorMessage: 'No structure found in CT file.' });
+        this.setState({ errorMessageKey: uuidv1(), errorMessage: 'No structure found in CT file.' });
       } else if (numSequencesInCT(this.state.fileContents) > 1) {
-        this.setState({ errorMessage: 'Multiple structures in CT file.' });
+        this.setState({ errorMessageKey: uuidv1(), errorMessage: 'Multiple structures in CT file.' });
       } else {
-        this.setState({ errorMessage: 'Invalid CT file.' });
+        this.setState({ errorMessageKey: uuidv1(), errorMessage: 'Invalid CT file.' });
       }
       return null;
     }
     if (ct.sequence.length === 0) {
-      this.setState({ errorMessage: 'Structure has a length of zero.' });
+      this.setState({ errorMessageKey: uuidv1(), errorMessage: 'Structure has a length of zero.' });
       return null;
     }
     return ct;
