@@ -163,7 +163,6 @@ it('selecting an example input overwrites existing input', () => {
   });
   let ei = _EXAMPLE_INPUTS[1];
   act(() => {
-    render(<CreateNewDrawing />, container);
     getExampleInputSelect().value = ei.exampleInput;
     getExampleInputSelect().dispatchEvent(
       new Event('change', { bubbles: true }),
@@ -173,6 +172,24 @@ it('selecting an example input overwrites existing input', () => {
   expect(getSequenceIdInput().value).toBe(ei.sequenceId);
   expect(getSequenceTextarea().value).toBe(ei.sequence);
   expect(getStructureTextarea().value).toBe(ei.structure);
+});
+
+it('selecting an example input clears error message', () => {
+  act(() => {
+    render(<CreateNewDrawing />, container);
+    getSubmitButton().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(getErrorMessageP().textContent).toBe('Sequence ID is empty.');
+  act(() => {
+    getExampleInputSelect().value = _EXAMPLE_INPUTS[1].exampleInput;
+    getExampleInputSelect().dispatchEvent(
+      new Event('change', { bubbles : true }),
+    );
+  });
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
+  expect(getErrorMessageSection().childNodes.length).toBe(0);
 });
 
 it('all example inputs (besides the first) are valid', () => {
@@ -236,6 +253,7 @@ it('empty sequence ID', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Sequence ID is empty.');
 });
 
@@ -258,6 +276,7 @@ it('sequence ID is all whitespace', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Sequence ID is empty.');
 });
 
@@ -324,6 +343,7 @@ it('empty sequence', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Sequence is empty.');
 });
 
@@ -346,6 +366,7 @@ it('sequence is all whitespace', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Sequence is empty.');
 });
 
@@ -368,6 +389,7 @@ it('sequence is all ignored characters', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Sequence is empty.');
 });
 
@@ -772,6 +794,7 @@ it('sequence and structure are of length zero', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Sequence is empty.');
 });
 
@@ -798,6 +821,7 @@ it('structure length does not match sequence length', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Sequence and structure are different lengths.');
 });
 
@@ -824,6 +848,7 @@ it('unmatched upstream partner', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Unmatched "(" in structure.');
 });
 
@@ -850,6 +875,7 @@ it('unmatched downstream partner', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(0);
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageP().textContent).toBe('Unmatched "]" in structure.');
 });
 
@@ -864,5 +890,6 @@ it('no error message by default', () => {
   act(() => {
     render(<CreateNewDrawing />, container);
   });
+  expect(getErrorMessageSection().id.length).toBeGreaterThan(0);
   expect(getErrorMessageSection().childNodes.length).toBe(0);
 });

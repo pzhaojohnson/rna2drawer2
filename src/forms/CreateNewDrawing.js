@@ -534,13 +534,19 @@ class CreateNewDrawing extends React.Component {
 
   _errorMessageSection() {
     if (this.state.errorMessage.length === 0) {
-      return <div></div>;
+      return (
+        <div
+          key={this.state.errorMessageKey}
+          id={this.state.errorMessageKey}
+        ></div>
+      );
     } else {
       return (
-        <div>
+        <div
+          key={this.state.errorMessageKey}
+          id={this.state.errorMessageKey}
+        >
           <p
-            key={this.state.errorMessageKey}
-            id={this.state.errorMessageKey}
             className={'unselectable-text'}
             style={{
               margin: '0px',
@@ -615,11 +621,14 @@ class CreateNewDrawing extends React.Component {
    * @returns {string|null} 
    */
   _parseSequence() {
-    let sequence = parseSequence(this.state.sequence, {
-      ignoreNumbers: this.state.ignoreNumbers,
-      ignoreNonAUGCTLetters: this.state.ignoreNonAUGCTLetters,
-      ignoreNonAlphanumerics: this.state.ignoreNonAlphanumerics,
-    });
+    let sequence = parseSequence(
+      this.state.sequence,
+      {
+        ignoreNumbers: this.state.ignoreNumbers,
+        ignoreNonAUGCTLetters: this.state.ignoreNonAUGCTLetters,
+        ignoreNonAlphanumerics: this.state.ignoreNonAlphanumerics,
+      },
+    );
     if (sequence.length === 0) {
       this.setState({
         errorMessageKey: uuidv1(),
