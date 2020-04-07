@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import parseSequenceId from '../parse/parseSequenceId';
 import parseSequence from '../parse/parseSequence';
 import {
   parseDotBracket,
@@ -603,7 +602,7 @@ class CreateNewDrawing extends React.Component {
    * @returns {string|null} 
    */
   _parseSequenceId() {
-    let sequenceId = parseSequenceId(this.state.sequenceId);
+    let sequenceId = this.state.sequenceId.trim();
     if (sequenceId.length === 0) {
       this.setState({
         errorMessageKey: uuidv1(),
