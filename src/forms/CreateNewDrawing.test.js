@@ -400,6 +400,25 @@ it('sequence parsing details are not shown by default', () => {
   expect(getSequenceParsingDetails().childNodes.length).toBe(0);
 });
 
+it('can open and close sequence parsing details', () => {
+  act(() => {
+    render(<CreateNewDrawing />, container);
+  });
+  expect(getSequenceParsingDetails().childNodes.length).toBe(0);
+  act(() => {
+    getSequenceParsingDetailsToggle().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(getSequenceParsingDetails().childNodes.length).toBeGreaterThan(0);
+  act(() => {
+    getSequenceParsingDetailsToggle().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(getSequenceParsingDetails().childNodes.length).toBe(0);
+});
+
 it('default sequence parsing options', () => {
   act(() => {
     render(<CreateNewDrawing />, container);
@@ -882,6 +901,25 @@ it('unmatched downstream partner', () => {
 it('structure parsing details are not shown by default', () => {
   act(() => {
     render(<CreateNewDrawing />, container);
+  });
+  expect(getStructureParsingDetails().childNodes.length).toBe(0);
+});
+
+it('can open and close structure parsing details', () => {
+  act(() => {
+    render(<CreateNewDrawing />, container);
+  });
+  expect(getStructureParsingDetails().childNodes.length).toBe(0);
+  act(() => {
+    getStructureParsingDetailsToggle().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  expect(getStructureParsingDetails().childNodes.length).toBeGreaterThan(0);
+  act(() => {
+    getStructureParsingDetailsToggle().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
   });
   expect(getStructureParsingDetails().childNodes.length).toBe(0);
 });
