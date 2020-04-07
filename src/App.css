@@ -174,3 +174,12 @@ overrides the background-color on hover setting below. */
 .menu-dropped-button:hover {
   background-color: gainsboro;
 }
+
+@keyframes fadein {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}

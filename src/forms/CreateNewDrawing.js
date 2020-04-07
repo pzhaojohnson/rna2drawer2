@@ -9,6 +9,7 @@ import {
   hasUnmatchedDownPartner,
   lastUnmatchedDownPartner,
 } from '../parse/parseDotBracket';
+const uuidv1 = require('uuid/v1');
 
 const _EXAMPLE_INPUTS = [
   {
@@ -50,6 +51,7 @@ class CreateNewDrawing extends React.Component {
 
       showStructureParsingDetails: false,
 
+      errorMessageKey: uuidv1(),
       errorMessage: '',
     };
   }
@@ -205,7 +207,9 @@ class CreateNewDrawing extends React.Component {
       exampleInput: ei.exampleInput,
       sequenceId: ei.sequenceId,
       sequence: ei.sequence,
-      structure: ei.structure
+      structure: ei.structure,
+      errorMessageKey: uuidv1(),
+      errorMessage: '',
     });
   }
 
@@ -535,11 +539,15 @@ class CreateNewDrawing extends React.Component {
       return (
         <div>
           <p
+            key={this.state.errorMessageKey}
+            id={this.state.errorMessageKey}
             className={'unselectable-text'}
             style={{
               margin: '0px',
               fontSize: '14px',
               color: 'red',
+              animationName: 'fadein',
+              animationDuration: '0.75s',
             }}
           >
             <b>{this.state.errorMessage}</b>
@@ -591,7 +599,10 @@ class CreateNewDrawing extends React.Component {
   _parseSequenceId() {
     let sequenceId = parseSequenceId(this.state.sequenceId);
     if (sequenceId.length === 0) {
-      this.setState({ errorMessage: 'Sequence ID is empty.' });
+      this.setState({
+        errorMessageKey: uuidv1(),
+        errorMessage: 'Sequence ID is empty.',
+      });
       return null;
     } else {
       return sequenceId;
@@ -610,7 +621,10 @@ class CreateNewDrawing extends React.Component {
       ignoreNonAlphanumerics: this.state.ignoreNonAlphanumerics,
     });
     if (sequence.length === 0) {
-      this.setState({ errorMessage: 'Sequence is empty.' });
+      this.setState({
+        errorMessageKey: uuidv1(),
+        errorMessage: 'Sequence is empty.',
+      });
       return null;
     } else {
       return sequence;
@@ -640,12 +654,21 @@ class CreateNewDrawing extends React.Component {
     if (parsed === null) {
       if (hasUnmatchedUpPartner(this.state.structure)) {
         let c = lastUnmatchedUpPartner(this.state.structure);
-        this.setState({ errorMessage: 'Unmatched "' + c + '" in structure.' });
+        this.setState({
+          errorMessageKey: uuidv1(),
+          errorMessage: 'Unmatched "' + c + '" in structure.',
+        });
       } else if (hasUnmatchedDownPartner(this.state.structure)) {
         let c = lastUnmatchedDownPartner(this.state.structure);
-        this.setState({ errorMessage: 'Unmatched "' + c + '" in structure.' });
+        this.setState({
+          errorMessageKey: uuidv1(),
+          errorMessage: 'Unmatched "' + c + '" in structure.',
+        });
       } else {
-        this.setState({ errorMessage: 'Invalid structure.' });
+        this.setState({
+          errorMessageKey: uuidv1(),
+          errorMessage: 'Invalid structure.',
+        });
       }
       return null;
     }
@@ -659,7 +682,10 @@ class CreateNewDrawing extends React.Component {
       return structure;
     } else {
       if (parsed.secondaryPartners.length !== sequence.length) {
-        this.setState({ errorMessage: 'Sequence and structure are different lengths.' });
+        this.setState({
+          errorMessageKey: uuidv1(),
+          errorMessage: 'Sequence and structure are different lengths.',
+        });
         return null;
       } else {
         return parsed;
