@@ -22,6 +22,12 @@ class StrictLayoutGeneralProps {
     if (savedState.terminiGap !== undefined) {
       gps.terminiGap = savedState.terminiGap;
     }
+    if (savedState.basePixelWidth !== undefined) {
+      gps.basePixelWidth = savedState.basePixelWidth;
+    }
+    if (savedState.basePixelHeight !== undefined) {
+      gps.basePixelHeight = savedState.basePixelHeight;
+    }
     return gps;
   }
 
@@ -33,6 +39,9 @@ class StrictLayoutGeneralProps {
     this.basePairPadding = 0;
     
     this.terminiGap = 4;
+
+    this.basePixelWidth = 12;
+    this.basePixelHeight = 12;
   }
 
   /**
@@ -50,6 +59,8 @@ class StrictLayoutGeneralProps {
    * @property {number} basePairBondLength 
    * @property {number} basePairPadding 
    * @property {number} terminiGap 
+   * @property {number} basePixelWidth 
+   * @property {number} basePixelHeight 
    */
 
   /**
@@ -62,6 +73,8 @@ class StrictLayoutGeneralProps {
       basePairBondLength: this.basePairBondLength,
       basePairPadding: this.basePairPadding,
       terminiGap: this.terminiGap,
+      basePixelWidth: this.basePixelWidth,
+      basePixelHeight: this.basePixelHeight,
     };
   }
 }
