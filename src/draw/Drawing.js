@@ -24,9 +24,6 @@ class Drawing {
       watsonCrick: [],
       tertiary: [],
     };
-
-    this._baseWidth = 12;
-    this._baseHeight = 16;
   }
 
   centerView() {
@@ -36,34 +33,6 @@ class Drawing {
     this._svgDiv.scrollLeft = (this._svgDiv.scrollWidth - window.innerWidth) / 2;
     
     this._svgDiv.scrollTop = (this._svgDiv.scrollHeight - this._svgDiv.clientHeight) / 2;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get baseWidth() {
-    return this._baseWidth;
-  }
-
-  /**
-   * @param {number} bw 
-   */
-  set baseWidth(bw) {
-    this._baseWidth = bw;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get baseHeight() {
-    return this._baseHeight;
-  }
-
-  /**
-   * @param {number} bh 
-   */
-  set baseHeight(bh) {
-    this._baseHeight = bh;
   }
 
   /**
