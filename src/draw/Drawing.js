@@ -1,4 +1,3 @@
-import { SVG } from '@svgdotjs/svg.js';
 import Sequence from './Sequence';
 import StraightBond from './StraightBond';
 
@@ -7,37 +6,27 @@ import StrictLayout from './layout/singleseq/strict/StrictLayout';
 class Drawing {
 
   /**
-   * @param {Element} container The DOM element to place the SVG document of the drawing in.
+   * @callback Drawing~SVG 
+   * 
+   * @returns {SVG.Doc} 
    */
-  constructor(container) {
-    this._initializeSVG(container);
+
+  /**
+   * @param {Drawing~SVG} SVG 
+   */
+  constructor(SVG) {
+    this._svg = SVG();
 
     this._sequences = [];
       
     this._bonds = {
       strand: [],
       watsonCrick: [],
-      tertiary: []
+      tertiary: [],
     };
 
     this._baseWidth = 12;
     this._baseHeight = 16;
-  }
-
-  /**
-   * @param {Element} container 
-   */
-  _initializeSVG(container) {
-    this._svgDiv = document.createElement('div');
-    this._svgDiv.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
-    container.appendChild(this._svgDiv);
-
-    this._svg = SVG().addTo(this._svgDiv);
-
-    this._svg.attr({
-      'width': 2 * window.screen.width,
-      'height': 2 * window.screen.height,
-    });
   }
 
   centerView() {
