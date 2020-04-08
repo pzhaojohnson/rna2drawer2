@@ -5,18 +5,7 @@ import StrictLayout from './layout/singleseq/strict/StrictLayout';
 
 class Drawing {
 
-  /**
-   * @callback Drawing~SVG 
-   * 
-   * @returns {SVG.Doc} 
-   */
-
-  /**
-   * @param {Drawing~SVG} SVG 
-   */
-  constructor(SVG) {
-    this._svg = SVG();
-
+  constructor() {
     this._sequences = [];
       
     this._bonds = {
@@ -24,6 +13,23 @@ class Drawing {
       watsonCrick: [],
       tertiary: [],
     };
+  }
+
+  /**
+   * @callback Drawing~SVG 
+   * 
+   * @returns {SVG.Doc} 
+   */
+
+  /**
+   * @param {Node} container 
+   * @param {Drawing~SVG} SVG 
+   */
+  addTo(container, SVG) {
+    this._div = document.createElement('div');
+    this._div.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
+    container.appendChild(this._div);
+    this._svg = SVG().addTo(this._div);
   }
 
   centerView() {

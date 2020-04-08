@@ -10,7 +10,9 @@ registerWindow(window, document);
  * @returns {SVG.Doc} A new SVG document compatible with Node.js.
  */
 function createNodeSVG() {
-  return SVG(document.documentElement);
+  let svg = SVG(document.documentElement);
+  svg.addTo = () => svg;
+  return svg;
 }
 
 export default createNodeSVG;
