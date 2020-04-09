@@ -1,5 +1,5 @@
 import UnpairedRegion from './UnpairedRegion';
-import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
+import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
 
 /**
@@ -295,7 +295,7 @@ class Stem {
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} 
+   * @returns {NormalizedBaseCoordinates} 
    */
   baseCoordinates5() {
     let x = this.xBottomCenter + (0.5 * Math.cos(this.angle));
@@ -304,37 +304,37 @@ class Stem {
     y += ((this.width / 2) - 0.5) * Math.sin(this.angle - (Math.PI / 2));
     x -= 0.5;
     y -= 0.5;
-    return new VirtualBaseCoordinates(x, y);
+    return new NormalizedBaseCoordinates(x, y);
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} 
+   * @returns {NormalizedBaseCoordinates} 
    */
   baseCoordinatesTop5() {
     let bc5 = this.baseCoordinates5();
-    return new VirtualBaseCoordinates(
+    return new NormalizedBaseCoordinates(
       bc5.xLeft + ((this.height - 1) * Math.cos(this.angle)),
       bc5.yTop + ((this.height - 1) * Math.sin(this.angle)),
     );
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} 
+   * @returns {NormalizedBaseCoordinates} 
    */
   baseCoordinates3() {
     let bc5 = this.baseCoordinates5();
-    return new VirtualBaseCoordinates(
+    return new NormalizedBaseCoordinates(
       bc5.xLeft + ((this.width - 1) * Math.cos(this.angle + (Math.PI / 2))),
       bc5.yTop + ((this.width - 1) * Math.sin(this.angle + (Math.PI / 2))),
     );
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} 
+   * @returns {NormalizedBaseCoordinates} 
    */
   baseCoordinatesTop3() {
     let bc3 = this.baseCoordinates3();
-    return new VirtualBaseCoordinates(
+    return new NormalizedBaseCoordinates(
       bc3.xLeft + ((this.height - 1) * Math.cos(this.angle)),
       bc3.yTop + ((this.height - 1) * Math.sin(this.angle)),
     );
@@ -412,7 +412,7 @@ class Stem {
   }
 
   /**
-   * @returns {Array<VirtualBaseCoordinates>} 
+   * @returns {Array<NormalizedBaseCoordinates>} 
    */
   baseCoordinates() {
     let coordinates = [];
@@ -420,7 +420,7 @@ class Stem {
     if (!this.isOutermostStem()) {
       coordinates.push(this.baseCoordinates5());
       for (let p = this.position5 + 1; p <= this.positionTop5; p++) {
-        coordinates.push(new VirtualBaseCoordinates(
+        coordinates.push(new NormalizedBaseCoordinates(
           coordinates[p - this.position5 - 1].xLeft + (step * Math.cos(this.angle)),
           coordinates[p - this.position5 - 1].yTop + (step * Math.sin(this.angle)),
         ));
@@ -445,7 +445,7 @@ class Stem {
     if (!this.isOutermostStem()) {
       coordinates.push(this.baseCoordinatesTop3());
       for (let p = this.positionTop3 + 1; p <= this.position3; p++) {
-        coordinates.push(new VirtualBaseCoordinates(
+        coordinates.push(new NormalizedBaseCoordinates(
           coordinates[p - this.position5 - 1].xLeft + (step * Math.cos(this.reverseAngle)),
           coordinates[p - this.position5 - 1].yTop + (step * Math.sin(this.reverseAngle)),
         ));
@@ -461,7 +461,7 @@ class Stem {
    * If this stem is the outermost stem, this method simply returns the unflipped
    * base coordinates.
    * 
-   * @returns {Array<VirtualBaseCoordinates>} 
+   * @returns {Array<NormalizedBaseCoordinates>} 
    */
   flippedBaseCoordinates() {
     if (this.isOutermostStem()) {
@@ -476,7 +476,7 @@ class Stem {
         let angle = normalizeAngle(bc5.angleBetweenCenters(bc), axis);
         let flippedAngle = axis - (angle - axis);
         let distance = bc5.distanceBetweenCenters(bc);
-        flippedCoordinates.push(new VirtualBaseCoordinates(
+        flippedCoordinates.push(new NormalizedBaseCoordinates(
           bc5.xLeft + (distance * Math.cos(flippedAngle)),
           bc5.yTop + (distance * Math.sin(flippedAngle))
         ));

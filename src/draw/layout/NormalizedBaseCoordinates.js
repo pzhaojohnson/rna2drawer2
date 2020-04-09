@@ -1,7 +1,7 @@
 import distanceBetween from '../distanceBetween';
 import angleBetween from '../angleBetween';
 
-class VirtualBaseCoordinates {
+class NormalizedBaseCoordinates {
   constructor(xLeft, yTop) {
     this._xLeft = xLeft;
     this._yTop = yTop;
@@ -61,4 +61,4 @@ class VirtualBaseCoordinates {
   }
 }
 
-export default VirtualBaseCoordinates;
+export default NormalizedBaseCoordinates;

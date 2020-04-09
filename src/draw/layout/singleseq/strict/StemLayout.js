@@ -1,4 +1,4 @@
-import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
+import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import { circleCenter } from './circleCenter';
 import { circleCircumference } from './circleCircumference';
 import Stem from './Stem';
@@ -376,7 +376,7 @@ class FlatOutermostLoop {
    * @param {StrictLayoutGeneralProps} generalProps 
    * @param {Array<StrictLayoutBaseProps} baseProps 
    * 
-   * @returns {Array<VirtualBaseCoordinates>} The base coordinates for the unpaired region.
+   * @returns {Array<NormalizedBaseCoordinates>} The base coordinates for the unpaired region.
    */
   static traverseUnpairedRegion53(ur, generalProps, baseProps) {
     let coordinates = [];
@@ -400,7 +400,7 @@ class FlatOutermostLoop {
       }
       x += d * Math.cos(angle);
       y += d * Math.sin(angle);
-      coordinates.push(new VirtualBaseCoordinates(x, y));
+      coordinates.push(new NormalizedBaseCoordinates(x, y));
     }
     return coordinates;
   }

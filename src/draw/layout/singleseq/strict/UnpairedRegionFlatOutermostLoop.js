@@ -5,7 +5,7 @@ import { FlatOutermostLoop } from './StemLayout';
  * @param {StrictLayoutGeneralProps} generalProps 
  * @param {Array<StrictLayoutBaseProps>} baseProps 
  * 
- * @returns {Array<VirtualBaseCoordinates>} 
+ * @returns {Array<NormalizedBaseCoordinates>} 
  */
 function baseCoordinatesFlatOutermostLoop(ur, generalProps, baseProps) {
   return FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, baseProps);

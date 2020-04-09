@@ -1,4 +1,4 @@
-import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
+import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 
@@ -87,7 +87,7 @@ class UnpairedRegion {
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} 
+   * @returns {NormalizedBaseCoordinates} 
    */
   baseCoordinatesBounding5() {
     if (this.isHairpinLoop()) {
@@ -100,7 +100,7 @@ class UnpairedRegion {
   }
 
   /**
-   * @returns {VirtualBaseCoordinates} 
+   * @returns {NormalizedBaseCoordinates} 
    */
   baseCoordinatesBounding3() {
     if (this.isHairpinLoop()) {
@@ -157,7 +157,7 @@ class UnpairedRegion {
   /**
    * @param {boolean} inOutermostLoop 
    * 
-   * @returns {Array<VirtualBaseCoordinates>} 
+   * @returns {Array<NormalizedBaseCoordinates>} 
    */
   baseCoordinates(inOutermostLoop) {
     if (inOutermostLoop && this._generalProps.flatOutermostLoop) {

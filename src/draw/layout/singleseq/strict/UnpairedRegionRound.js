@@ -1,4 +1,4 @@
-import VirtualBaseCoordinates from '../../VirtualBaseCoordinates';
+import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
 import { circleCenter } from './circleCenter';
 import distanceBetween from '../../../distanceBetween';
@@ -194,7 +194,7 @@ function _angleIncrement(ur, generalProps) {
  * @param {UnpairedRegion} ur 
  * @param {StrictLayoutGeneralProps} generalProps 
  * 
- * @returns {Array<VirtualBaseCoordinates>} 
+ * @returns {Array<NormalizedBaseCoordinates>} 
  */
 function baseCoordinatesRound(ur, generalProps) {
   if (ur.size === 0) {
@@ -208,7 +208,7 @@ function baseCoordinatesRound(ur, generalProps) {
     for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
       let xCenter = center.x + (radius * Math.cos(angle));
       let yCenter = center.y + (radius * Math.sin(angle));
-      coordinates.push(new VirtualBaseCoordinates(xCenter - 0.5, yCenter - 0.5));
+      coordinates.push(new NormalizedBaseCoordinates(xCenter - 0.5, yCenter - 0.5));
       angle += angleIncrement;
     }
     return coordinates;

@@ -47,7 +47,7 @@ class StrictLayout {
   /**
    * @param {number} position 
    * 
-   * @returns {VirtualBaseCoordinates} 
+   * @returns {NormalizedBaseCoordinates} 
    */
   baseCoordinates(position) {
     return this._baseCoordinates[position - 1];
