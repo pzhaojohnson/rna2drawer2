@@ -1018,6 +1018,39 @@ describe('Sequence class', () => {
     expect(seq.getBaseById(b4.id)).toBe(null);
   });
 
+  describe('forEachBase method', () => {
+    it('multiple bases', () => {
+      let svg = createNodeSVG();
+      let seq = new Sequence(createUUIDforSVG());
+      let b1 = Base.create(svg, 'a', 1, 2);
+      seq.appendBase(b1, svg);
+      let b2 = Base.create(svg, 'q', 5, 6);
+      seq.appendBase(b2, svg);
+      let ids = [b1.id, b2.id];
+      let i = 0;
+      seq.forEachBase(b => {
+        expect(b.id).toBe(ids[i]);
+        i++;
+      });
+      expect(i).toBe(2);
+    });
+  });
+
+  describe('baseIds method', () => {
+    it('multiple bases', () => {
+      let svg = createNodeSVG();
+      let seq = new Sequence('asdf');
+      let b1 = Base.create(svg, 'b', 0, 0);
+      seq.appendBase(b1, svg);
+      let b2 = Base.create(svg, 'h', 2, 2);
+      seq.appendBase(b2, svg);
+      let ids = seq.baseIds();
+      expect(ids.length).toBe(2);
+      expect(ids[0]).toBe(b1.id);
+      expect(ids[1]).toBe(b2.id);
+    });
+  });
+
   it('positionOfBase method', () => {
     let svg = createNodeSVG();
     let seq = new Sequence(createUUIDforSVG());

@@ -419,6 +419,22 @@ class Sequence {
   }
 
   /**
+   * @param {callback} cb 
+   */
+  forEachBase(cb) {
+    this._bases.forEach(b => cb(b));
+  }
+
+  /**
+   * @returns {Array<string>} 
+   */
+  baseIds() {
+    let ids = [];
+    this.forEachBase(b => ids.push(b.id));
+    return ids;
+  }
+
+  /**
    * Returns zero if the given base is not in this sequence.
    * 
    * @param {Base} b 
