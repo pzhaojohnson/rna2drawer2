@@ -602,6 +602,13 @@ class Sequence {
     this._updateBaseNumberings(svg);
   }
 
+  remove() {
+    for (let i = 0; i < this._bases.length; i++) {
+      this._bases[i].remove();
+    }
+    this._bases = [];
+  }
+
   /**
    * @typedef {Object} Sequence~SavableState 
    * @property {string} className 

@@ -33,19 +33,22 @@ class Drawing {
   }
 
   centerView() {
+    this._div.scrollLeft = (this._div.scrollWidth - window.innerWidth) / 2;
+    this._div.scrollTop = (this._div.scrollHeight - this._div.clientHeight) / 2;
+  }
 
-    /* Using window.innerWidth is not perfectly precise, but this._container.innerWidth
-    always seems to return 0. */
-    this._svgDiv.scrollLeft = (this._svgDiv.scrollWidth - window.innerWidth) / 2;
-    
-    this._svgDiv.scrollTop = (this._svgDiv.scrollHeight - this._svgDiv.clientHeight) / 2;
+  /**
+   * @returns {number} 
+   */
+  get numSequences() {
+    return this._sequences.length;
   }
 
   /**
    * @returns {boolean} 
    */
   isEmpty() {
-    return this._sequences.length === 0;
+    return this.numSequences === 0;
   }
 
   /**
@@ -65,6 +68,13 @@ class Drawing {
   }
 
   /**
+   * @param {callback} cb 
+   */
+  forEachSequence(cb) {
+    this._sequences.forEach(seq => cb(seq));
+  }
+
+  /**
    * @returns {Array<string>} 
    */
   sequenceIds() {
@@ -74,12 +84,43 @@ class Drawing {
   }
 
   /**
-   * @param {callback} cb 
+   * @param {string} id 
+   * 
+   * @returns {boolean} 
    */
-  forEachSequence(cb) {
-    this._sequences.forEach(seq => cb(seq));
+  sequenceIdIsTaken(id) {
+    return this.sequenceIds().includes(id);
   }
 
+  /**
+   * @param {string} id 
+   * @param {string} letters 
+   */
+  appendSequence(id, letters) {
+    if (this.sequenceIdIsTaken(id)) {
+      return;
+    }
+    this._sequences.push(
+      Sequence.createOutOfView(this._svg, id, letters)
+    );
+  }
+
+  /**
+   * @param {string} id 
+   */
+  removeSequenceById(id) {
+    let i = null;
+    for (let j = 0; j < this._sequences.length; j++) {
+      if (this._sequences[j].id === id) {
+        i = j;
+      }
+    }
+    if (i !== null) {
+      this._sequences[i].remove();
+      this._sequences.splice(i, 1);
+    }
+  }
+  
   /**
    * @param {callback} cb 
    */

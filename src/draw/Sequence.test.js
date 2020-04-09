@@ -1463,6 +1463,20 @@ it('removeBaseAtPosition method', () => {
   expect(svg.findOne('#' + textId6)).toBe(null);
 });
 
+it('remove method', () => {
+  let svg = createNodeSVG();
+  let seq = new Sequence(createUUIDforSVG());
+  let b1 = Base.create(svg, 'a', 1, 2);
+  seq.appendBase(b1);
+  let b2 = Base.create(svg, 'g', 3, 4);
+  seq.appendBase(b2);
+  expect(svg.findOne('#' + b1._text.id())).not.toBe(null);
+  expect(svg.findOne('#' + b2._text.id())).not.toBe(null);
+  seq.remove();
+  expect(svg.findOne('#' + b1._text.id())).toBe(null);
+  expect(svg.findOne('#' + b2._text.id())).toBe(null);
+});
+
 it('savableState method', () => {
   let svg = createNodeSVG();
   let seq = new Sequence(createUUIDforSVG());
