@@ -96,7 +96,7 @@ class Drawing {
    * @param {string} id 
    * @param {string} letters 
    */
-  appendSequence(id, letters) {
+  appendSequenceOutOfView(id, letters) {
     if (this.sequenceIdIsTaken(id)) {
       return;
     }

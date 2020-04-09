@@ -34,7 +34,7 @@ describe('Drawing class', () => {
     it('drawing is not empty', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('A Sequence', 'AUGC');
+      drawing.appendSequenceOutOfView('A Sequence', 'AUGC');
       expect(drawing.isEmpty()).toBeFalsy();
     });
   });
@@ -48,15 +48,15 @@ describe('Drawing class', () => {
     it('a sequence has the given ID', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('blah', 'asdf');
-      drawing.appendSequence('asdf', 'blah');
+      drawing.appendSequenceOutOfView('blah', 'asdf');
+      drawing.appendSequenceOutOfView('asdf', 'blah');
       expect(drawing.getSequenceById('asdf').id).toBe('asdf');
     });
 
     it('a sequence does not have the given ID', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('qwer', 'AAGGCC');
+      drawing.appendSequenceOutOfView('qwer', 'AAGGCC');
       expect(drawing.getSequenceById('zxcv')).toBe(null);
     });
   });
@@ -72,8 +72,8 @@ describe('Drawing class', () => {
     it('multiple sequences', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('asdf', 'zxcv');
-      drawing.appendSequence('zxcv', 'asdf');
+      drawing.appendSequenceOutOfView('asdf', 'zxcv');
+      drawing.appendSequenceOutOfView('zxcv', 'asdf');
       let ids = ['asdf', 'zxcv'];
       let i = 0;
       drawing.forEachSequence(seq => {
@@ -93,8 +93,8 @@ describe('Drawing class', () => {
     it('multiple sequences', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('fdsa', 'fdsa');
-      drawing.appendSequence('zxcv', 'qwer');
+      drawing.appendSequenceOutOfView('fdsa', 'fdsa');
+      drawing.appendSequenceOutOfView('zxcv', 'qwer');
       let ids = drawing.sequenceIds();
       expect(ids.length).toBe(2);
       expect(ids[0]).toBe('fdsa');
@@ -106,25 +106,25 @@ describe('Drawing class', () => {
     it('sequence ID is not taken', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('asdf', 'asdf');
+      drawing.appendSequenceOutOfView('asdf', 'asdf');
       expect(drawing.sequenceIdIsTaken('asd')).toBeFalsy();
     });
 
     it('sequence ID is taken', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('asdf', 'asdf');
+      drawing.appendSequenceOutOfView('asdf', 'asdf');
       expect(drawing.sequenceIdIsTaken('asdf')).toBeTruthy();
     });
   });
 
-  describe('appendSequence method', () => {
+  describe('appendSequenceOutOfView method', () => {
     it('sequence ID is taken', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('asdf', 'asdfasdf');
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
       expect(drawing.numSequences).toBe(1);
-      drawing.appendSequence('asdf', 'qwer');
+      drawing.appendSequenceOutOfView('asdf', 'qwer');
       expect(drawing.numSequences).toBe(1);
     });
 
@@ -132,8 +132,8 @@ describe('Drawing class', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
       expect(drawing.numSequences).toBe(0);
-      drawing.appendSequence('qwer', 'qwer');
-      drawing.appendSequence('zxcv', 'zxcv');
+      drawing.appendSequenceOutOfView('qwer', 'qwer');
+      drawing.appendSequenceOutOfView('zxcv', 'zxcv');
       expect(drawing.numSequences).toBe(2);
       let ids = ['qwer', 'zxcv'];
       let i = 0;
@@ -148,7 +148,7 @@ describe('Drawing class', () => {
     it('no sequence has the given ID', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('asdf', 'qwer');
+      drawing.appendSequenceOutOfView('asdf', 'qwer');
       drawing.removeSequenceById('qwer');
       expect(drawing.numSequences).toBe(1);
     });
@@ -156,8 +156,8 @@ describe('Drawing class', () => {
     it('removing the first sequence', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('qwer', 'zxcv');
-      drawing.appendSequence('zxcv', 'asdfasdf');
+      drawing.appendSequenceOutOfView('qwer', 'zxcv');
+      drawing.appendSequenceOutOfView('zxcv', 'asdfasdf');
       drawing.removeSequenceById('qwer');
       expect(drawing.numSequences).toBe(1);
       let ids = drawing.sequenceIds();
@@ -167,8 +167,8 @@ describe('Drawing class', () => {
     it('removing the last sequence', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('zxcv', 'qwerqwer');
-      drawing.appendSequence('asdf', 'qwer');
+      drawing.appendSequenceOutOfView('zxcv', 'qwerqwer');
+      drawing.appendSequenceOutOfView('asdf', 'qwer');
       drawing.removeSequenceById('asdf');
       expect(drawing.numSequences).toBe(1);
       let ids = drawing.sequenceIds();
@@ -179,7 +179,7 @@ describe('Drawing class', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
       let svg = drawing._svg;
-      drawing.appendSequence('asdf', 'zxcv');
+      drawing.appendSequenceOutOfView('asdf', 'zxcv');
       let seq = drawing.getSequenceById('asdf');
       let b1 = seq.getBaseAtPosition(1);
       expect(drawing.numSequences).toBe(1);
@@ -194,8 +194,8 @@ describe('Drawing class', () => {
     it('multiple sequences', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequence('asdf', 'ab');
-      drawing.appendSequence('qwer', 'z');
+      drawing.appendSequenceOutOfView('asdf', 'ab');
+      drawing.appendSequenceOutOfView('qwer', 'z');
       let seq1 = drawing.getSequenceById('asdf');
       let b1 = seq1.getBaseAtPosition(1);
       let b2 = seq1.getBaseAtPosition(2);
