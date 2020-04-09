@@ -1,7 +1,8 @@
 import Sequence from './Sequence';
-import StraightBond from './StraightBond';
-
-import StrictLayout from './layout/singleseq/strict/StrictLayout';
+import {
+  StrandBond,
+  WatsonCrickBond,
+} from './StraightBond';
 
 class Drawing {
 
@@ -131,6 +132,16 @@ class Drawing {
     });
     return ids;
   }
+
+  /**
+   * @param {Base} b1 
+   * @param {Base} b2 
+   */
+  addStrandBond(b1, b2) {
+    this._bonds.strand.push(
+      StrandBond.create(this._svg, b1, b2),
+    );
+  }
   
   /**
    * @param {callback} cb 
@@ -140,10 +151,47 @@ class Drawing {
   }
 
   /**
+   * @param {Base} b1 
+   * @param {Base} b2 
+   */
+  addWatsonCrickBond(b1, b2) {
+    this._bonds.watsonCrick.push(
+      WatsonCrickBond.create(this._svg, b1, b2),
+    );
+  }
+
+  /**
    * @param {callback} cb 
    */
   forEachWatsonCrickBond(cb) {
     this._bonds.watsonCrick.forEach(wcb => cb(wcb));
+  }
+
+  /**
+   * @param {Array<Base>} side1 
+   * @param {Array<Base>} side2 
+   */
+  addTertiaryBond(side1, side2) {
+    if (side1.length === 0 || side2.length === 0) {
+      return;
+    }
+    this._bonds.tertiary.push(
+      TertiaryBond.create(
+        this._svg,
+        side1,
+        side2,
+        b => {
+          let angle = 0;
+          this.forEachSequence(seq => {
+            if (seq.containsBase(b)) {
+              let p = seq.positionOfBase(b);
+              angle = seq.clockwiseNormalAngleAtPosition(p);
+            }
+          });
+          return angle;
+        },
+      ),
+    );
   }
 
   /**
