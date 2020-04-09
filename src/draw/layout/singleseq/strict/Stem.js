@@ -64,6 +64,9 @@ class Stem {
     }
   }
 
+  /**
+   * @throws {Error} If a knot is encountered.
+   */
   _initializeLoop() {
     this._loop = [];
     let partners = this._partners;
@@ -75,6 +78,9 @@ class Stem {
       p++;
     }
     while (p < this.positionTop3) {
+      if (partners[p - 1] < p) {
+        throw new Error('Knot encountered in loop.');
+      }
       let bst3 = new Stem(p, partners, gps, bps);
       this._loop.push(new UnpairedRegion(bst5, bst3, partners, gps, bps));
       this._loop.push(bst3);

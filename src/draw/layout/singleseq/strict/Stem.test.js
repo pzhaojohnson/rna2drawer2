@@ -157,6 +157,24 @@ it('_initializeLoop - unpaired regions of size zero', () => {
   expect(it.next().done).toBeTruthy();
 });
 
+it("_initializeLoop - a knot with outer 5' side", () => {
+  let partners = [8, 7, null, 11, 10, null, 2, 1, null, 5, 4];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  expect(
+    () => { new Stem(0, partners, gps, bps) }
+  ).toThrow();
+});
+
+it("_initializeLoop - a knot with outer 3' side", () => {
+  let partners = [8, 7, null, 11, 10, null, 2, 1, null , 5, 4];
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  expect(
+    () => { new Stem(0, partners, gps, bps) }
+  ).toThrow();
+});
+
 it('position and size getters', () => {
   let partners = parseDotBracket('..(((....))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
