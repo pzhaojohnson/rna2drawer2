@@ -69,7 +69,7 @@ it('isEmpty - sequence of length greater than zero', () => {
   expect(sl.isEmpty()).toBeFalsy();
 });
 
-it('baseCoordinates', () => {
+it('baseCoordinatesAtPosition', () => {
   let partners = parseDotBracket('...(((...(((......))).......))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   let bps = defaultBaseProps(partners.length);
@@ -78,7 +78,7 @@ it('baseCoordinates', () => {
   StemLayout.setCoordinatesAndAngles(st, gps, bps);
   let ebcs = st.baseCoordinates();
   for (let p = 1; p <= partners.length; p++) {
-    let bc = sl.baseCoordinates(p);
+    let bc = sl.baseCoordinatesAtPosition(p);
     let ebc = ebcs[p - 1];
     expect(bc.xCenter).toBe(ebc.xCenter);
     expect(bc.yCenter).toBe(ebc.yCenter);
@@ -102,7 +102,7 @@ it('xMin, xMax, yMin, and yMax - sequence of length greater than zero', () => {
   let bps = defaultBaseProps(partners.length);
   let sl = new StrictLayout(partners, gps, bps);
   for (let p = 1; p <= partners.length; p++) {
-    let bc = sl.baseCoordinates(p);
+    let bc = sl.baseCoordinatesAtPosition(p);
     expect(sl.xMin).toBeLessThanOrEqual(bc.xLeft);
     expect(sl.xMax).toBeGreaterThanOrEqual(bc.xRight);
     expect(sl.yMin).toBeLessThanOrEqual(bc.yBottom);

@@ -45,12 +45,12 @@ class StrictLayout {
   }
   
   /**
-   * @param {number} position 
+   * @param {number} p 
    * 
    * @returns {NormalizedBaseCoordinates} 
    */
-  baseCoordinates(position) {
-    return this._baseCoordinates[position - 1];
+  baseCoordinatesAtPosition(p) {
+    return this._baseCoordinates[p - 1];
   }
 
   /**
@@ -60,9 +60,9 @@ class StrictLayout {
     if (this.isEmpty()) {
       return 0;
     } else {
-      let xMin = this.baseCoordinates(1).xLeft;
+      let xMin = this.baseCoordinatesAtPosition(1).xLeft;
       for (let p = 2; p <= this.size; p++) {
-        let x = this.baseCoordinates(p).xLeft;
+        let x = this.baseCoordinatesAtPosition(p).xLeft;
         if (x < xMin) {
           xMin = x;
         }
@@ -78,9 +78,9 @@ class StrictLayout {
     if (this.isEmpty()) {
       return 0;
     } else {
-      let xMax = this.baseCoordinates(1).xRight;
+      let xMax = this.baseCoordinatesAtPosition(1).xRight;
       for (let p = 2; p <= this.size; p++) {
-        let x = this.baseCoordinates(p).xRight;
+        let x = this.baseCoordinatesAtPosition(p).xRight;
 
         if (x > xMax) {
           xMax = x;
@@ -97,9 +97,9 @@ class StrictLayout {
     if (this.isEmpty()) {
       return 0;
     } else {
-      let yMin = this.baseCoordinates(1).yTop;
+      let yMin = this.baseCoordinatesAtPosition(1).yTop;
       for (let p = 2; p <= this.size; p++) {
-        let y = this.baseCoordinates(p).yTop;
+        let y = this.baseCoordinatesAtPosition(p).yTop;
         if (y < yMin) {
           yMin = y;
         }
@@ -115,9 +115,9 @@ class StrictLayout {
     if (this.isEmpty()) {
       return 0;
     } else {
-      let yMax = this.baseCoordinates(1).yBottom;
+      let yMax = this.baseCoordinatesAtPosition(1).yBottom;
       for (let p = 2; p <= this.size; p++) {
-        let y = this.baseCoordinates(p).yBottom;
+        let y = this.baseCoordinatesAtPosition(p).yBottom;
         if (y > yMax) {
           yMax = y;
         }
