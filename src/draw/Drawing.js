@@ -120,6 +120,17 @@ class Drawing {
       this._sequences.splice(i, 1);
     }
   }
+
+  /**
+   * @returns {Array<string>} 
+   */
+  baseIds() {
+    let ids = [];
+    this.forEachSequence(seq => {
+      ids = ids.concat(seq.baseIds());
+    });
+    return ids;
+  }
   
   /**
    * @param {callback} cb 

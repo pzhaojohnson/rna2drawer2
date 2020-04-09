@@ -189,4 +189,23 @@ describe('Drawing class', () => {
       expect(svg.findOne('#' + b1._text.id())).toBe(null);
     });
   });
+
+  describe('baseIds method', () => {
+    it('multiple sequences', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequence('asdf', 'ab');
+      drawing.appendSequence('qwer', 'z');
+      let seq1 = drawing.getSequenceById('asdf');
+      let b1 = seq1.getBaseAtPosition(1);
+      let b2 = seq1.getBaseAtPosition(2);
+      let seq2 = drawing.getSequenceById('qwer');
+      let b3 = seq2.getBaseAtPosition(1);
+      let ids = drawing.baseIds();
+      expect(ids.length).toBe(3);
+      expect(ids[0]).toBe(b1.id);
+      expect(ids[1]).toBe(b2.id);
+      expect(ids[2]).toBe(b3.id);
+    });
+  });
 });
