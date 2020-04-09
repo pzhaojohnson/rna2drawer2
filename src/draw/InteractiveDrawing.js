@@ -14,6 +14,13 @@ class InteractiveDrawing {
   constructor(container) {
     this._drawing = new Drawing(container);
 
+    this._strictLayoutProps = {
+      general: new StrictLayoutGeneralProps(),
+      base: [],
+      baseWidth: 12,
+      baseHeight: 12,
+    };
+
     this._layoutType = 'strict';
     this._mode = _MODES.FOLDING;
   }
