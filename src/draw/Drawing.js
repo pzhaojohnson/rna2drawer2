@@ -123,6 +123,64 @@ class Drawing {
   }
 
   /**
+   * @returns {number} 
+   */
+  get numBases() {
+    let n = 0;
+    this.forEachSequence(seq => {
+      n += seq.length;
+    });
+    return n;
+  }
+
+  /**
+   * Returns null if the position is out of range.
+   * 
+   * @param {number} p 
+   * 
+   * @returns {Base|null} 
+   */
+  getBaseAtStrictLayoutPosition(p) {
+    let base = null;
+    let q = 1;
+    this.forEachBase(b => {
+      if (q === p) {
+        base = b;
+      }
+      q++;
+    });
+    return base;
+  }
+
+  /**
+   * Returns zero if the given base is not in this drawing.
+   * 
+   * @param {Base} b 
+   * 
+   * @returns {number} 
+   */
+  strictLayoutPositionOfBase(b) {
+    let p = 0;
+    let q = 1;
+    this.forEachBase(base => {
+      if (base.id === b.id) {
+        p = q;
+      }
+      q++;
+    });
+    return p;
+  }
+
+  /**
+   * @param {callback} cb 
+   */
+  forEachBase(cb) {
+    this.forEachSequence(seq => {
+      seq.forEachBase(b => cb(b));
+    });
+  }
+
+  /**
    * @returns {Array<string>} 
    */
   baseIds() {
@@ -134,15 +192,12 @@ class Drawing {
   }
 
   /**
-   * @param {Base} b1 
-   * @param {Base} b2 
+   * @returns {number} 
    */
-  addStrandBond(b1, b2) {
-    this._bonds.strand.push(
-      StrandBond.create(this._svg, b1, b2),
-    );
+  get numStrandBonds() {
+    return this._bonds.strand.length;
   }
-  
+
   /**
    * @param {callback} cb 
    */
@@ -154,17 +209,116 @@ class Drawing {
    * @param {Base} b1 
    * @param {Base} b2 
    */
-  addWatsonCrickBond(b1, b2) {
-    this._bonds.watsonCrick.push(
-      WatsonCrickBond.create(this._svg, b1, b2),
+  addStrandBond(b1, b2) {
+    this._bonds.strand.push(
+      StrandBond.create(this._svg, b1, b2),
     );
   }
 
+  /**
+   * @param {string} sequenceId 
+   */
+  addStrandBondsForSequence(sequenceId) {
+    let seq = this.getSequenceById(sequenceId);
+    if (seq === null) {
+      return;
+    }
+    for (let p = 1; p <= seq.length - 1; p++) {
+      let b1 = seq.getBaseAtPosition(p);
+      let b2 = seq.getBaseAtPosition(p + 1);
+      this.addStrandBond(b1, b2);
+    }
+  }
+  
   /**
    * @param {callback} cb 
    */
   forEachWatsonCrickBond(cb) {
     this._bonds.watsonCrick.forEach(wcb => cb(wcb));
+  }
+
+  /**
+   * @returns {Array<number|null>} 
+   */
+  strictLayoutPartners() {
+    let partners = [];
+    for (let i = 0; i < this.numBases; i++) {
+      partners.push(null);
+    }
+    this.forEachWatsonCrickBond(wcb => {
+      let p = this.strictLayoutPositionOfBase(wcb.base1);
+      let q = this.strictLayoutPositionOfBase(wcb.base2);
+      partners[p - 1] = q;
+      partners[q - 1] = p;
+    });
+    return partners;
+  }
+
+  /**
+   * Has no effect if the length of the given partners notation
+   * does not match the number of bases in this drawing.
+   * 
+   * @param {Array<number|null>} partners 
+   */
+  removeExcessStrictLayoutPairs(partners) {
+    if (partners.length !== this.numBases) {
+      return;
+    }
+    let filtered = [];
+    this.forEachWatsonCrickBond(wcb => {
+      let p = this.strictLayoutPositionOfBase(wcb.base1);
+      let q = this.strictLayoutPositionOfBase(wcb.base2);
+      if (partners[p - 1] === q) {
+        filtered.push(wcb);
+      } else {
+        wcb.remove();
+      }
+    });
+    this._bonds.watsonCrick = filtered;
+  }
+
+  /**
+   * Has no effect if the length of the given partners notation
+   * does not match the number of bases in this drawing.
+   * 
+   * @param {Array<number|null>} partners 
+   */
+  addMissingStrictLayoutPairs(partners) {
+    if (partners.length !== this.numBases) {
+      return;
+    }
+    let currPartners = this.strictLayoutPartners();
+    for (let p = 1; p <= this.numBases; p++) {
+      let q = partners[p - 1];
+      if (q !== null && currPartners[p - 1] !== q) {
+        let b1 = this.getBaseAtStrictLayoutPosition(p);
+        let b2 = this.getBaseAtStrictLayoutPosition(q);
+        this._bonds.watsonCrick.push(
+          WatsonCrickBond.create(this._svg, b1, b2),
+        );
+      }
+    }
+  }
+
+  /**
+   * Has no effect if the length of the given partners notation
+   * does not match the number of bases in this drawing.
+   * 
+   * @param {Array<number|null>} partners 
+   */
+  applyStrictLayoutPartners(partners) {
+    if (partners.length !== this.numBases) {
+      return;
+    }
+    this.removeExcessStrictLayoutPairs(partners);
+    this.addMissingStrictLayoutPairs(partners);
+  }
+
+  /**
+   * @param {callback} cb 
+   */
+  forEachTertiaryBond(cb) {
+    this._bonds.tertiary.forEach(tb => cb(tb));
   }
 
   /**
@@ -195,99 +349,24 @@ class Drawing {
   }
 
   /**
-   * @param {callback} cb 
+   * @param {StrictLayout} layout 
+   * @param {number} baseWidth 
+   * @param {number} baseHeight 
    */
-  forEachTertiaryBond(cb) {
-    this._bonds.tertiary.forEach(tb => cb(tb));
-  }
-
-  /**
-   * Adds the given structure to this drawing.
-   * 
-   * @param {string} id The sequence ID.
-   * @param {string} sequence The sequence.
-   * @param {Array<number|null>} partners The partners notation of the secondary structure.
-   */
-  addStructure(id, sequence, partners) {
-    let seq = Sequence.createHorizontalLine(
-      this._svg,
-      id,
-      sequence,
-      window.screen.width,
-      window.screen.height,
-      this.defaults.baseWidth
-    );
-
-    this._sequences.push(seq);
-
-    for (let p = 1; p <= sequence.length; p++) {
-      let q = partners[p - 1];
-
-      if (q !== null && p < q) {
-        this._bonds.watsonCrick.push(StraightBond.createWatsonCrick(
-          this._svg,
-          seq.getBase(p),
-          seq.getBase(q),
-          this.defaults
-        ));
-      }
-    }
-  }
-
-  /**
-   * Applies a strict layout to the drawing.
-   */
-  applyStrictLayout() {
-    let layout = new StrictLayout(
-      this.strictLayoutPartners(),
-      this.strictLayoutProps(),
-      this.strictLayoutBaseProps(),
-    );
-
-    let x = 500;
-    let y = 500;
-
+  applyStrictLayout(layout, baseWidth, baseHeight) {
+    let xMin = layout.xMin;
+    let yMin = layout.yMin;
+    let xPadding = window.screen.width / 2;
+    let yPadding = window.screen.height / 2;
     let p = 1;
-
-    this._sequences.forEach(seq => {
-      for (let q = 1; q <= seq.length; q++) {
-        let b = seq.getBase(q);
-        let cs = layout.baseCoordinates(p);
-        console.log(cs.xCenter, cs.yCenter, p);
-
-        b.move(
-          (cs.xCenter * this.defaults.baseWidth) + 500,
-          (cs.yCenter * this.defaults.baseHeight) + 500,
-        );
-
-        p++;
-      }
+    this.forEachBase(b => {
+      let bc = layout.baseCoordinatesAtPosition(p);
+      //b.x = xPadding + ((bc.xCenter - xMin) * basewidth);
+      //b.y = yPadding + ((bc.yCenter - yMin) * baseHeight);
+      p++;
     });
-  }
-
-  strictLayoutPartners() {
-    let baseIdsToPositions = {};
-    let p = 1;
-
-    this._sequences.forEach(seq => {
-      for (let q = 1; q <= seq.length; q++) {
-        let b = seq.getBase(q);
-        baseIdsToPositions[b.id] = p;
-        p++;
-      }
-    });
-
-    let partners = [];
-    Object.keys(baseIdsToPositions).forEach(k => partners.push(null));
-
-    this._bonds.watsonCrick.forEach(wcb => {
-      let r = baseIdsToPositions[wcb.base1.id];
-      let s = baseIdsToPositions[wcb.base2.id];
-      partners[r - 1] = s;
-      partners[s - 1] = r;
-    });
-
-    return partners;
+    // set width of drawing to layout.xMax + xPadding
+    // set height of drawing to layout.yMax + yPadding
   }
 
   /**

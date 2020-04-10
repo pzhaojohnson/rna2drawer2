@@ -1,5 +1,6 @@
 import Drawing from './Drawing';
 import createNodeSVG from './createNodeSVG';
+import Base from './Base';
 
 describe('Drawing class', () => {
   it('instantiates', () => {
@@ -190,6 +191,69 @@ describe('Drawing class', () => {
     });
   });
 
+  it('numBases getter', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    expect(drawing.numBases).toBe(0);
+    drawing.appendSequenceOutOfView('asdf', 'zx');
+    expect(drawing.numBases).toBe(2);
+    drawing.appendSequenceOutOfView('qwer', 'zxcv');
+    expect(drawing.numBases).toBe(6);
+  });
+
+  describe('getBaseAtStrictLayoutPosition method', () => {
+    it('getting the first and last base', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'ab');
+      drawing.appendSequenceOutOfView('qwer', 'cd');
+      expect(drawing.getBaseAtStrictLayoutPosition(1).letter).toBe('a');
+      expect(drawing.getBaseAtStrictLayoutPosition(4).letter).toBe('d');
+    });
+
+    it('positions out of range', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'ab');
+      drawing.appendSequenceOutOfView('qwer', 'cd');
+      expect(drawing.getBaseAtStrictLayoutPosition(0)).toBe(null);
+      expect(drawing.getBaseAtStrictLayoutPosition(5)).toBe(null);
+    });
+  });
+
+  describe('strictLayoutPositionOfBase method', () => {
+    it('base is not in drawing', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let b = Base.create(drawing._svg, 'a', 1, 2);
+      expect(drawing.strictLayoutPositionOfBase(b)).toBe(0);
+    });
+
+    it('multiple sequences', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'zxcv');
+      drawing.appendSequenceOutOfView('qwer', 'zx');
+      let seq = drawing.getSequenceById('qwer');
+      let b = seq.getBaseAtPosition(1);
+      expect(drawing.strictLayoutPositionOfBase(b)).toBe(5);
+    });
+  });
+
+  it('forEachBase method', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing.appendSequenceOutOfView('qwer', 'as');
+    drawing.appendSequenceOutOfView('zxcv', 'gh');
+    let letters = 'asgh';
+    let i = 0;
+    drawing.forEachBase(b => {
+      expect(b.letter).toBe(letters.charAt(i));
+      i++;
+    });
+    expect(i).toBe(4);
+  });
+
   describe('baseIds method', () => {
     it('multiple sequences', () => {
       let drawing = new Drawing();
@@ -206,6 +270,68 @@ describe('Drawing class', () => {
       expect(ids[0]).toBe(b1.id);
       expect(ids[1]).toBe(b2.id);
       expect(ids[2]).toBe(b3.id);
+    });
+  });
+
+  it('numStrandBonds getter', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    expect(drawing.numStrandBonds).toBe(0);
+    drawing.appendSequenceOutOfView('asdf', 'zxcv');
+    drawing.addStrandBondsForSequence('asdf');
+    expect(drawing.numStrandBonds).toBe(3);
+  });
+
+  it('forEachStrandBond method', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing.appendSequenceOutOfView('asdf', 'asd');
+    drawing.addStrandBondsForSequence('asdf');
+    let i = 0;
+    drawing.forEachStrandBond(sb => {
+      expect(sb.id).toBe(drawing._bonds.strand[i].id);
+      i++;
+    });
+    expect(i).toBe(2);
+  });
+  
+  it('addStrandBond method', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing.appendSequenceOutOfView('asfd', 'ab');
+    let b1 = drawing.getBaseAtStrictLayoutPosition(1);
+    let b2 = drawing.getBaseAtStrictLayoutPosition(2);
+    expect(drawing.numStrandBonds).toBe(0);
+    drawing.addStrandBond(b1, b2);
+    expect(drawing.numStrandBonds).toBe(1);
+    let sb = drawing._bonds.strand[0];
+    expect(sb.base1.id).toBe(b1.id);
+    expect(sb.base2.id).toBe(b2.id);
+  });
+
+  describe('addStrandBondsForSequence method', () => {
+    it('no sequence has the given ID', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      expect(drawing.numStrandBonds).toBe(0);
+      drawing.addStrandBondsForSequence('asdf');
+      expect(drawing.numStrandBonds).toBe(0);
+    });
+
+    it('adds strand bonds correctly', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'zxc');
+      expect(drawing.numStrandBonds).toBe(0);
+      drawing.addStrandBondsForSequence('asdf');
+      expect(drawing.numStrandBonds).toBe(2);
+      let baseIds = drawing.baseIds();
+      let sb1 = drawing._bonds.strand[0];
+      let sb2 = drawing._bonds.strand[1];
+      expect(sb1.base1.id).toBe(baseIds[0]);
+      expect(sb1.base2.id).toBe(baseIds[1]);
+      expect(sb2.base1.id).toBe(baseIds[1]);
+      expect(sb2.base2.id).toBe(baseIds[2]);
     });
   });
 });
