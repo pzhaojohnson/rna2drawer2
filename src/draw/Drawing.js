@@ -191,6 +191,29 @@ class Drawing {
   }
 
   /**
+   * The returned bases will include the bases at the given
+   * 5' and 3' most positions.
+   * 
+   * The bases are returned in ascending order.
+   * 
+   * @param {number} p5 
+   * @param {number} p3 
+   * 
+   * @returns {Array<Base>} 
+   */
+  getBasesInStrictLayoutRange(p5, p3) {
+    let bases = [];
+    let p = 1;
+    this.forEachBase(b => {
+      if (p >= p5 && p <= p3) {
+        bases.push(b);
+      }
+      p++;
+    });
+    return bases;
+  }
+
+  /**
    * Returns zero if the given base is not in this drawing.
    * 
    * @param {Base} b 

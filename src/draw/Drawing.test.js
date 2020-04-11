@@ -221,6 +221,29 @@ describe('Drawing class', () => {
     });
   });
 
+  describe('getBasesInStrictLayoutRange method', () => {
+    it('basic case', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'qwerasdf');
+      drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+      let bases = drawing.getBasesInStrictLayoutRange(7, 10);
+      expect(bases.length).toBe(4);
+      expect(bases[0].letter).toBe('d');
+      expect(bases[1].letter).toBe('f');
+      expect(bases[2].letter).toBe('z');
+      expect(bases[3].letter).toBe('x');
+    });
+
+    it('invalid range', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+      let bases = drawing.getBasesInStrictLayoutRange(6, 3);
+      expect(bases.length).toBe(0);
+    });
+  });
+
   describe('strictLayoutPositionOfBase method', () => {
     it('base is not in drawing', () => {
       let drawing = new Drawing();
