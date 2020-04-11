@@ -230,6 +230,23 @@ class Drawing {
   }
 
   /**
+   * Returns null if no sequence contains the given base.
+   * 
+   * @param {Base} b 
+   * 
+   * @returns {Sequence|null} 
+   */
+  sequenceOfBase(b) {
+    let seq = null;
+    this.forEachSequence(s => {
+      if (s.containsBase(b)) {
+        seq = s;
+      }
+    });
+    return seq;
+  }
+
+  /**
    * @returns {number} 
    */
   get numStrandBonds() {
@@ -403,7 +420,11 @@ class Drawing {
     );
   }
 
-  addTertiaryBondBetweenStrictLayoutPositions() {}
+  /**
+   * @param {Array<number>} ps1 
+   * @param {Array<number>} ps2 
+   */
+  addTertiaryBondBetweenStrictLayoutPositions(ps1, ps2) {}
 
   /**
    * Has no effect if no tertiary bond has the given ID.
@@ -414,6 +435,7 @@ class Drawing {
     let i = null;
     for (let j = 0; j < this._bonds.tertiary.length; j++) {
       if (this._bonds.tertiary[j].id === id) {
+        this._bonds.tertiary[j].remove();
         i = j;
       }
     }
