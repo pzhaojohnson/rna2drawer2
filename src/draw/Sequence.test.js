@@ -1018,6 +1018,26 @@ describe('Sequence class', () => {
     expect(seq.getBaseById(b4.id)).toBe(null);
   });
 
+  describe('getBasesInRange method', () => {
+    it('basic case', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfasdf');
+      let bases = seq.getBasesInRange(3, 6);
+      expect(bases.length).toBe(4);
+      expect(bases[0].letter).toBe('d');
+      expect(bases[1].letter).toBe('f');
+      expect(bases[2].letter).toBe('a');
+      expect(bases[3].letter).toBe('s');
+    });
+
+    it('invalid range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfasdf');
+      let bases = seq.getBasesInRange(7, 3);
+      expect(bases.length).toBe(0);
+    });
+  });
+
   describe('forEachBase method', () => {
     it('multiple bases', () => {
       let svg = createNodeSVG();

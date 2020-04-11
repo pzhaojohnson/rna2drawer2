@@ -419,6 +419,25 @@ class Sequence {
   }
 
   /**
+   * The returned bases will include the bases at the given
+   * 5' and 3' most positions.
+   * 
+   * The bases are returned in ascending order.
+   * 
+   * @param {number} p5 
+   * @param {number} p3 
+   * 
+   * @returns {Array<Base>} 
+   */
+  getBasesInRange(p5, p3) {
+    let bases = [];
+    for (let p = p5; p <= p3; p++) {
+      bases.push(this.getBaseAtPosition(p));
+    }
+    return bases;
+  }
+
+  /**
    * @param {callback} cb 
    */
   forEachBase(cb) {
