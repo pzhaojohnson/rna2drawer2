@@ -31,11 +31,49 @@ class Drawing {
     this._div.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
     container.appendChild(this._div);
     this._svg = SVG().addTo(this._div);
+    this._svg.attr({
+      'width': 2 * window.screen.width,
+      'height': 2 * window.screen.height,
+    });
   }
 
   centerView() {
     this._div.scrollLeft = (this._div.scrollWidth - window.innerWidth) / 2;
     this._div.scrollTop = (this._div.scrollHeight - this._div.clientHeight) / 2;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get width() {
+    return this._svg.viewbox().width;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get height() {
+    return this._svg.viewbox().height;
+  }
+
+  /**
+   * @param {number} width 
+   * @param {number} height 
+   */
+  setWidthAndHeight(width, height) {
+    let zoom = this.zoom;
+    this._svg.viewbox(0, 0, width, height);
+    this._svg.attr({
+      'width': zoom * width,
+      'height': zoom * height,
+    });
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get zoom() {
+    return this._svg.viewbox().zoom;
   }
 
   /**
@@ -315,6 +353,23 @@ class Drawing {
   }
 
   /**
+   * Returns null if no tertiary bond has the given ID.
+   * 
+   * @param {string} id 
+   * 
+   * @returns {TertiaryBond|null} 
+   */
+  getTertiaryBondById(id) {
+    let bond = null;
+    this.forEachTertiaryBond(tb => {
+      if (tb.id === id) {
+        bond = tb;
+      }
+    });
+    return bond;
+  }
+
+  /**
    * @param {callback} cb 
    */
   forEachTertiaryBond(cb) {
@@ -348,6 +403,25 @@ class Drawing {
     );
   }
 
+  addTertiaryBondBetweenStrictLayoutPositions() {}
+
+  /**
+   * Has no effect if no tertiary bond has the given ID.
+   * 
+   * @param {string} id 
+   */
+  removeTertiaryBondById(id) {
+    let i = null;
+    for (let j = 0; j < this._bonds.tertiary.length; j++) {
+      if (this._bonds.tertiary[j].id === id) {
+        i = j;
+      }
+    }
+    if (i !== null) {
+      this._bonds.tertiary.splice(j, 1);
+    }
+  }
+
   /**
    * @param {StrictLayout} layout 
    * @param {number} baseWidth 
@@ -359,14 +433,24 @@ class Drawing {
     let xPadding = window.screen.width / 2;
     let yPadding = window.screen.height / 2;
     let p = 1;
-    this.forEachBase(b => {
-      let bc = layout.baseCoordinatesAtPosition(p);
-      //b.x = xPadding + ((bc.xCenter - xMin) * basewidth);
-      //b.y = yPadding + ((bc.yCenter - yMin) * baseHeight);
-      p++;
+    this.forEachSequence(seq => {
+      let q = 1;
+      seq.forEachBase(b => {
+        let bc = layout.baseCoordinatesAtPosition(p);
+        b.move(
+          xPadding + ((bc.xCenter - xMin) * baseWidth),
+          yPadding + ((bc.yCenter - yMin) * baseHeight),
+          seq.clockwiseNormalAngleAtPosition(q),
+          seq.outerNormalAngleAtPosition(q),
+        );
+        p++;
+        q++;
+      });
     });
-    // set width of drawing to layout.xMax + xPadding
-    // set height of drawing to layout.yMax + yPadding
+    this.setWidthAndHeight(
+      ((layout.xMax - xMin) * baseWidth) + xPadding,
+      ((layout.yMax - yMin) * baseHeight) + yPadding,
+    );
   }
 
   /**
