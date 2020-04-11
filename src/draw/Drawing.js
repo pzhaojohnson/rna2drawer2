@@ -3,6 +3,7 @@ import {
   StrandBond,
   WatsonCrickBond,
 } from './StraightBond';
+import parseStems from '../parse/parseStems';
 
 class Drawing {
 
@@ -444,10 +445,31 @@ class Drawing {
   }
 
   /**
-   * @param {Array<number>} ps1 
-   * @param {Array<number>} ps2 
+   * @param {number} p5 
+   * @param {number} p3 
+   * @param {number} size 
    */
-  addTertiaryBondBetweenStrictLayoutPositions(ps1, ps2) {}
+  addTertiaryBondForStrictLayoutStem(p5, p3, size) {
+    let side1 = this.getBasesInStrictLayoutRange(p5, p5 + size - 1);
+    let side2 = this.getBasesInStrictLayoutRange(p3 - size + 1, p3);
+    this.addTertiaryBond(side1, side2);
+  }
+
+  /**
+   * This method adds the tertiary pairs with the fewest number
+   * of tertiary bonds (i.e. maximizes the sizes of tertiary bonds).
+   * 
+   * @param {Sequence} seq 
+   * @param {Array<number|null>} partners 
+   */
+  addTertiaryPairsForSequence(seq, partners) {
+    let stems = parseStems(partners);
+    stems.forEach(st => {
+      let side1 = seq.getBasesInRange(st.start, st.start + st.size - 1);
+      let side2 = seq.getBasesInRange(st.end - st.size + 1, st.end);
+      this.addTertiaryBond(side1, side2);
+    });
+  }
 
   /**
    * Has no effect if no tertiary bond has the given ID.
@@ -465,6 +487,23 @@ class Drawing {
     if (i !== null) {
       this._bonds.tertiary.splice(j, 1);
     }
+  }
+
+  /**
+   * @param {string} id 
+   * @param {string} letters 
+   * @param {Array<number|null>} secondaryPartners 
+   * @param {Array<number|null>} tertiaryPartners 
+   */
+  appendStructure(id, letters, secondaryPartners, tertiaryPartners) {
+    let prevPartners = this.strictLayoutPartners();
+    if (this.sequenceIdIsTaken(id)) {
+      return;
+    }
+    this.appendSequenceOutOfView(id, letters);
+    this.applyStrictLayoutPartners(prevPartners.concat(secondaryPartners));
+    let seq = this.getSequenceById(id);
+    this.addTertiaryPairsForSequence(seq, tertiaryPartners);
   }
 
   /**
