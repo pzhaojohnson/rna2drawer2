@@ -74,7 +74,10 @@ class Drawing {
    * @returns {number} 
    */
   get zoom() {
-    return this._svg.viewbox().zoom;
+    if (this.width === 0) {
+      return 1;
+    }
+    return this._svg.attr('width') / this.width;
   }
 
   /**

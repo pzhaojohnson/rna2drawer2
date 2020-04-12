@@ -26,6 +26,61 @@ describe('Drawing class', () => {
     expect(typeof drawing._div.scrollTop).toBe('number');
   });
 
+  it('width and height getters', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing._svg.viewbox(0, 0, 125, 68);
+    expect(drawing.width).toBe(125);
+    expect(drawing.height).toBe(68);
+  });
+
+  describe('setWidthAndHeight method', () => {
+    it('sets width and height', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.setWidthAndHeight(128, 156);
+      let vb = drawing._svg.viewbox();
+      expect(vb.x).toBe(0);
+      expect(vb.y).toBe(0);
+      expect(vb.width).toBe(128);
+      expect(vb.height).toBe(156);
+    });
+
+    it('maintains zoom', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.setWidthAndHeight(100, 80);
+      drawing._svg.attr({
+        'width': 150,
+        'height': 120,
+      });
+      expect(drawing.zoom).toBeCloseTo(1.5, 3);
+      drawing.setWidthAndHeight(120, 100);
+      expect(drawing._svg.attr('width')).toBeCloseTo(180, 3);
+      expect(drawing._svg.attr('height')).toBeCloseTo(150, 3);
+    });
+  });
+
+  describe('zoom getter', () => {
+    it('drawing width is zero', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.setWidthAndHeight(0, 0);
+      expect(drawing.zoom).toBe(1);
+    });
+
+    it('drawing width is greater than zero', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing._svg.viewbox(0, 0, 120, 120);
+      drawing._svg.attr({
+        'width': 240,
+        'height': 240,
+      });
+      expect(drawing.zoom).toBeCloseTo(2, 3);
+    });
+  });
+
   describe('isEmpty method', () => {
     it('drawing is empty', () => {
       let drawing = new Drawing();
