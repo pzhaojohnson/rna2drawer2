@@ -385,16 +385,16 @@ describe('Drawing class', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => createNodeSVG());
     expect(drawing.numStrandBonds).toBe(0);
-    drawing.appendSequenceOutOfView('asdf', 'zxcv');
-    drawing.addStrandBondsForSequence('asdf');
+    let seq = drawing.appendSequenceOutOfView('asdf', 'zxcv');
+    drawing.addStrandBondsForSequence(seq);
     expect(drawing.numStrandBonds).toBe(3);
   });
 
   it('forEachStrandBond method', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => createNodeSVG());
-    drawing.appendSequenceOutOfView('asdf', 'asd');
-    drawing.addStrandBondsForSequence('asdf');
+    let seq = drawing.appendSequenceOutOfView('asdf', 'asd');
+    drawing.addStrandBondsForSequence(seq);
     let i = 0;
     drawing.forEachStrandBond(sb => {
       expect(sb.id).toBe(drawing._bonds.strand[i].id);
@@ -418,28 +418,31 @@ describe('Drawing class', () => {
   });
 
   describe('addStrandBondsForSequence method', () => {
-    it('no sequence has the given ID', () => {
+    it('sequence has length greater than one', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'zxc');
       expect(drawing.numStrandBonds).toBe(0);
-      drawing.addStrandBondsForSequence('asdf');
-      expect(drawing.numStrandBonds).toBe(0);
+      let bonds = drawing.addStrandBondsForSequence(seq);
+      expect(bonds.length).toBe(2);
+      expect(drawing.numStrandBonds).toBe(2);
+      expect(bonds[0]).toBe(drawing._bonds.strand[0]);
+      expect(bonds[1]).toBe(drawing._bonds.strand[1]);
+      let baseIds = drawing.baseIds();
+      expect(bonds[0].base1.id).toBe(baseIds[0]);
+      expect(bonds[0].base2.id).toBe(baseIds[1]);
+      expect(bonds[1].base1.id).toBe(baseIds[1]);
+      expect(bonds[1].base2.id).toBe(baseIds[2]);
     });
 
-    it('adds strand bonds correctly', () => {
+    it('sequence has length less than or equal to one', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'zxc');
+      let seq = drawing.appendSequenceOutOfView('asdf', 'a');
       expect(drawing.numStrandBonds).toBe(0);
-      drawing.addStrandBondsForSequence('asdf');
-      expect(drawing.numStrandBonds).toBe(2);
-      let baseIds = drawing.baseIds();
-      let sb1 = drawing._bonds.strand[0];
-      let sb2 = drawing._bonds.strand[1];
-      expect(sb1.base1.id).toBe(baseIds[0]);
-      expect(sb1.base2.id).toBe(baseIds[1]);
-      expect(sb2.base1.id).toBe(baseIds[1]);
-      expect(sb2.base2.id).toBe(baseIds[2]);
+      let bonds = drawing.addStrandBondsForSequence(seq);
+      expect(bonds.length).toBe(0);
+      expect(drawing.numStrandBonds).toBe(0);
     });
   });
 });

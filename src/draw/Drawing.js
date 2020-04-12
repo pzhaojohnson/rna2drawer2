@@ -306,18 +306,18 @@ class Drawing {
   }
 
   /**
-   * @param {string} sequenceId 
+   * @param {Sequence} seq 
+   * 
+   * @returns {Array<StrandBond>} 
    */
-  addStrandBondsForSequence(sequenceId) {
-    let seq = this.getSequenceById(sequenceId);
-    if (seq === null) {
-      return;
-    }
+  addStrandBondsForSequence(seq) {
+    let bonds = [];
     for (let p = 1; p <= seq.length - 1; p++) {
       let b1 = seq.getBaseAtPosition(p);
       let b2 = seq.getBaseAtPosition(p + 1);
-      this.addStrandBond(b1, b2);
+      bonds.push(this.addStrandBond(b1, b2));
     }
+    return bonds;
   }
   
   /**
