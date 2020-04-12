@@ -319,6 +319,13 @@ class Drawing {
     }
     return bonds;
   }
+
+  /**
+   * @returns {number} 
+   */
+  get numWatsonCrickBonds() {
+    return this._bonds.watsonCrick.length;
+  }
   
   /**
    * @param {callback} cb 
@@ -332,9 +339,9 @@ class Drawing {
    */
   strictLayoutPartners() {
     let partners = [];
-    for (let i = 0; i < this.numBases; i++) {
+    this.forEachBase(b => {
       partners.push(null);
-    }
+    });
     this.forEachWatsonCrickBond(wcb => {
       let p = this.strictLayoutPositionOfBase(wcb.base1);
       let q = this.strictLayoutPositionOfBase(wcb.base2);
@@ -372,22 +379,26 @@ class Drawing {
    * does not match the number of bases in this drawing.
    * 
    * @param {Array<number|null>} partners 
+   * 
+   * @returns {Array<WatsonCrickBond>} 
    */
   addMissingStrictLayoutPairs(partners) {
     if (partners.length !== this.numBases) {
       return;
     }
     let currPartners = this.strictLayoutPartners();
+    let added = [];
     for (let p = 1; p <= this.numBases; p++) {
       let q = partners[p - 1];
-      if (q !== null && currPartners[p - 1] !== q) {
+      if (q !== null && p < q && currPartners[p - 1] !== q) {
         let b1 = this.getBaseAtStrictLayoutPosition(p);
         let b2 = this.getBaseAtStrictLayoutPosition(q);
-        this._bonds.watsonCrick.push(
-          WatsonCrickBond.create(this._svg, b1, b2),
-        );
+        let wcb = WatsonCrickBond.create(this._svg, b1, b2);
+        this._bonds.watsonCrick.push(wcb);
+        added.push(wcb);
       }
     }
+    return added;
   }
 
   /**
@@ -395,13 +406,15 @@ class Drawing {
    * does not match the number of bases in this drawing.
    * 
    * @param {Array<number|null>} partners 
+   * 
+   * @returns {Array<WatsonCrickBond>} 
    */
   applyStrictLayoutPartners(partners) {
     if (partners.length !== this.numBases) {
       return;
     }
     this.removeExcessStrictLayoutPairs(partners);
-    this.addMissingStrictLayoutPairs(partners);
+    return this.addMissingStrictLayoutPairs(partners);
   }
 
   /**
@@ -498,23 +511,6 @@ class Drawing {
     if (i !== null) {
       this._bonds.tertiary.splice(j, 1);
     }
-  }
-
-  /**
-   * @param {string} id 
-   * @param {string} letters 
-   * @param {Array<number|null>} secondaryPartners 
-   * @param {Array<number|null>} tertiaryPartners 
-   */
-  appendStructure(id, letters, secondaryPartners, tertiaryPartners) {
-    let prevPartners = this.strictLayoutPartners();
-    if (this.sequenceIdIsTaken(id)) {
-      return;
-    }
-    this.appendSequenceOutOfView(id, letters);
-    this.applyStrictLayoutPartners(prevPartners.concat(secondaryPartners));
-    let seq = this.getSequenceById(id);
-    this.addTertiaryPairsForSequence(seq, tertiaryPartners);
   }
 
   /**

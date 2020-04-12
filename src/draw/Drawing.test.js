@@ -1,6 +1,14 @@
 import Drawing from './Drawing';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
+import { WatsonCrickBond } from './StraightBond';
+
+function checkPartners(partners, expectedPartners) {
+  expect(partners.length).toBe(expectedPartners.length);
+  for (let i = 0; i < expectedPartners.length; i++) {
+    expect(partners[i]).toBe(expectedPartners[i]);
+  }
+}
 
 describe('Drawing class', () => {
   it('instantiates', () => {
@@ -443,6 +451,168 @@ describe('Drawing class', () => {
       let bonds = drawing.addStrandBondsForSequence(seq);
       expect(bonds.length).toBe(0);
       expect(drawing.numStrandBonds).toBe(0);
+    });
+  });
+
+  it('numWatsonCrickBonds getter', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing.appendSequenceOutOfView('asdf', 'aaaggguuu');
+    expect(drawing.numWatsonCrickBonds).toBe(0);
+    drawing.applyStrictLayoutPartners([9, 8, null, null, null, null, null, 2, 1]);
+    expect(drawing.numWatsonCrickBonds).toBe(2);
+  });
+
+  it('forEachWatsonCrickBond method', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    let seq = drawing.appendSequenceOutOfView('asdf', 'GGGAAACCC');
+    let wcb1 = WatsonCrickBond.create(drawing._svg, seq.getBaseAtPosition(1), seq.getBaseAtPosition(9));
+    let wcb2 = WatsonCrickBond.create(drawing._svg, seq.getBaseAtPosition(2), seq.getBaseAtPosition(8));
+    drawing._bonds.watsonCrick.push(wcb1);
+    drawing._bonds.watsonCrick.push(wcb2);
+    let bonds = [wcb1, wcb2];
+    let i = 0;
+    drawing.forEachWatsonCrickBond(wcb => {
+      expect(wcb).toBe(bonds[i]);
+      i++;
+    });
+    expect(i).toBe(2);
+  });
+
+  describe('strictLayoutPartners method', () => {
+    it('unstructured', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'aaggcc');
+      checkPartners(
+        drawing.strictLayoutPartners(),
+        [null, null, null, null, null, null],
+      );
+    });
+
+    it('multiple sequences', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq1 = drawing.appendSequenceOutOfView('asdf', 'agc');
+      let seq2 = drawing.appendSequenceOutOfView('qwer', 'ewq');
+      drawing._bonds.watsonCrick.push(
+        WatsonCrickBond.create(drawing._svg, seq1.getBaseAtPosition(1), seq2.getBaseAtPosition(3)),
+      );
+      drawing._bonds.watsonCrick.push(
+        WatsonCrickBond.create(drawing._svg, seq1.getBaseAtPosition(2), seq2.getBaseAtPosition(2)),
+      );
+      checkPartners(
+        drawing.strictLayoutPartners(),
+        [6, 5, null, null, 2, 1],
+      );
+    });
+  });
+
+  describe('removeExcessStrictLayoutPairs method', () => {
+    it('partners notation is the wrong length', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'aaaggguuu');
+      drawing.applyStrictLayoutPartners([9, 8, 7, null, null, null, 3, 2, 1]);
+      expect(drawing.numWatsonCrickBonds).toBe(3);
+      drawing.removeExcessStrictLayoutPairs([7, 6, null, null, null, 2, 1]);
+      expect(drawing.numWatsonCrickBonds).toBe(3);
+    });
+
+    it('removes bonds from bonds array', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'ggguuuccc');
+      drawing.applyStrictLayoutPartners([9, 8, 7, null, null, null, 3, 2, 1]);
+      let bonds = [];
+      drawing.forEachWatsonCrickBond(wcb => bonds.push(wcb));
+      expect(drawing.numWatsonCrickBonds).toBe(3);
+      drawing.removeExcessStrictLayoutPairs([9, null, 7, null, null, null, 3, null, 1]);
+      expect(drawing.numWatsonCrickBonds).toBe(2);
+      bonds.splice(1, 1);
+      let i = 0;
+      drawing.forEachWatsonCrickBond(wcb => {
+        expect(wcb).toBe(bonds[i]);
+        i++;
+      });
+    });
+
+    it('calls remove method of bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'aaauuuccc');
+      drawing.applyStrictLayoutPartners([9, 8, 7, null, null, null, 3, 2, 1]);
+      let bonds = [];
+      drawing.forEachWatsonCrickBond(wcb => bonds.push(wcb));
+      let wcb2 = bonds[1];
+      let lineId = wcb2._line.id();
+      expect(drawing._svg.findOne('#' + lineId)).not.toBe(null);
+      drawing.removeExcessStrictLayoutPairs([9, null, 7, null, null, null, 3, null, 1]);
+      expect(drawing._svg.findOne('#' + lineId)).toBe(null);
+    });
+  });
+
+  describe('addMissingStrictLayoutPairs method', () => {
+    it('partners notation is the wrong length', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'aaacc');
+      drawing.appendSequenceOutOfView('qwer', 'cuuu');
+      expect(drawing.numWatsonCrickBonds).toBe(0);
+      drawing.addMissingStrictLayoutPairs([9, 8, 7, null, null, null, 3, 2, 1, null]);
+      expect(drawing.numWatsonCrickBonds).toBe(0);
+    });
+
+    it('multiple sequences (and returns the added bonds)', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'aaacc');
+      drawing.appendSequenceOutOfView('qwer', 'cuuu');
+      expect(drawing.numWatsonCrickBonds).toBe(0);
+      let bonds = drawing.addMissingStrictLayoutPairs([9, null, 7, null, null, null, 3, null, 1]);
+      expect(drawing.numWatsonCrickBonds).toBe(2);
+      expect(bonds.length).toBe(2);
+      let p = 1;
+      let i = 0;
+      drawing.forEachWatsonCrickBond(wcb => {
+        expect(wcb.base1).toBe(drawing.getBaseAtStrictLayoutPosition(p));
+        expect(wcb.base2).toBe(drawing.getBaseAtStrictLayoutPosition(10 - p));
+        expect(wcb).toBe(bonds[i]);
+        p += 2;
+        i++;
+      });
+    });
+  });
+
+  describe('applyStrictLayoutPartners method', () => {
+    it('partners notation is the wrong length', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'aaagggccc');
+      expect(drawing.numWatsonCrickBonds).toBe(0);
+      drawing.applyStrictLayoutPartners([7, 6, null, null, null, 2, 1]);
+      expect(drawing.numWatsonCrickBonds).toBe(0);
+    });
+
+    it('removes and adds bonds and returns the added bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'gggaaaccc');
+      expect(drawing.numWatsonCrickBonds).toBe(0);
+      drawing.applyStrictLayoutPartners([9, 8, null, null, null, null, null, 2, 1]);
+      expect(drawing.numWatsonCrickBonds).toBe(2);
+      let bonds = drawing.applyStrictLayoutPartners([9, null, 7, null, null, null, 3, null, 1]);
+      expect(drawing.numWatsonCrickBonds).toBe(2);
+      expect(bonds.length).toBe(1);
+      expect(bonds[0].base1).toBe(drawing.getBaseAtStrictLayoutPosition(3));
+      expect(bonds[0].base2).toBe(drawing.getBaseAtStrictLayoutPosition(7));
+      let p = 1;
+      drawing.forEachWatsonCrickBond(wcb => {
+        expect(wcb.base1).toBe(drawing.getBaseAtStrictLayoutPosition(p));
+        expect(wcb.base2).toBe(drawing.getBaseAtStrictLayoutPosition(10 - p));
+        p += 2;
+      });
     });
   });
 });
