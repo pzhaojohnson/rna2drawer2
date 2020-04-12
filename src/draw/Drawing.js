@@ -296,11 +296,13 @@ class Drawing {
   /**
    * @param {Base} b1 
    * @param {Base} b2 
+   * 
+   * @returns {StrandBond} 
    */
   addStrandBond(b1, b2) {
-    this._bonds.strand.push(
-      StrandBond.create(this._svg, b1, b2),
-    );
+    let sb = StrandBond.create(this._svg, b1, b2);
+    this._bonds.strand.push(sb);
+    return sb;
   }
 
   /**

@@ -410,9 +410,9 @@ describe('Drawing class', () => {
     let b1 = drawing.getBaseAtStrictLayoutPosition(1);
     let b2 = drawing.getBaseAtStrictLayoutPosition(2);
     expect(drawing.numStrandBonds).toBe(0);
-    drawing.addStrandBond(b1, b2);
+    let sb = drawing.addStrandBond(b1, b2);
     expect(drawing.numStrandBonds).toBe(1);
-    let sb = drawing._bonds.strand[0];
+    expect(sb).toBe(drawing._bonds.strand[0]);
     expect(sb.base1.id).toBe(b1.id);
     expect(sb.base2.id).toBe(b2.id);
   });
