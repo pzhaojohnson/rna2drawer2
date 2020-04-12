@@ -571,8 +571,8 @@ class Drawing {
       });
     });
     this.setWidthAndHeight(
-      ((layout.xMax - xMin) * baseWidth) + xPadding,
-      ((layout.yMax - yMin) * baseHeight) + yPadding,
+      ((layout.xMax - xMin) * baseWidth) + (2 * xPadding),
+      ((layout.yMax - yMin) * baseHeight) + (2 * yPadding),
     );
   }
 

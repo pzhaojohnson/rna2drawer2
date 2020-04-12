@@ -1,14 +1,12 @@
 import Drawing from './Drawing';
+import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import StrictLayoutGeneralProps from './layout/singleseq/strict/StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './layout/singleseq/strict/StrictLayoutBaseProps';
 
 class InteractiveDrawing {
 
-  /**
-   * @param {Element} container The DOM element to place the SVG document of this drawing in.
-   */
-  constructor(container) {
-    this._drawing = new Drawing(container);
+  constructor() {
+    this._drawing = new Drawing();
 
     this._strictLayoutProps = {
       general: new StrictLayoutGeneralProps(),
@@ -42,6 +40,20 @@ class InteractiveDrawing {
   }
 
   /**
+   * @returns {string} 
+   */
+  get layoutType() {
+    return this._layoutType;
+  }
+
+  /**
+   * @returns {boolean} 
+   */
+  hasStrictLayout() {
+    return this.layoutType === 'strict';
+  }
+
+  /**
    * Returns null if no sequence is added.
    * 
    * @param {string} id 
@@ -59,6 +71,22 @@ class InteractiveDrawing {
     return seq;
   }
 
+  _applyStrictLayout() {
+    let baseProps = [];
+    this._strictLayoutProps.base.forEach(bps => {
+      baseProps.push(bps.deepCopy());
+    });
+    this._drawing.applyStrictLayout(
+      new StrictLayout(
+        this._drawing.strictLayoutPartners(),
+        this._strictLayoutProps.general.deepCopy(),
+        baseProps,
+      ),
+      this._strictLayoutProps.baseWidth,
+      this._strictLayoutProps.baseHeight,
+    );
+  }
+
   /**
    * @param {string} id 
    * @param {string} letters 
@@ -66,6 +94,7 @@ class InteractiveDrawing {
    * @param {Array<number|null>} tertiaryPartners 
    */
   appendStructure(id, letters, secondaryPartners, tertiaryPartners) {
+    let wasEmpty = this.isEmpty();
     let strictLayoutPartners = this._drawing.strictLayoutPartners();
     let seq = this._appendSequenceOutOfView(id, letters);
     if (!seq) {
@@ -76,6 +105,12 @@ class InteractiveDrawing {
       strictLayoutPartners.concat(secondaryPartners),
     );
     this._drawing.addTertiaryPairsForSequence(seq, tertiaryPartners);
+    if (this.hasStrictLayout()) {
+      this._applyStrictLayout();
+    }
+    if (wasEmpty) {
+      this._drawing.centerView();
+    }
   }
 }
 

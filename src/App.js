@@ -13,13 +13,17 @@ import { OpenCT } from './forms/OpenCT';
 class App {
 
   /**
-   * @param {object} options 
-   * @param {boolean} options.testing Set to True to tell the app that it is running in a test via Node.js.
-   * @param {Element} options.testingDrawingContainer Container for the drawing of the app when testing.
+   * @callback App~SVG 
+   * 
+   * @returns {SVG.Svg} 
    */
-  constructor(options={}) {
-    this._options = options;
 
+  /**
+   * @param {App~SVG} SVG
+   */
+  constructor(SVG) {
+    this._SVG = SVG;
+    
     this._fillInBody();
     this._renderPermanentComponents();
 
@@ -91,11 +95,7 @@ class App {
    * @returns {Element} The container element for the SVG document of the drawing.
    */
   _getDrawingContainer() {
-    if (this._options.testing) {
-      return this._options.testingDrawingContainer;
-    } else {
-      return document.getElementById(this._drawingContainerId);
-    }
+    return document.getElementById(this._drawingContainerId);
   }
 
   /**
@@ -143,7 +143,8 @@ class App {
   }
 
   _renderDrawing() {
-    this._drawing = new InteractiveDrawing(this._getDrawingContainer());
+    this._drawing = new InteractiveDrawing();
+    this._drawing.addTo(this._getDrawingContainer(), () => this._SVG());
   }
 
   _renderMenu() {
@@ -231,7 +232,15 @@ class App {
     return () => this._openForm(
       <CreateNewDrawing
         width={'100vw'}
-        submit={() => {}}
+        submit={(id, letters, secondaryPartners, tertiaryPartners) => {
+          this._drawing.appendStructure(
+            id,
+            letters,
+            secondaryPartners,
+            tertiaryPartners,
+          );
+          this._closeCurrForm();
+        }}
       />
     );
   }

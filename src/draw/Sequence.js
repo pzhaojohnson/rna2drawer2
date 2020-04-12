@@ -613,7 +613,7 @@ class Sequence {
     }
 
     if (p === this.length + 1) {
-      this.appendBase(b);
+      this.appendBase(b, svg);
     } else if (this.positionInRange(p)) {
       this._bases.splice(p - 1, 0, b);
     }
