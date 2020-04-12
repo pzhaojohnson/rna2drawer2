@@ -189,7 +189,8 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
       expect(drawing.numSequences).toBe(1);
-      drawing.appendSequenceOutOfView('asdf', 'qwer');
+      let seq = drawing.appendSequenceOutOfView('asdf', 'qwer');
+      expect(seq).toBe(null);
       expect(drawing.numSequences).toBe(1);
     });
 
@@ -197,8 +198,10 @@ describe('Drawing class', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
       expect(drawing.numSequences).toBe(0);
-      drawing.appendSequenceOutOfView('qwer', 'qwer');
-      drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+      let seq1 = drawing.appendSequenceOutOfView('qwer', 'qwer');
+      expect(seq1.id).toBe('qwer');
+      let seq2 = drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+      expect(seq2.id).toBe('zxcv');
       expect(drawing.numSequences).toBe(2);
       let ids = ['qwer', 'zxcv'];
       let i = 0;

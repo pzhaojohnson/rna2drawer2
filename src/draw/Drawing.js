@@ -136,16 +136,20 @@ class Drawing {
   }
 
   /**
+   * Returns null if the given sequence ID is taken.
+   * 
    * @param {string} id 
    * @param {string} letters 
+   * 
+   * @returns {Sequence|null} 
    */
   appendSequenceOutOfView(id, letters) {
     if (this.sequenceIdIsTaken(id)) {
-      return;
+      return null;
     }
-    this._sequences.push(
-      Sequence.createOutOfView(this._svg, id, letters)
-    );
+    let seq = Sequence.createOutOfView(this._svg, id, letters);
+    this._sequences.push(seq);
+    return seq;
   }
 
   /**
