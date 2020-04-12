@@ -363,6 +363,24 @@ describe('Drawing class', () => {
     });
   });
 
+  describe('sequenceOfBase method', () => {
+    it('multiple sequences', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'qwer');
+      let seq = drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+      let b = seq.getBaseAtPosition(2);
+      expect(drawing.sequenceOfBase(b)).toBe(seq);
+    });
+
+    it('no sequence contains base', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let b = Base.create(drawing._svg, 'a', 1, 2);
+      expect(drawing.sequenceOfBase(b)).toBe(null);
+    });
+  });
+
   it('numStrandBonds getter', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => createNodeSVG());
