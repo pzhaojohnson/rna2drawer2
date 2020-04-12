@@ -81,6 +81,15 @@ describe('Drawing class', () => {
     });
   });
 
+  it('numSequences getter', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    expect(drawing.numSequences).toBe(0);
+    drawing.appendSequenceOutOfView('asdf', 'qwer');
+    drawing.appendSequenceOutOfView('zxcv', 'asdf');
+    expect(drawing.numSequences).toBe(2);
+  });
+
   describe('isEmpty method', () => {
     it('drawing is empty', () => {
       let drawing = new Drawing();
