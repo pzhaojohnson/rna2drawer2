@@ -897,6 +897,12 @@ describe('Drawing class', () => {
         expect(typeof b.yCenter).toBe('number');
         expect(isFinite(b.yCenter)).toBeTruthy();
       });
+      expect(typeof drawing.width).toBe('number');
+      expect(isFinite(drawing.width)).toBeTruthy();
+      expect(typeof drawing.height).toBe('number');
+      expect(isFinite(drawing.height)).toBeTruthy();
+      expect(typeof drawing.zoom).toBe('number');
+      expect(isFinite(drawing.zoom)).toBeTruthy();
     });
   });
 });
