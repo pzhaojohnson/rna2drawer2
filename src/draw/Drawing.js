@@ -153,6 +153,8 @@ class Drawing {
   }
 
   /**
+   * Has no effect if no sequence has the given ID.
+   * 
    * @param {string} id 
    */
   removeSequenceById(id) {
