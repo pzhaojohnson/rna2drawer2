@@ -175,7 +175,7 @@ class Sequence {
     
     for (let i = 0; i < letters.length; i++) {
       let c = letters.charAt(i);
-      seq.appendBase(Base.createOutOfView(svg, c));
+      seq.appendBase(Base.createOutOfView(svg, c), svg);
     }
 
     Sequence._applyMostRecentProps(seq, svg);

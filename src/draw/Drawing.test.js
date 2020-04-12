@@ -4,11 +4,30 @@ import Base from './Base';
 import { WatsonCrickBond } from './StraightBond';
 import TertiaryBond from './TertiaryBond';
 import parseDotBracket from '../parse/parseDotBracket';
+import StrictLayout from './layout/singleseq/strict/StrictLayout';
+import StrictLayoutGeneralProps from './layout/singleseq/strict/StrictLayoutGeneralProps';
+import StrictLayoutBaseProps from './layout/singleseq/strict/StrictLayoutBaseProps';
 
 function checkPartners(partners, expectedPartners) {
   expect(partners.length).toBe(expectedPartners.length);
   for (let i = 0; i < expectedPartners.length; i++) {
     expect(partners[i]).toBe(expectedPartners[i]);
+  }
+}
+
+function defaultBaseProps(length) {
+  let baseProps = [];
+  for (let i = 0; i < length; i++) {
+    baseProps.push(new StrictLayoutBaseProps());
+  }
+  return baseProps;
+}
+
+function checkCoords(coords, expectedCoords) {
+  expect(coords.length).toBe(expectedCoords.length);
+  for (let i = 0; i < expectedCoords.length; i++) {
+    expect(coords[i][0]).toBeCloseTo(expectedCoords[i][0], 3);
+    expect(coords[i][1]).toBeCloseTo(expectedCoords[i][1], 3);
   }
 }
 
@@ -856,6 +875,28 @@ describe('Drawing class', () => {
       expect(drawing.numTertiaryBonds).toBe(1);
       expect(drawing._svg.findOne('#' + curveId2)).toBe(null);
       expect(drawing._bonds.tertiary[0]).toBe(tb1);
+    });
+  });
+
+  describe('applyStrictLayout method', () => {
+    it('runs without throwing', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let letters = 'asdfasdfasdfasdfqwerqwerqwerqwerqwer';
+      let dtbr = '..(((....(((((....)))))..((..))..)))';
+      drawing.appendSequenceOutOfView('asdf', letters);
+      let sl = new StrictLayout(
+        parseDotBracket(dtbr).secondaryPartners,
+        new StrictLayoutGeneralProps(),
+        defaultBaseProps(letters.length),
+      );
+      drawing.applyStrictLayout(sl, 8, 10);
+      drawing.forEachBase(b => {
+        expect(typeof b.xCenter).toBe('number');
+        expect(isFinite(b.xCenter)).toBeTruthy();
+        expect(typeof b.yCenter).toBe('number');
+        expect(isFinite(b.yCenter)).toBeTruthy();
+      });
     });
   });
 });
