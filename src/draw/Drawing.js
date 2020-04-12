@@ -3,6 +3,7 @@ import {
   StrandBond,
   WatsonCrickBond,
 } from './StraightBond';
+import TertiaryBond from './TertiaryBond';
 import parseStems from '../parse/parseStems';
 
 class Drawing {
@@ -280,6 +281,22 @@ class Drawing {
   }
 
   /**
+   * Returns zero if this drawing does not contain the given base.
+   * 
+   * @param {Base} b 
+   * 
+   * @returns {number} 
+   */
+  clockwiseNormalAngleOfBase(b) {
+    let seq = this.sequenceOfBase(b);
+    if (seq) {
+      let p = seq.positionOfBase(b);
+      return seq.clockwiseNormalAngleAtPosition(p);
+    }
+    return 0;
+  }
+
+  /**
    * @returns {number} 
    */
   get numStrandBonds() {
@@ -418,6 +435,13 @@ class Drawing {
   }
 
   /**
+   * @returns {number} 
+   */
+  get numTertiaryBonds() {
+    return this._bonds.tertiary.length;
+  }
+
+  /**
    * Returns null if no tertiary bond has the given ID.
    * 
    * @param {string} id 
@@ -442,41 +466,40 @@ class Drawing {
   }
 
   /**
+   * Returns null if no tertiary bond is added.
+   * 
    * @param {Array<Base>} side1 
    * @param {Array<Base>} side2 
+   * 
+   * @returns {TertiaryBond|null} 
    */
   addTertiaryBond(side1, side2) {
     if (side1.length === 0 || side2.length === 0) {
-      return;
+      return null;
     }
-    this._bonds.tertiary.push(
-      TertiaryBond.create(
-        this._svg,
-        side1,
-        side2,
-        b => {
-          let angle = 0;
-          this.forEachSequence(seq => {
-            if (seq.containsBase(b)) {
-              let p = seq.positionOfBase(b);
-              angle = seq.clockwiseNormalAngleAtPosition(p);
-            }
-          });
-          return angle;
-        },
-      ),
+    let tb = TertiaryBond.create(
+      this._svg,
+      side1,
+      side2,
+      b => this.clockwiseNormalAngleOfBase(b)
     );
+    this._bonds.tertiary.push(tb);
+    return tb;
   }
 
   /**
+   * Returns null if no tertiary bond is added.
+   * 
    * @param {number} p5 
    * @param {number} p3 
    * @param {number} size 
+   * 
+   * @returns {TertiaryBond|null} 
    */
-  addTertiaryBondForStrictLayoutStem(p5, p3, size) {
+  addStrictLayoutStemAsTertiaryBond(p5, p3, size) {
     let side1 = this.getBasesInStrictLayoutRange(p5, p5 + size - 1);
     let side2 = this.getBasesInStrictLayoutRange(p3 - size + 1, p3);
-    this.addTertiaryBond(side1, side2);
+    return this.addTertiaryBond(side1, side2);
   }
 
   /**
@@ -485,14 +508,21 @@ class Drawing {
    * 
    * @param {Sequence} seq 
    * @param {Array<number|null>} partners 
+   * 
+   * @returns {Array<TertiaryBond>} 
    */
   addTertiaryPairsForSequence(seq, partners) {
     let stems = parseStems(partners);
+    let added = [];
     stems.forEach(st => {
       let side1 = seq.getBasesInRange(st.start, st.start + st.size - 1);
       let side2 = seq.getBasesInRange(st.end - st.size + 1, st.end);
-      this.addTertiaryBond(side1, side2);
+      let tb = this.addTertiaryBond(side1, side2);
+      if (tb) {
+        added.push(tb);
+      }
     });
+    return added;
   }
 
   /**
@@ -502,14 +532,16 @@ class Drawing {
    */
   removeTertiaryBondById(id) {
     let i = null;
-    for (let j = 0; j < this._bonds.tertiary.length; j++) {
-      if (this._bonds.tertiary[j].id === id) {
-        this._bonds.tertiary[j].remove();
+    let j = 0;
+    this.forEachTertiaryBond(tb => {
+      if (tb.id === id) {
+        tb.remove();
         i = j;
       }
-    }
+      j++;
+    });
     if (i !== null) {
-      this._bonds.tertiary.splice(j, 1);
+      this._bonds.tertiary.splice(i, 1);
     }
   }
 

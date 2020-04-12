@@ -2,6 +2,8 @@ import Drawing from './Drawing';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 import { WatsonCrickBond } from './StraightBond';
+import TertiaryBond from './TertiaryBond';
+import parseDotBracket from '../parse/parseDotBracket';
 
 function checkPartners(partners, expectedPartners) {
   expect(partners.length).toBe(expectedPartners.length);
@@ -389,6 +391,27 @@ describe('Drawing class', () => {
     });
   });
 
+  describe('clockwiseNormalAngleOfBase method', () => {
+    it('drawing contains base', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdf');
+      let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwer');
+      let b = seq2.getBaseAtPosition(3);
+      expect(
+        drawing.clockwiseNormalAngleOfBase(b)
+      ).toBe(seq2.clockwiseNormalAngleAtPosition(3));
+    });
+
+    it('drawing does not contain base', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdf');
+      let b = Base.create(drawing._svg, 'a', 1, 2);
+      expect(drawing.clockwiseNormalAngleOfBase(b)).toBe(0);
+    });
+  });
+
   it('numStrandBonds getter', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => createNodeSVG());
@@ -613,6 +636,226 @@ describe('Drawing class', () => {
         expect(wcb.base2).toBe(drawing.getBaseAtStrictLayoutPosition(10 - p));
         p += 2;
       });
+    });
+  });
+
+  it('numTertiaryBonds getter', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
+    expect(drawing.numTertiaryBonds).toBe(0);
+    let tb = drawing.addTertiaryBond(
+      drawing.getBasesInStrictLayoutRange(1, 4),
+      drawing.getBasesInStrictLayoutRange(9, 12),
+    );
+    expect(drawing.numTertiaryBonds).toBe(1);
+    drawing.removeTertiaryBondById(tb.id);
+    expect(drawing.numTertiaryBonds).toBe(0);
+  });
+
+  describe('getTertiaryBondById method', () => {
+    it('basic case', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdfasdf');
+      drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(1, 3),
+        drawing.getBasesInStrictLayoutRange(7, 9),
+      );
+      let tb2 = drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(3, 5),
+        drawing.getBasesInStrictLayoutRange(9, 11),
+      );
+      drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(5, 7),
+        drawing.getBasesInStrictLayoutRange(14, 16),
+      );
+      expect(drawing.numTertiaryBonds).toBe(3);
+      expect(drawing.getTertiaryBondById(tb2.id).id).toBe(tb2.id);
+    });
+
+    it('no tertiary bond has the given ID', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asfd', 'asdfasdfasdf');
+      drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(1, 3),
+        drawing.getBasesInStrictLayoutRange(7, 9),
+      );
+      expect(drawing.getTertiaryBondById('qwer')).toBe(null);
+    });
+  });
+
+  it('forEachTertiaryBond method', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing.appendSequenceOutOfView('asdf', 'qwerqwerqwer');
+    let tb1 = drawing.addTertiaryBond(
+      drawing.getBasesInStrictLayoutRange(1, 3),
+      drawing.getBasesInStrictLayoutRange(7, 9),
+    );
+    let tb2 = drawing.addTertiaryBond(
+      drawing.getBasesInStrictLayoutRange(3, 5),
+      drawing.getBasesInStrictLayoutRange(10, 12),
+    );
+    let bonds = [tb1, tb2];
+    let i = 0;
+    drawing.forEachTertiaryBond(tb => {
+      expect(tb).toBe(bonds[i]);
+      i++;
+    });
+    expect(i).toBe(2);
+  });
+
+  describe('addTertiaryBond method', () => {
+    it('sides have lengths of zero', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
+      let tb1 = drawing.addTertiaryBond(
+        [],
+        drawing.getBasesInStrictLayoutRange(3, 5),
+      );
+      expect(tb1).toBe(null);
+      let tb2 = drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(2, 4),
+        [],
+      );
+      expect(tb2).toBe(null);
+      expect(drawing.numTertiaryBonds).toBe(0);
+    });
+
+    it('returns the added bond', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
+      let tb = drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(2, 4),
+        drawing.getBasesInStrictLayoutRange(7, 9),
+      );
+      expect(drawing.numTertiaryBonds).toBe(1);
+      expect(tb).toBe(drawing._bonds.tertiary[0]);
+    });
+
+    it('creates the bond with correct sides and angles', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'qwerqwerqwerqwer');
+      let tb = drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(2, 3),
+        drawing.getBasesInStrictLayoutRange(7, 8),
+      );
+      let etb = TertiaryBond.create(
+        drawing._svg,
+        seq.getBasesInRange(2, 3),
+        seq.getBasesInRange(7, 8),
+        b => {
+          let p = seq.positionOfBase(b);
+          return seq.clockwiseNormalAngleAtPosition(p);
+        },
+      );
+      expect(tb._side1[0]).toBe(etb._side1[0]);
+      expect(tb._side1[1]).toBe(etb._side1[1]);
+      expect(tb._side2[0]).toBe(etb._side2[0]);
+      expect(tb._side2[1]).toBe(etb._side2[1]);
+      expect(tb._bracket1.attr('d')).toBe(etb._bracket1.attr('d'));
+      expect(tb._bracket2.attr('d')).toBe(etb._bracket2.attr('d'));
+    });
+  });
+
+  describe('addTertiaryBondForStrictLayoutStem method', () => {
+    it('returns the added bond', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+      drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
+      let tb = drawing.addStrictLayoutStemAsTertiaryBond(2, 12, 2);
+      expect(drawing.numTertiaryBonds).toBe(1);
+      expect(tb).toBe(drawing._bonds.tertiary[0]);
+    });
+
+    it('adds the bond with the correct sides', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+      let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
+      let tb = drawing.addStrictLayoutStemAsTertiaryBond(3, 14, 2);
+      expect(tb._side1[0]).toBe(seq1.getBaseAtPosition(3));
+      expect(tb._side1[1]).toBe(seq1.getBaseAtPosition(4));
+      expect(tb._side2[0]).toBe(seq2.getBaseAtPosition(5));
+      expect(tb._side2[1]).toBe(seq2.getBaseAtPosition(6));
+    });
+  });
+
+  describe('addTertiaryPairsForSequence', () => {
+    it('returns the added bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'qwerqwerqwer');
+      expect(drawing.numTertiaryBonds).toBe(0);
+      let bonds = drawing.addTertiaryPairsForSequence(
+        seq,
+        [9, 8, null, null, 7, null, 5, 2, 1, null, null, null],
+      );
+      expect(bonds.length).toBe(2);
+      expect(drawing.numTertiaryBonds).toBe(2);
+      expect(bonds[0]).toBe(drawing._bonds.tertiary[0]);
+      expect(bonds[1]).toBe(drawing._bonds.tertiary[1]);
+    });
+
+    it('adds bonds with the correct sides', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('qwer', 'qwerqwerqwer');
+      let bonds = drawing.addTertiaryPairsForSequence(
+        seq,
+        parseDotBracket('.((..(.)..))').secondaryPartners,
+      );
+      expect(bonds[0]._side1.length).toBe(2);
+      expect(bonds[0]._side1[0]).toBe(seq.getBaseAtPosition(2));
+      expect(bonds[0]._side1[1]).toBe(seq.getBaseAtPosition(3));
+      expect(bonds[0]._side2.length).toBe(2);
+      expect(bonds[0]._side2[0]).toBe(seq.getBaseAtPosition(11));
+      expect(bonds[0]._side2[1]).toBe(seq.getBaseAtPosition(12));
+      expect(bonds[1]._side1.length).toBe(1);
+      expect(bonds[1]._side1[0]).toBe(seq.getBaseAtPosition(6));
+      expect(bonds[1]._side2.length).toBe(1);
+      expect(bonds[1]._side2[0]).toBe(seq.getBaseAtPosition(8));
+    });
+  });
+
+  describe('removeTertiaryBondById method', () => {
+    it('no tertiary bond has the given ID', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
+      drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(1, 3),
+        drawing.getBasesInStrictLayoutRange(6, 7),
+      );
+      expect(drawing.numTertiaryBonds).toBe(1);
+      drawing.removeTertiaryBondById('blah');
+      expect(drawing.numTertiaryBonds).toBe(1);
+    });
+
+    it('removes the correct tertiary bond and removes it from the drawing', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdfasdf');
+      let tb1 = drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(1, 3),
+        drawing.getBasesInStrictLayoutRange(6, 7),
+      );
+      let tb2 = drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(4, 5),
+        drawing.getBasesInStrictLayoutRange(12, 12),
+      );
+      let curveId2 = tb2._curve.id();
+      expect(drawing.numTertiaryBonds).toBe(2);
+      drawing.removeTertiaryBondById(tb2.id);
+      expect(drawing.numTertiaryBonds).toBe(1);
+      expect(drawing._svg.findOne('#' + curveId2)).toBe(null);
+      expect(drawing._bonds.tertiary[0]).toBe(tb1);
     });
   });
 });

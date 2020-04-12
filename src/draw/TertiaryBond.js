@@ -233,18 +233,21 @@ class TertiaryBond {
       { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
       getClockwiseNormalAngleOfBase,
     ));
+    bracket1.id();
 
     let bracket2 = svg.path(TertiaryBond._dBracket(
       side2,
       { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
       getClockwiseNormalAngleOfBase,
     ));
+    bracket2.id();
 
     let curve = svg.path(TertiaryBond._dCurve(
       bracket1,
       bracket2,
       { height: 100, angle: 3 * Math.PI / 2 },
     ));
+    curve.id();
 
     let tb = new TertiaryBond(
       curve,
@@ -379,6 +382,13 @@ class TertiaryBond {
         throw new Error('Invalid L segment.');
       }
     });
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get id() {
+    return this._curve.id();
   }
 
   /**
