@@ -905,4 +905,102 @@ describe('Drawing class', () => {
       expect(isFinite(drawing.zoom)).toBeTruthy();
     });
   });
+
+  describe('savableState method', () => {
+    it('includes class name and svg string', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+      drawing.applyStrictLayoutPartners(
+        parseDotBracket('((....))').secondaryPartners,
+      );
+      let savableState = drawing.savableState();
+      expect(savableState.className).toBe('Drawing');
+      expect(savableState.svg).toBe(drawing._svg.svg());
+    });
+
+    it('includes sequences', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdf');
+      let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwer');
+      let savableState = drawing.savableState();
+      expect(savableState.sequences.length).toBe(2);
+      expect(
+        JSON.stringify(savableState.sequences[0])
+      ).toBe(JSON.stringify(seq1.savableState()));
+      expect(
+        JSON.stringify(savableState.sequences[1])
+      ).toBe(JSON.stringify(seq2.savableState()));
+    });
+
+    it('includes strand bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'asd');
+      let bonds = drawing.addStrandBondsForSequence(seq);
+      let savableState = drawing.savableState();
+      expect(savableState.bonds.strand.length).toBe(2);
+      expect(
+        JSON.stringify(savableState.bonds.strand[0])
+      ).toBe(JSON.stringify(bonds[0].savableState()));
+      expect(
+        JSON.stringify(savableState.bonds.strand[1])
+      ).toBe(JSON.stringify(bonds[1].savableState()));
+    });
+
+    it('includes Watson-Crick bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      drawing.appendSequenceOutOfView('asf', 'asdfasdf');
+      let bonds = drawing.applyStrictLayoutPartners(
+        parseDotBracket('((....))').secondaryPartners,
+      );
+      let savableState = drawing.savableState();
+      expect(savableState.bonds.watsonCrick.length).toBe(2);
+      expect(
+        JSON.stringify(savableState.bonds.watsonCrick[0])
+      ).toBe(JSON.stringify(bonds[0].savableState()));
+      expect(
+        JSON.stringify(savableState.bonds.watsonCrick[1])
+      ).toBe(JSON.stringify(bonds[1].savableState()));
+    });
+
+    it('includes tertiary bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
+      let bonds = drawing.addTertiaryPairsForSequence(
+        seq,
+        parseDotBracket('((..(...).))').secondaryPartners,
+      );
+      let savableState = drawing.savableState();
+      expect(savableState.bonds.tertiary.length).toBe(2);
+      expect(
+        JSON.stringify(savableState.bonds.tertiary[0])
+      ).toBe(JSON.stringify(bonds[0].savableState()));
+      expect(
+        JSON.stringify(savableState.bonds.tertiary[1])
+      ).toBe(JSON.stringify(bonds[1].savableState()));
+    });
+
+    it('can be converted to and from a JSON string', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+      drawing.addStrandBondsForSequence(seq);
+      drawing.applyStrictLayoutPartners(
+        parseDotBracket('(((..)))').secondaryPartners,
+      );
+      drawing.addTertiaryBond(
+        drawing.getBasesInStrictLayoutRange(1, 2),
+        drawing.getBasesInStrictLayoutRange(6, 7),
+      );
+      let savableState1 = drawing.savableState();
+      let json1 = JSON.stringify(savableState1);
+      let savableState2 = JSON.parse(json1);
+      let json2 = JSON.stringify(savableState2);
+      expect(json2).toBe(json1);
+    });
+  });
 });

@@ -578,6 +578,7 @@ class Drawing {
 
   /**
    * @typedef {Object} Drawing~SavableState 
+   * @property {string} className 
    * @property {string} svg 
    * @property {Array<Sequence~SavableState>} sequences 
    * @property {Drawing~BondsSavableState} bonds 
@@ -595,6 +596,7 @@ class Drawing {
    */
   savableState() {
     let savableState = {
+      className: 'Drawing',
       svg: this._svg.svg(),
       sequences: [],
       bonds: {
