@@ -545,6 +545,21 @@ class Drawing {
     }
   }
 
+  _repositionBonds() {
+    this.forEachStrandBond(sb => sb.reposition());
+    this.forEachWatsonCrickBond(wcb => wcb.reposition());
+    this.forEachTertiaryBond(tb => {
+      tb.reposition(b => {
+        let seq = this.sequenceOfBase(b);
+        if (!seq) {
+          return 0;
+        }
+        let p = seq.positionOfBase(b);
+        return seq.clockwiseNormalAngleAtPosition(p);
+      });
+    });
+  }
+
   /**
    * @param {StrictLayout} layout 
    * @param {number} baseWidth 
@@ -570,6 +585,7 @@ class Drawing {
         q++;
       });
     });
+    this._repositionBonds();
     this.setWidthAndHeight(
       ((layout.xMax - xMin) * baseWidth) + (2 * xPadding),
       ((layout.yMax - yMin) * baseHeight) + (2 * yPadding),
