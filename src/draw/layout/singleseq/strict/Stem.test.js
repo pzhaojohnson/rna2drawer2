@@ -215,6 +215,32 @@ it('numBranches - some branches', () => {
   expect(omst.numBranches).toBe(2);
 });
 
+it('firstUnpairedRegionInLoop getter', () => {
+  let partners = parseDotBracket('(((...((...))..)))').secondaryPartners;
+  let gps = new StrictLayoutGeneralProps();
+  let bps = defaultBaseProps(partners.length);
+  let st = new Stem(1, partners, gps, bps);
+  expect(st.firstUnpairedRegionInLoop).toBe(st._loop[0]);
+});
+
+describe('lastUnpairedRegionInLoop getter', () => {
+  it('hairpin loop', () => {
+    let partners = parseDotBracket('(((...)))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, bps);
+    expect(st.lastUnpairedRgionInLoop).toBe(st._loop[0]);
+  });
+
+  it('has inner stems', () => {
+    let partners = parseDotBracket('((..(((...)))..(((.....))).))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, bps);
+    expect(st.lastUnpairedRgionInLoop).toBe(st._loop[4]);
+  });
+});
+
 it('xBottomCenter and yBottomCenter getters and setters', () => {
   let partners = parseDotBracket('(((...)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();

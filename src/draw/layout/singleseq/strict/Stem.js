@@ -158,6 +158,28 @@ class Stem {
   }
 
   /**
+   * @returns {UnpairedRegion} 
+   */
+  get firstUnpairedRegionInLoop() {
+    let it = this.loopIterator();
+    return it.next().value;
+  }
+
+  /**
+   * @returns {UnpairedRegion} 
+   */
+  get lastUnpairedRgionInLoop() {
+    let it = this.loopIterator();
+    let next = it.next();
+    let value;
+    while (!next.done) {
+      value = next.value;
+      next = it.next();
+    }
+    return value;
+  }
+
+  /**
    * @returns {number} 
    */
   get xBottomCenter() {
