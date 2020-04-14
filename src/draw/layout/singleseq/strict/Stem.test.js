@@ -241,6 +241,50 @@ describe('lastUnpairedRegionInLoop getter', () => {
   });
 });
 
+describe('firstStemInLoop getter', () => {
+  it('hairpin loop', () => {
+    let partners = parseDotBracket('(((...)))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, bps);
+    expect(st.firstStemInLoop).toBe(null);
+  });
+
+  it('multiple stems in loop', () => {
+    let partners = parseDotBracket('((..(((...)))..(((...)))..))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, bps);
+    expect(st.firstStemInLoop).toBe(st._loop[1]);
+  });
+});
+
+describe('lastStemInLoop getter', () => {
+  it('hairpin loop', () => {
+    let partners = parseDotBracket('(((...)))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, bps);
+    expect(st.lastStemInLoop).toBe(null);
+  });
+
+  it('one stem in loop', () => {
+    let partners = parseDotBracket('(((...(((...))).)))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, bps);
+    expect(st.lastStemInLoop).toBe(st._loop[1]);
+  });
+
+  it('multiple stems in loop', () => {
+    let partners = parseDotBracket('((...(((...))).(((...)))..((...)).))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, bps);
+    expect(st.lastStemInLoop).toBe(st._loop[5]);
+  });
+});
+
 it('xBottomCenter and yBottomCenter getters and setters', () => {
   let partners = parseDotBracket('(((...)))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();

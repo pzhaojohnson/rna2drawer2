@@ -180,6 +180,41 @@ class Stem {
   }
 
   /**
+   * Returns null if the loop contains no stems.
+   * 
+   * @returns {Stem|null} 
+   */
+  get firstStemInLoop() {
+    if (this.numBranches === 0) {
+      return null;
+    }
+    let it = this.loopIterator();
+    it.next();
+    return it.next().value;
+  }
+
+  /**
+   * Returns null if the loop contains no stems.
+   * 
+   * @returns {Stem|null} 
+   */
+  get lastStemInLoop() {
+    if (this.numBranches === 0) {
+      return null;
+    }
+    let it = this.loopIterator();
+    it.next();
+    let st;
+    let next = it.next();
+    while (!next.done) {
+      st = next.value;
+      it.next();
+      next = it.next();
+    }
+    return st;
+  }
+
+  /**
    * @returns {number} 
    */
   get xBottomCenter() {
