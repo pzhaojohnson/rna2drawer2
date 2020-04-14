@@ -229,7 +229,7 @@ describe('lastUnpairedRegionInLoop getter', () => {
     let gps = new StrictLayoutGeneralProps();
     let bps = defaultBaseProps(partners.length);
     let st = new Stem(1, partners, gps, bps);
-    expect(st.lastUnpairedRgionInLoop).toBe(st._loop[0]);
+    expect(st.lastUnpairedRegionInLoop).toBe(st._loop[0]);
   });
 
   it('has inner stems', () => {
@@ -237,7 +237,31 @@ describe('lastUnpairedRegionInLoop getter', () => {
     let gps = new StrictLayoutGeneralProps();
     let bps = defaultBaseProps(partners.length);
     let st = new Stem(1, partners, gps, bps);
-    expect(st.lastUnpairedRgionInLoop).toBe(st._loop[4]);
+    expect(st.lastUnpairedRegionInLoop).toBe(st._loop[4]);
+  });
+});
+
+describe('unpairedRegionsInLoop method', () => {
+  it('hairpin loop', () => {
+    let partners = parseDotBracket('(((...)))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, bps);
+    let urs = st.unpairedRegionsInLoop();
+    expect(urs.length).toBe(1);
+    expect(urs[0]).toBe(st._loop[0]);
+  });
+
+  it('multiple unpaired regions in loop', () => {
+    let partners = parseDotBracket('...(((...)))..(((...)))..').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, bps);
+    let urs = omst.unpairedRegionsInLoop();
+    expect(urs.length).toBe(3);
+    expect(urs[0]).toBe(omst._loop[0]);
+    expect(urs[1]).toBe(omst._loop[2]);
+    expect(urs[2]).toBe(omst._loop[4]);
   });
 });
 
@@ -274,6 +298,28 @@ describe('lastStemInLoop getter', () => {
     let bps = defaultBaseProps(partners.length);
     let st = new Stem(1, partners, gps, bps);
     expect(st.lastStemInLoop).toBe(st._loop[1]);
+  });
+
+  describe('stemsInLoop method', () => {
+    it('hairpin loop', () => {
+      let partners = parseDotBracket('...').secondaryPartners;
+      let gps = new StrictLayoutGeneralProps();
+      let bps = defaultBaseProps(partners.length);
+      let omst = new Stem(0, partners, gps, bps);
+      let sts = omst.stemsInLoop();
+      expect(sts.length).toBe(0);
+    });
+
+    it('multiple stems in loop', () => {
+      let partners = parseDotBracket('((...(((...))).((..))..))').secondaryPartners;
+      let gps = new StrictLayoutGeneralProps();
+      let bps = defaultBaseProps(partners.length);
+      let st = new Stem(1, partners, gps, bps);
+      let ists = st.stemsInLoop();
+      expect(ists.length).toBe(2);
+      expect(ists[0]).toBe(st._loop[1]);
+      expect(ists[1]).toBe(st._loop[3]);
+    });
   });
 
   it('multiple stems in loop', () => {

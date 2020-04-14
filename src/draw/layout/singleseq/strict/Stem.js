@@ -168,7 +168,7 @@ class Stem {
   /**
    * @returns {UnpairedRegion} 
    */
-  get lastUnpairedRgionInLoop() {
+  get lastUnpairedRegionInLoop() {
     let it = this.loopIterator();
     let next = it.next();
     let value;
@@ -177,6 +177,21 @@ class Stem {
       next = it.next();
     }
     return value;
+  }
+
+  /**
+   * @returns {Array<UnpairedRegion>} 
+   */
+  unpairedRegionsInLoop() {
+    let urs = [];
+    let it = this.loopIterator();
+    urs.push(it.next().value);
+    let next = it.next();
+    while (!next.done) {
+      urs.push(it.next().value);
+      next = it.next();
+    }
+    return urs;
   }
 
   /**
@@ -212,6 +227,22 @@ class Stem {
       next = it.next();
     }
     return st;
+  }
+
+  /**
+   * @returns {Array<Stem>} 
+   */
+  stemsInLoop() {
+    let sts = [];
+    let it = this.loopIterator();
+    it.next();
+    let next = it.next();
+    while (!next.done) {
+      sts.push(next.value);
+      it.next();
+      next = it.next();
+    }
+    return sts;
   }
 
   /**
