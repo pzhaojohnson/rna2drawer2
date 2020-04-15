@@ -16,7 +16,7 @@ function _radialAngle(st, structureLength) {
   } else if (st.isOutermostStem()) {
     return 0;
   }
-  let p = (st.position3 - st.position5 + 1) / 2;
+  let p = (st.position5 + st.position3 - 1) / 2;
   return ((2 * Math.PI) * (p / structureLength)) - Math.PI;
 }
 
@@ -48,7 +48,7 @@ function _numBasesInLoop(st) {
  * @param {Array<number>} stretches3 
  * @param {number} stretch 
  */
-function _addStretchToUnpairedRegion(ur, stretches3, stretch) {
+function _setStretchForUnpairedRegion(ur, stretches3, stretch) {
   let positions = ur.size + 1;
   let p = ur.boundingPosition5;
   if (p === 0) {
@@ -60,6 +60,8 @@ function _addStretchToUnpairedRegion(ur, stretches3, stretch) {
     p++;
   }
 }
+
+const _ONE_BRANCH_RADIATION = 2 * Math.PI / 3;
 
 /**
  * Assumes that the loop of the given stem has one branch.
@@ -78,16 +80,18 @@ function _radiateOneBranch(st, stretches3) {
     urSmaller = urBigger;
     urBigger = urTemp;
   }
-  let radiation = 2 * Math.PI / 3;
-  let length = (radiation / Math.PI) * urBigger.size;
+  let length = (_ONE_BRANCH_RADIATION / Math.PI) * urBigger.size;
   if (urSmaller.size < length) {
-    _addStretchToUnpairedRegion(
+    _setStretchForUnpairedRegion(
       urSmaller,
       stretches3,
       length - urSmaller.size,
     );
   }
 }
+
+const _MULTIPLE_BRANCHES_SPREAD = 4;
+const _MULTIPLE_BRANCHES_SPREAD_ANGLE = Math.PI / 2;
 
 /**
  * Assumes that the loop of the given stem has multiple branches.
@@ -96,10 +100,7 @@ function _radiateOneBranch(st, stretches3) {
  * @param {Array<number>} stretches3 
  */
 function _spreadMultipleBranches(st, stretches3) {
-  let angleThreshold = Math.PI / 6;
-  let spread = 4;
-  let urs = st.unpairedRegionsInLoop();
-  urs.forEach(ur => {
+  st.unpairedRegionsInLoop().forEach(ur => {
     let st5 = ur.boundingStem5;
     let st3 = ur.boundingStem3;
     if (!st5.isOutermostStem() && !st3.isOutermostStem()) {
@@ -111,12 +112,20 @@ function _spreadMultipleBranches(st, stretches3) {
         angle3 += Math.PI;
       }
       angle3 = normalizeAngle(angle3, angle5);
-      if (angle3 - angle5 > angleThreshold) {
-        _addStretchToUnpairedRegion(ur, stretches3, spread - ur.size);
+      if (angle3 - angle5 < _MULTIPLE_BRANCHES_SPREAD_ANGLE) {
+        if (ur.size < _MULTIPLE_BRANCHES_SPREAD) {
+          _setStretchForUnpairedRegion(
+            ur,
+            stretches3,
+            _MULTIPLE_BRANCHES_SPREAD - ur.size,
+          );
+        }
       }
     }
   });
 }
+
+const _MULTIPLE_BRANCHES_RADIATION = Math.PI / 2;
 
 /**
  * Assumes that the loop of the given stem has multiple branches.
@@ -125,24 +134,25 @@ function _spreadMultipleBranches(st, stretches3) {
  * @param {Array<number>} stretches3 
  */
 function _radiateMultipleBranchesOutward(st, stretches3) {
-  let radiation = Math.PI / 2;
-  let numBases = _numBasesInLoop(st);
-  numBases -= st.firstUnpairedRegionInLoop.size;
-  numBases -= st.lastUnpairedRegionInLoop.size;
-  numBases -= 4;
-  circumference = (Math.PI / (Math.PI - radiation)) * numBases;
-  let length = (radiation / (2 * Math.PI)) * circumference;
+  let remainingBases = _numBasesInLoop(st);
+  remainingBases -= st.firstUnpairedRegionInLoop.size;
+  remainingBases -= st.lastUnpairedRegionInLoop.size;
+  remainingBases -= 4;
+  let circumference = (Math.PI / (Math.PI - _MULTIPLE_BRANCHES_RADIATION)) * remainingBases;
+  let length = (_MULTIPLE_BRANCHES_RADIATION / (2 * Math.PI)) * circumference;
   length = Math.max(
     length,
     st.firstUnpairedRegionInLoop.size,
     st.lastUnpairedRegionInLoop.size,
   );
-  _addStretchToUnpairedRegion(
+  _setStretchForUnpairedRegion(
     st.firstUnpairedRegionInLoop,
+    stretches3,
     length - st.firstUnpairedRegionInLoop.size,
   );
-  _addStretchToUnpairedRegion(
+  _setStretchForUnpairedRegion(
     st.lastUnpairedRegionInLoop,
+    stretches3,
     length - st.lastUnpairedRegionInLoop.size,
   );
 }
@@ -154,21 +164,21 @@ function _radiateMultipleBranchesOutward(st, stretches3) {
  * @param {Array<number>} stretches3 
  */
 function _radiateMultipleBranches(st, stretches3) {
-  let angleThreshold = Math.PI / 2;
   if (st.isOutermostStem()) {
     _spreadMultipleBranches(st, stretches3);
+    return;
   }
   let outerAngle = _radialAngle(st, stretches3.length);
   outerAngle += Math.PI;
   let firstAngle = _radialAngle(st.firstStemInLoop, stretches3.length);
   let lastAngle = _radialAngle(st.lastStemInLoop, stretches3.length);
-  let firstExceeded = normalizeAngle(firstAngle, outerAngle) - outerAngle > angleThreshold;
-  let lastExceeded = normalizeAngle(outerAngle, lastAngle) - lastAngle > angleThreshold;
+  let firstExceeded = normalizeAngle(firstAngle, outerAngle) - outerAngle > _MULTIPLE_BRANCHES_RADIATION;
+  let lastExceeded = normalizeAngle(outerAngle, lastAngle) - lastAngle > _MULTIPLE_BRANCHES_RADIATION;
   if (firstExceeded && lastExceeded) {
     _radiateMultipleBranchesOutward(st, stretches3);
-  } else {
-    _spreadMultipleBranches(st, stretches3);
+    return;
   }
+  _spreadMultipleBranches(st, stretches3);
 }
 
 function _radiateLoop(st, stretches3) {
@@ -208,9 +218,13 @@ export {
   // these are only exported to aid testing
   _radialAngle,
   _numBasesInLoop,
-  _addStretchToUnpairedRegion,
+  _setStretchForUnpairedRegion,
+  _ONE_BRANCH_RADIATION,
   _radiateOneBranch,
+  _MULTIPLE_BRANCHES_SPREAD,
+  _MULTIPLE_BRANCHES_SPREAD_ANGLE,
   _spreadMultipleBranches,
+  _MULTIPLE_BRANCHES_RADIATION,
   _radiateMultipleBranchesOutward,
   _radiateMultipleBranches,
   _radiateLoop,
