@@ -11,7 +11,13 @@ registerWindow(window, document);
  */
 function createNodeSVG() {
   let svg = SVG(document.documentElement);
+
+  // elements seem to linger from previously created SVG documents...
+  svg.clear();
+
+  // needed for Drawing class tests to work
   svg.addTo = () => svg;
+  
   return svg;
 }
 
