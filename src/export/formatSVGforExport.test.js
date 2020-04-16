@@ -10,12 +10,14 @@ import {
   _shiftCircle,
   _shiftRect,
   _shiftElements,
+  _scaleCoordinate,
   _scaleText,
   _scaleLine,
   _scalePath,
   _scaleCircle,
   _scaleRect,
   _scaleElements,
+  _NUMBER_TRIM,
   _trimTextNumbers,
   _trimLineNumbers,
   _trimPathNumbers,
@@ -100,7 +102,7 @@ describe('_shiftPath function', () => {
     expect(l[2]).toBe(25);
   });
 
-  it('shifts an Q segment', () => {
+  it('shifts a Q segment', () => {
     let svg = createNodeSVG();
     let p = svg.path('M 5 4 Q 3 2 8 10');
     _shiftPath(p, 10, 12);

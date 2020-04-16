@@ -150,29 +150,256 @@ function _shiftElements(svg) {
   });
 }
 
-function _scaleText(text, scaling, xOrigin, yOrigin) {}
+/**
+ * @param {number} c 
+ * @param {number} scaling 
+ * @param {number} cOrigin 
+ * 
+ * @returns {number} 
+ */
+function _scaleCoordinate(c, scaling, cOrigin) {
+  return cOrigin + (scaling * (c - cOrigin));
+}
 
-function _scaleLine(line, scaling, xOrigin, yOrigin) {}
+/**
+ * @param {SVG.Text} rect 
+ * @param {number} scaling 
+ * @param {number} xOrigin 
+ * @param {number} yOrigin 
+ */
+function _scaleText(text, scaling, xOrigin, yOrigin) {
+  let x = _scaleCoordinate(text.attr('x'), scaling, xOrigin);
+  let y = _scaleCoordinate(text.attr('y'), scaling, yOrigin);
+  let fs = scaling * text.attr('font-size');
+  text.attr({
+    'x': x,
+    'y': y,
+    'fs': fs,
+  });
+}
 
-function _scalePath(path, scaling, xOrigin, yOrigin) {}
+/**
+ * @param {SVG.Line} rect 
+ * @param {number} scaling 
+ * @param {number} xOrigin 
+ * @param {number} yOrigin 
+ */
+function _scaleLine(line, scaling, xOrigin, yOrigin) {
+  let x1 = _scaleCoordinate(line.attr('x1'), scaling, xOrigin);
+  let y1 = _scaleCoordinate(line.attr('y1'), scaling, yOrigin);
+  let x2 = _scaleCoordinate(line.attr('x2'), scaling, xOrigin);
+  let y2 = _scaleCoordinate(line.attr('y2'), scaling, yOrigin);
+  let sw = scaling * line.attr('stroke-width');
+  line.attr({
+    'x1': x1,
+    'y1': y1,
+    'x2': x2,
+    'y2': y2,
+    'stroke-width': sw,
+  });
+}
 
-function _scaleCircle(circle, scaling, xOrigin, yOrigin) {}
+/**
+ * @param {SVG.Path} rect 
+ * @param {number} scaling 
+ * @param {number} xOrigin 
+ * @param {number} yOrigin 
+ */
+function _scalePath(path, scaling, xOrigin, yOrigin) {
+  let d = '';
+  path.array().forEach(segment => {
+    if (segment[0] === 'M') {
+      let s = [
+        'M',
+        _scaleCoordinate(segment[1], scaling, xOrigin),
+        _scaleCoordinate(segment[2], scaling, yOrigin),
+      ];
+      d += s.join(' ') + ' ';
+    } else if (segment[1] === 'L') {
+      let s = [
+        'L',
+        _scaleCoordinate(segment[1], scaling, xOrigin),
+        _scaleCoordinate(segment[2], scaling, yOrigin),
+      ];
+      d += s.join(' ') + ' ';
+    } else if (segment[2] === 'Q') {
+      let s = [
+        'Q',
+        _scaleCoordinate(segment[1], scaling, xOrigin),
+        _scaleCoordinate(segment[2], scaling, yOrigin),
+        _scaleCoordinate(segment[3], scaling, xOrigin),
+        _scaleCoordinate(segment[4], scaling, yOrigin),
+      ];
+      d += s.join(' ') + ' ';
+    } else {
+      d += segment.join(' ') + ' ';
+    }
+  });
+  path.plot(d);
+}
 
-function _scaleRect(rect, scaling, xOrigin, yOrigin) {}
+/**
+ * @param {SVG.Circle} rect 
+ * @param {number} scaling 
+ * @param {number} xOrigin 
+ * @param {number} yOrigin 
+ */
+function _scaleCircle(circle, scaling, xOrigin, yOrigin) {
+  let cx = _scaleCoordinate(circle.attr('cx'), scaling, xOrigin);
+  let cy = _scaleCoordinate(circle.attr('cy'), scaling, yOrigin);
+  let r = scaling * circle.attr('r');
+  let sw = scaling * circle.attr('stroke-width');
+  circle.attr({
+    'cx': cx,
+    'cy;': cy,
+    'r': r,
+    'stroke-width': sw,
+  });
+}
 
-function _scaleElements(svg, scaling) {}
+/**
+ * @param {SVG.Rect} rect 
+ * @param {number} scaling 
+ * @param {number} xOrigin 
+ * @param {number} yOrigin 
+ */
+function _scaleRect(rect, scaling, xOrigin, yOrigin) {
+  let x = _scaleCoordinate(rect.attr('x'), scaling, xOrigin);
+  let y = _scaleCoordinate(rect.attr('y'), scaling, yOrigin);
+  let w = scaling * rect.attr('width');
+  let h = scaling * rect.attr('height');
+  let sw = scaling * rect.attr('stroke-width');
+  rect.attr({
+    'x': x,
+    'y': y,
+    'width': w,
+    'height': h,
+    'stroke-width': sw,
+  });
+}
 
-function _trimTextNumbers(text) {}
+/**
+ * @param {SVG.Svg} svg 
+ * @param {number} scaling 
+ */
+function _scaleElements(svg, scaling) {
+  let xOrigin = _xTextMin(svg);
+  let yOrigin = _yTextMin(svg);
+  svg.children().forEach(c => {
+    if (c.type === 'text') {
+      _scaleText(c, scaling, xOrigin, yOrigin);
+    } else if (c.type === 'line') {
+      _scaleLine(c, scaling, xOrigin, yOrigin);
+    } else if (c.type === 'path') {
+      _scalePath(c, scaling, xOrigin, yOrigin);
+    } else if (c.type === 'circle') {
+      _scaleCircle(c, scaling, xOrigin, yOrigin);
+    } else if (c.type === 'rect') {
+      _scaleRect(c, scaling, xOrigin, yOrigin);
+    }
+  });
+}
 
-function _trimLineNumbers(line) {}
+const _NUMBER_TRIM = 6;
 
-function _trimPathNumbers(path) {}
+/**
+ * @param {SVG.Text} text 
+ */
+function _trimTextNumbers(text) {
+  let x = text.attr('x').toFixed(_NUMBER_TRIM);
+  let y = text.attr('y').toFixed(_NUMBER_TRIM);
+  let fs = text.attr('font-size').toFixed(_NUMBER_TRIM);
+  text.attr({
+    'x': Number.parseFloat(x),
+    'y': Number.parseFloat(y),
+    'font-size': Number.parseFloat(fs),
+  });
+}
 
-function _trimCircleNumbers(circle) {}
+/**
+ * @param {SVG.Line} line 
+ */
+function _trimLineNumbers(line) {
+  let x1 = line.attr('x1').toFixed(_NUMBER_TRIM);
+  let y1 = line.attr('y1').toFixed(_NUMBER_TRIM);
+  let x2 = line.attr('x2').toFixed(_NUMBER_TRIM);
+  let y2 = line.attr('y2').toFixed(_NUMBER_TRIM);
+  let sw = line.attr('stroke-width').toFixed(_NUMBER_TRIM);
+  line.attr({
+    'x1': Number.parseFloat(x1),
+    'y1': Number.parseFloat(y1),
+    'x2': Number.parseFloat(x2),
+    'y2': Number.parseFloat(y2),
+    'stroke-width': Number.parseFloat(sw),
+  });
+}
 
-function _trimRectNumbers(rect) {}
+/**
+ * @param {SVG.Path} path 
+ */
+function _trimPathNumbers(path) {
+  let d = '';
+  path.array().forEach(segment => {
+    d += segment[0] + ' ';
+    segment.slice(1).forEach(n => {
+      d += n.toFixed(_NUMBER_TRIM) + ' ';
+    });
+  });
+  path.plot(d);
+}
 
-function _trimNumbers(svg) {}
+/**
+ * @param {SVG.Circle} circle 
+ */
+function _trimCircleNumbers(circle) {
+  let cx = circle.attr('cx').toFixed(_NUMBER_TRIM);
+  let cy = circle.attr('cy').toFixed(_NUMBER_TRIM);
+  let r = circle.attr('r').toFixed(_NUMBER_TRIM);
+  let sw = circle.attr('stroke-width').toFixed(_NUMBER_TRIM);
+  circle.attr({
+    'cx': Number.parseFloat(cx),
+    'cy': Number.parseFloat(cy),
+    'r': Number.parseFloat(r),
+    'stroke-width': Number.parseFloat(sw),
+  });
+}
+
+/**
+ * @param {SVG.Rect} rect 
+ */
+function _trimRectNumbers(rect) {
+  let x = rect.attr('x').toFixed(_NUMBER_TRIM);
+  let y = rect.attr('y').toFixed(_NUMBER_TRIM);
+  let w = rect.attr('width').toFixed(_NUMBER_TRIM);
+  let h = rect.attr('height').toFixed(_NUMBER_TRIM);
+  let sw = rect.attr('stroke-width').toFixed(_NUMBER_TRIM);
+  rect.attr({
+    'x': Number.parseFloat(x),
+    'y': Number.parseFloat(y),
+    'width': Number.parseFloat(w),
+    'height': Number.parseFloat(h),
+    'stroke-width': Number.parseFloat(sw),
+  });
+}
+
+/**
+ * @param {SVG.Svg} svg 
+ */
+function _trimNumbers(svg) {
+  svg.children().forEach(c => {
+    if (c.type === 'text') {
+      _trimTextNumbers(c);
+    } else if (c.type === 'line') {
+      _trimLineNumbers(c);
+    } else if (c.type === 'path') {
+      _trimPathNumbers(c);
+    } else if (c.type === 'circle') {
+      _trimCircleNumbers(c);
+    } else if (c.type === 'rect') {
+      _trimRectNumbers(c);
+    }
+  });
+}
 
 /**
  * @param {SVG.Svg} svg A structure drawing.
@@ -198,12 +425,14 @@ export {
   _shiftElements,
   _xTextMin,
   _yTextMin,
+  _scaleCoordinate,
   _scaleText,
   _scaleLine,
   _scalePath,
   _scaleCircle,
   _scaleRect,
   _scaleElements,
+  _NUMBER_TRIM,
   _trimTextNumbers,
   _trimLineNumbers,
   _trimPathNumbers,
