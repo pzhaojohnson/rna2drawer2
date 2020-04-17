@@ -293,19 +293,19 @@ it('_trimLineNumbers function', () => {
   let x2 = -2198.1358179119149;
   let y2 = 6.1985712948179284;
   let sw = 5.129481729182471;
-  expect(x1.toFixed(_NUMBER_TRIM) == x1).toBeFalsy();
-  expect(y1.toFixed(_NUMBER_TRIM) == y1).toBeFalsy();
-  expect(x2.toFixed(_NUMBER_TRIM) == x2).toBeFalsy();
-  expect(y2.toFixed(_NUMBER_TRIM) == y2).toBeFalsy();
-  expect(sw.toFixed(_NUMBER_TRIM) == sw).toBeFalsy();
+  expect(_trimNum(x1)).not.toEqual(x1);
+  expect(_trimNum(y1)).not.toEqual(y1);
+  expect(_trimNum(x2)).not.toEqual(x2);
+  expect(_trimNum(y2)).not.toEqual(y2);
+  expect(_trimNum(sw)).not.toEqual(sw);
   let l = svg.line(x1, y1, x2, y2);
   l.attr({ 'stroke-width': sw });
   _trimLineNumbers(l);
-  expect(l.attr('x1') == x1.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(l.attr('y1') == y1.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(l.attr('x2') == x2.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(l.attr('y2') == y2.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(l.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(l.attr('x1')).toEqual(_trimNum(x1));
+  expect(l.attr('y1')).toEqual(_trimNum(y1));
+  expect(l.attr('x2')).toEqual(_trimNum(x2));
+  expect(l.attr('y2')).toEqual(_trimNum(y2));
+  expect(l.attr('stroke-width')).toEqual(_trimNum(sw));
 });
 
 describe('_trimPathNumbers function', () => {

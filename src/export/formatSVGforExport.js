@@ -343,17 +343,17 @@ function _trimTextNumbers(text) {
  * @param {SVG.Line} line 
  */
 function _trimLineNumbers(line) {
-  let x1 = line.attr('x1').toFixed(_NUMBER_TRIM);
-  let y1 = line.attr('y1').toFixed(_NUMBER_TRIM);
-  let x2 = line.attr('x2').toFixed(_NUMBER_TRIM);
-  let y2 = line.attr('y2').toFixed(_NUMBER_TRIM);
-  let sw = line.attr('stroke-width').toFixed(_NUMBER_TRIM);
+  let x1 = _trimNum(line.attr('x1'));
+  let y1 = _trimNum(line.attr('y1'));
+  let x2 = _trimNum(line.attr('x2'));
+  let y2 = _trimNum(line.attr('y2'));
+  let sw = _trimNum(line.attr('stroke-width'));
   line.attr({
-    'x1': Number.parseFloat(x1),
-    'y1': Number.parseFloat(y1),
-    'x2': Number.parseFloat(x2),
-    'y2': Number.parseFloat(y2),
-    'stroke-width': Number.parseFloat(sw),
+    'x1': x1,
+    'y1': y1,
+    'x2': x2,
+    'y2': y2,
+    'stroke-width': sw,
   });
 }
 
