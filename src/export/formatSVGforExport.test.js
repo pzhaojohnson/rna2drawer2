@@ -324,10 +324,10 @@ describe('_trimPathNumbers function', () => {
       let my = 424.12395873985174;
       let lx = -2.4837859817249;
       let ly = 0.13581798791244;
-      expect(Number.parseFloat(mx.toFixed(_NUMBER_TRIM))).not.toBe(mx);
-      expect(Number.parseFloat(my.toFixed(_NUMBER_TRIM))).not.toBe(my);
-      expect(Number.parseFloat(lx.toFixed(_NUMBER_TRIM))).not.toBe(lx);
-      expect(Number.parseFloat(ly.toFixed(_NUMBER_TRIM))).not.toBe(ly);
+      expect(_trimNum(mx)).not.toEqual(mx);
+      expect(_trimNum(my)).not.toEqual(my);
+      expect(_trimNum(lx)).not.toEqual(lx);
+      expect(_trimNum(ly)).not.toEqual(ly);
       let d = ['M', mx, my, 'L', lx, ly].join(' ');
       let p = svg.path(d);
       _trimPathNumbers(p);
@@ -336,13 +336,13 @@ describe('_trimPathNumbers function', () => {
       let m = pa[0];
       expect(m.length).toBe(3);
       expect(m[0]).toBe('M');
-      expect(m[1]).toBe(Number.parseFloat(mx.toFixed(_NUMBER_TRIM)));
-      expect(m[2]).toBe(Number.parseFloat(my.toFixed(_NUMBER_TRIM)));
+      expect(m[1]).toEqual(_trimNum(mx));
+      expect(m[2]).toEqual(_trimNum(my));
       let l = pa[1];
       expect(l.length).toBe(3);
       expect(l[0]).toBe('L');
-      expect(l[1]).toBe(Number.parseFloat(lx.toFixed(_NUMBER_TRIM)));
-      expect(l[2]).toBe(Number.parseFloat(ly.toFixed(_NUMBER_TRIM)));
+      expect(l[1]).toEqual(_trimNum(lx));
+      expect(l[2]).toEqual(_trimNum(ly));
     });
   });
   
@@ -361,9 +361,7 @@ describe('_trimPathNumbers function', () => {
       let p = svg.path('M 5 6 L 3 4');
       let da = [5.198471284, 7.129847192];
       da.forEach(n => {
-        expect(
-          Number.parseFloat(n.toFixed(_NUMBER_TRIM))
-        ).not.toBe(n);
+        expect(_trimNum(n)).not.toEqual(n);
       });
       p.attr({ 'stroke-dasharray': da.join(' ') });
       _trimPathNumbers(p);
@@ -374,23 +372,19 @@ describe('_trimPathNumbers function', () => {
         ns.push(Number.parseFloat(v));
       });
       expect(ns.length).toBe(2);
-      expect(ns[0]).toBe(Number.parseFloat(da[0].toFixed(_NUMBER_TRIM)));
-      expect(ns[1]).toBe(Number.parseFloat(da[1].toFixed(_NUMBER_TRIM)));
+      expect(ns[0]).toEqual(_trimNum(da[0]));
+      expect(ns[1]).toEqual(_trimNum(da[1]));
     });
   });
   
   it('trims stroke-width', () => {
     let svg = createNodeSVG();
-    let p = svg.path('M 1 2 L 3 4');
     let sw = 6.19847192847192;
-    expect(
-      Number.parseFloat(sw.toFixed(_NUMBER_TRIM))
-    ).not.toBe(sw);
+    expect(_trimNum(sw)).not.toEqual(sw);
+    let p = svg.path('M 1 2 L 3 4');
     p.attr({ 'stroke-width': sw });
     _trimPathNumbers(p);
-    expect(
-      p.attr('stroke-width')
-    ).toBe(Number.parseFloat(sw.toFixed(_NUMBER_TRIM)));
+    expect(p.attr('stroke-width')).toEqual(_trimNum(sw));
   });
 });
 

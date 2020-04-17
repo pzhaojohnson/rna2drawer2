@@ -369,7 +369,7 @@ function _trimPathSegmentNumbers(path) {
   pa.forEach(segment => {
     d += segment[0] + ' ';
     segment.slice(1).forEach(n => {
-      d += n.toFixed(_NUMBER_TRIM) + ' ';
+      d += _trimNum(n) + ' ';
     });
   });
   path.plot(d);
@@ -387,9 +387,7 @@ function _trimPathStrokeDasharrayNumbers(path) {
   let trimmed = [];
   da.forEach(v => {
     let n = Number.parseFloat(v);
-    let t = n.toFixed(_NUMBER_TRIM);
-    n = Number.parseFloat(t);
-    trimmed.push(n);
+    trimmed.push(_trimNum(n));
   });
   path.attr({ 'stroke-dasharray': trimmed.join(' ') });
 }
@@ -398,9 +396,7 @@ function _trimPathStrokeDasharrayNumbers(path) {
  * @param {SVG.Path} path 
  */
 function _trimPathStrokeWidth(path) {
-  let sw = path.attr('stroke-width');
-  sw = sw.toFixed(_NUMBER_TRIM);
-  sw = Number.parseFloat(sw);
+  let sw = _trimNum(path.attr('stroke-width'));
   path.attr({ 'stroke-width': sw });
 }
 
