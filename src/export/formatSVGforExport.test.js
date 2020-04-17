@@ -394,17 +394,17 @@ it('_trimCircleNumbers function', () => {
   let cy = 15.19481729481724;
   let r = 10.22985719851751;
   let sw = 5.12129812749;
-  expect(cx.toFixed(_NUMBER_TRIM) == cx).toBeFalsy();
-  expect(cy.toFixed(_NUMBER_TRIM) == cy).toBeFalsy();
-  expect(r.toFixed(_NUMBER_TRIM) == r).toBeFalsy();
-  expect(sw.toFixed(_NUMBER_TRIM) == sw).toBeFalsy();
+  expect(_trimNum(cx)).not.toEqual(cx);
+  expect(_trimNum(cy)).not.toEqual(cy);
+  expect(_trimNum(r)).not.toEqual(r);
+  expect(_trimNum(sw)).not.toEqual(sw);
   let c = svg.circle(2 * r);
   c.attr({ 'cx': cx, 'cy': cy, 'stroke-width': sw });
   _trimCircleNumbers(c);
-  expect(c.attr('cx') == cx.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(c.attr('cy') == cy.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(c.attr('r') == r.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(c.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(c.attr('cx')).toEqual(_trimNum(cx));
+  expect(c.attr('cy')).toEqual(_trimNum(cy));
+  expect(c.attr('r')).toEqual(_trimNum(r));
+  expect(c.attr('stroke-width')).toEqual(_trimNum(sw));
 });
 
 it('_trimRectNumbers function', () => {

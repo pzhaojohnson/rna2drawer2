@@ -413,15 +413,15 @@ function _trimPathNumbers(path) {
  * @param {SVG.Circle} circle 
  */
 function _trimCircleNumbers(circle) {
-  let cx = circle.attr('cx').toFixed(_NUMBER_TRIM);
-  let cy = circle.attr('cy').toFixed(_NUMBER_TRIM);
-  let r = circle.attr('r').toFixed(_NUMBER_TRIM);
-  let sw = circle.attr('stroke-width').toFixed(_NUMBER_TRIM);
+  let cx = _trimNum(circle.attr('cx'));
+  let cy = _trimNum(circle.attr('cy'));
+  let r = _trimNum(circle.attr('r'));
+  let sw = _trimNum(circle.attr('stroke-width'));
   circle.attr({
-    'cx': Number(cx),
-    'cy': Number(cy),
-    'r': Number(r),
-    'stroke-width': Number(sw),
+    'cx': cx,
+    'cy': cy,
+    'r': r,
+    'stroke-width': sw,
   });
 }
 
