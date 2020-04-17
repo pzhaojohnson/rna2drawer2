@@ -340,6 +340,7 @@ function _trimLineNumbers(line) {
 function _trimPathNumbers(path) {
   let sw = path.attr('stroke-width').toFixed(_NUMBER_TRIM);
   path.attr({ 'stroke-width': Number.parseFloat(sw) });
+
   let d = '';
   path.array().forEach(segment => {
     d += segment[0] + ' ';

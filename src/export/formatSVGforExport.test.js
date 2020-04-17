@@ -255,18 +255,17 @@ function hasMoreDecimalPlacesThan(n, ) {
 it('_trimTextNumbers function', () => {
   let svg = createNodeSVG();
   let t = svg.text(add => add.tspan('a'));
-  t.attr({
-    'x': 1.12372729124,
-    'y': 1.42985792371,
-    'font-size': 9.876184691284,
-  });
-  expect(t.attr('x').toFixed(_NUMBER_TRIM) == t.attr('x')).toBeFalsy();
-  expect(t.attr('y').toFixed(_NUMBER_TRIM) == t.attr('y')).toBeFalsy();
-  expect(t.attr('font-size').toFixed(_NUMBER_TRIM) == t.attr('font-size')).toBeFalsy();
+  let x = 1.3857191924124;
+  let y = 6.18719285719;
+  let fs = 12.223985719114;
+  expect(x.toFixed(_NUMBER_TRIM) == x).toBeFalsy();
+  expect(y.toFixed(_NUMBER_TRIM) == y).toBeFalsy();
+  expect(fs.toFixed(_NUMBER_TRIM) == fs).toBeFalsy();
+  t.attr({ 'x': x, 'y': y, 'font-size': fs });
   _trimTextNumbers(t);
-  expect(t.attr('x').toFixed(_NUMBER_TRIM) == t.attr('x')).toBeTruthy();
-  expect(t.attr('y').toFixed(_NUMBER_TRIM) == t.attr('y')).toBeTruthy();
-  expect(t.attr('font-size').toFixed(_NUMBER_TRIM) == t.attr('font-size')).toBeTruthy();
+  expect(t.attr('x') == x.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(t.attr('y') == y.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(t.attr('font-size') == fs.toFixed(_NUMBER_TRIM)).toBeTruthy();
 });
 
 it('_trimLineNumbers function', () => {
