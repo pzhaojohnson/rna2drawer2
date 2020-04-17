@@ -399,19 +399,19 @@ it('_trimRectNumbers function', () => {
   let w = 48.13958719857;
   let h = 18.1985719825791;
   let sw = 2.238571389517;
-  expect(x.toFixed(_NUMBER_TRIM) == x).toBeFalsy();
-  expect(y.toFixed(_NUMBER_TRIM) == y).toBeFalsy();
-  expect(w.toFixed(_NUMBER_TRIM) == w).toBeFalsy();
-  expect(h.toFixed(_NUMBER_TRIM) == h).toBeFalsy();
-  expect(sw.toFixed(_NUMBER_TRIM) == sw).toBeFalsy();
+  expect(Number.parseFloat(x.toFixed(_NUMBER_TRIM))).not.toBe(x);
+  expect(Number.parseFloat(y.toFixed(_NUMBER_TRIM))).not.toBe(y);
+  expect(Number.parseFloat(w.toFixed(_NUMBER_TRIM))).not.toBe(w);
+  expect(Number.parseFloat(h.toFixed(_NUMBER_TRIM))).not.toBe(h);
+  expect(Number.parseFloat(sw.toFixed(_NUMBER_TRIM))).not.toBe(sw);
   let r = svg.rect(w, h);
   r.attr({ 'x': x, 'y': y, 'stroke-width': sw });
   _trimRectNumbers(r);
-  expect(r.attr('x') == x.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(r.attr('y') == y.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(r.attr('width') == w.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(r.attr('height') == h.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(r.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(r.attr('x')).toBe(Number.parseFloat(x.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('y')).toBe(Number.parseFloat(y.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('width')).toBe(Number.parseFloat(w.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('height')).toBe(Number.parseFloat(h.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('stroke-width')).toBe(Number.parseFloat(sw.toFixed(_NUMBER_TRIM)));
 });
 
 describe('_trimNumbers function', () => {
