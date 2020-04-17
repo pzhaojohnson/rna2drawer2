@@ -268,3 +268,25 @@ it('_trimTextNumbers function', () => {
   expect(t.attr('y').toFixed(_NUMBER_TRIM) == t.attr('y')).toBeTruthy();
   expect(t.attr('font-size').toFixed(_NUMBER_TRIM) == t.attr('font-size')).toBeTruthy();
 });
+
+it('_trimLineNumbers function', () => {
+  let svg = createNodeSVG();
+  let l = svg.line(
+    1.29385719385,
+    -19.235729385279,
+    5.1213985723,
+    349.13987519385791,
+  );
+  l.attr({ 'stroke-width': 1.485273985791 });
+  expect(l.attr('x1').toFixed(_NUMBER_TRIM) == l.attr('x1')).toBeFalsy();
+  expect(l.attr('y1').toFixed(_NUMBER_TRIM) == l.attr('y1')).toBeFalsy();
+  expect(l.attr('x2').toFixed(_NUMBER_TRIM) == l.attr('x2')).toBeFalsy();
+  expect(l.attr('y2').toFixed(_NUMBER_TRIM) == l.attr('y2')).toBeFalsy();
+  expect(l.attr('stroke-width').toFixed(_NUMBER_TRIM) == l.attr('stroke-width')).toBeFalsy();
+  _trimLineNumbers(l);
+  expect(l.attr('x1').toFixed(_NUMBER_TRIM) == l.attr('x1')).toBeTruthy();
+  expect(l.attr('y1').toFixed(_NUMBER_TRIM) == l.attr('y1')).toBeTruthy();
+  expect(l.attr('x2').toFixed(_NUMBER_TRIM) == l.attr('x2')).toBeTruthy();
+  expect(l.attr('y2').toFixed(_NUMBER_TRIM) == l.attr('y2')).toBeTruthy();
+  expect(l.attr('stroke-width').toFixed(_NUMBER_TRIM) == l.attr('stroke-width')).toBeTruthy();
+});
