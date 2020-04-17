@@ -350,6 +350,24 @@ function _trimLineNumbers(line) {
 /**
  * @param {SVG.Path} path 
  */
+function _trimPathSegmentNumbers(path) {
+  let pa = path.array();
+  if (!pa) {
+    return;
+  }
+  let d = '';
+  pa.forEach(segment => {
+    d += segment[0] + ' ';
+    segment.slice(1).forEach(n => {
+      d += n.toFixed(_NUMBER_TRIM) + ' ';
+    });
+  });
+  path.plot(d);
+}
+
+/**
+ * @param {SVG.Path} path 
+ */
 function _trimPathStrokeDasharrayNumbers(path) {
   let s = path.attr('stroke-dasharray');
   if (!s) {
@@ -366,26 +384,26 @@ function _trimPathStrokeDasharrayNumbers(path) {
   path.attr({ 'stroke-dasharray': trimmed.join(' ') });
 }
 
-function _trimPathSegmentsNumbers(path) {
-  let d = '';
-  path.array().forEach(segment => {
-    d += segment[0] + ' ';
-    segment.slice(1).forEach(n => {
-      d += n.toFixed(_NUMBER_TRIM) + ' ';
-    });
-  });
-  path.plot(d);
+/**
+ * @param {SVG.Path} path 
+ */
+function _trimPathStrokeWidth(path) {
+  let sw = path.attr('stroke-width');
+  if (!sw) {
+    return;
+  }
+  sw = sw.toFixed(_NUMBER_TRIM);
+  sw = Number.parseFloat(sw);
+  path.attr({ 'stroke-width': sw });
 }
 
 /**
  * @param {SVG.Path} path 
  */
 function _trimPathNumbers(path) {
-  let sw = path.attr('stroke-width').toFixed(_NUMBER_TRIM);
-  path.attr({ 'stroke-width': Number.parseFloat(sw) });
-
+  _trimPathSegmentNumbers(path);
   _trimPathStrokeDasharrayNumbers(path);
-  _trimPathSegmentsNumbers(path);
+  _trimPathStrokeWidth(path);
 }
 
 /**

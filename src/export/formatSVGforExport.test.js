@@ -288,59 +288,99 @@ it('_trimLineNumbers function', () => {
 });
 
 describe('_trimPathNumbers function', () => {
-  it('trims stroke-width', () => {
-    let svg = createNodeSVG();
-    let p = svg.path('M 1 2 Q 5 8 2 5');
-    let sw = 5.13859712948;
-    expect(sw.toFixed(_NUMBER_TRIM) == sw).toBeFalsy();
-    p.attr({ 'stroke-width': sw });
-    _trimPathNumbers(p);
-    expect(p.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  });
+  describe('trims segment numbers', () => {
+    it('handles undefined segments', () => {
+      let svg = createNodeSVG();
+      let p = svg.path();
+      expect(
+        () => _trimPathNumbers(p)
+      ).not.toThrow();
+    });
 
-  it('trims stroke-dasharray', () => {
-    let svg = createNodeSVG();
-    let p = svg.path('M 4 5 L 100 4000');
-    let da = [5.1298471284781, 6.192847128472];
-    da.forEach(n => {
-      expect(n.toFixed(_NUMBER_TRIM) == n).toBeFalsy();
+    it('trims the numbers', () => {
+      let svg = createNodeSVG();
+      let mx = 5.1248172984712341;
+      let my = 424.12395873985174;
+      let lx = -2.4837859817249;
+      let ly = 0.13581798791244;
+      expect(Number.parseFloat(mx.toFixed(_NUMBER_TRIM))).not.toBe(mx);
+      expect(Number.parseFloat(my.toFixed(_NUMBER_TRIM))).not.toBe(my);
+      expect(Number.parseFloat(lx.toFixed(_NUMBER_TRIM))).not.toBe(lx);
+      expect(Number.parseFloat(ly.toFixed(_NUMBER_TRIM))).not.toBe(ly);
+      let d = ['M', mx, my, 'L', lx, ly].join(' ');
+      let p = svg.path(d);
+      _trimPathNumbers(p);
+      let pa = p.array();
+      expect(pa.length).toBe(2);
+      let m = pa[0];
+      expect(m.length).toBe(3);
+      expect(m[0]).toBe('M');
+      expect(m[1]).toBe(Number.parseFloat(mx.toFixed(_NUMBER_TRIM)));
+      expect(m[2]).toBe(Number.parseFloat(my.toFixed(_NUMBER_TRIM)));
+      let l = pa[1];
+      expect(l.length).toBe(3);
+      expect(l[0]).toBe('L');
+      expect(l[1]).toBe(Number.parseFloat(lx.toFixed(_NUMBER_TRIM)));
+      expect(l[2]).toBe(Number.parseFloat(ly.toFixed(_NUMBER_TRIM)));
     });
-    p.attr({
-      'stroke-dasharray': da.join(' '),
-      'stroke-width': 1.5,
-    });
-    _trimPathNumbers(p);
-    let s = p.attr('stroke-dasharray');
-    let vs = nonemptySplitByWhitespace(s);
-    let ns = [];
-    vs.forEach(v => {
-      ns.push(Number.parseFloat(v));
-    });
-    expect(ns.length).toBe(2);
-    expect(ns[0] == da[0].toFixed(_NUMBER_TRIM)).toBeTruthy();
-    expect(ns[1] == da[1].toFixed(_NUMBER_TRIM)).toBeTruthy();
   });
+  
+  describe('trims stroke-dasharray', () => {
+    it('handles undefined stroke-dasharray', () => {
+      let svg = createNodeSVG();
+      let p = svg.path('M 1 2 L 3 4');
+      expect(p.attr('stroke-dasharray')).toBe(undefined);
+      expect(
+        () => _trimPathNumbers(p)
+      ).not.toThrow();
+    });
 
-  it('trims d', () => {
-    let svg = createNodeSVG();
-    let mx = 5.1248172984712341;
-    let my = 424.12395873985174;
-    let lx = -2.4837859817249;
-    let ly = 0.13581798791244;
-    expect(mx.toFixed(_NUMBER_TRIM) == mx).toBeFalsy();
-    expect(my.toFixed(_NUMBER_TRIM) == my).toBeFalsy();
-    expect(lx.toFixed(_NUMBER_TRIM) == lx).toBeFalsy();
-    expect(ly.toFixed(_NUMBER_TRIM) == ly).toBeFalsy();
-    let d = ['M', mx, my, 'L', lx, ly].join(' ');
-    let p = svg.path(d);
-    _trimPathNumbers(p);
-    let segments = p.array();
-    let m = segments[0];
-    expect(m[1] == mx.toFixed(_NUMBER_TRIM)).toBeTruthy();
-    expect(m[2] == my.toFixed(_NUMBER_TRIM)).toBeTruthy();
-    let l = segments[1];
-    expect(l[1] == lx.toFixed(_NUMBER_TRIM)).toBeTruthy();
-    expect(l[2] == ly.toFixed(_NUMBER_TRIM)).toBeTruthy();
+    it('trims the numbers', () => {
+      let svg = createNodeSVG();
+      let p = svg.path('M 5 6 L 3 4');
+      let da = [5.198471284, 7.129847192];
+      da.forEach(n => {
+        expect(
+          Number.parseFloat(n.toFixed(_NUMBER_TRIM))
+        ).not.toBe(n);
+      });
+      p.attr({ 'stroke-dasharray': da.join(' ') });
+      _trimPathNumbers(p);
+      let s = p.attr('stroke-dasharray');
+      let vs = nonemptySplitByWhitespace(s);
+      let ns = [];
+      vs.forEach(v => {
+        ns.push(Number.parseFloat(v));
+      });
+      expect(ns.length).toBe(2);
+      expect(ns[0]).toBe(Number.parseFloat(da[0].toFixed(_NUMBER_TRIM)));
+      expect(ns[1]).toBe(Number.parseFloat(da[1].toFixed(_NUMBER_TRIM)));
+    });
+  });
+  
+  describe('trims stroke-width', () => {
+    it('handles undefined stroke-width', () => {
+      let svg = createNodeSVG();
+      let p = svg.path('M 1 2 L 3 4');
+      p.attr({ 'stroke-width': null });
+      expect(
+        () => _trimPathNumbers(p)
+      ).not.toThrow();
+    });
+
+    it('trims the number', () => {
+      let svg = createNodeSVG();
+      let p = svg.path('M 1 2 L 3 4');
+      let sw = 6.19847192847192;
+      expect(
+        Number.parseFloat(sw.toFixed(_NUMBER_TRIM))
+      ).not.toBe(sw);
+      p.attr({ 'stroke-width': sw });
+      _trimPathNumbers(p);
+      expect(
+        p.attr('stroke-width')
+      ).toBe(Number.parseFloat(sw.toFixed(_NUMBER_TRIM)));
+    });
   });
 });
 
