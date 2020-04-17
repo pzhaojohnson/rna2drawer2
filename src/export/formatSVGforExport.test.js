@@ -26,6 +26,7 @@ import {
   _trimNumbers,
 } from './formatSVGforExport';
 import createNodeSVG from '../draw/createNodeSVG';
+import { nonemptySplitByWhitespace } from '../parse/nonemptySplitByWhitespace';
 
 describe('_xTextMin and _yTextMin functions', () => {
   it('no text elements', () => {
@@ -295,6 +296,29 @@ describe('_trimPathNumbers function', () => {
     p.attr({ 'stroke-width': sw });
     _trimPathNumbers(p);
     expect(p.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  });
+
+  it('trims stroke-dasharray', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 4 5 L 100 4000');
+    let da = [5.1298471284781, 6.192847128472];
+    da.forEach(n => {
+      expect(n.toFixed(_NUMBER_TRIM) == n).toBeFalsy();
+    });
+    p.attr({
+      'stroke-dasharray': da.join(' '),
+      'stroke-width': 1.5,
+    });
+    _trimPathNumbers(p);
+    let s = p.attr('stroke-dasharray');
+    let vs = nonemptySplitByWhitespace(s);
+    let ns = [];
+    vs.forEach(v => {
+      ns.push(Number.parseFloat(v));
+    });
+    expect(ns.length).toBe(2);
+    expect(ns[0] == da[0].toFixed(_NUMBER_TRIM)).toBeTruthy();
+    expect(ns[1] == da[1].toFixed(_NUMBER_TRIM)).toBeTruthy();
   });
 
   it('trims d', () => {
