@@ -331,12 +331,11 @@ function _trimNum(n) {
 function _trimTextNumbers(text) {
   let x = _trimNum(text.attr('x'));
   let y = _trimNum(text.attr('y'));
-  let fs = _trimNum(text.attr('font-size'));
-  text.attr({
-    'x': x,
-    'y': y,
-    'font-size': fs,
-  });
+  text.attr({ 'x': x, 'y': y });
+  let fs = text.attr('font-size');
+  if (typeof fs === 'number') {
+    text.attr({ 'font-size': _trimNum(fs) });
+  }
 }
 
 /**
