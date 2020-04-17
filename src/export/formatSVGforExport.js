@@ -1,3 +1,5 @@
+import { nonemptySplitByWhitespace } from '../parse/nonemptySplitByWhitespace';
+
 const _X_PADDING = 100;
 const _Y_PADDING = 100;
 
@@ -206,6 +208,17 @@ function _scaleLine(line, scaling, xOrigin, yOrigin) {
  * @param {number} yOrigin 
  */
 function _scalePath(path, scaling, xOrigin, yOrigin) {
+  let sw = scaling * path.attr('stroke-width');
+  path.attr({ 'stroke-width': sw });
+
+  let da = path.attr('stroke-dasharray');
+  da = nonemptySplitByWhitespace(da);
+  let i = 0;
+  da.forEach(n => {
+    da[i] = scaling * Number.parseFloat(n);
+    i++;
+  });
+  
   let d = '';
   path.array().forEach(segment => {
     if (segment[0] === 'M') {
