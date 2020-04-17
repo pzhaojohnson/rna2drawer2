@@ -213,12 +213,11 @@ function _scalePath(path, scaling, xOrigin, yOrigin) {
 
   let da = path.attr('stroke-dasharray');
   da = nonemptySplitByWhitespace(da);
-  let i = 0;
+  let daScaled = [];
   da.forEach(n => {
-    da[i] = scaling * Number.parseFloat(n);
-    i++;
+    daScaled.push(scaling * Number.parseFloat(n));
   });
-  path.attr({ 'stroke-dasharray': da.join(' ') });
+  path.attr({ 'stroke-dasharray': daScaled.join(' ') });
   
   let d = '';
   path.array().forEach(segment => {
