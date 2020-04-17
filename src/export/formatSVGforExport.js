@@ -316,6 +316,16 @@ function _scaleElements(svg, scaling) {
 const _NUMBER_TRIM = 6;
 
 /**
+ * @param {number} n 
+ * 
+ * @returns {number} 
+ */
+function _trimNum(n) {
+  let trimmed = n.toFixed(_NUMBER_TRIM);
+  return Number.parseFloat(trimmed);
+}
+
+/**
  * @param {SVG.Text} text 
  */
 function _trimTextNumbers(text) {
@@ -488,6 +498,7 @@ export {
   _scaleRect,
   _scaleElements,
   _NUMBER_TRIM,
+  _trimNum,
   _trimTextNumbers,
   _trimLineNumbers,
   _trimPathNumbers,

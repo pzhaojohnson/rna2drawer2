@@ -18,6 +18,7 @@ import {
   _scaleRect,
   _scaleElements,
   _NUMBER_TRIM,
+  _trimNum,
   _trimTextNumbers,
   _trimLineNumbers,
   _trimPathNumbers,
@@ -246,6 +247,26 @@ describe('_shiftElements function', () => {
     _shiftElements(svg);
     expect(r.attr('x')).toBe(-25);
     expect(r.attr('y')).toBe(24);
+  });
+});
+
+describe('_trimNum function', () => {
+  it('number needs trimming', () => {
+    let n = 5.1294719287124;
+    let trimmed = Number.parseFloat(
+      n.toFixed(_NUMBER_TRIM)
+    );
+    expect(trimmed).not.toEqual(n);
+    expect(_trimNum(n)).toEqual(trimmed);
+  });
+
+  it('number does not need trimming', () => {
+    let n = 0.12;
+    let trimmed = Number.parseFloat(
+      n.toFixed(_NUMBER_TRIM)
+    );
+    expect(trimmed).toEqual(n);
+    expect(_trimNum(n)).toEqual(n);
   });
 });
 
