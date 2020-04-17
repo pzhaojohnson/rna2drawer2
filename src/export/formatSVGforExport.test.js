@@ -319,3 +319,22 @@ describe('_trimPathNumbers function', () => {
     expect(l[2] == ly.toFixed(_NUMBER_TRIM)).toBeTruthy();
   });
 });
+
+it('_trimCircleNumbers function', () => {
+  let svg = createNodeSVG();
+  let cx = 6.158712985715;
+  let cy = 15.19481729481724;
+  let r = 10.22985719851751;
+  let sw = 5.12129812749;
+  expect(cx.toFixed(_NUMBER_TRIM) == cx).toBeFalsy();
+  expect(cy.toFixed(_NUMBER_TRIM) == cy).toBeFalsy();
+  expect(r.toFixed(_NUMBER_TRIM) == r).toBeFalsy();
+  expect(sw.toFixed(_NUMBER_TRIM) == sw).toBeFalsy();
+  let c = svg.circle(2 * r);
+  c.attr({ 'cx': cx, 'cy': cy, 'stroke-width': sw });
+  _trimCircleNumbers(c);
+  expect(c.attr('cx') == cx.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(c.attr('cy') == cy.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(c.attr('r') == r.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(c.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
+});
