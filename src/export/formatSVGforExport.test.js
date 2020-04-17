@@ -338,3 +338,25 @@ it('_trimCircleNumbers function', () => {
   expect(c.attr('r') == r.toFixed(_NUMBER_TRIM)).toBeTruthy();
   expect(c.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
 });
+
+it('_trimRectNumbers function', () => {
+  let svg = createNodeSVG();
+  let x = 23.93857913817;
+  let y = 12.2938571398517;
+  let w = 48.13958719857;
+  let h = 18.1985719825791;
+  let sw = 2.238571389517;
+  expect(x.toFixed(_NUMBER_TRIM) == x).toBeFalsy();
+  expect(y.toFixed(_NUMBER_TRIM) == y).toBeFalsy();
+  expect(w.toFixed(_NUMBER_TRIM) == w).toBeFalsy();
+  expect(h.toFixed(_NUMBER_TRIM) == h).toBeFalsy();
+  expect(sw.toFixed(_NUMBER_TRIM) == sw).toBeFalsy();
+  let r = svg.rect(w, h);
+  r.attr({ 'x': x, 'y': y, 'stroke-width': sw });
+  _trimRectNumbers(r);
+  expect(r.attr('x') == x.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(r.attr('y') == y.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(r.attr('width') == w.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(r.attr('height') == h.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(r.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
+});
