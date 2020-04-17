@@ -290,3 +290,36 @@ it('_trimLineNumbers function', () => {
   expect(l.attr('y2').toFixed(_NUMBER_TRIM) == l.attr('y2')).toBeTruthy();
   expect(l.attr('stroke-width').toFixed(_NUMBER_TRIM) == l.attr('stroke-width')).toBeTruthy();
 });
+
+describe('_trimPathNumbers function', () => {
+  it('trims stroke-width', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 1 2 Q 5 8 2 5');
+    p.attr({ 'stroke-width': 6.19284719284 });
+    expect(p.attr('stroke-width').toFixed(_NUMBER_TRIM) == p.attr('stroke-width')).toBeFalsy();
+    _trimPathNumbers(p);
+    expect(p.attr('stroke-width').toFixed(_NUMBER_TRIM) == p.attr('stroke-width')).toBeTruthy();
+  });
+
+  it('trims d', () => {
+    let svg = createNodeSVG();
+    let d = 'M 2.2385214148172 4.487502935801 '
+      + 'L 3.1927469284738 482.198192471294';
+    let p = svg.path(d);
+    let segments = p.array();
+    let m = segments[0];
+    expect(m[1].toFixed(_NUMBER_TRIM) == m[1]).toBeFalsy();
+    expect(m[2].toFixed(_NUMBER_TRIM) == m[2]).toBeFalsy();
+    let l = segments[1];
+    expect(l[1].toFixed(_NUMBER_TRIM) == l[1]).toBeFalsy();
+    expect(l[2].toFixed(_NUMBER_TRIM) == l[2]).toBeFalsy();
+    _trimPathNumbers(p);
+    segments = p.array();
+    m = segments[0];
+    expect(m[1].toFixed(_NUMBER_TRIM) == m[1]).toBeTruthy();
+    expect(m[2].toFixed(_NUMBER_TRIM) == m[2]).toBeTruthy();
+    l = segments[1];
+    expect(l[1].toFixed(_NUMBER_TRIM) == l[1]).toBeTruthy();
+    expect(l[2].toFixed(_NUMBER_TRIM) == l[2]).toBeTruthy();
+  });
+});
