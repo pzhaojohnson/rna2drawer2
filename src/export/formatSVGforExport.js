@@ -329,13 +329,13 @@ function _trimNum(n) {
  * @param {SVG.Text} text 
  */
 function _trimTextNumbers(text) {
-  let x = text.attr('x').toFixed(_NUMBER_TRIM);
-  let y = text.attr('y').toFixed(_NUMBER_TRIM);
-  let fs = text.attr('font-size').toFixed(_NUMBER_TRIM);
+  let x = _trimNum(text.attr('x'));
+  let y = _trimNum(text.attr('y'));
+  let fs = _trimNum(text.attr('font-size'));
   text.attr({
-    'x': Number.parseFloat(x),
-    'y': Number.parseFloat(y),
-    'font-size': Number.parseFloat(fs),
+    'x': x,
+    'y': y,
+    'font-size': fs,
   });
 }
 

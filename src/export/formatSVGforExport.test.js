@@ -272,18 +272,18 @@ describe('_trimNum function', () => {
 
 it('_trimTextNumbers function', () => {
   let svg = createNodeSVG();
-  let t = svg.text(add => add.tspan('a'));
   let x = 1.3857191924124;
   let y = 6.18719285719;
   let fs = 12.223985719114;
-  expect(x.toFixed(_NUMBER_TRIM) == x).toBeFalsy();
-  expect(y.toFixed(_NUMBER_TRIM) == y).toBeFalsy();
-  expect(fs.toFixed(_NUMBER_TRIM) == fs).toBeFalsy();
+  expect(_trimNum(x)).not.toEqual(x);
+  expect(_trimNum(y)).not.toEqual(y);
+  expect(_trimNum(fs)).not.toEqual(fs);
+  let t = svg.text(add => add.tspan('a'));
   t.attr({ 'x': x, 'y': y, 'font-size': fs });
   _trimTextNumbers(t);
-  expect(t.attr('x') == x.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(t.attr('y') == y.toFixed(_NUMBER_TRIM)).toBeTruthy();
-  expect(t.attr('font-size') == fs.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(t.attr('x')).toEqual(_trimNum(x));
+  expect(t.attr('y')).toEqual(_trimNum(y));
+  expect(t.attr('font-size')).toEqual(_trimNum(fs));
 });
 
 it('_trimLineNumbers function', () => {
