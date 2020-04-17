@@ -414,19 +414,19 @@ it('_trimRectNumbers function', () => {
   let w = 48.13958719857;
   let h = 18.1985719825791;
   let sw = 2.238571389517;
-  expect(Number(x.toFixed(_NUMBER_TRIM))).not.toBe(x);
-  expect(Number(y.toFixed(_NUMBER_TRIM))).not.toBe(y);
-  expect(Number(w.toFixed(_NUMBER_TRIM))).not.toBe(w);
-  expect(Number(h.toFixed(_NUMBER_TRIM))).not.toBe(h);
-  expect(Number(sw.toFixed(_NUMBER_TRIM))).not.toBe(sw);
+  expect(_trimNum(x)).not.toEqual(x);
+  expect(_trimNum(y)).not.toEqual(y);
+  expect(_trimNum(w)).not.toEqual(w);
+  expect(_trimNum(h)).not.toEqual(h);
+  expect(_trimNum(sw)).not.toEqual(sw);
   let r = svg.rect(w, h);
   r.attr({ 'x': x, 'y': y, 'stroke-width': sw });
   _trimRectNumbers(r);
-  expect(r.attr('x')).toBe(Number(x.toFixed(_NUMBER_TRIM)));
-  expect(r.attr('y')).toBe(Number(y.toFixed(_NUMBER_TRIM)));
-  expect(r.attr('width')).toBe(Number(w.toFixed(_NUMBER_TRIM)));
-  expect(r.attr('height')).toBe(Number(h.toFixed(_NUMBER_TRIM)));
-  expect(r.attr('stroke-width')).toBe(Number(sw.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('x')).toEqual(_trimNum(x));
+  expect(r.attr('y')).toEqual(_trimNum(y));
+  expect(r.attr('width')).toEqual(_trimNum(w));
+  expect(r.attr('height')).toEqual(_trimNum(h));
+  expect(r.attr('stroke-width')).toEqual(_trimNum(sw));
 });
 
 describe('_trimNumbers function', () => {

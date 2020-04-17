@@ -429,17 +429,17 @@ function _trimCircleNumbers(circle) {
  * @param {SVG.Rect} rect 
  */
 function _trimRectNumbers(rect) {
-  let x = rect.attr('x').toFixed(_NUMBER_TRIM);
-  let y = rect.attr('y').toFixed(_NUMBER_TRIM);
-  let w = rect.attr('width').toFixed(_NUMBER_TRIM);
-  let h = rect.attr('height').toFixed(_NUMBER_TRIM);
-  let sw = rect.attr('stroke-width').toFixed(_NUMBER_TRIM);
+  let x = _trimNum(rect.attr('x'));
+  let y = _trimNum(rect.attr('y'));
+  let w = _trimNum(rect.attr('width'));
+  let h = _trimNum(rect.attr('height'));
+  let sw = _trimNum(rect.attr('stroke-width'));
   rect.attr({
-    'x': Number(x),
-    'y': Number(y),
-    'width': Number(w),
-    'height': Number(h),
-    'stroke-width': Number(sw),
+    'x': x,
+    'y': y,
+    'width': w,
+    'height': h,
+    'stroke-width': sw,
   });
 }
 
