@@ -290,31 +290,32 @@ describe('_trimPathNumbers function', () => {
   it('trims stroke-width', () => {
     let svg = createNodeSVG();
     let p = svg.path('M 1 2 Q 5 8 2 5');
-    p.attr({ 'stroke-width': 6.19284719284 });
-    expect(p.attr('stroke-width').toFixed(_NUMBER_TRIM) == p.attr('stroke-width')).toBeFalsy();
+    let sw = 5.13859712948;
+    expect(sw.toFixed(_NUMBER_TRIM) == sw).toBeFalsy();
+    p.attr({ 'stroke-width': sw });
     _trimPathNumbers(p);
-    expect(p.attr('stroke-width').toFixed(_NUMBER_TRIM) == p.attr('stroke-width')).toBeTruthy();
+    expect(p.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
   });
 
   it('trims d', () => {
     let svg = createNodeSVG();
-    let d = 'M 2.2385214148172 4.487502935801 '
-      + 'L 3.1927469284738 482.198192471294';
+    let mx = 5.1248172984712341;
+    let my = 424.12395873985174;
+    let lx = -2.4837859817249;
+    let ly = 0.13581798791244;
+    expect(mx.toFixed(_NUMBER_TRIM) == mx).toBeFalsy();
+    expect(my.toFixed(_NUMBER_TRIM) == my).toBeFalsy();
+    expect(lx.toFixed(_NUMBER_TRIM) == lx).toBeFalsy();
+    expect(ly.toFixed(_NUMBER_TRIM) == ly).toBeFalsy();
+    let d = ['M', mx, my, 'L', lx, ly].join(' ');
     let p = svg.path(d);
+    _trimPathNumbers(p);
     let segments = p.array();
     let m = segments[0];
-    expect(m[1].toFixed(_NUMBER_TRIM) == m[1]).toBeFalsy();
-    expect(m[2].toFixed(_NUMBER_TRIM) == m[2]).toBeFalsy();
+    expect(m[1] == mx.toFixed(_NUMBER_TRIM)).toBeTruthy();
+    expect(m[2] == my.toFixed(_NUMBER_TRIM)).toBeTruthy();
     let l = segments[1];
-    expect(l[1].toFixed(_NUMBER_TRIM) == l[1]).toBeFalsy();
-    expect(l[2].toFixed(_NUMBER_TRIM) == l[2]).toBeFalsy();
-    _trimPathNumbers(p);
-    segments = p.array();
-    m = segments[0];
-    expect(m[1].toFixed(_NUMBER_TRIM) == m[1]).toBeTruthy();
-    expect(m[2].toFixed(_NUMBER_TRIM) == m[2]).toBeTruthy();
-    l = segments[1];
-    expect(l[1].toFixed(_NUMBER_TRIM) == l[1]).toBeTruthy();
-    expect(l[2].toFixed(_NUMBER_TRIM) == l[2]).toBeTruthy();
+    expect(l[1] == lx.toFixed(_NUMBER_TRIM)).toBeTruthy();
+    expect(l[2] == ly.toFixed(_NUMBER_TRIM)).toBeTruthy();
   });
 });
