@@ -215,7 +215,7 @@ function _scalePath(path, scaling, xOrigin, yOrigin) {
   da = nonemptySplitByWhitespace(da);
   let daScaled = [];
   da.forEach(n => {
-    daScaled.push(scaling * Number.parseFloat(n));
+    daScaled.push(scaling * Number(n));
   });
   path.attr({ 'stroke-dasharray': daScaled.join(' ') });
   
@@ -322,7 +322,7 @@ const _NUMBER_TRIM = 6;
  */
 function _trimNum(n) {
   let trimmed = n.toFixed(_NUMBER_TRIM);
-  return Number.parseFloat(trimmed);
+  return Number(trimmed);
 }
 
 /**
@@ -386,7 +386,7 @@ function _trimPathStrokeDasharrayNumbers(path) {
   let da = nonemptySplitByWhitespace(s);
   let trimmed = [];
   da.forEach(v => {
-    let n = Number.parseFloat(v);
+    let n = Number(v);
     trimmed.push(_trimNum(n));
   });
   path.attr({ 'stroke-dasharray': trimmed.join(' ') });
@@ -418,10 +418,10 @@ function _trimCircleNumbers(circle) {
   let r = circle.attr('r').toFixed(_NUMBER_TRIM);
   let sw = circle.attr('stroke-width').toFixed(_NUMBER_TRIM);
   circle.attr({
-    'cx': Number.parseFloat(cx),
-    'cy': Number.parseFloat(cy),
-    'r': Number.parseFloat(r),
-    'stroke-width': Number.parseFloat(sw),
+    'cx': Number(cx),
+    'cy': Number(cy),
+    'r': Number(r),
+    'stroke-width': Number(sw),
   });
 }
 
@@ -435,11 +435,11 @@ function _trimRectNumbers(rect) {
   let h = rect.attr('height').toFixed(_NUMBER_TRIM);
   let sw = rect.attr('stroke-width').toFixed(_NUMBER_TRIM);
   rect.attr({
-    'x': Number.parseFloat(x),
-    'y': Number.parseFloat(y),
-    'width': Number.parseFloat(w),
-    'height': Number.parseFloat(h),
-    'stroke-width': Number.parseFloat(sw),
+    'x': Number(x),
+    'y': Number(y),
+    'width': Number(w),
+    'height': Number(h),
+    'stroke-width': Number(sw),
   });
 }
 

@@ -253,7 +253,7 @@ describe('_shiftElements function', () => {
 describe('_trimNum function', () => {
   it('number needs trimming', () => {
     let n = 5.1294719287124;
-    let trimmed = Number.parseFloat(
+    let trimmed = Number(
       n.toFixed(_NUMBER_TRIM)
     );
     expect(trimmed).not.toEqual(n);
@@ -262,7 +262,7 @@ describe('_trimNum function', () => {
 
   it('number does not need trimming', () => {
     let n = 0.12;
-    let trimmed = Number.parseFloat(
+    let trimmed = Number(
       n.toFixed(_NUMBER_TRIM)
     );
     expect(trimmed).toEqual(n);
@@ -369,7 +369,7 @@ describe('_trimPathNumbers function', () => {
       let vs = nonemptySplitByWhitespace(s);
       let ns = [];
       vs.forEach(v => {
-        ns.push(Number.parseFloat(v));
+        ns.push(Number(v));
       });
       expect(ns.length).toBe(2);
       expect(ns[0]).toEqual(_trimNum(da[0]));
@@ -414,19 +414,19 @@ it('_trimRectNumbers function', () => {
   let w = 48.13958719857;
   let h = 18.1985719825791;
   let sw = 2.238571389517;
-  expect(Number.parseFloat(x.toFixed(_NUMBER_TRIM))).not.toBe(x);
-  expect(Number.parseFloat(y.toFixed(_NUMBER_TRIM))).not.toBe(y);
-  expect(Number.parseFloat(w.toFixed(_NUMBER_TRIM))).not.toBe(w);
-  expect(Number.parseFloat(h.toFixed(_NUMBER_TRIM))).not.toBe(h);
-  expect(Number.parseFloat(sw.toFixed(_NUMBER_TRIM))).not.toBe(sw);
+  expect(Number(x.toFixed(_NUMBER_TRIM))).not.toBe(x);
+  expect(Number(y.toFixed(_NUMBER_TRIM))).not.toBe(y);
+  expect(Number(w.toFixed(_NUMBER_TRIM))).not.toBe(w);
+  expect(Number(h.toFixed(_NUMBER_TRIM))).not.toBe(h);
+  expect(Number(sw.toFixed(_NUMBER_TRIM))).not.toBe(sw);
   let r = svg.rect(w, h);
   r.attr({ 'x': x, 'y': y, 'stroke-width': sw });
   _trimRectNumbers(r);
-  expect(r.attr('x')).toBe(Number.parseFloat(x.toFixed(_NUMBER_TRIM)));
-  expect(r.attr('y')).toBe(Number.parseFloat(y.toFixed(_NUMBER_TRIM)));
-  expect(r.attr('width')).toBe(Number.parseFloat(w.toFixed(_NUMBER_TRIM)));
-  expect(r.attr('height')).toBe(Number.parseFloat(h.toFixed(_NUMBER_TRIM)));
-  expect(r.attr('stroke-width')).toBe(Number.parseFloat(sw.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('x')).toBe(Number(x.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('y')).toBe(Number(y.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('width')).toBe(Number(w.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('height')).toBe(Number(h.toFixed(_NUMBER_TRIM)));
+  expect(r.attr('stroke-width')).toBe(Number(sw.toFixed(_NUMBER_TRIM)));
 });
 
 describe('_trimNumbers function', () => {
