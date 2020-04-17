@@ -389,9 +389,6 @@ function _trimPathStrokeDasharrayNumbers(path) {
  */
 function _trimPathStrokeWidth(path) {
   let sw = path.attr('stroke-width');
-  if (!sw) {
-    return;
-  }
   sw = sw.toFixed(_NUMBER_TRIM);
   sw = Number.parseFloat(sw);
   path.attr({ 'stroke-width': sw });

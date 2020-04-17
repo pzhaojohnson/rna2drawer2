@@ -358,29 +358,18 @@ describe('_trimPathNumbers function', () => {
     });
   });
   
-  describe('trims stroke-width', () => {
-    it('handles undefined stroke-width', () => {
-      let svg = createNodeSVG();
-      let p = svg.path('M 1 2 L 3 4');
-      p.attr({ 'stroke-width': null });
-      expect(
-        () => _trimPathNumbers(p)
-      ).not.toThrow();
-    });
-
-    it('trims the number', () => {
-      let svg = createNodeSVG();
-      let p = svg.path('M 1 2 L 3 4');
-      let sw = 6.19847192847192;
-      expect(
-        Number.parseFloat(sw.toFixed(_NUMBER_TRIM))
-      ).not.toBe(sw);
-      p.attr({ 'stroke-width': sw });
-      _trimPathNumbers(p);
-      expect(
-        p.attr('stroke-width')
-      ).toBe(Number.parseFloat(sw.toFixed(_NUMBER_TRIM)));
-    });
+  it('trims stroke-width', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 1 2 L 3 4');
+    let sw = 6.19847192847192;
+    expect(
+      Number.parseFloat(sw.toFixed(_NUMBER_TRIM))
+    ).not.toBe(sw);
+    p.attr({ 'stroke-width': sw });
+    _trimPathNumbers(p);
+    expect(
+      p.attr('stroke-width')
+    ).toBe(Number.parseFloat(sw.toFixed(_NUMBER_TRIM)));
   });
 });
 
