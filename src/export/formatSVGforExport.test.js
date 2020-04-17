@@ -360,3 +360,73 @@ it('_trimRectNumbers function', () => {
   expect(r.attr('height') == h.toFixed(_NUMBER_TRIM)).toBeTruthy();
   expect(r.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
 });
+
+describe('_trimNumbers function', () => {
+  it('trims text element numbers', () => {
+    let svg = createNodeSVG();
+    let x = 1.38937591871;
+    expect(x.toFixed(_NUMBER_TRIM) == x).toBeFalsy();
+    let t = svg.text(add => add.tspan('t'));
+    t.attr({ 'x': x, 'y': 3.12, 'font-size': 12 });
+    _trimNumbers(svg);
+    expect(t.attr('x') == x.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  });
+
+  it('trims line element numbers', () => {
+    let svg = createNodeSVG();
+    let x1 = 5.12841294811;
+    expect(x1.toFixed(_NUMBER_TRIM) == x1).toBeFalsy();
+    let l = svg.line(x1, 5, 7, 8);
+    l.attr({ 'stroke-width': 2 });
+    _trimNumbers(svg);
+    expect(l.attr('x1') == x1.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  });
+
+  it('trims path element numbers', () => {
+    let svg = createNodeSVG();
+    let mx = 5.129481724827;
+    expect(mx.toFixed(_NUMBER_TRIM) == mx).toBeFalsy();
+    let d = ['M', mx, 5, 'L', 6, 2].join(' ');
+    let p = svg.path(d);
+    p.attr({ 'stroke-width': 1 });
+    _trimNumbers(svg);
+    let segments = p.array();
+    let m = segments[0];
+    expect(m[1] == mx.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  });
+
+  it('trims circle element numbers', () => {
+    let svg = createNodeSVG();
+    let cx = 5.1948712984719;
+    expect(cx.toFixed(_NUMBER_TRIM) == cx).toBeFalsy();
+    let c = svg.circle(34);
+    c.attr({ 'cx': cx, 'cy': 5, 'stroke-width': 1 });
+    _trimNumbers(svg);
+    expect(c.attr('cx') == cx.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  });
+
+  it('trims rect element numbers', () => {
+    let svg = createNodeSVG();
+    let x = 6.1298417298471;
+    expect(x.toFixed(_NUMBER_TRIM) == x).toBeFalsy();
+    let r = svg.rect(3, 9);
+    r.attr({ 'x': x, 'y': 3, 'stroke-width': 1.5 });
+    _trimNumbers(svg);
+    expect(r.attr('x') == x.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  });
+
+  it('trims numbers for multiple elements', () => {
+    let svg = createNodeSVG();
+    let x = 6.12948172944;
+    let cx = 0.397162947182;
+    expect(x.toFixed(_NUMBER_TRIM) == x).toBeFalsy();
+    expect(cx.toFixed(_NUMBER_TRIM) == cx).toBeFalsy();
+    let t = svg.text(add => add.tspan('t'));
+    t.attr({ 'x': x, 'y': 5, 'font-size': 15 });
+    let c = svg.circle(20);
+    c.attr({ 'cx': cx, 'cy': 6, 'stroke-width': 2 });
+    _trimNumbers(svg);
+    expect(t.attr('x') == x.toFixed(_NUMBER_TRIM)).toBeTruthy();
+    expect(c.attr('cx') == cx.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  });
+});
