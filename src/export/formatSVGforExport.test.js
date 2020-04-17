@@ -248,10 +248,6 @@ describe('_shiftElements function', () => {
   });
 });
 
-function hasMoreDecimalPlacesThan(n, ) {
-
-}
-
 it('_trimTextNumbers function', () => {
   let svg = createNodeSVG();
   let t = svg.text(add => add.tspan('a'));
@@ -270,24 +266,24 @@ it('_trimTextNumbers function', () => {
 
 it('_trimLineNumbers function', () => {
   let svg = createNodeSVG();
-  let l = svg.line(
-    1.29385719385,
-    -19.235729385279,
-    5.1213985723,
-    349.13987519385791,
-  );
-  l.attr({ 'stroke-width': 1.485273985791 });
-  expect(l.attr('x1').toFixed(_NUMBER_TRIM) == l.attr('x1')).toBeFalsy();
-  expect(l.attr('y1').toFixed(_NUMBER_TRIM) == l.attr('y1')).toBeFalsy();
-  expect(l.attr('x2').toFixed(_NUMBER_TRIM) == l.attr('x2')).toBeFalsy();
-  expect(l.attr('y2').toFixed(_NUMBER_TRIM) == l.attr('y2')).toBeFalsy();
-  expect(l.attr('stroke-width').toFixed(_NUMBER_TRIM) == l.attr('stroke-width')).toBeFalsy();
+  let x1 = 23.1192847192591;
+  let y1 = 1.2395817941124;
+  let x2 = -2198.1358179119149;
+  let y2 = 6.1985712948179284;
+  let sw = 5.129481729182471;
+  expect(x1.toFixed(_NUMBER_TRIM) == x1).toBeFalsy();
+  expect(y1.toFixed(_NUMBER_TRIM) == y1).toBeFalsy();
+  expect(x2.toFixed(_NUMBER_TRIM) == x2).toBeFalsy();
+  expect(y2.toFixed(_NUMBER_TRIM) == y2).toBeFalsy();
+  expect(sw.toFixed(_NUMBER_TRIM) == sw).toBeFalsy();
+  let l = svg.line(x1, y1, x2, y2);
+  l.attr({ 'stroke-width': sw });
   _trimLineNumbers(l);
-  expect(l.attr('x1').toFixed(_NUMBER_TRIM) == l.attr('x1')).toBeTruthy();
-  expect(l.attr('y1').toFixed(_NUMBER_TRIM) == l.attr('y1')).toBeTruthy();
-  expect(l.attr('x2').toFixed(_NUMBER_TRIM) == l.attr('x2')).toBeTruthy();
-  expect(l.attr('y2').toFixed(_NUMBER_TRIM) == l.attr('y2')).toBeTruthy();
-  expect(l.attr('stroke-width').toFixed(_NUMBER_TRIM) == l.attr('stroke-width')).toBeTruthy();
+  expect(l.attr('x1') == x1.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(l.attr('y1') == y1.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(l.attr('x2') == x2.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(l.attr('y2') == y2.toFixed(_NUMBER_TRIM)).toBeTruthy();
+  expect(l.attr('stroke-width') == sw.toFixed(_NUMBER_TRIM)).toBeTruthy();
 });
 
 describe('_trimPathNumbers function', () => {
