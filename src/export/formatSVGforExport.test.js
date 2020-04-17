@@ -247,3 +247,24 @@ describe('_shiftElements function', () => {
     expect(r.attr('y')).toBe(24);
   });
 });
+
+function hasMoreDecimalPlacesThan(n, ) {
+
+}
+
+it('_trimTextNumbers function', () => {
+  let svg = createNodeSVG();
+  let t = svg.text(add => add.tspan('a'));
+  t.attr({
+    'x': 1.12372729124,
+    'y': 1.42985792371,
+    'font-size': 9.876184691284,
+  });
+  expect(t.attr('x').toFixed(_NUMBER_TRIM) == t.attr('x')).toBeFalsy();
+  expect(t.attr('y').toFixed(_NUMBER_TRIM) == t.attr('y')).toBeFalsy();
+  expect(t.attr('font-size').toFixed(_NUMBER_TRIM) == t.attr('font-size')).toBeFalsy();
+  _trimTextNumbers(t);
+  expect(t.attr('x').toFixed(_NUMBER_TRIM) == t.attr('x')).toBeTruthy();
+  expect(t.attr('y').toFixed(_NUMBER_TRIM) == t.attr('y')).toBeTruthy();
+  expect(t.attr('font-size').toFixed(_NUMBER_TRIM) == t.attr('font-size')).toBeTruthy();
+});
