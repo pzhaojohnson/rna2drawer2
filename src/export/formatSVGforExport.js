@@ -26,6 +26,28 @@ function _xTextMin(svg) {
 }
 
 /**
+ * Returns zero if there are no text elements.
+ * 
+ * @param {SVG.Svg} svg 
+ * 
+ * @returns {number} 
+ */
+function _xTextMax(svg) {
+  let x = null;
+  svg.children().forEach(c => {
+    if (c.type === 'text') {
+      if (x === null || c.attr('x') > x) {
+        x = c.attr('x');
+      }
+    }
+  });
+  if (x === null) {
+    return 0;
+  }
+  return x;
+}
+
+/**
  * If there are no text elements, this function returns zero.
  * 
  * @param {SVG.Svg} svg 
@@ -37,6 +59,28 @@ function _yTextMin(svg) {
   svg.children().forEach(c => {
     if (c.type === 'text') {
       if (y === null || c.attr('y') < y) {
+        y = c.attr('y');
+      }
+    }
+  });
+  if (y === null) {
+    return 0;
+  }
+  return y;
+}
+
+/**
+ * Returns zero if there are no text elements.
+ * 
+ * @param {SVG.Svg} svg 
+ * 
+ * @returns {number} 
+ */
+function _yTextMax(svg) {
+  let y = null;
+  svg.children().forEach(c => {
+    if (c.type === 'text') {
+      if (y === null || c.attr('y') > y) {
         y = c.attr('y');
       }
     }
@@ -477,14 +521,16 @@ export {
   // these are only exported to aid testing
   _X_PADDING,
   _Y_PADDING,
+  _xTextMin,
+  _xTextMax,
+  _yTextMin,
+  _yTextMax,
   _shiftText,
   _shiftLine,
   _shiftPath,
   _shiftCircle,
   _shiftRect,
   _shiftElements,
-  _xTextMin,
-  _yTextMin,
   _scaleCoordinate,
   _scaleText,
   _scaleLine,

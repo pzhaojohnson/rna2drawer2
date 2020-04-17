@@ -3,7 +3,9 @@ import {
   _X_PADDING,
   _Y_PADDING,
   _xTextMin,
+  _xTextMax,
   _yTextMin,
+  _yTextMax,
   _shiftText,
   _shiftLine,
   _shiftPath,
@@ -29,22 +31,28 @@ import {
 import createNodeSVG from '../draw/createNodeSVG';
 import { nonemptySplitByWhitespace } from '../parse/nonemptySplitByWhitespace';
 
-describe('_xTextMin and _yTextMin functions', () => {
+describe('_xTextMin, _xTextMax, _yTextMin and _yTextMax functions', () => {
   it('no text elements', () => {
     let svg = createNodeSVG();
     svg.circle(100);
     expect(_xTextMin(svg)).toBe(0);
+    expect(_xTextMax(svg)).toBe(0);
     expect(_yTextMin(svg)).toBe(0);
+    expect(_yTextMax(svg)).toBe(0);
   });
 
   it('ignore non-text elements', () => {
     let svg = createNodeSVG();
-    let c = svg.circle(50);
-    c.attr({ 'cx': 25, 'cy': 25 });
+    let r1 = svg.rect(50, 25);
+    r1.attr({ 'x': 25, 'y': 25 });
     let t = svg.text(add => add.tspan('a'));
     t.attr({ 'x': 50, 'y': 75 });
+    let r2 = svg.rect(1000, 500);
+    r2.attr({ 'x': 150, 'y': 175 });
     expect(_xTextMin(svg)).toBe(50);
+    expect(_xTextMax(svg)).toBe(50);
     expect(_yTextMin(svg)).toBe(75);
+    expect(_yTextMax(svg)).toBe(75);
   });
 
   it('multiple text elements', () => {
@@ -54,9 +62,11 @@ describe('_xTextMin and _yTextMin functions', () => {
     let t2 = svg.text(add => add.tspan('b'));
     t2.attr({ 'x': 25, 'y': 78 });
     let t3 = svg.text(add => add.tspan('c'));
-    t3.attr({ 'x': 45, 'y': 35 });
+    t3.attr({ 'x': 65, 'y': 35 });
     expect(_xTextMin(svg)).toBe(25);
+    expect(_xTextMax(svg)).toBe(65);
     expect(_yTextMin(svg)).toBe(35);
+    expect(_yTextMax(svg)).toBe(78);
   });
 });
 
