@@ -251,8 +251,12 @@ function _scaleLine(line, scaling, xOrigin, yOrigin) {
  * @param {number} yOrigin 
  */
 function _scalePathSegments(path, scaling, xOrigin, yOrigin) {
+  let pa = path.array();
+  if (!pa) {
+    return;
+  }
   let d = '';
-  path.array().forEach(segment => {
+  pa.forEach(segment => {
     if (segment[0] === 'M') {
       let s = [
         'M',
@@ -260,14 +264,14 @@ function _scalePathSegments(path, scaling, xOrigin, yOrigin) {
         _scaleCoordinate(segment[2], scaling, yOrigin),
       ];
       d += s.join(' ') + ' ';
-    } else if (segment[1] === 'L') {
+    } else if (segment[0] === 'L') {
       let s = [
         'L',
         _scaleCoordinate(segment[1], scaling, xOrigin),
         _scaleCoordinate(segment[2], scaling, yOrigin),
       ];
       d += s.join(' ') + ' ';
-    } else if (segment[2] === 'Q') {
+    } else if (segment[0] === 'Q') {
       let s = [
         'Q',
         _scaleCoordinate(segment[1], scaling, xOrigin),

@@ -308,6 +308,98 @@ it('_scaleLine function', () => {
   expect(l.attr('stroke-width')).toBeCloseTo(3, 3);
 });
 
+describe('_scalePath function', () => {
+  describe('scales path segments', () => {
+    it('handles undefined path', () => {
+      let svg = createNodeSVG();
+      let p = svg.path();
+      expect(
+        () => _scalePath(p, 3, 5, 8)
+      ).not.toThrow();
+    });
+
+    it('scales M, L and Q segments', () => {
+      let svg = createNodeSVG();
+      let p = svg.path('M 5 8 L 2 4 Q 8 9 6 7');
+      _scalePath(p, 0.5, -1, 2);
+      let pa = p.array();
+      expect(pa.length).toBe(3);
+      let m = pa[0];
+      expect(m.length).toBe(3);
+      expect(m[0]).toBe('M');
+      expect(m[1]).toBeCloseTo(2, 3);
+      expect(m[2]).toBeCloseTo(5);
+      let l = pa[1];
+      expect(l.length).toBe(3);
+      expect(l[0]).toBe('L');
+      expect(l[1]).toBeCloseTo(0.5, 3);
+      expect(l[2]).toBeCloseTo(3, 3);
+      let q = pa[2];
+      expect(q.length).toBe(5);
+      expect(q[0]).toBe('Q');
+      expect(q[1]).toBeCloseTo(3.5, 3);
+      expect(q[2]).toBeCloseTo(5.5, 3);
+      expect(q[3]).toBeCloseTo(2.5, 3);
+      expect(q[4]).toBeCloseTo(4.5, 3);
+    });
+
+    it('includes unrecognized segments', () => {
+      let svg = createNodeSVG();
+      let p = svg.path('M 1 2 L 4 5 H 20');
+      _scalePath(p, 2, 4, 6);
+      let pa = p.array();
+      expect(pa.length).toBe(3);
+      let m = pa[0];
+      expect(m.length).toBe(3);
+      expect(m[0]).toBe('M');
+      expect(m[1]).toBe(-2);
+      expect(m[2]).toBe(-2);
+      let l = pa[1];
+      expect(l.length).toBe(3);
+      expect(l[0]).toBe('L');
+      expect(l[1]).toBe(4);
+      expect(l[2]).toBe(4);
+      let h = pa[2];
+      expect(h.length).toBe(2);
+      expect(h[0]).toBe('H');
+      expect(h[1]).toBe(20);
+    });
+  });
+
+  describe('scales stroke-dasharray', () => {
+    it('handles undefined stroke-dasharray', () => {
+      let svg = createNodeSVG();
+      let p = svg.path('M 1 2 L 3 4');
+      expect(p.attr('stroke-dasharray')).toBe(undefined);
+      expect(
+        () => _scalePath(p, 5, 4, 3)
+      ).not.toThrow();
+      expect(p.attr('stroke-dasharray')).toBe(undefined);
+    });
+
+    it('scales values', () => {
+      let svg = createNodeSVG();
+      let p = svg.path('M 1 5 L 4 3');
+      p.attr({ 'stroke-dasharray': '5 8 2' });
+      _scalePath(p, 3, 7, 9);
+      let s = p.attr('stroke-dasharray');
+      let da = nonemptySplitByWhitespace(s);
+      expect(da.length).toBe(3);
+      expect(Number(da[0])).toBe(15);
+      expect(Number(da[1])).toBe(24);
+      expect(Number(da[2])).toBe(6);
+    });
+  });
+
+  it('scales stroke-width', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 1 2 L 3 4');
+    p.attr({ 'stroke-width': 2.5 });
+    _scalePath(p, 2, 3, 4);
+    expect(p.attr('stroke-width')).toBeCloseTo(5, 3);
+  });
+});
+
 describe('_trimNum function', () => {
   it('number needs trimming', () => {
     let n = 5.1294719287124;
