@@ -339,7 +339,7 @@ function _scaleCircle(circle, scaling, xOrigin, yOrigin) {
   let sw = scaling * circle.attr('stroke-width');
   circle.attr({
     'cx': cx,
-    'cy;': cy,
+    'cy': cy,
     'r': r,
     'stroke-width': sw,
   });

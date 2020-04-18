@@ -400,6 +400,21 @@ describe('_scalePath function', () => {
   });
 });
 
+it('_scaleCircle function', () => {
+  let svg = createNodeSVG();
+  let c = svg.circle(20);
+  c.attr({
+    'cx': 3,
+    'cy': 50,
+    'stroke-width': 1.5,
+  });
+  _scaleCircle(c, 3, 6, 5);
+  expect(c.attr('cx')).toBe(-3);
+  expect(c.attr('cy')).toBe(140);
+  expect(c.attr('r')).toBe(30);
+  expect(c.attr('stroke-width')).toBeCloseTo(4.5, 3);
+});
+
 describe('_trimNum function', () => {
   it('number needs trimming', () => {
     let n = 5.1294719287124;
