@@ -261,6 +261,10 @@ describe('_shiftElements function', () => {
   });
 });
 
+it('_scaleCoordinate function', () => {
+  expect(_scaleCoordinate(2, 3, 4)).toBe(-2);
+});
+
 describe('_trimNum function', () => {
   it('number needs trimming', () => {
     let n = 5.1294719287124;
