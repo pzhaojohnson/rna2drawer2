@@ -415,6 +415,22 @@ it('_scaleCircle function', () => {
   expect(c.attr('stroke-width')).toBeCloseTo(4.5, 3);
 });
 
+it('_scaleRect function', () => {
+  let svg = createNodeSVG();
+  let r = svg.rect(20, 40);
+  r.attr({
+    'x': 4,
+    'y': 18,
+    'stroke-width': 2.5,
+  });
+  _scaleRect(r, 2, 9, 10);
+  expect(r.attr('x')).toBe(-1);
+  expect(r.attr('y')).toBe(26);
+  expect(r.attr('width')).toBe(40);
+  expect(r.attr('height')).toBe(80);
+  expect(r.attr('stroke-width')).toBeCloseTo(5, 3);
+});
+
 describe('_trimNum function', () => {
   it('number needs trimming', () => {
     let n = 5.1294719287124;
