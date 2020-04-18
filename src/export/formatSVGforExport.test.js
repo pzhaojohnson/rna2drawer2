@@ -296,6 +296,18 @@ describe('_scaleText function', () => {
   });
 });
 
+it('_scaleLine function', () => {
+  let svg = createNodeSVG();
+  let l = svg.line(2, 4, 8, 6);
+  l.attr({ 'stroke-width': 1.5 });
+  _scaleLine(l, 2, -2, 4);
+  expect(l.attr('x1')).toBe(6);
+  expect(l.attr('y1')).toBe(4);
+  expect(l.attr('x2')).toBe(18);
+  expect(l.attr('y2')).toBe(8);
+  expect(l.attr('stroke-width')).toBeCloseTo(3, 3);
+});
+
 describe('_trimNum function', () => {
   it('number needs trimming', () => {
     let n = 5.1294719287124;
