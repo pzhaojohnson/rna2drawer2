@@ -389,6 +389,29 @@ function _scaleElements(svg, scaling) {
   });
 }
 
+/**
+ * Sets the dominant-baseline for all text elements to auto and
+ * updates the y attribute such that where the text is displayed
+ * remains the same.
+ * 
+ * This step is important because some applications (e.g. Illustrator)
+ * do not support the dominant-baseline attribute.
+ * 
+ * @param {SVG.Svg} svg 
+ */
+function _resetTextDominantBaselines(svg) {
+  svg.children().forEach(c => {
+    if (c.type === 'text') {
+      let b = c.bbox();
+      let cy = b.cy;
+      c.attr({ 'dominant-baseline': 'auto' });
+      b = c.bbox();
+      let y = c.attr('y') - (b.cy - cy);
+      c.attr({ 'y': y });
+    }
+  });
+}
+
 const _NUMBER_TRIM = 6;
 
 /**
@@ -547,6 +570,7 @@ function _setDimensions(svg) {
 function formatSVGforExport(svg, scaling=1) {
   _shiftElements(svg);
   _scaleElements(svg, scaling);
+  _resetTextDominantBaselines(svg);
   _trimNumbers(svg);
   _setDimensions(svg);
 }
@@ -574,6 +598,7 @@ export {
   _scaleCircle,
   _scaleRect,
   _scaleElements,
+  _resetTextDominantBaselines,
   _NUMBER_TRIM,
   _trimTextNumbers,
   _trimLineNumbers,

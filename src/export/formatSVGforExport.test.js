@@ -19,6 +19,7 @@ import {
   _scaleCircle,
   _scaleRect,
   _scaleElements,
+  _resetTextDominantBaselines,
   _NUMBER_TRIM,
   _trimTextNumbers,
   _trimLineNumbers,
@@ -505,6 +506,52 @@ describe('_scaleElements function', () => {
   });
 });
 
+describe('_resetTextDominantBaselines function', () => {
+  it('ignores non-text elements', () => {
+    let svg = createNodeSVG();
+    let c = svg.circle(20);
+    _resetTextDominantBaselines(svg);
+    expect(c.attr('dominant-baseline')).toBe(undefined);
+  });
+
+  it('sets dominant-baseline to auto and updates x and y', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('A'));
+    t.attr({
+      'y': 7.2,
+      'font-size': 12,
+      'dominant-baseline': 'middle',
+    });
+    let y = t.attr('y');
+    let b = t.bbox();
+    let cy = b.cy;
+    _resetTextDominantBaselines(svg);
+    expect(t.attr('dominant-baseline')).toBe('auto');
+    expect(t.attr('y')).toBeGreaterThan(y);
+    b = t.bbox();
+    expect(b.cy).toBeCloseTo(cy, 3);
+  });
+
+  it('resets multiple text elements', () => {
+    let svg = createNodeSVG();
+    let t1 = svg.text(add => add.tspan('a'));
+    t1.attr({
+      'y': 5,
+      'font-size': 20,
+      'dominant-baseline': 'middle',
+    });
+    let t2 = svg.text(add => add.tspan('A'));
+    t2.attr({
+      'y': 20,
+      'font-size': 8,
+      'dominant-baseline': 'middle',
+    });
+    _resetTextDominantBaselines(svg);
+    expect(t1.attr('dominant-baseline')).toBe('auto');
+    expect(t2.attr('dominant-baseline')).toBe('auto');
+  });
+});
+
 describe('_trimTextNumbers function', () => {
   it('handles undefined and string font-size', () => {
     let svg = createNodeSVG();
@@ -796,6 +843,18 @@ describe('formatSVGforExport function', () => {
     t.attr({ 'font-size': fs });
     formatSVGforExport(svg, 1);
     expect(t.attr('font-size')).toEqual(trimNum(fs, _NUMBER_TRIM));
+  });
+
+  it('resets text dominant-baseline attributes', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('a'));
+    t.attr({
+      'y': 8,
+      'font-size': 20,
+      'dominant-baseline': 'hanging',
+    });
+    formatSVGforExport(svg);
+    expect(t.attr('dominant-baseline')).toBe('auto');
   });
 
   it('sets SVG dimensions', () => {
