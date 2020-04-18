@@ -20,7 +20,6 @@ import {
   _scaleRect,
   _scaleElements,
   _NUMBER_TRIM,
-  _trimNum,
   _trimTextNumbers,
   _trimLineNumbers,
   _trimPathNumbers,
@@ -31,6 +30,7 @@ import {
 } from './formatSVGforExport';
 import createNodeSVG from '../draw/createNodeSVG';
 import { nonemptySplitByWhitespace } from '../parse/nonemptySplitByWhitespace';
+import { trimNum } from './trimNum';
 
 describe('_xTextMin, _xTextMax, _yTextMin and _yTextMax functions', () => {
   it('no text elements', () => {
@@ -505,26 +505,6 @@ describe('_scaleElements function', () => {
   });
 });
 
-describe('_trimNum function', () => {
-  it('number needs trimming', () => {
-    let n = 5.1294719287124;
-    let trimmed = Number(
-      n.toFixed(_NUMBER_TRIM)
-    );
-    expect(trimmed).not.toEqual(n);
-    expect(_trimNum(n)).toEqual(trimmed);
-  });
-
-  it('number does not need trimming', () => {
-    let n = 0.12;
-    let trimmed = Number(
-      n.toFixed(_NUMBER_TRIM)
-    );
-    expect(trimmed).toEqual(n);
-    expect(_trimNum(n)).toEqual(n);
-  });
-});
-
 describe('_trimTextNumbers function', () => {
   it('handles undefined and string font-size', () => {
     let svg = createNodeSVG();
@@ -546,15 +526,15 @@ describe('_trimTextNumbers function', () => {
     let x = 1.3857191924124;
     let y = 6.18719285719;
     let fs = 12.223985719114;
-    expect(_trimNum(x)).not.toEqual(x);
-    expect(_trimNum(y)).not.toEqual(y);
-    expect(_trimNum(fs)).not.toEqual(fs);
+    expect(trimNum(x, _NUMBER_TRIM)).not.toEqual(x);
+    expect(trimNum(y, _NUMBER_TRIM)).not.toEqual(y);
+    expect(trimNum(fs, _NUMBER_TRIM)).not.toEqual(fs);
     let t = svg.text(add => add.tspan('a'));
     t.attr({ 'x': x, 'y': y, 'font-size': fs });
     _trimTextNumbers(t);
-    expect(t.attr('x')).toEqual(_trimNum(x));
-    expect(t.attr('y')).toEqual(_trimNum(y));
-    expect(t.attr('font-size')).toEqual(_trimNum(fs));
+    expect(t.attr('x')).toEqual(trimNum(x, _NUMBER_TRIM));
+    expect(t.attr('y')).toEqual(trimNum(y, _NUMBER_TRIM));
+    expect(t.attr('font-size')).toEqual(trimNum(fs, _NUMBER_TRIM));
   });
 });
 
@@ -565,19 +545,19 @@ it('_trimLineNumbers function', () => {
   let x2 = -2198.1358179119149;
   let y2 = 6.1985712948179284;
   let sw = 5.129481729182471;
-  expect(_trimNum(x1)).not.toEqual(x1);
-  expect(_trimNum(y1)).not.toEqual(y1);
-  expect(_trimNum(x2)).not.toEqual(x2);
-  expect(_trimNum(y2)).not.toEqual(y2);
-  expect(_trimNum(sw)).not.toEqual(sw);
+  expect(trimNum(x1, _NUMBER_TRIM)).not.toEqual(x1);
+  expect(trimNum(y1, _NUMBER_TRIM)).not.toEqual(y1);
+  expect(trimNum(x2, _NUMBER_TRIM)).not.toEqual(x2);
+  expect(trimNum(y2, _NUMBER_TRIM)).not.toEqual(y2);
+  expect(trimNum(sw, _NUMBER_TRIM)).not.toEqual(sw);
   let l = svg.line(x1, y1, x2, y2);
   l.attr({ 'stroke-width': sw });
   _trimLineNumbers(l);
-  expect(l.attr('x1')).toEqual(_trimNum(x1));
-  expect(l.attr('y1')).toEqual(_trimNum(y1));
-  expect(l.attr('x2')).toEqual(_trimNum(x2));
-  expect(l.attr('y2')).toEqual(_trimNum(y2));
-  expect(l.attr('stroke-width')).toEqual(_trimNum(sw));
+  expect(l.attr('x1')).toEqual(trimNum(x1, _NUMBER_TRIM));
+  expect(l.attr('y1')).toEqual(trimNum(y1, _NUMBER_TRIM));
+  expect(l.attr('x2')).toEqual(trimNum(x2, _NUMBER_TRIM));
+  expect(l.attr('y2')).toEqual(trimNum(y2, _NUMBER_TRIM));
+  expect(l.attr('stroke-width')).toEqual(trimNum(sw, _NUMBER_TRIM));
 });
 
 describe('_trimPathNumbers function', () => {
@@ -596,10 +576,10 @@ describe('_trimPathNumbers function', () => {
       let my = 424.12395873985174;
       let lx = -2.4837859817249;
       let ly = 0.13581798791244;
-      expect(_trimNum(mx)).not.toEqual(mx);
-      expect(_trimNum(my)).not.toEqual(my);
-      expect(_trimNum(lx)).not.toEqual(lx);
-      expect(_trimNum(ly)).not.toEqual(ly);
+      expect(trimNum(mx, _NUMBER_TRIM)).not.toEqual(mx);
+      expect(trimNum(my, _NUMBER_TRIM)).not.toEqual(my);
+      expect(trimNum(lx, _NUMBER_TRIM)).not.toEqual(lx);
+      expect(trimNum(ly, _NUMBER_TRIM)).not.toEqual(ly);
       let d = ['M', mx, my, 'L', lx, ly].join(' ');
       let p = svg.path(d);
       _trimPathNumbers(p);
@@ -608,13 +588,13 @@ describe('_trimPathNumbers function', () => {
       let m = pa[0];
       expect(m.length).toBe(3);
       expect(m[0]).toBe('M');
-      expect(m[1]).toEqual(_trimNum(mx));
-      expect(m[2]).toEqual(_trimNum(my));
+      expect(m[1]).toEqual(trimNum(mx, _NUMBER_TRIM));
+      expect(m[2]).toEqual(trimNum(my, _NUMBER_TRIM));
       let l = pa[1];
       expect(l.length).toBe(3);
       expect(l[0]).toBe('L');
-      expect(l[1]).toEqual(_trimNum(lx));
-      expect(l[2]).toEqual(_trimNum(ly));
+      expect(l[1]).toEqual(trimNum(lx, _NUMBER_TRIM));
+      expect(l[2]).toEqual(trimNum(ly, _NUMBER_TRIM));
     });
   });
   
@@ -633,7 +613,7 @@ describe('_trimPathNumbers function', () => {
       let p = svg.path('M 5 6 L 3 4');
       let da = [5.198471284, 7.129847192];
       da.forEach(n => {
-        expect(_trimNum(n)).not.toEqual(n);
+        expect(trimNum(n, _NUMBER_TRIM)).not.toEqual(n);
       });
       p.attr({ 'stroke-dasharray': da.join(' ') });
       _trimPathNumbers(p);
@@ -644,19 +624,19 @@ describe('_trimPathNumbers function', () => {
         ns.push(Number(v));
       });
       expect(ns.length).toBe(2);
-      expect(ns[0]).toEqual(_trimNum(da[0]));
-      expect(ns[1]).toEqual(_trimNum(da[1]));
+      expect(ns[0]).toEqual(trimNum(da[0], _NUMBER_TRIM));
+      expect(ns[1]).toEqual(trimNum(da[1], _NUMBER_TRIM));
     });
   });
   
   it('trims stroke-width', () => {
     let svg = createNodeSVG();
     let sw = 6.19847192847192;
-    expect(_trimNum(sw)).not.toEqual(sw);
+    expect(trimNum(sw, _NUMBER_TRIM)).not.toEqual(sw);
     let p = svg.path('M 1 2 L 3 4');
     p.attr({ 'stroke-width': sw });
     _trimPathNumbers(p);
-    expect(p.attr('stroke-width')).toEqual(_trimNum(sw));
+    expect(p.attr('stroke-width')).toEqual(trimNum(sw, _NUMBER_TRIM));
   });
 });
 
@@ -666,17 +646,17 @@ it('_trimCircleNumbers function', () => {
   let cy = 15.19481729481724;
   let r = 10.22985719851751;
   let sw = 5.12129812749;
-  expect(_trimNum(cx)).not.toEqual(cx);
-  expect(_trimNum(cy)).not.toEqual(cy);
-  expect(_trimNum(r)).not.toEqual(r);
-  expect(_trimNum(sw)).not.toEqual(sw);
+  expect(trimNum(cx, _NUMBER_TRIM)).not.toEqual(cx);
+  expect(trimNum(cy, _NUMBER_TRIM)).not.toEqual(cy);
+  expect(trimNum(r, _NUMBER_TRIM)).not.toEqual(r);
+  expect(trimNum(sw, _NUMBER_TRIM)).not.toEqual(sw);
   let c = svg.circle(2 * r);
   c.attr({ 'cx': cx, 'cy': cy, 'stroke-width': sw });
   _trimCircleNumbers(c);
-  expect(c.attr('cx')).toEqual(_trimNum(cx));
-  expect(c.attr('cy')).toEqual(_trimNum(cy));
-  expect(c.attr('r')).toEqual(_trimNum(r));
-  expect(c.attr('stroke-width')).toEqual(_trimNum(sw));
+  expect(c.attr('cx')).toEqual(trimNum(cx, _NUMBER_TRIM));
+  expect(c.attr('cy')).toEqual(trimNum(cy, _NUMBER_TRIM));
+  expect(c.attr('r')).toEqual(trimNum(r, _NUMBER_TRIM));
+  expect(c.attr('stroke-width')).toEqual(trimNum(sw, _NUMBER_TRIM));
 });
 
 it('_trimRectNumbers function', () => {
@@ -686,86 +666,86 @@ it('_trimRectNumbers function', () => {
   let w = 48.13958719857;
   let h = 18.1985719825791;
   let sw = 2.238571389517;
-  expect(_trimNum(x)).not.toEqual(x);
-  expect(_trimNum(y)).not.toEqual(y);
-  expect(_trimNum(w)).not.toEqual(w);
-  expect(_trimNum(h)).not.toEqual(h);
-  expect(_trimNum(sw)).not.toEqual(sw);
+  expect(trimNum(x, _NUMBER_TRIM)).not.toEqual(x);
+  expect(trimNum(y, _NUMBER_TRIM)).not.toEqual(y);
+  expect(trimNum(w, _NUMBER_TRIM)).not.toEqual(w);
+  expect(trimNum(h, _NUMBER_TRIM)).not.toEqual(h);
+  expect(trimNum(sw, _NUMBER_TRIM)).not.toEqual(sw);
   let r = svg.rect(w, h);
   r.attr({ 'x': x, 'y': y, 'stroke-width': sw });
   _trimRectNumbers(r);
-  expect(r.attr('x')).toEqual(_trimNum(x));
-  expect(r.attr('y')).toEqual(_trimNum(y));
-  expect(r.attr('width')).toEqual(_trimNum(w));
-  expect(r.attr('height')).toEqual(_trimNum(h));
-  expect(r.attr('stroke-width')).toEqual(_trimNum(sw));
+  expect(r.attr('x')).toEqual(trimNum(x, _NUMBER_TRIM));
+  expect(r.attr('y')).toEqual(trimNum(y, _NUMBER_TRIM));
+  expect(r.attr('width')).toEqual(trimNum(w, _NUMBER_TRIM));
+  expect(r.attr('height')).toEqual(trimNum(h, _NUMBER_TRIM));
+  expect(r.attr('stroke-width')).toEqual(trimNum(sw, _NUMBER_TRIM));
 });
 
 describe('_trimNumbers function', () => {
   it('trims text element numbers', () => {
     let svg = createNodeSVG();
     let x = 1.38937591871;
-    expect(_trimNum(x)).not.toEqual(x);
+    expect(trimNum(x, _NUMBER_TRIM)).not.toEqual(x);
     let t = svg.text(add => add.tspan('t'));
     t.attr({ 'x': x });
     _trimNumbers(svg);
-    expect(t.attr('x')).toEqual(_trimNum(x));
+    expect(t.attr('x')).toEqual(trimNum(x, _NUMBER_TRIM));
   });
 
   it('trims line element numbers', () => {
     let svg = createNodeSVG();
     let x1 = 5.12841294811;
-    expect(_trimNum(x1)).not.toEqual(x1);
+    expect(trimNum(x1, _NUMBER_TRIM)).not.toEqual(x1);
     let l = svg.line(x1, 5, 7, 8);
     _trimNumbers(svg);
-    expect(l.attr('x1')).toEqual(_trimNum(x1));
+    expect(l.attr('x1')).toEqual(trimNum(x1, _NUMBER_TRIM));
   });
 
   it('trims path element numbers', () => {
     let svg = createNodeSVG();
     let mx = 5.129481724827;
-    expect(_trimNum(mx)).not.toEqual(mx);
+    expect(trimNum(mx, _NUMBER_TRIM)).not.toEqual(mx);
     let d = ['M', mx, 5, 'L', 6, 2].join(' ');
     let p = svg.path(d);
     _trimNumbers(svg);
     let pa = p.array();
     let m = pa[0];
-    expect(m[1]).toEqual(_trimNum(mx));
+    expect(m[1]).toEqual(trimNum(mx, _NUMBER_TRIM));
   });
 
   it('trims circle element numbers', () => {
     let svg = createNodeSVG();
     let cx = 5.1948712984719;
-    expect(_trimNum(cx)).not.toEqual(cx);
+    expect(trimNum(cx, _NUMBER_TRIM)).not.toEqual(cx);
     let c = svg.circle(34);
     c.attr({ 'cx': cx });
     _trimNumbers(svg);
-    expect(c.attr('cx')).toEqual(_trimNum(cx));
+    expect(c.attr('cx')).toEqual(trimNum(cx, _NUMBER_TRIM));
   });
 
   it('trims rect element numbers', () => {
     let svg = createNodeSVG();
     let x = 6.1298417298471;
-    expect(_trimNum(x)).not.toEqual(x);
+    expect(trimNum(x, _NUMBER_TRIM)).not.toEqual(x);
     let r = svg.rect(3, 9);
     r.attr({ 'x': x });
     _trimNumbers(svg);
-    expect(r.attr('x')).toEqual(_trimNum(x));
+    expect(r.attr('x')).toEqual(trimNum(x, _NUMBER_TRIM));
   });
 
   it('trims numbers for multiple elements', () => {
     let svg = createNodeSVG();
     let x = 6.12948172944;
     let cx = 0.397162947182;
-    expect(_trimNum(x)).not.toEqual(x);
-    expect(_trimNum(cx)).not.toEqual(cx);
+    expect(trimNum(x, _NUMBER_TRIM)).not.toEqual(x);
+    expect(trimNum(cx, _NUMBER_TRIM)).not.toEqual(cx);
     let t = svg.text(add => add.tspan('t'));
     t.attr({ 'x': x });
     let c = svg.circle(20);
     c.attr({ 'cx': cx });
     _trimNumbers(svg);
-    expect(t.attr('x')).toEqual(_trimNum(x));
-    expect(c.attr('cx')).toEqual(_trimNum(cx));
+    expect(t.attr('x')).toEqual(trimNum(x, _NUMBER_TRIM));
+    expect(c.attr('cx')).toEqual(trimNum(cx, _NUMBER_TRIM));
   });
 });
 
@@ -811,11 +791,11 @@ describe('formatSVGforExport function', () => {
   it('trims numbers', () => {
     let svg = createNodeSVG();
     let fs = 10.235273798172;
-    expect(_trimNum(fs)).not.toEqual(fs);
+    expect(trimNum(fs, _NUMBER_TRIM)).not.toEqual(fs);
     let t = svg.text(add => add.tspan('b'));
     t.attr({ 'font-size': fs });
     formatSVGforExport(svg, 1);
-    expect(t.attr('font-size')).toEqual(_trimNum(fs));
+    expect(t.attr('font-size')).toEqual(trimNum(fs, _NUMBER_TRIM));
   });
 
   it('sets SVG dimensions', () => {
