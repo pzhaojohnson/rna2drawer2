@@ -4,7 +4,7 @@ const _X_PADDING = 100;
 const _Y_PADDING = 100;
 
 /**
- * If there are no text elements, this function returns zero.
+ * Returns zero if there are no text elements.
  * 
  * @param {SVG.Svg} svg 
  * 
@@ -48,7 +48,7 @@ function _xTextMax(svg) {
 }
 
 /**
- * If there are no text elements, this function returns zero.
+ * Returns zero if there are no text elements.
  * 
  * @param {SVG.Svg} svg 
  * 
