@@ -431,6 +431,80 @@ it('_scaleRect function', () => {
   expect(r.attr('stroke-width')).toBeCloseTo(5, 3);
 });
 
+describe('_scaleElements function', () => {
+  it('uses correct origin (and scales multiple elements)', () => {
+    let svg = createNodeSVG();
+    let c = svg.circle(20);
+    c.attr({ 'cx': 5, 'cy': 9 });
+    let t1 = svg.text(add => add.tspan('a'));
+    t1.attr({ 'x': 10, 'y': 12 });
+    let t2 = svg.text(add => add.tspan('b'));
+    t2.attr({ 'x': 4, 'y': 3 });
+    _scaleElements(svg, 3);
+    expect(c.attr('cx')).toBe(7);
+    expect(c.attr('cy')).toBe(21);
+    expect(t1.attr('x')).toBe(22);
+    expect(t1.attr('y')).toBe(30);
+    expect(t2.attr('x')).toBe(4);
+    expect(t2.attr('y')).toBe(3);
+  });
+
+  it('scales text elements', () => {
+    let svg = createNodeSVG();
+    let t1 = svg.text(add => add.tspan('a'));
+    t1.attr({ 'x': 50, 'y': 60 });
+    let t2 = svg.text(add => add.tspan('b'));
+    t2.attr({ 'x': 25, 'y': 30 });
+    _scaleElements(svg, 2);
+    expect(t1.attr('x')).toBe(75);
+    expect(t1.attr('y')).toBe(90);
+  });
+
+  it('scales line elements', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(5, 9, 3, 8);
+    let t = svg.text(add => add.tspan('a'));
+    t.attr({ 'x': 7, 'y': 6 });
+    _scaleElements(svg, 3);
+    expect(l.attr('x1')).toBe(1);
+    expect(l.attr('y1')).toBe(15);
+  });
+
+  it('scales path elements', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 3 5 L 2 9');
+    let t = svg.text(add => add.tspan('a'));
+    t.attr({ 'x': 19, 'y': 12 });
+    _scaleElements(svg, 0.5);
+    let pa = p.array();
+    let m = pa[0];
+    expect(m[1]).toBeCloseTo(11, 3);
+    expect(m[2]).toBeCloseTo(8.5, 3);
+  });
+
+  it('scales circle elements', () => {
+    let svg = createNodeSVG();
+    let c = svg.circle(20);
+    c.attr({ 'cx': 9, 'cy': 20 });
+    let t = svg.text(add => add.tspan('g'));
+    t.attr({ 'x': 7, 'y': 6 });
+    _scaleElements(svg, 1.5);
+    expect(c.attr('cx')).toBeCloseTo(10, 3);
+    expect(c.attr('cy')).toBeCloseTo(27, 3);
+  });
+
+  it('scales rect elements', () => {
+    let svg = createNodeSVG();
+    let r = svg.rect(10, 15);
+    r.attr({ 'x': 30, 'y': 40 });
+    let t = svg.text(add => add.tspan('q'));
+    t.attr({ 'x': 11, 'y': 14 });
+    _scaleElements(svg, 0.5);
+    expect(r.attr('x')).toBeCloseTo(20.5, 3);
+    expect(r.attr('y')).toBeCloseTo(27, 3);
+  });
+});
+
 describe('_trimNum function', () => {
   it('number needs trimming', () => {
     let n = 5.1294719287124;
