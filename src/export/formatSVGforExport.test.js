@@ -785,3 +785,51 @@ it('_setDimensions function', () => {
   expect(svg.attr('width')).toBe(50 + _X_PADDING);
   expect(svg.attr('height')).toBe(100 + _Y_PADDING);
 });
+
+describe('formatSVGforExport function', () => {
+  it('shifts elements', () => {
+    let svg = createNodeSVG();
+    let x = 9142;
+    let y = 1245;
+    expect(x).not.toEqual(_X_PADDING);
+    expect(y).not.toEqual(_Y_PADDING);
+    let t = svg.text(add => add.tspan('a'));
+    t.attr({ 'x': x, 'y': y });
+    formatSVGforExport(svg);
+    expect(t.attr('x')).toBeCloseTo(_X_PADDING, 3);
+    expect(t.attr('y')).toBeCloseTo(_Y_PADDING, 3);
+  });
+
+  it('scales elements', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('t'));
+    t.attr({ 'font-size': 9 });
+    formatSVGforExport(svg, 2);
+    expect(t.attr('font-size')).toBe(18);
+  });
+
+  it('trims numbers', () => {
+    let svg = createNodeSVG();
+    let fs = 10.235273798172;
+    expect(_trimNum(fs)).not.toEqual(fs);
+    let t = svg.text(add => add.tspan('b'));
+    t.attr({ 'font-size': fs });
+    formatSVGforExport(svg, 1);
+    expect(t.attr('font-size')).toEqual(_trimNum(fs));
+  });
+
+  it('sets SVG dimensions', () => {
+    let svg = createNodeSVG();
+    let t1 = svg.text(add => add.tspan('a'));
+    t1.attr({ 'x': 50, 'y': 25 });
+    let t2 = svg.text(add => add.tspan('b'));
+    t2.attr({ 'x': 100, 'y': 150 });
+    formatSVGforExport(svg, 1);
+    expect(svg.viewbox().x).toBe(0);
+    expect(svg.viewbox().y).toBe(0);
+    expect(svg.viewbox().width).toBeCloseTo((2 * _X_PADDING) + 50, 3);
+    expect(svg.viewbox().height).toBeCloseTo((2 * _Y_PADDING) + 125, 3);
+    expect(svg.attr('width')).toBeCloseTo((2 * _X_PADDING) + 50, 3);
+    expect(svg.attr('height')).toBeCloseTo((2 * _Y_PADDING) + 125, 3);
+  });
+});
