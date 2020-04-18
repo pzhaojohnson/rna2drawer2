@@ -216,12 +216,11 @@ function _scaleCoordinate(c, scaling, cOrigin) {
 function _scaleText(text, scaling, xOrigin, yOrigin) {
   let x = _scaleCoordinate(text.attr('x'), scaling, xOrigin);
   let y = _scaleCoordinate(text.attr('y'), scaling, yOrigin);
-  let fs = scaling * text.attr('font-size');
-  text.attr({
-    'x': x,
-    'y': y,
-    'fs': fs,
-  });
+  text.attr({ 'x': x, 'y': y });
+  let fs = _text.attr('font-size');
+  if (typeof fs === 'number') {
+    text.attr({ 'font-size': scaling * fs });
+  }
 }
 
 /**
