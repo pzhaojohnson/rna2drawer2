@@ -27,6 +27,7 @@ import {
   _trimCircleNumbers,
   _trimRectNumbers,
   _trimNumbers,
+  _setDimensions,
 } from './formatSVGforExport';
 import createNodeSVG from '../draw/createNodeSVG';
 import { nonemptySplitByWhitespace } from '../parse/nonemptySplitByWhitespace';
@@ -522,4 +523,21 @@ describe('_trimNumbers function', () => {
     expect(t.attr('x')).toEqual(_trimNum(x));
     expect(c.attr('cx')).toEqual(_trimNum(cx));
   });
+});
+
+it('_setDimensions function', () => {
+  let svg = createNodeSVG();
+  let t1 = svg.text(add => add.tspan('a'));
+  t1.attr({ 'x': 5, 'y': 7 });
+  let t2 = svg.text(add => add.tspan('b'));
+  t2.attr({ 'x': 50, 'y': 100 });
+  let t3 = svg.text(add => add.tspan('c'));
+  t3.attr({ 'x': 30, 'y': 78 });
+  _setDimensions(svg);
+  expect(svg.viewbox().x).toBe(0);
+  expect(svg.viewbox().y).toBe(0);
+  expect(svg.viewbox().width).toBe(50 + _X_PADDING);
+  expect(svg.viewbox().height).toBe(100 + _Y_PADDING);
+  expect(svg.attr('width')).toBe(50 + _X_PADDING);
+  expect(svg.attr('height')).toBe(100 + _Y_PADDING);
 });

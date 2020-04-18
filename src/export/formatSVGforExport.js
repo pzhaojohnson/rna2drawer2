@@ -506,6 +506,19 @@ function _trimNumbers(svg) {
 }
 
 /**
+ * @param {SVG.Svg} svg 
+ */
+function _setDimensions(svg) {
+  let width = _xTextMax(svg) + _X_PADDING;
+  let height = _yTextMax(svg) + _Y_PADDING;
+  svg.viewbox(0, 0, width, height);
+  svg.attr({
+    'width': width,
+    'height': height,
+  });
+}
+
+/**
  * @param {SVG.Svg} svg A structure drawing.
  * @param {number} [scaling=1] How much to scale the drawing.
  */
@@ -513,6 +526,7 @@ function formatSVGforExport(svg, scaling=1) {
   _shiftElements(svg);
   _scaleElements(svg, scaling);
   _trimNumbers(svg);
+  _setDimensions(svg);
 }
 
 export {
@@ -546,4 +560,5 @@ export {
   _trimCircleNumbers,
   _trimRectNumbers,
   _trimNumbers,
+  _setDimensions,
 };
