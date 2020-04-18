@@ -265,6 +265,37 @@ it('_scaleCoordinate function', () => {
   expect(_scaleCoordinate(2, 3, 4)).toBe(-2);
 });
 
+describe('_scaleText function', () => {
+  it('handles undefine and string font-size', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('a'));
+    expect(t.attr('font-size')).toBe(undefined);
+    expect(
+      () => _scaleText(t, 3, 5, 7)
+    ).not.toThrow();
+    expect(t.attr('font-size')).toBe(undefined);
+    t.attr({ 'font-size': 'medium' });
+    expect(
+      () => _scaleText(t, 3, 5, 7)
+    ).not.toThrow();
+    expect(t.attr('font-size')).toBe('medium');
+  });
+
+  it('scales properties', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('b'));
+    t.attr({
+      'x': 3,
+      'y': 4,
+      'font-size': 5,
+    });
+    _scaleText(t, 5, 1, 6);
+    expect(t.attr('x')).toBe(11);
+    expect(t.attr('y')).toBe(-4);
+    expect(t.attr('font-size')).toBe(25);
+  });
+});
+
 describe('_trimNum function', () => {
   it('number needs trimming', () => {
     let n = 5.1294719287124;

@@ -217,7 +217,7 @@ function _scaleText(text, scaling, xOrigin, yOrigin) {
   let x = _scaleCoordinate(text.attr('x'), scaling, xOrigin);
   let y = _scaleCoordinate(text.attr('y'), scaling, yOrigin);
   text.attr({ 'x': x, 'y': y });
-  let fs = _text.attr('font-size');
+  let fs = text.attr('font-size');
   if (typeof fs === 'number') {
     text.attr({ 'font-size': scaling * fs });
   }
