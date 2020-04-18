@@ -245,23 +245,12 @@ function _scaleLine(line, scaling, xOrigin, yOrigin) {
 }
 
 /**
- * @param {SVG.Path} rect 
+ * @param {SVG.Path} path 
  * @param {number} scaling 
  * @param {number} xOrigin 
  * @param {number} yOrigin 
  */
-function _scalePath(path, scaling, xOrigin, yOrigin) {
-  let sw = scaling * path.attr('stroke-width');
-  path.attr({ 'stroke-width': sw });
-
-  let da = path.attr('stroke-dasharray');
-  da = nonemptySplitByWhitespace(da);
-  let daScaled = [];
-  da.forEach(n => {
-    daScaled.push(scaling * Number(n));
-  });
-  path.attr({ 'stroke-dasharray': daScaled.join(' ') });
-  
+function _scalePathSegments(path, scaling, xOrigin, yOrigin) {
   let d = '';
   path.array().forEach(segment => {
     if (segment[0] === 'M') {
@@ -292,6 +281,45 @@ function _scalePath(path, scaling, xOrigin, yOrigin) {
     }
   });
   path.plot(d);
+}
+
+/**
+ * @param {SVG.Path} path 
+ * @param {number} scaling 
+ */
+function _scalePathStrokeDasharray(path, scaling) {
+  let s = path.attr('stroke-dasharray');
+  if (!s) {
+    return;
+  }
+  let da = nonemptySplitByWhitespace(s);
+  let scaled = [];
+  da.forEach(v => {
+    let n = Number(v);
+    scaled.push(scaling * n);
+  });
+  path.attr({ 'stroke-dasharray': scaled.join(' ') });
+}
+
+/**
+ * @param {SVG.Path} path 
+ * @param {number} scaling 
+ */
+function _scalePathStrokeWidth(path, scaling) {
+  let sw = scaling * path.attr('stroke-width');
+  path.attr({ 'stroke-width': sw });
+}
+
+/**
+ * @param {SVG.Path} rect 
+ * @param {number} scaling 
+ * @param {number} xOrigin 
+ * @param {number} yOrigin 
+ */
+function _scalePath(path, scaling, xOrigin, yOrigin) {
+  _scalePathSegments(path, scaling, xOrigin, yOrigin);
+  _scalePathStrokeDasharray(path, scaling);
+  _scalePathStrokeWidth(path, scaling);
 }
 
 /**
