@@ -4,11 +4,16 @@ import {
   _trimNum,
   _xTextCenter,
   _yTextCenter,
+  _textOptions,
 } from './createPPTXfromSVG';
 import { trimNum } from './trimNum';
 import createNodeSVG from '../draw/createNodeSVG';
 const fs = require('fs');
+import { pixelsToPoints } from './pixelsToPoints';
+import { pixelsToInches } from './pixelsToInches';
+import { pointsToPixels } from './pointsToPixels';
 import PptxGenJs from 'pptxgenjs';
+import { pointsToInches } from './pointsToInches';
 
 it('_trimNum function', () => {
   let n = 7.1298471294;
@@ -81,6 +86,88 @@ describe('_yTextCenter function', () => {
     t.attr({ 'dominant-baseline': 'hanging' });
     let cy = 30 + (t.bbox().cy - cyPrev);
     expect(_yTextCenter(t)).toBeCloseTo(cy, 3);
+  });
+});
+
+describe('_textOptions function', () => {
+  describe('font-size, w and h', () => {
+    it('gives correct values', () => {
+      let svg = createNodeSVG();
+      let t = svg.text(add => add.tspan('T'));
+      t.attr({ 'font-size': pointsToPixels(20) });
+      let tos = _textOptions(t);
+      expect(tos.fontSize).toBeCloseTo(20, 2);
+      expect(tos.w).toBeCloseTo(pointsToInches(30), 2);
+      expect(tos.h).toBeCloseTo(pointsToInches(30), 2);
+    });
+
+    it('trims numbers', () => {
+      let svg = createNodeSVG();
+      let t = svg.text(add => add.tspan('Y'));
+      let fs = 12.2339587128947;
+      expect(_trimNum(fs)).not.toEqual(fs);
+      t.attr({ 'font-size': fs });
+      let tos = _textOptions(t);
+      expect(_trimNum(tos.fontSize)).toEqual(tos.fontSize);
+      expect(_trimNum(tos.w)).toEqual(tos.w);
+      expect(_trimNum(tos.h)).toEqual(tos.h);
+    });
+  });
+
+  describe('x and y', () => {
+    it('gives correct values', () => {
+      let svg = createNodeSVG();
+      let t = svg.text(add => add.tspan('A'));
+      t.attr({
+        'x': 50,
+        'y': 100,
+        'font-size': pointsToPixels(12),
+      });
+      let cx = _xTextCenter(t);
+      let cy = _yTextCenter(t);
+      let x = pixelsToInches(cx) - pointsToInches(9);
+      let y = pixelsToInches(cy) - pointsToInches(9);
+      let tos = _textOptions(t);
+      expect(tos.x).toBeCloseTo(x, 2);
+      expect(tos.y).toBeCloseTo(y, 2);
+    });
+
+    it('trims numbers', () => {
+      let svg = createNodeSVG();
+      let x = 6.19847129847;
+      let y = 7.1893781257;
+      expect(_trimNum(x)).not.toEqual(x);
+      expect(_trimNum(y)).not.toEqual(y);
+      let t = svg.text(add => add.tspan('Y'));
+      t.attr({ 'x': x, 'y': y });
+      let tos = _textOptions(t);
+      expect(_trimNum(tos.x)).toEqual(tos.x);
+      expect(_trimNum(tos.y)).toEqual(tos.y);
+    });
+  });
+
+  describe('bold', () => {
+    it('font-weight is normal, bold, bolder, 400 or 700', () => {
+      let svg = createNodeSVG();
+      let t = svg.text(add => add.tspan('G'));
+      t.attr({ 'font-weight': 'normal' });
+      expect(_textOptions(t).bold).toBe(false);
+      t.attr({ 'font-weight': 'bold' });
+      expect(_textOptions(t).bold).toBe(true);
+      t.attr({ 'font-weight': 'bolder' });
+      expect(_textOptions(t).bold).toBe(true);
+      t.attr({ 'font-weight': 400 });
+      expect(_textOptions(t).bold).toBe(false);
+      t.attr({ 'font-weight': 700 });
+      expect(_textOptions(t).bold).toBe(true);
+    });
+  });
+
+  it('gives correct fontFace', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('A'));
+    t.attr({ 'font-family': 'Consolas' });
+    expect(_textOptions(t).fontFace).toBe('Consolas');
   });
 });
 

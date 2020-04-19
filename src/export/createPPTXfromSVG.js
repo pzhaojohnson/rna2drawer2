@@ -1,6 +1,7 @@
 import PptxGenJs from 'pptxgenjs';
 import { pixelsToInches } from './pixelsToInches';
 import { pixelsToPoints } from './pixelsToPoints';
+import { pointsToInches } from './pointsToInches';
 import { trimNum } from './trimNum';
 
 const _NUMBER_TRIM = 3;
@@ -80,13 +81,13 @@ function _textOptions(text) {
   let fs = pixelsToPoints(text.attr('font-size'));
   let w = pointsToInches(1.5 * fs);
   let h = pointsToInches(1.5 * fs);
-  let x = pixelsToInches(_xTextCenter(text));
-  let y = pixelsToInches(_yTextCenter(text));
+  let x = pixelsToInches(_xTextCenter(text)) - (w / 2);
+  let y = pixelsToInches(_yTextCenter(text)) - (h / 2);
   let fw = text.attr('font-weight');
   let bold = false;
-  if (fw === 'bold') {
+  if (fw === 'bold' || fw === 'bolder') {
     bold = true;
-  } else if (typeof fw === 'number' && fw > 400) {
+  } else if (typeof fw === 'number' && fw > 500) {
     bold = true;
   }
   return {
@@ -337,4 +338,5 @@ export {
   _trimNum,
   _xTextCenter,
   _yTextCenter,
+  _textOptions,
 };
