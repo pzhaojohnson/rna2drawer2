@@ -163,11 +163,14 @@ describe('_textOptions function', () => {
     });
   });
 
-  it('gives correct fontFace', () => {
+  it('gives correct fontFace, align and valign', () => {
     let svg = createNodeSVG();
     let t = svg.text(add => add.tspan('A'));
     t.attr({ 'font-family': 'Consolas' });
-    expect(_textOptions(t).fontFace).toBe('Consolas');
+    let tos = _textOptions(t);
+    expect(tos.fontFace).toBe('Consolas');
+    expect(tos.align).toBe('center');
+    expect(tos.valign).toBe('middle');
   });
 });
 

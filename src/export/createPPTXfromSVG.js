@@ -96,7 +96,7 @@ function _textOptions(text) {
     w: _trimNum(w),
     h: _trimNum(h),
     align: 'center',
-    valgin: 'middle',
+    valign: 'middle',
     fontFace: text.attr('font-family'),
     fontSize: _trimNum(fs),
     bold: bold,
