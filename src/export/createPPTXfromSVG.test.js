@@ -2,6 +2,7 @@ import {
   createPPTXfromSVG,
   _NUMBER_TRIM,
   _trimNum,
+  _xTextCenter,
 } from './createPPTXfromSVG';
 import { trimNum } from './trimNum';
 import createNodeSVG from '../draw/createNodeSVG';
@@ -13,6 +14,39 @@ it('_trimNum function', () => {
   let trimmed = trimNum(n, _NUMBER_TRIM);
   expect(trimmed).not.toEqual(n);
   expect(_trimNum(n)).toEqual(trimmed);
+});
+
+describe('_xTextCenter function', () => {
+  describe('resets text-anchor', () => {
+    it('text-anchor was previously undefined', () => {
+      let svg = createNodeSVG();
+      let t = svg.text(add => add.tspan('a'));
+      _xTextCenter(t);
+      expect(t.attr('text-anchor')).toBe('start');
+    });
+
+    it('text-anchor was end', () => {
+      let svg = createNodeSVG();
+      let t = svg.text(add => add.tspan('A'));
+      t.attr({ 'text-anchor': 'end' });
+      _xTextCenter(t);
+      expect(t.attr('text-anchor')).toBe('end');
+    });
+  });
+
+  it('gives correct value', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('G'));
+    t.attr({
+      'x': 5,
+      'font-size': 20,
+      'text-anchor': 'middle',
+    });
+    let cxPrev = t.bbox().cx;
+    t.attr({ 'text-anchor': 'end' });
+    let cx = 5 + (t.bbox().cx - cxPrev);
+    expect(_xTextCenter(t)).toBeCloseTo(cx, 3);
+  });
 });
 
 describe('createPPTXfromSVG function', () => {

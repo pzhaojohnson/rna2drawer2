@@ -30,6 +30,9 @@ function _setSlideDimensions(pres, svg) {
 }
 
 /**
+ * If text-anchor was undefined, this function will set it to 'start',
+ * which should not change how the text element is displayed.
+ * 
  * @param {SVG.Text} text 
  * 
  * @returns {number} 
@@ -39,12 +42,10 @@ function _xTextCenter(text) {
   if (!taPrev) {
     taPrev = 'start';
   }
-  let b = text.bbox();
-  let cx = b.cx;
-  text.attr({ 'text-align': 'middle' });
-  b = text.bbox();
-  let shift = b.cx - cx;
-  text.attr({ 'text-align': taPrev });
+  let cx = text.bbox().cx;
+  text.attr({ 'text-anchor': 'middle' });
+  let shift = text.bbox().cx - cx;
+  text.attr({ 'text-anchor': taPrev });
   return text.attr('x') - shift;
 }
 
