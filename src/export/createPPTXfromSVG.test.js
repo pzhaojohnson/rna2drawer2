@@ -3,6 +3,7 @@ import {
   _NUMBER_TRIM,
   _trimNum,
   _xTextCenter,
+  _yTextCenter,
 } from './createPPTXfromSVG';
 import { trimNum } from './trimNum';
 import createNodeSVG from '../draw/createNodeSVG';
@@ -18,7 +19,7 @@ it('_trimNum function', () => {
 
 describe('_xTextCenter function', () => {
   describe('resets text-anchor', () => {
-    it('text-anchor was previously undefined', () => {
+    it('text-anchor was undefined', () => {
       let svg = createNodeSVG();
       let t = svg.text(add => add.tspan('a'));
       _xTextCenter(t);
@@ -46,6 +47,40 @@ describe('_xTextCenter function', () => {
     t.attr({ 'text-anchor': 'end' });
     let cx = 5 + (t.bbox().cx - cxPrev);
     expect(_xTextCenter(t)).toBeCloseTo(cx, 3);
+  });
+});
+
+describe('_yTextCenter function', () => {
+  describe('resets dominant-baseline', () => {
+    it('dominant-baseline was undefined', () => {
+      let svg = createNodeSVG();
+      let t = svg.text(add => add.tspan('A'));
+      expect(t.attr('dominant-baseline')).toBe(undefined);
+      _yTextCenter(t);
+      expect(t.attr('dominant-baseline')).toBe('auto');
+    });
+
+    it('dominant-baseline was hanging', () => {
+      let svg = createNodeSVG();
+      let t = svg.text(add => add.tspan('G'));
+      t.attr({ 'dominant-baseline': 'hanging' });
+      _yTextCenter(t);
+      expect(t.attr('dominant-baseline')).toBe('hanging');
+    });
+  });
+
+  it('gives correct value', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('T'));
+    t.attr({
+      'y': 30,
+      'font-size': 12,
+      'dominant-baseline': 'middle',
+    });
+    let cyPrev = t.bbox().cy;
+    t.attr({ 'dominant-baseline': 'hanging' });
+    let cy = 30 + (t.bbox().cy - cyPrev);
+    expect(_yTextCenter(t)).toBeCloseTo(cy, 3);
   });
 });
 

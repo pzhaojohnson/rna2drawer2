@@ -50,6 +50,9 @@ function _xTextCenter(text) {
 }
 
 /**
+ * If dominant-baseline was undefined, this function will set it to 'auto',
+ * which should not change how the text element is displayed.
+ * 
  * @param {SVG.Text} text 
  * 
  * @returns {number} 
