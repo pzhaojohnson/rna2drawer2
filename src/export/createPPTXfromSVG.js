@@ -1,8 +1,18 @@
 import PptxGenJs from 'pptxgenjs';
 import { pixelsToInches } from './pixelsToInches';
 import { pixelsToPoints } from './pixelsToPoints';
+import { trimNum } from './trimNum';
 
-const _NUMBER_TRIM = 6;
+const _NUMBER_TRIM = 3;
+
+/**
+ * @param {number} n 
+ * 
+ * @returns {number} 
+ */
+function _trimNum(n) {
+  return trimNum(n, _NUMBER_TRIM);
+}
 
 /**
  * @param {PptxGenJs.PptxGenJs} pres 
@@ -74,14 +84,14 @@ function _textOptions(text) {
     bold = true;
   }
   return {
-    x: trimNum(x, _NUMBER_TRIM),
-    y: trimNum(y, _NUMBER_TRIM),
-    w: trimNum(w, _NUMBER_TRIM),
-    h: trimNum(h, _NUMBER_TRIM),
+    x: _trimNum(x),
+    y: _trimNum(y),
+    w: _trimNum(w),
+    h: _trimNum(h),
     align: 'center',
     valgin: 'middle',
     fontFace: text.attr('font-family'),
-    fontSize: trimNum(fs, _NUMBER_TRIM),
+    fontSize: _trimNum(fs),
     bold: bold,
   };
 }
@@ -108,12 +118,12 @@ function _lineOptions(line) {
   let w = Math.max(line.attr('x1'), line.attr('x2')) - x;
   let h = Math.max(line.attr('y1'), line.attr('y2')) - y;
   return {
-    x: trimNum(pixelsToInches(x), _NUMBER_TRIM),
-    y: trimNum(pixelsToInches(y), _NUMBER_TRIM),
-    w: trimNum(pixelsToInches(w), _NUMBER_TRIM),
-    h: trimNum(pixelsToInches(h), _NUMBER_TRIM),
+    x: _trimNum(pixelsToInches(x)),
+    y: _trimNum(pixelsToInches(y)),
+    w: _trimNum(pixelsToInches(w)),
+    h: _trimNum(pixelsToInches(h)),
     line: line.attr('stroke'),
-    lineSize: trimNum(pixelsToPoints(line.attr('stroke-width'))),
+    lineSize: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
   };
 }
 
@@ -158,10 +168,10 @@ function _pathLineOptions(path, x1, y1, x2, y2) {
     lineDash = 'lgDash';
   }
   return {
-    x: trimNum(pixelsToInches(x), _NUMBER_TRIM),
-    y: trimNum(pixelsToInches(y), _NUMBER_TRIM),
-    w: trimNum(pixelsToInches(w), _NUMBER_TRIM),
-    h: trimNum(pixelsToInches(h), _NUMBER_TRIM),
+    x: _trimNum(pixelsToInches(x)),
+    y: _trimNum(pixelsToInches(y)),
+    w: _trimNum(pixelsToInches(w)),
+    h: _trimNum(pixelsToInches(h)),
     line: path.attr('stroke'),
     lineSize: path.attr('stroke-width'),
     lineDash: lineDash,
@@ -229,10 +239,10 @@ function _circleOptions(circle) {
   let w = 2 * circle.attr('r');
   let h = 2 * circle.attr('r');
   return {
-    x: trimNum(pixelsToInches(x), _NUMBER_TRIM),
-    y: trimNum(pixelsToInches(y), _NUMBER_TRIM),
-    w: trimNum(pixelsToInches(w), _NUMBER_TRIM),
-    h: trimNum(pixelsToInches(h), _NUMBER_TRIM),
+    x: _trimNum(pixelsToInches(x)),
+    y: _trimNum(pixelsToInches(y)),
+    w: _trimNum(pixelsToInches(w)),
+    h: _trimNum(pixelsToInches(h)),
     line: circle.attr('stroke'),
     lineSize: circle.attr('stroke-width'),
     fill: {
@@ -262,10 +272,10 @@ function _addCircle(pres, slide, circle) {
  */
 function _rectOptions(rect) {
   return {
-    x: trimNum(pixelsToInches(rect.attr('x')), _NUMBER_TRIM),
-    y: trimNum(pixelsToInches(rect.attr('y')), _NUMBER_TRIM),
-    w: trimNum(pixelsToInches(rect.attr('width')), _NUMBER_TRIM),
-    h: trimNum(pixelsToInches(rect.attr('height')), _NUMBER_TRIM),
+    x: _trimNum(pixelsToInches(rect.attr('x'))),
+    y: _trimNum(pixelsToInches(rect.attr('y'))),
+    w: _trimNum(pixelsToInches(rect.attr('width'))),
+    h: _trimNum(pixelsToInches(rect.attr('height'))),
     line: rect.attr('stroke'),
     lineSize: rect.attr('stroke-width'),
     fill: {
