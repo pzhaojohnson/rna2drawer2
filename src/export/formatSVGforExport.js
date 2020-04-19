@@ -415,15 +415,24 @@ function _resetTextDominantBaselines(svg) {
 const _NUMBER_TRIM = 6;
 
 /**
+ * @param {number} n 
+ * 
+ * @returns {number} 
+ */
+function _trimNum(n) {
+  return trimNum(n, _NUMBER_TRIM);
+}
+
+/**
  * @param {SVG.Text} text 
  */
 function _trimTextNumbers(text) {
-  let x = trimNum(text.attr('x'), _NUMBER_TRIM);
-  let y = trimNum(text.attr('y'), _NUMBER_TRIM);
+  let x = _trimNum(text.attr('x'));
+  let y = _trimNum(text.attr('y'));
   text.attr({ 'x': x, 'y': y });
   let fs = text.attr('font-size');
   if (typeof fs === 'number') {
-    text.attr({ 'font-size': trimNum(fs, _NUMBER_TRIM) });
+    text.attr({ 'font-size': _trimNum(fs) });
   }
 }
 
@@ -431,11 +440,11 @@ function _trimTextNumbers(text) {
  * @param {SVG.Line} line 
  */
 function _trimLineNumbers(line) {
-  let x1 = trimNum(line.attr('x1'), _NUMBER_TRIM);
-  let y1 = trimNum(line.attr('y1'), _NUMBER_TRIM);
-  let x2 = trimNum(line.attr('x2'), _NUMBER_TRIM);
-  let y2 = trimNum(line.attr('y2'), _NUMBER_TRIM);
-  let sw = trimNum(line.attr('stroke-width'), _NUMBER_TRIM);
+  let x1 = _trimNum(line.attr('x1'));
+  let y1 = _trimNum(line.attr('y1'));
+  let x2 = _trimNum(line.attr('x2'));
+  let y2 = _trimNum(line.attr('y2'));
+  let sw = _trimNum(line.attr('stroke-width'));
   line.attr({
     'x1': x1,
     'y1': y1,
@@ -457,7 +466,7 @@ function _trimPathSegmentNumbers(path) {
   pa.forEach(segment => {
     d += segment[0] + ' ';
     segment.slice(1).forEach(n => {
-      d += trimNum(n, _NUMBER_TRIM) + ' ';
+      d += _trimNum(n) + ' ';
     });
   });
   path.plot(d);
@@ -475,7 +484,7 @@ function _trimPathStrokeDasharrayNumbers(path) {
   let trimmed = [];
   da.forEach(v => {
     let n = Number(v);
-    trimmed.push(trimNum(n, _NUMBER_TRIM));
+    trimmed.push(_trimNum(n));
   });
   path.attr({ 'stroke-dasharray': trimmed.join(' ') });
 }
@@ -484,7 +493,7 @@ function _trimPathStrokeDasharrayNumbers(path) {
  * @param {SVG.Path} path 
  */
 function _trimPathStrokeWidth(path) {
-  let sw = trimNum(path.attr('stroke-width'), _NUMBER_TRIM);
+  let sw = _trimNum(path.attr('stroke-width'));
   path.attr({ 'stroke-width': sw });
 }
 
@@ -501,10 +510,10 @@ function _trimPathNumbers(path) {
  * @param {SVG.Circle} circle 
  */
 function _trimCircleNumbers(circle) {
-  let cx = trimNum(circle.attr('cx'), _NUMBER_TRIM);
-  let cy = trimNum(circle.attr('cy'), _NUMBER_TRIM);
-  let r = trimNum(circle.attr('r'), _NUMBER_TRIM);
-  let sw = trimNum(circle.attr('stroke-width'), _NUMBER_TRIM);
+  let cx = _trimNum(circle.attr('cx'));
+  let cy = _trimNum(circle.attr('cy'));
+  let r = _trimNum(circle.attr('r'));
+  let sw = _trimNum(circle.attr('stroke-width'));
   circle.attr({
     'cx': cx,
     'cy': cy,
@@ -517,11 +526,11 @@ function _trimCircleNumbers(circle) {
  * @param {SVG.Rect} rect 
  */
 function _trimRectNumbers(rect) {
-  let x = trimNum(rect.attr('x'), _NUMBER_TRIM);
-  let y = trimNum(rect.attr('y'), _NUMBER_TRIM);
-  let w = trimNum(rect.attr('width'), _NUMBER_TRIM);
-  let h = trimNum(rect.attr('height'), _NUMBER_TRIM);
-  let sw = trimNum(rect.attr('stroke-width'), _NUMBER_TRIM);
+  let x = _trimNum(rect.attr('x'));
+  let y = _trimNum(rect.attr('y'));
+  let w = _trimNum(rect.attr('width'));
+  let h = _trimNum(rect.attr('height'));
+  let sw = _trimNum(rect.attr('stroke-width'));
   rect.attr({
     'x': x,
     'y': y,
@@ -600,6 +609,7 @@ export {
   _scaleElements,
   _resetTextDominantBaselines,
   _NUMBER_TRIM,
+  _trimNum,
   _trimTextNumbers,
   _trimLineNumbers,
   _trimPathNumbers,
