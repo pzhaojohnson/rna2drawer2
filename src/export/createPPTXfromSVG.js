@@ -327,6 +327,8 @@ export {
   createPPTXfromSVG,
 
   // these are only exported to aid testing
+  _NUMBER_TRIM,
+  _trimNum,
   _xTextCenter,
   _yTextCenter,
 };
