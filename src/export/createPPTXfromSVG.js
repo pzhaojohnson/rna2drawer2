@@ -19,10 +19,12 @@ function _trimNum(n) {
  * @param {SVG.Svg} svg 
  */
 function _setSlideDimensions(pres, svg) {
+  let w = pixelsToInches(svg.viewbox().width);
+  let h = pixelsToInches(svg.viewbox().height);
   pres.defineLayout({
     name: 'CUSTOM_LAYOUT',
-    width: pixelsToInches(svg.viewbox().width),
-    height: pixelsToInches(svg.viewbox().height),
+    width: _trimNum(w),
+    height: _trimNum(h),
   });
   pres.layout = 'CUSTOM_LAYOUT';
 }
