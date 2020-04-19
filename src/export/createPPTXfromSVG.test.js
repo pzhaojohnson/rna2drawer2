@@ -5,6 +5,7 @@ import {
   _xTextCenter,
   _yTextCenter,
   _textOptions,
+  _lineOptions,
 } from './createPPTXfromSVG';
 import { trimNum } from './trimNum';
 import createNodeSVG from '../draw/createNodeSVG';
@@ -12,7 +13,6 @@ const fs = require('fs');
 import { pixelsToPoints } from './pixelsToPoints';
 import { pixelsToInches } from './pixelsToInches';
 import { pointsToPixels } from './pointsToPixels';
-import PptxGenJs from 'pptxgenjs';
 import { pointsToInches } from './pointsToInches';
 
 it('_trimNum function', () => {
@@ -171,6 +171,88 @@ describe('_textOptions function', () => {
     expect(tos.fontFace).toBe('Consolas');
     expect(tos.align).toBe('center');
     expect(tos.valign).toBe('middle');
+  });
+});
+
+describe('_lineOptions function', () => {
+  describe('x, y, w and h', () => {
+    it('flipped horizontally and not flipped vertically', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(120, 15, 20, 75);
+      let los = _lineOptions(l);
+      expect(los.x).toBeCloseTo(pixelsToInches(120), 2);
+      expect(los.y).toBeCloseTo(pixelsToInches(15), 2);
+      expect(los.w).toBeCloseTo(pixelsToInches(100), 2);
+      expect(los.h).toBeCloseTo(pixelsToInches(60), 2);
+    });
+
+    it('not flipped horizontally and flipped vertically', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(70, 250, 190, 90);
+      let los = _lineOptions(l);
+      expect(los.x).toBeCloseTo(pixelsToInches(70), 2);
+      expect(los.y).toBeCloseTo(pixelsToInches(250), 2);
+      expect(los.w).toBeCloseTo(pixelsToInches(120), 2);
+      expect(los.h).toBeCloseTo(pixelsToInches(160), 2);
+    });
+
+    it('trims numbers', () => {
+      let svg = createNodeSVG();
+      let x1 = 5.198471284;
+      let y1 = 6.1841289414;
+      let x2 = 12.2358738471;
+      let y2 = 5.12984712847;
+      expect(_trimNum(x1)).not.toEqual(x1);
+      expect(_trimNum(y1)).not.toEqual(y1);
+      expect(_trimNum(x2)).not.toEqual(x2);
+      expect(_trimNum(y2)).not.toEqual(y2);
+      let l = svg.line(x1, y1, x2, y2);
+      let los = _lineOptions(l);
+      expect(_trimNum(los.x)).toEqual(los.x);
+      expect(_trimNum(los.y)).toEqual(los.y);
+      expect(_trimNum(los.w)).toEqual(los.w);
+      expect(_trimNum(los.h)).toEqual(los.h);
+    });
+  });
+
+  describe('flipH and flipV', () => {
+    it('flipped horizontally and not flipped vertically', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(100, 8, 20, 40);
+      let los = _lineOptions(l);
+      expect(los.flipH).toBe(true);
+      expect(los.flipV).toBe(false);
+    });
+
+    it('not flipped horizontally and flipped vertically', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(30, 200, 90, 120);
+      let los = _lineOptions(l);
+      expect(los.flipH).toBe(false);
+      expect(los.flipV).toBe(true);
+    });
+  });
+
+  it('line and lineSize', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(1, 3, 5, 7);
+    l.attr({
+      'stroke': 'aabbcc',
+      'stroke-width': pointsToPixels(2),
+    });
+    let los = _lineOptions(l);
+    expect(los.line).toBe('aabbcc');
+    expect(los.lineSize).toBeCloseTo(2, 2);
+  });
+
+  it('trims lineSize', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(2, 4, 6, 8);
+    let sw = 2.23938471298;
+    expect(_trimNum(sw)).not.toEqual(sw);
+    l.attr({ 'stroke-width': sw });
+    let los = _lineOptions(l);
+    expect(_trimNum(los.lineSize)).toEqual(los.lineSize);
   });
 });
 

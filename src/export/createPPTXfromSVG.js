@@ -120,15 +120,29 @@ function _addText(slide, text) {
  * @returns {Object} 
  */
 function _lineOptions(line) {
-  let x = Math.min(line.attr('x1'), line.attr('x2'));
-  let y = Math.min(line.attr('y1'), line.attr('y2'));
-  let w = Math.max(line.attr('x1'), line.attr('x2')) - x;
-  let h = Math.max(line.attr('y1'), line.attr('y2')) - y;
+  let xMin = Math.min(line.attr('x1'), line.attr('x2'));
+  let xMax = Math.max(line.attr('x1'), line.attr('x2'));
+  let yMin = Math.min(line.attr('y1'), line.attr('y2'));
+  let yMax = Math.max(line.attr('y1'), line.attr('y2'));
+  let flipH = false;
+  if (line.attr('x1') > xMin) {
+    flipH = true;
+  }
+  let flipV = false;
+  if (line.attr('y1') > yMin) {
+    flipV = true;
+  }
+  let x = pixelsToInches(line.attr('x1'));
+  let y = pixelsToInches(line.attr('y1'));
+  let w = pixelsToInches(xMax - xMin);
+  let h = pixelsToInches(yMax - yMin);
   return {
-    x: _trimNum(pixelsToInches(x)),
-    y: _trimNum(pixelsToInches(y)),
-    w: _trimNum(pixelsToInches(w)),
-    h: _trimNum(pixelsToInches(h)),
+    x: _trimNum(x),
+    y: _trimNum(y),
+    w: _trimNum(w),
+    h: _trimNum(h),
+    flipH: flipH,
+    flipV: flipV,
     line: line.attr('stroke'),
     lineSize: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
   };
@@ -339,4 +353,5 @@ export {
   _xTextCenter,
   _yTextCenter,
   _textOptions,
+  _lineOptions,
 };
