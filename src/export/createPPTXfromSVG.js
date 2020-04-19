@@ -307,7 +307,7 @@ function _addRect(pres, slide, rect) {
  */
 function createPPTXfromSVG(svg) {
   let pres = new PptxGenJs();
-  _setSlideDimensions(slide, svg);
+  _setSlideDimensions(pres, svg);
   let slide = pres.addSlide();
   svg.children().forEach(c => {
     if (c.type === 'text') {
