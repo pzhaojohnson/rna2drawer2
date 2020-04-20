@@ -127,6 +127,7 @@ function _textOptions(text) {
     fontFace: text.attr('font-family'),
     fontSize: _trimNum(fs),
     bold: bold,
+    color: _pptxHex(text.attr('fill')),
   };
 }
 

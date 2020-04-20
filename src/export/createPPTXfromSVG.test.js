@@ -194,6 +194,14 @@ describe('_textOptions function', () => {
     expect(tos.align).toBe('center');
     expect(tos.valign).toBe('middle');
   });
+
+  it('gives correct color (and uses _pptxHex function', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('A'));
+    t.attr({ 'fill': '#152637' });
+    let tos = _textOptions(t);
+    expect(tos.color).toBe('152637');
+  });
 });
 
 describe('_lineOptions function', () => {
