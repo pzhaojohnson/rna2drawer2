@@ -279,16 +279,17 @@ function _addLinesPath(pres, slide, path) {
  */
 function _pathImageOptions(path) {
   let b = path.bbox();
-  let x = b.x;
-  let y = b.y;
-  path.dmove(-x, -y);
-  let xml = '<svg '
-    + 'viewbox="0 0 ' + _trimNum(b.width) + ' ' + _trimNum(b.height) + '" '
-    + 'width="' + _trimNum(b.width) + '" '
-    + 'height="' + _trimNum(b.height) + '" >'
-    + path.svg()
-    + '</svg>';
-  path.dmove(x, y);
+  let sw = path.attr('stroke-width');
+  let svg = path.root();
+  let nested = svg.nested();
+  nested.svg(path.svg());
+  let np = nested.first();
+  nested.viewbox(0, 0, b.width + sw, b.height + sw);
+  nested.attr({ 'width': b.width + sw, 'height': b.height + sw });
+  np.dmove(-b.x + (sw / 2), -b.y + (sw / 2));
+  let xml = nested.svg();
+  nested.clear();
+  nested.remove();
   let base64 = null;
   try {
     base64 = window.btoa(xml);
@@ -298,10 +299,10 @@ function _pathImageOptions(path) {
   }
   return {
     data: 'image/svg+xml;base64,' + base64,
-    x: _trimNum(pixelsToInches(b.x)),
-    y: _trimNum(pixelsToInches(b.y)),
-    w: _trimNum(pixelsToInches(b.width)),
-    h: _trimNum(pixelsToInches(b.height)),
+    x: _trimNum(pixelsToInches(b.x - (sw / 2))),
+    y: _trimNum(pixelsToInches(b.y - (sw / 2))),
+    w: _trimNum(pixelsToInches(b.width + sw)),
+    h: _trimNum(pixelsToInches(b.height + sw)),
   };
 }
 
