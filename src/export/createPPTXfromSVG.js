@@ -171,7 +171,7 @@ function _lineOptions(line) {
     h: _trimNum(h),
     flipH: flipH,
     flipV: flipV,
-    line: line.attr('stroke'),
+    line: _pptxHex(line.attr('stroke')),
     lineSize: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
   };
 }

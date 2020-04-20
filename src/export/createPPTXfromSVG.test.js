@@ -263,11 +263,11 @@ describe('_lineOptions function', () => {
     });
   });
 
-  it('line and lineSize', () => {
+  it('line and lineSize (and uses _pptxHex function)', () => {
     let svg = createNodeSVG();
     let l = svg.line(1, 3, 5, 7);
     l.attr({
-      'stroke': 'aabbcc',
+      'stroke': '#aabbcc',
       'stroke-width': pointsToPixels(2),
     });
     let los = _lineOptions(l);
