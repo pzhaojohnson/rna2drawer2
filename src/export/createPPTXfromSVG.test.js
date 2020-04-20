@@ -1,5 +1,6 @@
 import {
   createPPTXfromSVG,
+  _pptxHex,
   _NUMBER_TRIM,
   _trimNum,
   _xTextCenter,
@@ -15,6 +16,26 @@ import { pixelsToPoints } from './pixelsToPoints';
 import { pixelsToInches } from './pixelsToInches';
 import { pointsToPixels } from './pointsToPixels';
 import { pointsToInches } from './pointsToInches';
+
+describe('_pptxHex function', () => {
+  describe('given hex code is a string', () => {
+    it("starts with '#'", () => {
+      expect(_pptxHex('#a1b5c8')).toBe('a1b5c8');
+    });
+
+    it("does not start with '#'", () => {
+      expect(_pptxHex('198237')).toBe('198237');
+    });
+  });
+
+  it('given hex code is a number', () => {
+    expect(_pptxHex(986532)).toBe('986532');
+  });
+
+  it('given hex code is neither a string nor number', () => {
+    expect(_pptxHex(undefined)).toBe('000000');
+  });
+});
 
 it('_trimNum function', () => {
   let n = 7.1298471294;

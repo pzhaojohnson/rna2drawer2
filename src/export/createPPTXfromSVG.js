@@ -5,9 +5,19 @@ import { pointsToInches } from './pointsToInches';
 import { trimNum } from './trimNum';
 
 /**
+ * If the given hex code is a string and the first character is a '#',
+ * this function will remove the '#'. Otherwise, this function will simply
+ * return the given string.
+ * 
+ * If the given hex code is a number, this function will return the string
+ * of that number.
+ * 
+ * If the given hex code has a different type (e.g. undefined), this function
+ * will return '000000'.
+ * 
  * @param {string|number} hex 
  * 
- * @returns {string} 
+ * @returns {string} The hex code in a format compatible with PptxGenJs.
  */
 function _pptxHex(hex) {
   if (typeof hex === 'string') {
