@@ -4,6 +4,23 @@ import { pixelsToPoints } from './pixelsToPoints';
 import { pointsToInches } from './pointsToInches';
 import { trimNum } from './trimNum';
 
+/**
+ * @param {string|number} hex 
+ * 
+ * @returns {string} 
+ */
+function _pptxHex(hex) {
+  if (typeof hex === 'string') {
+    if (hex.charAt(0) === '#') {
+      return hex.substring(1);
+    }
+    return hex;
+  } else if (typeof hex === 'number') {
+    return hex.toString();
+  }
+  return '000000';
+}
+
 const _NUMBER_TRIM = 3;
 
 /**
@@ -259,13 +276,17 @@ function _circleOptions(circle) {
   let y = circle.attr('cy') - circle.attr('r');
   let w = 2 * circle.attr('r');
   let h = 2 * circle.attr('r');
+  let lineSize = pixelsToPoints(circle.attr('stroke-width'));
+  if (circle.attr('stroke-opacity') === 0) {
+    lineSize = 0;
+  }
   return {
     x: _trimNum(pixelsToInches(x)),
     y: _trimNum(pixelsToInches(y)),
     w: _trimNum(pixelsToInches(w)),
     h: _trimNum(pixelsToInches(h)),
     line: circle.attr('stroke'),
-    lineSize: circle.attr('stroke-width'),
+    lineSize: _trimNum(lineSize),
     fill: {
       type: 'solid',
       color: circle.attr('fill'),
@@ -348,10 +369,12 @@ export {
   createPPTXfromSVG,
 
   // these are only exported to aid testing
+  _pptxHex,
   _NUMBER_TRIM,
   _trimNum,
   _xTextCenter,
   _yTextCenter,
   _textOptions,
   _lineOptions,
+  _circleOptions,
 };

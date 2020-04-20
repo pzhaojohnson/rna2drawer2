@@ -6,6 +6,7 @@ import {
   _yTextCenter,
   _textOptions,
   _lineOptions,
+  _circleOptions,
 } from './createPPTXfromSVG';
 import { trimNum } from './trimNum';
 import createNodeSVG from '../draw/createNodeSVG';
@@ -253,6 +254,37 @@ describe('_lineOptions function', () => {
     l.attr({ 'stroke-width': sw });
     let los = _lineOptions(l);
     expect(_trimNum(los.lineSize)).toEqual(los.lineSize);
+  });
+});
+
+describe('_circleOptions function', () => {
+  describe('x, y, w and h', () => {
+    it('gives correct values', () => {});
+
+    it('trims numbers', () => {});
+  });
+
+  it('gives correct line', () => {});
+
+  describe('lineSize', () => {
+    it('stroke-opacity is greater than zero', () => {});
+
+    it('stroke-opacity is zero', () => {});
+
+    it('trims number', () => {});
+  });
+
+  it('gives correct fill', () => {
+    let svg = createNodeSVG();
+    let c = svg.circle(20);
+    c.attr({
+      'fill': '#998877',
+      'fill-opacity': 0.3,
+    });
+    let cos = _circleOptions(c);
+    expect(cos.fill.type).toBe('solid');
+    expect(cos.fill.color).toBe('#998877');
+    expect(cos.fill.alpha).toBeCloseTo(30, 2);
   });
 });
 
