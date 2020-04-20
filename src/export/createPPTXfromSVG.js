@@ -324,16 +324,20 @@ function _addCircle(pres, slide, circle) {
  * @returns {Object} 
  */
 function _rectOptions(rect) {
+  let lineSize = pixelsToPoints(rect.attr('stroke-width'));
+  if (rect.attr('stroke-opacity') === 0) {
+    lineSize = 0;
+  }
   return {
     x: _trimNum(pixelsToInches(rect.attr('x'))),
     y: _trimNum(pixelsToInches(rect.attr('y'))),
     w: _trimNum(pixelsToInches(rect.attr('width'))),
     h: _trimNum(pixelsToInches(rect.attr('height'))),
-    line: rect.attr('stroke'),
-    lineSize: rect.attr('stroke-width'),
+    line: _pptxHex(rect.attr('stroke')),
+    lineSize: _trimNum(lineSize),
     fill: {
       type: 'solid',
-      color: rect.attr('fill'),
+      color: _pptxHex(rect.attr('fill')),
       alpha: 100 * rect.attr('fill-opacity'),
     },
   };
@@ -388,4 +392,5 @@ export {
   _textOptions,
   _lineOptions,
   _circleOptions,
+  _rectOptions,
 };

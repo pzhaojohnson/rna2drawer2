@@ -8,6 +8,7 @@ import {
   _textOptions,
   _lineOptions,
   _circleOptions,
+  _rectOptions,
 } from './createPPTXfromSVG';
 import { trimNum } from './trimNum';
 import createNodeSVG from '../draw/createNodeSVG';
@@ -374,6 +375,95 @@ describe('_circleOptions function', () => {
     expect(cos.fill.type).toBe('solid');
     expect(cos.fill.color).toBe('998877');
     expect(cos.fill.alpha).toBeCloseTo(30, 2);
+  });
+});
+
+describe('_rectOptions function', () => {
+  describe('x, y, w and h', () => {
+    it('gives correct values', () => {
+      let svg = createNodeSVG();
+      let r = svg.rect(110, 70);
+      r.attr({ 'x': 20, 'y': 200 });
+      let ros = _rectOptions(r);
+      expect(ros.x).toBeCloseTo(pixelsToInches(20), 2);
+      expect(ros.y).toBeCloseTo(pixelsToInches(200), 2);
+      expect(ros.w).toBeCloseTo(pixelsToInches(110), 2);
+      expect(ros.h).toBeCloseTo(pixelsToInches(70), 2);
+    });
+
+    it('trims numbers', () => {
+      let svg = createNodeSVG();
+      let x = 6.1984719247;
+      let y = 12.29857387;
+      let w = 56.1298471847;
+      let h = 100.23857387;
+      expect(_trimNum(x)).not.toEqual(x);
+      expect(_trimNum(y)).not.toEqual(y);
+      expect(_trimNum(w)).not.toEqual(w);
+      expect(_trimNum(h)).not.toEqual(h);
+      let r = svg.rect(w, h);
+      r.attr({ 'x': x, 'y': y });
+      let ros = _rectOptions(r);
+      expect(_trimNum(ros.x)).toEqual(ros.x);
+      expect(_trimNum(ros.y)).toEqual(ros.y);
+      expect(_trimNum(ros.w)).toEqual(ros.w);
+      expect(_trimNum(ros.h)).toEqual(ros.h);
+    });
+  });
+
+  it('gives correct line (and uses _pptxHex function)', () => {
+    let svg = createNodeSVG();
+    let r = svg.rect(40, 30);
+    r.attr({ 'stroke': '#56ab32' });
+    let ros = _rectOptions(r);
+    expect(ros.line).toBe('56ab32');
+  });
+
+  describe('lineSize', () => {
+    it('stroke-opacity is greater than zero', () => {
+      let svg = createNodeSVG();
+      let r = svg.rect(10, 40);
+      r.attr({
+        'stroke-width': pointsToPixels(5),
+        'stroke-opacity': 0.6,
+      });
+      let ros = _rectOptions(r);
+      expect(ros.lineSize).toBeCloseTo(5, 2);
+    });
+
+    it('stroke-opacity is zero', () => {
+      let svg = createNodeSVG();
+      let r = svg.rect(40, 20);
+      r.attr({
+        'stroke-width': 7,
+        'stroke-opacity': 0,
+      });
+      let ros = _rectOptions(r);
+      expect(ros.lineSize).toBe(0);
+    });
+
+    it('trims the number', () => {
+      let svg = createNodeSVG();
+      let r = svg.rect(50, 20);
+      let sw = 6.1948712844;
+      expect(_trimNum(sw)).not.toEqual(sw);
+      r.attr({ 'stroke-width': sw });
+      let ros = _rectOptions(r);
+      expect(_trimNum(ros.lineSize)).toEqual(ros.lineSize);
+    });
+  });
+
+  it('gives correct fill (and uses _pptxHex function)', () => {
+    let svg = createNodeSVG();
+    let r = svg.rect(10, 20);
+    r.attr({
+      'fill': '#ab12cd',
+      'fill-opacity': 0.8,
+    });
+    let ros = _rectOptions(r);
+    expect(ros.fill.type).toBe('solid');
+    expect(ros.fill.color).toBe('ab12cd');
+    expect(ros.fill.alpha).toBeCloseTo(80, 2);
   });
 });
 
