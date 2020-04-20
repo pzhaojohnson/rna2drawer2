@@ -292,7 +292,7 @@ function _pathImageOptions(path) {
  * @param {PptxGenJs.Slide} slide 
  * @param {SVG.Path} path 
  */
-function _addPathAsSVG(slide, path) {
+function _addPathAsImage(slide, path) {
   let options = _pathImageOptions(path);
   if (options) {
     slide.addImage(options);
@@ -309,7 +309,7 @@ function _addPath(pres, slide, path) {
     _addLinesPath(pres, slide, path);
     return;
   }
-  _addPathAsSVG(slide, path);
+  _addPathAsImage(slide, path);
 }
 
 /**
