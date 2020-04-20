@@ -278,7 +278,17 @@ function _addLinesPath(pres, slide, path) {
  * @returns {Object|null} 
  */
 function _pathImageOptions(path) {
-  let xml = path.svg();
+  let b = path.bbox();
+  let x = b.x;
+  let y = b.y;
+  path.dmove(-x, -y);
+  let xml = '<svg '
+    + 'viewbox="0 0 ' + _trimNum(b.width) + ' ' + _trimNum(b.height) + '" '
+    + 'width="' + _trimNum(b.width) + '" '
+    + 'height="' + _trimNum(b.height) + '" >'
+    + path.svg()
+    + '</svg>';
+  path.dmove(x, y);
   let base64 = null;
   try {
     base64 = window.btoa(xml);
@@ -288,6 +298,10 @@ function _pathImageOptions(path) {
   }
   return {
     data: 'image/svg+xml;base64,' + base64,
+    x: _trimNum(pixelsToInches(b.x)),
+    y: _trimNum(pixelsToInches(b.y)),
+    w: _trimNum(pixelsToInches(b.width)),
+    h: _trimNum(pixelsToInches(b.height)),
   };
 }
 

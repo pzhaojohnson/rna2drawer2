@@ -429,14 +429,49 @@ it('_linesPathOptions function', () => {
   });
 });
 
-it('_pathImageOptions function', () => {
-  let svg = createNodeSVG();
-  let p = svg.path('M 3 9 Q 5.14 7.1248 6 90');
-  let xml = p.svg();
-  let base64 = window.btoa(xml);
-  expect(
-    _pathImageOptions(p).data
-  ).toBe('image/svg+xml;base64,' + base64);
+describe('_pathImageOptions function', () => {
+  it('gives correct x, y, w and h', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 3 9 Q 15 20 3 31');
+    let pios = _pathImageOptions(p);
+    expect(pios.x).toBeCloseTo(pixelsToInches(3), 2);
+    expect(pios.y).toBeCloseTo(pixelsToInches(9), 2);
+    expect(pios.w).toBeCloseTo(pixelsToInches(6), 2);
+    expect(pios.h).toBeCloseTo(pixelsToInches(22), 2);
+  });
+
+  it('no net change to SVG document', () => {
+    let svg = createNodeSVG();
+    svg.viewbox(2, 10, 120, 140);
+    svg.attr({ 'width': 200, 'height': 250 });
+    let p = svg.path('M 4 15 Q 80 90 4 165');
+    let xml = svg.svg();
+    _pathImageOptions(p);
+    expect(svg.svg()).toBe(xml);
+  });
+
+  it('trims numbers', () => {
+    let svg = createNodeSVG();
+    let mx = 5.12984712814;
+    let my = 7.19871824748;
+    let qcx = 10.2384418244;
+    let qcy = 40.129481724;
+    let qex = 3.12984712847;
+    let qey = 80.198472814;
+    expect(_trimNum(mx)).not.toEqual(mx);
+    expect(_trimNum(my)).not.toEqual(my);
+    expect(_trimNum(qcx)).not.toEqual(qcx);
+    expect(_trimNum(qcy)).not.toEqual(qcy);
+    expect(_trimNum(qex)).not.toEqual(qex);
+    expect(_trimNum(qey)).not.toEqual(qey);
+    let d = ['M', mx, my, 'Q', qcx, qcy, qex, qey].join(' ');
+    let p = svg.path(d);
+    let pios = _pathImageOptions(p);
+    expect(_trimNum(pios.x)).toEqual(pios.x);
+    expect(_trimNum(pios.y)).toEqual(pios.y);
+    expect(_trimNum(pios.w)).toEqual(pios.w);
+    expect(_trimNum(pios.h)).toEqual(pios.h);
+  });
 });
 
 describe('_circleOptions function', () => {
@@ -694,7 +729,12 @@ describe('createPPTXfromSVG function', () => {
         'fill-opacity': 0,
       });
       let pres = createPPTXfromSVG(svg);
-      // TODO: check against file
+      // TODO: stop the following from stalling...
+      /*
+      return pres.write('nodebuffer').then(data => {
+        fs.writeFile('testinput/pptx/path_is_not_just_lines_nodebuffer.pptx', data, () => {});
+      });
+      */
     });
   });
 });
