@@ -296,11 +296,11 @@ function _circleOptions(circle) {
     y: _trimNum(pixelsToInches(y)),
     w: _trimNum(pixelsToInches(w)),
     h: _trimNum(pixelsToInches(h)),
-    line: circle.attr('stroke'),
+    line: _pptxHex(circle.attr('stroke')),
     lineSize: _trimNum(lineSize),
     fill: {
       type: 'solid',
-      color: circle.attr('fill'),
+      color: _pptxHex(circle.attr('fill')),
       alpha: 100 * circle.attr('fill-opacity'),
     },
   };

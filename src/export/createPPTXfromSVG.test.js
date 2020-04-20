@@ -288,22 +288,82 @@ describe('_lineOptions function', () => {
 
 describe('_circleOptions function', () => {
   describe('x, y, w and h', () => {
-    it('gives correct values', () => {});
+    it('gives correct values', () => {
+      let svg = createNodeSVG();
+      let c = svg.circle(20);
+      c.attr({
+        'cx': 40,
+        'cy': 100,
+      });
+      let cos = _circleOptions(c);
+      expect(cos.x).toBeCloseTo(pixelsToInches(30), 2);
+      expect(cos.y).toBeCloseTo(pixelsToInches(90), 2);
+      expect(cos.w).toBeCloseTo(pixelsToInches(20), 2);
+      expect(cos.h).toBeCloseTo(pixelsToInches(20), 2);
+    });
 
-    it('trims numbers', () => {});
+    it('trims numbers', () => {
+      let svg = createNodeSVG();
+      let d = 6.12481724871;
+      let cx = 6.12984718247;
+      let cy = 8.39857128471;
+      expect(_trimNum(d)).not.toEqual(d);
+      expect(_trimNum(cx)).not.toEqual(cx);
+      expect(_trimNum(cy)).not.toEqual(cy);
+      let c = svg.circle(d);
+      c.attr({ 'cx': cx, 'cy': cy });
+      let cos = _circleOptions(c);
+      expect(_trimNum(cos.x)).toEqual(cos.x);
+      expect(_trimNum(cos.y)).toEqual(cos.y);
+      expect(_trimNum(cos.w)).toEqual(cos.w);
+      expect(_trimNum(cos.h)).toEqual(cos.h);
+    });
   });
 
-  it('gives correct line', () => {});
+  it('gives correct line (and uses _pptxHex function)', () => {
+    let svg = createNodeSVG();
+    let c = svg.circle(100);
+    c.attr({ 'stroke': '#987654' });
+    let cos = _circleOptions(c);
+    expect(cos.line).toBe('987654');
+  });
 
   describe('lineSize', () => {
-    it('stroke-opacity is greater than zero', () => {});
+    it('stroke-opacity is greater than zero', () => {
+      let svg = createNodeSVG();
+      let c = svg.circle(20);
+      c.attr({
+        'stroke-width': pointsToPixels(2),
+        'stroke-opacity': 0.5,
+      });
+      let cos = _circleOptions(c);
+      expect(cos.lineSize).toBeCloseTo(2, 2);
+    });
 
-    it('stroke-opacity is zero', () => {});
+    it('stroke-opacity is zero', () => {
+      let svg = createNodeSVG();
+      let c = svg.circle(10);
+      c.attr({
+        'stroke-width': 5,
+        'stroke-opacity': 0,
+      });
+      let cos = _circleOptions(c);
+      expect(cos.lineSize).toBe(0);
+    });
 
-    it('trims number', () => {});
+    it('trims number', () => {
+      let svg = createNodeSVG();
+      let c = svg.circle(20);
+      let sw = 5.19284719194;
+      expect(_trimNum(sw)).not.toEqual(sw);
+      c.attr({ 'stroke-width': sw });
+      let cos = _circleOptions(c);
+      expect(cos.lineSize).toBeGreaterThan(0);
+      expect(_trimNum(cos.lineSize)).toEqual(cos.lineSize);
+    });
   });
 
-  it('gives correct fill', () => {
+  it('gives correct fill (and uses _pptxHex function)', () => {
     let svg = createNodeSVG();
     let c = svg.circle(20);
     c.attr({
@@ -312,7 +372,7 @@ describe('_circleOptions function', () => {
     });
     let cos = _circleOptions(c);
     expect(cos.fill.type).toBe('solid');
-    expect(cos.fill.color).toBe('#998877');
+    expect(cos.fill.color).toBe('998877');
     expect(cos.fill.alpha).toBeCloseTo(30, 2);
   });
 });
