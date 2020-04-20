@@ -440,14 +440,26 @@ describe('_pathImageOptions function', () => {
     expect(pios.h).toBeCloseTo(pixelsToInches(22), 2);
   });
 
-  it('no net change to SVG document', () => {
+  it('no net change in path position', () => {
     let svg = createNodeSVG();
     svg.viewbox(2, 10, 120, 140);
     svg.attr({ 'width': 200, 'height': 250 });
     let p = svg.path('M 4 15 Q 80 90 4 165');
-    let xml = svg.svg();
     _pathImageOptions(p);
-    expect(svg.svg()).toBe(xml);
+    let pa = p.array();
+    expect(pa.length).toBe(2);
+    let m = pa[0];
+    expect(m.length).toBe(3);
+    expect(m[0]).toBe('M');
+    expect(m[1]).toBe(4);
+    expect(m[2]).toBe(15);
+    let q = pa[1];
+    expect(q.length).toBe(5);
+    expect(q[0]).toBe('Q');
+    expect(q[1]).toBe(80);
+    expect(q[2]).toBe(90);
+    expect(q[3]).toBe(4);
+    expect(q[4]).toBe(165);
   });
 
   it('trims numbers', () => {
