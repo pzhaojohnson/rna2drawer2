@@ -152,8 +152,8 @@ function _lineOptions(line) {
   let xMax = Math.max(line.attr('x1'), line.attr('x2'));
   let yMin = Math.min(line.attr('y1'), line.attr('y2'));
   let yMax = Math.max(line.attr('y1'), line.attr('y2'));
-  let x = pixelsToInches(line.attr('x1'));
-  let y = pixelsToInches(line.attr('y1'));
+  let x = pixelsToInches(xMin);
+  let y = pixelsToInches(yMin);
   let w = pixelsToInches(xMax - xMin);
   let h = pixelsToInches(yMax - yMin);
   return {
@@ -322,21 +322,21 @@ function _circleOptions(circle) {
   let y = circle.attr('cy') - circle.attr('r');
   let w = 2 * circle.attr('r');
   let h = 2 * circle.attr('r');
-  let lineSize = pixelsToPoints(circle.attr('stroke-width'));
-  if (circle.attr('stroke-opacity') === 0) {
-    lineSize = 0;
-  }
   return {
     x: _trimNum(pixelsToInches(x)),
     y: _trimNum(pixelsToInches(y)),
     w: _trimNum(pixelsToInches(w)),
     h: _trimNum(pixelsToInches(h)),
-    line: _pptxHex(circle.attr('stroke')),
-    lineSize: _trimNum(lineSize),
+    line: {
+      type: 'solid',
+      color: _pptxHex(circle.attr('stroke')),
+      alpha: 100 * (1 - circle.attr('stroke-opacity')),
+    },
+    lineSize: _trimNum(pixelsToPoints(circle.attr('stroke-width'))),
     fill: {
       type: 'solid',
       color: _pptxHex(circle.attr('fill')),
-      alpha: 100 * circle.attr('fill-opacity'),
+      alpha: 100 * (1 - circle.attr('fill-opacity')),
     },
   };
 }
@@ -348,7 +348,7 @@ function _circleOptions(circle) {
  */
 function _addCircle(pres, slide, circle) {
   slide.addShape(
-    pres.ShapeType.oval,
+    pres.ShapeType.ellipse,
     _circleOptions(circle),
   );
 }
@@ -359,21 +359,21 @@ function _addCircle(pres, slide, circle) {
  * @returns {Object} 
  */
 function _rectOptions(rect) {
-  let lineSize = pixelsToPoints(rect.attr('stroke-width'));
-  if (rect.attr('stroke-opacity') === 0) {
-    lineSize = 0;
-  }
   return {
     x: _trimNum(pixelsToInches(rect.attr('x'))),
     y: _trimNum(pixelsToInches(rect.attr('y'))),
     w: _trimNum(pixelsToInches(rect.attr('width'))),
     h: _trimNum(pixelsToInches(rect.attr('height'))),
-    line: _pptxHex(rect.attr('stroke')),
-    lineSize: _trimNum(lineSize),
+    line: {
+      type: 'solid',
+      color: _pptxHex(rect.attr('stroke')),
+      alpha: 100 * (1 - rect.attr('stroke-opacity')),
+    },
+    lineSize: _trimNum(pixelsToPoints(rect.attr('stroke-width'))),
     fill: {
       type: 'solid',
       color: _pptxHex(rect.attr('fill')),
-      alpha: 100 * rect.attr('fill-opacity'),
+      alpha: 100 * (1 - rect.attr('fill-opacity')),
     },
   };
 }
@@ -385,7 +385,7 @@ function _rectOptions(rect) {
  */
 function _addRect(pres, slide, rect) {
   slide.addShape(
-    pres.ShapeType.rectangle,
+    pres.ShapeType.rect,
     _rectOptions(rect),
   );
 }
