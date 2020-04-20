@@ -9,6 +9,7 @@ import {
   _lineOptions,
   _pathHasOnlyLines,
   _pathLineOptions,
+  _linesPathOptions,
   _pathImageOptions,
   _circleOptions,
   _rectOptions,
@@ -394,6 +395,27 @@ describe('_pathLineOptions function', () => {
       let plos = _pathLineOptions(p, 5, 6, 100, 200);
       expect(plos.lineDash).toBe('lgDash');
     });
+  });
+});
+
+it('_linesPathOptions function', () => {
+  let svg = createNodeSVG();
+  let p = svg.path('M 2.5 1.2 L 10 12 L 100 25.3');
+  let options = _linesPathOptions(p);
+  expect(options.length).toBe(2);
+  let opts1 = _pathLineOptions(p, 2.5, 1.2, 10, 12);
+  expect(
+    Object.keys(options[0]).length
+  ).toBe(Object.keys(opts1).length);
+  Object.keys(opts1).forEach(k => {
+    expect(options[0][k]).toBe(opts1[k]);
+  });
+  let opts2 = _pathLineOptions(p, 10, 12, 100, 25.3);
+  expect(
+    Object.keys(options[1]).length
+  ).toBe(Object.keys(opts2).length);
+  Object.keys(opts2).forEach(k => {
+    expect(options[1][k]).toBe(opts2[k]);
   });
 });
 

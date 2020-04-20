@@ -428,6 +428,7 @@ export {
   _lineOptions,
   _pathHasOnlyLines,
   _pathLineOptions,
+  _linesPathOptions,
   _pathImageOptions,
   _circleOptions,
   _rectOptions,
