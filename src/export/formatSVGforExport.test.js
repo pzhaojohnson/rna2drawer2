@@ -822,6 +822,21 @@ it('_setDimensions function', () => {
 });
 
 describe('formatSVGforExport function', () => {
+  it('removes invisible lines', () => {
+    let svg = createNodeSVG();
+    let l1 = svg.line(2, 4, 6, 8);
+    let l2 = svg.line(5, 5, 9, 8);
+    let id1 = l1.id();
+    let id2 = l2.id();
+    l1.attr({ 'stroke-opacity': 0 });
+    l2.attr({ 'stroke-opacity': 0.5 });
+    expect(svg.findOne('#' + id1)).not.toBe(null);
+    expect(svg.findOne('#' + id2)).not.toBe(null);
+    formatSVGforExport(svg);
+    expect(svg.findOne('#' + id1)).toBe(null);
+    expect(svg.findOne('#' + id2)).not.toBe(null);
+  });
+
   it('shifts elements', () => {
     let svg = createNodeSVG();
     let x = 9142;

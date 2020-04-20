@@ -1,6 +1,21 @@
 import { nonemptySplitByWhitespace } from '../parse/nonemptySplitByWhitespace';
 import { trimNum } from './trimNum';
 
+/**
+ * @param {SVG.Svg} svg 
+ */
+function _removeInvisibleLines(svg) {
+  let toBeRemoved = [];
+  svg.children().forEach(c => {
+    if (c.type === 'line') {
+      if (c.attr('stroke-opacity') === 0) {
+        toBeRemoved.push(c);
+      }
+    }
+  });
+  toBeRemoved.forEach(line => line.remove());
+}
+
 const _X_PADDING = 100;
 const _Y_PADDING = 100;
 
@@ -577,6 +592,7 @@ function _setDimensions(svg) {
  * @param {number} [scaling=1] How much to scale the drawing.
  */
 function formatSVGforExport(svg, scaling=1) {
+  _removeInvisibleLines(svg);
   _shiftElements(svg);
   _scaleElements(svg, scaling);
   _resetTextDominantBaselines(svg);
