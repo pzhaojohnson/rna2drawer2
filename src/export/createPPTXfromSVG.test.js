@@ -8,6 +8,7 @@ import {
   _textOptions,
   _lineOptions,
   _pathHasOnlyLines,
+  _pathImageOptions,
   _circleOptions,
   _rectOptions,
 } from './createPPTXfromSVG';
@@ -300,6 +301,16 @@ describe('_pathHasOnlyLines function', () => {
     let p = svg.path('M 1 2 Q 10 12 5 9');
     expect(_pathHasOnlyLines(p)).toBeFalsy();
   });
+});
+
+it('_pathImageOptions function', () => {
+  let svg = createNodeSVG();
+  let p = svg.path('M 3 9 Q 5.14 7.1248 6 90');
+  let xml = p.svg();
+  let base64 = window.btoa(xml);
+  expect(
+    _pathImageOptions(p).data
+  ).toBe('image/svg+xml;base64,' + base64);
 });
 
 describe('_circleOptions function', () => {

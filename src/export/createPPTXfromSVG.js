@@ -248,19 +248,35 @@ function _addLinesPath(pres, slide, path) {
 }
 
 /**
- * @param {PptxGenJs.Slide} slide 
+ * Returns null if the SVG XML of the path is unable to
+ * be converted to base64 using the window.btoa function.
+ * 
  * @param {SVG.Path} path 
+ * 
+ * @returns {Object|null} 
  */
-function _addPathAsSVG(slide, path) {
+function _pathImageOptions(path) {
   let xml = path.svg();
   let base64 = null;
   try {
     base64 = window.btoa(xml);
   } catch (err) {}
-  if (base64) {
-    slide.addImage({
-      data: 'image/svg+xml;base64,' + base64,
-    });
+  if (!base64) {
+    return null;
+  }
+  return {
+    data: 'image/svg+xml;base64,' + base64,
+  };
+}
+
+/**
+ * @param {PptxGenJs.Slide} slide 
+ * @param {SVG.Path} path 
+ */
+function _addPathAsSVG(slide, path) {
+  let options = _pathImageOptions(path);
+  if (options) {
+    slide.addImage(options);
   }
 }
 
@@ -392,6 +408,7 @@ export {
   _textOptions,
   _lineOptions,
   _pathHasOnlyLines,
+  _pathImageOptions,
   _circleOptions,
   _rectOptions,
 };
