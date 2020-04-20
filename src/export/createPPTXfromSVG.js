@@ -152,14 +152,6 @@ function _lineOptions(line) {
   let xMax = Math.max(line.attr('x1'), line.attr('x2'));
   let yMin = Math.min(line.attr('y1'), line.attr('y2'));
   let yMax = Math.max(line.attr('y1'), line.attr('y2'));
-  let flipH = false;
-  if (line.attr('x1') > xMin) {
-    flipH = true;
-  }
-  let flipV = false;
-  if (line.attr('y1') > yMin) {
-    flipV = true;
-  }
   let x = pixelsToInches(line.attr('x1'));
   let y = pixelsToInches(line.attr('y1'));
   let w = pixelsToInches(xMax - xMin);
@@ -169,8 +161,8 @@ function _lineOptions(line) {
     y: _trimNum(y),
     w: _trimNum(w),
     h: _trimNum(h),
-    flipH: flipH,
-    flipV: flipV,
+    flipH: line.attr('x1') > xMin,
+    flipV: line.attr('y1') > yMin,
     line: _pptxHex(line.attr('stroke')),
     lineSize: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
   };
@@ -207,6 +199,15 @@ function _pathHasOnlyLines(path) {
   return onlyLines;
 }
 
+/**
+ * @param {SVG.Path} path 
+ * @param {number} x1 
+ * @param {number} y1 
+ * @param {number} x2 
+ * @param {number} y2 
+ * 
+ * @returns {Object} 
+ */
 function _pathLineOptions(path, x1, y1, x2, y2) {
   let x = Math.min(x1, x2);
   let y = Math.min(y1, y2);
@@ -221,10 +222,33 @@ function _pathLineOptions(path, x1, y1, x2, y2) {
     y: _trimNum(pixelsToInches(y)),
     w: _trimNum(pixelsToInches(w)),
     h: _trimNum(pixelsToInches(h)),
-    line: path.attr('stroke'),
-    lineSize: path.attr('stroke-width'),
+    flipH: x1 > x2,
+    flipV: y1 > y2,
+    line: _pptxHex(path.attr('stroke')),
+    lineSize: _trimNum(pixelsToPoints(path.attr('stroke-width'))),
     lineDash: lineDash,
   };
+}
+
+/**
+ * @param {SVG.Path} path 
+ * 
+ * @returns {Array<Object>} 
+ */
+function _linesPathOptions(path) {
+  let options = [];
+  let pa = path.array();
+  let m = pa[0];
+  let xPrev = m[1];
+  let yPrev = m[2];
+  pa.slice(1).forEach(segment => {
+    options.push(
+      _pathLineOptions(path, xPrev, yPrev, segment[1], segment[2])
+    );
+    xPrev = segment[1];
+    yPrev = segment[2];
+  });
+  return options;
 }
 
 /**
@@ -233,17 +257,12 @@ function _pathLineOptions(path, x1, y1, x2, y2) {
  * @param {SVG.Path} path 
  */
 function _addLinesPath(pres, slide, path) {
-  let pa = path.array();
-  let m = pa[0];
-  let xPrev = m[1];
-  let yPrev = m[2];
-  pa.slice(1).forEach(segment => {
+  let options = _linesPathOptions(path);
+  options.forEach(opts => {
     slide.addShape(
       pres.ShapeType.line,
-      _pathLineOptions(path, xPrev, yPrev, segment[1], segment[2]),
+      opts,
     );
-    xPrev = segment[1];
-    yPrev = segment[2];
   });
 }
 
@@ -408,6 +427,7 @@ export {
   _textOptions,
   _lineOptions,
   _pathHasOnlyLines,
+  _pathLineOptions,
   _pathImageOptions,
   _circleOptions,
   _rectOptions,
