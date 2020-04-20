@@ -7,7 +7,7 @@ import {
   _yTextCenter,
   _textOptions,
   _lineOptions,
-  _pathHasOnlyLines,
+  _pathIsOnlyLines,
   _pathLineOptions,
   _linesPathOptions,
   _pathImageOptions,
@@ -292,17 +292,26 @@ describe('_lineOptions function', () => {
   });
 });
 
-describe('_pathHasOnlyLines function', () => {
-  it('path has only lines', () => {
+describe('_pathIsOnlyLines function', () => {
+  it('fill-opacity is greater than zero and is only lines', () => {
     let svg = createNodeSVG();
-    let p = svg.path('M 1 3 L 6 9 L 20 1');
-    expect(_pathHasOnlyLines(p)).toBeTruthy();
+    let p = svg.path('M 3 4 L 6 8');
+    p.attr({ 'fill-opacity': 0.5 });
+    expect(_pathIsOnlyLines(p)).toBeFalsy();
   });
 
-  it('path is not just lines', () => {
+  it('fill-opacity is zero and is only lines', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 1 3 L 6 9 L 20 1');
+    p.attr({ 'fill-opacity': 0 });
+    expect(_pathIsOnlyLines(p)).toBeTruthy();
+  });
+
+  it('fill-opacity is zero and is not just lines', () => {
     let svg = createNodeSVG();
     let p = svg.path('M 1 2 Q 10 12 5 9');
-    expect(_pathHasOnlyLines(p)).toBeFalsy();
+    p.attr({ 'fill-opacity': 0 });
+    expect(_pathIsOnlyLines(p)).toBeFalsy();
   });
 });
 

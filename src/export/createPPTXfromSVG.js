@@ -185,7 +185,10 @@ function _addLine(pres, slide, line) {
  * 
  * @returns {boolean} 
  */
-function _pathHasOnlyLines(path) {
+function _pathIsOnlyLines(path) {
+  if (path.attr('fill-opacity') > 0) {
+    return false;
+  }
   let onlyLines = true;
   let pa = path.array();
   if (pa[0][0] !== 'M') {
@@ -305,7 +308,7 @@ function _addPathAsImage(slide, path) {
  * @param {SVG.Path} path 
  */
 function _addPath(pres, slide, path) {
-  if (_pathHasOnlyLines(path)) {
+  if (_pathIsOnlyLines(path)) {
     _addLinesPath(pres, slide, path);
     return;
   }
@@ -426,7 +429,7 @@ export {
   _yTextCenter,
   _textOptions,
   _lineOptions,
-  _pathHasOnlyLines,
+  _pathIsOnlyLines,
   _pathLineOptions,
   _linesPathOptions,
   _pathImageOptions,
