@@ -7,6 +7,7 @@ import {
   _yTextCenter,
   _textOptions,
   _lineOptions,
+  _pathHasOnlyLines,
   _circleOptions,
   _rectOptions,
 } from './createPPTXfromSVG';
@@ -284,6 +285,20 @@ describe('_lineOptions function', () => {
     l.attr({ 'stroke-width': sw });
     let los = _lineOptions(l);
     expect(_trimNum(los.lineSize)).toEqual(los.lineSize);
+  });
+});
+
+describe('_pathHasOnlyLines function', () => {
+  it('path has only lines', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 1 3 L 6 9 L 20 1');
+    expect(_pathHasOnlyLines(p)).toBeTruthy();
+  });
+
+  it('path is not just lines', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 1 2 Q 10 12 5 9');
+    expect(_pathHasOnlyLines(p)).toBeFalsy();
   });
 });
 

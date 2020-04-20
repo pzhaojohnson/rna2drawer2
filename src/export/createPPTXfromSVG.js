@@ -391,6 +391,7 @@ export {
   _yTextCenter,
   _textOptions,
   _lineOptions,
+  _pathHasOnlyLines,
   _circleOptions,
   _rectOptions,
 };
