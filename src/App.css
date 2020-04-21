@@ -30,6 +30,7 @@ input[type=text] {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
+  border-radius: 4px;
 }
 
 input[type=text]:hover {
@@ -58,6 +59,7 @@ textarea {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
+  border-radius: 4px;
   resize: none;
 }
 
@@ -89,6 +91,7 @@ button {
   font-weight: normal;
   font-style: normal;
   color: white;
+  border-radius: 4px;
   box-shadow: none;
 }
 
@@ -110,6 +113,7 @@ select {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
+  border-radius: 4px;
 }
 
 select:hover {

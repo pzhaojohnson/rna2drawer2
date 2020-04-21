@@ -82,7 +82,7 @@ class CreateNewDrawing extends React.Component {
               maxWidth: '1200px',
               margin: '16px',
               border: 'thin solid #bfbfbf',
-              borderRadius: '32px',
+              borderRadius: '24px',
               display: 'flex',
               flexDirection: 'column',
             }}
