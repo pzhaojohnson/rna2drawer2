@@ -48,7 +48,7 @@ class OpenCT extends React.Component {
               maxWidth: '1200px',
               margin: '16px',
               border: 'thin solid #bfbfbf',
-              borderRadius: '24px',
+              borderRadius: '8px',
               display: 'flex',
               flexDirection: 'column',
             }}
@@ -65,7 +65,7 @@ class OpenCT extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '32px 88px 32px 88px',
+          margin: '32px 80px 32px 80px',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -79,7 +79,7 @@ class OpenCT extends React.Component {
   _title() {
     return (
       <div>
-        <p className={'unselectable-text'} style={{ margin: '0px 16px 0px 16px', fontSize: '24px' }} >
+        <p className={'unselectable-text'} style={{ margin: '0px 24px 0px 24px', fontSize: '24px' }} >
           Open a CT File
         </p>
         <div
@@ -100,7 +100,7 @@ class OpenCT extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '24px 32px 0px 32px',
+          margin: '24px 40px 0px 40px',
           display: 'flex',
           flexDirection: 'column',
         }}
