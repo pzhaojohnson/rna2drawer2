@@ -79,7 +79,7 @@ class CreateNewDrawing extends React.Component {
           <div
             style={{
               flexGrow: '1',
-              maxWidth: '1040px',
+              maxWidth: '1200px',
               margin: '16px',
               border: 'thin solid #bfbfbf',
               borderRadius: '24px',
@@ -99,7 +99,7 @@ class CreateNewDrawing extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '32px 48px 32px 48px',
+          margin: '32px 88px 32px 88px',
           display: 'flex',
           flexDirection: 'column',
         }}
