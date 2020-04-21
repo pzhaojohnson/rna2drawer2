@@ -30,7 +30,7 @@ input[type=text] {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 input[type=text]:hover {
@@ -59,7 +59,7 @@ textarea {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  border-radius: 4px;
+  border-radius: 2px;
   resize: none;
 }
 
@@ -113,7 +113,7 @@ select {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 select:hover {
@@ -181,7 +181,7 @@ overrides the background-color on hover setting below. */
 
 @keyframes fadein {
   from {
-    opacity: 0.5;
+    opacity: 0.25;
   }
   to {
     opacity: 1;

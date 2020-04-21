@@ -22,7 +22,7 @@ class Menu extends React.Component {
         src={logo}
         alt={'Logo'}
         style={{
-          height: '16px',
+          height: '18px',
           padding: '4px 8px 4px 8px'
         }}
       />
@@ -41,7 +41,7 @@ class Menu extends React.Component {
     return {
       border: 'none',
       margin: '0px',
-      padding: '4px 8px 4px 8px',
+      padding: '6px 8px 6px 8px',
       fontSize: '12px',
       color: this.state.buttonColor,
     };
