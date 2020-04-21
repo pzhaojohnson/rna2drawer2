@@ -99,7 +99,7 @@ class CreateNewDrawing extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '32px 64px 32px 64px',
+          margin: '32px 48px 32px 48px',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -121,7 +121,7 @@ class CreateNewDrawing extends React.Component {
 
   _titleText() {
     return (
-      <p className={'unselectable-text'} style={{ margin: '0px 8px 0px 8px', fontSize: '24px' }} >
+      <p className={'unselectable-text'} style={{ margin: '0px 24px 0px 24px', fontSize: '24px' }} >
         Create a New Drawing
       </p>
     );
@@ -146,7 +146,7 @@ class CreateNewDrawing extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '16px 16px 0px 16px',
+          margin: '24px 40px 0px 40px',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -260,7 +260,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceAndStructureSections() {
     return (
-      <div style={{ margin: '0px 0px 10px 0px', flexGrow: '1' }} >
+      <div style={{ margin: '0px 0px 18px 0px', flexGrow: '1' }} >
         {this._sequenceSection()}
         {this._structureSection()}
       </div>

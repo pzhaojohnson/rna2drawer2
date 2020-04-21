@@ -65,7 +65,7 @@ class OpenCT extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '32px 64px 32px 64px',
+          margin: '32px 48px 32px 48px',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -79,7 +79,7 @@ class OpenCT extends React.Component {
   _title() {
     return (
       <div>
-        <p className={'unselectable-text'} style={{ margin: '0px 8px 0px 8px', fontSize: '24px' }} >
+        <p className={'unselectable-text'} style={{ margin: '0px 24px 0px 24px', fontSize: '24px' }} >
           Open a CT File
         </p>
         <div
@@ -100,7 +100,7 @@ class OpenCT extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '24px 16px 0px 16px',
+          margin: '24px 40px 0px 40px',
           display: 'flex',
           flexDirection: 'column',
         }}
