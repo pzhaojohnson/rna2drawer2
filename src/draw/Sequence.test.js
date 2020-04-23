@@ -1110,7 +1110,7 @@ describe('Sequence class', () => {
     expect(seq.offsetPositionOfBase(b4)).toBe(8);
   });
 
-  it('containsBase method', () => {
+  it('contains method', () => {
     let svg = createNodeSVG();
     let seq = new Sequence(createUUIDforSVG());
 
@@ -1120,23 +1120,23 @@ describe('Sequence class', () => {
     let b4 = Base.create(svg, 'q', -0.1, -1);
 
     // on empty sequence
-    expect(seq.containsBase(b1)).toBeFalsy();
+    expect(seq.contains(b1)).toBeFalsy();
 
     seq.appendBase(b1);
     seq.appendBase(b2);
     seq.appendBase(b3);
 
     // the first base
-    expect(seq.containsBase(b1)).toBeTruthy();
+    expect(seq.contains(b1)).toBeTruthy();
 
     // middle base
-    expect(seq.containsBase(b2)).toBeTruthy();
+    expect(seq.contains(b2)).toBeTruthy();
 
     // the last base
-    expect(seq.containsBase(b3)).toBeTruthy();
+    expect(seq.contains(b3)).toBeTruthy();
 
     // not in the sequence
-    expect(seq.containsBase(b4)).toBeFalsy();
+    expect(seq.contains(b4)).toBeFalsy();
   });
 
   it('clockwiseNormalAngleAtPosition method', () => {

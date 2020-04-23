@@ -273,7 +273,7 @@ class Drawing {
   sequenceOfBase(b) {
     let seq = null;
     this.forEachSequence(s => {
-      if (s.containsBase(b)) {
+      if (s.contains(b)) {
         seq = s;
       }
     });

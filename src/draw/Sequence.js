@@ -487,7 +487,7 @@ class Sequence {
    * 
    * @returns {boolean} 
    */
-  containsBase(b) {
+  contains(b) {
     return this.positionOfBase(b) !== 0;
   }
 
@@ -585,7 +585,7 @@ class Sequence {
    * @throws {Error} If the given base is already in this sequence.
    */
   appendBase(b, svg) {
-    if (this.containsBase(b)) {
+    if (this.contains(b)) {
       throw new Error('Base is already in this sequence.');
     }
 
@@ -603,7 +603,7 @@ class Sequence {
   appendBases(bs, svg) {
     let alreadyContains = false;
     bs.forEach(b => {
-      if (this.containsBase(b)) {
+      if (this.contains(b)) {
         alreadyContains = true;
       }
     });
@@ -628,7 +628,7 @@ class Sequence {
    * @throws {Error} If the given position is out of range.
    */
   insertBaseAtPosition(b, p, svg) {
-    if (this.containsBase(b)) {
+    if (this.contains(b)) {
       throw new Error('Base is already in this sequence.');
     } else if (this.positionOutOfRange(p) && p !== this.length + 1) {
       throw new Error('Position is out of range.');
