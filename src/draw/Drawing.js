@@ -1,7 +1,7 @@
 import Sequence from './Sequence';
 import {
   StrandBond,
-  WatsonCrickBond,
+  SecondaryBond,
 } from './StraightBond';
 import TertiaryBond from './TertiaryBond';
 import parseStems from '../parse/parseStems';
@@ -13,7 +13,7 @@ class Drawing {
       
     this._bonds = {
       strand: [],
-      watsonCrick: [],
+      secondary: [],
       tertiary: [],
     };
   }
@@ -340,15 +340,15 @@ class Drawing {
   /**
    * @returns {number} 
    */
-  get numWatsonCrickBonds() {
-    return this._bonds.watsonCrick.length;
+  get numSecondaryBonds() {
+    return this._bonds.secondary.length;
   }
   
   /**
    * @param {callback} cb 
    */
-  forEachWatsonCrickBond(cb) {
-    this._bonds.watsonCrick.forEach(wcb => cb(wcb));
+  forEachSecondaryBond(cb) {
+    this._bonds.secondary.forEach(wcb => cb(wcb));
   }
 
   /**
@@ -359,7 +359,7 @@ class Drawing {
     this.forEachBase(b => {
       partners.push(null);
     });
-    this.forEachWatsonCrickBond(wcb => {
+    this.forEachSecondaryBond(wcb => {
       let p = this.strictLayoutPositionOfBase(wcb.base1);
       let q = this.strictLayoutPositionOfBase(wcb.base2);
       partners[p - 1] = q;
@@ -379,7 +379,7 @@ class Drawing {
       return;
     }
     let filtered = [];
-    this.forEachWatsonCrickBond(wcb => {
+    this.forEachSecondaryBond(wcb => {
       let p = this.strictLayoutPositionOfBase(wcb.base1);
       let q = this.strictLayoutPositionOfBase(wcb.base2);
       if (partners[p - 1] === q) {
@@ -388,7 +388,7 @@ class Drawing {
         wcb.remove();
       }
     });
-    this._bonds.watsonCrick = filtered;
+    this._bonds.secondary = filtered;
   }
 
   /**
@@ -397,7 +397,7 @@ class Drawing {
    * 
    * @param {Array<number|null>} partners 
    * 
-   * @returns {Array<WatsonCrickBond>} 
+   * @returns {Array<SecondaryBond>} 
    */
   addMissingStrictLayoutPairs(partners) {
     if (partners.length !== this.numBases) {
@@ -410,8 +410,8 @@ class Drawing {
       if (q !== null && p < q && currPartners[p - 1] !== q) {
         let b1 = this.getBaseAtStrictLayoutPosition(p);
         let b2 = this.getBaseAtStrictLayoutPosition(q);
-        let wcb = WatsonCrickBond.create(this._svg, b1, b2);
-        this._bonds.watsonCrick.push(wcb);
+        let wcb = SecondaryBond.create(this._svg, b1, b2);
+        this._bonds.secondary.push(wcb);
         added.push(wcb);
       }
     }
@@ -424,7 +424,7 @@ class Drawing {
    * 
    * @param {Array<number|null>} partners 
    * 
-   * @returns {Array<WatsonCrickBond>} 
+   * @returns {Array<SecondaryBond>} 
    */
   applyStrictLayoutPartners(partners) {
     if (partners.length !== this.numBases) {
@@ -547,7 +547,7 @@ class Drawing {
 
   _repositionBonds() {
     this.forEachStrandBond(sb => sb.reposition());
-    this.forEachWatsonCrickBond(wcb => wcb.reposition());
+    this.forEachSecondaryBond(wcb => wcb.reposition());
     this.forEachTertiaryBond(tb => {
       tb.reposition(b => {
         let seq = this.sequenceOfBase(b);
@@ -603,7 +603,7 @@ class Drawing {
   /**
    * @typedef {Object} Drawing~BondsSavableState 
    * @property {Array<StraightBond~SavableState} strand 
-   * @property {Array<StraightBond~SavableState} watsonCrick 
+   * @property {Array<StraightBond~SavableState} secondary 
    * @property {Array<TertiaryBond~SavableState} tertiary 
    */
 
@@ -617,7 +617,7 @@ class Drawing {
       sequences: [],
       bonds: {
         strand: [],
-        watsonCrick: [],
+        secondary: [],
         tertiary: [],
       },
     };
@@ -627,8 +627,8 @@ class Drawing {
     this._bonds.strand.forEach(
       sb => savableState.bonds.strand.push(sb.savableState())
     );
-    this._bonds.watsonCrick.forEach(
-      wcb => savableState.bonds.watsonCrick.push(wcb.savableState())
+    this._bonds.secondary.forEach(
+      wcb => savableState.bonds.secondary.push(wcb.savableState())
     );
     this._bonds.tertiary.forEach(
       tb => savableState.bonds.tertiary.push(tb.savableState())

@@ -435,10 +435,10 @@ StrandBond._mostRecentProps = {
   strokeWidth: 1,
 };
 
-class WatsonCrickBond extends StraightBond {
+class SecondaryBond extends StraightBond {
 
   /**
-   * @typedef {Object} WatsonCrickBond~MostRecentProps 
+   * @typedef {Object} SecondaryBond~MostRecentProps 
    * @property {number} padding1 
    * @property {number} padding2 
    * @property {string} autStroke 
@@ -448,49 +448,49 @@ class WatsonCrickBond extends StraightBond {
    */
 
   /**
-   * @returns {WatsonCrickBond~MostRecentProps} 
+   * @returns {SecondaryBond~MostRecentProps} 
    */
   static mostRecentProps() {
-    return { ...WatsonCrickBond._mostRecentProps };
+    return { ...SecondaryBond._mostRecentProps };
   }
 
   /**
-   * @param {WatsonCrickBond} wcb 
+   * @param {SecondaryBond} sb 
    */
-  static _applyMostRecentProps(wcb) {
-    let mrps = WatsonCrickBond.mostRecentProps();
+  static _applyMostRecentProps(sb) {
+    let mrps = SecondaryBond.mostRecentProps();
 
-    wcb.padding1 = mrps.padding1;
-    wcb.padding2 = mrps.padding2;
-    wcb.strokeWidth = mrps.strokeWidth;
+    sb.padding1 = mrps.padding1;
+    sb.padding2 = mrps.padding2;
+    sb.strokeWidth = mrps.strokeWidth;
 
-    if (wcb.isAUT()) {
-      wcb.stroke = mrps.autStroke;
-    } else if (wcb.isGC()) {
-      wcb.stroke = mrps.gcStroke;
-    } else if (wcb.isGUT()) {
-      wcb.stroke = mrps.gutStroke;
+    if (sb.isAUT()) {
+      sb.stroke = mrps.autStroke;
+    } else if (sb.isGC()) {
+      sb.stroke = mrps.gcStroke;
+    } else if (sb.isGUT()) {
+      sb.stroke = mrps.gutStroke;
     } else {
-      wcb.stroke = mrps.otherStroke;
+      sb.stroke = mrps.otherStroke;
     }
   }
 
   /**
-   * @param {WatsonCrickBond} wcb 
+   * @param {SecondaryBond} sb 
    */
-  static _copyPropsToMostRecent(wcb) {
-    WatsonCrickBond._mostRecentProps.padding1 = wcb.padding1;
-    WatsonCrickBond._mostRecentProps.padding2 = wcb.padding2;
-    WatsonCrickBond._mostRecentProps.strokeWidth = wcb.strokeWidth;
+  static _copyPropsToMostRecent(sb) {
+    SecondaryBond._mostRecentProps.padding1 = sb.padding1;
+    SecondaryBond._mostRecentProps.padding2 = sb.padding2;
+    SecondaryBond._mostRecentProps.strokeWidth = sb.strokeWidth;
     
-    if (wcb.isAUT()) {
-      WatsonCrickBond._mostRecentProps.autStroke = wcb.stroke;
-    } else if (wcb.isGC()) {
-      WatsonCrickBond._mostRecentProps.gcStroke = wcb.stroke;
-    } else if (wcb.isGUT()) {
-      WatsonCrickBond._mostRecentProps.gutStroke = wcb.stroke;
+    if (sb.isAUT()) {
+      SecondaryBond._mostRecentProps.autStroke = sb.stroke;
+    } else if (sb.isGC()) {
+      SecondaryBond._mostRecentProps.gcStroke = sb.stroke;
+    } else if (sb.isGUT()) {
+      SecondaryBond._mostRecentProps.gutStroke = sb.stroke;
     } else {
-      WatsonCrickBond._mostRecentProps.otherStroke = wcb.stroke;
+      SecondaryBond._mostRecentProps.otherStroke = sb.stroke;
     }
   }
 
@@ -499,20 +499,20 @@ class WatsonCrickBond extends StraightBond {
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBaseById} getBaseById 
    * 
-   * @throws {Error} If the saved state is not for a Watson-Crick bond.
+   * @throws {Error} If the saved state is not for a secondary bond.
    */
   static fromSavedState(savedState, svg, getBaseById) {
-    if (savedState.className !== 'WatsonCrickBond') {
-      throw new Error('Saved state is not for a Watson-Crick bond.');
+    if (savedState.className !== 'SecondaryBond') {
+      throw new Error('Saved state is not for a secondary bond.');
     }
 
     let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
-    let wcb = new WatsonCrickBond(line, b1, b2);
+    let sb = new SecondaryBond(line, b1, b2);
 
-    WatsonCrickBond._copyPropsToMostRecent(wcb);
-    return wcb;
+    SecondaryBond._copyPropsToMostRecent(sb);
+    return sb;
   }
 
   /**
@@ -520,15 +520,15 @@ class WatsonCrickBond extends StraightBond {
    * @param {Base} b1 
    * @param {Base} b2 
    * 
-   * @returns {WatsonCrickBond} 
+   * @returns {SecondaryBond} 
    */
   static create(svg, b1, b2) {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id(createUUIDforSVG());
-    let wcb = new WatsonCrickBond(line, b1, b2);
-    WatsonCrickBond._applyMostRecentProps(wcb);
-    return wcb;
+    let sb = new SecondaryBond(line, b1, b2);
+    SecondaryBond._applyMostRecentProps(sb);
+    return sb;
   }
 
   /**
@@ -591,7 +591,7 @@ class WatsonCrickBond extends StraightBond {
    */
   set padding1(p) {
     this._reposition(p, this.padding2);
-    WatsonCrickBond._mostRecentProps.padding1 = p;
+    SecondaryBond._mostRecentProps.padding1 = p;
   }
 
   /**
@@ -606,7 +606,7 @@ class WatsonCrickBond extends StraightBond {
    */
   set padding2(p) {
     this._reposition(this.padding1, p);
-    WatsonCrickBond._mostRecentProps.padding2 = p;
+    SecondaryBond._mostRecentProps.padding2 = p;
   }
 
   /**
@@ -623,13 +623,13 @@ class WatsonCrickBond extends StraightBond {
     this._line.attr({ 'stroke': s });
 
     if (this.isAUT()) {
-      WatsonCrickBond._mostRecentProps.autStroke = s;
+      SecondaryBond._mostRecentProps.autStroke = s;
     } else if (this.isGC()) {
-      WatsonCrickBond._mostRecentProps.gcStroke = s;
+      SecondaryBond._mostRecentProps.gcStroke = s;
     } else if (this.isGUT()) {
-      WatsonCrickBond._mostRecentProps.gutStroke = s;
+      SecondaryBond._mostRecentProps.gutStroke = s;
     } else {
-      WatsonCrickBond._mostRecentProps.otherStroke = s;
+      SecondaryBond._mostRecentProps.otherStroke = s;
     }
   }
 
@@ -645,7 +645,7 @@ class WatsonCrickBond extends StraightBond {
    */
   set strokeWidth(sw) {
     this._line.attr({ 'stroke-width': sw });
-    WatsonCrickBond._mostRecentProps.strokeWidth = sw;
+    SecondaryBond._mostRecentProps.strokeWidth = sw;
   }
 
   /**
@@ -653,7 +653,7 @@ class WatsonCrickBond extends StraightBond {
    */
   savableState() {
     return {
-      className: 'WatsonCrickBond',
+      className: 'SecondaryBond',
       line: this._line.id(),
       base1: this.base1.id,
       base2: this.base2.id,
@@ -661,7 +661,7 @@ class WatsonCrickBond extends StraightBond {
   }
 }
 
-WatsonCrickBond._mostRecentProps = {
+SecondaryBond._mostRecentProps = {
   padding1: 6,
   padding2: 6,
   autStroke: '#000000',
@@ -674,5 +674,5 @@ WatsonCrickBond._mostRecentProps = {
 export {
   StraightBond,
   StrandBond,
-  WatsonCrickBond,
+  SecondaryBond,
 };

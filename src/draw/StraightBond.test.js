@@ -1,4 +1,4 @@
-import { StraightBond, StrandBond, WatsonCrickBond } from './StraightBond';
+import { StraightBond, StrandBond, SecondaryBond } from './StraightBond';
 import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import Base from './Base';
@@ -10,7 +10,7 @@ it('mostRecentProps static method returns a new object', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('StrandBond _applyMostRecentProps static method', () => {
@@ -33,25 +33,25 @@ it('StrandBond _applyMostRecentProps static method', () => {
   expect(sb.strokeWidth).toBeCloseTo(5.432, 6);
 });
 
-it('WatsonCrickBond _applyMostRecentProps padding1, padding2, and strokeWidth', () => {
+it('SecondaryBond _applyMostRecentProps padding1, padding2, and strokeWidth', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'g', 1, 3);
   let b2 = Base.create(svg, 't', 6, 6);
-  let wcb = new WatsonCrickBond(svg, b1, b2);
+  let sb = new SecondaryBond(svg, b1, b2);
 
   /* Set after creating the strand bond since the create static method itself
   applies the most recent properties. */
-  WatsonCrickBond._mostRecentProps.padding1 = 66.5;
-  WatsonCrickBond._mostRecentProps.padding2 = 12.33;
-  WatsonCrickBond._mostRecentProps.strokeWidth = 1.222;
+  SecondaryBond._mostRecentProps.padding1 = 66.5;
+  SecondaryBond._mostRecentProps.padding2 = 12.33;
+  SecondaryBond._mostRecentProps.strokeWidth = 1.222;
   
-  WatsonCrickBond._applyMostRecentProps(wcb);
-  expect(wcb.padding1).toBeCloseTo(66.5, 6);
-  expect(wcb.padding2).toBeCloseTo(12.33, 6);
-  expect(wcb.strokeWidth).toBeCloseTo(1.222, 6);
+  SecondaryBond._applyMostRecentProps(sb);
+  expect(sb.padding1).toBeCloseTo(66.5, 6);
+  expect(sb.padding2).toBeCloseTo(12.33, 6);
+  expect(sb.strokeWidth).toBeCloseTo(1.222, 6);
 });
 
-it('WatsonCrickBond _applyMostRecentProps stroke', () => {
+it('SecondaryBond _applyMostRecentProps stroke', () => {
   let svg = createNodeSVG();
   let ba = Base.create(svg, 'A', 3, 5);
   let bu = Base.create(svg, 'U', 4, 3);
@@ -59,31 +59,31 @@ it('WatsonCrickBond _applyMostRecentProps stroke', () => {
   let bc = Base.create(svg, 'c', 2, 2);
   let bt = Base.create(svg, 't', 5.5, -5.5);
 
-  let wcbau = WatsonCrickBond.create(svg, bu, ba);
-  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
-  let wcbgu = WatsonCrickBond.create(svg, bg, bu);
-  let wcbat = WatsonCrickBond.create(svg, bt, ba);
-  let wcbgt = WatsonCrickBond.create(svg, bt, bg);
-  let wcbOther = WatsonCrickBond.create(svg, ba, bc);
+  let wcbau = SecondaryBond.create(svg, bu, ba);
+  let wcbgc = SecondaryBond.create(svg, bc, bg);
+  let wcbgu = SecondaryBond.create(svg, bg, bu);
+  let wcbat = SecondaryBond.create(svg, bt, ba);
+  let wcbgt = SecondaryBond.create(svg, bt, bg);
+  let wcbOther = SecondaryBond.create(svg, ba, bc);
   
   /* Set after creating the strand bond since the create static method itself
   applies the most recent properties. */
-  WatsonCrickBond._mostRecentProps.autStroke = '#aabbcc';
-  WatsonCrickBond._mostRecentProps.gcStroke = '#ccbbaa';
-  WatsonCrickBond._mostRecentProps.gutStroke = '#112233';
-  WatsonCrickBond._mostRecentProps.otherStroke = '#998877';
+  SecondaryBond._mostRecentProps.autStroke = '#aabbcc';
+  SecondaryBond._mostRecentProps.gcStroke = '#ccbbaa';
+  SecondaryBond._mostRecentProps.gutStroke = '#112233';
+  SecondaryBond._mostRecentProps.otherStroke = '#998877';
 
-  WatsonCrickBond._applyMostRecentProps(wcbau);
+  SecondaryBond._applyMostRecentProps(wcbau);
   expect(wcbau.stroke).toBe('#aabbcc');
-  WatsonCrickBond._applyMostRecentProps(wcbgc);
+  SecondaryBond._applyMostRecentProps(wcbgc);
   expect(wcbgc.stroke).toBe('#ccbbaa');
-  WatsonCrickBond._applyMostRecentProps(wcbgu);
+  SecondaryBond._applyMostRecentProps(wcbgu);
   expect(wcbgu.stroke).toBe('#112233');
-  WatsonCrickBond._applyMostRecentProps(wcbat);
+  SecondaryBond._applyMostRecentProps(wcbat);
   expect(wcbat.stroke).toBe('#aabbcc');
-  WatsonCrickBond._applyMostRecentProps(wcbgt);
+  SecondaryBond._applyMostRecentProps(wcbgt);
   expect(wcbgt.stroke).toBe('#112233');
-  WatsonCrickBond._applyMostRecentProps(wcbOther);
+  SecondaryBond._applyMostRecentProps(wcbOther);
   expect(wcbOther.stroke).toBe('#998877');
 });
 
@@ -106,24 +106,24 @@ it('StrandBond _copyPropsToMostRecent', () => {
   expect(mrps.strokeWidth).toBeCloseTo(3.222, 6);
 });
 
-it('WatsonCrickBond _copyPropsToMostRecent padding1, padding2, and strokeWidth', () => {
+it('SecondaryBond _copyPropsToMostRecent padding1, padding2, and strokeWidth', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'e', 5.5, 4);
   let b2 = Base.create(svg, 'w', 4, 3);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
+  let sb = SecondaryBond.create(svg, b1, b2);
 
-  wcb.padding1 = 8.777;
-  wcb.padding2 = 6.578;
-  wcb.strokeWidth = 35;
-  WatsonCrickBond._copyPropsToMostRecent(wcb);
+  sb.padding1 = 8.777;
+  sb.padding2 = 6.578;
+  sb.strokeWidth = 35;
+  SecondaryBond._copyPropsToMostRecent(sb);
 
-  let mrps = WatsonCrickBond.mostRecentProps();
+  let mrps = SecondaryBond.mostRecentProps();
   expect(mrps.padding1).toBeCloseTo(8.777, 6);
   expect(mrps.padding2).toBeCloseTo(6.578, 6);
   expect(mrps.strokeWidth).toBeCloseTo(35, 6);
 });
 
-it('WatsonCrickBond _copyPropsToMostRecent stroke', () => {
+it('SecondaryBond _copyPropsToMostRecent stroke', () => {
   let svg = createNodeSVG();
   let ba = Base.create(svg, 'A', 3, 5);
   let bu = Base.create(svg, 'U', 4, 3);
@@ -131,12 +131,12 @@ it('WatsonCrickBond _copyPropsToMostRecent stroke', () => {
   let bc = Base.create(svg, 'c', 2, 2);
   let bt = Base.create(svg, 't', 5.5, -5.5);
 
-  let wcbau = WatsonCrickBond.create(svg, bu, ba);
-  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
-  let wcbgu = WatsonCrickBond.create(svg, bg, bu);
-  let wcbat = WatsonCrickBond.create(svg, bt, ba);
-  let wcbgt = WatsonCrickBond.create(svg, bt, bg);
-  let wcbOther = WatsonCrickBond.create(svg, ba, bc);
+  let wcbau = SecondaryBond.create(svg, bu, ba);
+  let wcbgc = SecondaryBond.create(svg, bc, bg);
+  let wcbgu = SecondaryBond.create(svg, bg, bu);
+  let wcbat = SecondaryBond.create(svg, bt, ba);
+  let wcbgt = SecondaryBond.create(svg, bt, bg);
+  let wcbOther = SecondaryBond.create(svg, ba, bc);
   
   wcbau.stroke = '#123456';
   wcbgc.stroke = '#234567';
@@ -145,18 +145,18 @@ it('WatsonCrickBond _copyPropsToMostRecent stroke', () => {
   wcbgt.stroke = '#567890';
   wcbOther.stroke = '#678900';
 
-  WatsonCrickBond._copyPropsToMostRecent(wcbau);
-  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#123456');
-  WatsonCrickBond._copyPropsToMostRecent(wcbgc);
-  expect(WatsonCrickBond.mostRecentProps().gcStroke).toBe('#234567');
-  WatsonCrickBond._copyPropsToMostRecent(wcbgu);
-  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#345678');
-  WatsonCrickBond._copyPropsToMostRecent(wcbat);
-  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#456789');
-  WatsonCrickBond._copyPropsToMostRecent(wcbgt);
-  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#567890');
-  WatsonCrickBond._copyPropsToMostRecent(wcbOther);
-  expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#678900');
+  SecondaryBond._copyPropsToMostRecent(wcbau);
+  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#123456');
+  SecondaryBond._copyPropsToMostRecent(wcbgc);
+  expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#234567');
+  SecondaryBond._copyPropsToMostRecent(wcbgu);
+  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#345678');
+  SecondaryBond._copyPropsToMostRecent(wcbat);
+  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#456789');
+  SecondaryBond._copyPropsToMostRecent(wcbgt);
+  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#567890');
+  SecondaryBond._copyPropsToMostRecent(wcbOther);
+  expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#678900');
 });
 
 function checkCoordinates(cs, ecs) {
@@ -255,7 +255,7 @@ it('fromSavedState static method valid saved state', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('fromSavedState static method invalid saved state', () => {
@@ -293,7 +293,7 @@ it('fromSavedState static method invalid saved state', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('fromSavedState updates most recent padding1, padding2, and strokeWidth properties', () => {
@@ -322,7 +322,7 @@ it('fromSavedState updates most recent padding1, padding2, and strokeWidth prope
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('StrandBond fromSavedState updates most recent stroke property', () => {
@@ -345,7 +345,7 @@ it('StrandBond fromSavedState updates most recent stroke property', () => {
   expect(mrps.stroke).toBe('#433221');
 });
 
-it('WatsonCrickBond fromSavedState updates most recent stroke properties', () => {
+it('SecondaryBond fromSavedState updates most recent stroke properties', () => {
   let svg = createNodeSVG();
   let ba = Base.create(svg, 'a', 4, 1);
   let bu = Base.create(svg, 'U', 7, 100);
@@ -353,12 +353,12 @@ it('WatsonCrickBond fromSavedState updates most recent stroke properties', () =>
   let bc = Base.create(svg, 'c', 11, 33);
   let bt = Base.create(svg, 't', 4, 99);
 
-  let wcbau = WatsonCrickBond.create(svg, ba, bu);
-  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
-  let wcbgu = WatsonCrickBond.create(svg, bu, bg);
-  let wcbat = WatsonCrickBond.create(svg, bt, ba);
-  let wcbgt = WatsonCrickBond.create(svg, bg, bt);
-  let wcbOther = WatsonCrickBond.create(svg, bg, ba);
+  let wcbau = SecondaryBond.create(svg, ba, bu);
+  let wcbgc = SecondaryBond.create(svg, bc, bg);
+  let wcbgu = SecondaryBond.create(svg, bu, bg);
+  let wcbat = SecondaryBond.create(svg, bt, ba);
+  let wcbgt = SecondaryBond.create(svg, bg, bt);
+  let wcbOther = SecondaryBond.create(svg, bg, ba);
 
   function getBaseById(id) {
     let dict = {};
@@ -372,33 +372,33 @@ it('WatsonCrickBond fromSavedState updates most recent stroke properties', () =>
 
   wcbau.stroke = '#445522';
   let auSavableState = wcbau.savableState();
-  WatsonCrickBond.fromSavedState(auSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#445522');
+  SecondaryBond.fromSavedState(auSavableState, svg, getBaseById);
+  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#445522');
   
   wcbgc.stroke = '#aabcde';
   let gcSavableState = wcbgc.savableState();
-  WatsonCrickBond.fromSavedState(gcSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().gcStroke).toBe('#aabcde');
+  SecondaryBond.fromSavedState(gcSavableState, svg, getBaseById);
+  expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#aabcde');
 
   wcbgu.stroke = '#aaabbb';
   let guSavablestate = wcbgu.savableState();
-  WatsonCrickBond.fromSavedState(guSavablestate, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#aaabbb');
+  SecondaryBond.fromSavedState(guSavablestate, svg, getBaseById);
+  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#aaabbb');
 
   wcbat.stroke = '#654321';
   let atSavableState = wcbat.savableState();
-  WatsonCrickBond.fromSavedState(atSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#654321');
+  SecondaryBond.fromSavedState(atSavableState, svg, getBaseById);
+  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#654321');
 
   wcbgt.stroke = '#987654';
   let gtSavableState = wcbgt.savableState();
-  WatsonCrickBond.fromSavedState(gtSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#987654');
+  SecondaryBond.fromSavedState(gtSavableState, svg, getBaseById);
+  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#987654');
 
   wcbOther.stroke = '#a1b2c3';
   let otherSavableState = wcbOther.savableState();
-  WatsonCrickBond.fromSavedState(otherSavableState, svg, getBaseById);
-  expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
+  SecondaryBond.fromSavedState(otherSavableState, svg, getBaseById);
+  expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
 });
 
 it('basic test of create static method', () => {
@@ -411,7 +411,7 @@ it('basic test of create static method', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('basic test of constructor', () => {
@@ -425,7 +425,7 @@ it('basic test of constructor', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('_validateLine method', () => {
@@ -445,7 +445,7 @@ it('_validateLine method', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('base1 and base2 getters', () => {
@@ -459,7 +459,7 @@ it('base1 and base2 getters', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('id getter', () => {
@@ -481,7 +481,7 @@ it('id getter', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('padding1 getter and setter', () => {
@@ -522,7 +522,7 @@ it('padding1 getter and setter', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('padding2 getter and setter', () => {
@@ -563,7 +563,7 @@ it('padding2 getter and setter', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('reposition method', () => {
@@ -598,7 +598,7 @@ it('reposition method', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('_reposition method', () => {
@@ -630,7 +630,7 @@ it('_reposition method', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('_reposition method updates opacity', () => {
@@ -653,7 +653,7 @@ it('_reposition method updates opacity', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('insertBefore method', () => {
@@ -676,7 +676,7 @@ it('insertBefore method', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('insertAfter method', () => {
@@ -699,7 +699,7 @@ it('insertAfter method', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('stroke getter and setter', () => {
@@ -719,7 +719,7 @@ it('stroke getter and setter', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('StrandBond stroke setter updates most recent property', () => {
@@ -731,7 +731,7 @@ it('StrandBond stroke setter updates most recent property', () => {
   expect(StrandBond.mostRecentProps().stroke).toBe('#445566');
 });
 
-it('WatsonCrickBond stroke setter updates most recent property', () => {
+it('SecondaryBond stroke setter updates most recent property', () => {
   let svg = createNodeSVG();
   let ba = Base.create(svg, 'A', 3, 5);
   let bu = Base.create(svg, 'U', 4, 3);
@@ -739,25 +739,25 @@ it('WatsonCrickBond stroke setter updates most recent property', () => {
   let bc = Base.create(svg, 'c', 2, 2);
   let bt = Base.create(svg, 't', 5.5, -5.5);
 
-  let wcbau = WatsonCrickBond.create(svg, bu, ba);
-  let wcbgc = WatsonCrickBond.create(svg, bc, bg);
-  let wcbgu = WatsonCrickBond.create(svg, bg, bu);
-  let wcbat = WatsonCrickBond.create(svg, bt, ba);
-  let wcbgt = WatsonCrickBond.create(svg, bt, bg);
-  let wcbOther = WatsonCrickBond.create(svg, ba, bc);
+  let wcbau = SecondaryBond.create(svg, bu, ba);
+  let wcbgc = SecondaryBond.create(svg, bc, bg);
+  let wcbgu = SecondaryBond.create(svg, bg, bu);
+  let wcbat = SecondaryBond.create(svg, bt, ba);
+  let wcbgt = SecondaryBond.create(svg, bt, bg);
+  let wcbOther = SecondaryBond.create(svg, ba, bc);
   
   wcbau.stroke = '#123456';
-  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#123456');
+  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#123456');
   wcbgc.stroke = '#234567';
-  expect(WatsonCrickBond.mostRecentProps().gcStroke).toBe('#234567');
+  expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#234567');
   wcbgu.stroke = '#345678';
-  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#345678');
+  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#345678');
   wcbat.stroke = '#456789';
-  expect(WatsonCrickBond.mostRecentProps().autStroke).toBe('#456789');
+  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#456789');
   wcbgt.stroke = '#567890';
-  expect(WatsonCrickBond.mostRecentProps().gutStroke).toBe('#567890');
+  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#567890');
   wcbOther.stroke = '#678900';
-  expect(WatsonCrickBond.mostRecentProps().otherStroke).toBe('#678900');
+  expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#678900');
 });
 
 it('strokeWidth getter and setter', () => {
@@ -780,7 +780,7 @@ it('strokeWidth getter and setter', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('opacity getter and private setter', () => {
@@ -800,7 +800,7 @@ it('opacity getter and private setter', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('remove method', () => {
@@ -827,7 +827,7 @@ it('remove method', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('savableState method all properties except className', () => {
@@ -844,7 +844,7 @@ it('savableState method all properties except className', () => {
   }
 
   runFor(StrandBond);
-  runFor(WatsonCrickBond);
+  runFor(SecondaryBond);
 });
 
 it('StrandBond savableState method className property', () => {
@@ -855,10 +855,10 @@ it('StrandBond savableState method className property', () => {
   expect(sb.savableState().className).toBe('StrandBond');
 });
 
-it('WatsonCrickBond savableState method className property', () => {
+it('SecondaryBond savableState method className property', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1.1, 1.2);
   let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let wcb = WatsonCrickBond.create(svg, b1, b2);
-  expect(wcb.savableState().className).toBe('WatsonCrickBond');
+  let sb = SecondaryBond.create(svg, b1, b2);
+  expect(sb.savableState().className).toBe('SecondaryBond');
 });
