@@ -1,6 +1,6 @@
 import Sequence from './Sequence';
 import {
-  StrandBond,
+  PrimaryBond,
   SecondaryBond,
 } from './StraightBond';
 import TertiaryBond from './TertiaryBond';
@@ -12,7 +12,7 @@ class Drawing {
     this._sequences = [];
       
     this._bonds = {
-      strand: [],
+      primary: [],
       secondary: [],
       tertiary: [],
     };
@@ -299,40 +299,40 @@ class Drawing {
   /**
    * @returns {number} 
    */
-  get numStrandBonds() {
-    return this._bonds.strand.length;
+  get numPrimaryBonds() {
+    return this._bonds.primary.length;
   }
 
   /**
    * @param {callback} cb 
    */
-  forEachStrandBond(cb) {
-    this._bonds.strand.forEach(sb => cb(sb));
+  forEachPrimaryBond(cb) {
+    this._bonds.primary.forEach(sb => cb(sb));
   }
 
   /**
    * @param {Base} b1 
    * @param {Base} b2 
    * 
-   * @returns {StrandBond} 
+   * @returns {PrimaryBond} 
    */
-  addStrandBond(b1, b2) {
-    let sb = StrandBond.create(this._svg, b1, b2);
-    this._bonds.strand.push(sb);
+  addPrimaryBond(b1, b2) {
+    let sb = PrimaryBond.create(this._svg, b1, b2);
+    this._bonds.primary.push(sb);
     return sb;
   }
 
   /**
    * @param {Sequence} seq 
    * 
-   * @returns {Array<StrandBond>} 
+   * @returns {Array<PrimaryBond>} 
    */
-  addStrandBondsForSequence(seq) {
+  addPrimaryBondsForSequence(seq) {
     let bonds = [];
     for (let p = 1; p <= seq.length - 1; p++) {
       let b1 = seq.getBaseAtPosition(p);
       let b2 = seq.getBaseAtPosition(p + 1);
-      bonds.push(this.addStrandBond(b1, b2));
+      bonds.push(this.addPrimaryBond(b1, b2));
     }
     return bonds;
   }
@@ -546,7 +546,7 @@ class Drawing {
   }
 
   _repositionBonds() {
-    this.forEachStrandBond(sb => sb.reposition());
+    this.forEachPrimaryBond(sb => sb.reposition());
     this.forEachSecondaryBond(wcb => wcb.reposition());
     this.forEachTertiaryBond(tb => {
       tb.reposition(b => {
@@ -602,7 +602,7 @@ class Drawing {
 
   /**
    * @typedef {Object} Drawing~BondsSavableState 
-   * @property {Array<StraightBond~SavableState} strand 
+   * @property {Array<StraightBond~SavableState} primary 
    * @property {Array<StraightBond~SavableState} secondary 
    * @property {Array<TertiaryBond~SavableState} tertiary 
    */
@@ -616,7 +616,7 @@ class Drawing {
       svg: this._svg.svg(),
       sequences: [],
       bonds: {
-        strand: [],
+        primary: [],
         secondary: [],
         tertiary: [],
       },
@@ -624,8 +624,8 @@ class Drawing {
     this._sequences.forEach(
       seq => savableState.sequences.push(seq.savableState())
     );
-    this._bonds.strand.forEach(
-      sb => savableState.bonds.strand.push(sb.savableState())
+    this._bonds.primary.forEach(
+      sb => savableState.bonds.primary.push(sb.savableState())
     );
     this._bonds.secondary.forEach(
       wcb => savableState.bonds.secondary.push(wcb.savableState())

@@ -1,4 +1,4 @@
-import { StraightBond, StrandBond, SecondaryBond } from './StraightBond';
+import { StraightBond, PrimaryBond, SecondaryBond } from './StraightBond';
 import createNodeSVG from './createNodeSVG';
 import createUUIDforSVG from './createUUIDforSVG';
 import Base from './Base';
@@ -9,28 +9,28 @@ it('mostRecentProps static method returns a new object', () => {
     expect(mrps).not.toBe(StraightBondClass._mostRecentProps);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
-it('StrandBond _applyMostRecentProps static method', () => {
+it('PrimaryBond _applyMostRecentProps static method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 5, 6);
   let b2 = Base.create(svg, 'g', 1, 3);
-  let sb = StrandBond.create(svg, b1, b2);
+  let pb = PrimaryBond.create(svg, b1, b2);
   
-  /* Set after creating the strand bond since the create static method itself
+  /* Set after creating the primary bond since the create static method itself
   applies the most recent properties. */
-  StrandBond._mostRecentProps.padding1 = 5.111;
-  StrandBond._mostRecentProps.padding2 = 1.222;
-  StrandBond._mostRecentProps.stroke = '#453423';
-  StrandBond._mostRecentProps.strokeWidth = 5.432;
+  PrimaryBond._mostRecentProps.padding1 = 5.111;
+  PrimaryBond._mostRecentProps.padding2 = 1.222;
+  PrimaryBond._mostRecentProps.stroke = '#453423';
+  PrimaryBond._mostRecentProps.strokeWidth = 5.432;
   
-  StrandBond._applyMostRecentProps(sb);
-  expect(sb.padding1).toBeCloseTo(5.111, 6);
-  expect(sb.padding2).toBeCloseTo(1.222, 6);
-  expect(sb.stroke).toBe('#453423');
-  expect(sb.strokeWidth).toBeCloseTo(5.432, 6);
+  PrimaryBond._applyMostRecentProps(pb);
+  expect(pb.padding1).toBeCloseTo(5.111, 6);
+  expect(pb.padding2).toBeCloseTo(1.222, 6);
+  expect(pb.stroke).toBe('#453423');
+  expect(pb.strokeWidth).toBeCloseTo(5.432, 6);
 });
 
 it('SecondaryBond _applyMostRecentProps padding1, padding2, and strokeWidth', () => {
@@ -39,7 +39,7 @@ it('SecondaryBond _applyMostRecentProps padding1, padding2, and strokeWidth', ()
   let b2 = Base.create(svg, 't', 6, 6);
   let sb = new SecondaryBond(svg, b1, b2);
 
-  /* Set after creating the strand bond since the create static method itself
+  /* Set after creating the primary bond since the create static method itself
   applies the most recent properties. */
   SecondaryBond._mostRecentProps.padding1 = 66.5;
   SecondaryBond._mostRecentProps.padding2 = 12.33;
@@ -59,47 +59,47 @@ it('SecondaryBond _applyMostRecentProps stroke', () => {
   let bc = Base.create(svg, 'c', 2, 2);
   let bt = Base.create(svg, 't', 5.5, -5.5);
 
-  let wcbau = SecondaryBond.create(svg, bu, ba);
-  let wcbgc = SecondaryBond.create(svg, bc, bg);
-  let wcbgu = SecondaryBond.create(svg, bg, bu);
-  let wcbat = SecondaryBond.create(svg, bt, ba);
-  let wcbgt = SecondaryBond.create(svg, bt, bg);
-  let wcbOther = SecondaryBond.create(svg, ba, bc);
+  let sbau = SecondaryBond.create(svg, bu, ba);
+  let sbgc = SecondaryBond.create(svg, bc, bg);
+  let sbgu = SecondaryBond.create(svg, bg, bu);
+  let sbat = SecondaryBond.create(svg, bt, ba);
+  let sbgt = SecondaryBond.create(svg, bt, bg);
+  let sbOther = SecondaryBond.create(svg, ba, bc);
   
-  /* Set after creating the strand bond since the create static method itself
+  /* Set after creating the secondary bond since the create static method itself
   applies the most recent properties. */
   SecondaryBond._mostRecentProps.autStroke = '#aabbcc';
   SecondaryBond._mostRecentProps.gcStroke = '#ccbbaa';
   SecondaryBond._mostRecentProps.gutStroke = '#112233';
   SecondaryBond._mostRecentProps.otherStroke = '#998877';
 
-  SecondaryBond._applyMostRecentProps(wcbau);
-  expect(wcbau.stroke).toBe('#aabbcc');
-  SecondaryBond._applyMostRecentProps(wcbgc);
-  expect(wcbgc.stroke).toBe('#ccbbaa');
-  SecondaryBond._applyMostRecentProps(wcbgu);
-  expect(wcbgu.stroke).toBe('#112233');
-  SecondaryBond._applyMostRecentProps(wcbat);
-  expect(wcbat.stroke).toBe('#aabbcc');
-  SecondaryBond._applyMostRecentProps(wcbgt);
-  expect(wcbgt.stroke).toBe('#112233');
-  SecondaryBond._applyMostRecentProps(wcbOther);
-  expect(wcbOther.stroke).toBe('#998877');
+  SecondaryBond._applyMostRecentProps(sbau);
+  expect(sbau.stroke).toBe('#aabbcc');
+  SecondaryBond._applyMostRecentProps(sbgc);
+  expect(sbgc.stroke).toBe('#ccbbaa');
+  SecondaryBond._applyMostRecentProps(sbgu);
+  expect(sbgu.stroke).toBe('#112233');
+  SecondaryBond._applyMostRecentProps(sbat);
+  expect(sbat.stroke).toBe('#aabbcc');
+  SecondaryBond._applyMostRecentProps(sbgt);
+  expect(sbgt.stroke).toBe('#112233');
+  SecondaryBond._applyMostRecentProps(sbOther);
+  expect(sbOther.stroke).toBe('#998877');
 });
 
-it('StrandBond _copyPropsToMostRecent', () => {
+it('PrimaryBond _copyPropsToMostRecent', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'b', 1, 3);
   let b2 = Base.create(svg, 'n', 5, 7);
-  let sb = StrandBond.create(svg, b1, b2);
+  let pb = PrimaryBond.create(svg, b1, b2);
   
-  sb.padding1 = 5.6789;
-  sb.padding2 = 4.365;
-  sb.stroke = '#9a8c7b';
-  sb.strokeWidth = 3.222;
-  StrandBond._copyPropsToMostRecent(sb);
+  pb.padding1 = 5.6789;
+  pb.padding2 = 4.365;
+  pb.stroke = '#9a8c7b';
+  pb.strokeWidth = 3.222;
+  PrimaryBond._copyPropsToMostRecent(pb);
 
-  let mrps = StrandBond.mostRecentProps();
+  let mrps = PrimaryBond.mostRecentProps();
   expect(mrps.padding1).toBeCloseTo(5.6789, 6);
   expect(mrps.padding2).toBeCloseTo(4.365, 6);
   expect(mrps.stroke).toBe('#9a8c7b');
@@ -131,31 +131,31 @@ it('SecondaryBond _copyPropsToMostRecent stroke', () => {
   let bc = Base.create(svg, 'c', 2, 2);
   let bt = Base.create(svg, 't', 5.5, -5.5);
 
-  let wcbau = SecondaryBond.create(svg, bu, ba);
-  let wcbgc = SecondaryBond.create(svg, bc, bg);
-  let wcbgu = SecondaryBond.create(svg, bg, bu);
-  let wcbat = SecondaryBond.create(svg, bt, ba);
-  let wcbgt = SecondaryBond.create(svg, bt, bg);
-  let wcbOther = SecondaryBond.create(svg, ba, bc);
+  let sbau = SecondaryBond.create(svg, bu, ba);
+  let sbgc = SecondaryBond.create(svg, bc, bg);
+  let sbgu = SecondaryBond.create(svg, bg, bu);
+  let sbat = SecondaryBond.create(svg, bt, ba);
+  let sbgt = SecondaryBond.create(svg, bt, bg);
+  let sbOther = SecondaryBond.create(svg, ba, bc);
   
-  wcbau.stroke = '#123456';
-  wcbgc.stroke = '#234567';
-  wcbgu.stroke = '#345678';
-  wcbat.stroke = '#456789';
-  wcbgt.stroke = '#567890';
-  wcbOther.stroke = '#678900';
+  sbau.stroke = '#123456';
+  sbgc.stroke = '#234567';
+  sbgu.stroke = '#345678';
+  sbat.stroke = '#456789';
+  sbgt.stroke = '#567890';
+  sbOther.stroke = '#678900';
 
-  SecondaryBond._copyPropsToMostRecent(wcbau);
+  SecondaryBond._copyPropsToMostRecent(sbau);
   expect(SecondaryBond.mostRecentProps().autStroke).toBe('#123456');
-  SecondaryBond._copyPropsToMostRecent(wcbgc);
+  SecondaryBond._copyPropsToMostRecent(sbgc);
   expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#234567');
-  SecondaryBond._copyPropsToMostRecent(wcbgu);
+  SecondaryBond._copyPropsToMostRecent(sbgu);
   expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#345678');
-  SecondaryBond._copyPropsToMostRecent(wcbat);
+  SecondaryBond._copyPropsToMostRecent(sbat);
   expect(SecondaryBond.mostRecentProps().autStroke).toBe('#456789');
-  SecondaryBond._copyPropsToMostRecent(wcbgt);
+  SecondaryBond._copyPropsToMostRecent(sbgt);
   expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#567890');
-  SecondaryBond._copyPropsToMostRecent(wcbOther);
+  SecondaryBond._copyPropsToMostRecent(sbOther);
   expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#678900');
 });
 
@@ -254,7 +254,7 @@ it('fromSavedState static method valid saved state', () => {
     expect(sb2.base2).toBe(sb1.base2);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -292,7 +292,7 @@ it('fromSavedState static method invalid saved state', () => {
     expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -321,17 +321,17 @@ it('fromSavedState updates most recent padding1, padding2, and strokeWidth prope
     expect(mrps.strokeWidth).toBeCloseTo(1.65, 6);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
-it('StrandBond fromSavedState updates most recent stroke property', () => {
+it('PrimaryBond fromSavedState updates most recent stroke property', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'a', 5, 6);
   let b2 = Base.create(svg, 'e', 0, 0);
-  let sb1 = StrandBond.create(svg, b1, b2);
-  sb1.stroke = '#433221';
-  let savableState = sb1.savableState();
+  let pb1 = PrimaryBond.create(svg, b1, b2);
+  pb1.stroke = '#433221';
+  let savableState = pb1.savableState();
 
   function getBaseById(id) {
     let dict = {};
@@ -340,8 +340,8 @@ it('StrandBond fromSavedState updates most recent stroke property', () => {
     return dict[id];
   }
 
-  let sb2 = StrandBond.fromSavedState(savableState, svg, getBaseById);
-  let mrps = StrandBond.mostRecentProps();
+  let pb2 = PrimaryBond.fromSavedState(savableState, svg, getBaseById);
+  let mrps = PrimaryBond.mostRecentProps();
   expect(mrps.stroke).toBe('#433221');
 });
 
@@ -353,12 +353,12 @@ it('SecondaryBond fromSavedState updates most recent stroke properties', () => {
   let bc = Base.create(svg, 'c', 11, 33);
   let bt = Base.create(svg, 't', 4, 99);
 
-  let wcbau = SecondaryBond.create(svg, ba, bu);
-  let wcbgc = SecondaryBond.create(svg, bc, bg);
-  let wcbgu = SecondaryBond.create(svg, bu, bg);
-  let wcbat = SecondaryBond.create(svg, bt, ba);
-  let wcbgt = SecondaryBond.create(svg, bg, bt);
-  let wcbOther = SecondaryBond.create(svg, bg, ba);
+  let sbau = SecondaryBond.create(svg, ba, bu);
+  let sbgc = SecondaryBond.create(svg, bc, bg);
+  let sbgu = SecondaryBond.create(svg, bu, bg);
+  let sbat = SecondaryBond.create(svg, bt, ba);
+  let sbgt = SecondaryBond.create(svg, bg, bt);
+  let sbOther = SecondaryBond.create(svg, bg, ba);
 
   function getBaseById(id) {
     let dict = {};
@@ -370,33 +370,33 @@ it('SecondaryBond fromSavedState updates most recent stroke properties', () => {
     return dict[id];
   }
 
-  wcbau.stroke = '#445522';
-  let auSavableState = wcbau.savableState();
+  sbau.stroke = '#445522';
+  let auSavableState = sbau.savableState();
   SecondaryBond.fromSavedState(auSavableState, svg, getBaseById);
   expect(SecondaryBond.mostRecentProps().autStroke).toBe('#445522');
   
-  wcbgc.stroke = '#aabcde';
-  let gcSavableState = wcbgc.savableState();
+  sbgc.stroke = '#aabcde';
+  let gcSavableState = sbgc.savableState();
   SecondaryBond.fromSavedState(gcSavableState, svg, getBaseById);
   expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#aabcde');
 
-  wcbgu.stroke = '#aaabbb';
-  let guSavablestate = wcbgu.savableState();
+  sbgu.stroke = '#aaabbb';
+  let guSavablestate = sbgu.savableState();
   SecondaryBond.fromSavedState(guSavablestate, svg, getBaseById);
   expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#aaabbb');
 
-  wcbat.stroke = '#654321';
-  let atSavableState = wcbat.savableState();
+  sbat.stroke = '#654321';
+  let atSavableState = sbat.savableState();
   SecondaryBond.fromSavedState(atSavableState, svg, getBaseById);
   expect(SecondaryBond.mostRecentProps().autStroke).toBe('#654321');
 
-  wcbgt.stroke = '#987654';
-  let gtSavableState = wcbgt.savableState();
+  sbgt.stroke = '#987654';
+  let gtSavableState = sbgt.savableState();
   SecondaryBond.fromSavedState(gtSavableState, svg, getBaseById);
   expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#987654');
 
-  wcbOther.stroke = '#a1b2c3';
-  let otherSavableState = wcbOther.savableState();
+  sbOther.stroke = '#a1b2c3';
+  let otherSavableState = sbOther.savableState();
   SecondaryBond.fromSavedState(otherSavableState, svg, getBaseById);
   expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
 });
@@ -410,7 +410,7 @@ it('basic test of create static method', () => {
     expect(typeof(sb) === 'object' && sb !== null).toBeTruthy();
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -424,7 +424,7 @@ it('basic test of constructor', () => {
     expect(() => new StraightBondClass(line, b1, b2)).not.toThrow();
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -444,7 +444,7 @@ it('_validateLine method', () => {
     expect(() => new StraightBondClass(line2, b0, b1)).toThrow();
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -458,7 +458,7 @@ it('base1 and base2 getters', () => {
     expect(sb.base2).toBe(b2);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -480,7 +480,7 @@ it('id getter', () => {
     expect(sb._line.id()).toBe(id);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -521,7 +521,7 @@ it('padding1 getter and setter', () => {
     expect(StraightBondClass.mostRecentProps().padding1).toBeCloseTo(0.25, 6);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -562,7 +562,7 @@ it('padding2 getter and setter', () => {
     expect(StraightBondClass.mostRecentProps().padding2).toBeCloseTo(0.5, 6);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -597,7 +597,7 @@ it('reposition method', () => {
     );
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -629,7 +629,7 @@ it('_reposition method', () => {
     );
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -652,7 +652,7 @@ it('_reposition method updates opacity', () => {
     expect(sb.opacity).toBe(1);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -675,7 +675,7 @@ it('insertBefore method', () => {
     expect(sb._line.position()).toBeLessThan(rect.position());
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -698,7 +698,7 @@ it('insertAfter method', () => {
     expect(sb._line.position()).toBeLessThan(rect.position());
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -707,7 +707,7 @@ it('stroke getter and setter', () => {
     let svg = createNodeSVG();
     let b1 = Base.create(svg, 'A', 1, 1);
     let b2 = Base.create(svg, 'U', 4, 4);
-    let sb = StrandBond.create(svg, b1, b2);
+    let sb = PrimaryBond.create(svg, b1, b2);
 
     sb.stroke = '#456abc';
     
@@ -718,17 +718,17 @@ it('stroke getter and setter', () => {
     expect(sb._line.attr('stroke')).toBe('#456abc');
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
-it('StrandBond stroke setter updates most recent property', () => {
+it('PrimaryBond stroke setter updates most recent property', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'a', 3, 5);
   let b2 = Base.create(svg, 'j', 1, 1);
-  let sb = StrandBond.create(svg, b1, b2);
-  sb.stroke = '#445566';
-  expect(StrandBond.mostRecentProps().stroke).toBe('#445566');
+  let pb = PrimaryBond.create(svg, b1, b2);
+  pb.stroke = '#445566';
+  expect(PrimaryBond.mostRecentProps().stroke).toBe('#445566');
 });
 
 it('SecondaryBond stroke setter updates most recent property', () => {
@@ -739,24 +739,24 @@ it('SecondaryBond stroke setter updates most recent property', () => {
   let bc = Base.create(svg, 'c', 2, 2);
   let bt = Base.create(svg, 't', 5.5, -5.5);
 
-  let wcbau = SecondaryBond.create(svg, bu, ba);
-  let wcbgc = SecondaryBond.create(svg, bc, bg);
-  let wcbgu = SecondaryBond.create(svg, bg, bu);
-  let wcbat = SecondaryBond.create(svg, bt, ba);
-  let wcbgt = SecondaryBond.create(svg, bt, bg);
-  let wcbOther = SecondaryBond.create(svg, ba, bc);
+  let sbau = SecondaryBond.create(svg, bu, ba);
+  let sbgc = SecondaryBond.create(svg, bc, bg);
+  let sbgu = SecondaryBond.create(svg, bg, bu);
+  let sbat = SecondaryBond.create(svg, bt, ba);
+  let sbgt = SecondaryBond.create(svg, bt, bg);
+  let sbOther = SecondaryBond.create(svg, ba, bc);
   
-  wcbau.stroke = '#123456';
+  sbau.stroke = '#123456';
   expect(SecondaryBond.mostRecentProps().autStroke).toBe('#123456');
-  wcbgc.stroke = '#234567';
+  sbgc.stroke = '#234567';
   expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#234567');
-  wcbgu.stroke = '#345678';
+  sbgu.stroke = '#345678';
   expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#345678');
-  wcbat.stroke = '#456789';
+  sbat.stroke = '#456789';
   expect(SecondaryBond.mostRecentProps().autStroke).toBe('#456789');
-  wcbgt.stroke = '#567890';
+  sbgt.stroke = '#567890';
   expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#567890');
-  wcbOther.stroke = '#678900';
+  sbOther.stroke = '#678900';
   expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#678900');
 });
 
@@ -779,7 +779,7 @@ it('strokeWidth getter and setter', () => {
     expect(StraightBondClass.mostRecentProps().strokeWidth).toBeCloseTo(2.3, 6);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -799,7 +799,7 @@ it('opacity getter and private setter', () => {
     expect(sb._line.attr('opacity')).toBeCloseTo(0.4567, 6);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -826,7 +826,7 @@ it('remove method', () => {
     expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
@@ -843,16 +843,16 @@ it('savableState method all properties except className', () => {
     expect(savableState.base2).toBe(b2.id);
   }
 
-  runFor(StrandBond);
+  runFor(PrimaryBond);
   runFor(SecondaryBond);
 });
 
-it('StrandBond savableState method className property', () => {
+it('PrimaryBond savableState method className property', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1.1, 1.2);
   let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let sb = StrandBond.create(svg, b1, b2);
-  expect(sb.savableState().className).toBe('StrandBond');
+  let pb = PrimaryBond.create(svg, b1, b2);
+  expect(pb.savableState().className).toBe('PrimaryBond');
 });
 
 it('SecondaryBond savableState method className property', () => {

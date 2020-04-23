@@ -280,10 +280,10 @@ class StraightBond {
   }
 }
 
-class StrandBond extends StraightBond {
+class PrimaryBond extends StraightBond {
   
   /**
-   * @typedef {Object} StrandBond~MostRecentProps 
+   * @typedef {Object} PrimaryBond~MostRecentProps 
    * @property {number} padding1 
    * @property {number} padding2 
    * @property {string} stroke 
@@ -291,17 +291,17 @@ class StrandBond extends StraightBond {
    */
 
   /**
-   * @returns {StrandBond~MostRecentProps} 
+   * @returns {PrimaryBond~MostRecentProps} 
    */
   static mostRecentProps() {
-    return { ...StrandBond._mostRecentProps };
+    return { ...PrimaryBond._mostRecentProps };
   }
 
   /**
-   * @param {StrandBond} sb 
+   * @param {PrimaryBond} sb 
    */
   static _applyMostRecentProps(sb) {
-    let mrps = StrandBond.mostRecentProps();
+    let mrps = PrimaryBond.mostRecentProps();
     sb.padding1 = mrps.padding1;
     sb.padding2 = mrps.padding2;
     sb.stroke = mrps.stroke;
@@ -309,13 +309,13 @@ class StrandBond extends StraightBond {
   }
 
   /**
-   * @param {StrandBond} sb 
+   * @param {PrimaryBond} sb 
    */
   static _copyPropsToMostRecent(sb) {
-    StrandBond._mostRecentProps.padding1 = sb.padding1;
-    StrandBond._mostRecentProps.padding2 = sb.padding2;
-    StrandBond._mostRecentProps.stroke = sb.stroke;
-    StrandBond._mostRecentProps.strokeWidth = sb.strokeWidth;
+    PrimaryBond._mostRecentProps.padding1 = sb.padding1;
+    PrimaryBond._mostRecentProps.padding2 = sb.padding2;
+    PrimaryBond._mostRecentProps.stroke = sb.stroke;
+    PrimaryBond._mostRecentProps.strokeWidth = sb.strokeWidth;
   }
 
   /**
@@ -323,19 +323,19 @@ class StrandBond extends StraightBond {
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBaseById} getBaseById 
    * 
-   * @throws {Error} If the saved state is not for a strand bond.
+   * @throws {Error} If the saved state is not for a primary bond.
    */
   static fromSavedState(savedState, svg, getBaseById) {
-    if (savedState.className !== 'StrandBond') {
-      throw new Error('Saved state is not for a strand bond.');
+    if (savedState.className !== 'PrimaryBond') {
+      throw new Error('Saved state is not for a primary bond.');
     }
 
     let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
-    let sb = new StrandBond(line, b1, b2);
+    let sb = new PrimaryBond(line, b1, b2);
 
-    StrandBond._copyPropsToMostRecent(sb);
+    PrimaryBond._copyPropsToMostRecent(sb);
     return sb;
   }
 
@@ -344,14 +344,14 @@ class StrandBond extends StraightBond {
    * @param {Base} b1 
    * @param {Base} b2 
    * 
-   * @returns {StrandBond} 
+   * @returns {PrimaryBond} 
    */
   static create(svg, b1, b2) {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id(createUUIDforSVG());
-    let sb = new StrandBond(line, b1, b2);
-    StrandBond._applyMostRecentProps(sb);
+    let sb = new PrimaryBond(line, b1, b2);
+    PrimaryBond._applyMostRecentProps(sb);
     return sb;
   }
 
@@ -367,7 +367,7 @@ class StrandBond extends StraightBond {
    */
   set padding1(p) {
     this._reposition(p, this.padding2);
-    StrandBond._mostRecentProps.padding1 = p;
+    PrimaryBond._mostRecentProps.padding1 = p;
   }
 
   /**
@@ -382,7 +382,7 @@ class StrandBond extends StraightBond {
    */
   set padding2(p) {
     this._reposition(this.padding1, p);
-    StrandBond._mostRecentProps.padding2 = p;
+    PrimaryBond._mostRecentProps.padding2 = p;
   }
 
   /**
@@ -397,7 +397,7 @@ class StrandBond extends StraightBond {
    */
   set stroke(s) {
     this._line.attr({ 'stroke': s });
-    StrandBond._mostRecentProps.stroke = s;
+    PrimaryBond._mostRecentProps.stroke = s;
   }
 
   /**
@@ -412,7 +412,7 @@ class StrandBond extends StraightBond {
    */
   set strokeWidth(sw) {
     this._line.attr({ 'stroke-width': sw });
-    StrandBond._mostRecentProps.strokeWidth = sw;
+    PrimaryBond._mostRecentProps.strokeWidth = sw;
   }
 
   /**
@@ -420,7 +420,7 @@ class StrandBond extends StraightBond {
    */
   savableState() {
     return {
-      className: 'StrandBond',
+      className: 'PrimaryBond',
       line: this._line.id(),
       base1: this.base1.id,
       base2: this.base2.id,
@@ -428,7 +428,7 @@ class StrandBond extends StraightBond {
   }
 }
 
-StrandBond._mostRecentProps = {
+PrimaryBond._mostRecentProps = {
   padding1: 6,
   padding2: 6,
   stroke: '#808080',
@@ -673,6 +673,6 @@ SecondaryBond._mostRecentProps = {
 
 export {
   StraightBond,
-  StrandBond,
+  PrimaryBond,
   SecondaryBond,
 };
