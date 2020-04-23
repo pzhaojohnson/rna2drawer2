@@ -1387,6 +1387,26 @@ describe('Sequence class', () => {
       expect(seq.getBaseAtPosition(4).id).toBe(b1.id);
       expect(seq.getBaseAtPosition(5).id).toBe(b2.id);
     });
+
+    it('updates base numberings', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfasdfasdfasdfasdf');
+      seq.setNumberingAnchor(12, svg);
+      seq.setNumberingIncrement(10, svg);
+      expect(seq.getBaseAtPosition(2).hasNumbering()).toBeTruthy();
+      expect(seq.getBaseAtPosition(12).hasNumbering()).toBeTruthy();
+      let bases = [
+        Base.create(svg, 'a', 1, 2),
+        Base.create(svg, 't', 5, 6),
+        Base.create(svg, 'r', 6, 9),
+      ];
+      seq.appendBases(bases, svg);
+      expect(seq.getBaseAtPosition(2).hasNumbering()).toBeTruthy();
+      expect(seq.getBaseAtPosition(12).hasNumbering()).toBeTruthy();
+      expect(seq.getBaseAtPosition(21).hasNumbering()).toBeFalsy();
+      expect(seq.getBaseAtPosition(22).hasNumbering()).toBeTruthy();
+      expect(seq.getBaseAtPosition(23).hasNumbering()).toBeFalsy();
+    });
   });
 
   it('insertBaseAtPosition method', () => {
