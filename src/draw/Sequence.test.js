@@ -1364,6 +1364,31 @@ describe('Sequence class', () => {
     expect(b4.numbering.number).toBe(4);
   });
 
+  describe('appendBases method', () => {
+    it('sequence already contains one of the given bases', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
+      let b1 = Base.create(svg, 'Q', 1, 5);
+      let b2 = seq.getBaseAtPosition(3);
+      let b3 = Base.create(svg, 'H', 5, 6);
+      expect(seq.length).toBe(4);
+      seq.appendBases([b1, b2, b3], svg);
+      expect(seq.length).toBe(4);
+    });
+
+    it('sequence does not contain any of the given bases', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'QQE', 'qqe');
+      let b1 = Base.create(svg, 'T', 3, 1);
+      let b2 = Base.create(svg, 'B', 3, 3);
+      expect(seq.length).toBe(3);
+      seq.appendBases([b1, b2], svg);
+      expect(seq.length).toBe(5);
+      expect(seq.getBaseAtPosition(4).id).toBe(b1.id);
+      expect(seq.getBaseAtPosition(5).id).toBe(b2.id);
+    });
+  });
+
   it('insertBaseAtPosition method', () => {
     let svg = createNodeSVG();
     let seq = new Sequence(createUUIDforSVG());

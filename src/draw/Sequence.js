@@ -172,12 +172,11 @@ class Sequence {
    */
   static createOutOfView(svg, id, letters) {
     let seq = new Sequence(id);
-    
+    let bases = [];
     for (let i = 0; i < letters.length; i++) {
-      let c = letters.charAt(i);
-      seq.appendBase(Base.createOutOfView(svg, c), svg);
+      bases.push(Base.createOutOfView(svg, letters.charAt(i)));
     }
-
+    seq.appendBases(bases, svg);
     Sequence._applyMostRecentProps(seq, svg);
     return seq;
   }
@@ -591,6 +590,29 @@ class Sequence {
     }
 
     this._bases.push(b);
+    this._updateBaseNumberings(svg);
+  }
+
+  /**
+   * This method has no effect if this sequence already contains
+   * one of the given bases.
+   * 
+   * @param {Array<Base>} bs 
+   * @param {SVG.Svg} svg 
+   */
+  appendBases(bs, svg) {
+    let alreadyContains = false;
+    bs.forEach(b => {
+      if (this.containsBase(b)) {
+        alreadyContains = true;
+      }
+    });
+    if (alreadyContains) {
+      return;
+    }
+    bs.forEach(b => {
+      this._bases.push(b);
+    });
     this._updateBaseNumberings(svg);
   }
 
