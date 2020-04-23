@@ -1,6 +1,5 @@
 import Base from './Base';
 import createNodeSVG from './createNodeSVG';
-import createUUIDforSVG from './createUUIDforSVG';
 import normalizeAngle from './normalizeAngle';
 import Numbering from './Numbering';
 import { CircleBaseAnnotation } from './BaseAnnotation';
@@ -150,7 +149,7 @@ it('createOutOfView static method', () => {
 it('basic test of constructor', () => {
   let svg = createNodeSVG();
   let text = svg.text(add => add.tspan('e'));
-  text.id(createUUIDforSVG());
+  text.id();
 
   text.attr({
     'x': 4.4,
@@ -167,19 +166,19 @@ it('_validateText method', () => {
   
   // valid case
   let text1 = svg.text('A');
-  text1.id(createUUIDforSVG());
+  text1.id();
   text1.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   expect(() => new Base(text1)).not.toThrow();
 
   // more than one character
   let text2 = svg.text('UG');
-  text2.id(createUUIDforSVG());
+  text2.id();
   text2.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   expect(() => new Base(text2)).toThrow();
 
   // empty string
   let text3 = svg.text('');
-  text3.id(createUUIDforSVG());
+  text3.id();
   text3.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   expect(() => new Base(text3)).toThrow();
 
@@ -191,20 +190,20 @@ it('_validateText method', () => {
 
   // text-anchor is not middle
   let text5 = svg.text('A');
-  text5.id(createUUIDforSVG());
+  text5.id();
   text5.attr({ 'dominant-baseline': 'middle' });
   expect(() => new Base(text5)).toThrow();
 
   // dominant-baseline is not middle
   let text6 = svg.text('U');
-  text6.id(createUUIDforSVG());
+  text6.id();
   text6.attr({ 'text-anchor': 'middle' });
   expect(() => new Base(text6)).toThrow();
 });
 
 it('id getter', () => {
   let svg = createNodeSVG();
-  let id = createUUIDforSVG();
+  let id = 'a_unique_id';
   let text = svg.text('A');
   text.attr({ 'id': id, 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   let b = new Base(text);

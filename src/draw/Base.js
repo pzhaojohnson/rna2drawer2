@@ -1,4 +1,3 @@
-import createUUIDforSVG from './createUUIDforSVG';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
@@ -105,7 +104,7 @@ class Base {
    */
   static create(svg, character, xCenter, yCenter) {
     let text = svg.text((add) => add.tspan(character));
-    text.id(createUUIDforSVG());
+    text.id();
 
     text.attr({
       'x': xCenter,
