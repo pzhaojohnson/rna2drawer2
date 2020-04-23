@@ -57,12 +57,12 @@ class InteractiveDrawing {
    * Returns null if no sequence is added.
    * 
    * @param {string} id 
-   * @param {string} letters 
+   * @param {string} characters 
    * 
    * @returns {Sequence|null} 
    */
-  _appendSequenceOutOfView(id, letters) {
-    let seq = this._drawing.appendSequenceOutOfView(id, letters);
+  _appendSequenceOutOfView(id, characters) {
+    let seq = this._drawing.appendSequenceOutOfView(id, characters);
     if (seq) {
       seq.forEachBase(b => {
         this._strictLayoutProps.base.push(new StrictLayoutBaseProps());
@@ -89,14 +89,14 @@ class InteractiveDrawing {
 
   /**
    * @param {string} id 
-   * @param {string} letters 
+   * @param {string} characters 
    * @param {Array<number|null>} secondaryPartners 
    * @param {Array<number|null>} tertiaryPartners 
    */
-  appendStructure(id, letters, secondaryPartners, tertiaryPartners) {
+  appendStructure(id, characters, secondaryPartners, tertiaryPartners) {
     let wasEmpty = this.isEmpty();
     let strictLayoutPartners = this._drawing.strictLayoutPartners();
-    let seq = this._appendSequenceOutOfView(id, letters);
+    let seq = this._appendSequenceOutOfView(id, characters);
     if (!seq) {
       return;
     }

@@ -485,7 +485,7 @@ it('id getter', () => {
 });
 
 describe('SecondaryBond isAUT method', () => {
-  it('works with lowercase letters', () => {
+  it('works with lowercase characters', () => {
     let svg = createNodeSVG();
     let bu = Base.create(svg, 'u', 4, 5);
     let ba = Base.create(svg, 'a', 3, 5);
@@ -518,7 +518,7 @@ describe('SecondaryBond isAUT method', () => {
 });
 
 describe('SecondaryBond isGC method', () => {
-  it('works with lowercase letters', () => {
+  it('works with lowercase characters', () => {
     let svg = createNodeSVG();
     let bc = Base.create(svg, 'c', 3, 5);
     let bg = Base.create(svg, 'g', 8, 9);
@@ -546,7 +546,7 @@ describe('SecondaryBond isGC method', () => {
 });
 
 describe('SecondaryBond isGUT method', () => {
-  it('works with lowercase letters', () => {
+  it('works with lowercase characters', () => {
     let svg = createNodeSVG();
     let bu = Base.create(svg, 'u', 5, 5);
     let bg = Base.create(svg, 'g', 3, 4);

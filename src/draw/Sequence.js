@@ -166,15 +166,15 @@ class Sequence {
   /**
    * @param {SVG.Doc} svg 
    * @param {string} id 
-   * @param {string} letters 
+   * @param {string} characters 
    * 
    * @returns {Sequence} 
    */
-  static createOutOfView(svg, id, letters) {
+  static createOutOfView(svg, id, characters) {
     let seq = new Sequence(id);
     let bases = [];
-    for (let i = 0; i < letters.length; i++) {
-      bases.push(Base.createOutOfView(svg, letters.charAt(i)));
+    for (let i = 0; i < characters.length; i++) {
+      bases.push(Base.createOutOfView(svg, characters.charAt(i)));
     }
     seq.appendBases(bases, svg);
     Sequence._applyMostRecentProps(seq, svg);

@@ -303,8 +303,8 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asdf', 'ab');
       drawing.appendSequenceOutOfView('qwer', 'cd');
-      expect(drawing.getBaseAtStrictLayoutPosition(1).letter).toBe('a');
-      expect(drawing.getBaseAtStrictLayoutPosition(4).letter).toBe('d');
+      expect(drawing.getBaseAtStrictLayoutPosition(1).character).toBe('a');
+      expect(drawing.getBaseAtStrictLayoutPosition(4).character).toBe('d');
     });
 
     it('positions out of range', () => {
@@ -325,10 +325,10 @@ describe('Drawing class', () => {
       drawing.appendSequenceOutOfView('zxcv', 'zxcv');
       let bases = drawing.getBasesInStrictLayoutRange(7, 10);
       expect(bases.length).toBe(4);
-      expect(bases[0].letter).toBe('d');
-      expect(bases[1].letter).toBe('f');
-      expect(bases[2].letter).toBe('z');
-      expect(bases[3].letter).toBe('x');
+      expect(bases[0].character).toBe('d');
+      expect(bases[1].character).toBe('f');
+      expect(bases[2].character).toBe('z');
+      expect(bases[3].character).toBe('x');
     });
 
     it('invalid range', () => {
@@ -364,10 +364,10 @@ describe('Drawing class', () => {
     drawing.addTo(document.body, () => createNodeSVG());
     drawing.appendSequenceOutOfView('qwer', 'as');
     drawing.appendSequenceOutOfView('zxcv', 'gh');
-    let letters = 'asgh';
+    let characters = 'asgh';
     let i = 0;
     drawing.forEachBase(b => {
-      expect(b.letter).toBe(letters.charAt(i));
+      expect(b.character).toBe(characters.charAt(i));
       i++;
     });
     expect(i).toBe(4);
@@ -882,13 +882,13 @@ describe('Drawing class', () => {
     it('runs without throwing', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      let letters = 'asdfasdfasdfasdfqwerqwerqwerqwerqwer';
+      let characters = 'asdfasdfasdfasdfqwerqwerqwerqwerqwer';
       let dtbr = '..(((....(((((....)))))..((..))..)))';
-      drawing.appendSequenceOutOfView('asdf', letters);
+      drawing.appendSequenceOutOfView('asdf', characters);
       let sl = new StrictLayout(
         parseDotBracket(dtbr).secondaryPartners,
         new StrictLayoutGeneralProps(),
-        defaultBaseProps(letters.length),
+        defaultBaseProps(characters.length),
       );
       drawing.applyStrictLayout(sl, 8, 10);
       drawing.forEachBase(b => {

@@ -60,7 +60,7 @@ it('fromSavedState static method valid saved state', () => {
   let savableState = b1.savableState();
   let b2 = Base.fromSavedState(savableState, svg, Math.PI / 3);
   expect(b2._text.id()).toBe(b1._text.id());
-  expect(b2.letter).toBe(b1.letter);
+  expect(b2.character).toBe(b1.character);
   expect(b2.hasHighlighting()).toBeFalsy();
   expect(b2.hasOutline()).toBeFalsy();
   expect(b2.hasNumbering()).toBeFalsy();
@@ -75,7 +75,7 @@ it('fromSavedState static method valid saved state', () => {
   savableState = b1.savableState();
   let b3 = Base.fromSavedState(savableState, svg, Math.PI / 3);
   expect(b3._text.id()).toBe(b1._text.id());
-  expect(b3.letter).toBe(b1.letter);
+  expect(b3.character).toBe(b1.character);
   expect(b3.highlighting._circle.id()).toBe(highlighting._circle.id());
   expect(b3.outline._circle.id()).toBe(outline._circle.id());
   expect(b3.numbering._text.id()).toBe(numbering._text.id());
@@ -126,7 +126,7 @@ it('fromSavedState static method updates most recent properties', () => {
 it('create static method', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1, 2);
-  expect(b.letter).toEqual('A');
+  expect(b.character).toEqual('A');
   expect(b.xCenter).toEqual(1);
   expect(b.yCenter).toEqual(2);
 });
@@ -148,7 +148,7 @@ it('create static method applies most recent properties', () => {
 it('createOutOfView static method', () => {
   let svg = createNodeSVG();
   let b = Base.createOutOfView(svg, 'I');
-  expect(b.letter).toBe('I');
+  expect(b.character).toBe('I');
   expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
 });
 
@@ -216,19 +216,19 @@ it('id getter', () => {
   expect(b.id).toEqual(id);
 });
 
-it('letter getter and setter', () => {
+it('character getter and setter', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1, 2);
-  expect(b.letter).toBe('A');
+  expect(b.character).toBe('A');
 
-  b.letter = 'i';
-  expect(b.letter).toBe('i');
+  b.character = 'i';
+  expect(b.character).toBe('i');
 
   // empty string
-  expect(() => { b.letter = ''; }).toThrow();
+  expect(() => { b.character = ''; }).toThrow();
 
   // more than one character
-  expect(() => { b.letter = 'abc'; }).toThrow();
+  expect(() => { b.character = 'abc'; }).toThrow();
 });
 
 it('xCenter and yCenter getters', () => {

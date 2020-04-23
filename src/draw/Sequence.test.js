@@ -337,24 +337,24 @@ describe('Sequence class', () => {
       return b.xCenter <= -50 || b.yCenter <= -50;
     }
 
-    // one letter
+    // one character
     seq = Sequence.createOutOfView(svg, createUUIDforSVG(), 'o');
     expect(seq.length).toBe(1);
     let b1 = seq.getBaseAtPosition(1);
-    expect(b1.letter).toBe('o');
+    expect(b1.character).toBe('o');
     expect(baseIsOutOfView(b1)).toBeTruthy();
     
-    // multiple letters
+    // multiple characters
     seq = Sequence.createOutOfView(svg, createUUIDforSVG(), 'aqt');
     expect(seq.length).toBe(3);
     b1 = seq.getBaseAtPosition(1);
-    expect(b1.letter).toBe('a');
+    expect(b1.character).toBe('a');
     expect(baseIsOutOfView(b1)).toBeTruthy();
     let b2 = seq.getBaseAtPosition(2);
-    expect(b2.letter).toBe('q');
+    expect(b2.character).toBe('q');
     expect(baseIsOutOfView(b2)).toBeTruthy();
     let b3 = seq.getBaseAtPosition(3);
-    expect(b3.letter).toBe('t');
+    expect(b3.character).toBe('t');
     expect(baseIsOutOfView(b3)).toBeTruthy();
   });
 
@@ -1024,10 +1024,10 @@ describe('Sequence class', () => {
       let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfasdf');
       let bases = seq.getBasesInRange(3, 6);
       expect(bases.length).toBe(4);
-      expect(bases[0].letter).toBe('d');
-      expect(bases[1].letter).toBe('f');
-      expect(bases[2].letter).toBe('a');
-      expect(bases[3].letter).toBe('s');
+      expect(bases[0].character).toBe('d');
+      expect(bases[1].character).toBe('f');
+      expect(bases[2].character).toBe('a');
+      expect(bases[3].character).toBe('s');
     });
 
     it('invalid range', () => {

@@ -535,8 +535,8 @@ class SecondaryBond extends StraightBond {
    * @returns {boolean} 
    */
   isAUT() {
-    let l1 = this.base1.letter.toUpperCase();
-    let l2 = this.base2.letter.toUpperCase();
+    let l1 = this.base1.character.toUpperCase();
+    let l2 = this.base2.character.toUpperCase();
 
     if (l1 === 'A') {
       return l2 === 'U' || l2 === 'T';
@@ -551,8 +551,8 @@ class SecondaryBond extends StraightBond {
    * @returns {boolean} 
    */
   isGC() {
-    let l1 = this.base1.letter.toUpperCase();
-    let l2 = this.base2.letter.toUpperCase();
+    let l1 = this.base1.character.toUpperCase();
+    let l2 = this.base2.character.toUpperCase();
 
     if (l1 === 'G') {
       return l2 === 'C';
@@ -567,8 +567,8 @@ class SecondaryBond extends StraightBond {
    * @returns {boolean} 
    */
   isGUT() {
-    let l1 = this.base1.letter.toUpperCase();
-    let l2 = this.base2.letter.toUpperCase();
+    let l1 = this.base1.character.toUpperCase();
+    let l2 = this.base2.character.toUpperCase();
 
     if (l1 === 'G') {
       return l2 === 'U' || l2 === 'T';

@@ -103,14 +103,14 @@ class Base {
 
   /**
    * @param {SVG.Doc} svg 
-   * @param {string} letter 
+   * @param {string} character 
    * @param {number} xCenter 
    * @param {number} yCenter 
    * 
    * @returns {Base} 
    */
-  static create(svg, letter, xCenter, yCenter) {
-    let text = svg.text((add) => add.tspan(letter));
+  static create(svg, character, xCenter, yCenter) {
+    let text = svg.text((add) => add.tspan(character));
     text.id(createUUIDforSVG());
 
     text.attr({
@@ -127,10 +127,10 @@ class Base {
 
   /**
    * @param {SVG.Doc} svg 
-   * @param {string} letter 
+   * @param {string} character 
    */
-  static createOutOfView(svg, letter) {
-    return Base.create(svg, letter, 0, -200);
+  static createOutOfView(svg, character) {
+    return Base.create(svg, character, 0, -200);
   }
 
   /**
@@ -181,22 +181,22 @@ class Base {
   /**
    * @returns {string} 
    */
-  get letter() {
+  get character() {
     return this._text.text();
   }
 
   /**
-   * @param {string} l 
+   * @param {string} c 
    * 
    * @throws {Error} If the length of the given string is not one.
    */
-  set letter(l) {
-    if (l.length !== 1) {
-      throw new Error('Letter must be a single character.');
+  set character(c) {
+    if (c.length !== 1) {
+      throw new Error('The given string has multiple characters.');
     }
 
     this._text.clear();
-    this._text.tspan(l);
+    this._text.tspan(c);
   }
 
   /**
