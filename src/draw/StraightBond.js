@@ -555,7 +555,7 @@ class SecondaryBond extends StraightBond {
     let l2 = this.base2.letter.toUpperCase();
 
     if (l1 === 'G') {
-      return this.l2 === 'C';
+      return l2 === 'C';
     } else if (l1 === 'C') {
       return l2 === 'G';
     } else {

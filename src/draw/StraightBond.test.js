@@ -484,6 +484,100 @@ it('id getter', () => {
   runFor(SecondaryBond);
 });
 
+describe('SecondaryBond isAUT method', () => {
+  it('works with lowercase letters', () => {
+    let svg = createNodeSVG();
+    let bu = Base.create(svg, 'u', 4, 5);
+    let ba = Base.create(svg, 'a', 3, 5);
+    let sbua = SecondaryBond.create(svg, bu, ba);
+    expect(sbua.isAUT()).toBeTruthy();
+  });
+
+  it('all possible true cases', () => {
+    let svg = createNodeSVG();
+    let ba = Base.create(svg, 'A', 1, 2);
+    let bu = Base.create(svg, 'U', 5, 7);
+    let bt = Base.create(svg, 't', 0, 0);
+    let sbau = SecondaryBond.create(svg, ba, bu);
+    expect(sbau.isAUT()).toBeTruthy();
+    let sbat = SecondaryBond.create(svg, ba, bt);
+    expect(sbat.isAUT()).toBeTruthy();
+    let sbua = SecondaryBond.create(svg, bu, ba);
+    expect(sbua.isAUT()).toBeTruthy();
+    let sbta = SecondaryBond.create(svg, bt, ba);
+    expect(sbta.isAUT()).toBeTruthy();
+  });
+
+  it('a false case', () => {
+    let svg = createNodeSVG();
+    let ba = Base.create(svg, 'A', 1, 5);
+    let bc = Base.create(svg, 'C', 1, 5);
+    let sbac = SecondaryBond.create(svg, ba, bc);
+    expect(sbac.isAUT()).toBeFalsy();
+  });
+});
+
+describe('SecondaryBond isGC method', () => {
+  it('works with lowercase letters', () => {
+    let svg = createNodeSVG();
+    let bc = Base.create(svg, 'c', 3, 5);
+    let bg = Base.create(svg, 'g', 8, 9);
+    let sbcg = SecondaryBond.create(svg, bc, bg);
+    expect(sbcg.isGC()).toBeTruthy();
+  });
+
+  it('all possible true cases', () => {
+    let svg = createNodeSVG();
+    let bg = Base.create(svg, 'G', 3, 5);
+    let bc = Base.create(svg, 'c', 7, 9);
+    let sbgc = SecondaryBond.create(svg, bg, bc);
+    expect(sbgc.isGC()).toBeTruthy();
+    let sbcg = SecondaryBond.create(svg, bc, bg);
+    expect(sbcg.isGC()).toBeTruthy();
+  });
+
+  it('a false case', () => {
+    let svg = createNodeSVG();
+    let bg = Base.create(svg, 'G', 4, 5);
+    let bu = Base.create(svg, 'U', 1, 2);
+    let sbgu = SecondaryBond.create(svg, bg, bu);
+    expect(sbgu.isGC()).toBeFalsy();
+  });
+});
+
+describe('SecondaryBond isGUT method', () => {
+  it('works with lowercase letters', () => {
+    let svg = createNodeSVG();
+    let bu = Base.create(svg, 'u', 5, 5);
+    let bg = Base.create(svg, 'g', 3, 4);
+    let sbug = SecondaryBond.create(svg, bu, bg);
+    expect(sbug.isGUT()).toBeTruthy();
+  });
+
+  it('all possible true cases', () => {
+    let svg = createNodeSVG();
+    let bg = Base.create(svg, 'g', 1, 4);
+    let bu = Base.create(svg, 'U', 2, 2);
+    let bt = Base.create(svg, 't', 9, 8);
+    let sbgu = SecondaryBond.create(svg, bg, bu);
+    expect(sbgu.isGUT()).toBeTruthy();
+    let sbgt = SecondaryBond.create(svg, bg, bt);
+    expect(sbgt.isGUT()).toBeTruthy();
+    let sbug = SecondaryBond.create(svg, bu, bg);
+    expect(sbug.isGUT()).toBeTruthy();
+    let sbtg = SecondaryBond.create(svg, bt, bg);
+    expect(sbtg.isGUT()).toBeTruthy();
+  });
+
+  it('a false case', () => {
+    let svg = createNodeSVG();
+    let bu = Base.create(svg, 'U', 2, 5);
+    let ba = Base.create(svg, 'A', 2, 5);
+    let sbua = SecondaryBond.create(svg, bu, ba);
+    expect(sbua.isGUT()).toBeFalsy();
+  });
+});
+
 it('padding1 getter and setter', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
