@@ -14,12 +14,8 @@ class FiniteStack {
    */
   push(ele) {
     this._stack.push(ele);
-
     if (this._stack.length > this._sizeLimit) {
-
-      // remove the bottom element
       this._stack.shift();
-
       this._sizeLimitWasExceeded = true;
     }
   }
