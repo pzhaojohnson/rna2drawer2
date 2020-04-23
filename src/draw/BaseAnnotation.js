@@ -1,7 +1,6 @@
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
-import createUUIDforSVG from './createUUIDforSVG';
 
 class BaseAnnotation {
   
@@ -131,9 +130,8 @@ class CircleBaseAnnotation extends BaseAnnotation {
    */
   static createNondisplaced(svg, xCenterBase, yCenterBase) {
     let circle = svg.circle(10);
-
+    circle.id();
     circle.attr({
-      'id': createUUIDforSVG(),
       'cx': xCenterBase,
       'cy': yCenterBase
     });

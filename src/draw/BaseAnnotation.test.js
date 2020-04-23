@@ -1,6 +1,5 @@
 import { CircleBaseAnnotation, BaseAnnotation } from './BaseAnnotation';
 import createNodeSVG from './createNodeSVG';
-import createUUIDforSVG from './createUUIDforSVG';
 
 it('check that BaseAnnotation class members are unimplemented', () => {
   let svg = createNodeSVG();
@@ -105,7 +104,7 @@ it('circle _validateCircle', () => {
   
   // valid circle
   let circle = svg.circle(10);
-  circle.attr({ 'id': createUUIDforSVG() });
+  circle.id();
   expect(() => new CircleBaseAnnotation(circle, 0, 0, 0)).not.toThrow();
 
   // ID that is not a string
@@ -121,7 +120,7 @@ it('circle _validateCircle', () => {
 it('circle id getter', () => {
   let svg = createNodeSVG();
   let circle = svg.circle(8);
-  let id = createUUIDforSVG();
+  let id = 'a_unique_id';
   circle.id(id);
   let cba = new CircleBaseAnnotation(circle, 0, 0, 0);
   expect(cba.id).toBe(id);
