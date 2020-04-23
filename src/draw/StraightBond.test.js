@@ -1,6 +1,5 @@
 import { StraightBond, PrimaryBond, SecondaryBond } from './StraightBond';
 import createNodeSVG from './createNodeSVG';
-import createUUIDforSVG from './createUUIDforSVG';
 import Base from './Base';
 
 it('mostRecentProps static method returns a new object', () => {
@@ -418,7 +417,7 @@ it('basic test of constructor', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
     let line = svg.line(0, 0.22, 2.45, -1);
-    line.id(createUUIDforSVG());
+    line.id();
     let b1 = Base.create(svg, 'G', -1, -2);
     let b2 = Base.create(svg, 'C', 10, 0.002);
     expect(() => new StraightBondClass(line, b1, b2)).not.toThrow();
@@ -435,7 +434,7 @@ it('_validateLine method', () => {
     let b2 = Base.create(svg, 'U', 2, 3);
 
     let line1 = svg.line(1, 1, 2, 2);
-    line1.id(createUUIDforSVG());
+    line1.id();
     expect(() => new StraightBondClass(line1, b1, b2)).not.toThrow();
     
     // ID is not a string
@@ -469,7 +468,7 @@ it('id getter', () => {
     let b1 = Base.create(svg, 'U', 2, 3);
 
     let line = svg.line(1, 2, 3, 4);
-    let id = createUUIDforSVG();
+    let id = 'a_unique_id';
     line.attr({ 'id': id });
     let sb = new StraightBondClass(line, b0, b1);
     

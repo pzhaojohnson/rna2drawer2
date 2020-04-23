@@ -1,5 +1,4 @@
 import distanceBetween from './distanceBetween';
-import createUUIDforSVG from './createUUIDforSVG';
 
 class StraightBond {
 
@@ -349,7 +348,7 @@ class PrimaryBond extends StraightBond {
   static create(svg, b1, b2) {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
-    line.id(createUUIDforSVG());
+    line.id();
     let sb = new PrimaryBond(line, b1, b2);
     PrimaryBond._applyMostRecentProps(sb);
     return sb;
@@ -525,7 +524,7 @@ class SecondaryBond extends StraightBond {
   static create(svg, b1, b2) {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
-    line.id(createUUIDforSVG());
+    line.id();
     let sb = new SecondaryBond(line, b1, b2);
     SecondaryBond._applyMostRecentProps(sb);
     return sb;
