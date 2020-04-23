@@ -56,7 +56,7 @@ it('fromSavedState static method valid saved state', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'A', 1, 2);
 
-  // no highlighting, outline, numbering, or annotations
+  // no highlighting, outline or numbering
   let savableState = b1.savableState();
   let b2 = Base.fromSavedState(savableState, svg, Math.PI / 3);
   expect(b2._text.id()).toBe(b1._text.id());
@@ -64,14 +64,11 @@ it('fromSavedState static method valid saved state', () => {
   expect(b2.hasHighlighting()).toBeFalsy();
   expect(b2.hasOutline()).toBeFalsy();
   expect(b2.hasNumbering()).toBeFalsy();
-  expect(b2.hasNoAnnotations()).toBeTruthy();
-
-  // with highlighting, outline, numbering, and annotations
+  
+  // with highlighting, outline and numbering
   let highlighting = b1.addCircleHighlighting(svg);
   let outline = b1.addCircleOutline(svg);
   let numbering = b1.addNumbering(svg, 3, Math.PI / 3);
-  let annotation1 = b1.addCircleAnnotation(svg);
-  let annotation2 = b1.addCircleAnnotation(svg);
   savableState = b1.savableState();
   let b3 = Base.fromSavedState(savableState, svg, Math.PI / 3);
   expect(b3._text.id()).toBe(b1._text.id());
@@ -80,8 +77,6 @@ it('fromSavedState static method valid saved state', () => {
   expect(b3.outline._circle.id()).toBe(outline._circle.id());
   expect(b3.numbering._text.id()).toBe(numbering._text.id());
   expect(b3.numbering._line.id()).toBe(numbering._line.id());
-  expect(b3._annotations[0]._circle.id()).toBe(annotation1._circle.id());
-  expect(b3._annotations[1]._circle.id()).toBe(annotation2._circle.id());
 });
 
 it('fromSavedState static method invalid class name', () => {
@@ -242,7 +237,7 @@ it('xCenter and yCenter getters', () => {
   expect(b.yCenter).toBeCloseTo(12.4, 6);
 });
 
-it('move with no highlighting, outline, numbering, or annotations', () => {
+it('move with no highlighting, outline or numbering', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 0, 0);
   
@@ -255,17 +250,14 @@ it('move with no highlighting, outline, numbering, or annotations', () => {
   expect(b.yCenter).toEqual(8);
 });
 
-it('move with highlighting, outline, numbering, and annotations', () => {
+it('move with highlighting, outline and numbering', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'G', 0.2, -0.5);
   let highlighting = b.addCircleHighlighting(svg);
   let outline = b.addCircleOutline(svg);
   let numbering = b.addNumbering(svg, 0, 4 * Math.PI / 3);
   let eNumbering = Numbering.create(svg, 0, b.xCenter, b.yCenter, 4 * Math.PI / 3);
-  let annotation1 = b.addCircleAnnotation(svg);
-  annotation1.shift(1, 2, b.xCenter, b.yCenter, Math.PI / 3);
-  let annotation2 = b.addCircleAnnotation(svg);
-
+  
   b.move(100.5, 300.111, 2 * Math.PI / 3, 5 * Math.PI / 3);
   eNumbering.reposition(100.5, 300.111, 5 * Math.PI / 3);
   
@@ -287,12 +279,6 @@ it('move with highlighting, outline, numbering, and annotations', () => {
   expect(numbering._line.attr('y1')).toBeCloseTo(eNumbering._line.attr('y1'), 6);
   expect(numbering._line.attr('x2')).toBeCloseTo(eNumbering._line.attr('x2'), 6);
   expect(numbering._line.attr('y2')).toBeCloseTo(eNumbering._line.attr('y2'), 6);
-
-  expect(annotation1.xCenter).toBeCloseTo(99.26794919243112, 6);
-  expect(annotation1.yCenter).toBeCloseTo(301.9770254037844, 6);
-
-  expect(annotation2.xCenter).toBeCloseTo(100.5, 6);
-  expect(annotation2.yCenter).toBeCloseTo(300.111, 6);
 });
 
 it('distanceBetweenCenters method', () => {
@@ -639,181 +625,34 @@ it('removeNumbering method', () => {
   expect(b.hasNumbering()).toBeFalsy();
 });
 
-it('addCircleAnnotation method', () => {
-  let svg = createNodeSVG();
-  let b = Base.create(svg, 'k', 1, 2.22);
-
-  let ann1 = b.addCircleAnnotation(svg);
-  expect(b.numAnnotations).toBe(1);
-  
-  // can add multiple annotations
-  let ann2 = b.addCircleAnnotation(svg);
-  expect(b.numAnnotations).toBe(2);
-
-  let annotation1 = b.getAnnotationById(ann1.id);
-  expect(annotation1.id).toBe(ann1.id);
-  let annotation2 = b.getAnnotationById(ann2.id);
-  expect(annotation2.id).toBe(ann2.id);
-});
-
-it('addCircleAnnotationFromSavedState method', () => {
-  let svg = createNodeSVG();
-  let b = Base.create(svg, 'k', 1, 2.22);
-
-  let cba1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
-  let savedState1 = cba1.savableState();
-  let ann1 = b.addCircleAnnotationFromSavedState(savedState1, svg, Math.PI / 3);
-  expect(b.numAnnotations).toBe(1);
-
-  // can add multiple annotations
-  let cba2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
-  let savedState2 = cba2.savableState();
-  let ann2 = b.addCircleAnnotationFromSavedState(savedState2, svg, Math.PI / 3);
-  expect(b.numAnnotations).toBe(2);
-
-  let annotation1 = b.getAnnotationById(ann1.id);
-  let annotation2 = b.getAnnotationById(ann2.id);
-  expect(annotation1.id).toBe(ann1.id);
-  expect(annotation1._circle.id()).toBe(cba1._circle.id());
-  expect(annotation2.id).toBe(ann2.id);
-  expect(annotation2._circle.id()).toBe(cba2._circle.id());
-});
-
-it('numAnnotations getter', () => {
-  let svg = createNodeSVG();
-  let b = Base.create(svg, 'A', 1.3, 1.4);
-  expect(b.numAnnotations).toBe(0);
-  b.addCircleAnnotation(svg);
-  let ann2 = b.addCircleAnnotation(svg);
-  b.addCircleAnnotation(svg);
-  expect(b.numAnnotations).toBe(3);
-  b.removeAnnotationById(ann2.id);
-  expect(b.numAnnotations).toBe(2);
-  b.removeAnnotations();
-  expect(b.numAnnotations).toBe(0);
-});
-
-it('hasNoAnnotations method', () => {
-  let svg = createNodeSVG();
-  let b = Base.create(svg, 'A', 1.3, 1.4);
-  expect(b.hasNoAnnotations()).toBeTruthy();
-  b.addCircleAnnotation(svg);
-  let ann2 = b.addCircleAnnotation(svg);
-  b.addCircleAnnotation(svg);
-  expect(b.hasNoAnnotations()).toBeFalsy();
-  b.removeAnnotationById(ann2.id);
-  expect(b.hasNoAnnotations()).toBeFalsy();
-  b.removeAnnotations();
-  expect(b.hasNoAnnotations()).toBeTruthy();
-});
-
-it('getAnnotationById method', () => {
-  let svg = createNodeSVG();
-  let b = Base.create(svg, 'g', 0, 0);
-
-  let ann1 = b.addCircleAnnotation(svg);
-  expect(b.getAnnotationById(ann1.id).id).toBe(ann1.id);
-  expect(b.getAnnotationById(ann1.id)._circle.id()).toBe(ann1._circle.id());
-  
-  let ann2 = b.addCircleAnnotation(svg);
-  expect(b.getAnnotationById(ann1.id).id).toBe(ann1.id);
-  expect(b.getAnnotationById(ann1.id)._circle.id()).toBe(ann1._circle.id());
-  expect(b.getAnnotationById(ann2.id).id).toBe(ann2.id);
-  expect(b.getAnnotationById(ann2.id)._circle.id()).toBe(ann2._circle.id());
-
-  // no annotation has the given ID
-  let outline = b.addCircleOutline(svg);
-  expect(b.getAnnotationById(outline.id)).toBe(null);
-
-  // calling when base has no annotations
-  b.removeAnnotations();
-  expect(b.getAnnotationById(outline.id)).toBe(null);
-});
-
-it('removeAnnotationById method', () => {
-  let svg = createNodeSVG();
-  let b = Base.create(svg, 'g', 0, 0);
-
-  let ann1 = b.addCircleAnnotation(svg);
-  let ann2 = b.addCircleAnnotation(svg);
-  expect(b.numAnnotations).toBe(2);
-  expect(b.getAnnotationById(ann1.id).id).toBe(ann1.id);
-  expect(b.getAnnotationById(ann1.id)._circle.id()).toBe(ann1._circle.id());
-  expect(b.getAnnotationById(ann2.id).id).toBe(ann2.id);
-  expect(b.getAnnotationById(ann2.id)._circle.id()).toBe(ann2._circle.id());
-
-  // no annotation has the given ID
-  let outline = b.addCircleOutline(svg);
-  expect(() => b.removeAnnotationById(outline.id)).not.toThrow();
-  expect(b.numAnnotations).toBe(2);
-
-  let id1 = ann1.id;
-  b.removeAnnotationById(ann1.id);
-  expect(b.numAnnotations).toBe(1);
-  expect(b.getAnnotationById(id1)).toBe(null);
-
-  // annotation 2 is still present
-  expect(b.getAnnotationById(ann2.id).id).toBe(ann2.id);
-  expect(b.getAnnotationById(ann2.id)._circle.id()).toBe(ann2._circle.id());
-
-  let id2 = ann2.id;
-  b.removeAnnotationById(ann2.id);
-  expect(b.numAnnotations).toBe(0);
-  expect(b.getAnnotationById(id2)).toBe(null);
-  
-  // calling when base has no annotations
-  expect(() => b.removeAnnotationById(id1)).not.toThrow();
-});
-
-it('removeAnnotations method', () => {
-  let svg = createNodeSVG();
-  let b = Base.create(svg, 'l', 1, 7);
-
-  // calling when has no annotations
-  expect(() => b.removeAnnotations()).not.toThrow();
-  expect(b.numAnnotations).toBe(0);
-  
-  let ann1 = b.addCircleAnnotation(svg);
-  let ann2 = b.addCircleAnnotation(svg);
-  expect(b.numAnnotations).toBe(2);
-  b.removeAnnotations();
-  expect(b.numAnnotations).toBe(0);
-});
-
 it('remove method', () => {
   let svg = createNodeSVG();
   
-  // with no highlighting, outline, numbering, or annotations
+  // with no highlighting, outline or numbering
   let b1 = Base.create(svg, 'q', 2.2, 3.3);
   let textId = b1._text.id();
   expect(svg.findOne('#' + textId)).not.toBe(null);
   b1.remove();
   expect(svg.findOne('#' + textId)).toBe(null);
 
-  // with highlighting, outline, numbering, and annotations
+  // with highlighting, outline and numbering
   let b2 = Base.create(svg, '1', 1, 1);
   let highlighting = b2.addCircleHighlighting(svg);
   let outline = b2.addCircleOutline(svg);
   let numbering = b2.addNumbering(svg, 5, Math.PI / 3);
-  let ann1 = b2.addCircleAnnotation(svg);
-  let ann2 = b2.addCircleAnnotation(svg);
-
+  
   textId = b2._text.id();
   let highlightingCircleId = highlighting._circle.id();
   let outlineCircleId = outline._circle.id();
   let numberingTextId = numbering._text.id();
   let numberingLineId = numbering._line.id();
-  let annCircleId1 = ann1._circle.id();
-  let annCircleId2 = ann2._circle.id();
-
+  
   expect(svg.findOne('#' + textId)).not.toBe(null);
   expect(svg.findOne('#' + highlightingCircleId)).not.toBe(null);
   expect(svg.findOne('#' + outlineCircleId)).not.toBe(null);
   expect(svg.findOne('#' + numberingTextId)).not.toBe(null);
   expect(svg.findOne('#' + numberingLineId)).not.toBe(null);
-  expect(svg.findOne('#' + annCircleId1)).not.toBe(null);
-  expect(svg.findOne('#' + annCircleId2)).not.toBe(null);
-
+  
   b2.remove();
 
   expect(svg.findOne('#' + textId)).toBe(null);
@@ -821,35 +660,28 @@ it('remove method', () => {
   expect(svg.findOne('#' + outlineCircleId)).toBe(null);
   expect(svg.findOne('#' + numberingTextId)).toBe(null);
   expect(svg.findOne('#' + numberingLineId)).toBe(null);
-  expect(svg.findOne('#' + annCircleId1)).toBe(null);
-  expect(svg.findOne('#' + annCircleId2)).toBe(null);
 });
 
 it('savableState method', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'A', 1.3, 1.4);
   
-  // no highlighting, outline, numbering, or annotations
+  // no highlighting, outline or numbering
   let savableState = b.savableState();
   expect(savableState.className).toBe('Base');
   expect(savableState.text).toBe(b._text.id());
   expect(savableState.highlighting).toBe(undefined);
   expect(savableState.outline).toBe(undefined);
   expect(savableState.numbering).toBe(undefined);
-  expect(savableState.annotations.length).toBe(0);
-
-  // with highlighting, outline, numbering, and annotations
+  
+  // with highlighting, outline and numbering
   let highlighting = b.addCircleHighlighting(svg);
   let outline = b.addCircleOutline(svg);
   let numbering = b.addNumbering(svg, 2, Math.PI / 3);
-  let annotation1 = b.addCircleAnnotation(svg);
-  let annotation2 = b.addCircleAnnotation(svg);
   savableState = b.savableState();
   expect(savableState.className).toBe('Base');
   expect(savableState.text).toBe(b._text.id());
   expect(savableState.highlighting.className).toBe('CircleBaseAnnotation');
   expect(savableState.outline.className).toBe('CircleBaseAnnotation');
   expect(savableState.numbering.className).toBe('Numbering');
-  expect(savableState.annotations[0].className).toBe('CircleBaseAnnotation');
-  expect(savableState.annotations[1].className).toBe('CircleBaseAnnotation');
 });

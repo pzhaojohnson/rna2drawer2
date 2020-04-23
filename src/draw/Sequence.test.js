@@ -279,11 +279,11 @@ describe('Sequence class', () => {
 
     it('passes clockwise normal angle to bases', () => {
       
-      // check by including a base with a circle annotation
+      // check by including a base with an outline
       let svg = createNodeSVG();
       let seq1 = new Sequence(createUUIDforSVG());
       let b1 = Base.create(svg, 'g', 4, 5);
-      let ca1 = b1.addCircleAnnotation(svg);
+      let ca1 = b1.addCircleOutline(svg);
       seq1.appendBase(b1, svg);
 
       let savableState = seq1.savableState();
@@ -291,8 +291,8 @@ describe('Sequence class', () => {
       expect(seq2.length).toBe(1);
       let b2 = seq2.getBaseAtPosition(1);
       expect(b1._text.id()).toBe(b2._text.id());
-      expect(b2.numAnnotations).toBe(1);
-      expect(b2.getAnnotationById(ca1.id)).not.toBe(null);
+      expect(b2.hasOutline()).toBeTruthy();
+      expect(b2.outline.id).toBe(ca1.id);
     });
 
     it('sets numbering properties', () => {

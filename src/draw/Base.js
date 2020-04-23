@@ -69,12 +69,6 @@ class Base {
       b.addNumberingFromSavedState(savedState.numbering, svg);
     }
 
-    if (savedState.annotations) {
-      savedState.annotations.forEach(
-        ann => b.addCircleAnnotationFromSavedState(ann, svg, clockwiseNormalAngle)
-      );
-    }
-
     Base._copyPropsToMostRecent(b);
     return b;
   }
@@ -143,7 +137,6 @@ class Base {
     this._highlighting = null;
     this._outline = null;
     this._numbering = null;
-    this._annotations = [];
   }
 
   /**
@@ -236,10 +229,6 @@ class Base {
     if (this._numbering !== null) {
       this._numbering.reposition(xCenter, yCenter, outerNormalAngle);
     }
-
-    this._annotations.forEach(
-      ann => ann.reposition(xCenter, yCenter, clockwiseNormalAngle)
-    );
   }
 
   /**
@@ -566,100 +555,11 @@ class Base {
     }
   }
 
-  /**
-   * @param {SVG.Doc} svg 
-   * 
-   * @returns {CircleBaseAnnotation} 
-   */
-  addCircleAnnotation(svg) {
-    this._annotations.push(CircleBaseAnnotation.createNondisplaced(
-      svg, this.xCenter, this.yCenter
-    ));
-
-    return this._annotations[this._annotations.length - 1];
-  }
-
-  /**
-   * @param {CircleBaseAnnotation~SavableState} savedState 
-   * @param {SVG.Doc} svg 
-   * @param {number} clockwiseNormalAngle 
-   * 
-   * @returns {CircleBaseAnnotation} 
-   */
-  addCircleAnnotationFromSavedState(savedState, svg, clockwiseNormalAngle) {
-    this._annotations.push(CircleBaseAnnotation.fromSavedState(
-      savedState,
-      svg,
-      this.xCenter,
-      this.yCenter,
-      clockwiseNormalAngle,
-    ));
-
-    return this._annotations[this._annotations.length - 1];
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get numAnnotations() {
-    return this._annotations.length;
-  }
-
-  /**
-   * @returns {boolean} 
-   */
-  hasNoAnnotations() {
-    return this.numAnnotations === 0;
-  }
-
-  /**
-   * Returns null if no annotation has the given ID.
-   * 
-   * @param {string} id 
-   * 
-   * @returns {CircleBaseAnnotation|null} 
-   */
-  getAnnotationById(id) {
-    for (let i = 0; i < this._annotations.length; i++) {
-      if (this._annotations[i].id === id) {
-        return this._annotations[i];
-      }
-    }
-    
-    return null;
-  }
-
-  /**
-   * Has no effect if no annotation has the given ID.
-   * 
-   * @param {string} id 
-   */
-  removeAnnotationById(id) {
-    let i = null;
-
-    for (let j = 0; j < this._annotations.length; j++) {
-      if (this._annotations[j].id === id) {
-        i = j;
-      }
-    }
-
-    if (i !== null) {
-      this._annotations[i].remove();
-      this._annotations.splice(i, 1);
-    }
-  }
-
-  removeAnnotations() {
-    this._annotations.forEach(ann => ann.remove());
-    this._annotations = [];
-  }
-
   remove() {
     this.removeHighlighting();
     this.removeOutline();
     this.removeNumbering();
-    this.removeAnnotations();
-
+    
     this._text.remove();
   }
 
@@ -670,7 +570,6 @@ class Base {
    * @property {CircleBaseAnnotation~SavableState|undefined} highlighting 
    * @property {CircleBaseAnnotation~SavableState|undefined} outline 
    * @property {Numbering~SavableState|undefined} numbering 
-   * @property {Array<CircleBaseAnnotation~SavableState>} annotations 
    */
 
   /**
@@ -693,12 +592,6 @@ class Base {
     if (this.hasNumbering()) {
       savableState.numbering = this._numbering.savableState();
     }
-
-    savableState.annotations = [];
-
-    this._annotations.forEach(
-      ann => savableState.annotations.push(ann.savableState())
-    );
 
     return savableState;
   }
