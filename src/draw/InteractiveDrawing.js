@@ -100,7 +100,7 @@ class InteractiveDrawing {
     if (!seq) {
       return;
     }
-    this._drawing.addStrandBondsForSequence(seq);
+    this._drawing.addPrimaryBondsForSequence(seq);
     this._drawing.applyStrictLayoutPartners(
       strictLayoutPartners.concat(secondaryPartners),
     );
