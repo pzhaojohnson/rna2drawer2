@@ -118,7 +118,6 @@ class CircleBaseAnnotation extends BaseAnnotation {
     if (savedState.className !== 'CircleBaseAnnotation') {
       throw new Error('Saved state is not for a circle base annotation.');
     }
-    
     let circle = svg.findOne('#' + savedState.circle);
     return new CircleBaseAnnotation(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle);
   }
@@ -135,7 +134,6 @@ class CircleBaseAnnotation extends BaseAnnotation {
       'cx': xCenterBase,
       'cy': yCenterBase
     });
-    
     return new CircleBaseAnnotation(circle, xCenterBase, yCenterBase, 0);
   }
 
@@ -206,14 +204,12 @@ class CircleBaseAnnotation extends BaseAnnotation {
       this.xCenter,
       this.yCenter,
     );
-
     let angle = angleBetween(
       xCenterBase,
       yCenterBase,
       this.xCenter,
       this.yCenter,
     );
-
     this._displacementAngle = normalizeAngle(angle, baseClockwiseNormalAngle) - baseClockwiseNormalAngle;
   }
 
@@ -243,7 +239,6 @@ class CircleBaseAnnotation extends BaseAnnotation {
       'cx': this.xCenter + xShift,
       'cy': this.yCenter + yShift,
     });
-
     this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
   }
 
@@ -257,7 +252,6 @@ class CircleBaseAnnotation extends BaseAnnotation {
    */
   reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
     let angle = baseClockwiseNormalAngle + this._displacementAngle;
-
     this._circle.attr({
       'cx': xCenterBase + (this._displacementLength * Math.cos(angle)),
       'cy': yCenterBase + (this._displacementLength * Math.sin(angle)),
