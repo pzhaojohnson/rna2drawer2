@@ -161,7 +161,7 @@ it('basic test of constructor', () => {
     'x': 4.4,
     'y': 5.5,
     'text-anchor': 'middle',
-    'dy': '0.4em',
+    'dominant-baseline': 'middle',
   });
   
   expect(() => new Base(text)).not.toThrow();
@@ -173,34 +173,34 @@ it('_validateText method', () => {
   // valid case
   let text1 = svg.text('A');
   text1.id(createUUIDforSVG());
-  text1.attr({ 'text-anchor': 'middle', 'dy': '0.4em' });
+  text1.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   expect(() => new Base(text1)).not.toThrow();
 
   // more than one character
   let text2 = svg.text('UG');
   text2.id(createUUIDforSVG());
-  text2.attr({ 'text-anchor': 'middle', 'dy': '0.4em' });
+  text2.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   expect(() => new Base(text2)).toThrow();
 
   // empty string
   let text3 = svg.text('');
   text3.id(createUUIDforSVG());
-  text3.attr({ 'text-anchor': 'middle', 'dy': '0.4em' });
+  text3.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   expect(() => new Base(text3)).toThrow();
 
   // ID is not a string
   let text4 = svg.text('C');
   text4.id(0.1234);
-  text4.attr({ 'text-anchor': 'middle', 'dy': '0.4em' });
+  text4.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   expect(() => new Base(text4)).toThrow();
 
   // text-anchor is not middle
   let text5 = svg.text('A');
   text5.id(createUUIDforSVG());
-  text5.attr({ 'dy': '0.4em' });
+  text5.attr({ 'dominant-baseline': 'middle' });
   expect(() => new Base(text5)).toThrow();
 
-  // dy is not 0.4em
+  // dominant-baseline is not middle
   let text6 = svg.text('U');
   text6.id(createUUIDforSVG());
   text6.attr({ 'text-anchor': 'middle' });
@@ -211,7 +211,7 @@ it('id getter', () => {
   let svg = createNodeSVG();
   let id = createUUIDforSVG();
   let text = svg.text('A');
-  text.attr({ 'id': id, 'text-anchor': 'middle', 'dy': '0.4em' });
+  text.attr({ 'id': id, 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   let b = new Base(text);
   expect(b.id).toEqual(id);
 });

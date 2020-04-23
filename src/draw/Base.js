@@ -117,7 +117,7 @@ class Base {
       'x': xCenter,
       'y': yCenter,
       'text-anchor': 'middle',
-      'dy': '0.4em',
+      'dominant-baseline': 'middle',
     });
 
     let b = new Base(text);
@@ -166,8 +166,8 @@ class Base {
       throw new Error('The text-anchor property must be middle.');
     }
 
-    if (this._text.attr('dy') !== '0.4em') {
-      throw new Error('The dy property must be 0.4em.');
+    if (this._text.attr('dominant-baseline') !== 'middle') {
+      throw new Error('dominant-baseline must be middle.');
     }
   }
 
