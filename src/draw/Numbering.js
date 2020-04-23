@@ -1,7 +1,6 @@
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
-import createUUIDforSVG from './createUUIDforSVG';
 
 class Numbering {
 
@@ -159,10 +158,10 @@ class Numbering {
   static create(svg, number, xCenterBase, yCenterBase, angle) {
     let lc = Numbering._lineCoordinates(xCenterBase, yCenterBase, angle, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
-    line.id(createUUIDforSVG());
+    line.id();
     
     let text = svg.text((add) => add.tspan(number.toString()));
-    text.id(createUUIDforSVG());
+    text.id();
     let tp = Numbering._textPositioning(line);
 
     text.attr({

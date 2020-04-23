@@ -1,6 +1,5 @@
 import Numbering from './Numbering';
 import createNodeSVG from './createNodeSVG';
-import createUUIDforSVG from './createUUIDforSVG';
 import angleBetween from './angleBetween';
 import distanceBetween from './distanceBetween';
 import normalizeAngle from './normalizeAngle';
@@ -237,9 +236,9 @@ it('create static method applies most recent properties', () => {
 it('basic test of constructor', () => {
   let svg = createNodeSVG();
   let text = svg.text(add => add.tspan('12'));
-  text.id(createUUIDforSVG());
+  text.id();
   let line = svg.line(1, 2, 3, 4);
-  text.id(createUUIDforSVG());
+  line.id();
   expect(() => new Numbering(text, line, 5, 6)).not.toThrow();
 });
 
@@ -249,7 +248,7 @@ it('_validateText', () => {
 
   // valid text
   let text = svg.text(add => add.tspan('-2'));
-  text.id(createUUIDforSVG());
+  text.id();
   expect(() => new Numbering(text, line, 0, 0)).not.toThrow();
 
   /* It does not seem possible using the SVG.js framework to create an element
@@ -262,7 +261,7 @@ it('_validateText', () => {
 
   // text that is not a number
   text = svg.text(add => add.tspan('asdf'));
-  text.id(createUUIDforSVG());
+  text.id();
   expect(() => new Numbering(text, line, 5, 6));
 
   // text that is a number but not an integer
@@ -273,10 +272,10 @@ it('_validateText', () => {
 it('id getter', () => {
   let svg = createNodeSVG();
   let text = svg.text(add => add.tspan('1'));
-  let textId = createUUIDforSVG();
+  let textId = 'a_unique_text_id';
   text.id(textId);
   let line = svg.line(7, 8, 9, 0);
-  line.id(createUUIDforSVG());
+  line.id();
   let n = new Numbering(text, line, 8, 7);
   expect(n.id).toBe(textId);
 });
@@ -284,11 +283,11 @@ it('id getter', () => {
 it('_validateLine', () => {
   let svg = createNodeSVG();
   let text = svg.text(add => add.tspan('6'));
-  text.id(createUUIDforSVG());
+  text.id();
 
   // valid line
   let line = svg.line(0, 2, 3, 8);
-  line.id(createUUIDforSVG())
+  line.id()
   expect(() => new Numbering(text, line, -2, -5)).not.toThrow();
 
   /* It does not seem possible using the SVG.js framework to create an element
