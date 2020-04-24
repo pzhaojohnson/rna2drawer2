@@ -82,22 +82,14 @@ it('type getter', () => {
   expect(cba.type).toBe('circle');
 })
 
-it('circle _validateCircle', () => {
-  let svg = createNodeSVG();
-  
-  // valid circle
-  let circle = svg.circle(10);
-  circle.id();
-  expect(() => new CircleBaseAnnotation(circle, 0, 0, 0)).not.toThrow();
-
-  // ID that is not a string
-  circle = svg.circle(10);
-  circle.attr({ 'id': 2 });
-  expect(() => new CircleBaseAnnotation(circle, 0, 0, 0)).toThrow();
-
-  /* It does not seem possible to create an element without an ID with the
-  SVG.js framework. */
-
+describe('_validateCircle method', () => {
+  it('initializes ID if not already initialized', () => {
+    let svg = createNodeSVG();
+    let c = svg.circle(10);
+    expect(c.attr('id')).toBe(undefined);
+    let cba = new CircleBaseAnnotation(c, 0, 0, 0);
+    expect(c.attr('id')).not.toBe(undefined);
+  });
 });
 
 it('circle id getter', () => {

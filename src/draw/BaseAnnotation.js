@@ -133,14 +133,10 @@ class CircleBaseAnnotation extends BaseAnnotation {
   }
 
   /**
-   * Validates the circle of this base annotation.
-   * 
-   * @throws {Error} If the ID of the circle is not a string or an empty string.
+   * Initializes the ID of the circle if it is not already initialized.
    */
   _validateCircle() {
-    if (typeof(this._circle.id()) !== 'string' || this._circle.id().length === 0) {
-      throw new Error('The circle must have a unique ID.');
-    }
+    this._circle.id();
   }
 
   /**
