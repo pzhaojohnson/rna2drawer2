@@ -6,10 +6,10 @@ class BaseAnnotation {
   
   /**
    * @param {SVG.Doc} svg 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    */
-  static createNondisplaced(svg, xCenterBase, yCenterBase) {}
+  static createNondisplaced(svg, xBaseCenter, yBaseCenter) {}
 
   /**
    * @returns {string} 
@@ -46,18 +46,18 @@ class BaseAnnotation {
    * 
    * @param {number} xShift 
    * @param {number} yShift 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} baseClockwiseNormalAngle 
    */
-  shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {}
+  shift(xShift, yShift, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {}
 
   /**
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} baseClockwiseNormalAngle 
    */
-  reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {}
+  reposition(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {}
 
   /**
    * @param {SVG.Element} ele 
@@ -82,47 +82,47 @@ class CircleBaseAnnotation extends BaseAnnotation {
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} baseClockwiseNormalAngle 
    * 
    * @throws {Error} If the saved state is not for a circle base annotation.
    */
-  static fromSavedState(savedState, svg, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+  static fromSavedState(savedState, svg, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
     if (savedState.className !== 'CircleBaseAnnotation') {
       throw new Error('Saved state is not for a circle base annotation.');
     }
     let circle = svg.findOne('#' + savedState.circle);
-    return new CircleBaseAnnotation(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle);
+    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle);
   }
   
   /**
    * @param {SVG.Doc} svg 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    */
-  static createNondisplaced(svg, xCenterBase, yCenterBase) {
+  static createNondisplaced(svg, xBaseCenter, yBaseCenter) {
     let circle = svg.circle(10);
     circle.id();
     circle.attr({
-      'cx': xCenterBase,
-      'cy': yCenterBase
+      'cx': xBaseCenter,
+      'cy': yBaseCenter
     });
-    return new CircleBaseAnnotation(circle, xCenterBase, yCenterBase, 0);
+    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter, 0);
   }
 
   /**
    * @param {SVG.Circle} circle 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} baseClockwiseNormalAngle 
    */
-  constructor(circle, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+  constructor(circle, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
     super();
 
     this._circle = circle;
     this._validateCircle();
-    this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
+    this._storeDisplacement(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle);
   }
 
   /**
@@ -167,20 +167,20 @@ class CircleBaseAnnotation extends BaseAnnotation {
   /**
    * Sets the _displacementLength and _displacementAngle properties.
    * 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} baseClockwiseNormalAngle 
    */
-  _storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+  _storeDisplacement(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
     this._displacementLength = distanceBetween(
-      xCenterBase,
-      yCenterBase,
+      xBaseCenter,
+      yBaseCenter,
       this.xCenter,
       this.yCenter,
     );
     let angle = angleBetween(
-      xCenterBase,
-      yCenterBase,
+      xBaseCenter,
+      yBaseCenter,
       this.xCenter,
       this.yCenter,
     );
@@ -204,31 +204,31 @@ class CircleBaseAnnotation extends BaseAnnotation {
   /**
    * @param {number} xShift 
    * @param {number} yShift 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} baseClockwiseNormalAngle 
    */
-  shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+  shift(xShift, yShift, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
     this._circle.attr({
       'cx': this.xCenter + xShift,
       'cy': this.yCenter + yShift,
     });
-    this._storeDisplacement(xCenterBase, yCenterBase, baseClockwiseNormalAngle);
+    this._storeDisplacement(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle);
   }
 
   /**
    * Repositions the circle of this base annotation based on the given base coordinates
    * and clockwise normal angle and the stored displacement of the circle.
    * 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} baseClockwiseNormalAngle 
    */
-  reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
+  reposition(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
     let angle = baseClockwiseNormalAngle + this._displacementAngle;
     this._circle.attr({
-      'cx': xCenterBase + (this._displacementLength * Math.cos(angle)),
-      'cy': yCenterBase + (this._displacementLength * Math.sin(angle)),
+      'cx': xBaseCenter + (this._displacementLength * Math.cos(angle)),
+      'cy': yBaseCenter + (this._displacementLength * Math.sin(angle)),
     });
   }
 
