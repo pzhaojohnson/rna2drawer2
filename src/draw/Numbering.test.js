@@ -288,10 +288,11 @@ it('_validateLine', () => {
   line.id()
   expect(() => new Numbering(text, line, -2, -5)).not.toThrow();
 
-  // ID is not a string
+  // initializes ID
   line = svg.line(-1, -2, 3, 4);
-  line.id(3);
-  expect(() => new Numbering(text, line, -1, 0)).toThrow();
+  expect(line.attr('id')).toBe(undefined);
+  new Numbering(text, line, -1, 0);
+  expect(line.attr('id')).toBeTruthy();
 });
 
 it('basePadding getter and setter', () => {
