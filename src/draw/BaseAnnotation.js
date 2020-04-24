@@ -80,20 +80,25 @@ class BaseAnnotation {
 class CircleBaseAnnotation extends BaseAnnotation {
 
   /**
+   * Returns null if the saved state is invalid.
+   * 
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * @param {number} referenceAngle 
    * 
-   * @throws {Error} If the saved state is not for a circle base annotation.
+   * @returns {CircleBaseAnnotation|null} 
    */
   static fromSavedState(savedState, svg, xBaseCenter, yBaseCenter, referenceAngle) {
     if (savedState.className !== 'CircleBaseAnnotation') {
-      throw new Error('Saved state is not for a circle base annotation.');
+      return null;
     }
     let circle = svg.findOne('#' + savedState.circle);
-    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter, referenceAngle);
+    try {
+      return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter, referenceAngle);
+    } catch (err) {}
+    return null;
   }
   
   /**

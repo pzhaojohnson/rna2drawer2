@@ -25,30 +25,30 @@ it('circle fromSavedState static method invalid saved state', () => {
   // no class name defined
   delete savableState.className;
   
-  expect(() => CircleBaseAnnotation.fromSavedState(
-    savableState, svg, 5, 8, Math.PI / 3)
-  ).toThrow();
+  expect(CircleBaseAnnotation.fromSavedState(
+    savableState, svg, 5, 8, Math.PI / 3
+  )).toBe(null);
 
   // class name is not a string
   savableState.className = -19;
 
-  expect(() => CircleBaseAnnotation.fromSavedState(
-    savableState, svg, 5, 8, Math.PI / 3)
-  ).toThrow();
+  expect(CircleBaseAnnotation.fromSavedState(
+    savableState, svg, 5, 8, Math.PI / 3
+  )).toBe(null);
 
   // class name is an empty string
   savableState.className = '';
 
-  expect(() => CircleBaseAnnotation.fromSavedState(
-    savableState, svg, 5, 8, Math.PI / 3)
-  ).toThrow();
+  expect(CircleBaseAnnotation.fromSavedState(
+    savableState, svg, 5, 8, Math.PI / 3
+  )).toBe(null);
 
   // class name is not CircleBaseAnnotation
   savableState.className = 'CircleBseAnnotation';
 
-  expect(() => CircleBaseAnnotation.fromSavedState(
-    savableState, svg, 5, 8, Math.PI / 3)
-  ).toThrow();
+  expect(CircleBaseAnnotation.fromSavedState(
+    savableState, svg, 5, 8, Math.PI / 3
+  )).toBe(null);
 });
 
 it('circle createNondisplaced', () => {
