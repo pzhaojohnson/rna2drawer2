@@ -48,16 +48,16 @@ class BaseAnnotation {
    * @param {number} yShift 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} baseClockwiseNormalAngle 
+   * @param {number} referenceAngle 
    */
-  shift(xShift, yShift, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {}
+  shift(xShift, yShift, xBaseCenter, yBaseCenter, referenceAngle) {}
 
   /**
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} baseClockwiseNormalAngle 
+   * @param {number} referenceAngle 
    */
-  reposition(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {}
+  reposition(xBaseCenter, yBaseCenter, referenceAngle) {}
 
   /**
    * @param {SVG.Element} ele 
@@ -84,16 +84,16 @@ class CircleBaseAnnotation extends BaseAnnotation {
    * @param {SVG.Doc} svg 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} baseClockwiseNormalAngle 
+   * @param {number} referenceAngle 
    * 
    * @throws {Error} If the saved state is not for a circle base annotation.
    */
-  static fromSavedState(savedState, svg, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
+  static fromSavedState(savedState, svg, xBaseCenter, yBaseCenter, referenceAngle) {
     if (savedState.className !== 'CircleBaseAnnotation') {
       throw new Error('Saved state is not for a circle base annotation.');
     }
     let circle = svg.findOne('#' + savedState.circle);
-    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle);
+    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter, referenceAngle);
   }
   
   /**
@@ -115,14 +115,14 @@ class CircleBaseAnnotation extends BaseAnnotation {
    * @param {SVG.Circle} circle 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} baseClockwiseNormalAngle 
+   * @param {number} referenceAngle 
    */
-  constructor(circle, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
+  constructor(circle, xBaseCenter, yBaseCenter, referenceAngle) {
     super();
 
     this._circle = circle;
     this._validateCircle();
-    this._storeDisplacement(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle);
+    this._storeDisplacement(xBaseCenter, yBaseCenter, referenceAngle);
   }
 
   /**
@@ -169,9 +169,9 @@ class CircleBaseAnnotation extends BaseAnnotation {
    * 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} baseClockwiseNormalAngle 
+   * @param {number} referenceAngle 
    */
-  _storeDisplacement(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
+  _storeDisplacement(xBaseCenter, yBaseCenter, referenceAngle) {
     this._displacementLength = distanceBetween(
       xBaseCenter,
       yBaseCenter,
@@ -184,7 +184,7 @@ class CircleBaseAnnotation extends BaseAnnotation {
       this.xCenter,
       this.yCenter,
     );
-    this._displacementAngle = normalizeAngle(angle, baseClockwiseNormalAngle) - baseClockwiseNormalAngle;
+    this._displacementAngle = normalizeAngle(angle, referenceAngle) - referenceAngle;
   }
 
   /**
@@ -206,14 +206,14 @@ class CircleBaseAnnotation extends BaseAnnotation {
    * @param {number} yShift 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} baseClockwiseNormalAngle 
+   * @param {number} referenceAngle 
    */
-  shift(xShift, yShift, xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
+  shift(xShift, yShift, xBaseCenter, yBaseCenter, referenceAngle) {
     this._circle.attr({
       'cx': this.xCenter + xShift,
       'cy': this.yCenter + yShift,
     });
-    this._storeDisplacement(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle);
+    this._storeDisplacement(xBaseCenter, yBaseCenter, referenceAngle);
   }
 
   /**
@@ -222,10 +222,10 @@ class CircleBaseAnnotation extends BaseAnnotation {
    * 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} baseClockwiseNormalAngle 
+   * @param {number} referenceAngle 
    */
-  reposition(xBaseCenter, yBaseCenter, baseClockwiseNormalAngle) {
-    let angle = baseClockwiseNormalAngle + this._displacementAngle;
+  reposition(xBaseCenter, yBaseCenter, referenceAngle) {
+    let angle = referenceAngle + this._displacementAngle;
     this._circle.attr({
       'cx': xBaseCenter + (this._displacementLength * Math.cos(angle)),
       'cy': yBaseCenter + (this._displacementLength * Math.sin(angle)),
