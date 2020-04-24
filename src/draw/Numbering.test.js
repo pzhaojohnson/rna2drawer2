@@ -23,58 +23,58 @@ it('_textPositioning', () => {
   expect(tp.x).toBeCloseTo(4, 6);
   expect(tp.y).toBeCloseTo(10.2, 6);
   expect(tp.textAnchor).toBe('middle');
-  expect(tp.dy).toBe('0.8em');
+  expect(tp.dominantBaseline).toBe('hanging');
 
   tp = Numbering._textPositioning(svg.line(-2.2, 1, -6.2, 4));
   expect(tp.x).toBeCloseTo(-10.2, 6);
   expect(tp.y).toBeCloseTo(4, 6);
   expect(tp.textAnchor).toBe('end');
-  expect(tp.dy).toBe('0.4em');
+  expect(tp.dominantBaseline).toBe('middle');
 
   tp = Numbering._textPositioning(svg.line(-1, -2.2, -4, -6.2));
   expect(tp.x).toBeCloseTo(-4, 6);
   expect(tp.y).toBeCloseTo(-10.2, 6);
   expect(tp.textAnchor).toBe('middle');
-  expect(tp.dy).toBe('0em');
+  expect(tp.dominantBaseline).toBe('baseline');
 
   // a line with an angle above 7 * Math.PI / 4
   tp = Numbering._textPositioning(svg.line(2.2, -1, 6.2, -4));
   expect(tp.x).toBeCloseTo(10.2, 6);
   expect(tp.y).toBeCloseTo(-4, 6);
   expect(tp.textAnchor).toBe('start');
-  expect(tp.dy).toBe('0.4em');
+  expect(tp.dominantBaseline).toBe('middle');
   
   // a line with an angle below Math.PI / 4
   tp = Numbering._textPositioning(svg.line(2.2, 1, 6.2, 4));
   expect(tp.x).toBeCloseTo(10.2, 6);
   expect(tp.y).toBeCloseTo(4, 6);
   expect(tp.textAnchor).toBe('start');
-  expect(tp.dy).toBe('0.4em');
+  expect(tp.dominantBaseline).toBe('middle');
 
   /* A line with an angle at each quadrant border. */
   tp = Numbering._textPositioning(svg.line(1, 2, 3, 4));
   expect(tp.x).toBeCloseTo(3, 6);
   expect(tp.y).toBeCloseTo(8, 6);
   expect(tp.textAnchor).toBe('middle');
-  expect(tp.dy).toBe('0.8em');
+  expect(tp.dominantBaseline).toBe('hanging');
 
   tp = Numbering._textPositioning(svg.line(-1, 2, -3, 4));
   expect(tp.x).toBeCloseTo(-7, 6);
   expect(tp.y).toBeCloseTo(4, 6);
   expect(tp.textAnchor).toBe('end');
-  expect(tp.dy).toBe('0.4em');
+  expect(tp.dominantBaseline).toBe('middle');
 
   tp = Numbering._textPositioning(svg.line(-1, -2, -3, -4));
   expect(tp.x).toBeCloseTo(-3, 6);
   expect(tp.y).toBeCloseTo(-8, 6);
   expect(tp.textAnchor).toBe('middle');
-  expect(tp.dy).toBe('0em');
+  expect(tp.dominantBaseline).toBe('baseline');
 
   tp = Numbering._textPositioning(svg.line(1, -2, 3, -4));
   expect(tp.x).toBeCloseTo(3, 6);
   expect(tp.y).toBeCloseTo(-8, 6);
   expect(tp.textAnchor).toBe('middle');
-  expect(tp.dy).toBe('0em');
+  expect(tp.dominantBaseline).toBe('baseline');
 });
 
 it('mostRecentProps static method', () => {
@@ -379,7 +379,7 @@ it('reposition', () => {
   expect(n._text.attr('x')).toBeCloseTo(7.767627457812106, 6);
   expect(n._text.attr('y')).toBeCloseTo(-12.40838939219355, 6);
   expect(n._text.attr('text-anchor')).toBe('start');
-  expect(n._text.attr('dy')).toBe('0.4em');
+  expect(n._text.attr('dominant-baseline')).toBe('middle');
 });
 
 it('_reposition', () => {
@@ -405,7 +405,7 @@ it('_reposition', () => {
   expect(n._text.attr('x')).toBeCloseTo(4.735133409446726, 6);
   expect(n._text.attr('y')).toBeCloseTo(9.7577054331476765, 6);
   expect(n._text.attr('text-anchor')).toBe('middle');
-  expect(n._text.attr('dy')).toBe('0.8em');
+  expect(n._text.attr('dominant-baseline')).toBe('hanging');
 });
 
 it('insertBefore', () => {

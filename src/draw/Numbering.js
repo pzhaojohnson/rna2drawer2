@@ -34,7 +34,7 @@ class Numbering {
    * @property {number} x 
    * @property {number} y 
    * @property {string} textAnchor 
-   * @property {string} dy 
+   * @property {string} dominantBaseline 
    */
 
   /**
@@ -56,22 +56,22 @@ class Numbering {
       tp.x = line.attr('x2') + textPadding;
       tp.y = line.attr('y2');
       tp.textAnchor = 'start';
-      tp.dy = '0.4em';
+      tp.dominantBaseline = 'middle';
     } else if (lineAngle >= Math.PI / 4 && lineAngle < 3 * Math.PI / 4) {
       tp.x = line.attr('x2');
       tp.y = line.attr('y2') + textPadding;
       tp.textAnchor = 'middle';
-      tp.dy = '0.8em';
+      tp.dominantBaseline = 'hanging';
     } else if (lineAngle >= 3 * Math.PI / 4 && lineAngle < 5 * Math.PI / 4) {
       tp.x = line.attr('x2') - textPadding;
       tp.y = line.attr('y2');
       tp.textAnchor = 'end';
-      tp.dy = '0.4em';
+      tp.dominantBaseline = 'middle';
     } else {
       tp.x = line.attr('x2');
       tp.y = line.attr('y2') - textPadding;
       tp.textAnchor = 'middle';
-      tp.dy = '0em';
+      tp.dominantBaseline = 'baseline';
     }
     return tp;
   }
@@ -160,7 +160,7 @@ class Numbering {
       'x': tp.x,
       'y': tp.y,
       'text-anchor': tp.textAnchor,
-      'dy': tp.dy,
+      'dominant-baseline': tp.dominantBaseline,
     });
     let n = new Numbering(text, line, xBaseCenter, yBaseCenter);
     Numbering._applyMostRecentProps(n);
@@ -332,7 +332,7 @@ class Numbering {
       'x': tp.x,
       'y': tp.y,
       'text-anchor': tp.textAnchor,
-      'dy': tp.dy,
+      'dominant-baseline': tp.dominantBaseline,
     });
     this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
