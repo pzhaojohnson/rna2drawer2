@@ -1,25 +1,8 @@
-import { CircleBaseAnnotation, BaseAnnotation } from './BaseAnnotation';
+import {
+  BaseAnnotation,
+  CircleBaseAnnotation,
+} from './BaseAnnotation';
 import createNodeSVG from './createNodeSVG';
-
-it('check that BaseAnnotation class members are unimplemented', () => {
-  let svg = createNodeSVG();
-
-  expect(() => BaseAnnotation.createNondisplaced(svg, 1, 2)).toThrow();
-
-  let ba = new BaseAnnotation();
-  expect(() => ba.type).toThrow();
-  expect(() => ba.id).toThrow();
-  expect(() => ba.xCenter).toThrow();
-  expect(() => ba.yCenter).toThrow();
-  expect(() => ba.displacementLength).toThrow();
-  expect(() => ba.displacementAngle).toThrow();
-  expect(() => ba.shift(1, 2, 3, 4, 5)).toThrow();
-  expect(() => ba.reposition(7, 8, 9)).toThrow();
-  expect(() => ba.insertBefore(svg.rect(10))).toThrow();
-  expect(() => ba.insertAfter(svg.rect(10))).toThrow();
-  expect(() => ba.remove()).toThrow();
-  expect(() => ba.savableState()).toThrow();
-});
 
 it('circle fromSavedState static method valid saved state', () => {
   let svg = createNodeSVG();

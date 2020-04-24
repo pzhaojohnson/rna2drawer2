@@ -9,51 +9,37 @@ class BaseAnnotation {
    * @param {number} xCenterBase 
    * @param {number} yCenterBase 
    */
-  static createNondisplaced(svg, xCenterBase, yCenterBase) {
-    throw new Error('Not implemented.');
-  }
+  static createNondisplaced(svg, xCenterBase, yCenterBase) {}
 
   /**
    * @returns {string} 
    */
-  get type() {
-    throw new Error('Not implemented.');
-  }
+  get type() {}
 
   /**
    * @returns {string} 
    */
-  get id() {
-    throw new Error('Not implemented.');
-  }
+  get id() {}
 
   /**
    * @returns {number} 
    */
-  get xCenter() {
-    throw new Error('Not implemented.');
-  }
+  get xCenter() {}
 
   /**
    * @returns {number} 
    */
-  get yCenter() {
-    throw new Error('Not implemented.');
-  }
+  get yCenter() {}
 
   /**
    * @returns {number} 
    */
-  get displacementLength() {
-    throw new Error('Not implemented.');
-  }
+  get displacementLength() {}
 
   /**
    * @returns {number} 
    */
-  get displacementAngle() {
-    throw new Error('Not implemented.');
-  }
+  get displacementAngle() {}
 
   /**
    * Shifts the element of this base annotation.
@@ -64,43 +50,31 @@ class BaseAnnotation {
    * @param {number} yCenterBase 
    * @param {number} baseClockwiseNormalAngle 
    */
-  shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
-    throw new Error('Not implemented.');
-  }
+  shift(xShift, yShift, xCenterBase, yCenterBase, baseClockwiseNormalAngle) {}
 
   /**
    * @param {number} xCenterBase 
    * @param {number} yCenterBase 
    * @param {number} baseClockwiseNormalAngle 
    */
-  reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {
-    throw new Error('Not implemented.');
-  }
+  reposition(xCenterBase, yCenterBase, baseClockwiseNormalAngle) {}
 
   /**
    * @param {SVG.Element} ele 
    */
-  insertBefore(ele) {
-    throw new Error('Not implemented.');
-  }
+  insertBefore(ele) {}
 
   /**
    * @param {SVG.Element} ele 
    */
-  insertAfter(ele) {
-    throw new Error('Not implemented.');
-  }
+  insertAfter(ele) {}
 
-  remove() {
-    throw new Error('Not implemented.');
-  }
+  remove() {}
 
   /**
    * @returns {Object} 
    */
-  savableState() {
-    throw new Error('Not implemented.');
-  }
+  savableState() {}
 }
 
 class CircleBaseAnnotation extends BaseAnnotation {
