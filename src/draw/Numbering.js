@@ -191,16 +191,15 @@ class Numbering {
   }
 
   /**
-   * @throws {Error} If the ID of the text is not a string or is an empty string.
+   * Initializes the ID of the text if it is not already initialized.
+   * 
    * @throws {Error} If the text cannot be parsed as an integer.
    */
   _validateText() {
-    if (typeof(this._text.id()) !== 'string' || this._text.id().length === 0) {
-      throw new Error('Invalid text ID.');
-    }
-    let n = Number.parseFloat(this._text.text());
+    this._text.id();
+    let n = Number(this._text.text());
     if (!isFinite(n) || Math.floor(n) !== n) {
-      throw new Error('Text cannot be parsed as an integer.');
+      throw new Error('Text content is not an integer.');
     }
   }
 

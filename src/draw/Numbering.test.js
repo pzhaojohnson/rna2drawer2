@@ -251,13 +251,11 @@ it('_validateText', () => {
   text.id();
   expect(() => new Numbering(text, line, 0, 0)).not.toThrow();
 
-  /* It does not seem possible using the SVG.js framework to create an element
-  with no ID or an empty string for an ID. */
-
-  // ID is not a string
+  // initializes ID
   text = svg.text(add => add.tspan('10'));
-  text.id(2);
-  expect(() => new Numbering(text, line, 3, 4)).toThrow();
+  expect(text.attr('id')).toBe(undefined);
+  new Numbering(text, line, 3, 4);
+  expect(text.attr('id')).toBeTruthy();
 
   // text that is not a number
   text = svg.text(add => add.tspan('asdf'));
@@ -289,9 +287,6 @@ it('_validateLine', () => {
   let line = svg.line(0, 2, 3, 8);
   line.id()
   expect(() => new Numbering(text, line, -2, -5)).not.toThrow();
-
-  /* It does not seem possible using the SVG.js framework to create an element
-  with no ID or an empty string for an ID. */
 
   // ID is not a string
   line = svg.line(-1, -2, 3, 4);
