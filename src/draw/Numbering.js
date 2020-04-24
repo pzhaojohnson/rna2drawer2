@@ -122,20 +122,28 @@ class Numbering {
   }
 
   /**
+   * Returns null if the saved state is invalid.
+   * 
    * @param {Numbering~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * 
-   * @throws {Error} If the saved state is not for a numbering.
+   * @returns {Numbering|null} 
    */
   static fromSavedState(savedState, svg, xBaseCenter, yBaseCenter) {
     if (savedState.className !== 'Numbering') {
-      throw new Error('Saved state is not for a numbering.');
+      return null;
     }
     let text = svg.findOne('#' + savedState.text);
     let line = svg.findOne('#' + savedState.line);
-    let n = new Numbering(text, line, xBaseCenter, yBaseCenter);
+    let n = null;
+    try {
+      n = new Numbering(text, line, xBaseCenter, yBaseCenter);
+    } catch (err) {}
+    if (!n) {
+      return null;
+    }
     Numbering._copyPropsToMostRecent(n);
     return n;
   }

@@ -163,19 +163,19 @@ it('fromSavedState static method invalid saved state', () => {
   
   // no class name defined
   delete savableState.className;
-  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
+  expect(Numbering.fromSavedState(savableState, svg, 1, 8)).toBe(null);
 
   // class name is not a string
   savableState.className = 0.1234;
-  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
+  expect(Numbering.fromSavedState(savableState, svg, 1, 8)).toBe(null);
 
   // class name is an empty string
   savableState.className = '';
-  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
+  expect(Numbering.fromSavedState(savableState, svg, 1, 8)).toBe(null);
 
   // class name is not Numbering
   savableState.className = 'Nmbering';
-  expect(() => Numbering.fromSavedState(savableState, svg, 1, 8)).toThrow();
+  expect(Numbering.fromSavedState(savableState, svg, 1, 8)).toBe(null);
 });
 
 it('fromSavedState static method updates most recent properties', () => {
