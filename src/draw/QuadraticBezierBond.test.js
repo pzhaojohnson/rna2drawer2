@@ -1,4 +1,6 @@
-import TertiaryBond from './TertiaryBond';
+import {
+  QuadraticBezierBond,
+ } from './QuadraticBezierBond';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 import distanceBetween from './distanceBetween';
@@ -6,7 +8,7 @@ import distanceBetween from './distanceBetween';
 function exampleBond() {
   let svg = createNodeSVG();
   
-  return TertiaryBond.create(
+  return QuadraticBezierBond.create(
     svg,
     [Base.create(svg, 'A', 1, 2)],
     [Base.create(svg, 'U', 10, 11)],
@@ -52,7 +54,7 @@ it('_dBracket', () => {
 
   // side of length one
   dBracketCheck(
-    TertiaryBond._dBracket([b1], positivePositionalProps, base => Math.PI / 3),
+    QuadraticBezierBond._dBracket([b1], positivePositionalProps, base => Math.PI / 3),
     [
       ['M', 0.47871870788979676, 7.4971143170299746],
       ['L', 0.9787187078897972, 8.363139720814413],
@@ -72,7 +74,7 @@ it('_dBracket', () => {
 
   // side of length greater than one and different angles for each base
   dBracketCheck(
-    TertiaryBond._dBracket([b1, b2, b3], positivePositionalProps, getClockwiseNormalAngleOfBase),
+    QuadraticBezierBond._dBracket([b1, b2, b3], positivePositionalProps, getClockwiseNormalAngleOfBase),
     [
       ['M', 0.47871870788979676, 7.4971143170299746],
       ['L', 0.9787187078897972, 8.363139720814413],
@@ -93,7 +95,7 @@ it('_dBracket', () => {
 
   // clockwise normal angle of zero
   dBracketCheck(
-    TertiaryBond._dBracket([b1, b2], positionalPropsOfZero, base => 0),
+    QuadraticBezierBond._dBracket([b1, b2], positionalPropsOfZero, base => 0),
     [
       ['M', 1, 2],
       ['L', 1, 2],
@@ -112,7 +114,7 @@ it('_dBracket', () => {
   };
 
   dBracketCheck(
-    TertiaryBond._dBracket([b1, b2], negativePositionalProps, base => Math.PI / 4),
+    QuadraticBezierBond._dBracket([b1, b2], negativePositionalProps, base => Math.PI / 4),
     [
       ['M', -3.7807489476022482, -1.2095576798057384],
       ['L', -5.51316056150929, -2.9419692937127797],
@@ -129,19 +131,19 @@ it('_bracketMidpoint', () => {
   
   // bracket midpoint for side with one base
   let bracket = svg.path('M 0.5 1 L 3.5 -0.9 L 0.999 42 L 1 3 L 0.8 0.88');
-  let mp = TertiaryBond._bracketMidpoint(bracket);
+  let mp = QuadraticBezierBond._bracketMidpoint(bracket);
   expect(mp.x).toBeCloseTo(0.999, 6);
   expect(mp.y).toBeCloseTo(42, 6);
   
   // bracket midpoint for side with even number of bases
   bracket = svg.path('M 1 2 L 0.9 2.0 L -3.4 5.555 L 6.8 7 L -7 -7 L 0 0');
-  mp = TertiaryBond._bracketMidpoint(bracket);
+  mp = QuadraticBezierBond._bracketMidpoint(bracket);
   expect(mp.x).toBeCloseTo((-3.4 + 6.8) / 2, 6);
   expect(mp.y).toBeCloseTo((5.555 + 7) / 2, 6);
   
   // bracket midpoint for side with odd number of bases (greater than one)
   bracket = svg.path('M 1 2 L 3 4 L 5 6 L 7.996 -0.889 L 0 0 L 3 4 L 2 1');
-  mp = TertiaryBond._bracketMidpoint(bracket);
+  mp = QuadraticBezierBond._bracketMidpoint(bracket);
   expect(mp.x).toBeCloseTo(7.996, 6);
   expect(mp.y).toBeCloseTo(-0.889, 6);
 });
@@ -176,7 +178,7 @@ it('_dCurve', () => {
   let positionalProps = { height: 5, angle: Math.PI / 2 };
 
   dCurveCheck(
-    TertiaryBond._dCurve(bracket1, bracket2, positionalProps),
+    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
     [
       ['M', 5, 6],
       ['Q', 6.464466094067262, 14.535533905932738, 15, 16],
@@ -187,7 +189,7 @@ it('_dCurve', () => {
   bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
   bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
   positionalProps = { height: 5, angle: Math.PI / 2 };
-  let d = TertiaryBond._dCurve(bracket1, bracket2, positionalProps);
+  let d = QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps);
   let curve = svg.path(d);
   let segments = curve.array();
   expect(segments.length).toBe(2);
@@ -209,7 +211,7 @@ it('_dCurve', () => {
   positionalProps = { height: 0, angle: 0 };
 
   dCurveCheck(
-    TertiaryBond._dCurve(bracket1, bracket2, positionalProps),
+    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
     [
       ['M', 5, 6],
       ['Q', 10, 11, 15, 16],
@@ -222,7 +224,7 @@ it('_dCurve', () => {
   positionalProps = { height: 0, angle: 0 };
 
   dCurveCheck(
-    TertiaryBond._dCurve(bracket1, bracket2, positionalProps),
+    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
     [
       ['M', 5, 6],
       ['Q', 5, 6, 5, 6],
@@ -235,7 +237,7 @@ it('_dCurve', () => {
   positionalProps = { height: -1.1, angle: -Math.PI / 2 };
 
   dCurveCheck(
-    TertiaryBond._dCurve(bracket1, bracket2, positionalProps),
+    QuadraticBezierBond._dCurve(bracket1, bracket2, positionalProps),
     [
       ['M', 5, 6],
       ['Q', 9.222182540694797, 11.777817459305203, 15, 16],
@@ -244,18 +246,18 @@ it('_dCurve', () => {
 });
 
 it('mostRecentProps static method', () => {
-  TertiaryBond._mostRecentProps.topPaddingBracket1 = 0.887;
-  TertiaryBond._mostRecentProps.topPaddingBracket2 = 9.009;
-  TertiaryBond._mostRecentProps.overhangPaddingBracket1 = 1.463;
-  TertiaryBond._mostRecentProps.overhangPaddingBracket2 = 55.4;
-  TertiaryBond._mostRecentProps.overhangLengthBracket1 = 1478;
-  TertiaryBond._mostRecentProps.overhangLengthBracket2 = 9.6;
-  TertiaryBond._mostRecentProps.stroke = '#243546';
-  TertiaryBond._mostRecentProps.strokeWidth = 1.334;
-  TertiaryBond._mostRecentProps.curveStrokeDasharray = '1 2 3';
+  QuadraticBezierBond._mostRecentProps.topPaddingBracket1 = 0.887;
+  QuadraticBezierBond._mostRecentProps.topPaddingBracket2 = 9.009;
+  QuadraticBezierBond._mostRecentProps.overhangPaddingBracket1 = 1.463;
+  QuadraticBezierBond._mostRecentProps.overhangPaddingBracket2 = 55.4;
+  QuadraticBezierBond._mostRecentProps.overhangLengthBracket1 = 1478;
+  QuadraticBezierBond._mostRecentProps.overhangLengthBracket2 = 9.6;
+  QuadraticBezierBond._mostRecentProps.stroke = '#243546';
+  QuadraticBezierBond._mostRecentProps.strokeWidth = 1.334;
+  QuadraticBezierBond._mostRecentProps.curveStrokeDasharray = '1 2 3';
 
-  let mrps = TertiaryBond.mostRecentProps();
-  expect(mrps).not.toBe(TertiaryBond._mostRecentProps);
+  let mrps = QuadraticBezierBond.mostRecentProps();
+  expect(mrps).not.toBe(QuadraticBezierBond._mostRecentProps);
   expect(mrps.topPaddingBracket1).toBe(0.887);
   expect(mrps.topPaddingBracket2).toBe(9.009);
   expect(mrps.overhangPaddingBracket1).toBe(1.463);
@@ -271,30 +273,30 @@ it('_applyMostRecentProps static method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'q', 1, 3);
   let b2 = Base.create(svg, 'w', 5, 6);
-  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], b => 0);
   
-  /* Set after creating tertiary bond since the create static method itself
+  /* Set after creating quadratic bezier bond since the create static method itself
   applies the most recent properties. */
-  TertiaryBond._mostRecentProps.topPaddingBracket1 = 0.887;
-  TertiaryBond._mostRecentProps.topPaddingBracket2 = 9.009;
-  TertiaryBond._mostRecentProps.overhangPaddingBracket1 = 1.463;
-  TertiaryBond._mostRecentProps.overhangPaddingBracket2 = 55.4;
-  TertiaryBond._mostRecentProps.overhangLengthBracket1 = 1478;
-  TertiaryBond._mostRecentProps.overhangLengthBracket2 = 9.6;
-  TertiaryBond._mostRecentProps.stroke = '#243546';
-  TertiaryBond._mostRecentProps.strokeWidth = 1.334;
-  TertiaryBond._mostRecentProps.curveStrokeDasharray = '1 2 3';
+  QuadraticBezierBond._mostRecentProps.topPaddingBracket1 = 0.887;
+  QuadraticBezierBond._mostRecentProps.topPaddingBracket2 = 9.009;
+  QuadraticBezierBond._mostRecentProps.overhangPaddingBracket1 = 1.463;
+  QuadraticBezierBond._mostRecentProps.overhangPaddingBracket2 = 55.4;
+  QuadraticBezierBond._mostRecentProps.overhangLengthBracket1 = 1478;
+  QuadraticBezierBond._mostRecentProps.overhangLengthBracket2 = 9.6;
+  QuadraticBezierBond._mostRecentProps.stroke = '#243546';
+  QuadraticBezierBond._mostRecentProps.strokeWidth = 1.334;
+  QuadraticBezierBond._mostRecentProps.curveStrokeDasharray = '1 2 3';
 
-  TertiaryBond._applyMostRecentProps(tb, b => 0);
-  expect(tb.topPaddingBracket1).toBeCloseTo(0.887, 6);
-  expect(tb.topPaddingBracket2).toBeCloseTo(9.009, 6);
-  expect(tb.overhangPaddingBracket1).toBeCloseTo(1.463, 6);
-  expect(tb.overhangPaddingBracket2).toBeCloseTo(55.4, 6);
-  expect(tb.overhangLengthBracket1).toBeCloseTo(1478, 6);
-  expect(tb.overhangLengthBracket2).toBeCloseTo(9.6, 6);
-  expect(tb.stroke).toBe('#243546');
-  expect(tb.strokeWidth).toBeCloseTo(1.334, 6);
-  expect(tb.curveStrokeDasharray).toBe('1 2 3');
+  QuadraticBezierBond._applyMostRecentProps(qbb, b => 0);
+  expect(qbb.topPaddingBracket1).toBeCloseTo(0.887, 6);
+  expect(qbb.topPaddingBracket2).toBeCloseTo(9.009, 6);
+  expect(qbb.overhangPaddingBracket1).toBeCloseTo(1.463, 6);
+  expect(qbb.overhangPaddingBracket2).toBeCloseTo(55.4, 6);
+  expect(qbb.overhangLengthBracket1).toBeCloseTo(1478, 6);
+  expect(qbb.overhangLengthBracket2).toBeCloseTo(9.6, 6);
+  expect(qbb.stroke).toBe('#243546');
+  expect(qbb.strokeWidth).toBeCloseTo(1.334, 6);
+  expect(qbb.curveStrokeDasharray).toBe('1 2 3');
 });
 
 it('_copyPropsToMostRecent static method', () => {
@@ -302,20 +304,20 @@ it('_copyPropsToMostRecent static method', () => {
   let b1 = Base.create(svg, 'j', 5, 6);
   let b2 = Base.create(svg, 'a', 4, 5);
   let b3 = Base.create(svg, 'A', 5.55, 6.66);
-  let tb = TertiaryBond.create(svg, [b1, b2], [b3], b => 0);
+  let qbb = QuadraticBezierBond.create(svg, [b1, b2], [b3], b => 0);
   
-  tb.setTopPaddingBracket1(0.8855, b => 0);
-  tb.setTopPaddingBracket2(12345, b => 0);
-  tb.setOverhangPaddingBracket1(5.43, b => 0);
-  tb.setOverhangPaddingBracket2(3.567, b => 0);
-  tb.setOverhangLengthBracket1(9.999, b => 0);
-  tb.setOverhangLengthBracket2(7.543, b => 0);
-  tb.stroke = '#645342';
-  tb.strokeWidth = 1.445;
-  tb.curveStrokeDasharray = '3 3 2';
+  qbb.setTopPaddingBracket1(0.8855, b => 0);
+  qbb.setTopPaddingBracket2(12345, b => 0);
+  qbb.setOverhangPaddingBracket1(5.43, b => 0);
+  qbb.setOverhangPaddingBracket2(3.567, b => 0);
+  qbb.setOverhangLengthBracket1(9.999, b => 0);
+  qbb.setOverhangLengthBracket2(7.543, b => 0);
+  qbb.stroke = '#645342';
+  qbb.strokeWidth = 1.445;
+  qbb.curveStrokeDasharray = '3 3 2';
 
-  TertiaryBond._copyPropsToMostRecent(tb);
-  let mrps = TertiaryBond.mostRecentProps();
+  QuadraticBezierBond._copyPropsToMostRecent(qbb);
+  let mrps = QuadraticBezierBond.mostRecentProps();
   expect(mrps.topPaddingBracket1).toBeCloseTo(0.8855, 6);
   expect(mrps.topPaddingBracket2).toBeCloseTo(12345, 6);
   expect(mrps.overhangPaddingBracket1).toBeCloseTo(5.43, 6);
@@ -347,10 +349,10 @@ it('fromSavedState static method valid saved state', () => {
     return Math.PI / 3;
   }
 
-  let tb1 = TertiaryBond.create(svg, [b1, b2], [b3, b4], getClockwiseNormalAngleOfBase);
+  let tb1 = QuadraticBezierBond.create(svg, [b1, b2], [b3, b4], getClockwiseNormalAngleOfBase);
 
   let savedState = tb1.savableState();
-  let tb2 = TertiaryBond.fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase);
+  let tb2 = QuadraticBezierBond.fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase);
 
   expect(tb2._curve.id()).toBe(tb1._curve.id());
   expect(tb2._bracket1.id()).toBe(tb1._bracket1.id());
@@ -379,38 +381,38 @@ it('fromSavedState static method invalid class name', () => {
     return Math.PI / 5;
   }
 
-  let tb = TertiaryBond.create(svg, [b1], [b2], getClockwiseNormalAngleOfBase);
-  let savableState = tb.savableState();
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], getClockwiseNormalAngleOfBase);
+  let savableState = qbb.savableState();
 
-  expect(() => TertiaryBond.fromSavedState(
+  expect(() => QuadraticBezierBond.fromSavedState(
     savableState, svg, getBaseById, getClockwiseNormalAngleOfBase)
   ).not.toThrow();
 
   // no class name defined
   delete savableState.className;
 
-  expect(() => TertiaryBond.fromSavedState(
+  expect(() => QuadraticBezierBond.fromSavedState(
     savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
   )).toThrow();
 
   // class name is not a string
   savableState.className = 0.1234;
   
-  expect(() => TertiaryBond.fromSavedState(
+  expect(() => QuadraticBezierBond.fromSavedState(
     savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
   )).toThrow();
 
   // class name is an empty string
   savableState.className = '';
 
-  expect(() => TertiaryBond.fromSavedState(
+  expect(() => QuadraticBezierBond.fromSavedState(
     savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
   )).toThrow();
 
-  // class name is not TertiaryBond
-  savableState.className = 'TertiaryBnd';
+  // class name is not QuadraticBezierBond
+  savableState.className = 'QuadraticBezierBnd';
 
-  expect(() => TertiaryBond.fromSavedState(
+  expect(() => QuadraticBezierBond.fromSavedState(
     savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
   )).toThrow();
 });
@@ -431,20 +433,20 @@ it('fromSavedState static method updates most recent properties', () => {
     return 0;
   }
 
-  let tb = TertiaryBond.create(svg, [b1], [b2], getClockwiseNormalAngleOfBase);
-  tb.setTopPaddingBracket1(2.222, getClockwiseNormalAngleOfBase);
-  tb.setTopPaddingBracket2(3.333, getClockwiseNormalAngleOfBase);
-  tb.setOverhangPaddingBracket1(1.45, getClockwiseNormalAngleOfBase);
-  tb.setOverhangPaddingBracket2(4.44, getClockwiseNormalAngleOfBase);
-  tb.setOverhangLengthBracket1(3.24, getClockwiseNormalAngleOfBase);
-  tb.setOverhangLengthBracket2(5.446, getClockwiseNormalAngleOfBase);
-  tb.stroke = '#abbccd';
-  tb.strokeWidth = 5.66;
-  tb.curveStrokeDasharray = '1 5 4';
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], getClockwiseNormalAngleOfBase);
+  qbb.setTopPaddingBracket1(2.222, getClockwiseNormalAngleOfBase);
+  qbb.setTopPaddingBracket2(3.333, getClockwiseNormalAngleOfBase);
+  qbb.setOverhangPaddingBracket1(1.45, getClockwiseNormalAngleOfBase);
+  qbb.setOverhangPaddingBracket2(4.44, getClockwiseNormalAngleOfBase);
+  qbb.setOverhangLengthBracket1(3.24, getClockwiseNormalAngleOfBase);
+  qbb.setOverhangLengthBracket2(5.446, getClockwiseNormalAngleOfBase);
+  qbb.stroke = '#abbccd';
+  qbb.strokeWidth = 5.66;
+  qbb.curveStrokeDasharray = '1 5 4';
 
-  let savedState = tb.savableState();
-  TertiaryBond.fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase);
-  let mrps = TertiaryBond.mostRecentProps();
+  let savedState = qbb.savableState();
+  QuadraticBezierBond.fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase);
+  let mrps = QuadraticBezierBond.mostRecentProps();
   expect(mrps.topPaddingBracket1).toBeCloseTo(2.222, 6);
   expect(mrps.topPaddingBracket2).toBeCloseTo(3.333, 6);
   expect(mrps.overhangPaddingBracket1).toBeCloseTo(1.45, 6);
@@ -460,34 +462,34 @@ it('basic test of create static method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'g', 0, 1);
   let b2 = Base.create(svg, 'c', 5, 32);
-  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
-  expect(typeof(tb) === 'object' && tb !== null).toBeTruthy();
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], b => 0);
+  expect(typeof(qbb) === 'object' && qbb !== null).toBeTruthy();
 });
 
 it('create static method applies most recent properties', () => {
-  TertiaryBond._mostRecentProps.topPaddingBracket1 = 5.664;
-  TertiaryBond._mostRecentProps.topPaddingBracket2 = -1.5767;
-  TertiaryBond._mostRecentProps.overhangPaddingBracket1 = 1.434;
-  TertiaryBond._mostRecentProps.overhangPaddingBracket2 = 12.243;
-  TertiaryBond._mostRecentProps.overhangLengthBracket1 = 12.325;
-  TertiaryBond._mostRecentProps.overhangLengthBracket2 = 13.3476;
-  TertiaryBond._mostRecentProps.stroke = '#113355';
-  TertiaryBond._mostRecentProps.strokeWidth = 1.558;
-  TertiaryBond._mostRecentProps.curveStrokeDasharray = '4 5 5 3';
+  QuadraticBezierBond._mostRecentProps.topPaddingBracket1 = 5.664;
+  QuadraticBezierBond._mostRecentProps.topPaddingBracket2 = -1.5767;
+  QuadraticBezierBond._mostRecentProps.overhangPaddingBracket1 = 1.434;
+  QuadraticBezierBond._mostRecentProps.overhangPaddingBracket2 = 12.243;
+  QuadraticBezierBond._mostRecentProps.overhangLengthBracket1 = 12.325;
+  QuadraticBezierBond._mostRecentProps.overhangLengthBracket2 = 13.3476;
+  QuadraticBezierBond._mostRecentProps.stroke = '#113355';
+  QuadraticBezierBond._mostRecentProps.strokeWidth = 1.558;
+  QuadraticBezierBond._mostRecentProps.curveStrokeDasharray = '4 5 5 3';
 
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'g', 1, 3);
   let b2 = Base.create(svg, 'a', 2, 2);
-  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
-  expect(tb.topPaddingBracket1).toBeCloseTo(5.664, 6);
-  expect(tb.topPaddingBracket2).toBeCloseTo(-1.5767, 6);
-  expect(tb.overhangPaddingBracket1).toBeCloseTo(1.434, 6);
-  expect(tb.overhangPaddingBracket2).toBeCloseTo(12.243, 6);
-  expect(tb.overhangLengthBracket1).toBeCloseTo(12.325, 6);
-  expect(tb.overhangLengthBracket2).toBeCloseTo(13.3476, 6);
-  expect(tb.stroke).toBe('#113355');
-  expect(tb.strokeWidth).toBeCloseTo(1.558, 6);
-  expect(tb.curveStrokeDasharray).toBe('4 5 5 3');
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], b => 0);
+  expect(qbb.topPaddingBracket1).toBeCloseTo(5.664, 6);
+  expect(qbb.topPaddingBracket2).toBeCloseTo(-1.5767, 6);
+  expect(qbb.overhangPaddingBracket1).toBeCloseTo(1.434, 6);
+  expect(qbb.overhangPaddingBracket2).toBeCloseTo(12.243, 6);
+  expect(qbb.overhangLengthBracket1).toBeCloseTo(12.325, 6);
+  expect(qbb.overhangLengthBracket2).toBeCloseTo(13.3476, 6);
+  expect(qbb.stroke).toBe('#113355');
+  expect(qbb.strokeWidth).toBeCloseTo(1.558, 6);
+  expect(qbb.curveStrokeDasharray).toBe('4 5 5 3');
 });
 
 it('basic test of constructor', () => {
@@ -499,7 +501,7 @@ it('basic test of constructor', () => {
   let b2 = Base.create(svg, 'g', 7, 7);
 
   expect(
-    () => new TertiaryBond(curve, bracket1, bracket2, [b1], [b2], b => 0)
+    () => new QuadraticBezierBond(curve, bracket1, bracket2, [b1], [b2], b => 0)
   ).not.toThrow();
 });
 
@@ -520,7 +522,7 @@ it('validating sides', () => {
     let bracket1 = svg.path(dBracket1);
     let bracket2 = svg.path(dBracket2);
 
-    return new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
   
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -567,7 +569,7 @@ it('validating curve', () => {
   let side2 = [Base.create(svg, 'U', 3, 4)];
 
   function createBondWithCurve(curve) {
-    return new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   // a valid curve
@@ -673,14 +675,14 @@ it('validating brackets', () => {
     let curve = svg.path('M 1 2 Q 3 4 5 6');
     let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
     let side2 = [Base.create(svg, 'A', 1, 2)];
-    return new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   function createBondWithBracket2AndSide2(bracket2, side2) {
     let curve = svg.path('M 1 2 Q 3 4 5 6');
     let bracket1 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
     let side1 = [Base.create(svg, 'A', 1, 2)];
-    return new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
+    return new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
   }
 
   let b1 = Base.create(svg, 'A', 1, 2);
@@ -848,38 +850,38 @@ it('curve property getters', () => {
   let bracket2 = svg.path('M 1 2 L 3 4 L 5 6 L 7 8 L 9 10');
   let side1 = [Base.create(svg, 'A', 1, 2)];
   let side2 = [Base.create(svg, 'U', 3, 4)];
-  let tb = new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  let qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
 
-  expect(tb.xCurveEnd1).toBe(1.1);
-  expect(tb.yCurveEnd1).toBe(-2);
-  expect(tb.xCurveEnd2).toBe(5);
-  expect(tb.yCurveEnd2).toBe(-0.86);
-  expect(tb.xCurveControlPoint).toBe(3);
-  expect(tb.yCurveControlPoint).toBe(0.4);
+  expect(qbb.xCurveEnd1).toBe(1.1);
+  expect(qbb.yCurveEnd1).toBe(-2);
+  expect(qbb.xCurveEnd2).toBe(5);
+  expect(qbb.yCurveEnd2).toBe(-0.86);
+  expect(qbb.xCurveControlPoint).toBe(3);
+  expect(qbb.yCurveControlPoint).toBe(0.4);
 
-  expect(tb.curveHeight).toBeCloseTo(1.8306829326784035, 6);
-  expect(tb.curveAngle).toBeCloseTo(1.3137271587657995, 6);
+  expect(qbb.curveHeight).toBeCloseTo(1.8306829326784035, 6);
+  expect(qbb.curveAngle).toBeCloseTo(1.3137271587657995, 6);
 
   // curve height of zero
   curve = svg.path('M 0 0 Q 1 1 2 2');
-  tb = new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
-  expect(tb.curveHeight).toBeCloseTo(0, 6);
-  expect(typeof(tb.curveAngle)).toBe('number');
-  expect(isFinite(tb.curveAngle)).toBeTruthy();
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  expect(qbb.curveHeight).toBeCloseTo(0, 6);
+  expect(typeof(qbb.curveAngle)).toBe('number');
+  expect(isFinite(qbb.curveAngle)).toBeTruthy();
   
   // zero distance between ends
   curve = svg.path('M 0 0 Q 0 1 0 0');
-  tb = new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
-  expect(tb.curveHeight).toBeCloseTo(1, 6);
-  expect(typeof(tb.curveAngle)).toBe('number');
-  expect(isFinite(tb.curveAngle)).toBeTruthy();
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  expect(qbb.curveHeight).toBeCloseTo(1, 6);
+  expect(typeof(qbb.curveAngle)).toBe('number');
+  expect(isFinite(qbb.curveAngle)).toBeTruthy();
   
   // curve height of zero and zero distance between ends
   curve = svg.path('M 1.1 1.1 Q 1.1 1.1 1.1 1.1');
-  tb = new TertiaryBond(curve, bracket1, bracket2, side1, side2, () => 0);
-  expect(tb.curveHeight).toBe(0);
-  expect(typeof(tb.curveAngle)).toBe('number');
-  expect(isFinite(tb.curveAngle)).toBeTruthy();
+  qbb = new QuadraticBezierBond(curve, bracket1, bracket2, side1, side2, () => 0);
+  expect(qbb.curveHeight).toBe(0);
+  expect(typeof(qbb.curveAngle)).toBe('number');
+  expect(isFinite(qbb.curveAngle)).toBeTruthy();
 });
 
 it('shiftCurveControlPoint', () => {
@@ -889,22 +891,22 @@ it('shiftCurveControlPoint', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let tb = TertiaryBond.create(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
     base => Math.PI / 3,
   );
 
-  let segments = tb._curve.array();
-  tb.shiftCurveControlPoint(10, -10, base => Math.PI / 3);
+  let segments = qbb._curve.array();
+  qbb.shiftCurveControlPoint(10, -10, base => Math.PI / 3);
   let q = segments[1];
   q[1] += 10;
   q[2] -= 10;
 
-  dCurveCheck(tb._curve.attr('d'), segments);
-  expect(tb.xCurveControlPoint).toBeCloseTo(q[1], 6);
-  expect(tb.yCurveControlPoint).toBeCloseTo(q[2], 6);
+  dCurveCheck(qbb._curve.attr('d'), segments);
+  expect(qbb.xCurveControlPoint).toBeCloseTo(q[1], 6);
+  expect(qbb.yCurveControlPoint).toBeCloseTo(q[2], 6);
 });
 
 it('bracket 1 top padding getter and setter', () => {
@@ -914,21 +916,21 @@ it('bracket 1 top padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let tb = TertiaryBond.create(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
     base => Math.PI / 4,
   );
 
-  tb.setOverhangPaddingBracket1(6, base => Math.PI / 4);
-  tb.setOverhangLengthBracket1(4, base => Math.PI / 4);
+  qbb.setOverhangPaddingBracket1(6, base => Math.PI / 4);
+  qbb.setOverhangLengthBracket1(4, base => Math.PI / 4);
 
-  tb.setTopPaddingBracket1(2, base => Math.PI / 4);
-  expect(tb.topPaddingBracket1).toBeCloseTo(2, 6);
+  qbb.setTopPaddingBracket1(2, base => Math.PI / 4);
+  expect(qbb.topPaddingBracket1).toBeCloseTo(2, 6);
 
   dBracketCheck(
-    tb._bracket1.attr('d'),
+    qbb._bracket1.attr('d'),
     [
       ['M', -4.656854249492381, 4.828427124746191],
       ['L', -1.8284271247461898, 7.656854249492381],
@@ -940,8 +942,8 @@ it('bracket 1 top padding getter and setter', () => {
   );
 
   // updates most recent property
-  tb.setTopPaddingBracket1(8.887, base => Math.PI / 4);
-  expect(TertiaryBond.mostRecentProps().topPaddingBracket1).toBeCloseTo(8.887, 6);
+  qbb.setTopPaddingBracket1(8.887, base => Math.PI / 4);
+  expect(QuadraticBezierBond.mostRecentProps().topPaddingBracket1).toBeCloseTo(8.887, 6);
 });
 
 it('bracket 2 top padding getter and setter', () => {
@@ -951,21 +953,21 @@ it('bracket 2 top padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let tb = TertiaryBond.create(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b3, b4],
     [b1, b2],
     base => Math.PI / 4,
   );
 
-  tb.setOverhangPaddingBracket2(6, base => Math.PI / 4);
-  tb.setOverhangLengthBracket2(4, base => Math.PI / 4);
+  qbb.setOverhangPaddingBracket2(6, base => Math.PI / 4);
+  qbb.setOverhangLengthBracket2(4, base => Math.PI / 4);
 
-  tb.setTopPaddingBracket2(2, base => Math.PI / 4);
-  expect(tb.topPaddingBracket2).toBeCloseTo(2, 6);
+  qbb.setTopPaddingBracket2(2, base => Math.PI / 4);
+  expect(qbb.topPaddingBracket2).toBeCloseTo(2, 6);
 
   dBracketCheck(
-    tb._bracket2.attr('d'),
+    qbb._bracket2.attr('d'),
     [
       ['M', -4.656854249492381, 4.828427124746191],
       ['L', -1.8284271247461898, 7.656854249492381],
@@ -977,8 +979,8 @@ it('bracket 2 top padding getter and setter', () => {
   );
 
   // updates most recent property
-  tb.setTopPaddingBracket2(4.332, base => Math.PI / 4);
-  expect(TertiaryBond.mostRecentProps().topPaddingBracket2).toBeCloseTo(4.332, 6);
+  qbb.setTopPaddingBracket2(4.332, base => Math.PI / 4);
+  expect(QuadraticBezierBond.mostRecentProps().topPaddingBracket2).toBeCloseTo(4.332, 6);
 });
 
 it('bracket 1 overhang padding getter and setter', () => {
@@ -988,21 +990,21 @@ it('bracket 1 overhang padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let tb = TertiaryBond.create(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
     base => Math.PI / 4,
   );
 
-  tb.setTopPaddingBracket1(2, base => Math.PI / 4);
-  tb.setOverhangLengthBracket1(4, base => Math.PI / 4);
+  qbb.setTopPaddingBracket1(2, base => Math.PI / 4);
+  qbb.setOverhangLengthBracket1(4, base => Math.PI / 4);
 
-  tb.setOverhangPaddingBracket1(3.5, base => Math.PI / 4);
-  expect(tb.overhangPaddingBracket1).toBeCloseTo(3.5, 6);
+  qbb.setOverhangPaddingBracket1(3.5, base => Math.PI / 4);
+  expect(qbb.overhangPaddingBracket1).toBeCloseTo(3.5, 6);
 
   dBracketCheck(
-    tb._bracket1.attr('d'),
+    qbb._bracket1.attr('d'),
     [
       ['M', -2.8890872965260117, 3.060660171779821],
       ['L', -0.06066017177982097, 5.889087296526011],
@@ -1014,8 +1016,8 @@ it('bracket 1 overhang padding getter and setter', () => {
   );
 
   // updates most recent property
-  tb.setOverhangPaddingBracket1(5.667, base => Math.PI / 4);
-  expect(TertiaryBond.mostRecentProps().overhangPaddingBracket1).toBeCloseTo(5.667, 6);
+  qbb.setOverhangPaddingBracket1(5.667, base => Math.PI / 4);
+  expect(QuadraticBezierBond.mostRecentProps().overhangPaddingBracket1).toBeCloseTo(5.667, 6);
 });
 
 it('bracket 2 overhang padding getter and setter', () => {
@@ -1025,21 +1027,21 @@ it('bracket 2 overhang padding getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let tb = TertiaryBond.create(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b3, b4],
     [b1, b2],
     base => Math.PI / 4,
   );
 
-  tb.setTopPaddingBracket2(2, base => Math.PI / 4);
-  tb.setOverhangLengthBracket2(4, base => Math.PI / 4);
+  qbb.setTopPaddingBracket2(2, base => Math.PI / 4);
+  qbb.setOverhangLengthBracket2(4, base => Math.PI / 4);
 
-  tb.setOverhangPaddingBracket2(3.5, base => Math.PI / 4);
-  expect(tb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
+  qbb.setOverhangPaddingBracket2(3.5, base => Math.PI / 4);
+  expect(qbb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
 
   dBracketCheck(
-    tb._bracket2.attr('d'),
+    qbb._bracket2.attr('d'),
     [
       ['M', -2.8890872965260117, 3.060660171779821],
       ['L', -0.06066017177982097, 5.889087296526011],
@@ -1051,8 +1053,8 @@ it('bracket 2 overhang padding getter and setter', () => {
   );
 
   // updates most recent property
-  tb.setOverhangPaddingBracket2(1.335, base => Math.PI / 4);
-  expect(TertiaryBond.mostRecentProps().overhangPaddingBracket2).toBeCloseTo(1.335, 6);
+  qbb.setOverhangPaddingBracket2(1.335, base => Math.PI / 4);
+  expect(QuadraticBezierBond.mostRecentProps().overhangPaddingBracket2).toBeCloseTo(1.335, 6);
 });
 
 it('bracket 1 overhang length getter and setter', () => {
@@ -1062,21 +1064,21 @@ it('bracket 1 overhang length getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let tb = TertiaryBond.create(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
     base => Math.PI / 4,
   );
 
-  tb.setTopPaddingBracket1(2, base => Math.PI / 4);
-  tb.setOverhangPaddingBracket1(3.5, base => Math.PI / 4);
+  qbb.setTopPaddingBracket1(2, base => Math.PI / 4);
+  qbb.setOverhangPaddingBracket1(3.5, base => Math.PI / 4);
 
-  tb.setOverhangLengthBracket1(1, base => Math.PI / 4);
-  expect(tb.overhangLengthBracket1).toBeCloseTo(1, 6);
+  qbb.setOverhangLengthBracket1(1, base => Math.PI / 4);
+  expect(qbb.overhangLengthBracket1).toBeCloseTo(1, 6);
 
   dBracketCheck(
-    tb._bracket1.attr('d'),
+    qbb._bracket1.attr('d'),
     [
       ['M', -0.7677669529663687, 5.181980515339463],
       ['L', -0.06066017177982097, 5.889087296526011],
@@ -1088,8 +1090,8 @@ it('bracket 1 overhang length getter and setter', () => {
   );
 
   // updates most recent property
-  tb.setOverhangLengthBracket1(3.445, base => Math.PI / 4);
-  expect(TertiaryBond.mostRecentProps().overhangLengthBracket1).toBeCloseTo(3.445, 6);
+  qbb.setOverhangLengthBracket1(3.445, base => Math.PI / 4);
+  expect(QuadraticBezierBond.mostRecentProps().overhangLengthBracket1).toBeCloseTo(3.445, 6);
 });
 
 it('bracket 2 overhang length getter and setter', () => {
@@ -1099,21 +1101,21 @@ it('bracket 2 overhang length getter and setter', () => {
   let b3 = Base.create(svg, 'G', 5, 6);
   let b4 = Base.create(svg, 'C', 7, 8);
 
-  let tb = TertiaryBond.create(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b3, b4],
     [b1, b2],
     base => Math.PI / 4,
   );
 
-  tb.setTopPaddingBracket2(2, base => Math.PI / 4);
-  tb.setOverhangPaddingBracket2(3.5, base => Math.PI / 4);
+  qbb.setTopPaddingBracket2(2, base => Math.PI / 4);
+  qbb.setOverhangPaddingBracket2(3.5, base => Math.PI / 4);
 
-  tb.setOverhangLengthBracket2(1, base => Math.PI / 4);
-  expect(tb.overhangLengthBracket2).toBeCloseTo(1, 6);
+  qbb.setOverhangLengthBracket2(1, base => Math.PI / 4);
+  expect(qbb.overhangLengthBracket2).toBeCloseTo(1, 6);
 
   dBracketCheck(
-    tb._bracket2.attr('d'),
+    qbb._bracket2.attr('d'),
     [
       ['M', -0.7677669529663687, 5.181980515339463],
       ['L', -0.06066017177982097, 5.889087296526011],
@@ -1125,8 +1127,8 @@ it('bracket 2 overhang length getter and setter', () => {
   );
 
   // updates most recent property
-  tb.setOverhangLengthBracket2(1.345, base => Math.PI / 4);
-  expect(TertiaryBond.mostRecentProps().overhangLengthBracket2).toBeCloseTo(1.345, 6);
+  qbb.setOverhangLengthBracket2(1.345, base => Math.PI / 4);
+  expect(QuadraticBezierBond.mostRecentProps().overhangLengthBracket2).toBeCloseTo(1.345, 6);
 });
 
 it('reposition method', () => {
@@ -1136,50 +1138,50 @@ it('reposition method', () => {
   let b3 = Base.create(svg, 'G', 3, 4);
   let b4 = Base.create(svg, 'C', 4, 5);
 
-  let tb = TertiaryBond.create(
+  let qbb = QuadraticBezierBond.create(
     svg,
     [b1, b2],
     [b3, b4],
     base => Math.PI / 3,
   );
 
-  tb.setTopPaddingBracket1(2, base => Math.PI / 3);
-  tb.setTopPaddingBracket2(2, base => Math.PI / 3);
-  tb.setOverhangPaddingBracket1(3.5, base => Math.PI / 3);
-  tb.setOverhangPaddingBracket2(3.5, base => Math.PI / 3);
-  tb.setOverhangLengthBracket1(4, base => Math.PI / 3);
-  tb.setOverhangLengthBracket2(4, base => Math.PI / 3);
+  qbb.setTopPaddingBracket1(2, base => Math.PI / 3);
+  qbb.setTopPaddingBracket2(2, base => Math.PI / 3);
+  qbb.setOverhangPaddingBracket1(3.5, base => Math.PI / 3);
+  qbb.setOverhangPaddingBracket2(3.5, base => Math.PI / 3);
+  qbb.setOverhangLengthBracket1(4, base => Math.PI / 3);
+  qbb.setOverhangLengthBracket2(4, base => Math.PI / 3);
 
-  let xCurveControlPointPrev = tb.xCurveControlPoint;
-  let yCurveControlPointPrev = tb.yCurveControlPoint;
-  let curveHeightPrev = tb.curveHeight;
-  let curveAnglePrev = tb.curveAngle;
+  let xCurveControlPointPrev = qbb.xCurveControlPoint;
+  let yCurveControlPointPrev = qbb.yCurveControlPoint;
+  let curveHeightPrev = qbb.curveHeight;
+  let curveAnglePrev = qbb.curveAngle;
 
   b1.move(1.5, 2.5);
   b2.move(2.5, 3.5);
   b3.move(3.5, 4.5);
   b4.move(4.5, 5.5);
-  tb.reposition(base => Math.PI / 3);
+  qbb.reposition(base => Math.PI / 3);
 
   dCurveCheck(
-    tb._curve.attr('d'),
+    qbb._curve.attr('d'),
     [
       ['M', 3, 4.732050807568877],
       ['Q', xCurveControlPointPrev + 0.5, yCurveControlPointPrev + 0.5, 5, 6.732050807568877],
     ],
   );
 
-  expect(tb.xCurveEnd1).toBeCloseTo(3, 6);
-  expect(tb.yCurveEnd1).toBeCloseTo(4.732050807568877, 6);
-  expect(tb.xCurveEnd2).toBeCloseTo(5, 6);
-  expect(tb.yCurveEnd2).toBeCloseTo(6.732050807568877, 6);
-  expect(tb.xCurveControlPoint).toBeCloseTo(xCurveControlPointPrev + 0.5, 6);
-  expect(tb.yCurveControlPoint).toBeCloseTo(yCurveControlPointPrev + 0.5, 6);
-  expect(tb.curveHeight).toBeCloseTo(curveHeightPrev, 6);
-  expect(tb.curveAngle).toBeCloseTo(curveAnglePrev, 6);
+  expect(qbb.xCurveEnd1).toBeCloseTo(3, 6);
+  expect(qbb.yCurveEnd1).toBeCloseTo(4.732050807568877, 6);
+  expect(qbb.xCurveEnd2).toBeCloseTo(5, 6);
+  expect(qbb.yCurveEnd2).toBeCloseTo(6.732050807568877, 6);
+  expect(qbb.xCurveControlPoint).toBeCloseTo(xCurveControlPointPrev + 0.5, 6);
+  expect(qbb.yCurveControlPoint).toBeCloseTo(yCurveControlPointPrev + 0.5, 6);
+  expect(qbb.curveHeight).toBeCloseTo(curveHeightPrev, 6);
+  expect(qbb.curveAngle).toBeCloseTo(curveAnglePrev, 6);
 
   dBracketCheck(
-    tb._bracket1.attr('d'),
+    qbb._bracket1.attr('d'),
     [
       ['M', -2.5310889132455374, 2.517949192431123],
       ['L', -0.5310889132455356, 5.982050807568877],
@@ -1190,12 +1192,12 @@ it('reposition method', () => {
     ],
   );
 
-  expect(tb.topPaddingBracket1).toBeCloseTo(2, 6);
-  expect(tb.overhangPaddingBracket1).toBeCloseTo(3.5, 6);
-  expect(tb.overhangLengthBracket1).toBeCloseTo(4, 6);
+  expect(qbb.topPaddingBracket1).toBeCloseTo(2, 6);
+  expect(qbb.overhangPaddingBracket1).toBeCloseTo(3.5, 6);
+  expect(qbb.overhangLengthBracket1).toBeCloseTo(4, 6);
 
   dBracketCheck(
-    tb._bracket2.attr('d'),
+    qbb._bracket2.attr('d'),
     [
       ['M', -0.5310889132455374, 4.517949192431123],
       ['L', 1.4689110867544644, 7.982050807568877],
@@ -1206,163 +1208,163 @@ it('reposition method', () => {
     ],
   );
 
-  expect(tb.topPaddingBracket2).toBeCloseTo(2, 6);
-  expect(tb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
-  expect(tb.overhangLengthBracket2).toBeCloseTo(4, 6);
+  expect(qbb.topPaddingBracket2).toBeCloseTo(2, 6);
+  expect(qbb.overhangPaddingBracket2).toBeCloseTo(3.5, 6);
+  expect(qbb.overhangLengthBracket2).toBeCloseTo(4, 6);
 });
 
 it('stroke getter and setter', () => {
-  let tb = exampleBond();
+  let qbb = exampleBond();
 
-  tb.stroke = '#123456';
-
-  // test getter
-  expect(tb.stroke).toBe('#123456');
-
-  // check actual values
-  expect(tb._curve.attr('stroke')).toBe('#123456');
-  expect(tb._bracket1.attr('stroke')).toBe('#123456');
-  expect(tb._bracket2.attr('stroke')).toBe('#123456');
-
-  tb.stroke = 'blue';
+  qbb.stroke = '#123456';
 
   // test getter
-  expect(tb.stroke).toBe('blue');
+  expect(qbb.stroke).toBe('#123456');
 
   // check actual values
-  expect(tb._curve.attr('stroke')).toBe('blue');
-  expect(tb._bracket1.attr('stroke')).toBe('blue');
-  expect(tb._bracket2.attr('stroke')).toBe('blue');
+  expect(qbb._curve.attr('stroke')).toBe('#123456');
+  expect(qbb._bracket1.attr('stroke')).toBe('#123456');
+  expect(qbb._bracket2.attr('stroke')).toBe('#123456');
+
+  qbb.stroke = 'blue';
+
+  // test getter
+  expect(qbb.stroke).toBe('blue');
+
+  // check actual values
+  expect(qbb._curve.attr('stroke')).toBe('blue');
+  expect(qbb._bracket1.attr('stroke')).toBe('blue');
+  expect(qbb._bracket2.attr('stroke')).toBe('blue');
 
   // updates most recent property
-  expect(TertiaryBond.mostRecentProps().stroke).toBe('blue');
+  expect(QuadraticBezierBond.mostRecentProps().stroke).toBe('blue');
 });
 
 it('strokeWidth getter and setter', () => {
-  let tb = exampleBond();
+  let qbb = exampleBond();
   
-  tb.strokeWidth = 0.5;
+  qbb.strokeWidth = 0.5;
   
   // test getter
-  expect(tb.strokeWidth).toBe(0.5);
+  expect(qbb.strokeWidth).toBe(0.5);
   
   // check actual values
-  expect(tb._curve.attr('stroke-width')).toBe(0.5);
-  expect(tb._bracket1.attr('stroke-width')).toBe(0.5);
-  expect(tb._bracket2.attr('stroke-width')).toBe(0.5);
-  tb.strokeWidth = 2;
+  expect(qbb._curve.attr('stroke-width')).toBe(0.5);
+  expect(qbb._bracket1.attr('stroke-width')).toBe(0.5);
+  expect(qbb._bracket2.attr('stroke-width')).toBe(0.5);
+  qbb.strokeWidth = 2;
 
   // test getter
-  expect(tb.strokeWidth).toBe(2);
+  expect(qbb.strokeWidth).toBe(2);
 
   // check actual values
-  expect(tb._curve.attr('stroke-width')).toBe(2);
-  expect(tb._bracket1.attr('stroke-width')).toBe(2);
-  expect(tb._bracket2.attr('stroke-width')).toBe(2);
+  expect(qbb._curve.attr('stroke-width')).toBe(2);
+  expect(qbb._bracket1.attr('stroke-width')).toBe(2);
+  expect(qbb._bracket2.attr('stroke-width')).toBe(2);
 
   // updates most recent property
-  expect(TertiaryBond.mostRecentProps().strokeWidth).toBe(2);
+  expect(QuadraticBezierBond.mostRecentProps().strokeWidth).toBe(2);
 });
 
 it('curveStrokeDasharray getter and setter', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'a', 1, 3);
   let b2 = Base.create(svg, 'G', 5, 6);
-  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
-  tb.curveStrokeDasharray = '1 3 3 5';
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], b => 0);
+  qbb.curveStrokeDasharray = '1 3 3 5';
 
   // check getter
-  expect(tb.curveStrokeDasharray).toBe('1 3 3 5');
+  expect(qbb.curveStrokeDasharray).toBe('1 3 3 5');
 
   // check actual value
-  expect(tb._curve.attr('stroke-dasharray')).toBe('1 3 3 5');
+  expect(qbb._curve.attr('stroke-dasharray')).toBe('1 3 3 5');
 
   // update most recent property
-  expect(TertiaryBond.mostRecentProps().curveStrokeDasharray).toBe('1 3 3 5');
+  expect(QuadraticBezierBond.mostRecentProps().curveStrokeDasharray).toBe('1 3 3 5');
 });
 
 it('bracket 1 opacity getter and setter', () => {
-  let tb = exampleBond();
-  tb.opacityBracket1 = 0.5;
-  expect(tb.opacityBracket1).toBe(0.5);
-  tb.opacityBracket1 = 0;
-  expect(tb.opacityBracket1).toBe(0);
-  tb.opacityBracket1 = 1;
-  expect(tb.opacityBracket1).toBe(1);
+  let qbb = exampleBond();
+  qbb.opacityBracket1 = 0.5;
+  expect(qbb.opacityBracket1).toBe(0.5);
+  qbb.opacityBracket1 = 0;
+  expect(qbb.opacityBracket1).toBe(0);
+  qbb.opacityBracket1 = 1;
+  expect(qbb.opacityBracket1).toBe(1);
 });
 
 it('bracket 2 opacity getter and setter', () => {
-  let tb = exampleBond();
-  tb.opacityBracket2 = 0.5;
-  expect(tb.opacityBracket2).toBe(0.5);
-  tb.opacityBracket2 = 0;
-  expect(tb.opacityBracket2).toBe(0);
-  tb.opacityBracket2 = 1;
-  expect(tb.opacityBracket2).toBe(1);
+  let qbb = exampleBond();
+  qbb.opacityBracket2 = 0.5;
+  expect(qbb.opacityBracket2).toBe(0.5);
+  qbb.opacityBracket2 = 0;
+  expect(qbb.opacityBracket2).toBe(0);
+  qbb.opacityBracket2 = 1;
+  expect(qbb.opacityBracket2).toBe(1);
 });
 
 it('binding mousedown', () => {
-  let tb = exampleBond();
+  let qbb = exampleBond();
 
   let mousedownedCursor = false;
-  tb.bindMousedown(() => mousedownedCursor = true);
-  tb._curve.fire('mousedown');
+  qbb.bindMousedown(() => mousedownedCursor = true);
+  qbb._curve.fire('mousedown');
   expect(mousedownedCursor).toBeTruthy();
 
   let mousedownedBracket1 = false;
-  tb.bindMousedown(() => mousedownedBracket1 = true);
-  tb._bracket1.fire('mousedown');
+  qbb.bindMousedown(() => mousedownedBracket1 = true);
+  qbb._bracket1.fire('mousedown');
   expect(mousedownedBracket1).toBeTruthy();
   
   let mousedownedBracket2 = false;
-  tb.bindMousedown(() => mousedownedBracket2 = true);
-  tb._bracket2.fire('mousedown');
+  qbb.bindMousedown(() => mousedownedBracket2 = true);
+  qbb._bracket2.fire('mousedown');
   expect(mousedownedBracket2).toBeTruthy();
 });
 
 it('binding dblclick', () => {
-  let tb = exampleBond();
+  let qbb = exampleBond();
 
   let dblclickedCursor = false;
-  tb.bindDblclick(() => dblclickedCursor = true);
-  tb._curve.fire('dblclick');
+  qbb.bindDblclick(() => dblclickedCursor = true);
+  qbb._curve.fire('dblclick');
   expect(dblclickedCursor).toBeTruthy();
 
   let dblclickedBracket1 = false;
-  tb.bindDblclick(() => dblclickedBracket1 = true);
-  tb._bracket1.fire('dblclick');
+  qbb.bindDblclick(() => dblclickedBracket1 = true);
+  qbb._bracket1.fire('dblclick');
   expect(dblclickedBracket1).toBeTruthy();
   
   let dblclickedBracket2 = false;
-  tb.bindDblclick(() => dblclickedBracket2 = true);
-  tb._bracket2.fire('dblclick');
+  qbb.bindDblclick(() => dblclickedBracket2 = true);
+  qbb._bracket2.fire('dblclick');
   expect(dblclickedBracket2).toBeTruthy();
 });
 
 it('cursor getter and setter', () => {
-  let tb = exampleBond();
+  let qbb = exampleBond();
 
-  tb.cursor = 'pointer';
-  expect(tb.cursor).toBe('pointer');
+  qbb.cursor = 'pointer';
+  expect(qbb.cursor).toBe('pointer');
 
-  tb.cursor = 'default';
-  expect(tb.cursor).toBe('default');
+  qbb.cursor = 'default';
+  expect(qbb.cursor).toBe('default');
 });
 
 it('remove method', () => {
   let svg = createNodeSVG();
   let b1 = Base.create(svg, 'q', 1, 3);
   let b2 = Base.create(svg, 'c', 1.11, 2.3);
-  let tb = TertiaryBond.create(svg, [b1], [b2], b => 0);
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], b => 0);
 
-  let curveId = tb._curve.id();
+  let curveId = qbb._curve.id();
   expect(svg.findOne('#' + curveId)).not.toBe(null);
-  let bracketId1 = tb._bracket1.id();
+  let bracketId1 = qbb._bracket1.id();
   expect(svg.findOne('#' + bracketId1)).not.toBe(null);
-  let bracketId2 = tb._bracket2.id();
+  let bracketId2 = qbb._bracket2.id();
   expect(svg.findOne('#' + bracketId2)).not.toBe(null);
 
-  tb.remove();
+  qbb.remove();
   expect(svg.findOne('#' + curveId)).toBe(null);
   expect(svg.findOne('#' + bracketId1)).toBe(null);
   expect(svg.findOne('#' + bracketId2)).toBe(null);
@@ -1374,14 +1376,14 @@ it('savableState method', () => {
   let b2 = Base.create(svg, 'u', 1.1, 2.2);
   let b3 = Base.create(svg, 'k', -1, -0.55);
   let b4 = Base.create(svg, 'm', 0, 0);
-  let tb = TertiaryBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
+  let qbb = QuadraticBezierBond.create(svg, [b1, b2], [b3, b4], b => Math.PI / 3);
 
-  let savableState = tb.savableState();
+  let savableState = qbb.savableState();
 
-  expect(savableState.className).toBe('TertiaryBond');
-  expect(savableState.curve).toBe(tb._curve.id());
-  expect(savableState.bracket1).toBe(tb._bracket1.id());
-  expect(savableState.bracket2).toBe(tb._bracket2.id());
+  expect(savableState.className).toBe('QuadraticBezierBond');
+  expect(savableState.curve).toBe(qbb._curve.id());
+  expect(savableState.bracket1).toBe(qbb._bracket1.id());
+  expect(savableState.bracket2).toBe(qbb._bracket2.id());
   expect(savableState.side1.length).toBe(2);
   expect(savableState.side1[0]).toBe(b1.id);
   expect(savableState.side1[1]).toBe(b2.id);

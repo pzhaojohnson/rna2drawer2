@@ -2,7 +2,7 @@ import Drawing from './Drawing';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 import { SecondaryBond } from './StraightBond';
-import TertiaryBond from './TertiaryBond';
+import { TertiaryBond } from './QuadraticBezierBond';
 import parseDotBracket from '../parse/parseDotBracket';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import StrictLayoutGeneralProps from './layout/singleseq/strict/StrictLayoutGeneralProps';

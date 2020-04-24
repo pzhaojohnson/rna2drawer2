@@ -3,7 +3,7 @@ import {
   PrimaryBond,
   SecondaryBond,
 } from './StraightBond';
-import TertiaryBond from './TertiaryBond';
+import { TertiaryBond } from './QuadraticBezierBond';
 import parseStems from '../parse/parseStems';
 
 class Drawing {
