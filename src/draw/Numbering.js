@@ -13,17 +13,17 @@ class Numbering {
    */
 
   /**
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} angle 
    * @param {number} basePadding 
    * @param {number} length 
    * 
    * @returns {Numbering~LineCoordinates} 
    */
-  static _lineCoordinates(xCenterBase, yCenterBase, angle, basePadding, length) {
-    let x1 = xCenterBase + (basePadding * Math.cos(angle));
-    let y1 = yCenterBase + (basePadding * Math.sin(angle));
+  static _lineCoordinates(xBaseCenter, yBaseCenter, angle, basePadding, length) {
+    let x1 = xBaseCenter + (basePadding * Math.cos(angle));
+    let y1 = yBaseCenter + (basePadding * Math.sin(angle));
 
     let x2 = x1 + (length * Math.cos(angle));
     let y2 = y1 + (length * Math.sin(angle));
@@ -129,19 +129,19 @@ class Numbering {
   /**
    * @param {Numbering~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * 
    * @throws {Error} If the saved state is not for a numbering.
    */
-  static fromSavedState(savedState, svg, xCenterBase, yCenterBase) {
+  static fromSavedState(savedState, svg, xBaseCenter, yBaseCenter) {
     if (savedState.className !== 'Numbering') {
       throw new Error('Saved state is not for a numbering.');
     }
 
     let text = svg.findOne('#' + savedState.text);
     let line = svg.findOne('#' + savedState.line);
-    let n = new Numbering(text, line, xCenterBase, yCenterBase);
+    let n = new Numbering(text, line, xBaseCenter, yBaseCenter);
     Numbering._copyPropsToMostRecent(n);
     return n;
   }
@@ -149,14 +149,14 @@ class Numbering {
   /**
    * @param {SVG.Doc} svg 
    * @param {number} number 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} angle 
    * 
    * @returns {Numbering} 
    */
-  static create(svg, number, xCenterBase, yCenterBase, angle) {
-    let lc = Numbering._lineCoordinates(xCenterBase, yCenterBase, angle, 10, 8);
+  static create(svg, number, xBaseCenter, yBaseCenter, angle) {
+    let lc = Numbering._lineCoordinates(xBaseCenter, yBaseCenter, angle, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     line.id();
     
@@ -171,7 +171,7 @@ class Numbering {
       'dy': tp.dy,
     });
     
-    let n = new Numbering(text, line, xCenterBase, yCenterBase);
+    let n = new Numbering(text, line, xBaseCenter, yBaseCenter);
     Numbering._applyMostRecentProps(n);
     return n;
   }
@@ -179,16 +179,16 @@ class Numbering {
   /**
    * @param {SVG.Text} text 
    * @param {SVG.Line} line 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    */
-  constructor(text, line, xCenterBase, yCenterBase) {
+  constructor(text, line, xBaseCenter, yBaseCenter) {
     this._text = text;
     this._validateText();
 
     this._line = line;
     this._validateLine();
-    this._storeBasePadding(xCenterBase, yCenterBase);
+    this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
   /**
@@ -226,13 +226,13 @@ class Numbering {
   /**
    * Sets the _basePadding property.
    * 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    */
-  _storeBasePadding(xCenterBase, yCenterBase) {
+  _storeBasePadding(xBaseCenter, yBaseCenter) {
     this._basePadding = distanceBetween(
-      xCenterBase,
-      yCenterBase,
+      xBaseCenter,
+      yBaseCenter,
       this._line.attr('x1'),
       this._line.attr('y1'),
     );
@@ -256,12 +256,12 @@ class Numbering {
       this._line.attr('y2'),
     );
 
-    let xCenterBase = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
-    let yCenterBase = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
+    let xBaseCenter = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
+    let yBaseCenter = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
 
     this._reposition(
-      xCenterBase,
-      yCenterBase,
+      xBaseCenter,
+      yBaseCenter,
       angle,
       bp,
       this.lineLength,
@@ -293,12 +293,12 @@ class Numbering {
       this._line.attr('y2'),
     );
 
-    let xCenterBase = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
-    let yCenterBase = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
+    let xBaseCenter = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
+    let yBaseCenter = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
 
     this._reposition(
-      xCenterBase,
-      yCenterBase,
+      xBaseCenter,
+      yBaseCenter,
       angle,
       this.basePadding,
       ll,
@@ -311,14 +311,14 @@ class Numbering {
    * Repositions this numbering based on the given base coordinates and angle,
    * maintaining the previous base padding and line length.
    * 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} angle 
    */
-  reposition(xCenterBase, yCenterBase, angle) {
+  reposition(xBaseCenter, yBaseCenter, angle) {
     this._reposition(
-      xCenterBase,
-      yCenterBase,
+      xBaseCenter,
+      yBaseCenter,
       angle,
       this.basePadding,
       this.lineLength,
@@ -329,16 +329,16 @@ class Numbering {
    * Repositions this numbering based on the given base coordinates, angle, base padding,
    * and line length.
    * 
-   * @param {number} xCenterBase 
-   * @param {number} yCenterBase 
+   * @param {number} xBaseCenter 
+   * @param {number} yBaseCenter 
    * @param {number} angle 
    * @param {number} basePadding 
    * @param {number} lineLength 
    */
-  _reposition(xCenterBase, yCenterBase, angle, basePadding, lineLength) {
+  _reposition(xBaseCenter, yBaseCenter, angle, basePadding, lineLength) {
     let lc = Numbering._lineCoordinates(
-      xCenterBase,
-      yCenterBase,
+      xBaseCenter,
+      yBaseCenter,
       angle,
       basePadding,
       lineLength,
@@ -355,7 +355,7 @@ class Numbering {
       'dy': tp.dy,
     });
 
-    this._storeBasePadding(xCenterBase, yCenterBase);
+    this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
   /**
