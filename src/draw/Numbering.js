@@ -24,10 +24,8 @@ class Numbering {
   static _lineCoordinates(xBaseCenter, yBaseCenter, angle, basePadding, length) {
     let x1 = xBaseCenter + (basePadding * Math.cos(angle));
     let y1 = yBaseCenter + (basePadding * Math.sin(angle));
-
     let x2 = x1 + (length * Math.cos(angle));
     let y2 = y1 + (length * Math.sin(angle));
-
     return { x1: x1, y1: y1, x2: x2, y2: y2 };
   }
 
@@ -51,11 +49,9 @@ class Numbering {
       line.attr('x2'),
       line.attr('y2'),
     );
-
     lineAngle = normalizeAngle(lineAngle, 0);
     let tp = {};
     let textPadding = 4;
-
     if (lineAngle < Math.PI / 4 || lineAngle > 7 * Math.PI / 4) {
       tp.x = line.attr('x2') + textPadding;
       tp.y = line.attr('y2');
@@ -77,7 +73,6 @@ class Numbering {
       tp.textAnchor = 'middle';
       tp.dy = '0em';
     }
-
     return tp;
   }
 
@@ -138,7 +133,6 @@ class Numbering {
     if (savedState.className !== 'Numbering') {
       throw new Error('Saved state is not for a numbering.');
     }
-
     let text = svg.findOne('#' + savedState.text);
     let line = svg.findOne('#' + savedState.line);
     let n = new Numbering(text, line, xBaseCenter, yBaseCenter);
@@ -159,18 +153,15 @@ class Numbering {
     let lc = Numbering._lineCoordinates(xBaseCenter, yBaseCenter, angle, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     line.id();
-    
     let text = svg.text((add) => add.tspan(number.toString()));
     text.id();
     let tp = Numbering._textPositioning(line);
-
     text.attr({
       'x': tp.x,
       'y': tp.y,
       'text-anchor': tp.textAnchor,
       'dy': tp.dy,
     });
-    
     let n = new Numbering(text, line, xBaseCenter, yBaseCenter);
     Numbering._applyMostRecentProps(n);
     return n;
@@ -199,9 +190,7 @@ class Numbering {
     if (typeof(this._text.id()) !== 'string' || this._text.id().length === 0) {
       throw new Error('Invalid text ID.');
     }
-
     let n = Number.parseFloat(this._text.text());
-
     if (!isFinite(n) || Math.floor(n) !== n) {
       throw new Error('Text cannot be parsed as an integer.');
     }
@@ -255,10 +244,8 @@ class Numbering {
       this._line.attr('x2'),
       this._line.attr('y2'),
     );
-
     let xBaseCenter = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
     let yBaseCenter = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
-
     this._reposition(
       xBaseCenter,
       yBaseCenter,
@@ -266,7 +253,6 @@ class Numbering {
       bp,
       this.lineLength,
     );
-
     Numbering._mostRecentProps.basePadding = bp;
   }
 
@@ -292,10 +278,8 @@ class Numbering {
       this._line.attr('x2'),
       this._line.attr('y2'),
     );
-
     let xBaseCenter = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
     let yBaseCenter = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
-
     this._reposition(
       xBaseCenter,
       yBaseCenter,
@@ -303,7 +287,6 @@ class Numbering {
       this.basePadding,
       ll,
     );
-
     Numbering._mostRecentProps.lineLength = ll;
   }
 
@@ -343,18 +326,14 @@ class Numbering {
       basePadding,
       lineLength,
     );
-
     this._line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
-
     let tp = Numbering._textPositioning(this._line);
-
     this._text.attr({
       'x': tp.x,
       'y': tp.y,
       'text-anchor': tp.textAnchor,
       'dy': tp.dy,
     });
-
     this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
@@ -390,7 +369,6 @@ class Numbering {
     if (!isFinite(n) || Math.floor(n) !== n) {
       throw new Error('Number must be an integer.');
     }
-
     this._text.clear();
     this._text.tspan(n.toString());
   }
