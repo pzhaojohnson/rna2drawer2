@@ -5,7 +5,7 @@ import normalizeAngle from './normalizeAngle';
 class BaseAnnotation {
   
   /**
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    */
@@ -42,8 +42,6 @@ class BaseAnnotation {
   get displacementAngle() {}
 
   /**
-   * Shifts the element of this base annotation.
-   * 
    * @param {number} xShift 
    * @param {number} yShift 
    * @param {number} xBaseCenter 
@@ -102,12 +100,12 @@ class CircleBaseAnnotation extends BaseAnnotation {
   }
   
   /**
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    */
   static createNondisplaced(svg, xBaseCenter, yBaseCenter) {
-    let circle = svg.circle(10);
+    let circle = svg.circle(20);
     circle.id();
     circle.attr({
       'cx': xBaseCenter,
@@ -131,17 +129,17 @@ class CircleBaseAnnotation extends BaseAnnotation {
   }
 
   /**
-   * @returns {string} 
-   */
-  get type() {
-    return 'circle';
-  }
-
-  /**
    * Initializes the ID of the circle if it is not already initialized.
    */
   _validateCircle() {
     this._circle.id();
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get type() {
+    return 'circle';
   }
 
   /**
@@ -218,9 +216,6 @@ class CircleBaseAnnotation extends BaseAnnotation {
   }
 
   /**
-   * Repositions the circle of this base annotation based on the given base coordinates
-   * and clockwise normal angle and the stored displacement of the circle.
-   * 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * @param {number} referenceAngle 
