@@ -71,7 +71,7 @@ class Base {
       b.addCircleOutlineFromSavedState(savedState.outline, clockwiseNormalAngle);
     }
     if (savedState.numbering) {
-      b.addNumberingFromSavedState(savedState.numbering, svg);
+      b.addNumberingFromSavedState(savedState.numbering);
     }
     Base._copyPropsToMostRecent(b);
     return b;
@@ -513,15 +513,14 @@ class Base {
 
   /**
    * @param {Numbering~SavableState} savedState 
-   * @param {SVG.Doc} svg 
    * 
    * @returns {Numbering} 
    */
-  addNumberingFromSavedState(savedState, svg) {
+  addNumberingFromSavedState(savedState) {
     this.removeNumbering();
     this._numbering = Numbering.fromSavedState(
       savedState,
-      svg,
+      this._text.root(),
       this.xCenter,
       this.yCenter,
     );

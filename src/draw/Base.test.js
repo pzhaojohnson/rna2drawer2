@@ -554,14 +554,14 @@ it('addNumberingFromSavedState method', () => {
   // no previous numbering
   let n1 = Numbering.create(svg, 0, b.xCenter, b.yCenter, 0);
   let savedState1 = n1.savableState();
-  let numbering1 = b.addNumberingFromSavedState(savedState1, svg);
+  let numbering1 = b.addNumberingFromSavedState(savedState1);
   let textId1 = numbering1._text.id();
   expect(svg.findOne('#' + textId1)).not.toBe(null);
 
   // removes previous numbering
   let n2 = Numbering.create(svg, 1, b.xCenter, b.yCenter, 0);
   let savedState2 = n2.savableState();
-  let numbering2 = b.addNumberingFromSavedState(savedState2, svg);
+  let numbering2 = b.addNumberingFromSavedState(savedState2);
   let textId2 = numbering2._text.id();
   expect(svg.findOne('#' + textId2)).not.toBe(null);
   expect(svg.findOne('#' + textId1)).toBe(null);
