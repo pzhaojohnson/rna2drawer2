@@ -170,12 +170,13 @@ it('_validateText method', () => {
   text3.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
   expect(() => new Base(text3)).toThrow();
 
-  // ID is not a string
+  // initializes ID
   let text4 = svg.text('C');
-  text4.id(0.1234);
   text4.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
-  expect(() => new Base(text4)).toThrow();
-
+  expect(text4.attr('id')).toBe(undefined);
+  new Base(text4);
+  expect(text4.attr('id')).toBeTruthy();
+  
   // text-anchor is not middle
   let text5 = svg.text('A');
   text5.id();

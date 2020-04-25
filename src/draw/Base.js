@@ -154,15 +154,14 @@ class Base {
   }
 
   /**
-   * @throws {Error} If the ID of the text is not a string or is an empty string.
+   * Initializes the ID of the text if it is not already initialized.
+   * 
    * @throws {Error} If the text content is not a single character.
    * @throws {Error} If the text-anchor property is not middle.
    * @throws {Error} If the dy property is not 0.4em.
    */
   _validateText() {
-    if (typeof(this._text.id()) !== 'string' || this._text.id().length === 0) {
-      throw new Error('Invalid ID.');
-    }
+    this._text.id();
     if (this._text.text().length !== 1) {
       throw new Error('The text content must be a single character.');
     }
