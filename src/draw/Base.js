@@ -384,6 +384,8 @@ class Base {
   }
 
   /**
+   * Removes any previous highlighting.
+   * 
    * @returns {CircleBaseAnnotation} 
    */
   addCircleHighlighting() {
@@ -397,6 +399,8 @@ class Base {
   }
 
   /**
+   * Removes any previous highlighting.
+   * 
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {number} [clockwiseNormalAngle=0] 
    * 
@@ -439,6 +443,8 @@ class Base {
   }
 
   /**
+   * Removes any previous outline.
+   * 
    * @returns {CircleBaseAnnotation} 
    */
   addCircleOutline() {
@@ -452,6 +458,8 @@ class Base {
   }
 
   /**
+   * Removes any previous outline.
+   * 
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {number} [clockwiseNormalAngle=0] 
    * 
@@ -494,6 +502,8 @@ class Base {
   }
 
   /**
+   * Removes any previous numbering.
+   * 
    * @param {number} number 
    * @param {number} [outerNormalAngle=0] 
    * 
@@ -512,6 +522,8 @@ class Base {
   }
 
   /**
+   * Removes any previous numbering.
+   * 
    * @param {Numbering~SavableState} savedState 
    * 
    * @returns {Numbering} 
