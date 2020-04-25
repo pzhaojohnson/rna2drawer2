@@ -81,33 +81,26 @@ class Sequence {
    */
   static _clockwiseNormalAngleAtPositionFromSavedState(p, savedState, svg) {
     let sb = savedState.bases[p - 1];
-    
     let cs = {
       xCenter: Base.xFromSavedState(sb, svg),
       yCenter: Base.yFromSavedState(sb, svg),
     };
-    
     let cs5 = null;
     let cs3 = null;
-
     if (p > 1) {
       let sb5 = savedState.bases[p - 2];
-      
       cs5 = {
         xCenter: Base.xFromSavedState(sb5, svg),
         yCenter: Base.yFromSavedState(sb5, svg),
       };
     }
-
     if (p < savedState.bases.length) {
       let sb3 = savedState.bases[p];
-
       cs3 = {
         xCenter: Base.xFromSavedState(sb3, svg),
         yCenter: Base.yFromSavedState(sb3, svg),
       };
     }
-
     return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
   }
 
@@ -120,14 +113,12 @@ class Sequence {
    */
   static _innerNormalAngleOfBase(cs, cs5, cs3) {
     let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
-    
     if (cs5 === null || cs3 === null) {
       return cna;
     } else {
       let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
       let a3 = Sequence._angleBetweenBaseCenters(cs, cs3);
       a5 = normalizeAngle(a5, a3);
-
       if (a5 - a3 < Math.PI) {
         return (a5 + a3) / 2;
       } else {
@@ -148,17 +139,14 @@ class Sequence {
     seq.setNumberingOffset(savedState.numberingOffset, svg);
     seq.setNumberingAnchor(savedState.numberingAnchor, svg);
     seq.setNumberingIncrement(savedState.numberingIncrement, svg);
-
     for (let p = 1; p <= savedState.bases.length; p++) {
       let b = Base.fromSavedState(
         savedState.bases[p - 1],
         svg,
         Sequence._clockwiseNormalAngleAtPositionFromSavedState(p, savedState, svg),
       );
-
       seq.appendBase(b, svg);
     }
-
     Sequence._copyPropsToMostRecent(seq);
     return seq;
   }
@@ -208,14 +196,11 @@ class Sequence {
         b.removeNumbering();
       }
     });
-
     let anchor = this.numberingAnchor;
     let increment = this.numberingIncrement;
-    
     for (let p = anchor; p > 0; p -= increment) {
       if (p <= this.length) {
         let b = this.getBaseAtPosition(p);
-        
         b.addNumbering(
           p + this.numberingOffset,
           this.outerNormalAngleAtPosition(p)
@@ -226,7 +211,6 @@ class Sequence {
     for (let p = anchor + increment; p <= this.length; p += increment) {
       if (p > 0) {
         let b = this.getBaseAtPosition(p);
-        
         b.addNumbering(
           p + this.numberingOffset,
           this.outerNormalAngleAtPosition(p)
@@ -252,7 +236,6 @@ class Sequence {
     if (!isFinite(no) || Math.floor(no) !== no) {
       throw new Error('Numbering offset must be an integer.');
     }
-
     this._numberingOffset = no;
     this._updateBaseNumberings(svg);
   }
@@ -274,7 +257,6 @@ class Sequence {
     if (!isFinite(na) || Math.floor(na) !== na) {
       throw new Error('Numbering anchor must be an integer.');
     }
-
     this._numberingAnchor = na;
     this._updateBaseNumberings(svg);
     Sequence._mostRecentProps.numberingAnchor = na;
@@ -300,7 +282,6 @@ class Sequence {
     } else if (ni < 1) {
       throw new Error('Numbering increment must be positive.');
     }
-
     this._numberingIncrement = ni;
     this._updateBaseNumberings(svg);
     Sequence._mostRecentProps.numberingIncrement = ni;
@@ -406,12 +387,10 @@ class Sequence {
   getBaseById(id) {
     for (let p = 1; p <= this.length; p++) {
       let b = this.getBaseAtPosition(p);
-      
       if (b.id === id) {
         return b;
       }
     }
-
     return null;
   }
 
@@ -463,7 +442,6 @@ class Sequence {
         return p;
       }
     }
-
     return 0;
   }
 
@@ -502,20 +480,16 @@ class Sequence {
     } else {
       let b = this.getBaseAtPosition(p);
       let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
-      
       let cs5 = null;
       let cs3 = null;
-      
       if (p > 1) {
         let b5 = this.getBaseAtPosition(p - 1);
         cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
       }
-
       if (p < this.length) {
         let b3 = this.getBaseAtPosition(p + 1);
         cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
       }
-
       return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
     }
   }
@@ -541,20 +515,16 @@ class Sequence {
     } else {
       let b = this.getBaseAtPosition(p);
       let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
-      
       let cs5 = null;
       let cs3 = null;
-      
       if (p > 1) {
         let b5 = this.getBaseAtPosition(p - 1);
         cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
       }
-
       if (p < this.length) {
         let b3 = this.getBaseAtPosition(p + 1);
         cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
       }
-
       return Sequence._innerNormalAngleOfBase(cs, cs5, cs3);
     }
   }
@@ -586,7 +556,6 @@ class Sequence {
     if (this.contains(b)) {
       throw new Error('Base is already in this sequence.');
     }
-
     this._bases.push(b);
     this._updateBaseNumberings(svg);
   }
@@ -631,13 +600,11 @@ class Sequence {
     } else if (this.positionOutOfRange(p) && p !== this.length + 1) {
       throw new Error('Position is out of range.');
     }
-
     if (p === this.length + 1) {
       this.appendBase(b, svg);
     } else if (this.positionInRange(p)) {
       this._bases.splice(p - 1, 0, b);
     }
-
     this._updateBaseNumberings(svg);
   }
 
@@ -653,7 +620,6 @@ class Sequence {
       b.remove();
       this._bases.splice(p - 1, 1);
     }
-
     this._updateBaseNumberings(svg);
   }
 
@@ -686,11 +652,9 @@ class Sequence {
       numberingAnchor: this.numberingAnchor,
       numberingIncrement: this.numberingIncrement,
     };
-
     this._bases.forEach(
       b => savableState.bases.push(b.savableState())
     );
-
     return savableState;
   }
 }
