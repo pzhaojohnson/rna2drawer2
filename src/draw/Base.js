@@ -100,12 +100,14 @@ class Base {
   }
 
   /**
+   * Returns null if the given string is not a single character.
+   * 
    * @param {SVG.Doc} svg 
    * @param {string} character 
    * @param {number} xCenter 
    * @param {number} yCenter 
    * 
-   * @returns {Base} 
+   * @returns {Base|null} 
    */
   static create(svg, character, xCenter, yCenter) {
     let text = svg.text((add) => add.tspan(character));
@@ -116,14 +118,24 @@ class Base {
       'text-anchor': 'middle',
       'dominant-baseline': 'middle',
     });
-    let b = new Base(text);
+    let b = null;
+    try {
+      b = new Base(text);
+    } catch (err) {}
+    if (!b) {
+      return null;
+    }
     Base._applyMostRecentProps(b);
     return b;
   }
 
   /**
+   * Returns null if the given string is not a single character.
+   * 
    * @param {SVG.Doc} svg 
    * @param {string} character 
+   * 
+   * @returns {Base|null} 
    */
   static createOutOfView(svg, character) {
     return Base.create(svg, character, 0, -200);
