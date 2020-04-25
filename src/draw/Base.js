@@ -439,14 +439,14 @@ class Base {
   }
 
   /**
-   * @param {SVG.Doc} svg 
-   * 
    * @returns {CircleBaseAnnotation} 
    */
-  addCircleOutline(svg) {
+  addCircleOutline() {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.createNondisplaced(
-      svg, this.xCenter, this.yCenter
+      this._text.root(),
+      this.xCenter,
+      this.yCenter,
     );
     return this._outline;
   }
