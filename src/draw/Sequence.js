@@ -83,8 +83,8 @@ class Sequence {
     let sb = savedState.bases[p - 1];
     
     let cs = {
-      xCenter: Base.xCenterFromSavedState(sb, svg),
-      yCenter: Base.yCenterFromSavedState(sb, svg),
+      xCenter: Base.xFromSavedState(sb, svg),
+      yCenter: Base.yFromSavedState(sb, svg),
     };
     
     let cs5 = null;
@@ -94,8 +94,8 @@ class Sequence {
       let sb5 = savedState.bases[p - 2];
       
       cs5 = {
-        xCenter: Base.xCenterFromSavedState(sb5, svg),
-        yCenter: Base.yCenterFromSavedState(sb5, svg),
+        xCenter: Base.xFromSavedState(sb5, svg),
+        yCenter: Base.yFromSavedState(sb5, svg),
       };
     }
 
@@ -103,8 +103,8 @@ class Sequence {
       let sb3 = savedState.bases[p];
 
       cs3 = {
-        xCenter: Base.xCenterFromSavedState(sb3, svg),
-        yCenter: Base.yCenterFromSavedState(sb3, svg),
+        xCenter: Base.xFromSavedState(sb3, svg),
+        yCenter: Base.yFromSavedState(sb3, svg),
       };
     }
 

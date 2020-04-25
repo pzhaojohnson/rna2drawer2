@@ -83,7 +83,7 @@ class Base {
    * 
    * @returns {number} 
    */
-  static xCenterFromSavedState(savedState, svg) {
+  static xFromSavedState(savedState, svg) {
     let text = svg.findOne('#' + savedState.text);
     return text.attr('x');
   }
@@ -94,7 +94,7 @@ class Base {
    * 
    * @returns {number} 
    */
-  static yCenterFromSavedState(savedState, svg) {
+  static yFromSavedState(savedState, svg) {
     let text = svg.findOne('#' + savedState.text);
     return text.attr('y');
   }
