@@ -414,14 +414,14 @@ it('addCircleHighlightingFromSavedState method', () => {
   // no previous highlighting
   let cba1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
   let savedState1 = cba1.savableState();
-  let highlighting1 = b.addCircleHighlightingFromSavedState(savedState1, svg, Math.PI / 3);
+  let highlighting1 = b.addCircleHighlightingFromSavedState(savedState1, Math.PI / 3);
   let circleId1 = highlighting1._circle.id();
   expect(svg.findOne('#' + circleId1)).not.toBe(null);
 
   // removes previous highlighting
   let cba2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
   let savedState2 = cba2.savableState();
-  let highlighting2 = b.addCircleHighlightingFromSavedState(savedState2, svg, Math.PI / 3);
+  let highlighting2 = b.addCircleHighlightingFromSavedState(savedState2, Math.PI / 3);
   let circleId2 = highlighting2._circle.id();
   expect(svg.findOne('#' + circleId2)).not.toBe(null);
   expect(svg.findOne('#' + circleId1)).toBe(null);
