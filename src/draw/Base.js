@@ -156,21 +156,24 @@ class Base {
   /**
    * Initializes the ID of the text if it is not already initialized.
    * 
+   * Sets the text-anchor and dominant-baseline attributes to middle
+   * without changing where the text is displayed.
+   * 
    * @throws {Error} If the text content is not a single character.
-   * @throws {Error} If the text-anchor property is not middle.
-   * @throws {Error} If the dy property is not 0.4em.
    */
   _validateText() {
     this._text.id();
     if (this._text.text().length !== 1) {
       throw new Error('The text content must be a single character.');
     }
-    if (this._text.attr('text-anchor') !== 'middle') {
-      throw new Error('The text-anchor property must be middle.');
-    }
-    if (this._text.attr('dominant-baseline') !== 'middle') {
-      throw new Error('dominant-baseline must be middle.');
-    }
+    let b = this._text.bbox();
+    let cxPrev = b.cx;
+    let cyPrev = b.cy;
+    this._text.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
+    b = this._text.bbox();
+    let x = this._text.attr('x') - (b.cx - cxPrev);
+    let y = this._text.attr('y') - (b.cy - cyPrev);
+    this._text.attr({ 'x': x, 'y': y });
   }
 
   /**

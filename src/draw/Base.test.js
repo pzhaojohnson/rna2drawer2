@@ -176,18 +176,6 @@ it('_validateText method', () => {
   expect(text4.attr('id')).toBe(undefined);
   new Base(text4);
   expect(text4.attr('id')).toBeTruthy();
-  
-  // text-anchor is not middle
-  let text5 = svg.text('A');
-  text5.id();
-  text5.attr({ 'dominant-baseline': 'middle' });
-  expect(() => new Base(text5)).toThrow();
-
-  // dominant-baseline is not middle
-  let text6 = svg.text('U');
-  text6.id();
-  text6.attr({ 'text-anchor': 'middle' });
-  expect(() => new Base(text6)).toThrow();
 });
 
 it('id getter', () => {
