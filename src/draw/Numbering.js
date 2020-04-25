@@ -50,14 +50,14 @@ class Numbering {
       line.attr('y2'),
     );
     lineAngle = normalizeAngle(lineAngle, 0);
-    let tp = {};
     let textPadding = 4;
-    if (lineAngle < Math.PI / 4 || lineAngle > 7 * Math.PI / 4) {
-      tp.x = line.attr('x2') + textPadding;
-      tp.y = line.attr('y2');
-      tp.textAnchor = 'start';
-      tp.dominantBaseline = 'middle';
-    } else if (lineAngle >= Math.PI / 4 && lineAngle < 3 * Math.PI / 4) {
+    let tp = {
+      x: line.attr('x2') + textPadding,
+      y: line.attr('y2'),
+      textAnchor: 'start',
+      dominantBaseline: 'middle',
+    };
+    if (lineAngle >= Math.PI / 4 && lineAngle < 3 * Math.PI / 4) {
       tp.x = line.attr('x2');
       tp.y = line.attr('y2') + textPadding;
       tp.textAnchor = 'middle';
@@ -67,7 +67,7 @@ class Numbering {
       tp.y = line.attr('y2');
       tp.textAnchor = 'end';
       tp.dominantBaseline = 'middle';
-    } else {
+    } else if (lineAngle >= 5 * Math.PI / 4 && lineAngle < 7 * Math.PI / 4) {
       tp.x = line.attr('x2');
       tp.y = line.attr('y2') - textPadding;
       tp.textAnchor = 'middle';
@@ -125,7 +125,7 @@ class Numbering {
    * Returns null if the saved state is invalid.
    * 
    * @param {Numbering~SavableState} savedState 
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * 
@@ -149,13 +149,15 @@ class Numbering {
   }
 
   /**
-   * @param {SVG.Doc} svg 
+   * Returns null if the given number is not an integer.
+   * 
+   * @param {SVG.Svg} svg 
    * @param {number} number 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * @param {number} angle 
    * 
-   * @returns {Numbering} 
+   * @returns {Numbering|null} 
    */
   static create(svg, number, xBaseCenter, yBaseCenter, angle) {
     let lc = Numbering._lineCoordinates(xBaseCenter, yBaseCenter, angle, 10, 8);
@@ -170,7 +172,13 @@ class Numbering {
       'text-anchor': tp.textAnchor,
       'dominant-baseline': tp.dominantBaseline,
     });
-    let n = new Numbering(text, line, xBaseCenter, yBaseCenter);
+    let n = null;
+    try {
+      n = new Numbering(text, line, xBaseCenter, yBaseCenter);
+    } catch (err) {}
+    if (!n) {
+      return null;
+    }
     Numbering._applyMostRecentProps(n);
     return n;
   }
@@ -180,6 +188,8 @@ class Numbering {
    * @param {SVG.Line} line 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
+   * 
+   * @throws {Error} If the text content is not an integer.
    */
   constructor(text, line, xBaseCenter, yBaseCenter) {
     this._text = text;
@@ -193,7 +203,7 @@ class Numbering {
   /**
    * Initializes the ID of the text if it is not already initialized.
    * 
-   * @throws {Error} If the text cannot be parsed as an integer.
+   * @throws {Error} If the text content is not an integer.
    */
   _validateText() {
     this._text.id();
@@ -204,17 +214,17 @@ class Numbering {
   }
 
   /**
-   * @returns {string} 
-   */
-  get id() {
-    return this._text.id();
-  }
-
-  /**
    * Initializes the ID of the line if it is not already initializes.
    */
   _validateLine() {
     this._line.id();
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get id() {
+    return this._text.id();
   }
 
   /**
@@ -296,9 +306,6 @@ class Numbering {
   }
 
   /**
-   * Repositions this numbering based on the given base coordinates and angle,
-   * maintaining the previous base padding and line length.
-   * 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * @param {number} angle 
@@ -314,9 +321,6 @@ class Numbering {
   }
 
   /**
-   * Repositions this numbering based on the given base coordinates, angle, base padding,
-   * and line length.
-   * 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * @param {number} angle 
@@ -362,17 +366,17 @@ class Numbering {
    * @returns {number} 
    */
   get number() {
-    return Number.parseInt(this._text.text());
+    return Number(this._text.text());
   }
 
   /**
-   * @param {number} n 
+   * Has no effect if the given number is not an integer.
    * 
-   * @throws {Error} If the given number is not an integer.
+   * @param {number} n 
    */
   set number(n) {
-    if (!isFinite(n) || Math.floor(n) !== n) {
-      throw new Error('Number must be an integer.');
+    if (!Number.isFinite(n) || Math.floor(n) !== n) {
+      return;
     }
     this._text.clear();
     this._text.tspan(n.toString());
