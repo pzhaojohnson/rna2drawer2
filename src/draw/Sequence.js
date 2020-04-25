@@ -217,7 +217,6 @@ class Sequence {
         let b = this.getBaseAtPosition(p);
         
         b.addNumbering(
-          svg,
           p + this.numberingOffset,
           this.outerNormalAngleAtPosition(p)
         );
@@ -229,7 +228,6 @@ class Sequence {
         let b = this.getBaseAtPosition(p);
         
         b.addNumbering(
-          svg,
           p + this.numberingOffset,
           this.outerNormalAngleAtPosition(p)
         );

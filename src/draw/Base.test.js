@@ -67,7 +67,7 @@ it('fromSavedState static method valid saved state', () => {
   // with highlighting, outline and numbering
   let highlighting = b1.addCircleHighlighting();
   let outline = b1.addCircleOutline();
-  let numbering = b1.addNumbering(svg, 3, Math.PI / 3);
+  let numbering = b1.addNumbering(3, Math.PI / 3);
   savableState = b1.savableState();
   let b3 = Base.fromSavedState(savableState, svg, Math.PI / 3);
   expect(b3._text.id()).toBe(b1._text.id());
@@ -231,7 +231,7 @@ it('move with highlighting, outline and numbering', () => {
   let b = Base.create(svg, 'G', 0.2, -0.5);
   let highlighting = b.addCircleHighlighting();
   let outline = b.addCircleOutline();
-  let numbering = b.addNumbering(svg, 0, 4 * Math.PI / 3);
+  let numbering = b.addNumbering(0, 4 * Math.PI / 3);
   let eNumbering = Numbering.create(svg, 0, b.xCenter, b.yCenter, 4 * Math.PI / 3);
   
   b.move(100.5, 300.111, 2 * Math.PI / 3, 5 * Math.PI / 3);
@@ -536,12 +536,12 @@ it('addNumbering method', () => {
   let b = Base.create(svg, 'C', 0.99, 100.2357);
 
   // no previous numbering
-  let numbering1 = b.addNumbering(svg, 5, Math.PI / 3);
+  let numbering1 = b.addNumbering(5, Math.PI / 3);
   let textId1 = numbering1._text.id();
   expect(svg.findOne('#' + textId1)).not.toBe(null);
 
   // removes previous numbering
-  let numbering2 = b.addNumbering(svg, 10, 4 * Math.PI / 3);
+  let numbering2 = b.addNumbering(10, 4 * Math.PI / 3);
   let textId2 = numbering2._text.id();
   expect(svg.findOne('#' + textId2)).not.toBe(null);
   expect(svg.findOne('#' + textId1)).toBe(null);
@@ -571,7 +571,7 @@ it('hasNumbering method', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'C', 0.99, 100.2357);
   expect(b.hasNumbering()).toBeFalsy();
-  b.addNumbering(svg, 12, Math.PI / 6);
+  b.addNumbering(12, Math.PI / 6);
   expect(b.hasNumbering()).toBeTruthy();
   b.removeNumbering();
   expect(b.hasNumbering()).toBeFalsy();
@@ -581,7 +581,7 @@ it('numbering getter', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'C', 0.99, 100.2357);
   expect(b.numbering).toBe(null);
-  let numbering = b.addNumbering(svg, -9, Math.PI / 7);
+  let numbering = b.addNumbering(-9, Math.PI / 7);
   expect(b.numbering.id).toBe(numbering.id);
   b.removeNumbering();
   expect(b.numbering).toBe(null);
@@ -591,7 +591,7 @@ it('removeNumbering method', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'C', 0.99, 100.2357);
   
-  b.addNumbering(svg, -10000, Math.PI);
+  b.addNumbering(-10000, Math.PI);
   expect(b.hasNumbering()).toBeTruthy();
   b.removeNumbering();
   expect(b.hasNumbering()).toBeFalsy();
@@ -615,7 +615,7 @@ it('remove method', () => {
   let b2 = Base.create(svg, '1', 1, 1);
   let highlighting = b2.addCircleHighlighting();
   let outline = b2.addCircleOutline();
-  let numbering = b2.addNumbering(svg, 5, Math.PI / 3);
+  let numbering = b2.addNumbering(5, Math.PI / 3);
   
   textId = b2._text.id();
   let highlightingCircleId = highlighting._circle.id();
@@ -653,7 +653,7 @@ it('savableState method', () => {
   // with highlighting, outline and numbering
   let highlighting = b.addCircleHighlighting();
   let outline = b.addCircleOutline();
-  let numbering = b.addNumbering(svg, 2, Math.PI / 3);
+  let numbering = b.addNumbering(2, Math.PI / 3);
   savableState = b.savableState();
   expect(savableState.className).toBe('Base');
   expect(savableState.text).toBe(b._text.id());

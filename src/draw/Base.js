@@ -494,16 +494,19 @@ class Base {
   }
 
   /**
-   * @param {SVG.Doc} svg 
    * @param {number} number 
    * @param {number} [outerNormalAngle=0] 
    * 
    * @returns {Numbering} 
    */
-  addNumbering(svg, number, outerNormalAngle=0) {
+  addNumbering(number, outerNormalAngle=0) {
     this.removeNumbering();
     this._numbering = Numbering.create(
-      svg, number, this.xCenter, this.yCenter, outerNormalAngle
+      this._text.root(),
+      number,
+      this.xCenter,
+      this.yCenter,
+      outerNormalAngle,
     );
     return this._numbering;
   }
