@@ -484,14 +484,14 @@ it('addCircleOutlineFromSavedState method', () => {
   // no previous outline
   let cba1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
   let savedState1 = cba1.savableState();
-  let outline1 = b.addCircleOutlineFromSavedState(savedState1, svg, Math.PI / 3);
+  let outline1 = b.addCircleOutlineFromSavedState(savedState1, Math.PI / 3);
   let circleId1 = outline1._circle.id();
   expect(svg.findOne('#' + circleId1)).not.toBe(null);
 
   // removes previous outline
   let cba2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
   let savedState2 = cba2.savableState();
-  let outline2 = b.addCircleOutlineFromSavedState(savedState2, svg, Math.PI / 3);
+  let outline2 = b.addCircleOutlineFromSavedState(savedState2, Math.PI / 3);
   let circleId2 = outline2._circle.id();
   expect(svg.findOne('#' + circleId2)).not.toBe(null);
   expect(svg.findOne('#' + circleId1)).toBe(null);

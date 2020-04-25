@@ -68,7 +68,7 @@ class Base {
       b.addCircleHighlightingFromSavedState(savedState.highlighting, clockwiseNormalAngle);
     }
     if (savedState.outline) {
-      b.addCircleOutlineFromSavedState(savedState.outline, svg, clockwiseNormalAngle);
+      b.addCircleOutlineFromSavedState(savedState.outline, clockwiseNormalAngle);
     }
     if (savedState.numbering) {
       b.addNumberingFromSavedState(savedState.numbering, svg);
@@ -453,16 +453,15 @@ class Base {
 
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
-   * @param {SVG.Doc} svg 
    * @param {number} [clockwiseNormalAngle=0] 
    * 
    * @returns {CircleBaseAnnotation} 
    */
-  addCircleOutlineFromSavedState(savedState, svg, clockwiseNormalAngle=0) {
+  addCircleOutlineFromSavedState(savedState, clockwiseNormalAngle=0) {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(
       savedState,
-      svg,
+      this._text.root(),
       this.xCenter,
       this.yCenter,
       clockwiseNormalAngle,
