@@ -83,21 +83,9 @@ it('fromSavedState static method invalid class name', () => {
   let b = Base.create(svg, 'A', 1, 2);
   let savableState = b.savableState();
 
-  // no class name defined
-  delete savableState.className;
-  expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
-
-  // class name is not a string
-  savableState.className = 5;
-  expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
-
-  // class name is an empty string
-  savableState.className = '';
-  expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
-
   // class name is not Base
   savableState.className = 'Bse';
-  expect(() => Base.fromSavedState(savableState, svg, Math.PI / 3)).toThrow();
+  expect(Base.fromSavedState(savableState, svg, Math.PI / 3)).toBe(null);
 });
 
 it('fromSavedState static method updates most recent properties', () => {

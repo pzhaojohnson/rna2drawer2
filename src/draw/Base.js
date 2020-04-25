@@ -42,18 +42,28 @@ class Base {
   }
 
   /**
+   * Returns null if the saved state is invalid.
+   * 
    * @param {Base~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {number} clockwiseNormalAngle 
+   * 
+   * @returns {Base|null} 
    * 
    * @throws {Error} If the saved state is not for a base.
    */
   static fromSavedState(savedState, svg, clockwiseNormalAngle) {
     if (savedState.className !== 'Base') {
-      throw new Error('Saved state is not for a base.');
+      return null;
     }
     let text = svg.findOne('#' + savedState.text);
-    let b = new Base(text);
+    let b = null;
+    try {
+      b = new Base(text);
+    } catch (err) {}
+    if (!b) {
+      return null;
+    }
     if (savedState.highlighting) {
       b.addCircleHighlightingFromSavedState(savedState.highlighting, svg, clockwiseNormalAngle);
     }
