@@ -2,6 +2,7 @@ import Drawing from './Drawing';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import StrictLayoutGeneralProps from './layout/singleseq/strict/StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './layout/singleseq/strict/StrictLayoutBaseProps';
+import { radiateStems } from './layout/singleseq/strict/radiateStems';
 
 class InteractiveDrawing {
 
@@ -99,6 +100,11 @@ class InteractiveDrawing {
     let seq = this._appendSequenceOutOfView(id, characters);
     if (!seq) {
       return;
+    }
+    let stretches3 = radiateStems(secondaryPartners);
+    let i = this._strictLayoutProps.base.length - secondaryPartners.length;
+    for (let j = 0; j < secondaryPartners.length; j++) {
+      this._strictLayoutProps.base[i + j].stretch3 = stretches3[j];
     }
     this._drawing.addPrimaryBondsForSequence(seq);
     this._drawing.applyStrictLayoutPartners(

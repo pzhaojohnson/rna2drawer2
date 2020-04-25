@@ -61,7 +61,7 @@ function _setStretchForUnpairedRegion(ur, stretches3, stretch) {
   }
 }
 
-const _ONE_BRANCH_RADIATION = 2 * Math.PI / 3;
+const _ONE_BRANCH_RADIATION = Math.PI;
 
 /**
  * Assumes that the loop of the given stem has one branch.
@@ -91,7 +91,7 @@ function _radiateOneBranch(st, stretches3) {
 }
 
 const _MULTIPLE_BRANCHES_SPREAD = 4;
-const _MULTIPLE_BRANCHES_SPREAD_ANGLE = Math.PI / 2;
+const _MULTIPLE_BRANCHES_SPREAD_ANGLE = Math.PI;
 
 /**
  * Assumes that the loop of the given stem has multiple branches.
@@ -139,7 +139,7 @@ function _radiateMultipleBranchesOutward(st, stretches3) {
   remainingBases -= st.lastUnpairedRegionInLoop.size;
   remainingBases -= 4;
   let circumference = (Math.PI / (Math.PI - _MULTIPLE_BRANCHES_RADIATION)) * remainingBases;
-  let length = (_MULTIPLE_BRANCHES_RADIATION / (2 * Math.PI)) * circumference;
+  let length = (circumference * (_MULTIPLE_BRANCHES_RADIATION / (2 * Math.PI))) - 2;
   length = Math.max(
     length,
     st.firstUnpairedRegionInLoop.size,

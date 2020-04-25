@@ -186,13 +186,10 @@ describe('_radiateOneBranch function', () => {
   });
 
   it('already radiated enough', () => {
-    let partners = parseDotBracket('((......(((...))).....))').secondaryPartners;
+    let partners = parseDotBracket('((......(((...)))......))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
     let bps = defaultBaseProps(partners.length);
     let st = new Stem(1, partners, gps, bps);
-    expect(
-      st.firstUnpairedRegionInLoop.size
-    ).not.toBe(st.lastUnpairedRegionInLoop.size);
     let stretches3 = zeroStretches3(partners.length);
     _radiateOneBranch(st, stretches3);
     checkStretches3(
@@ -319,7 +316,7 @@ describe('_radiateMultipleBranchesOutward function', () => {
   });
 
   it('radiation determines the length', () => {
-    let partners = parseDotBracket('((((((((((((((((.((.))....((.)).))))))))))))))))').secondaryPartners;
+    let partners = parseDotBracket('((((((((((((((((.((.))........((.)).))))))))))))))))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
     let bps = defaultBaseProps(partners.length);
     let st = new Stem(1, partners, gps, bps);
@@ -331,8 +328,8 @@ describe('_radiateMultipleBranchesOutward function', () => {
     let s = (length - 1) / 2;
     expectedStretches3[15] = s;
     expectedStretches3[16] = s;
-    expectedStretches3[30] = s;
-    expectedStretches3[31] = s;
+    expectedStretches3[34] = s;
+    expectedStretches3[35] = s;
     checkStretches3(stretches3, expectedStretches3);
   });
 });
@@ -353,7 +350,7 @@ describe('_radiateMultipleBranches function', () => {
   });
 
   it('both stems exceed radiation angle', () => {
-    let partners = parseDotBracket('((((((((((((((((.((.))....((.)).))))))))))))))))').secondaryPartners;
+    let partners = parseDotBracket('((((((((((((((((.((.))........((.)).))))))))))))))))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
     let bps = defaultBaseProps(partners.length);
     let st = new Stem(1, partners, gps, bps);
@@ -363,8 +360,8 @@ describe('_radiateMultipleBranches function', () => {
     _radiateMultipleBranchesOutward(st, expectedStretches3);
     expect(expectedStretches3[15]).toBeGreaterThan(0);
     expect(expectedStretches3[16]).toBeGreaterThan(0);
-    expect(expectedStretches3[30]).toBeGreaterThan(0);
-    expect(expectedStretches3[31]).toBeGreaterThan(0);
+    expect(expectedStretches3[34]).toBeGreaterThan(0);
+    expect(expectedStretches3[35]).toBeGreaterThan(0);
     checkStretches3(stretches3, expectedStretches3);
   });
 
