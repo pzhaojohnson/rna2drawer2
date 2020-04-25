@@ -65,7 +65,7 @@ it('fromSavedState static method valid saved state', () => {
   expect(b2.hasNumbering()).toBeFalsy();
   
   // with highlighting, outline and numbering
-  let highlighting = b1.addCircleHighlighting(svg);
+  let highlighting = b1.addCircleHighlighting();
   let outline = b1.addCircleOutline(svg);
   let numbering = b1.addNumbering(svg, 3, Math.PI / 3);
   savableState = b1.savableState();
@@ -229,7 +229,7 @@ it('move with no highlighting, outline or numbering', () => {
 it('move with highlighting, outline and numbering', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'G', 0.2, -0.5);
-  let highlighting = b.addCircleHighlighting(svg);
+  let highlighting = b.addCircleHighlighting();
   let outline = b.addCircleOutline(svg);
   let numbering = b.addNumbering(svg, 0, 4 * Math.PI / 3);
   let eNumbering = Numbering.create(svg, 0, b.xCenter, b.yCenter, 4 * Math.PI / 3);
@@ -396,12 +396,12 @@ it('addCircleHighlighting method', () => {
   let b = Base.create(svg, 'C', 0.99, 100.2357);
 
   // no previous highlighting
-  let highlighting1 = b.addCircleHighlighting(svg);
+  let highlighting1 = b.addCircleHighlighting();
   let circleId1 = highlighting1._circle.id();
   expect(svg.findOne('#' + circleId1)).not.toBe(null);
 
   // removes previous highlighting
-  let highlighting2 = b.addCircleHighlighting(svg);
+  let highlighting2 = b.addCircleHighlighting();
   let circleId2 = highlighting2._circle.id();
   expect(svg.findOne('#' + circleId2)).not.toBe(null);
   expect(svg.findOne('#' + circleId1)).toBe(null);
@@ -431,7 +431,7 @@ it('hasHighlighting method', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'C', 0.99, 100.2357);
   expect(b.hasHighlighting()).toBeFalsy();
-  b.addCircleHighlighting(svg);
+  b.addCircleHighlighting();
   expect(b.hasHighlighting()).toBeTruthy();
   b.removeHighlighting();
   expect(b.hasHighlighting()).toBeFalsy();
@@ -441,7 +441,7 @@ it('highlighting getter', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'C', 0.99, 100.2357);
   expect(b.highlighting).toBe(null);
-  let highlighting = b.addCircleHighlighting(svg);
+  let highlighting = b.addCircleHighlighting();
   expect(b.highlighting.id).toBe(highlighting.id);
   b.removeHighlighting();
   expect(b.highlighting).toBe(null);
@@ -451,7 +451,7 @@ it('removeHighlighting method', () => {
   let svg = createNodeSVG();
   let b = Base.create(svg, 'C', 0.99, 100.2357);
   
-  b.addCircleHighlighting(svg);
+  b.addCircleHighlighting();
   expect(b.hasHighlighting()).toBeTruthy();
   b.removeHighlighting();
   expect(b.hasHighlighting()).toBeFalsy();
@@ -613,7 +613,7 @@ it('remove method', () => {
 
   // with highlighting, outline and numbering
   let b2 = Base.create(svg, '1', 1, 1);
-  let highlighting = b2.addCircleHighlighting(svg);
+  let highlighting = b2.addCircleHighlighting();
   let outline = b2.addCircleOutline(svg);
   let numbering = b2.addNumbering(svg, 5, Math.PI / 3);
   
@@ -651,7 +651,7 @@ it('savableState method', () => {
   expect(savableState.numbering).toBe(undefined);
   
   // with highlighting, outline and numbering
-  let highlighting = b.addCircleHighlighting(svg);
+  let highlighting = b.addCircleHighlighting();
   let outline = b.addCircleOutline(svg);
   let numbering = b.addNumbering(svg, 2, Math.PI / 3);
   savableState = b.savableState();

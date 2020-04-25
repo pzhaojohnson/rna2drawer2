@@ -384,14 +384,14 @@ class Base {
   }
 
   /**
-   * @param {SVG.Doc} svg 
-   * 
    * @returns {CircleBaseAnnotation} 
    */
-  addCircleHighlighting(svg) {
+  addCircleHighlighting() {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.createNondisplaced(
-      svg, this.xCenter, this.yCenter
+      this._text.root(),
+      this.xCenter,
+      this.yCenter,
     );
     return this._highlighting;
   }
