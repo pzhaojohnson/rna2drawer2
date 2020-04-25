@@ -46,13 +46,13 @@ class Base {
    * 
    * @param {Base~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {number} clockwiseNormalAngle 
+   * @param {number} [clockwiseNormalAngle=0] 
    * 
    * @returns {Base|null} 
    * 
    * @throws {Error} If the saved state is not for a base.
    */
-  static fromSavedState(savedState, svg, clockwiseNormalAngle) {
+  static fromSavedState(savedState, svg, clockwiseNormalAngle=0) {
     if (savedState.className !== 'Base') {
       return null;
     }
@@ -206,10 +206,10 @@ class Base {
   /**
    * @param {number} xCenter 
    * @param {number} yCenter 
-   * @param {number} clockwiseNormalAngle 
-   * @param {number} outerNormalAngle 
+   * @param {number} [clockwiseNormalAngle=0] 
+   * @param {number} [outerNormalAngle=0] 
    */
-  move(xCenter, yCenter, clockwiseNormalAngle, outerNormalAngle) {
+  move(xCenter, yCenter, clockwiseNormalAngle=0, outerNormalAngle=0) {
     this._text.attr({
       'x': xCenter,
       'y': yCenter
@@ -385,11 +385,11 @@ class Base {
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {number} clockwiseNormalAngle 
+   * @param {number} [clockwiseNormalAngle=0] 
    * 
    * @returns {CircleBaseAnnotation} 
    */
-  addCircleHighlightingFromSavedState(savedState, svg, clockwiseNormalAngle) {
+  addCircleHighlightingFromSavedState(savedState, svg, clockwiseNormalAngle=0) {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.fromSavedState(
       savedState,
@@ -441,11 +441,11 @@ class Base {
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {number} clockwiseNormalAngle 
+   * @param {number} [clockwiseNormalAngle=0] 
    * 
    * @returns {CircleBaseAnnotation} 
    */
-  addCircleOutlineFromSavedState(savedState, svg, clockwiseNormalAngle) {
+  addCircleOutlineFromSavedState(savedState, svg, clockwiseNormalAngle=0) {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(
       savedState,
@@ -484,11 +484,11 @@ class Base {
   /**
    * @param {SVG.Doc} svg 
    * @param {number} number 
-   * @param {number} outerNormalAngle 
+   * @param {number} [outerNormalAngle=0] 
    * 
    * @returns {Numbering} 
    */
-  addNumbering(svg, number, outerNormalAngle) {
+  addNumbering(svg, number, outerNormalAngle=0) {
     this.removeNumbering();
     this._numbering = Numbering.create(
       svg, number, this.xCenter, this.yCenter, outerNormalAngle
