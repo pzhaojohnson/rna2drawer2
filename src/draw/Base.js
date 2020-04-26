@@ -45,12 +45,10 @@ class Base {
    * Returns null if the saved state is invalid.
    * 
    * @param {Base~SavableState} savedState 
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {number} [clockwiseNormalAngle=0] 
    * 
    * @returns {Base|null} 
-   * 
-   * @throws {Error} If the saved state is not for a base.
    */
   static fromSavedState(savedState, svg, clockwiseNormalAngle=0) {
     if (savedState.className !== 'Base') {
@@ -60,8 +58,7 @@ class Base {
     let b = null;
     try {
       b = new Base(text);
-    } catch (err) {}
-    if (!b) {
+    } catch (err) {
       return null;
     }
     if (savedState.highlighting) {
@@ -79,7 +76,7 @@ class Base {
 
   /**
    * @param {Base~SavableState} savedState 
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * 
    * @returns {number} 
    */
@@ -102,7 +99,7 @@ class Base {
   /**
    * Returns null if the given string is not a single character.
    * 
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {string} character 
    * @param {number} xCenter 
    * @param {number} yCenter 
@@ -121,8 +118,7 @@ class Base {
     let b = null;
     try {
       b = new Base(text);
-    } catch (err) {}
-    if (!b) {
+    } catch (err) {
       return null;
     }
     Base._applyMostRecentProps(b);
@@ -143,6 +139,8 @@ class Base {
 
   /**
    * @param {SVG.Text} text 
+   * 
+   * @throws {Error} If the text content is not a single character.
    */
   constructor(text) {
     this._text = text;
@@ -191,13 +189,13 @@ class Base {
   }
 
   /**
-   * @param {string} c 
+   * Has no effect if the given string is not a single character.
    * 
-   * @throws {Error} If the length of the given string is not one.
+   * @param {string} c 
    */
   set character(c) {
     if (c.length !== 1) {
-      throw new Error('The given string has multiple characters.');
+      return;
     }
     this._text.clear();
     this._text.tspan(c);
@@ -228,13 +226,13 @@ class Base {
       'x': xCenter,
       'y': yCenter
     });
-    if (this._highlighting !== null) {
+    if (this.hasHighlighting()) {
       this._highlighting.reposition(xCenter, yCenter, clockwiseNormalAngle);
     }
-    if (this._outline !== null) {
+    if (this.hasOutline()) {
       this._outline.reposition(xCenter, yCenter, clockwiseNormalAngle);
     }
-    if (this._numbering !== null) {
+    if (this.hasNumbering()) {
       this._numbering.reposition(xCenter, yCenter, outerNormalAngle);
     }
   }
@@ -342,6 +340,20 @@ class Base {
   }
 
   /**
+   * @returns {string} 
+   */
+  get cursor() {
+    return this._text.css('cursor');
+  }
+
+  /**
+   * @param {string} c 
+   */
+  set cursor(c) {
+    this._text.css({ 'cursor': c });
+  }
+
+  /**
    * @param {function} callback 
    */
   bindMouseover(callback) {
@@ -370,22 +382,6 @@ class Base {
   }
 
   /**
-   * @returns {string} 
-   */
-  get cursor() {
-    return this._text.css('cursor');
-  }
-
-  /**
-   * @param {string} c 
-   */
-  set cursor(c) {
-    this._text.css({ 'cursor': c });
-  }
-
-  /**
-   * Removes any previous highlighting.
-   * 
    * @returns {CircleBaseAnnotation} 
    */
   addCircleHighlighting() {
@@ -399,8 +395,6 @@ class Base {
   }
 
   /**
-   * Removes any previous highlighting.
-   * 
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {number} [clockwiseNormalAngle=0] 
    * 
@@ -422,7 +416,10 @@ class Base {
    * @returns {boolean} 
    */
   hasHighlighting() {
-    return this._highlighting !== null;
+    if (this._highlighting) {
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -443,8 +440,6 @@ class Base {
   }
 
   /**
-   * Removes any previous outline.
-   * 
    * @returns {CircleBaseAnnotation} 
    */
   addCircleOutline() {
@@ -458,8 +453,6 @@ class Base {
   }
 
   /**
-   * Removes any previous outline.
-   * 
    * @param {CircleBaseAnnotation~SavableState} savedState 
    * @param {number} [clockwiseNormalAngle=0] 
    * 
@@ -481,7 +474,10 @@ class Base {
    * @returns {boolean} 
    */
   hasOutline() {
-    return this._outline !== null;
+    if (this._outline) {
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -502,12 +498,12 @@ class Base {
   }
 
   /**
-   * Removes any previous numbering.
+   * Returns null if the given number is not accepted by the Numbering class.
    * 
    * @param {number} number 
    * @param {number} [outerNormalAngle=0] 
    * 
-   * @returns {Numbering} 
+   * @returns {Numbering|null} 
    */
   addNumbering(number, outerNormalAngle=0) {
     this.removeNumbering();
@@ -522,8 +518,6 @@ class Base {
   }
 
   /**
-   * Removes any previous numbering.
-   * 
    * @param {Numbering~SavableState} savedState 
    * 
    * @returns {Numbering} 
@@ -543,7 +537,10 @@ class Base {
    * @returns {boolean} 
    */
   hasNumbering() {
-    return this._numbering !== null;
+    if (this._numbering) {
+      return true;
+    }
+    return false;
   }
 
   /**
