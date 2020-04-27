@@ -540,13 +540,13 @@ class Sequence {
   /**
    * Appends the given base to the end of this sequence.
    * 
-   * @param {Base} b 
+   * Has no effect if the given base is already in this sequence.
    * 
-   * @throws {Error} If the given base is already in this sequence.
+   * @param {Base} b 
    */
   appendBase(b) {
     if (this.contains(b)) {
-      throw new Error('Base is already in this sequence.');
+      return;
     }
     this._bases.push(b);
     this._updateBaseNumberings();
@@ -578,17 +578,17 @@ class Sequence {
    * If the position is one plus the length of this sequence, the base will
    * be appended to the end of this sequence.
    * 
+   * Has no effect if the given base is already in this sequence or if the
+   * given position is out of range.
+   * 
    * @param {Base} b 
    * @param {number} p 
-   * 
-   * @throws {Error} If the given base is already in this sequence.
-   * @throws {Error} If the given position is out of range.
    */
   insertBaseAtPosition(b, p) {
     if (this.contains(b)) {
-      throw new Error('Base is already in this sequence.');
+      return;
     } else if (this.positionOutOfRange(p) && p !== this.length + 1) {
-      throw new Error('Position is out of range.');
+      return;
     }
     if (p === this.length + 1) {
       this.appendBase(b);

@@ -1347,7 +1347,7 @@ describe('Sequence class', () => {
     expect(seq.getBaseAtPosition(3)).toBe(b3);
 
     // appending a base that is already in the sequence
-    expect(() => seq.appendBase(b2)).toThrow();
+    seq.appendBase(b2);
     expect(seq.length).toBe(3);
     
     // base numberings are updated
@@ -1414,10 +1414,12 @@ describe('Sequence class', () => {
 
     // inserting below range of empty sequence
     let b1 = Base.create(svg, 'a', 2, 3);
-    expect(() => seq.insertBaseAtPosition(b1, 0, svg)).toThrow();
+    seq.insertBaseAtPosition(b1, 0, svg);
+    expect(seq.length).toBe(0);
 
     // inserting above range of empty sequence
-    expect(() => seq.insertBaseAtPosition(b1, 2, svg)).toThrow();
+    seq.insertBaseAtPosition(b1, 2, svg);
+    expect(seq.length).toBe(0);
 
     // inserting into empty sequence
     seq.insertBaseAtPosition(b1, 1, svg);
@@ -1431,10 +1433,12 @@ describe('Sequence class', () => {
 
     // inserting below range
     let b4 = Base.create(svg, 'e', 5, 5);
-    expect(() => seq.insertBaseAtPosition(b4, 0, svg)).toThrow();
+    seq.insertBaseAtPosition(b4, 0, svg);
+    expect(seq.length).toBe(3);
 
     // inserting above range
-    expect(() => seq.insertBaseAtPosition(b4, 5, svg)).toThrow();
+    seq.insertBaseAtPosition(b4, 5, svg);
+    expect(seq.length).toBe(3);
 
     // inserting at the low end
     seq.insertBaseAtPosition(b4, 1, svg);
@@ -1469,7 +1473,8 @@ describe('Sequence class', () => {
     expect(seq.getBaseAtPosition(7)).toBe(b6);
 
     // inserting a base that is already in the sequence
-    expect(() => seq.insertBaseAtPosition(b2, 4, svg)).toThrow();
+    seq.insertBaseAtPosition(b2, 4, svg);
+    expect(seq.length).toBe(7);
 
     // base numberings are updated
     seq.setNumberingAnchor(2, svg);
