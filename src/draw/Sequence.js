@@ -224,13 +224,13 @@ class Sequence {
   }
 
   /**
-   * @param {number} no 
+   * Has no effect if the given number is not an integer.
    * 
-   * @throws {Error} If the given numbering offset is not an integer.
+   * @param {number} no 
    */
   setNumberingOffset(no) {
     if (!isFinite(no) || Math.floor(no) !== no) {
-      throw new Error('Numbering offset must be an integer.');
+      return;
     }
     this._numberingOffset = no;
     this._updateBaseNumberings();
@@ -244,13 +244,13 @@ class Sequence {
   }
 
   /**
-   * @param {number} na 
+   * Has no effect if the given number is not an integer.
    * 
-   * @throws {Error} If the given numbering anchor is not an integer.
+   * @param {number} na 
    */
   setNumberingAnchor(na) {
     if (!isFinite(na) || Math.floor(na) !== na) {
-      throw new Error('Numbering anchor must be an integer.');
+      return;
     }
     this._numberingAnchor = na;
     this._updateBaseNumberings();
@@ -265,16 +265,15 @@ class Sequence {
   }
 
   /**
-   * @param {number} ni 
+   * Has no effect if the given number is not an integer or is not positive.
    * 
-   * @throws {Error} If the given numbering increment is not an integer.
-   * @throws {Error} If the given numbering increment is not positive.
+   * @param {number} ni 
    */
   setNumberingIncrement(ni) {
     if (!isFinite(ni) || Math.floor(ni) !== ni) {
-      throw new Error('Numbering increment must be an integer.');
+      return;
     } else if (ni < 1) {
-      throw new Error('Numbering increment must be positive.');
+      return;
     }
     this._numberingIncrement = ni;
     this._updateBaseNumberings();
