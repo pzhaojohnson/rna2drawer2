@@ -75,7 +75,7 @@ class Sequence {
   /**
    * @param {number} p 
    * @param {Sequence~SavableState} savedState 
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * 
    * @returns {number} 
    */
@@ -130,7 +130,7 @@ class Sequence {
 
   /**
    * @param {Sequence~SavableState} savedState 
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * 
    * @returns {Sequence} 
    */
@@ -152,7 +152,7 @@ class Sequence {
   }
 
   /**
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {string} id 
    * @param {string} characters 
    * 
