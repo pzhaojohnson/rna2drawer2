@@ -36,7 +36,7 @@ class OpenCT extends React.Component {
         <div
           style={{
             flexGrow: '1',
-            maxHeight: '816px',
+            maxHeight: '824px',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
@@ -46,7 +46,7 @@ class OpenCT extends React.Component {
             style={{
               flexGrow: '1',
               maxWidth: '1200px',
-              margin: '8px',
+              margin: '12px',
               border: 'thin solid #bfbfbf',
               borderRadius: '4px',
               display: 'flex',
