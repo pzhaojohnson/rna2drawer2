@@ -297,7 +297,7 @@ describe('Sequence class', () => {
     it('sets numbering properties', () => {
       let svg = createNodeSVG();
       let seq1 = new Sequence('asdf');
-      seq1.setNumberingOffset(4, svg);
+      seq1.setNumberingOffset(4);
       seq1.setNumberingAnchor(-2, svg);
       seq1.setNumberingIncrement(3, svg);
 
@@ -373,11 +373,11 @@ describe('Sequence class', () => {
     let seq = new Sequence('asdf');
     
     // a positive value
-    seq.setNumberingOffset(5, svg);
+    seq.setNumberingOffset(5);
     expect(seq.numberingOffset).toBe(5);
 
     // a negative value
-    seq.setNumberingOffset(-10, svg);
+    seq.setNumberingOffset(-10);
     expect(seq.numberingOffset).toBe(-10);
   });
 
@@ -391,7 +391,7 @@ describe('Sequence class', () => {
     let seq = new Sequence('asdf');
 
     // empty sequence
-    expect(() => seq.setNumberingOffset(101, svg)).not.toThrow();
+    expect(() => seq.setNumberingOffset(101)).not.toThrow();
     expect(seq.numberingOffset).toBe(101);
 
     // with no base numberings

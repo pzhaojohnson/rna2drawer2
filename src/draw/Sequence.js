@@ -20,10 +20,10 @@ class Sequence {
   /**
    * @param {Sequence} seq 
    */
-  static _applyMostRecentProps(seq, svg) {
+  static _applyMostRecentProps(seq) {
     let props = Sequence.mostRecentProps();
-    seq.setNumberingAnchor(props.numberingAnchor, svg);
-    seq.setNumberingIncrement(props.numberingIncrement, svg);
+    seq.setNumberingAnchor(props.numberingAnchor);
+    seq.setNumberingIncrement(props.numberingIncrement);
   }
 
   /**
@@ -136,16 +136,16 @@ class Sequence {
    */
   static fromSavedState(savedState, svg) {
     let seq = new Sequence(savedState.id);
-    seq.setNumberingOffset(savedState.numberingOffset, svg);
-    seq.setNumberingAnchor(savedState.numberingAnchor, svg);
-    seq.setNumberingIncrement(savedState.numberingIncrement, svg);
+    seq.setNumberingOffset(savedState.numberingOffset);
+    seq.setNumberingAnchor(savedState.numberingAnchor);
+    seq.setNumberingIncrement(savedState.numberingIncrement);
     for (let p = 1; p <= savedState.bases.length; p++) {
       let b = Base.fromSavedState(
         savedState.bases[p - 1],
         svg,
         Sequence._clockwiseNormalAngleAtPositionFromSavedState(p, savedState, svg),
       );
-      seq.appendBase(b, svg);
+      seq.appendBase(b);
     }
     Sequence._copyPropsToMostRecent(seq);
     return seq;
@@ -164,8 +164,8 @@ class Sequence {
     for (let i = 0; i < characters.length; i++) {
       bases.push(Base.createOutOfView(svg, characters.charAt(i)));
     }
-    seq.appendBases(bases, svg);
-    Sequence._applyMostRecentProps(seq, svg);
+    seq.appendBases(bases);
+    Sequence._applyMostRecentProps(seq);
     return seq;
   }
 
@@ -187,10 +187,7 @@ class Sequence {
     return this._id;
   }
 
-  /**
-   * @param {SVG.Doc} svg 
-   */
-  _updateBaseNumberings(svg) {
+  _updateBaseNumberings() {
     this._bases.forEach(b => {
       if (b.hasNumbering()) {
         b.removeNumbering();
@@ -228,16 +225,15 @@ class Sequence {
 
   /**
    * @param {number} no 
-   * @param {SVG.Doc} svg 
    * 
    * @throws {Error} If the given numbering offset is not an integer.
    */
-  setNumberingOffset(no, svg) {
+  setNumberingOffset(no) {
     if (!isFinite(no) || Math.floor(no) !== no) {
       throw new Error('Numbering offset must be an integer.');
     }
     this._numberingOffset = no;
-    this._updateBaseNumberings(svg);
+    this._updateBaseNumberings();
   }
 
   /**
@@ -249,16 +245,15 @@ class Sequence {
 
   /**
    * @param {number} na 
-   * @param {SVG.Doc} svg 
    * 
    * @throws {Error} If the given numbering anchor is not an integer.
    */
-  setNumberingAnchor(na, svg) {
+  setNumberingAnchor(na) {
     if (!isFinite(na) || Math.floor(na) !== na) {
       throw new Error('Numbering anchor must be an integer.');
     }
     this._numberingAnchor = na;
-    this._updateBaseNumberings(svg);
+    this._updateBaseNumberings();
     Sequence._mostRecentProps.numberingAnchor = na;
   }
 
@@ -271,19 +266,18 @@ class Sequence {
 
   /**
    * @param {number} ni 
-   * @param {SVG.Doc} svg 
    * 
    * @throws {Error} If the given numbering increment is not an integer.
    * @throws {Error} If the given numbering increment is not positive.
    */
-  setNumberingIncrement(ni, svg) {
+  setNumberingIncrement(ni) {
     if (!isFinite(ni) || Math.floor(ni) !== ni) {
       throw new Error('Numbering increment must be an integer.');
     } else if (ni < 1) {
       throw new Error('Numbering increment must be positive.');
     }
     this._numberingIncrement = ni;
-    this._updateBaseNumberings(svg);
+    this._updateBaseNumberings();
     Sequence._mostRecentProps.numberingIncrement = ni;
   }
 
@@ -548,16 +542,15 @@ class Sequence {
    * Appends the given base to the end of this sequence.
    * 
    * @param {Base} b 
-   * @param {SVG.Doc} svg 
    * 
    * @throws {Error} If the given base is already in this sequence.
    */
-  appendBase(b, svg) {
+  appendBase(b) {
     if (this.contains(b)) {
       throw new Error('Base is already in this sequence.');
     }
     this._bases.push(b);
-    this._updateBaseNumberings(svg);
+    this._updateBaseNumberings();
   }
 
   /**
@@ -565,9 +558,8 @@ class Sequence {
    * one of the given bases.
    * 
    * @param {Array<Base>} bs 
-   * @param {SVG.Svg} svg 
    */
-  appendBases(bs, svg) {
+  appendBases(bs) {
     let alreadyContains = false;
     bs.forEach(b => {
       if (this.contains(b)) {
@@ -580,7 +572,7 @@ class Sequence {
     bs.forEach(b => {
       this._bases.push(b);
     });
-    this._updateBaseNumberings(svg);
+    this._updateBaseNumberings();
   }
 
   /**
@@ -589,38 +581,36 @@ class Sequence {
    * 
    * @param {Base} b 
    * @param {number} p 
-   * @param {SVG.Doc} svg 
    * 
    * @throws {Error} If the given base is already in this sequence.
    * @throws {Error} If the given position is out of range.
    */
-  insertBaseAtPosition(b, p, svg) {
+  insertBaseAtPosition(b, p) {
     if (this.contains(b)) {
       throw new Error('Base is already in this sequence.');
     } else if (this.positionOutOfRange(p) && p !== this.length + 1) {
       throw new Error('Position is out of range.');
     }
     if (p === this.length + 1) {
-      this.appendBase(b, svg);
+      this.appendBase(b);
     } else if (this.positionInRange(p)) {
       this._bases.splice(p - 1, 0, b);
     }
-    this._updateBaseNumberings(svg);
+    this._updateBaseNumberings();
   }
 
   /**
    * Has no effect if the given position is out of range.
    * 
    * @param {number} p 
-   * @param {SVG.Doc} svg 
    */
-  removeBaseAtPosition(p, svg) {
+  removeBaseAtPosition(p) {
     if (this.positionInRange(p)) {
       let b = this.getBaseAtPosition(p);
       b.remove();
       this._bases.splice(p - 1, 1);
     }
-    this._updateBaseNumberings(svg);
+    this._updateBaseNumberings();
   }
 
   remove() {
