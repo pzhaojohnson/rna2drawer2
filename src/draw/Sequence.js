@@ -58,11 +58,11 @@ class Sequence {
    * @returns {number} 
    */
   static _clockwiseNormalAngleOfBase(cs, cs5, cs3) {
-    if (cs5 === null && cs3 === null) {
+    if (!cs5 && !cs3) {
       return Math.PI / 2;
-    } else if (cs5 === null) {
+    } else if (!cs5) {
       return Sequence._angleBetweenBaseCenters(cs, cs3) + (Math.PI / 2);
-    } else if (cs3 === null) {
+    } else if (!cs3) {
       return Sequence._angleBetweenBaseCenters(cs, cs5) - (Math.PI / 2);
     } else {
       let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
@@ -113,7 +113,7 @@ class Sequence {
    */
   static _innerNormalAngleOfBase(cs, cs5, cs3) {
     let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
-    if (cs5 === null || cs3 === null) {
+    if (!cs5 || !cs3) {
       return cna;
     } else {
       let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
