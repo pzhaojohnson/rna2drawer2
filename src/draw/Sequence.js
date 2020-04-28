@@ -58,18 +58,17 @@ class Sequence {
    * @returns {number} 
    */
   static _clockwiseNormalAngleOfBase(cs, cs5, cs3) {
-    if (!cs5 && !cs3) {
-      return Math.PI / 2;
-    } else if (!cs5) {
-      return Sequence._angleBetweenBaseCenters(cs, cs3) + (Math.PI / 2);
-    } else if (!cs3) {
-      return Sequence._angleBetweenBaseCenters(cs, cs5) - (Math.PI / 2);
-    } else {
+    if (cs5 && cs3) {
       let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
       let a3 = Sequence._angleBetweenBaseCenters(cs, cs3);
       a5 = normalizeAngle(a5, a3);
       return (a5 + a3) / 2;
+    } else if (cs5) {
+      return Sequence._angleBetweenBaseCenters(cs, cs5) - (Math.PI / 2);
+    } else if (cs3) {
+      return Sequence._angleBetweenBaseCenters(cs, cs3) + (Math.PI / 2);
     }
+    return Math.PI / 2;
   }
 
   /**
@@ -112,20 +111,17 @@ class Sequence {
    * @returns {number} 
    */
   static _innerNormalAngleOfBase(cs, cs5, cs3) {
-    let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
     if (!cs5 || !cs3) {
-      return cna;
-    } else {
-      let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
-      let a3 = Sequence._angleBetweenBaseCenters(cs, cs3);
-      a5 = normalizeAngle(a5, a3);
-      if (a5 - a3 < Math.PI) {
-        return (a5 + a3) / 2;
-      } else {
-        a3 = normalizeAngle(a3, a5);
-        return (a5 + a3) / 2;
-      }
+      return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
     }
+    let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
+    let a3 = Sequence._angleBetweenBaseCenters(cs, cs3);
+    a5 = normalizeAngle(a5, a3);
+    if (a5 - a3 < Math.PI) {
+      return (a5 + a3) / 2;
+    }
+    a3 = normalizeAngle(a3, a5);
+    return (a5 + a3) / 2;
   }
 
   /**
@@ -228,6 +224,15 @@ class Sequence {
    * 
    * @param {number} no 
    */
+  set numberingOffset(no) {
+    this.setNumberingOffset(no);
+  }
+
+  /**
+   * Has no effect if the given number is not an integer.
+   * 
+   * @param {number} no 
+   */
   setNumberingOffset(no) {
     if (!isFinite(no) || Math.floor(no) !== no) {
       return;
@@ -241,6 +246,15 @@ class Sequence {
    */
   get numberingAnchor() {
     return this._numberingAnchor;
+  }
+
+  /**
+   * Has no effect if the given number is not an integer.
+   * 
+   * @param {number} na 
+   */
+  set numberingAnchor(na) {
+    this.setNumberingAnchor(na);
   }
 
   /**
@@ -262,6 +276,15 @@ class Sequence {
    */
   get numberingIncrement() {
     return this._numberingIncrement;
+  }
+
+  /**
+   * Has no effect if the given number is not an integer or is not positive.
+   * 
+   * @param {number} ni 
+   */
+  set numberingIncrement(ni) {
+    this.setNumberingIncrement(ni);
   }
 
   /**
