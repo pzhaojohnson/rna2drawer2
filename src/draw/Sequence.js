@@ -384,13 +384,13 @@ class Sequence {
    * @returns {Base|null} 
    */
   getBaseById(id) {
-    for (let p = 1; p <= this.length; p++) {
-      let b = this.getBaseAtPosition(p);
+    let base = null;
+    this.forEachBase(b => {
       if (b.id === id) {
-        return b;
+        base = b;
       }
-    }
-    return null;
+    });
+    return base;
   }
 
   /**
@@ -406,9 +406,12 @@ class Sequence {
    */
   getBasesInRange(p5, p3) {
     let bases = [];
-    for (let p = p5; p <= p3; p++) {
-      bases.push(this.getBaseAtPosition(p));
-    }
+    this._bases.forEach((b, i) => {
+      let p = i + 1;
+      if (p >= p5 && p <= p3) {
+        bases.push(b);
+      }
+    });
     return bases;
   }
 

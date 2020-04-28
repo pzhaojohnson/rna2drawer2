@@ -617,76 +617,49 @@ describe('Sequence class', () => {
     });
   });
 
-  it('getBaseById method', () => {
+  describe('getBaseById method', () => {
+    it('no base has the given ID', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
+      expect(seq.getBaseById('asdfqwer')).toBe(null);
+    });
+
+    it('a base does have the given ID', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qeere');
+      let b3 = seq.getBaseAtPosition(3);
+      expect(seq.getBaseById(b3.id)).toBe(b3);
+    });
+  });
+
+  it('getBasesInRange method', () => {
     let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
-
-    let b1 = Base.create(svg, 'e', 1, 2);
-    seq.appendBase(b1, svg);
-    let b2 = Base.create(svg, 'b', 1, 1);
-    seq.appendBase(b2, svg);
-    let b3 = Base.create(svg, 'r', 0.01, 0.04);
-    seq.appendBase(b3, svg);
-    let b4 = Base.create(svg, 'n', -1, -2.2);
-    expect(seq.length).toBe(3);
-
-    expect(seq.getBaseById(b1.id)).toBe(b1);
-    expect(seq.getBaseById(b2.id)).toBe(b2);
-    expect(seq.getBaseById(b3.id)).toBe(b3);
-    expect(seq.getBaseById(b4.id)).toBe(null);
+    let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcvqwer');
+    let bases = seq.getBasesInRange(3, 5);
+    expect(bases.length).toBe(3);
+    expect(bases[0].character).toBe('c');
+    expect(bases[1].character).toBe('v');
+    expect(bases[2].character).toBe('q');
   });
 
-  describe('getBasesInRange method', () => {
-    it('basic case', () => {
-      let svg = createNodeSVG();
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfasdf');
-      let bases = seq.getBasesInRange(3, 6);
-      expect(bases.length).toBe(4);
-      expect(bases[0].character).toBe('d');
-      expect(bases[1].character).toBe('f');
-      expect(bases[2].character).toBe('a');
-      expect(bases[3].character).toBe('s');
-    });
-
-    it('invalid range', () => {
-      let svg = createNodeSVG();
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfasdf');
-      let bases = seq.getBasesInRange(7, 3);
-      expect(bases.length).toBe(0);
+  it('forEachBase method', () => {
+    let svg = createNodeSVG();
+    let characters = 'cvbn';
+    let seq = Sequence.createOutOfView(svg, 'adf', characters);
+    let i = 0;
+    seq.forEachBase(b => {
+      expect(b.character).toBe(characters.charAt(i));
+      i++;
     });
   });
 
-  describe('forEachBase method', () => {
-    it('multiple bases', () => {
-      let svg = createNodeSVG();
-      let seq = new Sequence('asdf');
-      let b1 = Base.create(svg, 'a', 1, 2);
-      seq.appendBase(b1, svg);
-      let b2 = Base.create(svg, 'q', 5, 6);
-      seq.appendBase(b2, svg);
-      let ids = [b1.id, b2.id];
-      let i = 0;
-      seq.forEachBase(b => {
-        expect(b.id).toBe(ids[i]);
-        i++;
-      });
-      expect(i).toBe(2);
-    });
-  });
-
-  describe('baseIds method', () => {
-    it('multiple bases', () => {
-      let svg = createNodeSVG();
-      let seq = new Sequence('asdf');
-      let b1 = Base.create(svg, 'b', 0, 0);
-      seq.appendBase(b1, svg);
-      let b2 = Base.create(svg, 'h', 2, 2);
-      seq.appendBase(b2, svg);
-      let ids = seq.baseIds();
-      expect(ids.length).toBe(2);
-      expect(ids[0]).toBe(b1.id);
-      expect(ids[1]).toBe(b2.id);
-    });
+  it('baseIds method', () => {
+    let svg = createNodeSVG();
+    let seq = Sequence.createOutOfView(svg, 'asdf', 'bh');
+    let ids = seq.baseIds();
+    expect(ids.length).toBe(2);
+    expect(ids[0]).toBe(seq.getBaseAtPosition(1).id);
+    expect(ids[1]).toBe(seq.getBaseAtPosition(2).id);
   });
 
   it('positionOfBase method', () => {
