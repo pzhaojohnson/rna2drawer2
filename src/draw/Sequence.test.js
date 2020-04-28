@@ -210,156 +210,122 @@ describe('Sequence class', () => {
   });
 
   describe('fromSavedState static method', () => {
-    it('an empty sequence', () => {
+    it('creates with id and numbering properties', () => {
       let svg = createNodeSVG();
-      let seq1 = new Sequence('asdf');
-      let savableState = seq1.savableState();
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(seq2.length).toBe(0);
+      let seq1 = new Sequence('zxcvasdfqwer');
+      seq1.numberingOffset = -200;
+      seq1.numberingAnchor = 249;
+      seq1.numberingIncrement = 134;
+      let savableState1 = seq1.savableState();
+      let seq2 = Sequence.fromSavedState(savableState1, svg);
+      expect(seq2.id).toBe('zxcvasdfqwer');
+      expect(seq2.numberingOffset).toBe(-200);
+      expect(seq2.numberingAnchor).toBe(249);
+      expect(seq2.numberingIncrement).toBe(134);
     });
 
-    it('a sequence of length one', () => {
+    it('creates bases', () => {
       let svg = createNodeSVG();
       let seq1 = new Sequence('asdf');
-      
-      let b1 = Base.create(svg, 't', 4, 5);
-      seq1.appendBase(b1, svg);
-      
-      let savableState = seq1.savableState();
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(seq2.length).toBe(1);
-
-      expect(
-        JSON.stringify(seq2.getBaseAtPosition(1).savableState())
-      ).toBe(
-        JSON.stringify(b1.savableState())
-      );
-    });
-
-    it('a sequence of length greater than one', () => {
-      let svg = createNodeSVG();
-      let seq1 = new Sequence('asdf');
-      
-      let b1 = Base.create(svg, 't', 4, 5);
-      seq1.appendBase(b1, svg);
-      let b2 = Base.create(svg, 'r', 3, 4);
-      seq1.appendBase(b2, svg);
-      let b3 = Base.create(svg, 'q', 5, 6);
-      seq1.appendBase(b3, svg);
-      
-      let savableState = seq1.savableState();
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(seq2.length).toBe(3);
-
-      expect(
-        JSON.stringify(seq2.getBaseAtPosition(1).savableState())
-      ).toBe(
-        JSON.stringify(b1.savableState())
-      );
-      
-      expect(
-        JSON.stringify(seq2.getBaseAtPosition(2).savableState())
-      ).toBe(
-        JSON.stringify(b2.savableState())
-      );
-
-      expect(
-        JSON.stringify(seq2.getBaseAtPosition(3).savableState())
-      ).toBe(
-        JSON.stringify(b3.savableState())
-      );
+      seq1.appendBases([
+        Base.create(svg, 'y', 2, 4),
+        Base.create(svg, 'M', 5, 10),
+      ]);
+      let savableState1 = seq1.savableState();
+      let seq2 = Sequence.fromSavedState(savableState1, svg);
+      expect(seq2.length).toBe(2);
+      let b21 = seq2.getBaseAtPosition(1);
+      expect(b21.character).toBe('y');
+      let b22 = seq2.getBaseAtPosition(2);
+      expect(b22.character).toBe('M');
     });
 
     it('passes clockwise normal angle to bases', () => {
-      
-      // check by including a base with an outline
       let svg = createNodeSVG();
       let seq1 = new Sequence('asdf');
-      let b1 = Base.create(svg, 'g', 4, 5);
-      let ca1 = b1.addCircleOutline(svg);
-      seq1.appendBase(b1, svg);
-
-      let savableState = seq1.savableState();
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(seq2.length).toBe(1);
-      let b2 = seq2.getBaseAtPosition(1);
-      expect(b1._text.id()).toBe(b2._text.id());
-      expect(b2.hasOutline()).toBeTruthy();
-      expect(b2.outline.id).toBe(ca1.id);
+      seq1.appendBases([
+        Base.create(svg, 'A', 4, 9),
+        Base.create(svg, 'B', -10, 2),
+        Base.create(svg, 'T', 100, 900),
+      ]);
+      let b12 = seq1.getBaseAtPosition(2);
+      let o12 = b12.addCircleOutline();
+      let cna12 = seq1.clockwiseNormalAngleAtPosition(2);
+      o12.shift(14, 15, b12.xCenter, b12.yCenter, cna12);
+      let savableState1 = seq1.savableState();
+      let seq2 = Sequence.fromSavedState(savableState1, svg);
+      let b22 = seq2.getBaseAtPosition(2);
+      expect(
+        normalizeAngle(b22.outline.displacementAngle)
+      ).toBeCloseTo(normalizeAngle(o12.displacementAngle), 3);
     });
 
-    it('sets numbering properties', () => {
+    it('copies properties to most recent', () => {
       let svg = createNodeSVG();
       let seq1 = new Sequence('asdf');
-      seq1.setNumberingOffset(4);
-      seq1.setNumberingAnchor(-2, svg);
-      seq1.setNumberingIncrement(3, svg);
-
-      let savableState = seq1.savableState();
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(seq2.numberingOffset).toBe(4);
-      expect(seq2.numberingAnchor).toBe(-2);
-      expect(seq2.numberingIncrement).toBe(3);
-    });
-
-    it('updates most recent properties', () => {
-      let svg = createNodeSVG();
-      let seq1 = new Sequence('asdf');
-      seq1.setNumberingAnchor(3, svg);
-      seq1.setNumberingIncrement(8, svg);
-
-      Sequence._mostRecentProps.numberingAnchor = 0;
-      Sequence._mostRecentProps.numberingIncrement = 0;
-
-      let savableState = seq1.savableState();
-      let seq2 = Sequence.fromSavedState(savableState, svg);
+      seq1.numberingAnchor = 177;
+      seq1.numberingIncrement = 124;
+      let savableState1 = seq1.savableState();
+      Sequence._mostRecentProps.numberingAnchor = 2;
+      Sequence._mostRecentProps.numberingIncrement = 10;
+      let seq2 = Sequence.fromSavedState(savableState1, svg);
       let mrps = Sequence.mostRecentProps();
-      expect(mrps.numberingAnchor).toBe(3);
-      expect(mrps.numberingIncrement).toBe(8);
+      expect(mrps.numberingAnchor).toBe(177);
+      expect(mrps.numberingIncrement).toBe(124);
     });
   });
 
-  it('createOutOfView static method', () => {
-    let svg = createNodeSVG();
+  describe('createOutOfView static method', () => {
+    it('creates with ID', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'ppooiiuu', 'asdf');
+      expect(seq.id).toBe('ppooiiuu');
+    });
 
-    // empty sequence
-    let seq = Sequence.createOutOfView(svg, 'asdf', '');
-    expect(seq.length).toBe(0);
+    it('adds bases out of view', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'wO');
+      expect(seq.length).toBe(2);
+      let b1 = seq.getBaseAtPosition(1);
+      expect(b1.character).toBe('w');
+      expect(b1.xCenter < -50 || b1.yCenter < -50).toBeTruthy();
+      let b2 = seq.getBaseAtPosition(2);
+      expect(b2.character).toBe('O');
+      expect(b2.xCenter < -50 || b2.yCenter < -50).toBeTruthy();
+    });
 
-    function baseIsOutOfView(b) {
-      return b.xCenter <= -50 || b.yCenter <= -50;
-    }
-
-    // one character
-    seq = Sequence.createOutOfView(svg, 'asdf', 'o');
-    expect(seq.length).toBe(1);
-    let b1 = seq.getBaseAtPosition(1);
-    expect(b1.character).toBe('o');
-    expect(baseIsOutOfView(b1)).toBeTruthy();
-    
-    // multiple characters
-    seq = Sequence.createOutOfView(svg, 'asdf', 'aqt');
-    expect(seq.length).toBe(3);
-    b1 = seq.getBaseAtPosition(1);
-    expect(b1.character).toBe('a');
-    expect(baseIsOutOfView(b1)).toBeTruthy();
-    let b2 = seq.getBaseAtPosition(2);
-    expect(b2.character).toBe('q');
-    expect(baseIsOutOfView(b2)).toBeTruthy();
-    let b3 = seq.getBaseAtPosition(3);
-    expect(b3.character).toBe('t');
-    expect(baseIsOutOfView(b3)).toBeTruthy();
+    it('applies most recent properties', () => {
+      let svg = createNodeSVG();
+      Sequence._mostRecentProps.numberingAnchor = 1129;
+      Sequence._mostRecentProps.numberingIncrement = 87;
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      expect(seq.numberingAnchor).toBe(1129);
+      expect(seq.numberingIncrement).toBe(87);
+    });
   });
 
-  it('basic test of constructor', () => {
-    let id = 'asdf';
-    expect(() => new Sequence(id)).not.toThrow();
+  describe('constructor', () => {
+    it('stores ID', () => {
+      let seq = new Sequence('ttnnmmbb');
+      expect(seq.id).toBe('ttnnmmbb');
+    });
+
+    it('initializes bases array', () => {
+      let seq = new Sequence('asdf');
+      expect(seq._bases.length).toBe(0);
+    });
+
+    it('initializes numbering properties', () => {
+      let seq = new Sequence('asdf');
+      expect(seq.numberingOffset).toBe(0);
+      expect(typeof seq.numberingAnchor).toBe('number');
+      expect(typeof seq.numberingIncrement).toBe('number');
+    });
   });
 
   it('id getter', () => {
-    let id = 'asdf';
-    let seq = new Sequence(id);
-    expect(seq.id).toBe(id);
+    let seq = new Sequence('ooyyuu');
+    expect(seq.id).toBe('ooyyuu');
   });
 
   it('numberingOffset getter', () => {

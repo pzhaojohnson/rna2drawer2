@@ -111,17 +111,17 @@ class Sequence {
    * @returns {number} 
    */
   static _innerNormalAngleOfBase(cs, cs5, cs3) {
+    let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
     if (!cs5 || !cs3) {
-      return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
+      return cna;
     }
     let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
     let a3 = Sequence._angleBetweenBaseCenters(cs, cs3);
     a5 = normalizeAngle(a5, a3);
     if (a5 - a3 < Math.PI) {
-      return (a5 + a3) / 2;
+      return cna;
     }
-    a3 = normalizeAngle(a3, a5);
-    return (a5 + a3) / 2;
+    return cna + Math.PI;
   }
 
   /**
@@ -132,17 +132,19 @@ class Sequence {
    */
   static fromSavedState(savedState, svg) {
     let seq = new Sequence(savedState.id);
-    seq.setNumberingOffset(savedState.numberingOffset);
-    seq.setNumberingAnchor(savedState.numberingAnchor);
-    seq.setNumberingIncrement(savedState.numberingIncrement);
-    for (let p = 1; p <= savedState.bases.length; p++) {
-      let b = Base.fromSavedState(
-        savedState.bases[p - 1],
+    seq.numberingOffset = savedState.numberingOffset;
+    seq.numberingAnchor = savedState.numberingAnchor;
+    seq.numberingIncrement = savedState.numberingIncrement;
+    let bases = [];
+    savedState.bases.forEach((sb, i) => {
+      let p = i + 1;
+      bases.push(Base.fromSavedState(
+        sb,
         svg,
         Sequence._clockwiseNormalAngleAtPositionFromSavedState(p, savedState, svg),
-      );
-      seq.appendBase(b);
-    }
+      ))
+    });
+    seq.appendBases(bases);
     Sequence._copyPropsToMostRecent(seq);
     return seq;
   }
@@ -157,8 +159,8 @@ class Sequence {
   static createOutOfView(svg, id, characters) {
     let seq = new Sequence(id);
     let bases = [];
-    for (let i = 0; i < characters.length; i++) {
-      bases.push(Base.createOutOfView(svg, characters.charAt(i)));
+    for (let c of characters) {
+      bases.push(Base.createOutOfView(svg, c));
     }
     seq.appendBases(bases);
     Sequence._applyMostRecentProps(seq);
@@ -177,7 +179,7 @@ class Sequence {
   }
 
   /**
-   * @returns {string} The ID of this sequence.
+   * @returns {string} 
    */
   get id() {
     return this._id;
