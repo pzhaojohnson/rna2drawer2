@@ -186,32 +186,14 @@ class Sequence {
   }
 
   _updateBaseNumberings() {
-    this._bases.forEach(b => {
-      if (b.hasNumbering()) {
+    this._bases.forEach((b, i) => {
+      let p = i + 1;
+      if ((p - this.numberingAnchor) % this.numberingIncrement == 0) {
+        b.addNumbering(p + this.numberingOffset, this.outerNormalAngleAtPosition(p));
+      } else {
         b.removeNumbering();
       }
     });
-    let anchor = this.numberingAnchor;
-    let increment = this.numberingIncrement;
-    for (let p = anchor; p > 0; p -= increment) {
-      if (p <= this.length) {
-        let b = this.getBaseAtPosition(p);
-        b.addNumbering(
-          p + this.numberingOffset,
-          this.outerNormalAngleAtPosition(p)
-        );
-      }
-    }
-
-    for (let p = anchor + increment; p <= this.length; p += increment) {
-      if (p > 0) {
-        let b = this.getBaseAtPosition(p);
-        b.addNumbering(
-          p + this.numberingOffset,
-          this.outerNormalAngleAtPosition(p)
-        );
-      }
-    }
   }
 
   /**
@@ -369,7 +351,7 @@ class Sequence {
   }
 
   /**
-   * Returns null if the position is out of the range of this sequence.
+   * Returns null if the given position is out of range.
    * 
    * @param {number} p 
    * 
@@ -378,13 +360,12 @@ class Sequence {
   getBaseAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
-    } else {
-      return this._bases[p - 1];
     }
+    return this._bases[p - 1];
   }
 
   /**
-   * Returns null if the offset position is out of the offset range of this sequence.
+   * Returns null if the given offset position is out of range.
    * 
    * @param {number} op 
    * 
