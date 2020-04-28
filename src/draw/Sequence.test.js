@@ -662,297 +662,199 @@ describe('Sequence class', () => {
     expect(ids[1]).toBe(seq.getBaseAtPosition(2).id);
   });
 
-  it('positionOfBase method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
+  describe('positionOfBase method', () => {
+    it('base is not in sequence', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      let b = Base.create(svg, 'a', 2, 3);
+      expect(seq.positionOfBase(b)).toBe(0);
+    });
 
-    let b1 = Base.create(svg, 'e', 1, 2);
-    seq.appendBase(b1, svg);
-    let b2 = Base.create(svg, 'b', 1, 1);
-    seq.appendBase(b2, svg);
-    let b3 = Base.create(svg, 'r', 0.01, 0.04);
-    seq.appendBase(b3, svg);
-    let b4 = Base.create(svg, 'n', -1, -2.2);
-    expect(seq.length).toBe(3);
-
-    expect(seq.positionOfBase(b1)).toBe(1);
-    expect(seq.positionOfBase(b2)).toBe(2);
-    expect(seq.positionOfBase(b3)).toBe(3);
-    expect(seq.positionOfBase(b4)).toBe(0);
+    it('returns correct position', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      let b3 = seq.getBaseAtPosition(3);
+      expect(seq.positionOfBase(b3)).toBe(3);
+    });
   });
 
-  it('offsetPositionOfBase method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
+  describe('offsetPositionOfBase method', () => {
+    it('base is not in sequence', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'qwer', 'zxcv');
+      seq.numberingOffset = -15;
+      let b = Base.create(svg, 't', 3, 5);
+      expect(seq.offsetPositionOfBase(b)).toBe(-15);
+    });
 
-    let b1 = Base.create(svg, 'e', 1, 2);
-    seq.appendBase(b1, svg);
-    let b2 = Base.create(svg, 'b', 1, 1);
-    seq.appendBase(b2, svg);
-    let b3 = Base.create(svg, 'r', 0.01, 0.04);
-    seq.appendBase(b3, svg);
-    let b4 = Base.create(svg, 'n', -1, -2.2);
-    expect(seq.length).toBe(3);
-
-    seq.setNumberingOffset(8, svg);
-    expect(seq.offsetPositionOfBase(b1)).toBe(9);
-    expect(seq.offsetPositionOfBase(b2)).toBe(10);
-    expect(seq.offsetPositionOfBase(b3)).toBe(11);
-    expect(seq.offsetPositionOfBase(b4)).toBe(8);
+    it('returns correct offset position', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'zxcv', 'asdf');
+      seq.numberingOffset = 24;
+      let b3 = seq.getBaseAtPosition(3);
+      expect(seq.offsetPositionOfBase(b3)).toBe(27);
+    });
   });
 
-  it('contains method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
+  describe('contains method', () => {
+    it('base is in sequence', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwerqwer');
+      let b6 = seq.getBaseAtPosition(6);
+      expect(seq.contains(b6)).toBeTruthy();
+    });
 
-    let b1 = Base.create(svg, 'a', 1, 2);
-    let b2 = Base.create(svg, 'g', 3, 4);
-    let b3 = Base.create(svg, 'v', 1, 5);
-    let b4 = Base.create(svg, 'q', -0.1, -1);
-
-    // on empty sequence
-    expect(seq.contains(b1)).toBeFalsy();
-
-    seq.appendBase(b1);
-    seq.appendBase(b2);
-    seq.appendBase(b3);
-
-    // the first base
-    expect(seq.contains(b1)).toBeTruthy();
-
-    // middle base
-    expect(seq.contains(b2)).toBeTruthy();
-
-    // the last base
-    expect(seq.contains(b3)).toBeTruthy();
-
-    // not in the sequence
-    expect(seq.contains(b4)).toBeFalsy();
+    it('base is not in sequence', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      let b = Base.create(svg, 'a', 1, 2);
+      expect(seq.contains(b)).toBeFalsy();
+    });
   });
 
-  it('clockwiseNormalAngleAtPosition method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
+  describe('clockwiseNormalAngleAtPosition method', () => {
+    it('position is out of range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      expect(seq.clockwiseNormalAngleAtPosition(5)).toBe(null);
+    });
+
+    it("no 5' or 3' base", () => {
+      let svg = createNodeSVG();
+      let seq = new Sequence('asdf');
+      let b = Base.create(svg, 'a', 4, 7);
+      seq.appendBase(b);
+      expect(
+        seq.clockwiseNormalAngleAtPosition(1)
+      ).toBe(Sequence._clockwiseNormalAngleOfBase(
+        { xCenter: 4, yCenter: 7 },
+        null,
+        null,
+      ));
+    });
+
+    it("has a 5' and 3' base", () => {
+      let svg = createNodeSVG();
+      let seq = new Sequence('asdf');
+      seq.appendBases([
+        Base.create(svg, 'e', 5, 10),
+        Base.create(svg, 'b', 20, 30),
+        Base.create(svg, 'n', 44, 55),
+      ]);
+      expect(
+        seq.clockwiseNormalAngleAtPosition(2)
+      ).toBe(Sequence._clockwiseNormalAngleOfBase(
+        { xCenter: 20, yCenter: 30 },
+        { xCenter: 5, yCenter: 10 },
+        { xCenter: 44, yCenter: 55 },
+      ));
+    });
+  });
+
+  describe('counterClockwiseNormalAngleAtPosition method', () => {
+    it('position is out of range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      expect(seq.counterClockwiseNormalAngleAtPosition(6)).toBe(null);
+    });
+
+    it('position is in range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcvzxcv');
+      expect(
+        seq.counterClockwiseNormalAngleAtPosition(5)
+      ).toBe(
+        Math.PI + seq.clockwiseNormalAngleAtPosition(5)
+      );
+    });
+  });
+
+  describe('innerNormalAngleAtPosition method', () => {
+    it('position is out of range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'zxcv', 'asdf');
+      expect(seq.innerNormalAngleAtPosition(5)).toBe(null);
+    });
+
+    it("no 5' or 3' base", () => {
+      let svg = createNodeSVG();
+      let seq = new Sequence('asdf');
+      seq.appendBase(
+        Base.create(svg, 't', 5, 12),
+      );
+      expect(
+        seq.innerNormalAngleAtPosition(1)
+      ).toBe(Sequence._innerNormalAngleOfBase(
+        { xCenter: 5, yCenter: 12 },
+        null,
+        null,
+      ));
+    });
+
+    it("has a 5' and 3' base", () => {
+      let svg = createNodeSVG();
+      let seq = new Sequence('qwer');
+      seq.appendBases([
+        Base.create(svg, 'Q', 55, 44),
+        Base.create(svg, 'q', -10, 33),
+        Base.create(svg, 'N', 100, 112),
+      ]);
+      expect(
+        seq.innerNormalAngleAtPosition(2)
+      ).toBe(Sequence._innerNormalAngleOfBase(
+        { xCenter: -10, yCenter: 33 },
+        { xCenter: 55, yCenter: 44 },
+        { xCenter: 100, yCenter: 112 },
+      ));
+    });
+  });
+
+  describe('outerNormalAngleAtPosition', () => {
+    it('position out of range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'qwer', 'dd');
+      expect(seq.outerNormalAngleAtPosition(3)).toBe(null);
+    });
+
+    it('position is in range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
+      expect(
+        seq.outerNormalAngleAtPosition(2)
+      ).toBe(
+        Math.PI + seq.innerNormalAngleAtPosition(2)
+      );
+    });
+  });
+
+  describe('appendBase method', () => {
+    it('already contains base', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      expect(seq.length).toBe(4);
+      seq.appendBase(seq.getBaseAtPosition(3));
+      expect(seq.length).toBe(4);
+    });
+
+    it('appends base', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
+      expect(seq.length).toBe(4);
+      seq.appendBase(Base.create(svg, 'q', 4, 5));
+      expect(seq.length).toBe(5);
+      expect(seq.getBaseAtPosition(5).character).toBe('q');
+    });
     
-    let b1 = Base.create(svg, 'A', 1, 2);
-    let b2 = Base.create(svg, 'G', 3, 4);
-    let b3 = Base.create(svg, 't', -0.5, -0.6);
-
-    // no 5' or 3' bases
-    seq.appendBase(b1);
-    
-    expect(
-      seq.clockwiseNormalAngleAtPosition(1)
-    ).toBeCloseTo(
-      Sequence._clockwiseNormalAngleOfBase(
-        { xCenter: b1.xCenter, yCenter: b1.yCenter },
-        null,
-        null,
-      ),
-      6,
-    );
-
-    // only a 3' base
-    seq.appendBase(b2);
-
-    expect(
-      seq.clockwiseNormalAngleAtPosition(1)
-    ).toBeCloseTo(
-      Sequence._clockwiseNormalAngleOfBase(
-        { xCenter: b1.xCenter, yCenter: b1.yCenter },
-        null,
-        { xCenter: b2.xCenter, yCenter: b2.yCenter },
-      ),
-      6,
-    );
-
-    // only a 5' base
-    expect(
-      seq.clockwiseNormalAngleAtPosition(2)
-    ).toBeCloseTo(
-      Sequence._clockwiseNormalAngleOfBase(
-        { xCenter: b2.xCenter, yCenter: b2.yCenter },
-        { xCenter: b1.xCenter, yCenter: b1.yCenter },
-        null,
-      ),
-      6,
-    );
-
-    // both a 5' and 3' base
-    seq.appendBase(b3);
-
-    expect(
-      seq.clockwiseNormalAngleAtPosition(2)
-    ).toBeCloseTo(
-      Sequence._clockwiseNormalAngleOfBase(
-        { xCenter: b2.xCenter, yCenter: b2.yCenter },
-        { xCenter: b1.xCenter, yCenter: b1.yCenter },
-        { xCenter: b3.xCenter, yCenter: b3.yCenter },
-      ),
-      6,
-    );
-
-    // position out of range
-    expect(
-      seq.clockwiseNormalAngleAtPosition(4)
-    ).toBe(null);
-  });
-
-  it('counterClockwiseNormalAngleAtPosition method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
-    
-    let b1 = Base.create(svg, 'A', 1, 2);
-    seq.appendBase(b1);
-    let b2 = Base.create(svg, 'G', 3, 4);
-    seq.appendBase(b2);
-    let b3 = Base.create(svg, 't', -0.5, -0.6);
-    seq.appendBase(b3);
-
-    // just check that it returns Math.PI plus the clockwise normal angle
-    expect(
-      seq.counterClockwiseNormalAngleAtPosition(2)
-    ).toBeCloseTo(
-      seq.clockwiseNormalAngleAtPosition(2) + Math.PI,
-      6,
-    );
-
-    // position out of range
-    expect(
-      seq.counterClockwiseNormalAngleAtPosition(4)
-    ).toBe(null);
-  });
-
-  it('innerNormalAngleAtPosition method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
-
-    let b1 = Base.create(svg, 'A', 1, 2);
-    let b2 = Base.create(svg, 'G', 3, 4);
-    let b3 = Base.create(svg, 't', -0.5, -0.6);
-
-    // no 5' or 3' bases
-    seq.appendBase(b1);
-
-    expect(
-      seq.innerNormalAngleAtPosition(1)
-    ).toBeCloseTo(
-      Sequence._innerNormalAngleOfBase(
-        { xCenter: b1.xCenter, yCenter: b1.yCenter },
-        null,
-        null,
-      ),
-      6,
-    );
-
-    // only a 3' base
-    seq.appendBase(b2);
-
-    expect(
-      seq.innerNormalAngleAtPosition(1)
-    ).toBeCloseTo(
-      Sequence._innerNormalAngleOfBase(
-        { xCenter: b1.xCenter, yCenter: b1.yCenter },
-        null,
-        { xCenter: b2.xCenter, yCenter: b2.yCenter },
-      ),
-      6,
-    );
-
-    // only a 5' base
-    expect(
-      seq.innerNormalAngleAtPosition(2)
-    ).toBeCloseTo(
-      Sequence._innerNormalAngleOfBase(
-        { xCenter: b2.xCenter, yCenter: b2.yCenter },
-        { xCenter: b1.xCenter, yCenter: b1.yCenter },
-        null,
-      ),
-      6,
-    );
-
-    // both a 5' and 3' base
-    seq.appendBase(b3);
-
-    expect(
-      seq.innerNormalAngleAtPosition(2)
-    ).toBeCloseTo(
-      Sequence._innerNormalAngleOfBase(
-        { xCenter: b2.xCenter, yCenter: b2.yCenter },
-        { xCenter: b1.xCenter, yCenter: b1.yCenter },
-        { xCenter: b3.xCenter, yCenter: b3.yCenter },
-      ),
-      6,
-    );
-
-    // position out of range
-    expect(
-      seq.innerNormalAngleAtPosition(4)
-    ).toBe(null);
-  });
-
-  it('outerNormalAngleAtPosition method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
-
-    let b1 = Base.create(svg, 'A', 1, 2);
-    seq.appendBase(b1);
-    let b2 = Base.create(svg, 'G', 3, 4);
-    seq.appendBase(b2);
-    let b3 = Base.create(svg, 't', -0.5, -0.6);
-    seq.appendBase(b3);
-
-    // just check that it returns Math.PI plus the inner normal angle
-    expect(
-      seq.outerNormalAngleAtPosition(2)
-    ).toBeCloseTo(
-      seq.innerNormalAngleAtPosition(2) + Math.PI,
-      6,
-    );
-
-    // position out of range
-    expect(
-      seq.outerNormalAngleAtPosition(4)
-    ).toBe(null);
-  });
-
-  it('appendBase method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
-
-    // appending to empty sequence
-    expect(seq.length).toBe(0);
-    let b1 = Base.create(svg, 'A', 1, 3);
-    seq.appendBase(b1, svg);
-    expect(seq.length).toBe(1);
-    expect(seq.getBaseAtPosition(1)).toBe(b1);
-
-    // appending to a nonempty sequence
-    let b2 = Base.create(svg, 'a', 3, 3);
-    seq.appendBase(b2, svg);
-    expect(seq.length).toBe(2);
-    let b3 = Base.create(svg, 'w', 5, 4);
-    seq.appendBase(b3, svg);
-    expect(seq.length).toBe(3);
-    expect(seq.getBaseAtPosition(1)).toBe(b1);
-    expect(seq.getBaseAtPosition(2)).toBe(b2);
-    expect(seq.getBaseAtPosition(3)).toBe(b3);
-
-    // appending a base that is already in the sequence
-    seq.appendBase(b2);
-    expect(seq.length).toBe(3);
-    
-    // base numberings are updated
-    seq.setNumberingAnchor(1, svg);
-    seq.setNumberingIncrement(3, svg);
-    expect(seq.length).toBe(3);
-    let b4 = Base.create(svg, 't', 5, 6);
-    seq.appendBase(b4, svg);
-    expect(seq.length).toBe(4);
-    expect(b1.numbering.number).toBe(1);
-    expect(b2.hasNumbering()).toBeFalsy();
-    expect(b3.hasNumbering()).toBeFalsy();
-    expect(b4.numbering.number).toBe(4);
+    it('updates base numberings', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'qwer', 'asdfasdf');
+      seq.numberingAnchor = 0;
+      seq.numberingIncrement = 9;
+      let b = Base.create(svg, 't', 1, 5);
+      expect(b.hasNumbering()).toBeFalsy();
+      seq.appendBase(b);
+      expect(b.hasNumbering()).toBeTruthy();
+    });
   });
 
   describe('appendBases method', () => {
@@ -1000,207 +902,141 @@ describe('Sequence class', () => {
     });
   });
 
-  it('insertBaseAtPosition method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
+  describe('insertBaseAtPosition method', () => {
+    it('already contains given base', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwe');
+      let b2 = seq.getBaseAtPosition(2);
+      expect(seq.length).toBe(3);
+      seq.insertBaseAtPosition(b2, 3);
+      expect(seq.length).toBe(3);
+    });
 
-    // inserting below range of empty sequence
-    let b1 = Base.create(svg, 'a', 2, 3);
-    seq.insertBaseAtPosition(b1, 0, svg);
-    expect(seq.length).toBe(0);
+    it('position is out of range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'qwer', 'kkj');
+      let b = Base.create(svg, 'q', 1, 2);
+      expect(seq.length).toBe(3);
+      seq.insertBaseAtPosition(b, 5);
+      expect(seq.length).toBe(3);
+    });
 
-    // inserting above range of empty sequence
-    seq.insertBaseAtPosition(b1, 2, svg);
-    expect(seq.length).toBe(0);
+    it('positions at the beginning middle and end', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'qer', 'bbm');
+      expect(seq.length).toBe(3);
+      seq.insertBaseAtPosition(Base.create(svg, 't', 2, 2), 1);
+      expect(seq.length).toBe(4);
+      expect(seq.getBaseAtPosition(1).character).toBe('t');
+      seq.insertBaseAtPosition(Base.create(svg, 'p', 5, 5), 3);
+      expect(seq.length).toBe(5);
+      expect(seq.getBaseAtPosition(3).character).toBe('p');
+      seq.insertBaseAtPosition(Base.create(svg, 'e', 3, 9), 6);
+      expect(seq.length).toBe(6);
+      expect(seq.getBaseAtPosition(6).character).toBe('e');
+    });
 
-    // inserting into empty sequence
-    seq.insertBaseAtPosition(b1, 1, svg);
-    expect(seq.length).toBe(1);
-    expect(seq.getBaseAtPosition(1)).toBe(b1);
-
-    let b2 = Base.create(svg, 'g', 1, 4);
-    seq.appendBase(b2, svg);
-    let b3 = Base.create(svg, 'k', 5.5, 6.3);
-    seq.appendBase(b3, svg);
-
-    // inserting below range
-    let b4 = Base.create(svg, 'e', 5, 5);
-    seq.insertBaseAtPosition(b4, 0, svg);
-    expect(seq.length).toBe(3);
-
-    // inserting above range
-    seq.insertBaseAtPosition(b4, 5, svg);
-    expect(seq.length).toBe(3);
-
-    // inserting at the low end
-    seq.insertBaseAtPosition(b4, 1, svg);
-    expect(seq.length).toBe(4);
-    expect(seq.getBaseAtPosition(1)).toBe(b4);
-
-    // inserting at the high end
-    let b5 = Base.create(svg, 'b', 3, -1);
-    seq.insertBaseAtPosition(b5, 4, svg);
-    expect(seq.length).toBe(5);
-    expect(seq.getBaseAtPosition(4)).toBe(b5);
-    
-    // inserting just above the high end
-    let b6 = Base.create(svg, 'w', 1, 5);
-    seq.insertBaseAtPosition(b6, 6, svg);
-    expect(seq.length).toBe(6);
-    expect(seq.getBaseAtPosition(6)).toBe(b6);
-
-    // inserting in the middle
-    let b7 = Base.create(svg, 'h', 7, 10);
-    seq.insertBaseAtPosition(b7, 3, svg);
-    expect(seq.length).toBe(7);
-    expect(seq.getBaseAtPosition(3)).toBe(b7);
-
-    // check complete sequence
-    expect(seq.getBaseAtPosition(1)).toBe(b4);
-    expect(seq.getBaseAtPosition(2)).toBe(b1);
-    expect(seq.getBaseAtPosition(3)).toBe(b7);
-    expect(seq.getBaseAtPosition(4)).toBe(b2);
-    expect(seq.getBaseAtPosition(5)).toBe(b5);
-    expect(seq.getBaseAtPosition(6)).toBe(b3);
-    expect(seq.getBaseAtPosition(7)).toBe(b6);
-
-    // inserting a base that is already in the sequence
-    seq.insertBaseAtPosition(b2, 4, svg);
-    expect(seq.length).toBe(7);
-
-    // base numberings are updated
-    seq.setNumberingAnchor(2, svg);
-    seq.setNumberingIncrement(3, svg);
-    let b8 = Base.create(svg, 'q', 4, 4);
-    seq.insertBaseAtPosition(b8, 6, svg);
-    expect(seq.length).toBe(8);
-    expect(seq.getBaseAtPosition(1).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(2).numbering.number).toBe(2);
-    expect(seq.getBaseAtPosition(3).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(4).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(5).numbering.number).toBe(5);
-    expect(seq.getBaseAtPosition(6).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(7).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(8).numbering.number).toBe(8);
+    it('updates base numberings', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'qwer', 'asdf');
+      seq.numberingAnchor = 2;
+      let b = Base.create(svg, 'q', 2, 2);
+      expect(b.hasNumbering()).toBeFalsy();
+      seq.insertBaseAtPosition(b, 2);
+      expect(b.hasNumbering()).toBeTruthy();
+    });
   });
 
-  it('removeBaseAtPosition method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
+  describe('removeBaseAtPosition method', () => {
+    it('position is out of range', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      expect(seq.length).toBe(4);
+      seq.removeBaseAtPosition(5);
+      expect(seq.length).toBe(4);
+    });
 
-    // calling on an empty sequence
-    expect(seq.length).toBe(0);
-    expect(() => seq.removeBaseAtPosition(0, svg)).not.toThrow();
-    expect(() => seq.removeBaseAtPosition(1, svg)).not.toThrow();
-    expect(() => seq.removeBaseAtPosition(-1, svg)).not.toThrow();
-    expect(seq.length).toBe(0);
+    it('removes the base', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
+      let b3 = seq.getBaseAtPosition(3);
+      let id3 = b3.id;
+      expect(seq.length).toBe(4);
+      expect(svg.findOne('#' + id3)).toBeTruthy();
+      seq.removeBaseAtPosition(3);
+      expect(seq.length).toBe(3);
+      expect(seq.getBaseAtPosition(3).character).toBe('v');
+      expect(svg.findOne('#' + id3)).toBe(null);
+    });
 
-    let b1 = Base.create(svg, 'a', 1, 2);
-    seq.appendBase(b1, svg);
-    let b2 = Base.create(svg, 'b', 4, 3);
-    seq.appendBase(b2, svg);
-    let b3 = Base.create(svg, 'q', 6, 5);
-    seq.appendBase(b3, svg);
-    let b4 = Base.create(svg, 'i', 7, 8);
-    seq.appendBase(b4, svg);
-    expect(seq.length).toBe(4);
-
-    // position of zero
-    expect(() => seq.removeBaseAtPosition(0, svg)).not.toThrow();
-    expect(seq.length).toBe(4);
-    
-    // negative position
-    expect(() => seq.removeBaseAtPosition(-1, svg)).not.toThrow();
-    expect(seq.length).toBe(4);
-
-    // position is greater than sequence length
-    expect(() => seq.removeBaseAtPosition(5, svg)).not.toThrow();
-    expect(seq.length).toBe(4);
-
-    // removing a middle base
-    let id2 = b2.id;
-    expect(seq.getBaseById(id2)).toBe(b2);
-    seq.removeBaseAtPosition(2, svg);
-    expect(seq.getBaseById(id2)).toBe(null);
-    
-    // removing the first base
-    let id1 = b1.id;
-    expect(seq.getBaseById(id1)).toBe(b1);
-    seq.removeBaseAtPosition(1, svg);
-    expect(seq.getBaseById(id1)).toBe(null)
-
-    // removing the last base
-    let id4 = b4.id;
-    expect(seq.getBaseById(id4)).toBe(b4);
-    seq.removeBaseAtPosition(2, svg);
-    expect(seq.getBaseById(id4)).toBe(null);
-
-    let b5 = Base.create(svg, 't', 3, 4);
-    seq.appendBase(b5, svg);
-    let b6 = Base.create(svg, 'w', 1, 2);
-    seq.appendBase(b6, svg);
-    expect(seq.getBaseAtPosition(1)).toBe(b3);
-    expect(seq.getBaseAtPosition(2)).toBe(b5);
-    expect(seq.getBaseAtPosition(3)).toBe(b6);
-    
-    // base numberings are updated
-    seq.setNumberingAnchor(2, svg);
-    seq.setNumberingIncrement(5, svg);
-    expect(b3.hasNumbering()).toBeFalsy();
-    expect(b5.numbering.number).toBe(2);
-    expect(b6.hasNumbering()).toBeFalsy();
-    seq.removeBaseAtPosition(2, svg);
-    expect(b3.hasNumbering()).toBeFalsy();
-    expect(b6.numbering.number).toBe(2);
-    
-    // remove method of base is called when base is removed
-    let textId6 = b6._text.id();
-    expect(svg.findOne('#' + textId6)).not.toBe(null);
-    seq.removeBaseAtPosition(2, svg);
-    expect(svg.findOne('#' + textId6)).toBe(null);
+    it('updates base numberings', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwerqwer');
+      seq.numberingAnchor = 5;
+      let b6 = seq.getBaseAtPosition(6);
+      expect(b6.hasNumbering()).toBeFalsy();
+      seq.removeBaseAtPosition(5);
+      expect(b6.hasNumbering()).toBeTruthy();
+    });
   });
 
-  it('remove method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
-    let b1 = Base.create(svg, 'a', 1, 2);
-    seq.appendBase(b1);
-    let b2 = Base.create(svg, 'g', 3, 4);
-    seq.appendBase(b2);
-    expect(svg.findOne('#' + b1._text.id())).not.toBe(null);
-    expect(svg.findOne('#' + b2._text.id())).not.toBe(null);
-    seq.remove();
-    expect(svg.findOne('#' + b1._text.id())).toBe(null);
-    expect(svg.findOne('#' + b2._text.id())).toBe(null);
+  describe('remove method', () => {
+    it('removes bases and resets bases array', () => {
+      let svg = createNodeSVG();
+      let seq = new Sequence('asdf');
+      let b1 = Base.create(svg, 'a', 1, 2);
+      let id1 = b1.id;
+      let b2 = Base.create(svg, 'g', 3, 4);
+      let id2 = b2.id;
+      seq.appendBases([b1, b2]);
+      expect(seq.length).toBe(2);
+      expect(svg.findOne('#' + id1)).toBeTruthy();
+      expect(svg.findOne('#' + id2)).toBeTruthy();
+      seq.remove();
+      expect(seq.length).toBe(0);
+      expect(svg.findOne('#' + id1)).toBe(null);
+      expect(svg.findOne('#' + id2)).toBe(null);
+    });
   });
 
-  it('savableState method', () => {
-    let svg = createNodeSVG();
-    let seq = new Sequence('asdf');
+  describe('savableState method', () => {
+    it('includes className, ID and numbering properties', () => {
+      let seq = new Sequence('asdfqwer');
+      seq.numberingOffset = 27;
+      seq.numberingAnchor = 115;
+      seq.numberingIncrement = 98;
+      let savableState = seq.savableState();
+      expect(savableState.className).toBe('Sequence');
+      expect(savableState.id).toBe('asdfqwer');
+      expect(savableState.numberingOffset).toBe(27);
+      expect(savableState.numberingAnchor).toBe(115);
+      expect(savableState.numberingIncrement).toBe(98);
+    });
 
-    let b1 = Base.create(svg, 'A', 2, 4);
-    seq.appendBase(b1, svg);
-    let b2 = Base.create(svg, 'a', 5, 4);
-    seq.appendBase(b2, svg);
+    it('includes bases', () => {
+      let svg = createNodeSVG();
+      let seq = new Sequence('asdf');
+      let b1 = Base.create(svg, 't', 55, 66);
+      let b2 = Base.create(svg, 'i', 10, -20);
+      seq.appendBases([b1, b2]);
+      let savableState = seq.savableState();
+      expect(savableState.bases.length).toBe(2);
+      expect(
+        JSON.stringify(savableState.bases[0])
+      ).toBe(JSON.stringify(b1.savableState()));
+      expect(
+        JSON.stringify(savableState.bases[1])
+      ).toBe(JSON.stringify(b2.savableState()));
+    });
 
-    // base 2 will have a numbering
-    seq.setNumberingOffset(5, svg);
-    seq.setNumberingAnchor(2, svg);
-    seq.setNumberingIncrement(7, svg);
-
-    let savableState = seq.savableState();
-
-    expect(savableState.className).toBe('Sequence');
-    expect(savableState.numberingOffset).toBe(5);
-    expect(savableState.numberingAnchor).toBe(2);
-    expect(savableState.numberingIncrement).toBe(7);
-
-    expect(
-      JSON.stringify(savableState.bases[0])
-    ).toBe(JSON.stringify(b1.savableState()));
-
-    expect(
-      JSON.stringify(savableState.bases[1])
-    ).toBe(JSON.stringify(b2.savableState()));
+    it('can be converted to and from a JSON string', () => {
+      let svg = createNodeSVG();
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcvqwer');
+      let savableState1 = seq.savableState();
+      let json1 = JSON.stringify(savableState1);
+      let savableState2 = JSON.parse(json1);
+      let json2 = JSON.stringify(savableState2);
+      expect(json2).toBe(json1);
+    });
   });
 });

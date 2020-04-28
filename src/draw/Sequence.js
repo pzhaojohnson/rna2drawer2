@@ -466,11 +466,11 @@ class Sequence {
    * @returns {boolean} 
    */
   contains(b) {
-    return this.positionOfBase(b) !== 0;
+    return this.positionOfBase(b) > 0;
   }
 
   /**
-   * Returns null if the position is out of the range of this sequence.
+   * Returns null if the given position is out of range.
    * 
    * @param {number} p 
    * 
@@ -479,29 +479,34 @@ class Sequence {
   clockwiseNormalAngleAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
-    } else {
-      let b = this.getBaseAtPosition(p);
-      let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
-      let cs5 = null;
-      let cs3 = null;
-      if (p > 1) {
-        let b5 = this.getBaseAtPosition(p - 1);
-        cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
-      }
-      if (p < this.length) {
-        let b3 = this.getBaseAtPosition(p + 1);
-        cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
-      }
-      return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
     }
+    let b = this.getBaseAtPosition(p);
+    let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
+    let cs5 = null;
+    let cs3 = null;
+    if (p > 1) {
+      let b5 = this.getBaseAtPosition(p - 1);
+      cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
+    }
+    if (p < this.length) {
+      let b3 = this.getBaseAtPosition(p + 1);
+      cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
+    }
+    return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
   }
 
+  /**
+   * Returns null if the given position is out of range.
+   * 
+   * @param {number} p 
+   * 
+   * @returns {number|null} 
+   */
   counterClockwiseNormalAngleAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
-    } else {
-      return Math.PI + this.clockwiseNormalAngleAtPosition(p);
     }
+    return Math.PI + this.clockwiseNormalAngleAtPosition(p);
   }
 
   /**
@@ -514,21 +519,20 @@ class Sequence {
   innerNormalAngleAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
-    } else {
-      let b = this.getBaseAtPosition(p);
-      let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
-      let cs5 = null;
-      let cs3 = null;
-      if (p > 1) {
-        let b5 = this.getBaseAtPosition(p - 1);
-        cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
-      }
-      if (p < this.length) {
-        let b3 = this.getBaseAtPosition(p + 1);
-        cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
-      }
-      return Sequence._innerNormalAngleOfBase(cs, cs5, cs3);
     }
+    let b = this.getBaseAtPosition(p);
+    let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
+    let cs5 = null;
+    let cs3 = null;
+    if (p > 1) {
+      let b5 = this.getBaseAtPosition(p - 1);
+      cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
+    }
+    if (p < this.length) {
+      let b3 = this.getBaseAtPosition(p + 1);
+      cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
+    }
+    return Sequence._innerNormalAngleOfBase(cs, cs5, cs3);
   }
 
   /**
@@ -541,9 +545,8 @@ class Sequence {
   outerNormalAngleAtPosition(p) {
     if (this.positionOutOfRange(p)) {
       return null;
-    } else {
-      return Math.PI + this.innerNormalAngleAtPosition(p);
     }
+    return Math.PI + this.innerNormalAngleAtPosition(p);
   }
 
   /**
@@ -563,7 +566,7 @@ class Sequence {
 
   /**
    * This method has no effect if this sequence already contains
-   * one of the given bases.
+   * any of the given bases.
    * 
    * @param {Array<Base>} bs 
    */
@@ -613,18 +616,17 @@ class Sequence {
    * @param {number} p 
    */
   removeBaseAtPosition(p) {
-    if (this.positionInRange(p)) {
-      let b = this.getBaseAtPosition(p);
-      b.remove();
-      this._bases.splice(p - 1, 1);
+    if (this.positionOutOfRange(p)) {
+      return;
     }
+    let b = this.getBaseAtPosition(p);
+    b.remove();
+    this._bases.splice(p - 1, 1);
     this._updateBaseNumberings();
   }
 
   remove() {
-    for (let i = 0; i < this._bases.length; i++) {
-      this._bases[i].remove();
-    }
+    this.forEachBase(b => b.remove());
     this._bases = [];
   }
 
@@ -650,7 +652,7 @@ class Sequence {
       numberingAnchor: this.numberingAnchor,
       numberingIncrement: this.numberingIncrement,
     };
-    this._bases.forEach(
+    this.forEachBase(
       b => savableState.bases.push(b.savableState())
     );
     return savableState;
