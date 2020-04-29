@@ -1,6 +1,238 @@
 import { StraightBond, PrimaryBond, SecondaryBond } from './StraightBond';
 import createNodeSVG from './createNodeSVG';
 import Base from './Base';
+import distanceBetween from './distanceBetween';
+import angleBetween from './angleBetween';
+import normalizeAngle from './normalizeAngle';
+
+describe('StraightBond class', () => {
+  it('_lineCoordinates static method', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'A', 5, 8);
+    let b2 = Base.create(svg, 'r', 77, 980);
+    let lcs = StraightBond._lineCoordinates(b1, b2, 4, 7);
+    expect(
+      distanceBetween(5, 8, lcs.x1, lcs.y1)
+    ).toBeCloseTo(4);
+    expect(
+      distanceBetween(77, 980, lcs.x2, lcs.y2)
+    ).toBeCloseTo(7);
+    expect(
+      normalizeAngle(angleBetween(lcs.x1, lcs.y1, lcs.x2, lcs.y2))
+    ).toBeCloseTo(normalizeAngle(b1.angleBetweenCenters(b2)));
+  });
+
+  describe('_opacity static method', () => {
+    it('paddings are too big', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'A', 5, 9);
+      let b2 = Base.create(svg, 'T', 8, 13);
+      expect(StraightBond._opacity(b1, b2, 3, 4)).toBe(0);
+    });
+
+    it('paddings fit', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 't', 1, 5);
+      let b2 = Base.create(svg, 'b', 80, 75);
+      expect(StraightBond._opacity(b1, b2, 3, 6)).toBe(1);
+    });
+  });
+
+  describe('constructor', () => {
+    it('stores bases and line', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(1, 3, 5, 7);
+      let b1 = Base.create(svg, 't', 1, 2);
+      let b2 = Base.create(svg, 'n', 3, 3);
+      let sb = new StraightBond(l, b1, b2);
+      expect(sb._line).toBe(l);
+      expect(sb.base1).toBe(b1);
+      expect(sb.base2).toBe(b2);
+    });
+
+    it('validates line', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(1, 2, 3, 4);
+      let b1 = Base.create(svg, 't', 1, 2);
+      let b2 = Base.create(svg, 't', 2, 3);
+      expect(l.attr('id')).toBe(undefined);
+      let sb = new StraightBond(l, b1, b2);
+      expect(l.attr('id')).toBeTruthy();
+    });
+
+    it('stores paddings', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'a', 3, 6);
+      let b2 = Base.create(svg, 'b', 90, 87);
+      let lcs = StraightBond._lineCoordinates(b1, b2, 8, 5);
+      let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
+      let sb = new StraightBond(l, b1, b2);
+      expect(sb.padding1).toBeCloseTo(8);
+      expect(sb.padding2).toBeCloseTo(5);
+    });
+  });
+
+  describe('_validateLine method', () => {
+    it('initializes ID', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(1, 2, 3, 4);
+      let b1 = Base.create(svg, 't', 1, 3);
+      let b2 = Base.create(svg, 'n', 5, 5);
+      expect(l.attr('id')).toBe(undefined);
+      let sb = new StraightBond(l, b1, b2);
+      expect(l.attr('id')).toBeTruthy();
+    });
+  });
+
+  it('id getter', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(1, 2, 3, 4);
+    let lid = l.id();
+    let b1 = Base.create(svg, 'e', 1, 4);
+    let b2 = Base.create(svg, 'h', 3, 2);
+    let sb = new StraightBond(l, b1, b2);
+    expect(sb.id).toBe(lid);
+  });
+
+  it('base1 and base2 getters', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(1, 2, 3, 4);
+    let b1 = Base.create(svg, 'y', 5, 4);
+    let b2 = Base.create(svg, 'n', 4, 5);
+    let sb = new StraightBond(l, b1, b2);
+    expect(sb.base1).toBe(b1);
+    expect(sb.base2).toBe(b2);
+  });
+
+  it('padding1 and padding2 getters and setters', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'e', 3, 6);
+    let b2 = Base.create(svg, 'm', 200, 330);
+    let lcs = StraightBond._lineCoordinates(b1, b2, 8, 12);
+    let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
+    let sb = new StraightBond(l, b1, b2);
+    sb.padding1 = 18;
+    expect(sb.padding1).toBeCloseTo(18);
+    expect(
+      distanceBetween(3, 6, l.attr('x1'), l.attr('y1'))
+    ).toBeCloseTo(18);
+    sb.padding2 = 30;
+    expect(sb.padding2).toBeCloseTo(30);
+    expect(
+      distanceBetween(200, 330, l.attr('x2'), l.attr('y2'))
+    ).toBeCloseTo(30);
+  });
+
+  describe('reposition method', () => {
+    it('moves line', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'e', 4, 9);
+      let b2 = Base.create(svg, 'q', 200, 300);
+      let lcs = StraightBond._lineCoordinates(b1, b2, 12, 16);
+      let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
+      let sb = new StraightBond(l, b1, b2);
+      b1.moveTo(-10, -14);
+      b2.moveTo(312, 398);
+      sb.reposition();
+      lcs = StraightBond._lineCoordinates(b1, b2, 12, 16);
+      expect(l.attr('x1')).toBeCloseTo(lcs.x1);
+      expect(l.attr('y1')).toBeCloseTo(lcs.y1);
+      expect(l.attr('x2')).toBeCloseTo(lcs.x2);
+      expect(l.attr('y2')).toBeCloseTo(lcs.y2);
+      expect(sb.padding1).toBeCloseTo(12);
+      expect(sb.padding2).toBeCloseTo(16);
+    });
+
+    it('updates opacity', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'm', 3, 5);
+      let b2 = Base.create(svg, 'y', 500, 400);
+      let lcs = StraightBond._lineCoordinates(b1, b2, 6, 8);
+      let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
+      let sb = new StraightBond(l, b1, b2);
+      expect(sb.opacity).toBe(1);
+      b2.moveTo(4, 6);
+      sb.reposition();
+      expect(sb.opacity).toBe(0);
+    });
+  });
+
+  it('insertBefore and insertAfter methods', () => {
+    let svg = createNodeSVG();
+    let c = svg.circle(50);
+    let l = svg.line(1, 2, 3, 4);
+    let b1 = Base.create(svg, 'b', 2, 3);
+    let b2 = Base.create(svg, 'h', 5, 5);
+    let sb = new StraightBond(l, b1, b2);
+    expect(l.position()).toBeGreaterThan(c.position());
+    sb.insertBefore(c);
+    expect(l.position()).toBeLessThan(c.position());
+    sb.insertAfter(c);
+    expect(l.position()).toBeGreaterThan(c.position());
+  });
+
+  it('stroke and strokeWidth getters and setters', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(5, 5, 3, 3);
+    let b1 = Base.create(svg, 'b', 1, 4);
+    let b2 = Base.create(svg, 'n', 10, 12);
+    let sb = new StraightBond(l, b1, b2);
+    sb.stroke = '#44bb99';
+    expect(sb.stroke).toBe('#44bb99');
+    sb.strokeWidth = 5.43;
+    expect(sb.strokeWidth).toBe(5.43);
+  });
+
+  it('opacity getter and private setter', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(5, 2, 1, 6);
+    let b1 = Base.create(svg, 'b', 5, 4);
+    let b2 = Base.create(svg, 'n', 3, 5);
+    let sb = new StraightBond(l, b1, b2);
+    sb._setOpacity(0.55);
+    expect(sb.opacity).toBe(0.55);
+  });
+
+  it('remove method', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(1, 2, 4, 5);
+    let b1 = Base.create(svg, 'n', 1, 4);
+    let b2 = Base.create(svg, 'n', 4, 4);
+    let sb = new StraightBond(l, b1, b2);
+    let lid = l.id();
+    expect(svg.findOne('#' + lid)).toBeTruthy();
+    sb.remove();
+    expect(svg.findOne('#' + lid)).toBe(null);
+  });
+
+  describe('savableState method', () => {
+    it('includes className, line and base IDs', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(5, 5, 4, 3);
+      let b1 = Base.create(svg, 'n', 4, 3);
+      let b2 = Base.create(svg, 'j', 5, 10);
+      let sb = new StraightBond(l, b1, b2);
+      let savableState = sb.savableState();
+      expect(savableState.className).toBe('StraightBond');
+      expect(savableState.line).toBe(l.id());
+      expect(savableState.base1).toBe(b1.id);
+      expect(savableState.base2).toBe(b2.id);
+    });
+
+    it('can be converted to and from a JSON string', () => {
+      let svg = createNodeSVG();
+      let l = svg.line(5, 5, 4, 3);
+      let b1 = Base.create(svg, 'n', 4, 3);
+      let b2 = Base.create(svg, 'j', 5, 10);
+      let sb = new StraightBond(l, b1, b2);
+      let savableState1 = sb.savableState();
+      let json1 = JSON.stringify(savableState1);
+      let savableState2 = JSON.parse(json1);
+      let json2 = JSON.stringify(savableState2);
+      expect(json2).toBe(json1);
+    });
+  });
+});
 
 it('mostRecentProps static method returns a new object', () => {
   function runFor(StraightBondClass) {
@@ -164,71 +396,6 @@ function checkCoordinates(cs, ecs) {
   expect(cs.x2).toBeCloseTo(ecs.x2, 6);
   expect(cs.y2).toBeCloseTo(ecs.y2, 6);
 }
-
-it('StraightBond _lineCoordinates static method', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1, 2);
-  let b2 = Base.create(svg, 'U', 5, 6);
-  
-  // basic test
-  checkCoordinates(
-    StraightBond._lineCoordinates(b1, b2, 1, 2),
-    {
-      x1: 1 + (2 ** -0.5),
-      y1: 2 + (2 ** -0.5),
-      x2: 5 - (2 ** 0.5),
-      y2: 6 - (2 ** 0.5),
-    },
-  );
-
-  // paddings of zero
-  checkCoordinates(
-    StraightBond._lineCoordinates(b1, b2, 0, 0),
-    {
-      x1: 1,
-      y1: 2,
-      x2: 5,
-      y2: 6,
-    },
-  );
-
-  // negative base coordinates
-  b1.moveTo(-2, -1);
-  b2.moveTo(-10.5, -100);
-  
-  checkCoordinates(
-    StraightBond._lineCoordinates(b1, b2, 2.5, 1.111),
-    {
-      x1: -2.2138596577358562,
-      y1: -3.49083601362938,
-      x2: -10.404960768102185,
-      y2: -98.89307247554311,
-    },
-  );
-
-  // paddings greater than distance between bases
-  checkCoordinates(
-    StraightBond._lineCoordinates(b1, b2, 60, 60),
-    {
-      x1: -7.132631785660548,
-      y1: -60.78006432710513,
-      x2: -5.367368214339452,
-      y2: -40.21993567289487,
-    },
-  );
-});
-
-it('_opacity static method', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'q', 0, 0);
-  let b2 = Base.create(svg, 'w', 10, 10);
-
-  // paddings are greater than distance between bases
-  expect(StraightBond._opacity(b1, b2, 20, 20)).toBe(0);
-
-  // paddings are less than distance between bases
-  expect(StraightBond._opacity(b1, b2, 1, 1)).toBe(1);
-});
 
 it('fromSavedState static method valid saved state', () => {
   function runFor(StraightBondClass) {
@@ -401,77 +568,6 @@ it('basic test of create static method', () => {
   runFor(SecondaryBond);
 });
 
-it('basic test of constructor', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let line = svg.line(0, 0.22, 2.45, -1);
-    line.id();
-    let b1 = Base.create(svg, 'G', -1, -2);
-    let b2 = Base.create(svg, 'C', 10, 0.002);
-    expect(() => new StraightBondClass(line, b1, b2)).not.toThrow();
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('_validateLine method', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1, 2);
-    let b2 = Base.create(svg, 'U', 2, 3);
-
-    let line1 = svg.line(1, 1, 2, 2);
-    line1.id();
-    expect(() => new StraightBondClass(line1, b1, b2)).not.toThrow();
-    
-    // initializes ID
-    let line2 = svg.line(1, 4, 3, 5);
-    expect(line2.attr('id')).toBe(undefined);
-    new StraightBondClass(line2, b1, b2);
-    expect(line2.attr('id')).toBeTruthy();
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('base1 and base2 getters', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 4.5, 6);
-    let b2 = Base.create(svg, 'u', -10, -4);
-    let sb = StraightBondClass.create(svg, b1, b2);
-    expect(sb.base1).toBe(b1);
-    expect(sb.base2).toBe(b2);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('id getter', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b0 = Base.create(svg, 'A', 1, 2);
-    let b1 = Base.create(svg, 'U', 2, 3);
-
-    let line = svg.line(1, 2, 3, 4);
-    let id = 'a_unique_id';
-    line.attr({ 'id': id });
-    let sb = new StraightBondClass(line, b0, b1);
-    
-    // check getter
-    expect(sb.id).toBe(id);
-
-    // check actual value
-    expect(sb._line.id()).toBe(id);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
 describe('SecondaryBond isAUT method', () => {
   it('works with lowercase characters', () => {
     let svg = createNodeSVG();
@@ -566,224 +662,6 @@ describe('SecondaryBond isGUT method', () => {
   });
 });
 
-it('padding1 getter and setter', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'a', 40.3, 4.9);
-    let b2 = Base.create(svg, 'T', 1, 4);
-    let sb = StraightBondClass.create(svg, b1, b2);
-    sb.padding1 = 8;
-    sb.padding2 = 8;
-
-    let x2 = sb._line.attr('x2');
-    let y2 = sb._line.attr('y2');
-
-    sb.padding1 = 0.25;
-
-    // check getter
-    expect(sb.padding1).toBeCloseTo(0.25, 6);
-
-    // check actual line coordinates
-    checkCoordinates(
-      {
-        x1: sb._line.attr('x1'),
-        y1: sb._line.attr('y1'),
-        x2: sb._line.attr('x2'),
-        y2: sb._line.attr('y2'),
-      },
-      {
-        x1: 40.05006552984633,
-        y1: 4.89427630984381,
-        x2: x2,
-        y2: y2,
-      },
-    );
-
-    // updates most recent property
-    expect(StraightBondClass.mostRecentProps().padding1).toBeCloseTo(0.25, 6);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('padding2 getter and setter', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'a', 0.2, -3);
-    let b2 = Base.create(svg, 'T', 120.5, 8);
-    let sb = StraightBondClass.create(svg, b1, b2);
-    sb.padding1 = 8;
-    sb.padding2 = 8;
-
-    let x1 = sb._line.attr('x1');
-    let y1 = sb._line.attr('y1');
-
-    sb.padding2 = 0.5;
-
-    // check getter
-    expect(sb.padding2).toBeCloseTo(0.5, 6);
-
-    // check actual line coordinates
-    checkCoordinates(
-      {
-        x1: sb._line.attr('x1'),
-        y1: sb._line.attr('y1'),
-        x2: sb._line.attr('x2'),
-        y2: sb._line.attr('y2'),
-      },
-      {
-        x1: x1,
-        y1: y1,
-        x2: 120.00207721370248,
-        y2: 7.954470900671049,
-      },
-    );
-
-    // updates most recent property
-    expect(StraightBondClass.mostRecentProps().padding2).toBeCloseTo(0.5, 6);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('reposition method', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'a', 0.2, -3);
-    let b2 = Base.create(svg, 'T', 120.5, 8);
-    let sb = StraightBondClass.create(svg, b1, b2);
-
-    sb.padding1 = 5;
-    sb.padding2 = 0.99;
-
-    b1.moveTo(-10, 0.5);
-    b2.moveTo(1000, 980.2);
-
-    sb.reposition();
-
-    checkCoordinates(
-      {
-        x1: sb._line.attr('x1'),
-        y1: sb._line.attr('y1'),
-        x2: sb._line.attr('x2'),
-        y2: sb._line.attr('y2'),
-      },
-      {
-        x1: -6.411041600732329,
-        y1: 3.981289647289641,
-        x2: 999.289386236945,
-        y2: 979.5107046498367,
-      },
-    );
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('_reposition method', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'a', 0.2, -3);
-    let b2 = Base.create(svg, 'T', 120.5, 8);
-    let sb = StraightBondClass.create(svg, b1, b2);
-
-    b1.moveTo(-10, 0.5);
-    b2.moveTo(1000, 980.2);
-
-    sb._reposition(5, 0.99);
-
-    checkCoordinates(
-      {
-        x1: sb._line.attr('x1'),
-        y1: sb._line.attr('y1'),
-        x2: sb._line.attr('x2'),
-        y2: sb._line.attr('y2'),
-      },
-      {
-        x1: -6.411041600732329,
-        y1: 3.981289647289641,
-        x2: 999.289386236945,
-        y2: 979.5107046498367,
-      },
-    );
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('_reposition method updates opacity', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'b', 0, 1);
-    let b2 = Base.create(svg, 'n', -100.5, -101.6);
-    let sb = StraightBondClass.create(svg, b1, b2);
-
-    expect(sb.opacity).toBe(1);
-    b1.moveTo(100, 100.5);
-    b2.moveTo(200.1, 200.011);
-    sb._reposition(1000, 999);
-    expect(sb.opacity).toBe(0);
-
-    b1.moveTo(0, 0);
-    b2.moveTo(10000, 100009);
-    sb._reposition(1000, 999);
-    expect(sb.opacity).toBe(1);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('insertBefore method', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'a', -0.445, 0.56);
-    let b2 = Base.create(svg, 'T', 1, 2);
-    let sb = StraightBondClass.create(svg, b1, b2);
-
-    let circle = svg.circle(100);
-    let rect = svg.rect(2);
-
-    expect(sb._line.position()).toBeLessThan(circle.position());
-    expect(sb._line.position()).toBeLessThan(rect.position());
-
-    sb.insertBefore(rect);
-
-    expect(sb._line.position()).toBeGreaterThan(circle.position());
-    expect(sb._line.position()).toBeLessThan(rect.position());
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('insertAfter method', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'a', -0.445, 0.56);
-    let b2 = Base.create(svg, 'T', 1, 2);
-    let sb = StraightBondClass.create(svg, b1, b2);
-
-    let circle = svg.circle(100);
-    let rect = svg.rect(2);
-
-    expect(sb._line.position()).toBeLessThan(circle.position());
-    expect(sb._line.position()).toBeLessThan(rect.position());
-
-    sb.insertAfter(circle);
-
-    expect(sb._line.position()).toBeGreaterThan(circle.position());
-    expect(sb._line.position()).toBeLessThan(rect.position());
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
 it('stroke getter and setter', () => {
   function runFor(StraightBondClass) {
     let svg = createNodeSVG();
@@ -863,84 +741,4 @@ it('strokeWidth getter and setter', () => {
 
   runFor(PrimaryBond);
   runFor(SecondaryBond);
-});
-
-it('opacity getter and private setter', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'e', 4, 5);
-    let b2 = Base.create(svg, 'r', 1, 4);
-    let sb = StraightBondClass.create(svg, b1, b2);
-
-    sb._setOpacity(0.4567);
-
-    // check getter
-    expect(sb.opacity).toBeCloseTo(0.4567, 6);
-
-    // check actual value
-    expect(sb._line.attr('opacity')).toBeCloseTo(0.4567, 6);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('remove method', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1.1, 1.2);
-    let b2 = Base.create(svg, 'U', 2.1, 2.2);
-    let sb = StraightBondClass.create(svg, b1, b2);
-    let lineId = sb._line.id();
-    let baseTextId1 = b1._text.id();
-    let baseTextId2 = b2._text.id();
-
-    expect(svg.findOne('#' + lineId)).not.toBe(null);
-    expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
-    expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
-
-    sb.remove();
-
-    expect(svg.findOne('#' + lineId)).toBe(null);
-
-    // does not remove the bases
-    expect(svg.findOne('#' + baseTextId1)).not.toBe(null);
-    expect(svg.findOne('#' + baseTextId2)).not.toBe(null);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('savableState method all properties except className', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1.1, 1.2);
-    let b2 = Base.create(svg, 'U', 2.1, 2.2);
-    let sb = StraightBondClass.create(svg, b1, b2);
-
-    let savableState = sb.savableState();
-    expect(savableState.line).toBe(sb._line.id());
-    expect(savableState.base1).toBe(b1.id);
-    expect(savableState.base2).toBe(b2.id);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('PrimaryBond savableState method className property', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1.1, 1.2);
-  let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let pb = PrimaryBond.create(svg, b1, b2);
-  expect(pb.savableState().className).toBe('StraightBond');
-});
-
-it('SecondaryBond savableState method className property', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'A', 1.1, 1.2);
-  let b2 = Base.create(svg, 'U', 2.1, 2.2);
-  let sb = SecondaryBond.create(svg, b1, b2);
-  expect(sb.savableState().className).toBe('StraightBond');
 });

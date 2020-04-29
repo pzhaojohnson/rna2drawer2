@@ -45,8 +45,8 @@ class StraightBond {
 
   /**
    * @param {SVG.Line} line 
-   * @param {Base} b1 One base of the straight bond.
-   * @param {Base} b2 The other base of the straight bond.
+   * @param {Base} b1 
+   * @param {Base} b2 
    */
   constructor(line, b1, b2) {
     this._base1 = b1;
