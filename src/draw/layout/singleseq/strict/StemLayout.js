@@ -251,83 +251,6 @@ class TriangleLoop {
   }
 
   /**
-   * The height of a triangle loop is defined as the distance between the top
-   * of the outer stem and the bottom of the platform for the inner stems.
-   * 
-   * @param {Stem} st 
-   * 
-   * @returns {number} 
-   */
-  static height(st) {
-    if (st.hasHairpinLoop()) {
-      return 0;
-    } else if (st.numBranches === 1) {
-      return TriangleLoop._heightOneBranch(st);
-    } else {
-      return TriangleLoop._heightMultipleBranches(st);
-    }
-  }
-
-  /**
-   * @param {Stem} st 
-   * 
-   * @returns {number} 
-   */
-  static _heightOneBranch(st) {
-    let it = st.loopIterator();
-    let ur5 = it.next().value;
-    it.next();
-    let ur3 = it.next().value;
-    let greater = Math.max(ur5.length, ur3.length);
-    let halfCircumference = greater + 1;
-    let diameter = (2 * halfCircumference) / Math.PI;
-    return diameter - 1;
-  }
-
-  /**
-   * @param {Stem} st 
-   * 
-   * @returns {number} 
-   */
-  static _minHeightMultipleBranches(st) {
-    let platformLength = TriangleLoop.platformLength(st);
-    let opp = (platformLength - st.width) / 2;
-    let maxAngle = Math.max(0.001, st.maxTriangleLoopBranchingAngle / 2);
-    maxAngle = Math.min(Math.PI / 2 - 0.001, maxAngle);
-    let hyp = opp / Math.sin(maxAngle);
-    return Math.max(
-      (((hyp ** 2) - (opp ** 2)) ** 0.5) - 1,
-      0,
-    );
-  }
-
-  /**
-   * @param {Stem} st 
-   * 
-   * @returns {number} 
-   */
-  static _heightMultipleBranches(st) {
-    let it = st.loopIterator();
-    let urFirst = it.next().value;
-    let next = it.next();
-    let urLast = null;
-    while (!next.done) {
-      urLast = it.next().value;
-      next = it.next();
-    }
-    let platformLength = TriangleLoop.platformLength(st);
-    let opp = (platformLength - st.width) / 2;
-    let hyp = Math.max(
-      urFirst.length + 1,
-      urLast.length + 1,
-      opp + 0.001,
-    );
-    let height = (((hyp ** 2) - (opp ** 2)) ** 0.5) - 1;
-    let minHeight = TriangleLoop._minHeightMultipleBranches(st);
-    return Math.max(height, minHeight);
-  }
-
-  /**
    * Recursively sets the coordinates and angles of stems inner to the given stem.
    * 
    * @param {Stem} st 
@@ -340,12 +263,12 @@ class TriangleLoop {
     } else {
       let x = st.xTopCenter;
       let y = st.yTopCenter;
-      let height = TriangleLoop.height(st, generalProps);
-      x += height * Math.cos(st.angle);
-      y += height * Math.sin(st.angle);
-      let platformLength = TriangleLoop.platformLength(st);
-      x += (platformLength / 2) * Math.cos(st.angle - (Math.PI / 2));
-      y += (platformLength / 2) * Math.sin(st.angle - (Math.PI / 2));
+      let h = st.triangleLoopHeight - 1;
+      x += h * Math.cos(st.angle);
+      y += h * Math.sin(st.angle);
+      let pl = TriangleLoop.platformLength(st);
+      x += (pl / 2) * Math.cos(st.angle - (Math.PI / 2));
+      y += (pl / 2) * Math.sin(st.angle - (Math.PI / 2));
       let it = st.loopIterator();
       it.next();
       let next = it.next();

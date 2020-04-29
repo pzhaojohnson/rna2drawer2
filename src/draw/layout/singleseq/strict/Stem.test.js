@@ -570,21 +570,23 @@ it('hasTriangleLoop - an inner stem', () => {
   expect(st2.hasTriangleLoop()).toBeFalsy();
 });
 
-it('maxTriangleLoopBranchingAngle - the outermost stem', () => {
-  let partners = parseDotBracket('...').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(partners.length);
-  let omst = new Stem(0, partners, gps, bps);
-  expect(omst.maxTriangleLoopBranchingAngle).toBe(Math.PI / 4);
-});
+describe('triangleLoopHeight getter', () => {
+  it('the outermost stem', () => {
+    let partners = parseDotBracket('..((..))').secondaryPartners;
+    let gps = new StrictLayoutBaseProps();
+    let bps = defaultBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, bps);
+    expect(omst.triangleLoopHeight).toBe(0);
+  });
 
-it('maxTriangleLoopBranchingAngle - an inner stem', () => {
-  let partners = parseDotBracket('..(((...)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(partners.length);
-  bps[2].maxTriangleLoopBranchingAngle = 5 * Math.PI / 7;
-  let st = new Stem(3, partners, gps, bps);
-  expect(st.maxTriangleLoopBranchingAngle).toBeCloseTo(5 * Math.PI / 7, 3);
+  it('an inner stem', () => {
+    let partners = parseDotBracket('..(((...)))').secondaryPartners;
+    let gps = new StrictLayoutGeneralProps();
+    let bps = defaultBaseProps(partners.length);
+    bps[2].triangleLoopHeight = 5.78;
+    let st = new Stem(3, partners, gps, bps);
+    expect(st.triangleLoopHeight).toBe(5.78);
+  });
 });
 
 it('isFlipped - the outermost stem', () => {

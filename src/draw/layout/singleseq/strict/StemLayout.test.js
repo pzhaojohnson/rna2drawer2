@@ -387,10 +387,10 @@ it('RoundLoop setInnerCoordinatesAngles - inner stems have inner stems (triangle
   let ist1 = stit.next().value;
   stit.next();
   let ist2 = stit.next().value;
-  expect(ist1.xBottomCenter).toBeCloseTo(4.910689130419872, 3);
+  expect(ist1.xBottomCenter).toBeCloseTo(6.048871526169038, 3);
   expect(ist1.yBottomCenter).toBeCloseTo(-4.1, 3);
   expect(normalizeAngle(ist1.angle)).toBeCloseTo(normalizeAngle(st.angle), 3);
-  expect(ist2.xBottomCenter).toBeCloseTo(4.9106891304198745, 3);
+  expect(ist2.xBottomCenter).toBeCloseTo(6.048871526169038, 3);
   expect(ist2.yBottomCenter).toBeCloseTo(4.1, 3);
   expect(normalizeAngle(ist2.angle)).toBeCloseTo(normalizeAngle(st.angle), 3);
 });
@@ -415,132 +415,6 @@ it('TriangleLoop platformLength - multiple branches (and includes stretch)', () 
   expect(TriangleLoop.platformLength(st)).toBeCloseTo(11.3, 3);
 });
 
-it('TriangleLoop height - a hairpin', () => {
-  let partners = parseDotBracket('((..))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop.height(st)).toBe(0);
-});
-
-it('TriangleLoop height - one branch', () => {
-  let partners = parseDotBracket('(.(..).)').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1.23;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  bps[1].stretch3 = 2.8;
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop.height(st)).toBe(TriangleLoop._heightOneBranch(st));
-});
-
-it('TriangleLoop height - multiple branches', () => {
-  let partners = parseDotBracket('(.(.)..(.).)').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 2.87;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  bps[1].stretch3 = 8.8;
-  bps[5].stretch3 = 4.3;
-  bps[9].stretch3 = -1;
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop.height(st)).toBe(TriangleLoop._heightMultipleBranches(st));
-});
-
-it("TriangleLoop _heightOneBranch - 5' side is greater (and includes stretch)", () => {
-  let partners = parseDotBracket('(.(..).)').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1.23;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  bps[1].stretch3 = 5.3;
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._heightOneBranch(st)).toBeCloseTo(3.647324338283344, 3);
-});
-
-it("TriangleLoop _heightOneBranch - 3' side is greater (and includes stretch)", () => {
-  let partners = parseDotBracket('(.(..).)').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1.23;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  bps[6].stretch3 = 8.9;
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._heightOneBranch(st)).toBeCloseTo(5.939155518806637, 3);
-});
-
-it('TriangleLoop _minHeightMultipleBranches - normal case', () => {
-  let partners = parseDotBracket('((..((..))..((..)).))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1;
-  let bps = defaultBaseProps(partners.length)
-  bps[0].loopShape = 'triangle';
-  bps[0].maxTriangleLoopBranchingAngle = 2 * Math.PI / 3;
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._minHeightMultipleBranches(st)).toBeCloseTo(0.4433756729740652, 3);
-});
-
-it('TriangleLoop _minHeightMultipleBranches - max angle is too small', () => {
-  let partners = parseDotBracket('((..((..))..((..)).))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1;
-  let bps = defaultBaseProps(partners.length)
-  bps[0].loopShape = 'triangle';
-  bps[0].maxTriangleLoopBranchingAngle = 0;
-  let st = new Stem(1, partners, gps, bps);
-  let minHeight = TriangleLoop._minHeightMultipleBranches(st);
-  expect(isFinite(minHeight)).toBeTruthy();
-  expect(minHeight).toBeGreaterThanOrEqual(0);
-});
-
-it('TriangleLoop _minHeightMultipleBranches - max angle is too big', () => {
-  let partners = parseDotBracket('((..((..))..((..)).))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1;
-  let bps = defaultBaseProps(partners.length)
-  bps[0].loopShape = 'triangle';
-  bps[0].maxTriangleLoopBranchingAngle = Math.PI;
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._minHeightMultipleBranches(st)).toBe(0);
-});
-
-it("TriangleLoop _heightMultipleBranches - 5' side is greater (and includes stretch)", () => {
-  let partners = parseDotBracket('(.(.)..(.).)').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1.5;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  bps[1].stretch3 = 18.8;
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._heightMultipleBranches(st)).toBeCloseTo(19.61740769350017, 3);
-});
-
-it("TriangleLoop _heightMultipleBranches - 3' side is greater (and includes stretch)", () => {
-  let partners = parseDotBracket('(.(.)..(.).)').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1.5;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  bps[9].stretch3 = 15.6;
-  let st = new Stem(1, partners, gps, bps);
-  expect(TriangleLoop._heightMultipleBranches(st)).toBeCloseTo(16.38382869220702, 3);
-});
-
-it('TriangleLoop _heightMultipleBranches - both sides are too small and uses minHeight', () => {
-  let partners = parseDotBracket('(.(.)..(.).)').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
-  gps.basePairBondLength = 1.5;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].loopShape = 'triangle';
-  bps[0].maxTriangleLoopBranchingAngle = 8 * Math.PI / 9;
-  bps[5].stretch3 = 100.6;
-  let st = new Stem(1, partners, gps, bps);
-  expect(
-    TriangleLoop._heightMultipleBranches(st)
-  ).toBe(TriangleLoop._minHeightMultipleBranches(st));
-});
-
 it('TriangleLoop setInnerCoordinatesAndAngles - a hairpin', () => {
   let partners = parseDotBracket('((..))').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
@@ -558,7 +432,7 @@ it('TriangleLoop setInnerCoordinatesAndAngles - one branch', () => {
   gps.basePairBondLength = 1.29;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
-  bps[1].stretch3 = 4.8;
+  bps[0].triangleLoopHeight = 6.8;
   let ost = new Stem(1, partners, gps, bps);
   ost.xBottomCenter = 1.2;
   ost.yBottomCenter = 3.4;
@@ -567,8 +441,8 @@ it('TriangleLoop setInnerCoordinatesAndAngles - one branch', () => {
   let it = ost.loopIterator();
   it.next();
   let ist = it.next().value;
-  expect(ist.xBottomCenter).toBeCloseTo(4.949036488868186, 3);
-  expect(ist.yBottomCenter).toBeCloseTo(5.564507226049776, 3);
+  expect(ist.xBottomCenter).toBeCloseTo(7.088972745734183, 3);
+  expect(ist.yBottomCenter).toBeCloseTo(6.799999999999999, 3);
   expect(ist.angle).toBeCloseTo(Math.PI / 6 , 3);
 });
 
@@ -578,7 +452,7 @@ it('TriangleLoop setInnerCoordinatesAndAngles - multiple branches', () => {
   gps.basePairBondLength = 1;
   let bps = defaultBaseProps(partners.length);
   bps[0].loopShape = 'triangle';
-  bps[1].stretch3 = 15;
+  bps[0].triangleLoopHeight = 15;
   let ost = new Stem(1, partners, gps, bps);
   ost.xBottomCenter = 5.6;
   ost.yBottomCenter = 7.8;
@@ -589,11 +463,11 @@ it('TriangleLoop setInnerCoordinatesAndAngles - multiple branches', () => {
   let ist1 = it.next().value;
   it.next();
   let ist2 = it.next().value;
-  expect(ist1.xBottomCenter).toBeCloseTo(11.842522350939024, 3);
-  expect(ist1.yBottomCenter).toBeCloseTo(-8.0123658792107, 3);
+  expect(ist1.xBottomCenter).toBeCloseTo(10.934936490538906, 3);
+  expect(ist1.yBottomCenter).toBeCloseTo(-6.440381056766581, 3);
   expect(ist1.angle).toBeCloseTo(-Math.PI / 3, 3);
-  expect(ist2.xBottomCenter).toBeCloseTo(16.17264936986122, 3);
-  expect(ist2.yBottomCenter).toBeCloseTo(-5.5123658792107, 3);
+  expect(ist2.xBottomCenter).toBeCloseTo(15.265063509461099, 3);
+  expect(ist2.yBottomCenter).toBeCloseTo(-3.940381056766581, 3);
   expect(ist2.angle).toBeCloseTo(-Math.PI / 3, 3);
 });
 
@@ -1099,36 +973,36 @@ it('FlatOutermostLoop setCoordinatesAndAngles - inner stems have inner stems (tr
       [1, 0],
       [2, -1.1102230246251565e-16],
       [2, -1],
-      [0.8770794699266418, -1.3548594600630963],
-      [-0.24439906732510508, -1.7142501162301187],
-      [-1.3644173276065032, -2.0781661091360775],
-      [-2.4829570505766156, -2.4466015056364654],
-      [-3.599999999999999, -2.819550298904276],
-      [-3.599999999999999, -3.819550298904276],
-      [-3.599999999999999, -4.819550298904276],
-      [-3.373259557792105, -5.75996161805996],
-      [-2.499999999999999, -6.176137568895063],
-      [-1.6267404422078933, -5.75996161805996],
-      [-1.3999999999999988, -4.819550298904276],
-      [-1.3999999999999988, -3.819550298904276],
-      [-1.3999999999999988, -2.819550298904276],
-      [0.0999814815089084, -2.8297564979758363],
-      [1.599985185190711, -2.8358802476592473],
-      [3.1000000000000862, -2.8379215025937583],
-      [4.600014814809461, -2.8358802476592473],
-      [6.1000185184912645, -2.8297564979758363],
-      [7.600000000000001, -2.819550298904276],
-      [7.600000000000001, -3.819550298904276],
-      [7.600000000000001, -4.819550298904276],
-      [7.54546066836604, -5.790676350151886],
-      [8.213671832476555, -6.497467823123175],
-      [9.186328167523449, -6.497467823123174],
-      [9.854539331633962, -5.790676350151885],
-      [9.8, -4.819550298904276],
-      [9.8, -3.819550298904276],
-      [9.8, -2.819550298904276],
-      [7.937429084906967, -2.200476047132895],
-      [6.0707342388039365, -1.593950124777507],
+      [0.874039735147818, -1.7916225963297734],
+      [-0.24895604176595043, -2.587445025066131],
+      [-1.3689716654458834, -3.3874561848375606],
+      [-2.4859915121685674, -4.1916449158414935],
+      [-3.599999999999999, -5.000000000000001],
+      [-3.599999999999999, -6.000000000000001],
+      [-3.599999999999999, -7.000000000000001],
+      [-3.373259557792105, -7.940411319155685],
+      [-2.499999999999999, -8.356587269990788],
+      [-1.6267404422078933, -7.940411319155685],
+      [-1.3999999999999988, -7.000000000000001],
+      [-1.3999999999999988, -6.000000000000001],
+      [-1.3999999999999988, -5.000000000000001],
+      [0.0999814815089084, -5.010206199071604],
+      [1.599985185190711, -5.016329948755015],
+      [3.1000000000000862, -5.018371203689526],
+      [4.600014814809461, -5.016329948755015],
+      [6.1000185184912645, -5.010206199071604],
+      [7.600000000000001, -5.000000000000001],
+      [7.600000000000001, -6.000000000000001],
+      [7.600000000000001, -7.000000000000001],
+      [7.54546066836604, -7.9711260512476105],
+      [8.213671832476555, -8.6779175242189],
+      [9.186328167523447, -8.6779175242189],
+      [9.854539331633962, -7.9711260512476105],
+      [9.8, -7.000000000000001],
+      [9.8, -6.000000000000001],
+      [9.8, -5.000000000000001],
+      [7.941645248799944, -3.655055473372329],
+      [6.074954471523569, -2.3217049181749303],
       [4.2, -1],
       [4.2, 0],
       [5.2, -1.1102230246251565e-16],

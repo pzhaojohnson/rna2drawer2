@@ -19,8 +19,8 @@ class StrictLayoutBaseProps {
     if (savedState.loopShape !== undefined) {
       bps.loopShape = savedState.loopShape;
     }
-    if (savedState.maxTriangleLoopBranchingAngle !== undefined) {
-      bps.maxTriangleLoopBranchingAngle = savedState.maxTriangleLoopBranchingAngle;
+    if (savedState.triangleLoopHeight !== undefined) {
+      bps.triangleLoopHeight = savedState.triangleLoopHeight;
     }
     return bps;
   }
@@ -30,7 +30,7 @@ class StrictLayoutBaseProps {
     this.flatOutermostLoopAngle3 = 0;
     this.flipStem = false;
     this.loopShape = 'round';
-    this.maxTriangleLoopBranchingAngle = 0.8 * Math.PI;
+    this.triangleLoopHeight = 4;
   }
 
   /**
@@ -47,7 +47,7 @@ class StrictLayoutBaseProps {
    * @property {number} flatOutermostLoopAngle3 
    * @property {boolean} flipStem 
    * @property {string} loopShape 
-   * @property {number} maxTriangleLoopBranchingAngle 
+   * @property {number} triangleLoopHeight 
    */
 
   /**
@@ -59,7 +59,7 @@ class StrictLayoutBaseProps {
       flatOutermostLoopAngle3: this.flatOutermostLoopAngle3,
       flipStem: this.flipStem,
       loopShape: this.loopShape,
-      maxTriangleLoopBranchingAngle: this.maxTriangleLoopBranchingAngle,
+      triangleLoopHeight: this.triangleLoopHeight,
     };
   }
 }
