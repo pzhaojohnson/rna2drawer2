@@ -136,13 +136,8 @@ class Sequence {
     seq.numberingAnchor = savedState.numberingAnchor;
     seq.numberingIncrement = savedState.numberingIncrement;
     let bases = [];
-    savedState.bases.forEach((sb, i) => {
-      let p = i + 1;
-      bases.push(Base.fromSavedState(
-        sb,
-        svg,
-        Sequence._clockwiseNormalAngleAtPositionFromSavedState(p, savedState, svg),
-      ))
+    savedState.bases.forEach(sb => {
+      bases.push(Base.fromSavedState(sb, svg))
     });
     seq.appendBases(bases);
     Sequence._copyPropsToMostRecent(seq);

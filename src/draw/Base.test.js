@@ -88,7 +88,7 @@ describe('Base class', () => {
         let svg = createNodeSVG();
         let b1 = Base.create(svg, 'Y', 4, 6);
         let h1 = b1.addCircleHighlighting();
-        h1.shift(5, 8, 4, 6);
+        h1.shift(5, 8);
         let dl = h1.displacementLength;
         let da = h1.displacementAngle;
         let savableState1 = b1.savableState();
@@ -103,7 +103,7 @@ describe('Base class', () => {
         let svg = createNodeSVG();
         let b1 = Base.create(svg, 'N', 3, 2);
         let o1 = b1.addCircleOutline();
-        o1.shift(-2, -9, 3, 2);
+        o1.shift(-2, -9);
         let dl = o1.displacementLength;
         let da = o1.displacementAngle;
         let savableState1 = b1.savableState();
@@ -308,7 +308,7 @@ describe('Base class', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 't', 1, 2);
       let h = b.addCircleHighlighting();
-      h.shift(5, 4, 1, 2);
+      h.shift(5, 4);
       let da = h.displacementAngle;
       b.move(8, 9);
       expect(
@@ -320,7 +320,7 @@ describe('Base class', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'e', 3, 8);
       let o = b.addCircleOutline();
-      o.shift(-2, 55, 3, 8);
+      o.shift(-2, 55);
       let da = o.displacementAngle;
       b.move(55, 38);
       expect(
@@ -487,7 +487,7 @@ describe('Base class', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'q', 2, 9);
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 2, 9);
-      cba.shift(8, 10, 2, 9);
+      cba.shift(8, 10);
       let dl = cba.displacementLength;
       let da = cba.displacementAngle;
       let savableState = cba.savableState();
@@ -586,7 +586,7 @@ describe('Base class', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'w', 12, 16);
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 12, 16);
-      cba.shift(4, 8, 12, 16);
+      cba.shift(4, 8);
       let dl = cba.displacementLength;
       let da = cba.displacementAngle;
       let savableState = cba.savableState();

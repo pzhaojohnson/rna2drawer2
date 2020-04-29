@@ -44,10 +44,8 @@ class BaseAnnotation {
   /**
    * @param {number} xShift 
    * @param {number} yShift 
-   * @param {number} xBaseCenter 
-   * @param {number} yBaseCenter 
    */
-  shift(xShift, yShift, xBaseCenter, yBaseCenter) {}
+  shift(xShift, yShift) {}
 
   /**
    * @param {number} xBaseCenter 
@@ -197,10 +195,10 @@ class CircleBaseAnnotation extends BaseAnnotation {
   /**
    * @param {number} xShift 
    * @param {number} yShift 
-   * @param {number} xBaseCenter 
-   * @param {number} yBaseCenter 
    */
-  shift(xShift, yShift, xBaseCenter, yBaseCenter) {
+  shift(xShift, yShift) {
+    let xBaseCenter = this.xCenter + (this.displacementLength * Math.cos(this.displacementAngle + Math.PI));
+    let yBaseCenter = this.yCenter + (this.displacementLength * Math.sin(this.displacementAngle + Math.PI));
     this._circle.attr({
       'cx': this.xCenter + xShift,
       'cy': this.yCenter + yShift,

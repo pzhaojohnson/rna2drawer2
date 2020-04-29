@@ -240,26 +240,6 @@ describe('Sequence class', () => {
       expect(b22.character).toBe('M');
     });
 
-    it('passes clockwise normal angle to bases', () => {
-      let svg = createNodeSVG();
-      let seq1 = new Sequence('asdf');
-      seq1.appendBases([
-        Base.create(svg, 'A', 4, 9),
-        Base.create(svg, 'B', -10, 2),
-        Base.create(svg, 'T', 100, 900),
-      ]);
-      let b12 = seq1.getBaseAtPosition(2);
-      let o12 = b12.addCircleOutline();
-      let cna12 = seq1.clockwiseNormalAngleAtPosition(2);
-      o12.shift(14, 15, b12.xCenter, b12.yCenter, cna12);
-      let savableState1 = seq1.savableState();
-      let seq2 = Sequence.fromSavedState(savableState1, svg);
-      let b22 = seq2.getBaseAtPosition(2);
-      expect(
-        normalizeAngle(b22.outline.displacementAngle)
-      ).toBeCloseTo(normalizeAngle(o12.displacementAngle), 3);
-    });
-
     it('copies properties to most recent', () => {
       let svg = createNodeSVG();
       let seq1 = new Sequence('asdf');

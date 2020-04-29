@@ -12,7 +12,7 @@ describe('CircleBaseAnnotation class', () => {
     it('valid saved state', () => {
       let svg = createNodeSVG();
       let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 1, 10);
-      cba1.shift(3, 5, 1, 10);
+      cba1.shift(3, 5);
       let savableState1 = cba1.savableState();
       let cba2 = CircleBaseAnnotation.fromSavedState(savableState1, svg, 1, 10);
       let savableState2 = cba2.savableState();
@@ -23,7 +23,7 @@ describe('CircleBaseAnnotation class', () => {
       it('wrong className', () => {
         let svg = createNodeSVG();
         let cba = CircleBaseAnnotation.createNondisplaced(svg, 0, 4);
-        cba.shift(2, 3, 0, 4);
+        cba.shift(2, 3);
         let savableState = cba.savableState();
         savableState.className = 'CircleBseAnnotation';
         expect(
@@ -115,7 +115,7 @@ describe('CircleBaseAnnotation class', () => {
   it('displacementLength and displacementAngle getters', () => {
     let svg = createNodeSVG();
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
-    cba.shift(1, 9, 5, 8);
+    cba.shift(1, 9);
     expect(cba.displacementLength).toBe(cba._displacementLength);
     expect(cba.displacementAngle).toBe(cba._displacementAngle);
   });
@@ -124,7 +124,7 @@ describe('CircleBaseAnnotation class', () => {
     it('shifts the circle', () => {
       let svg = createNodeSVG();
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 9);
-      cba.shift(4, 3, 5, 9);
+      cba.shift(4, 3);
       expect(cba.xCenter).toBeCloseTo(9, 3);
       expect(cba.yCenter).toBeCloseTo(12, 3);
     });
@@ -132,7 +132,7 @@ describe('CircleBaseAnnotation class', () => {
     it('updates displacement', () => {
       let svg = createNodeSVG();
       let cba = CircleBaseAnnotation.createNondisplaced(svg, -2, 19);
-      cba.shift(5, 8, -2, 19);
+      cba.shift(5, 8);
       expect(cba.displacementLength).toBeCloseTo(distanceBetween(3, 27, -2, 19), 3);
       expect(cba.displacementAngle).toBeCloseTo(
         normalizeAngle(angleBetween(-2, 19, 3, 27))
@@ -144,7 +144,7 @@ describe('CircleBaseAnnotation class', () => {
     it('maintains displacement', () => {
       let svg = createNodeSVG();
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 9);
-      cba.shift(-1, 8, 3, 9);
+      cba.shift(-1, 8);
       let dl = cba.displacementLength;
       let da = cba.displacementAngle;
       cba.reposition(5, 14);
