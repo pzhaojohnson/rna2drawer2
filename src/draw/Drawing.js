@@ -571,17 +571,23 @@ class Drawing {
     let xPadding = window.screen.width / 2;
     let yPadding = window.screen.height / 2;
     let p = 1;
+    this.forEachBase(b => {
+      let bc = layout.baseCoordinatesAtPosition(p);
+      b.move(
+        xPadding + ((bc.xCenter - xMin) * baseWidth),
+        yPadding + ((bc.yCenter - yMin) * baseHeight),
+      );
+      p++;
+    });
     this.forEachSequence(seq => {
       let q = 1;
       seq.forEachBase(b => {
-        let bc = layout.baseCoordinatesAtPosition(p);
         b.move(
-          xPadding + ((bc.xCenter - xMin) * baseWidth),
-          yPadding + ((bc.yCenter - yMin) * baseHeight),
+          b.xCenter,
+          b.yCenter,
           seq.clockwiseNormalAngleAtPosition(q),
           seq.outerNormalAngleAtPosition(q),
         );
-        p++;
         q++;
       });
     });
