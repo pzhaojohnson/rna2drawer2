@@ -57,9 +57,7 @@ class StraightBond {
    * 
    * @throws {Error} If the saved state is not for the correct straight bond.
    */
-  static fromSavedState(savedState, svg, getBaseById) {
-    throw new Error('Not implemented.');
-  }
+  static fromSavedState(savedState, svg, getBaseById) {}
 
   /**
    * @param {SVG.Doc} svg 
@@ -68,9 +66,7 @@ class StraightBond {
    * 
    * @returns {StraightBond} 
    */
-  static create(svg, b1, b2) {
-    throw new Error('Not implemented.');
-  }
+  static create(svg, b1, b2) {}
 
   /**
    * @param {SVG.Line} line 
@@ -139,30 +135,22 @@ class StraightBond {
   /**
    * @returns {number} 
    */
-  get padding1() {
-    throw new Error('Not implemented.');
-  }
+  get padding1() {}
 
   /**
    * @param {number} p 
    */
-  set padding1(p) {
-    throw new Error('Not implemented.');
-  }
+  set padding1(p) {}
 
   /**
    * @returns {number} 
    */
-  get padding2() {
-    throw new Error('Not implemented.');
-  }
+  get padding2() {}
 
   /**
    * @param {number} p 
    */
-  set padding2(p) {
-    throw new Error('Not implemented.');
-  }
+  set padding2(p) {}
 
   /**
    * Repositions the line of this straight bond based on the current positions
@@ -214,30 +202,22 @@ class StraightBond {
   /**
    * @returns {string} 
    */
-  get stroke() {
-    throw new Error('Not implemented.');
-  }
+  get stroke() {}
 
   /**
    * @param {string} s 
    */
-  set stroke(s) {
-    throw new Error('Not implemented.');
-  }
+  set stroke(s) {}
 
   /**
    * @returns {number} 
    */
-  get strokeWidth() {
-    throw new Error('Not implemented.');
-  }
+  get strokeWidth() {}
 
   /**
    * @param {number} sw 
    */
-  set strokeWidth(sw) {
-    throw new Error('Not implemented.');
-  }
+  set strokeWidth(sw) {}
 
   /**
    * @returns {number} 
@@ -268,9 +248,7 @@ class StraightBond {
   /**
    * @returns {Object} 
    */
-  savableState() {
-    throw new Error('Not implemented.');
-  }
+  savableState() {}
 }
 
 class PrimaryBond extends StraightBond {
