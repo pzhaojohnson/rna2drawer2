@@ -51,11 +51,13 @@ class StraightBond {
    */
 
   /**
+   * Returns null if the saved state is invalid.
+   * 
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBaseById} getBaseById 
    * 
-   * @throws {Error} If the saved state is not for the correct straight bond.
+   * @returns {StraightBond|null} 
    */
   static fromSavedState(savedState, svg, getBaseById) {}
 
@@ -288,22 +290,29 @@ class PrimaryBond extends StraightBond {
   }
 
   /**
+   * Returns null if the saved state is invalid.
+   * 
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBaseById} getBaseById 
    * 
-   * @throws {Error} If the saved state is not for a primary bond.
+   * @returns {PrimaryBond|null} 
    */
   static fromSavedState(savedState, svg, getBaseById) {
     if (savedState.className !== 'PrimaryBond') {
-      throw new Error('Saved state is not for a primary bond.');
+      return null;
     }
     let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
-    let sb = new PrimaryBond(line, b1, b2);
-    PrimaryBond._copyPropsToMostRecent(sb);
-    return sb;
+    let pb = null;
+    try {
+      pb = new PrimaryBond(line, b1, b2);
+    } catch (err) {
+      return null;
+    }
+    PrimaryBond._copyPropsToMostRecent(pb);
+    return pb;
   }
 
   /**
@@ -459,20 +468,27 @@ class SecondaryBond extends StraightBond {
   }
 
   /**
+   * Returns null if the saved state is invalid.
+   * 
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
    * @param {StraightBond~getBaseById} getBaseById 
    * 
-   * @throws {Error} If the saved state is not for a secondary bond.
+   * @returns {SecondaryBond|null} 
    */
   static fromSavedState(savedState, svg, getBaseById) {
     if (savedState.className !== 'SecondaryBond') {
-      throw new Error('Saved state is not for a secondary bond.');
+      return null;
     }
     let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
-    let sb = new SecondaryBond(line, b1, b2);
+    let sb = null;
+    try {
+      sb = new SecondaryBond(line, b1, b2);
+    } catch (err) {
+      return null;
+    }
     SecondaryBond._copyPropsToMostRecent(sb);
     return sb;
   }

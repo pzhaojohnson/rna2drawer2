@@ -274,21 +274,9 @@ it('fromSavedState static method invalid saved state', () => {
     let savableState = sb1.savableState();
     expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).not.toThrow();
 
-    // no class name defined
-    delete savableState.className;
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-    // class name is not a string
-    savableState.className = 2;
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
-    // class name is an empty string
-    savableState.className = '';
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
-
     // class name is nonempty and incorrect
     savableState.className = 'StraightBnd';
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toThrow();
+    expect(StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toBe(null);
   }
 
   runFor(PrimaryBond);
