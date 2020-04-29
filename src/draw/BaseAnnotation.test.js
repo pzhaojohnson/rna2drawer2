@@ -217,11 +217,23 @@ describe('CircleBaseAnnotation class', () => {
     expect(svg.findOne('#' + id)).toBe(null);
   });
 
-  it('savableState method', () => {
-    let svg = createNodeSVG();
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
-    let savableState = cba.savableState();
-    expect(savableState.className).toBe('CircleBaseAnnotation');
-    expect(savableState.circle).toBe(cba._circle.id());
+  describe('savableState method', () => {
+    it('includes className and circle ID', () => {
+      let svg = createNodeSVG();
+      let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
+      let savableState = cba.savableState();
+      expect(savableState.className).toBe('CircleBaseAnnotation');
+      expect(savableState.circle).toBe(cba._circle.id());
+    });
+
+    it('can be converted to and from a JSON string', () => {
+      let svg = createNodeSVG();
+      let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 5, 9);
+      let savableState1 = cba1.savableState();
+      let json1 = JSON.stringify(savableState1);
+      let savableState2 = JSON.parse(json1);
+      let json2 = JSON.stringify(savableState2);
+      expect(json2).toBe(json1);
+    });
   });
 });
