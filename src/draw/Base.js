@@ -218,7 +218,7 @@ class Base {
    * @param {number} xCenter 
    * @param {number} yCenter 
    */
-  move(xCenter, yCenter) {
+  moveTo(xCenter, yCenter) {
     this._text.attr({
       'x': xCenter,
       'y': yCenter

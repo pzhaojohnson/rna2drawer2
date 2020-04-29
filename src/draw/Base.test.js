@@ -292,14 +292,14 @@ describe('Base class', () => {
     expect(b.yCenter).toBe(-2);
   });
 
-  describe('move method', () => {
+  describe('moveTo method', () => {
     it('no highlighting, outline or numbering', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'g', 3, 5);
       expect(b.hasHighlighting()).toBeFalsy();
       expect(b.hasOutline()).toBeFalsy();
       expect(b.hasNumbering()).toBeFalsy();
-      b.move(-10, 200);
+      b.moveTo(-10, 200);
       expect(b.xCenter).toBe(-10);
       expect(b.yCenter).toBe(200);
     });
@@ -310,7 +310,7 @@ describe('Base class', () => {
       let h = b.addCircleHighlighting();
       h.shift(5, 4);
       let da = h.displacementAngle;
-      b.move(8, 9);
+      b.moveTo(8, 9);
       expect(
         normalizeAngle(angleBetween(8, 9, h.xCenter, h.yCenter))
       ).toBeCloseTo(normalizeAngle(da));
@@ -322,7 +322,7 @@ describe('Base class', () => {
       let o = b.addCircleOutline();
       o.shift(-2, 55);
       let da = o.displacementAngle;
-      b.move(55, 38);
+      b.moveTo(55, 38);
       expect(
         normalizeAngle(angleBetween(55, 38, o.xCenter, o.yCenter))
       ).toBeCloseTo(normalizeAngle(da));
@@ -332,7 +332,7 @@ describe('Base class', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'e', 1, 5);
       let n = b.addNumbering(112, Math.PI / 5);
-      b.move(20, 40);
+      b.moveTo(20, 40);
       expect(
         normalizeAngle(angleBetween(20, 40, n._line.attr('x1'), n._line.attr('y1')))
       ).toBeCloseTo(Math.PI / 5);

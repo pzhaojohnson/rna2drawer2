@@ -1157,10 +1157,10 @@ it('reposition method', () => {
   let curveHeightPrev = qbb.curveHeight;
   let curveAnglePrev = qbb.curveAngle;
 
-  b1.move(1.5, 2.5);
-  b2.move(2.5, 3.5);
-  b3.move(3.5, 4.5);
-  b4.move(4.5, 5.5);
+  b1.moveTo(1.5, 2.5);
+  b2.moveTo(2.5, 3.5);
+  b3.moveTo(3.5, 4.5);
+  b4.moveTo(4.5, 5.5);
   qbb.reposition(base => Math.PI / 3);
 
   dCurveCheck(

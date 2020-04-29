@@ -573,7 +573,7 @@ class Drawing {
     let p = 1;
     this.forEachBase(b => {
       let bc = layout.baseCoordinatesAtPosition(p);
-      b.move(
+      b.moveTo(
         xPadding + ((bc.xCenter - xMin) * baseWidth),
         yPadding + ((bc.yCenter - yMin) * baseHeight),
       );

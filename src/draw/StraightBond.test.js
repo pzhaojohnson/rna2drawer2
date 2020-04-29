@@ -193,8 +193,8 @@ it('StraightBond _lineCoordinates static method', () => {
   );
 
   // negative base coordinates
-  b1.move(-2, -1);
-  b2.move(-10.5, -100);
+  b1.moveTo(-2, -1);
+  b2.moveTo(-10.5, -100);
   
   checkCoordinates(
     StraightBond._lineCoordinates(b1, b2, 2.5, 1.111),
@@ -669,8 +669,8 @@ it('reposition method', () => {
     sb.padding1 = 5;
     sb.padding2 = 0.99;
 
-    b1.move(-10, 0.5);
-    b2.move(1000, 980.2);
+    b1.moveTo(-10, 0.5);
+    b2.moveTo(1000, 980.2);
 
     sb.reposition();
 
@@ -701,8 +701,8 @@ it('_reposition method', () => {
     let b2 = Base.create(svg, 'T', 120.5, 8);
     let sb = StraightBondClass.create(svg, b1, b2);
 
-    b1.move(-10, 0.5);
-    b2.move(1000, 980.2);
+    b1.moveTo(-10, 0.5);
+    b2.moveTo(1000, 980.2);
 
     sb._reposition(5, 0.99);
 
@@ -734,13 +734,13 @@ it('_reposition method updates opacity', () => {
     let sb = StraightBondClass.create(svg, b1, b2);
 
     expect(sb.opacity).toBe(1);
-    b1.move(100, 100.5);
-    b2.move(200.1, 200.011);
+    b1.moveTo(100, 100.5);
+    b2.moveTo(200.1, 200.011);
     sb._reposition(1000, 999);
     expect(sb.opacity).toBe(0);
 
-    b1.move(0, 0);
-    b2.move(10000, 100009);
+    b1.moveTo(0, 0);
+    b2.moveTo(10000, 100009);
     sb._reposition(1000, 999);
     expect(sb.opacity).toBe(1);
   }
