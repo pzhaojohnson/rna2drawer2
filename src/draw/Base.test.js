@@ -334,14 +334,14 @@ describe('Base class', () => {
       );
     });
 
-    it('repositions numbering and passes outer normal angle', () => {
+    it('repositions numbering', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'e', 1, 5);
       let n = b.addNumbering(112, Math.PI / 5);
-      b.move(20, 40, 0, 3 * Math.PI / 7);
+      b.move(20, 40, 0, Math.PI / 5);
       expect(
         normalizeAngle(angleBetween(20, 40, n._line.attr('x1'), n._line.attr('y1')))
-      ).toBeCloseTo(3 * Math.PI / 7, 3);
+      ).toBeCloseTo(Math.PI / 5);
     });
   });
 

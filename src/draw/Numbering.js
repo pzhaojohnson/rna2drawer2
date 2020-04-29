@@ -335,13 +335,12 @@ class Numbering {
   /**
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} angle 
    */
-  reposition(xBaseCenter, yBaseCenter, angle) {
+  reposition(xBaseCenter, yBaseCenter) {
     this._reposition(
       xBaseCenter,
       yBaseCenter,
-      angle,
+      this.lineAngle,
       this.basePadding,
       this.lineLength,
     );

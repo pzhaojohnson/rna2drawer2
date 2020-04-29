@@ -423,27 +423,25 @@ describe('Numbering class', () => {
   });
 
   describe('reposition method', () => {
-    it('maintains base padding and line length', () => {
+    it('maintains line angle, base padding and line length', () => {
       let svg = createNodeSVG();
       let n = Numbering.create(svg, 12, 9, 8, Math.PI / 3);
       n.basePadding = 12;
       n.lineLength = 19;
       n.reposition(100, 112, 2 * Math.PI / 3);
+      expect(normalizeAngle(n.lineAngle)).toBeCloseTo(Math.PI / 3);
       expect(n.basePadding).toBeCloseTo(12, 3);
       expect(n.lineLength).toBeCloseTo(19, 3);
     });
 
-    it('updates position and angle', () => {
+    it('updates position', () => {
       let svg = createNodeSVG();
       let n = Numbering.create(svg, 20, 30, 40, Math.PI / 5);
       n.basePadding = 19;
-      n.reposition(-2, -5, 5 * Math.PI / 6);
+      n.reposition(-2, -5);
       expect(
         distanceBetween(-2, -5, n._line.attr('x1'), n._line.attr('y1'))
       ).toBeCloseTo(19, 3);
-      expect(
-        normalizeAngle(angleBetween(-2, -5, n._line.attr('x1'), n._line.attr('y1')))
-      ).toBeCloseTo(5 * Math.PI / 6, 3);
     });
   });
 

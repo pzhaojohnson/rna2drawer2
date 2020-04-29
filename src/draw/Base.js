@@ -233,7 +233,7 @@ class Base {
       this._outline.reposition(xCenter, yCenter, clockwiseNormalAngle);
     }
     if (this.hasNumbering()) {
-      this._numbering.reposition(xCenter, yCenter, outerNormalAngle);
+      this._numbering.reposition(xCenter, yCenter);
     }
   }
 
