@@ -582,12 +582,9 @@ class Drawing {
     this.forEachSequence(seq => {
       let q = 1;
       seq.forEachBase(b => {
-        b.move(
-          b.xCenter,
-          b.yCenter,
-          seq.clockwiseNormalAngleAtPosition(q),
-          seq.outerNormalAngleAtPosition(q),
-        );
+        if (b.hasNumbering()) {
+          b.numbering.lineAngle = seq.outerNormalAngleAtPosition(q);
+        }
         q++;
       });
     });

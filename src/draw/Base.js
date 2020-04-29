@@ -46,11 +46,10 @@ class Base {
    * 
    * @param {Base~SavableState} savedState 
    * @param {SVG.Svg} svg 
-   * @param {number} [clockwiseNormalAngle=0] 
    * 
    * @returns {Base|null} 
    */
-  static fromSavedState(savedState, svg, clockwiseNormalAngle=0) {
+  static fromSavedState(savedState, svg) {
     if (savedState.className !== 'Base') {
       return null;
     }
@@ -62,10 +61,10 @@ class Base {
       return null;
     }
     if (savedState.highlighting) {
-      b.addCircleHighlightingFromSavedState(savedState.highlighting, clockwiseNormalAngle);
+      b.addCircleHighlightingFromSavedState(savedState.highlighting);
     }
     if (savedState.outline) {
-      b.addCircleOutlineFromSavedState(savedState.outline, clockwiseNormalAngle);
+      b.addCircleOutlineFromSavedState(savedState.outline);
     }
     if (savedState.numbering) {
       b.addNumberingFromSavedState(savedState.numbering);
@@ -218,19 +217,17 @@ class Base {
   /**
    * @param {number} xCenter 
    * @param {number} yCenter 
-   * @param {number} [clockwiseNormalAngle=0] 
-   * @param {number} [outerNormalAngle=0] 
    */
-  move(xCenter, yCenter, clockwiseNormalAngle=0, outerNormalAngle=0) {
+  move(xCenter, yCenter) {
     this._text.attr({
       'x': xCenter,
       'y': yCenter
     });
     if (this.hasHighlighting()) {
-      this._highlighting.reposition(xCenter, yCenter, clockwiseNormalAngle);
+      this._highlighting.reposition(xCenter, yCenter);
     }
     if (this.hasOutline()) {
-      this._outline.reposition(xCenter, yCenter, clockwiseNormalAngle);
+      this._outline.reposition(xCenter, yCenter);
     }
     if (this.hasNumbering()) {
       this._numbering.reposition(xCenter, yCenter);
@@ -396,18 +393,16 @@ class Base {
 
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
-   * @param {number} [clockwiseNormalAngle=0] 
    * 
    * @returns {CircleBaseAnnotation} 
    */
-  addCircleHighlightingFromSavedState(savedState, clockwiseNormalAngle=0) {
+  addCircleHighlightingFromSavedState(savedState) {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.fromSavedState(
       savedState,
       this._text.root(),
       this.xCenter,
       this.yCenter,
-      clockwiseNormalAngle,
     );
     return this._highlighting;
   }
@@ -454,18 +449,16 @@ class Base {
 
   /**
    * @param {CircleBaseAnnotation~SavableState} savedState 
-   * @param {number} [clockwiseNormalAngle=0] 
    * 
    * @returns {CircleBaseAnnotation} 
    */
-  addCircleOutlineFromSavedState(savedState, clockwiseNormalAngle=0) {
+  addCircleOutlineFromSavedState(savedState) {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(
       savedState,
       this._text.root(),
       this.xCenter,
       this.yCenter,
-      clockwiseNormalAngle,
     );
     return this._outline;
   }

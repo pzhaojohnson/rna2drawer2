@@ -84,30 +84,30 @@ describe('Base class', () => {
         expect(b2.hasNumbering()).toBeFalsy();
       });
 
-      it('includes highlighting and passes clockwise normal angle', () => {
+      it('includes highlighting', () => {
         let svg = createNodeSVG();
         let b1 = Base.create(svg, 'Y', 4, 6);
         let h1 = b1.addCircleHighlighting();
-        h1.shift(5, 8, 4, 6, Math.PI / 3);
+        h1.shift(5, 8, 4, 6);
         let dl = h1.displacementLength;
         let da = h1.displacementAngle;
         let savableState1 = b1.savableState();
-        let b2 = Base.fromSavedState(savableState1, svg, Math.PI / 3);
+        let b2 = Base.fromSavedState(savableState1, svg);
         expect(b2.highlighting.displacementLength).toBeCloseTo(dl, 3);
         expect(
           normalizeAngle(b2.highlighting.displacementAngle)
         ).toBeCloseTo(normalizeAngle(da), 3);
       });
 
-      it('includes outline and passes clockwise normal angle', () => {
+      it('includes outline', () => {
         let svg = createNodeSVG();
         let b1 = Base.create(svg, 'N', 3, 2);
         let o1 = b1.addCircleOutline();
-        o1.shift(-2, -9, 3, 2, Math.PI / 6);
+        o1.shift(-2, -9, 3, 2);
         let dl = o1.displacementLength;
         let da = o1.displacementAngle;
         let savableState1 = b1.savableState();
-        let b2 = Base.fromSavedState(savableState1, svg, Math.PI / 6);
+        let b2 = Base.fromSavedState(savableState1, svg);
         expect(b2.outline.displacementLength).toBeCloseTo(dl, 3);
         expect(
           normalizeAngle(b2.outline.displacementAngle)
@@ -299,46 +299,40 @@ describe('Base class', () => {
       expect(b.hasHighlighting()).toBeFalsy();
       expect(b.hasOutline()).toBeFalsy();
       expect(b.hasNumbering()).toBeFalsy();
-      b.move(-10, 200, 0, 0);
+      b.move(-10, 200);
       expect(b.xCenter).toBe(-10);
       expect(b.yCenter).toBe(200);
     });
 
-    it('repositions highlighting and passes clockwise normal angle', () => {
+    it('repositions highlighting', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 't', 1, 2);
       let h = b.addCircleHighlighting();
-      h.shift(5, 4, 1, 2, Math.PI / 3);
+      h.shift(5, 4, 1, 2);
       let da = h.displacementAngle;
-      b.move(8, 9, 2 * Math.PI / 7, 0);
+      b.move(8, 9);
       expect(
         normalizeAngle(angleBetween(8, 9, h.xCenter, h.yCenter))
-      ).toBeCloseTo(
-        normalizeAngle((2 * Math.PI / 7) + da),
-        3,
-      );
+      ).toBeCloseTo(normalizeAngle(da));
     });
 
-    it('repositions outline and passes clockwise normal angle', () => {
+    it('repositions outline', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'e', 3, 8);
       let o = b.addCircleOutline();
-      o.shift(-2, 55, 3, 8, 2 * Math.PI / 5);
+      o.shift(-2, 55, 3, 8);
       let da = o.displacementAngle;
-      b.move(55, 38, 4 * Math.PI / 9, 0);
+      b.move(55, 38);
       expect(
         normalizeAngle(angleBetween(55, 38, o.xCenter, o.yCenter))
-      ).toBeCloseTo(
-        normalizeAngle((4 * Math.PI / 9) + da),
-        3,
-      );
+      ).toBeCloseTo(normalizeAngle(da));
     });
 
     it('repositions numbering', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'e', 1, 5);
       let n = b.addNumbering(112, Math.PI / 5);
-      b.move(20, 40, 0, Math.PI / 5);
+      b.move(20, 40);
       expect(
         normalizeAngle(angleBetween(20, 40, n._line.attr('x1'), n._line.attr('y1')))
       ).toBeCloseTo(Math.PI / 5);
@@ -489,15 +483,15 @@ describe('Base class', () => {
       expect(h).toBe(b._highlighting);
     });
 
-    it('passes base center and clockwise normal angle', () => {
+    it('passes base center', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'q', 2, 9);
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 2, 9);
-      cba.shift(8, 10, 2, 9, Math.PI / 3);
+      cba.shift(8, 10, 2, 9);
       let dl = cba.displacementLength;
       let da = cba.displacementAngle;
       let savableState = cba.savableState();
-      let h = b.addCircleHighlightingFromSavedState(savableState, Math.PI / 3);
+      let h = b.addCircleHighlightingFromSavedState(savableState);
       expect(h.displacementLength).toBeCloseTo(dl, 3);
       expect(normalizeAngle(h.displacementAngle)).toBeCloseTo(normalizeAngle(da), 3);
     });
@@ -588,15 +582,15 @@ describe('Base class', () => {
       expect(o).toBe(b._outline);
     });
 
-    it('passes base center and clockwise normal angle', () => {
+    it('passes base center', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'w', 12, 16);
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 12, 16);
-      cba.shift(4, 8, 12, 16, 2 * Math.PI / 5);
+      cba.shift(4, 8, 12, 16);
       let dl = cba.displacementLength;
       let da = cba.displacementAngle;
       let savableState = cba.savableState();
-      let o = b.addCircleOutlineFromSavedState(savableState, 2 * Math.PI / 5);
+      let o = b.addCircleOutlineFromSavedState(savableState);
       expect(o.displacementLength).toBeCloseTo(dl, 3);
       expect(normalizeAngle(o.displacementAngle)).toBeCloseTo(normalizeAngle(da), 3);
     });
@@ -665,7 +659,7 @@ describe('Base class', () => {
       expect(b.hasNumbering()).toBeFalsy();
     });
 
-    it('passes number, base center and outer normal angle', () => {
+    it('passes number and base center', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'w', 5, 9);
       let n = b.addNumbering(12, Math.PI / 3);

@@ -12,9 +12,9 @@ describe('CircleBaseAnnotation class', () => {
     it('valid saved state', () => {
       let svg = createNodeSVG();
       let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 1, 10);
-      cba1.shift(3, 5, 1, 10, Math.PI / 3);
+      cba1.shift(3, 5, 1, 10);
       let savableState1 = cba1.savableState();
-      let cba2 = CircleBaseAnnotation.fromSavedState(savableState1, svg, 1, 10, Math.PI / 3);
+      let cba2 = CircleBaseAnnotation.fromSavedState(savableState1, svg, 1, 10);
       let savableState2 = cba2.savableState();
       expect(JSON.stringify(savableState2)).toBe(JSON.stringify(savableState1));
     });
@@ -23,11 +23,11 @@ describe('CircleBaseAnnotation class', () => {
       it('wrong className', () => {
         let svg = createNodeSVG();
         let cba = CircleBaseAnnotation.createNondisplaced(svg, 0, 4);
-        cba.shift(2, 3, 0, 4, 2 * Math.PI / 3);
+        cba.shift(2, 3, 0, 4);
         let savableState = cba.savableState();
         savableState.className = 'CircleBseAnnotation';
         expect(
-          CircleBaseAnnotation.fromSavedState(savableState, svg, 0, 4, 2 * Math.PI / 3)
+          CircleBaseAnnotation.fromSavedState(savableState, svg, 0, 4)
         ).toBe(null);
       });
 
@@ -38,7 +38,7 @@ describe('CircleBaseAnnotation class', () => {
         savableState.circle = 'asdf';
         expect(svg.findOne('#' + 'asdf')).toBe(null);
         expect(
-          CircleBaseAnnotation.fromSavedState(savableState, svg, -1, 5, Math.PI / 5)
+          CircleBaseAnnotation.fromSavedState(savableState, svg, -1, 5)
         ).toBe(null);
       });
     });
@@ -56,7 +56,7 @@ describe('CircleBaseAnnotation class', () => {
       let svg = createNodeSVG();
       let c = svg.circle(30);
       c.id();
-      let cba = new CircleBaseAnnotation(c, 2, 8, Math.PI / 3);
+      let cba = new CircleBaseAnnotation(c, 2, 8);
       expect(cba._circle.id()).toBe(c.id());
     });
 
@@ -64,7 +64,7 @@ describe('CircleBaseAnnotation class', () => {
       let svg = createNodeSVG();
       let c = svg.circle(15);
       expect(c.attr('id')).toBe(undefined);
-      let cba = new CircleBaseAnnotation(c, 1, 1, 0);
+      let cba = new CircleBaseAnnotation(c, 1, 1);
       expect(c.attr('id')).not.toBe(undefined);
     });
 
@@ -73,12 +73,11 @@ describe('CircleBaseAnnotation class', () => {
       let c = svg.circle(40);
       c.id();
       c.attr({ 'cx': 5, 'cy': 12 });
-      let cba = new CircleBaseAnnotation(c, 3, 20, 4 * Math.PI / 5);
+      let cba = new CircleBaseAnnotation(c, 3, 20);
       expect(cba.displacementLength).toBeCloseTo(distanceBetween(5, 12, 3, 20), 3);
-      expect(cba.displacementAngle).toBeCloseTo(
-        normalizeAngle(angleBetween(3, 20, 5, 12), 4 * Math.PI / 5) - (4 * Math.PI / 5),
-        3,
-      );
+      expect(
+        normalizeAngle(cba.displacementAngle)
+      ).toBeCloseTo(normalizeAngle(angleBetween(3, 20, 5, 12)));
     });
   });
   
@@ -87,7 +86,7 @@ describe('CircleBaseAnnotation class', () => {
       let svg = createNodeSVG();
       let c = svg.circle(10);
       expect(c.attr('id')).toBe(undefined);
-      let cba = new CircleBaseAnnotation(c, 0, 0, 0);
+      let cba = new CircleBaseAnnotation(c, 0, 0);
       expect(c.attr('id')).not.toBe(undefined);
     });
   });
@@ -102,7 +101,7 @@ describe('CircleBaseAnnotation class', () => {
     let svg = createNodeSVG();
     let c = svg.circle(8);
     c.id();
-    let cba = new CircleBaseAnnotation(c, 0, 0, 0);
+    let cba = new CircleBaseAnnotation(c, 0, 0);
     expect(cba.id).toBe(c.id());
   });
 
@@ -116,7 +115,7 @@ describe('CircleBaseAnnotation class', () => {
   it('displacementLength and displacementAngle getters', () => {
     let svg = createNodeSVG();
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
-    cba.shift(1, 9, 5, 8, 6 * Math.PI / 5);
+    cba.shift(1, 9, 5, 8);
     expect(cba.displacementLength).toBe(cba._displacementLength);
     expect(cba.displacementAngle).toBe(cba._displacementAngle);
   });
@@ -125,7 +124,7 @@ describe('CircleBaseAnnotation class', () => {
     it('shifts the circle', () => {
       let svg = createNodeSVG();
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 9);
-      cba.shift(4, 3, 5, 9, Math.PI / 3);
+      cba.shift(4, 3, 5, 9);
       expect(cba.xCenter).toBeCloseTo(9, 3);
       expect(cba.yCenter).toBeCloseTo(12, 3);
     });
@@ -133,11 +132,10 @@ describe('CircleBaseAnnotation class', () => {
     it('updates displacement', () => {
       let svg = createNodeSVG();
       let cba = CircleBaseAnnotation.createNondisplaced(svg, -2, 19);
-      cba.shift(5, 8, -2, 19, Math.PI / 6);
+      cba.shift(5, 8, -2, 19);
       expect(cba.displacementLength).toBeCloseTo(distanceBetween(3, 27, -2, 19), 3);
       expect(cba.displacementAngle).toBeCloseTo(
-        normalizeAngle(angleBetween(-2, 19, 3, 27), Math.PI / 6) - (Math.PI / 6),
-        3,
+        normalizeAngle(angleBetween(-2, 19, 3, 27))
       );
     });
   });
@@ -146,20 +144,14 @@ describe('CircleBaseAnnotation class', () => {
     it('maintains displacement', () => {
       let svg = createNodeSVG();
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 9);
-      cba.shift(-1, 8, 3, 9, Math.PI / 7);
+      cba.shift(-1, 8, 3, 9);
       let dl = cba.displacementLength;
       let da = cba.displacementAngle;
-      cba.reposition(5, 14, 2 * Math.PI / 7);
+      cba.reposition(5, 14);
       expect(cba.displacementLength).toBeCloseTo(dl, 3);
       expect(cba.displacementAngle).toBeCloseTo(da, 3);
-      expect(cba.xCenter).toBeCloseTo(
-        5 + (dl * Math.cos((2 * Math.PI / 7) + da)),
-        3,
-      );
-      expect(cba.yCenter).toBeCloseTo(
-        14 + (dl * Math.sin((2 * Math.PI / 7) + da)),
-        3,
-      );
+      expect(cba.xCenter).toBeCloseTo(5 + (dl * Math.cos(da)));
+      expect(cba.yCenter).toBeCloseTo(14 + (dl * Math.sin(da)));
     });
   });
 
