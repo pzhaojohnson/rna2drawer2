@@ -300,6 +300,13 @@ describe('Numbering class', () => {
     );
   });
 
+  it('_xBaseCenter and _yBaseCenter getters', () => {
+    let svg = createNodeSVG();
+    let n = Numbering.create(svg, 12, 10, 20, 2 * Math.PI / 3);
+    expect(n._xBaseCenter).toBeCloseTo(10, 3);
+    expect(n._yBaseCenter).toBeCloseTo(20, 3);
+  });
+
   describe('basePadding setter', () => {
     describe('repositions with correct values', () => {
       it('base center and base padding', () => {
@@ -340,6 +347,25 @@ describe('Numbering class', () => {
       n.basePadding = 16;
       expect(Numbering.mostRecentProps().basePadding).toBe(16);
     });
+  });
+
+  it('lineAngle getter', () => {
+    let svg = createNodeSVG();
+    let n = Numbering.create(svg, 65, 99, 103, Math.PI / 5);
+    expect(normalizeAngle(n.lineAngle)).toBeCloseTo(Math.PI / 5, 3);
+  });
+
+  it('lineAngle setter', () => {
+    let svg = createNodeSVG();
+    let n = Numbering.create(svg, 5, 8, 9, Math.PI / 3);
+    let bp = n.basePadding;
+    let ll = n.lineLength;
+    let lcs = Numbering._lineCoordinates(8, 9, 2 * Math.PI / 3, bp, ll);
+    n.lineAngle = 2 * Math.PI / 3;
+    expect(n._line.attr('x1')).toBeCloseTo(lcs.x1, 3);
+    expect(n._line.attr('y1')).toBeCloseTo(lcs.y1, 3);
+    expect(n._line.attr('x2')).toBeCloseTo(lcs.x2, 3);
+    expect(n._line.attr('y2')).toBeCloseTo(lcs.y2, 3);
   });
 
   it('lineLength getter', () => {

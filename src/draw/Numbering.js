@@ -155,12 +155,12 @@ class Numbering {
    * @param {number} number 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} angle 
+   * @param {number} lineAngle 
    * 
    * @returns {Numbering|null} 
    */
-  static create(svg, number, xBaseCenter, yBaseCenter, angle) {
-    let lc = Numbering._lineCoordinates(xBaseCenter, yBaseCenter, angle, 10, 8);
+  static create(svg, number, xBaseCenter, yBaseCenter, lineAngle) {
+    let lc = Numbering._lineCoordinates(xBaseCenter, yBaseCenter, lineAngle, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     line.id();
     let text = svg.text((add) => add.tspan(number.toString()));
@@ -228,6 +228,24 @@ class Numbering {
   }
 
   /**
+   * Derived from the current base padding and positions of the line.
+   * 
+   * @returns {number} 
+   */
+  get _xBaseCenter() {
+    return this._line.attr('x1') + (this.basePadding * Math.cos(this.lineAngle + Math.PI));
+  }
+
+  /**
+   * Derived from the current base padding and positions of the line.
+   * 
+   * @returns {number} 
+   */
+  get _yBaseCenter() {
+    return this._line.attr('y1') + (this.basePadding * Math.sin(this.lineAngle + Math.PI));
+  }
+
+  /**
    * Sets the _basePadding property.
    * 
    * @param {number} xBaseCenter 
@@ -253,22 +271,39 @@ class Numbering {
    * @param {number} bp 
    */
   set basePadding(bp) {
-    let angle = angleBetween(
+    this._reposition(
+      this._xBaseCenter,
+      this._yBaseCenter,
+      this.lineAngle,
+      bp,
+      this.lineLength,
+    );
+    Numbering._mostRecentProps.basePadding = bp;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get lineAngle() {
+    return angleBetween(
       this._line.attr('x1'),
       this._line.attr('y1'),
       this._line.attr('x2'),
       this._line.attr('y2'),
     );
-    let xBaseCenter = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
-    let yBaseCenter = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
+  }
+
+  /**
+   * @param {number} la 
+   */
+  set lineAngle(la) {
     this._reposition(
-      xBaseCenter,
-      yBaseCenter,
-      angle,
-      bp,
+      this._xBaseCenter,
+      this._yBaseCenter,
+      la,
+      this.basePadding,
       this.lineLength,
     );
-    Numbering._mostRecentProps.basePadding = bp;
   }
 
   /**
@@ -287,18 +322,10 @@ class Numbering {
    * @param {number} ll 
    */
   set lineLength(ll) {
-    let angle = angleBetween(
-      this._line.attr('x1'),
-      this._line.attr('y1'),
-      this._line.attr('x2'),
-      this._line.attr('y2'),
-    );
-    let xBaseCenter = this._line.attr('x1') - (this.basePadding * Math.cos(angle));
-    let yBaseCenter = this._line.attr('y1') - (this.basePadding * Math.sin(angle));
     this._reposition(
-      xBaseCenter,
-      yBaseCenter,
-      angle,
+      this._xBaseCenter,
+      this._yBaseCenter,
+      this.lineAngle,
       this.basePadding,
       ll,
     );
@@ -323,15 +350,15 @@ class Numbering {
   /**
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} angle 
+   * @param {number} lineAngle 
    * @param {number} basePadding 
    * @param {number} lineLength 
    */
-  _reposition(xBaseCenter, yBaseCenter, angle, basePadding, lineLength) {
+  _reposition(xBaseCenter, yBaseCenter, lineAngle, basePadding, lineLength) {
     let lc = Numbering._lineCoordinates(
       xBaseCenter,
       yBaseCenter,
-      angle,
+      lineAngle,
       basePadding,
       lineLength,
     );
