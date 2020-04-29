@@ -437,10 +437,11 @@ it('_validateLine method', () => {
     line1.id();
     expect(() => new StraightBondClass(line1, b1, b2)).not.toThrow();
     
-    // ID is not a string
-    let line2 = svg.line(-1, -2, 0, 0);
-    line2.id(22);
-    expect(() => new StraightBondClass(line2, b0, b1)).toThrow();
+    // initializes ID
+    let line2 = svg.line(1, 4, 3, 5);
+    expect(line2.attr('id')).toBe(undefined);
+    new StraightBondClass(line2, b1, b2);
+    expect(line2.attr('id')).toBeTruthy();
   }
 
   runFor(PrimaryBond);

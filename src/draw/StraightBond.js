@@ -84,12 +84,10 @@ class StraightBond {
   }
 
   /**
-   * @throws {Error} If the ID of the line is not a string or is an empty string.
+   * Initializes the ID of the line if it is not already initialized.
    */
   _validateLine() {
-    if (typeof(this._line.id()) !== 'string' || this._line.id().length === 0) {
-      throw new Error('Invalid line ID.');
-    }
+    this._line.id();
   }
 
   /**
