@@ -20,7 +20,6 @@ class StraightBond {
    */
   static _lineCoordinates(b1, b2, padding1, padding2) {
     let angle = b1.angleBetweenCenters(b2);
-
     return {
       x1: b1.xCenter + (padding1 * Math.cos(angle)),
       y1: b1.yCenter + (padding1 * Math.sin(angle)),
@@ -40,9 +39,8 @@ class StraightBond {
   static _opacity(b1, b2, padding1, padding2) {
     if (padding1 + padding2 > b1.distanceBetweenCenters(b2)) {
       return 0;
-    } else {
-      return 1;
     }
+    return 1;
   }
 
   /**
@@ -130,7 +128,6 @@ class StraightBond {
       this._line.attr('x1'),
       this._line.attr('y1'),
     );
-
     this._padding2 = distanceBetween(
       this.base2.xCenter,
       this.base2.yCenter,
@@ -184,18 +181,15 @@ class StraightBond {
    */
   _reposition(padding1, padding2) {
     let cs = StraightBond._lineCoordinates(this.base1, this.base2, padding1, padding2);
-    
     this._line.attr({
       'x1': cs.x1,
       'y1': cs.y1,
       'x2': cs.x2,
       'y2': cs.y2,
     });
-
     this._setOpacity(
       StraightBond._opacity(this.base1, this.base2, padding1, padding2)
     );
-    
     this._storePaddings();
   }
 
@@ -328,12 +322,10 @@ class PrimaryBond extends StraightBond {
     if (savedState.className !== 'PrimaryBond') {
       throw new Error('Saved state is not for a primary bond.');
     }
-
     let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
     let sb = new PrimaryBond(line, b1, b2);
-
     PrimaryBond._copyPropsToMostRecent(sb);
     return sb;
   }
@@ -458,11 +450,9 @@ class SecondaryBond extends StraightBond {
    */
   static _applyMostRecentProps(sb) {
     let mrps = SecondaryBond.mostRecentProps();
-
     sb.padding1 = mrps.padding1;
     sb.padding2 = mrps.padding2;
     sb.strokeWidth = mrps.strokeWidth;
-
     if (sb.isAUT()) {
       sb.stroke = mrps.autStroke;
     } else if (sb.isGC()) {
@@ -481,7 +471,6 @@ class SecondaryBond extends StraightBond {
     SecondaryBond._mostRecentProps.padding1 = sb.padding1;
     SecondaryBond._mostRecentProps.padding2 = sb.padding2;
     SecondaryBond._mostRecentProps.strokeWidth = sb.strokeWidth;
-    
     if (sb.isAUT()) {
       SecondaryBond._mostRecentProps.autStroke = sb.stroke;
     } else if (sb.isGC()) {
@@ -504,12 +493,10 @@ class SecondaryBond extends StraightBond {
     if (savedState.className !== 'SecondaryBond') {
       throw new Error('Saved state is not for a secondary bond.');
     }
-
     let line = svg.findOne('#' + savedState.line);
     let b1 = getBaseById(savedState.base1);
     let b2 = getBaseById(savedState.base2);
     let sb = new SecondaryBond(line, b1, b2);
-
     SecondaryBond._copyPropsToMostRecent(sb);
     return sb;
   }
@@ -536,14 +523,12 @@ class SecondaryBond extends StraightBond {
   isAUT() {
     let l1 = this.base1.character.toUpperCase();
     let l2 = this.base2.character.toUpperCase();
-
     if (l1 === 'A') {
       return l2 === 'U' || l2 === 'T';
     } else if (l1 === 'U' || l1 === 'T') {
       return l2 === 'A';
-    } else {
-      return false;
     }
+    return false;
   }
 
   /**
@@ -552,14 +537,12 @@ class SecondaryBond extends StraightBond {
   isGC() {
     let l1 = this.base1.character.toUpperCase();
     let l2 = this.base2.character.toUpperCase();
-
     if (l1 === 'G') {
       return l2 === 'C';
     } else if (l1 === 'C') {
       return l2 === 'G';
-    } else {
-      return false;
     }
+    return false;
   }
 
   /**
@@ -568,14 +551,12 @@ class SecondaryBond extends StraightBond {
   isGUT() {
     let l1 = this.base1.character.toUpperCase();
     let l2 = this.base2.character.toUpperCase();
-
     if (l1 === 'G') {
       return l2 === 'U' || l2 === 'T';
     } else if (l1 === 'U' || l1 === 'T') {
       return l2 === 'G';
-    } else {
-      return false;
     }
+    return false;
   }
 
   /**
@@ -620,7 +601,6 @@ class SecondaryBond extends StraightBond {
    */
   set stroke(s) {
     this._line.attr({ 'stroke': s });
-
     if (this.isAUT()) {
       SecondaryBond._mostRecentProps.autStroke = s;
     } else if (this.isGC()) {
