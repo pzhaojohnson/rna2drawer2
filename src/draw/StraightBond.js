@@ -44,33 +44,6 @@ class StraightBond {
   }
 
   /**
-   * @callback StraightBond~getBaseById 
-   * @param {string} id 
-   * 
-   * @returns {Base} 
-   */
-
-  /**
-   * Returns null if the saved state is invalid.
-   * 
-   * @param {StraightBond~SavableState} savedState 
-   * @param {SVG.Doc} svg 
-   * @param {StraightBond~getBaseById} getBaseById 
-   * 
-   * @returns {StraightBond|null} 
-   */
-  static fromSavedState(savedState, svg, getBaseById) {}
-
-  /**
-   * @param {SVG.Doc} svg 
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * 
-   * @returns {StraightBond} 
-   */
-  static create(svg, b1, b2) {}
-
-  /**
    * @param {SVG.Line} line 
    * @param {Base} b1 One base of the straight bond.
    * @param {Base} b2 The other base of the straight bond.
@@ -93,6 +66,13 @@ class StraightBond {
   }
 
   /**
+   * @returns {string} 
+   */
+  get id() {
+    return this._line.attr('id');
+  }
+
+  /**
    * @returns {Base} 
    */
   get base1() {
@@ -107,15 +87,7 @@ class StraightBond {
   }
 
   /**
-   * @returns {string} 
-   */
-  get id() {
-    return this._line.attr('id');
-  }
-
-  /**
-   * Sets the _padding1 and _padding2 properties based on the current positions
-   * of the bases and line of this straight bond.
+   * Sets the _padding1 and _padding2 properties.
    */
   _storePaddings() {
     this._padding1 = distanceBetween(
@@ -135,35 +107,39 @@ class StraightBond {
   /**
    * @returns {number} 
    */
-  get padding1() {}
+  get padding1() {
+    return this._padding1;
+  }
 
   /**
    * @param {number} p 
    */
-  set padding1(p) {}
+  set padding1(p) {
+    this._reposition(p, this.padding2);
+  }
 
   /**
    * @returns {number} 
    */
-  get padding2() {}
+  get padding2() {
+    return this._padding2;
+  }
 
   /**
    * @param {number} p 
    */
-  set padding2(p) {}
+  set padding2(p) {
+    this._reposition(this.padding1, p);
+  }
 
   /**
-   * Repositions the line of this straight bond based on the current positions
-   * of the bases of this straight bond.
+   * Repositions this straight bond based on the current positions of its bases.
    */
   reposition() {
     this._reposition(this.padding1, this.padding2);
   }
 
   /**
-   * Repositions the line of this straight bond based on the current positions
-   * of the bases of this straight bond and the given paddings.
-   * 
    * @param {number} padding1 
    * @param {number} padding2 
    */
@@ -182,8 +158,6 @@ class StraightBond {
   }
 
   /**
-   * Inserts the line of this straight bond before the given element.
-   * 
    * @param {SVG.Element} ele 
    */
   insertBefore(ele) {
@@ -191,8 +165,6 @@ class StraightBond {
   }
 
   /**
-   * Inserts the line of this straight bond after the given element.
-   * 
    * @param {SVG.Element} ele 
    */
   insertAfter(ele) {
@@ -202,22 +174,30 @@ class StraightBond {
   /**
    * @returns {string} 
    */
-  get stroke() {}
+  get stroke() {
+    return this._line.attr('stroke');
+  }
 
   /**
    * @param {string} s 
    */
-  set stroke(s) {}
+  set stroke(s) {
+    this._line.attr({ 'stroke': s });
+  }
 
   /**
    * @returns {number} 
    */
-  get strokeWidth() {}
+  get strokeWidth() {
+    return this._line.attr('stroke-width');
+  }
 
   /**
    * @param {number} sw 
    */
-  set strokeWidth(sw) {}
+  set strokeWidth(sw) {
+    this._line.attr({ 'stroke-width': sw });
+  }
 
   /**
    * @returns {number} 
@@ -297,11 +277,18 @@ class PrimaryBond extends StraightBond {
   }
 
   /**
+   * @callback PrimaryBond~getBaseById 
+   * @param {string} id 
+   * 
+   * @returns {Base} 
+   */
+
+  /**
    * Returns null if the saved state is invalid.
    * 
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {StraightBond~getBaseById} getBaseById 
+   * @param {PrimaryBond~getBaseById} getBaseById 
    * 
    * @returns {PrimaryBond|null} 
    */
@@ -333,23 +320,23 @@ class PrimaryBond extends StraightBond {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id();
-    let sb = new PrimaryBond(line, b1, b2);
-    PrimaryBond._applyMostRecentProps(sb);
-    return sb;
+    let pb = new PrimaryBond(line, b1, b2);
+    PrimaryBond._applyMostRecentProps(pb);
+    return pb;
   }
 
   /**
    * @returns {number} 
    */
   get padding1() {
-    return this._padding1;
+    return super.padding1;
   }
 
   /**
    * @param {number} p 
    */
   set padding1(p) {
-    this._reposition(p, this.padding2);
+    super.padding1 = p;
     PrimaryBond._mostRecentProps.padding1 = p;
   }
 
@@ -357,29 +344,31 @@ class PrimaryBond extends StraightBond {
    * @returns {number} 
    */
   get padding2() {
-    return this._padding2;
+    return super.padding2;
   }
 
   /**
    * @param {number} p 
    */
   set padding2(p) {
-    this._reposition(this.padding1, p);
+    super.padding2 = p;
     PrimaryBond._mostRecentProps.padding2 = p;
   }
 
   /**
    * @returns {string} 
    */
+  
   get stroke() {
-    return this._line.attr('stroke');
+    return super.stroke;
   }
+  
 
   /**
    * @param {string} s 
    */
   set stroke(s) {
-    this._line.attr({ 'stroke': s });
+    super.stroke = s;
     PrimaryBond._mostRecentProps.stroke = s;
   }
 
@@ -387,14 +376,14 @@ class PrimaryBond extends StraightBond {
    * @returns {number} 
    */
   get strokeWidth() {
-    return this._line.attr('stroke-width');
+    return super.strokeWidth;
   }
 
   /**
    * @param {number} sw 
    */
   set strokeWidth(sw) {
-    this._line.attr({ 'stroke-width': sw });
+    super.strokeWidth = sw;
     PrimaryBond._mostRecentProps.strokeWidth = sw;
   }
 }
@@ -463,11 +452,18 @@ class SecondaryBond extends StraightBond {
   }
 
   /**
+   * @callback SecondaryBond~getBaseById 
+   * @param {string} id 
+   * 
+   * @returns {Base} 
+   */
+
+  /**
    * Returns null if the saved state is invalid.
    * 
    * @param {StraightBond~SavableState} savedState 
    * @param {SVG.Doc} svg 
-   * @param {StraightBond~getBaseById} getBaseById 
+   * @param {SecondaryBond~getBaseById} getBaseById 
    * 
    * @returns {SecondaryBond|null} 
    */
@@ -550,14 +546,14 @@ class SecondaryBond extends StraightBond {
    * @returns {number} 
    */
   get padding1() {
-    return this._padding1;
+    return super.padding1;
   }
 
   /**
    * @param {number} p 
    */
   set padding1(p) {
-    this._reposition(p, this.padding2);
+    super.padding1 = p;
     SecondaryBond._mostRecentProps.padding1 = p;
   }
 
@@ -565,14 +561,14 @@ class SecondaryBond extends StraightBond {
    * @returns {number} 
    */
   get padding2() {
-    return this._padding2;
+    return super.padding2;
   }
 
   /**
    * @param {number} p 
    */
   set padding2(p) {
-    this._reposition(this.padding1, p);
+    super.padding2 = p;
     SecondaryBond._mostRecentProps.padding2 = p;
   }
 
@@ -580,14 +576,14 @@ class SecondaryBond extends StraightBond {
    * @returns {string} 
    */
   get stroke() {
-    return this._line.attr('stroke');
+    return super.stroke;
   }
 
   /**
    * @param {string} s 
    */
   set stroke(s) {
-    this._line.attr({ 'stroke': s });
+    super.stroke = s;
     if (this.isAUT()) {
       SecondaryBond._mostRecentProps.autStroke = s;
     } else if (this.isGC()) {
@@ -603,14 +599,14 @@ class SecondaryBond extends StraightBond {
    * @returns {number} 
    */
   get strokeWidth() {
-    return this._line.attr('stroke-width');
+    return super.strokeWidth;
   }
 
   /**
    * @param {number} sw 
    */
   set strokeWidth(sw) {
-    this._line.attr({ 'stroke-width': sw });
+    super.strokeWidth = sw;
     SecondaryBond._mostRecentProps.strokeWidth = sw;
   }
 }
