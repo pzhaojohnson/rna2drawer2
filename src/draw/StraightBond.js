@@ -246,9 +246,16 @@ class StraightBond {
    */
 
   /**
-   * @returns {Object} 
+   * @returns {StraightBond~SavableState} 
    */
-  savableState() {}
+  savableState() {
+    return {
+      className: 'StraightBond',
+      line: this._line.id(),
+      base1: this.base1.id,
+      base2: this.base2.id,
+    };
+  }
 }
 
 class PrimaryBond extends StraightBond {
@@ -299,7 +306,7 @@ class PrimaryBond extends StraightBond {
    * @returns {PrimaryBond|null} 
    */
   static fromSavedState(savedState, svg, getBaseById) {
-    if (savedState.className !== 'PrimaryBond') {
+    if (savedState.className !== 'StraightBond') {
       return null;
     }
     let line = svg.findOne('#' + savedState.line);
@@ -390,18 +397,6 @@ class PrimaryBond extends StraightBond {
     this._line.attr({ 'stroke-width': sw });
     PrimaryBond._mostRecentProps.strokeWidth = sw;
   }
-
-  /**
-   * @returns {StraightBond~SavableState} 
-   */
-  savableState() {
-    return {
-      className: 'PrimaryBond',
-      line: this._line.id(),
-      base1: this.base1.id,
-      base2: this.base2.id,
-    };
-  }
 }
 
 PrimaryBond._mostRecentProps = {
@@ -477,7 +472,7 @@ class SecondaryBond extends StraightBond {
    * @returns {SecondaryBond|null} 
    */
   static fromSavedState(savedState, svg, getBaseById) {
-    if (savedState.className !== 'SecondaryBond') {
+    if (savedState.className !== 'StraightBond') {
       return null;
     }
     let line = svg.findOne('#' + savedState.line);
@@ -617,18 +612,6 @@ class SecondaryBond extends StraightBond {
   set strokeWidth(sw) {
     this._line.attr({ 'stroke-width': sw });
     SecondaryBond._mostRecentProps.strokeWidth = sw;
-  }
-
-  /**
-   * @returns {StraightBond~SavableState} 
-   */
-  savableState() {
-    return {
-      className: 'SecondaryBond',
-      line: this._line.id(),
-      base1: this.base1.id,
-      base2: this.base2.id,
-    };
   }
 }
 

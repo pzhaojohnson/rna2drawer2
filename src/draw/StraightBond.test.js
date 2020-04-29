@@ -934,7 +934,7 @@ it('PrimaryBond savableState method className property', () => {
   let b1 = Base.create(svg, 'A', 1.1, 1.2);
   let b2 = Base.create(svg, 'U', 2.1, 2.2);
   let pb = PrimaryBond.create(svg, b1, b2);
-  expect(pb.savableState().className).toBe('PrimaryBond');
+  expect(pb.savableState().className).toBe('StraightBond');
 });
 
 it('SecondaryBond savableState method className property', () => {
@@ -942,5 +942,5 @@ it('SecondaryBond savableState method className property', () => {
   let b1 = Base.create(svg, 'A', 1.1, 1.2);
   let b2 = Base.create(svg, 'U', 2.1, 2.2);
   let sb = SecondaryBond.create(svg, b1, b2);
-  expect(sb.savableState().className).toBe('SecondaryBond');
+  expect(sb.savableState().className).toBe('StraightBond');
 });
