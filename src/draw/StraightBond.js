@@ -287,7 +287,7 @@ class PrimaryBond extends StraightBond {
    * Returns null if the saved state is invalid.
    * 
    * @param {StraightBond~SavableState} savedState 
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {PrimaryBond~getBaseById} getBaseById 
    * 
    * @returns {PrimaryBond|null} 
@@ -310,7 +310,7 @@ class PrimaryBond extends StraightBond {
   }
 
   /**
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {Base} b1 
    * @param {Base} b2 
    * 
@@ -462,7 +462,7 @@ class SecondaryBond extends StraightBond {
    * Returns null if the saved state is invalid.
    * 
    * @param {StraightBond~SavableState} savedState 
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {SecondaryBond~getBaseById} getBaseById 
    * 
    * @returns {SecondaryBond|null} 
@@ -485,7 +485,7 @@ class SecondaryBond extends StraightBond {
   }
 
   /**
-   * @param {SVG.Doc} svg 
+   * @param {SVG.Svg} svg 
    * @param {Base} b1 
    * @param {Base} b2 
    * 
