@@ -450,472 +450,378 @@ describe('PrimaryBond class', () => {
   });
 });
 
-it('mostRecentProps static method returns a new object', () => {
-  function runFor(StraightBondClass) {
-    let mrps = StraightBondClass.mostRecentProps();
-    expect(mrps).not.toBe(StraightBondClass._mostRecentProps);
-  }
+describe('SecondaryBond class', () => {
+  describe('mostRecentProps static method', () => {
+    it('returns a new object', () => {
+      expect(SecondaryBond.mostRecentProps()).not.toBe(SecondaryBond._mostRecentProps);
+    });
 
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
+    it('returns correct values', () => {
+      SecondaryBond._mostRecentProps.padding1 = 3.4588;
+      SecondaryBond._mostRecentProps.padding2 = 6.77;
+      SecondaryBond._mostRecentProps.autStroke = '#aaccee';
+      SecondaryBond._mostRecentProps.gcStroke = '#bbddff';
+      SecondaryBond._mostRecentProps.gutStroke = '#115533';
+      SecondaryBond._mostRecentProps.otherStroke = '#226644';
+      SecondaryBond._mostRecentProps.strokeWidth = 1.28;
+      let mrps = SecondaryBond.mostRecentProps();
+      expect(mrps.padding1).toBe(3.4588);
+      expect(mrps.padding2).toBe(6.77);
+      expect(mrps.autStroke).toBe('#aaccee');
+      expect(mrps.gcStroke).toBe('#bbddff');
+      expect(mrps.gutStroke).toBe('#115533');
+      expect(mrps.otherStroke).toBe('#226644');
+      expect(mrps.strokeWidth).toBe(1.28);
+    });
+  });
 
-it('SecondaryBond _applyMostRecentProps padding1, padding2, and strokeWidth', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'g', 1, 3);
-  let b2 = Base.create(svg, 't', 6, 6);
-  let sb = new SecondaryBond(svg, b1, b2);
+  describe('_applyMostRecentProps static method', () => {
+    it('applies padding1, padding2 and strokeWidth properties', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'a', 1, 5);
+      let b2 = Base.create(svg, 'g', 555, 55);
+      let sb = SecondaryBond.create(svg, b1, b2);
+      SecondaryBond._mostRecentProps.padding1 = 5.83;
+      SecondaryBond._mostRecentProps.padding2 = 10.28;
+      SecondaryBond._mostRecentProps.strokeWidth = 1.27;
+      SecondaryBond._applyMostRecentProps(sb);
+      expect(sb.padding1).toBeCloseTo(5.83);
+      expect(sb.padding2).toBeCloseTo(10.28);
+      expect(sb.strokeWidth).toBe(1.27);
+    });
 
-  /* Set after creating the primary bond since the create static method itself
-  applies the most recent properties. */
-  SecondaryBond._mostRecentProps.padding1 = 66.5;
-  SecondaryBond._mostRecentProps.padding2 = 12.33;
-  SecondaryBond._mostRecentProps.strokeWidth = 1.222;
+    it('applies stroke properties', () => {
+      let svg = createNodeSVG();
+      let ba = Base.create(svg, 'a', 1, 2);
+      let bu = Base.create(svg, 'u', 3, 5);
+      let bg = Base.create(svg, 'G', 1, 5);
+      let bc = Base.create(svg, 'c', 3, 3);
+      let sbau = SecondaryBond.create(svg, ba, bu);
+      let sbcg = SecondaryBond.create(svg, bc, bg);
+      let sbgu = SecondaryBond.create(svg, bg, bu);
+      let sbac = SecondaryBond.create(svg, ba, bc);
+      SecondaryBond._mostRecentProps.autStroke = '#114488';
+      SecondaryBond._mostRecentProps.gcStroke = '#111223';
+      SecondaryBond._mostRecentProps.gutStroke = '#aaabbc';
+      SecondaryBond._mostRecentProps.otherStroke = '#463524';
+      SecondaryBond._applyMostRecentProps(sbau);
+      expect(sbau.stroke).toBe('#114488');
+      SecondaryBond._applyMostRecentProps(sbcg);
+      expect(sbcg.stroke).toBe('#111223');
+      SecondaryBond._applyMostRecentProps(sbgu);
+      expect(sbgu.stroke).toBe('#aaabbc');
+      SecondaryBond._applyMostRecentProps(sbac);
+      expect(sbac.stroke).toBe('#463524');
+    });
+  });
+
+  describe('_copyPropsToMostRecent static method', () => {
+    it('copies padding1, padding2 and strokeWidth properties', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'g', 1, 2);
+      let b2 = Base.create(svg, 't', 300, 3);
+      let sb = SecondaryBond.create(svg, b1, b2);
+      sb.padding1 = 12.33;
+      sb.padding2 = 15.42;
+      sb.strokeWidth = 5.44;
+      SecondaryBond._copyPropsToMostRecent(sb);
+      let mrps = SecondaryBond.mostRecentProps();
+      expect(mrps.padding1).toBeCloseTo(12.33);
+      expect(mrps.padding2).toBeCloseTo(15.42);
+      expect(mrps.strokeWidth).toBe(5.44);
+    });
+
+    it('copies stroke properties', () => {
+      let svg = createNodeSVG();
+      let ba = Base.create(svg, 'A', 1, 2);
+      let bt = Base.create(svg, 't', 5, 5);
+      let bg = Base.create(svg, 'g', 2, 2);
+      let bc = Base.create(svg, 'C', 2, 2);
+      let sbta = SecondaryBond.create(svg, bt, ba);
+      let sbgc = SecondaryBond.create(svg, bg, bc);
+      let sbtg = SecondaryBond.create(svg, bt, bg);
+      let sbct = SecondaryBond.create(svg, bc, bt);
+      sbta.stroke = '#113322';
+      SecondaryBond._mostRecentProps.autStroke = '#123456';
+      SecondaryBond._copyPropsToMostRecent(sbta);
+      expect(SecondaryBond.mostRecentProps().autStroke).toBe('#113322');
+      sbgc.stroke = '#11aabb';
+      SecondaryBond._mostRecentProps.gcStroke = '#123456';
+      SecondaryBond._copyPropsToMostRecent(sbgc);
+      expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#11aabb');
+      sbtg.stroke = '#aa1234';
+      SecondaryBond._mostRecentProps.gutStroke = '#123456';
+      SecondaryBond._copyPropsToMostRecent(sbtg);
+      expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#aa1234');
+      sbct.stroke = '#876543';
+      SecondaryBond._mostRecentProps.otherStroke = '#123456';
+      SecondaryBond._copyPropsToMostRecent(sbct);
+      expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#876543');
+    });
+  });
+
+  describe('fromSavedState static method', () => {
+    describe('invalid saved state', () => {
+      it('invalid className', () => {
+        let svg = createNodeSVG();
+        let b1 = Base.create(svg, 'w', 2, 3);
+        let b2 = Base.create(svg, 'q', 1, 5);
+        let sb = SecondaryBond.create(svg, b1, b2);
+        let savableState = sb.savableState();
+        savableState.className = 'StraghtBond';
+        expect(SecondaryBond.fromSavedState(
+          savableState,
+          svg,
+          id => {
+            if (id === b1.id) {
+              return b1;
+            } else if (id === b2.id) {
+              return b2;
+            }
+          }
+        )).toBe(null);
+      });
+
+      it('constructor throws', () => {
+        let svg = createNodeSVG();
+        let b1 = Base.create(svg, 'a', 1, 2);
+        let b2 = Base.create(svg, 'w', 30, 40);
+        let sb = SecondaryBond.create(svg, b1, b2);
+        let l = sb._line;
+        let savableState = sb.savableState();
+        l.remove();
+        expect(SecondaryBond.fromSavedState(
+          savableState,
+          svg,
+          id => {
+            if (id === b1.id) {
+              return b1;
+            } else if (id === b2.id) {
+              return b2;
+            }
+          }
+        )).toBe(null);
+      });
+    });
+
+    it('creates with line and bases', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'a', 1, 2);
+      let b2 = Base.create(svg, 'b', 5, 5);
+      let sb1 = SecondaryBond.create(svg, b1, b2);
+      let l = sb1._line;
+      let savableState1 = sb1.savableState();
+      let sb2 = SecondaryBond.fromSavedState(
+        savableState1,
+        svg,
+        id => {
+          if (id === b1.id) {
+            return b1;
+          } else if (id === b2.id) {
+            return b2;
+          }
+        }
+      );
+      expect(sb2.base1).toBe(b1);
+      expect(sb2.base2).toBe(b2);
+      expect(sb2._line.id()).toBe(l.id());
+    });
+
+    it('copies properties to most recent', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'g', 1, 2);
+      let b2 = Base.create(svg, 'y', 4, 9);
+      let sb1 = SecondaryBond.create(svg, b1, b2);
+      sb1.strokeWidth = 4.23;
+      let savableState1 = sb1.savableState();
+      SecondaryBond._mostRecentProps.strokeWidth = 1;
+      let sb2 = SecondaryBond.fromSavedState(
+        savableState1,
+        svg,
+        id => {
+          if (id === b1.id) {
+            return b1;
+          } else if (id === b2.id) {
+            return b2;
+          }
+        }
+      );
+      expect(SecondaryBond.mostRecentProps().strokeWidth).toBe(4.23);
+    });
+  });
+
+  describe('create static method', () => {
+    it('creates with bases', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'a', 1, 5);
+      let b2 = Base.create(svg, 'T', 40, 30);
+      let sb = SecondaryBond.create(svg, b1, b2);
+      expect(sb.base1).toBe(b1);
+      expect(sb.base2).toBe(b2);
+    });
+
+    it('applies most recent properties', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'g', 1, 5);
+      let b2 = Base.create(svg, 'n', 55, 66);
+      SecondaryBond._mostRecentProps.strokeWidth = 10.24;
+      let sb = SecondaryBond.create(svg, b1, b2);
+      expect(sb.strokeWidth).toBe(10.24);
+    });
+  });
+
+  describe('isAUT method', () => {
+    it('works with lowercase characters', () => {
+      let svg = createNodeSVG();
+      let bu = Base.create(svg, 'u', 4, 5);
+      let ba = Base.create(svg, 'a', 3, 5);
+      let sbua = SecondaryBond.create(svg, bu, ba);
+      expect(sbua.isAUT()).toBeTruthy();
+    });
   
-  SecondaryBond._applyMostRecentProps(sb);
-  expect(sb.padding1).toBeCloseTo(66.5, 6);
-  expect(sb.padding2).toBeCloseTo(12.33, 6);
-  expect(sb.strokeWidth).toBeCloseTo(1.222, 6);
-});
-
-it('SecondaryBond _applyMostRecentProps stroke', () => {
-  let svg = createNodeSVG();
-  let ba = Base.create(svg, 'A', 3, 5);
-  let bu = Base.create(svg, 'U', 4, 3);
-  let bg = Base.create(svg, 'g', 3, 2);
-  let bc = Base.create(svg, 'c', 2, 2);
-  let bt = Base.create(svg, 't', 5.5, -5.5);
-
-  let sbau = SecondaryBond.create(svg, bu, ba);
-  let sbgc = SecondaryBond.create(svg, bc, bg);
-  let sbgu = SecondaryBond.create(svg, bg, bu);
-  let sbat = SecondaryBond.create(svg, bt, ba);
-  let sbgt = SecondaryBond.create(svg, bt, bg);
-  let sbOther = SecondaryBond.create(svg, ba, bc);
+    it('all possible true cases', () => {
+      let svg = createNodeSVG();
+      let ba = Base.create(svg, 'A', 1, 2);
+      let bu = Base.create(svg, 'U', 5, 7);
+      let bt = Base.create(svg, 't', 0, 0);
+      let sbau = SecondaryBond.create(svg, ba, bu);
+      expect(sbau.isAUT()).toBeTruthy();
+      let sbat = SecondaryBond.create(svg, ba, bt);
+      expect(sbat.isAUT()).toBeTruthy();
+      let sbua = SecondaryBond.create(svg, bu, ba);
+      expect(sbua.isAUT()).toBeTruthy();
+      let sbta = SecondaryBond.create(svg, bt, ba);
+      expect(sbta.isAUT()).toBeTruthy();
+    });
   
-  /* Set after creating the secondary bond since the create static method itself
-  applies the most recent properties. */
-  SecondaryBond._mostRecentProps.autStroke = '#aabbcc';
-  SecondaryBond._mostRecentProps.gcStroke = '#ccbbaa';
-  SecondaryBond._mostRecentProps.gutStroke = '#112233';
-  SecondaryBond._mostRecentProps.otherStroke = '#998877';
+    it('a false case', () => {
+      let svg = createNodeSVG();
+      let ba = Base.create(svg, 'A', 1, 5);
+      let bc = Base.create(svg, 'C', 1, 5);
+      let sbac = SecondaryBond.create(svg, ba, bc);
+      expect(sbac.isAUT()).toBeFalsy();
+    });
+  });
 
-  SecondaryBond._applyMostRecentProps(sbau);
-  expect(sbau.stroke).toBe('#aabbcc');
-  SecondaryBond._applyMostRecentProps(sbgc);
-  expect(sbgc.stroke).toBe('#ccbbaa');
-  SecondaryBond._applyMostRecentProps(sbgu);
-  expect(sbgu.stroke).toBe('#112233');
-  SecondaryBond._applyMostRecentProps(sbat);
-  expect(sbat.stroke).toBe('#aabbcc');
-  SecondaryBond._applyMostRecentProps(sbgt);
-  expect(sbgt.stroke).toBe('#112233');
-  SecondaryBond._applyMostRecentProps(sbOther);
-  expect(sbOther.stroke).toBe('#998877');
-});
-
-it('SecondaryBond _copyPropsToMostRecent padding1, padding2, and strokeWidth', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'e', 5.5, 4);
-  let b2 = Base.create(svg, 'w', 4, 3);
-  let sb = SecondaryBond.create(svg, b1, b2);
-
-  sb.padding1 = 8.777;
-  sb.padding2 = 6.578;
-  sb.strokeWidth = 35;
-  SecondaryBond._copyPropsToMostRecent(sb);
-
-  let mrps = SecondaryBond.mostRecentProps();
-  expect(mrps.padding1).toBeCloseTo(8.777, 6);
-  expect(mrps.padding2).toBeCloseTo(6.578, 6);
-  expect(mrps.strokeWidth).toBeCloseTo(35, 6);
-});
-
-it('SecondaryBond _copyPropsToMostRecent stroke', () => {
-  let svg = createNodeSVG();
-  let ba = Base.create(svg, 'A', 3, 5);
-  let bu = Base.create(svg, 'U', 4, 3);
-  let bg = Base.create(svg, 'g', 3, 2);
-  let bc = Base.create(svg, 'c', 2, 2);
-  let bt = Base.create(svg, 't', 5.5, -5.5);
-
-  let sbau = SecondaryBond.create(svg, bu, ba);
-  let sbgc = SecondaryBond.create(svg, bc, bg);
-  let sbgu = SecondaryBond.create(svg, bg, bu);
-  let sbat = SecondaryBond.create(svg, bt, ba);
-  let sbgt = SecondaryBond.create(svg, bt, bg);
-  let sbOther = SecondaryBond.create(svg, ba, bc);
+  describe('isGC method', () => {
+    it('works with lowercase characters', () => {
+      let svg = createNodeSVG();
+      let bc = Base.create(svg, 'c', 3, 5);
+      let bg = Base.create(svg, 'g', 8, 9);
+      let sbcg = SecondaryBond.create(svg, bc, bg);
+      expect(sbcg.isGC()).toBeTruthy();
+    });
   
-  sbau.stroke = '#123456';
-  sbgc.stroke = '#234567';
-  sbgu.stroke = '#345678';
-  sbat.stroke = '#456789';
-  sbgt.stroke = '#567890';
-  sbOther.stroke = '#678900';
-
-  SecondaryBond._copyPropsToMostRecent(sbau);
-  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#123456');
-  SecondaryBond._copyPropsToMostRecent(sbgc);
-  expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#234567');
-  SecondaryBond._copyPropsToMostRecent(sbgu);
-  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#345678');
-  SecondaryBond._copyPropsToMostRecent(sbat);
-  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#456789');
-  SecondaryBond._copyPropsToMostRecent(sbgt);
-  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#567890');
-  SecondaryBond._copyPropsToMostRecent(sbOther);
-  expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#678900');
-});
-
-function checkCoordinates(cs, ecs) {
-  expect(cs.x1).toBeCloseTo(ecs.x1, 6);
-  expect(cs.y1).toBeCloseTo(ecs.y1, 6);
-  expect(cs.x2).toBeCloseTo(ecs.x2, 6);
-  expect(cs.y2).toBeCloseTo(ecs.y2, 6);
-}
-
-it('fromSavedState static method valid saved state', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1.1, 1.2);
-    let b2 = Base.create(svg, 'U', 2.1, 2.2);
-    let sb1 = StraightBondClass.create(svg, b1, b2);
-
-    let savableState = sb1.savableState();
-
-    let getBaseById = (id) => {
-      let dict = {};
-      dict[b1.id] = b1;
-      dict[b2.id] = b2;
-      return dict[id];
-    };
-
-    let sb2 = StraightBondClass.fromSavedState(savableState, svg, getBaseById);
-
-    expect(sb2._line.id()).toBe(sb1._line.id());
-    expect(sb2.base1).toBe(sb1.base1);
-    expect(sb2.base2).toBe(sb1.base2);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('fromSavedState static method invalid saved state', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1.1, 1.2);
-    let b2 = Base.create(svg, 'U', 2.1, 2.2);
-    let sb1 = StraightBondClass.create(svg, b1, b2);
-
-    let getBaseById = (id) => {
-      let dict = {};
-      dict[b1.id] = b1;
-      dict[b2.id] = b2;
-      return dict[id];
-    };
-
-    let savableState = sb1.savableState();
-    expect(() => StraightBondClass.fromSavedState(savableState, svg, getBaseById)).not.toThrow();
-
-    // class name is nonempty and incorrect
-    savableState.className = 'StraightBnd';
-    expect(StraightBondClass.fromSavedState(savableState, svg, getBaseById)).toBe(null);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('fromSavedState updates most recent padding1, padding2, and strokeWidth properties', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'a', 5, 6);
-    let b2 = Base.create(svg, 'e', 0, 0);
-    let sb1 = StraightBondClass.create(svg, b1, b2);
-    sb1.padding1 = 5;
-    sb1.padding2 = 0.5;
-    sb1.strokeWidth = 1.65;
-    let savableState = sb1.savableState();
-
-    function getBaseById(id) {
-      let dict = {};
-      dict[b1.id] = b1;
-      dict[b2.id] = b2;
-      return dict[id];
-    }
-
-    let sb2 = StraightBondClass.fromSavedState(savableState, svg, getBaseById);
-    let mrps = StraightBondClass.mostRecentProps();
-    expect(mrps.padding1).toBeCloseTo(5, 6);
-    expect(mrps.padding2).toBeCloseTo(0.5, 6);
-    expect(mrps.strokeWidth).toBeCloseTo(1.65, 6);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('PrimaryBond fromSavedState updates most recent stroke property', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 5, 6);
-  let b2 = Base.create(svg, 'e', 0, 0);
-  let pb1 = PrimaryBond.create(svg, b1, b2);
-  pb1.stroke = '#433221';
-  let savableState = pb1.savableState();
-
-  function getBaseById(id) {
-    let dict = {};
-    dict[b1.id] = b1;
-    dict[b2.id] = b2;
-    return dict[id];
-  }
-
-  let pb2 = PrimaryBond.fromSavedState(savableState, svg, getBaseById);
-  let mrps = PrimaryBond.mostRecentProps();
-  expect(mrps.stroke).toBe('#433221');
-});
-
-it('SecondaryBond fromSavedState updates most recent stroke properties', () => {
-  let svg = createNodeSVG();
-  let ba = Base.create(svg, 'a', 4, 1);
-  let bu = Base.create(svg, 'U', 7, 100);
-  let bg = Base.create(svg, 'G', -10, 5);
-  let bc = Base.create(svg, 'c', 11, 33);
-  let bt = Base.create(svg, 't', 4, 99);
-
-  let sbau = SecondaryBond.create(svg, ba, bu);
-  let sbgc = SecondaryBond.create(svg, bc, bg);
-  let sbgu = SecondaryBond.create(svg, bu, bg);
-  let sbat = SecondaryBond.create(svg, bt, ba);
-  let sbgt = SecondaryBond.create(svg, bg, bt);
-  let sbOther = SecondaryBond.create(svg, bg, ba);
-
-  function getBaseById(id) {
-    let dict = {};
-    dict[ba.id] = ba;
-    dict[bu.id] = bu;
-    dict[bg.id] = bg;
-    dict[bc.id] = bc;
-    dict[bt.id] = bt;
-    return dict[id];
-  }
-
-  sbau.stroke = '#445522';
-  let auSavableState = sbau.savableState();
-  SecondaryBond.fromSavedState(auSavableState, svg, getBaseById);
-  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#445522');
+    it('all possible true cases', () => {
+      let svg = createNodeSVG();
+      let bg = Base.create(svg, 'G', 3, 5);
+      let bc = Base.create(svg, 'c', 7, 9);
+      let sbgc = SecondaryBond.create(svg, bg, bc);
+      expect(sbgc.isGC()).toBeTruthy();
+      let sbcg = SecondaryBond.create(svg, bc, bg);
+      expect(sbcg.isGC()).toBeTruthy();
+    });
   
-  sbgc.stroke = '#aabcde';
-  let gcSavableState = sbgc.savableState();
-  SecondaryBond.fromSavedState(gcSavableState, svg, getBaseById);
-  expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#aabcde');
-
-  sbgu.stroke = '#aaabbb';
-  let guSavablestate = sbgu.savableState();
-  SecondaryBond.fromSavedState(guSavablestate, svg, getBaseById);
-  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#aaabbb');
-
-  sbat.stroke = '#654321';
-  let atSavableState = sbat.savableState();
-  SecondaryBond.fromSavedState(atSavableState, svg, getBaseById);
-  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#654321');
-
-  sbgt.stroke = '#987654';
-  let gtSavableState = sbgt.savableState();
-  SecondaryBond.fromSavedState(gtSavableState, svg, getBaseById);
-  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#987654');
-
-  sbOther.stroke = '#a1b2c3';
-  let otherSavableState = sbOther.savableState();
-  SecondaryBond.fromSavedState(otherSavableState, svg, getBaseById);
-  expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#a1b2c3');
-});
-
-it('basic test of create static method', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1, 1);
-    let b2 = Base.create(svg, 'U', 4, 4);
-    let sb = StraightBondClass.create(svg, b1, b2);
-    expect(typeof(sb) === 'object' && sb !== null).toBeTruthy();
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-describe('SecondaryBond isAUT method', () => {
-  it('works with lowercase characters', () => {
-    let svg = createNodeSVG();
-    let bu = Base.create(svg, 'u', 4, 5);
-    let ba = Base.create(svg, 'a', 3, 5);
-    let sbua = SecondaryBond.create(svg, bu, ba);
-    expect(sbua.isAUT()).toBeTruthy();
+    it('a false case', () => {
+      let svg = createNodeSVG();
+      let bg = Base.create(svg, 'G', 4, 5);
+      let bu = Base.create(svg, 'U', 1, 2);
+      let sbgu = SecondaryBond.create(svg, bg, bu);
+      expect(sbgu.isGC()).toBeFalsy();
+    });
   });
 
-  it('all possible true cases', () => {
-    let svg = createNodeSVG();
-    let ba = Base.create(svg, 'A', 1, 2);
-    let bu = Base.create(svg, 'U', 5, 7);
-    let bt = Base.create(svg, 't', 0, 0);
-    let sbau = SecondaryBond.create(svg, ba, bu);
-    expect(sbau.isAUT()).toBeTruthy();
-    let sbat = SecondaryBond.create(svg, ba, bt);
-    expect(sbat.isAUT()).toBeTruthy();
-    let sbua = SecondaryBond.create(svg, bu, ba);
-    expect(sbua.isAUT()).toBeTruthy();
-    let sbta = SecondaryBond.create(svg, bt, ba);
-    expect(sbta.isAUT()).toBeTruthy();
-  });
-
-  it('a false case', () => {
-    let svg = createNodeSVG();
-    let ba = Base.create(svg, 'A', 1, 5);
-    let bc = Base.create(svg, 'C', 1, 5);
-    let sbac = SecondaryBond.create(svg, ba, bc);
-    expect(sbac.isAUT()).toBeFalsy();
-  });
-});
-
-describe('SecondaryBond isGC method', () => {
-  it('works with lowercase characters', () => {
-    let svg = createNodeSVG();
-    let bc = Base.create(svg, 'c', 3, 5);
-    let bg = Base.create(svg, 'g', 8, 9);
-    let sbcg = SecondaryBond.create(svg, bc, bg);
-    expect(sbcg.isGC()).toBeTruthy();
-  });
-
-  it('all possible true cases', () => {
-    let svg = createNodeSVG();
-    let bg = Base.create(svg, 'G', 3, 5);
-    let bc = Base.create(svg, 'c', 7, 9);
-    let sbgc = SecondaryBond.create(svg, bg, bc);
-    expect(sbgc.isGC()).toBeTruthy();
-    let sbcg = SecondaryBond.create(svg, bc, bg);
-    expect(sbcg.isGC()).toBeTruthy();
-  });
-
-  it('a false case', () => {
-    let svg = createNodeSVG();
-    let bg = Base.create(svg, 'G', 4, 5);
-    let bu = Base.create(svg, 'U', 1, 2);
-    let sbgu = SecondaryBond.create(svg, bg, bu);
-    expect(sbgu.isGC()).toBeFalsy();
-  });
-});
-
-describe('SecondaryBond isGUT method', () => {
-  it('works with lowercase characters', () => {
-    let svg = createNodeSVG();
-    let bu = Base.create(svg, 'u', 5, 5);
-    let bg = Base.create(svg, 'g', 3, 4);
-    let sbug = SecondaryBond.create(svg, bu, bg);
-    expect(sbug.isGUT()).toBeTruthy();
-  });
-
-  it('all possible true cases', () => {
-    let svg = createNodeSVG();
-    let bg = Base.create(svg, 'g', 1, 4);
-    let bu = Base.create(svg, 'U', 2, 2);
-    let bt = Base.create(svg, 't', 9, 8);
-    let sbgu = SecondaryBond.create(svg, bg, bu);
-    expect(sbgu.isGUT()).toBeTruthy();
-    let sbgt = SecondaryBond.create(svg, bg, bt);
-    expect(sbgt.isGUT()).toBeTruthy();
-    let sbug = SecondaryBond.create(svg, bu, bg);
-    expect(sbug.isGUT()).toBeTruthy();
-    let sbtg = SecondaryBond.create(svg, bt, bg);
-    expect(sbtg.isGUT()).toBeTruthy();
-  });
-
-  it('a false case', () => {
-    let svg = createNodeSVG();
-    let bu = Base.create(svg, 'U', 2, 5);
-    let ba = Base.create(svg, 'A', 2, 5);
-    let sbua = SecondaryBond.create(svg, bu, ba);
-    expect(sbua.isGUT()).toBeFalsy();
-  });
-});
-
-it('stroke getter and setter', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1, 1);
-    let b2 = Base.create(svg, 'U', 4, 4);
-    let sb = PrimaryBond.create(svg, b1, b2);
-
-    sb.stroke = '#456abc';
-    
-    // check getter
-    expect(sb.stroke).toBe('#456abc');
-
-    // check actual value
-    expect(sb._line.attr('stroke')).toBe('#456abc');
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
-});
-
-it('PrimaryBond stroke setter updates most recent property', () => {
-  let svg = createNodeSVG();
-  let b1 = Base.create(svg, 'a', 3, 5);
-  let b2 = Base.create(svg, 'j', 1, 1);
-  let pb = PrimaryBond.create(svg, b1, b2);
-  pb.stroke = '#445566';
-  expect(PrimaryBond.mostRecentProps().stroke).toBe('#445566');
-});
-
-it('SecondaryBond stroke setter updates most recent property', () => {
-  let svg = createNodeSVG();
-  let ba = Base.create(svg, 'A', 3, 5);
-  let bu = Base.create(svg, 'U', 4, 3);
-  let bg = Base.create(svg, 'g', 3, 2);
-  let bc = Base.create(svg, 'c', 2, 2);
-  let bt = Base.create(svg, 't', 5.5, -5.5);
-
-  let sbau = SecondaryBond.create(svg, bu, ba);
-  let sbgc = SecondaryBond.create(svg, bc, bg);
-  let sbgu = SecondaryBond.create(svg, bg, bu);
-  let sbat = SecondaryBond.create(svg, bt, ba);
-  let sbgt = SecondaryBond.create(svg, bt, bg);
-  let sbOther = SecondaryBond.create(svg, ba, bc);
+  describe('isGUT method', () => {
+    it('works with lowercase characters', () => {
+      let svg = createNodeSVG();
+      let bu = Base.create(svg, 'u', 5, 5);
+      let bg = Base.create(svg, 'g', 3, 4);
+      let sbug = SecondaryBond.create(svg, bu, bg);
+      expect(sbug.isGUT()).toBeTruthy();
+    });
   
-  sbau.stroke = '#123456';
-  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#123456');
-  sbgc.stroke = '#234567';
-  expect(SecondaryBond.mostRecentProps().gcStroke).toBe('#234567');
-  sbgu.stroke = '#345678';
-  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#345678');
-  sbat.stroke = '#456789';
-  expect(SecondaryBond.mostRecentProps().autStroke).toBe('#456789');
-  sbgt.stroke = '#567890';
-  expect(SecondaryBond.mostRecentProps().gutStroke).toBe('#567890');
-  sbOther.stroke = '#678900';
-  expect(SecondaryBond.mostRecentProps().otherStroke).toBe('#678900');
-});
+    it('all possible true cases', () => {
+      let svg = createNodeSVG();
+      let bg = Base.create(svg, 'g', 1, 4);
+      let bu = Base.create(svg, 'U', 2, 2);
+      let bt = Base.create(svg, 't', 9, 8);
+      let sbgu = SecondaryBond.create(svg, bg, bu);
+      expect(sbgu.isGUT()).toBeTruthy();
+      let sbgt = SecondaryBond.create(svg, bg, bt);
+      expect(sbgt.isGUT()).toBeTruthy();
+      let sbug = SecondaryBond.create(svg, bu, bg);
+      expect(sbug.isGUT()).toBeTruthy();
+      let sbtg = SecondaryBond.create(svg, bt, bg);
+      expect(sbtg.isGUT()).toBeTruthy();
+    });
+  
+    it('a false case', () => {
+      let svg = createNodeSVG();
+      let bu = Base.create(svg, 'U', 2, 5);
+      let ba = Base.create(svg, 'A', 2, 5);
+      let sbua = SecondaryBond.create(svg, bu, ba);
+      expect(sbua.isGUT()).toBeFalsy();
+    });
+  });
 
-it('strokeWidth getter and setter', () => {
-  function runFor(StraightBondClass) {
-    let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'A', 1, 1);
-    let b2 = Base.create(svg, 'U', 4, 4);
-    let sb = StraightBondClass.create(svg, b1, b2);
+  describe('padding1 and padding2 getters and setters', () => {
+    it('return and set values and update most recent properties', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'e', 1, 5);
+      let b2 = Base.create(svg, 'w', 200, 300);
+      let sb = SecondaryBond.create(svg, b1, b2);
+      sb.padding1 = 12.55;
+      sb.padding2 = 32.9;
+      expect(sb.padding1).toBeCloseTo(12.55);
+      expect(sb.padding2).toBeCloseTo(32.9);
+      let mrps = SecondaryBond.mostRecentProps();
+      expect(mrps.padding1).toBeCloseTo(12.55);
+      expect(mrps.padding2).toBeCloseTo(32.9);
+    });
+  });
 
-    sb.strokeWidth = 2.3;
+  describe('stroke getter and setter', () => {
+    it('return and set values', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'q', 3, 5);
+      let b2 = Base.create(svg, 'b', 2, 3);
+      let sb = SecondaryBond.create(svg, b1, b2);
+      sb.stroke = '#132435';
+      expect(sb.stroke).toBe('#132435');
+    });
 
-    // check getter
-    expect(sb.strokeWidth).toBeCloseTo(2.3, 6);
+    it('update most recent properties', () => {
+      let svg = createNodeSVG();
+      let ba = Base.create(svg, 'A', 4, 5);
+      let bu = Base.create(svg, 'U', 4, 8);
+      let bg = Base.create(svg, 'G', 10, 12);
+      let bc = Base.create(svg, 'C', 20, 30);
+      let sbau = SecondaryBond.create(svg, ba, bu);
+      let sbgc = SecondaryBond.create(svg, bg, bc);
+      let sbug = SecondaryBond.create(svg, bu, bg);
+      let sbga = SecondaryBond.create(svg, bg, ba);
+      sbau.stroke = '#445567';
+      sbgc.stroke = '#a1b2c3';
+      sbug.stroke = '#445abc';
+      sbga.stroke = '#aacbd1';
+      let mrps = SecondaryBond.mostRecentProps();
+      expect(mrps.autStroke).toBe('#445567');
+      expect(mrps.gcStroke).toBe('#a1b2c3');
+      expect(mrps.gutStroke).toBe('#445abc');
+      expect(mrps.otherStroke).toBe('#aacbd1');
+    });
+  });
 
-    // check actual value
-    expect(sb._line.attr('stroke-width')).toBeCloseTo(2.3, 6);
-
-    // updates most recent property
-    expect(StraightBondClass.mostRecentProps().strokeWidth).toBeCloseTo(2.3, 6);
-  }
-
-  runFor(PrimaryBond);
-  runFor(SecondaryBond);
+  describe('strokeWidth getter and setter', () => {
+    it('return and set value and update most recent property', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'b', 1, 5);
+      let b2 = Base.create(svg, 'q', -100, 200);
+      let sb = SecondaryBond.create(svg, b1, b2);
+      sb.strokeWidth = 1.245;
+      expect(sb.strokeWidth).toBe(1.245);
+      let mrps = SecondaryBond.mostRecentProps();
+      expect(mrps.strokeWidth).toBe(1.245);
+    });
+  });
 });
