@@ -64,7 +64,7 @@ it('_dBracket', () => {
     ],
   );
 
-  let getClockwiseNormalAngleOfBase = (b) => {
+  let getReferenceAngleOfBase = (b) => {
     let dict = {};
     dict[b1.id] = Math.PI / 3;
     dict[b2.id] = 2 * Math.PI / 3;
@@ -74,7 +74,7 @@ it('_dBracket', () => {
 
   // side of length greater than one and different angles for each base
   dBracketCheck(
-    QuadraticBezierBond._dBracket([b1, b2, b3], positivePositionalProps, getClockwiseNormalAngleOfBase),
+    QuadraticBezierBond._dBracket([b1, b2, b3], positivePositionalProps, getReferenceAngleOfBase),
     [
       ['M', 0.47871870788979676, 7.4971143170299746],
       ['L', 0.9787187078897972, 8.363139720814413],
@@ -345,14 +345,14 @@ it('fromSavedState static method valid saved state', () => {
     return dict[id];
   }
 
-  function getClockwiseNormalAngleOfBase(b) {
+  function getReferenceAngleOfBase(b) {
     return Math.PI / 3;
   }
 
-  let tb1 = QuadraticBezierBond.create(svg, [b1, b2], [b3, b4], getClockwiseNormalAngleOfBase);
+  let tb1 = QuadraticBezierBond.create(svg, [b1, b2], [b3, b4], getReferenceAngleOfBase);
 
   let savedState = tb1.savableState();
-  let tb2 = QuadraticBezierBond.fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase);
+  let tb2 = QuadraticBezierBond.fromSavedState(savedState, svg, getBaseById, getReferenceAngleOfBase);
 
   expect(tb2._curve.id()).toBe(tb1._curve.id());
   expect(tb2._bracket1.id()).toBe(tb1._bracket1.id());
@@ -377,43 +377,43 @@ it('fromSavedState static method invalid class name', () => {
     return dict[id];
   }
 
-  function getClockwiseNormalAngleOfBase(b) {
+  function getReferenceAngleOfBase(b) {
     return Math.PI / 5;
   }
 
-  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], getClockwiseNormalAngleOfBase);
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], getReferenceAngleOfBase);
   let savableState = qbb.savableState();
 
   expect(() => QuadraticBezierBond.fromSavedState(
-    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase)
+    savableState, svg, getBaseById, getReferenceAngleOfBase)
   ).not.toThrow();
 
   // no class name defined
   delete savableState.className;
 
   expect(() => QuadraticBezierBond.fromSavedState(
-    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
+    savableState, svg, getBaseById, getReferenceAngleOfBase
   )).toThrow();
 
   // class name is not a string
   savableState.className = 0.1234;
   
   expect(() => QuadraticBezierBond.fromSavedState(
-    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
+    savableState, svg, getBaseById, getReferenceAngleOfBase
   )).toThrow();
 
   // class name is an empty string
   savableState.className = '';
 
   expect(() => QuadraticBezierBond.fromSavedState(
-    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
+    savableState, svg, getBaseById, getReferenceAngleOfBase
   )).toThrow();
 
   // class name is not QuadraticBezierBond
   savableState.className = 'QuadraticBezierBnd';
 
   expect(() => QuadraticBezierBond.fromSavedState(
-    savableState, svg, getBaseById, getClockwiseNormalAngleOfBase
+    savableState, svg, getBaseById, getReferenceAngleOfBase
   )).toThrow();
 });
 
@@ -429,23 +429,23 @@ it('fromSavedState static method updates most recent properties', () => {
     return dict[id];
   }
 
-  function getClockwiseNormalAngleOfBase(b) {
+  function getReferenceAngleOfBase(b) {
     return 0;
   }
 
-  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], getClockwiseNormalAngleOfBase);
-  qbb.setTopPaddingBracket1(2.222, getClockwiseNormalAngleOfBase);
-  qbb.setTopPaddingBracket2(3.333, getClockwiseNormalAngleOfBase);
-  qbb.setOverhangPaddingBracket1(1.45, getClockwiseNormalAngleOfBase);
-  qbb.setOverhangPaddingBracket2(4.44, getClockwiseNormalAngleOfBase);
-  qbb.setOverhangLengthBracket1(3.24, getClockwiseNormalAngleOfBase);
-  qbb.setOverhangLengthBracket2(5.446, getClockwiseNormalAngleOfBase);
+  let qbb = QuadraticBezierBond.create(svg, [b1], [b2], getReferenceAngleOfBase);
+  qbb.setTopPaddingBracket1(2.222, getReferenceAngleOfBase);
+  qbb.setTopPaddingBracket2(3.333, getReferenceAngleOfBase);
+  qbb.setOverhangPaddingBracket1(1.45, getReferenceAngleOfBase);
+  qbb.setOverhangPaddingBracket2(4.44, getReferenceAngleOfBase);
+  qbb.setOverhangLengthBracket1(3.24, getReferenceAngleOfBase);
+  qbb.setOverhangLengthBracket2(5.446, getReferenceAngleOfBase);
   qbb.stroke = '#abbccd';
   qbb.strokeWidth = 5.66;
   qbb.curveStrokeDasharray = '1 5 4';
 
   let savedState = qbb.savableState();
-  QuadraticBezierBond.fromSavedState(savedState, svg, getBaseById, getClockwiseNormalAngleOfBase);
+  QuadraticBezierBond.fromSavedState(savedState, svg, getBaseById, getReferenceAngleOfBase);
   let mrps = QuadraticBezierBond.mostRecentProps();
   expect(mrps.topPaddingBracket1).toBeCloseTo(2.222, 6);
   expect(mrps.topPaddingBracket2).toBeCloseTo(3.333, 6);
