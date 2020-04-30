@@ -5,1010 +5,313 @@ import normalizeAngle from './normalizeAngle';
 class QuadraticBezierBond {
 
   /**
-   * @callback QuadraticBezierBond~getReferenceAngleOfBase 
-   * @param {Base} base 
-   * 
-   * @returns {number} 
-   */
-
-  /**
-   * @param {Array<Base>} side 
-   * @param {QuadraticBezierBond~BracketPositionalProps} positionalProps 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
+   * @param {Base} b1 
+   * @param {Base} b2 
+   * @param {number} padding1 
+   * @param {number} padding2 
+   * @param {number} controlHeight 
+   * @param {number} controlAngle 
    * 
    * @returns {string} 
    */
-  static _dBracket(side, positionalProps, getReferenceAngleOfBase) {
-    let bFirst = side[0];
-    let angle = getReferenceAngleOfBase(bFirst);
-    let x = bFirst.xCenter + (positionalProps.topPadding * Math.cos(angle));
-    let y = bFirst.yCenter + (positionalProps.topPadding * Math.sin(angle));
-    let d = 'L ' + x + ' ' + y + ' ';
-
-    angle += Math.PI / 2;
-    x += positionalProps.overhangPadding * Math.cos(angle);
-    y += positionalProps.overhangPadding * Math.sin(angle);
-    d = 'L ' + x + ' ' + y + ' ' + d;
-
-    angle += (positionalProps.topPadding < 0) ? (-Math.PI / 2) : (Math.PI / 2);
-    x += positionalProps.overhangLength * Math.cos(angle);
-    y += positionalProps.overhangLength * Math.sin(angle);
-    d = 'M ' + x + ' ' + y + ' ' + d;
-
-    side.slice(1, side.length).forEach(b => {
-      angle = getReferenceAngleOfBase(b);
-      x = b.xCenter + (positionalProps.topPadding * Math.cos(angle));
-      y = b.yCenter + (positionalProps.topPadding * Math.sin(angle));
-      d += 'L ' + x + ' ' + y + ' ';
-    });
-
-    let bLast = side[side.length - 1];
-    angle = getReferenceAngleOfBase(bLast);
-    x = bLast.xCenter + (positionalProps.topPadding * Math.cos(angle));
-    y = bLast.yCenter + (positionalProps.topPadding * Math.sin(angle));
-    
-    angle -= Math.PI / 2;
-    x += positionalProps.overhangPadding * Math.cos(angle);
-    y += positionalProps.overhangPadding * Math.sin(angle);
-    d += 'L ' + x + ' ' + y + ' ';
-
-    angle += (positionalProps.topPadding < 0) ? (Math.PI / 2) : (-Math.PI / 2);
-    x += positionalProps.overhangLength * Math.cos(angle);
-    y += positionalProps.overhangLength * Math.sin(angle);
-    d += 'L ' + x + ' ' + y;
-    
-    return d;
+  static _dPath(b1, b2, padding1, padding2, controlHeight, controlAngle) {
+    let xMiddle = (b1.xCenter + b2.xCenter) / 2;
+    let yMiddle = (b1.yCenter + b2.yCenter) / 2;
+    let ca = b1.angleBetweenCenters(b2) + controlAngle;
+    let xControl = xMiddle + (controlHeight * Math.cos(ca));
+    let yControl = yMiddle + (controlHeight * Math.sin(ca));
+    let a1 = angleBetween(b1.xCenter, b1.yCenter, xControl, yControl);
+    let x1 = b1.xCenter + (padding1 * Math.cos(a1));
+    let y1 = b1.yCenter + (padding1 * Math.sin(a1));
+    let a2 = angleBetween(b2.xCenter, b2.yCenter, xControl, yControl);
+    let x2 = b2.xCenter + (padding2 * Math.cos(a2));
+    let y2 = b2.yCenter + (padding2 * Math.sin(a2));
+    return ['M', x1, y1, 'Q', xControl, yControl, x2, y2].join(' ');
   }
 
   /**
-   * @typedef {Object} QuadraticBezierBond~BracketMidPoint 
-   * @property {number} x 
-   * @property {number} y 
+   * @param {SVG.Path} path 
+   * @param {Base} b1 
+   * @param {Base} b2 
    */
+  constructor(path, b1, b2) {
+    this._base1 = b1;
+    this._base2 = b2;
+
+    this._path = path;
+    this._validatePath();
+
+    this._storePaddings();
+    this._storeControlHeightAndAngle();
+  }
 
   /**
-   * @param {SVG.Path} bracket 
+   * Initializes the ID of the path if it is not already initialized.
    * 
-   * @returns {QuadraticBezierBond~BracketMidPoint} 
-   */
-  static _bracketMidpoint(bracket) {
-    let segments = bracket.array();
-    let lefti;
-    let righti;
-
-    // even number of segments
-    if (segments.length % 2 === 0) {
-      lefti = (segments.length / 2) - 1;
-      righti = segments.length / 2;
-    } else {
-      lefti = Math.floor(segments.length / 2);
-      righti = Math.floor(segments.length / 2);
-    }
-
-    let left = segments[lefti];
-    let right = segments[righti];
-    
-    return {
-      x: (left[1] + right[1]) / 2,
-      y: (left[2] + right[2]) / 2,
-    };
-  }
-
-  /**
-   * @param {SVG.Path} bracket1 
-   * @param {SVG.Path} bracket2 
-   * @param {QuadraticBezierBond~CurvePositionalProps} positionalProps 
+   * Sets fill-opacity to zero.
    * 
-   * @returns {string} 
+   * @throws {Error} If the path is not composed of an M and Q segment.
    */
-  static _dCurve(bracket1, bracket2, positionalProps) {
-    let bmp1 = QuadraticBezierBond._bracketMidpoint(bracket1);
-    let bmx1 = bmp1.x;
-    let bmy1 = bmp1.y;
-    let d = 'M ' + bmx1 + ' ' + bmy1 + ' ';
-
-    let bmp2 = QuadraticBezierBond._bracketMidpoint(bracket2);
-    let bmx2 = bmp2.x;
-    let bmy2 = bmp2.y;
-
-    let emx = (bmx1 + bmx2) / 2;
-    let emy = (bmy1 + bmy2) / 2;
-    let endsAngle = angleBetween(bmx1, bmy1, bmx2, bmy2);
-    let a = endsAngle + positionalProps.angle;
-
-    let xControl = emx + (positionalProps.height * Math.cos(a));
-    let yControl = emy + (positionalProps.height * Math.sin(a));
-
-    d += 'Q ' + xControl + ' ' + yControl + ' ' + bmx2 + ' ' + bmy2;
-
-    return d;
-  }
-
-  /**
-   * @typedef {Object} QuadraticBezierBond~MostRecentProps 
-   * @property {number} topPaddingBracket1 
-   * @property {number} topPaddingBracket2 
-   * @property {number} overhangPaddingBracket1 
-   * @property {number} overhangPaddingBracket2 
-   * @property {number} overhangLengthBracket1 
-   * @property {number} overhangLengthBracket2 
-   * @property {string} stroke 
-   * @property {number} strokeWidth 
-   * @property {string} curveStrokeDasharray 
-   */
-
-  /**
-   * @returns {QuadraticBezierBond~MostRecentProps} 
-   */
-  static mostRecentProps() {
-    return { ...QuadraticBezierBond._mostRecentProps };
-  }
-
-  /**
-   * @param {QuadraticBezierBond} qbb 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  static _applyMostRecentProps(qbb, getReferenceAngleOfBase) {
-    let mrps = QuadraticBezierBond.mostRecentProps();
-    qbb.setTopPaddingBracket1(mrps.topPaddingBracket1, getReferenceAngleOfBase);
-    qbb.setTopPaddingBracket2(mrps.topPaddingBracket2, getReferenceAngleOfBase);
-    qbb.setOverhangPaddingBracket1(mrps.overhangPaddingBracket1, getReferenceAngleOfBase);
-    qbb.setOverhangPaddingBracket2(mrps.overhangPaddingBracket2, getReferenceAngleOfBase);
-    qbb.setOverhangLengthBracket1(mrps.overhangLengthBracket1, getReferenceAngleOfBase);
-    qbb.setOverhangLengthBracket2(mrps.overhangLengthBracket2, getReferenceAngleOfBase);
-    qbb.stroke = mrps.stroke;
-    qbb.strokeWidth = mrps.strokeWidth;
-    qbb.curveStrokeDasharray = mrps.curveStrokeDasharray;
-  }
-
-  /**
-   * @param {QuadraticBezierBond} qbb 
-   */
-  static _copyPropsToMostRecent(qbb) {
-    QuadraticBezierBond._mostRecentProps.topPaddingBracket1 = qbb.topPaddingBracket1;
-    QuadraticBezierBond._mostRecentProps.topPaddingBracket2 = qbb.topPaddingBracket2;
-    QuadraticBezierBond._mostRecentProps.overhangPaddingBracket1 = qbb.overhangPaddingBracket1;
-    QuadraticBezierBond._mostRecentProps.overhangPaddingBracket2 = qbb.overhangPaddingBracket2;
-    QuadraticBezierBond._mostRecentProps.overhangLengthBracket1 = qbb.overhangLengthBracket1;
-    QuadraticBezierBond._mostRecentProps.overhangLengthBracket2 = qbb.overhangLengthBracket2;
-    QuadraticBezierBond._mostRecentProps.stroke = qbb.stroke;
-    QuadraticBezierBond._mostRecentProps.strokeWidth = qbb.strokeWidth;
-    QuadraticBezierBond._mostRecentProps.curveStrokeDasharray = qbb.curveStrokeDasharray;
-  }
-
-  /**
-   * @callback QuadraticBezierBond~getBaseById 
-   * @param {string} id 
-   * 
-   * @returns {Base} 
-   */
-  
-   /**
-   * @param {QuadraticBezierBond~SavableState} savedState 
-   * @param {SVG.Doc} svg 
-   * @param {QuadraticBezierBond~getBaseById} getBaseById 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   * 
-   * @throws {Error} If the saved state is not for a quadratic bezier bond.
-   */
-  static fromSavedState(savedState, svg, getBaseById, getReferenceAngleOfBase) {
-    if (savedState.className !== 'QuadraticBezierBond') {
-      throw new Error('Saved state is not for a quadratic bezier bond.');
+  _validatePath() {
+    this._path.id();
+    this._path.attr({ 'fill-opacity': 0 });
+    let pa = this._path.array();
+    if (pa.length !== 2) {
+      throw new Error('Invalid path.');
     }
-    
-    let curve = svg.findOne('#' + savedState.curve);
-    let bracket1 = svg.findOne('#' + savedState.bracket1);
-    let bracket2 = svg.findOne('#' + savedState.bracket2);
-
-    let side1 = [];
-    savedState.side1.forEach(id => side1.push(getBaseById(id)));
-
-    let side2 = [];
-    savedState.side2.forEach(id => side2.push(getBaseById(id)));
-
-    let qbb = new QuadraticBezierBond(
-      curve,
-      bracket1,
-      bracket2,
-      side1,
-      side2,
-      getReferenceAngleOfBase
-    );
-
-    QuadraticBezierBond._copyPropsToMostRecent(qbb);
-    return qbb;
-  }
-
-  /**
-   * @param {SVG.Doc} svg 
-   * @param {Array<Base>} side1 
-   * @param {Array<Base>} side2 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   * 
-   * @returns {QuadraticBezierBond} 
-   */
-  static create(svg, side1, side2, getReferenceAngleOfBase) {
-    let bracket1 = svg.path(QuadraticBezierBond._dBracket(
-      side1,
-      { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
-      getReferenceAngleOfBase,
-    ));
-    bracket1.id();
-
-    let bracket2 = svg.path(QuadraticBezierBond._dBracket(
-      side2,
-      { topPadding: 10, overhangPadding: 8, overhangLength: 10 },
-      getReferenceAngleOfBase,
-    ));
-    bracket2.id();
-
-    let curve = svg.path(QuadraticBezierBond._dCurve(
-      bracket1,
-      bracket2,
-      { height: 100, angle: 3 * Math.PI / 2 },
-    ));
-    curve.id();
-
-    let qbb = new QuadraticBezierBond(
-      curve,
-      bracket1,
-      bracket2,
-      side1,
-      side2,
-      getReferenceAngleOfBase
-    );
-
-    QuadraticBezierBond._applyMostRecentProps(qbb, getReferenceAngleOfBase);
-    return qbb;
-  }
-
-  /**
-   * The bases of a side should be consecutive and in ascending order, though
-   * this cannot be verified by quadratic bezier bond.
-   * 
-   * @param {SVG.Path} curve 
-   * @param {SVG.Path} bracket1 
-   * @param {SVG.Path} bracket2 
-   * @param {Array<Base>} side1 
-   * @param {Array<Base>} side2 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  constructor(curve, bracket1, bracket2, side1, side2, getReferenceAngleOfBase) {
-    
-    // make shallow copies
-    this._side1 = [...side1];
-    this._side2 = [...side2];
-    this._validateSides();
-
-    this._curve = curve;
-    this._bracket1 = bracket1;
-    this._bracket2 = bracket2;
-    this._validateCurve();
-    this._validateBracket(this._bracket1, this._side1);
-    this._validateBracket(this._bracket2, this._side2);
-    this._storeBracketTopPaddings(getReferenceAngleOfBase);
-  }
-  
-  /**
-   * @throws {Error} If either side of this bond has no bases.
-   */
-  _validateSides() {
-    if (this._side1.length === 0) {
-      throw new Error('Side 1 has no bases.');
+    let m = pa[0];
+    let q = pa[1];
+    if (m[0] !== 'M' || q[0] !== 'Q') {
+      throw new Error('Invalid path.');
     }
-
-    if (this._side2.length === 0) {
-      throw new Error('Side 2 has no bases.');
-    }
-  }
-
-  /**
-   * @throws {Error} If the ID of the curve is not a string or is an empty string.
-   * @throws {Error} If the curve is not composed of a M segment followed by a Q segment.
-   */
-  _validateCurve() {
-    if (typeof(this._curve.id()) !== 'string' || this._curve.id().length === 0) {
-      throw new Error('The ID of the curve must be set to a non-empty string.');
-    }
-
-    let segments = this._curve.array();
-
-    if (segments.length !== 2) {
-      throw new Error('The path of the curve should only have two segments.');
-    }
-
-    let m = segments[0];
-    
-    let mSegmentInvalid = m[0] !== 'M'
-      || m.length !== 3
-      || (typeof(m[1]) !== 'number' || !isFinite(m[1]))
-      || (typeof(m[2]) !== 'number' || !isFinite(m[2]));
-
-    if (mSegmentInvalid) {
-      throw new Error('The M segment of the curve is invalid.');
-    }
-
-    let q = segments[1];
-
-    let qSegmentInvalid = q[0] !== 'Q'
-      || q.length !== 5
-      || (typeof(q[1]) !== 'number' || !isFinite(q[1]))
-      || (typeof(q[2]) !== 'number' || !isFinite(q[2]))
-      || (typeof(q[3]) !== 'number' || !isFinite(q[3]))
-      || (typeof(q[4]) !== 'number' || !isFinite(q[4]));
-
-    if (qSegmentInvalid) {
-      throw new Error('The Q segment of the curve is invalid.');
-    }
-  }
-
-  /**
-   * @param {SVG.Path} bracket 
-   * @param {Array<Base>} side 
-   * 
-   * @throws {Error} If the ID of the bracket is not a string or is an empty string.
-   * @throws {Error} If the total number of segments is not four plus the number of bases in the side.
-   * @throws {Error} If the first segment of the bracket is not an M segment.
-   * @throws {Error} If any trailing segments are not L segments.
-   */
-  _validateBracket(bracket, side) {
-    if (typeof(bracket.id()) !== 'string' || bracket.id().length === 0) {
-      throw new Error('Invalid bracket ID.');
-    }
-
-    let segments = bracket.array();
-
-    if (segments.length !== side.length + 4) {
-      throw new Error('Incorrect number of segments.');
-    }
-
-    let m = segments[0];
-
-    let mSegmentInvalid = m[0] !== 'M'
-      || m.length != 3
-      || (typeof(m[1]) !== 'number' || !isFinite(m[1]))
-      || (typeof(m[2]) !== 'number' || !isFinite(m[2]));
-
-    if (mSegmentInvalid) {
-      throw new Error('Invalid M segment.');
-    }
-
-    segments.slice(1).forEach(l => {
-      let lSegmentInvalid = l[0] !== 'L'
-        || (typeof(l[1]) !== 'number' || !isFinite(l[1]))
-        || (typeof(l[2]) !== 'number' || !isFinite(l[2]));
-
-      if (lSegmentInvalid) {
-        throw new Error('Invalid L segment.');
-      }
-    });
   }
 
   /**
    * @returns {string} 
    */
   get id() {
-    return this._curve.id();
+    return this._path.id();
+  }
+
+  /**
+   * @returns {Base} 
+   */
+  get base1() {
+    return this._base1;
+  }
+
+  /**
+   * @returns {Base} 
+   */
+  get base2() {
+    return this._base2;
   }
 
   /**
    * @returns {number} 
    */
-  get xCurveEnd1() {
-    let m = this._curve.array()[0];
+  get x1() {
+    let pa = this._path.array();
+    let m = pa[0];
     return m[1];
   }
 
   /**
    * @returns {number} 
    */
-  get yCurveEnd1() {
-    let m = this._curve.array()[0];
+  get y1() {
+    let pa = this._path.array();
+    let m = pa[0];
     return m[2];
   }
 
   /**
    * @returns {number} 
    */
-  get xCurveEnd2() {
-    let q = this._curve.array()[1];
+  get x2() {
+    let pa = this._path.array();
+    let q = pa[1];
     return q[3];
   }
 
   /**
    * @returns {number} 
    */
-  get yCurveEnd2() {
-    let q = this._curve.array()[1];
+  get y2() {
+    let pa = this._path.array();
+    let q = pa[1];
     return q[4];
   }
 
   /**
    * @returns {number} 
    */
-  get xCurveControlPoint() {
-    let q = this._curve.array()[1];
+  get xControl() {
+    let pa = this._path.array();
+    let q = pa[1];
     return q[1];
   }
 
   /**
    * @returns {number} 
    */
-  get yCurveControlPoint() {
-    let q = this._curve.array()[1];
+  get yControl() {
+    let pa = this._path.array();
+    let q = pa[1];
     return q[2];
+  }
+
+  /**
+   * Sets the _padding1 and _padding2 properties.
+   */
+  _storePaddings() {
+    this._padding1 = distanceBetween(
+      this.base1.xCenter,
+      this.base1.yCenter,
+      this.x1,
+      this.y1,
+    );
+    this._padding2 = distanceBetween(
+      this.base2.xCenter,
+      this.base2.yCenter,
+      this.x2,
+      this.y2,
+    );
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get padding1() {
+    return this._padding1;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get padding2() {
+    return this._padding2;
+  }
+
+  /**
+   * Sets the _controlHeight and _controlAngle properties.
+   */
+  _storeControlHeightAndAngle() {
+    let xMiddle = (this.base1.xCenter + this.base2.xCenter) / 2;
+    let yMiddle = (this.base1.yCenter + this.base2.yCenter) / 2;
+    this._controlHeight = distanceBetween(
+      xMiddle,
+      yMiddle,
+      this.xControl,
+      this.yControl,
+    );
+    let a12 = this.base1.angleBetweenCenters(this.base2);
+    let ca = angleBetween(
+      xMiddle,
+      yMiddle,
+      this.xControl,
+      this.yControl,
+    );
+    this._controlAngle = normalizeAngle(ca, a12) - a12;
   }
 
   /**
    * @param {number} xShift 
    * @param {number} yShift 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
    */
-  shiftCurveControlPoint(xShift, yShift, getReferenceAngleOfBase) {
-    let xControl = this.xCurveControlPoint + xShift;
-    let yControl = this.yCurveControlPoint + yShift;
+  shiftControl(xShift, yShift) {
+    let xMiddle = (this.base1.xCenter + this.base2.xCenter) / 2;
+    let yMiddle = (this.base1.yCenter + this.base2.yCenter) / 2;
+    let xControl = this.xControl + xShift;
+    let yControl = this.yControl + yShift;
+    let controlHeight = distanceBetween(xMiddle, yMiddle, xControl, yControl);
+    let ca = angleBetween(xMiddle, yMiddle, xControl, yControl);
+    let a12 = this.base1.angleBetweenCenters(this.base2);
+    let controlAngle = normalizeAngle(ca, a12) - a12;
+    this._reposition(this.padding1, this.padding2, controlHeight, controlAngle);
+  }
 
-    let emx = (this.xCurveEnd1 + this.xCurveEnd2) / 2;
-    let emy = (this.yCurveEnd1 + this.yCurveEnd2) / 2;
-
-    let height = distanceBetween(emx, emy, xControl, yControl);
-
-    let endsAngle = angleBetween(this.xCurveEnd1, this.yCurveEnd1, this.xCurveEnd2, this.yCurveEnd2);
-    let a = angleBetween(emx, emy, xControl, yControl);
-    let angle = normalizeAngle(a, endsAngle) - endsAngle;
-
-    let curvePositionalProps = this._curvePositionalProps();
-    curvePositionalProps.height = height;
-    curvePositionalProps.angle = angle;
-
+  reposition() {
     this._reposition(
-      curvePositionalProps,
-      this._bracketPositionalProps1(),
-      this._bracketPositionalProps2(),
-      getReferenceAngleOfBase,
+      this.padding1,
+      this.padding2,
+      this._controlHeight,
+      this._controlAngle
     );
   }
 
   /**
-   * @returns {number} The distance between the control point of the curve and the midpoint
-   *  between the two ends of the curve.
+   * @param {number} padding1 
+   * @param {number} padding2 
    */
-  get curveHeight() {
-    let midx = (this.xCurveEnd2 + this.xCurveEnd1) / 2;
-    let midy = (this.yCurveEnd2 + this.yCurveEnd1) / 2;
-    return distanceBetween(midx, midy, this.xCurveControlPoint, this.yCurveControlPoint);
-  }
-
-  /**
-   * The angle of the control point of the curve is the angle from the midpoint between
-   * the two ends of the curve to the control point of the curve.
-   * 
-   * The angle between the two ends of the curve is calculated as the angle from end 1
-   * to end 2 of the curve.
-   * 
-   * The returned angle is normalized to be greater than or equal to zero and less
-   * than 2 * Math.PI.
-   * 
-   * @returns {number} The difference between the angle of the control point of the curve
-   *  and the angle between the two ends of the curve.
-   */
-  get curveAngle() {
-    let endsAngle = angleBetween(this.xCurveEnd1, this.yCurveEnd1, this.xCurveEnd2, this.yCurveEnd2);
-
-    let midx = (this.xCurveEnd2 + this.xCurveEnd1) / 2;
-    let midy = (this.yCurveEnd2 + this.yCurveEnd1) / 2;
-    let controlAngle = angleBetween(midx, midy, this.xCurveControlPoint, this.yCurveControlPoint);
-    
-    controlAngle = normalizeAngle(controlAngle, endsAngle);
-    return controlAngle - endsAngle;
-  }
-
-  /**
-   * @typedef {Object} QuadraticBezierBond~CurvePositionalProps 
-   * @property {number} height 
-   * @property {number} angle 
-   */
-
-  /**
-   * @returns {QuadraticBezierBond~CurvePositionalProps} 
-   */
-  _curvePositionalProps() {
-    return {
-      height: this.curveHeight,
-      angle: this.curveAngle,
-    };
-  }
-
-  /**
-   * Sets the _topPaddingBracket1 and _topPaddingBracket2 properties.
-   * 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  _storeBracketTopPaddings(getReferenceAngleOfBase) {
-    function topPadding(bracket, side) {
-      let l = bracket.array()[2];
-      let b = side[0];
-      let d = distanceBetween(b.xCenter, b.yCenter, l[1], l[2]);
-      let a = angleBetween(b.xCenter, b.yCenter, l[1], l[2]);
-      let na = getReferenceAngleOfBase(b);
-      let angleDiff = normalizeAngle(a, na) - na;
-
-      // if not for imprecision in floating point arithmetic, angleDiff would either be zero or Math.PI
-      if (angleDiff > Math.PI / 2 && angleDiff < 3 * Math.PI / 2) {
-        d *= -1;
-      }
-      
-      return d;
-    }
-
-    this._topPaddingBracket1 = topPadding(this._bracket1, this._side1);
-    this._topPaddingBracket2 = topPadding(this._bracket2, this._side2);
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get topPaddingBracket1() {
-    return this._topPaddingBracket1;
-  }
-
-  /**
-   * @param {number} tp 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  setTopPaddingBracket1(tp, getReferenceAngleOfBase) {
-    let bracketProps1 = this._bracketPositionalProps1();
-    bracketProps1.topPadding = tp;
-
-    this._reposition(
-      this._curvePositionalProps(),
-      bracketProps1,
-      this._bracketPositionalProps2(),
-      getReferenceAngleOfBase,
+  _reposition(padding1, padding2, controlHeight, controlAngle) {
+    this._path.plot(
+      QuadraticBezierBond._dPath(
+        this.base1,
+        this.base2,
+        padding1,
+        padding2,
+        controlHeight,
+        controlAngle,
+      )
     );
-
-    QuadraticBezierBond._mostRecentProps.topPaddingBracket1 = tp;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get topPaddingBracket2() {
-    return this._topPaddingBracket2;
-  }
-
-  /**
-   * @param {number} tp 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  setTopPaddingBracket2(tp, getReferenceAngleOfBase) {
-    let bracketProps2 = this._bracketPositionalProps2();
-    bracketProps2.topPadding = tp;
-
-    this._reposition(
-      this._curvePositionalProps(),
-      this._bracketPositionalProps1(),
-      bracketProps2,
-      getReferenceAngleOfBase,
-    );
-
-    QuadraticBezierBond._mostRecentProps.topPaddingBracket2 = tp;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get overhangPaddingBracket1() {
-    let segments = this._bracket1.array();
-    let l1 = segments[1];
-    let l2 = segments[2];
-    return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
-  }
-
-  /**
-   * @param {number} ohp 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  setOverhangPaddingBracket1(ohp, getReferenceAngleOfBase) {
-    let bracketProps1 = this._bracketPositionalProps1();
-    bracketProps1.overhangPadding = ohp;
-
-    this._reposition(
-      this._curvePositionalProps(),
-      bracketProps1,
-      this._bracketPositionalProps2(),
-      getReferenceAngleOfBase,
-    );
-
-    QuadraticBezierBond._mostRecentProps.overhangPaddingBracket1 = ohp;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get overhangPaddingBracket2() {
-    let segments = this._bracket2.array();
-    let l1 = segments[1];
-    let l2 = segments[2];
-    return distanceBetween(l1[1], l1[2], l2[1], l2[2]);
-  }
-
-  /**
-   * @param {number} ohp 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  setOverhangPaddingBracket2(ohp, getReferenceAngleOfBase) {
-    let bracketProps2 = this._bracketPositionalProps2();
-    bracketProps2.overhangPadding = ohp;
-
-    this._reposition(
-      this._curvePositionalProps(),
-      this._bracketPositionalProps1(),
-      bracketProps2,
-      getReferenceAngleOfBase,
-    );
-
-    QuadraticBezierBond._mostRecentProps.overhangPaddingBracket2 = ohp;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get overhangLengthBracket1() {
-    let segments = this._bracket1.array();
-    let m = segments[0];
-    let l = segments[1];
-    return distanceBetween(m[1], m[2], l[1], l[2]);
-  }
-
-  /**
-   * @param {number} ohl 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  setOverhangLengthBracket1(ohl, getReferenceAngleOfBase) {
-    let bracketProps1 = this._bracketPositionalProps1();
-    bracketProps1.overhangLength = ohl;
-
-    this._reposition(
-      this._curvePositionalProps(),
-      bracketProps1,
-      this._bracketPositionalProps2(),
-      getReferenceAngleOfBase,
-    );
-
-    QuadraticBezierBond._mostRecentProps.overhangLengthBracket1 = ohl;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get overhangLengthBracket2() {
-    let segments = this._bracket2.array();
-    let m = segments[0];
-    let l = segments[1];
-    return distanceBetween(m[1], m[2], l[1], l[2]);
-  }
-
-  /**
-   * @param {number} ohl 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  setOverhangLengthBracket2(ohl, getReferenceAngleOfBase) {
-    let bracketProps2 = this._bracketPositionalProps2();
-    bracketProps2.overhangLength = ohl;
-
-    this._reposition(
-      this._curvePositionalProps(),
-      this._bracketPositionalProps1(),
-      bracketProps2,
-      getReferenceAngleOfBase,
-    );
-
-    QuadraticBezierBond._mostRecentProps.overhangLengthBracket2 = ohl;
-  }
-
-  /**
-   * @typedef {Object} QuadraticBezierBond~BracketPositionalProps 
-   * @property {number} topPadding 
-   * @property {number} overhangPadding 
-   * @property {number} overhangLength 
-   */
-
-  /**
-   * @returns {QuadraticBezierBond~BracketPositionalProps} 
-   */
-  _bracketPositionalProps1() {
-    return {
-      topPadding: this.topPaddingBracket1,
-      overhangPadding: this.overhangPaddingBracket1,
-      overhangLength: this.overhangLengthBracket1,
-    };
-  }
-
-  /**
-   * @returns {QuadraticBezierBond~BracketPositionalProps} 
-   */
-  _bracketPositionalProps2() {
-    return {
-      topPadding: this.topPaddingBracket2,
-      overhangPadding: this.overhangPaddingBracket2,
-      overhangLength: this.overhangLengthBracket2,
-    };
-  }
-
-  /**
-   * Repositions the curve and brackets of this quadratic bezier bond based on the
-   * current positions of the bases of its sides.
-   * 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  reposition(getReferenceAngleOfBase) {
-    this._reposition(
-      this._curvePositionalProps(),
-      this._bracketPositionalProps1(),
-      this._bracketPositionalProps2(),
-      getReferenceAngleOfBase,
-    );
-  }
-
-  /**
-   * Repositions the curve and brackets of this quadratic bezier bond based on the
-   * current positions of the bases of its sides and the given positional properties
-   * for its curve and brackets.
-   * 
-   * @param {QuadraticBezierBond~CurvePositionalProps} curveProps 
-   * @param {QuadraticBezierBond~BracketPositionalProps} bracketProps1 
-   * @param {QuadraticBezierBond~BracketPositionalProps} bracketProps2 
-   * @param {QuadraticBezierBond~getReferenceAngleOfBase} getReferenceAngleOfBase 
-   */
-  _reposition(curveProps, bracketProps1, bracketProps2, getReferenceAngleOfBase) {
-    this._bracket1.plot(QuadraticBezierBond._dBracket(
-      this._side1,
-      bracketProps1,
-      getReferenceAngleOfBase,
-    ));
-
-    this._bracket2.plot(QuadraticBezierBond._dBracket(
-      this._side2,
-      bracketProps2,
-      getReferenceAngleOfBase,
-    ));
-
-    this._curve.plot(QuadraticBezierBond._dCurve(
-      this._bracket1,
-      this._bracket2,
-      curveProps,
-    ));
-
-    this._storeBracketTopPaddings(getReferenceAngleOfBase);
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get stroke() {
-    return this._curve.attr('stroke');
-  }
-
-  /**
-   * @param {string} s 
-   */
-  set stroke(s) {
-    this._curve.attr({ 'stroke': s });
-    this._bracket1.attr({ 'stroke': s });
-    this._bracket2.attr({ 'stroke': s });
-
-    QuadraticBezierBond._mostRecentProps.stroke = s;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get strokeWidth() {
-    return this._curve.attr('stroke-width');
-  }
-
-  /**
-   * @param {number} sw 
-   */
-  set strokeWidth(sw) {
-    this._curve.attr({ 'stroke-width': sw });
-    this._bracket1.attr({ 'stroke-width': sw });
-    this._bracket2.attr({ 'stroke-width': sw });
-
-    QuadraticBezierBond._mostRecentProps.strokeWidth = sw;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get curveStrokeDasharray() {
-    return this._curve.attr('stroke-dasharray');
-  }
-
-  /**
-   * @param {string} sd 
-   */
-  set curveStrokeDasharray(sd) {
-    this._curve.attr({ 'stroke-dasharray': sd });
-
-    QuadraticBezierBond._mostRecentProps.curveStrokeDasharray = sd;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get opacityBracket1() {
-    return this._bracket1.attr('opacity');
-  }
-
-  /**
-   * @param {number} o 
-   */
-  set opacityBracket1(o) {
-    this._bracket1.attr({ 'opacity': o });
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get opacityBracket2() {
-    return this._bracket2.attr('opacity');
-  }
-
-  /**
-   * @param {number} o 
-   */
-  set opacityBracket2(o) {
-    this._bracket2.attr({ 'opacity': o });
-  }
-
-  /**
-   * @param {function} cb 
-   */
-  bindMousedown(cb) {
-    this._curve.mousedown(cb);
-    this._bracket1.mousedown(cb);
-    this._bracket2.mousedown(cb);
-  }
-
-  /**
-   * @param {function} cb 
-   */
-  bindDblclick(cb) {
-    this._curve.dblclick(cb);
-    this._bracket1.dblclick(cb);
-    this._bracket2.dblclick(cb);
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get cursor() {
-    return this._curve.css('cursor');
-  }
-
-  /**
-   * @param {string} c 
-   */
-  set cursor(c) {
-    this._curve.css({ 'cursor': c });
-    this._bracket1.css({ 'cursor': c });
-    this._bracket2.css({ 'cursor': c });
+    this._storePaddings();
+    this._storeControlHeightAndAngle();
   }
 
   remove() {
-    this._curve.remove();
-    this._bracket1.remove();
-    this._bracket2.remove();
+    this._path.remove();
   }
 
   /**
-   * @typedef {Object} QuadraticBezierBond~SavableState 
+   * @typedef {Object} QuadaraticBezierBond~SavableState 
    * @property {string} className 
-   * @property {string} curve 
-   * @property {string} bracket1 
-   * @property {string} bracket2 
-   * @property {Array<string>} side1 
-   * @property {Array<string>} side2 
+   * @property {string} path 
+   * @property {string} base1 
+   * @property {string} base2 
    */
 
   /**
    * @returns {QuadraticBezierBond~SavableState} 
    */
   savableState() {
-    let savableState = {
+    return {
       className: 'QuadraticBezierBond',
-      curve: this._curve.id(),
-      bracket1: this._bracket1.id(),
-      bracket2: this._bracket2.id(),
-      side1: [],
-      side2: [],
+      path: this._path.id(),
+      base1: this.base1.id,
+      base2: this.base2.id,
     };
-
-    this._side1.forEach(
-      b => savableState.side1.push(b.id)
-    );
-
-    this._side2.forEach(
-      b => savableState.side2.push(b.id)
-    );
-
-    return savableState;
   }
 }
-
-QuadraticBezierBond._mostRecentProps = {
-  topPaddingBracket1: 10,
-  topPaddingBracket2: 10,
-  overhangPaddingBracket1: 8,
-  overhangPaddingBracket2: 8,
-  overhangLengthBracket1: 8,
-  overhangLengthBracket2: 8,
-  stroke: '#0000ff',
-  strokeWidth: 2,
-  curveStrokeDasharray: '3 1',
-};
 
 class TertiaryBond extends QuadraticBezierBond {
-  
+
   /**
-   * @returns {string} 
+   * @callback TertiaryBond~getBaseById 
+   * @param {string} id 
+   * 
+   * @returns {Base} 
    */
-  get stroke() {
-    return super.stroke;
+
+  /**
+   * Returns null if the saved state is invalid.
+   * 
+   * @param {QuadraticBezierBond~SavableState} savedState 
+   * @param {SVG.Svg} svg 
+   * @param {TertiaryBond~getBaseById} getBaseById 
+   * 
+   * @returns {TertiaryBond|null} 
+   */
+  static fromSavedState(savedState, svg, getBaseById) {
+    if (savedState.className !== 'QuadraticBezierBond') {
+      return null;
+    }
+    let p = svg.findOne('#' + savedState.path);
+    let b1 = getBaseById(savedState.base1);
+    let b2 = getBaseById(savedState.base2);
+    let tb = null;
+    try {
+      tb = new TertiaryBond(p, b1, b2);
+    } catch (err) {
+      return null;
+    }
+    return tb;
   }
 
   /**
-   * @param {string} s 
+   * @param {SVG.Svg} svg 
+   * @param {Base} b1 
+   * @param {Base} b2 
+   * 
+   * @returns {TertiaryBond} 
    */
-  set stroke(s) {
-    super.stroke = s;
-    TertiaryBond._mostRecentProps.stroke = s;
-  }
-
-  /**
-   * @returns {number} 
-   */
-  get strokeWidth() {
-    return super.strokeWidth;
-  }
-
-  /**
-   * @param {number} sw 
-   */
-  set strokeWidth(sw) {
-    super.strokeWidth = sw;
-    TertiaryBond._mostRecentProps.strokeWidth = sw;
-  }
-
-  /**
-   * @returns {string} 
-   */
-  get curveStrokeDasharray() {
-    return super.curveStrokeDasharray;
-  }
-
-  /**
-   * @param {string} sd 
-   */
-  set curveStrokeDasharray(sd) {
-    super.curveStrokeDasharray = sd;
-    TertiaryBond._mostRecentProps.curveStrokeDasharray = sd;
+  static create(svg, b1, b2) {
+    let p = svg.path(
+      QuadraticBezierBond._dPath(b1, b2, 8, 8, 20, -Math.PI)
+    );
+    return new TertiaryBond(p, b1, b2);
   }
 }
-
-TertiaryBond._mostRecentProps = {
-  topPaddingBracket1: 10,
-  topPaddingBracket2: 10,
-  overhangPaddingBracket1: 8,
-  overhangPaddingBracket2: 8,
-  overhangLengthBracket1: 8,
-  overhangLengthBracket2: 8,
-  stroke: '#0000ff',
-  strokeWidth: 2,
-  curveStrokeDasharray: '3 1',
-};
 
 export {
   QuadraticBezierBond,

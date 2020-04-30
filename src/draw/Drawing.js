@@ -466,63 +466,15 @@ class Drawing {
   }
 
   /**
-   * Returns null if no tertiary bond is added.
+   * @param {Base} b1 
+   * @param {Base} b2 
    * 
-   * @param {Array<Base>} side1 
-   * @param {Array<Base>} side2 
-   * 
-   * @returns {TertiaryBond|null} 
+   * @returns {TertiaryBond} 
    */
-  addTertiaryBond(side1, side2) {
-    if (side1.length === 0 || side2.length === 0) {
-      return null;
-    }
-    let tb = TertiaryBond.create(
-      this._svg,
-      side1,
-      side2,
-      b => this.clockwiseNormalAngleOfBase(b)
-    );
+  addTertiaryBond(b1, b2) {
+    let tb = TertiaryBond.create(this._svg, b1, b2);
     this._bonds.tertiary.push(tb);
     return tb;
-  }
-
-  /**
-   * Returns null if no tertiary bond is added.
-   * 
-   * @param {number} p5 
-   * @param {number} p3 
-   * @param {number} size 
-   * 
-   * @returns {TertiaryBond|null} 
-   */
-  addStrictLayoutStemAsTertiaryBond(p5, p3, size) {
-    let side1 = this.getBasesInStrictLayoutRange(p5, p5 + size - 1);
-    let side2 = this.getBasesInStrictLayoutRange(p3 - size + 1, p3);
-    return this.addTertiaryBond(side1, side2);
-  }
-
-  /**
-   * This method adds the tertiary pairs with the fewest number
-   * of tertiary bonds (i.e. maximizes the sizes of tertiary bonds).
-   * 
-   * @param {Sequence} seq 
-   * @param {Array<number|null>} partners 
-   * 
-   * @returns {Array<TertiaryBond>} 
-   */
-  addTertiaryPairsForSequence(seq, partners) {
-    let stems = parseStems(partners);
-    let added = [];
-    stems.forEach(st => {
-      let side1 = seq.getBasesInRange(st.start, st.start + st.size - 1);
-      let side2 = seq.getBasesInRange(st.end - st.size + 1, st.end);
-      let tb = this.addTertiaryBond(side1, side2);
-      if (tb) {
-        added.push(tb);
-      }
-    });
-    return added;
   }
 
   /**
@@ -548,16 +500,7 @@ class Drawing {
   _repositionBonds() {
     this.forEachPrimaryBond(sb => sb.reposition());
     this.forEachSecondaryBond(wcb => wcb.reposition());
-    this.forEachTertiaryBond(tb => {
-      tb.reposition(b => {
-        let seq = this.sequenceOfBase(b);
-        if (!seq) {
-          return 0;
-        }
-        let p = seq.positionOfBase(b);
-        return seq.clockwiseNormalAngleAtPosition(p);
-      });
-    });
+    this.forEachTertiaryBond(tb => tb.reposition());
   }
 
   /**
