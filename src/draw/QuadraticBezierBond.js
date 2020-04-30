@@ -950,7 +950,65 @@ QuadraticBezierBond._mostRecentProps = {
   curveStrokeDasharray: '3 1',
 };
 
-class TertiaryBond extends QuadraticBezierBond {}
+class TertiaryBond extends QuadraticBezierBond {
+  
+  /**
+   * @returns {string} 
+   */
+  get stroke() {
+    return super.stroke;
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set stroke(s) {
+    super.stroke = s;
+    TertiaryBond._mostRecentProps.stroke = s;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get strokeWidth() {
+    return super.strokeWidth;
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set strokeWidth(sw) {
+    super.strokeWidth = sw;
+    TertiaryBond._mostRecentProps.strokeWidth = sw;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get curveStrokeDasharray() {
+    return super.curveStrokeDasharray;
+  }
+
+  /**
+   * @param {string} sd 
+   */
+  set curveStrokeDasharray(sd) {
+    super.curveStrokeDasharray = sd;
+    TertiaryBond._mostRecentProps.curveStrokeDasharray = sd;
+  }
+}
+
+TertiaryBond._mostRecentProps = {
+  topPaddingBracket1: 10,
+  topPaddingBracket2: 10,
+  overhangPaddingBracket1: 8,
+  overhangPaddingBracket2: 8,
+  overhangLengthBracket1: 8,
+  overhangLengthBracket2: 8,
+  stroke: '#0000ff',
+  strokeWidth: 2,
+  curveStrokeDasharray: '3 1',
+};
 
 export {
   QuadraticBezierBond,
