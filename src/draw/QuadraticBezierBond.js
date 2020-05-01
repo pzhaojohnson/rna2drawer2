@@ -295,6 +295,20 @@ class QuadraticBezierBond {
     this._path.css({ 'cursor': c });
   }
 
+  /**
+   * @param {function} cb 
+   */
+  bindMousedown(cb) {
+    this._path.mousedown(cb);
+  }
+
+  /**
+   * @param {function} cb 
+   */
+  bindDlbclick(cb) {
+    this._path.dblclick(cb);
+  }
+
   remove() {
     this._path.remove();
   }

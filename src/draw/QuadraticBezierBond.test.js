@@ -219,6 +219,23 @@ describe('QuadraticBezierBond class', () => {
     expect(p.css('cursor')).toBe('pointer');
   });
 
+  it('bindMousedown and bindDblclick methods', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'b', 1, 5);
+    let b2 = Base.create(svg, 't', -100, -200);
+    let d = QuadraticBezierBond._dPath(b1, b2, 5, 12, 400, Math.PI / 5);
+    let p = svg.path(d);
+    let qbb = new QuadraticBezierBond(p, b1, b2);
+    let md = null;
+    qbb.bindMousedown(e => { md = e; });
+    p.fire('mousedown');
+    expect(md).toBeTruthy();
+    let dc = null;
+    qbb.bindDlbclick(e => { dc = e; });
+    p.fire('dblclick');
+    expect(dc).toBeTruthy();
+  });
+
   it('remove method', () => {
     let svg = createNodeSVG();
     let p = svg.path('M 1 2 Q 3 4 5 6');
