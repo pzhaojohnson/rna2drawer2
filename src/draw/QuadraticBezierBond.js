@@ -239,6 +239,62 @@ class QuadraticBezierBond {
     this._storeControlHeightAndAngle();
   }
 
+  /**
+   * @returns {string} 
+   */
+  get stroke() {
+    return this._path.attr('stroke');
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set stroke(s) {
+    this._path.attr({ 'stroke': s });
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get strokeWidth() {
+    return this._path.attr('stroke-width');
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set strokeWidth(sw) {
+    return this._path.attr({ 'stroke-width': sw });
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get strokeDasharray() {
+    return this._path.attr('stroke-dasharray');
+  }
+
+  /**
+   * @param {string} sd 
+   */
+  set strokeDasharray(sd) {
+    this._path.attr({ 'stroke-dasharray': sd });
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get cursor() {
+    return this._path.css('cursor');
+  }
+
+  /**
+   * @param {string} c 
+   */
+  set cursor(c) {
+    this._path.css({ 'cursor': c });
+  }
+
   remove() {
     this._path.remove();
   }

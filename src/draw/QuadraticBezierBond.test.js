@@ -188,6 +188,37 @@ describe('QuadraticBezierBond class', () => {
     ).toBeCloseTo(2 * Math.PI / 3);
   });
 
+  it('stroke, strokeWidth and strokeDasharray getters and setters', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'a', 50, 40);
+    let b2 = Base.create(svg, 'n', 100, 300);
+    let d = QuadraticBezierBond._dPath(b1, b2, 6, 8, 200, Math.PI / 6);
+    let p = svg.path(d);
+    let qbb = new QuadraticBezierBond(p, b1, b2);
+    qbb.stroke = '#132435';
+    expect(qbb.stroke).toBe('#132435');
+    expect(p.attr('stroke')).toBe('#132435');
+    qbb.strokeWidth = 3.44;
+    expect(qbb.strokeWidth).toBe(3.44);
+    expect(p.attr('stroke-width')).toBe(3.44);
+    qbb.strokeDasharray = '3 1 6 7';
+    expect(qbb.strokeDasharray).toBe('3 1 6 7');
+    expect(p.attr('stroke-dasharray')).toBe('3 1 6 7');
+  });
+
+  it('cursor getter and setter', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'q', 1, 3);
+    let b2 = Base.create(svg, 't', 5, 1000);
+    let d = QuadraticBezierBond._dPath(b1, b2, 10, 30, 35, Math.PI / 3);
+    let p = svg.path(d);
+    let qbb = new QuadraticBezierBond(p, b1, b2);
+    expect(qbb.cursor).not.toBe('pointer');
+    qbb.cursor = 'pointer';
+    expect(qbb.cursor).toBe('pointer');
+    expect(p.css('cursor')).toBe('pointer');
+  });
+
   it('remove method', () => {
     let svg = createNodeSVG();
     let p = svg.path('M 1 2 Q 3 4 5 6');
