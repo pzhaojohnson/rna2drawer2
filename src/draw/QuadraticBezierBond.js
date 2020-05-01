@@ -167,10 +167,34 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @param {number} p 
+   */
+  set padding1(p) {
+    this._reposition(
+      p,
+      this.padding2,
+      this._controlHeight,
+      this._controlAngle,
+    );
+  }
+
+  /**
    * @returns {number} 
    */
   get padding2() {
     return this._padding2;
+  }
+
+  /**
+   * @param {number} p 
+   */
+  set padding2(p) {
+    this._reposition(
+      this.padding1,
+      p,
+      this._controlHeight,
+      this._controlAngle,
+    );
   }
 
   /**
@@ -337,6 +361,45 @@ class QuadraticBezierBond {
 class TertiaryBond extends QuadraticBezierBond {
 
   /**
+   * @typedef {Object} TertiaryBond~MostRecentProps 
+   * @property {number} padding1 
+   * @property {number} padding2 
+   * @property {string} stroke 
+   * @property {number} strokeWidth 
+   * @property {string} strokeDasharray 
+   */
+
+  /**
+   * @returns {TertiaryBond~MostRecentProps} 
+   */
+  static mostRecentProps() {
+    return { ...TertiaryBond._mostRecentProps };
+  }
+
+  /**
+   * @param {TertiaryBond} tb 
+   */
+  static _applyMostRecentProps(tb) {
+    let mrps = TertiaryBond.mostRecentProps();
+    tb.padding1 = mrps.padding1;
+    tb.padding2 = mrps.padding2;
+    tb.stroke = mrps.stroke;
+    tb.strokeWidth = mrps.strokeWidth;
+    tb.strokeDasharray = mrps.strokeDasharray;
+  }
+
+  /**
+   * @param {TertiaryBond} tb 
+   */
+  static _copyPropsToMostRecent(tb) {
+    TertiaryBond._mostRecentProps.padding1 = tb.padding1;
+    TertiaryBond._mostRecentProps.padding2 = tb.padding2;
+    TertiaryBond._mostRecentProps.stroke = tb.stroke;
+    TertiaryBond._mostRecentProps.strokeWidth = tb.strokeWidth;
+    TertiaryBond._mostRecentProps.strokeDasharray = tb.strokeDasharray;
+  }
+
+  /**
    * @callback TertiaryBond~getBaseById 
    * @param {string} id 
    * 
@@ -365,6 +428,7 @@ class TertiaryBond extends QuadraticBezierBond {
     } catch (err) {
       return null;
     }
+    TertiaryBond._copyPropsToMostRecent(tb);
     return tb;
   }
 
@@ -379,9 +443,94 @@ class TertiaryBond extends QuadraticBezierBond {
     let p = svg.path(
       QuadraticBezierBond._dPath(b1, b2, 8, 8, 20, -Math.PI)
     );
-    return new TertiaryBond(p, b1, b2);
+    let tb = new TertiaryBond(p, b1, b2);
+    TertiaryBond._applyMostRecentProps(tb);
+    return tb;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get padding1() {
+    return super.padding1;
+  }
+
+  /**
+   * @param {number} p 
+   */
+  set padding1(p) {
+    super.padding1 = p;
+    TertiaryBond._mostRecentProps.padding1 = p;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get padding2() {
+    return super.padding2;
+  }
+
+  /**
+   * @param {number} p 
+   */
+  set padding2(p) {
+    super.padding2 = p;
+    TertiaryBond._mostRecentProps.padding2 = p;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get stroke() {
+    return super.stroke;
+  }
+
+  /**
+   * @param {string} s 
+   */
+  set stroke(s) {
+    super.stroke = s;
+    TertiaryBond._mostRecentProps.stroke = s;
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get strokeWidth() {
+    return super.strokeWidth;
+  }
+
+  /**
+   * @param {number} sw 
+   */
+  set strokeWidth(sw) {
+    super.strokeWidth = sw;
+    TertiaryBond._mostRecentProps.strokeWidth = sw;
+  }
+
+  /**
+   * @returns {string} 
+   */
+  get strokeDasharray() {
+    return super.strokeDasharray;
+  }
+
+  /**
+   * @param {string} sd 
+   */
+  set strokeDasharray(sd) {
+    super.strokeDasharray = sd;
+    TertiaryBond._mostRecentProps.strokeDasharray = sd;
   }
 }
+
+TertiaryBond._mostRecentProps = {
+  padding1: 8,
+  padding2: 8,
+  stroke: '#0000ff',
+  strokeWidth: 1,
+  strokeDasharray: '3 1',
+};
 
 export {
   QuadraticBezierBond,

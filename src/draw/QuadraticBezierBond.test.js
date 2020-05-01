@@ -139,6 +139,27 @@ describe('QuadraticBezierBond class', () => {
     ).toBeCloseTo(Math.PI / 5);
   });
 
+  it('padding1 and padding2 getters and setters', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 't', 50, 40);
+    let b2 = Base.create(svg, 't', 300, 400);
+    let d = QuadraticBezierBond._dPath(b1, b2, 4, 5, 50, Math.PI / 3);
+    let p = svg.path(d);
+    let qbb = new QuadraticBezierBond(p, b1, b2);
+    qbb.padding1 = 12.2;
+    expect(qbb.padding1).toBeCloseTo(12.2);
+    let pa = p.array();
+    expect(
+      distanceBetween(b1.xCenter, b1.yCenter, pa[0][1], pa[0][2])
+    ).toBeCloseTo(12.2);
+    qbb.padding2 = 14.5;
+    expect(qbb.padding2).toBeCloseTo(14.5);
+    pa = p.array();
+    expect(
+      distanceBetween(b2.xCenter, b2.yCenter, pa[1][3], pa[1][4])
+    ).toBeCloseTo(14.5);
+  });
+
   it('shiftControl method', () => {
     let svg = createNodeSVG();
     let b1 = Base.create(svg, 'T', 20, 30);
@@ -287,6 +308,63 @@ function getBasebyId(id, bases) {
 }
 
 describe('TeritaryBond class', () => {
+  describe('mostRecentProps static method', () => {
+    it('returns a new object', () => {
+      expect(TertiaryBond.mostRecentProps()).not.toBe(TertiaryBond._mostRecentProps);
+    });
+
+    it('returns correct values', () => {
+      TertiaryBond._mostRecentProps.padding1 = 2.45;
+      TertiaryBond._mostRecentProps.padding2 = 5.68;
+      TertiaryBond._mostRecentProps.stroke = '#45abc3';
+      TertiaryBond._mostRecentProps.strokeWidth = 3.47;
+      TertiaryBond._mostRecentProps.strokeDasharray = '3 3 1 5 6 9';
+      let mrps = TertiaryBond.mostRecentProps();
+      expect(mrps.padding1).toBe(2.45);
+      expect(mrps.padding2).toBe(5.68);
+      expect(mrps.stroke).toBe('#45abc3');
+      expect(mrps.strokeWidth).toBe(3.47);
+      expect(mrps.strokeDasharray).toBe('3 3 1 5 6 9');
+    });
+  });
+
+  it('_applyMostRecentProps static method', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 't', 300, 400);
+    let b2 = Base.create(svg, 'a', 0, 0);
+    let tb = TertiaryBond.create(svg, b1, b2);
+    TertiaryBond._mostRecentProps.padding1 = 16.4;
+    TertiaryBond._mostRecentProps.padding2 = 17.3;
+    TertiaryBond._mostRecentProps.stroke = '#243511';
+    TertiaryBond._mostRecentProps.strokeWidth = 3.22;
+    TertiaryBond._mostRecentProps.strokeDasharray = '3 1 9';
+    TertiaryBond._applyMostRecentProps(tb);
+    expect(tb.padding1).toBeCloseTo(16.4);
+    expect(tb.padding2).toBeCloseTo(17.3);
+    expect(tb.stroke).toBe('#243511');
+    expect(tb.strokeWidth).toBe(3.22);
+    expect(tb.strokeDasharray).toBe('3 1 9');
+  });
+
+  it('_copyPropsToMostRecent static method', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'q', 40, 30);
+    let b2 = Base.create(svg, 'Q', 500, 400);
+    let tb = TertiaryBond.create(svg, b1, b2);
+    tb.padding1 = 14.7;
+    tb.padding2 = 15.33;
+    tb.stroke = '#4455aa';
+    tb.strokeWidth = 5.42;
+    tb.strokeDasharray = '3 3 1 4';
+    TertiaryBond._copyPropsToMostRecent(tb);
+    let mrps = TertiaryBond.mostRecentProps();
+    expect(mrps.padding1).toBeCloseTo(14.7);
+    expect(mrps.padding2).toBeCloseTo(15.33);
+    expect(mrps.stroke).toBe('#4455aa');
+    expect(mrps.strokeWidth).toBe(5.42);
+    expect(mrps.strokeDasharray).toBe('3 3 1 4');
+  });
+
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
       it('wrong className', () => {
@@ -337,6 +415,22 @@ describe('TeritaryBond class', () => {
       expect(tb2.base1).toBe(b1);
       expect(tb2.base2).toBe(b2);
     });
+
+    it('copies properties to most recent', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 'e', 1, 5);
+      let b2 = Base.create(svg, 't', 11, 55);
+      let tb1 = TertiaryBond.create(svg, b1, b2);
+      tb1.stroke = '#12bbc5';
+      let savableState1 = tb1.savableState();
+      let tb2 = TertiaryBond.fromSavedState(
+        savableState1,
+        svg,
+        id => getBasebyId(id, [b1, b2]),
+      );
+      let mrps = TertiaryBond.mostRecentProps();
+      expect(mrps.stroke).toBe('#12bbc5');
+    });
   });
 
   describe('create static method', () => {
@@ -348,5 +442,45 @@ describe('TeritaryBond class', () => {
       expect(tb.base1).toBe(b1);
       expect(tb.base2).toBe(b2);
     });
+
+    it('applies most recent properties', () => {
+      let svg = createNodeSVG();
+      let b1 = Base.create(svg, 't', 50, 40);
+      let b2 = Base.create(svg, 'b', 300, 5000);
+      TertiaryBond._mostRecentProps.stroke = '#44bbca';
+      let tb = TertiaryBond.create(svg, b1, b2);
+      expect(tb.stroke).toBe('#44bbca');
+    });
+  });
+
+  it('padding1 and padding2 getters and setters', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'q', 1, 4);
+    let b2 = Base.create(svg, 't', 400, 3000);
+    let tb = TertiaryBond.create(svg, b1, b2);
+    tb.padding1 = 6.6;
+    expect(tb.padding1).toBeCloseTo(6.6);
+    tb.padding2 = 12.8;
+    expect(tb.padding2).toBeCloseTo(12.8);
+    let mrps = TertiaryBond.mostRecentProps();  // update most recent properties
+    expect(mrps.padding1).toBeCloseTo(6.6);
+    expect(mrps.padding2).toBeCloseTo(12.8);
+  });
+
+  it('stroke, strokeWidth and strokeDasharray getters and setters', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 't', 50, 40);
+    let b2 = Base.create(svg, 'q', -1000, -300);
+    let tb = TertiaryBond.create(svg, b1, b2);
+    tb.stroke = '#44bbcc';
+    expect(tb.stroke).toBe('#44bbcc');
+    tb.strokeWidth = 3.96;
+    expect(tb.strokeWidth).toBe(3.96);
+    tb.strokeDasharray = '3 2 8 7';
+    expect(tb.strokeDasharray).toBe('3 2 8 7');
+    let mrps = TertiaryBond.mostRecentProps();  // update most recent properties
+    expect(mrps.stroke).toBe('#44bbcc');
+    expect(mrps.strokeWidth).toBe(3.96);
+    expect(mrps.strokeDasharray).toBe('3 2 8 7');
   });
 });
