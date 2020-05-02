@@ -338,7 +338,7 @@ class QuadraticBezierBond {
   }
 
   /**
-   * @typedef {Object} QuadaraticBezierBond~SavableState 
+   * @typedef {Object} QuadraticBezierBond~SavableState 
    * @property {string} className 
    * @property {string} path 
    * @property {string} base1 
@@ -440,9 +440,8 @@ class TertiaryBond extends QuadraticBezierBond {
    * @returns {TertiaryBond} 
    */
   static create(svg, b1, b2) {
-    let p = svg.path(
-      QuadraticBezierBond._dPath(b1, b2, 8, 8, 60, -Math.PI / 2)
-    );
+    let d = QuadraticBezierBond._dPath(b1, b2, 6, 6, 100, -Math.PI / 2);
+    let p = svg.path(d);
     let tb = new TertiaryBond(p, b1, b2);
     TertiaryBond._applyMostRecentProps(tb);
     return tb;
