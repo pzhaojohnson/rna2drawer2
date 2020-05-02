@@ -194,7 +194,7 @@ class Drawing {
    * 
    * @returns {Base|null} 
    */
-  getBaseAtStrictLayoutPosition(p) {
+  getBaseAtOverallPosition(p) {
     let base = null;
     let q = 1;
     this.forEachBase(b => {
@@ -213,7 +213,7 @@ class Drawing {
    * 
    * @returns {number} 
    */
-  strictLayoutPositionOfBase(b) {
+  overallPositionOfBase(b) {
     let p = 0;
     let q = 1;
     this.forEachBase(base => {

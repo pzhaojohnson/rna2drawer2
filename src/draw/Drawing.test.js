@@ -297,14 +297,14 @@ describe('Drawing class', () => {
     expect(drawing.numBases).toBe(6);
   });
 
-  describe('getBaseAtStrictLayoutPosition method', () => {
+  describe('getBaseAtOverallPosition method', () => {
     it('getting the first and last base', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asdf', 'ab');
       drawing.appendSequenceOutOfView('qwer', 'cd');
-      expect(drawing.getBaseAtStrictLayoutPosition(1).character).toBe('a');
-      expect(drawing.getBaseAtStrictLayoutPosition(4).character).toBe('d');
+      expect(drawing.getBaseAtOverallPosition(1).character).toBe('a');
+      expect(drawing.getBaseAtOverallPosition(4).character).toBe('d');
     });
 
     it('positions out of range', () => {
@@ -312,17 +312,17 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asdf', 'ab');
       drawing.appendSequenceOutOfView('qwer', 'cd');
-      expect(drawing.getBaseAtStrictLayoutPosition(0)).toBe(null);
-      expect(drawing.getBaseAtStrictLayoutPosition(5)).toBe(null);
+      expect(drawing.getBaseAtOverallPosition(0)).toBe(null);
+      expect(drawing.getBaseAtOverallPosition(5)).toBe(null);
     });
   });
 
-  describe('strictLayoutPositionOfBase method', () => {
+  describe('overallPositionOfBase method', () => {
     it('base is not in drawing', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
       let b = Base.create(drawing._svg, 'a', 1, 2);
-      expect(drawing.strictLayoutPositionOfBase(b)).toBe(0);
+      expect(drawing.overallPositionOfBase(b)).toBe(0);
     });
 
     it('multiple sequences', () => {
@@ -332,7 +332,7 @@ describe('Drawing class', () => {
       drawing.appendSequenceOutOfView('qwer', 'zx');
       let seq = drawing.getSequenceById('qwer');
       let b = seq.getBaseAtPosition(1);
-      expect(drawing.strictLayoutPositionOfBase(b)).toBe(5);
+      expect(drawing.overallPositionOfBase(b)).toBe(5);
     });
   });
 
@@ -434,8 +434,8 @@ describe('Drawing class', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => createNodeSVG());
     drawing.appendSequenceOutOfView('asfd', 'ab');
-    let b1 = drawing.getBaseAtStrictLayoutPosition(1);
-    let b2 = drawing.getBaseAtStrictLayoutPosition(2);
+    let b1 = drawing.getBaseAtOverallPosition(1);
+    let b2 = drawing.getBaseAtOverallPosition(2);
     expect(drawing.numPrimaryBonds).toBe(0);
     let pb = drawing.addPrimaryBond(b1, b2);
     expect(drawing.numPrimaryBonds).toBe(1);
@@ -518,8 +518,8 @@ describe('Drawing class', () => {
     drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
     expect(drawing.numTertiaryBonds).toBe(0);
     let tb = drawing.addTertiaryBond(
-      drawing.getBaseAtStrictLayoutPosition(4),
-      drawing.getBaseAtStrictLayoutPosition(12),
+      drawing.getBaseAtOverallPosition(4),
+      drawing.getBaseAtOverallPosition(12),
     );
     expect(drawing.numTertiaryBonds).toBe(1);
     drawing.removeTertiaryBondById(tb.id);
@@ -532,16 +532,16 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdfasdf');
       drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(3),
-        drawing.getBaseAtStrictLayoutPosition(9),
+        drawing.getBaseAtOverallPosition(3),
+        drawing.getBaseAtOverallPosition(9),
       );
       let tb2 = drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(5),
-        drawing.getBaseAtStrictLayoutPosition(11),
+        drawing.getBaseAtOverallPosition(5),
+        drawing.getBaseAtOverallPosition(11),
       );
       drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(7),
-        drawing.getBaseAtStrictLayoutPosition(16),
+        drawing.getBaseAtOverallPosition(7),
+        drawing.getBaseAtOverallPosition(16),
       );
       expect(drawing.numTertiaryBonds).toBe(3);
       expect(drawing.getTertiaryBondById(tb2.id).id).toBe(tb2.id);
@@ -552,8 +552,8 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asfd', 'asdfasdfasdf');
       drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(3),
-        drawing.getBaseAtStrictLayoutPosition(7),
+        drawing.getBaseAtOverallPosition(3),
+        drawing.getBaseAtOverallPosition(7),
       );
       expect(drawing.getTertiaryBondById('qwer')).toBe(null);
     });
@@ -564,12 +564,12 @@ describe('Drawing class', () => {
     drawing.addTo(document.body, () => createNodeSVG());
     drawing.appendSequenceOutOfView('asdf', 'qwerqwerqwer');
     let tb1 = drawing.addTertiaryBond(
-      drawing.getBaseAtStrictLayoutPosition(1),
-      drawing.getBaseAtStrictLayoutPosition(9),
+      drawing.getBaseAtOverallPosition(1),
+      drawing.getBaseAtOverallPosition(9),
     );
     let tb2 = drawing.addTertiaryBond(
-      drawing.getBaseAtStrictLayoutPosition(3),
-      drawing.getBaseAtStrictLayoutPosition(12),
+      drawing.getBaseAtOverallPosition(3),
+      drawing.getBaseAtOverallPosition(12),
     );
     let bonds = [tb1, tb2];
     let i = 0;
@@ -586,8 +586,8 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
       let tb = drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(2),
-        drawing.getBaseAtStrictLayoutPosition(7),
+        drawing.getBaseAtOverallPosition(2),
+        drawing.getBaseAtOverallPosition(7),
       );
       expect(drawing.numTertiaryBonds).toBe(1);
       expect(tb).toBe(drawing._bonds.tertiary[0]);
@@ -598,11 +598,11 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       let seq = drawing.appendSequenceOutOfView('asdf', 'qwerqwerqwerqwer');
       let tb = drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(3),
-        drawing.getBaseAtStrictLayoutPosition(8),
+        drawing.getBaseAtOverallPosition(3),
+        drawing.getBaseAtOverallPosition(8),
       );
-      expect(tb.base1).toBe(drawing.getBaseAtStrictLayoutPosition(3));
-      expect(tb.base2).toBe(drawing.getBaseAtStrictLayoutPosition(8));
+      expect(tb.base1).toBe(drawing.getBaseAtOverallPosition(3));
+      expect(tb.base2).toBe(drawing.getBaseAtOverallPosition(8));
     });
   });
 
@@ -612,8 +612,8 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
       drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(3),
-        drawing.getBaseAtStrictLayoutPosition(6),
+        drawing.getBaseAtOverallPosition(3),
+        drawing.getBaseAtOverallPosition(6),
       );
       expect(drawing.numTertiaryBonds).toBe(1);
       drawing.removeTertiaryBondById('blah');
@@ -625,12 +625,12 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdfasdf');
       let tb1 = drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(3),
-        drawing.getBaseAtStrictLayoutPosition(7),
+        drawing.getBaseAtOverallPosition(3),
+        drawing.getBaseAtOverallPosition(7),
       );
       let tb2 = drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(5),
-        drawing.getBaseAtStrictLayoutPosition(12),
+        drawing.getBaseAtOverallPosition(5),
+        drawing.getBaseAtOverallPosition(12),
       );
       let pathId2 = tb2._path.id();
       expect(drawing.numTertiaryBonds).toBe(2);
@@ -731,10 +731,10 @@ describe('Drawing class', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
       let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdfasdf');
-      let b2 = drawing.getBaseAtStrictLayoutPosition(2);
-      let b5 = drawing.getBaseAtStrictLayoutPosition(5);
-      let b3 = drawing.getBaseAtStrictLayoutPosition(3);
-      let b8 = drawing.getBaseAtStrictLayoutPosition(8);
+      let b2 = drawing.getBaseAtOverallPosition(2);
+      let b5 = drawing.getBaseAtOverallPosition(5);
+      let b3 = drawing.getBaseAtOverallPosition(3);
+      let b8 = drawing.getBaseAtOverallPosition(8);
       let bonds = [
         drawing.addTertiaryBond(b2, b5),
         drawing.addTertiaryBond(b3, b8),
@@ -757,8 +757,8 @@ describe('Drawing class', () => {
       drawing.addSecondaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(7));
       drawing.addSecondaryBond(seq.getBaseAtPosition(1), seq.getBaseAtPosition(8));
       drawing.addTertiaryBond(
-        drawing.getBaseAtStrictLayoutPosition(2),
-        drawing.getBaseAtStrictLayoutPosition(7),
+        drawing.getBaseAtOverallPosition(2),
+        drawing.getBaseAtOverallPosition(7),
       );
       let savableState1 = drawing.savableState();
       let json1 = JSON.stringify(savableState1);
