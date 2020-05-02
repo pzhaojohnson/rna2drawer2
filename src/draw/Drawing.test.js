@@ -3,34 +3,9 @@ import createNodeSVG from './createNodeSVG';
 import Base from './Base';
 import { SecondaryBond } from './StraightBond';
 import { TertiaryBond } from './QuadraticBezierBond';
-import parseDotBracket from '../parse/parseDotBracket';
-import StrictLayout from './layout/singleseq/strict/StrictLayout';
-import StrictLayoutGeneralProps from './layout/singleseq/strict/StrictLayoutGeneralProps';
-import StrictLayoutBaseProps from './layout/singleseq/strict/StrictLayoutBaseProps';
 import distanceBetween from './distanceBetween';
-
-function checkPartners(partners, expectedPartners) {
-  expect(partners.length).toBe(expectedPartners.length);
-  for (let i = 0; i < expectedPartners.length; i++) {
-    expect(partners[i]).toBe(expectedPartners[i]);
-  }
-}
-
-function defaultBaseProps(length) {
-  let baseProps = [];
-  for (let i = 0; i < length; i++) {
-    baseProps.push(new StrictLayoutBaseProps());
-  }
-  return baseProps;
-}
-
-function checkCoords(coords, expectedCoords) {
-  expect(coords.length).toBe(expectedCoords.length);
-  for (let i = 0; i < expectedCoords.length; i++) {
-    expect(coords[i][0]).toBeCloseTo(expectedCoords[i][0], 3);
-    expect(coords[i][1]).toBeCloseTo(expectedCoords[i][1], 3);
-  }
-}
+import normalizeAngle from './normalizeAngle';
+import angleBetween from './angleBetween';
 
 describe('Drawing class', () => {
   it('instantiates', () => {
@@ -678,6 +653,52 @@ describe('Drawing class', () => {
       drawing.repositionBonds();
       expect(distanceBetween(1200, 3000, tb1.x2, tb1.y2)).toBeCloseTo(8.97);
       expect(distanceBetween(300, 450, tb2.x2, tb2.y2)).toBeCloseTo(17.8);
+    });
+  });
+
+  describe('adjustNumberingLineAngles', () => {
+    it('sets line angles to outer normal', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'asd');
+      let b1 = seq.getBaseAtPosition(1);
+      let b2 = seq.getBaseAtPosition(2);
+      let b3 = seq.getBaseAtPosition(3);
+      b1.moveTo(0, 0);
+      b2.moveTo(-1, -1);
+      b3.moveTo(0, -2);
+      let n = b2.addNumbering(2);
+      n.lineAngle = 0;
+      drawing.adjustNumberingLineAngles();
+      expect(normalizeAngle(n.lineAngle)).toBeCloseTo(Math.PI);
+    });
+
+    it('prevents overlaps with secondary bonds for bases 1 and 2', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'qwezxc');
+      seq.getBaseAtPosition(1).moveTo(0, 0);
+      seq.getBaseAtPosition(2).moveTo(1, -1);
+      seq.getBaseAtPosition(3).moveTo(0, -2);
+      seq.getBaseAtPosition(4).moveTo(3, 0);
+      seq.getBaseAtPosition(5).moveTo(2, -1);
+      seq.getBaseAtPosition(6).moveTo(3, -2);
+      let b2 = seq.getBaseAtPosition(2);
+      let b5 = seq.getBaseAtPosition(5);
+      let sb = drawing.addSecondaryBond(b2, b5);
+      let n2 = b2.addNumbering(2);
+      n2.lineAngle = 0;
+      let n5 = b5.addNumbering(5);
+      n5.lineAngle = Math.PI;
+      expect(
+        normalizeAngle(seq.outerNormalAngleAtPosition(2))
+      ).toBeCloseTo(0);
+      expect(
+        normalizeAngle(seq.outerNormalAngleAtPosition(5))
+      ).toBeCloseTo(Math.PI);
+      drawing.adjustNumberingLineAngles();
+      expect(normalizeAngle(n2.lineAngle)).toBeCloseTo(Math.PI);
+      expect(normalizeAngle(n5.lineAngle)).toBeCloseTo(0);
     });
   });
 

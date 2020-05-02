@@ -5,6 +5,8 @@ import {
 } from './StraightBond';
 import { TertiaryBond } from './QuadraticBezierBond';
 import parseStems from '../parse/parseStems';
+import angleBetween from './angleBetween';
+import normalizeAngle from './normalizeAngle';
 
 class Drawing {
 
@@ -402,6 +404,33 @@ class Drawing {
     this.forEachPrimaryBond(pb => pb.reposition());
     this.forEachSecondaryBond(sb => sb.reposition());
     this.forEachTertiaryBond(tb => tb.reposition());
+  }
+
+  adjustNumberingLineAngles() {
+    this.forEachSequence(seq => {
+      seq.forEachBase((b, p) => {
+        if (b.hasNumbering()) {
+          b.numbering.lineAngle = seq.outerNormalAngleAtPosition(p);
+        }
+      });
+    });
+    this.forEachSecondaryBond(sb => {
+      let b1 = sb.base1;
+      let b2 = sb.base2;
+      let ba = b1.angleBetweenCenters(b2);
+      if (b1.hasNumbering()) {
+        let la = normalizeAngle(b1.numbering.lineAngle, ba) - ba;
+        if (la < Math.PI / 2 || la > 3 * Math.PI / 2) {
+          b1.numbering.lineAngle = b1.numbering.lineAngle + Math.PI;
+        }
+      }
+      if (b2.hasNumbering()) {
+        let la = normalizeAngle(b2.numbering.lineAngle + Math.PI, ba) - ba;
+        if (la < Math.PI / 2 || la > 3 * Math.PI / 2) {
+          b2.numbering.lineAngle = b2.numbering.lineAngle + Math.PI;
+        }
+      }
+    });
   }
 
   /**
