@@ -334,6 +334,18 @@ class Drawing {
   }
 
   /**
+   * @param {Base} b1 
+   * @param {Base} b2 
+   * 
+   * @returns {SecondaryBond} 
+   */
+  addSecondaryBond(b1, b2) {
+    let sb = SecondaryBond.create(this._svg, b1, b2);
+    this._bonds.secondary.push(sb);
+    return sb;
+  }
+
+  /**
    * @returns {Array<number|null>} 
    */
   strictLayoutPartners() {

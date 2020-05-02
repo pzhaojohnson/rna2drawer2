@@ -38,10 +38,10 @@ describe('Drawing class', () => {
 
   it('addTo method', () => {
     let drawing = new Drawing();
-    expect(document.body.childNodes.length).toBe(0);
+    let n = document.body.childNodes.length;
     drawing.addTo(document.body, () => createNodeSVG());
-    expect(document.body.childNodes.length).toBe(1);
-    expect(document.body.childNodes[0].isSameNode(drawing._div)).toBeTruthy();
+    expect(document.body.childNodes.length).toBe(n + 1);
+    expect(document.body.childNodes[n].isSameNode(drawing._div)).toBeTruthy();
   });
 
   it('centerView method runs without throwing', () => {
@@ -497,6 +497,18 @@ describe('Drawing class', () => {
       i++;
     });
     expect(i).toBe(2);
+  });
+
+  describe('addSecondaryBond method', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    let seq = drawing.appendSequenceOutOfView('asdf', 'qwerasdf');
+    let b1 = seq.getBaseAtPosition(2);
+    let b2 = seq.getBaseAtPosition(6);
+    let sb = drawing.addSecondaryBond(b1, b2);
+    expect(sb.base1).toBe(b1);
+    expect(sb.base2).toBe(b2);
+    expect(drawing._bonds.secondary[0]).toBe(sb);
   });
 
   describe('strictLayoutPartners method', () => {
