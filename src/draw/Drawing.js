@@ -4,8 +4,6 @@ import {
   SecondaryBond,
 } from './StraightBond';
 import { TertiaryBond } from './QuadraticBezierBond';
-import parseStems from '../parse/parseStems';
-import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
 class Drawing {
