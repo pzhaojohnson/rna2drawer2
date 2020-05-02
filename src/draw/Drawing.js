@@ -80,7 +80,7 @@ class Drawing {
    * @returns {number} 
    */
   get zoom() {
-    if (this.width === 0) {
+    if (this.width == 0) {
       return 1;
     }
     return this._svg.attr('width') / this.width;
@@ -97,7 +97,7 @@ class Drawing {
    * @returns {boolean} 
    */
   isEmpty() {
-    return this.numSequences === 0;
+    return this.numSequences == 0;
   }
 
   /**
