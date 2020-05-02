@@ -12,8 +12,8 @@ class InteractiveDrawing {
     this._strictLayoutProps = {
       general: new StrictLayoutGeneralProps(),
       base: [],
-      baseWidth: 12,
-      baseHeight: 12,
+      baseWidth: 13.5,
+      baseHeight: 13.5,
     };
 
     this._layoutType = 'strict';

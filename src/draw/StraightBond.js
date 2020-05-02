@@ -417,8 +417,8 @@ class PrimaryBond extends StraightBond {
 }
 
 PrimaryBond._mostRecentProps = {
-  padding1: 6,
-  padding2: 6,
+  padding1: 8,
+  padding2: 8,
   stroke: '#808080',
   strokeWidth: 1,
 };

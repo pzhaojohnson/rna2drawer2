@@ -508,10 +508,10 @@ class Numbering {
 }
 
 Numbering._mostRecentProps = {
-  basePadding: 12,
+  basePadding: 8,
   lineLength: 8,
   fontFamily: 'Arial',
-  fontSize: 7,
+  fontSize: 8,
   fontWeight: 'normal',
   color: '#808080',
   lineStrokeWidth: 1,

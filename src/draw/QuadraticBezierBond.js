@@ -441,7 +441,7 @@ class TertiaryBond extends QuadraticBezierBond {
    */
   static create(svg, b1, b2) {
     let p = svg.path(
-      QuadraticBezierBond._dPath(b1, b2, 8, 8, 20, -Math.PI)
+      QuadraticBezierBond._dPath(b1, b2, 8, 8, 60, -Math.PI / 2)
     );
     let tb = new TertiaryBond(p, b1, b2);
     TertiaryBond._applyMostRecentProps(tb);
@@ -529,7 +529,7 @@ TertiaryBond._mostRecentProps = {
   padding2: 8,
   stroke: '#0000ff',
   strokeWidth: 1,
-  strokeDasharray: '3 1',
+  strokeDasharray: '2 2',
 };
 
 export {
