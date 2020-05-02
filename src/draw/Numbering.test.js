@@ -84,7 +84,7 @@ describe('Numbering class', () => {
 
   it('_applyMostRecentProps static method', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 9, 1.1, 2.2, 0);
+    let n = Numbering.create(svg, 9, 1.1, 2.2);
     Numbering._mostRecentProps.basePadding = 5.798;
     Numbering._mostRecentProps.lineLength = 10.23;
     Numbering._mostRecentProps.fontFamily = 'Tahoe';
@@ -104,7 +104,7 @@ describe('Numbering class', () => {
 
   it('_copyPropsToMostRecent static method', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 9, 1.1, 2.2, 0);
+    let n = Numbering.create(svg, 9, 1.1, 2.2);
     n.basePadding = 5.798;
     n.lineLength = 10.23;
     n.fontFamily = 'Tahoe';
@@ -126,7 +126,8 @@ describe('Numbering class', () => {
   describe('fromSavedState static method', () => {
     it('valid saved state', () => {
       let svg = createNodeSVG();
-      let n1 = Numbering.create(svg, 10, 5, 8, Math.PI / 3);
+      let n1 = Numbering.create(svg, 10, 5, 8);
+      n1.lineAngle = Math.PI / 3;
       let savableState1 = n1.savableState();
       let n2 = Numbering.fromSavedState(savableState1, svg, 5, 8);
       let savableState2 = n2.savableState();
@@ -136,7 +137,8 @@ describe('Numbering class', () => {
     describe('invalid saved state', () => {
       it('wrong className', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 5, 1, 2, Math.PI / 6);
+        let n = Numbering.create(svg, 5, 1, 2);
+        n.lineAngle = Math.PI / 6;
         let savableState = n.savableState();
         savableState.className = 'Nmbering';
         expect(Numbering.fromSavedState(savableState, svg, 1, 2)).toBe(null);
@@ -144,7 +146,8 @@ describe('Numbering class', () => {
 
       it('constructor throws', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 8, 3, 5, 2 * Math.PI / 3);
+        let n = Numbering.create(svg, 8, 3, 5);
+        n.lineAngle = 2 * Math.PI / 3;
         let savableState = n.savableState();
         n._text.clear();
         n._text.tspan('9.9');
@@ -154,10 +157,12 @@ describe('Numbering class', () => {
 
     it('updates most recent properties', () => {
       let svg = createNodeSVG();
-      let n1 = Numbering.create(svg, 6, 1.4, 5.5, Math.PI / 8);
+      let n1 = Numbering.create(svg, 6, 1.4, 5.5);
+      n1.lineAngle = Math.PI / 8;
       n1.fontSize = 12.987;
       let savableState1 = n1.savableState();
-      let n2 = Numbering.create(svg, 8, 1, 5, Math.PI / 5);
+      let n2 = Numbering.create(svg, 8, 1, 5);
+      n2.lineAngle = Math.PI / 5;
       n2.fontSize = 12;
       let mrps = Numbering.mostRecentProps();
       expect(mrps.fontSize).not.toBe(12.987);
@@ -171,28 +176,28 @@ describe('Numbering class', () => {
     describe('creates with correct values', () => {
       it('number', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 19, 1, 5, 0);
+        let n = Numbering.create(svg, 19, 1, 5);
         expect(n.number).toBe(19);
       });
 
       it('line coordinates', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 1, 6, 9, Math.PI / 3);
+        let n = Numbering.create(svg, 1, 6, 9);
         let x1 = n._line.attr('x1');
         let y1 = n._line.attr('y1');
         let x2 = n._line.attr('x2');
         let y2 = n._line.attr('y2');
         expect(
           normalizeAngle(angleBetween(6, 9, x1, y1))
-        ).toBeCloseTo(Math.PI / 3, 3);
+        ).toBeCloseTo(0, 3);
         expect(
           normalizeAngle(angleBetween(x1, y1, x2, y2))
-        ).toBeCloseTo(Math.PI / 3, 3);
+        ).toBeCloseTo(0, 3);
       });
 
       it('text positioning', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 9, 3, 8, 2 * Math.PI / 3);
+        let n = Numbering.create(svg, 9, 3, 8);
         let tp = Numbering._textPositioning(n._line);
         expect(n._text.attr('x')).toBe(tp.x);
         expect(n._text.attr('y')).toBe(tp.y);
@@ -203,13 +208,13 @@ describe('Numbering class', () => {
 
     it('constructor throws', () => {
       let svg = createNodeSVG();
-      expect(Numbering.create(svg, 5.5, 1, 2, 0)).toBe(null);
+      expect(Numbering.create(svg, 5.5, 1, 2)).toBe(null);
     });
 
     it('applies most recent properties', () => {
       let svg = createNodeSVG();
       Numbering._mostRecentProps.lineStrokeWidth = 1.59;
-      let n = Numbering.create(svg, 4, 1, 9, 0);
+      let n = Numbering.create(svg, 4, 1, 9);
       expect(n.lineStrokeWidth).toBe(1.59);
     });
   });
@@ -287,13 +292,14 @@ describe('Numbering class', () => {
 
   it('id getter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 5, 1, 6, 0);
+    let n = Numbering.create(svg, 5, 1, 6);
     expect(n.id).toBe(n._text.id());
   });
 
   it('basePadding getter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 6, 9, 12, Math.PI / 3);
+    let n = Numbering.create(svg, 6, 9, 12);
+    n.lineAngle = Math.PI / 3;
     expect(n.basePadding).toBeCloseTo(
       distanceBetween(9, 12, n._line.attr('x1'), n._line.attr('y1')),
       3,
@@ -302,7 +308,8 @@ describe('Numbering class', () => {
 
   it('_xBaseCenter and _yBaseCenter getters', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 12, 10, 20, 2 * Math.PI / 3);
+    let n = Numbering.create(svg, 12, 10, 20);
+    n.lineAngle = 2 * Math.PI / 3;
     expect(n._xBaseCenter).toBeCloseTo(10, 3);
     expect(n._yBaseCenter).toBeCloseTo(20, 3);
   });
@@ -311,7 +318,8 @@ describe('Numbering class', () => {
     describe('repositions with correct values', () => {
       it('base center and base padding', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 8, -2, 3, Math.PI / 5);
+        let n = Numbering.create(svg, 8, -2, 3);
+        n.lineAngle = Math.PI / 5;
         n.basePadding = 27;
         expect(n.basePadding).toBeCloseTo(27, 3);
         expect(
@@ -321,7 +329,8 @@ describe('Numbering class', () => {
 
       it('angle', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, -100, 4, 5, Math.PI / 6);
+        let n = Numbering.create(svg, -100, 4, 5);
+        n.lineAngle = Math.PI / 6;
         n.basePadding = 30;
         expect(
           angleBetween(4, 5, n._line.attr('x1'), n._line.attr('y1'))
@@ -333,7 +342,8 @@ describe('Numbering class', () => {
 
       it('line length', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 9, 10, 12, 2 * Math.PI / 3);
+        let n = Numbering.create(svg, 9, 10, 12);
+        n.lineAngle = 2 * Math.PI / 3;
         let ll = n.lineLength;
         n.basePadding = 45;
         expect(n.lineLength).toBeCloseTo(ll, 3);
@@ -342,7 +352,7 @@ describe('Numbering class', () => {
 
     it('updates most recent property', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 39, 7, 8, 0);
+      let n = Numbering.create(svg, 39, 7, 8);
       Numbering._mostRecentProps.basePadding = 8;
       n.basePadding = 16;
       expect(Numbering.mostRecentProps().basePadding).toBe(16);
@@ -351,13 +361,14 @@ describe('Numbering class', () => {
 
   it('lineAngle getter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 65, 99, 103, Math.PI / 5);
+    let n = Numbering.create(svg, 65, 99, 103);
+    n.lineAngle = Math.PI / 5;
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(Math.PI / 5, 3);
   });
 
   it('lineAngle setter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 5, 8, 9, Math.PI / 3);
+    let n = Numbering.create(svg, 5, 8, 9);
     let bp = n.basePadding;
     let ll = n.lineLength;
     let lcs = Numbering._lineCoordinates(8, 9, 2 * Math.PI / 3, bp, ll);
@@ -380,7 +391,8 @@ describe('Numbering class', () => {
     describe('repositions with correct values', () => {
       it('line length', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 8, 10, 19, Math.PI / 3);
+        let n = Numbering.create(svg, 8, 10, 19);
+        n.lineAngle = Math.PI / 3;
         expect(n.lineLength).not.toBeCloseTo(22, 3);
         n.lineLength = 22;
         expect(n.lineLength).toBeCloseTo(22, 3);
@@ -391,7 +403,8 @@ describe('Numbering class', () => {
 
       it('base center and base padding', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 9, 8, 6, Math.PI / 3);
+        let n = Numbering.create(svg, 9, 8, 6);
+        n.lineAngle = Math.PI / 3;
         let bp = n.basePadding;
         n.lineLength = 18;
         expect(n.basePadding).toBeCloseTo(bp, 3);
@@ -402,7 +415,8 @@ describe('Numbering class', () => {
 
       it('angle', () => {
         let svg = createNodeSVG();
-        let n = Numbering.create(svg, 15, 8, 9, Math.PI / 6);
+        let n = Numbering.create(svg, 15, 8, 9);
+        n.lineAngle = Math.PI / 6;
         n.lineLength = 18;
         expect(
           normalizeAngle(angleBetween(8, 9, n._line.attr('x1'), n._line.attr('y1')))
@@ -415,7 +429,7 @@ describe('Numbering class', () => {
 
     it('updates most recent property', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 12, 4, 5, 0);
+      let n = Numbering.create(svg, 12, 4, 5);
       Numbering._mostRecentProps.lineLength = 12;
       n.lineLength = 28;
       expect(Numbering.mostRecentProps().lineLength).toBeCloseTo(28, 3);
@@ -425,7 +439,8 @@ describe('Numbering class', () => {
   describe('reposition method', () => {
     it('maintains line angle, base padding and line length', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 12, 9, 8, Math.PI / 3);
+      let n = Numbering.create(svg, 12, 9, 8);
+      n.lineAngle = Math.PI / 3;
       n.basePadding = 12;
       n.lineLength = 19;
       n.reposition(100, 112, 2 * Math.PI / 3);
@@ -436,7 +451,8 @@ describe('Numbering class', () => {
 
     it('updates position', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 20, 30, 40, Math.PI / 5);
+      let n = Numbering.create(svg, 20, 30, 40);
+      n.lineAngle = Math.PI / 5;
       n.basePadding = 19;
       n.reposition(-2, -5);
       expect(
@@ -448,7 +464,8 @@ describe('Numbering class', () => {
   describe('_reposition method', () => {
     it('updates line coordinates', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 12, 9, 6, Math.PI / 5);
+      let n = Numbering.create(svg, 12, 9, 6);
+      n.lineAngle = Math.PI / 5;
       n._reposition(100, 1000, 8 * Math.PI / 5, 12, 18);
       let lcs = Numbering._lineCoordinates(100, 1000, 8 * Math.PI / 5, 12, 18);
       expect(n._line.attr('x1')).toBeCloseTo(lcs.x1, 3);
@@ -459,7 +476,8 @@ describe('Numbering class', () => {
 
     it('updates text positioning', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 90, 80, 50, Math.PI / 7);
+      let n = Numbering.create(svg, 90, 80, 50);
+      n.lineAngle = Math.PI / 7;
       n._reposition(-3, -2, Math.PI / 3.5, 100, 200);
       let tp = Numbering._textPositioning(n._line);
       expect(n._text.attr('x')).toBeCloseTo(tp.x, 3);
@@ -470,7 +488,8 @@ describe('Numbering class', () => {
 
     it('stores base padding', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 12, 5, 8, Math.PI / 6);
+      let n = Numbering.create(svg, 12, 5, 8);
+      n.lineAngle = Math.PI / 6;
       n._reposition(500, 450, Math.PI / 8, 27, 88);
       expect(n._basePadding).toBeCloseTo(27, 3);
     });
@@ -479,7 +498,8 @@ describe('Numbering class', () => {
   it('insertBefore and insertAfter methods', () => {
     let svg = createNodeSVG();
     let c = svg.circle(20);
-    let n = Numbering.create(svg, 12, 5, 6, 0);
+    let n = Numbering.create(svg, 12, 5, 6);
+    n.lineAngle = 0;
     expect(n._text.position()).toBeGreaterThan(c.position());
     expect(n._line.position()).toBeGreaterThan(c.position());
     n.insertBefore(c);
@@ -501,21 +521,21 @@ describe('Numbering class', () => {
   describe('number setter', () => {
     it('not a finite number', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 12, 0, 0, 0);
+      let n = Numbering.create(svg, 12, 0, 0);
       n.number = Infinity;
       expect(n.number).toBe(12);
     });
 
     it('not an integer', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 19, 0, 0, 0);
+      let n = Numbering.create(svg, 19, 0, 0);
       n.number = 12.5;
       expect(n.number).toBe(19);
     });
 
     it('an integer', () => {
       let svg = createNodeSVG();
-      let n = Numbering.create(svg, 3, 1, 2, 0);
+      let n = Numbering.create(svg, 3, 1, 2);
       n.number = 8;
       expect(n.number).toBe(8);
     });
@@ -523,7 +543,7 @@ describe('Numbering class', () => {
 
   it('fontFamily getter and setter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 9, 0, 0, 0);
+    let n = Numbering.create(svg, 9, 0, 0);
     n.fontFamily = 'Consolas';
     expect(n.fontFamily).toBe('Consolas');
     expect(Numbering.mostRecentProps().fontFamily).toBe('Consolas');
@@ -531,7 +551,7 @@ describe('Numbering class', () => {
 
   it('fontSize getter and setter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 12, 0, 0, 0);
+    let n = Numbering.create(svg, 12, 0, 0);
     n.fontSize = 19.87;
     expect(n.fontSize).toBe(19.87);
     expect(Numbering.mostRecentProps().fontSize).toBe(19.87);
@@ -539,7 +559,7 @@ describe('Numbering class', () => {
 
   it('fontWeight getter and setter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 100, 0, 0, 0);
+    let n = Numbering.create(svg, 100, 0, 0);
     n.fontWeight = 600;
     expect(n.fontWeight).toBe(600);
     expect(Numbering.mostRecentProps().fontWeight).toBe(600);
@@ -547,7 +567,7 @@ describe('Numbering class', () => {
 
   it('color getter and setter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 12, 2, 5, 0);
+    let n = Numbering.create(svg, 12, 2, 5);
     n.color = '#132435';
     expect(n.color).toBe('#132435');
     expect(n._text.attr('fill')).toBe('#132435');
@@ -557,7 +577,7 @@ describe('Numbering class', () => {
 
   it('lineStrokeWidth getter and setter', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 2, 1, 4, 0);
+    let n = Numbering.create(svg, 2, 1, 4);
     n.lineStrokeWidth = 5.234;
     expect(n.lineStrokeWidth).toBe(5.234);
     expect(Numbering.mostRecentProps().lineStrokeWidth).toBe(5.234);
@@ -565,7 +585,7 @@ describe('Numbering class', () => {
 
   it('remove method', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 2, 1, 8, 7);
+    let n = Numbering.create(svg, 2, 1, 8);
     let textId = n._text.id();
     let lineId = n._line.id();
     expect(svg.findOne('#' + textId)).toBeTruthy();
@@ -577,7 +597,7 @@ describe('Numbering class', () => {
 
   it('savableState method', () => {
     let svg = createNodeSVG();
-    let n = Numbering.create(svg, 8, 3, 9, 8);
+    let n = Numbering.create(svg, 8, 3, 9);
     let savableState = n.savableState();
     expect(savableState.className).toBe('Numbering');
     expect(savableState.text).toBe(n._text.id());

@@ -181,10 +181,10 @@ class Sequence {
   }
 
   _updateBaseNumberings() {
-    this._bases.forEach((b, i) => {
-      let p = i + 1;
+    this.forEachBase((b, p) => {
       if ((p - this.numberingAnchor) % this.numberingIncrement == 0) {
-        b.addNumbering(p + this.numberingOffset, this.outerNormalAngleAtPosition(p));
+        let n = b.addNumbering(p + this.numberingOffset);
+        n.lineAngle = this.outerNormalAngleAtPosition(p);
       } else {
         b.removeNumbering();
       }

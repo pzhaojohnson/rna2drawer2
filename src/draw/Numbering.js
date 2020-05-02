@@ -155,12 +155,11 @@ class Numbering {
    * @param {number} number 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
-   * @param {number} lineAngle 
    * 
    * @returns {Numbering|null} 
    */
-  static create(svg, number, xBaseCenter, yBaseCenter, lineAngle) {
-    let lc = Numbering._lineCoordinates(xBaseCenter, yBaseCenter, lineAngle, 10, 8);
+  static create(svg, number, xBaseCenter, yBaseCenter) {
+    let lc = Numbering._lineCoordinates(xBaseCenter, yBaseCenter, 0, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     line.id();
     let text = svg.text((add) => add.tspan(number.toString()));

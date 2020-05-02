@@ -494,18 +494,16 @@ class Base {
    * Returns null if the given number is not accepted by the Numbering class.
    * 
    * @param {number} number 
-   * @param {number} [outerNormalAngle=0] 
    * 
    * @returns {Numbering|null} 
    */
-  addNumbering(number, outerNormalAngle=0) {
+  addNumbering(number) {
     this.removeNumbering();
     this._numbering = Numbering.create(
       this._text.root(),
       number,
       this.xCenter,
       this.yCenter,
-      outerNormalAngle,
     );
     return this._numbering;
   }

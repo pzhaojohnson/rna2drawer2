@@ -331,7 +331,8 @@ describe('Base class', () => {
     it('repositions numbering', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'e', 1, 5);
-      let n = b.addNumbering(112, Math.PI / 5);
+      let n = b.addNumbering(112);
+      n.lineAngle = Math.PI / 5;
       b.moveTo(20, 40);
       expect(
         normalizeAngle(angleBetween(20, 40, n._line.attr('x1'), n._line.attr('y1')))
@@ -662,7 +663,8 @@ describe('Base class', () => {
     it('passes number and base center', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'w', 5, 9);
-      let n = b.addNumbering(12, Math.PI / 3);
+      let n = b.addNumbering(12);
+      n.lineAngle = Math.PI / 3;
       expect(n.number).toBe(12);
       expect(
         distanceBetween(5, 9, n._line.attr('x1'), n._line.attr('y1'))
