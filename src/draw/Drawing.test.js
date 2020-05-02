@@ -7,6 +7,7 @@ import parseDotBracket from '../parse/parseDotBracket';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import StrictLayoutGeneralProps from './layout/singleseq/strict/StrictLayoutGeneralProps';
 import StrictLayoutBaseProps from './layout/singleseq/strict/StrictLayoutBaseProps';
+import distanceBetween from './distanceBetween';
 
 function checkPartners(partners, expectedPartners) {
   expect(partners.length).toBe(expectedPartners.length);
@@ -618,6 +619,65 @@ describe('Drawing class', () => {
       expect(drawing.numTertiaryBonds).toBe(1);
       expect(drawing._svg.findOne('#' + pathId2)).toBe(null);
       expect(drawing._bonds.tertiary[0]).toBe(tb1);
+    });
+  });
+
+  describe('repositionBonds method', () => {
+    it('repositions primary bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'qwerasdf');
+      let b2 = seq.getBaseAtPosition(2);
+      let b3 = seq.getBaseAtPosition(3);
+      let b6 = seq.getBaseAtPosition(6);
+      let pb1 = drawing.addPrimaryBond(b2, b3);
+      let pb2 = drawing.addPrimaryBond(b6, b2);
+      pb1.padding1 = 12.2;
+      pb2.padding1 = 6.8;
+      b2.moveTo(50, 60);
+      b3.moveTo(100, 200);
+      b6.moveTo(1000, 2000);
+      drawing.repositionBonds();
+      expect(distanceBetween(50, 60, pb1.x1, pb1.y1)).toBeCloseTo(12.2);
+      expect(distanceBetween(1000, 2000, pb2.x1, pb2.y1)).toBeCloseTo(6.8);
+    });
+
+    it('repositions secondary bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'qwerasdf');
+      let b2 = seq.getBaseAtPosition(2);
+      let b3 = seq.getBaseAtPosition(3);
+      let b6 = seq.getBaseAtPosition(6);
+      let sb1 = drawing.addSecondaryBond(b2, b6);
+      let sb2 = drawing.addSecondaryBond(b3, b2);
+      sb1.padding1 = 15.7;
+      sb2.padding1 = 20.3;
+      b2.moveTo(-100, -200);
+      b3.moveTo(1000, 350);
+      b6.moveTo(450, 12);
+      drawing.repositionBonds();
+      expect(distanceBetween(-100, -200, sb1.x1, sb1.y1)).toBeCloseTo(15.7);
+      expect(distanceBetween(1000, 350, sb2.x1, sb2.y1)).toBeCloseTo(20.3);
+    });
+
+    it('repositions tertiary bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'qwerasdf');
+      let b2 = seq.getBaseAtPosition(2);
+      let b3 = seq.getBaseAtPosition(3);
+      let b6 = seq.getBaseAtPosition(6);
+      let tb1 = drawing.addTertiaryBond(b6, b3);
+      let tb2 = drawing.addTertiaryBond(b6, b2);
+      tb1.padding2 = 8.97;
+      tb2.padding2 = 17.8;
+      b2.moveTo(300, 450);
+      b3.moveTo(1200, 3000);
+      b6.moveTo(900, 750);
+      drawing.repositionBonds();
+      expect(distanceBetween(1200, 3000, tb1.x2, tb1.y2)).toBeCloseTo(8.97);
+      expect(distanceBetween(300, 450, tb2.x2, tb2.y2)).toBeCloseTo(17.8);
     });
   });
 

@@ -87,6 +87,34 @@ class StraightBond {
   }
 
   /**
+   * @returns {number} 
+   */
+  get x1() {
+    return this._line.attr('x1');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get y1() {
+    return this._line.attr('y1');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get x2() {
+    return this._line.attr('x2');
+  }
+
+  /**
+   * @returns {number} 
+   */
+  get y2() {
+    return this._line.attr('y2');
+  }
+
+  /**
    * Sets the _padding1 and _padding2 properties.
    */
   _storePaddings() {
