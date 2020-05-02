@@ -411,10 +411,16 @@ class Sequence {
   }
 
   /**
-   * @param {callback} cb 
+   * @typedef Sequence~forEachBase 
+   * @param {Base} b 
+   * @param {number} p The position of the base.
+   */
+
+  /**
+   * @param {Sequence~forEachBase} cb 
    */
   forEachBase(cb) {
-    this._bases.forEach(b => cb(b));
+    this._bases.forEach((b, i) => cb(b, i + 1));
   }
 
   /**

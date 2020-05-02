@@ -228,7 +228,7 @@ class Drawing {
   /**
    * @callback Drawing~forEachBase 
    * @param {Base} b 
-   * @param {number} p Overall position of the base.
+   * @param {number} p The overall position of the base.
    */
 
   /**

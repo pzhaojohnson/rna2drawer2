@@ -627,10 +627,12 @@ describe('Sequence class', () => {
     let characters = 'cvbn';
     let seq = Sequence.createOutOfView(svg, 'adf', characters);
     let i = 0;
-    seq.forEachBase(b => {
+    seq.forEachBase((b, p) => {
       expect(b.character).toBe(characters.charAt(i));
+      expect(p).toBe(i + 1);
       i++;
     });
+    expect(i).toBe(4);
   });
 
   it('baseIds method', () => {
