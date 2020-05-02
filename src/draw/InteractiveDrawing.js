@@ -55,6 +55,27 @@ class InteractiveDrawing {
   }
 
   /**
+   * @returns {Array<number|null>} 
+   */
+  _overallSecondaryPartners() {
+    let idsToPositions = {};
+    this._drawing.forEachBase((b, p) => {
+      idsToPositions[b.id] = p;
+    });
+    let partners = [];
+    this._drawing.forEachBase(b => {
+      partners.push(null);
+    });
+    this._drawing.forEachSecondaryBond(sb => {
+      let p = idsToPositions[sb.base1.id];
+      let q = idsToPositions[sb.base2.id];
+      partners[p - 1] = q;
+      partners[q - 1] = p;
+    });
+    return partners;
+  }
+
+  /**
    * Returns null if no sequence is added.
    * 
    * @param {string} id 
