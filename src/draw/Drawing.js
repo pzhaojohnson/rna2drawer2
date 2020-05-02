@@ -408,7 +408,7 @@ class Drawing {
     }
   }
 
-  _repositionBonds() {
+  repositionBonds() {
     this.forEachPrimaryBond(sb => sb.reposition());
     this.forEachSecondaryBond(wcb => wcb.reposition());
     this.forEachTertiaryBond(tb => tb.reposition());
