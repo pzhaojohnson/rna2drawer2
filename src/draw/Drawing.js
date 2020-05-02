@@ -269,22 +269,6 @@ class Drawing {
   }
 
   /**
-   * Returns zero if this drawing does not contain the given base.
-   * 
-   * @param {Base} b 
-   * 
-   * @returns {number} 
-   */
-  clockwiseNormalAngleOfBase(b) {
-    let seq = this.sequenceOfBase(b);
-    if (seq) {
-      let p = seq.positionOfBase(b);
-      return seq.clockwiseNormalAngleAtPosition(p);
-    }
-    return 0;
-  }
-
-  /**
    * @returns {number} 
    */
   get numPrimaryBonds() {

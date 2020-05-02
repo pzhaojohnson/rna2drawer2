@@ -388,27 +388,6 @@ describe('Drawing class', () => {
     });
   });
 
-  describe('clockwiseNormalAngleOfBase method', () => {
-    it('drawing contains base', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'asdf');
-      let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwer');
-      let b = seq2.getBaseAtPosition(3);
-      expect(
-        drawing.clockwiseNormalAngleOfBase(b)
-      ).toBe(seq2.clockwiseNormalAngleAtPosition(3));
-    });
-
-    it('drawing does not contain base', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'asdf');
-      let b = Base.create(drawing._svg, 'a', 1, 2);
-      expect(drawing.clockwiseNormalAngleOfBase(b)).toBe(0);
-    });
-  });
-
   it('numPrimaryBonds getter', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => createNodeSVG());
