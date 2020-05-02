@@ -104,6 +104,19 @@ describe('StraightBond class', () => {
     expect(sb.base2).toBe(b2);
   });
 
+  it('x1, y1, x2 and y2 getters', () => {
+    let svg = createNodeSVG();
+    let b1 = Base.create(svg, 'e', 1, 5);
+    let b2 = Base.create(svg, 'k', 600, 700);
+    let lcs = StraightBond._lineCoordinates(b1, b2, 6.7, 13.9);
+    let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
+    let sb = new StraightBond(l, b1, b2);
+    expect(sb.x1).toBeCloseTo(lcs.x1);
+    expect(sb.y1).toBeCloseTo(lcs.y1);
+    expect(sb.x2).toBeCloseTo(lcs.x2);
+    expect(sb.y2).toBeCloseTo(lcs.y2);
+  });
+
   it('padding1 and padding2 getters and setters', () => {
     let svg = createNodeSVG();
     let b1 = Base.create(svg, 'e', 3, 6);
