@@ -43,6 +43,44 @@ describe('InteractiveDrawing class', () => {
     expect(idrawing.hasStrictLayout()).toBeTruthy();
   });
 
+  describe('_appendSequenceOutOfView method', () => {
+    it('sequence cannot be appended', () => {
+      let idrawing = new InteractiveDrawing();
+      idrawing.addTo(document.body, () => createNodeSVG());
+      idrawing._appendSequenceOutOfView('asdf', 'asdf');
+      let seq2 = idrawing._appendSequenceOutOfView('asdf', 'qwer');
+      expect(seq2).toBe(null);
+    });
+
+    it('appends sequence', () => {
+      let idrawing = new InteractiveDrawing();
+      idrawing.addTo(document.body, () => createNodeSVG());
+      let seq1 = idrawing._appendSequenceOutOfView('asdf', 'asdf');
+      let seq2 = idrawing._appendSequenceOutOfView('qwer', 'qwer');
+      expect(idrawing._drawing._sequences[0]).toBe(seq1);
+      expect(idrawing._drawing._sequences[1]).toBe(seq2);
+    });
+
+    it('creates sequence out of view', () => {
+      let idrawing = new InteractiveDrawing();
+      idrawing.addTo(document.body, () => createNodeSVG());
+      let seq = idrawing._appendSequenceOutOfView('asdf', 'asdf');
+      seq.forEachBase(b => {
+        expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
+      });
+    });
+
+    it('appends strict layout base properties', () => {
+      let idrawing = new InteractiveDrawing();
+      idrawing.addTo(document.body, () => createNodeSVG());
+      expect(idrawing._strictLayoutProps.base.length).toBe(0);
+      idrawing._appendSequenceOutOfView('asdf', 'zxcv');
+      expect(idrawing._strictLayoutProps.base.length).toBe(4);
+      idrawing._appendSequenceOutOfView('qwer', 'bbn');
+      expect(idrawing._strictLayoutProps.base.length).toBe(7);
+    });
+  });
+
   describe('_overallSecondaryPartners method', () => {
     it('multiple sequences', () => {
       let id = new InteractiveDrawing();

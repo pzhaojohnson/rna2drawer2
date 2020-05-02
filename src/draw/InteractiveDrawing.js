@@ -34,13 +34,6 @@ class InteractiveDrawing {
   }
 
   /**
-   * @returns {boolean} True if this drawing is empty.
-   */
-  isEmpty() {
-    return this._drawing.isEmpty();
-  }
-
-  /**
    * @returns {string} 
    */
   get layoutType() {
@@ -52,6 +45,31 @@ class InteractiveDrawing {
    */
   hasStrictLayout() {
     return this.layoutType === 'strict';
+  }
+
+  /**
+   * @returns {boolean} True if this drawing is empty.
+   */
+  isEmpty() {
+    return this._drawing.isEmpty();
+  }
+
+  /**
+   * Returns null if the sequence cannot be appended.
+   * 
+   * @param {string} id 
+   * @param {string} characters 
+   * 
+   * @returns {Sequence|null} 
+   */
+  _appendSequenceOutOfView(id, characters) {
+    let seq = this._drawing.appendSequenceOutOfView(id, characters);
+    if (seq) {
+      seq.forEachBase(b => {
+        this._strictLayoutProps.base.push(new StrictLayoutBaseProps());
+      });
+    }
+    return seq;
   }
 
   /**
@@ -73,24 +91,6 @@ class InteractiveDrawing {
       partners[q - 1] = p;
     });
     return partners;
-  }
-
-  /**
-   * Returns null if no sequence is added.
-   * 
-   * @param {string} id 
-   * @param {string} characters 
-   * 
-   * @returns {Sequence|null} 
-   */
-  _appendSequenceOutOfView(id, characters) {
-    let seq = this._drawing.appendSequenceOutOfView(id, characters);
-    if (seq) {
-      seq.forEachBase(b => {
-        this._strictLayoutProps.base.push(new StrictLayoutBaseProps());
-      });
-    }
-    return seq;
   }
 
   _applyStrictLayout() {
