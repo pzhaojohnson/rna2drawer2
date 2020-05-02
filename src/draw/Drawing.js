@@ -196,12 +196,10 @@ class Drawing {
    */
   getBaseAtOverallPosition(p) {
     let base = null;
-    let q = 1;
-    this.forEachBase(b => {
+    this.forEachBase((b, q) => {
       if (q === p) {
         base = b;
       }
-      q++;
     });
     return base;
   }
@@ -215,12 +213,10 @@ class Drawing {
    */
   overallPositionOfBase(b) {
     let p = 0;
-    let q = 1;
-    this.forEachBase(base => {
+    this.forEachBase((base, q) => {
       if (base.id === b.id) {
         p = q;
       }
-      q++;
     });
     return p;
   }
