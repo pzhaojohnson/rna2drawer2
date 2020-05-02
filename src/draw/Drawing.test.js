@@ -476,9 +476,10 @@ describe('Drawing class', () => {
   it('numSecondaryBonds getter', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => createNodeSVG());
-    drawing.appendSequenceOutOfView('asdf', 'aaaggguuu');
+    let seq = drawing.appendSequenceOutOfView('asdf', 'aaaggguuu');
     expect(drawing.numSecondaryBonds).toBe(0);
-    drawing.applyStrictLayoutPartners([9, 8, null, null, null, null, null, 2, 1]);
+    drawing.addSecondaryBond(seq.getBaseAtPosition(1), seq.getBaseAtPosition(7));
+    drawing.addSecondaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(5));
     expect(drawing.numSecondaryBonds).toBe(2);
   });
 
@@ -509,142 +510,6 @@ describe('Drawing class', () => {
     expect(sb.base1).toBe(b1);
     expect(sb.base2).toBe(b2);
     expect(drawing._bonds.secondary[0]).toBe(sb);
-  });
-
-  describe('strictLayoutPartners method', () => {
-    it('unstructured', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'aaggcc');
-      checkPartners(
-        drawing.strictLayoutPartners(),
-        [null, null, null, null, null, null],
-      );
-    });
-
-    it('multiple sequences', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      let seq1 = drawing.appendSequenceOutOfView('asdf', 'agc');
-      let seq2 = drawing.appendSequenceOutOfView('qwer', 'ewq');
-      drawing._bonds.secondary.push(
-        SecondaryBond.create(drawing._svg, seq1.getBaseAtPosition(1), seq2.getBaseAtPosition(3)),
-      );
-      drawing._bonds.secondary.push(
-        SecondaryBond.create(drawing._svg, seq1.getBaseAtPosition(2), seq2.getBaseAtPosition(2)),
-      );
-      checkPartners(
-        drawing.strictLayoutPartners(),
-        [6, 5, null, null, 2, 1],
-      );
-    });
-  });
-
-  describe('removeExcessStrictLayoutPairs method', () => {
-    it('partners notation is the wrong length', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'aaaggguuu');
-      drawing.applyStrictLayoutPartners([9, 8, 7, null, null, null, 3, 2, 1]);
-      expect(drawing.numSecondaryBonds).toBe(3);
-      drawing.removeExcessStrictLayoutPairs([7, 6, null, null, null, 2, 1]);
-      expect(drawing.numSecondaryBonds).toBe(3);
-    });
-
-    it('removes bonds from bonds array', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'ggguuuccc');
-      drawing.applyStrictLayoutPartners([9, 8, 7, null, null, null, 3, 2, 1]);
-      let bonds = [];
-      drawing.forEachSecondaryBond(sb => bonds.push(sb));
-      expect(drawing.numSecondaryBonds).toBe(3);
-      drawing.removeExcessStrictLayoutPairs([9, null, 7, null, null, null, 3, null, 1]);
-      expect(drawing.numSecondaryBonds).toBe(2);
-      bonds.splice(1, 1);
-      let i = 0;
-      drawing.forEachSecondaryBond(sb => {
-        expect(sb).toBe(bonds[i]);
-        i++;
-      });
-    });
-
-    it('calls remove method of bonds', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'aaauuuccc');
-      drawing.applyStrictLayoutPartners([9, 8, 7, null, null, null, 3, 2, 1]);
-      let bonds = [];
-      drawing.forEachSecondaryBond(sb => bonds.push(sb));
-      let sb2 = bonds[1];
-      let lineId = sb2._line.id();
-      expect(drawing._svg.findOne('#' + lineId)).not.toBe(null);
-      drawing.removeExcessStrictLayoutPairs([9, null, 7, null, null, null, 3, null, 1]);
-      expect(drawing._svg.findOne('#' + lineId)).toBe(null);
-    });
-  });
-
-  describe('addMissingStrictLayoutPairs method', () => {
-    it('partners notation is the wrong length', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'aaacc');
-      drawing.appendSequenceOutOfView('qwer', 'cuuu');
-      expect(drawing.numSecondaryBonds).toBe(0);
-      drawing.addMissingStrictLayoutPairs([9, 8, 7, null, null, null, 3, 2, 1, null]);
-      expect(drawing.numSecondaryBonds).toBe(0);
-    });
-
-    it('multiple sequences (and returns the added bonds)', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'aaacc');
-      drawing.appendSequenceOutOfView('qwer', 'cuuu');
-      expect(drawing.numSecondaryBonds).toBe(0);
-      let bonds = drawing.addMissingStrictLayoutPairs([9, null, 7, null, null, null, 3, null, 1]);
-      expect(drawing.numSecondaryBonds).toBe(2);
-      expect(bonds.length).toBe(2);
-      let p = 1;
-      let i = 0;
-      drawing.forEachSecondaryBond(sb => {
-        expect(sb.base1).toBe(drawing.getBaseAtStrictLayoutPosition(p));
-        expect(sb.base2).toBe(drawing.getBaseAtStrictLayoutPosition(10 - p));
-        expect(sb).toBe(bonds[i]);
-        p += 2;
-        i++;
-      });
-    });
-  });
-
-  describe('applyStrictLayoutPartners method', () => {
-    it('partners notation is the wrong length', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'aaagggccc');
-      expect(drawing.numSecondaryBonds).toBe(0);
-      drawing.applyStrictLayoutPartners([7, 6, null, null, null, 2, 1]);
-      expect(drawing.numSecondaryBonds).toBe(0);
-    });
-
-    it('removes and adds bonds and returns the added bonds', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'gggaaaccc');
-      expect(drawing.numSecondaryBonds).toBe(0);
-      drawing.applyStrictLayoutPartners([9, 8, null, null, null, null, null, 2, 1]);
-      expect(drawing.numSecondaryBonds).toBe(2);
-      let bonds = drawing.applyStrictLayoutPartners([9, null, 7, null, null, null, 3, null, 1]);
-      expect(drawing.numSecondaryBonds).toBe(2);
-      expect(bonds.length).toBe(1);
-      expect(bonds[0].base1).toBe(drawing.getBaseAtStrictLayoutPosition(3));
-      expect(bonds[0].base2).toBe(drawing.getBaseAtStrictLayoutPosition(7));
-      let p = 1;
-      drawing.forEachSecondaryBond(sb => {
-        expect(sb.base1).toBe(drawing.getBaseAtStrictLayoutPosition(p));
-        expect(sb.base2).toBe(drawing.getBaseAtStrictLayoutPosition(10 - p));
-        p += 2;
-      });
-    });
   });
 
   it('numTertiaryBonds getter', () => {
@@ -808,10 +673,9 @@ describe('Drawing class', () => {
     it('includes class name and svg string', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
-      drawing.applyStrictLayoutPartners(
-        parseDotBracket('((....))').secondaryPartners,
-      );
+      let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+      drawing.addSecondaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(7));
+      drawing.addSecondaryBond(seq.getBaseAtPosition(3), seq.getBaseAtPosition(6));
       let savableState = drawing.savableState();
       expect(savableState.className).toBe('Drawing');
       expect(savableState.svg).toBe(drawing._svg.svg());
@@ -850,18 +714,17 @@ describe('Drawing class', () => {
     it('includes secondary bonds', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
-      drawing.appendSequenceOutOfView('asf', 'asdfasdf');
-      let bonds = drawing.applyStrictLayoutPartners(
-        parseDotBracket('((....))').secondaryPartners,
-      );
+      let seq = drawing.appendSequenceOutOfView('asf', 'asdfasdf');
+      let sb1 = drawing.addSecondaryBond(seq.getBaseAtPosition(1), seq.getBaseAtPosition(8));
+      let sb2 = drawing.addSecondaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(7));
       let savableState = drawing.savableState();
       expect(savableState.bonds.secondary.length).toBe(2);
       expect(
         JSON.stringify(savableState.bonds.secondary[0])
-      ).toBe(JSON.stringify(bonds[0].savableState()));
+      ).toBe(JSON.stringify(sb1.savableState()));
       expect(
         JSON.stringify(savableState.bonds.secondary[1])
-      ).toBe(JSON.stringify(bonds[1].savableState()));
+      ).toBe(JSON.stringify(sb2.savableState()));
     });
 
     it('includes tertiary bonds', () => {
@@ -891,9 +754,8 @@ describe('Drawing class', () => {
       drawing.addTo(document.body, () => createNodeSVG());
       let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
       drawing.addPrimaryBondsForSequence(seq);
-      drawing.applyStrictLayoutPartners(
-        parseDotBracket('(((..)))').secondaryPartners,
-      );
+      drawing.addSecondaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(7));
+      drawing.addSecondaryBond(seq.getBaseAtPosition(1), seq.getBaseAtPosition(8));
       drawing.addTertiaryBond(
         drawing.getBaseAtStrictLayoutPosition(2),
         drawing.getBaseAtStrictLayoutPosition(7),
