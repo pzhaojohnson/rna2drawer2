@@ -93,20 +93,83 @@ class InteractiveDrawing {
     return partners;
   }
 
-  _applyStrictLayout() {
+  /**
+   * Returns null if a strict layout cannot be created for this drawing.
+   * 
+   * @returns {StrictLayout|null} 
+   */
+  _strictLayout() {
     let baseProps = [];
     this._strictLayoutProps.base.forEach(bps => {
       baseProps.push(bps.deepCopy());
     });
-    this._drawing.applyStrictLayout(
-      new StrictLayout(
-        this._drawing.strictLayoutPartners(),
+    let sl = null;
+    try {
+      sl = new StrictLayout(
+        this._overallSecondaryPartners(),
         this._strictLayoutProps.general.deepCopy(),
         baseProps,
-      ),
-      this._strictLayoutProps.baseWidth,
-      this._strictLayoutProps.baseHeight,
+      );
+    } catch (err) {
+      return null;
+    }
+    return sl;
+  }
+
+  _applyStrictLayout() {
+    let sl = this._strictLayout();
+    if (!sl) {
+      return;
+    }
+    let bw = this._strictLayoutProps.baseWidth;
+    let bh = this._strictLayoutProps.baseHeight;
+    let xMin = sl.xMin;
+    let yMin = sl.yMin;
+    this._drawing.forEachBase((b, p) => {
+      let bcs = sl.baseCoordinatesAtPosition(p);
+      b.moveTo(
+        window.screen.width + (bw * (bcs.xCenter - xMin)),
+        window.screen.height + (bh * (bcs.yCenter - yMin)),
+      );
+    });
+    this._drawing.repositionBonds();
+    this._drawing.adjustNumberingLineAngles();
+    this._drawing.setWidthAndHeight(
+      (2 * window.screen.width) + (bw * (sl.xMax - xMin)),
+      (2 * window.screen.height) + (bh * (sl.yMax - yMin)),
     );
+  }
+
+  /**
+   * @param {Sequence} seq 
+   * @param {Array<number|null>} partners 
+   */
+  _addSecondaryBondsForSequence(seq, partners) {
+    seq.forEachBase((b, p) => {
+      let q = partners[p - 1];
+      if (q != null && p < q) {
+        this._drawing.addSecondaryBond(
+          seq.getBaseAtPosition(p),
+          seq.getBaseAtPosition(q)
+        );
+      }
+    });
+  }
+
+  /**
+   * @param {Sequence} seq 
+   * @param {Array<number|null>} partners 
+   */
+  _addTertiaryBondsForSequence(seq, partners) {
+    seq.forEachBase((b, p) => {
+      let q = partners[p - 1];
+      if (q != null && p < q) {
+        this._drawing.addTertiaryBond(
+          seq.getBaseAtPosition(p),
+          seq.getBaseAtPosition(q),
+        );
+      }
+    });
   }
 
   /**
@@ -117,7 +180,6 @@ class InteractiveDrawing {
    */
   appendStructure(id, characters, secondaryPartners, tertiaryPartners) {
     let wasEmpty = this.isEmpty();
-    let strictLayoutPartners = this._drawing.strictLayoutPartners();
     let seq = this._appendSequenceOutOfView(id, characters);
     if (!seq) {
       return;
@@ -128,10 +190,8 @@ class InteractiveDrawing {
       this._strictLayoutProps.base[i + j].stretch3 = stretches3[j];
     }
     this._drawing.addPrimaryBondsForSequence(seq);
-    this._drawing.applyStrictLayoutPartners(
-      strictLayoutPartners.concat(secondaryPartners),
-    );
-    this._drawing.addTertiaryPairsForSequence(seq, tertiaryPartners);
+    this._addSecondaryBondsForSequence(seq, secondaryPartners);
+    this._addTertiaryBondsForSequence(seq, tertiaryPartners);
     if (this.hasStrictLayout()) {
       this._applyStrictLayout();
     }

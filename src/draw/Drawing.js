@@ -32,9 +32,9 @@ class Drawing {
     this._div = document.createElement('div');
     this._div.style.cssText = 'width: 100%;'
       + 'height: 100%;'
-      + 'display: flex;'
-      + 'align-items: center;'
-      + 'justify-content: center;'
+      //+ 'display: flex;'
+      //+ 'align-items: center;'
+      //+ 'justify-content: center;'
       + 'overflow: auto;';
     container.appendChild(this._div);
     this._svg = SVG().addTo(this._div);
