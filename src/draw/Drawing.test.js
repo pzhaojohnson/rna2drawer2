@@ -641,34 +641,6 @@ describe('Drawing class', () => {
     });
   });
 
-  describe('applyStrictLayout method', () => {
-    it('runs without throwing', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      let characters = 'asdfasdfasdfasdfqwerqwerqwerqwerqwer';
-      let dtbr = '..(((....(((((....)))))..((..))..)))';
-      drawing.appendSequenceOutOfView('asdf', characters);
-      let sl = new StrictLayout(
-        parseDotBracket(dtbr).secondaryPartners,
-        new StrictLayoutGeneralProps(),
-        defaultBaseProps(characters.length),
-      );
-      drawing.applyStrictLayout(sl, 8, 10);
-      drawing.forEachBase(b => {
-        expect(typeof b.xCenter).toBe('number');
-        expect(isFinite(b.xCenter)).toBeTruthy();
-        expect(typeof b.yCenter).toBe('number');
-        expect(isFinite(b.yCenter)).toBeTruthy();
-      });
-      expect(typeof drawing.width).toBe('number');
-      expect(isFinite(drawing.width)).toBeTruthy();
-      expect(typeof drawing.height).toBe('number');
-      expect(isFinite(drawing.height)).toBeTruthy();
-      expect(typeof drawing.zoom).toBe('number');
-      expect(isFinite(drawing.zoom)).toBeTruthy();
-    });
-  });
-
   describe('savableState method', () => {
     it('includes class name and svg string', () => {
       let drawing = new Drawing();

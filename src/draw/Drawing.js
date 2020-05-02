@@ -415,41 +415,6 @@ class Drawing {
   }
 
   /**
-   * @param {StrictLayout} layout 
-   * @param {number} baseWidth 
-   * @param {number} baseHeight 
-   */
-  applyStrictLayout(layout, baseWidth, baseHeight) {
-    let xMin = layout.xMin;
-    let yMin = layout.yMin;
-    let xPadding = window.screen.width / 2;
-    let yPadding = window.screen.height / 2;
-    let p = 1;
-    this.forEachBase(b => {
-      let bc = layout.baseCoordinatesAtPosition(p);
-      b.moveTo(
-        xPadding + ((bc.xCenter - xMin) * baseWidth),
-        yPadding + ((bc.yCenter - yMin) * baseHeight),
-      );
-      p++;
-    });
-    this.forEachSequence(seq => {
-      let q = 1;
-      seq.forEachBase(b => {
-        if (b.hasNumbering()) {
-          b.numbering.lineAngle = seq.outerNormalAngleAtPosition(q);
-        }
-        q++;
-      });
-    });
-    this._repositionBonds();
-    this.setWidthAndHeight(
-      ((layout.xMax - xMin) * baseWidth) + (2 * xPadding),
-      ((layout.yMax - yMin) * baseHeight) + (2 * yPadding),
-    );
-  }
-
-  /**
    * @typedef {Object} Drawing~SavableState 
    * @property {string} className 
    * @property {string} svg 
