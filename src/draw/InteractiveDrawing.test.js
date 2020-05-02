@@ -43,6 +43,14 @@ describe('InteractiveDrawing class', () => {
     expect(idrawing.hasStrictLayout()).toBeTruthy();
   });
 
+  it('isEmpty method', () => {
+    let idrawing = new InteractiveDrawing();
+    idrawing.addTo(document.body, () => createNodeSVG());
+    expect(idrawing.isEmpty()).toBeTruthy();
+    idrawing._appendSequenceOutOfView('asdf', 'asdf');
+    expect(idrawing.isEmpty()).toBeFalsy();
+  });
+
   describe('_appendSequenceOutOfView method', () => {
     it('sequence cannot be appended', () => {
       let idrawing = new InteractiveDrawing();
