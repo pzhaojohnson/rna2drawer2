@@ -685,7 +685,7 @@ describe('Drawing class', () => {
       seq.getBaseAtPosition(6).moveTo(3, -2);
       let b2 = seq.getBaseAtPosition(2);
       let b5 = seq.getBaseAtPosition(5);
-      let sb = drawing.addSecondaryBond(b2, b5);
+      drawing.addSecondaryBond(b2, b5);
       let n2 = b2.addNumbering(2);
       n2.lineAngle = 0;
       let n5 = b5.addNumbering(5);
