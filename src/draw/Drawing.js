@@ -226,11 +226,21 @@ class Drawing {
   }
 
   /**
-   * @param {callback} cb 
+   * @callback Drawing~forEachBase 
+   * @param {Base} b 
+   * @param {number} p Overall position of the base.
+   */
+
+  /**
+   * @param {Drawing~forEachBase} cb 
    */
   forEachBase(cb) {
+    let p = 1;
     this.forEachSequence(seq => {
-      seq.forEachBase(b => cb(b));
+      seq.forEachBase(b => {
+        cb(b, p);
+        p++;
+      });
     });
   }
 
@@ -289,7 +299,7 @@ class Drawing {
    * @param {callback} cb 
    */
   forEachPrimaryBond(cb) {
-    this._bonds.primary.forEach(sb => cb(sb));
+    this._bonds.primary.forEach(pb => cb(pb));
   }
 
   /**
@@ -330,7 +340,7 @@ class Drawing {
    * @param {callback} cb 
    */
   forEachSecondaryBond(cb) {
-    this._bonds.secondary.forEach(wcb => cb(wcb));
+    this._bonds.secondary.forEach(sb => cb(sb));
   }
 
   /**
@@ -409,8 +419,8 @@ class Drawing {
   }
 
   repositionBonds() {
-    this.forEachPrimaryBond(sb => sb.reposition());
-    this.forEachSecondaryBond(wcb => wcb.reposition());
+    this.forEachPrimaryBond(pb => pb.reposition());
+    this.forEachSecondaryBond(sb => sb.reposition());
     this.forEachTertiaryBond(tb => tb.reposition());
   }
 
@@ -447,10 +457,10 @@ class Drawing {
       seq => savableState.sequences.push(seq.savableState())
     );
     this._bonds.primary.forEach(
-      sb => savableState.bonds.primary.push(sb.savableState())
+      pb => savableState.bonds.primary.push(pb.savableState())
     );
     this._bonds.secondary.forEach(
-      wcb => savableState.bonds.secondary.push(wcb.savableState())
+      sb => savableState.bonds.secondary.push(sb.savableState())
     );
     this._bonds.tertiary.forEach(
       tb => savableState.bonds.tertiary.push(tb.savableState())

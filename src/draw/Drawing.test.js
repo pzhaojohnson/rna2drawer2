@@ -343,8 +343,9 @@ describe('Drawing class', () => {
     drawing.appendSequenceOutOfView('zxcv', 'gh');
     let characters = 'asgh';
     let i = 0;
-    drawing.forEachBase(b => {
+    drawing.forEachBase((b, p) => {
       expect(b.character).toBe(characters.charAt(i));
+      expect(p).toBe(i + 1);
       i++;
     });
     expect(i).toBe(4);
