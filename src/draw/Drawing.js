@@ -21,7 +21,7 @@ class Drawing {
   /**
    * @callback Drawing~SVG 
    * 
-   * @returns {SVG.Doc} 
+   * @returns {SVG.Svg} 
    */
 
   /**
