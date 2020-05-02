@@ -35,6 +35,14 @@ describe('InteractiveDrawing class', () => {
     expect(idrawing.layoutType).toBe('freeform');
   });
 
+  it('hasStrictLayout method', () => {
+    let idrawing = new InteractiveDrawing();
+    idrawing._layoutType = 'freeform';
+    expect(idrawing.hasStrictLayout()).toBeFalsy();
+    idrawing._layoutType = 'strict';
+    expect(idrawing.hasStrictLayout()).toBeTruthy();
+  });
+
   describe('_overallSecondaryPartners method', () => {
     it('multiple sequences', () => {
       let id = new InteractiveDrawing();
