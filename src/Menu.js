@@ -288,11 +288,7 @@ class Menu extends React.Component {
       >
         {this._logo()}
         {this._fileMenu()}
-        {this._modeMenu()}
-        {this._editMenu()}
         {this._exportMenu()}
-        {this._settingsMenu()}
-        {this._helpMenu()}
       </div>
     );
   }
