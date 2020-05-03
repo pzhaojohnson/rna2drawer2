@@ -75,15 +75,16 @@ function _polarLengthToFit(ur) {
 /**
  * @param {UnpairedRegion} ur 
  * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {Coordinates} cb5 The 5' bounding coordinates.
+ * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
  * @returns {Coordinates} 
  */
-function _center(ur, generalProps) {
+function _center(ur, generalProps, cb5, cb3) {
   let bs5 = ur.boundingStem5;
   let bs3 = ur.boundingStem3;
   let verySmallTerminiGap = generalProps.terminiGap < _VERY_SMALL_THRESHOLD;
   if (bs5.isOutermostStem() && bs3.isOutermostStem() && verySmallTerminiGap) {
-    let cb5 = _coordinatesBounding5(ur, generalProps);
     let circumference = _polarLengthToFit(ur, generalProps);
     let radius = circumference / (2 * Math.PI);
     let angle = RoundLoop.originAngle(bs5, generalProps) + Math.PI;
@@ -92,8 +93,6 @@ function _center(ur, generalProps) {
       y: cb5.y + (radius * Math.sin(angle)),
     };
   } else {
-    let cb5 = _coordinatesBounding5(ur, generalProps);
-    let cb3 = _coordinatesBounding3(ur, generalProps);
     let polarLengthToFit = _polarLengthToFit(ur);
     return circleCenter(cb5.x, cb5.y, cb3.x, cb3.y, polarLengthToFit);
   }
@@ -102,66 +101,99 @@ function _center(ur, generalProps) {
 /**
  * @param {UnpairedRegion} ur 
  * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {Coordinates} cb5 The 5' bounding coordinates.
+ * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
  * @returns {number} 
  */
-function _radius(ur, generalProps) {
-  let center = _center(ur, generalProps);
-  let cb5 = _coordinatesBounding5(ur, generalProps);
+function _radius(ur, generalProps, cb5, cb3) {
+  let center = _center(ur, generalProps, cb5, cb3);
   return distanceBetween(center.x, center.y, cb5.x, cb5.y);
 }
 
-function _angleBounding5(ur, generalProps) {
-  let center = _center(ur, generalProps);
-  let cb5 = _coordinatesBounding5(ur, generalProps);
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {Coordinates} cb5 The 5' bounding coordinates.
+ * @param {Coordinates} cb3 The 3' bounding coordinates.
+ * 
+ * @returns {number} 
+ */
+function _angleBounding5(ur, generalProps, cb5, cb3) {
+  let center = _center(ur, generalProps, cb5, cb3);
   return angleBetween(center.x, center.y, cb5.x, cb5.y);
 }
 
-function _angleBounding3(ur, generalProps) {
-  let center = _center(ur, generalProps);
-  let cb3 = _coordinatesBounding3(ur, generalProps);
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {Coordinates} cb5 The 5' bounding coordinates.
+ * @param {Coordinates} cb3 The 3' bounding coordinates.
+ * 
+ * @returns {number} 
+ */
+function _angleBounding3(ur, generalProps, cb5, cb3) {
+  let center = _center(ur, generalProps, cb5, cb3);
   return angleBetween(center.x, center.y, cb3.x, cb3.y);
 }
 
-function _angleSpanBetweenBounds(ur, generalProps) {
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {Coordinates} cb5 The 5' bounding coordinates.
+ * @param {Coordinates} cb3 The 3' bounding coordinates.
+ * 
+ * @returns {number} 
+ */
+function _angleSpanBetweenBounds(ur, generalProps, cb5, cb3) {
   let bs5 = ur.boundingStem5;
   let bs3 = ur.boundingStem3;
   let verySmallTerminiGap = generalProps.terminiGap < _VERY_SMALL_THRESHOLD;
   if (bs5.isOutermostStem() && bs3.isOutermostStem() && verySmallTerminiGap) {
     return 2 * Math.PI;
   } else {
-    let angle5 = _angleBounding5(ur, generalProps);
-    let angle3 = _angleBounding3(ur, generalProps);
+    let angle5 = _angleBounding5(ur, generalProps, cb5, cb3);
+    let angle3 = _angleBounding3(ur, generalProps, cb5, cb3);
     angle3 = normalizeAngle(angle3, angle5);
     return angle3 - angle5;
   }
 }
 
-function _polarLengthBetweenBounds(ur, generalProps) {
-  let angleSpan = _angleSpanBetweenBounds(ur, generalProps);
-  let radius = _radius(ur, generalProps);
+/**
+ * @param {UnpairedRegion} ur 
+ * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {Coordinates} cb5 The 5' bounding coordinates.
+ * @param {Coordinates} cb3 The 3' bounding coordinates.
+ * 
+ * @returns {number} 
+ */
+function _polarLengthBetweenBounds(ur, generalProps, cb5, cb3) {
+  let angleSpan = _angleSpanBetweenBounds(ur, generalProps, cb5, cb3);
+  let radius = _radius(ur, generalProps, cb5, cb3);
   return angleSpan * radius;
 }
 
 /**
  * @param {UnpairedRegion} ur 
  * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {Coordinates} cb5 The 5' bounding coordinates.
+ * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
  * @returns {number} 
  */
-function _startingAngle(ur, generalProps) {
+function _startingAngle(ur, generalProps, cb5, cb3) {
   if (ur.size === 0) {
     return 0;
   } else if (ur.boundingStem5.isOutermostStem()) {
-    let angle5 = _angleBounding5(ur, generalProps);
-    let angleSpan = _angleSpanBetweenBounds(ur, generalProps);
-    let polarLengthBetweenBounds = _polarLengthBetweenBounds(ur, generalProps);
+    let angle5 = _angleBounding5(ur, generalProps, cb5, cb3);
+    let angleSpan = _angleSpanBetweenBounds(ur, generalProps, cb5, cb3);
+    let polarLengthBetweenBounds = _polarLengthBetweenBounds(ur, generalProps, cb5, cb3);
     return angle5 + (angleSpan * (0.5 / polarLengthBetweenBounds));
   } else {
-    let angle5 = _angleBounding5(ur, generalProps);
-    let angleSpan = _angleSpanBetweenBounds(ur, generalProps);
+    let angle5 = _angleBounding5(ur, generalProps, cb5, cb3);
+    let angleSpan = _angleSpanBetweenBounds(ur, generalProps, cb5, cb3);
     if (ur.boundingStem3.isOutermostStem()) {
-      let polarLengthBetweenBounds = _polarLengthBetweenBounds(ur, generalProps);
+      let polarLengthBetweenBounds = _polarLengthBetweenBounds(ur, generalProps, cb5, cb3);
       angleSpan += angleSpan * (0.5 / polarLengthBetweenBounds);
     }
     return angle5 + (angleSpan / (ur.size + 1));
@@ -171,19 +203,21 @@ function _startingAngle(ur, generalProps) {
 /**
  * @param {UnpairedRegion} ur 
  * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {Coordinates} cb5 The 5' bounding coordinates.
+ * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
  * @returns {number} 
  */
-function _angleIncrement(ur, generalProps) {
+function _angleIncrement(ur, generalProps, cb5, cb3) {
   if (ur.size === 0) {
     return 0;
   } else {
-    let startingAngle = _startingAngle(ur, generalProps);
-    let angle3 = _angleBounding3(ur, generalProps);
+    let startingAngle = _startingAngle(ur, generalProps, cb5, cb3);
+    let angle3 = _angleBounding3(ur, generalProps, cb5, cb3);
     angle3 = normalizeAngle(angle3, startingAngle);
     if (ur.boundingStem3.isOutermostStem()) {
-      let angleSpan = _angleSpanBetweenBounds(ur, generalProps);
-      let polarLengthBetweenBounds = _polarLengthBetweenBounds(ur, generalProps);
+      let angleSpan = _angleSpanBetweenBounds(ur, generalProps, cb5, cb3);
+      let polarLengthBetweenBounds = _polarLengthBetweenBounds(ur, generalProps, cb5, cb3);
       angle3 += angleSpan * (0.5 / polarLengthBetweenBounds);
     }
     return (angle3 - startingAngle) / ur.size;
@@ -201,10 +235,12 @@ function baseCoordinatesRound(ur, generalProps) {
     return [];
   } else {
     let coordinates = [];
-    let center = _center(ur, generalProps);
-    let radius = _radius(ur, generalProps);
-    let angle = _startingAngle(ur, generalProps);
-    let angleIncrement = _angleIncrement(ur, generalProps);
+    let cb5 = _coordinatesBounding5(ur, generalProps);
+    let cb3 = _coordinatesBounding3(ur, generalProps);
+    let center = _center(ur, generalProps, cb5, cb3);
+    let radius = _radius(ur, generalProps, cb5, cb3);
+    let angle = _startingAngle(ur, generalProps, cb5, cb3);
+    let angleIncrement = _angleIncrement(ur, generalProps, cb5, cb3);
     for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
       let xCenter = center.x + (radius * Math.cos(angle));
       let yCenter = center.y + (radius * Math.sin(angle));

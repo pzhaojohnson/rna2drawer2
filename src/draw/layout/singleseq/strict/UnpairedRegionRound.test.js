@@ -151,7 +151,9 @@ it('_center - both bounding stems are the outermost stem and the termini gap is 
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-  let center = _center(ur, gps);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  let center = _center(ur, gps, cb5, cb3);
   expect(center.x).toBeCloseTo(0, 3);
   expect(center.y).toBeCloseTo(0, 3);
 });
@@ -166,7 +168,9 @@ it('_center - else case', () => {
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-  let center = _center(ur, gps);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  let center = _center(ur, gps, cb5, cb3);
   expect(center.x).toBeCloseTo(0, 3);
   expect(center.y).toBeCloseTo(0, 3);
 });
@@ -181,7 +185,9 @@ it('_radius', () => {
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-  expect(_radius(ur, gps)).toBeCloseTo(7 / Math.PI, 2);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(_radius(ur, gps, cb5, cb3)).toBeCloseTo(7 / Math.PI, 2);
 });
 
 it('_angleBounding5', () => {
@@ -196,7 +202,11 @@ it('_angleBounding5', () => {
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(normalizeAngle(_angleBounding5(ur, gps))).toBeCloseTo(0.12259607673582126, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    normalizeAngle(_angleBounding5(ur, gps, cb5, cb3))
+  ).toBeCloseTo(0.12259607673582126, 3);
 });
 
 it('_angleBounding3', () => {
@@ -211,7 +221,11 @@ it('_angleBounding3', () => {
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(normalizeAngle(_angleBounding3(ur, gps))).toBeCloseTo(2.839692995904396, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    normalizeAngle(_angleBounding3(ur, gps, cb5, cb3))
+  ).toBeCloseTo(2.839692995904396, 3);
 });
 
 it('_angleSpanBetweenBounds - both stems are outermost and very small termini gap', () => {
@@ -223,7 +237,11 @@ it('_angleSpanBetweenBounds - both stems are outermost and very small termini ga
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-  expect(_angleSpanBetweenBounds(ur, gps)).toBeCloseTo(2 * Math.PI, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    _angleSpanBetweenBounds(ur, gps, cb5, cb3)
+  ).toBeCloseTo(2 * Math.PI, 3);
 });
 
 it('_angleSpanBetweenBounds - else case', () => {
@@ -238,7 +256,11 @@ it('_angleSpanBetweenBounds - else case', () => {
   let st = omit.next().value;
   let stit = st.loopIterator();
   let ur = stit.next().value;
-  expect(_angleSpanBetweenBounds(ur, gps)).toBeCloseTo(3.7909885340679628, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    _angleSpanBetweenBounds(ur, gps, cb5, cb3)
+  ).toBeCloseTo(3.7909885340679628, 3);
 });
 
 it('_polarLengthBetweenBounds', () => {
@@ -253,7 +275,11 @@ it('_polarLengthBetweenBounds', () => {
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(_polarLengthBetweenBounds(ur, gps)).toBeCloseTo(6, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    _polarLengthBetweenBounds(ur, gps, cb5, cb3)
+  ).toBeCloseTo(6, 3);
 });
 
 it('_startingAngle - unpaired region of size zero', () => {
@@ -264,7 +290,9 @@ it('_startingAngle - unpaired region of size zero', () => {
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-  expect(_startingAngle(ur, gps)).toBe(0);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(_startingAngle(ur, gps, cb5, cb3)).toBe(0);
 });
 
 it('_startingAngle - boundingStem5 is the outermost stem', () => {
@@ -277,7 +305,11 @@ it('_startingAngle - boundingStem5 is the outermost stem', () => {
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-  expect(normalizeAngle(_startingAngle(ur, gps))).toBeCloseTo(4.817108735504348, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    normalizeAngle(_startingAngle(ur, gps, cb5, cb3))
+  ).toBeCloseTo(4.817108735504348, 3);
 });
 
 it('_startingAngle - boundingStem5 is not outermost and boundingStem3 is outermost', () => {
@@ -293,7 +325,11 @@ it('_startingAngle - boundingStem5 is not outermost and boundingStem3 is outermo
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(normalizeAngle(_startingAngle(ur, gps))).toBeCloseTo(1.4737184696867538, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    normalizeAngle(_startingAngle(ur, gps, cb5, cb3))
+  ).toBeCloseTo(1.4737184696867538, 3);
 });
 
 it('_startingAngle - neither boundingStem5 or boundingStem3 are outermost', () => {
@@ -308,7 +344,11 @@ it('_startingAngle - neither boundingStem5 or boundingStem3 are outermost', () =
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(normalizeAngle(_startingAngle(ur, gps))).toBeCloseTo(5.394776913533493, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    normalizeAngle(_startingAngle(ur, gps, cb5, cb3))
+  ).toBeCloseTo(5.394776913533493, 3);
 });
 
 it('_angleIncrement - unpaired region of size zero', () => {
@@ -319,7 +359,9 @@ it('_angleIncrement - unpaired region of size zero', () => {
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-  expect(_angleIncrement(ur, gps)).toBe(0);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(_angleIncrement(ur, gps, cb5, cb3)).toBe(0);
 });
 
 it('_angleIncrement - boundingStem5 is the outermost stem', () => {
@@ -335,7 +377,11 @@ it('_angleIncrement - boundingStem5 is the outermost stem', () => {
   RoundLoop.setCoordinatesAndAngles(omst, gps, bps);
   let it = omst.loopIterator();
   let ur = it.next().value;
-  expect(_angleIncrement(ur, gps)).toBeCloseTo(0.3207913849843259, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    _angleIncrement(ur, gps, cb5, cb3)
+  ).toBeCloseTo(0.3207913849843259, 3);
 });
 
 it('_angleIncrement - boundingStem5 is not outermost and boundingStem3 is outermost', () => {
@@ -351,7 +397,11 @@ it('_angleIncrement - boundingStem5 is not outermost and boundingStem3 is outerm
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(normalizeAngle(_angleIncrement(ur, gps))).toBeCloseTo(0.626135131286097, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    normalizeAngle(_angleIncrement(ur, gps, cb5, cb3))
+  ).toBeCloseTo(0.626135131286097, 3);
 });
 
 it('_angleIncrement - neither boundingStem5 or boundingStem3 are outermost', () => {
@@ -369,7 +419,11 @@ it('_angleIncrement - neither boundingStem5 or boundingStem3 are outermost', () 
   it.next();
   it.next();
   let ur = it.next().value;
-  expect(_angleIncrement(ur, gps)).toBeCloseTo(0.7461625835116426, 3);
+  let cb5 = _coordinatesBounding5(ur, gps);
+  let cb3 = _coordinatesBounding3(ur, gps);
+  expect(
+    _angleIncrement(ur, gps, cb5, cb3)
+  ).toBeCloseTo(0.7461625835116426, 3);
 });
 
 function checkCoords(coords, expectedCoords) {
