@@ -148,8 +148,6 @@ class App {
   }
 
   _renderMenu() {
-    ReactDOM.unmountComponentAtNode(this._getMenuContainer())
-    
     this._menu = (
       <Menu
         drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
@@ -157,19 +155,15 @@ class App {
         openFormOpenCTCallback={this.openFormOpenCTCallback()}
       />
     );
-    
     ReactDOM.render(this._menu, this._getMenuContainer());
   }
 
   _renderInfobar() {
-    ReactDOM.unmountComponentAtNode(this._getInfobarContainer())
-    
     this._infobar = (
       <Infobar
         drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
       />
     );
-    
     ReactDOM.render(this._infobar, this._getInfobarContainer());
   }
 
