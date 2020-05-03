@@ -142,6 +142,18 @@ class InteractiveDrawing {
 
   /**
    * @param {Sequence} seq 
+   */
+  _addPrimaryBondsForSequence(seq) {
+    seq.forEachBase((b1, p) => {
+      if (p < seq.length) {
+        let b2 = seq.getBaseAtPosition(p + 1);
+        this._drawing.addPrimaryBond(b1, b2);
+      }
+    });
+  }
+
+  /**
+   * @param {Sequence} seq 
    * @param {Array<number|null>} partners 
    */
   _addSecondaryBondsForSequence(seq, partners) {
@@ -189,7 +201,7 @@ class InteractiveDrawing {
     for (let j = 0; j < secondaryPartners.length; j++) {
       this._strictLayoutProps.base[i + j].stretch3 = stretches3[j];
     }
-    this._drawing.addPrimaryBondsForSequence(seq);
+    this._addPrimaryBondsForSequence(seq);
     this._addSecondaryBondsForSequence(seq, secondaryPartners);
     this._addTertiaryBondsForSequence(seq, tertiaryPartners);
     if (this.hasStrictLayout()) {

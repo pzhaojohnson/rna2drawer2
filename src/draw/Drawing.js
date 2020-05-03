@@ -295,21 +295,6 @@ class Drawing {
   }
 
   /**
-   * @param {Sequence} seq 
-   * 
-   * @returns {Array<PrimaryBond>} 
-   */
-  addPrimaryBondsForSequence(seq) {
-    let bonds = [];
-    for (let p = 1; p <= seq.length - 1; p++) {
-      let b1 = seq.getBaseAtPosition(p);
-      let b2 = seq.getBaseAtPosition(p + 1);
-      bonds.push(this.addPrimaryBond(b1, b2));
-    }
-    return bonds;
-  }
-
-  /**
    * @returns {number} 
    */
   get numSecondaryBonds() {

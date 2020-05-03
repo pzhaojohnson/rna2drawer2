@@ -369,15 +369,23 @@ describe('Drawing class', () => {
     drawing.addTo(document.body, () => createNodeSVG());
     expect(drawing.numPrimaryBonds).toBe(0);
     let seq = drawing.appendSequenceOutOfView('asdf', 'zxcv');
-    drawing.addPrimaryBondsForSequence(seq);
-    expect(drawing.numPrimaryBonds).toBe(3);
+    let b1 = seq.getBaseAtPosition(1);
+    let b2 = seq.getBaseAtPosition(2);
+    let b3 = seq.getBaseAtPosition(3);
+    drawing.addPrimaryBond(b1, b2);
+    drawing.addPrimaryBond(b2, b3);
+    expect(drawing.numPrimaryBonds).toBe(2);
   });
 
   it('forEachPrimaryBond method', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => createNodeSVG());
     let seq = drawing.appendSequenceOutOfView('asdf', 'asd');
-    drawing.addPrimaryBondsForSequence(seq);
+    let b1 = seq.getBaseAtPosition(1);
+    let b2 = seq.getBaseAtPosition(2);
+    let b3 = seq.getBaseAtPosition(3);
+    drawing.addPrimaryBond(b1, b2);
+    drawing.addPrimaryBond(b2, b3);
     let i = 0;
     drawing.forEachPrimaryBond(pb => {
       expect(pb.id).toBe(drawing._bonds.primary[i].id);
@@ -398,35 +406,6 @@ describe('Drawing class', () => {
     expect(pb).toBe(drawing._bonds.primary[0]);
     expect(pb.base1.id).toBe(b1.id);
     expect(pb.base2.id).toBe(b2.id);
-  });
-
-  describe('addPrimaryBondsForSequence method', () => {
-    it('sequence has length greater than one', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      let seq = drawing.appendSequenceOutOfView('asdf', 'zxc');
-      expect(drawing.numPrimaryBonds).toBe(0);
-      let bonds = drawing.addPrimaryBondsForSequence(seq);
-      expect(bonds.length).toBe(2);
-      expect(drawing.numPrimaryBonds).toBe(2);
-      expect(bonds[0]).toBe(drawing._bonds.primary[0]);
-      expect(bonds[1]).toBe(drawing._bonds.primary[1]);
-      let baseIds = drawing.baseIds();
-      expect(bonds[0].base1.id).toBe(baseIds[0]);
-      expect(bonds[0].base2.id).toBe(baseIds[1]);
-      expect(bonds[1].base1.id).toBe(baseIds[1]);
-      expect(bonds[1].base2.id).toBe(baseIds[2]);
-    });
-
-    it('sequence has length less than or equal to one', () => {
-      let drawing = new Drawing();
-      drawing.addTo(document.body, () => createNodeSVG());
-      let seq = drawing.appendSequenceOutOfView('asdf', 'a');
-      expect(drawing.numPrimaryBonds).toBe(0);
-      let bonds = drawing.addPrimaryBondsForSequence(seq);
-      expect(bonds.length).toBe(0);
-      expect(drawing.numPrimaryBonds).toBe(0);
-    });
   });
 
   it('numSecondaryBonds getter', () => {
@@ -738,15 +717,19 @@ describe('Drawing class', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
       let seq = drawing.appendSequenceOutOfView('asdf', 'asd');
-      let bonds = drawing.addPrimaryBondsForSequence(seq);
+      let b1 = seq.getBaseAtPosition(1);
+      let b2 = seq.getBaseAtPosition(2);
+      let b3 = seq.getBaseAtPosition(3);
+      let pb1 = drawing.addPrimaryBond(b1, b2);
+      let pb2 = drawing.addPrimaryBond(b2, b3);
       let savableState = drawing.savableState();
       expect(savableState.bonds.primary.length).toBe(2);
       expect(
         JSON.stringify(savableState.bonds.primary[0])
-      ).toBe(JSON.stringify(bonds[0].savableState()));
+      ).toBe(JSON.stringify(pb1.savableState()));
       expect(
         JSON.stringify(savableState.bonds.primary[1])
-      ).toBe(JSON.stringify(bonds[1].savableState()));
+      ).toBe(JSON.stringify(pb2.savableState()));
     });
 
     it('includes secondary bonds', () => {
@@ -791,7 +774,7 @@ describe('Drawing class', () => {
       let drawing = new Drawing();
       drawing.addTo(document.body, () => createNodeSVG());
       let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
-      drawing.addPrimaryBondsForSequence(seq);
+      drawing.addPrimaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(3));
       drawing.addSecondaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(7));
       drawing.addSecondaryBond(seq.getBaseAtPosition(1), seq.getBaseAtPosition(8));
       drawing.addTertiaryBond(
