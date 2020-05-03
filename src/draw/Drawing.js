@@ -53,14 +53,16 @@ class Drawing {
    * @returns {number} 
    */
   get width() {
-    return this._svg.viewbox().width;
+    let vb = this._svg.viewbox();
+    return vb.width;
   }
 
   /**
    * @returns {number} 
    */
   get height() {
-    return this._svg.viewbox().height;
+    let vb = this._svg.viewbox();
+    return vb.height;
   }
 
   /**
@@ -68,11 +70,11 @@ class Drawing {
    * @param {number} height 
    */
   setWidthAndHeight(width, height) {
-    let zoom = this.zoom;
+    let z = this.zoom;
     this._svg.viewbox(0, 0, width, height);
     this._svg.attr({
-      'width': zoom * width,
-      'height': zoom * height,
+      'width': z * width,
+      'height': z * height,
     });
   }
 
@@ -80,10 +82,11 @@ class Drawing {
    * @returns {number} 
    */
   get zoom() {
-    if (this.width == 0) {
+    let vb = this._svg.viewbox();
+    if (vb.width == 0) {
       return 1;
     }
-    return this._svg.attr('width') / this.width;
+    return this._svg.attr('width') / vb.width;
   }
 
   /**
