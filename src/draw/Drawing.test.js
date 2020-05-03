@@ -6,6 +6,7 @@ import { TertiaryBond } from './QuadraticBezierBond';
 import distanceBetween from './distanceBetween';
 import normalizeAngle from './normalizeAngle';
 import angleBetween from './angleBetween';
+import { CircleBaseAnnotation } from './BaseAnnotation';
 
 describe('Drawing class', () => {
   it('instantiates', () => {
@@ -84,6 +85,17 @@ describe('Drawing class', () => {
       });
       expect(drawing.zoom).toBeCloseTo(2, 3);
     });
+  });
+
+  it('zoom setter', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing.setWidthAndHeight(2000, 1600);
+    drawing.zoom = 1.5;
+    expect(drawing._svg.attr('width')).toBeCloseTo(3000);
+    expect(drawing._svg.attr('height')).toBeCloseTo(2400);
+    expect(drawing.width).toBeCloseTo(2000);  // viewbox width is maintained
+    expect(drawing.height).toBeCloseTo(1600); // viewbox height is maintained
   });
 
   it('numSequences getter', () => {

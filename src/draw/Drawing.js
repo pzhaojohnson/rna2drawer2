@@ -87,6 +87,16 @@ class Drawing {
   }
 
   /**
+   * @param {number} z 
+   */
+  set zoom(z) {
+    let vb = this._svg.viewbox();
+    let w = z * vb.width;
+    let h = z * vb.height;
+    this._svg.attr({ 'width': w, 'height': h });
+  }
+
+  /**
    * @returns {number} 
    */
   get numSequences() {
