@@ -165,13 +165,13 @@ svg text {
 
 /* Override the background-color on hover setting for all buttons above. */
 .menu-top-button:hover {
-  background-color: #fafafa;
+  background-color: #fefefe;
 }
 
 /* Must be specified here, as specifying this in the Menu component itself
 overrides the background-color on hover setting below. */
 .menu-dropped-button {
-  background-color: #fafafa;
+  background-color: #fefefe;
 }
 
 /* Could not find a straightforward way to do this in React. */

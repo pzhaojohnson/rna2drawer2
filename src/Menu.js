@@ -10,7 +10,7 @@ class Menu extends React.Component {
 
     this.state = {
       borderColor: '#bfbfbf',
-      backgroundColor: '#fafafa',
+      backgroundColor: '#fefefe',
       buttonColor: 'black',
       disabledButtonColor: 'gray',
     };

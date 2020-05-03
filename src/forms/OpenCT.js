@@ -27,7 +27,7 @@ class OpenCT extends React.Component {
         style={{
           width: this.props.width,
           height: '100%',
-          backgroundColor: '#fcfcfc',
+          backgroundColor: '#fefefe',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
