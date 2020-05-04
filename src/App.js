@@ -183,10 +183,10 @@ class App {
     this._openForm(
       <CreateNewDrawing
         width={'100vw'}
-        submit={(id, letters, secondaryPartners, tertiaryPartners) => {
+        submit={(id, characters, secondaryPartners, tertiaryPartners) => {
           this._drawing.appendStructure(
             id,
-            letters,
+            characters,
             secondaryPartners,
             tertiaryPartners,
           );
