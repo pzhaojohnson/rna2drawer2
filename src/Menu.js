@@ -178,16 +178,16 @@ class Menu extends React.Component {
       this._topButton('File'),
       [
         this._droppedButton('New', {
-          onClick: this.props.openFormCreateNewDrawingCallback,
+          onClick: this.props.createNewDrawing,
         }),
         this._dropdownSeparator(),
         this._droppedButton('Open CT', {
-          onClick: this.props.openFormOpenCTCallback,
+          onClick: this.props.openCT,
         }),
         this._droppedButton('Open RNA2Drawer'),
         this._dropdownSeparator(),
         this._droppedButton('Save', {
-          disabled: this.props.drawingIsEmptyCallback(),
+          disabled: this.props.drawingIsEmpty,
         }),
       ],
     );
@@ -201,13 +201,13 @@ class Menu extends React.Component {
       this._droppedButton('Pivot Stems'),
     ];
 
-    if (this.props.drawingIsEmptyCallback()) {
+    if (this.props.drawingIsEmpty) {
       droppedItems = [];
     }
 
     return this._dropdownMenu(
       this._topButton('Mode', {
-        disabled: this.props.drawingIsEmptyCallback(),
+        disabled: this.props.drawingIsEmpty,
       }),
       droppedItems,
     );
@@ -225,13 +225,13 @@ class Menu extends React.Component {
       this._droppedButton('Edit Numbering Offsets'),
     ];
 
-    if (this.props.drawingIsEmptyCallback()) {
+    if (this.props.drawingIsEmpty) {
       droppedItems = [];
     }
 
     return this._dropdownMenu(
       this._topButton('Edit', {
-        disabled: this.props.drawingIsEmptyCallback(),
+        disabled: this.props.drawingIsEmpty,
       }),
       droppedItems,
     );
@@ -243,13 +243,13 @@ class Menu extends React.Component {
       this._droppedButton('PowerPoint (PPTX)'),
     ];
 
-    if (this.props.drawingIsEmptyCallback()) {
+    if (this.props.drawingIsEmpty) {
       droppedItems = [];
     }
 
     return this._dropdownMenu(
       this._topButton('Export', {
-        disabled: this.props.drawingIsEmptyCallback(),
+        disabled: this.props.drawingIsEmpty,
       }),
       droppedItems,
     );
@@ -295,9 +295,9 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
-  drawingIsEmptyCallback: PropTypes.func,
-  openFormCreateNewDrawingCallback: PropTypes.func,
-  openFormOpenCTCallback: PropTypes.func,
+  drawingIsEmpty: PropTypes.bool,
+  createNewDrawing: PropTypes.func,
+  openCT: PropTypes.func,
 };
 
 export default Menu;

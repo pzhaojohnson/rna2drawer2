@@ -150,9 +150,9 @@ class App {
   _renderMenu() {
     this._menu = (
       <Menu
-        drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
-        openFormCreateNewDrawingCallback={this.openFormCreateNewDrawingCallback()}
-        openFormOpenCTCallback={this.openFormOpenCTCallback()}
+        drawingIsEmpty={this._drawing.isEmpty()}
+        createNewDrawing={this.openFormCreateNewDrawingCallback()}
+        openCT={this.openFormOpenCTCallback()}
       />
     );
     ReactDOM.render(this._menu, this._getMenuContainer());
