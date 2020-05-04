@@ -180,10 +180,10 @@ class Menu extends React.Component {
         this._droppedButton('New', {
           onClick: () => {
             if (this.props.drawingIsEmpty) {
-              this.props.createNewDrawing;
+              this.props.createNewDrawing();
+            } else {
+              window.open(document.URL);
             }
-            console.log(document.URL);
-            window.open(document.URL);
           },
         }),
         this._dropdownSeparator(),
