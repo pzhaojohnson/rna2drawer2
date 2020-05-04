@@ -178,13 +178,22 @@ class Menu extends React.Component {
       this._topButton('File'),
       [
         this._droppedButton('New', {
-          onClick: this.props.createNewDrawing,
+          onClick: () => {
+            if (this.props.drawingIsEmpty) {
+              this.props.createNewDrawing;
+            }
+            console.log(document.URL);
+            window.open(document.URL);
+          },
         }),
         this._dropdownSeparator(),
         this._droppedButton('Open CT', {
           onClick: this.props.openCT,
+          disabled: !this.props.drawingIsEmpty,
         }),
-        this._droppedButton('Open RNA2Drawer'),
+        this._droppedButton('Open RNA2Drawer', {
+          disabled: !this.props.drawingIsEmpty,
+        }),
         this._dropdownSeparator(),
         this._droppedButton('Save', {
           disabled: this.props.drawingIsEmpty,
