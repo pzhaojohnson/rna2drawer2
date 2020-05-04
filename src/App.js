@@ -27,7 +27,7 @@ class App {
     this._fillInBody();
     this._renderPermanentComponents();
 
-    (this.openFormCreateNewDrawingCallback())();
+    this.createNewDrawing();
   }
 
   /**
@@ -151,8 +151,8 @@ class App {
     this._menu = (
       <Menu
         drawingIsEmpty={this._drawing.isEmpty()}
-        createNewDrawing={this.openFormCreateNewDrawingCallback()}
-        openCT={this.openFormOpenCTCallback()}
+        createNewDrawing={() => this.createNewDrawing()}
+        openCT={() => this.openCT()}
       />
     );
     ReactDOM.render(this._menu, this._getMenuContainer());
@@ -160,9 +160,7 @@ class App {
 
   _renderInfobar() {
     this._infobar = (
-      <Infobar
-        drawingIsEmptyCallback={this.drawingIsEmptyCallback()}
-      />
+      <Infobar />
     );
     ReactDOM.render(this._infobar, this._getInfobarContainer());
   }
@@ -170,43 +168,6 @@ class App {
   _updatePeripherals() {
     this._renderMenu();
     this._renderInfobar();
-  }
-
-  /**
-   * @callback App~drawingIsEmptyCallback 
-   * @returns {boolean} True if the drawing of this app is currently empty.
-   */
-  
-  /**
-   * @returns {App~drawingIsEmptyCallback} 
-   */
-  drawingIsEmptyCallback() {
-    return () => this._drawing.isEmpty();
-  }
-
-  /**
-   * Centers the scrollbars of the drawing container to center the view of the drawing.
-   * 
-   * @callback App~centerDrawingViewCallback
-   */
-
-  /**
-   * @returns {App~centerDrawingViewCallback}
-   */
-  centerDrawingViewCallback() {
-    return () => {
-      let dc = this._getDrawingContainer();
-      
-      /* This would be more straightforward if it was possible to use dc.clientWidth,
-      but dc.clientWidth always seems to return 0.
-      
-      This is also a little less precise than using dc.clientWidth. */
-      let fc = this._getFormContainer();
-      let dcWidth = document.body.clientWidth - fc.clientWidth;
-      dc.scrollLeft = (dc.scrollWidth - dcWidth) / 2;
-      
-      dc.scrollTop = (dc.scrollHeight - dc.clientHeight) / 2;
-    };
   }
 
   _openForm(form) {
@@ -218,12 +179,8 @@ class App {
     ReactDOM.unmountComponentAtNode(this._getFormContainer());
   }
 
-  closeFormCallback() {
-    return () => this._closeCurrForm();
-  }
-
-  openFormCreateNewDrawingCallback() {
-    return () => this._openForm(
+  createNewDrawing() {
+    this._openForm(
       <CreateNewDrawing
         width={'100vw'}
         submit={(id, letters, secondaryPartners, tertiaryPartners) => {
@@ -234,36 +191,19 @@ class App {
             tertiaryPartners,
           );
           this._closeCurrForm();
+          this._updatePeripherals();
         }}
       />
     );
   }
 
-  openFormOpenCTCallback() {
-    return () => this._openForm(
+  openCT() {
+    this._openForm(
       <OpenCT
         width={'100vw'}
         submit={() => {}}
       />
     );
-  }
-
-  addStructureCallback() {
-    return (id, sequence, partners) => {
-      this._drawing.addStructure(id, sequence, partners);
-      this._updatePeripherals();
-    }
-  }
-
-  /**
-   * @callback App~applyStrictLayoutCallback Applies a strict layout to the drawing of this app.
-   */
-
-  /**
-   * @returns {App~applyStrictLayoutCallback} 
-   */
-  applyStrictLayoutCallback() {
-    return () => this._drawing.applyStrictLayout();
   }
 }
 

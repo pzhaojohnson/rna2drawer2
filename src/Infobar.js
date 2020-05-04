@@ -41,17 +41,6 @@ class Infobar extends React.Component {
 
   render() {
     let content = null;
-
-    if (!this.props.drawingIsEmptyCallback()) {
-      content = (
-        <div style={this.infoStyles()} >
-          <div style={this.actionStyles()} >Select Position 12</div>
-          <div style={this.pieceStyles()} >5 Pairables</div>
-          <div style={this.pieceStyles()} >Range 1 to 20</div>
-        </div>
-      );
-    }
-
     return (
       <div
         style={{
@@ -69,8 +58,6 @@ class Infobar extends React.Component {
   }
 }
 
-Infobar.propTypes = {
-  drawingIsEmptyCallback: PropTypes.func,
-};
+Infobar.propTypes = {};
 
 export default Infobar;
