@@ -9,6 +9,7 @@ import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
 import { OpenCT } from './forms/OpenCT';
+import { ExportSVG } from './forms/ExportSVG';
 
 class App {
 
@@ -153,6 +154,7 @@ class App {
         drawingIsEmpty={this._drawing.isEmpty()}
         createNewDrawing={() => this.createNewDrawing()}
         openCT={() => this.openCT()}
+        exportSVG={() => this.exportSVG()}
       />
     );
     ReactDOM.render(this._menu, this._getMenuContainer());
@@ -202,6 +204,14 @@ class App {
       <OpenCT
         width={'100vw'}
         submit={() => {}}
+      />
+    );
+  }
+
+  exportSVG() {
+    this._openForm(
+      <ExportSVG
+        SVG={() => this._SVG()}
       />
     );
   }

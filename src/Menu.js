@@ -248,7 +248,9 @@ class Menu extends React.Component {
 
   _exportMenu() {
     let droppedItems = [
-      this._droppedButton('SVG'),
+      this._droppedButton('SVG', {
+        onClick: this.props.exportSVG,
+      }),
       this._droppedButton('PowerPoint (PPTX)'),
     ];
 
