@@ -2,10 +2,10 @@ import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
-class Numbering {
+class BaseNumbering {
 
   /**
-   * @typedef {Object} Numbering~LineCoordinates 
+   * @typedef {Object} BaseNumbering~LineCoordinates 
    * @property {number} x1 
    * @property {number} y1 
    * @property {number} x2 
@@ -19,7 +19,7 @@ class Numbering {
    * @param {number} basePadding 
    * @param {number} length 
    * 
-   * @returns {Numbering~LineCoordinates} 
+   * @returns {BaseNumbering~LineCoordinates} 
    */
   static _lineCoordinates(xBaseCenter, yBaseCenter, angle, basePadding, length) {
     let x1 = xBaseCenter + (basePadding * Math.cos(angle));
@@ -30,7 +30,7 @@ class Numbering {
   }
 
   /**
-   * @typedef {Object} Numbering~TextPositioning 
+   * @typedef {Object} BaseNumbering~TextPositioning 
    * @property {number} x 
    * @property {number} y 
    * @property {string} textAnchor 
@@ -40,7 +40,7 @@ class Numbering {
   /**
    * @param {SVG.Line} line 
    * 
-   * @returns {Numbering~TextPositioning} 
+   * @returns {BaseNumbering~TextPositioning} 
    */
   static _textPositioning(line) {
     let lineAngle = angleBetween(
@@ -77,7 +77,7 @@ class Numbering {
   }
 
   /**
-   * @typedef {Object} Numbering~MostRecentProps 
+   * @typedef {Object} BaseNumbering~MostRecentProps 
    * @property {number} basePadding 
    * @property {number} lineLength 
    * @property {string} fontFamily 
@@ -88,17 +88,17 @@ class Numbering {
    */
 
   /**
-   * @returns {Numbering~MostRecentProps} 
+   * @returns {BaseNumbering~MostRecentProps} 
    */
   static mostRecentProps() {
-    return { ...Numbering._mostRecentProps };
+    return { ...BaseNumbering._mostRecentProps };
   }
 
   /**
-   * @param {Numbering} n 
+   * @param {BaseNumbering} n 
    */
   static _applyMostRecentProps(n) {
-    let props = Numbering.mostRecentProps();
+    let props = BaseNumbering.mostRecentProps();
     n.basePadding = props.basePadding;
     n.lineLength = props.lineLength;
     n.fontFamily = props.fontFamily;
@@ -109,42 +109,42 @@ class Numbering {
   }
 
   /**
-   * @param {Numbering} n 
+   * @param {BaseNumbering} n 
    */
   static _copyPropsToMostRecent(n) {
-    Numbering._mostRecentProps.basePadding = n.basePadding;
-    Numbering._mostRecentProps.lineLength = n.lineLength;
-    Numbering._mostRecentProps.fontFamily = n.fontFamily;
-    Numbering._mostRecentProps.fontSize = n.fontSize;
-    Numbering._mostRecentProps.fontWeight = n.fontWeight;
-    Numbering._mostRecentProps.color = n.color;
-    Numbering._mostRecentProps.lineStrokeWidth = n.lineStrokeWidth;
+    BaseNumbering._mostRecentProps.basePadding = n.basePadding;
+    BaseNumbering._mostRecentProps.lineLength = n.lineLength;
+    BaseNumbering._mostRecentProps.fontFamily = n.fontFamily;
+    BaseNumbering._mostRecentProps.fontSize = n.fontSize;
+    BaseNumbering._mostRecentProps.fontWeight = n.fontWeight;
+    BaseNumbering._mostRecentProps.color = n.color;
+    BaseNumbering._mostRecentProps.lineStrokeWidth = n.lineStrokeWidth;
   }
 
   /**
    * Returns null if the saved state is invalid.
    * 
-   * @param {Numbering~SavableState} savedState 
+   * @param {BaseNumbering~SavableState} savedState 
    * @param {SVG.Svg} svg 
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * 
-   * @returns {Numbering|null} 
+   * @returns {BaseNumbering|null} 
    */
   static fromSavedState(savedState, svg, xBaseCenter, yBaseCenter) {
-    if (savedState.className !== 'Numbering') {
+    if (savedState.className !== 'BaseNumbering') {
       return null;
     }
     let text = svg.findOne('#' + savedState.text);
     let line = svg.findOne('#' + savedState.line);
     let n = null;
     try {
-      n = new Numbering(text, line, xBaseCenter, yBaseCenter);
+      n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
     } catch (err) {}
     if (!n) {
       return null;
     }
-    Numbering._copyPropsToMostRecent(n);
+    BaseNumbering._copyPropsToMostRecent(n);
     return n;
   }
 
@@ -156,15 +156,15 @@ class Numbering {
    * @param {number} xBaseCenter 
    * @param {number} yBaseCenter 
    * 
-   * @returns {Numbering|null} 
+   * @returns {BaseNumbering|null} 
    */
   static create(svg, number, xBaseCenter, yBaseCenter) {
-    let lc = Numbering._lineCoordinates(xBaseCenter, yBaseCenter, 0, 10, 8);
+    let lc = BaseNumbering._lineCoordinates(xBaseCenter, yBaseCenter, 0, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     line.id();
     let text = svg.text((add) => add.tspan(number.toString()));
     text.id();
-    let tp = Numbering._textPositioning(line);
+    let tp = BaseNumbering._textPositioning(line);
     text.attr({
       'x': tp.x,
       'y': tp.y,
@@ -173,12 +173,12 @@ class Numbering {
     });
     let n = null;
     try {
-      n = new Numbering(text, line, xBaseCenter, yBaseCenter);
+      n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
     } catch (err) {}
     if (!n) {
       return null;
     }
-    Numbering._applyMostRecentProps(n);
+    BaseNumbering._applyMostRecentProps(n);
     return n;
   }
 
@@ -277,7 +277,7 @@ class Numbering {
       bp,
       this.lineLength,
     );
-    Numbering._mostRecentProps.basePadding = bp;
+    BaseNumbering._mostRecentProps.basePadding = bp;
   }
 
   /**
@@ -328,7 +328,7 @@ class Numbering {
       this.basePadding,
       ll,
     );
-    Numbering._mostRecentProps.lineLength = ll;
+    BaseNumbering._mostRecentProps.lineLength = ll;
   }
 
   /**
@@ -353,7 +353,7 @@ class Numbering {
    * @param {number} lineLength 
    */
   _reposition(xBaseCenter, yBaseCenter, lineAngle, basePadding, lineLength) {
-    let lc = Numbering._lineCoordinates(
+    let lc = BaseNumbering._lineCoordinates(
       xBaseCenter,
       yBaseCenter,
       lineAngle,
@@ -361,7 +361,7 @@ class Numbering {
       lineLength,
     );
     this._line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
-    let tp = Numbering._textPositioning(this._line);
+    let tp = BaseNumbering._textPositioning(this._line);
     this._text.attr({
       'x': tp.x,
       'y': tp.y,
@@ -419,7 +419,7 @@ class Numbering {
    */
   set fontFamily(ff) {
     this._text.attr({ 'font-family': ff });
-    Numbering._mostRecentProps.fontFamily = ff;
+    BaseNumbering._mostRecentProps.fontFamily = ff;
   }
 
   /**
@@ -434,7 +434,7 @@ class Numbering {
    */
   set fontSize(fs) {
     this._text.attr({ 'font-size': fs });
-    Numbering._mostRecentProps.fontSize = fs;
+    BaseNumbering._mostRecentProps.fontSize = fs;
   }
 
   /**
@@ -449,7 +449,7 @@ class Numbering {
    */
   set fontWeight(fw) {
     this._text.attr({ 'font-weight': fw });
-    Numbering._mostRecentProps.fontWeight = fw;
+    BaseNumbering._mostRecentProps.fontWeight = fw;
   }
 
   /**
@@ -465,7 +465,7 @@ class Numbering {
   set color(c) {
     this._text.attr({ 'fill': c });
     this._line.attr({ 'stroke': c });
-    Numbering._mostRecentProps.color = c;
+    BaseNumbering._mostRecentProps.color = c;
   }
 
   /**
@@ -480,7 +480,7 @@ class Numbering {
    */
   set lineStrokeWidth(lsw) {
     this._line.attr({ 'stroke-width': lsw });
-    Numbering._mostRecentProps.lineStrokeWidth = lsw;
+    BaseNumbering._mostRecentProps.lineStrokeWidth = lsw;
   }
 
   remove() {
@@ -489,25 +489,25 @@ class Numbering {
   }
 
   /**
-   * @typedef {Object} Numbering~SavableState 
+   * @typedef {Object} BaseNumbering~SavableState 
    * @property {string} className 
    * @property {string} text 
    * @property {string} line 
    */
 
   /**
-   * @returns {Numbering~SavableState} 
+   * @returns {BaseNumbering~SavableState} 
    */
   savableState() {
     return {
-      className: 'Numbering',
+      className: 'BaseNumbering',
       text: this._text.id(),
       line: this._line.id(),
     };
   }
 }
 
-Numbering._mostRecentProps = {
+BaseNumbering._mostRecentProps = {
   basePadding: 8,
   lineLength: 8,
   fontFamily: 'Arial',
@@ -517,4 +517,4 @@ Numbering._mostRecentProps = {
   lineStrokeWidth: 1,
 };
 
-export default Numbering;
+export default BaseNumbering;

@@ -1,7 +1,7 @@
 import Base from './Base';
 import createNodeSVG from './createNodeSVG';
 import normalizeAngle from './normalizeAngle';
-import Numbering from './Numbering';
+import BaseNumbering from './BaseNumbering';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import angleBetween from './angleBetween';
 import distanceBetween from './distanceBetween';
@@ -680,7 +680,7 @@ describe('Base class', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'y', 5, 9);
       let n1 = b.addNumbering(30, 0);
-      let n2 = Numbering.create(svg, 15, 5, 9, Math.PI / 6);
+      let n2 = BaseNumbering.create(svg, 15, 5, 9, Math.PI / 6);
       let savableState2 = n2.savableState();
       expect(svg.findOne('#' + n1._text.id())).toBeTruthy();
       let n3 = b.addNumberingFromSavedState(savableState2);
@@ -690,7 +690,7 @@ describe('Base class', () => {
     it('returns added numbering', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'p', 7, 8);
-      let n1 = Numbering.create(svg, 20, 7, 8, 0);
+      let n1 = BaseNumbering.create(svg, 20, 7, 8, 0);
       let savableState1 = n1.savableState();
       let n2 = b.addNumberingFromSavedState(savableState1);
       expect(n2).toBe(b._numbering);
@@ -699,7 +699,7 @@ describe('Base class', () => {
     it('passes base center', () => {
       let svg = createNodeSVG();
       let b = Base.create(svg, 'e', 4, 9);
-      let n1 = Numbering.create(svg, 40, 4, 9, Math.PI / 3);
+      let n1 = BaseNumbering.create(svg, 40, 4, 9, Math.PI / 3);
       n1.basePadding = 12;
       let savableState1 = n1.savableState();
       let n2 = b.addNumberingFromSavedState(savableState1);

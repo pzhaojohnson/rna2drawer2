@@ -1,7 +1,7 @@
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
-import Numbering from './Numbering';
+import BaseNumbering from './BaseNumbering';
 
 class Base {
 
@@ -491,15 +491,15 @@ class Base {
   }
 
   /**
-   * Returns null if the given number is not accepted by the Numbering class.
+   * Returns null if the given number is not accepted by the BaseNumbering class.
    * 
    * @param {number} number 
    * 
-   * @returns {Numbering|null} 
+   * @returns {BaseNumbering|null} 
    */
   addNumbering(number) {
     this.removeNumbering();
-    this._numbering = Numbering.create(
+    this._numbering = BaseNumbering.create(
       this._text.root(),
       number,
       this.xCenter,
@@ -509,13 +509,13 @@ class Base {
   }
 
   /**
-   * @param {Numbering~SavableState} savedState 
+   * @param {BaseNumbering~SavableState} savedState 
    * 
-   * @returns {Numbering} 
+   * @returns {BaseNumbering} 
    */
   addNumberingFromSavedState(savedState) {
     this.removeNumbering();
-    this._numbering = Numbering.fromSavedState(
+    this._numbering = BaseNumbering.fromSavedState(
       savedState,
       this._text.root(),
       this.xCenter,
@@ -535,7 +535,7 @@ class Base {
   }
 
   /**
-   * @returns {Numbering|null} 
+   * @returns {BaseNumbering|null} 
    */
   get numbering() {
     return this._numbering;
@@ -564,7 +564,7 @@ class Base {
    * @property {string} text 
    * @property {CircleBaseAnnotation~SavableState|undefined} highlighting 
    * @property {CircleBaseAnnotation~SavableState|undefined} outline 
-   * @property {Numbering~SavableState|undefined} numbering 
+   * @property {BaseNumbering~SavableState|undefined} numbering 
    */
 
   /**
