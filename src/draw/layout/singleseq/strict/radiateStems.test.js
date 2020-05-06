@@ -15,14 +15,14 @@ import {
 } from './radiateStems';
 import parseDotBracket from '../../../../parse/parseDotBracket';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
 import normalizeAngle from '../../../normalizeAngle';
 
 function defaultPerBaseProps(length) {
   let perBaseProps = [];
   for (let i = 0; i < length; i++) {
-    perBaseProps.push(new StrictLayoutPerBaseProps());
+    perBaseProps.push(new PerBaseStrictLayoutProps());
   }
   return perBaseProps;
 }

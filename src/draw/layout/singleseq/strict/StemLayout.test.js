@@ -1,6 +1,6 @@
 import { RoundLoop, TriangleLoop, FlatOutermostLoop, StemLayout } from './StemLayout';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
 import normalizeAngle from '../../../normalizeAngle';
 import parseDotBracket from '../../../../parse/parseDotBracket';
@@ -12,7 +12,7 @@ import angleBetween from '../../../angleBetween';
 function defaultPerBaseProps(length) {
   let pbps = [];
   for (let i = 0; i < length; i++) {
-    pbps.push(new StrictLayoutPerBaseProps());
+    pbps.push(new PerBaseStrictLayoutProps());
   }
   return pbps;
 }

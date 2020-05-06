@@ -1,7 +1,7 @@
 import normalizeAngle from '../../../normalizeAngle';
 import Stem from './Stem';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import isKnotless from '../../../../parse/isKnotless';
 
 /**
@@ -205,7 +205,7 @@ function radiateStems(partners) {
   if (isKnotless(partners)) {
     let gps = new GeneralStrictLayoutProps();
     let pbps = [];
-    partners.forEach(p => pbps.push(new StrictLayoutPerBaseProps()));
+    partners.forEach(p => pbps.push(new PerBaseStrictLayoutProps()));
     let st = new Stem(0, partners, gps, pbps);
     _radiateLoop(st, stretches3);
   }

@@ -7,7 +7,7 @@ class StrictLayout {
   /**
    * @param {Array<number|null>} partners The partners notation of the secondary structure.
    * @param {GeneralStrictLayoutProps} generalProps 
-   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
+   * @param {Array<PerBaseStrictLayoutProps>} perBaseProps 
    */
   constructor(partners, generalProps, perBaseProps) {
     this._partners = partners;

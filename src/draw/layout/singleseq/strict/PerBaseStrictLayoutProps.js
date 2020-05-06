@@ -1,12 +1,12 @@
-class StrictLayoutPerBaseProps {
+class PerBaseStrictLayoutProps {
 
   /**
-   * @param {StrictLayoutPerBaseProps~SavableState} savedState 
+   * @param {PerBaseStrictLayoutProps~SavableState} savedState 
    * 
-   * @returns {StrictLayoutPerBaseProps} 
+   * @returns {PerBaseStrictLayoutProps} 
    */
   static fromSavedState(savedState) {
-    let pbps = new StrictLayoutPerBaseProps();
+    let pbps = new PerBaseStrictLayoutProps();
     if (savedState.stretch3 !== undefined) {
       pbps.stretch3 = savedState.stretch3;
     }
@@ -34,15 +34,15 @@ class StrictLayoutPerBaseProps {
   }
 
   /**
-   * @returns {StrictLayoutPerBaseProps} 
+   * @returns {PerBaseStrictLayoutProps} 
    */
   deepCopy() {
     let savableState = this.savableState();
-    return StrictLayoutPerBaseProps.fromSavedState(savableState);
+    return PerBaseStrictLayoutProps.fromSavedState(savableState);
   }
 
   /**
-   * @typedef {Object} StrictLayoutPerBaseProps~SavableState 
+   * @typedef {Object} PerBaseStrictLayoutProps~SavableState 
    * @property {number} stretch3 
    * @property {number} flatOutermostLoopAngle3 
    * @property {boolean} flipStem 
@@ -51,7 +51,7 @@ class StrictLayoutPerBaseProps {
    */
 
   /**
-   * @returns {StrictLayoutPerBaseProps~SavableState} 
+   * @returns {PerBaseStrictLayoutProps~SavableState} 
    */
   savableState() {
     return {
@@ -64,4 +64,4 @@ class StrictLayoutPerBaseProps {
   }
 }
 
-export default StrictLayoutPerBaseProps;
+export default PerBaseStrictLayoutProps;

@@ -1,14 +1,14 @@
-import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 
 it('fromSavedState static method', () => {
-  let bps1 = new StrictLayoutPerBaseProps();
+  let bps1 = new PerBaseStrictLayoutProps();
   bps1.stretch3 = 0.8;
   bps1.flatOutermostLoopAngle3 = Math.PI / 9;
   bps1.flipStem = true;
   bps1.loopShape = 'triangle';
   bps1.triangleLoopHeight = 8.55;
   let savableState1 = bps1.savableState();
-  let bps2 = StrictLayoutPerBaseProps.fromSavedState(savableState1);
+  let bps2 = PerBaseStrictLayoutProps.fromSavedState(savableState1);
   let savableState2 = bps2.savableState();
   Object.keys(savableState1).forEach(k => {
     expect(savableState2[k]).toBe(savableState1[k]);
@@ -16,8 +16,8 @@ it('fromSavedState static method', () => {
 });
 
 it('fromSavedState static method - ignores undefined properties', () => {
-  let bps1 = new StrictLayoutPerBaseProps();
-  let bps2 = StrictLayoutPerBaseProps.fromSavedState({});
+  let bps1 = new PerBaseStrictLayoutProps();
+  let bps2 = PerBaseStrictLayoutProps.fromSavedState({});
   let savableState1 = bps1.savableState();
   let savableState2 = bps2.savableState();
   Object.keys(savableState1).forEach(k => {
@@ -26,11 +26,11 @@ it('fromSavedState static method - ignores undefined properties', () => {
 });
 
 it('basic test of constructor', () => {
-  expect(() => { new StrictLayoutPerBaseProps() }).not.toThrow();
+  expect(() => { new PerBaseStrictLayoutProps() }).not.toThrow();
 });
 
 it('deepCopy', () => {
-  let bps1 = new StrictLayoutPerBaseProps();
+  let bps1 = new PerBaseStrictLayoutProps();
   bps1.stretch3 = 0.78;
   bps1.flatOutermostLoopAngle3 = 4 * Math.PI / 5;
   bps1.flipStem = true;
@@ -46,7 +46,7 @@ it('deepCopy', () => {
 });
 
 it('savableState', () => {
-  let pbps = new StrictLayoutPerBaseProps();
+  let pbps = new PerBaseStrictLayoutProps();
   pbps.stretch3 = 3.7;
   pbps.flatOutermostLoopAngle3 = Math.PI / 5;
   pbps.flipStem = true;
@@ -61,7 +61,7 @@ it('savableState', () => {
 });
 
 it('savableState - can be converted to and read from a JSON string', () => {
-  let pbps = new StrictLayoutPerBaseProps();
+  let pbps = new PerBaseStrictLayoutProps();
   let savableState1 = pbps.savableState();
   let json = JSON.stringify(savableState1);
   let savableState2 = JSON.parse(json);

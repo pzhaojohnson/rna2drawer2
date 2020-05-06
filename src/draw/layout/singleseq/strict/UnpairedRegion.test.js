@@ -1,6 +1,6 @@
 import UnpairedRegion from './UnpairedRegion';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
@@ -10,7 +10,7 @@ import { StemLayout } from './StemLayout';
 function defaultPerBaseProps(length) {
   let pbps = [];
   for (let i = 0; i < length; i++) {
-    pbps.push(new StrictLayoutPerBaseProps());
+    pbps.push(new PerBaseStrictLayoutProps());
   }
   return pbps;
 }

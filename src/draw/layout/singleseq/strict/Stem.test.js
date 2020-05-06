@@ -1,6 +1,6 @@
 import Stem from './Stem';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import normalizeAngle from '../../../normalizeAngle';
 import { StemLayout } from './StemLayout';
 import parseDotBracket from '../../../../parse/parseDotBracket';
@@ -8,7 +8,7 @@ import parseDotBracket from '../../../../parse/parseDotBracket';
 function defaultPerBaseProps(length) {
   let pbps = [];
   for (let i = 0; i < length; i++) {
-    pbps.push(new StrictLayoutPerBaseProps());
+    pbps.push(new PerBaseStrictLayoutProps());
   }
   return pbps;
 }
@@ -573,7 +573,7 @@ it('hasTriangleLoop - an inner stem', () => {
 describe('triangleLoopHeight getter', () => {
   it('the outermost stem', () => {
     let partners = parseDotBracket('..((..))').secondaryPartners;
-    let gps = new StrictLayoutPerBaseProps();
+    let gps = new PerBaseStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let omst = new Stem(0, partners, gps, pbps);
     expect(omst.triangleLoopHeight).toBe(0);

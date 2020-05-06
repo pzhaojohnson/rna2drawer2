@@ -23,7 +23,7 @@ class Stem {
    * @param {number} p5 The 5' most position of this stem.
    * @param {Array<number|null>} partners 
    * @param {GeneralStrictLayoutProps} generalProps 
-   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
+   * @param {Array<PerBaseStrictLayoutProps>} perBaseProps 
    */
   constructor(p5, partners, generalProps, perBaseProps) {
     this._partners = partners;

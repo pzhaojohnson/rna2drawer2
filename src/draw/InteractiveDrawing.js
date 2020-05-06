@@ -1,7 +1,7 @@
 import Drawing from './Drawing';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
-import StrictLayoutPerBaseProps from './layout/singleseq/strict/StrictLayoutPerBaseProps';
+import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
 
 class InteractiveDrawing {
@@ -66,7 +66,7 @@ class InteractiveDrawing {
     let seq = this._drawing.appendSequenceOutOfView(id, characters);
     if (seq) {
       seq.forEachBase(b => {
-        this._strictLayoutProps.base.push(new StrictLayoutPerBaseProps());
+        this._strictLayoutProps.base.push(new PerBaseStrictLayoutProps());
       });
     }
     return seq;
