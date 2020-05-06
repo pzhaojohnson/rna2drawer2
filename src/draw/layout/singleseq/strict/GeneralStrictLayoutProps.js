@@ -45,6 +45,7 @@ class GeneralStrictLayoutProps {
 
   /**
    * @typedef {Object} GeneralStrictLayoutProps~SavableState 
+   * @property {string} className 
    * @property {boolean} flatOutermostLoop 
    * @property {number} rotation 
    * @property {number} basePairBondLength 
@@ -57,6 +58,7 @@ class GeneralStrictLayoutProps {
    */
   savableState() {
     return {
+      className: 'GeneralStrictLayoutProps',
       flatOutermostLoop: this.flatOutermostLoop,
       rotation: this.rotation,
       basePairBondLength: this.basePairBondLength,

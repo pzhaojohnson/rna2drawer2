@@ -43,6 +43,7 @@ class PerBaseStrictLayoutProps {
 
   /**
    * @typedef {Object} PerBaseStrictLayoutProps~SavableState 
+   * @property {string} className 
    * @property {number} stretch3 
    * @property {number} flatOutermostLoopAngle3 
    * @property {boolean} flipStem 
@@ -55,6 +56,7 @@ class PerBaseStrictLayoutProps {
    */
   savableState() {
     return {
+      className: 'PerBaseStrictLayoutProps',
       stretch3: this.stretch3,
       flatOutermostLoopAngle3: this.flatOutermostLoopAngle3,
       flipStem: this.flipStem,
