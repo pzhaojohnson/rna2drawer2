@@ -1,12 +1,12 @@
-class StrictLayoutGeneralProps {
+class GeneralStrictLayoutProps {
   
   /**
-   * @param {StrictLayoutGeneralProps~SavableState} savedState 
+   * @param {GeneralStrictLayoutProps~SavableState} savedState 
    * 
-   * @returns {StrictLayoutGeneralProps} 
+   * @returns {GeneralStrictLayoutProps} 
    */
   static fromSavedState(savedState) {
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     if (savedState.flatOutermostLoop !== undefined) {
       gps.flatOutermostLoop = savedState.flatOutermostLoop;
     }
@@ -36,15 +36,15 @@ class StrictLayoutGeneralProps {
   }
 
   /**
-   * @returns {StrictLayoutGeneralProps} 
+   * @returns {GeneralStrictLayoutProps} 
    */
   deepCopy() {
     let savableState = this.savableState();
-    return StrictLayoutGeneralProps.fromSavedState(savableState);
+    return GeneralStrictLayoutProps.fromSavedState(savableState);
   }
 
   /**
-   * @typedef {Object} StrictLayoutGeneralProps~SavableState 
+   * @typedef {Object} GeneralStrictLayoutProps~SavableState 
    * @property {boolean} flatOutermostLoop 
    * @property {number} rotation 
    * @property {number} basePairBondLength 
@@ -53,7 +53,7 @@ class StrictLayoutGeneralProps {
    */
 
   /**
-   * @returns {StrictLayoutGeneralProps~SavableState} 
+   * @returns {GeneralStrictLayoutProps~SavableState} 
    */
   savableState() {
     return {
@@ -66,4 +66,4 @@ class StrictLayoutGeneralProps {
   }
 }
 
-export default StrictLayoutGeneralProps;
+export default GeneralStrictLayoutProps;

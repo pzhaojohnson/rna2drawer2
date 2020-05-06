@@ -1,6 +1,6 @@
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import { FlatOutermostLoop } from './StemLayout';
-import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
+import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
 import Stem from './Stem';
 
@@ -22,7 +22,7 @@ function checkCoords(coords, expectedCoords) {
 
 it('basic case', () => {
   let partners = [null, null, 5, null, 3, null, null];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.flatOutermostLoop = true;
   let pbps = defaultPerBaseProps(partners.length);
   pbps[4].stretch3 = 2;
@@ -48,7 +48,7 @@ it('basic case', () => {
 
 it("5' dangling unpaired region", () => {
   let partners = [null, null, 5, null, 3, null, null];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.flatOutermostLoop = true;
   let pbps = defaultPerBaseProps(partners.length);
   pbps[0].stretch3 = 5.5;

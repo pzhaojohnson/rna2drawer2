@@ -11,7 +11,7 @@ import normalizeAngle from '../../../normalizeAngle';
 class Stem {
 
   /**
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -22,7 +22,7 @@ class Stem {
   /**
    * @param {number} p5 The 5' most position of this stem.
    * @param {Array<number|null>} partners 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
   constructor(p5, partners, generalProps, perBaseProps) {

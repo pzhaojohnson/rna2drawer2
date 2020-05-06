@@ -1,14 +1,14 @@
-import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
+import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 
 it('fromSavedState static method', () => {
-  let gps1 = new StrictLayoutGeneralProps();
+  let gps1 = new GeneralStrictLayoutProps();
   gps1.flatOutermostLoop = true;
   gps1.rotation = Math.PI / 5;
   gps1.basePairBondLength = 5.4;
   gps1.basePairPadding = 3.2;
   gps1.terminiGap = 5.44;
   let savableState1 = gps1.savableState();
-  let gps2 = StrictLayoutGeneralProps.fromSavedState(savableState1);
+  let gps2 = GeneralStrictLayoutProps.fromSavedState(savableState1);
   let savableState2 = gps2.savableState();
   Object.keys(savableState1).forEach(k => {
     expect(savableState2[k]).toBe(savableState1[k]);
@@ -16,8 +16,8 @@ it('fromSavedState static method', () => {
 });
 
 it('fromSavedState static method - ignores undefined properties', () => {
-  let gps1 = new StrictLayoutGeneralProps();
-  let gps2 = StrictLayoutGeneralProps.fromSavedState({});
+  let gps1 = new GeneralStrictLayoutProps();
+  let gps2 = GeneralStrictLayoutProps.fromSavedState({});
   let savableState1 = gps1.savableState();
   let savableState2 = gps2.savableState();
   Object.keys(savableState1).forEach(k => {
@@ -26,11 +26,11 @@ it('fromSavedState static method - ignores undefined properties', () => {
 });
 
 it('basic test of constructor', () => {
-  expect(() => { new StrictLayoutGeneralProps() }).not.toThrow();
+  expect(() => { new GeneralStrictLayoutProps() }).not.toThrow();
 });
 
 it('deepCopy', () => {
-  let gps1 = new StrictLayoutGeneralProps();
+  let gps1 = new GeneralStrictLayoutProps();
   gps1.flatOutermostLoop = true;
   gps1.rotation = 2 * Math.PI / 3;
   gps1.basePairBondLength = 0.77;
@@ -46,7 +46,7 @@ it('deepCopy', () => {
 });
 
 it('savableState', () => {
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.flatOutermostLoop = true;
   gps.rotation = Math.PI / 3;
   gps.basePairBondLength = 2.8;
@@ -61,7 +61,7 @@ it('savableState', () => {
 });
 
 it('savableState - can be coverted to and read from a JSON string', () => {
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let savableState1 = gps.savableState();
   let json = JSON.stringify(savableState1);
   let savableState2 = JSON.parse(json);

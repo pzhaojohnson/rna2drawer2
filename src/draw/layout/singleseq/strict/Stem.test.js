@@ -1,5 +1,5 @@
 import Stem from './Stem';
-import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
+import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
 import normalizeAngle from '../../../normalizeAngle';
 import { StemLayout } from './StemLayout';
@@ -14,14 +14,14 @@ function defaultPerBaseProps(length) {
 }
 
 it('width static method', () => {
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 2.2;
   expect(Stem.width(gps)).toBe(2.2 + 2);
 });
 
 it('basic test of constructor - the outermost stem', () => {
   let partners = parseDotBracket('..').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   expect(
     () => new Stem(0, partners, gps, pbps)
@@ -30,7 +30,7 @@ it('basic test of constructor - the outermost stem', () => {
 
 it('basic test of constructor - an inner stem', () => {
   let partners = parseDotBracket('(((...)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   expect(
     () => new Stem(1, partners, gps, pbps)
@@ -39,7 +39,7 @@ it('basic test of constructor - an inner stem', () => {
 
 it('_initializePosition3 - the outermost stem', () => {
   let partners = parseDotBracket('....').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   expect(omst.position3).toBe(5);
@@ -47,7 +47,7 @@ it('_initializePosition3 - the outermost stem', () => {
 
 it('_initializePosition3 - an inner stem', () => {
   let partners = parseDotBracket('..(((...))).').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(3, partners, gps, pbps);
   expect(st.position3).toBe(11);
@@ -55,7 +55,7 @@ it('_initializePosition3 - an inner stem', () => {
 
 it('_initializeSize - the outermost stem', () => {
   let partners = parseDotBracket('..').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   expect(omst.size).toBe(1);
@@ -63,7 +63,7 @@ it('_initializeSize - the outermost stem', () => {
 
 it('_initializeSize - size of one', () => {
   let partners = parseDotBracket('.(...).').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(2, partners, gps, pbps);
   expect(st.size).toBe(1);
@@ -71,7 +71,7 @@ it('_initializeSize - size of one', () => {
 
 it('_initializeSize - size greater than one', () => {
   let partners = parseDotBracket('.(((....)))...').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(2, partners, gps, pbps);
   expect(st.size).toBe(3);
@@ -79,7 +79,7 @@ it('_initializeSize - size greater than one', () => {
 
 it('_initializeSize - hairpin with empty loop', () => {
   let partners = parseDotBracket('()').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
   expect(st.size).toBe(1);
@@ -87,7 +87,7 @@ it('_initializeSize - hairpin with empty loop', () => {
 
 it('_initializeLoop - the outermost stem', () => {
   let partners = parseDotBracket('.(((...)))..').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
@@ -105,7 +105,7 @@ it('_initializeLoop - the outermost stem', () => {
 
 it('_initializeLoop - an inner stem', () => {
   let partners = parseDotBracket('.(((..(((....))).....)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(2, partners, gps, pbps);
   let it = st.loopIterator();
@@ -123,7 +123,7 @@ it('_initializeLoop - an inner stem', () => {
 
 it('_initializeLoop - a hairpin', () => {
   let partners = parseDotBracket('((...))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
   let it = st.loopIterator();
@@ -135,7 +135,7 @@ it('_initializeLoop - a hairpin', () => {
 
 it('_initializeLoop - unpaired regions of size zero', () => {
   let partners = parseDotBracket('(((())(())))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
   let it = st.loopIterator();
@@ -159,7 +159,7 @@ it('_initializeLoop - unpaired regions of size zero', () => {
 
 it("_initializeLoop - a knot with outer 5' side", () => {
   let partners = [8, 7, null, 11, 10, null, 2, 1, null, 5, 4];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   expect(
     () => { new Stem(0, partners, gps, pbps) }
@@ -168,7 +168,7 @@ it("_initializeLoop - a knot with outer 5' side", () => {
 
 it("_initializeLoop - a knot with outer 3' side", () => {
   let partners = [8, 7, null, 11, 10, null, 2, 1, null , 5, 4];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   expect(
     () => { new Stem(0, partners, gps, pbps) }
@@ -177,7 +177,7 @@ it("_initializeLoop - a knot with outer 3' side", () => {
 
 it('position and size getters', () => {
   let partners = parseDotBracket('..(((....))).').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(3, partners, gps, pbps);
   expect(st.position5).toBe(3);
@@ -189,7 +189,7 @@ it('position and size getters', () => {
 
 it('loopIterator', () => {
   let partners = parseDotBracket('((..((...))..))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
   let it = st.loopIterator();
@@ -201,7 +201,7 @@ it('loopIterator', () => {
 
 it('numBranches - zero branches', () => {
   let partners = [];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = [];
   let omst = new Stem(0, partners, gps, pbps);
   expect(omst.numBranches).toBe(0);
@@ -209,7 +209,7 @@ it('numBranches - zero branches', () => {
 
 it('numBranches - some branches', () => {
   let partners = parseDotBracket('((..))..(((...))).').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   expect(omst.numBranches).toBe(2);
@@ -217,7 +217,7 @@ it('numBranches - some branches', () => {
 
 it('firstUnpairedRegionInLoop getter', () => {
   let partners = parseDotBracket('(((...((...))..)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
   expect(st.firstUnpairedRegionInLoop).toBe(st._loop[0]);
@@ -226,7 +226,7 @@ it('firstUnpairedRegionInLoop getter', () => {
 describe('lastUnpairedRegionInLoop getter', () => {
   it('hairpin loop', () => {
     let partners = parseDotBracket('(((...)))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let st = new Stem(1, partners, gps, pbps);
     expect(st.lastUnpairedRegionInLoop).toBe(st._loop[0]);
@@ -234,7 +234,7 @@ describe('lastUnpairedRegionInLoop getter', () => {
 
   it('has inner stems', () => {
     let partners = parseDotBracket('((..(((...)))..(((.....))).))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let st = new Stem(1, partners, gps, pbps);
     expect(st.lastUnpairedRegionInLoop).toBe(st._loop[4]);
@@ -244,7 +244,7 @@ describe('lastUnpairedRegionInLoop getter', () => {
 describe('unpairedRegionsInLoop method', () => {
   it('hairpin loop', () => {
     let partners = parseDotBracket('(((...)))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let st = new Stem(1, partners, gps, pbps);
     let urs = st.unpairedRegionsInLoop();
@@ -254,7 +254,7 @@ describe('unpairedRegionsInLoop method', () => {
 
   it('multiple unpaired regions in loop', () => {
     let partners = parseDotBracket('...(((...)))..(((...)))..').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let omst = new Stem(0, partners, gps, pbps);
     let urs = omst.unpairedRegionsInLoop();
@@ -268,7 +268,7 @@ describe('unpairedRegionsInLoop method', () => {
 describe('firstStemInLoop getter', () => {
   it('hairpin loop', () => {
     let partners = parseDotBracket('(((...)))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let st = new Stem(1, partners, gps, pbps);
     expect(st.firstStemInLoop).toBe(null);
@@ -276,7 +276,7 @@ describe('firstStemInLoop getter', () => {
 
   it('multiple stems in loop', () => {
     let partners = parseDotBracket('((..(((...)))..(((...)))..))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let st = new Stem(1, partners, gps, pbps);
     expect(st.firstStemInLoop).toBe(st._loop[1]);
@@ -286,7 +286,7 @@ describe('firstStemInLoop getter', () => {
 describe('lastStemInLoop getter', () => {
   it('hairpin loop', () => {
     let partners = parseDotBracket('(((...)))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let st = new Stem(1, partners, gps, pbps);
     expect(st.lastStemInLoop).toBe(null);
@@ -294,7 +294,7 @@ describe('lastStemInLoop getter', () => {
 
   it('one stem in loop', () => {
     let partners = parseDotBracket('(((...(((...))).)))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let st = new Stem(1, partners, gps, pbps);
     expect(st.lastStemInLoop).toBe(st._loop[1]);
@@ -303,7 +303,7 @@ describe('lastStemInLoop getter', () => {
   describe('stemsInLoop method', () => {
     it('hairpin loop', () => {
       let partners = parseDotBracket('...').secondaryPartners;
-      let gps = new StrictLayoutGeneralProps();
+      let gps = new GeneralStrictLayoutProps();
       let pbps = defaultPerBaseProps(partners.length);
       let omst = new Stem(0, partners, gps, pbps);
       let sts = omst.stemsInLoop();
@@ -312,7 +312,7 @@ describe('lastStemInLoop getter', () => {
 
     it('multiple stems in loop', () => {
       let partners = parseDotBracket('((...(((...))).((..))..))').secondaryPartners;
-      let gps = new StrictLayoutGeneralProps();
+      let gps = new GeneralStrictLayoutProps();
       let pbps = defaultPerBaseProps(partners.length);
       let st = new Stem(1, partners, gps, pbps);
       let ists = st.stemsInLoop();
@@ -324,7 +324,7 @@ describe('lastStemInLoop getter', () => {
 
   it('multiple stems in loop', () => {
     let partners = parseDotBracket('((...(((...))).(((...)))..((...)).))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     let st = new Stem(1, partners, gps, pbps);
     expect(st.lastStemInLoop).toBe(st._loop[5]);
@@ -333,7 +333,7 @@ describe('lastStemInLoop getter', () => {
 
 it('xBottomCenter and yBottomCenter getters and setters', () => {
   let partners = parseDotBracket('(((...)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
   st.xBottomCenter = 2.2;
@@ -344,7 +344,7 @@ it('xBottomCenter and yBottomCenter getters and setters', () => {
 
 it('angles getters and setter', () => {
   let partners = parseDotBracket('((..))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
   st.angle = Math.PI;
@@ -357,7 +357,7 @@ it('angles getters and setter', () => {
 
 it('width and height getters', () => {
   let partners = parseDotBracket('((..))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 2;
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
@@ -367,7 +367,7 @@ it('width and height getters', () => {
 
 it('height getter - positive basePairPadding', () => {
   let partners = parseDotBracket('(((...)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairPadding = 0.5;
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
@@ -376,7 +376,7 @@ it('height getter - positive basePairPadding', () => {
 
 it('loopLength - includes stretch', () => {
   let partners = parseDotBracket('..(((...)))..').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 1.25;
   let pbps = defaultPerBaseProps(partners.length);
   pbps[0].stretch3 = 0.9;
@@ -387,7 +387,7 @@ it('loopLength - includes stretch', () => {
 
 it('coordinates getters - positive basePairPadding', () => {
   let partners = parseDotBracket('(((....)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairPadding = 0.65;
   gps.basePairBondLength = 1.45;
   let pbps = defaultPerBaseProps(partners.length);
@@ -411,7 +411,7 @@ it('coordinates getters - positive basePairPadding', () => {
 
 it('baseCoordinates5 method', () => {
   let partners = [9, 8, 7, null, null, null, 3, 2, 1];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 1.4;
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
@@ -445,7 +445,7 @@ it('baseCoordinates5 method', () => {
 
 it('baseCoordinatesTop5 method', () => {
   let partners = [9, 8, 7, null, null, null, 3, 2, 1];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 0.9;
   gps.basePairPadding = 0.1;
   let pbps = defaultPerBaseProps(partners.length);
@@ -460,7 +460,7 @@ it('baseCoordinatesTop5 method', () => {
 
 it('baseCoordinates3 method', () => {
   let partners = [9, 8, 7, null, null, null, 3, 2, 1];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 1.8;
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
@@ -474,7 +474,7 @@ it('baseCoordinates3 method', () => {
 
 it('baseCoordinatesTop3 method', () => {
   let partners = [9, 8, 7, null, null, null, 3, 2, 1];
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 2.2;
   gps.basePairPadding = 0.25;
   let pbps = defaultPerBaseProps(partners.length);
@@ -489,7 +489,7 @@ it('baseCoordinatesTop3 method', () => {
 
 it('isOuterTo - is outer to', () => {
   let partners = parseDotBracket('.(((..(((....)))...)))...').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(2, partners, gps, pbps);
   let it = st.loopIterator();
@@ -501,7 +501,7 @@ it('isOuterTo - is outer to', () => {
 
 it('isOutermostStem', () => {
   let partners = parseDotBracket('((..))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   expect(omst.isOutermostStem()).toBeTruthy();
@@ -513,7 +513,7 @@ it('isOutermostStem', () => {
 
 it('hasHairpinLoop', () => {
   let partners = parseDotBracket('.(((..(((...))).)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(2, partners, gps, pbps);
   let it = st.loopIterator();
@@ -526,11 +526,11 @@ it('hasHairpinLoop', () => {
 it('hasRoundLoop - the outermost stem', () => {
   let partners = parseDotBracket('....').secondaryPartners;
   let pbps = defaultPerBaseProps(partners.length);
-  let gps1 = new StrictLayoutGeneralProps();
+  let gps1 = new GeneralStrictLayoutProps();
   gps1.flatOutermostLoop = false;
   let omst1 = new Stem(0, partners, gps1, pbps);
   expect(omst1.hasRoundLoop()).toBeTruthy();
-  let gps2 = new StrictLayoutGeneralProps();
+  let gps2 = new GeneralStrictLayoutProps();
   gps2.flatOutermostLoop = true;
   let omst2 = new Stem(0, partners, gps2, pbps);
   expect(omst2.hasRoundLoop()).toBeFalsy();
@@ -538,7 +538,7 @@ it('hasRoundLoop - the outermost stem', () => {
 
 it('hasRoundLoop - an inner stem', () => {
   let partners = parseDotBracket('.(((...))).').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let bps1 = defaultPerBaseProps(partners.length);
   bps1[1].loopShape = 'round';
   let st1 = new Stem(2, partners, gps, bps1);
@@ -551,7 +551,7 @@ it('hasRoundLoop - an inner stem', () => {
 
 it('hasTriangleLoop - the outermost stem', () => {
   let partners = parseDotBracket('..').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   expect(omst.hasTriangleLoop()).toBeFalsy();
@@ -559,7 +559,7 @@ it('hasTriangleLoop - the outermost stem', () => {
 
 it('hasTriangleLoop - an inner stem', () => {
   let partners = parseDotBracket('.(((...)))..').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let bps1 = defaultPerBaseProps(partners.length);
   bps1[1].loopShape = 'triangle';
   let st1 = new Stem(2, partners, gps, bps1);
@@ -581,7 +581,7 @@ describe('triangleLoopHeight getter', () => {
 
   it('an inner stem', () => {
     let partners = parseDotBracket('..(((...)))').secondaryPartners;
-    let gps = new StrictLayoutGeneralProps();
+    let gps = new GeneralStrictLayoutProps();
     let pbps = defaultPerBaseProps(partners.length);
     pbps[2].triangleLoopHeight = 5.78;
     let st = new Stem(3, partners, gps, pbps);
@@ -591,7 +591,7 @@ describe('triangleLoopHeight getter', () => {
 
 it('isFlipped - the outermost stem', () => {
   let partners = parseDotBracket('...').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   expect(omst.isFlipped()).toBeFalsy();
@@ -599,7 +599,7 @@ it('isFlipped - the outermost stem', () => {
 
 it('isFlipped - an inner stem', () => {
   let partners = parseDotBracket('.(((...)))..').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let bps1 = defaultPerBaseProps(partners.length);
   bps1[1].flipStem = true;
   let st1 = new Stem(2, partners, gps, bps1);
@@ -620,7 +620,7 @@ function checkCoords(coords, expectedCoords) {
 
 it('baseCoordinates method - the outermost stem', () => {
   let partners = parseDotBracket('...(((...))).......(((((.....))))).').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.terminiGap = 5;
   gps.basePairBondLength = 1.2;
   let pbps = defaultPerBaseProps(partners.length);
@@ -670,7 +670,7 @@ it('baseCoordinates method - the outermost stem', () => {
 
 it('baseCoordinates method - not the outermost stem', () => {
   let partners = parseDotBracket('(((....(((....))).........)))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 1;
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);
@@ -716,7 +716,7 @@ it('baseCoordinates method - not the outermost stem', () => {
 
 it('baseCoordinates method - a flipped and an unflipped inner stem', () => {
   let partners = parseDotBracket('...(((....))).....(((....)))........').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.terminiGap = 5;
   gps.basePairBondLength = 1.4;
   let pbps = defaultPerBaseProps(partners.length);
@@ -768,7 +768,7 @@ it('baseCoordinates method - a flipped and an unflipped inner stem', () => {
 
 it('flippedBaseCoordinates method - the outermost stem', () => {
   let partners = parseDotBracket('..((((....((((........)))).)))).').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   let expectedCoords = [];
@@ -781,7 +781,7 @@ it('flippedBaseCoordinates method - the outermost stem', () => {
 
 it('flippedBaseCoordinates method -  an inner stem', () => {
   let partners = parseDotBracket('((((...(((.....))).....(((((.....))))).))))').secondaryPartners;
-  let gps = new StrictLayoutGeneralProps();
+  let gps = new GeneralStrictLayoutProps();
   gps.basePairBondLength = 1.2;
   let pbps = defaultPerBaseProps(partners.length);
   let st = new Stem(1, partners, gps, pbps);

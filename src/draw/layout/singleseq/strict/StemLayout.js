@@ -7,7 +7,7 @@ class RoundLoop {
 
   /**
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -28,7 +28,7 @@ class RoundLoop {
 
   /**
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -44,7 +44,7 @@ class RoundLoop {
   
   /**
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {RoundLoop~Center} 
    */
@@ -78,7 +78,7 @@ class RoundLoop {
 
   /**
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -92,7 +92,7 @@ class RoundLoop {
 
   /**
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -115,7 +115,7 @@ class RoundLoop {
 
   /**
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -127,7 +127,7 @@ class RoundLoop {
 
   /**
    * @param {Stem} outermostStem 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -145,7 +145,7 @@ class RoundLoop {
 
   /**
    * @param {Stem} outermostStem 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -159,7 +159,7 @@ class RoundLoop {
 
   /**
    * @param {Stem} outermostStem 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * 
    * @returns {number} 
    */
@@ -175,7 +175,7 @@ class RoundLoop {
    * Sets the coordinates and angles for all stems in the layout.
    * 
    * @param {Stem} outermostStem 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
   static setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps) {
@@ -186,7 +186,7 @@ class RoundLoop {
    * Recursively sets the coordinates and angles of stems inner to the given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
   static setInnerCoordinatesAndAngles(st, generalProps, perBaseProps) {
@@ -254,7 +254,7 @@ class TriangleLoop {
    * Recursively sets the coordinates and angles of stems inner to the given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
   static setInnerCoordinatesAndAngles(st, generalProps, perBaseProps) {
@@ -296,7 +296,7 @@ class FlatOutermostLoop {
    * of its 5' bounding stem.
    * 
    * @param {UnpairedRegion} ur 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps} perBaseProps 
    * 
    * @returns {Array<NormalizedBaseCoordinates>} The base coordinates for the unpaired region.
@@ -330,7 +330,7 @@ class FlatOutermostLoop {
 
   /**
    * @param {UnpairedRegion} ur 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    * 
    * @returns {number} The angle leading to the next base after traversing the unpaired region
@@ -359,7 +359,7 @@ class FlatOutermostLoop {
    * based on the coordinates and angle of the 5' bounding stem of the unpaired region.
    * 
    * @param {UnpairedRegion} ur 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps} perBaseProps 
    */
   static setNextCoordinatesAndAngle53(ur, generalProps, perBaseProps) {
@@ -391,7 +391,7 @@ class FlatOutermostLoop {
    * Sets the coordinates and angles for all stems in the layout.
    * 
    * @param {Stem} outermostStem 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
   static setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps) {
@@ -414,7 +414,7 @@ class StemLayout {
    * Sets the coordinates and angles for all stems in the layout.
    * 
    * @param {Stem} outermostStem 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
   static setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps) {
@@ -429,7 +429,7 @@ class StemLayout {
    * Recursively sets the coordinates and angles of stems inner to the given stem.
    * 
    * @param {Stem} st 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
   static setInnerCoordinatesAndAngles(st, generalProps, perBaseProps) {

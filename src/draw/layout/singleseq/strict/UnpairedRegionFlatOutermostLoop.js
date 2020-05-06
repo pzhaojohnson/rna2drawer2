@@ -2,7 +2,7 @@ import { FlatOutermostLoop } from './StemLayout';
 
 /**
  * @param {UnpairdRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
  * 
  * @returns {Array<NormalizedBaseCoordinates>} 

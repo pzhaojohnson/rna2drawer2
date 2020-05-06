@@ -8,7 +8,7 @@ class UnpairedRegion {
    * @param {Stem} bs5 The stem immediately 5' to this unpaired region.
    * @param {Stem} bs3 The stem immediately 3' to this unpaired region.
    * @param {Array<number|null>} partners 
-   * @param {StrictLayoutGeneralProps} generalProps 
+   * @param {GeneralStrictLayoutProps} generalProps 
    * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
   constructor(bs5, bs3, partners, generalProps, perBaseProps) {

@@ -1,6 +1,6 @@
 import Drawing from './Drawing';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
-import StrictLayoutGeneralProps from './layout/singleseq/strict/StrictLayoutGeneralProps';
+import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
 import StrictLayoutPerBaseProps from './layout/singleseq/strict/StrictLayoutPerBaseProps';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
 
@@ -10,7 +10,7 @@ class InteractiveDrawing {
     this._drawing = new Drawing();
 
     this._strictLayoutProps = {
-      general: new StrictLayoutGeneralProps(),
+      general: new GeneralStrictLayoutProps(),
       base: [],
       baseWidth: 13.5,
       baseHeight: 13.5,

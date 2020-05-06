@@ -15,7 +15,7 @@ const _VERY_SMALL_THRESHOLD = 0.001;
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * 
  * @returns {Coordinates} 
  */
@@ -36,7 +36,7 @@ function _coordinatesBounding5(ur, generalProps) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * 
  * @returns {Coordinates} 
  */
@@ -74,7 +74,7 @@ function _polarLengthToFit(ur) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Coordinates} cb5 The 5' bounding coordinates.
  * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
@@ -100,7 +100,7 @@ function _center(ur, generalProps, cb5, cb3) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Coordinates} cb5 The 5' bounding coordinates.
  * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
@@ -113,7 +113,7 @@ function _radius(ur, generalProps, cb5, cb3) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Coordinates} cb5 The 5' bounding coordinates.
  * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
@@ -126,7 +126,7 @@ function _angleBounding5(ur, generalProps, cb5, cb3) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Coordinates} cb5 The 5' bounding coordinates.
  * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
@@ -139,7 +139,7 @@ function _angleBounding3(ur, generalProps, cb5, cb3) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Coordinates} cb5 The 5' bounding coordinates.
  * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
@@ -161,7 +161,7 @@ function _angleSpanBetweenBounds(ur, generalProps, cb5, cb3) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Coordinates} cb5 The 5' bounding coordinates.
  * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
@@ -175,7 +175,7 @@ function _polarLengthBetweenBounds(ur, generalProps, cb5, cb3) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Coordinates} cb5 The 5' bounding coordinates.
  * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
@@ -202,7 +202,7 @@ function _startingAngle(ur, generalProps, cb5, cb3) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * @param {Coordinates} cb5 The 5' bounding coordinates.
  * @param {Coordinates} cb3 The 3' bounding coordinates.
  * 
@@ -226,7 +226,7 @@ function _angleIncrement(ur, generalProps, cb5, cb3) {
 
 /**
  * @param {UnpairedRegion} ur 
- * @param {StrictLayoutGeneralProps} generalProps 
+ * @param {GeneralStrictLayoutProps} generalProps 
  * 
  * @returns {Array<NormalizedBaseCoordinates>} 
  */
