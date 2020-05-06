@@ -400,7 +400,7 @@ describe('Drawing class', () => {
     drawing.addPrimaryBond(b2, b3);
     let i = 0;
     drawing.forEachPrimaryBond(pb => {
-      expect(pb.id).toBe(drawing._bonds.primary[i].id);
+      expect(pb.id).toBe(drawing._primaryBonds[i].id);
       i++;
     });
     expect(i).toBe(2);
@@ -415,7 +415,7 @@ describe('Drawing class', () => {
     expect(drawing.numPrimaryBonds).toBe(0);
     let pb = drawing.addPrimaryBond(b1, b2);
     expect(drawing.numPrimaryBonds).toBe(1);
-    expect(pb).toBe(drawing._bonds.primary[0]);
+    expect(pb).toBe(drawing._primaryBonds[0]);
     expect(pb.base1.id).toBe(b1.id);
     expect(pb.base2.id).toBe(b2.id);
   });
@@ -436,8 +436,8 @@ describe('Drawing class', () => {
     let seq = drawing.appendSequenceOutOfView('asdf', 'GGGAAACCC');
     let sb1 = SecondaryBond.create(drawing._svg, seq.getBaseAtPosition(1), seq.getBaseAtPosition(9));
     let sb2 = SecondaryBond.create(drawing._svg, seq.getBaseAtPosition(2), seq.getBaseAtPosition(8));
-    drawing._bonds.secondary.push(sb1);
-    drawing._bonds.secondary.push(sb2);
+    drawing._secondaryBonds.push(sb1);
+    drawing._secondaryBonds.push(sb2);
     let bonds = [sb1, sb2];
     let i = 0;
     drawing.forEachSecondaryBond(sb => {
@@ -456,7 +456,7 @@ describe('Drawing class', () => {
     let sb = drawing.addSecondaryBond(b1, b2);
     expect(sb.base1).toBe(b1);
     expect(sb.base2).toBe(b2);
-    expect(drawing._bonds.secondary[0]).toBe(sb);
+    expect(drawing._secondaryBonds[0]).toBe(sb);
   });
 
   it('numTertiaryBonds getter', () => {
@@ -537,7 +537,7 @@ describe('Drawing class', () => {
         drawing.getBaseAtOverallPosition(7),
       );
       expect(drawing.numTertiaryBonds).toBe(1);
-      expect(tb).toBe(drawing._bonds.tertiary[0]);
+      expect(tb).toBe(drawing._tertiaryBonds[0]);
     });
 
     it('creates the bond with correct bases', () => {
@@ -584,7 +584,7 @@ describe('Drawing class', () => {
       drawing.removeTertiaryBondById(tb2.id);
       expect(drawing.numTertiaryBonds).toBe(1);
       expect(drawing._svg.findOne('#' + pathId2)).toBe(null);
-      expect(drawing._bonds.tertiary[0]).toBe(tb1);
+      expect(drawing._tertiaryBonds[0]).toBe(tb1);
     });
   });
 
@@ -735,12 +735,12 @@ describe('Drawing class', () => {
       let pb1 = drawing.addPrimaryBond(b1, b2);
       let pb2 = drawing.addPrimaryBond(b2, b3);
       let savableState = drawing.savableState();
-      expect(savableState.bonds.primary.length).toBe(2);
+      expect(savableState.primaryBonds.length).toBe(2);
       expect(
-        JSON.stringify(savableState.bonds.primary[0])
+        JSON.stringify(savableState.primaryBonds[0])
       ).toBe(JSON.stringify(pb1.savableState()));
       expect(
-        JSON.stringify(savableState.bonds.primary[1])
+        JSON.stringify(savableState.primaryBonds[1])
       ).toBe(JSON.stringify(pb2.savableState()));
     });
 
@@ -751,12 +751,12 @@ describe('Drawing class', () => {
       let sb1 = drawing.addSecondaryBond(seq.getBaseAtPosition(1), seq.getBaseAtPosition(8));
       let sb2 = drawing.addSecondaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(7));
       let savableState = drawing.savableState();
-      expect(savableState.bonds.secondary.length).toBe(2);
+      expect(savableState.secondaryBonds.length).toBe(2);
       expect(
-        JSON.stringify(savableState.bonds.secondary[0])
+        JSON.stringify(savableState.secondaryBonds[0])
       ).toBe(JSON.stringify(sb1.savableState()));
       expect(
-        JSON.stringify(savableState.bonds.secondary[1])
+        JSON.stringify(savableState.secondaryBonds[1])
       ).toBe(JSON.stringify(sb2.savableState()));
     });
 
@@ -773,12 +773,12 @@ describe('Drawing class', () => {
         drawing.addTertiaryBond(b3, b8),
       ];
       let savableState = drawing.savableState();
-      expect(savableState.bonds.tertiary.length).toBe(2);
+      expect(savableState.tertiaryBonds.length).toBe(2);
       expect(
-        JSON.stringify(savableState.bonds.tertiary[0])
+        JSON.stringify(savableState.tertiaryBonds[0])
       ).toBe(JSON.stringify(bonds[0].savableState()));
       expect(
-        JSON.stringify(savableState.bonds.tertiary[1])
+        JSON.stringify(savableState.tertiaryBonds[1])
       ).toBe(JSON.stringify(bonds[1].savableState()));
     });
 

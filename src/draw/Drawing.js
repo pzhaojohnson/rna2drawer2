@@ -10,12 +10,10 @@ class Drawing {
 
   constructor() {
     this._sequences = [];
-      
-    this._bonds = {
-      primary: [],
-      secondary: [],
-      tertiary: [],
-    };
+    
+    this._primaryBonds = [];
+    this._secondaryBonds = [];
+    this._tertiaryBonds = [];
   }
 
   /**
@@ -282,14 +280,14 @@ class Drawing {
    * @returns {number} 
    */
   get numPrimaryBonds() {
-    return this._bonds.primary.length;
+    return this._primaryBonds.length;
   }
 
   /**
    * @param {callback} cb 
    */
   forEachPrimaryBond(cb) {
-    this._bonds.primary.forEach(pb => cb(pb));
+    this._primaryBonds.forEach(pb => cb(pb));
   }
 
   /**
@@ -300,7 +298,7 @@ class Drawing {
    */
   addPrimaryBond(b1, b2) {
     let sb = PrimaryBond.create(this._svg, b1, b2);
-    this._bonds.primary.push(sb);
+    this._primaryBonds.push(sb);
     return sb;
   }
 
@@ -308,14 +306,14 @@ class Drawing {
    * @returns {number} 
    */
   get numSecondaryBonds() {
-    return this._bonds.secondary.length;
+    return this._secondaryBonds.length;
   }
   
   /**
    * @param {callback} cb 
    */
   forEachSecondaryBond(cb) {
-    this._bonds.secondary.forEach(sb => cb(sb));
+    this._secondaryBonds.forEach(sb => cb(sb));
   }
 
   /**
@@ -326,7 +324,7 @@ class Drawing {
    */
   addSecondaryBond(b1, b2) {
     let sb = SecondaryBond.create(this._svg, b1, b2);
-    this._bonds.secondary.push(sb);
+    this._secondaryBonds.push(sb);
     return sb;
   }
 
@@ -334,7 +332,7 @@ class Drawing {
    * @returns {number} 
    */
   get numTertiaryBonds() {
-    return this._bonds.tertiary.length;
+    return this._tertiaryBonds.length;
   }
 
   /**
@@ -358,7 +356,7 @@ class Drawing {
    * @param {callback} cb 
    */
   forEachTertiaryBond(cb) {
-    this._bonds.tertiary.forEach(tb => cb(tb));
+    this._tertiaryBonds.forEach(tb => cb(tb));
   }
 
   /**
@@ -369,7 +367,7 @@ class Drawing {
    */
   addTertiaryBond(b1, b2) {
     let tb = TertiaryBond.create(this._svg, b1, b2);
-    this._bonds.tertiary.push(tb);
+    this._tertiaryBonds.push(tb);
     return tb;
   }
 
@@ -389,7 +387,7 @@ class Drawing {
       j++;
     });
     if (i !== null) {
-      this._bonds.tertiary.splice(i, 1);
+      this._tertiaryBonds.splice(i, 1);
     }
   }
 
@@ -432,14 +430,9 @@ class Drawing {
    * @property {string} className 
    * @property {string} svg 
    * @property {Array<Sequence~SavableState>} sequences 
-   * @property {Drawing~BondsSavableState} bonds 
-   */
-
-  /**
-   * @typedef {Object} Drawing~BondsSavableState 
-   * @property {Array<StraightBond~SavableState} primary 
-   * @property {Array<StraightBond~SavableState} secondary 
-   * @property {Array<TertiaryBond~SavableState} tertiary 
+   * @property {Array<PrimaryBond~SavableState>} primaryBonds 
+   * @property {Array<SecondaryBond~SavableState>} secondaryBonds 
+   * @property {Array<TertiaryBond~SavableState>} tertiaryBonds 
    */
 
   /**
@@ -450,23 +443,21 @@ class Drawing {
       className: 'Drawing',
       svg: this._svg.svg(),
       sequences: [],
-      bonds: {
-        primary: [],
-        secondary: [],
-        tertiary: [],
-      },
+      primaryBonds: [],
+      secondaryBonds: [],
+      tertiaryBonds: [],
     };
     this._sequences.forEach(
       seq => savableState.sequences.push(seq.savableState())
     );
-    this._bonds.primary.forEach(
-      pb => savableState.bonds.primary.push(pb.savableState())
+    this._primaryBonds.forEach(
+      pb => savableState.primaryBonds.push(pb.savableState())
     );
-    this._bonds.secondary.forEach(
-      sb => savableState.bonds.secondary.push(sb.savableState())
+    this._secondaryBonds.forEach(
+      sb => savableState.secondaryBonds.push(sb.savableState())
     );
-    this._bonds.tertiary.forEach(
-      tb => savableState.bonds.tertiary.push(tb.savableState())
+    this._tertiaryBonds.forEach(
+      tb => savableState.tertiaryBonds.push(tb.savableState())
     );
     return savableState;
   }
