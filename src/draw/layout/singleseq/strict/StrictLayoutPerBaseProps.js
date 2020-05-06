@@ -1,28 +1,28 @@
-class StrictLayoutBaseProps {
+class StrictLayoutPerBaseProps {
 
   /**
-   * @param {StrictLayoutBaseProps~SavableState} savedState 
+   * @param {StrictLayoutPerBaseProps~SavableState} savedState 
    * 
-   * @returns {StrictLayoutBaseProps} 
+   * @returns {StrictLayoutPerBaseProps} 
    */
   static fromSavedState(savedState) {
-    let bps = new StrictLayoutBaseProps();
+    let pbps = new StrictLayoutPerBaseProps();
     if (savedState.stretch3 !== undefined) {
-      bps.stretch3 = savedState.stretch3;
+      pbps.stretch3 = savedState.stretch3;
     }
     if (savedState.flatOutermostLoopAngle3 !== undefined) {
-      bps.flatOutermostLoopAngle3 = savedState.flatOutermostLoopAngle3;
+      pbps.flatOutermostLoopAngle3 = savedState.flatOutermostLoopAngle3;
     }
     if (savedState.flipStem !== undefined) {
-      bps.flipStem = savedState.flipStem;
+      pbps.flipStem = savedState.flipStem;
     }
     if (savedState.loopShape !== undefined) {
-      bps.loopShape = savedState.loopShape;
+      pbps.loopShape = savedState.loopShape;
     }
     if (savedState.triangleLoopHeight !== undefined) {
-      bps.triangleLoopHeight = savedState.triangleLoopHeight;
+      pbps.triangleLoopHeight = savedState.triangleLoopHeight;
     }
-    return bps;
+    return pbps;
   }
 
   constructor() {
@@ -34,15 +34,15 @@ class StrictLayoutBaseProps {
   }
 
   /**
-   * @returns {StrictLayoutBaseProps} 
+   * @returns {StrictLayoutPerBaseProps} 
    */
   deepCopy() {
     let savableState = this.savableState();
-    return StrictLayoutBaseProps.fromSavedState(savableState);
+    return StrictLayoutPerBaseProps.fromSavedState(savableState);
   }
 
   /**
-   * @typedef {Object} StrictLayoutBaseProps~SavableState 
+   * @typedef {Object} StrictLayoutPerBaseProps~SavableState 
    * @property {number} stretch3 
    * @property {number} flatOutermostLoopAngle3 
    * @property {boolean} flipStem 
@@ -51,7 +51,7 @@ class StrictLayoutBaseProps {
    */
 
   /**
-   * @returns {StrictLayoutBaseProps~SavableState} 
+   * @returns {StrictLayoutPerBaseProps~SavableState} 
    */
   savableState() {
     return {
@@ -64,4 +64,4 @@ class StrictLayoutBaseProps {
   }
 }
 
-export default StrictLayoutBaseProps;
+export default StrictLayoutPerBaseProps;

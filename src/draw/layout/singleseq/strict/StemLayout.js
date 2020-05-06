@@ -176,10 +176,10 @@ class RoundLoop {
    * 
    * @param {Stem} outermostStem 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
-    RoundLoop.setInnerCoordinatesAndAngles(outermostStem, generalProps, baseProps);
+  static setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps) {
+    RoundLoop.setInnerCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);
   }
 
   /**
@@ -187,9 +187,9 @@ class RoundLoop {
    * 
    * @param {Stem} st 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
+  static setInnerCoordinatesAndAngles(st, generalProps, perBaseProps) {
     if (st.numBranches === 0) {
       return;
     } else {
@@ -217,7 +217,7 @@ class RoundLoop {
         ist.xBottomCenter = center.x + (bottomCenterRadius * Math.cos(angle));
         ist.yBottomCenter = center.y + (bottomCenterRadius * Math.sin(angle));
         ist.angle = angle;
-        StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
+        StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, perBaseProps);
         angle += stemAngleSpan;
         iur = it.next().value;
         next = it.next();
@@ -255,9 +255,9 @@ class TriangleLoop {
    * 
    * @param {Stem} st 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
+  static setInnerCoordinatesAndAngles(st, generalProps, perBaseProps) {
     if (st.hasHairpinLoop()) {
       return;
     } else {
@@ -279,7 +279,7 @@ class TriangleLoop {
         ist.xBottomCenter = x;
         ist.yBottomCenter = y;
         ist.angle = st.angle;
-        StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, baseProps);
+        StemLayout.setInnerCoordinatesAndAngles(ist, generalProps, perBaseProps);
         let ur = it.next().value;
         x += ((ist.width / 2) + ur.length) * Math.cos(st.angle + (Math.PI / 2));
         y += ((ist.width / 2) + ur.length) * Math.sin(st.angle + (Math.PI / 2));
@@ -297,11 +297,11 @@ class FlatOutermostLoop {
    * 
    * @param {UnpairedRegion} ur 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps} perBaseProps 
    * 
    * @returns {Array<NormalizedBaseCoordinates>} The base coordinates for the unpaired region.
    */
-  static traverseUnpairedRegion53(ur, generalProps, baseProps) {
+  static traverseUnpairedRegion53(ur, generalProps, perBaseProps) {
     let coordinates = [];
     let x;
     let y;
@@ -318,8 +318,8 @@ class FlatOutermostLoop {
     for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
       let d = 1;
       if (p > 1) {
-        d += Math.max(0, baseProps[p - 2].stretch3);
-        angle += baseProps[p - 2].flatOutermostLoopAngle3;
+        d += Math.max(0, perBaseProps[p - 2].stretch3);
+        angle += perBaseProps[p - 2].flatOutermostLoopAngle3;
       }
       x += d * Math.cos(angle);
       y += d * Math.sin(angle);
@@ -331,13 +331,13 @@ class FlatOutermostLoop {
   /**
    * @param {UnpairedRegion} ur 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    * 
    * @returns {number} The angle leading to the next base after traversing the unpaired region
    *  5' to 3' starting with the coordinates and angle of its 5' bounding stem.
    */
-  static unpairedRegionAngle53(ur, generalProps, baseProps) {
-    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, baseProps);
+  static unpairedRegionAngle53(ur, generalProps, perBaseProps) {
+    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, perBaseProps);
     let angle;
     if (ur.boundingStem5.isOutermostStem() && coordinates.length < 2) {
       angle = generalProps.rotation;
@@ -349,7 +349,7 @@ class FlatOutermostLoop {
       angle = coordinates[ur.size - 2].angleBetweenCenters(coordinates[ur.size - 1]);
     }
     if (ur.boundingPosition3 > 1) {
-      angle += baseProps[ur.boundingPosition3 - 2].flatOutermostLoopAngle3;
+      angle += perBaseProps[ur.boundingPosition3 - 2].flatOutermostLoopAngle3;
     }
     return angle;
   }
@@ -360,13 +360,13 @@ class FlatOutermostLoop {
    * 
    * @param {UnpairedRegion} ur 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps} perBaseProps 
    */
-  static setNextCoordinatesAndAngle53(ur, generalProps, baseProps) {
+  static setNextCoordinatesAndAngle53(ur, generalProps, perBaseProps) {
     let x;
     let y;
-    let angle = FlatOutermostLoop.unpairedRegionAngle53(ur, generalProps, baseProps);
-    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, baseProps);
+    let angle = FlatOutermostLoop.unpairedRegionAngle53(ur, generalProps, perBaseProps);
+    let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, perBaseProps);
     if (coordinates.length === 0) {
       x = ur.baseCoordinatesBounding5().xCenter;
       y = ur.baseCoordinatesBounding5().yCenter;
@@ -376,7 +376,7 @@ class FlatOutermostLoop {
     }
     let d = 0.5 + (ur.boundingStem3.width / 2);
     if (ur.boundingPosition3 > 1) {
-      d += Math.max(0, baseProps[ur.boundingPosition3 - 2].stretch3);
+      d += Math.max(0, perBaseProps[ur.boundingPosition3 - 2].stretch3);
     }
     x += d * Math.cos(angle);
     y += d * Math.sin(angle);
@@ -392,16 +392,16 @@ class FlatOutermostLoop {
    * 
    * @param {Stem} outermostStem 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
+  static setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps) {
     let it = outermostStem.loopIterator();
     let ur = it.next().value;
     let next = it.next();
     while (!next.done) {
       let st = next.value;
-      FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, generalProps, baseProps);
-      StemLayout.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
+      FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, generalProps, perBaseProps);
+      StemLayout.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
       ur = it.next().value;
       next = it.next();
     }
@@ -415,13 +415,13 @@ class StemLayout {
    * 
    * @param {Stem} outermostStem 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  static setCoordinatesAndAngles(outermostStem, generalProps, baseProps) {
+  static setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps) {
     if (generalProps.flatOutermostLoop) {
-      FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, generalProps, baseProps);
+      FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);
     } else if (outermostStem.hasRoundLoop()) {
-      RoundLoop.setCoordinatesAndAngles(outermostStem, generalProps, baseProps);
+      RoundLoop.setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);
     }
   }
 
@@ -430,13 +430,13 @@ class StemLayout {
    * 
    * @param {Stem} st 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  static setInnerCoordinatesAndAngles(st, generalProps, baseProps) {
+  static setInnerCoordinatesAndAngles(st, generalProps, perBaseProps) {
     if (st.hasRoundLoop()) {
-      RoundLoop.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
+      RoundLoop.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
     } else if (st.hasTriangleLoop()) {
-      TriangleLoop.setInnerCoordinatesAndAngles(st, generalProps, baseProps);
+      TriangleLoop.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
     }
   }
 }

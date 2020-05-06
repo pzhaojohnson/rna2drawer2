@@ -15,16 +15,16 @@ import {
 } from './radiateStems';
 import parseDotBracket from '../../../../parse/parseDotBracket';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
-import StrictLayoutBaseProps from './StrictLayoutBaseProps';
+import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
 import Stem from './Stem';
 import normalizeAngle from '../../../normalizeAngle';
 
-function defaultBaseProps(length) {
-  let baseProps = [];
+function defaultPerBaseProps(length) {
+  let perBaseProps = [];
   for (let i = 0; i < length; i++) {
-    baseProps.push(new StrictLayoutBaseProps());
+    perBaseProps.push(new StrictLayoutPerBaseProps());
   }
-  return baseProps;
+  return perBaseProps;
 }
 
 function zeroStretches3(length) {
@@ -46,24 +46,24 @@ describe('_radialAngle function', () => {
   it('structure length is zero', () => {
     let partners = parseDotBracket('.').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     expect(_radialAngle(omst, 0)).toBe(0);
   });
 
   it('outermost stem', () => {
     let partners = parseDotBracket('..(((...)))......').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     expect(_radialAngle(omst, partners.length)).toBe(0);
   });
 
   it('an inner stem', () => {
     let partners = parseDotBracket('..(((...)))....(((...)))......').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(3, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(3, partners, gps, pbps);
     expect(
       normalizeAngle(_radialAngle(st, partners.length))
     ).toBeCloseTo(4.502949470145371, 3);
@@ -74,16 +74,16 @@ describe('_numBasesInLoop function', () => {
   it('handles the outermost stem', () => {
     let partners = parseDotBracket('.....').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     expect(_numBasesInLoop(omst)).toBe(5);
   });
 
   it('handles a stem with multiple inner stems', () => {
     let partners = parseDotBracket('((..(((...)))...((.))))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     expect(_numBasesInLoop(st)).toBe(11);
   });
 });
@@ -92,8 +92,8 @@ describe('_setStretchForUnpairedRegion function', () => {
   it('handles a bounding position of zero', () => {
     let partners = parseDotBracket('...(((...)))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let it = omst.loopIterator();
     let ur = it.next().value;
     let stretches3 = zeroStretches3(partners.length);
@@ -107,8 +107,8 @@ describe('_setStretchForUnpairedRegion function', () => {
   it('handles a bounding position greater than zero', () => {
     let partners = parseDotBracket('((.))...').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let it = omst.loopIterator();
     it.next();
     it.next();
@@ -124,8 +124,8 @@ describe('_setStretchForUnpairedRegion function', () => {
   it('handles an unpaired region of size zero', () => {
     let partners = parseDotBracket('(.)(.)').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let it = omst.loopIterator();
     it.next();
     it.next();
@@ -143,8 +143,8 @@ describe('_radiateOneBranch function', () => {
   it('does nothing for the outermost stem', () => {
     let partners = parseDotBracket('...(((...))).').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateOneBranch(omst, stretches3);
     checkStretches3(
@@ -156,8 +156,8 @@ describe('_radiateOneBranch function', () => {
   it('can radiate clockwise', () => {
     let partners = parseDotBracket('((.(((...))).........))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let urFirst = st.firstUnpairedRegionInLoop;
     let urLast = st.lastUnpairedRegionInLoop;
     let stretches3 = zeroStretches3(partners.length);
@@ -172,8 +172,8 @@ describe('_radiateOneBranch function', () => {
   it('can radiate counterclockwise', () => {
     let partners = parseDotBracket('((.........(((...))).))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let urFirst = st.firstUnpairedRegionInLoop;
     let urLast = st.lastUnpairedRegionInLoop;
     let stretches3 = zeroStretches3(partners.length);
@@ -188,8 +188,8 @@ describe('_radiateOneBranch function', () => {
   it('already radiated enough', () => {
     let partners = parseDotBracket('((......(((...)))......))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateOneBranch(st, stretches3);
     checkStretches3(
@@ -203,8 +203,8 @@ describe('_spreadMultipleBranches function', () => {
   it('does not stretch unpaired regions neighboring the outermost stem', () => {
     let partners = parseDotBracket('.((..))................................((..))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _spreadMultipleBranches(omst, stretches3);
     checkStretches3(
@@ -216,8 +216,8 @@ describe('_spreadMultipleBranches function', () => {
   it("the 5' stem is outer to the 3' stem", () => {
     let partners = parseDotBracket('((.((..)).....................))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _spreadMultipleBranches(st, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -230,8 +230,8 @@ describe('_spreadMultipleBranches function', () => {
   it("the 3' stem is outer to the 5' stem", () => {
     let partners = parseDotBracket('((.....................((..)).))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _spreadMultipleBranches(st, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -244,8 +244,8 @@ describe('_spreadMultipleBranches function', () => {
   it('neither stem is outer', () => {
     let partners = parseDotBracket('............((..)).((..))........').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _spreadMultipleBranches(omst, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -258,8 +258,8 @@ describe('_spreadMultipleBranches function', () => {
   it('greater than the angle threshold', () => {
     let partners = parseDotBracket('...((..))................((..))...').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _spreadMultipleBranches(omst, stretches3);
     checkStretches3(
@@ -271,8 +271,8 @@ describe('_spreadMultipleBranches function', () => {
   it('unpaired region is too big', () => {
     let partners = parseDotBracket('...................((..)).....((..))................').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let st5 = omst.firstStemInLoop;
     let st3 = omst.lastStemInLoop;
     let angle5 = _radialAngle(st5, partners.length);
@@ -292,8 +292,8 @@ describe('_radiateMultipleBranchesOutward function', () => {
   it('first unpaired region determines the length', () => {
     let partners = parseDotBracket('((((((((((((......((.)).((.)).))))))))))))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateMultipleBranchesOutward(st, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -305,8 +305,8 @@ describe('_radiateMultipleBranchesOutward function', () => {
   it('last unpaired region determines the length', () => {
     let partners = parseDotBracket('((((((((((((.((.)).((.))......))))))))))))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateMultipleBranchesOutward(st, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -318,8 +318,8 @@ describe('_radiateMultipleBranchesOutward function', () => {
   it('radiation determines the length', () => {
     let partners = parseDotBracket('((((((((((((((((.((.))........((.)).))))))))))))))))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateMultipleBranchesOutward(st, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -338,8 +338,8 @@ describe('_radiateMultipleBranches function', () => {
   it('spreads outermost stem', () => {
     let partners = parseDotBracket('.((.)).........((.)).((.))..............((.)).').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateMultipleBranches(omst, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -352,8 +352,8 @@ describe('_radiateMultipleBranches function', () => {
   it('both stems exceed radiation angle', () => {
     let partners = parseDotBracket('((((((((((((((((.((.))........((.)).))))))))))))))))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateMultipleBranches(st, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -368,8 +368,8 @@ describe('_radiateMultipleBranches function', () => {
   it('only one stem exceeds radiation angle', () => {
     let partners = parseDotBracket('((..........((.)).((.)).))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateMultipleBranches(st, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -382,8 +382,8 @@ describe('_radiateMultipleBranches function', () => {
   it('neither stem exceeds radiation angle', () => {
     let partners = parseDotBracket('((....((.))......................((.))....))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateMultipleBranches(st, stretches3);
     checkStretches3(
@@ -397,8 +397,8 @@ describe('_radiateLoop function', () => {
   it('one branch', () => {
     let partners = parseDotBracket('((.((.))...........))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let st = new Stem(1, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let st = new Stem(1, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateLoop(st, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -412,8 +412,8 @@ describe('_radiateLoop function', () => {
   it('multiple branches', () => {
     let partners = parseDotBracket('..(((.))).(((.)))................').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateLoop(omst, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -427,8 +427,8 @@ describe('_radiateLoop function', () => {
   it('is recursive on inner stems', () => {
     let partners = parseDotBracket('..((.((.))..........)).').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps(partners.length);
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps(partners.length);
+    let omst = new Stem(0, partners, gps, pbps);
     let stretches3 = zeroStretches3(partners.length);
     _radiateLoop(omst, stretches3);
     let expectedStretches3 = zeroStretches3(partners.length);
@@ -453,8 +453,8 @@ describe('radiateStems function', () => {
   it('calls the _radiateLoop function', () => {
     let partners = parseDotBracket('((..(((...)))......................)).((...))').secondaryPartners;
     let gps = new StrictLayoutGeneralProps();
-    let bps = defaultBaseProps('partners.length');
-    let omst = new Stem(0, partners, gps, bps);
+    let pbps = defaultPerBaseProps('partners.length');
+    let omst = new Stem(0, partners, gps, pbps);
     let expectedStretches3 = zeroStretches3(partners.length);
     _radiateLoop(omst, expectedStretches3);
     checkStretches3(

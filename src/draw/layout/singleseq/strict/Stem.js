@@ -23,12 +23,12 @@ class Stem {
    * @param {number} p5 The 5' most position of this stem.
    * @param {Array<number|null>} partners 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  constructor(p5, partners, generalProps, baseProps) {
+  constructor(p5, partners, generalProps, perBaseProps) {
     this._partners = partners;
     this._generalProps = generalProps;
-    this._baseProps = baseProps;
+    this._perBaseProps = perBaseProps;
     
     this._position5 = p5;
     this._initializePosition3();
@@ -71,7 +71,7 @@ class Stem {
     this._loop = [];
     let partners = this._partners;
     let gps = this._generalProps;
-    let bps = this._baseProps;
+    let pbps = this._perBaseProps;
     let bst5 = this;
     let p = this.position5 + this.size;
     while (partners[p - 1] === null) {
@@ -81,8 +81,8 @@ class Stem {
       if (partners[p - 1] < p) {
         throw new Error('Knot encountered in loop.');
       }
-      let bst3 = new Stem(p, partners, gps, bps);
-      this._loop.push(new UnpairedRegion(bst5, bst3, partners, gps, bps));
+      let bst3 = new Stem(p, partners, gps, pbps);
+      this._loop.push(new UnpairedRegion(bst5, bst3, partners, gps, pbps));
       this._loop.push(bst3);
       bst5 = bst3;
       p = bst5.position3 + 1;
@@ -90,7 +90,7 @@ class Stem {
         p++;
       }
     }
-    this._loop.push(new UnpairedRegion(bst5, this, partners, gps, bps));
+    this._loop.push(new UnpairedRegion(bst5, this, partners, gps, pbps));
   }
 
   /**
@@ -464,7 +464,7 @@ class Stem {
     if (this.isOutermostStem()) {
       return !this._generalProps.flatOutermostLoop;
     } else {
-      return this._baseProps[this.position5 - 1].loopShape === 'round';
+      return this._perBaseProps[this.position5 - 1].loopShape === 'round';
     }
   }
 
@@ -477,7 +477,7 @@ class Stem {
     if (this.isOutermostStem()) {
       return false;
     } else {
-      return this._baseProps[this.position5 - 1].loopShape === 'triangle';
+      return this._perBaseProps[this.position5 - 1].loopShape === 'triangle';
     }
   }
 
@@ -488,7 +488,7 @@ class Stem {
     if (this.isOutermostStem()) {
       return 0;
     }
-    return this._baseProps[this.position5 - 1].triangleLoopHeight;
+    return this._perBaseProps[this.position5 - 1].triangleLoopHeight;
   }
 
   /**
@@ -500,7 +500,7 @@ class Stem {
     if (this.isOutermostStem()) {
       return false;
     } else {
-      return this._baseProps[this.position5 - 1].flipStem;
+      return this._perBaseProps[this.position5 - 1].flipStem;
     }
   }
 

@@ -1,7 +1,7 @@
 import Drawing from './Drawing';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import StrictLayoutGeneralProps from './layout/singleseq/strict/StrictLayoutGeneralProps';
-import StrictLayoutBaseProps from './layout/singleseq/strict/StrictLayoutBaseProps';
+import StrictLayoutPerBaseProps from './layout/singleseq/strict/StrictLayoutPerBaseProps';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
 
 class InteractiveDrawing {
@@ -66,7 +66,7 @@ class InteractiveDrawing {
     let seq = this._drawing.appendSequenceOutOfView(id, characters);
     if (seq) {
       seq.forEachBase(b => {
-        this._strictLayoutProps.base.push(new StrictLayoutBaseProps());
+        this._strictLayoutProps.base.push(new StrictLayoutPerBaseProps());
       });
     }
     return seq;
@@ -99,16 +99,16 @@ class InteractiveDrawing {
    * @returns {StrictLayout|null} 
    */
   _strictLayout() {
-    let baseProps = [];
-    this._strictLayoutProps.base.forEach(bps => {
-      baseProps.push(bps.deepCopy());
+    let perBaseProps = [];
+    this._strictLayoutProps.base.forEach(pbps => {
+      perBaseProps.push(pbps.deepCopy());
     });
     let sl = null;
     try {
       sl = new StrictLayout(
         this._overallSecondaryPartners(),
         this._strictLayoutProps.general.deepCopy(),
-        baseProps,
+        perBaseProps,
       );
     } catch (err) {
       return null;

@@ -7,17 +7,17 @@ class StrictLayout {
   /**
    * @param {Array<number|null>} partners The partners notation of the secondary structure.
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  constructor(partners, generalProps, baseProps) {
+  constructor(partners, generalProps, perBaseProps) {
     this._partners = partners;
     this._validatePartners();
     
     this._generalProps = generalProps;
-    this._baseProps = baseProps;
+    this._perBaseProps = perBaseProps;
     
-    this._outermostStem = new Stem(0, partners, generalProps, baseProps);
-    StemLayout.setCoordinatesAndAngles(this._outermostStem, generalProps, baseProps);
+    this._outermostStem = new Stem(0, partners, generalProps, perBaseProps);
+    StemLayout.setCoordinatesAndAngles(this._outermostStem, generalProps, perBaseProps);
     this._baseCoordinates = this._outermostStem.baseCoordinates();
   }
   

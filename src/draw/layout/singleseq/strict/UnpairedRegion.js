@@ -9,12 +9,12 @@ class UnpairedRegion {
    * @param {Stem} bs3 The stem immediately 3' to this unpaired region.
    * @param {Array<number|null>} partners 
    * @param {StrictLayoutGeneralProps} generalProps 
-   * @param {Array<StrictLayoutBaseProps>} baseProps 
+   * @param {Array<StrictLayoutPerBaseProps>} perBaseProps 
    */
-  constructor(bs5, bs3, partners, generalProps, baseProps) {
+  constructor(bs5, bs3, partners, generalProps, perBaseProps) {
     this._partners = partners;
     this._generalProps = generalProps;
-    this._baseProps = baseProps;
+    this._perBaseProps = perBaseProps;
 
     this._boundingStem5 = bs5;
     this._boundingStem3 = bs3;
@@ -146,10 +146,10 @@ class UnpairedRegion {
   get length() {
     let length = 0;
     if (this.boundingPosition5 > 0) {
-      length += this._baseProps[this.boundingPosition5 - 1].stretch3;
+      length += this._perBaseProps[this.boundingPosition5 - 1].stretch3;
     }
     for (let p = this.boundingPosition5 + 1; p < this.boundingPosition3; p++) {
-      length += 1 + this._baseProps[p - 1].stretch3;
+      length += 1 + this._perBaseProps[p - 1].stretch3;
     }
     return Math.max(length, 0);
   }
@@ -161,7 +161,7 @@ class UnpairedRegion {
    */
   baseCoordinates(inOutermostLoop) {
     if (inOutermostLoop && this._generalProps.flatOutermostLoop) {
-      return baseCoordinatesFlatOutermostLoop(this, this._generalProps, this._baseProps);
+      return baseCoordinatesFlatOutermostLoop(this, this._generalProps, this._perBaseProps);
     } else {
       return baseCoordinatesRound(this, this._generalProps);
     }

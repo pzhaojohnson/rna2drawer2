@@ -1,15 +1,15 @@
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import { FlatOutermostLoop } from './StemLayout';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
-import StrictLayoutBaseProps from './StrictLayoutBaseProps';
+import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
 import Stem from './Stem';
 
-function defaultBaseProps(length) {
-  let bps = [];
+function defaultPerBaseProps(length) {
+  let pbps = [];
   for (let i = 0; i < length; i++) {
-    bps.push(new StrictLayoutBaseProps());
+    pbps.push(new StrictLayoutPerBaseProps());
   }
-  return bps;
+  return pbps;
 }
 
 function checkCoords(coords, expectedCoords) {
@@ -24,13 +24,13 @@ it('basic case', () => {
   let partners = [null, null, 5, null, 3, null, null];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  let bps = defaultBaseProps(partners.length);
-  bps[4].stretch3 = 2;
-  bps[4].flatOutermostLoopAngle3 = -Math.PI / 3;
-  bps[5].stretch3 = -4.5;
-  bps[5].flatOutermostLoopAngle3 = Math.PI / 6;
+  let pbps = defaultPerBaseProps(partners.length);
+  pbps[4].stretch3 = 2;
+  pbps[4].flatOutermostLoopAngle3 = -Math.PI / 3;
+  pbps[5].stretch3 = -4.5;
+  pbps[5].flatOutermostLoopAngle3 = Math.PI / 6;
 
-  let outermostStem = new Stem(0, partners, gps, bps);
+  let outermostStem = new Stem(0, partners, gps, pbps);
   let it = outermostStem.loopIterator();
   it.next();
   let st5 = it.next().value;
@@ -41,8 +41,8 @@ it('basic case', () => {
   st5.yBottomCenter = 35.7;
 
   checkCoords(
-    baseCoordinatesFlatOutermostLoop(ur, gps, bps),
-    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
+    baseCoordinatesFlatOutermostLoop(ur, gps, pbps),
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, pbps),
   );
 });
 
@@ -50,11 +50,11 @@ it("5' dangling unpaired region", () => {
   let partners = [null, null, 5, null, 3, null, null];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  let bps = defaultBaseProps(partners.length);
-  bps[0].stretch3 = 5.5;
-  bps[0].flatOutermostLoopAngle3 = Math.PI / 3;
+  let pbps = defaultPerBaseProps(partners.length);
+  pbps[0].stretch3 = 5.5;
+  pbps[0].flatOutermostLoopAngle3 = Math.PI / 3;
 
-  let outermostStem = new Stem(0, partners, gps, bps);
+  let outermostStem = new Stem(0, partners, gps, pbps);
   let it = outermostStem.loopIterator();
   let ur = it.next().value;
   
@@ -63,7 +63,7 @@ it("5' dangling unpaired region", () => {
   outermostStem.yBottomCenter = -2.4;
 
   checkCoords(
-    baseCoordinatesFlatOutermostLoop(ur, gps, bps),
-    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, bps),
+    baseCoordinatesFlatOutermostLoop(ur, gps, pbps),
+    FlatOutermostLoop.traverseUnpairedRegion53(ur, gps, pbps),
   );
 });

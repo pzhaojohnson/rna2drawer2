@@ -1,36 +1,36 @@
 import UnpairedRegion from './UnpairedRegion';
 import StrictLayoutGeneralProps from './StrictLayoutGeneralProps';
-import StrictLayoutBaseProps from './StrictLayoutBaseProps';
+import StrictLayoutPerBaseProps from './StrictLayoutPerBaseProps';
 import Stem from './Stem';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import parseDotBracket from '../../../../parse/parseDotBracket';
 import { StemLayout } from './StemLayout';
 
-function defaultBaseProps(length) {
-  let bps = [];
+function defaultPerBaseProps(length) {
+  let pbps = [];
   for (let i = 0; i < length; i++) {
-    bps.push(new StrictLayoutBaseProps());
+    pbps.push(new StrictLayoutPerBaseProps());
   }
-  return bps;
+  return pbps;
 }
 
 it('basic test of constructor', () => {
   let partners = [3, null, 1, 6, null, 4];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(6);
-  let st5 = new Stem(1, partners, gps, bps);
-  let st3 = new Stem(4, partners, gps, bps);
+  let pbps = defaultPerBaseProps(6);
+  let st5 = new Stem(1, partners, gps, pbps);
+  let st3 = new Stem(4, partners, gps, pbps);
   expect(
-    () => new UnpairedRegion(st5, st3, partners, gps, bps)
+    () => new UnpairedRegion(st5, st3, partners, gps, pbps)
   ).not.toThrow();
 });
 
 it('bounding stem getters', () => {
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(6);
-  let st = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(6);
+  let st = new Stem(1, partners, gps, pbps);
   let it = st.loopIterator();
   let ur = it.next().value;
   expect(Object.is(ur.boundingStem5, st)).toBeTruthy();
@@ -40,8 +40,8 @@ it('bounding stem getters', () => {
 it("5' and 3' bounding position getters - hairpin loop", () => {
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(6);
-  let st = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(6);
+  let st = new Stem(1, partners, gps, pbps);
   let it = st.loopIterator();
   let ur = it.next().value;
   expect(ur.boundingPosition5).toBe(2);
@@ -51,8 +51,8 @@ it("5' and 3' bounding position getters - hairpin loop", () => {
 it("5' and 3' bounding position getters - 5' stem is outer", () => {
   let partners = [11, 10, null, 8, 7, null, 5, 4, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(11);
-  let ost = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(11);
+  let ost = new Stem(1, partners, gps, pbps);
   let it = ost.loopIterator();
   let ur = it.next().value;
   expect(ur.boundingPosition5).toBe(2);
@@ -62,8 +62,8 @@ it("5' and 3' bounding position getters - 5' stem is outer", () => {
 it("5' and 3' bounding position getters - 3' stem is outer", () => {
   let partners = [11, 10, null, 8, 7, null, 5, 4, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(11);
-  let ost = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(11);
+  let ost = new Stem(1, partners, gps, pbps);
   let it = ost.loopIterator();
   it.next();
   it.next();
@@ -75,8 +75,8 @@ it("5' and 3' bounding position getters - 3' stem is outer", () => {
 it("5' and 3' bounding position getters - neither stem is outer", () => {
   let partners = [5, 4, null, 2, 1, null, 11, 10, null, 8, 7];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(11);
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(11);
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   it.next();
@@ -88,8 +88,8 @@ it("5' and 3' bounding position getters - neither stem is outer", () => {
 it("5' and 3' bounding stem outward angle getters - hairpin loop", () => {
   let partners = [3, null, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(3);
-  let st = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(3);
+  let st = new Stem(1, partners, gps, pbps);
   st.angle = Math.PI / 3;
   let it = st.loopIterator();
   let ur = it.next().value;
@@ -100,8 +100,8 @@ it("5' and 3' bounding stem outward angle getters - hairpin loop", () => {
 it("5' and 3' bounding stem outward angle getters - 5' stem is outer", () => {
   let partners = [8, null, 6, null, null, 3, null, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(8);
-  let ost = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(8);
+  let ost = new Stem(1, partners, gps, pbps);
   ost.angle = -Math.PI / 8;
   let it = ost.loopIterator();
   let ur = it.next().value;
@@ -113,8 +113,8 @@ it("5' and 3' bounding stem outward angle getters - 5' stem is outer", () => {
 it("5' and 3' bounding stem outward angle getters - 3' stem is outer", () => {
   let partners = [8, null, 6, null, null, 3, null, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(8);
-  let ost = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(8);
+  let ost = new Stem(1, partners, gps, pbps);
   let it = ost.loopIterator();
   it.next();
   let ist = it.next().value;
@@ -128,8 +128,8 @@ it("5' and 3' bounding stem outward angle getters - 3' stem is outer", () => {
 it("5' and 3' bounding stem outward angle getters - neither stem is outer", () => {
   let partners = [3, null, 1, 6, null, 4];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(6);
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(6);
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   let st5 = it.next().value;
@@ -144,8 +144,8 @@ it("5' and 3' bounding stem outward angle getters - neither stem is outer", () =
 it("5' and 3' bounding base coordinates - hairpin loop", () => {
   let partners = [6, 5, null, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(6);
-  let st = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(6);
+  let st = new Stem(1, partners, gps, pbps);
   let it = st.loopIterator();
   let ur = it.next().value;
   
@@ -163,8 +163,8 @@ it("5' and 3' bounding base coordinates - hairpin loop", () => {
 it("5' and 3' bounding base coordinates - 5' stem is outer", () => {
   let partners = [11, 10, null, 8, 7, null, 5, 4, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(11);
-  let ost = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(11);
+  let ost = new Stem(1, partners, gps, pbps);
   let it = ost.loopIterator();
   let ur = it.next().value;
   let ist = it.next().value;
@@ -183,8 +183,8 @@ it("5' and 3' bounding base coordinates - 5' stem is outer", () => {
 it("5' and 3' bounding base coordinates - 3' stem is outer", () => {
   let partners = [11, 10, null, 8, 7, null, 5, 4, null, 2, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(11);
-  let ost = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(11);
+  let ost = new Stem(1, partners, gps, pbps);
   let it = ost.loopIterator();
   it.next();
   let ist = it.next().value;
@@ -204,8 +204,8 @@ it("5' and 3' bounding base coordinates - 3' stem is outer", () => {
 it("5' and 3' bounding base coordinates - neither stem is outer", () => {
   let partners = [5, 4, null, 2, 1, null, 11, 10, null, 8, 7];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(11);
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(11);
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   let st5 = it.next().value;
@@ -226,8 +226,8 @@ it("5' and 3' bounding base coordinates - neither stem is outer", () => {
 it('size getter - size of zero', () => {
   let partners = [3, null, 1, 6, null, 4];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(6);
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(6);
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   it.next();
@@ -238,8 +238,8 @@ it('size getter - size of zero', () => {
 it('size getter - size greater than zero', () => {
   let partners = [3, null, 1, null, null, 8, null, 6];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(8);
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(8);
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   it.next();
@@ -250,8 +250,8 @@ it('size getter - size greater than zero', () => {
 it('isHairpinLoop method - is a hairpin loop', () => {
   let partners = [3, null, 1];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(3);
-  let st = new Stem(1, partners, gps, bps);
+  let pbps = defaultPerBaseProps(3);
+  let st = new Stem(1, partners, gps, pbps);
   let it = st.loopIterator();
   let ur = it.next().value;
   expect(ur.isHairpinLoop()).toBeTruthy();
@@ -260,8 +260,8 @@ it('isHairpinLoop method - is a hairpin loop', () => {
 it('isHairpinLoop method - is not a hairpin loop', () => {
   let partners = [3, null, 1, null, 7, null, 5];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(7);
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(7);
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   it.next();
@@ -272,8 +272,8 @@ it('isHairpinLoop method - is not a hairpin loop', () => {
 it('isDangling5 and isDangling3 methods', () => {
   let partners = [null, 7, 6, null, null, 3, 2, null, 11, null, 9];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(11);
-  let outermostStem = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(11);
+  let outermostStem = new Stem(0, partners, gps, pbps);
   let it = outermostStem.loopIterator();
 
   let ur = it.next().value;
@@ -294,8 +294,8 @@ it('isDangling5 and isDangling3 methods', () => {
 it('length getter - size of zero', () => {
   let partners = [];
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = [];
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   let ur = it.next().value;
   expect(ur.length).toBe(0);
@@ -304,11 +304,11 @@ it('length getter - size of zero', () => {
 it('length getter - positive size', () => {
   let partners = [3, null, 1, null, null, 8, null, 6];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(8);
-  bps[3].stretch3 = 5;
-  bps[4].stretch3 = 6;
-  bps[5].stretch3 = 8;
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(8);
+  pbps[3].stretch3 = 5;
+  pbps[4].stretch3 = 6;
+  pbps[5].stretch3 = 8;
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   it.next();
@@ -319,12 +319,12 @@ it('length getter - positive size', () => {
 it("length getter - includes 3' stretch of 5' bounding position", () => {
   let partners = [3, null, 1, null, null, 8, null, 6];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(8);
-  bps[2].stretch3 = 1.5;
-  bps[3].stretch3 = 5;
-  bps[4].stretch3 = 6;
-  bps[5].stretch3 = 8;
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(8);
+  pbps[2].stretch3 = 1.5;
+  pbps[3].stretch3 = 5;
+  pbps[4].stretch3 = 6;
+  pbps[5].stretch3 = 8;
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   it.next();
@@ -335,11 +335,11 @@ it("length getter - includes 3' stretch of 5' bounding position", () => {
 it("length getter - 5' bounding position is zero", () => {
   let partners = [null, null, null];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(3);
-  bps[0].stretch3 = 0.5;
-  bps[1].stretch3 = 1.9;
-  bps[2].stretch3 = -0.2;
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(3);
+  pbps[0].stretch3 = 0.5;
+  pbps[1].stretch3 = 1.9;
+  pbps[2].stretch3 = -0.2;
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   let ur = it.next().value;
   expect(ur.length).toBeCloseTo(5.2, 3);
@@ -348,12 +348,12 @@ it("length getter - 5' bounding position is zero", () => {
 it('length getter - does not return a negative length', () => {
   let partners = [3, null, 1, null, null, 8, null, 6];
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(8);
-  bps[2].stretch3 = 1.5;
-  bps[3].stretch3 = 5;
-  bps[4].stretch3 = -600;
-  bps[5].stretch3 = 8;
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(8);
+  pbps[2].stretch3 = 1.5;
+  pbps[3].stretch3 = 5;
+  pbps[4].stretch3 = -600;
+  pbps[5].stretch3 = 8;
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   it.next();
@@ -372,8 +372,8 @@ function checkCoords(coords, expectedCoords) {
 it('baseCoordinates method - size of zero', () => {
   let partners = [];
   let gps = new StrictLayoutGeneralProps();
-  let bps = [];
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = [];
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   let ur = it.next().value;
   checkCoords(ur.baseCoordinates(), []);
@@ -383,13 +383,13 @@ it('baseCoordinates method - in a flat outermost loop', () => {
   let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  let bps = defaultBaseProps(11);
-  bps[2].stretch3 = 2;
-  bps[2].flatOutermostLoopAngle3 = Math.PI / 3;
-  bps[3].stretch3 = 0;
-  bps[4].stretch3 = 4;
-  bps[5].flatOutermostLoopAngle3 = -Math.PI / 5;
-  let omst = new Stem(0, partners, gps, bps);
+  let pbps = defaultPerBaseProps(11);
+  pbps[2].stretch3 = 2;
+  pbps[2].flatOutermostLoopAngle3 = Math.PI / 3;
+  pbps[3].stretch3 = 0;
+  pbps[4].stretch3 = 4;
+  pbps[5].flatOutermostLoopAngle3 = -Math.PI / 5;
+  let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
   let st5 = it.next();
@@ -400,7 +400,7 @@ it('baseCoordinates method - in a flat outermost loop', () => {
   st5.angle = -5 * Math.PI / 9;
   checkCoords(
     ur.baseCoordinates(true),
-    baseCoordinatesFlatOutermostLoop(ur, gps, bps),
+    baseCoordinatesFlatOutermostLoop(ur, gps, pbps),
   );
 });
 
@@ -408,9 +408,9 @@ it('baseCoordinates - in a round outermost loop', () => {
   let partners = parseDotBracket('....').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = false;
-  let bps = defaultBaseProps(partners.length);
-  let omst = new Stem(0, partners, gps, bps);
-  StemLayout.setCoordinatesAndAngles(omst, gps, bps);
+  let pbps = defaultPerBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, pbps);
+  StemLayout.setCoordinatesAndAngles(omst, gps, pbps);
   let it = omst.loopIterator();
   let ur = it.next().value;
   checkCoords(
@@ -423,9 +423,9 @@ it('baseCoordinates - is not in the flat outermost loop', () => {
   let partners = parseDotBracket('..(((...))).').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
   gps.flatOutermostLoop = true;
-  let bps = defaultBaseProps(partners.length);
-  let omst = new Stem(0, partners, gps, bps);
-  StemLayout.setCoordinatesAndAngles(omst, gps, bps);
+  let pbps = defaultPerBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, pbps);
+  StemLayout.setCoordinatesAndAngles(omst, gps, pbps);
   let omit = omst.loopIterator();
   omit.next();
   let st = omit.next().value;
@@ -440,9 +440,9 @@ it('baseCoordinates - is not in the flat outermost loop', () => {
 it('baseCoordinates method - in an inner round loop', () => {
   let partners = parseDotBracket('.(((...((...)).)))....').secondaryPartners;
   let gps = new StrictLayoutGeneralProps();
-  let bps = defaultBaseProps(partners.length);
-  let omst = new Stem(0, partners, gps, bps);
-  StemLayout.setCoordinatesAndAngles(omst, gps, bps);
+  let pbps = defaultPerBaseProps(partners.length);
+  let omst = new Stem(0, partners, gps, pbps);
+  StemLayout.setCoordinatesAndAngles(omst, gps, pbps);
   let omit = omst.loopIterator();
   omit.next();
   let st = omit.next().value;
