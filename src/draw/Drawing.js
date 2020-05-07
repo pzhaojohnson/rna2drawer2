@@ -426,6 +426,13 @@ class Drawing {
   }
 
   /**
+   * @returns {string} 
+   */
+  get svgString() {
+    return this._svg.svg();
+  }
+
+  /**
    * @typedef {Object} Drawing~SavableState 
    * @property {string} className 
    * @property {string} svg 

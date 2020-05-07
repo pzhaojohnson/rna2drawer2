@@ -698,6 +698,25 @@ describe('Drawing class', () => {
     });
   });
 
+  it('svgString getter', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    let seq = drawing.appendSequenceOutOfView('asdf', 'asdf');
+    drawing.addSecondaryBond(
+      seq.getBaseAtPosition(2),
+      seq.getBaseAtPosition(4),
+    );
+    let svgString1 = drawing.svgString;
+    let svg2 = createNodeSVG();
+    svg2.svg(svgString1);
+    let svg1 = svg2.children()[0];
+    let svgContentString1 = svg1.svg(false);
+    svg2.clear();
+    svg2.svg(svgContentString1);
+    let svgContentString2 = svg2.svg(false);
+    expect(svgContentString2).toBe(svgContentString1);
+  });
+
   describe('savableState method', () => {
     it('includes class name and svg string', () => {
       let drawing = new Drawing();
