@@ -285,6 +285,25 @@ describe('Drawing class', () => {
     expect(drawing.numBases).toBe(6);
   });
 
+  describe('getBaseById method', () => {
+    it('handles multiple sequences', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdf');
+      let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwer');
+      let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+      let b = seq2.getBaseAtPosition(3);
+      expect(drawing.getBaseById(b.id)).toBe(b);
+    });
+
+    it('no base has the given ID', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'qwer');
+      expect(drawing.getBaseById('fdsa')).toBe(null);
+    });
+  });
+
   describe('getBaseAtOverallPosition method', () => {
     it('getting the first and last base', () => {
       let drawing = new Drawing();
@@ -817,6 +836,80 @@ describe('Drawing class', () => {
       let savableState2 = JSON.parse(json1);
       let json2 = JSON.stringify(savableState2);
       expect(json2).toBe(json1);
+    });
+  });
+
+  describe('applySavedState method', () => {
+    it('replaces SVG content', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfqwer');
+      let svgString1 = drawing.svgString;
+      let savableState = drawing.savableState();
+      let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerzxcv');
+      expect(drawing.svgString).not.toBe(svgString1);
+      drawing.applySavedState(savableState);
+      expect(drawing.svgString).toBe(svgString1);
+    });
+    
+    it('replaces sequences', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdf');
+      let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwer');
+      let savableState = drawing.savableState();
+      let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+      expect(drawing.numSequences).toBe(3);
+      drawing.applySavedState(savableState);
+      expect(drawing.numSequences).toBe(2);
+    });
+
+    it('replaces primary bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+      let b1 = seq.getBaseAtPosition(1);
+      let b3 = seq.getBaseAtPosition(3);
+      let b4 = seq.getBaseAtPosition(4);
+      drawing.addPrimaryBond(b1, b3);
+      drawing.addPrimaryBond(b3, b4);
+      let savableState = drawing.savableState();
+      drawing.addPrimaryBond(b1, b4);
+      expect(drawing.numPrimaryBonds).toBe(3);
+      drawing.applySavedState(savableState);
+      expect(drawing.numPrimaryBonds).toBe(2);
+    });
+
+    it('replaces secondary bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+      let b2 = seq.getBaseAtPosition(2);
+      let b3 = seq.getBaseAtPosition(3);
+      let b7 = seq.getBaseAtPosition(7);
+      drawing.addSecondaryBond(b2, b7);
+      drawing.addSecondaryBond(b7, b3);
+      let savableState = drawing.savableState();
+      drawing.addSecondaryBond(b3, b7);
+      expect(drawing.numSecondaryBonds).toBe(3);
+      drawing.applySavedState(savableState);
+      expect(drawing.numSecondaryBonds).toBe(2);
+    });
+
+    it('replaces tertiary bonds', () => {
+      let drawing = new Drawing();
+      drawing.addTo(document.body, () => createNodeSVG());
+      let seq = drawing.appendSequenceOutOfView('asdf', 'asdfqwer');
+      let b2 = seq.getBaseAtPosition(2);
+      let b4 = seq.getBaseAtPosition(4);
+      let b8 = seq.getBaseAtPosition(8);
+      drawing.addTertiaryBond(b2, b4);
+      drawing.addTertiaryBond(b8, b2);
+      let savableState = drawing.savableState();
+      drawing.addTertiaryBond(b4, b2);
+      expect(drawing.numTertiaryBonds).toBe(3);
+      drawing.applySavedState(savableState);
+      expect(drawing.numTertiaryBonds).toBe(2);
     });
   });
 });

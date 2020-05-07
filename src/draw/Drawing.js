@@ -196,6 +196,23 @@ class Drawing {
   }
 
   /**
+   * Returns null if no base has the given ID.
+   * 
+   * @param {string} id 
+   * 
+   * @returns {Base|null} 
+   */
+  getBaseById(id) {
+    let base = null;
+    this.forEachBase(b => {
+      if (b.id === id) {
+        base = b;
+      }
+    });
+    return base;
+  }
+
+  /**
    * Returns null if the position is out of range.
    * 
    * @param {number} p 
@@ -467,6 +484,45 @@ class Drawing {
       tb => savableState.tertiaryBonds.push(tb.savableState())
     );
     return savableState;
+  }
+
+  /**
+   * @param {Drawing~SavableState} savedState 
+   */
+  applySavedState(savedState) {
+    this._sequences = [];
+    this._primaryBonds = [];
+    this._secondaryBonds = [];
+    this._tertiaryBonds = [];
+    this._applySavedSvg(savedState.svg);
+    savedState.sequences.forEach(sseq => {
+      let seq = Sequence.fromSavedState(sseq, this._svg);
+      this._sequences.push(seq);
+    });
+    savedState.primaryBonds.forEach(spb => {
+      let pb = PrimaryBond.fromSavedState(spb, this._svg, id => this.getBaseById(id));
+      this._primaryBonds.push(pb);
+    });
+    savedState.secondaryBonds.forEach(ssb => {
+      let sb = SecondaryBond.fromSavedState(ssb, this._svg, id => this.getBaseById(id));
+      this._secondaryBonds.push(sb);
+    });
+    savedState.tertiaryBonds.forEach(stb => {
+      let tb = TertiaryBond.fromSavedState(stb, this._svg, id => this.getBaseById(id));
+      this._tertiaryBonds.push(tb);
+    });
+  }
+
+  /**
+   * @param {string} svgString 
+   */
+  _applySavedSvg(svgString) {
+    this._svg.clear();
+    this._svg.svg(svgString);
+    let nested = this._svg.first();
+    let content = nested.svg(false);
+    this._svg.clear();
+    this._svg.svg(content);
   }
 }
 
