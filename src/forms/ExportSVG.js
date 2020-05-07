@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Base from '../draw/Base';
 const uuidv1 = require('uuid/v1');
 
-class ExportSVG extends React.Component {
+class ExportSvg extends React.Component {
   constructor(props) {
     super(props);
 
@@ -183,5 +183,5 @@ class ExportSVG extends React.Component {
 }
 
 export {
-  ExportSVG,
+  ExportSvg,
 };
