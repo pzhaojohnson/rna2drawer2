@@ -3,7 +3,7 @@ import { shallow, mount, render } from 'enzyme';
 const fs = require('fs');
 
 import { OpenCt } from './OpenCt';
-import { parseCT } from '../parse/parseCT';
+import { parseCt } from '../parse/parseCt';
 
 function getTitleAndContent(componentWrapper) {
   return componentWrapper.getDOMNode().childNodes[0].childNodes[0].childNodes[0];
@@ -356,7 +356,7 @@ it('handles a CT file downloaded from Mfold', () => {
   );
   expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
   expect(submit.mock.calls.length).toBe(1);
-  let ct = parseCT(data);
+  let ct = parseCt(data);
   expect(submit.mock.calls[0][0]).toBe('asdf');
   expect(submit.mock.calls[0][1]).toBe(ct.sequence);
   checkPartners(submit.mock.calls[0][2], ct.partners);

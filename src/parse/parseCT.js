@@ -210,7 +210,7 @@ function _parseNumberingOffset(ct) {
  * 
  * @returns {ParsedCT|null} 
  */
-function parseCT(ct) {
+function parseCt(ct) {
   if(numSequencesInCT(ct) !== 1) {
     return null;
   }
@@ -269,7 +269,7 @@ function numSequencesInCT(ct) {
 }
 
 export {
-  parseCT,
+  parseCt,
   numSequencesInCT,
 
   // these are only exported to aid testing

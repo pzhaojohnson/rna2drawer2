@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  parseCT,
+  parseCt,
   numSequencesInCT,
-} from '../parse/parseCT';
+} from '../parse/parseCt';
 const uuidv1 = require('uuid/v1');
 
 class OpenCt extends React.Component {
@@ -293,7 +293,7 @@ class OpenCt extends React.Component {
       }
       return null;
     }
-    let ct = parseCT(this.state.fileContents);
+    let ct = parseCt(this.state.fileContents);
     if (ct === null) {
       if (numSequencesInCT(this.state.fileContents) === 0) {
         this.setState({ errorMessageKey: uuidv1(), errorMessage: 'No structure found in CT file.' });

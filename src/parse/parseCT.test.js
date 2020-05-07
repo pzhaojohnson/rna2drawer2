@@ -1,5 +1,5 @@
 import {
-  parseCT,
+  parseCt,
   numSequencesInCT,
   _lineShouldBeIgnored,
   _headerLineIndex,
@@ -10,7 +10,7 @@ import {
   _parsePartners,
   _parseNumberingOffset,
   _numSequences,
-} from './parseCT';
+} from './parseCt';
 const fs = require('fs');
 import parseDotBracket from './parseDotBracket';
 
@@ -303,42 +303,42 @@ it('_parseNumberingOffset - returns correct offset', () => {
   )).toBe(7);
 });
 
-it('parseCT - empty string', () => {
-  expect(parseCT('')).toBe(null);
+it('parseCt - empty string', () => {
+  expect(parseCt('')).toBe(null);
 });
 
-it('parseCT - zero sequeces', () => {
-  expect(parseCT(
+it('parseCt - zero sequeces', () => {
+  expect(parseCt(
     '#blah\n'
     + ' #asdf\n'
     + '   '
   )).toBe(null);
 });
 
-it('parseCT - multiple sequences', () => {
-  expect(parseCT(
+it('parseCt - multiple sequences', () => {
+  expect(parseCt(
     '128\t3 dG'
   )).toBe(null);
 });
 
-it('parseCT - sequence cannot be parsed', () => {
-  expect(parseCT(
+it('parseCt - sequence cannot be parsed', () => {
+  expect(parseCt(
     '128 1  dG\n'
     + ' 1 a 3 4 0\n'
     + '2 er 3 4 0'
   )).toBe(null);
 });
 
-it('parseCT - structure cannot be parsed', () => {
-  expect(parseCT(
+it('parseCt - structure cannot be parsed', () => {
+  expect(parseCt(
     '11 dG\n'
     + '1 a 3 4 3\n'
     + '2 g 3 4 0'
   )).toBe(null);
 });
 
-it('parseCT - returns correct sequence, structure, and numbering offset', () => {
-  let parsed = parseCT(
+it('parseCt - returns correct sequence, structure, and numbering offset', () => {
+  let parsed = parseCt(
     '34 dG\n'
     + '1 q 3 4 4 -4\n'
     + '2 w 3 4 0 -3\n'
@@ -354,9 +354,9 @@ it('parseCT - returns correct sequence, structure, and numbering offset', () => 
   expect(parsed.numberingOffset).toBe(-5);
 });
 
-it('parseCT - a CT file downloaded from Mfold', () => {
+it('parseCt - a CT file downloaded from Mfold', () => {
   let data = fs.readFileSync('testinput/ct/ct0.ct', 'utf8');
-  let parsed = parseCT(data);
+  let parsed = parseCt(data);
   expect(parsed.sequence).toBe('aaagucgcgcuggcacaggacgaagucgca');
   let epartners = parseDotBracket('......(((((............)).))).').secondaryPartners;
   expect(parsed.partners.length).toBe(epartners.length);
