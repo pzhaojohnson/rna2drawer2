@@ -6,7 +6,7 @@ import {
 } from '../parse/parseCT';
 const uuidv1 = require('uuid/v1');
 
-class OpenCT extends React.Component {
+class OpenCt extends React.Component {
   constructor(props) {
     super(props);
 
@@ -271,7 +271,7 @@ class OpenCT extends React.Component {
   }
 
   /**
-   * @typedef {Object} OpenCT~ParsedCT 
+   * @typedef {Object} OpenCt~ParsedCT 
    * @property {string} sequence 
    * @property {Array<number|null>} partners 
    * @property {number} numberingOffset 
@@ -282,7 +282,7 @@ class OpenCT extends React.Component {
    * is unable to be read, if the CT file is invalid, or if the CT
    * file specifies a structure of length zero.
    * 
-   * @returns {OpenCT~ParsedCT|null}
+   * @returns {OpenCt~ParsedCT|null}
    */
   _parseCT() {
     if (this.state.fileContents === null) {
@@ -312,16 +312,16 @@ class OpenCT extends React.Component {
   }
 }
 
-OpenCT.propTypes = {
+OpenCt.propTypes = {
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   submit: PropTypes.func,
 };
 
-OpenCT.defaultProps = {
+OpenCt.defaultProps = {
   width: '100vw',
   submit: () => {},
 };
 
 export {
-  OpenCT,
+  OpenCt,
 };

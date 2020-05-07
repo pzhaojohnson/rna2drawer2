@@ -8,8 +8,8 @@ import Menu from './Menu';
 import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
-import { OpenCT } from './forms/OpenCT';
-import { ExportSVG } from './forms/ExportSVG';
+import { OpenCt } from './forms/OpenCt';
+import { ExportSvg } from './forms/ExportSvg';
 
 class App {
 
@@ -153,8 +153,8 @@ class App {
       <Menu
         drawingIsEmpty={this._drawing.isEmpty()}
         createNewDrawing={() => this.createNewDrawing()}
-        openCT={() => this.openCT()}
-        exportSVG={() => this.exportSVG()}
+        openCt={() => this.openCt()}
+        exportSvg={() => this.exportSvg()}
       />
     );
     ReactDOM.render(this._menu, this._getMenuContainer());
@@ -199,18 +199,18 @@ class App {
     );
   }
 
-  openCT() {
+  openCt() {
     this._openForm(
-      <OpenCT
+      <OpenCt
         width={'100vw'}
         submit={() => {}}
       />
     );
   }
 
-  exportSVG() {
+  exportSvg() {
     this._openForm(
-      <ExportSVG
+      <ExportSvg
         SVG={() => this._SVG()}
       />
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 const fs = require('fs');
 
-import { OpenCT } from './OpenCT';
+import { OpenCt } from './OpenCt';
 import { parseCT } from '../parse/parseCT';
 
 function getTitleAndContent(componentWrapper) {
@@ -38,7 +38,7 @@ function getSubmitButtonWrapper(componentWrapper) {
 }
 
 it('renders', () => {
-  mount(<OpenCT />);
+  mount(<OpenCt />);
 });
 
 it('basic test of submitting sequence ID', () => {
@@ -50,7 +50,7 @@ it('basic test of submitting sequence ID', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'A Sequence ID' } },
@@ -77,7 +77,7 @@ it('empty sequence ID', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: '' } },
@@ -104,7 +104,7 @@ it('sequence ID is all whitespace', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: '  \t\t  \t' } },
@@ -131,7 +131,7 @@ it('leading and trailing whitespace is trimmed from sequence ID', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: '  \tTrimmed Sequence ID  \t\t' } },
@@ -151,7 +151,7 @@ it('leading and trailing whitespace is trimmed from sequence ID', () => {
 
 it('no file uploaded', () => {
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
@@ -168,7 +168,7 @@ it('no file uploaded', () => {
 
 it('files list is empty on file input change', () => {
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />)
+  let wrapper = mount(<OpenCt submit={submit} />)
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
@@ -196,7 +196,7 @@ it('uploading a file clears error message', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSubmitButtonWrapper(wrapper).simulate(
     'click',
     { target: {} },
@@ -220,7 +220,7 @@ it('unable to load file', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
@@ -248,7 +248,7 @@ it('no structures in CT file', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
@@ -276,7 +276,7 @@ it('multiple structures in CT file', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
@@ -304,7 +304,7 @@ it('structure of length zero', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
@@ -340,7 +340,7 @@ it('handles a CT file downloaded from Mfold', () => {
     };
   };
   let submit = jest.fn();
-  let wrapper = mount(<OpenCT submit={submit} />);
+  let wrapper = mount(<OpenCt submit={submit} />);
   getSequenceIdInputWrapper(wrapper).simulate(
     'change',
     { target: { value: 'asdf' } },
@@ -364,7 +364,7 @@ it('handles a CT file downloaded from Mfold', () => {
 });
 
 it('no error message shown by default', () => {
-  let wrapper = mount(<OpenCT />);
+  let wrapper = mount(<OpenCt />);
   expect(getErrorMessageSection(wrapper).id.length).toBeGreaterThan(0);
   expect(getErrorMessagePWrapper(wrapper).length).toBe(0);
 });

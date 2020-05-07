@@ -188,7 +188,7 @@ class Menu extends React.Component {
         }),
         this._dropdownSeparator(),
         this._droppedButton('Open CT', {
-          onClick: this.props.openCT,
+          onClick: this.props.openCt,
           disabled: !this.props.drawingIsEmpty,
         }),
         this._droppedButton('Open RNA2Drawer', {
@@ -249,7 +249,7 @@ class Menu extends React.Component {
   _exportMenu() {
     let droppedItems = [
       this._droppedButton('SVG', {
-        onClick: this.props.exportSVG,
+        onClick: this.props.exportSvg,
       }),
       this._droppedButton('PowerPoint (PPTX)'),
     ];
@@ -308,7 +308,7 @@ class Menu extends React.Component {
 Menu.propTypes = {
   drawingIsEmpty: PropTypes.bool,
   createNewDrawing: PropTypes.func,
-  openCT: PropTypes.func,
+  openCt: PropTypes.func,
 };
 
 export default Menu;
