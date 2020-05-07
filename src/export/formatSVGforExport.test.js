@@ -1,5 +1,5 @@
 import {
-  formatSVGforExport,
+  formatSvgForExport,
   _X_PADDING,
   _Y_PADDING,
   _xTextMin,
@@ -29,7 +29,7 @@ import {
   _trimRectNumbers,
   _trimNumbers,
   _setDimensions,
-} from './formatSVGforExport';
+} from './formatSvgForExport';
 import createNodeSVG from '../draw/createNodeSVG';
 import { nonemptySplitByWhitespace } from '../parse/nonemptySplitByWhitespace';
 import { trimNum } from './trimNum';
@@ -821,7 +821,7 @@ it('_setDimensions function', () => {
   expect(svg.attr('height')).toBe(100 + _Y_PADDING);
 });
 
-describe('formatSVGforExport function', () => {
+describe('formatSvgForExport function', () => {
   it('removes invisible lines', () => {
     let svg = createNodeSVG();
     let l1 = svg.line(2, 4, 6, 8);
@@ -832,7 +832,7 @@ describe('formatSVGforExport function', () => {
     l2.attr({ 'stroke-opacity': 0.5 });
     expect(svg.findOne('#' + id1)).not.toBe(null);
     expect(svg.findOne('#' + id2)).not.toBe(null);
-    formatSVGforExport(svg);
+    formatSvgForExport(svg);
     expect(svg.findOne('#' + id1)).toBe(null);
     expect(svg.findOne('#' + id2)).not.toBe(null);
   });
@@ -845,7 +845,7 @@ describe('formatSVGforExport function', () => {
     expect(y).not.toEqual(_Y_PADDING);
     let t = svg.text(add => add.tspan('a'));
     t.attr({ 'x': x, 'y': y });
-    formatSVGforExport(svg);
+    formatSvgForExport(svg);
     expect(t.attr('x')).toBeCloseTo(_X_PADDING, 3);
     expect(t.attr('y')).toBeCloseTo(_Y_PADDING, 3);
   });
@@ -854,7 +854,7 @@ describe('formatSVGforExport function', () => {
     let svg = createNodeSVG();
     let t = svg.text(add => add.tspan('t'));
     t.attr({ 'font-size': 9 });
-    formatSVGforExport(svg, 2);
+    formatSvgForExport(svg, 2);
     expect(t.attr('font-size')).toBe(18);
   });
 
@@ -864,7 +864,7 @@ describe('formatSVGforExport function', () => {
     expect(_trimNum(fs)).not.toEqual(fs);
     let t = svg.text(add => add.tspan('b'));
     t.attr({ 'font-size': fs });
-    formatSVGforExport(svg, 1);
+    formatSvgForExport(svg, 1);
     expect(t.attr('font-size')).toEqual(_trimNum(fs));
   });
 
@@ -876,7 +876,7 @@ describe('formatSVGforExport function', () => {
       'font-size': 20,
       'dominant-baseline': 'hanging',
     });
-    formatSVGforExport(svg);
+    formatSvgForExport(svg);
     expect(t.attr('dominant-baseline')).toBe('auto');
   });
 
@@ -886,7 +886,7 @@ describe('formatSVGforExport function', () => {
     t1.attr({ 'x': 50, 'y': 25 });
     let t2 = svg.text(add => add.tspan('b'));
     t2.attr({ 'x': 100, 'y': 150 });
-    formatSVGforExport(svg, 1);
+    formatSvgForExport(svg, 1);
     expect(svg.viewbox().x).toBe(0);
     expect(svg.viewbox().y).toBe(0);
     expect(svg.viewbox().width).toBeCloseTo((2 * _X_PADDING) + 50, 3);

@@ -591,7 +591,7 @@ function _setDimensions(svg) {
  * @param {SVG.Svg} svg A structure drawing.
  * @param {number} [scaling=1] How much to scale the drawing.
  */
-function formatSVGforExport(svg, scaling=1) {
+function formatSvgForExport(svg, scaling=1) {
   _removeInvisibleLines(svg);
   _shiftElements(svg);
   _scaleElements(svg, scaling);
@@ -601,7 +601,7 @@ function formatSVGforExport(svg, scaling=1) {
 }
 
 export {
-  formatSVGforExport,
+  formatSvgForExport,
 
   // these are only exported to aid testing
   _X_PADDING,
