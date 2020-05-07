@@ -1,5 +1,5 @@
 import {
-  createPPTXfromSVG,
+  createPptxFromSvg,
   _pptxHex,
   _NUMBER_TRIM,
   _trimNum,
@@ -13,7 +13,7 @@ import {
   _pathImageOptions,
   _circleOptions,
   _rectOptions,
-} from './createPPTXfromSVG';
+} from './createPptxFromSvg';
 import { trimNum } from './trimNum';
 import createNodeSVG from '../draw/createNodeSVG';
 const fs = require('fs');
@@ -659,11 +659,11 @@ describe('_rectOptions function', () => {
   });
 });
 
-describe('createPPTXfromSVG function', () => {
+describe('createPptxFromSvg function', () => {
   it('sets slide dimensions (and trims numbers)', () => {
     let svg = createNodeSVG();
     svg.viewbox(0, 0, 800, 500);
-    let pres = createPPTXfromSVG(svg);
+    let pres = createPptxFromSvg(svg);
     return pres.write('blob').then(data => {
       let expectedData = fs.readFileSync('testinput/pptx/sets_slide_dimensions_blob');
       expect(data.toString()).toBe(expectedData.toString());
@@ -687,7 +687,7 @@ describe('createPPTXfromSVG function', () => {
       'stroke': '#0000ff',
       'stroke-width': 10,
     });
-    let pres = createPPTXfromSVG(svg);
+    let pres = createPptxFromSvg(svg);
     return pres.write('blob').then(data => {
       let expectedData = fs.readFileSync('testinput/pptx/adds_texts_and_lines_blob');
       expect(data.toString()).toBe(expectedData.toString());
@@ -712,7 +712,7 @@ describe('createPPTXfromSVG function', () => {
       'stroke-width': 20,
       'fill-opacity': 0,
     });
-    let pres = createPPTXfromSVG(svg);
+    let pres = createPptxFromSvg(svg);
     return pres.write('blob').then(data => {
       let expectedData = fs.readFileSync('testinput/pptx/adds_circles_and_rects_blob');
       expect(data.toString()).toBe(expectedData.toString());
@@ -729,7 +729,7 @@ describe('createPPTXfromSVG function', () => {
         'stroke-width': 5,
         'fill-opacity': 0,
       });
-      let pres = createPPTXfromSVG(svg);
+      let pres = createPptxFromSvg(svg);
       return pres.write('blob').then(data => {
         let expectedData = fs.readFileSync('testinput/pptx/path_is_only_lines_blob');
         expect(data.toString()).toBe(expectedData.toString());
@@ -745,7 +745,7 @@ describe('createPPTXfromSVG function', () => {
         'stroke-width': 8,
         'fill-opacity': 0,
       });
-      let pres = createPPTXfromSVG(svg);
+      let pres = createPptxFromSvg(svg);
       // TODO: stop the following from stalling...
       /*
       return pres.write('nodebuffer').then(data => {

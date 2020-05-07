@@ -413,7 +413,7 @@ function _addRect(pres, slide, rect) {
  * 
  * @returns {PptxGenJs.PptxGenJs} 
  */
-function createPPTXfromSVG(svg) {
+function createPptxFromSvg(svg) {
   let pres = new PptxGenJs();
   _setSlideDimensions(pres, svg);
   let slide = pres.addSlide();
@@ -434,7 +434,7 @@ function createPPTXfromSVG(svg) {
 }
 
 export {
-  createPPTXfromSVG,
+  createPptxFromSvg,
 
   // these are only exported to aid testing
   _pptxHex,
