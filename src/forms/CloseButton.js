@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import blackCrossMark from './blackCrossMark.svg';
+import grayCrossMark from './grayCrossMark.svg';
 import whiteCrossMark from './whiteCrossMark.svg';
 
 class CloseButton extends React.Component {
@@ -13,7 +14,7 @@ class CloseButton extends React.Component {
   }
 
   _crossMark() {
-    let src = this.state.hovered ? whiteCrossMark : blackCrossMark;
+    let src = this.state.hovered ? whiteCrossMark : grayCrossMark;
     return (
       <img
         className={'unselectable'}
