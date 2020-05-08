@@ -826,15 +826,20 @@ describe('formatSvgForExport function', () => {
     let svg = createNodeSVG();
     let l1 = svg.line(2, 4, 6, 8);
     let l2 = svg.line(5, 5, 9, 8);
+    let l3 = svg.line(1, 3, 5, 7);
     let id1 = l1.id();
     let id2 = l2.id();
+    let id3 = l3.id();
     l1.attr({ 'stroke-opacity': 0 });
     l2.attr({ 'stroke-opacity': 0.5 });
+    l3.attr({ 'opacity': 0 });
     expect(svg.findOne('#' + id1)).not.toBe(null);
     expect(svg.findOne('#' + id2)).not.toBe(null);
+    expect(svg.findOne('#' + id3)).not.toBe(null);
     formatSvgForExport(svg);
     expect(svg.findOne('#' + id1)).toBe(null);
     expect(svg.findOne('#' + id2)).not.toBe(null);
+    expect(svg.findOne('#' + id3)).toBe(null);
   });
 
   it('shifts elements', () => {

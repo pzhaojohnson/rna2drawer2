@@ -8,7 +8,7 @@ function _removeInvisibleLines(svg) {
   let toBeRemoved = [];
   svg.children().forEach(c => {
     if (c.type === 'line') {
-      if (c.attr('stroke-opacity') === 0) {
+      if (c.attr('opacity') === 0 || c.attr('stroke-opacity') === 0) {
         toBeRemoved.push(c);
       }
     }
