@@ -66,12 +66,10 @@ CloseButton.propTypes = {
   position: PropTypes.string,
   top: PropTypes.string,
   right: PropTypes.string,
-  close: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 CloseButton.defaultProps = {
-  width: '20px',
-  height: '20px',
   onClick: () => {},
 };
 
