@@ -108,7 +108,7 @@ class ExportSvg extends React.Component {
             type={'text'}
             value={this.state.baseFontSize}
             onChange={event => this._onBaseFontSizeInputChange(event)}
-            spellcheck={'false'}
+            spellCheck={'false'}
             style={{
               flexGrow: '1',
               fontSize: '12px',
