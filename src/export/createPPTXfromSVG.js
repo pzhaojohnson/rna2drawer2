@@ -58,6 +58,26 @@ function _setSlideDimensions(pres, svg) {
 }
 
 /**
+ * @param {SVG.Text} text 
+ * 
+ * @returns {number} 
+ */
+function _textWidth(text) {
+  let bb = text.bbox();
+  return pixelsToInches(4 * bb.width);
+}
+
+/**
+ * @param {SVG.Text} text 
+ * 
+ * @returns {number} 
+ */
+function _textHeight(text) {
+  let bb = text.bbox();
+  return pixelsToInches(2 * bb.height);
+}
+
+/**
  * If text-anchor was undefined, this function will set it to 'start',
  * which should not change how the text element is displayed.
  * 
@@ -106,8 +126,8 @@ function _yTextCenter(text) {
  */
 function _textOptions(text) {
   let fs = pixelsToPoints(text.attr('font-size'));
-  let w = pointsToInches(1.5 * fs);
-  let h = pointsToInches(1.5 * fs);
+  let w = _textWidth(text);
+  let h = _textHeight(text);
   let x = pixelsToInches(_xTextCenter(text)) - (w / 2);
   let y = pixelsToInches(_yTextCenter(text)) - (h / 2);
   let fw = text.attr('font-weight');
