@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CloseButton } from './CloseButton';
 import Base from '../draw/Base';
 const uuidv1 = require('uuid/v1');
 
@@ -19,20 +20,32 @@ class ExportSvg extends React.Component {
     return (
       <div
         style={{
-          width: '400px',
+          position: 'relative',
           height: '100%',
           backgroundColor: '#fefefe',
           borderWidth: '0px 0px 0px thin',
           borderStyle: 'solid',
           borderColor: '#bfbfbf',
-          display: 'flex',
-          flexDirection: 'column',
         }}
       >
-        {this._title()}
-        {this._baseFontSize()}
-        {this._errorMessageSection()}
-        {this._exportButton()}
+        <CloseButton
+          position={'absolute'}
+          top={'0px'}
+          right={'0px'}
+        />
+        <div
+          style={{
+            width: '400px',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {this._title()}
+          {this._baseFontSize()}
+          {this._errorMessageSection()}
+          {this._exportButton()}
+        </div>
       </div>
     );
   }

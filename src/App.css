@@ -135,6 +135,13 @@ svg text {
   cursor: default;
 }
 
+.unselectable {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 .unselectable-text {
   user-select: none;
   -webkit-user-select: none;
@@ -177,6 +184,16 @@ overrides the background-color on hover setting below. */
 /* Could not find a straightforward way to do this in React. */
 .menu-dropped-button:hover {
   background-color: gainsboro;
+}
+
+.close-button {
+  background-color: transparent;
+}
+
+.close-button:hover {
+  background-color: #ff0000;
+  transition-duration: 0.25s;
+  -webkit-transition-duration: 0.25s;
 }
 
 @keyframes fadein {
