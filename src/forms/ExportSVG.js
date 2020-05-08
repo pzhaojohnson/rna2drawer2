@@ -22,6 +22,7 @@ class ExportSvg extends React.Component {
       <div
         style={{
           position: 'relative',
+          width: '400px',
           height: '100%',
           backgroundColor: '#fefefe',
           borderWidth: '0px 0px 0px thin',
@@ -29,180 +30,273 @@ class ExportSvg extends React.Component {
           borderColor: '#bfbfbf',
         }}
       >
-        <CloseButton
-          position={'absolute'}
-          top={'0px'}
-          right={'0px'}
-          onClick={() => this.close()}
-        />
-        <div
-          style={{
-            width: '400px',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {this._title()}
-          {this._baseFontSizeSection()}
-          {this._errorMessageSection()}
-          {this._exportButton()}
-        </div>
+        {this.closeButton()}
+        {this.titleAndContent()}
       </div>
     );
   }
 
-  _title() {
+  closeButton() {
     return (
-      <div>
-        <p
-          className={'unselectable-text'}
-          style={{
-            margin: '16px 32px 0px 32px',
-            fontSize: '24px',
-          }}
-        >
-          Export SVG
-        </p>
-        <div
-          style={{
-            height: '0px',
-            borderWidth: '0px 0px thin 0px',
-            borderStyle: 'solid',
-            borderColor: '#bfbfbf',
-            margin: '8px 16px 0px 16px',
-          }}
-        ></div>
-      </div>
+      <CloseButton
+        position={'absolute'}
+        top={'0px'}
+        right={'0px'}
+        onClick={() => this.close()}
+      />
     );
   }
 
-  _baseFontSizeSection() {
+  titleAndContent() {
     return (
       <div
-        style={{ margin: '24px 40px 18px 40px' }}
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
       >
-        <p
-          className={'unselectable-text'}
-          style={{ fontSize: '12px' }}
-        >
-          Scale the exported drawing by setting the font size of bases.
-        </p>
-        <div
-          style={{
-            margin: '8px 0px 0px 8px',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-        >
-          <p
-            className={'unselectable-text'}
-            style={{
-              fontSize: '12px',
-              display: 'inline-block',
-              marginRight: '8px',
-            }}
-          >
-            Font size of bases:
-          </p>
-          <input
-            type={'text'}
-            value={this.state.baseFontSize}
-            onChange={event => this._onBaseFontSizeInputChange(event)}
-            spellCheck={'false'}
-            style={{
-              flexGrow: '1',
-              fontSize: '12px',
-              textAlign: 'right',
-            }}
-          />
-        </div>
+        {this.titleSection()}
+        {this.baseFontSizeSection()}
+        {this.errorMessageSection()}
+        {this.exportSection()}
       </div>
+    );
+  }
+
+  titleSection() {
+    return (
+      <div>
+        {this.titleText()}
+        {this.titleUnderline()}
+      </div>
+    );
+  }
+
+  titleText() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: '16px 32px 0px 32px',
+          fontSize: '24px',
+        }}
+      >
+        Export SVG
+      </p>
+    );
+  }
+
+  titleUnderline() {
+    return (
+      <div
+        style={{
+          height: '0px',
+          borderWidth: '0px 0px thin 0px',
+          borderStyle: 'solid',
+          borderColor: '#bfbfbf',
+          margin: '8px 16px 0px 16px',
+        }}
+      ></div>
+    );
+  }
+
+  baseFontSizeSection() {
+    return (
+      <div
+        style={{
+          margin: '24px 40px 18px 40px',
+        }}
+      >
+        {this.baseFontSizeDescription()}
+        {this.baseFontSizeField()}
+      </div>
+    );
+  }
+
+  baseFontSizeDescription() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          fontSize: '12px',
+        }}
+      >
+        Scale the exported drawing by setting the font size of bases.
+      </p>
+    );
+  }
+
+  baseFontSizeField() {
+    return (
+      <div
+        style={{
+          margin: '8px 0px 0px 8px',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        {this.baseFontSizeLabel()}
+        {this.baseFontSizeInput()}
+      </div>
+    );
+  }
+
+  baseFontSizeLabel() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          fontSize: '12px',
+          display: 'inline-block',
+          marginRight: '8px',
+        }}
+      >
+        Font size of bases:
+      </p>
+    );
+  }
+
+  baseFontSizeInput() {
+    return (
+      <input
+        type={'text'}
+        value={this.state.baseFontSize}
+        onChange={event => this.onBaseFontSizeInputChange(event)}
+        spellCheck={'false'}
+        style={{
+          flexGrow: '1',
+          fontSize: '12px',
+          textAlign: 'right',
+        }}
+      />
     );
   }
   
-  _onBaseFontSizeInputChange(event) {
+  onBaseFontSizeInputChange(event) {
     this.setState({
       baseFontSize: event.target.value,
     });
   }
 
-  _errorMessageSection() {
+  errorMessageSection() {
     if (!this.state.errorMessage) {
-      return (
-        <div key={this.state.errorMessageKey} id={this.state.errorMessageKey}></div>
-      );
+      return this.emptyErrorMessageSection();
     }
     return (
-      <div key={this.state.errorMessageKey} id={this.state.errorMessageKey} >
-        <p
-          className={'unselectable-text'}
-          style={{
-            margin: '0px 40px 0px 40px',
-            fontSize: '14px',
-            color: 'red',
-            animationName: 'fadein',
-            animationDuration: '0.75s',
-          }}
-        >
-          <b>{this.state.errorMessage}</b>
-        </p>
+      <div
+        key={this.state.errorMessageKey}
+        id={this.state.errorMessageKey} 
+      >
+        {this.errorMessageText()}
       </div>
     );
   }
 
-  _exportButton() {
+  emptyErrorMessageSection() {
+    return (
+      <div
+        key={this.state.errorMessageKey}
+        id={this.state.errorMessageKey}
+      ></div>
+    );
+  }
+
+  errorMessageText() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: '0px 40px 0px 40px',
+          fontSize: '14px',
+          color: 'red',
+          animationName: 'fadein',
+          animationDuration: '0.75s',
+        }}
+      >
+        <b>{this.state.errorMessage}</b>
+      </p>
+    );
+  }
+
+  exportSection() {
     return (
       <div
         style={{
           margin: '6px 40px 0px 40px',
         }}
       >
-        <button
-          onClick={() => this._export()}
-          style={{
-            padding: '4px 32px 4px 32px',
-            fontSize: '12px',
-            borderRadius: '2px',
-          }}
-        >
-          Export
-        </button>
+        {this.exportButton()}
       </div>
     );
   }
 
-  _export() {
-    let bfs = this._parseBaseFrontSize();
+  exportButton() {
+    return (
+      <button
+        onClick={() => this.export()}
+        style={{
+          padding: '4px 32px 4px 32px',
+          fontSize: '12px',
+          borderRadius: '2px',
+        }}
+      >
+        Export
+      </button>
+    );
+  }
+
+  export() {
+    let bfs = this.parseBaseFrontSize();
     if (!bfs) {
       return;
     }
-    this.setState({ errorMessage: '', errorMessageKey: uuidv1() });
+    this.setState({
+      errorMessage: '',
+      errorMessageKey: uuidv1(),
+    });
     let scaling = bfs / Base.mostRecentProps().fontSize;
     let svgString = this.getSvgStringForExport(scaling);
     this.offerSvgForDownload(svgString);
   }
 
-  _parseBaseFrontSize() {
+  parseBaseFrontSize() {
     let bfs = Number(this.state.baseFontSize);
     if (!Number.isFinite(bfs)) {
-      this.setState({ errorMessage: 'Font size of bases must be a number.', errorMessageKey: uuidv1() });
+      this.setState({
+        errorMessage: 'Font size of bases must be a number.',
+        errorMessageKey: uuidv1(),
+      });
       return null;
     }
     if (bfs <= 0) {
-      this.setState({ errorMessage: 'Font size of bases must be positive.', errorMessageKey: uuidv1() });
+      this.setState({
+        errorMessage: 'Font size of bases must be positive.',
+        errorMessageKey: uuidv1(),
+      });
       return null;
     }
     return bfs;
   }
 
   /**
+   * Returns an empty string if either of the SVG or getSvgString callback
+   * props are missing.
+   * 
    * @param {number} scaling 
    * 
    * @returns {string} 
    */
   getSvgStringForExport(scaling) {
+    if (!this.props.SVG) {
+      console.log('Missing SVG callback.');
+      return '';
+    } else if (!this.props.getSvgString) {
+      console.log('Missing getSvgString callback.');
+      return '';
+    }
     let div = document.createElement('div');
     div.style.cssText = 'max-width: 0px; max-height: 0px';
     document.body.appendChild(div);
@@ -233,9 +327,8 @@ class ExportSvg extends React.Component {
     a.innerHTML = '&nbsp;';
     a.href = url;
     a.download = 'Drawing.svg';
-    a.dispatchEvent(
-      new MouseEvent('click', {})
-    );
+    let me = new MouseEvent('click', {});
+    a.dispatchEvent(me);
     document.body.removeChild(div);
   }
 
@@ -247,13 +340,9 @@ class ExportSvg extends React.Component {
 }
 
 ExportSvg.propTypes = {
-  SVG: PropTypes.func,
-  getSvgString: PropTypes.func,
-  close: PropTypes.func,
-};
-
-ExportSvg.defaultProps = {
-  close: () => {},
+  SVG: PropTypes.func.isRequired,
+  getSvgString: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
 };
 
 export {
