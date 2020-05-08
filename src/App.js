@@ -212,6 +212,7 @@ class App {
     this._openForm(
       <ExportSvg
         SVG={() => this._SVG()}
+        getSvgString={() => this._drawing.svgString}
       />
     );
   }

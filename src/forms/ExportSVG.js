@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CloseButton } from './CloseButton';
-import Base from '../draw/Base';
 const uuidv1 = require('uuid/v1');
+import Base from '../draw/Base';
+import { formatSvgForExport } from '../export/formatSvgForExport';
 
 class ExportSvg extends React.Component {
   constructor(props) {
@@ -28,11 +29,7 @@ class ExportSvg extends React.Component {
           borderColor: '#bfbfbf',
         }}
       >
-        <CloseButton
-          position={'absolute'}
-          top={'0px'}
-          right={'0px'}
-        />
+        <CloseButton position={'absolute'} top={'0px'} right={'0px'} />
         <div
           style={{
             width: '400px',
@@ -42,7 +39,7 @@ class ExportSvg extends React.Component {
           }}
         >
           {this._title()}
-          {this._baseFontSize()}
+          {this._baseFontSizeSection()}
           {this._errorMessageSection()}
           {this._exportButton()}
         </div>
@@ -75,7 +72,7 @@ class ExportSvg extends React.Component {
     );
   }
 
-  _baseFontSize() {
+  _baseFontSizeSection() {
     return (
       <div
         style={{ margin: '24px 40px 18px 40px' }}
@@ -178,7 +175,8 @@ class ExportSvg extends React.Component {
     }
     this.setState({ errorMessage: '', errorMessageKey: uuidv1() });
     let scaling = bfs / Base.mostRecentProps().fontSize;
-
+    let svgString = this.getSvgStringForExport(scaling);
+    this.offerSvgForDownload(svgString);
   }
 
   _parseBaseFrontSize() {
@@ -193,7 +191,54 @@ class ExportSvg extends React.Component {
     }
     return bfs;
   }
+
+  /**
+   * @param {number} scaling 
+   * 
+   * @returns {string} 
+   */
+  getSvgStringForExport(scaling) {
+    let div = document.createElement('div');
+    div.style.cssText = 'max-width: 0px; max-height: 0px';
+    document.body.appendChild(div);
+    let svg = this.props.SVG();
+    svg.addTo(div);
+    svg.svg(this.props.getSvgString());
+    let nested = svg.first();
+    let content = nested.svg(false);
+    svg.clear();
+    svg.svg(content);
+    formatSvgForExport(svg, scaling);
+    let svgString = svg.svg();
+    document.body.removeChild(div);
+    return svgString;
+  }
+
+  /**
+   * @param {string} svgString 
+   */
+  offerSvgForDownload(svgString) {
+    let b = new Blob([svgString], { type: 'text/plain' });
+    let url = URL.createObjectURL(b);
+    let div = document.createElement('div');
+    div.style.cssText = 'max-width: 0px; max-height: 0px';
+    document.body.appendChild(div);
+    let a = document.createElement('a');
+    div.appendChild(a);
+    a.innerHTML = '&nbsp;';
+    a.href = url;
+    a.download = 'Drawing.svg';
+    a.dispatchEvent(
+      new MouseEvent('click', {})
+    );
+    document.body.removeChild(div);
+  }
 }
+
+ExportSvg.propTypes = {
+  SVG: PropTypes.func,
+  getSvgString: PropTypes.func,
+};
 
 export {
   ExportSvg,

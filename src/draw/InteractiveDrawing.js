@@ -211,6 +211,13 @@ class InteractiveDrawing {
       this._drawing.centerView();
     }
   }
+
+  /**
+   * @returns {string} 
+   */
+  get svgString() {
+    return this._drawing.svgString;
+  }
 }
 
 export default InteractiveDrawing;
