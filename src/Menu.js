@@ -251,7 +251,9 @@ class Menu extends React.Component {
       this._droppedButton('SVG', {
         onClick: this.props.exportSvg,
       }),
-      this._droppedButton('PowerPoint (PPTX)'),
+      this._droppedButton('PowerPoint (PPTX)', {
+        onClick: this.props.exportPptx,
+      }),
     ];
 
     if (this.props.drawingIsEmpty) {
@@ -309,6 +311,8 @@ Menu.propTypes = {
   drawingIsEmpty: PropTypes.bool,
   createNewDrawing: PropTypes.func,
   openCt: PropTypes.func,
+  exportSvg: PropTypes.func,
+  exportPptx: PropTypes.func,
 };
 
 export default Menu;

@@ -10,6 +10,7 @@ import Infobar from './Infobar';
 import CreateNewDrawing from './forms/CreateNewDrawing';
 import { OpenCt } from './forms/OpenCt';
 import { ExportSvg } from './forms/ExportSvg';
+import { ExportPptx } from './forms/ExportPptx';
 
 class App {
 
@@ -155,6 +156,7 @@ class App {
         createNewDrawing={() => this.createNewDrawing()}
         openCt={() => this.openCt()}
         exportSvg={() => this.exportSvg()}
+        exportPptx={() => this.exportPptx()}
       />
     );
     ReactDOM.render(this._menu, this._getMenuContainer());
@@ -211,6 +213,16 @@ class App {
   exportSvg() {
     this._openForm(
       <ExportSvg
+        SVG={() => this._SVG()}
+        getSvgString={() => this._drawing.svgString}
+        close={() => this._closeCurrForm()}
+      />
+    );
+  }
+
+  exportPptx() {
+    this._openForm(
+      <ExportPptx
         SVG={() => this._SVG()}
         getSvgString={() => this._drawing.svgString}
         close={() => this._closeCurrForm()}
