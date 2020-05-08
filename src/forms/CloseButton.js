@@ -56,7 +56,9 @@ class CloseButton extends React.Component {
   }
 
   onClick() {
-    this.props.onClick();
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
   }
 }
 
