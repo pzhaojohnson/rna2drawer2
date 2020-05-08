@@ -140,6 +140,7 @@ describe('handles invalid base font size', () => {
     });
     let t = getErrorMessageTextContent();
     expect(t.length).toBe(0);
+    let id1 = getErrorMessageSection().id;
     act(() => {
       let eb = getExportButton();
       eb.dispatchEvent(
@@ -148,6 +149,8 @@ describe('handles invalid base font size', () => {
     });
     t = getErrorMessageTextContent();
     expect(t.length).toBeGreaterThan(0);
+    let id2 = getErrorMessageSection().id;
+    expect(id2).not.toBe(id1);
   });
 
   it('handles negative base font size', () => {
@@ -161,6 +164,7 @@ describe('handles invalid base font size', () => {
     });
     let t = getErrorMessageTextContent();
     expect(t.length).toBe(0);
+    let id1 = getErrorMessageSection().id;
     act(() => {
       let eb = getExportButton();
       eb.dispatchEvent(
@@ -169,6 +173,8 @@ describe('handles invalid base font size', () => {
     });
     t = getErrorMessageTextContent();
     expect(t.length).toBeGreaterThan(0);
+    let id2 = getErrorMessageSection().id;
+    expect(id2).not.toBe(id1);
   });
 
   it('handles positive base font size less than one', () => {
@@ -182,6 +188,7 @@ describe('handles invalid base font size', () => {
     });
     let t = getErrorMessageTextContent();
     expect(t.length).toBe(0);
+    let id1 = getErrorMessageSection().id;
     act(() => {
       let eb = getExportButton();
       eb.dispatchEvent(
@@ -190,6 +197,8 @@ describe('handles invalid base font size', () => {
     });
     t = getErrorMessageTextContent();
     expect(t.length).toBeGreaterThan(0);
+    let id2 = getErrorMessageSection().id;
+    expect(id2).not.toBe(id1);
   });
 });
 
@@ -210,6 +219,7 @@ it('clears error message on valid input', () => {
   });
   let t = getErrorMessageTextContent();
   expect(t.length).toBeGreaterThan(0);
+  let id1 = getErrorMessageSection().id;
   act(() => {
     let input = getBaseFontSizeInput();
     fireEvent.change(
@@ -225,4 +235,6 @@ it('clears error message on valid input', () => {
   });
   t = getErrorMessageTextContent();
   expect(t.length).toBe(0);
+  let id2 = getErrorMessageSection().id;
+  expect(id2).not.toBe(id1);
 });
