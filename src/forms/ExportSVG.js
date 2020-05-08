@@ -273,7 +273,7 @@ class ExportSvg extends React.Component {
     }
     if (bfs < 1) {
       this.setState({
-        errorMessage: 'Font size of bases must be at least 1.0.',
+        errorMessage: 'Font size of bases must be at least 1.',
         errorMessageKey: uuidv1(),
       });
       return null;
