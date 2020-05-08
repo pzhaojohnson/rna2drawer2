@@ -219,7 +219,7 @@ describe('_lineOptions function', () => {
       expect(los.x).toBeCloseTo(pixelsToInches(20), 2);
       expect(los.y).toBeCloseTo(pixelsToInches(15), 2);
       expect(los.w).toBeCloseTo(pixelsToInches(100), 2);
-      expect(los.h).toBeCloseTo(pixelsToInches(60), 2);
+      expect(los.h).toBeCloseTo(pixelsToInches(60), 1);
     });
 
     it('not flipped horizontally and flipped vertically', () => {

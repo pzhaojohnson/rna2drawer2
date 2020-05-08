@@ -31,7 +31,7 @@ function _pptxHex(hex) {
   return '000000';
 }
 
-const _NUMBER_TRIM = 3;
+const _NUMBER_TRIM = 2;
 
 /**
  * @param {number} n 
