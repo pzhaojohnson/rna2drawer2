@@ -271,9 +271,9 @@ class ExportSvg extends React.Component {
       });
       return null;
     }
-    if (bfs <= 0) {
+    if (bfs < 1) {
       this.setState({
-        errorMessage: 'Font size of bases must be positive.',
+        errorMessage: 'Font size of bases must be at least 1.0.',
         errorMessageKey: uuidv1(),
       });
       return null;
@@ -291,10 +291,10 @@ class ExportSvg extends React.Component {
    */
   getSvgStringForExport(scaling) {
     if (!this.props.SVG) {
-      console.log('Missing SVG callback.');
+      console.error('Missing SVG callback.');
       return '';
     } else if (!this.props.getSvgString) {
-      console.log('Missing getSvgString callback.');
+      console.error('Missing getSvgString callback.');
       return '';
     }
     let div = document.createElement('div');
@@ -314,9 +314,14 @@ class ExportSvg extends React.Component {
   }
 
   /**
+   * No file is offered for download if the given string is empty.
+   * 
    * @param {string} svgString 
    */
   offerSvgForDownload(svgString) {
+    if (!svgString) {
+      return;
+    }
     let b = new Blob([svgString], { type: 'text/plain' });
     let url = URL.createObjectURL(b);
     let div = document.createElement('div');
@@ -333,9 +338,11 @@ class ExportSvg extends React.Component {
   }
 
   close() {
-    if (this.props.close) {
-      this.props.close();
+    if (!this.props.close) {
+      console.error('Missing close callback.');
+      return;
     }
+    this.props.close();
   }
 }
 
