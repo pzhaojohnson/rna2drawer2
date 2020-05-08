@@ -32,3 +32,13 @@ it('calls onClick callback', () => {
   });
   expect(onClick.mock.calls.length).toBe(1);
 });
+
+it('handles undefined onClick callback', () => {
+  act(() => {
+    render(<CloseButton />, container);
+    let cb = getCloseButton();
+    cb.dispatchEvent(
+      new Event('click', { bubbles: true })
+    );
+  });
+});
