@@ -12,7 +12,7 @@ class CloseButton extends React.Component {
     };
   }
 
-  _cross() {
+  _crossMark() {
     let src = this.state.hovered ? whiteCrossMark : blackCrossMark;
     return (
       <img
@@ -42,7 +42,7 @@ class CloseButton extends React.Component {
           justifyContent: 'center',
         }}
       >
-        {this._cross()}
+        {this._crossMark()}
       </div>
     );
   }
