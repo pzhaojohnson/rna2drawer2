@@ -29,7 +29,12 @@ class ExportSvg extends React.Component {
           borderColor: '#bfbfbf',
         }}
       >
-        <CloseButton position={'absolute'} top={'0px'} right={'0px'} />
+        <CloseButton
+          position={'absolute'}
+          top={'0px'}
+          right={'0px'}
+          onClick={() => this.close()}
+        />
         <div
           style={{
             width: '400px',
@@ -233,11 +238,22 @@ class ExportSvg extends React.Component {
     );
     document.body.removeChild(div);
   }
+
+  close() {
+    if (this.props.close) {
+      this.props.close();
+    }
+  }
 }
 
 ExportSvg.propTypes = {
   SVG: PropTypes.func,
   getSvgString: PropTypes.func,
+  close: PropTypes.func,
+};
+
+ExportSvg.defaultProps = {
+  close: () => {},
 };
 
 export {

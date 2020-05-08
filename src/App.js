@@ -213,6 +213,7 @@ class App {
       <ExportSvg
         SVG={() => this._SVG()}
         getSvgString={() => this._drawing.svgString}
+        close={() => this._closeCurrForm()}
       />
     );
   }
