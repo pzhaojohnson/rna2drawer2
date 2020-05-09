@@ -18,16 +18,22 @@ const _EXAMPLE_INPUTS = [
     structure: '',
   },
   {
-    exampleInput: 'Several Hairpins',
-    sequenceId: 'Several Hairpins',
-    sequence: 'AGCGCAUACGAUAACCAUCGCCGCGCAUCGGCCAGCAUCGGGCCAAGGCUGCACGCCAUUGCAUGGUGUGUAAAGCU',
-    structure:'.((((...((((....))))..))))...((((.......)))).....(((((((((.....))))))))).....',
+    exampleInput: 'A Small Structure',
+    sequenceId: 'A Small Structure',
+    sequence: 'UAAGCGCAUAGACGAUGCAACCGCAUCGCCUAGCGCUUAGAUCGGCCAACAGCAUCGGUUGGCCAAUAGGCUGCACGCCAUCAUUUGCAUGGUGUGUAAAGCUU',
+    structure:'...((((.....((((((....))))))....)))).......(((((((.......))))))).......(((((((((.........)))))))))......',
   },
   {
-    exampleInput: "PEMV2 3'UTR",
-    sequenceId: "PEMV2 3'UTR",
-    sequence: 'UUAACUAGGCGGGCGUGUUGGUUACAGUAGGAGGGGACAGUGCGCAUCGAAACUGAGCCCCACCACAACUCUCAUCCACGGGGUGGUUGGGACGCAGGUGUCGGAGGGAUCGCCAGCCCUCAGGAUAGUGAGCUCCCGCAGAGGGAUAAGCUAUCUCCCUGCGACGUAGUGGUAGAACACGUGGGAUAGGGGAUGACCUUGUCGACCGGUUAUCGGUCCCCUGCUCCUUCGAGCUGGCAAGGCGCUCACAGGUUCUACACUGCUACUAAAGUUGGUGGUGGAUGUCUCGCCCAAAAAGAUCACAAACGCGCGGGACAAGGUCCCUUCCACCUUCGCCGGGUAAGGCUAGAGUCAGCGCUGCAUGACUAUAACUUGCGGCCGAUCCAGUUGCACGACUGGUGGUCCCCCUCAGUGUCUCGGUUGUCUGCCGAGUGGGCGGUGGUCGGAUUCCACCACACCCUGCCACGAGGUGCGUGGAGACUUGGCCAGUCUAGGCUCGUCGUAAUUAGUUGCAGCGACGUUAAUCAACCCGUCCGGGCAUAUAAUAGGACCGGUUGUGCUUCUUCCUCCCUUCUUAGCCAGGUGGUUACCUCCCUGGCGCCC',
-    structure: '.......(((.((((....(((.......(((((((((.....((.(((....))))).(((((((((((((((.((((...)))).)))).((((((.....(((((........))))).(((((((....((((.....))))...))))))).))))))...(((((((((.....(((((((..(((.((.((((((((((((.....)))))....((((....)))).))))))))))))....))))))).))))))))).)))).))))))).((((((((...................))))))))..))))))))))))..))))(((..(((..((((.(..(((((((..((((....(((((((.((.......((..(((((((((((((((((.(((.((((((.....)))))).(((..(((((.((...))))))).)))...))))))).....)).))))..)))))))...))))))))))).)))))))))))........(((((.((((............)))).))))).).)))).))))))......((((((..(....)..))))))))).',
+    exampleInput: 'A Big Structure',
+    sequenceId: 'A Big Structure',
+    sequence: 'GCCGCUAUAACAAUACUAGAUGGAAUUUCACAGUAUUCACUGAGACUCAUUGAUGCUAUGAUGUUCACAUCUGAUUUGGCUACUAACAAUCUAGUUGUAAUGGCCUACAUUACAGGUGGUGUUGUUCAGUUGACUUCGCAGUGGCUAACUAACAUCUUUGGCACUGUUUAUGAAAAACUCAAACCCGUCCUUGAUUGGCUUGAAGAGAAGUUUAAGGAAGGUGUAGAGUUUCUUAGAGACGGUUGGGAAAUUGUUAAAUUUAUCUCAACCUGUGCUUGUGAAAUUGUCGGUGGACAAAUUGUCACCUGUGCAAAGGAAAUUAAGGAGAGUGUUCAGACAUUCUUUAAGCUUGUAAAUAAAUUUUUGGCUUUGUGUGCUGACUCUAUCAUUAUUGGUGGAGCUAAACUUAAAGCCUUGAAUUUAGGUGAAACAUUUGUCACGCACUCAAAGGGAUUGUACAGAAAGUGUGUUAAAUCCAGAGAAGAAACUGGCCUACUCAUGCCUCUAAAAGCCCCAAAAGAAAUUAUCUUCUUAGAGGGA',
+    structure: '((((((..........((((((((((.(((.(((((.((.((.....)).))))))).))).)))).))))))..(..(((...(((((((((.((((((((.....)))))))).))).)))))).)))..)......))))))..((..(((((...(((((.((((.(((.((((((..(((..(((((((...((((......))))))))))).)))...)))))).))).))))((((((((((((....))))..)))))))).)))))...))...)))..)).(((((((..(((((.................(((((((((....)))))))))...........(((((((..(((((((.((..((.((((((((....)))))))).)).)).)))))))..))))))))))))...))))))).....(((...(((..(....(((..(((((......((((........))))......))))).)))...)..)))..(((((......))))).)))...',
+  },
+  {
+    exampleInput: 'Pseudoknots',
+    sequenceId: 'Pseudoknots',
+    sequence: 'UUUUAUAGAAACCAUCUCACUUGCUGGUUCCUAUAAAGAUUGGUCCUAUUCUGGACAAUCUACACAACUAGGUAUAGAAUCUGGUAAGAGAGGUGAUAAAAGUGUAUAUUACACUAGUAAUCCUACCACAUUCCACCUAGAUGGUGAAGUUAUCACCUUUGACAAUCUUAAGACACUUCUUUCUUUGAGAGAAGUGAGGACUAUUAAGGUGUUUAAAACAGUAGACAACAUUAACCUCCACACUGUUGUUGUGGACACCAUGUCAAUGACAUAUGGACAUGGUGUUGGUCCAACUUAUUUGGAUG',
+    structure: '...[[[[[...((((....((((.((((((]]]]].((((((((((......))))..((((.((......)).))))...{{{{{..(((((((((((.((((((...))))))........}}}}}.....((((.....))))...)))))))))))..)))))).....((((((((((...)))))))))).)))))).)))).((((((......)))))).((((.((.((((((.......))))))<<<<<.)).))))....))))...>>>>>...((((((.....)))))).',
   },
 ];
 
