@@ -91,7 +91,12 @@ class Drawing {
     let vb = this._svg.viewbox();
     let w = z * vb.width;
     let h = z * vb.height;
+    let change = z / this.zoom;
+    let sl = Math.floor(change * this._div.scrollLeft);
+    let st = Math.floor(change * this._div.scrollTop);
     this._svg.attr({ 'width': w, 'height': h });
+    this._div.scrollLeft = sl;
+    this._div.scrollTop = st;
   }
 
   /**
