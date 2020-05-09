@@ -77,6 +77,14 @@ describe('zoom section', () => {
     });
   });
 
+  it('has a default zoom prop', () => {
+    act(() => {
+      render(<Infobar drawingIsEmpty={false} />, container);
+    });
+    let display = getZoomDisplay();
+    expect(display.textContent).toBe('100%');
+  });
+
   describe('zoom minus', () => {
     it('background color changes on mouse over and out', () => {
       act(() => {
@@ -96,6 +104,16 @@ describe('zoom section', () => {
         );
       });
       expect(minus.style.backgroundColor).toBe('transparent');
+    });
+
+    it('handles undefined setZoom prop', () => {
+      act(() => {
+        render(<Infobar drawingIsEmpty={false} />, container);
+        let minus = getZoomMinus();
+        minus.dispatchEvent(
+          new Event('click', { bubbles: true })
+        );
+      });
     });
 
     it('handles predefined zoom prop', () => {
@@ -227,6 +245,16 @@ describe('zoom section', () => {
         );
       });
       expect(plus.style.backgroundColor).toBe('transparent');
+    });
+
+    it('handles undefined setZoom prop', () => {
+      act(() => {
+        render(<Infobar drawingIsEmpty={false} />, container);
+        let plus = getZoomPlus();
+        plus.dispatchEvent(
+          new Event('click', { bubbles: true })
+        );
+      });
     });
 
     it('handles predefined zoom prop', () => {
