@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import plus from './plus.svg';
+import minus from './minus.svg';
+
 const _ZOOMS = [0.05, 0.1, 0.25, 0.35, 0.5, 0.6, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 7.5, 10];
 
 class Infobar extends React.Component {
@@ -71,22 +74,23 @@ class Infobar extends React.Component {
         onClick={() => this.decreaseZoom()}
         style={{
           width: '20px',
+          height: '20px',
           borderRadius: '2px',
           backgroundColor: this.state.zoomMinusHovered ? 'gainsboro' : 'transparent',
           display: 'flex',
+          flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <p
-          className={'unselectable-text'}
+        <img
+          className={'unselectable'}
+          src={minus}
+          alt={'Minus'}
           style={{
-            flexGrow: '1',
-            textAlign: 'center',
-            fontSize: '14px',
+            width: '8px',
           }}
-        >
-          <b>-</b>
-        </p>
+        />
       </div>
     );
   }
@@ -149,22 +153,23 @@ class Infobar extends React.Component {
         onClick={() => this.increaseZoom()}
         style={{
           width: '20px',
+          height: '20px',
           borderRadius: '2px',
           backgroundColor: this.state.zoomPlusHovered ? 'gainsboro' : 'transparent',
           display: 'flex',
+          flexDirection: 'row',
           alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <p
-          className={'unselectable-text'}
+        <img
+          className={'unselectable'}
+          src={plus}
+          alt={'Plus'}
           style={{
-            flexGrow: '1',
-            textAlign: 'center',
-            fontSize: '14px',
+            width: '10px',
           }}
-        >
-          <b>+</b>
-        </p>
+        />
       </div>
     );
   }
