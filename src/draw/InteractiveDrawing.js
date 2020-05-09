@@ -34,6 +34,20 @@ class InteractiveDrawing {
   }
 
   /**
+   * @returns {number} 
+   */
+  get zoom() {
+    return this._drawing.zoom;
+  }
+
+  /**
+   * @param {number} z 
+   */
+  set zoom(z) {
+    this._drawing.zoom = z;
+  }
+
+  /**
    * @returns {string} 
    */
   get layoutType() {

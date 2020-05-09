@@ -164,9 +164,18 @@ class App {
 
   _renderInfobar() {
     this._infobar = (
-      <Infobar />
+      <Infobar
+        drawingIsEmpty={this._drawing.isEmpty()}
+        zoom={this._drawing.zoom}
+        setZoom={z => this._setDrawingZoom(z)}
+      />
     );
     ReactDOM.render(this._infobar, this._getInfobarContainer());
+  }
+
+  _setDrawingZoom(z) {
+    this._drawing.zoom = z;
+    this._updatePeripherals();
   }
 
   _updatePeripherals() {
