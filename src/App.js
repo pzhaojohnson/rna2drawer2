@@ -5,7 +5,7 @@ import './App.css';
 import InteractiveDrawing from './draw/InteractiveDrawing';
 
 import Menu from './Menu';
-import Infobar from './Infobar';
+import { Infobar } from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
 import { OpenCt } from './forms/OpenCt';

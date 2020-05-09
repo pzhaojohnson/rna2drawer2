@@ -69,8 +69,8 @@ class Infobar extends React.Component {
   zoomMinus() {
     return (
       <div
-        onMouseEnter={() => this.onZoomMinusEnter()}
-        onMouseLeave={() => this.onZoomMinusLeave()}
+        onMouseOver={() => this.onZoomMinusOver()}
+        onMouseOut={() => this.onZoomMinusOut()}
         onClick={() => this.decreaseZoom()}
         style={{
           width: '20px',
@@ -95,13 +95,13 @@ class Infobar extends React.Component {
     );
   }
 
-  onZoomMinusEnter() {
+  onZoomMinusOver() {
     this.setState({
       zoomMinusHovered: true,
     });
   }
 
-  onZoomMinusLeave() {
+  onZoomMinusOut() {
     this.setState({
       zoomMinusHovered: false,
     });
@@ -148,8 +148,8 @@ class Infobar extends React.Component {
   zoomPlus() {
     return (
       <div
-        onMouseEnter={() => this.onZoomPlusEnter()}
-        onMouseLeave={() => this.onZoomPlusLeave()}
+        onMouseOver={() => this.onZoomPlusOver()}
+        onMouseOut={() => this.onZoomPlusOut()}
         onClick={() => this.increaseZoom()}
         style={{
           width: '20px',
@@ -174,13 +174,13 @@ class Infobar extends React.Component {
     );
   }
 
-  onZoomPlusEnter() {
+  onZoomPlusOver() {
     this.setState({
       zoomPlusHovered: true,
     });
   }
 
-  onZoomPlusLeave() {
+  onZoomPlusOut() {
     this.setState({
       zoomPlusHovered: false,
     });
@@ -221,4 +221,9 @@ Infobar.defaultProps = {
   setZoom: z => {},
 };
 
-export default Infobar;
+export {
+  Infobar,
+
+  // only exported to aid testing
+  _ZOOMS,
+}
