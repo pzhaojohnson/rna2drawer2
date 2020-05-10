@@ -322,7 +322,7 @@ class CircleBaseAnnotation extends BaseAnnotation {
   /**
    * @typedef {Object} CircleBaseAnnotation~SavableState 
    * @property {string} className 
-   * @property {string} circle 
+   * @property {string} circleId 
    */
 
   /**
