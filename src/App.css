@@ -186,16 +186,6 @@ overrides the background-color on hover setting below. */
   background-color: gainsboro;
 }
 
-.close-button {
-  background-color: transparent;
-}
-
-.close-button:hover {
-  background-color: #ff0000;
-  transition-duration: 0.25s;
-  -webkit-transition-duration: 0.25s;
-}
-
 @keyframes fadein {
   from {
     opacity: 0.25;
