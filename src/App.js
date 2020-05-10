@@ -193,6 +193,10 @@ class App {
   }
 
   createNewDrawing() {
+    if (!this._drawing.isEmpty()) {
+      window.open(document.URL);
+      return;
+    }
     this._openForm(
       <CreateNewDrawing
         width={'100vw'}
@@ -211,6 +215,10 @@ class App {
   }
 
   openCt() {
+    if (!this._drawing.isEmpty()) {
+      window.open(document.URL);
+      return;
+    }
     this._openForm(
       <OpenCt
         width={'100vw'}

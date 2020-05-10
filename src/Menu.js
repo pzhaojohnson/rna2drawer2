@@ -16,7 +16,27 @@ class Menu extends React.Component {
     };
   }
 
-  _logo() {
+  render() {
+    return (
+      <div
+        style={{
+          borderWidth: '0px 0px thin 0px',
+          borderStyle: 'solid',
+          borderColor: this.state.borderColor,
+          backgroundColor: this.state.backgroundColor,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center'
+        }}
+      >
+        {this.logo()}
+        {this.fileDropdown()}
+        {this.exportDropdown()}
+      </div>
+    );
+  }
+
+  logo() {
     return (
       <img
         src={logo}
@@ -29,109 +49,75 @@ class Menu extends React.Component {
     );
   }
 
-  _stylesDropdownContent() {
-    return {
-      borderWidth: '0px thin thin thin',
-      borderStyle: 'solid',
-      borderColor: this.state.borderColor,
-    };
-  }
-
-  _stylesButton() {
-    return {
-      border: 'none',
-      margin: '0px',
-      padding: '6px 8px 6px 8px',
-      fontSize: '12px',
-      color: this.state.buttonColor,
-    };
-  }
+  /**
+   * @typedef {Object} Menu~TopButtonProps 
+   * @property {string} text 
+   * @property {boolean} disabled 
+   */
 
   /**
-   * Disabling a top button simply changes its color to this.state.disabledButtonColor.
+   * @param {Menu~TopButtonProps} props 
    * 
-   * @param {string} text The text of the button.
-   * @param {object} options 
-   * @param {boolean} options.disabled Set to true to disable the button.
+   * @returns {React.Component} 
    */
-  _topButton(text, options={}) {
-    let color = options.disabled ? this.state.disabledButtonColor : this.state.buttonColor;
-
+  topButton(props) {
     return (
       <button
         style={{
-          ...this._stylesButton(),
+          border: 'none',
+          margin: '0px',
+          padding: '6px 8px 6px 8px',
+          fontSize: '12px',
           backgroundColor: this.state.backgroundColor,
-          color: color,
+          color: props.disabled ? this.state.disabledButtonColor : this.state.buttonColor,
         }}
       >
-        {text}
+        {props.text}
       </button>
     );
   }
 
-  _checkmark() {
-    return (
-      <img
-        src={checkmark}
-        alt={'Checkmark'}
-        style={{
-          height: '16px',
-          padding: '0px 8px 0px 8px',
-        }}
-      />
-    );
-  }
+  /**
+   * @typedef {Object} Menu~DroppedButtonProps 
+   * @property {string} text 
+   * @property {callback} onClick 
+   * @property {boolean} disabled 
+   * @param {boolean} checked 
+   */
 
   /**
-   * Disabling a dropped button prevents any onClick callback from being called,
-   * changes the color of the button to this.state.disabledButtenColor, and prevents
-   * the background color of the button from changing on hover.
+   * @param {Menu~DroppedButtonProps} props 
    * 
-   * @param {string} text The text of the button.
-   * @param {object} options 
-   * @param {callback} options.onClick The callback to call when the button is clicked.
-   * @param {boolean} options.disabled Set to true to disable the button.
-   * @param {boolean} options.checkmark Set to true to give the button a checkmark.
-   * 
-   * @returns {React.Component} The dropped button.
+   * @returns {React.Component} 
    */
-  _droppedButton(text, options={}) {
-    let onClick = options.onClick ? options.onClick : () => null;
-    
-    let style = {
-      ...this._stylesButton(),
-      minWidth: '200px',
-      textAlign: 'left',
-      color: this.state.buttonColor,
-    };
-
-    if (options.disabled) {
-      onClick = () => null;
-      style.color = this.state.disabledButtonColor;
-      
-      // prevents the background color from changing on hover as defined in App.css
-      style.backgroundColor = this.state.backgroundColor;
-    }
-
+  droppedButton(props) {
     return (
       <button
         key={uuidv1()}
-        className={'menu-dropped-button'}
-        onClick={onClick}
-        style={style}
+        className={'dropped-menu-button'}
+        onClick={props.disabled ? () => {} : props.onClick}
+        style={{
+          minWidth: '200px',
+          border: 'none',
+          margin: '0px',
+          padding: '6px 8px 6px 8px',
+          backgroundColor: props.disabled ? this.state.backgroundColor : undefined,
+          textAlign: 'left',
+          fontSize: '12px',
+          color: props.disabled ? this.state.disabledButtonColor : this.state.buttonColor,
+        }}
       >
         <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
           <div style={{ flexGrow: '1' }} >
-            {text}
+            {props.text}
           </div>
-          {options.checkmark ? this._checkmark() : null}
+          {props.checked ? this.checkmark() : null}
         </div>
       </button>
     );
   }
-
-  _dropdownSeparator() {
+  
+  separator() {
     return (
       <div
         key={uuidv1()}
@@ -157,152 +143,84 @@ class Menu extends React.Component {
 
   /**
    * @param {React.Component} topButton The top button.
-   * @param {Array<React.Component>} droppedItems The dropped items.
+   * @param {Array<React.Component>} droppedComps The dropped items.
    */
-  _dropdownMenu(topButton, droppedItems) {
+  dropdown(topButton, droppedComps) {
     return (
       <div className={'dropdown-menu'} >
         {topButton}
         <div
           className={'dropdown-menu-content'}
-          style={this._stylesDropdownContent()}
+          style={{
+            borderWidth: '0px thin thin thin',
+            borderStyle: 'solid',
+            borderColor: this.state.borderColor,
+          }}
         >
-          {droppedItems}
+          {droppedComps}
         </div>
       </div>
     );
   }
 
-  _fileMenu() {
-    return this._dropdownMenu(
-      this._topButton('File'),
+  fileDropdown() {
+    return this.dropdown(
+      this.topButton({ text: 'File' }),
       [
-        this._droppedButton('New', {
-          onClick: () => {
-            if (this.props.drawingIsEmpty) {
-              this.props.createNewDrawing();
-            } else {
-              window.open(document.URL);
-            }
-          },
+        this.droppedButton({
+          text: 'New',
+          onClick: () => this.props.createNewDrawing(),
         }),
-        this._dropdownSeparator(),
-        this._droppedButton('Open CT', {
-          onClick: this.props.openCt,
+        this.separator(),
+        this.droppedButton({
+          text: 'Open CT',
+          onClick: () => this.props.openCt(),
           disabled: !this.props.drawingIsEmpty,
         }),
-        this._droppedButton('Open RNA2Drawer', {
+        this.droppedButton({
+          text: 'Open RNA2Drawer 2',
           disabled: !this.props.drawingIsEmpty,
         }),
-        this._dropdownSeparator(),
-        this._droppedButton('Save', {
+        this.separator(),
+        this.droppedButton({
+          text: 'Save',
           disabled: this.props.drawingIsEmpty,
         }),
       ],
     );
   }
 
-  _modeMenu() {
-    let droppedItems = [
-      this._droppedButton('Fold', {
-        checkmark: true
-      }),
-      this._droppedButton('Pivot Stems'),
-    ];
-
-    if (this.props.drawingIsEmpty) {
-      droppedItems = [];
+  exportDropdown() {
+    let topButton = this.topButton({
+      text: 'Export',
+      disabled: this.props.drawingIsEmpty,
+    });
+    let droppedComps = [];
+    if (!this.props.drawingIsEmpty) {
+      droppedComps = [
+        this.droppedButton({
+          text: 'SVG',
+          onClick: () => this.props.exportSvg(),
+        }),
+        this.droppedButton({
+          text: 'PowerPoint (PPTX)',
+          onClick: () => this.props.exportPptx(),
+        }),
+      ];
     }
-
-    return this._dropdownMenu(
-      this._topButton('Mode', {
-        disabled: this.props.drawingIsEmpty,
-      }),
-      droppedItems,
-    );
+    return this.dropdown(topButton, droppedComps);
   }
 
-  _editMenu() {
-    let droppedItems = [
-      this._droppedButton('Undo'),
-      this._droppedButton('Redo'),
-      this._dropdownSeparator(),
-      this._droppedButton('Add a Sequence'),
-      this._droppedButton('Delete a Sequence'),
-      this._droppedButton('Delete a Subsequence'),
-      this._dropdownSeparator(),
-      this._droppedButton('Edit Numbering Offsets'),
-    ];
-
-    if (this.props.drawingIsEmpty) {
-      droppedItems = [];
-    }
-
-    return this._dropdownMenu(
-      this._topButton('Edit', {
-        disabled: this.props.drawingIsEmpty,
-      }),
-      droppedItems,
-    );
-  }
-
-  _exportMenu() {
-    let droppedItems = [
-      this._droppedButton('SVG', {
-        onClick: this.props.exportSvg,
-      }),
-      this._droppedButton('PowerPoint (PPTX)', {
-        onClick: this.props.exportPptx,
-      }),
-    ];
-
-    if (this.props.drawingIsEmpty) {
-      droppedItems = [];
-    }
-
-    return this._dropdownMenu(
-      this._topButton('Export', {
-        disabled: this.props.drawingIsEmpty,
-      }),
-      droppedItems,
-    );
-  }
-
-  _settingsMenu() {
-    return this._dropdownMenu(
-      this._topButton('Settings'),
-      [
-        this._droppedButton('App Styles'),
-      ],
-    );
-  }
-
-  _helpMenu() {
-    return this._dropdownMenu(
-      this._topButton('Help'),
-      [
-        this._droppedButton('About'),
-      ],
-    );
-  }
-
-  render() {
+  checkmark() {
     return (
-      <div
+      <img
+        src={checkmark}
+        alt={'Checkmark'}
         style={{
-          borderWidth: '0px 0px thin 0px',
-          borderStyle: 'solid',
-          borderColor: this.state.borderColor,
-          backgroundColor: this.state.backgroundColor,
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center'
+          height: '16px',
+          padding: '0px 8px 0px 8px',
         }}
-      >
-        {this._logo()}
-        {this._fileMenu()}
-        {this._exportMenu()}
-      </div>
+      />
     );
   }
 }
@@ -313,6 +231,14 @@ Menu.propTypes = {
   openCt: PropTypes.func,
   exportSvg: PropTypes.func,
   exportPptx: PropTypes.func,
+};
+
+Menu.defaultProps = {
+  drawingIsEmpty: true,
+  createNewDrawing: () => {},
+  openCt: () => {},
+  exportSvg: () => {},
+  exportPptx: () => {},
 };
 
 export default Menu;
