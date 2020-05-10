@@ -5,25 +5,14 @@ import checkmark from './checkmark.svg';
 const uuidv1 = require('uuid/v1');
 
 class Menu extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      borderColor: '#bfbfbf',
-      backgroundColor: '#fefefe',
-      buttonColor: 'black',
-      disabledButtonColor: 'gray',
-    };
-  }
-
   render() {
     return (
       <div
         style={{
           borderWidth: '0px 0px thin 0px',
           borderStyle: 'solid',
-          borderColor: this.state.borderColor,
-          backgroundColor: this.state.backgroundColor,
+          borderColor: this.props.borderColor,
+          backgroundColor: this.props.backgroundColor,
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center'
@@ -68,8 +57,8 @@ class Menu extends React.Component {
           margin: '0px',
           padding: '6px 8px 6px 8px',
           fontSize: '12px',
-          backgroundColor: this.state.backgroundColor,
-          color: props.disabled ? this.state.disabledButtonColor : this.state.buttonColor,
+          backgroundColor: this.props.backgroundColor,
+          color: props.disabled ? this.props.disabledButtonColor : this.props.buttonColor,
         }}
       >
         {props.text}
@@ -101,10 +90,10 @@ class Menu extends React.Component {
           border: 'none',
           margin: '0px',
           padding: '6px 8px 6px 8px',
-          backgroundColor: props.disabled ? this.state.backgroundColor : undefined,
+          backgroundColor: props.disabled ? this.props.backgroundColor : undefined,
           textAlign: 'left',
           fontSize: '12px',
-          color: props.disabled ? this.state.disabledButtonColor : this.state.buttonColor,
+          color: props.disabled ? this.props.disabledButtonColor : this.props.buttonColor,
         }}
       >
         <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
@@ -123,7 +112,7 @@ class Menu extends React.Component {
         key={uuidv1()}
         style={{
           width: '100%',
-          backgroundColor: this.state.backgroundColor,
+          backgroundColor: this.props.backgroundColor,
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -133,7 +122,7 @@ class Menu extends React.Component {
             height: '0px',
             borderWidth: '0px 0px thin 0px',
             borderStyle: 'solid',
-            borderColor: this.state.borderColor,
+            borderColor: this.props.borderColor,
             margin: '0px 4px 0px 4px',
           }}
         ></div>
@@ -154,7 +143,7 @@ class Menu extends React.Component {
           style={{
             borderWidth: '0px thin thin thin',
             borderStyle: 'solid',
-            borderColor: this.state.borderColor,
+            borderColor: this.props.borderColor,
           }}
         >
           {droppedComps}
@@ -226,6 +215,11 @@ class Menu extends React.Component {
 }
 
 Menu.propTypes = {
+  borderColor: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  buttonColor: PropTypes.string,
+  disabledButtonColor: PropTypes.string,
+
   drawingIsEmpty: PropTypes.bool,
   createNewDrawing: PropTypes.func,
   openCt: PropTypes.func,
@@ -234,6 +228,11 @@ Menu.propTypes = {
 };
 
 Menu.defaultProps = {
+  borderColor: '#bfbfbf',
+  backgroundColor: '#fefefe',
+  buttonColor: '#000000',
+  disabledButtonColor: '#808080',
+
   drawingIsEmpty: true,
   createNewDrawing: () => {},
   openCt: () => {},
@@ -241,4 +240,6 @@ Menu.defaultProps = {
   exportPptx: () => {},
 };
 
-export default Menu;
+export {
+  Menu,
+};
