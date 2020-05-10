@@ -35,7 +35,7 @@ describe('CircleBaseAnnotation class', () => {
         let svg = createNodeSVG();
         let cba = CircleBaseAnnotation.createNondisplaced(svg, -1, 5);
         let savableState = cba.savableState();
-        savableState.circle = 'asdf';
+        savableState.circleId = 'asdf';
         expect(svg.findOne('#' + 'asdf')).toBe(null);
         expect(
           CircleBaseAnnotation.fromSavedState(savableState, svg, -1, 5)
@@ -223,7 +223,7 @@ describe('CircleBaseAnnotation class', () => {
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
       let savableState = cba.savableState();
       expect(savableState.className).toBe('CircleBaseAnnotation');
-      expect(savableState.circle).toBe(cba._circle.id());
+      expect(savableState.circleId).toBe(cba._circle.id());
     });
 
     it('can be converted to and from a JSON string', () => {

@@ -87,7 +87,7 @@ class CircleBaseAnnotation extends BaseAnnotation {
     if (savedState.className !== 'CircleBaseAnnotation') {
       return null;
     }
-    let circle = svg.findOne('#' + savedState.circle);
+    let circle = svg.findOne('#' + savedState.circleId);
     try {
       return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
     } catch (err) {}
@@ -331,7 +331,7 @@ class CircleBaseAnnotation extends BaseAnnotation {
   savableState() {
     return {
       className: 'CircleBaseAnnotation',
-      circle: this._circle.id(),
+      circleId: this._circle.id(),
     };
   }
 }
