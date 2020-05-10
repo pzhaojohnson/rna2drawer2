@@ -135,8 +135,8 @@ class BaseNumbering {
     if (savedState.className !== 'BaseNumbering') {
       return null;
     }
-    let text = svg.findOne('#' + savedState.text);
-    let line = svg.findOne('#' + savedState.line);
+    let text = svg.findOne('#' + savedState.textId);
+    let line = svg.findOne('#' + savedState.lineId);
     let n = null;
     try {
       n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
@@ -491,8 +491,8 @@ class BaseNumbering {
   /**
    * @typedef {Object} BaseNumbering~SavableState 
    * @property {string} className 
-   * @property {string} text 
-   * @property {string} line 
+   * @property {string} textId 
+   * @property {string} lineId 
    */
 
   /**
@@ -501,8 +501,8 @@ class BaseNumbering {
   savableState() {
     return {
       className: 'BaseNumbering',
-      text: this._text.id(),
-      line: this._line.id(),
+      textId: this._text.id(),
+      lineId: this._line.id(),
     };
   }
 }

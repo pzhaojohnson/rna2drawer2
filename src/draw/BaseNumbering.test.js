@@ -600,7 +600,7 @@ describe('BaseNumbering class', () => {
     let n = BaseNumbering.create(svg, 8, 3, 9);
     let savableState = n.savableState();
     expect(savableState.className).toBe('BaseNumbering');
-    expect(savableState.text).toBe(n._text.id());
-    expect(savableState.line).toBe(n._line.id());
+    expect(savableState.textId).toBe(n._text.id());
+    expect(savableState.lineId).toBe(n._line.id());
   });
 });
