@@ -53,7 +53,7 @@ class Base {
     if (savedState.className !== 'Base') {
       return null;
     }
-    let text = svg.findOne('#' + savedState.text);
+    let text = svg.findOne('#' + savedState.textId);
     let b = null;
     try {
       b = new Base(text);
@@ -80,7 +80,7 @@ class Base {
    * @returns {number} 
    */
   static xFromSavedState(savedState, svg) {
-    let text = svg.findOne('#' + savedState.text);
+    let text = svg.findOne('#' + savedState.textId);
     return text.attr('x');
   }
 
@@ -91,7 +91,7 @@ class Base {
    * @returns {number} 
    */
   static yFromSavedState(savedState, svg) {
-    let text = svg.findOne('#' + savedState.text);
+    let text = svg.findOne('#' + savedState.textId);
     return text.attr('y');
   }
 
@@ -561,7 +561,7 @@ class Base {
   /**
    * @typedef {Object} Base~SavableState 
    * @property {string} className 
-   * @property {string} text 
+   * @property {string} textId 
    * @property {CircleBaseAnnotation~SavableState|undefined} highlighting 
    * @property {CircleBaseAnnotation~SavableState|undefined} outline 
    * @property {BaseNumbering~SavableState|undefined} numbering 
@@ -573,7 +573,7 @@ class Base {
   savableState() {
     let savableState = {
       className: 'Base',
-      text: this._text.id(),
+      textId: this._text.id(),
     };
     if (this.hasHighlighting()) {
       savableState.highlighting = this._highlighting.savableState();

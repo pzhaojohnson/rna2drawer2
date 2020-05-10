@@ -776,7 +776,7 @@ describe('Base class', () => {
       let b = Base.create(svg, 'a', 1, 2);
       let savableState = b.savableState();
       expect(savableState.className).toBe('Base');
-      expect(savableState.text).toBe(b._text.id());
+      expect(savableState.textId).toBe(b._text.id());
     });
 
     it('with no highlighting, outline or numbering', () => {
