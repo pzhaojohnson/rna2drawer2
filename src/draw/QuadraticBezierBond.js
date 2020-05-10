@@ -340,9 +340,9 @@ class QuadraticBezierBond {
   /**
    * @typedef {Object} QuadraticBezierBond~SavableState 
    * @property {string} className 
-   * @property {string} path 
-   * @property {string} base1 
-   * @property {string} base2 
+   * @property {string} pathId 
+   * @property {string} baseId1 
+   * @property {string} baseId2 
    */
 
   /**
@@ -351,9 +351,9 @@ class QuadraticBezierBond {
   savableState() {
     return {
       className: 'QuadraticBezierBond',
-      path: this._path.id(),
-      base1: this.base1.id,
-      base2: this.base2.id,
+      pathId: this._path.id(),
+      baseId1: this.base1.id,
+      baseId2: this.base2.id,
     };
   }
 }
@@ -419,9 +419,9 @@ class TertiaryBond extends QuadraticBezierBond {
     if (savedState.className !== 'QuadraticBezierBond') {
       return null;
     }
-    let p = svg.findOne('#' + savedState.path);
-    let b1 = getBaseById(savedState.base1);
-    let b2 = getBaseById(savedState.base2);
+    let p = svg.findOne('#' + savedState.pathId);
+    let b1 = getBaseById(savedState.baseId1);
+    let b2 = getBaseById(savedState.baseId2);
     let tb = null;
     try {
       tb = new TertiaryBond(p, b1, b2);

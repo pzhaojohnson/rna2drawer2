@@ -277,9 +277,9 @@ describe('QuadraticBezierBond class', () => {
       let qbb = new QuadraticBezierBond(p, b1, b2);
       let savableState = qbb.savableState();
       expect(savableState.className).toBe('QuadraticBezierBond');
-      expect(savableState.path).toBe(p.id());
-      expect(savableState.base1).toBe(b1.id);
-      expect(savableState.base2).toBe(b2.id);
+      expect(savableState.pathId).toBe(p.id());
+      expect(savableState.baseId1).toBe(b1.id);
+      expect(savableState.baseId2).toBe(b2.id);
     });
 
     it('can be converted to and from a JSON string', () => {
