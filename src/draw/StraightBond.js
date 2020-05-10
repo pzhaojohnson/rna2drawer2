@@ -248,9 +248,9 @@ class StraightBond {
   /**
    * @typedef {Object} StraightBond~SavableState 
    * @property {string} className 
-   * @property {string} line 
-   * @property {string} base1 
-   * @property {string} base2 
+   * @property {string} lineId 
+   * @property {string} baseId1 
+   * @property {string} baseId2 
    */
 
   /**
@@ -259,9 +259,9 @@ class StraightBond {
   savableState() {
     return {
       className: 'StraightBond',
-      line: this._line.id(),
-      base1: this.base1.id,
-      base2: this.base2.id,
+      lineId: this._line.id(),
+      baseId1: this.base1.id,
+      baseId2: this.base2.id,
     };
   }
 }
@@ -324,9 +324,9 @@ class PrimaryBond extends StraightBond {
     if (savedState.className !== 'StraightBond') {
       return null;
     }
-    let line = svg.findOne('#' + savedState.line);
-    let b1 = getBaseById(savedState.base1);
-    let b2 = getBaseById(savedState.base2);
+    let line = svg.findOne('#' + savedState.lineId);
+    let b1 = getBaseById(savedState.baseId1);
+    let b2 = getBaseById(savedState.baseId2);
     let pb = null;
     try {
       pb = new PrimaryBond(line, b1, b2);
@@ -499,9 +499,9 @@ class SecondaryBond extends StraightBond {
     if (savedState.className !== 'StraightBond') {
       return null;
     }
-    let line = svg.findOne('#' + savedState.line);
-    let b1 = getBaseById(savedState.base1);
-    let b2 = getBaseById(savedState.base2);
+    let line = svg.findOne('#' + savedState.lineId);
+    let b1 = getBaseById(savedState.baseId1);
+    let b2 = getBaseById(savedState.baseId2);
     let sb = null;
     try {
       sb = new SecondaryBond(line, b1, b2);

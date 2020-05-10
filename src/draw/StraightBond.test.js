@@ -227,9 +227,9 @@ describe('StraightBond class', () => {
       let sb = new StraightBond(l, b1, b2);
       let savableState = sb.savableState();
       expect(savableState.className).toBe('StraightBond');
-      expect(savableState.line).toBe(l.id());
-      expect(savableState.base1).toBe(b1.id);
-      expect(savableState.base2).toBe(b2.id);
+      expect(savableState.lineId).toBe(l.id());
+      expect(savableState.baseId1).toBe(b1.id);
+      expect(savableState.baseId2).toBe(b2.id);
     });
 
     it('can be converted to and from a JSON string', () => {
