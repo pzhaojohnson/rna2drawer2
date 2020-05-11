@@ -80,7 +80,7 @@ class OpenRna2drawer extends React.Component {
     return (
       <div>
         <p className={'unselectable-text'} style={{ margin: '0px 24px 0px 24px', fontSize: '24px' }} >
-          Open RNA2Drawer 2
+          Open an RNA2Drawer 2 File
         </p>
         <div
           style={{
@@ -100,7 +100,7 @@ class OpenRna2drawer extends React.Component {
       <div
         style={{
           flexGrow: '1',
-          margin: '26px 40px 0px 40px',
+          margin: '32px 40px 0px 40px',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -115,23 +115,10 @@ class OpenRna2drawer extends React.Component {
   fileUpload() {
     return (
       <div style={{ margin: '0px 0px 26px 0px' }} >
-        <p
-          style={{
-            fontSize: '14px',
-          }}
-        >
-          Select a file with extension ".rna2drawer2":
-        </p>
-        <div
-          style={{
-            margin: '12px 0px 0px 12px',
-          }}
-        >
-          <input
-            type={'file'}
-            onChange={event => this.onFileInputChange(event)}
-          />
-        </div>
+        <input
+          type={'file'}
+          onChange={event => this.onFileInputChange(event)}
+        />
       </div>
     );
   }
