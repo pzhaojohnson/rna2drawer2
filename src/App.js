@@ -27,130 +27,108 @@ class App {
     this._SVG = SVG;
     
     this._fillInBody();
-    this._renderPermanentComponents();
-
+    this._initializeDrawing();
+    this._renderPeripherals();
+    
     this.createNewDrawing();
   }
 
-  /**
-   * Fills in the body element of this app with permanent elements.
-   * 
-   * It is preferrable to specify these elements here rather than in dist/index.html
-   * since using an HTML file with the Jest testing framework does not seem very
-   * straightforward... and this allows rendering of this app in testing.
-   * 
-   * The body element in dist/index.html is otherwise empty except for the script tag
-   * to bundle.js. This method assumes that the body element is empty prior to its calling.
-   * 
-   * Use of document.body.innerHTML is also discouraged given its association with
-   * XSS attacks.
-   */
   _fillInBody() {
     let outermostDiv = document.createElement('div');
     outermostDiv.style.cssText = 'height: 100vh; display: flex; flex-direction: column;';
     document.body.appendChild(outermostDiv);
 
     let menuContainer = document.createElement('div');
-    menuContainer.id = this._menuContainerId;
+    menuContainer.id = this.menuContainerId;
     outermostDiv.appendChild(menuContainer);
 
-    let drawingAndTaskPaneDiv = document.createElement('div');
-    drawingAndTaskPaneDiv.style.cssText = 'min-height: 0; flex-grow: 1; display: flex; flex-direction: row;';
-    outermostDiv.appendChild(drawingAndTaskPaneDiv);
+    let drawingAndFormDiv = document.createElement('div');
+    drawingAndFormDiv.style.cssText = 'min-height: 0px; flex-grow: 1; display: flex; flex-direction: row;';
+    outermostDiv.appendChild(drawingAndFormDiv);
 
     let drawingContainer = document.createElement('div');
-    drawingContainer.id = this._drawingContainerId;
+    drawingContainer.id = this.drawingContainerId;
     drawingContainer.style.cssText = 'flex-grow: 1; overflow: auto;';
-    drawingAndTaskPaneDiv.appendChild(drawingContainer);
+    drawingAndFormDiv.appendChild(drawingContainer);
 
     let formContainer = document.createElement('div');
-    formContainer.id = this._formContainerId;
-    drawingAndTaskPaneDiv.appendChild(formContainer);
+    formContainer.id = this.formContainerId;
+    drawingAndFormDiv.appendChild(formContainer);
 
     let infobarContainer = document.createElement('div');
-    infobarContainer.id = this._infobarContainerId;
+    infobarContainer.id = this.infobarContainerId;
     outermostDiv.appendChild(infobarContainer);
   }
 
   /**
-   * @returns {string} The ID of the container element for the menu.
+   * @returns {string} 
    */
-  get _menuContainerId() {
+  get menuContainerId() {
     return 'MenuContainer';
   }
   
   /**
-   * @returns {Element} The container element for the menu.
+   * @returns {string} 
    */
-  _getMenuContainer() {
-    return document.getElementById(this._menuContainerId);
-  }
-
-  /**
-   * @returns {string} The ID of the container element for the SVG document of the drawing.
-   */
-  get _drawingContainerId() {
+  get drawingContainerId() {
     return 'DrawingContainer';
   }
 
   /**
-   * @returns {Element} The container element for the SVG document of the drawing.
+   * @returns {string} 
    */
-  _getDrawingContainer() {
-    return document.getElementById(this._drawingContainerId);
-  }
-
-  /**
-   * @returns {string} The ID of the container element for forms.
-   */
-  get _formContainerId() {
+  get formContainerId() {
     return 'FormContainer';
   }
 
   /**
-   * @returns {Element} The container element for any task panes.
+   * @returns {string} 
    */
-  _getFormContainer() {
-    return document.getElementById(this._formContainerId);
-  }
-
-  /**
-   * @returns {string} The ID of the container element for the infobar.
-   */
-  get _infobarContainerId() {
+  get infobarContainerId() {
     return 'InfobarContainer';
   }
 
   /**
-   * @returns {Element} The container element for the infobar.
+   * @returns {Element} 
    */
-  _getInfobarContainer() {
-    return document.getElementById(this._infobarContainerId);
+  get menuContainer() {
+    return document.getElementById(this.menuContainerId);
   }
 
   /**
-   * Initializes and renders the drawing, menu, and infobar components and stores references to them
-   * in the _drawing, _menu, and _infobar properties, respectively.
-   * 
-   * The drawing must be initialized and rendered before the menu and infobar, since the rendering of
-   * the menu and infobar depends on the state of the drawing.
-   * 
-   * These instances of the menu, drawing, and infobar components will remain throughout the lifetime
-   * of this app.
+   * @returns {Element} 
    */
-  _renderPermanentComponents() {
-    this._renderDrawing();
+  get drawingContainer() {
+    return document.getElementById(this.drawingContainerId);
+  }
+
+  /**
+   * @returns {Element} 
+   */
+  get formContainer() {
+    return document.getElementById(this.formContainerId);
+  }
+
+  /**
+   * @returns {Element} 
+   */
+  get infobarContainer() {
+    return document.getElementById(this.infobarContainerId);
+  }
+
+  _initializeDrawing() {
+    this._drawing = new InteractiveDrawing();
+    let container = this.drawingContainer;
+    this._drawing.addTo(container, () => this._SVG());
+  }
+
+  _renderPeripherals() {
     this._renderMenu();
     this._renderInfobar();
   }
 
-  _renderDrawing() {
-    this._drawing = new InteractiveDrawing();
-    this._drawing.addTo(this._getDrawingContainer(), () => this._SVG());
-  }
-
   _renderMenu() {
-    this._menu = (
+    let menu = (
       <Menu
         drawingIsEmpty={this._drawing.isEmpty()}
         createNewDrawing={() => this.createNewDrawing()}
@@ -159,37 +137,32 @@ class App {
         exportPptx={() => this.exportPptx()}
       />
     );
-    ReactDOM.render(this._menu, this._getMenuContainer());
+    ReactDOM.render(menu, this.menuContainer);
   }
 
   _renderInfobar() {
-    this._infobar = (
+    let infobar = (
       <Infobar
         drawingIsEmpty={this._drawing.isEmpty()}
         zoom={this._drawing.zoom}
-        setZoom={z => this._setDrawingZoom(z)}
+        setZoom={z => this.setDrawingZoom(z)}
       />
     );
-    ReactDOM.render(this._infobar, this._getInfobarContainer());
+    ReactDOM.render(infobar, this.infobarContainer);
   }
 
-  _setDrawingZoom(z) {
+  setDrawingZoom(z) {
     this._drawing.zoom = z;
-    this._updatePeripherals();
+    this._renderPeripherals();
   }
 
-  _updatePeripherals() {
-    this._renderMenu();
-    this._renderInfobar();
+  openForm(form) {
+    this.closeCurrForm();
+    ReactDOM.render(form, this.formContainer);
   }
 
-  _openForm(form) {
-    this._closeCurrForm();
-    ReactDOM.render(form, this._getFormContainer());
-  }
-
-  _closeCurrForm() {
-    ReactDOM.unmountComponentAtNode(this._getFormContainer());
+  closeCurrForm() {
+    ReactDOM.unmountComponentAtNode(this.formContainer);
   }
 
   createNewDrawing() {
@@ -197,7 +170,7 @@ class App {
       window.open(document.URL);
       return;
     }
-    this._openForm(
+    this.openForm(
       <CreateNewDrawing
         width={'100vw'}
         submit={(id, characters, secondaryPartners, tertiaryPartners) => {
@@ -207,8 +180,8 @@ class App {
             secondaryPartners,
             tertiaryPartners,
           );
-          this._closeCurrForm();
-          this._updatePeripherals();
+          this.closeCurrForm();
+          this._renderPeripherals();
         }}
       />
     );
@@ -219,7 +192,7 @@ class App {
       window.open(document.URL);
       return;
     }
-    this._openForm(
+    this.openForm(
       <OpenCt
         width={'100vw'}
         submit={() => {}}
@@ -228,21 +201,21 @@ class App {
   }
 
   exportSvg() {
-    this._openForm(
+    this.openForm(
       <ExportSvg
         SVG={() => this._SVG()}
         getSvgString={() => this._drawing.svgString}
-        close={() => this._closeCurrForm()}
+        close={() => this.closeCurrForm()}
       />
     );
   }
 
   exportPptx() {
-    this._openForm(
+    this.openForm(
       <ExportPptx
         SVG={() => this._SVG()}
         getSvgString={() => this._drawing.svgString}
-        close={() => this._closeCurrForm()}
+        close={() => this.closeCurrForm()}
       />
     );
   }
