@@ -9,6 +9,7 @@ import { Infobar } from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
 import { OpenCt } from './forms/OpenCt';
+import { OpenRna2drawer } from './forms/OpenRna2drawer';
 import { ExportSvg } from './forms/ExportSvg';
 import { ExportPptx } from './forms/ExportPptx';
 
@@ -133,6 +134,7 @@ class App {
         drawingIsEmpty={this._drawing.isEmpty()}
         createNewDrawing={() => this.createNewDrawing()}
         openCt={() => this.openCt()}
+        openRna2drawer={() => this.openRna2drawer()}
         exportSvg={() => this.exportSvg()}
         exportPptx={() => this.exportPptx()}
       />
@@ -195,6 +197,18 @@ class App {
     this.openForm(
       <OpenCt
         width={'100vw'}
+        submit={() => {}}
+      />
+    );
+  }
+
+  openRna2drawer() {
+    if (!this._drawing.isEmpty()) {
+      window.open(document.URL);
+      return;
+    }
+    this.openForm(
+      <OpenRna2drawer
         submit={() => {}}
       />
     );

@@ -168,6 +168,7 @@ class Menu extends React.Component {
         }),
         this.droppedButton({
           text: 'Open RNA2Drawer 2',
+          onClick: () => this.props.openRna2drawer(),
           disabled: !this.props.drawingIsEmpty,
         }),
         this.separator(),
@@ -223,6 +224,7 @@ Menu.propTypes = {
   drawingIsEmpty: PropTypes.bool,
   createNewDrawing: PropTypes.func,
   openCt: PropTypes.func,
+  openRna2drawer: PropTypes.func,
   exportSvg: PropTypes.func,
   exportPptx: PropTypes.func,
 };
@@ -236,6 +238,7 @@ Menu.defaultProps = {
   drawingIsEmpty: true,
   createNewDrawing: () => {},
   openCt: () => {},
+  openRna2drawer: () => {},
   exportSvg: () => {},
   exportPptx: () => {},
 };
