@@ -33,6 +33,10 @@ class FiniteStack {
     }
   }
 
+  clear() {
+    this._stack = [];
+  }
+
   /**
    * @returns {boolean} True if this finite stack is empty.
    */

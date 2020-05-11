@@ -43,6 +43,24 @@ it('popping an empty finite stack', () => {
   expect(fs.pop()).toBeNull();
 });
 
+describe('clear method', () => {
+  it('handles empty stack', () => {
+    let fs = new FiniteStack();
+    expect(fs.isEmpty()).toBeTruthy();
+    expect(() => fs.clear()).not.toThrow();
+    expect(fs.isEmpty()).toBeTruthy();
+  });
+
+  it('clears a nonempty stack', () => {
+    let fs = new FiniteStack();
+    fs.push('asdf');
+    fs.push('zxcv');
+    expect(fs.isEmpty()).toBeFalsy();
+    fs.clear();
+    expect(fs.isEmpty()).toBeTruthy();
+  });
+});
+
 it('size limit', () => {
   let fs = new FiniteStack();
   
