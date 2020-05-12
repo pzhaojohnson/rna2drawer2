@@ -62,8 +62,11 @@ class StrictDrawing {
     return this._drawing.isEmpty();
   }
 
-  _pushUndo() {
-    this._undoStack.push(this.savableState());
+  /**
+   * @param {StrictDrawing~SavableState} savedState 
+   */
+  _pushUndo(savedState) {
+    this._undoStack.push(savedState);
     this._redoStack.clear();
   }
 
@@ -85,11 +88,11 @@ class StrictDrawing {
 
   /**
    * @typedef {Object} StrictDrawing~SavableState 
+   * @property {Drawing~SavableState} drawing 
    * @property {GeneralStrictLayoutProps~SavableState} generalLayoutProps 
    * @property {Array<PerBaseStrictLayoutProps~SavableState>} perBaseLayoutProps 
    * @property {number} baseWidth 
    * @property {number} baseHeight 
-   * @property {Drawing~SavableState} drawing 
    */
 
   /**
@@ -98,11 +101,11 @@ class StrictDrawing {
   savableState() {
     let state = {
       className: 'StrictDrawing',
+      drawing: this._drawing.savableState(),
       generalLayoutProps: this._generalLayoutProps.savableState(),
       perBaseLayoutProps: [],
       baseWidth: this._baseWidth,
       baseHeight: this._baseHeight,
-      drawing: this._drawing.savableState(),
     };
     this._perBaseLayoutProps.forEach(pbps => {
       state.perBaseLayoutProps.push(pbps.savableState());
@@ -113,7 +116,7 @@ class StrictDrawing {
   /**
    * @returns {string} 
    */
-  savableString() {
+  get savableString() {
     let savableState = this.savableState();
     return JSON.stringify(savableState);
   }
@@ -134,6 +137,23 @@ class StrictDrawing {
   }
 
   /**
+   * @param {string} id 
+   * @param {string} characters 
+   * 
+   * @returns {boolean} True if the sequence was successfully appended.
+   */
+  _appendSequenceOutOfView(id, characters) {
+    let seq = this._drawing.appendSequenceOutOfView(id, characters);
+    if (!seq) {
+      return false;
+    }
+    seq.forEachBase(() => {
+      this._perBaseLayoutProps.push(new PerBaseStrictLayoutProps());
+    });
+    return true;
+  }
+
+  /**
    * @typedef {Object} StrictDrawing~Structure 
    * @property {string} id 
    * @property {string} characters 
@@ -146,10 +166,9 @@ class StrictDrawing {
     * 
     * @returns {boolean} True if the structure was successfully appended.
     */
-  appendStructure(structure) {
-    let wasEmpty = this.isEmpty();
-    let seq = this._appendSequenceOfStructure(structure);
-    if (!seq) {
+  _appendStructure(structure) {
+    let appended = this._appendSequenceOfStructure(structure);
+    if (!appended) {
       return false;
     }
     this._addPrimaryBondsOfStructure(structure);
@@ -157,31 +176,19 @@ class StrictDrawing {
     this._addTertiaryBondsOfStructure(structure);
     this._radiateStemsOfStructure(structure);
     this._updateLayout();
-    if (wasEmpty) {
-      this._drawing.centerView();
-    }
     return true;
   }
 
   /**
-   * Returns null if the sequence could not be appended.
-   * 
    * @param {StrictDrawing~Structure} structure 
    * 
-   * @returns {Sequence|null} 
+   * @returns {boolean} True if the sequence was successfully appended.
    */
   _appendSequenceOfStructure(structure) {
-    let seq = this._drawing.appendSequenceOutOfView(
+    return this._appendSequenceOutOfView(
       structure.id,
       structure.characters,
     );
-    if (!seq) {
-      return null;
-    }
-    seq.forEachBase(() => {
-      this._perBaseLayoutProps.push(new PerBaseStrictLayoutProps());
-    });
-    return seq;
   }
 
   /**
@@ -319,6 +326,15 @@ class StrictDrawing {
       (2 * window.screen.height) + (bh * (l.yMax - yMin)),
     );
   }
+
+  /**
+   * @param {StrictDrawing~Structure} structure 
+   * 
+   * @returns {boolean} True if the structure was successfully drawn.
+   */
+  createNewDrawing(structure) {
+    return this._appendStructure(structure);
+  }
   
   /**
    * @typedef {Object} StrictDrawing~Ct 
@@ -332,16 +348,16 @@ class StrictDrawing {
   /**
    * @param {StrictDrawing~Ct} ct 
    * 
-   * @returns {boolean} True if the structure was successfully appended.
+   * @returns {boolean} True if the structure was successfully drawn.
    */
   openCt(ct) {
-    let result = this.appendStructure({
+    let appended = this._appendStructure({
       id: ct.id,
       characters: ct.characters,
       secondaryPartners: ct.secondaryPartners,
       tertiaryPartners: ct.tertiaryPartners,
     });
-    if (!result) {
+    if (!appended) {
       return false;
     }
     let seq = this._drawing.getSequenceById(ct.id);
@@ -352,7 +368,7 @@ class StrictDrawing {
   /**
    * @param {string} fileContents 
    * 
-   * @returns {boolean} True if the contents of the file are valid.
+   * @returns {boolean} True if the saved state was successfully applied.
    */
   openRna2drawer2(fileContents) {
     let savedState = null;
@@ -366,6 +382,4 @@ class StrictDrawing {
   }
 }
 
-export {
-  StrictDrawing,
-};
+export default StrictDrawing;

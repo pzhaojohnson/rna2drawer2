@@ -33,15 +33,29 @@ class FiniteStack {
     }
   }
 
+  peek() {
+    if (this.isEmpty()) {
+      return null;
+    }
+    return this._stack[this.size - 1];
+  }
+
   clear() {
     this._stack = [];
   }
 
   /**
-   * @returns {boolean} True if this finite stack is empty.
+   * @returns {number} 
+   */
+  get size() {
+    return this._stack.length;
+  }
+
+  /**
+   * @returns {boolean} 
    */
   isEmpty() {
-    return this._stack.length === 0;
+    return this.size == 0;
   }
 
   /**

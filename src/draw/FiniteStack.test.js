@@ -12,6 +12,16 @@ it('push and pop', () => {
   expect(fs.pop()).toBe(1);
 });
 
+it('size getter', () => {
+  let fs = new FiniteStack();
+  expect(fs.size).toBe(0);
+  fs.push('asdf');
+  fs.push('qwer');
+  expect(fs.size).toBe(2);
+  fs.pop();
+  expect(fs.size).toBe(1);
+});
+
 it('isEmpty method', () => {
   let fs = new FiniteStack();
   expect(fs.isEmpty()).toBeTruthy();
@@ -41,6 +51,23 @@ it('popping an empty finite stack', () => {
 
   // popping an empty finite stack multiple times in a row
   expect(fs.pop()).toBeNull();
+});
+
+describe('peek method', () => {
+  it('handles an empty stack', () => {
+    let fs = new FiniteStack();
+    expect(fs.isEmpty()).toBeTruthy();
+    expect(fs.peek()).toBe(null);
+  });
+
+  it('returns top element without popping', () => {
+    let fs = new FiniteStack();
+    fs.push('asdf');
+    fs.push('qwer');
+    expect(fs.size).toBe(2);
+    expect(fs.peek()).toBe('qwer');
+    expect(fs.size).toBe(2);
+  });
 });
 
 describe('clear method', () => {
