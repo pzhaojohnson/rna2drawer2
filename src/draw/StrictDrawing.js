@@ -378,7 +378,12 @@ class StrictDrawing {
    * @returns {boolean} True if the structure was successfully drawn.
    */
   createNewDrawing(structure) {
-    return this._appendStructure(structure);
+    let appended = this._appendStructure(structure);
+    if (!appended) {
+      return false;
+    }
+    this._drawing.centerView();
+    return true;
   }
   
   /**

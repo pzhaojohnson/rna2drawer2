@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 
-import InteractiveDrawing from './draw/InteractiveDrawing';
+import StrictDrawing from './draw/StrictDrawing';
+//import InteractiveDrawing from './draw/InteractiveDrawing';
 
 import { Menu } from './Menu';
 import { Infobar } from './Infobar';
@@ -118,7 +119,7 @@ class App {
   }
 
   _initializeDrawing() {
-    this._drawing = new InteractiveDrawing();
+    this._drawing = new StrictDrawing();
     let container = this.drawingContainer;
     this._drawing.addTo(container, () => this._SVG());
   }
@@ -176,12 +177,12 @@ class App {
       <CreateNewDrawing
         width={'100vw'}
         submit={(id, characters, secondaryPartners, tertiaryPartners) => {
-          this._drawing.appendStructure(
-            id,
-            characters,
-            secondaryPartners,
-            tertiaryPartners,
-          );
+          this._drawing.createNewDrawing({
+            id: id,
+            characters: characters,
+            secondaryPartners: secondaryPartners,
+            tertiaryPartners: tertiaryPartners,
+          });
           this.closeCurrForm();
           this._renderPeripherals();
         }}
