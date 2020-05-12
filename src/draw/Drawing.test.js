@@ -143,6 +143,17 @@ describe('Drawing class', () => {
     });
   });
 
+  it('getSequenceAtIndex method', () => {
+    let drawing = new Drawing();
+    drawing.addTo(document.body, () => createNodeSVG());
+    drawing.appendSequenceOutOfView('asdf', 'asdf');
+    drawing.appendSequenceOutOfView('qwer', 'qwer');
+    drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+    expect(drawing.getSequenceAtIndex(1).id).toBe('qwer');
+    expect(drawing.getSequenceAtIndex(0).id).toBe('asdf');
+    expect(drawing.getSequenceAtIndex(2).id).toBe('zxcv');
+  });
+
   describe('forEachSequence method', () => {
     it('empty drawing', () => {
       let drawing = new Drawing();

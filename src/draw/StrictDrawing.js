@@ -122,18 +122,55 @@ class StrictDrawing {
   }
 
   /**
+   * If the saved state cannot be successfully applied, the state of
+   * this drawing will not be affected.
+   * 
    * @param {StrictDrawing~SavableState} savedState 
+   * 
+   * @returns {boolean} True if the saved state was successfully applied.
    */
   _applySavedState(savedState) {
-    this._drawing.applySavedState(savedState.drawing);
-    this._generalLayoutProps = GeneralStrictLayoutProps.fromSavedState(savedState);
+    let prevState = this.savableState();
+    try {
+      this._drawing.applySavedState(savedState.drawing);
+      this._applySavedGeneralLayoutProps(savedState);
+      this._applySavedPerBaseLayoutProps(savedState);
+      this._applySavedBaseWidthAndHeight(savedState);
+    } catch (err) {
+      this._applySavedState(prevState);
+      return false;
+    }
+    return true;
+  }
+
+  _applySavedGeneralLayoutProps(savedState) {
+    if (!savedState.generalLayoutProps) {
+      throw new Error();
+    }
+    this._generalLayoutProps = GeneralStrictLayoutProps.fromSavedState(
+      savedState.generalLayoutProps
+    );
+  }
+
+  _applySavedPerBaseLayoutProps(savedState) {
+    if (savedState.perBaseLayoutProps.length != this._drawing.numBases) {
+      throw new Error();
+    }
     this._perBaseLayoutProps = [];
-    savedState.perBaseLayoutProps.forEach(spbps => {
-      let pbps = PerBaseStrictLayoutProps.fromSavedState(spbps);
-      this._perBaseLayoutProps.push(pbps);
+    savedState.perBaseLayoutProps.forEach(sps => {
+      let ps = PerBaseStrictLayoutProps.fromSavedState(sps);
+      this._perBaseLayoutProps.push(ps);
     });
-    this._baseWidth = savedState.baseWidth;
-    this._baseHeight = savedState.baseHeight;
+  }
+
+  _applySavedBaseWidthAndHeight(savedState) {
+    let bw = savedState.baseWidth;
+    let bh = savedState.baseHeight;
+    if (typeof bw !== 'number' || typeof bh !== 'number') {
+      throw new Error();
+    }
+    this._baseWidth = bw;
+    this._baseHeight = bh;
   }
 
   /**
@@ -228,7 +265,7 @@ class StrictDrawing {
   _addTertiaryBondsOfStructure(structure) {
     let seq = this._drawing.getSequenceById(structure.id);
     seq.forEachBase((b, p) => {
-      let q = structure.secondaryPartners[p - 1];
+      let q = structure.tertiaryPartners[p - 1];
       if (typeof q == 'number' && p < q) {
         let tb = this._drawing.addTertiaryBond(
           seq.getBaseAtPosition(p),
@@ -295,6 +332,14 @@ class StrictDrawing {
     return props;
   }
 
+  get baseWidth() {
+    return this._baseWidth;
+  }
+
+  get baseHeight() {
+    return this._baseHeight;
+  }
+
   /**
    * @returns {StrictLayout} 
    */
@@ -308,8 +353,8 @@ class StrictDrawing {
 
   _updateLayout() {
     let l = this.layout();
-    let bw = this._baseWidth;
-    let bh = this._baseHeight;
+    let bw = this.baseWidth;
+    let bh = this.baseHeight;
     let xMin = l.xMin;
     let yMin = l.yMin;
     this._drawing.forEachBase((b, p) => {

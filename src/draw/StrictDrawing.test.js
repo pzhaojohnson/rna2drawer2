@@ -1,5 +1,7 @@
 import StrictDrawing from './StrictDrawing';
 import createNodeSVG from './createNodeSVG';
+import parseDotBracket from '../parse/parseDotBracket';
+import { radiateStems } from './layout/singleseq/strict/radiateStems';
 
 it('instantiates', () => {
   expect(() => new StrictDrawing()).not.toThrow();
@@ -173,4 +175,159 @@ it('savableString getter', () => {
   expect(sd.savableString).toBe(
     JSON.stringify(sd.savableState())
   );
+});
+
+describe('_applySavedState method', () => {
+  it('handles invalid saved state', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('asdf', 'asdf');
+    let invalidState = sd.savableState();
+    invalidState.baseWidth = 'asdf';
+    sd._appendSequenceOutOfView('qwer', 'qwer');
+    let prevState = sd.savableState();
+    let prevJson = JSON.stringify(prevState);
+    expect(sd._applySavedState(invalidState)).toBeFalsy();
+    expect(
+      JSON.stringify(sd.savableState())
+    ).toBe(prevJson);
+  });
+
+  it('applies a valid saved state', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('asdf', 'asdf');
+    let savedState = sd.savableState();
+    sd._appendSequenceOutOfView('qwer', 'qwer');
+    expect(sd._applySavedState(savedState)).toBeTruthy();
+    expect(
+      JSON.stringify(sd.savableState())
+    ).toBe(JSON.stringify(savedState));
+  });
+});
+
+describe('_appendSequenceOutOfView method', () => {
+  it('sequence cannot be appended', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('asdf', 'asdf');
+    expect(
+      sd._appendSequenceOutOfView('asdf', 'asdfasdf')
+    ).toBeFalsy();
+    expect(sd._drawing.numSequences).toBe(1);
+    expect(sd._perBaseLayoutProps.length).toBe(4);
+  });
+
+  it('sequence can be appended', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('asdf', 'asdf');
+    expect(
+      sd._appendSequenceOutOfView('qwer', 'qwerqwer')
+    ).toBeTruthy();
+    expect(sd._drawing.getSequenceById('qwer')).toBeTruthy();
+    expect(sd._drawing.numBases).toBe(12);
+    expect(sd._perBaseLayoutProps.length).toBe(12);
+  });
+});
+
+describe('_appendStructure method', () => {
+  it('sequence cannot be appended', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('asdf', 'asdf');
+    let appended = sd._appendStructure({
+      id: 'asdf',
+      characters: 'asd',
+      secondaryPartners: [3, null, 1],
+      tertiaryPartners: [3, null, 1],
+    });
+    expect(appended).toBeFalsy();
+    expect(sd._drawing.numBases).toBe(4);
+    expect(sd._perBaseLayoutProps.length).toBe(4);
+    expect(sd._drawing.numPrimaryBonds).toBe(0);
+    expect(sd._drawing.numSecondaryBonds).toBe(0);
+    expect(sd._drawing.numTertiaryBonds).toBe(0);
+  });
+
+  it('appends sequence, per base layout props and primary bonds', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    let appended = sd._appendStructure({
+      id: 'asdf',
+      characters: 'asd',
+      secondaryPartners: [null, null, null],
+      tertiaryPartners: [null, null, null],
+    });
+    expect(appended).toBeTruthy();
+    let seq = sd._drawing.getSequenceById('asdf');
+    expect(seq.length).toBe(3);
+    expect(sd._perBaseLayoutProps.length).toBe(3);
+    expect(sd._drawing.numPrimaryBonds).toBe(2);
+    let p = 1;
+    sd._drawing.forEachPrimaryBond(pb => {
+      expect(pb.base1.id).toBe(seq.getBaseAtPosition(p).id);
+      expect(pb.base2.id).toBe(seq.getBaseAtPosition(p + 1).id);
+      p++;
+    });
+  });
+
+  it('adds secondary and tertiary bonds', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    let appended = sd._appendStructure({
+      id: 'asdf',
+      characters: 'asdfqw',
+      secondaryPartners: [null, 5, null, null, 2, null],
+      tertiaryPartners: [null, null, 6, null, null, 3],
+    });
+    expect(appended).toBeTruthy();
+    let seq = sd._drawing.getSequenceById('asdf');
+    expect(sd._drawing.numSecondaryBonds).toBe(1);
+    sd._drawing.forEachSecondaryBond(sb => {
+      expect(sb.base1.id).toBe(seq.getBaseAtPosition(2).id);
+      expect(sb.base2.id).toBe(seq.getBaseAtPosition(5).id);
+    });
+    expect(sd._drawing.numTertiaryBonds).toBe(1);
+    sd._drawing.forEachTertiaryBond(tb => {
+      expect(tb.base1.id).toBe(seq.getBaseAtPosition(3).id);
+      expect(tb.base2.id).toBe(seq.getBaseAtPosition(6).id);
+    });
+  });
+
+  it('radiates stems', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('qwer', 'qwer');
+    let dotBracket = '.((.))((.)).....';
+    let parsed = parseDotBracket(dotBracket);
+    let stretches3 = radiateStems(parsed.secondaryPartners);
+    expect(stretches3[5]).toBeGreaterThan(0);
+    sd._appendStructure({
+      id: 'asdf',
+      characters: dotBracket,
+      secondaryPartners: parsed.secondaryPartners,
+      tertiaryPartners: parsed.tertiaryPartners,
+    });
+    sd._perBaseLayoutProps.slice(4).forEach((ps, i) => {
+      expect(ps.stretch3).toBe(stretches3[i]);
+    });
+  });
+
+  it('updates layout', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('qwer', 'qwer');
+    let seq = sd._drawing.getSequenceById('qwer');
+    let yPrev = seq.getBaseAtPosition(4).yCenter;
+    sd._appendStructure({
+      id: 'asdf',
+      characters: 'as',
+      secondaryPartners: [null, null],
+      tertiaryPartners: [null, null],
+    });
+    expect(
+      seq.getBaseAtPosition(4).yCenter
+    ).not.toBeCloseTo(yPrev);
+  });
 });

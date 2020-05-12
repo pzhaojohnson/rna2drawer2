@@ -130,6 +130,15 @@ class Drawing {
   }
 
   /**
+   * @param {number} i 
+   * 
+   * @returns {Sequence} 
+   */
+  getSequenceAtIndex(i) {
+    return this._sequences[i];
+  }
+
+  /**
    * @param {callback} cb 
    */
   forEachSequence(cb) {
