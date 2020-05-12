@@ -2,6 +2,7 @@ import StrictDrawing from './StrictDrawing';
 import createNodeSVG from './createNodeSVG';
 import parseDotBracket from '../parse/parseDotBracket';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
+import StrictLayout from './layout/singleseq/strict/StrictLayout';
 
 it('instantiates', () => {
   expect(() => new StrictDrawing()).not.toThrow();
@@ -329,5 +330,104 @@ describe('_appendStructure method', () => {
     expect(
       seq.getBaseAtPosition(4).yCenter
     ).not.toBeCloseTo(yPrev);
+  });
+});
+
+describe('overallSecondaryPartners method', () => {
+  it('handles multiple sequences', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequenceOutOfView('qwer', 'qwerqwer');
+    let seq1 = sd._drawing.getSequenceById('asdf');
+    let seq2 = sd._drawing.getSequenceById('qwer');
+    sd._drawing.addSecondaryBond(
+      seq1.getBaseAtPosition(2),
+      seq2.getBaseAtPosition(7),
+    );
+    sd._drawing.addSecondaryBond(
+      seq2.getBaseAtPosition(1),
+      seq2.getBaseAtPosition(5),
+    );
+    let partners = sd.overallSecondaryPartners();
+    let expected = [null, 11, null, null, 9, null, null, null, 5, null, 2, null];
+    expected.forEach((v, i) => {
+      expect(partners[i]).toBe(v);
+    });
+  });
+});
+
+describe('generalLayoutProps method', () => {
+  it('returns a copy', () => {
+    let sd = new StrictDrawing();
+    let ps = sd.generalLayoutProps();
+    expect(ps).not.toBe(sd._generalLayoutProps);
+    expect(JSON.stringify(ps)).toBe(
+      JSON.stringify(sd._generalLayoutProps)
+    );
+  });
+});
+
+describe('perBaseLayoutProps method', () => {
+  it('returns copies', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendSequenceOutOfView('asdf', 'asdf');
+    let arr = sd.perBaseLayoutProps();
+    expect(arr).not.toBe(sd._perBaseLayoutProps);
+    arr.forEach((ps, i) => {
+      expect(ps).not.toBe(sd._perBaseLayoutProps[i]);
+    });
+    arr.forEach((ps, i) => {
+      expect(JSON.stringify(ps)).toBe(
+        JSON.stringify(sd._perBaseLayoutProps[i])
+      );
+    });
+  });
+});
+
+it('baseWidth and baseHeight getters', () => {
+  let sd = new StrictDrawing();
+  sd._baseWidth = 9.664;
+  sd._baseHeight = 14.783;
+  expect(sd.baseWidth).toBe(9.664);
+  expect(sd.baseHeight).toBe(14.783);
+});
+
+it('layout method', () => {
+  let sd = new StrictDrawing();
+  sd.addTo(document.body, () => createNodeSVG());
+  let parsed = parseDotBracket('((..))');
+  sd._appendStructure({
+    id: 'asdf',
+    characters: 'asdfas',
+    secondaryPartners: parsed.secondaryPartners,
+    tertiaryPartners: parsed.tertiaryPartners,
+  });
+  let layout = sd.layout();
+  let expected = new StrictLayout(
+    parsed.secondaryPartners,
+    sd.generalLayoutProps(),
+    sd.perBaseLayoutProps(),
+  );
+  sd._drawing.forEachBase((b, p) => {
+    let l = layout.baseCoordinatesAtPosition(p);
+    let e = expected.baseCoordinatesAtPosition(p);
+    expect(e.distanceBetweenCenters(l)).toBeCloseTo(0);
+  });
+});
+
+describe('_updateLayout method', () => {
+  it('does not throw', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    let parsed = parseDotBracket('((.((...))))');
+    sd._appendStructure({
+      id: 'qwer',
+      characters: 'qwerqwerqwer',
+      secondaryPartners: parsed.secondaryPartners,
+      tertiaryPartners: parsed.tertiaryPartners,
+    });
+    expect(() => sd._updateLayout()).not.toThrow();
   });
 });
