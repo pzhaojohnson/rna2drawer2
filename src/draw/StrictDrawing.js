@@ -7,15 +7,17 @@ import FiniteStack from './FiniteStack';
 
 class StrictDrawing {
   constructor() {
+    this._drawing = new Drawing();
+
     this._generalLayoutProps = new GeneralStrictLayoutProps();
     this._perBaseLayoutProps = [];
     this._baseWidth = 13.5;
     this._baseHeight = 13.5;
 
-    this._drawing = new Drawing();
-
     this._undoStack = new FiniteStack();
     this._redoStack = new FiniteStack();
+
+    this._interactionState = {};
   }
 
   /**
@@ -62,7 +64,7 @@ class StrictDrawing {
 
   _pushUndo() {
     this._undoStack.push(this.savableState());
-
+    this._redoStack.clear();
   }
 
   undo() {
@@ -78,159 +80,6 @@ class StrictDrawing {
       this._undoStack.push(this.savableState());
       let state = this._redoStack.pop();
       this._applySavedState(state);
-    }
-  }
-
-  /**
-   * Returns null if the sequence cannot be appended.
-   * 
-   * @param {string} id 
-   * @param {string} characters 
-   * 
-   * @returns {Sequence|null} 
-   */
-  _appendSequenceOutOfView(id, characters) {
-    let seq = this._drawing.appendSequenceOutOfView(id, characters);
-    if (seq) {
-      seq.forEachBase(b => {
-        this._perBaseLayoutProps.push(new PerBaseStrictLayoutProps());
-      });
-    }
-    return seq;
-  }
-
-  /**
-   * @returns {Array<number|null>} 
-   */
-  _overallSecondaryPartners() {
-    let idsToPositions = {};
-    this._drawing.forEachBase((b, p) => {
-      idsToPositions[b.id] = p;
-    });
-    let partners = [];
-    this._drawing.forEachBase(b => {
-      partners.push(null);
-    });
-    this._drawing.forEachSecondaryBond(sb => {
-      let p = idsToPositions[sb.base1.id];
-      let q = idsToPositions[sb.base2.id];
-      partners[p - 1] = q;
-      partners[q - 1] = p;
-    });
-    return partners;
-  }
-
-  /**
-   * Returns null if a strict layout cannot be created for this drawing.
-   * 
-   * @returns {StrictLayout|null} 
-   */
-  _strictLayout() {
-    let sl = null;
-    try {
-      sl = new StrictLayout(
-        this._overallSecondaryPartners(),
-        this._generalLayoutProps,
-        this._perBaseLayoutProps,
-      );
-    } catch (err) {
-      return null;
-    }
-    return sl;
-  }
-
-  _updateLayout() {
-    let sl = this._strictLayout();
-    if (!sl) {
-      return;
-    }
-    let bw = this._baseWidth;
-    let bh = this._baseHeight;
-    let xMin = sl.xMin;
-    let yMin = sl.yMin;
-    this._drawing.forEachBase((b, p) => {
-      let bcs = sl.baseCoordinatesAtPosition(p);
-      b.moveTo(
-        window.screen.width + (bw * (bcs.xCenter - xMin)),
-        window.screen.height + (bh * (bcs.yCenter - yMin)),
-      );
-    });
-    this._drawing.repositionBonds();
-    this._drawing.adjustNumberingLineAngles();
-    this._drawing.setWidthAndHeight(
-      (2 * window.screen.width) + (bw * (sl.xMax - xMin)),
-      (2 * window.screen.height) + (bh * (sl.yMax - yMin)),
-    );
-  }
-
-  /**
-   * @param {Sequence} seq 
-   */
-  _addPrimaryBondsForSequence(seq) {
-    seq.forEachBase((b1, p) => {
-      if (p < seq.length) {
-        let b2 = seq.getBaseAtPosition(p + 1);
-        this._drawing.addPrimaryBond(b1, b2);
-      }
-    });
-  }
-
-  /**
-   * @param {Sequence} seq 
-   * @param {Array<number|null>} partners 
-   */
-  _addSecondaryBondsForSequence(seq, partners) {
-    seq.forEachBase((b, p) => {
-      let q = partners[p - 1];
-      if (q != null && p < q) {
-        this._drawing.addSecondaryBond(
-          seq.getBaseAtPosition(p),
-          seq.getBaseAtPosition(q)
-        );
-      }
-    });
-  }
-
-  /**
-   * @param {Sequence} seq 
-   * @param {Array<number|null>} partners 
-   */
-  _addTertiaryBondsForSequence(seq, partners) {
-    seq.forEachBase((b, p) => {
-      let q = partners[p - 1];
-      if (q != null && p < q) {
-        let tb = this._drawing.addTertiaryBond(
-          seq.getBaseAtPosition(p),
-          seq.getBaseAtPosition(q),
-        );
-        tb.cursor = 'pointer';
-      }
-    });
-  }
-
-  /**
-   * @param {string} id 
-   * @param {string} characters 
-   * @param {Array<number|null>} secondaryPartners 
-   * @param {Array<number|null>} tertiaryPartners 
-   */
-  appendStructure(id, characters, secondaryPartners, tertiaryPartners) {
-    let wasEmpty = this.isEmpty();
-    let seq = this._appendSequenceOutOfView(id, characters);
-    if (!seq) {
-      return;
-    }
-    let stretches3 = radiateStems(secondaryPartners);
-    let i = this._strictLayoutProps.base.length - secondaryPartners.length;
-    for (let j = 0; j < secondaryPartners.length; j++) {
-      this._strictLayoutProps.base[i + j].stretch3 = stretches3[j];
-    }
-    this._addPrimaryBondsForSequence(seq);
-    this._addSecondaryBondsForSequence(seq, secondaryPartners);
-    this._addTertiaryBondsForSequence(seq, tertiaryPartners);
-    this._updateLayout();
-    if (wasEmpty) {
-      this._drawing.centerView();
     }
   }
 
@@ -273,6 +122,7 @@ class StrictDrawing {
    * @param {StrictDrawing~SavableState} savedState 
    */
   _applySavedState(savedState) {
+    this._drawing.applySavedState(savedState.drawing);
     this._generalLayoutProps = GeneralStrictLayoutProps.fromSavedState(savedState);
     this._perBaseLayoutProps = [];
     savedState.perBaseLayoutProps.forEach(spbps => {
@@ -281,7 +131,238 @@ class StrictDrawing {
     });
     this._baseWidth = savedState.baseWidth;
     this._baseHeight = savedState.baseHeight;
-    this._drawing.applySavedState(savedState.drawing);
+  }
+
+  /**
+   * @typedef {Object} StrictDrawing~Structure 
+   * @property {string} id 
+   * @property {string} characters 
+   * @property {Array<number|null>} secondaryPartners 
+   * @property {Array<number|null>} tertiaryPartners 
+   */
+
+   /**
+    * @param {StrictDrawing~Structure} structure 
+    * 
+    * @returns {boolean} True if the structure was successfully appended.
+    */
+  appendStructure(structure) {
+    let wasEmpty = this.isEmpty();
+    let seq = this._appendSequenceOfStructure(structure);
+    if (!seq) {
+      return false;
+    }
+    this._addPrimaryBondsOfStructure(structure);
+    this._addSecondaryBondsOfStructure(structure);
+    this._addTertiaryBondsOfStructure(structure);
+    this._radiateStemsOfStructure(structure);
+    this._updateLayout();
+    if (wasEmpty) {
+      this._drawing.centerView();
+    }
+    return true;
+  }
+
+  /**
+   * Returns null if the sequence could not be appended.
+   * 
+   * @param {StrictDrawing~Structure} structure 
+   * 
+   * @returns {Sequence|null} 
+   */
+  _appendSequenceOfStructure(structure) {
+    let seq = this._drawing.appendSequenceOutOfView(
+      structure.id,
+      structure.characters,
+    );
+    if (!seq) {
+      return null;
+    }
+    seq.forEachBase(() => {
+      this._perBaseLayoutProps.push(new PerBaseStrictLayoutProps());
+    });
+    return seq;
+  }
+
+  /**
+   * @param {StrictDrawing~Structure} structure 
+   */
+  _addPrimaryBondsOfStructure(structure) {
+    let seq = this._drawing.getSequenceById(structure.id);
+    seq.forEachBase((b, p) => {
+      if (p < seq.length) {
+        this._drawing.addPrimaryBond(
+          seq.getBaseAtPosition(p),
+          seq.getBaseAtPosition(p + 1),
+        );
+      }
+    });
+  }
+
+  /**
+   * @param {StrictDrawing~Structure} structure 
+   */
+  _addSecondaryBondsOfStructure(structure) {
+    let seq = this._drawing.getSequenceById(structure.id);
+    seq.forEachBase((b, p) => {
+      let q = structure.secondaryPartners[p - 1];
+      if (typeof q == 'number' && p < q) {
+        this._drawing.addSecondaryBond(
+          seq.getBaseAtPosition(p),
+          seq.getBaseAtPosition(q),
+        );
+      }
+    });
+  }
+
+  /**
+   * @param {StrictDrawing~Structure} structure 
+   */
+  _addTertiaryBondsOfStructure(structure) {
+    let seq = this._drawing.getSequenceById(structure.id);
+    seq.forEachBase((b, p) => {
+      let q = structure.secondaryPartners[p - 1];
+      if (typeof q == 'number' && p < q) {
+        let tb = this._drawing.addTertiaryBond(
+          seq.getBaseAtPosition(p),
+          seq.getBaseAtPosition(q),
+        );
+        tb.cursor = 'pointer';
+      }
+    });
+  }
+
+  /**
+   * @param {StrictDrawing~Structure} structure 
+   */
+  _radiateStemsOfStructure(structure) {
+    let stretches3 = radiateStems(structure.secondaryPartners);
+    let seq = this._drawing.getSequenceById(structure.id);
+    if (seq.length == 0) {
+      return;
+    }
+    let b1 = seq.getBaseAtPosition(1);
+    let op1 = this._drawing.overallPositionOfBase(b1);
+    seq.forEachBase((b, p) => {
+      let op = op1 + p - 1;
+      this._perBaseLayoutProps[op - 1].stretch3 = stretches3[p - 1];
+    });
+  }
+
+  /**
+   * @returns {Array<number|null>} 
+   */
+  overallSecondaryPartners() {
+    let idsToPositions = {};
+    this._drawing.forEachBase((b, p) => {
+      idsToPositions[b.id] = p;
+    });
+    let partners = [];
+    this._drawing.forEachBase(b => {
+      partners.push(null);
+    });
+    this._drawing.forEachSecondaryBond(sb => {
+      let p = idsToPositions[sb.base1.id];
+      let q = idsToPositions[sb.base2.id];
+      partners[p - 1] = q;
+      partners[q - 1] = p;
+    });
+    return partners;
+  }
+
+  /**
+   * @returns {GeneralStrictLayoutProps} 
+   */
+  generalLayoutProps() {
+    return this._generalLayoutProps.deepCopy();
+  }
+
+  /**
+   * @returns {Array<PerBaseStrictLayoutProps>} 
+   */
+  perBaseLayoutProps() {
+    let props = [];
+    this._perBaseLayoutProps.forEach(ps => {
+      props.push(ps.deepCopy());
+    });
+    return props;
+  }
+
+  /**
+   * @returns {StrictLayout} 
+   */
+  layout() {
+    return new StrictLayout(
+      this.overallSecondaryPartners(),
+      this.generalLayoutProps(),
+      this.perBaseLayoutProps(),
+    );
+  }
+
+  _updateLayout() {
+    let l = this.layout();
+    let bw = this._baseWidth;
+    let bh = this._baseHeight;
+    let xMin = l.xMin;
+    let yMin = l.yMin;
+    this._drawing.forEachBase((b, p) => {
+      let bcs = l.baseCoordinatesAtPosition(p);
+      b.moveTo(
+        window.screen.width + (bw * (bcs.xCenter - xMin)),
+        window.screen.height + (bh * (bcs.yCenter - yMin)),
+      );
+    });
+    this._drawing.repositionBonds();
+    this._drawing.adjustNumberingLineAngles();
+    this._drawing.setWidthAndHeight(
+      (2 * window.screen.width) + (bw * (l.xMax - xMin)),
+      (2 * window.screen.height) + (bh * (l.yMax - yMin)),
+    );
+  }
+  
+  /**
+   * @typedef {Object} StrictDrawing~Ct 
+   * @property {string} id 
+   * @property {string} characters 
+   * @property {Array<number|null>} secondaryPartners 
+   * @property {Array<number|null>} tertiaryPartners 
+   * @property {number} numberingOffset 
+   */
+
+  /**
+   * @param {StrictDrawing~Ct} ct 
+   * 
+   * @returns {boolean} True if the structure was successfully appended.
+   */
+  openCt(ct) {
+    let result = this.appendStructure({
+      id: ct.id,
+      characters: ct.characters,
+      secondaryPartners: ct.secondaryPartners,
+      tertiaryPartners: ct.tertiaryPartners,
+    });
+    if (!result) {
+      return false;
+    }
+    let seq = this._drawing.getSequenceById(ct.id);
+    seq.numberingOffset = ct.numberingOffset;
+    return true;
+  }
+
+  /**
+   * @param {string} fileContents 
+   * 
+   * @returns {boolean} True if the contents of the file are valid.
+   */
+  openRna2drawer2(fileContents) {
+    let savedState = null;
+    try {
+      savedState = JSON.parse(fileContents);
+    } catch (err) {
+      return false;
+    }
+    this._applySavedState(savedState);
+    return true;
   }
 }
 
