@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './App.css';
 
 import StrictDrawing from './draw/StrictDrawing';
-//import InteractiveDrawing from './draw/InteractiveDrawing';
 
 import { Menu } from './Menu';
 import { Infobar } from './Infobar';
