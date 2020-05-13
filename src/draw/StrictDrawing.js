@@ -5,6 +5,8 @@ import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLay
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
 import FiniteStack from './FiniteStack';
 
+import overallSecondaryPartners from './edit/overallSecondaryPartners';
+
 class StrictDrawing {
   constructor() {
     this._drawing = new Drawing();
@@ -297,21 +299,7 @@ class StrictDrawing {
    * @returns {Array<number|null>} 
    */
   overallSecondaryPartners() {
-    let idsToPositions = {};
-    this._drawing.forEachBase((b, p) => {
-      idsToPositions[b.id] = p;
-    });
-    let partners = [];
-    this._drawing.forEachBase(b => {
-      partners.push(null);
-    });
-    this._drawing.forEachSecondaryBond(sb => {
-      let p = idsToPositions[sb.base1.id];
-      let q = idsToPositions[sb.base2.id];
-      partners[p - 1] = q;
-      partners[q - 1] = p;
-    });
-    return partners;
+    return overallSecondaryPartners(this._drawing);
   }
 
   /**

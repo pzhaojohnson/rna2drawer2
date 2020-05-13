@@ -3,6 +3,7 @@ import createNodeSVG from './createNodeSVG';
 import parseDotBracket from '../parse/parseDotBracket';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
+import overallSecondaryPartners from './edit/overallSecondaryPartners';
 
 it('instantiates', () => {
   expect(() => new StrictDrawing()).not.toThrow();
@@ -334,23 +335,17 @@ describe('_appendStructure method', () => {
 });
 
 describe('overallSecondaryPartners method', () => {
-  it('handles multiple sequences', () => {
+  it('returns same values as overallSecondaryPartners function', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
-    sd._appendSequenceOutOfView('qwer', 'qwerqwer');
-    let seq1 = sd._drawing.getSequenceById('asdf');
-    let seq2 = sd._drawing.getSequenceById('qwer');
+    sd._appendSequenceOutOfView('asdf', 'asdfasdf');
+    let seq = sd._drawing.getSequenceById('asdf');
     sd._drawing.addSecondaryBond(
-      seq1.getBaseAtPosition(2),
-      seq2.getBaseAtPosition(7),
-    );
-    sd._drawing.addSecondaryBond(
-      seq2.getBaseAtPosition(1),
-      seq2.getBaseAtPosition(5),
+      seq.getBaseAtPosition(2),
+      seq.getBaseAtPosition(6),
     );
     let partners = sd.overallSecondaryPartners();
-    let expected = [null, 11, null, null, 9, null, null, null, 5, null, 2, null];
+    let expected = overallSecondaryPartners(sd._drawing);
     expected.forEach((v, i) => {
       expect(partners[i]).toBe(v);
     });
