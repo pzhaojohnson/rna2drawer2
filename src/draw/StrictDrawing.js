@@ -6,6 +6,8 @@ import { radiateStems } from './layout/singleseq/strict/radiateStems';
 import FiniteStack from './FiniteStack';
 
 import overallSecondaryPartners from './edit/overallSecondaryPartners';
+import appendStructure from './edit/appendStructure';
+import isKnotless from '../parse/isKnotless';
 
 class StrictDrawing {
   constructor() {
@@ -193,88 +195,38 @@ class StrictDrawing {
   }
 
   /**
-   * @typedef {Object} StrictDrawing~Structure 
+   * @typedef {Object} Structure 
    * @property {string} id 
    * @property {string} characters 
-   * @property {Array<number|null>} secondaryPartners 
-   * @property {Array<number|null>} tertiaryPartners 
+   * @property {Array<number|null>|undefined} secondaryPartners 
+   * @property {Array<number|null>|undefined} tertiaryPartners 
    */
 
    /**
-    * @param {StrictDrawing~Structure} structure 
+    * @param {Structure} structure 
     * 
     * @returns {boolean} True if the structure was successfully appended.
     */
   _appendStructure(structure) {
-    let appended = this._appendSequenceOfStructure(structure);
+    if (structure.secondaryPartners) {
+      if (!isKnotless(structure.secondaryPartners)) {
+        return false;
+      }
+    }
+    let appended = appendStructure(this._drawing, structure);
     if (!appended) {
       return false;
     }
-    this._addPrimaryBondsOfStructure(structure);
-    this._addSecondaryBondsOfStructure(structure);
-    this._addTertiaryBondsOfStructure(structure);
+    this._appendPerBaseLayoutPropsOfStructure(structure);
     this._radiateStemsOfStructure(structure);
     this._updateLayout();
     return true;
   }
 
-  /**
-   * @param {StrictDrawing~Structure} structure 
-   * 
-   * @returns {boolean} True if the sequence was successfully appended.
-   */
-  _appendSequenceOfStructure(structure) {
-    return this._appendSequenceOutOfView(
-      structure.id,
-      structure.characters,
-    );
-  }
-
-  /**
-   * @param {StrictDrawing~Structure} structure 
-   */
-  _addPrimaryBondsOfStructure(structure) {
+  _appendPerBaseLayoutPropsOfStructure(structure) {
     let seq = this._drawing.getSequenceById(structure.id);
-    seq.forEachBase((b, p) => {
-      if (p < seq.length) {
-        this._drawing.addPrimaryBond(
-          seq.getBaseAtPosition(p),
-          seq.getBaseAtPosition(p + 1),
-        );
-      }
-    });
-  }
-
-  /**
-   * @param {StrictDrawing~Structure} structure 
-   */
-  _addSecondaryBondsOfStructure(structure) {
-    let seq = this._drawing.getSequenceById(structure.id);
-    seq.forEachBase((b, p) => {
-      let q = structure.secondaryPartners[p - 1];
-      if (typeof q == 'number' && p < q) {
-        this._drawing.addSecondaryBond(
-          seq.getBaseAtPosition(p),
-          seq.getBaseAtPosition(q),
-        );
-      }
-    });
-  }
-
-  /**
-   * @param {StrictDrawing~Structure} structure 
-   */
-  _addTertiaryBondsOfStructure(structure) {
-    let seq = this._drawing.getSequenceById(structure.id);
-    seq.forEachBase((b, p) => {
-      let q = structure.tertiaryPartners[p - 1];
-      if (typeof q == 'number' && p < q) {
-        let tb = this._drawing.addTertiaryBond(
-          seq.getBaseAtPosition(p),
-          seq.getBaseAtPosition(q),
-        );
-        tb.cursor = 'pointer';
-      }
+    seq.forEachBase(() => {
+      this._perBaseLayoutProps.push(new PerBaseStrictLayoutProps());
     });
   }
 
@@ -282,6 +234,9 @@ class StrictDrawing {
    * @param {StrictDrawing~Structure} structure 
    */
   _radiateStemsOfStructure(structure) {
+    if (!structure.secondaryPartners) {
+      return;
+    }
     let stretches3 = radiateStems(structure.secondaryPartners);
     let seq = this._drawing.getSequenceById(structure.id);
     if (seq.length == 0) {

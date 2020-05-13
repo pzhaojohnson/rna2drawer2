@@ -234,67 +234,68 @@ describe('_appendSequenceOutOfView method', () => {
 });
 
 describe('_appendStructure method', () => {
-  it('sequence cannot be appended', () => {
+  it('does not allow knots in secondary structure', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
     let appended = sd._appendStructure({
       id: 'asdf',
-      characters: 'asd',
-      secondaryPartners: [3, null, 1],
-      tertiaryPartners: [3, null, 1],
+      characters: 'asdfasdf',
+      secondaryPartners: [6, null, 8, null, null, 1, null, 3],
     });
     expect(appended).toBeFalsy();
-    expect(sd._drawing.numBases).toBe(4);
+    expect(sd._drawing.numSequences).toBe(0);
+  });
+
+  it('structure cannot be appended', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendStructure({
+      id: 'asdf',
+      characters: 'asdf',
+    });
+    let appended = sd._appendStructure({
+      id: 'asdf',
+      characters: 'qwer',
+    });
+    expect(appended).toBeFalsy();
+    expect(sd._drawing.numSequences).toBe(1);
+  });
+
+  it('calls appendStructure function', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendStructure({
+      id: 'qwer',
+      characters: 'asdfqwer',
+    });
+    expect(sd._drawing.numSequences).toBe(1);
+    let seq = sd._drawing.getSequenceById('qwer');
+    expect(seq.characters).toBe('asdfqwer');
+  });
+
+  it('appends per base layout props', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => createNodeSVG());
+    sd._appendStructure({
+      id: 'asdf',
+      characters: 'asdf',
+    });
     expect(sd._perBaseLayoutProps.length).toBe(4);
-    expect(sd._drawing.numPrimaryBonds).toBe(0);
-    expect(sd._drawing.numSecondaryBonds).toBe(0);
-    expect(sd._drawing.numTertiaryBonds).toBe(0);
+    sd._appendStructure({
+      id: 'qwer',
+      characters: 'qwerqwer',
+    });
+    expect(sd._perBaseLayoutProps.length).toBe(12);
   });
 
-  it('appends sequence, per base layout props and primary bonds', () => {
+  it('handles undefined secondary partners', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    let appended = sd._appendStructure({
+    sd._appendStructure({
       id: 'asdf',
-      characters: 'asd',
-      secondaryPartners: [null, null, null],
-      tertiaryPartners: [null, null, null],
+      characters: 'asdf',
     });
-    expect(appended).toBeTruthy();
-    let seq = sd._drawing.getSequenceById('asdf');
-    expect(seq.length).toBe(3);
-    expect(sd._perBaseLayoutProps.length).toBe(3);
-    expect(sd._drawing.numPrimaryBonds).toBe(2);
-    let p = 1;
-    sd._drawing.forEachPrimaryBond(pb => {
-      expect(pb.base1.id).toBe(seq.getBaseAtPosition(p).id);
-      expect(pb.base2.id).toBe(seq.getBaseAtPosition(p + 1).id);
-      p++;
-    });
-  });
-
-  it('adds secondary and tertiary bonds', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    let appended = sd._appendStructure({
-      id: 'asdf',
-      characters: 'asdfqw',
-      secondaryPartners: [null, 5, null, null, 2, null],
-      tertiaryPartners: [null, null, 6, null, null, 3],
-    });
-    expect(appended).toBeTruthy();
-    let seq = sd._drawing.getSequenceById('asdf');
-    expect(sd._drawing.numSecondaryBonds).toBe(1);
-    sd._drawing.forEachSecondaryBond(sb => {
-      expect(sb.base1.id).toBe(seq.getBaseAtPosition(2).id);
-      expect(sb.base2.id).toBe(seq.getBaseAtPosition(5).id);
-    });
-    expect(sd._drawing.numTertiaryBonds).toBe(1);
-    sd._drawing.forEachTertiaryBond(tb => {
-      expect(tb.base1.id).toBe(seq.getBaseAtPosition(3).id);
-      expect(tb.base2.id).toBe(seq.getBaseAtPosition(6).id);
-    });
+    expect(sd._drawing.numSequences).toBe(1);
   });
 
   it('radiates stems', () => {
@@ -309,7 +310,6 @@ describe('_appendStructure method', () => {
       id: 'asdf',
       characters: dotBracket,
       secondaryPartners: parsed.secondaryPartners,
-      tertiaryPartners: parsed.tertiaryPartners,
     });
     sd._perBaseLayoutProps.slice(4).forEach((ps, i) => {
       expect(ps.stretch3).toBe(stretches3[i]);
@@ -325,8 +325,6 @@ describe('_appendStructure method', () => {
     sd._appendStructure({
       id: 'asdf',
       characters: 'as',
-      secondaryPartners: [null, null],
-      tertiaryPartners: [null, null],
     });
     expect(
       seq.getBaseAtPosition(4).yCenter
