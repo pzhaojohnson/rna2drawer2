@@ -4,6 +4,7 @@ import { CloseButton } from './CloseButton';
 const uuidv1 = require('uuid/v1');
 import Base from '../draw/Base';
 import { formatSvgForExport } from '../export/formatSvgForExport';
+import offerFileForDownload from '../export/offerFileForDownload';
 
 class ExportSvg extends React.Component {
   constructor(props) {
@@ -259,7 +260,7 @@ class ExportSvg extends React.Component {
     });
     let scaling = bfs / Base.mostRecentProps().fontSize;
     let svgString = this.getSvgStringForExport(scaling);
-    this.offerSvgForDownload(svgString);
+    this.offerSvgFileForDownload(svgString);
   }
 
   parseBaseFrontSize() {
@@ -314,27 +315,21 @@ class ExportSvg extends React.Component {
   }
 
   /**
-   * No file is offered for download if the given string is empty.
-   * 
+   * @typedef {Object} FileProps 
+   * @property {string} name 
+   * @property {string} type 
+   * @property {string} contents 
+   */
+
+  /**
    * @param {string} svgString 
    */
-  offerSvgForDownload(svgString) {
-    if (!svgString) {
-      return;
-    }
-    let b = new Blob([svgString], { type: 'text/plain' });
-    let url = URL.createObjectURL(b);
-    let div = document.createElement('div');
-    div.style.cssText = 'max-width: 0px; max-height: 0px';
-    document.body.appendChild(div);
-    let a = document.createElement('a');
-    div.appendChild(a);
-    a.innerHTML = '&nbsp;';
-    a.href = url;
-    a.download = 'Drawing.svg';
-    let me = new MouseEvent('click', {});
-    a.dispatchEvent(me);
-    document.body.removeChild(div);
+  offerSvgFileForDownload(svgString) {
+    offerFileForDownload({
+      name: 'Drawing.svg',
+      type: 'text/plain',
+      contents: svgString,
+    });
   }
 
   close() {
