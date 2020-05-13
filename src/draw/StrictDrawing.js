@@ -220,7 +220,7 @@ class StrictDrawing {
     }
     this._appendPerBaseLayoutPropsOfStructure(structure);
     this._radiateStemsOfStructure(structure);
-    this._updateLayout();
+    this._applyLayout();
     return true;
   }
 
@@ -295,7 +295,7 @@ class StrictDrawing {
     );
   }
 
-  _updateLayout() {
+  _applyLayout() {
     applyStrictLayout(
       this._drawing,
       this.layout(),

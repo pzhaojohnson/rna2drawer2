@@ -4,6 +4,7 @@ import parseDotBracket from '../parse/parseDotBracket';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import overallSecondaryPartners from './edit/overallSecondaryPartners';
+import applyStrictLayout from './edit/applyStrictLayout';
 
 it('instantiates', () => {
   expect(() => new StrictDrawing()).not.toThrow();
@@ -29,7 +30,7 @@ it('zoom getter and setter', () => {
   let sd = new StrictDrawing();
   sd.addTo(document.body, () => createNodeSVG());
   sd._appendSequenceOutOfView('qwer', 'qwer');
-  sd._updateLayout();
+  sd._applyLayout();
   sd.zoom = 2.75;
   expect(sd.zoom).toBeCloseTo(2.75);
   expect(sd._drawing.zoom).toBeCloseTo(2.75);
@@ -410,17 +411,30 @@ it('layout method', () => {
   });
 });
 
-describe('_updateLayout method', () => {
-  it('does not throw', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    let parsed = parseDotBracket('((.((...))))');
-    sd._appendStructure({
-      id: 'qwer',
-      characters: 'qwerqwerqwer',
-      secondaryPartners: parsed.secondaryPartners,
-      tertiaryPartners: parsed.tertiaryPartners,
-    });
-    expect(() => sd._updateLayout()).not.toThrow();
+it('_applyLayout method', () => {
+  let sd = new StrictDrawing();
+  sd.addTo(document.body, () => createNodeSVG());
+  sd._appendStructure({
+    id: 'asdf',
+    characters: 'asdfasdfa',
+  });
+  let seq = sd._drawing.getSequenceById('asdf');
+  sd._drawing.addSecondaryBond(
+    seq.getBaseAtPosition(2),
+    seq.getBaseAtPosition(8),
+  );
+  sd._drawing.addSecondaryBond(
+    seq.getBaseAtPosition(3),
+    seq.getBaseAtPosition(7),
+  );
+  sd._applyLayout();
+  let coordinates = [];
+  sd._drawing.forEachBase(b => {
+    coordinates.push({ xCenter: b.xCenter, yCenter: b.yCenter });
+  });
+  applyStrictLayout(sd._drawing, sd.layout(), sd.baseWidth, sd.baseHeight);
+  sd._drawing.forEachBase((b, p) => {
+    expect(b.xCenter).toBeCloseTo(coordinates[p - 1].xCenter);
+    expect(b.yCenter).toBeCloseTo(coordinates[p - 1].yCenter);
   });
 });
