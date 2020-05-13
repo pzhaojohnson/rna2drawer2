@@ -184,15 +184,11 @@ class StrictDrawing {
    * 
    * @returns {boolean} True if the sequence was successfully appended.
    */
-  _appendSequenceOutOfView(id, characters) {
-    let seq = this._drawing.appendSequenceOutOfView(id, characters);
-    if (!seq) {
-      return false;
-    }
-    seq.forEachBase(() => {
-      this._perBaseLayoutProps.push(new PerBaseStrictLayoutProps());
+  _appendSequence(id, characters) {
+    return this._appendStructure({
+      id: id,
+      characters: characters,
     });
-    return true;
   }
 
   /**

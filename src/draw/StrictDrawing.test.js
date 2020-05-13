@@ -22,15 +22,14 @@ describe('addTo method', () => {
 it('svgString getter', () => {
   let sd = new StrictDrawing();
   sd.addTo(document.body, () => createNodeSVG());
-  sd._appendSequenceOutOfView('asdf', 'asdf');
+  sd._appendSequence('asdf', 'asdf');
   expect(sd.svgString).toBe(sd._drawing.svgString);
 });
 
 it('zoom getter and setter', () => {
   let sd = new StrictDrawing();
   sd.addTo(document.body, () => createNodeSVG());
-  sd._appendSequenceOutOfView('qwer', 'qwer');
-  sd._applyLayout();
+  sd._appendSequence('qwer', 'qwer');
   sd.zoom = 2.75;
   expect(sd.zoom).toBeCloseTo(2.75);
   expect(sd._drawing.zoom).toBeCloseTo(2.75);
@@ -40,7 +39,7 @@ it('isEmpty method', () => {
   let sd = new StrictDrawing();
   sd.addTo(document.body, () => createNodeSVG());
   expect(sd.isEmpty()).toBeTruthy();
-  sd._appendSequenceOutOfView('asdf', 'asdf');
+  sd._appendSequence('asdf', 'asdf');
   expect(sd.isEmpty()).toBeFalsy();
 });
 
@@ -48,11 +47,11 @@ describe('_pushUndo method', () => {
   it('pushes undo stack and clears redo stack', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     let savedState1 = sd.savableState();
     sd._pushUndo(savedState1);
     sd.undo();
-    sd._appendSequenceOutOfView('zxcv', 'zxcv');
+    sd._appendSequence('zxcv', 'zxcv');
     let savedState2 = sd.savableState();
     expect(sd._undoStack.isEmpty()).toBeTruthy();
     expect(sd._redoStack.isEmpty()).toBeFalsy();
@@ -75,10 +74,10 @@ describe('undo method', () => {
   it('pops undo stack, applies saved state and pushes redo stack', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     let savedState1 = sd.savableState();
     sd._undoStack.push(savedState1);
-    sd._appendSequenceOutOfView('qwer', 'qwer');
+    sd._appendSequence('qwer', 'qwer');
     let savedState2 = sd.savableState();
     sd.undo();
     expect(sd._undoStack.isEmpty()).toBeTruthy();
@@ -102,10 +101,10 @@ describe('redo method', () => {
   it('pops redo stack, applies saved state and pushes undo stack', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     let savedState1 = sd.savableState();
     sd._pushUndo(savedState1);
-    sd._appendSequenceOutOfView('qwer', 'qwer');
+    sd._appendSequence('qwer', 'qwer');
     let savedState2 = sd.savableState();
     sd.undo();
     sd.redo();
@@ -123,7 +122,7 @@ describe('savableState method', () => {
   it('includes drawing', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     let savableState = sd.savableState();
     expect(
       JSON.stringify(savableState.drawing)
@@ -135,7 +134,7 @@ describe('savableState method', () => {
   it('includes layout props', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('zxcv', 'zxcv');
+    sd._appendSequence('zxcv', 'zxcv');
     let savableState = sd.savableState();
     expect(
       JSON.stringify(savableState.generalLayoutProps)
@@ -162,7 +161,7 @@ describe('savableState method', () => {
   it('can be converted to and from a JSON string', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     let savableState1 = sd.savableState();
     let json1 = JSON.stringify(savableState1);
     let savableState2 = JSON.parse(json1);
@@ -174,7 +173,7 @@ describe('savableState method', () => {
 it('savableString getter', () => {
   let sd = new StrictDrawing();
   sd.addTo(document.body, () => createNodeSVG());
-  sd._appendSequenceOutOfView('asdf', 'asdf');
+  sd._appendSequence('asdf', 'asdf');
   expect(sd.savableString).toBe(
     JSON.stringify(sd.savableState())
   );
@@ -184,10 +183,10 @@ describe('_applySavedState method', () => {
   it('handles invalid saved state', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     let invalidState = sd.savableState();
     invalidState.baseWidth = 'asdf';
-    sd._appendSequenceOutOfView('qwer', 'qwer');
+    sd._appendSequence('qwer', 'qwer');
     let prevState = sd.savableState();
     let prevJson = JSON.stringify(prevState);
     expect(sd._applySavedState(invalidState)).toBeFalsy();
@@ -199,9 +198,9 @@ describe('_applySavedState method', () => {
   it('applies a valid saved state', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     let savedState = sd.savableState();
-    sd._appendSequenceOutOfView('qwer', 'qwer');
+    sd._appendSequence('qwer', 'qwer');
     expect(sd._applySavedState(savedState)).toBeTruthy();
     expect(
       JSON.stringify(sd.savableState())
@@ -209,13 +208,13 @@ describe('_applySavedState method', () => {
   });
 });
 
-describe('_appendSequenceOutOfView method', () => {
+describe('_appendSequence method', () => {
   it('sequence cannot be appended', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     expect(
-      sd._appendSequenceOutOfView('asdf', 'asdfasdf')
+      sd._appendSequence('asdf', 'asdfasdf')
     ).toBeFalsy();
     expect(sd._drawing.numSequences).toBe(1);
     expect(sd._perBaseLayoutProps.length).toBe(4);
@@ -224,9 +223,9 @@ describe('_appendSequenceOutOfView method', () => {
   it('sequence can be appended', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     expect(
-      sd._appendSequenceOutOfView('qwer', 'qwerqwer')
+      sd._appendSequence('qwer', 'qwerqwer')
     ).toBeTruthy();
     expect(sd._drawing.getSequenceById('qwer')).toBeTruthy();
     expect(sd._drawing.numBases).toBe(12);
@@ -302,7 +301,7 @@ describe('_appendStructure method', () => {
   it('radiates stems', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('qwer', 'qwer');
+    sd._appendSequence('qwer', 'qwer');
     let dotBracket = '.((.))((.)).....';
     let parsed = parseDotBracket(dotBracket);
     let stretches3 = radiateStems(parsed.secondaryPartners);
@@ -320,7 +319,7 @@ describe('_appendStructure method', () => {
   it('updates layout', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('qwer', 'qwer');
+    sd._appendSequence('qwer', 'qwer');
     let seq = sd._drawing.getSequenceById('qwer');
     let yPrev = seq.getBaseAtPosition(4).yCenter;
     sd._appendStructure({
@@ -337,7 +336,7 @@ describe('overallSecondaryPartners method', () => {
   it('returns same values as overallSecondaryPartners function', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdfasdf');
+    sd._appendSequence('asdf', 'asdfasdf');
     let seq = sd._drawing.getSequenceById('asdf');
     sd._drawing.addSecondaryBond(
       seq.getBaseAtPosition(2),
@@ -366,7 +365,7 @@ describe('perBaseLayoutProps method', () => {
   it('returns copies', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequenceOutOfView('asdf', 'asdf');
+    sd._appendSequence('asdf', 'asdf');
     let arr = sd.perBaseLayoutProps();
     expect(arr).not.toBe(sd._perBaseLayoutProps);
     arr.forEach((ps, i) => {

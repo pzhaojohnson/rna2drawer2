@@ -534,9 +534,13 @@ class Drawing {
     this._svg.clear();
     this._svg.svg(svgString);
     let nested = this._svg.first();
+    let vb = nested.viewbox();
+    let w = vb.width;
+    let h = vb.height;
     let content = nested.svg(false);
     this._svg.clear();
     this._svg.svg(content);
+    this.setWidthAndHeight(w, h);
   }
 }
 
