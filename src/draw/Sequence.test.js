@@ -308,6 +308,17 @@ describe('Sequence class', () => {
     expect(seq.id).toBe('ooyyuu');
   });
 
+  it('characters getter', () => {
+    let svg = createNodeSVG();
+    let seq = new Sequence('asdf');
+    seq.appendBases([
+      Base.create(svg, 'b', 1, 2),
+      Base.create(svg, 'T', 5, 4),
+      Base.create(svg, '2', 4, 3),
+    ]);
+    expect(seq.characters).toBe('bT2');
+  });
+
   describe('_updateBaseNumberings method', () => {
     it('adds numbering to correct bases', () => {
       let svg = createNodeSVG();

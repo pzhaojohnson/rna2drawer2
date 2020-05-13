@@ -180,6 +180,17 @@ class Sequence {
     return this._id;
   }
 
+  /**
+   * @returns {string} 
+   */
+  get characters() {
+    let cs = '';
+    this.forEachBase(b => {
+      cs += b.character;
+    });
+    return cs;
+  }
+
   _updateBaseNumberings() {
     this.forEachBase((b, p) => {
       if ((p - this.numberingAnchor) % this.numberingIncrement == 0) {
