@@ -4,8 +4,8 @@ import './App.css';
 
 import StrictDrawing from './draw/StrictDrawing';
 
-import { Menu } from './Menu';
-import { Infobar } from './Infobar';
+import Menu from './Menu';
+import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
 import { OpenCt } from './forms/OpenCt';

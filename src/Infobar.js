@@ -221,6 +221,8 @@ Infobar.defaultProps = {
   setZoom: z => {},
 };
 
+export default Infobar;
+
 export {
   Infobar,
 

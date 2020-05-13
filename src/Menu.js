@@ -243,6 +243,4 @@ Menu.defaultProps = {
   exportPptx: () => {},
 };
 
-export {
-  Menu,
-};
+export default Menu;
