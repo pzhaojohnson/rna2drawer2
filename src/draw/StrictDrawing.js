@@ -8,6 +8,7 @@ import FiniteStack from './FiniteStack';
 import overallSecondaryPartners from './edit/overallSecondaryPartners';
 import appendStructure from './edit/appendStructure';
 import isKnotless from '../parse/isKnotless';
+import applyStrictLayout from './edit/applyStrictLayout';
 
 class StrictDrawing {
   constructor() {
@@ -295,23 +296,11 @@ class StrictDrawing {
   }
 
   _updateLayout() {
-    let l = this.layout();
-    let bw = this.baseWidth;
-    let bh = this.baseHeight;
-    let xMin = l.xMin;
-    let yMin = l.yMin;
-    this._drawing.forEachBase((b, p) => {
-      let bcs = l.baseCoordinatesAtPosition(p);
-      b.moveTo(
-        window.screen.width + (bw * (bcs.xCenter - xMin)),
-        window.screen.height + (bh * (bcs.yCenter - yMin)),
-      );
-    });
-    this._drawing.repositionBonds();
-    this._drawing.adjustNumberingLineAngles();
-    this._drawing.setWidthAndHeight(
-      (2 * window.screen.width) + (bw * (l.xMax - xMin)),
-      (2 * window.screen.height) + (bh * (l.yMax - yMin)),
+    applyStrictLayout(
+      this._drawing,
+      this.layout(),
+      this.baseWidth,
+      this.baseHeight,
     );
   }
 
