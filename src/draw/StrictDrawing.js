@@ -126,6 +126,10 @@ class StrictDrawing {
     return JSON.stringify(savableState, null, ' ');
   }
 
+  applySavedState(savedState) {
+    return this._applySavedState(savedState);
+  }
+
   /**
    * If the saved state cannot be successfully applied, the state of
    * this drawing will not be affected.
@@ -355,8 +359,7 @@ class StrictDrawing {
     } catch (err) {
       return false;
     }
-    this._applySavedState(savedState);
-    return true;
+    return this._applySavedState(savedState);
   }
 }
 

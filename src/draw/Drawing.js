@@ -525,6 +525,8 @@ class Drawing {
       let tb = TertiaryBond.fromSavedState(stb, this._svg, id => this.getBaseById(id));
       this._tertiaryBonds.push(tb);
     });
+    this.adjustNumberingLineAngles();
+    this.centerView();
   }
 
   /**

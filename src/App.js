@@ -211,7 +211,14 @@ class App {
     }
     this.openForm(
       <OpenRna2drawer
-        submit={() => {}}
+        submit={fileContents => {
+          let applied = this._drawing.openRna2drawer2(fileContents);
+          if (applied) {
+            this.closeCurrForm();
+          }
+          this._renderPeripherals();
+          return applied;
+        }}
       />
     );
   }
