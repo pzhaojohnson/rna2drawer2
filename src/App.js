@@ -184,13 +184,8 @@ class App {
     this.openForm(
       <CreateNewDrawing
         width={'100vw'}
-        submit={(id, characters, secondaryPartners, tertiaryPartners) => {
-          this._drawing.createNewDrawing({
-            id: id,
-            characters: characters,
-            secondaryPartners: secondaryPartners,
-            tertiaryPartners: tertiaryPartners,
-          });
+        submit={structure => {
+          this._drawing.appendStructure(structure);
           this.closeCurrForm();
           this._renderPeripherals();
           this._updateDocumentTitle();

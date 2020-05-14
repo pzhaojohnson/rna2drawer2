@@ -208,6 +208,10 @@ class StrictDrawing {
     * 
     * @returns {boolean} True if the structure was successfully appended.
     */
+  appendStructure(structure) {
+    return this._appendStructure(structure);
+  }
+  
   _appendStructure(structure) {
     if (structure.secondaryPartners) {
       if (!isKnotless(structure.secondaryPartners)) {
@@ -221,6 +225,7 @@ class StrictDrawing {
     this._appendPerBaseLayoutPropsOfStructure(structure);
     this._radiateStemsOfStructure(structure);
     this._applyLayout();
+    this._drawing.centerView();
     return true;
   }
 
@@ -309,20 +314,6 @@ class StrictDrawing {
    */
   sequenceIds() {
     return this._drawing.sequenceIds();
-  }
-
-  /**
-   * @param {StrictDrawing~Structure} structure 
-   * 
-   * @returns {boolean} True if the structure was successfully drawn.
-   */
-  createNewDrawing(structure) {
-    let appended = this._appendStructure(structure);
-    if (!appended) {
-      return false;
-    }
-    this._drawing.centerView();
-    return true;
   }
 }
 

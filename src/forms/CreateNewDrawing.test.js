@@ -231,7 +231,7 @@ it('basic test of submitting a sequence ID', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][0]).toBe('a sequence ID');
+  expect(submit.mock.calls[0][0].id).toBe('a sequence ID');
 });
 
 it('empty sequence ID', () => {
@@ -299,7 +299,7 @@ it('trims leading and trailing whitespace from sequence ID', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][0]).toBe('as  dd gh');
+  expect(submit.mock.calls[0][0].id).toBe('as  dd gh');
 });
 
 it('basic test of submitting a sequence', () => {
@@ -321,7 +321,7 @@ it('basic test of submitting a sequence', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][1]).toBe('AGGCCUT');
+  expect(submit.mock.calls[0][0].characters).toBe('AGGCCUT');
 });
 
 it('empty sequence', () => {
@@ -451,7 +451,7 @@ it('ignores numbers when checked', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][1]).toBe('aagg');
+  expect(submit.mock.calls[0][0].characters).toBe('aagg');
 });
 
 it('includes numbers when unchecked', () => {
@@ -481,7 +481,7 @@ it('includes numbers when unchecked', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][1]).toBe('aa123gg');
+  expect(submit.mock.calls[0][0].characters).toBe('aa123gg');
 });
 
 it('ignores non-AUGCT letters when checked', () => {
@@ -503,7 +503,7 @@ it('ignores non-AUGCT letters when checked', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][1]).toBe('aAUtCC');
+  expect(submit.mock.calls[0][0].characters).toBe('aAUtCC');
 });
 
 it('includes non-AUGCT letters when unchecked', () => {
@@ -533,7 +533,7 @@ it('includes non-AUGCT letters when unchecked', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][1]).toBe('aAhjmUtlpwCC');
+  expect(submit.mock.calls[0][0].characters).toBe('aAhjmUtlpwCC');
 });
 
 it('ignores non-alphanumerics when checked', () => {
@@ -555,7 +555,7 @@ it('ignores non-alphanumerics when checked', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][1]).toBe('GgcaCt');
+  expect(submit.mock.calls[0][0].characters).toBe('GgcaCt');
 });
 
 it('includes non-alphanumerics when unchecked', () => {
@@ -585,7 +585,7 @@ it('includes non-alphanumerics when unchecked', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][1]).toBe('..Ggca<>()Ct]');
+  expect(submit.mock.calls[0][0].characters).toBe('..Ggca<>()Ct]');
 });
 
 it('ignores whitespace', () => {
@@ -607,7 +607,7 @@ it('ignores whitespace', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][1]).toBe('aAtctTT');
+  expect(submit.mock.calls[0][0].characters).toBe('aAtctTT');
 });
 
 function unpairedPartners(length) {
@@ -649,11 +649,11 @@ it('basic test of submitting a structure', () => {
   });
   expect(submit.mock.calls.length).toBe(1);
   checkPartners(
-    submit.mock.calls[0][2],
+    submit.mock.calls[0][0].secondaryPartners,
     [6, 5, null, null, 2, 1],
   );
   checkPartners(
-    submit.mock.calls[0][3],
+    submit.mock.calls[0][0].tertiaryPartners,
     unpairedPartners(6),
   );
 });
@@ -682,11 +682,11 @@ it('submitted structure includes tertiary pairs', () => {
   });
   expect(submit.mock.calls.length).toBe(1);
   checkPartners(
-    submit.mock.calls[0][2],
+    submit.mock.calls[0][0].secondaryPartners,
     [6, 5, null, null, 2, 1, null, null],
   );
   checkPartners(
-    submit.mock.calls[0][3],
+    submit.mock.calls[0][0].tertiaryPartners,
     [null, null, 8, 7, null, null, 4, 3],
   );
 });
@@ -715,11 +715,11 @@ it('empty structure', () => {
   });
   expect(submit.mock.calls.length).toBe(1);
   checkPartners(
-    submit.mock.calls[0][2],
+    submit.mock.calls[0][0].secondaryPartners,
     unpairedPartners(6),
   );
   checkPartners(
-    submit.mock.calls[0][3],
+    submit.mock.calls[0][0].tertiaryPartners,
     unpairedPartners(6),
   );
 });
@@ -748,11 +748,11 @@ it('structure is all whitespace', () => {
   });
   expect(submit.mock.calls.length).toBe(1);
   checkPartners(
-    submit.mock.calls[0][2],
+    submit.mock.calls[0][0].secondaryPartners,
     unpairedPartners(6),
   );
   checkPartners(
-    submit.mock.calls[0][3],
+    submit.mock.calls[0][0].tertiaryPartners,
     unpairedPartners(6),
   );
 });
@@ -780,12 +780,13 @@ it('structure is all ignored characters', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
+  let c = submit.mock.calls[0];
   checkPartners(
-    submit.mock.calls[0][2],
+    c[0].secondaryPartners,
     unpairedPartners(6),
   );
   checkPartners(
-    submit.mock.calls[0][3],
+    c[0].tertiaryPartners,
     unpairedPartners(6),
   );
 });

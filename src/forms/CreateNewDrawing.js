@@ -598,12 +598,12 @@ class CreateNewDrawing extends React.Component {
     if (structure === null) {
       return;
     }
-    this.props.submit(
-      sequenceId,
-      sequence,
-      structure.secondaryPartners,
-      structure.tertiaryPartners,
-    );
+    this.props.submit({
+      id: sequenceId,
+      characters: sequence,
+      secondaryPartners: structure.secondaryPartners,
+      tertiaryPartners: structure.tertiaryPartners,
+    });
   }
 
   /**
