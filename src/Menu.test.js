@@ -41,19 +41,14 @@ function getFileNewButton() {
   return droppedComps.childNodes[0];
 }
 
-function getFileOpenCtButton() {
-  let droppedComps = getFileDroppedComps();
-  return droppedComps.childNodes[2];
-}
-
 function getFileOpenRna2drawerButton() {
   let droppedComps = getFileDroppedComps();
-  return droppedComps.childNodes[3];
+  return droppedComps.childNodes[1];
 }
 
 function getFileSaveButton() {
   let droppedComps = getFileDroppedComps();
-  return droppedComps.childNodes[5];
+  return droppedComps.childNodes[2];
 }
 
 function getExportDropdown() {
@@ -96,8 +91,6 @@ it('renders file dropdown when drawing is empty', () => {
   expect(top.style.color).toBe('black');
   let _new = getFileNewButton();
   expect(_new.style.color).toBe('black');
-  let openCt = getFileOpenCtButton();
-  expect(openCt.style.color).toBe('black');
   let openRna2drawer = getFileOpenRna2drawerButton();
   expect(openRna2drawer.style.color).toBe('black');
   let save = getFileSaveButton();
@@ -119,8 +112,6 @@ it('renders file dropdown when drawing is not empty', () => {
   expect(top.style.color).toBe('black');
   let _new = getFileNewButton();
   expect(_new.style.color).toBe('black');
-  let openCt = getFileOpenCtButton();
-  expect(openCt.style.color).toBe('gray');
   let openRna2drawer = getFileOpenRna2drawerButton();
   expect(openRna2drawer.style.color).toBe('gray');
   let save = getFileSaveButton();
@@ -175,60 +166,6 @@ describe('handles createNewDrawing callback', () => {
       render(<Menu drawingIsEmpty={true} />, container);
       let _new = getFileNewButton();
       _new.dispatchEvent(
-        new Event('click', { bubbles: true })
-      );
-    });
-  });
-});
-
-describe('handles openCt callback', () => {
-  it('binds openCt callback when drawing is empty', () => {
-    let openCt = jest.fn();
-    act(() => {
-      render(
-        <Menu
-          drawingIsEmpty={true}
-          openCt={openCt}
-        />,
-        container,
-      );
-    });
-    expect(openCt.mock.calls.length).toBe(0);
-    act(() => {
-      let openCt = getFileOpenCtButton();
-      openCt.dispatchEvent(
-        new Event('click', { bubbles: true })
-      );
-    });
-    expect(openCt.mock.calls.length).toBe(1);
-  });
-
-  it('does not bind openCt callback when drawing is not empty', () => {
-    let openCt = jest.fn();
-    act(() => {
-      render(
-        <Menu
-          drawingIsEmpty={false}
-          openCt={openCt}
-        />,
-        container,
-      );
-    });
-    expect(openCt.mock.calls.length).toBe(0);
-    act(() => {
-      let openCt = getFileOpenCtButton();
-      openCt.dispatchEvent(
-        new Event('click', { bubbles: true })
-      );
-    });
-    expect(openCt.mock.calls.length).toBe(0);
-  });
-
-  it('handles undefined openCt callback', () => {
-    act(() => {
-      render(<Menu drawingIsEmpty={false} />, container);
-      let openCt = getFileOpenCtButton();
-      openCt.dispatchEvent(
         new Event('click', { bubbles: true })
       );
     });

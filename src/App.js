@@ -191,19 +191,6 @@ class App {
     );
   }
 
-  openCt() {
-    if (!this._drawing.isEmpty()) {
-      window.open(document.URL);
-      return;
-    }
-    this.openForm(
-      <OpenCt
-        width={'100vw'}
-        submit={() => {}}
-      />
-    );
-  }
-
   openRna2drawer() {
     if (!this._drawing.isEmpty()) {
       window.open(document.URL);

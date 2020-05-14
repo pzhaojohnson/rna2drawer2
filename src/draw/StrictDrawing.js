@@ -328,26 +328,6 @@ class StrictDrawing {
    */
 
   /**
-   * @param {StrictDrawing~Ct} ct 
-   * 
-   * @returns {boolean} True if the structure was successfully drawn.
-   */
-  openCt(ct) {
-    let appended = this._appendStructure({
-      id: ct.id,
-      characters: ct.characters,
-      secondaryPartners: ct.secondaryPartners,
-      tertiaryPartners: ct.tertiaryPartners,
-    });
-    if (!appended) {
-      return false;
-    }
-    let seq = this._drawing.getSequenceById(ct.id);
-    seq.numberingOffset = ct.numberingOffset;
-    return true;
-  }
-
-  /**
    * @param {string} fileContents 
    * 
    * @returns {boolean} True if the saved state was successfully applied.
