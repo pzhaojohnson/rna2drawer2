@@ -206,8 +206,8 @@ class App {
     }
     this.openForm(
       <OpenRna2drawer
-        submit={fileContents => {
-          let applied = this._drawing.openRna2drawer2(fileContents);
+        submit={savedState => {
+          let applied = this._drawing.applySavedState(savedState);
           if (applied) {
             this.closeCurrForm();
           }

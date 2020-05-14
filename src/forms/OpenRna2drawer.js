@@ -227,8 +227,11 @@ class OpenRna2drawer extends React.Component {
     if (!this.checkFileExtension()) {
       return;
     }
-    let fc = this.state.fileContents;
-    if (!this.props.submit(fc)) {
+    let savedState = this.parseSavedState();
+    if (!savedState) {
+      return;
+    }
+    if (!this.props.submit(savedState)) {
       this.setState({
         errorMessage: this.props.errorMessages.invalidFile,
         errorMessageKey: uuidv1(),
@@ -263,6 +266,18 @@ class OpenRna2drawer extends React.Component {
       errorMessageKey: uuidv1(),
     });
     return false;
+  }
+
+  parseSavedState() {
+    try {
+      return JSON.parse(this.state.fileContents);
+    } catch (err) {
+      this.setState({
+        errorMessage: this.props.errorMessages.invalidFile,
+        errorMessageKey: uuidv1(),
+      });
+      return null;
+    }
   }
 }
 

@@ -324,30 +324,6 @@ class StrictDrawing {
     this._drawing.centerView();
     return true;
   }
-  
-  /**
-   * @typedef {Object} StrictDrawing~Ct 
-   * @property {string} id 
-   * @property {string} characters 
-   * @property {Array<number|null>} secondaryPartners 
-   * @property {Array<number|null>} tertiaryPartners 
-   * @property {number} numberingOffset 
-   */
-
-  /**
-   * @param {string} fileContents 
-   * 
-   * @returns {boolean} True if the saved state was successfully applied.
-   */
-  openRna2drawer2(fileContents) {
-    let savedState = null;
-    try {
-      savedState = JSON.parse(fileContents);
-    } catch (err) {
-      return false;
-    }
-    return this._applySavedState(savedState);
-  }
 }
 
 export default StrictDrawing;
