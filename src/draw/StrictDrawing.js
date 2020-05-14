@@ -305,6 +305,13 @@ class StrictDrawing {
   }
 
   /**
+   * @returns {Array<string>} 
+   */
+  sequenceIds() {
+    return this._drawing.sequenceIds();
+  }
+
+  /**
    * @param {StrictDrawing~Structure} structure 
    * 
    * @returns {boolean} True if the structure was successfully drawn.

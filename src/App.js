@@ -160,6 +160,14 @@ class App {
     this._renderPeripherals();
   }
 
+  _updateDocumentTitle() {
+    if (this._drawing.isEmpty()) {
+      document.title = 'RNA2Drawer 2';
+      return;
+    }
+    document.title = this._drawing.sequenceIds().join(', ');
+  }
+
   openForm(form) {
     this.closeCurrForm();
     ReactDOM.render(form, this.formContainer);
@@ -186,6 +194,7 @@ class App {
           });
           this.closeCurrForm();
           this._renderPeripherals();
+          this._updateDocumentTitle();
         }}
       />
     );
@@ -204,6 +213,7 @@ class App {
             this.closeCurrForm();
           }
           this._renderPeripherals();
+          this._updateDocumentTitle();
           return applied;
         }}
       />
