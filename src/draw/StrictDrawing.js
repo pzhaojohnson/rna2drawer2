@@ -123,7 +123,7 @@ class StrictDrawing {
    */
   get savableString() {
     let savableState = this.savableState();
-    return JSON.stringify(savableState);
+    return JSON.stringify(savableState, null, ' ');
   }
 
   /**

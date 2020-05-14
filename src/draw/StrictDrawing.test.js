@@ -175,7 +175,7 @@ it('savableString getter', () => {
   sd.addTo(document.body, () => createNodeSVG());
   sd._appendSequence('asdf', 'asdf');
   expect(sd.savableString).toBe(
-    JSON.stringify(sd.savableState())
+    JSON.stringify(sd.savableState(), null, ' ')
   );
 });
 

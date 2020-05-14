@@ -10,6 +10,7 @@ import Infobar from './Infobar';
 import CreateNewDrawing from './forms/CreateNewDrawing';
 import { OpenCt } from './forms/OpenCt';
 import { OpenRna2drawer } from './forms/OpenRna2drawer';
+import offerFileForDownload from './export/offerFileForDownload';
 import { ExportSvg } from './forms/ExportSvg';
 import { ExportPptx } from './forms/ExportPptx';
 
@@ -135,6 +136,7 @@ class App {
         createNewDrawing={() => this.createNewDrawing()}
         openCt={() => this.openCt()}
         openRna2drawer={() => this.openRna2drawer()}
+        save={() => this.save()}
         exportSvg={() => this.exportSvg()}
         exportPptx={() => this.exportPptx()}
       />
@@ -212,6 +214,14 @@ class App {
         submit={() => {}}
       />
     );
+  }
+
+  save() {
+    offerFileForDownload({
+      name: 'Drawing.rna2drawer2',
+      type: 'text/plain',
+      contents: this._drawing.savableString,
+    });
   }
 
   exportSvg() {

@@ -235,6 +235,58 @@ describe('handles openCt callback', () => {
   });
 });
 
+describe('handling of save callback', () => {
+  it('does not bind save callback when drawing is empty', () => {
+    let save = jest.fn();
+    act(() => {
+      render(
+        <Menu
+          drawingIsEmpty={true}
+          save={save}
+        />,
+        container,
+      );
+    });
+    act(() => {
+      let button = getFileSaveButton();
+      button.dispatchEvent(
+        new Event('click', { bubbles: true })
+      );
+    });
+    expect(save.mock.calls.length).toBe(0);
+  });
+
+  it('binds save callback when drawing is not empty', () => {
+    let save = jest.fn();
+    act(() => {
+      render(
+        <Menu
+          drawingIsEmpty={false}
+          save={save}
+        />,
+        container,
+      );
+    });
+    act(() => {
+      let button = getFileSaveButton();
+      button.dispatchEvent(
+        new Event('click', { bubbles: true })
+      );
+    });
+    expect(save.mock.calls.length).toBe(1);
+  });
+
+  it('handles undefined save callback', () => {
+    act(() => {
+      render(<Menu drawingIsEmpty={false} />, container);
+      let button = getFileSaveButton();
+      button.dispatchEvent(
+        new Event('click', { bubbles: true })
+      );
+    });
+  });
+});
+
 it('renders export dropdown when drawing is empty', () => {
   act(() => {
     render(
