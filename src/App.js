@@ -8,7 +8,6 @@ import Menu from './Menu';
 import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
-import { OpenCt } from './forms/OpenCt';
 import { OpenRna2drawer } from './forms/OpenRna2drawer';
 import offerFileForDownload from './export/offerFileForDownload';
 import { ExportSvg } from './forms/ExportSvg';
