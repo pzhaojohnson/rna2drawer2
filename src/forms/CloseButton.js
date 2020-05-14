@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import blackCrossMark from './blackCrossMark.svg';
-import grayCrossMark from './grayCrossMark.svg';
-import whiteCrossMark from './whiteCrossMark.svg';
+import blackCrossMark from '../icons/blackCrossMark.svg';
+import grayCrossMark from '../icons/grayCrossMark.svg';
+import whiteCrossMark from '../icons/whiteCrossMark.svg';
 
 class CloseButton extends React.Component {
   constructor(props) {

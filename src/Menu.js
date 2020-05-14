@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import logo from './logo.svg';
-import checkmark from './checkmark.svg';
+import logo from './icons/logo.svg';
+import checkmark from './icons/checkmark.svg';
 const uuidv1 = require('uuid/v1');
 
 class Menu extends React.Component {
