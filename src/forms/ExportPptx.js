@@ -332,6 +332,4 @@ ExportPptx.propTypes = {
   close: PropTypes.func.isRequired,
 };
 
-export {
-  ExportPptx,
-};
+export default ExportPptx;

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 const fs = require('fs');
 
-import { OpenRna2drawer } from './OpenRna2drawer';
+import OpenRna2drawer from './OpenRna2drawer';
 
 function getComponent(componentWrapper) {
   return componentWrapper.getDOMNode();

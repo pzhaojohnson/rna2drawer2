@@ -347,6 +347,4 @@ ExportSvg.propTypes = {
   close: PropTypes.func.isRequired,
 };
 
-export {
-  ExportSvg,
-};
+export default ExportSvg;

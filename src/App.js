@@ -8,10 +8,10 @@ import Menu from './Menu';
 import Infobar from './Infobar';
 
 import CreateNewDrawing from './forms/CreateNewDrawing';
-import { OpenRna2drawer } from './forms/OpenRna2drawer';
+import OpenRna2drawer from './forms/OpenRna2drawer';
 import offerFileForDownload from './export/offerFileForDownload';
-import { ExportSvg } from './forms/ExportSvg';
-import { ExportPptx } from './forms/ExportPptx';
+import ExportSvg from './forms/ExportSvg';
+import ExportPptx from './forms/ExportPptx';
 
 class App {
 

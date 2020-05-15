@@ -3,7 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent } from '@testing-library/react';
 
-import { ExportSvg } from './ExportSvg';
+import ExportSvg from './ExportSvg';
 
 let container = null;
 

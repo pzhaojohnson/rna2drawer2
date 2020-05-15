@@ -303,6 +303,4 @@ OpenRna2drawer.defaultProps = {
   },
 };
 
-export {
-  OpenRna2drawer,
-};
+export default OpenRna2drawer;

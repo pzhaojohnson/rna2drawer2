@@ -3,7 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent } from '@testing-library/react';
 
-import { ExportPptx } from './ExportPptx';
+import ExportPptx from './ExportPptx';
 
 let container = null;
 
