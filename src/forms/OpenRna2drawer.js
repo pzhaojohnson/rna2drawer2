@@ -23,7 +23,7 @@ class OpenRna2drawer extends React.Component {
         style={{
           width: this.props.width,
           height: '100%',
-          backgroundColor: '#fefefe',
+          backgroundColor: '#ffffff',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',

@@ -25,7 +25,7 @@ class ExportSvg extends React.Component {
           position: 'relative',
           width: '400px',
           height: '100%',
-          backgroundColor: '#fefefe',
+          backgroundColor: '#ffffff',
           borderWidth: '0px 0px 0px thin',
           borderStyle: 'solid',
           borderColor: '#bfbfbf',
