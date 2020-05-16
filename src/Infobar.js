@@ -27,7 +27,7 @@ class Infobar extends React.Component {
           borderWidth: 'thin 0px 0px 0px',
           borderStyle: 'solid',
           borderColor: '#bfbfbf',
-          backgroundColor: '#fefefe',
+          backgroundColor: '#ffffff',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
