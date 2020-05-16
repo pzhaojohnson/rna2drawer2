@@ -225,7 +225,7 @@ Menu.propTypes = {
 
 Menu.defaultProps = {
   borderColor: '#bfbfbf',
-  backgroundColor: '#fefefe',
+  backgroundColor: '#ffffff',
   buttonColor: '#000000',
   disabledButtonColor: '#808080',
 
