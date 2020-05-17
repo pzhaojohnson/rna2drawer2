@@ -3,7 +3,7 @@ import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
-import FiniteStack from './FiniteStack';
+import FiniteStack from '../undo/FiniteStack';
 
 import overallSecondaryPartners from './edit/overallSecondaryPartners';
 import appendStructure from './edit/appendStructure';
