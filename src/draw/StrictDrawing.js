@@ -17,8 +17,6 @@ class StrictDrawing {
     this._perBaseLayoutProps = [];
     this._baseWidth = 13.5;
     this._baseHeight = 13.5;
-
-    this._interactionState = {};
   }
 
   /**
@@ -163,7 +161,7 @@ class StrictDrawing {
   appendSequence(id, characters) {
     return this._appendSequence(id, characters);
   }
-  
+
   _appendSequence(id, characters) {
     return this._appendStructure({
       id: id,
