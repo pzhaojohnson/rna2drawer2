@@ -1,6 +1,19 @@
 class PerBaseStrictLayoutProps {
 
   /**
+   * @param {Array<PerBaseStrictLayoutProps>} arr 
+   * 
+   * @returns {Array<PerBaseStrictLayoutProps>} 
+   */
+  static deepCopyArray(arr) {
+    let copyArr = [];
+    arr.forEach(props => {
+      copyArr.push(props.deepCopy());
+    });
+    return copyArr;
+  }
+
+  /**
    * @param {PerBaseStrictLayoutProps~SavableState} savedState 
    * 
    * @returns {PerBaseStrictLayoutProps} 

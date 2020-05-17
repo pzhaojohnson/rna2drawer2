@@ -1,5 +1,27 @@
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 
+describe('deepCopyArray static method', () => {
+  let arr = [
+    new PerBaseStrictLayoutProps(),
+    new PerBaseStrictLayoutProps(),
+    new PerBaseStrictLayoutProps(),
+  ];
+  let copyArr = PerBaseStrictLayoutProps.deepCopyArray(arr);
+  
+  it('returns no shared objects', () => {
+    expect(copyArr).not.toBe(arr);
+    copyArr.forEach((props, i) => {
+      expect(props).not.toBe(arr[i]);
+    });
+  });
+
+  it('returns correct values', () => {
+    expect(
+      JSON.stringify(arr)
+    ).toBe(JSON.stringify(copyArr));
+  });
+});
+
 it('fromSavedState static method', () => {
   let bps1 = new PerBaseStrictLayoutProps();
   bps1.stretch3 = 0.8;
