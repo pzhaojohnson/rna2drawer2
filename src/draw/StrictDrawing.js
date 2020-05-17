@@ -3,7 +3,6 @@ import StrictLayout from './layout/singleseq/strict/StrictLayout';
 import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
-import FiniteStack from '../undo/FiniteStack';
 
 import overallSecondaryPartners from './edit/overallSecondaryPartners';
 import appendStructure from './edit/appendStructure';
@@ -18,9 +17,6 @@ class StrictDrawing {
     this._perBaseLayoutProps = [];
     this._baseWidth = 13.5;
     this._baseHeight = 13.5;
-
-    this._undoStack = new FiniteStack();
-    this._redoStack = new FiniteStack();
 
     this._interactionState = {};
   }
@@ -65,30 +61,6 @@ class StrictDrawing {
    */
   isEmpty() {
     return this._drawing.isEmpty();
-  }
-
-  /**
-   * @param {StrictDrawing~SavableState} savedState 
-   */
-  _pushUndo(savedState) {
-    this._undoStack.push(savedState);
-    this._redoStack.clear();
-  }
-
-  undo() {
-    if (!this._undoStack.isEmpty()) {
-      this._redoStack.push(this.savableState());
-      let state = this._undoStack.pop();
-      this._applySavedState(state);
-    }
-  }
-
-  redo() {
-    if (!this._redoStack.isEmpty()) {
-      this._undoStack.push(this.savableState());
-      let state = this._redoStack.pop();
-      this._applySavedState(state);
-    }
   }
 
   /**
@@ -188,6 +160,10 @@ class StrictDrawing {
    * 
    * @returns {boolean} True if the sequence was successfully appended.
    */
+  appendSequence(id, characters) {
+    return this._appendSequence(id, characters);
+  }
+  
   _appendSequence(id, characters) {
     return this._appendStructure({
       id: id,

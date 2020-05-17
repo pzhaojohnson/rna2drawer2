@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 
+import FiniteStack from './undo/FiniteStack';
+
 import StrictDrawing from './draw/StrictDrawing';
 
 import createMenuForApp from './menu/createMenuForApp';
@@ -24,6 +26,9 @@ class App {
    */
   constructor(SVG) {
     this._SVG = SVG;
+
+    this._undoStack = new FiniteStack();
+    this._redoStack = new FiniteStack();
     
     this._fillInBody();
     this._initializeDrawing();
@@ -181,6 +186,45 @@ class App {
       return;
     }
     document.title = this.strictDrawing.sequenceIds().join(', ');
+  }
+
+  pushUndo() {
+    this._undoStack.push(
+      this.strictDrawing.savableState()
+    );
+    this._redoStack.clear();
+  }
+
+  canUndo() {
+    return !this._undoStack.isEmpty();
+  }
+
+  undo() {
+    if (!this.canUndo()) {
+      return;
+    }
+    this._redoStack.push(
+      this.strictDrawing.savableState()
+    );
+    this.strictDrawing.applySavedState(
+      this._undoStack.pop()
+    );
+  }
+
+  canRedo() {
+    return !this._redoStack.isEmpty();
+  }
+
+  redo() {
+    if (!this.canRedo()) {
+      return;
+    }
+    this._undoStack.push(
+      this.strictDrawing.savableState()
+    );
+    this.strictDrawing.applySavedState(
+      this._redoStack.pop()
+    );
   }
 
   save() {
