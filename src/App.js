@@ -71,58 +71,34 @@ class App {
     outermostDiv.appendChild(infobarContainer);
   }
 
-  /**
-   * @returns {string} 
-   */
   get _menuContainerId() {
     return 'MenuContainer';
   }
   
-  /**
-   * @returns {string} 
-   */
   get _drawingContainerId() {
     return 'DrawingContainer';
   }
 
-  /**
-   * @returns {string} 
-   */
   get _formContainerId() {
     return 'FormContainer';
   }
 
-  /**
-   * @returns {string} 
-   */
   get _infobarContainerId() {
     return 'InfobarContainer';
   }
 
-  /**
-   * @returns {Element} 
-   */
   _getMenuContainer() {
     return document.getElementById(this._menuContainerId);
   }
 
-  /**
-   * @returns {Element} 
-   */
   _getDrawingContainer() {
     return document.getElementById(this._drawingContainerId);
   }
 
-  /**
-   * @returns {Element} 
-   */
   _getFormContainer() {
     return document.getElementById(this._formContainerId);
   }
 
-  /**
-   * @returns {Element} 
-   */
   _getInfobarContainer() {
     return document.getElementById(this._infobarContainerId);
   }
