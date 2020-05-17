@@ -185,6 +185,7 @@ class App {
     this.strictDrawing.applySavedState(
       this._undoStack.pop()
     );
+    this.renderPeripherals();
   }
 
   canRedo() {
@@ -201,6 +202,7 @@ class App {
     this.strictDrawing.applySavedState(
       this._redoStack.pop()
     );
+    this.renderPeripherals();
   }
 
   save() {
