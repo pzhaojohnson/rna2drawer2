@@ -1,4 +1,4 @@
-import secondaryAndTertiaryPartners from '../../parse/secondaryAndTertiaryPartners';
+import splitSecondaryAndTertiaryPairs from '../../parse/splitSecondaryAndTertiaryPairs';
 
 function _idsToPositions(drawing) {
   let dict = {};
@@ -24,7 +24,7 @@ function _overallSecondaryPartners(drawing) {
 }
 
 function _removeKnots(partners) {
-  return secondaryAndTertiaryPartners(partners).secondaryPartners;
+  return splitSecondaryAndTertiaryPairs(partners).secondaryPartners;
 }
 
 /**

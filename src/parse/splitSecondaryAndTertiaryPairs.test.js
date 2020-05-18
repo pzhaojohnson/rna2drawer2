@@ -1,4 +1,4 @@
-import secondaryAndTertiaryPartners from './secondaryAndTertiaryPartners';
+import splitSecondaryAndTertiaryPairs from './splitSecondaryAndTertiaryPairs';
 import validatePartners from './validatePartners';
 
 /**
@@ -240,7 +240,7 @@ cases.push({
   tertiaryPartners: tertiaryPartners,
 });
 
-it('secondaryAndTertiaryPartners', () => {
+it('splitSecondaryAndTertiaryPairs', () => {
   cases.forEach(cs => {
 
     // validate manually generated partners notation
@@ -250,7 +250,7 @@ it('secondaryAndTertiaryPartners', () => {
     validatePartners(cs.tertiaryPartners);
     expect(cs.tertiaryPartners.length).toBe(cs.allPartners.length);
 
-    let result = secondaryAndTertiaryPartners(cs.allPartners);
+    let result = splitSecondaryAndTertiaryPairs(cs.allPartners);
 
     expect(result.secondaryPartners.length).toBe(cs.allPartners.length);
     expect(result.tertiaryPartners.length).toBe(cs.allPartners.length);

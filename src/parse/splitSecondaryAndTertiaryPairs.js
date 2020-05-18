@@ -14,7 +14,7 @@
  * 
  * @returns {SecondaryAndTertiaryPartners} 
  */
-function secondaryAndTertiaryPartners(allPartners) {
+function splitSecondaryAndTertiaryPairs(allPartners) {
 
   // the partners notation of the secondary structure
   let secondaryPartners = [];
@@ -123,4 +123,4 @@ function secondaryAndTertiaryPartners(allPartners) {
   };
 }
 
-export default secondaryAndTertiaryPartners;
+export default splitSecondaryAndTertiaryPairs;
