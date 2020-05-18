@@ -269,10 +269,15 @@ class StrictDrawing {
    * @returns {StrictLayout} 
    */
   layout() {
+    let partners = this.layoutPartners();
+    let perBaseProps = this.perBaseLayoutProps();
+    while (perBaseProps.length < partners.length) {
+      perBaseProps.push(new PerBaseStrictLayoutProps());
+    }
     return new StrictLayout(
-      this.layoutPartners(),
+      partners,
       this.generalLayoutProps(),
-      this.perBaseLayoutProps(),
+      perBaseProps.slice(0, partners.length),
     );
   }
 
