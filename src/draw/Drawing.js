@@ -390,6 +390,13 @@ class Drawing {
     this._tertiaryBonds.forEach(tb => cb(tb));
   }
 
+  _addTertiaryBond(tb) {
+    this._tertiaryBonds.push(tb);
+    if (this._onAddTertiaryBond) {
+      this._onAddTertiaryBond(tb);
+    }
+  }
+
   /**
    * @param {Base} b1 
    * @param {Base} b2 
@@ -398,8 +405,12 @@ class Drawing {
    */
   addTertiaryBond(b1, b2) {
     let tb = TertiaryBond.create(this._svg, b1, b2);
-    this._tertiaryBonds.push(tb);
+    this._addTertiaryBond(tb);
     return tb;
+  }
+
+  onAddTertiaryBond(cb) {
+    this._onAddTertiaryBond = cb;
   }
 
   /**
@@ -523,7 +534,7 @@ class Drawing {
     });
     savedState.tertiaryBonds.forEach(stb => {
       let tb = TertiaryBond.fromSavedState(stb, this._svg, id => this.getBaseById(id));
-      this._tertiaryBonds.push(tb);
+      this._addTertiaryBond(tb);
     });
     this.adjustNumberingLineAngles();
     this.centerView();

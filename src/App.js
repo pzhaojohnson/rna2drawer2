@@ -5,6 +5,7 @@ import './App.css';
 import FiniteStack from './undo/FiniteStack';
 
 import StrictDrawing from './draw/StrictDrawing';
+import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 
 import createMenuForApp from './menu/createMenuForApp';
 import createInfobarForApp from './infobar/createInfobarForApp';
@@ -32,6 +33,7 @@ class App {
     
     this._fillInBody();
     this._initializeDrawing();
+    this._initializeDrawingInteraction();
     this.renderPeripherals();
 
     this._setBindings();
@@ -129,6 +131,22 @@ class App {
     return this._strictDrawing;
   }
 
+  _initializeDrawingInteraction() {
+    this._strictDrawingInteraction = new StrictDrawingInteraction(
+      this.strictDrawing
+    );
+    this._strictDrawingInteraction.onShouldPushUndo(() => {
+      this.pushUndo();
+    });
+    this._strictDrawingInteraction.onChange(() => {
+      this.renderPeripherals();
+    });
+  }
+
+  get strictDrawingInteraction() {
+    return this._strictDrawingInteraction;
+  }
+
   renderPeripherals() {
     this.renderMenu();
     this.renderInfobar();
@@ -179,6 +197,7 @@ class App {
       this.strictDrawing.savableState()
     );
     this._redoStack.clear();
+    this.renderPeripherals();
   }
 
   canUndo() {

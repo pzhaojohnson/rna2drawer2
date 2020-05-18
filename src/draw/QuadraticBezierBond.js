@@ -305,6 +305,22 @@ class QuadraticBezierBond {
     this._path.attr({ 'stroke-dasharray': sd });
   }
 
+  get fill() {
+    return this._path.attr('fill');
+  }
+
+  set fill(f) {
+    this._path.attr({ 'fill': f });
+  }
+
+  get fillOpacity() {
+    return this._path.attr('fill-opacity');
+  }
+
+  set fillOpacity(fo) {
+    this._path.attr({ 'fill-opacity': fo });
+  }
+
   /**
    * @returns {string} 
    */
@@ -319,17 +335,25 @@ class QuadraticBezierBond {
     this._path.css({ 'cursor': c });
   }
 
+  onMouseover(cb) {
+    this._path.mouseover(cb);
+  }
+
+  onMouseout(cb) {
+    this._path.mouseout(cb);
+  }
+
   /**
    * @param {function} cb 
    */
-  bindMousedown(cb) {
+  onMousedown(cb) {
     this._path.mousedown(cb);
   }
 
   /**
    * @param {function} cb 
    */
-  bindDlbclick(cb) {
+  onDblclick(cb) {
     this._path.dblclick(cb);
   }
 
@@ -528,7 +552,7 @@ TertiaryBond._mostRecentProps = {
   padding2: 8,
   stroke: '#0000ff',
   strokeWidth: 1,
-  strokeDasharray: '2 2',
+  strokeDasharray: '6 2',
 };
 
 export {

@@ -240,21 +240,41 @@ describe('QuadraticBezierBond class', () => {
     expect(p.css('cursor')).toBe('pointer');
   });
 
-  it('bindMousedown and bindDblclick methods', () => {
+  describe('binding events', () => {
     let svg = createNodeSVG();
-    let b1 = Base.create(svg, 'b', 1, 5);
-    let b2 = Base.create(svg, 't', -100, -200);
-    let d = QuadraticBezierBond._dPath(b1, b2, 5, 12, 400, Math.PI / 5);
+    let b1 = Base.create(svg, 'b', 1, 2);
+    let b2 = Base.create(svg, 'r', 5, 9);
+    let d = QuadraticBezierBond._dPath(b1, b2, 7, 8, 25, Math.PI / 3);
     let p = svg.path(d);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    let md = null;
-    qbb.bindMousedown(e => { md = e; });
-    p.fire('mousedown');
-    expect(md).toBeTruthy();
-    let dc = null;
-    qbb.bindDlbclick(e => { dc = e; });
-    p.fire('dblclick');
-    expect(dc).toBeTruthy();
+
+    it('onMouseover method', () => {
+      let over = false;
+      qbb.onMouseover(e => over = e);
+      p.fire('mouseover');
+      expect(over).toBeTruthy();
+    });
+
+    it('onMouseout method', () => {
+      let out = false;
+      qbb.onMouseout(e => out = e);
+      p.fire('mouseout');
+      expect(out).toBeTruthy();
+    });
+
+    it('onMousedown method', () => {
+      let down = false;
+      qbb.onMousedown(e => down = e);
+      p.fire('mousedown');
+      expect(down).toBeTruthy();
+    });
+
+    it('onDblclick method', () => {
+      let dbl = false;
+      qbb.onDblclick(e => dbl = e);
+      p.fire('dblclick');
+      expect(dbl).toBeTruthy();
+    });
   });
 
   it('remove method', () => {
