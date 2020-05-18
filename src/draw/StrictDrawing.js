@@ -296,6 +296,30 @@ class StrictDrawing {
   sequenceIds() {
     return this._drawing.sequenceIds();
   }
+
+  hasFlatOutermostLoop() {
+    return this._generalLayoutProps.flatOutermostLoop;
+  }
+
+  flatOutermostLoop() {
+    if (this.hasFlatOutermostLoop()) {
+      return;
+    }
+    this._generalLayoutProps.flatOutermostLoop = true;
+    this._applyLayout();
+  }
+
+  hasRoundOutermostLoop() {
+    return !this.hasFlatOutermostLoop();
+  }
+
+  roundOutermostLoop() {
+    if (this.hasRoundOutermostLoop()) {
+      return;
+    }
+    this._generalLayoutProps.flatOutermostLoop = false;
+    this._applyLayout();
+  }
 }
 
 export default StrictDrawing;

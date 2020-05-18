@@ -36,6 +36,24 @@ function createMenuForApp(app) {
       canUndo={app.canUndo()}
       redo={() => app.redo()}
       canRedo={app.canRedo()}
+      flatOutermostLoop={() => {
+        if (app.strictDrawing.hasFlatOutermostLoop()) {
+          return;
+        }
+        app.pushUndo();
+        app.strictDrawing.flatOutermostLoop();
+        app.renderPeripherals();
+      }}
+      hasFlatOutermostLoop={app.strictDrawing.hasFlatOutermostLoop()}
+      roundOutermostLoop={() => {
+        if (app.strictDrawing.hasRoundOutermostLoop()) {
+          return;
+        }
+        app.pushUndo();
+        app.strictDrawing.roundOutermostLoop();
+        app.renderPeripherals();
+      }}
+      hasRoundOutermostLoop={app.strictDrawing.hasRoundOutermostLoop()}
       exportSvg={() => renderExportSvgInApp(app)}
       exportPptx={() => renderExportPptxInApp(app)}
     />

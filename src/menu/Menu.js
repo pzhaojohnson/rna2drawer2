@@ -199,6 +199,19 @@ class Menu extends React.Component {
           disabled: !this.props.canRedo,
           keyBinding: 'Ctrl+Shift+Z',
         }),
+        this.separator(),
+        this.droppedButton({
+          text: 'Flat Outermost Loop',
+          onClick: () => this.props.flatOutermostLoop(),
+          disabled: this.props.hasFlatOutermostLoop,
+          checked: this.props.hasFlatOutermostLoop,
+        }),
+        this.droppedButton({
+          text: 'Round Outermost Loop',
+          onClick: () => this.props.roundOutermostLoop(),
+          disabled: this.props.hasRoundOutermostLoop,
+          checked: this.props.hasRoundOutermostLoop,
+        }),
       ];
     }
     return this.dropdown(topButton, droppedComps);
@@ -253,6 +266,10 @@ Menu.propTypes = {
   canUndo: PropTypes.bool,
   redo: PropTypes.func,
   canRedo: PropTypes.bool,
+  flatOutermostLoop: PropTypes.func,
+  hasFlatOutermostLoop: PropTypes.bool,
+  roundOutermostLoop: PropTypes.func,
+  hasRoundOutermostLoop: PropTypes.bool,
   exportSvg: PropTypes.func,
   exportPptx: PropTypes.func,
 };
@@ -271,6 +288,10 @@ Menu.defaultProps = {
   canUndo: false,
   redo: () => {},
   canRedo: false,
+  flatOutermostLoop: () => {},
+  hasFlatOutermostLoop: false,
+  roundOutermostLoop: () => {},
+  hasRoundOutermostLoop: false,
   exportSvg: () => {},
   exportPptx: () => {},
 };
