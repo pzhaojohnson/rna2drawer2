@@ -33,6 +33,8 @@ class App {
     this._fillInBody();
     this._initializeDrawing();
     this.renderPeripherals();
+
+    this._setBindings();
     
     renderCreateNewDrawingInApp(this);
   }
@@ -42,6 +44,17 @@ class App {
    */
   get SVG() {
     return this._SVG;
+  }
+
+  _setBindings() {
+    document.addEventListener('keydown', event => {
+      let k = event.key.toUpperCase();
+      if (event.ctrlKey && event.shiftKey && k == 'Z') {
+        this.redo();
+      } else if (event.ctrlKey && k == 'Z') {
+        this.undo();
+      }
+    });
   }
 
   _fillInBody() {

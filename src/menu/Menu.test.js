@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { render, unmountComponentAtNode, createPortal } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 
 import Menu from './Menu';
@@ -51,9 +51,34 @@ function getFileSaveButton() {
   return droppedComps.childNodes[2];
 }
 
-function getExportDropdown() {
+function getEditDropdown() {
   let c = getComponent();
   return c.childNodes[2];
+}
+
+function getEditTopButtn() {
+  let dropdown = getEditDropdown();
+  return dropdown.childNodes[0];
+}
+
+function getEditDroppedComps() {
+  let dropdown = getEditDropdown();
+  return dropdown.childNodes[1];
+}
+
+function getEditUndoButton() {
+  let droppedComps = getEditDroppedComps();
+  return droppedComps.childNodes[0];
+}
+
+function getEditRedoButton() {
+  let droppedComps = getEditDroppedComps();
+  return droppedComps.childNodes[1];
+}
+
+function getExportDropdown() {
+  let c = getComponent();
+  return c.childNodes[3];
 }
 
 function getExportTopButton() {
@@ -222,6 +247,40 @@ describe('handling of save callback', () => {
       );
     });
   });
+});
+
+it('renders edit dropdown when drawing is empty', () => {
+  act(() => {
+    render(
+      <Menu
+        buttonColor={'black'}
+        disabledButtonColor={'gray'}
+        drawingIsEmpty={true}
+      />,
+      container,
+    );
+  });
+  let top = getEditTopButtn();
+  expect(top.style.color).toBe('gray');
+  let droppedComps = getEditDroppedComps();
+  expect(droppedComps.childNodes.length).toBe(0);
+});
+
+it('renders edit dropdown when drawing is not empty', () => {
+  act(() => {
+    render(
+      <Menu
+        buttonColor={'black'}
+        disabledButtonColor={'gray'}
+        drawingIsEmpty={false}
+      />,
+      container,
+    );
+  });
+  let top = getEditTopButtn();
+  expect(top.style.color).toBe('black');
+  let droppedComps = getEditDroppedComps();
+  expect(droppedComps.childNodes.length).toBeGreaterThan(0);
 });
 
 it('renders export dropdown when drawing is empty', () => {

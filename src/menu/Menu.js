@@ -20,6 +20,7 @@ class Menu extends React.Component {
       >
         {this.logo()}
         {this.fileDropdown()}
+        {this.editDropdown()}
         {this.exportDropdown()}
       </div>
     );
@@ -71,6 +72,7 @@ class Menu extends React.Component {
    * @property {string} text 
    * @property {callback} onClick 
    * @property {boolean} disabled 
+   * @property {string} keyBinding 
    * @param {boolean} checked 
    */
 
@@ -99,6 +101,9 @@ class Menu extends React.Component {
         <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
           <div style={{ flexGrow: '1' }} >
             {props.text}
+          </div>
+          <div>
+            {props.keyBinding ? props.keyBinding : null}
           </div>
           {props.checked ? this.checkmark() : null}
         </div>
@@ -174,6 +179,31 @@ class Menu extends React.Component {
     );
   }
 
+  editDropdown() {
+    let topButton = this.topButton({
+      text: 'Edit',
+      disabled: this.props.drawingIsEmpty,
+    });
+    let droppedComps = [];
+    if (!this.props.drawingIsEmpty) {
+      droppedComps = [
+        this.droppedButton({
+          text: 'Undo',
+          onClick: () => this.props.undo(),
+          disabled: !this.props.canUndo,
+          keyBinding: 'Ctrl+Z',
+        }),
+        this.droppedButton({
+          text: 'Redo',
+          onClick: () => this.props.redo(),
+          disabled: !this.props.canRedo,
+          keyBinding: 'Ctrl+Shift+Z',
+        }),
+      ];
+    }
+    return this.dropdown(topButton, droppedComps);
+  }
+
   exportDropdown() {
     let topButton = this.topButton({
       text: 'Export',
@@ -219,6 +249,10 @@ Menu.propTypes = {
   createNewDrawing: PropTypes.func,
   openRna2drawer: PropTypes.func,
   save: PropTypes.func,
+  undo: PropTypes.func,
+  canUndo: PropTypes.bool,
+  redo: PropTypes.func,
+  canRedo: PropTypes.bool,
   exportSvg: PropTypes.func,
   exportPptx: PropTypes.func,
 };
@@ -233,6 +267,10 @@ Menu.defaultProps = {
   createNewDrawing: () => {},
   openRna2drawer: () => {},
   save: () => {},
+  undo: () => {},
+  canUndo: false,
+  redo: () => {},
+  canRedo: false,
   exportSvg: () => {},
   exportPptx: () => {},
 };

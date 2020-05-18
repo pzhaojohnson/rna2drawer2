@@ -32,6 +32,10 @@ function createMenuForApp(app) {
         renderOpenRna2drawerInApp(app);
       }}
       save={() => app.save()}
+      undo={() => app.undo()}
+      canUndo={app.canUndo()}
+      redo={() => app.redo()}
+      canRedo={app.canRedo()}
       exportSvg={() => renderExportSvgInApp(app)}
       exportPptx={() => renderExportPptxInApp(app)}
     />
