@@ -216,8 +216,12 @@ class App {
   }
 
   save() {
+    let name = 'Drawing';
+    if (document.title) {
+      name = document.title;
+    }
     offerFileForDownload({
-      name: document.title + '.rna2drawer2',
+      name: name + '.rna2drawer2',
       type: 'text/plain',
       contents: this.strictDrawing.savableString,
     });

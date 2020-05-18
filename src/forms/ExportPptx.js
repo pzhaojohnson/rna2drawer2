@@ -262,7 +262,7 @@ class ExportPptx extends React.Component {
     let scaling = bfs / Base.mostRecentProps().fontSize;
     let pres = this.createPptx(scaling);
     if (pres) {
-      pres.writeFile('Drawing.pptx');
+      this.savePptx(pres);
     }
   }
 
@@ -315,6 +315,17 @@ class ExportPptx extends React.Component {
     let pres = createPptxFromSvg(svg);
     document.body.removeChild(div);
     return pres;
+  }
+
+  /**
+   * @param {PptxGenJs.PptxGenJs} pres 
+   */
+  savePptx(pres) {
+    let name = 'Drawing';
+    if (document.title) {
+      name = document.title;
+    }
+    pres.writeFile(name + '.pptx');
   }
 
   close() {

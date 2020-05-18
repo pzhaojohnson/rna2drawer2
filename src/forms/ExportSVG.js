@@ -325,8 +325,12 @@ class ExportSvg extends React.Component {
    * @param {string} svgString 
    */
   offerSvgFileForDownload(svgString) {
+    let name = 'Drawing';
+    if (document.title) {
+      name = document.title;
+    }
     offerFileForDownload({
-      name: 'Drawing.svg',
+      name: name + '.svg',
       type: 'text/plain',
       contents: svgString,
     });
