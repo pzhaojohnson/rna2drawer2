@@ -5,7 +5,7 @@ import CreateNewDrawing from './CreateNewDrawing';
  * @param {App} app 
  */
 function renderCreateNewDrawingInApp(app) {
-  app.renderForm(
+  app.renderForm(() => (
     <CreateNewDrawing
       width={'100vw'}
       submit={structure => {
@@ -15,7 +15,7 @@ function renderCreateNewDrawingInApp(app) {
         app.updateDocumentTitle();
       }}
     />
-  );
+  ));
 }
 
 export default renderCreateNewDrawingInApp;

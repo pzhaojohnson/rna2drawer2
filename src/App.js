@@ -132,8 +132,8 @@ class App {
   renderPeripherals() {
     this.renderMenu();
     this.renderInfobar();
-    if (this._currForm) {
-      this._currForm.forceUpdate();
+    if (this._currFormFactory) {
+      this.renderForm(this._currFormFactory);
     }
   }
 
@@ -151,19 +151,16 @@ class App {
     );
   }
 
-  /**
-   * @param {React.Element} formElement 
-   */
-  renderForm(formElement) {
-    this.unmountCurrForm();
-    this._currForm = ReactDOM.render(
-      formElement,
-      this._getFormContainer()
+  renderForm(formFactory) {
+    ReactDOM.render(
+      formFactory(),
+      this._getFormContainer(),
     );
+    this._currFormFactory = formFactory;
   }
 
   unmountCurrForm() {
-    this._currForm = null;
+    this._currFormFactory = null;
     ReactDOM.unmountComponentAtNode(
       this._getFormContainer()
     );

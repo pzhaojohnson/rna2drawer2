@@ -5,7 +5,7 @@ import OpenRna2drawer from './OpenRna2drawer';
  * @param {App} app 
  */
 function renderOpenRna2drawerInApp(app) {
-  app.renderForm(
+  app.renderForm(() => (
     <OpenRna2drawer
       submit={savedState => {
         let applied = app.strictDrawing.applySavedState(savedState);
@@ -17,7 +17,7 @@ function renderOpenRna2drawerInApp(app) {
         return applied;
       }}
     />
-  );
+  ));
 }
 
 export default renderOpenRna2drawerInApp;
