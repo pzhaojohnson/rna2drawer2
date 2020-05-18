@@ -252,11 +252,9 @@ class StrictDrawing {
    * @returns {Array<PerBaseStrictLayoutProps>} 
    */
   perBaseLayoutProps() {
-    let props = [];
-    this._perBaseLayoutProps.forEach(ps => {
-      props.push(ps.deepCopy());
-    });
-    return props;
+    return PerBaseStrictLayoutProps.deepCopyArray(
+      this._perBaseLayoutProps
+    );
   }
 
   get baseWidth() {
