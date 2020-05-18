@@ -4,7 +4,7 @@ import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLay
 import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
 
-import overallSecondaryPartners from './edit/overallSecondaryPartners';
+import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
 import appendStructure from './edit/appendStructure';
 import isKnotless from '../parse/isKnotless';
 import applyStrictLayout from './edit/applyStrictLayout';
@@ -17,6 +17,10 @@ class StrictDrawing {
     this._perBaseLayoutProps = [];
     this._baseWidth = 13.5;
     this._baseHeight = 13.5;
+  }
+
+  get drawing() {
+    return this._drawing;
   }
 
   /**
@@ -233,8 +237,8 @@ class StrictDrawing {
   /**
    * @returns {Array<number|null>} 
    */
-  overallSecondaryPartners() {
-    return overallSecondaryPartners(this._drawing);
+  layoutPartners() {
+    return layoutPartnersOfStrictDrawing(this);
   }
 
   /**
@@ -268,7 +272,7 @@ class StrictDrawing {
    */
   layout() {
     return new StrictLayout(
-      this.overallSecondaryPartners(),
+      this.layoutPartners(),
       this.generalLayoutProps(),
       this.perBaseLayoutProps(),
     );

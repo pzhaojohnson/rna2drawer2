@@ -3,7 +3,7 @@ import createNodeSVG from './createNodeSVG';
 import parseDotBracket from '../parse/parseDotBracket';
 import { radiateStems } from './layout/singleseq/strict/radiateStems';
 import StrictLayout from './layout/singleseq/strict/StrictLayout';
-import overallSecondaryPartners from './edit/overallSecondaryPartners';
+import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
 import applyStrictLayout from './edit/applyStrictLayout';
 
 it('instantiates', () => {
@@ -257,8 +257,8 @@ describe('_appendStructure method', () => {
   });
 });
 
-describe('overallSecondaryPartners method', () => {
-  it('returns same values as overallSecondaryPartners function', () => {
+describe('layoutPartners method', () => {
+  it('returns same values as layoutPartnersOfStrictDrawing function', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => createNodeSVG());
     sd._appendSequence('asdf', 'asdfasdf');
@@ -267,8 +267,8 @@ describe('overallSecondaryPartners method', () => {
       seq.getBaseAtPosition(2),
       seq.getBaseAtPosition(6),
     );
-    let partners = sd.overallSecondaryPartners();
-    let expected = overallSecondaryPartners(sd._drawing);
+    let partners = sd.layoutPartners();
+    let expected = layoutPartnersOfStrictDrawing(sd);
     expected.forEach((v, i) => {
       expect(partners[i]).toBe(v);
     });
