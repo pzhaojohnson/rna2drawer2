@@ -515,6 +515,7 @@ class Drawing {
    * @param {Drawing~SavableState} savedState 
    */
   applySavedState(savedState) {
+    let wasEmpty = this.isEmpty();
     this._sequences = [];
     this._primaryBonds = [];
     this._secondaryBonds = [];
@@ -537,7 +538,9 @@ class Drawing {
       this._addTertiaryBond(tb);
     });
     this.adjustNumberingLineAngles();
-    this.centerView();
+    if (wasEmpty) {
+      this.centerView();
+    }
   }
 
   /**
