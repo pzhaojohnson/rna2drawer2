@@ -446,7 +446,7 @@ describe('_pathImageOptions function', () => {
       'fill-opacity': 0,
     });
     let pios = _pathImageOptions(p);
-    expect(pios.data).toBe('image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpzdmdqcz0iaHR0cDovL3N2Z2pzLmNvbS9zdmdqcyIgdmlld0JveD0iMCAwIDU0LjUwMDAwMDAwMDAwMDAxIDQwMyIgd2lkdGg9IjU0LjUwMDAwMDAwMDAwMDAxIiBoZWlnaHQ9IjQwMyI+PHBhdGggZD0iTTUyLjAwMDAwMDAwMDAwMDAxIDIuNVEtNDYuOTk5OTk5OTk5OTk5OTkgMjAwLjUgNTIuMDAwMDAwMDAwMDAwMDEgNDAwLjUgIiBzdHJva2U9IiNmZjAwMDAiIHN0cm9rZS13aWR0aD0iNSIgZmlsbC1vcGFjaXR5PSIwIj48L3BhdGg+PC9zdmc+');
+    expect(pios.data).toBe('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpzdmdqcz0iaHR0cDovL3N2Z2pzLmNvbS9zdmdqcyIgdmlld0JveD0iMCAwIDU0LjUwMDAwMDAwMDAwMDAxIDQwMyIgd2lkdGg9IjU0LjUwMDAwMDAwMDAwMDAxIiBoZWlnaHQ9IjQwMyI+PHBhdGggZD0iTTUyLjAwMDAwMDAwMDAwMDAxIDIuNVEtNDYuOTk5OTk5OTk5OTk5OTkgMjAwLjUgNTIuMDAwMDAwMDAwMDAwMDEgNDAwLjUgIiBzdHJva2U9IiNmZjAwMDAiIHN0cm9rZS13aWR0aD0iNSIgZmlsbC1vcGFjaXR5PSIwIj48L3BhdGg+PC9zdmc+');
   });
 
   it('nested SVG document is removed', () => {

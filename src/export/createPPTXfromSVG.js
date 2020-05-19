@@ -318,7 +318,7 @@ function _pathImageOptions(path) {
     return null;
   }
   return {
-    data: 'image/svg+xml;base64,' + base64,
+    data: 'data:image/svg+xml;base64,' + base64,
     x: _trimNum(pixelsToInches(b.x - (sw / 2))),
     y: _trimNum(pixelsToInches(b.y - (sw / 2))),
     w: _trimNum(pixelsToInches(b.width + sw)),
