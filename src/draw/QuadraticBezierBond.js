@@ -552,7 +552,7 @@ TertiaryBond._mostRecentProps = {
   padding2: 8,
   stroke: '#0000ff',
   strokeWidth: 1,
-  strokeDasharray: '6 2',
+  strokeDasharray: '8 2',
 };
 
 export {
