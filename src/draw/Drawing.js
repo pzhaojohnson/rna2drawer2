@@ -177,7 +177,18 @@ class Drawing {
     }
     let seq = Sequence.createOutOfView(this._svg, id, characters);
     this._sequences.push(seq);
+    this.fireAddSequence(seq);
     return seq;
+  }
+
+  onAddSequence(cb) {
+    this._onAddSequence = cb;
+  }
+
+  fireAddSequence(seq) {
+    if (this._onAddSequence) {
+      this._onAddSequence(seq);
+    }
   }
 
   /**
@@ -523,6 +534,7 @@ class Drawing {
     this._applySavedSvg(savedState.svg);
     savedState.sequences.forEach(sseq => {
       let seq = Sequence.fromSavedState(sseq, this._svg);
+      this.fireAddSequence(seq);
       this._sequences.push(seq);
     });
     savedState.primaryBonds.forEach(spb => {

@@ -257,6 +257,13 @@ class StrictDrawing {
     );
   }
 
+  /**
+   * @param {Array<PerBaseStrictLayoutProps>} props 
+   */
+  setPerBaseLayoutProps(props) {
+    this._perBaseLayoutProps = props;
+  }
+
   get baseWidth() {
     return this._baseWidth;
   }
@@ -288,6 +295,10 @@ class StrictDrawing {
       this.baseWidth,
       this.baseHeight,
     );
+  }
+
+  applyLayout() {
+    this._applyLayout();
   }
 
   /**

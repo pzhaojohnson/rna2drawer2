@@ -214,7 +214,7 @@ class App {
     this.strictDrawing.applySavedState(
       this._undoStack.pop()
     );
-    this.renderPeripherals();
+    this.drawingChangedNotByInteraction();
   }
 
   canRedo() {
@@ -231,6 +231,11 @@ class App {
     this.strictDrawing.applySavedState(
       this._redoStack.pop()
     );
+    this.drawingChangedNotByInteraction();
+  }
+
+  drawingChangedNotByInteraction() {
+    this._strictDrawingInteraction.reset();
     this.renderPeripherals();
   }
 

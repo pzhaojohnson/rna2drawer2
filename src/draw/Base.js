@@ -357,6 +357,10 @@ class Base {
     this._text.mouseover(callback);
   }
 
+  onMouseover(cb) {
+    this._text.mouseover(cb);
+  }
+
   /**
    * @param {function} callback 
    */
@@ -364,11 +368,19 @@ class Base {
     this._text.mouseout(callback);
   }
 
+  onMouseout(cb) {
+    this._text.mouseout(cb);
+  }
+
   /**
    * @param {function} callback 
    */
   bindMousedown(callback) {
     this._text.mousedown(callback);
+  }
+
+  onMousedown(cb) {
+    this._text.mousedown(cb);
   }
 
   /**
@@ -388,6 +400,7 @@ class Base {
       this.xCenter,
       this.yCenter,
     );
+    this._highlighting.insertBefore(this._text);
     return this._highlighting;
   }
 
@@ -404,6 +417,7 @@ class Base {
       this.xCenter,
       this.yCenter,
     );
+    this._highlighting.insertBefore(this._text);
     return this._highlighting;
   }
 

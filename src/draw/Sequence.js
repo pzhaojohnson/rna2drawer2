@@ -573,6 +573,7 @@ class Sequence {
       return;
     }
     this._bases.push(b);
+    this.fireAddBase(b);
     this._updateBaseNumberings();
   }
 
@@ -594,6 +595,7 @@ class Sequence {
     }
     bs.forEach(b => {
       this._bases.push(b);
+      this.fireAddBase(b);
     });
     this._updateBaseNumberings();
   }
@@ -619,7 +621,18 @@ class Sequence {
     } else if (this.positionInRange(p)) {
       this._bases.splice(p - 1, 0, b);
     }
+    this.fireAddBase(b);
     this._updateBaseNumberings();
+  }
+
+  onAddBase(cb) {
+    this._onAddBase = cb;
+  }
+
+  fireAddBase(b) {
+    if (this._onAddBase) {
+      this._onAddBase(b);
+    }
   }
 
   /**
