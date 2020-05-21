@@ -33,6 +33,10 @@ class PivotingMode {
     this._setBindings();
   }
 
+  get className() {
+    return 'PivotingMode';
+  }
+
   get strictDrawing() {
     return this._strictDrawing;
   }
@@ -95,12 +99,14 @@ class PivotingMode {
   }
 
   handleMousemove(event) {
-    if (isFinite(this._xMousePrev) && isFinite(this._yMousePrev)) {
-      if (this._selected) {
-        this._pivot(
-          event.screenX - this._xMousePrev,
-          event.screenY - this._yMousePrev,
-        );
+    if (!this._disabled) {
+      if (isFinite(this._xMousePrev) && isFinite(this._yMousePrev)) {
+        if (this._selected) {
+          this._pivot(
+            event.screenX - this._xMousePrev,
+            event.screenY - this._yMousePrev,
+          );
+        }
       }
     }
     this._xMousePrev = event.screenX;
@@ -202,6 +208,9 @@ class PivotingMode {
   }
 
   handleMouseup() {
+    if (this._disabled) {
+      return;
+    }
     this._selected = null;
     this._condense = true;
     setBaseHighlightingsOfDrawing(
@@ -219,12 +228,22 @@ class PivotingMode {
     });
   }
 
+  handleMousedownOnDrawing() {}
+
   reset() {
     this._selected = null;
     setBaseHighlightingsOfDrawing(
       this.strictDrawing.drawing,
       [],
     );
+  }
+
+  disable() {
+    this._disabled = true;
+  }
+
+  enable() {
+    this._disabled = false;
   }
 
   onShouldPushUndo(cb) {

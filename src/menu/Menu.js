@@ -20,6 +20,7 @@ class Menu extends React.Component {
       >
         {this.logo()}
         {this.fileDropdown()}
+        {this.modeDropdown()}
         {this.editDropdown()}
         {this.exportDropdown()}
       </div>
@@ -179,6 +180,31 @@ class Menu extends React.Component {
     );
   }
 
+  modeDropdown() {
+    let topButton = this.topButton({
+      text: 'Mode',
+      disabled: this.props.drawingIsEmpty,
+    });
+    let droppedComps = [];
+    if (!this.props.drawingIsEmpty) {
+      droppedComps = [
+        this.droppedButton({
+          text: 'Pivot Stems',
+          onClick: () => this.props.startPivoting(),
+          disabled: this.props.pivoting,
+          checked: this.props.pivoting,
+        }),
+        this.droppedButton({
+          text: 'Modify Base Pairs',
+          onClick: () => this.props.startFolding(),
+          disabled: this.props.folding,
+          checked: this.props.folding,
+        }),
+      ];
+    }
+    return this.dropdown(topButton, droppedComps);
+  }
+
   editDropdown() {
     let topButton = this.topButton({
       text: 'Edit',
@@ -259,9 +285,16 @@ Menu.propTypes = {
   disabledButtonColor: PropTypes.string,
 
   drawingIsEmpty: PropTypes.bool,
+  
   createNewDrawing: PropTypes.func,
   openRna2drawer: PropTypes.func,
   save: PropTypes.func,
+  
+  pivoting: PropTypes.bool,
+  startPivoting: PropTypes.func,
+  folding: PropTypes.bool,
+  startFolding: PropTypes.func,
+  
   undo: PropTypes.func,
   canUndo: PropTypes.bool,
   redo: PropTypes.func,
@@ -270,6 +303,7 @@ Menu.propTypes = {
   hasFlatOutermostLoop: PropTypes.bool,
   roundOutermostLoop: PropTypes.func,
   hasRoundOutermostLoop: PropTypes.bool,
+  
   exportSvg: PropTypes.func,
   exportPptx: PropTypes.func,
 };
@@ -281,9 +315,16 @@ Menu.defaultProps = {
   disabledButtonColor: '#808080',
 
   drawingIsEmpty: true,
+  
   createNewDrawing: () => {},
   openRna2drawer: () => {},
   save: () => {},
+  
+  pivoting: false,
+  startPivoting: () => {},
+  folding: false,
+  startFolding: () => {},
+  
   undo: () => {},
   canUndo: false,
   redo: () => {},
@@ -292,6 +333,7 @@ Menu.defaultProps = {
   hasFlatOutermostLoop: false,
   roundOutermostLoop: () => {},
   hasRoundOutermostLoop: false,
+  
   exportSvg: () => {},
   exportPptx: () => {},
 };

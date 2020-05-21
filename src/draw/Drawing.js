@@ -163,6 +163,14 @@ class Drawing {
     return this.sequenceIds().includes(id);
   }
 
+  get overallCharacters() {
+    let cs = '';
+    this.forEachSequence(seq => {
+      cs += seq.characters;
+    });
+    return cs;
+  }
+
   /**
    * Returns null if the given sequence ID is taken.
    * 
@@ -370,6 +378,21 @@ class Drawing {
     return sb;
   }
 
+  removeSecondaryBondById(id) {
+    let i = null;
+    let j = 0;
+    this.forEachSecondaryBond(sb => {
+      if (sb.id === id) {
+        sb.remove();
+        i = j;
+      }
+      j++;
+    });
+    if (i !== null) {
+      this._secondaryBonds.splice(i, 1);
+    }
+  }
+
   /**
    * @returns {number} 
    */
@@ -476,6 +499,11 @@ class Drawing {
         }
       }
     });
+  }
+
+  onMousedown(cb) {
+    //this._div.addEventListener('mousedown', cb);
+    this._svg.mousedown(cb);
   }
 
   /**

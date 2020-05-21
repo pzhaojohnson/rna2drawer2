@@ -1,4 +1,5 @@
 import PivotingMode from './PivotingMode';
+import FoldingMode from './FoldingMode';
 import TertiaryBondsInteraction from './TertiaryBondsInteraction';
 
 class StrictDrawingInteraction {
@@ -7,7 +8,10 @@ class StrictDrawingInteraction {
 
     this._setBindings();
     this._initializePivotingMode();
+    this._initializeFoldingMode();
     this._initializeTertiaryBondsInteraction();
+
+    this._currMode = this._pivotingMode;
   }
 
   get strictDrawing() {
@@ -21,8 +25,13 @@ class StrictDrawingInteraction {
 
   _bindDrawing() {
     let drawing = this.strictDrawing.drawing;
+    drawing.onMousedown(() => this._handleMousedownOnDrawing());
     drawing.forEachSequence(seq => this._bindSequence(seq));
     drawing.onAddSequence(seq => this._bindSequence(seq));
+  }
+
+  _handleMousedownOnDrawing() {
+    this._currMode.handleMousedownOnDrawing();
   }
 
   _bindSequence(seq) {
@@ -31,28 +40,35 @@ class StrictDrawingInteraction {
   }
 
   _bindBase(b) {
-    b.cursor = 'pointer';
-    b.onMouseover(() => this._handleMouseoverOnBase(b));
-    b.onMouseout(() => this._handleMouseoutOnBase(b));
-    b.onMousedown(() => this._handleMousedownOnBase(b));
+    b.onMouseover(event => this._handleMouseoverOnBase(b, event));
+    b.onMouseout(event => this._handleMouseoutOnBase(b, event));
+    b.onMousedown(event => this._handleMousedownOnBase(b, event));
   }
 
-  _handleMouseoverOnBase(b) {
-    this._pivotingMode.handleMouseoverOnBase(b);
+  _handleMouseoverOnBase(b, event) {
+    this._currMode.handleMouseoverOnBase(b, event);
   }
 
-  _handleMouseoutOnBase(b) {
-    this._pivotingMode.handleMouseoutOnBase(b);
+  _handleMouseoutOnBase(b, event) {
+    this._currMode.handleMouseoutOnBase(b, event);
   }
 
-  _handleMousedownOnBase(b) {
-    this._pivotingMode.handleMousedownOnBase(b);
+  _handleMousedownOnBase(b, event) {
+    this._currMode.handleMousedownOnBase(b, event);
   }
 
   _initializePivotingMode() {
     this._pivotingMode = new PivotingMode(this.strictDrawing);
     this._pivotingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
     this._pivotingMode.onChange(() => this.fireChange());
+    this._pivotingMode.enable();
+  }
+
+  _initializeFoldingMode() {
+    this._foldingMode = new FoldingMode(this.strictDrawing);
+    this._foldingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
+    this._foldingMode.onChange(() => this.fireChange());
+    this._foldingMode.disable();
   }
 
   _initializeTertiaryBondsInteraction() {
@@ -68,7 +84,7 @@ class StrictDrawingInteraction {
   }
 
   reset() {
-    this._pivotingMode.reset();
+    this._currMode.reset();
   }
 
   onShouldPushUndo(cb) {
@@ -89,6 +105,36 @@ class StrictDrawingInteraction {
     if (this._onChange) {
       this._onChange();
     }
+  }
+
+  pivoting() {
+    return this._currMode.className == 'PivotingMode';
+  }
+
+  folding() {
+    return this._currMode.className == 'FoldingMode';
+  }
+
+  startPivoting() {
+    if (this.pivoting()) {
+      return;
+    }
+    this._currMode.reset();
+    this._currMode.disable();
+    this._pivotingMode.enable();
+    this._pivotingMode.reset();
+    this._currMode = this._pivotingMode;
+  }
+
+  startFolding() {
+    if (this.folding()) {
+      return;
+    }
+    this._currMode.reset();
+    this._currMode.disable();
+    this._foldingMode.enable();
+    this._foldingMode.reset();
+    this._currMode = this._foldingMode;
   }
 }
 

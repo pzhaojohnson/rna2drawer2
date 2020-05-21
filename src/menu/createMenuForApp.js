@@ -54,6 +54,16 @@ function createMenuForApp(app) {
         app.renderPeripherals();
       }}
       hasRoundOutermostLoop={app.strictDrawing.hasRoundOutermostLoop()}
+      pivoting={app.strictDrawingInteraction.pivoting()}
+      startPivoting={() => {
+        app.strictDrawingInteraction.startPivoting();
+        app.renderPeripherals();
+      }}
+      folding={app.strictDrawingInteraction.folding()}
+      startFolding={() => {
+        app.strictDrawingInteraction.startFolding();
+        app.renderPeripherals();
+      }}
       exportSvg={() => renderExportSvgInApp(app)}
       exportPptx={() => renderExportPptxInApp(app)}
     />
