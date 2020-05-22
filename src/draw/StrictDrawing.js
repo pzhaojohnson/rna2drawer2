@@ -316,14 +316,14 @@ class StrictDrawing {
   }
 
   hasFlatOutermostLoop() {
-    return this._generalLayoutProps.flatOutermostLoop;
+    return this._generalLayoutProps.outermostLoopShape === 'flat';
   }
 
   flatOutermostLoop() {
     if (this.hasFlatOutermostLoop()) {
       return;
     }
-    this._generalLayoutProps.flatOutermostLoop = true;
+    this._generalLayoutProps.outermostLoopShape = 'flat';
     this._applyLayout();
   }
 
@@ -335,7 +335,7 @@ class StrictDrawing {
     if (this.hasRoundOutermostLoop()) {
       return;
     }
-    this._generalLayoutProps.flatOutermostLoop = false;
+    this._generalLayoutProps.outermostLoopShape = 'round';
     this._applyLayout();
   }
 }

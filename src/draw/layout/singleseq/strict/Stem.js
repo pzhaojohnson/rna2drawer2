@@ -462,7 +462,7 @@ class Stem {
    */
   hasRoundLoop() {
     if (this.isOutermostStem()) {
-      return !this._generalProps.flatOutermostLoop;
+      return this._generalProps.outermostLoopShape !== 'flat';
     } else {
       return this._perBaseProps[this.position5 - 1].loopShape === 'round';
     }

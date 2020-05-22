@@ -2,7 +2,7 @@ import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 
 it('fromSavedState static method', () => {
   let gps1 = new GeneralStrictLayoutProps();
-  gps1.flatOutermostLoop = true;
+  gps1.outermostLoopShape = 'flat';
   gps1.rotation = Math.PI / 5;
   gps1.basePairBondLength = 5.4;
   gps1.basePairPadding = 3.2;
@@ -31,7 +31,7 @@ it('basic test of constructor', () => {
 
 it('deepCopy', () => {
   let gps1 = new GeneralStrictLayoutProps();
-  gps1.flatOutermostLoop = true;
+  gps1.outermostLoopShape = 'flat';
   gps1.rotation = 2 * Math.PI / 3;
   gps1.basePairBondLength = 0.77;
   gps1.basePairPadding = 0.1;
@@ -47,13 +47,13 @@ it('deepCopy', () => {
 
 it('savableState', () => {
   let gps = new GeneralStrictLayoutProps();
-  gps.flatOutermostLoop = true;
+  gps.outermostLoopShape = 'flat';
   gps.rotation = Math.PI / 3;
   gps.basePairBondLength = 2.8;
   gps.basePairPadding = 0.77;
   gps.terminiGap = 7.8;
   let savableState = gps.savableState();
-  expect(savableState.flatOutermostLoop).toBe(true);
+  expect(savableState.outermostLoopShape).toBe('flat');
   expect(savableState.rotation).toBe(Math.PI / 3);
   expect(savableState.basePairBondLength).toBe(2.8);
   expect(savableState.basePairPadding).toBe(0.77);

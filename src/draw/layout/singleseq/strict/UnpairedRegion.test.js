@@ -382,7 +382,7 @@ it('baseCoordinates method - size of zero', () => {
 it('baseCoordinates method - in a flat outermost loop', () => {
   let partners = [3, null, 1, null, null, null, null, null, 11, null, 9];
   let gps = new GeneralStrictLayoutProps();
-  gps.flatOutermostLoop = true;
+  gps.outermostLoopShape = 'flat';
   let pbps = defaultPerBaseProps(11);
   pbps[2].stretch3 = 2;
   pbps[2].flatOutermostLoopAngle3 = Math.PI / 3;
@@ -407,7 +407,7 @@ it('baseCoordinates method - in a flat outermost loop', () => {
 it('baseCoordinates - in a round outermost loop', () => {
   let partners = parseDotBracket('....').secondaryPartners;
   let gps = new GeneralStrictLayoutProps();
-  gps.flatOutermostLoop = false;
+  gps.outermostLoopShape = 'round';
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   StemLayout.setCoordinatesAndAngles(omst, gps, pbps);
@@ -422,7 +422,7 @@ it('baseCoordinates - in a round outermost loop', () => {
 it('baseCoordinates - is not in the flat outermost loop', () => {
   let partners = parseDotBracket('..(((...))).').secondaryPartners;
   let gps = new GeneralStrictLayoutProps();
-  gps.flatOutermostLoop = true;
+  gps.outermostLoopShape = 'flat';
   let pbps = defaultPerBaseProps(partners.length);
   let omst = new Stem(0, partners, gps, pbps);
   StemLayout.setCoordinatesAndAngles(omst, gps, pbps);

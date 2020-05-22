@@ -7,8 +7,8 @@ class GeneralStrictLayoutProps {
    */
   static fromSavedState(savedState) {
     let gps = new GeneralStrictLayoutProps();
-    if (savedState.flatOutermostLoop !== undefined) {
-      gps.flatOutermostLoop = savedState.flatOutermostLoop;
+    if (savedState.outermostLoopShape !== undefined) {
+      gps.outermostLoopShape = savedState.outermostLoopShape;
     }
     if (savedState.rotation !== undefined) {
       gps.rotation = savedState.rotation;
@@ -26,7 +26,7 @@ class GeneralStrictLayoutProps {
   }
 
   constructor() {
-    this.flatOutermostLoop = false;
+    this.outermostLoopShape = 'round';
     this.rotation = 0.0;
 
     this.basePairBondLength = 1.2;
@@ -46,7 +46,7 @@ class GeneralStrictLayoutProps {
   /**
    * @typedef {Object} GeneralStrictLayoutProps~SavableState 
    * @property {string} className 
-   * @property {boolean} flatOutermostLoop 
+   * @property {string} outermostLoopShape 
    * @property {number} rotation 
    * @property {number} basePairBondLength 
    * @property {number} basePairPadding 
@@ -59,7 +59,7 @@ class GeneralStrictLayoutProps {
   savableState() {
     return {
       className: 'GeneralStrictLayoutProps',
-      flatOutermostLoop: this.flatOutermostLoop,
+      outermostLoopShape: this.outermostLoopShape,
       rotation: this.rotation,
       basePairBondLength: this.basePairBondLength,
       basePairPadding: this.basePairPadding,

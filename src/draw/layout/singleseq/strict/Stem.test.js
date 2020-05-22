@@ -527,11 +527,11 @@ it('hasRoundLoop - the outermost stem', () => {
   let partners = parseDotBracket('....').secondaryPartners;
   let pbps = defaultPerBaseProps(partners.length);
   let gps1 = new GeneralStrictLayoutProps();
-  gps1.flatOutermostLoop = false;
+  gps1.outermostLoopShape = 'round';
   let omst1 = new Stem(0, partners, gps1, pbps);
   expect(omst1.hasRoundLoop()).toBeTruthy();
   let gps2 = new GeneralStrictLayoutProps();
-  gps2.flatOutermostLoop = true;
+  gps2.outermostLoopShape = 'flat';
   let omst2 = new Stem(0, partners, gps2, pbps);
   expect(omst2.hasRoundLoop()).toBeFalsy();
 });

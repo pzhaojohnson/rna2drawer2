@@ -418,7 +418,7 @@ class StemLayout {
    * @param {Array<PerBaseStrictLayoutProps>} perBaseProps 
    */
   static setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps) {
-    if (generalProps.flatOutermostLoop) {
+    if (generalProps.outermostLoopShape === 'flat') {
       FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);
     } else if (outermostStem.hasRoundLoop()) {
       RoundLoop.setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);

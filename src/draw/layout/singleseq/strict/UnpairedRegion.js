@@ -160,7 +160,7 @@ class UnpairedRegion {
    * @returns {Array<NormalizedBaseCoordinates>} 
    */
   baseCoordinates(inOutermostLoop) {
-    if (inOutermostLoop && this._generalProps.flatOutermostLoop) {
+    if (inOutermostLoop && this._generalProps.outermostLoopShape === 'flat') {
       return baseCoordinatesFlatOutermostLoop(this, this._generalProps, this._perBaseProps);
     } else {
       return baseCoordinatesRound(this, this._generalProps);
