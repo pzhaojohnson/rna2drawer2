@@ -170,6 +170,11 @@ class App {
   }
 
   renderForm(formFactory) {
+
+    /* Seems to be necessary for user entered values (e.g. in input elements)
+    to be updated in a currently rendered form. */
+    this.unmountCurrForm();
+    
     ReactDOM.render(
       formFactory(),
       this._getFormContainer(),
