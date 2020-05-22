@@ -53,7 +53,7 @@ function getFileSaveButton() {
 
 function getEditDropdown() {
   let c = getComponent();
-  return c.childNodes[2];
+  return c.childNodes[3];
 }
 
 function getEditTopButtn() {
@@ -78,7 +78,7 @@ function getEditRedoButton() {
 
 function getExportDropdown() {
   let c = getComponent();
-  return c.childNodes[3];
+  return c.childNodes[4];
 }
 
 function getExportTopButton() {
