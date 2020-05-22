@@ -3,12 +3,8 @@ import isAllWhitespace from '../isAllWhitespace';
 /**
  * Returns null if the given string cannot be parsed as
  * a positive floating point number.
- * 
- * @param {string} s 
- * 
- * @returns {number|null} 
  */
-function parsePositiveFloat(s) {
+function parsePositiveFloat(s: string): number | null {
   if (isAllWhitespace(s)) {
     return null;
   }
