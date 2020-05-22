@@ -12,7 +12,7 @@ import createInfobarForApp from './infobar/createInfobarForApp';
 
 import renderCreateNewDrawingInApp from './forms/renderCreateNewDrawingInApp';
 
-import offerFileForDownload from './export/offerFileForDownload';
+import saveDrawingForApp from './export/saveDrawingForApp';
 
 class App {
 
@@ -245,15 +245,7 @@ class App {
   }
 
   save() {
-    let name = 'Drawing';
-    if (document.title) {
-      name = document.title;
-    }
-    offerFileForDownload({
-      name: name + '.rna2drawer2',
-      type: 'text/plain',
-      contents: this.strictDrawing.savableString,
-    });
+    saveDrawingForApp(this);
   }
 }
 
