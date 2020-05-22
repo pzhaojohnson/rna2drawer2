@@ -1,4 +1,4 @@
-import isAllWhitespace from '../isAllWhitespace';
+import parseNonemptyFloat from './parseNonemptyFloat';
 
 /**
  * Returns null if the string cannot be parsed as a
@@ -9,11 +9,8 @@ import isAllWhitespace from '../isAllWhitespace';
  * @returns {number|null} 
  */
 function parseNonnegativeFloat(s) {
-  if (isAllWhitespace(s)) {
-    return null;
-  }
-  let n = Number(s);
-  if (!Number.isFinite(n)) {
+  let n = parseNonemptyFloat(s);
+  if (!n && n !== 0) {
     return null;
   }
   if (n < 0) {
