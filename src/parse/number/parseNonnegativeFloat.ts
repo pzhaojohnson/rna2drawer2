@@ -1,14 +1,10 @@
 import parseNonemptyFloat from './parseNonemptyFloat';
 
 /**
- * Returns null if the string cannot be parsed as a
- * nonnegative floating point number.
- * 
- * @param {string} s 
- * 
- * @returns {number|null} 
+ * Returns null if the given string cannot be parsed as
+ * a nonnegative floating point number.
  */
-function parseNonnegativeFloat(s) {
+function parseNonnegativeFloat(s: string): number | null {
   let n = parseNonemptyFloat(s);
   if (!n && n !== 0) {
     return null;
