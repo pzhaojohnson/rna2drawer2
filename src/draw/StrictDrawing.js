@@ -249,6 +249,13 @@ class StrictDrawing {
   }
 
   /**
+   * @param {GeneralStrictLayoutProps} props 
+   */
+  setGeneralLayoutProps(props) {
+    this._generalLayoutProps = props;
+  }
+
+  /**
    * @returns {Array<PerBaseStrictLayoutProps>} 
    */
   perBaseLayoutProps() {

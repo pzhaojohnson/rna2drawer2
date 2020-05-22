@@ -5,6 +5,7 @@ import openNewTab from './openNewTab';
 
 import renderCreateNewDrawingInApp from '../forms/renderCreateNewDrawingInApp';
 import renderOpenRna2drawerInApp from '../forms/renderOpenRna2drawerInApp';
+import renderEditLayoutInApp from '../forms/renderEditLayoutInApp';
 import renderExportSvgInApp from '../forms/renderExportSvgInApp';
 import renderExportPptxInApp from '../forms/renderExportPptxInApp';
 
@@ -32,6 +33,16 @@ function createMenuForApp(app) {
         renderOpenRna2drawerInApp(app);
       }}
       save={() => app.save()}
+      pivoting={app.strictDrawingInteraction.pivoting()}
+      startPivoting={() => {
+        app.strictDrawingInteraction.startPivoting();
+        app.renderPeripherals();
+      }}
+      folding={app.strictDrawingInteraction.folding()}
+      startFolding={() => {
+        app.strictDrawingInteraction.startFolding();
+        app.renderPeripherals();
+      }}
       undo={() => app.undo()}
       canUndo={app.canUndo()}
       redo={() => app.redo()}
@@ -54,16 +65,7 @@ function createMenuForApp(app) {
         app.renderPeripherals();
       }}
       hasRoundOutermostLoop={app.strictDrawing.hasRoundOutermostLoop()}
-      pivoting={app.strictDrawingInteraction.pivoting()}
-      startPivoting={() => {
-        app.strictDrawingInteraction.startPivoting();
-        app.renderPeripherals();
-      }}
-      folding={app.strictDrawingInteraction.folding()}
-      startFolding={() => {
-        app.strictDrawingInteraction.startFolding();
-        app.renderPeripherals();
-      }}
+      editLayout={() => renderEditLayoutInApp(app)}
       exportSvg={() => renderExportSvgInApp(app)}
       exportPptx={() => renderExportPptxInApp(app)}
     />

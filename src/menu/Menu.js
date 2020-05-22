@@ -238,6 +238,11 @@ class Menu extends React.Component {
           disabled: this.props.hasRoundOutermostLoop,
           checked: this.props.hasRoundOutermostLoop,
         }),
+        this.separator(),
+        this.droppedButton({
+          text: 'Layout',
+          onClick: () => this.props.editLayout(),
+        }),
       ];
     }
     return this.dropdown(topButton, droppedComps);
@@ -303,6 +308,7 @@ Menu.propTypes = {
   hasFlatOutermostLoop: PropTypes.bool,
   roundOutermostLoop: PropTypes.func,
   hasRoundOutermostLoop: PropTypes.bool,
+  editLayout: PropTypes.func,
   
   exportSvg: PropTypes.func,
   exportPptx: PropTypes.func,
@@ -333,6 +339,7 @@ Menu.defaultProps = {
   hasFlatOutermostLoop: false,
   roundOutermostLoop: () => {},
   hasRoundOutermostLoop: false,
+  editLayout: () => {},
   
   exportSvg: () => {},
   exportPptx: () => {},
