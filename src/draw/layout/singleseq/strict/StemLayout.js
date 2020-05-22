@@ -319,7 +319,7 @@ class FlatOutermostLoop {
       let d = 1;
       if (p > 1) {
         d += Math.max(0, perBaseProps[p - 2].stretch3);
-        angle += perBaseProps[p - 2].flatOutermostLoopAngle3;
+        angle += perBaseProps[p - 2].flatLoopAngle3;
       }
       x += d * Math.cos(angle);
       y += d * Math.sin(angle);
@@ -349,7 +349,7 @@ class FlatOutermostLoop {
       angle = coordinates[ur.size - 2].angleBetweenCenters(coordinates[ur.size - 1]);
     }
     if (ur.boundingPosition3 > 1) {
-      angle += perBaseProps[ur.boundingPosition3 - 2].flatOutermostLoopAngle3;
+      angle += perBaseProps[ur.boundingPosition3 - 2].flatLoopAngle3;
     }
     return angle;
   }

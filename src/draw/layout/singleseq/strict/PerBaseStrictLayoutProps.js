@@ -23,8 +23,8 @@ class PerBaseStrictLayoutProps {
     if (savedState.stretch3 !== undefined) {
       pbps.stretch3 = savedState.stretch3;
     }
-    if (savedState.flatOutermostLoopAngle3 !== undefined) {
-      pbps.flatOutermostLoopAngle3 = savedState.flatOutermostLoopAngle3;
+    if (savedState.flatLoopAngle3 !== undefined) {
+      pbps.flatLoopAngle3 = savedState.flatLoopAngle3;
     }
     if (savedState.flipStem !== undefined) {
       pbps.flipStem = savedState.flipStem;
@@ -40,7 +40,7 @@ class PerBaseStrictLayoutProps {
 
   constructor() {
     this.stretch3 = 0;
-    this.flatOutermostLoopAngle3 = 0;
+    this.flatLoopAngle3 = 0;
     this.flipStem = false;
     this.loopShape = 'round';
     this.triangleLoopHeight = 4;
@@ -58,7 +58,7 @@ class PerBaseStrictLayoutProps {
    * @typedef {Object} PerBaseStrictLayoutProps~SavableState 
    * @property {string} className 
    * @property {number} stretch3 
-   * @property {number} flatOutermostLoopAngle3 
+   * @property {number} flatLoopAngle3 
    * @property {boolean} flipStem 
    * @property {string} loopShape 
    * @property {number} triangleLoopHeight 
@@ -71,7 +71,7 @@ class PerBaseStrictLayoutProps {
     return {
       className: 'PerBaseStrictLayoutProps',
       stretch3: this.stretch3,
-      flatOutermostLoopAngle3: this.flatOutermostLoopAngle3,
+      flatLoopAngle3: this.flatLoopAngle3,
       flipStem: this.flipStem,
       loopShape: this.loopShape,
       triangleLoopHeight: this.triangleLoopHeight,

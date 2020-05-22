@@ -562,11 +562,11 @@ it("FlatOutermostLoop traverseUnpairedRegion53 - uses stretch and 3' angles of b
   gps.outermostLoopShape = 'flat';
   let pbps = defaultPerBaseProps(partners.length);
   pbps[0].stretch3 = 1;
-  pbps[0].flatOutermostLoopAngle3 = Math.PI / 6;
+  pbps[0].flatLoopAngle3 = Math.PI / 6;
   pbps[1].stretch3 = 2;
-  pbps[1].flatOutermostLoopAngle3 = Math.PI / 3;
+  pbps[1].flatLoopAngle3 = Math.PI / 3;
   pbps[2].stretch3 = 0.5;
-  pbps[2].flatOutermostLoopAngle3 = -Math.PI / 6;
+  pbps[2].flatLoopAngle3 = -Math.PI / 6;
   let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   let ur = it.next().value;
@@ -606,7 +606,7 @@ it("FlatOutermostLoop traverseUnpairedRegion53 - 5' bounding stem is an inner st
   gps.outermostLoopShape = 'flat';
   let pbps = defaultPerBaseProps(partners.length);
   pbps[8].stretch3 = 5;
-  pbps[8].flatOutermostLoopAngle3 = Math.PI / 3;
+  pbps[8].flatLoopAngle3 = Math.PI / 3;
   let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
@@ -679,7 +679,7 @@ it("FlatOutermostLoop unpairedRegionAngle53 - 5' inner stem and size of one", ()
   let gps = new GeneralStrictLayoutProps();
   gps.outermostLoopShape = 'flat';
   let pbps = defaultPerBaseProps(partners.length);
-  pbps[8].flatOutermostLoopAngle3 = Math.PI / 6;
+  pbps[8].flatLoopAngle3 = Math.PI / 6;
   let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
@@ -696,7 +696,7 @@ it("FlatOutermostLoop unpairedRegionAngle53 - 5' inner stem and size of at least
   let gps = new GeneralStrictLayoutProps();
   gps.outermostLoopShape = 'flat';
   let pbps = defaultPerBaseProps(partners.length);
-  pbps[9].flatOutermostLoopAngle3 = Math.PI / 10;
+  pbps[9].flatLoopAngle3 = Math.PI / 10;
   let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
@@ -714,7 +714,7 @@ it("FlatOutermostLoop unpairedRegionAngle53 - includes 3' angle of last position
   gps.outermostLoopShape = 'flat';
   gps.rotation = Math.PI / 5;
   let pbps = defaultPerBaseProps(partners.length);
-  pbps[0].flatOutermostLoopAngle3 = 2 * Math.PI / 5;
+  pbps[0].flatLoopAngle3 = 2 * Math.PI / 5;
   let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   let ur = it.next().value;
@@ -744,7 +744,7 @@ it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size of zero', () => {
   gps.basePairBondLength = 2.3;
   let pbps = defaultPerBaseProps(partners.length);
   pbps[2].stretch3 = 2.6;
-  pbps[2].flatOutermostLoopAngle3 = Math.PI / 7;
+  pbps[2].flatLoopAngle3 = Math.PI / 7;
   let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
   it.next();
@@ -766,7 +766,7 @@ it('FlatOutermostLoop setNextCoordinatesAndAngle53 - size greater than zero', ()
   gps.outermostLoopShape = 'flat';
   gps.rotation = -Math.PI / 3;
   let pbps = defaultPerBaseProps(partners.length);
-  pbps[1].flatOutermostLoopAngle3 = 2;
+  pbps[1].flatLoopAngle3 = 2;
   pbps[1].stretch3 = 1;
   let omst = new Stem(0, partners, gps, pbps);
   let it = omst.loopIterator();
@@ -867,10 +867,10 @@ it('FlatOutermostLoop setCoordinatesAndAngles - multiple stems', () => {
   gps.rotation = Math.PI / 5;
   let pbps = defaultPerBaseProps(partners.length);
   pbps[0].stretch3 = 2.5;
-  pbps[1].flatOutermostLoopAngle3 = -Math.PI / 3;
+  pbps[1].flatLoopAngle3 = -Math.PI / 3;
   pbps[11].stretch3 = -5;
   pbps[12].stretch3 = 10;
-  pbps[12].flatOutermostLoopAngle3 = Math.PI / 6;
+  pbps[12].flatLoopAngle3 = Math.PI / 6;
   let omst = new Stem(0, partners, gps, pbps);
   FlatOutermostLoop.setCoordinatesAndAngles(omst, gps, pbps);
   checkCoords(
