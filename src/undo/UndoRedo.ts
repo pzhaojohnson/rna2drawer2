@@ -1,8 +1,8 @@
 import FiniteStack from './FiniteStack';
 
 class UndoRedo<E> {
-  _undoStack: FiniteStack;
-  _redoStack: FiniteStack;
+  _undoStack: FiniteStack<E>;
+  _redoStack: FiniteStack<E>;
 
   constructor() {
     this._undoStack = new FiniteStack();
