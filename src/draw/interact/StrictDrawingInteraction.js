@@ -124,6 +124,7 @@ class StrictDrawingInteraction {
     this._pivotingMode.enable();
     this._pivotingMode.reset();
     this._currMode = this._pivotingMode;
+    this.fireChange();
   }
 
   startFolding() {
@@ -135,6 +136,7 @@ class StrictDrawingInteraction {
     this._foldingMode.enable();
     this._foldingMode.reset();
     this._currMode = this._foldingMode;
+    this.fireChange();
   }
 }
 
