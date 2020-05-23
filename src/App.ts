@@ -35,7 +35,7 @@ class App {
     this._initializeDrawingInteraction();
     this.renderPeripherals();
 
-    this._setBindings();
+    this._setKeyBindings();
     
     renderCreateNewDrawingInApp(this);
   }
@@ -106,7 +106,7 @@ class App {
   _initializeDrawing() {
     this._strictDrawing = new StrictDrawing();
     let container = this._getDrawingContainer();
-    this._strictDrawing.addTo(container, () => this._SVG());
+    this._strictDrawing.addTo(container, () => this.SVG());
   }
 
   get strictDrawing(): StrictDrawing {
@@ -213,7 +213,7 @@ class App {
     this.renderPeripherals();
   }
 
-  _setBindings() {
+  _setKeyBindings() {
     document.addEventListener('keydown', event => {
       let k = event.key.toUpperCase();
       if (event.ctrlKey && event.shiftKey && k == 'Z') {
