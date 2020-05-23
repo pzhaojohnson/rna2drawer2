@@ -18,6 +18,10 @@ class UndoRedo<E> {
     return !this._undoStack.isEmpty();
   }
 
+  peekUndo(): E {
+    return this._undoStack.peek();
+  }
+
   /**
    * If the undo stack is empty when this method is called,
    * then the passed element is returned and the undo and
@@ -35,6 +39,10 @@ class UndoRedo<E> {
 
   canRedo(): boolean {
     return !this._redoStack.isEmpty();
+  }
+
+  peekRedo(): E {
+    return this._redoStack.peek();
   }
 
   /**

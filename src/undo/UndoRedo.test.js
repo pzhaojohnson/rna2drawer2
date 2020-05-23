@@ -33,6 +33,22 @@ it('canUndo method', () => {
   expect(ur.canUndo()).toBeFalsy();
 });
 
+describe('peekUndo method', () => {
+  it('on empty undo stack', () => {
+    let ur = new UndoRedo();
+    expect(ur._undoStack.isEmpty()).toBeTruthy();
+    expect(ur.peekUndo()).toBeFalsy();
+  });
+
+  it('returns top element of undo stack without popping it', () => {
+    let ur = new UndoRedo();
+    ur.pushUndo(5);
+    ur.pushUndo(6);
+    expect(ur.peekUndo()).toBe(6);
+    expect(ur._undoStack.size).toBe(2);
+  });
+});
+
 describe('undo method', () => {
   it('when cannot undo', () => {
     let ur = new UndoRedo();
@@ -72,6 +88,24 @@ it('canRedo method', () => {
   expect(ur.canRedo()).toBeTruthy();
   ur.pushUndo(18);
   expect(ur.canRedo()).toBeFalsy();
+});
+
+describe('peekRedo method', () => {
+  it('on empty redo stack', () => {
+    let ur = new UndoRedo();
+    expect(ur._redoStack.isEmpty()).toBeTruthy();
+    expect(ur.peekRedo()).toBeFalsy();
+  });
+
+  it('returns top element of redo stack without popping it', () => {
+    let ur = new UndoRedo();
+    ur.pushUndo(20);
+    ur.pushUndo(21);
+    ur.undo(22);
+    ur.undo(23);
+    expect(ur.peekRedo()).toBe(23);
+    expect(ur._redoStack.size).toBe(2);
+  });
 });
 
 describe('redo method', () => {

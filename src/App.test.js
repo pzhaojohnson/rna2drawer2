@@ -18,14 +18,14 @@ describe('pushUndo method', () => {
     sd.appendSequence('zxcv', 'zxcv');
     app.undo();
     app.undo();
-    expect(app._undoStack.isEmpty()).toBeTruthy();
-    expect(app._redoStack.isEmpty()).toBeFalsy();
+    expect(app.canUndo()).toBeFalsy();
+    expect(app.canRedo()).toBeTruthy();
     let savedState = sd.savableState();
     app.pushUndo();
     expect(
-      JSON.stringify(app._undoStack.peek())
+      JSON.stringify(app._undoRedo.peekUndo())
     ).toBe(JSON.stringify(savedState));
-    expect(app._redoStack.isEmpty()).toBeTruthy();
+    expect(app.canRedo()).toBeFalsy();
   });
 });
 
@@ -45,12 +45,12 @@ describe('undo method', () => {
     sd.appendSequence('qwer', 'qwer');
     let savedState2 = sd.savableState();
     app.undo();
-    expect(app._undoStack.isEmpty()).toBeTruthy();
+    expect(app.canUndo()).toBeFalsy();
     expect(
       JSON.stringify(sd.savableState())
     ).toBe(JSON.stringify(savedState1));
     expect(
-      JSON.stringify(app._redoStack.peek())
+      JSON.stringify(app._undoRedo.peekRedo())
     ).toBe(JSON.stringify(savedState2));
   });
 });
@@ -73,11 +73,11 @@ describe('redo method', () => {
     app.undo();
     app.redo();
     expect(
-      JSON.stringify(app._undoStack.peek())
+      JSON.stringify(app._undoRedo.peekUndo())
     ).toBe(JSON.stringify(savedState1));
     expect(
       JSON.stringify(sd.savableState())
     ).toBe(JSON.stringify(savedState2));
-    expect(app._redoStack.isEmpty()).toBeTruthy();
+    expect(app.canRedo()).toBeFalsy();
   });
 });

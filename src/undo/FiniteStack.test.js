@@ -42,22 +42,22 @@ it('isEmpty method', () => {
 
 it('popping an empty finite stack', () => {
   let fs = new FiniteStack();
-  expect(fs.pop()).toBeNull();
+  expect(fs.pop()).toBeFalsy();
   fs.push('asdf');
   fs.push('qwer');
   expect(fs.pop()).toBe('qwer');
   expect(fs.pop()).toBe('asdf');
-  expect(fs.pop()).toBeNull();
+  expect(fs.pop()).toBeFalsy();
 
   // popping an empty finite stack multiple times in a row
-  expect(fs.pop()).toBeNull();
+  expect(fs.pop()).toBeFalsy();
 });
 
 describe('peek method', () => {
   it('handles an empty stack', () => {
     let fs = new FiniteStack();
     expect(fs.isEmpty()).toBeTruthy();
-    expect(fs.peek()).toBe(null);
+    expect(fs.peek()).toBeFalsy();
   });
 
   it('returns top element without popping', () => {
