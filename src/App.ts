@@ -1,4 +1,5 @@
-import ReactDOM from 'react-dom';
+import * as ReactDOM from 'react-dom';
+import { ReactElement } from 'react';
 import './App.css';
 
 import UndoRedo from './undo/UndoRedo';
@@ -13,18 +14,18 @@ import renderCreateNewDrawingInApp from './forms/renderCreateNewDrawingInApp';
 
 import saveDrawingForApp from './export/saveDrawingForApp';
 
+interface Svg {
+  addTo: () => Svg;
+}
+
 class App {
+  _SVG: () => Svg;
+  _undoRedo: UndoRedo<object>;
+  _strictDrawing: StrictDrawing;
+  _strictDrawingInteraction: StrictDrawingInteraction;
+  _currFormFactory: () => ReactElement;
 
-  /**
-   * @callback App~SVG 
-   * 
-   * @returns {SVG.Svg} 
-   */
-
-  /**
-   * @param {App~SVG} SVG
-   */
-  constructor(SVG) {
+  constructor(SVG: () => Svg) {
     this._SVG = SVG;
 
     this._undoRedo = new UndoRedo();
@@ -39,22 +40,8 @@ class App {
     renderCreateNewDrawingInApp(this);
   }
 
-  /**
-   * @returns {App~SVG} 
-   */
-  get SVG() {
+  get SVG(): () => Svg {
     return this._SVG;
-  }
-
-  _setBindings() {
-    document.addEventListener('keydown', event => {
-      let k = event.key.toUpperCase();
-      if (event.ctrlKey && event.shiftKey && k == 'Z') {
-        this.redo();
-      } else if (event.ctrlKey && k == 'Z') {
-        this.undo();
-      }
-    });
   }
 
   _fillInBody() {
@@ -84,35 +71,35 @@ class App {
     outermostDiv.appendChild(infobarContainer);
   }
 
-  get _menuContainerId() {
+  get _menuContainerId(): string {
     return 'MenuContainer';
   }
   
-  get _drawingContainerId() {
+  get _drawingContainerId(): string {
     return 'DrawingContainer';
   }
 
-  get _formContainerId() {
+  get _formContainerId(): string {
     return 'FormContainer';
   }
 
-  get _infobarContainerId() {
+  get _infobarContainerId(): string {
     return 'InfobarContainer';
   }
 
-  _getMenuContainer() {
+  _getMenuContainer(): Element {
     return document.getElementById(this._menuContainerId);
   }
 
-  _getDrawingContainer() {
+  _getDrawingContainer(): Element {
     return document.getElementById(this._drawingContainerId);
   }
 
-  _getFormContainer() {
+  _getFormContainer(): Element {
     return document.getElementById(this._formContainerId);
   }
 
-  _getInfobarContainer() {
+  _getInfobarContainer(): Element {
     return document.getElementById(this._infobarContainerId);
   }
 
@@ -122,10 +109,7 @@ class App {
     this._strictDrawing.addTo(container, () => this._SVG());
   }
 
-  /**
-   * @returns {StrictDrawing} 
-   */
-  get strictDrawing() {
+  get strictDrawing(): StrictDrawing {
     return this._strictDrawing;
   }
 
@@ -141,7 +125,7 @@ class App {
     });
   }
 
-  get strictDrawingInteraction() {
+  get strictDrawingInteraction(): StrictDrawingInteraction {
     return this._strictDrawingInteraction;
   }
 
@@ -167,7 +151,7 @@ class App {
     );
   }
 
-  renderForm(formFactory) {
+  renderForm(formFactory: () => ReactElement) {
 
     /* Seems to be necessary for user entered values (e.g. in input elements)
     to be updated in a currently rendered form. */
@@ -187,14 +171,6 @@ class App {
     );
   }
 
-  updateDocumentTitle() {
-    if (this.strictDrawing.isEmpty()) {
-      document.title = 'RNA2Drawer 2';
-      return;
-    }
-    document.title = this.strictDrawing.sequenceIds().join(', ');
-  }
-
   pushUndo() {
     this._undoRedo.pushUndo(
       this.strictDrawing.savableState()
@@ -202,7 +178,7 @@ class App {
     this.renderPeripherals();
   }
 
-  canUndo() {
+  canUndo(): boolean {
     return this._undoRedo.canUndo();
   }
 
@@ -217,7 +193,7 @@ class App {
     this.drawingChangedNotByInteraction();
   }
 
-  canRedo() {
+  canRedo(): boolean {
     return this._undoRedo.canRedo();
   }
 
@@ -235,6 +211,25 @@ class App {
   drawingChangedNotByInteraction() {
     this._strictDrawingInteraction.reset();
     this.renderPeripherals();
+  }
+
+  _setBindings() {
+    document.addEventListener('keydown', event => {
+      let k = event.key.toUpperCase();
+      if (event.ctrlKey && event.shiftKey && k == 'Z') {
+        this.redo();
+      } else if (event.ctrlKey && k == 'Z') {
+        this.undo();
+      }
+    });
+  }
+
+  updateDocumentTitle() {
+    if (this.strictDrawing.isEmpty()) {
+      document.title = 'RNA2Drawer 2';
+      return;
+    }
+    document.title = this.strictDrawing.sequenceIds().join(', ');
   }
 
   save() {
