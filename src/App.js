@@ -1,8 +1,7 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 
-import FiniteStack from './undo/FiniteStack';
+import UndoRedo from './undo/UndoRedo';
 
 import StrictDrawing from './draw/StrictDrawing';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
@@ -28,9 +27,8 @@ class App {
   constructor(SVG) {
     this._SVG = SVG;
 
-    this._undoStack = new FiniteStack();
-    this._redoStack = new FiniteStack();
-    
+    this._undoRedo = new UndoRedo();
+
     this._fillInBody();
     this._initializeDrawing();
     this._initializeDrawingInteraction();
@@ -198,43 +196,38 @@ class App {
   }
 
   pushUndo() {
-    this._undoStack.push(
+    this._undoRedo.pushUndo(
       this.strictDrawing.savableState()
     );
-    this._redoStack.clear();
     this.renderPeripherals();
   }
 
   canUndo() {
-    return !this._undoStack.isEmpty();
+    return this._undoRedo.canUndo();
   }
 
   undo() {
     if (!this.canUndo()) {
       return;
     }
-    this._redoStack.push(
-      this.strictDrawing.savableState()
-    );
+    let currState = this.strictDrawing.savableState();
     this.strictDrawing.applySavedState(
-      this._undoStack.pop()
+      this._undoRedo.undo(currState)
     );
     this.drawingChangedNotByInteraction();
   }
 
   canRedo() {
-    return !this._redoStack.isEmpty();
+    return this._undoRedo.canRedo();
   }
 
   redo() {
     if (!this.canRedo()) {
       return;
     }
-    this._undoStack.push(
-      this.strictDrawing.savableState()
-    );
+    let currState = this.strictDrawing.savableState();
     this.strictDrawing.applySavedState(
-      this._redoStack.pop()
+      this._undoRedo.redo(currState)
     );
     this.drawingChangedNotByInteraction();
   }
