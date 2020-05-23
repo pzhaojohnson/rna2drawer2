@@ -2,6 +2,14 @@ import * as ReactDOM from 'react-dom';
 import { ReactElement } from 'react';
 import './App.css';
 
+import {
+  fillInBodyForApp,
+  getMenuContainer,
+  getDrawingContainer,
+  getFormContainer,
+  getInfobarContainer,
+} from './fillInBodyForApp';
+
 import UndoRedo from './undo/UndoRedo';
 
 import StrictDrawing from './draw/StrictDrawing';
@@ -28,10 +36,10 @@ class App {
   constructor(SVG: () => Svg) {
     this._SVG = SVG;
 
-    this._undoRedo = new UndoRedo();
+    fillInBodyForApp();
 
-    this._fillInBody();
     this._initializeDrawing();
+    this._undoRedo = new UndoRedo();
     this._initializeDrawingInteraction();
     this.renderPeripherals();
 
@@ -44,68 +52,9 @@ class App {
     return this._SVG;
   }
 
-  _fillInBody() {
-    let outermostDiv = document.createElement('div');
-    outermostDiv.style.cssText = 'height: 100vh; display: flex; flex-direction: column;';
-    document.body.appendChild(outermostDiv);
-
-    let menuContainer = document.createElement('div');
-    menuContainer.id = this._menuContainerId;
-    outermostDiv.appendChild(menuContainer);
-
-    let drawingAndFormDiv = document.createElement('div');
-    drawingAndFormDiv.style.cssText = 'min-height: 0px; flex-grow: 1; display: flex; flex-direction: row;';
-    outermostDiv.appendChild(drawingAndFormDiv);
-
-    let drawingContainer = document.createElement('div');
-    drawingContainer.id = this._drawingContainerId;
-    drawingContainer.style.cssText = 'flex-grow: 1; overflow: auto;';
-    drawingAndFormDiv.appendChild(drawingContainer);
-
-    let formContainer = document.createElement('div');
-    formContainer.id = this._formContainerId;
-    drawingAndFormDiv.appendChild(formContainer);
-
-    let infobarContainer = document.createElement('div');
-    infobarContainer.id = this._infobarContainerId;
-    outermostDiv.appendChild(infobarContainer);
-  }
-
-  get _menuContainerId(): string {
-    return 'MenuContainer';
-  }
-  
-  get _drawingContainerId(): string {
-    return 'DrawingContainer';
-  }
-
-  get _formContainerId(): string {
-    return 'FormContainer';
-  }
-
-  get _infobarContainerId(): string {
-    return 'InfobarContainer';
-  }
-
-  _getMenuContainer(): Element {
-    return document.getElementById(this._menuContainerId);
-  }
-
-  _getDrawingContainer(): Element {
-    return document.getElementById(this._drawingContainerId);
-  }
-
-  _getFormContainer(): Element {
-    return document.getElementById(this._formContainerId);
-  }
-
-  _getInfobarContainer(): Element {
-    return document.getElementById(this._infobarContainerId);
-  }
-
   _initializeDrawing() {
     this._strictDrawing = new StrictDrawing();
-    let container = this._getDrawingContainer();
+    let container = getDrawingContainer();
     this._strictDrawing.addTo(container, () => this.SVG());
   }
 
@@ -140,14 +89,14 @@ class App {
   renderMenu() {
     ReactDOM.render(
       createMenuForApp(this),
-      this._getMenuContainer(),
+      getMenuContainer(),
     );
   }
 
   renderInfobar() {
     ReactDOM.render(
       createInfobarForApp(this),
-      this._getInfobarContainer(),
+      getInfobarContainer(),
     );
   }
 
@@ -159,7 +108,7 @@ class App {
     
     ReactDOM.render(
       formFactory(),
-      this._getFormContainer(),
+      getFormContainer(),
     );
     this._currFormFactory = formFactory;
   }
@@ -167,7 +116,7 @@ class App {
   unmountCurrForm() {
     this._currFormFactory = null;
     ReactDOM.unmountComponentAtNode(
-      this._getFormContainer()
+      getFormContainer()
     );
   }
 
@@ -208,11 +157,6 @@ class App {
     this.drawingChangedNotByInteraction();
   }
 
-  drawingChangedNotByInteraction() {
-    this._strictDrawingInteraction.reset();
-    this.renderPeripherals();
-  }
-
   _setKeyBindings() {
     document.addEventListener('keydown', event => {
       let k = event.key.toUpperCase();
@@ -222,6 +166,11 @@ class App {
         this.undo();
       }
     });
+  }
+
+  drawingChangedNotByInteraction() {
+    this._strictDrawingInteraction.reset();
+    this.renderPeripherals();
   }
 
   updateDocumentTitle() {

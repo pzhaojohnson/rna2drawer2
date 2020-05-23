@@ -2,6 +2,13 @@ import App from './App';
 import NodeSVG from './draw/NodeSVG';
 import React from 'react';
 
+import {
+  getMenuContainer,
+  getDrawingContainer,
+  getFormContainer,
+  getInfobarContainer,
+} from './fillInBodyForApp';
+
 jest.mock('./menu/createMenuForApp');
 import createMenuForApp from './menu/createMenuForApp';
 
@@ -21,45 +28,13 @@ it('SVG getter', () => {
   expect(app.SVG).toBe(svg);
 });
 
-it('fills in body', () => {
-  let app = new App(() => NodeSVG());
-  expect(
-    document.getElementById(app._menuContainerId)
-  ).toBeTruthy();
-  expect(
-    document.getElementById(app._drawingContainerId)
-  ).toBeTruthy();
-  expect(
-    document.getElementById(app._formContainerId)
-  ).toBeTruthy();
-  expect(
-    document.getElementById(app._infobarContainerId)
-  ).toBeTruthy();
-});
-
-it('can retrieve element containers', () => {
-  let app = new App(() => NodeSVG());
-  expect(
-    app._getMenuContainer().id
-  ).toBe(app._menuContainerId);
-  expect(
-    app._getDrawingContainer().id
-  ).toBe(app._drawingContainerId);
-  expect(
-    app._getFormContainer().id
-  ).toBe(app._formContainerId);
-  expect(
-    app._getInfobarContainer().id
-  ).toBe(app._infobarContainerId);
-});
-
 it('initializes drawing and adds it to its container', () => {
   let app = new App(() => NodeSVG());
   expect(
     () => app.strictDrawing.appendSequence('asdf', 'asdf')
   ).not.toThrow(); // will throw if SVG callback not passed
   expect(
-    app._getDrawingContainer().childNodes.length
+    getDrawingContainer().childNodes.length
   ).toBeGreaterThan(0);
 });
 
@@ -112,7 +87,7 @@ it('renderMenu method', () => {
   app.renderMenu();
   expect(createMenuForApp.mock.calls.length).toBe(c + 1);
   expect(createMenuForApp.mock.calls[c][0]).toBe(app); // passes self
-  expect(app._getMenuContainer().textContent).toBe(textContent);
+  expect(getMenuContainer().textContent).toBe(textContent);
 });
 
 it('renderInfobar method', () => {
@@ -123,7 +98,7 @@ it('renderInfobar method', () => {
   app.renderInfobar();
   expect(createInfobarForApp.mock.calls.length).toBe(c + 1);
   expect(createInfobarForApp.mock.calls[c][0]).toBe(app); // passes self
-  expect(app._getInfobarContainer().textContent).toBe(textContent);
+  expect(getInfobarContainer().textContent).toBe(textContent);
 });
 
 it('renderForm method', () => {
@@ -133,7 +108,7 @@ it('renderForm method', () => {
   app.unmountCurrForm = jest.fn();
   app.renderForm(formFactory);
   expect(app.unmountCurrForm.mock.calls.length).toBe(1);
-  expect(app._getFormContainer().textContent).toBe(textContent);
+  expect(getFormContainer().textContent).toBe(textContent);
   expect(app._currFormFactory).toBe(formFactory);
 });
 
@@ -142,10 +117,10 @@ it('unmountCurrForm method', () => {
   let formFactory = jest.fn(() => <div>{textContent}</div>);
   let app = new App(() => NodeSVG());
   app.renderForm(formFactory);
-  expect(app._getFormContainer().textContent).toBe(textContent);
+  expect(getFormContainer().textContent).toBe(textContent);
   expect(app._currFormFactory).toBe(formFactory);
   app.unmountCurrForm();
-  expect(app._getFormContainer().textContent).toBeFalsy();
+  expect(getFormContainer().textContent).toBeFalsy();
   expect(app._currFormFactory).toBeFalsy();
 });
 
