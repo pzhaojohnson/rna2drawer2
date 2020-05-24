@@ -3,8 +3,8 @@ import createMenuForApp from './createMenuForApp';
 jest.mock('./file/createFileDropdownForApp');
 import createFileDropdownForApp from './file/createFileDropdownForApp';
 
-jest.mock('./createModeDropdownForApp');
-import createModeDropdownForApp from './createModeDropdownForApp';
+jest.mock('./mode/createModeDropdownForApp');
+import createModeDropdownForApp from './mode/createModeDropdownForApp';
 
 jest.mock('./createEditDropdownForApp');
 import createEditDropdownForApp from './createEditDropdownForApp';

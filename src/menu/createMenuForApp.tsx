@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Menu from './Menu';
 import createFileDropdownForApp from './file/createFileDropdownForApp';
-import createModeDropdownForApp from './createModeDropdownForApp';
+import createModeDropdownForApp from './mode/createModeDropdownForApp';
 import createEditDropdownForApp from './createEditDropdownForApp';
 import createExportDropdownForApp from './createExportDropdownForApp';
 
