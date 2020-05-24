@@ -3,7 +3,7 @@ import Menu from './Menu';
 import createFileDropdownForApp from './file/createFileDropdownForApp';
 import createModeDropdownForApp from './mode/createModeDropdownForApp';
 import createEditDropdownForApp from './createEditDropdownForApp';
-import createExportDropdownForApp from './createExportDropdownForApp';
+import createExportDropdownForApp from './export/createExportDropdownForApp';
 
 interface App {
   strictDrawing: {
