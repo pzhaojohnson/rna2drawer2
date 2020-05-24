@@ -5,16 +5,12 @@ class Menu extends React.Component {
   static defaultProps: {
     borderColor: string;
     backgroundColor: string;
-    buttonColor: string;
-    disabledButtonColor: string;
   }
 
   props: {
     borderColor: string;
     backgroundColor: string;
-    buttonColor: string;
-    disabledButtonColor: string;
-
+    
     fileDropdown: React.ReactElement;
     modeDropdown: React.ReactElement;
     editDropdown: React.ReactElement;
@@ -47,8 +43,6 @@ class Menu extends React.Component {
 Menu.defaultProps = {
   borderColor: '#bfbfbf',
   backgroundColor: '#ffffff',
-  buttonColor: '#000000',
-  disabledButtonColor: '#808080',
 };
 
 export default Menu;

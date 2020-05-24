@@ -1,23 +1,22 @@
 import * as React from 'react';
-const uuidv1 = require('uuid/v1');
 import CheckMark from './CheckMark';
 
 class DroppedButton extends React.Component {
   static defaultProps: {
-    backgroundColor: string;
-    disabled: boolean;
     keyBinding: string;
+    disabled: boolean;
+    backgroundColor: string;
     checked: boolean;
     buttonColor: string;
     disabledButtonColor: string;
   }
 
   props: {
-    backgroundColor: string;
     text: string;
     onClick: () => void;
-    disabled: boolean;
     keyBinding: string;
+    disabled: boolean;
+    backgroundColor: string;
     checked: boolean;
     buttonColor: string;
     disabledButtonColor: string;
@@ -26,7 +25,6 @@ class DroppedButton extends React.Component {
   render() {
     return (
       <button
-        key={uuidv1()}
         className={'dropped-menu-button'}
         onClick={this.props.disabled ? () => {} : this.props.onClick}
         style={{
@@ -55,9 +53,9 @@ class DroppedButton extends React.Component {
 }
 
 DroppedButton.defaultProps = {
-  backgroundColor: '#ffffff',
   disabled: false,
   keyBinding: '',
+  backgroundColor: '#ffffff',
   checked: false,
   buttonColor: '#000000',
   disabledButtonColor: '#808080',

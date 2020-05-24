@@ -1,5 +1,4 @@
 import * as React from 'react';
-const uuidv1 = require('uuid/v1');
 
 class DroppedSeparator extends React.Component {
   static defaultProps: {
@@ -15,7 +14,6 @@ class DroppedSeparator extends React.Component {
   render() {
     return (
       <div
-        key={uuidv1()}
         style={{
           width: '100%',
           backgroundColor: this.props.backgroundColor,
