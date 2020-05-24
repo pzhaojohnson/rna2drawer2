@@ -600,6 +600,20 @@ class Base {
     }
     return savableState;
   }
+
+  refreshIds() {
+    this._text.id(null);
+    this._text.id();
+    if (this.hasHighlighting()) {
+      this.highlighting.refreshIds();
+    }
+    if (this.hasOutline()) {
+      this.outline.refreshIds();
+    }
+    if (this.hasNumbering()) {
+      this.numbering.refreshIds();
+    }
+  }
 }
 
 Base._mostRecentProps = {

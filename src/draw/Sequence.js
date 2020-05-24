@@ -682,6 +682,10 @@ class Sequence {
     );
     return savableState;
   }
+
+  refreshIds() {
+    this.forEachBase(b => b.refreshIds());
+  }
 }
 
 Sequence._mostRecentProps = {

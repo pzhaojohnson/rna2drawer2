@@ -69,6 +69,8 @@ class BaseAnnotation {
    * @returns {Object} 
    */
   savableState() {}
+
+  refreshIds() {}
 }
 
 class CircleBaseAnnotation extends BaseAnnotation {
@@ -333,6 +335,11 @@ class CircleBaseAnnotation extends BaseAnnotation {
       className: 'CircleBaseAnnotation',
       circleId: this._circle.id(),
     };
+  }
+
+  refreshIds() {
+    this._circle.id(null);
+    this._circle.id();
   }
 }
 

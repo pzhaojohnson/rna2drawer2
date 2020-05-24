@@ -598,6 +598,13 @@ class Drawing {
     this._svg.svg(content);
     this.setWidthAndHeight(w, h);
   }
+
+  refreshIds() {
+    this.forEachSequence(seq => seq.refreshIds());
+    this.forEachPrimaryBond(pb => pb.refreshIds());
+    this.forEachSecondaryBond(sb => sb.refreshIds());
+    this.forEachTertiaryBond(tb => tb.refreshIds());
+  }
 }
 
 export default Drawing;

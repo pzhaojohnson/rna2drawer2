@@ -264,6 +264,11 @@ class StraightBond {
       baseId2: this.base2.id,
     };
   }
+
+  refreshIds() {
+    this._line.id(null);
+    this._line.id();
+  }
 }
 
 class PrimaryBond extends StraightBond {

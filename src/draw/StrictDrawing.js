@@ -156,6 +156,10 @@ class StrictDrawing {
     this._baseHeight = bh;
   }
 
+  refreshIds() {
+    this.drawing.refreshIds();
+  }
+
   /**
    * @param {string} id 
    * @param {string} characters 

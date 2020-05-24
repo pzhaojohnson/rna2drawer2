@@ -10,6 +10,10 @@ function renderOpenRna2drawerInApp(app) {
       submit={savedState => {
         let applied = app.strictDrawing.applySavedState(savedState);
         if (applied) {
+
+          // needed for the SVG ID generator function to work correctly
+          app.strictDrawing.refreshIds();
+          
           app.unmountCurrForm();
           app.renderPeripherals();
           app.updateDocumentTitle();

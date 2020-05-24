@@ -380,6 +380,11 @@ class QuadraticBezierBond {
       baseId2: this.base2.id,
     };
   }
+
+  refreshIds() {
+    this._path.id(null);
+    this._path.id();
+  }
 }
 
 class TertiaryBond extends QuadraticBezierBond {

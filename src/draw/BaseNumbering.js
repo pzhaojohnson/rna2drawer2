@@ -505,6 +505,13 @@ class BaseNumbering {
       lineId: this._line.id(),
     };
   }
+
+  refreshIds() {
+    this._text.id(null);
+    this._text.id();
+    this._line.id(null);
+    this._line.id();
+  }
 }
 
 BaseNumbering._mostRecentProps = {
