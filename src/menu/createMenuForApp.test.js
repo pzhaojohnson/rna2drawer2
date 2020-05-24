@@ -6,8 +6,8 @@ import createFileDropdownForApp from './file/createFileDropdownForApp';
 jest.mock('./mode/createModeDropdownForApp');
 import createModeDropdownForApp from './mode/createModeDropdownForApp';
 
-jest.mock('./createEditDropdownForApp');
-import createEditDropdownForApp from './createEditDropdownForApp';
+jest.mock('./edit/createEditDropdownForApp');
+import createEditDropdownForApp from './edit/createEditDropdownForApp';
 
 jest.mock('./export/createExportDropdownForApp');
 import createExportDropdownForApp from './export/createExportDropdownForApp';
