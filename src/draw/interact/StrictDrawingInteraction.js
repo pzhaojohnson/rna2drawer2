@@ -1,6 +1,6 @@
 import PivotingMode from './PivotingMode';
 import FoldingMode from './FoldingMode';
-import TertiaryBondsInteraction from './TertiaryBondsInteraction';
+import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
 
 class StrictDrawingInteraction {
   constructor(strictDrawing) {

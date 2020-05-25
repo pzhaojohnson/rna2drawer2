@@ -362,6 +362,13 @@ class QuadraticBezierBond {
   }
 
   /**
+   * @returns {boolean} 
+   */
+  hasBeenRemoved() {
+    return !this._path.root();
+  }
+
+  /**
    * @typedef {Object} QuadraticBezierBond~SavableState 
    * @property {string} className 
    * @property {string} pathId 
