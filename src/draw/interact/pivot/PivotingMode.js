@@ -1,8 +1,13 @@
-import positionIsInStem from '../../parse/positionIsInStem';
-import stemOfPosition from '../../parse/stemOfPosition';
-import unpairedRegionOfPosition from '../../parse/unpairedRegionOfPosition';
-import setBaseHighlightingsOfDrawing from '../edit/setBaseHighlightingsOfDrawing';
-import normalizeAngle from '../normalizeAngle';
+import positionIsInStem from '../../../parse/positionIsInStem';
+import stemOfPosition from '../../../parse/stemOfPosition';
+import unpairedRegionOfPosition from '../../../parse/unpairedRegionOfPosition';
+import setBaseHighlightingsOfDrawing from '../../edit/setBaseHighlightingsOfDrawing';
+import normalizeAngle from '../../normalizeAngle';
+
+import unpairedRegionToStretch5 from './unpairedRegionToStretch5';
+import unpairedRegionToStretch3 from './unpairedRegionToStretch3';
+
+import stretchOfUnpairedRegion from './stretchOfUnpairedRegion';
 
 function _getUnpairedRegion5(st, partners) {
   let p = st.position5 - 1;
@@ -142,23 +147,13 @@ class PivotingMode {
     return s / (2 * wh);
   }
 
-  _totalStretchOfUnpairedRegion(ur) {
-    let ts = 0;
-    let props = this.strictDrawing.perBaseLayoutProps();
-    for (let p = ur.boundingPosition5; p < ur.boundingPosition3; p++) {
-      if (p > 0) {
-        ts += props[p - 1].stretch3;
-      }
-    }
-    return ts;
-  }
-
   _pivot5(xMove, yMove) {
     let s = this._moveToStretch(xMove, yMove);
     let partners = this.strictDrawing.layoutPartners();
+    let perBaseProps = this.strictDrawing.perBaseLayoutProps();
     if (this._condense) {
       let ur5 = _getUnpairedRegion5(this._selected, partners);
-      let s5 = this._totalStretchOfUnpairedRegion(ur5);
+      let s5 = stretchOfUnpairedRegion(ur5, perBaseProps);
       this._addStretchToUnpairedRegion(-Math.min(s5, s), ur5);
       s -= s5;
     }
@@ -172,9 +167,10 @@ class PivotingMode {
   _pivot3(xMove, yMove) {
     let s = this._moveToStretch(xMove, yMove);
     let partners = this.strictDrawing.layoutPartners();
+    let perBaseProps = this.strictDrawing.perBaseLayoutProps();
     if (this._condense) {
       let ur3 = _getUnpairedRegion3(this._selected, partners);
-      let s3 = this._totalStretchOfUnpairedRegion(ur3);
+      let s3 = stretchOfUnpairedRegion(ur3, perBaseProps);
       this._addStretchToUnpairedRegion(-Math.min(s3, s), ur3);
       s -= s3;
     }

@@ -1,32 +1,30 @@
-function _parseBoundingPosition5(p, partners) {
+function _parseBoundingPosition5(p: number, partners: [number, null]): number {
   while (p > 0 && !partners[p - 1]) {
     p--;
   }
   return p;
 }
 
-function _parseBoundingPosition3(p, partners) {
+function _parseBoundingPosition3(p: number, partners: [number, null]): number {
   while (p <= partners.length && !partners[p - 1]) {
     p++;
   }
   return p;
 }
 
-/**
- * @typedef {Object} UnpairedRegion 
- * @property {number} boundingPosition5 The 5' bounding position.
- * @property {number} boundingPosition3 The 3' bounding position.
- */
+interface UnpairedRegion {
+
+  // the 5' bounding position
+  boundingPosition5: number;
+
+  // the 3' bounding position
+  boundingPosition3: number;
+}
 
 /**
  * Returns null if the position is not in an unpaired region.
- * 
- * @param {number} p 
- * @param {Array<number|null>} partners 
- * 
- * @returns {UnpairedRegion|null} 
  */
-function unpairedRegionOfPosition(p, partners) {
+function unpairedRegionOfPosition(p: number, partners: [number, null]): (UnpairedRegion | null) {
   if (partners[p - 1]) {
     return null;
   }

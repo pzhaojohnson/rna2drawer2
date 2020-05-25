@@ -1,4 +1,4 @@
-function _parsePosition5(p, partners) {
+function _parsePosition5(p: number, partners: [number, null]): number {
   let q = partners[p - 1];
   let p5 = Math.min(p, q);
   let p3 = Math.max(p, q);
@@ -9,7 +9,7 @@ function _parsePosition5(p, partners) {
   return p5;
 }
 
-function _parsePositionTop5(p, partners) {
+function _parsePositionTop5(p: number, partners: [number, null]): number {
   let q = partners[p - 1];
   let p5 = Math.min(p, q);
   let p3 = Math.max(p, q);
@@ -20,22 +20,22 @@ function _parsePositionTop5(p, partners) {
   return p5;
 }
 
-/**
- * @typedef {Object} Stem 
- * @property {number} position5 The 5' most position of the stem.
- * @property {number} position3 The 3' most position of the stem.
- * @property {number} size The number of base pairs in the stem.
- */
+interface Stem {
+
+  // the 5' most position of the stem
+  position5: number;
+
+  // the 3' most position of the stem
+  position3: number;
+
+  // the number of base pairs in the stem
+  size: number;
+}
 
 /**
  * Returns null if the position is not in a stem.
- * 
- * @param {number} p 
- * @param {Array<number|null>} partners 
- * 
- * @returns {Stem|null} 
  */
-function stemOfPosition(p, partners) {
+function stemOfPosition(p: number, partners: [number, null]): (Stem | null) {
   if (!partners[p - 1]) {
     return null;
   }

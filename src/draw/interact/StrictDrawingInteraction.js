@@ -1,4 +1,4 @@
-import PivotingMode from './PivotingMode';
+import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './FoldingMode';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
 

@@ -1,12 +1,6 @@
 import unpairedRegionOfPosition from './unpairedRegionOfPosition';
 
-/**
- * @param {number} p 
- * @param {Array<number|null>} partners 
- * 
- * @returns {boolean} 
- */
-function positionIsInUnpairedRegion(p, partners) {
+function positionIsInUnpairedRegion(p: number, partners: [number, null]): boolean {
   if (unpairedRegionOfPosition(p, partners)) {
     return true;
   }
