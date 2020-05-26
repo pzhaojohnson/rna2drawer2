@@ -1,35 +1,16 @@
 import positionIsInStem from '../../../parse/positionIsInStem';
 import stemOfPosition from '../../../parse/stemOfPosition';
-import unpairedRegionOfPosition from '../../../parse/unpairedRegionOfPosition';
-import setBaseHighlightingsOfDrawing from '../../edit/setBaseHighlightingsOfDrawing';
 import normalizeAngle from '../../normalizeAngle';
 
-import unpairedRegionToStretch5 from './unpairedRegionToStretch5';
-import unpairedRegionToStretch3 from './unpairedRegionToStretch3';
+import setAllBaseHighlightings from '../highlight/setAllBaseHighlightings';
+import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings';
 
+import unpairedRegion5 from './unpairedRegion5';
+import unpairedRegion3 from './unpairedRegion3';
+
+import mouseMoveToStretch from './mouseMoveToStretch';
 import stretchOfUnpairedRegion from './stretchOfUnpairedRegion';
-
-function _getUnpairedRegion5(st, partners) {
-  let p = st.position5 - 1;
-  if (p > 0 && !partners[p - 1]) {
-    return unpairedRegionOfPosition(p, partners);
-  }
-  return {
-    boundingPosition5: p,
-    boundingPosition3: st.position5,
-  };
-}
-
-function _getUnpairedRegion3(st, partners) {
-  let p = st.position3 + 1;
-  if (p <= partners.length && !partners[p - 1]) {
-    return unpairedRegionOfPosition(p, partners);
-  }
-  return {
-    boundingPosition5: st.position3,
-    boundingPosition3: p,
-  };
-}
+import addStretchToUnpairedRegion from './addStretchToUnpairedRegion';
 
 class PivotingMode {
   constructor(strictDrawing) {
@@ -71,7 +52,7 @@ class PivotingMode {
       highlightings[st.position5 + i - 1] = { ...h };
       highlightings[st.position3 - i - 1] = { ...h };
     }
-    setBaseHighlightingsOfDrawing(
+    setAllBaseHighlightings(
       this.strictDrawing.drawing,
       highlightings,
     );
@@ -79,7 +60,7 @@ class PivotingMode {
 
   handleMouseoutOnBase(b) {
     if (!this._selected) {
-      setBaseHighlightingsOfDrawing(
+      setAllBaseHighlightings(
         this.strictDrawing.drawing,
         [],
       );
@@ -141,41 +122,35 @@ class PivotingMode {
     }
   }
 
-  _moveToStretch(xMove, yMove) {
-    let s = (xMove**2 + yMove**2)**0.5;
-    let wh = (this.strictDrawing.baseWidth + this.strictDrawing.baseHeight) / 2;
-    return s / (2 * wh);
-  }
-
   _pivot5(xMove, yMove) {
-    let s = this._moveToStretch(xMove, yMove);
+    let s = mouseMoveToStretch(xMove, yMove, this.strictDrawing);
     let partners = this.strictDrawing.layoutPartners();
     let perBaseProps = this.strictDrawing.perBaseLayoutProps();
     if (this._condense) {
-      let ur5 = _getUnpairedRegion5(this._selected, partners);
+      let ur5 = unpairedRegion5(this._selected, partners);
       let s5 = stretchOfUnpairedRegion(ur5, perBaseProps);
       this._addStretchToUnpairedRegion(-Math.min(s5, s), ur5);
       s -= s5;
     }
     if (s > 0) {
-      let ur3 = _getUnpairedRegion3(this._selected, partners);
+      let ur3 = unpairedRegion3(this._selected, partners);
       this._addStretchToUnpairedRegion(s, ur3);
     }
     this.strictDrawing.applyLayout();
   }
 
   _pivot3(xMove, yMove) {
-    let s = this._moveToStretch(xMove, yMove);
+    let s = mouseMoveToStretch(xMove, yMove, this.strictDrawing);
     let partners = this.strictDrawing.layoutPartners();
     let perBaseProps = this.strictDrawing.perBaseLayoutProps();
     if (this._condense) {
-      let ur3 = _getUnpairedRegion3(this._selected, partners);
+      let ur3 = unpairedRegion3(this._selected, partners);
       let s3 = stretchOfUnpairedRegion(ur3, perBaseProps);
       this._addStretchToUnpairedRegion(-Math.min(s3, s), ur3);
       s -= s3;
     }
     if (s > 0) {
-      let ur5 = _getUnpairedRegion5(this._selected, partners);
+      let ur5 = unpairedRegion5(this._selected, partners);
       this._addStretchToUnpairedRegion(s, ur5);
     }
     this.strictDrawing.applyLayout();
@@ -209,10 +184,7 @@ class PivotingMode {
     }
     this._selected = null;
     this._condense = true;
-    setBaseHighlightingsOfDrawing(
-      this.strictDrawing.drawing,
-      [],
-    );
+    removeAllBaseHighlightings(this.strictDrawing.drawing);
   }
 
   _bindKeys() {
@@ -228,10 +200,7 @@ class PivotingMode {
 
   reset() {
     this._selected = null;
-    setBaseHighlightingsOfDrawing(
-      this.strictDrawing.drawing,
-      [],
-    );
+    removeAllBaseHighlightings(this.strictDrawing.drawing);
   }
 
   disable() {

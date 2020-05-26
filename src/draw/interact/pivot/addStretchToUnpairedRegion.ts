@@ -7,11 +7,10 @@ interface PerBaseProps {
   stretch3: number;
 }
 
-function addStretchToUnpairedRegion(
-  stretch: number,
-  ur: UnpairedRegion,
-  perBaseProps: [PerBaseProps],
-) {
+function addStretchToUnpairedRegion(stretch: number, ur: UnpairedRegion, perBaseProps: [PerBaseProps]) {
+  if (!stretch || !ur || !perBaseProps) {
+    return;
+  }
   let size = ur.boundingPosition3 - ur.boundingPosition5;
   if (ur.boundingPosition5 == 0) {
     size--;
