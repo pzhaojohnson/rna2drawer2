@@ -11,3 +11,8 @@ function removeAllBaseHighlightings(drawing: Drawing) {
 }
 
 export default removeAllBaseHighlightings;
+
+export {
+  removeAllBaseHighlightings,
+  Drawing,
+};

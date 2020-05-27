@@ -1,13 +1,13 @@
-interface UnpairedRegion {
+export interface UnpairedRegion {
   boundingPosition5: number;
   boundingPosition3: number;
 }
 
-interface PerBaseProps {
+export interface PerBaseProps {
   stretch3: number;
 }
 
-function addStretchToUnpairedRegion(stretch: number, ur: UnpairedRegion, perBaseProps: [PerBaseProps]) {
+export function addStretchToUnpairedRegion(stretch: number, ur: UnpairedRegion, perBaseProps: PerBaseProps[]) {
   if (!stretch || !ur || !perBaseProps) {
     return;
   }

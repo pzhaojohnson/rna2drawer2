@@ -1,20 +1,18 @@
-import unpairedRegionOfPosition from '../../../parse/unpairedRegionOfPosition';
+import {
+  unpairedRegionOfPosition,
+  UnpairedRegion,
+} from '../../../parse/unpairedRegionOfPosition';
 
-interface Stem {
+export interface Stem {
   position5: number;
   position3: number;
-}
-
-interface UnpairedRegion {
-  boundingPosition5: number;
-  boundingPosition3: number;
 }
 
 /**
  * It is undefined what this function returns if the given stem
  * does not exist in the given partners notation.
  */
-function unpairedRegion3(st: Stem, partners: [number, null]): (UnpairedRegion | null) {
+export function unpairedRegion3(st: Stem, partners: (number | null)[]): (UnpairedRegion | null) {
   if (!st || !partners) {
     return null;
   }
@@ -29,3 +27,7 @@ function unpairedRegion3(st: Stem, partners: [number, null]): (UnpairedRegion | 
 }
 
 export default unpairedRegion3;
+
+export {
+  UnpairedRegion,
+};

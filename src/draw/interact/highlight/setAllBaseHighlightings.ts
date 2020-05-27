@@ -1,31 +1,31 @@
-interface Drawing {
-  forEachBase: (cb: ForEachBaseCallback) => void;
-}
-
-interface ForEachBaseCallback {
-  (b: Base, p: number): void;
-}
-
-interface HighlightingProps {
-  radius?: number;
-  stroke?: string;
-  strokeWidth?: number;
-  fill?: string;
-  fillOpacity?: number;
-}
-
-interface Base {
-  fontSize: number;
-  addCircleHighlighting: () => Highlighting;
-  removeHighlighting: () => void;
-}
-
-interface Highlighting {
+export interface Highlighting {
   radius: number;
   stroke: string;
   strokeWidth: number;
   fill: string;
   fillOpacity: number;
+}
+
+export interface Base {
+  fontSize: number;
+  addCircleHighlighting: () => Highlighting;
+  removeHighlighting: () => void;
+}
+
+export interface ForEachBaseFunc {
+  (b: Base, p: number): void;
+}
+
+export interface Drawing {
+  forEachBase: (cb: ForEachBaseFunc) => void;
+}
+
+export interface HighlightingProps {
+  radius?: number;
+  stroke?: string;
+  strokeWidth?: number;
+  fill?: string;
+  fillOpacity?: number;
 }
 
 function _fillInPropsForBase(props: HighlightingProps, b: Base) {
@@ -44,7 +44,7 @@ function _applyPropsToHighlighting(props: HighlightingProps, h: Highlighting) {
   h.fillOpacity = props.fillOpacity;
 }
 
-function setAllBaseHighlightings(drawing: Drawing, highlightings: HighlightingProps[]) {
+export function setAllBaseHighlightings(drawing: Drawing, highlightings: HighlightingProps[]) {
   if (!drawing || !highlightings) {
     return;
   }
@@ -62,8 +62,3 @@ function setAllBaseHighlightings(drawing: Drawing, highlightings: HighlightingPr
 }
 
 export default setAllBaseHighlightings;
-
-export {
-  setAllBaseHighlightings,
-  Drawing,
-};
