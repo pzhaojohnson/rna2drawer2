@@ -1,5 +1,5 @@
 import PivotingMode from './pivot/PivotingMode';
-import FoldingMode from './FoldingMode';
+import FoldingMode from './fold/FoldingMode';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
 
 class StrictDrawingInteraction {

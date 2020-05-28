@@ -253,13 +253,16 @@ class Drawing {
    * @returns {Base|null} 
    */
   getBaseAtOverallPosition(p) {
-    let base = null;
-    this.forEachBase((b, q) => {
-      if (q === p) {
-        base = b;
+    let seqStart = 1;
+    for (let s = 0; s < this.numSequences; s++) {
+      let seq = this._sequences[s];
+      let seqEnd = seqStart + seq.length - 1;
+      if (p >= seqStart && p <= seqEnd) {
+        return seq.getBaseAtPosition(p - seqStart + 1);
       }
-    });
-    return base;
+      seqStart += seqEnd + 1;
+    }
+    return null;
   }
 
   /**

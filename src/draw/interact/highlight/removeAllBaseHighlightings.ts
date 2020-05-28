@@ -1,9 +1,7 @@
-import {
-  setAllBaseHighlightings,
-  Drawing,
-} from './setAllBaseHighlightings';
+import Drawing from '../../Drawing';
+import setAllBaseHighlightings from './setAllBaseHighlightings';
 
-function removeAllBaseHighlightings(drawing: Drawing) {
+export function removeAllBaseHighlightings(drawing: Drawing) {
   if (!drawing) {
     return;
   }
@@ -11,8 +9,3 @@ function removeAllBaseHighlightings(drawing: Drawing) {
 }
 
 export default removeAllBaseHighlightings;
-
-export {
-  removeAllBaseHighlightings,
-  Drawing,
-};
