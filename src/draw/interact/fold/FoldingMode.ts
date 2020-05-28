@@ -17,9 +17,7 @@ class FoldingMode implements FoldingModeInterface {
     looseEnd: number
   } | null;
   _selecting: boolean;
-
   _disabled: boolean;
-
   _onShouldPushUndo: () => void;
   _onChange: () => void;
 
@@ -57,7 +55,7 @@ class FoldingMode implements FoldingModeInterface {
     );
   }
 
-  get selectedLength(): (number | null) {
+  get selectedLength(): number {
     if (!this.selected) {
       return 0;
     }
@@ -77,7 +75,7 @@ class FoldingMode implements FoldingModeInterface {
 
   withinSelected(p: number): boolean {
     if (!this.selected) {
-      return;
+      return false;
     }
     return p >= this.minSelected && p <= this.maxSelected;
   }
@@ -132,6 +130,7 @@ class FoldingMode implements FoldingModeInterface {
 
   reset() {
     this.hovered = null;
+    this.stopSelecting();
     this.selected = null;
     removeAllBaseHighlightings(this.strictDrawing.drawing);
   }

@@ -14,7 +14,7 @@ function createFoldButtonForApp(app: App): React.ReactElement {
   return (
     <DroppedButton
       key={uuidv1()}
-      text={'Modify Base Pairs'}
+      text={'Pair and Unpair'}
       onClick={() => {
         if (app.strictDrawingInteraction.folding()) {
           return;

@@ -6,7 +6,7 @@ export function handleMouseoverOnBase(mode: FoldingMode, b: Base) {
   let drawing = mode.strictDrawing.drawing;
   let p = drawing.overallPositionOfBase(b);
   mode.hovered = p;
-  if (mode.selecting()) {
+  if (mode.selected && mode.selecting()) {
     mode.selected.looseEnd = p;
   }
   setAllBaseHighlightings(mode);

@@ -3,35 +3,47 @@ import {
   hoveredComplement,
   Complement,
 } from './hoveredComplement';
-import selectedAreUnpaired from './selectedAreUnpaired';
+import selectedAreSecondaryUnpaired from './selectedAreSecondaryUnpaired';
 import isKnotless from '../../../parse/isKnotless';
 
 type Pair = [number, number];
 
-function pairsOfComplement(mode: FoldingMode, comp: Complement): Pair[] {
-  let pairs = [];
+function pairs(mode: FoldingMode, comp: Complement): Pair[] {
+  let ps = [];
   for (let i = 0; i < mode.selectedLength; i++) {
     let p: Pair = [
       mode.minSelected + i,
       comp.position3 - i,
     ];
-    pairs.push(p);
+    ps.push(p);
   }
-  return pairs;
+  return ps;
+}
+
+function canAddSecondaryBonds(mode: FoldingMode, comp: Complement): boolean {
+  if (!selectedAreSecondaryUnpaired(mode)) {
+    return false;
+  }
+  let partners = mode.strictDrawing.layoutPartners();
+  pairs(mode, comp).forEach((p: Pair) => {
+    partners[p[0] - 1] = p[1];
+    partners[p[1] - 1] = p[0];
+  });
+  return isKnotless(partners);
 }
 
 function addSecondaryBonds(mode: FoldingMode, comp: Complement) {
   let drawing = mode.strictDrawing.drawing;
-  pairsOfComplement(mode, comp).forEach((p: Pair) => {
+  pairs(mode, comp).forEach((p: Pair) => {
     let b1 = drawing.getBaseAtOverallPosition(p[0]);
     let b2 = drawing.getBaseAtOverallPosition(p[1]);
     drawing.addSecondaryBond(b1, b2);
   });
 }
 
-function removeStretch(mode: FoldingMode, comp: Complement) {
+function removeStretchOfPairs(mode: FoldingMode, comp: Complement) {
   let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
-  pairsOfComplement(mode, comp).forEach((p: Pair) => {
+  pairs(mode, comp).forEach((p: Pair) => {
     perBaseProps[p[0] - 1].stretch3 = 0;
     perBaseProps[p[1] - 1].stretch3 = 0;
   });
@@ -39,7 +51,7 @@ function removeStretch(mode: FoldingMode, comp: Complement) {
 
 function addTertiaryBonds(mode: FoldingMode, comp: Complement) {
   let drawing = mode.strictDrawing.drawing;
-  pairsOfComplement(mode, comp).forEach((p: Pair) => {
+  pairs(mode, comp).forEach((p: Pair) => {
     let b1 = drawing.getBaseAtOverallPosition(p[0]);
     let b2 = drawing.getBaseAtOverallPosition(p[1]);
     drawing.addTertiaryBond(b1, b2);
@@ -52,24 +64,13 @@ export function pair(mode: FoldingMode) {
     return;
   }
   mode.fireShouldPushUndo();
-  if (!selectedAreUnpaired(mode)) {
+  if (canAddSecondaryBonds(mode, comp)) {
+    addSecondaryBonds(mode, comp);
+    removeStretchOfPairs(mode, comp);
+    mode.strictDrawing.applyLayout();
+  } else {
     addTertiaryBonds(mode, comp);
-    mode.reset();
-    return;
   }
-  let partners = mode.strictDrawing.layoutPartners();
-  pairsOfComplement(mode, comp).forEach((p: Pair) => {
-    partners[p[0] - 1] = p[1];
-    partners[p[1] - 1] = p[0];
-  });
-  if (!isKnotless(partners)) {
-    addTertiaryBonds(mode, comp);
-    mode.reset();
-    return;
-  }
-  addSecondaryBonds(mode, comp);
-  removeStretch(mode, comp);
-  mode.strictDrawing.applyLayout();
   mode.reset();
 }
 

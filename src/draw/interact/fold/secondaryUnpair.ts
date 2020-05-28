@@ -1,13 +1,9 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import { SecondaryBond } from '../../StraightBond';
 import evenOutStretches from './evenOutStretches';
-import selectedAreUnpaired from './selectedAreUnpaired';
 
-export function unpair(mode: FoldingMode) {
+export function secondaryUnpair(mode: FoldingMode) {
   if (!mode.selected) {
-    return;
-  }
-  if (selectedAreUnpaired(mode)) {
     return;
   }
   mode.fireShouldPushUndo();
@@ -28,4 +24,4 @@ export function unpair(mode: FoldingMode) {
   mode.reset();
 }
 
-export default unpair;
+export default secondaryUnpair;

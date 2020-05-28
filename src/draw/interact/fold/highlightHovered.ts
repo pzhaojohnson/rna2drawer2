@@ -1,6 +1,6 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import highlightBase from '../highlight/highlightBase';
-import selectedAreUnpaired from './selectedAreUnpaired';
+import selectedAreSecondaryUnpaired from './selectedAreSecondaryUnpaired';
 import {
   hoveredComplement,
   Complement,
@@ -48,7 +48,7 @@ export function highlightHovered(mode: FoldingMode) {
     return;
   }
   if (mode.hoveringSelected()) {
-    if (!selectedAreUnpaired(mode) && !mode.selecting()) {
+    if (!selectedAreSecondaryUnpaired(mode) && !mode.selecting()) {
       highlightUnpair(mode);
     }
     return;

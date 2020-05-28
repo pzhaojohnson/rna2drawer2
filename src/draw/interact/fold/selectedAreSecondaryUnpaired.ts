@@ -1,6 +1,6 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 
-export function selectedAreUnpaired(mode: FoldingMode): boolean {
+export function selectedAreSecondaryUnpaired(mode: FoldingMode): boolean {
   if (!mode.selected) {
     return false;
   }
@@ -13,4 +13,4 @@ export function selectedAreUnpaired(mode: FoldingMode): boolean {
   return true;
 }
 
-export default selectedAreUnpaired;
+export default selectedAreSecondaryUnpaired;
