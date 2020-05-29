@@ -260,7 +260,7 @@ class Drawing {
       if (p >= seqStart && p <= seqEnd) {
         return seq.getBaseAtPosition(p - seqStart + 1);
       }
-      seqStart += seqEnd + 1;
+      seqStart = seqEnd + 1;
     }
     return null;
   }

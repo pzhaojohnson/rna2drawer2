@@ -12,7 +12,7 @@ export function highlightStem(mode: PivotingMode, st: Stem) {
   for (let i = 0; i < st.size; i++) {
     let h = {
       fill: '#00ffff',
-      fillOpacity: 0.5,
+      fillOpacity: 0.4,
     };
     highlightings[st.position5 + i - 1] = { ...h };
     highlightings[st.position3 - i - 1] = { ...h };

@@ -8,6 +8,7 @@ export interface FoldingModeInterface {
     tightEnd: number;
     looseEnd: number;
   } | null;
+  selecting: boolean;
 
   readonly minSelected: number | null;
   readonly maxSelected: number | null;
@@ -16,10 +17,6 @@ export interface FoldingModeInterface {
   overlapsSelected: (position5: number, position3: number) => boolean;
   hoveringSelected: () => boolean;
 
-  startSelecting: () => void;
-  stopSelecting: () => void;
-  selecting: () => boolean;
-  
   reset: () => void;
 
   disable: () => void;

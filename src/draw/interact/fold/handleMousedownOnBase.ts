@@ -25,7 +25,7 @@ export function handleMousedownOnBase(mode: FoldingMode, b: Base) {
     tightEnd: mode.hovered,
     looseEnd: mode.hovered,
   };
-  mode.startSelecting();
+  mode.selecting = true;
   setAllBaseHighlightings(mode);
 }
 

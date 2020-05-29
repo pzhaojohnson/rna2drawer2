@@ -14,7 +14,7 @@ it('passes a key', () => {
 
 it('passes text', () => {
   let fb = createFoldButtonForApp(app);
-  expect(fb.props.text).toBe('Modify Base Pairs');
+  expect(fb.props.text).toBe('Pair and Unpair');
 });
 
 it('when already folding', () => {

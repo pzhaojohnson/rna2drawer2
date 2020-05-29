@@ -5,19 +5,22 @@ import Base from '../../Base';
 import handleMouseoverOnBase from './handleMouseoverOnBase';
 import handleMouseoutOnBase from './handleMouseoutOnBase';
 import handleMousedownOnBase from './handleMousedownOnBase';
-import handleMouseup from './handleMouseup';
 import handleMousedownOnDrawing from './handleMousedownOnDrawing';
+import handleMouseup from './handleMouseup';
 import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings';
 
 class FoldingMode implements FoldingModeInterface {
   _strictDrawing: StrictDrawing;
+
   hovered: number | null;
   selected: {
     tightEnd: number,
     looseEnd: number
   } | null;
-  _selecting: boolean;
+  selecting: boolean;
+  
   _disabled: boolean;
+  
   _onShouldPushUndo: () => void;
   _onChange: () => void;
 
@@ -62,17 +65,6 @@ class FoldingMode implements FoldingModeInterface {
     return this.maxSelected - this.minSelected + 1;
   }
 
-  get selectedCharacters(): string {
-    if (!this.selected) {
-      return '';
-    }
-    let cs = this.strictDrawing.drawing.overallCharacters;
-    return cs.substring(
-      this.minSelected - 1,
-      this.maxSelected,
-    );
-  }
-
   withinSelected(p: number): boolean {
     if (!this.selected) {
       return false;
@@ -92,18 +84,6 @@ class FoldingMode implements FoldingModeInterface {
       return false;
     }
     return this.withinSelected(this.hovered);
-  }
-
-  startSelecting() {
-    this._selecting = true;
-  }
-
-  stopSelecting() {
-    this._selecting = false;
-  }
-
-  selecting(): boolean {
-    return this._selecting;
   }
 
   handleMouseoverOnBase(b: Base) {
@@ -130,8 +110,8 @@ class FoldingMode implements FoldingModeInterface {
 
   reset() {
     this.hovered = null;
-    this.stopSelecting();
     this.selected = null;
+    this.selecting = false;
     removeAllBaseHighlightings(this.strictDrawing.drawing);
   }
 

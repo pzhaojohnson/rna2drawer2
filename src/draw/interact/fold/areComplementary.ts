@@ -10,10 +10,16 @@ export function areComplementary(characters1: string, characters2: string): bool
   if (characters1.length !== characters2.length) {
     return false;
   }
+  if (characters1.length == 0 && characters2.length == 0) {
+    return false;
+  }
+  characters1 = characters1.toUpperCase();
+  characters2 = characters2.toUpperCase();
   for (let i = 0; i < characters1.length; i++) {
     let c1 = characters1.charAt(i);
     let c2 = characters2.charAt(characters2.length - i - 1);
-    if (!COMPLEMENTS[c1].includes(c2)) {
+    let comps1 = COMPLEMENTS[c1];
+    if (!comps1 || !comps1.includes(c2)) {
       return false;
     }
   }

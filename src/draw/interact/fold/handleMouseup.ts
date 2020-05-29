@@ -5,7 +5,7 @@ export function handleMouseup(mode: FoldingMode) {
   if (mode.disabled()) {
     return;
   }
-  mode.stopSelecting();
+  mode.selecting = false;
   setAllBaseHighlightings(mode);
 }
 

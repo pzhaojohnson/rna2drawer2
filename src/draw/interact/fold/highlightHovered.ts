@@ -48,7 +48,7 @@ export function highlightHovered(mode: FoldingMode) {
     return;
   }
   if (mode.hoveringSelected()) {
-    if (!selectedAreSecondaryUnpaired(mode) && !mode.selecting()) {
+    if (!selectedAreSecondaryUnpaired(mode) && !mode.selecting) {
       highlightUnpair(mode);
     }
     return;
