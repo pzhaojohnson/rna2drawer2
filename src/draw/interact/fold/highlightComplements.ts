@@ -1,5 +1,6 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import highlightBase from '../highlight/highlightBase';
+import basesInRange from './basesInRange';
 import areComplementary from './areComplementary';
 
 interface Complement {
@@ -8,16 +9,12 @@ interface Complement {
 }
 
 function highlightComp(mode: FoldingMode, comp: Complement) {
-  let drawing = mode.strictDrawing.drawing;
-  for (let p = comp.position5; p <= comp.position3; p++) {
-    let b = drawing.getBaseAtOverallPosition(p);
-    if (b) {
-      highlightBase(b, {
-        fill: '#0000ff',
-        fillOpacity: 0.15,
-      });
-    }
-  }
+  basesInRange(mode, comp).forEach(b => {
+    highlightBase(b, {
+      fill: '#0000ff',
+      fillOpacity: 0.15,
+    });
+  });
 }
 
 export function highlightComplements(mode: FoldingMode) {

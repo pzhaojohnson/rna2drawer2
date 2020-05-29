@@ -9,7 +9,14 @@ export interface HighlightingProps {
   fillOpacity?: number;
 }
 
-export function highlightBase(b: Base, props: HighlightingProps) {
+export function highlightBase(b: Base, props?: HighlightingProps) {
+  if (!b) {
+    console.error('No base provided.');
+    return;
+  }
+  if (!props) {
+    props = {};
+  }
   let h = b.addCircleHighlighting();
   h.radius = props.radius ?? 1.25 * b.fontSize;
   h.stroke = props.stroke ?? '#000000';

@@ -1,11 +1,11 @@
 import Drawing from '../../Drawing';
-import setAllBaseHighlightings from './setAllBaseHighlightings';
+import Base from '../../Base';
 
 export function removeAllBaseHighlightings(drawing: Drawing) {
   if (!drawing) {
     return;
   }
-  setAllBaseHighlightings(drawing, []);
+  drawing.forEachBase((b: Base) => b.removeHighlighting());
 }
 
 export default removeAllBaseHighlightings;
