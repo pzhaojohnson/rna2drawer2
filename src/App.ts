@@ -13,6 +13,7 @@ import {
 import UndoRedo from './undo/UndoRedo';
 
 import StrictDrawing from './draw/StrictDrawing';
+import { StrictDrawingSavableState } from './draw/StrictDrawingInterface';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 
 import createMenuForApp from './menu/createMenuForApp';
@@ -28,7 +29,7 @@ interface Svg {
 
 class App {
   _SVG: () => Svg;
-  _undoRedo: UndoRedo<object>;
+  _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing: StrictDrawing;
   _strictDrawingInteraction: StrictDrawingInteraction;
   _currFormFactory: () => ReactElement;

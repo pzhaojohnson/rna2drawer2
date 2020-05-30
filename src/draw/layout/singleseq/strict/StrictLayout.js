@@ -4,7 +4,7 @@ import splitSecondaryAndTertiaryPairs from '../../../../parse/splitSecondaryAndT
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 
-class StrictLayout {
+export class StrictLayout {
 
   /**
    * @param {Array<number|null>} partners The partners notation of the secondary structure.

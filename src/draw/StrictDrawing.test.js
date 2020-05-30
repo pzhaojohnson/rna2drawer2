@@ -1,92 +1,271 @@
 import StrictDrawing from './StrictDrawing';
-import createNodeSVG from './createNodeSVG';
+import NodeSVG from './NodeSVG';
 import parseDotBracket from '../parse/parseDotBracket';
-import { radiateStems } from './layout/singleseq/strict/radiateStems';
-import StrictLayout from './layout/singleseq/strict/StrictLayout';
-import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
-import applyStrictLayout from './edit/applyStrictLayout';
+import validatePartners from '../parse/validatePartners';
 
-it('instantiates', () => {
-  expect(() => new StrictDrawing()).not.toThrow();
+import { StrictLayout } from './layout/singleseq/strict/StrictLayout';
+
+import * as ApplyStrictLayout from './edit/applyStrictLayout';
+import * as AppendStructureToStrictDrawing from './edit/appendStructureToStrictDrawing';
+
+import isKnotless from '../parse/isKnotless';
+import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
+import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
+
+let sd = new StrictDrawing();
+sd.addTo(document.body, () => NodeSVG());
+let dotBracket = '(((.[[[.))).]]].';
+sd.appendStructure({
+  id: 'asdf',
+  characters: 'asdfasdfasdfasdf',
+  secondaryPartners: parseDotBracket(dotBracket).secondaryPartners,
+  tertiaryPartners: parseDotBracket(dotBracket).tertiaryPartners,
+});
+let generalProps = sd.generalLayoutProps();
+generalProps.basePairBondLength = 6.78;
+sd.setGeneralLayoutProps(generalProps);
+let perBaseProps = sd.perBaseLayoutProps();
+perBaseProps[0].flipStem = true;
+perBaseProps[11].stretch3 = 20;
+sd.setPerBaseLayoutProps(perBaseProps);
+sd.baseWidth = 20.78;
+sd.baseHeight = 18.012;
+
+it('constructor initializes props', () => {
+  let sd = new StrictDrawing();
+  expect(sd.drawing).toBeTruthy();
+  expect(sd.generalLayoutProps()).toBeTruthy();
+  expect(sd.perBaseLayoutProps()).toBeTruthy();
+  expect(sd.baseWidth).toBeTruthy();
+  expect(sd.baseHeight).toBeTruthy();
 });
 
-describe('addTo method', () => {
-  it('calls addTo method of drawing', () => {
-    let sd = new StrictDrawing();
-    let n = document.body.childNodes.length;
-    sd.addTo(document.body, () => createNodeSVG());
-    expect(document.body.childNodes.length).toBe(n + 1);
+it('drawing getter', () => {
+  expect(sd.drawing.savableState().className).toBe('Drawing');
+});
+
+it('addTo method', () => {
+  let sd = new StrictDrawing();
+  sd._drawing = {
+    addTo: jest.fn(),
+  };
+  let node = jest.fn();
+  let svg = jest.fn();
+  sd.addTo(node, svg);
+  expect(sd._drawing.addTo.mock.calls[0][0]).toBe(node);
+  expect(sd._drawing.addTo.mock.calls[0][1]).toBe(svg);
+});
+
+describe('layoutPartners method', () => {
+  let sd = new StrictDrawing();
+  sd.addTo(document.body, () => NodeSVG());
+  sd.appendStructure({
+    id: 'asdf',
+    characters: 'asdfasdfasdfasdf',
+    secondaryPartners: parseDotBracket('((..((....))..))').secondaryPartners,
+  });
+  
+  it('no knots', () => {
+    let partners = sd.layoutPartners();
+    expect(() => validatePartners(partners)).not.toThrow();
+    expect(partners.length).toBe(16);
+  });
+
+  it('removes knots', () => {
+    let seq = sd.drawing.getSequenceById('asdf');
+    sd.drawing.addSecondaryBond(
+      seq.getBaseAtPosition(8),
+      seq.getBaseAtPosition(14),
+    );
+    let partners = sd.layoutPartners();
+    expect(() => validatePartners(partners)).not.toThrow();
+    expect(isKnotless(partners)).toBeTruthy();
   });
 });
 
-it('svgString getter', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
-  sd._appendSequence('asdf', 'asdf');
-  expect(sd.svgString).toBe(sd._drawing.svgString);
+describe('generalLayoutProps method', () => {
+  it('handles nullish props', () => {
+    sd._generalLayoutProps = undefined;
+    expect(sd.generalLayoutProps()).toBeTruthy();
+    expect(sd._generalLayoutProps).toBeTruthy();
+  });
+
+  it('returns a deep copy', () => {
+    let props = sd.generalLayoutProps();
+    expect(props).not.toBe(sd._generalLayoutProps);
+    expect(JSON.stringify(props)).toBe(JSON.stringify(sd._generalLayoutProps));
+  });
 });
 
-it('zoom getter and setter', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
-  sd._appendSequence('qwer', 'qwer');
-  sd.zoom = 2.75;
-  expect(sd.zoom).toBeCloseTo(2.75);
-  expect(sd._drawing.zoom).toBeCloseTo(2.75);
+describe('setGeneralLayoutProps method', () => {
+  it('handles missing argument', () => {
+    sd.setGeneralLayoutProps();
+    expect(sd.generalLayoutProps()).toBeTruthy();
+  });
+
+  it('sets props', () => {
+    let props = new GeneralStrictLayoutProps();
+    props.basePairPadding = 3.487;
+    sd.setGeneralLayoutProps(props);
+    expect(sd.generalLayoutProps().basePairPadding).toBe(3.487);
+  });
 });
 
-it('isEmpty method', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
-  expect(sd.isEmpty()).toBeTruthy();
-  sd._appendSequence('asdf', 'asdf');
-  expect(sd.isEmpty()).toBeFalsy();
+describe('perBaseLayoutProps method', () => {
+  it('handles nullish props', () => {
+    sd._perBaseLayoutProps = undefined;
+    expect(sd.perBaseLayoutProps()).toBeTruthy();
+    expect(sd._perBaseLayoutProps).toBeTruthy();
+  });
+
+  it('returns a deep copy', () => {
+    let props = sd.perBaseLayoutProps();
+    expect(props).not.toBe(sd._perBaseLayoutProps);
+    expect(JSON.stringify(props)).toBe(JSON.stringify(sd._perBaseLayoutProps));
+  });
+});
+
+describe('setPerBaseLayoutProps method', () => {
+  it('handles missing argument', () => {
+    sd.setPerBaseLayoutProps();
+    expect(sd.perBaseLayoutProps()).toBeTruthy();
+  });
+
+  it('sets props', () => {
+    let props = [
+      new PerBaseStrictLayoutProps(),
+      new PerBaseStrictLayoutProps(),
+    ];
+    props[1].stretch3 = 7.89;
+    sd.setPerBaseLayoutProps(props);
+    expect(sd.perBaseLayoutProps()[1].stretch3).toBe(7.89);
+  });
+});
+
+it('baseWidth and baseHeight getters', () => {
+  sd.baseWidth = 2.59;
+  sd.baseHeight = 23.09;
+  expect(sd.baseWidth).toBe(2.59);
+  expect(sd.baseHeight).toBe(23.09);
+});
+
+describe('layout method', () => {
+  it('creates layout with correct props', () => {
+    let received = sd.layout();
+    let expected = new StrictLayout(
+      sd.layoutPartners(),
+      sd.generalLayoutProps(),
+      sd.perBaseLayoutProps(),
+    );
+    expect(received.toString()).toBe(expected.toString());
+  });
+
+  it('handles failure to create layout', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => NodeSVG());
+    sd.appendSequence('asdf', 'asdf');
+    sd.layoutPartners = () => { throw new Error(); };
+    expect(sd.layout()).toBe(null);
+  });
+});
+
+describe('applyLayout method', () => {
+  it('handles failure to create layout', () => {
+    let spy = jest.spyOn(ApplyStrictLayout, 'applyStrictLayout');
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => NodeSVG());
+    sd.layout = () => null;
+    sd.applyLayout();
+    expect(spy.mock.calls.length).toBe(0);
+  });
+
+  it('calls applyStrictLayout function', () => {
+    let spy = jest.spyOn(ApplyStrictLayout, 'applyStrictLayout');
+    sd.applyLayout();
+    let c = spy.mock.calls[0];
+    expect(c[0]).toBe(sd.drawing);
+    expect(c[1].toString()).toBe(sd.layout().toString());
+    expect(c[2]).toBe(sd.baseWidth);
+    expect(c[3]).toBe(sd.baseHeight);
+  });
+});
+
+describe('outermost loop shape methods', () => {
+  it('handle nullish general layout props', () => {
+    sd._generalLayoutProps = undefined;
+    expect(sd.hasFlatOutermostLoop()).toBeFalsy();
+    sd._generalLayoutProps = undefined;
+    sd.flatOutermostLoop();
+    expect(sd.hasFlatOutermostLoop()).toBeTruthy();
+    sd._generalLayoutProps = undefined;
+    expect(sd.hasRoundOutermostLoop()).toBeTruthy();
+    sd._generalLayoutProps = undefined;
+    expect(sd.roundOutermostLoop());
+    expect(sd.hasRoundOutermostLoop()).toBeTruthy();
+    sd.generalLayoutProps();
+    expect(sd._generalLayoutProps).toBeTruthy();
+  });
+
+  it('can change and report the outermost loop shape', () => {
+    sd.flatOutermostLoop();
+    sd.roundOutermostLoop();
+    expect(sd.hasRoundOutermostLoop()).toBeTruthy();
+    expect(sd.hasFlatOutermostLoop()).toBeFalsy();
+    sd.flatOutermostLoop();
+    expect(sd.hasRoundOutermostLoop()).toBeFalsy();
+    expect(sd.hasFlatOutermostLoop()).toBeTruthy();
+  });
 });
 
 describe('savableState method', () => {
-  it('includes drawing', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('asdf', 'asdf');
+  it('handles nullish general layout props', () => {
+    let original = sd.generalLayoutProps();
+    sd._generalLayoutProps = undefined;
     let savableState = sd.savableState();
     expect(
-      JSON.stringify(savableState.drawing)
-    ).toBe(
-      JSON.stringify(sd._drawing.savableState())
-    );
+      savableState.generalLayoutProps.toString()
+    ).toBe((new GeneralStrictLayoutProps()).toString());
+    sd.setGeneralLayoutProps(original);
   });
 
-  it('includes layout props', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('zxcv', 'zxcv');
+  it('handles nullish per base layout props array', () => {
+    let original = sd.perBaseLayoutProps();
+    sd._perBaseLayoutProps = undefined;
     let savableState = sd.savableState();
-    expect(
-      JSON.stringify(savableState.generalLayoutProps)
-    ).toBe(
-      JSON.stringify(sd._generalLayoutProps.savableState())
-    );
-    savableState.perBaseLayoutProps.forEach((ps, i) => {
-      expect(JSON.stringify(ps)).toBe(
-        JSON.stringify(sd._perBaseLayoutProps[i].savableState())
-      );
-    });
+    expect(savableState.perBaseLayoutProps.toString()).toBe(([]).toString());
+    sd.setPerBaseLayoutProps(original);
   });
 
-  it('includes base width and height', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._baseWidth = 18.777;
-    sd._baseHeight = 21.356;
+  it('handles nullish per base layout props in array', () => {
+    let original = sd.perBaseLayoutProps();
+    let modified = sd.perBaseLayoutProps();
+    modified[0] = undefined;
+    sd.setPerBaseLayoutProps(modified);
     let savableState = sd.savableState();
-    expect(savableState.baseWidth).toBe(18.777);
-    expect(savableState.baseHeight).toBe(21.356);
+    expect(savableState.perBaseLayoutProps.length).toBe(modified.length);
+    expect(savableState.perBaseLayoutProps[0]).toBeFalsy();
+    sd.setPerBaseLayoutProps(original);
+  });
+
+  it('gives correct values', () => {
+    let generalProps = sd.generalLayoutProps();
+    generalProps.basePairPadding = 12.71;
+    sd.setGeneralLayoutProps(generalProps);
+    let perBaseProps = sd.perBaseLayoutProps();
+    perBaseProps[0].triangleLoopHeight = 12.91;
+    sd.setPerBaseLayoutProps(perBaseProps);
+    sd.baseWidth = 18.02;
+    sd.baseHeight = 22.34;
+    let savableState = sd.savableState();
+    expect(savableState.drawing.className).toBe('Drawing');
+    expect(savableState.generalLayoutProps.basePairPadding).toBe(12.71);
+    expect(savableState.perBaseLayoutProps.length).toBe(perBaseProps.length);
+    expect(savableState.perBaseLayoutProps[0].triangleLoopHeight).toBe(12.91);
+    expect(savableState.baseWidth).toBe(18.02);
+    expect(savableState.baseHeight).toBe(22.34);
   });
 
   it('can be converted to and from a JSON string', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('asdf', 'asdf');
     let savableState1 = sd.savableState();
     let json1 = JSON.stringify(savableState1);
     let savableState2 = JSON.parse(json1);
@@ -95,270 +274,88 @@ describe('savableState method', () => {
   });
 });
 
-it('savableString getter', () => {
+it('savableString method', () => {
+  let savableString = sd.savableString;
+  let savableState = JSON.parse(savableString);
+  expect(savableState.toString()).toBe(sd.savableState().toString());
+});
+
+describe('applySavedState method', () => {
+  it('handles failure to apply saved state', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => NodeSVG());
+    let savableState1 = sd.savableState();
+    sd.appendSequence('asdf', 'asdf');
+    let savableState2 = sd.savableState();
+    savableState1.drawing.sequences = 'asdf';
+    let applied = sd.applySavedState(savableState1);
+    expect(applied).toBeFalsy();
+    expect(JSON.stringify(sd.savableState())).toBe(JSON.stringify(savableState2));
+  });
+
+  it('applies saved state', () => {
+    let sd = new StrictDrawing();
+    sd.addTo(document.body, () => NodeSVG());
+    let savableState1 = sd.savableState();
+    sd.appendSequence('qwer', 'qwerqwer');
+    let savableState2 = sd.savableState();
+    expect(JSON.stringify(savableState1)).not.toBe(JSON.stringify(savableState2));
+    let applied = sd.applySavedState(savableState1);
+    expect(applied).toBeTruthy();
+    expect(JSON.stringify(sd.savableState())).toBe(JSON.stringify(savableState1));
+  });
+});
+
+it('refreshIds method', () => {
+  let spy = jest.spyOn(sd.drawing, 'refreshIds');
+  sd.refreshIds();
+  expect(spy).toHaveBeenCalled();
+});
+
+it('zoom getter and setter', () => {
+  let getSpy = jest.spyOn(sd.drawing, 'zoom', 'get');
+  let setSpy = jest.spyOn(sd.drawing, 'zoom', 'set');
+  sd.zoom = 0.78;
+  expect(sd.zoom).toBeCloseTo(0.78);
+  expect(getSpy).toHaveBeenCalled();
+  expect(setSpy).toHaveBeenCalled();
+});
+
+it('isEmpty method', () => {
   let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
-  sd._appendSequence('asdf', 'asdf');
-  expect(sd.savableString).toBe(
-    JSON.stringify(sd.savableState(), null, ' ')
-  );
+  sd.addTo(document.body, () => NodeSVG());
+  expect(sd.isEmpty()).toBeTruthy();
+  sd.appendSequence('asdf', 'asdf');
+  expect(sd.isEmpty()).toBeFalsy();
 });
 
-describe('_applySavedState method', () => {
-  it('handles invalid saved state', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('asdf', 'asdf');
-    let invalidState = sd.savableState();
-    invalidState.baseWidth = 'asdf';
-    sd._appendSequence('qwer', 'qwer');
-    let prevState = sd.savableState();
-    let prevJson = JSON.stringify(prevState);
-    expect(sd._applySavedState(invalidState)).toBeFalsy();
-    expect(
-      JSON.stringify(sd.savableState())
-    ).toBe(prevJson);
-  });
-
-  it('applies a valid saved state', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('asdf', 'asdf');
-    let savedState = sd.savableState();
-    sd._appendSequence('qwer', 'qwer');
-    expect(sd._applySavedState(savedState)).toBeTruthy();
-    expect(
-      JSON.stringify(sd.savableState())
-    ).toBe(JSON.stringify(savedState));
-  });
+it('sequenceIds method', () => {
+  expect(sd.sequenceIds().toString()).toBe(sd.drawing.sequenceIds().toString());
+  expect(sd.sequenceIds().length).toBeGreaterThan(0);
 });
 
-describe('_appendSequence method', () => {
-  it('sequence cannot be appended', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('asdf', 'asdf');
-    expect(
-      sd._appendSequence('asdf', 'asdfasdf')
-    ).toBeFalsy();
-    expect(sd._drawing.numSequences).toBe(1);
-    expect(sd._perBaseLayoutProps.length).toBe(4);
-  });
-
-  it('sequence can be appended', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('asdf', 'asdf');
-    expect(
-      sd._appendSequence('qwer', 'qwerqwer')
-    ).toBeTruthy();
-    expect(sd._drawing.getSequenceById('qwer')).toBeTruthy();
-    expect(sd._drawing.numBases).toBe(12);
-    expect(sd._perBaseLayoutProps.length).toBe(12);
-  });
+it('appendSequence method', () => {
+  let spy = jest.spyOn(sd, 'appendStructure');
+  sd.appendSequence('kljh', 'kkio');
+  let c = spy.mock.calls[0];
+  expect(c[0].id).toBe('kljh');
+  expect(c[0].characters).toBe('kkio');
+  expect(c[0].secondaryPartners).toBeFalsy();
+  expect(c[0].tertiaryPartners).toBeFalsy();
 });
 
-describe('_appendStructure method', () => {
-  it('does not allow knots in secondary structure', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    let appended = sd._appendStructure({
-      id: 'asdf',
-      characters: 'asdfasdf',
-      secondaryPartners: [6, null, 8, null, null, 1, null, 3],
-    });
-    expect(appended).toBeFalsy();
-    expect(sd._drawing.numSequences).toBe(0);
-  });
-
-  it('structure cannot be appended', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendStructure({
-      id: 'asdf',
-      characters: 'asdf',
-    });
-    let appended = sd._appendStructure({
-      id: 'asdf',
-      characters: 'qwer',
-    });
-    expect(appended).toBeFalsy();
-    expect(sd._drawing.numSequences).toBe(1);
-  });
-
-  it('calls appendStructure function', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendStructure({
-      id: 'qwer',
-      characters: 'asdfqwer',
-    });
-    expect(sd._drawing.numSequences).toBe(1);
-    let seq = sd._drawing.getSequenceById('qwer');
-    expect(seq.characters).toBe('asdfqwer');
-  });
-
-  it('appends per base layout props', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendStructure({
-      id: 'asdf',
-      characters: 'asdf',
-    });
-    expect(sd._perBaseLayoutProps.length).toBe(4);
-    sd._appendStructure({
-      id: 'qwer',
-      characters: 'qwerqwer',
-    });
-    expect(sd._perBaseLayoutProps.length).toBe(12);
-  });
-
-  it('handles undefined secondary partners', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendStructure({
-      id: 'asdf',
-      characters: 'asdf',
-    });
-    expect(sd._drawing.numSequences).toBe(1);
-  });
-
-  it('radiates stems', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('qwer', 'qwer');
-    let dotBracket = '.((.))((.)).....';
-    let parsed = parseDotBracket(dotBracket);
-    let stretches3 = radiateStems(parsed.secondaryPartners);
-    expect(stretches3[5]).toBeGreaterThan(0);
-    sd._appendStructure({
-      id: 'asdf',
-      characters: dotBracket,
-      secondaryPartners: parsed.secondaryPartners,
-    });
-    sd._perBaseLayoutProps.slice(4).forEach((ps, i) => {
-      expect(ps.stretch3).toBe(stretches3[i]);
-    });
-  });
-
-  it('updates layout', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('qwer', 'qwer');
-    let seq = sd._drawing.getSequenceById('qwer');
-    let yPrev = seq.getBaseAtPosition(4).yCenter;
-    sd._appendStructure({
-      id: 'asdf',
-      characters: 'as',
-    });
-    expect(
-      seq.getBaseAtPosition(4).yCenter
-    ).not.toBeCloseTo(yPrev);
-  });
-});
-
-describe('layoutPartners method', () => {
-  it('returns same values as layoutPartnersOfStrictDrawing function', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('asdf', 'asdfasdf');
-    let seq = sd._drawing.getSequenceById('asdf');
-    sd._drawing.addSecondaryBond(
-      seq.getBaseAtPosition(2),
-      seq.getBaseAtPosition(6),
-    );
-    let partners = sd.layoutPartners();
-    let expected = layoutPartnersOfStrictDrawing(sd);
-    expected.forEach((v, i) => {
-      expect(partners[i]).toBe(v);
-    });
-  });
-});
-
-describe('generalLayoutProps method', () => {
-  it('returns a copy', () => {
-    let sd = new StrictDrawing();
-    let ps = sd.generalLayoutProps();
-    expect(ps).not.toBe(sd._generalLayoutProps);
-    expect(JSON.stringify(ps)).toBe(
-      JSON.stringify(sd._generalLayoutProps)
-    );
-  });
-});
-
-describe('perBaseLayoutProps method', () => {
-  it('returns copies', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => createNodeSVG());
-    sd._appendSequence('asdf', 'asdf');
-    let arr = sd.perBaseLayoutProps();
-    expect(arr).not.toBe(sd._perBaseLayoutProps);
-    arr.forEach((ps, i) => {
-      expect(ps).not.toBe(sd._perBaseLayoutProps[i]);
-    });
-    arr.forEach((ps, i) => {
-      expect(JSON.stringify(ps)).toBe(
-        JSON.stringify(sd._perBaseLayoutProps[i])
-      );
-    });
-  });
-});
-
-it('baseWidth and baseHeight getters', () => {
-  let sd = new StrictDrawing();
-  sd._baseWidth = 9.664;
-  sd._baseHeight = 14.783;
-  expect(sd.baseWidth).toBe(9.664);
-  expect(sd.baseHeight).toBe(14.783);
-});
-
-it('layout method', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
-  let parsed = parseDotBracket('((..))');
-  sd._appendStructure({
+it('appendStructure method', () => {
+  let spy = jest.spyOn(AppendStructureToStrictDrawing, 'appendStructureToStrictDrawing');
+  let s = {
     id: 'asdf',
-    characters: 'asdfas',
-    secondaryPartners: parsed.secondaryPartners,
-    tertiaryPartners: parsed.tertiaryPartners,
-  });
-  let layout = sd.layout();
-  let expected = new StrictLayout(
-    parsed.secondaryPartners,
-    sd.generalLayoutProps(),
-    sd.perBaseLayoutProps(),
-  );
-  sd._drawing.forEachBase((b, p) => {
-    let l = layout.baseCoordinatesAtPosition(p);
-    let e = expected.baseCoordinatesAtPosition(p);
-    expect(e.distanceBetweenCenters(l)).toBeCloseTo(0);
-  });
+    characters: 'qwerzxcv',
+  };
+  sd.appendStructure(s);
+  let c = spy.mock.calls[0];
+  expect(c[0]).toBe(sd);
+  expect(c[1]).toBe(s);
 });
 
-it('_applyLayout method', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
-  sd._appendStructure({
-    id: 'asdf',
-    characters: 'asdfasdfa',
-  });
-  let seq = sd._drawing.getSequenceById('asdf');
-  sd._drawing.addSecondaryBond(
-    seq.getBaseAtPosition(2),
-    seq.getBaseAtPosition(8),
-  );
-  sd._drawing.addSecondaryBond(
-    seq.getBaseAtPosition(3),
-    seq.getBaseAtPosition(7),
-  );
-  sd._applyLayout();
-  let coordinates = [];
-  sd._drawing.forEachBase(b => {
-    coordinates.push({ xCenter: b.xCenter, yCenter: b.yCenter });
-  });
-  applyStrictLayout(sd._drawing, sd.layout(), sd.baseWidth, sd.baseHeight);
-  sd._drawing.forEachBase((b, p) => {
-    expect(b.xCenter).toBeCloseTo(coordinates[p - 1].xCenter);
-    expect(b.yCenter).toBeCloseTo(coordinates[p - 1].yCenter);
-  });
+it('svgString getter', () => {
+  expect(sd.svgString).toBe(sd.drawing.svgString);
 });

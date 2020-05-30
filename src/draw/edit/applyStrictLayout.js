@@ -27,7 +27,7 @@ function _setWidthAndHeight(drawing, layout, baseWidth, baseHeight) {
  * @param {number} baseWidth 
  * @param {number} baseHeight 
  */
-function applyStrictLayout(drawing, layout, baseWidth, baseHeight) {
+export function applyStrictLayout(drawing, layout, baseWidth, baseHeight) {
   _moveBases(drawing, layout, baseWidth, baseHeight);
   drawing.repositionBonds();
   drawing.adjustNumberingLineAngles();

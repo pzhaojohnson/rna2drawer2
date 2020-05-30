@@ -1,4 +1,14 @@
-function _checkPartnersLengths(drawing, structure) {
+import { DrawingInterface as Drawing } from '../DrawingInterface';
+import { BaseInterface as Base } from '../BaseInterface';
+
+export interface Structure {
+  id: string;
+  characters: string;
+  secondaryPartners?: (number | null)[];
+  tertiaryPartners?: (number | null)[];
+}
+
+function _checkPartnersLengths(structure: Structure) {
   let seqLength = structure.characters.length;
   if (structure.secondaryPartners) {
     let secondaryLength = structure.secondaryPartners.length;
@@ -15,7 +25,7 @@ function _checkPartnersLengths(drawing, structure) {
   return true;
 }
 
-function _appendSequence(drawing, structure) {
+function _appendSequence(drawing: Drawing, structure: Structure) {
   let seq = drawing.appendSequenceOutOfView(
     structure.id,
     structure.characters,
@@ -26,9 +36,9 @@ function _appendSequence(drawing, structure) {
   return true;
 }
 
-function _addPrimaryBonds(drawing, structure) {
+function _addPrimaryBonds(drawing: Drawing, structure: Structure) {
   let seq = drawing.getSequenceById(structure.id);
-  seq.forEachBase((b, p) => {
+  seq.forEachBase((b: Base, p: number) => {
     if (p < seq.length) {
       drawing.addPrimaryBond(
         seq.getBaseAtPosition(p),
@@ -38,12 +48,12 @@ function _addPrimaryBonds(drawing, structure) {
   });
 }
 
-function _addSecondaryBonds(drawing, structure) {
+function _addSecondaryBonds(drawing: Drawing, structure: Structure) {
   if (!structure.secondaryPartners) {
     return;
   }
   let seq = drawing.getSequenceById(structure.id);
-  seq.forEachBase((b, p) => {
+  seq.forEachBase((b: Base, p: number) => {
     let q = structure.secondaryPartners[p - 1];
     if (q != null && p < q) {
       drawing.addSecondaryBond(
@@ -54,12 +64,12 @@ function _addSecondaryBonds(drawing, structure) {
   });
 }
 
-function _addTertiaryBonds(drawing, structure) {
+function _addTertiaryBonds(drawing: Drawing, structure: Structure) {
   if (!structure.tertiaryPartners) {
     return;
   }
   let seq = drawing.getSequenceById(structure.id);
-  seq.forEachBase((b, p) => {
+  seq.forEachBase((b: Base, p: number) => {
     let q = structure.tertiaryPartners[p - 1];
     if (q != null && p < q) {
       drawing.addTertiaryBond(
@@ -71,25 +81,14 @@ function _addTertiaryBonds(drawing, structure) {
 }
 
 /**
- * @typedef {Object} Structure 
- * @property {string} id 
- * @property {string} characters 
- * @property {Array<number|null>|undefined} secondaryPartners 
- * @property {Array<number|null>|undefined} tertiaryPartners 
- */
-
-/**
  * The structure is not appended if the sequence cannot be appended (e.g. the
  * sequence ID is already taken), or if the lengths of the secondary or tertiary
  * partners do not match the length of the sequence.
  * 
- * @param {Drawing} drawing 
- * @param {Structure} structure 
- * 
- * @returns {boolean} True if the structure was successfully appended.
+ * Returns true if the structure was successfully appended.
  */
-function appendStructure(drawing, structure) {
-  if (!_checkPartnersLengths(drawing, structure)) {
+export function appendStructure(drawing: Drawing, structure: Structure) {
+  if (!_checkPartnersLengths(structure)) {
     return false;
   }
   if (!_appendSequence(drawing, structure)) {
