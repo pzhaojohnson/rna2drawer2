@@ -1,6 +1,8 @@
 import Stem from './Stem';
 import { StemLayout } from './StemLayout';
-import isKnotless from '../../../../parse/isKnotless';
+import splitSecondaryAndTertiaryPairs from '../../../../parse/splitSecondaryAndTertiaryPairs'
+import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 
 class StrictLayout {
 
@@ -14,19 +16,51 @@ class StrictLayout {
     this._validatePartners();
     
     this._generalProps = generalProps;
+    this._validateGeneralProps();
+
     this._perBaseProps = perBaseProps;
-    
-    this._outermostStem = new Stem(0, partners, generalProps, perBaseProps);
-    StemLayout.setCoordinatesAndAngles(this._outermostStem, generalProps, perBaseProps);
+    this._validatePerBaseProps();
+
+    this._outermostStem = new Stem(
+      0,
+      this._partners,
+      this._generalProps,
+      this._perBaseProps
+    );
+    StemLayout.setCoordinatesAndAngles(
+      this._outermostStem,
+      this._generalProps,
+      this._perBaseProps
+    );
     this._baseCoordinates = this._outermostStem.baseCoordinates();
   }
   
-  /**
-   * @throws {Error} If the partners notation contains knots.
-   */
   _validatePartners() {
-    if (!isKnotless(this._partners)) {
-      throw new Error('The partners notation cannot contain knots.');
+    for (let i = 0; i < this._partners.length; i++) {
+      if (!this._partners[i]) {
+        this._partners[i] = null;
+      }
+    }
+    this._partners = splitSecondaryAndTertiaryPairs(this._partners).secondaryPartners;
+  }
+
+  _validateGeneralProps() {
+    if (!this._generalProps) {
+      this._generalProps = new GeneralStrictLayoutProps();
+    }
+  }
+
+  _validatePerBaseProps() {
+    if (!this._perBaseProps) {
+      this._perBaseProps = [];
+    }
+    while (this._perBaseProps.length < this._partners.length) {
+      this._perBaseProps.push(new PerBaseStrictLayoutProps());
+    }
+    for (let i = 0; i < this._perBaseProps.length; i++) {
+      if (!this._perBaseProps[i]) {
+        this._perBaseProps[i] = new PerBaseStrictLayoutProps();
+      }
     }
   }
 

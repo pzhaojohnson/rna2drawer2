@@ -27,22 +27,54 @@ it('sequence of length zero', () => {
   expect(() => { new StrictLayout(partners, gps, pbps) }).not.toThrow();
 });
 
-it('_validatePartners - throws when there are knots', () => {
-  let partners = parseDotBracket('.....(((.....)))').secondaryPartners;
-  partners[0] = 12;
-  partners[11] = 1;
-  partners[1] = 11;
-  partners[10] = 2;
-  let gps = new GeneralStrictLayoutProps();
-  let pbps = defaultPerBaseProps(partners.length);
-  expect(() => { new StrictLayout(partners, gps, pbps) }).toThrow();
+it('handles undefineds in partners notation', () => {
+  let partners = parseDotBracket('..((....))..').secondaryPartners;
+  partners[0] = undefined;
+  partners[5] = undefined;
+  expect(
+    () => new StrictLayout(partners)
+  ).not.toThrow();
 });
 
-it('_validatePatners - does not throw when there are no knots', () => {
-  let partners = parseDotBracket('.....(((.....)))').secondaryPartners;
+it('handles knots', () => {
+  let partners = parseDotBracket('...((....))').secondaryPartners;
+  partners[0] = 8;
+  partners[1] = 7;
+  partners[6] = 2;
+  partners[7] = 1;
+  expect(
+    () => new StrictLayout(partners)
+  ).not.toThrow();
+});
+
+it('handles missing general and per base props', () => {
+  let partners = parseDotBracket('....').secondaryPartners;
+  expect(() => new StrictLayout(partners)).not.toThrow();
+});
+
+it('handles per base props of wrong length', () => {
+  let partners = parseDotBracket('...((..))').secondaryPartners;
   let gps = new GeneralStrictLayoutProps();
-  let pbps = defaultPerBaseProps(partners.length);
-  expect(() => { new StrictLayout(partners, gps, pbps) }).not.toThrow();
+  let pbps = defaultPerBaseProps(3); // too short
+  expect(
+    () => new StrictLayout(partners, gps, pbps)
+  ).not.toThrow();
+  pbps = defaultPerBaseProps(20); // too long
+  expect(
+    () => new StrictLayout(partners, gps, pbps)
+  ).not.toThrow();
+});
+
+it('handles nullish values in per base props', () => {
+  let partners = parseDotBracket('..(((...)))').secondaryPartners;
+  let gps = new GeneralStrictLayoutProps();
+  let pbps = defaultPerBaseProps(8);
+  pbps[1] = undefined;
+  pbps[2] = null;
+  pbps[5] = undefined;
+  expect(
+    () => new StrictLayout(partners, gps, pbps)
+  ).not.toThrow();
 });
 
 it('size', () => {
