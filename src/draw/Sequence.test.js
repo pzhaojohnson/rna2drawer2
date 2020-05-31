@@ -1064,4 +1064,13 @@ describe('Sequence class', () => {
       expect(json2).toBe(json1);
     });
   });
+
+  it('refreshIds method', () => {
+    let svg = createNodeSVG();
+    let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
+    let spies = [];
+    seq.forEachBase(b => spies.push(jest.spyOn(b, 'refreshIds')));
+    seq.refreshIds();
+    spies.forEach(s => expect(s).toHaveBeenCalled());
+  });
 });
