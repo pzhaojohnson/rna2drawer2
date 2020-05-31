@@ -1,5 +1,5 @@
 import Sequence from './Sequence';
-import createNodeSVG from './createNodeSVG';
+import NodeSVG from './NodeSVG';
 import Base from './Base';
 import normalizeAngle from './normalizeAngle';
 import angleBetween from './angleBetween';
@@ -104,7 +104,7 @@ describe('Sequence class', () => {
 
   describe('_clockwiseNormalAngleAtPositionFromSavedState static method', () => {
     it("no 5' or 3' neighboring base", () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBase(Base.create(svg, 'A', 3, 5));
       let savableState = seq.savableState();
@@ -121,7 +121,7 @@ describe('Sequence class', () => {
     });
 
     it("5' and 3' neighboring bases", () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('qwer');
       seq.appendBases([
         Base.create(svg, 'g', 5, 9),
@@ -211,7 +211,7 @@ describe('Sequence class', () => {
 
   describe('fromSavedState static method', () => {
     it('creates with id and numbering properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq1 = new Sequence('zxcvasdfqwer');
       seq1.numberingOffset = -200;
       seq1.numberingAnchor = 249;
@@ -225,7 +225,7 @@ describe('Sequence class', () => {
     });
 
     it('creates bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq1 = new Sequence('asdf');
       seq1.appendBases([
         Base.create(svg, 'y', 2, 4),
@@ -241,7 +241,7 @@ describe('Sequence class', () => {
     });
 
     it('copies properties to most recent', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq1 = new Sequence('asdf');
       seq1.numberingAnchor = 177;
       seq1.numberingIncrement = 124;
@@ -257,13 +257,13 @@ describe('Sequence class', () => {
 
   describe('createOutOfView static method', () => {
     it('creates with ID', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'ppooiiuu', 'asdf');
       expect(seq.id).toBe('ppooiiuu');
     });
 
     it('adds bases out of view', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'wO');
       expect(seq.length).toBe(2);
       let b1 = seq.getBaseAtPosition(1);
@@ -275,7 +275,7 @@ describe('Sequence class', () => {
     });
 
     it('applies most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       Sequence._mostRecentProps.numberingAnchor = 1129;
       Sequence._mostRecentProps.numberingIncrement = 87;
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
@@ -309,7 +309,7 @@ describe('Sequence class', () => {
   });
 
   it('characters getter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let seq = new Sequence('asdf');
     seq.appendBases([
       Base.create(svg, 'b', 1, 2),
@@ -321,7 +321,7 @@ describe('Sequence class', () => {
 
   describe('_updateBaseNumberings method', () => {
     it('adds numbering to correct bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBases([
         Base.create(svg, 'A', 1, 2),
@@ -346,7 +346,7 @@ describe('Sequence class', () => {
     });
 
     it('removes numbering from correct bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBases([
         Base.create(svg, 'A', 1, 2),
@@ -372,7 +372,7 @@ describe('Sequence class', () => {
     });
     
     it('passes correct number with numbering offset', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBases([
         Base.create(svg, 'a', 5, 23),
@@ -386,7 +386,7 @@ describe('Sequence class', () => {
     });
 
     it('passes outer normal angle', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBases([
         Base.create(svg, 'T', -10, -12),
@@ -427,7 +427,7 @@ describe('Sequence class', () => {
     });
 
     it('updates base numberings', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBase(Base.create(svg, 'T', 2, 3));
       seq.numberingAnchor = 1;
@@ -459,7 +459,7 @@ describe('Sequence class', () => {
     });
 
     it('updates base numberings', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBase(Base.create(svg, 'e', 1, 5));
       let b1 = seq.getBaseAtPosition(1);
@@ -497,7 +497,7 @@ describe('Sequence class', () => {
     });
 
     it('updates base numberings', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBases([
         Base.create(svg, 'r', 1, 5),
@@ -517,7 +517,7 @@ describe('Sequence class', () => {
   });
 
   it('length getter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let seq = new Sequence('asdf');
     expect(seq.length).toBe(0);
     seq.appendBases([
@@ -541,7 +541,7 @@ describe('Sequence class', () => {
 
   describe('positionOutOfRange method', () => {
     it('edge cases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'ki', 'ggh');
       expect(seq.positionOutOfRange(0)).toBeTruthy();
       expect(seq.positionOutOfRange(1)).toBeFalsy();
@@ -552,7 +552,7 @@ describe('Sequence class', () => {
 
   describe('positionInRange method', () => {
     it('edge cases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'uuj', 'lkj');
       expect(seq.positionInRange(0)).toBeFalsy();
       expect(seq.positionInRange(1)).toBeTruthy();
@@ -563,7 +563,7 @@ describe('Sequence class', () => {
 
   describe('offsetPositionOutOfRange method', () => {
     it('edge cases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'hh', 'plo');
       seq.numberingOffset = 12;
       expect(seq.offsetPositionOutOfRange(12)).toBeTruthy();
@@ -575,7 +575,7 @@ describe('Sequence class', () => {
 
   describe('offsetPositionInRange method', () => {
     it('edge cases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'QYQ');
       seq.numberingOffset = -45;
       expect(seq.offsetPositionInRange(-45)).toBeFalsy();
@@ -587,13 +587,13 @@ describe('Sequence class', () => {
 
   describe('getBaseAtPosition method', () => {
     it('position is out of range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'ui');
       expect(seq.getBaseAtPosition(3)).toBeFalsy();
     });
 
     it('position is in range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
       expect(seq.getBaseAtPosition(2)).toBe(seq._bases[1]);
     });
@@ -601,7 +601,7 @@ describe('Sequence class', () => {
 
   describe('getBaseAtOffsetPosition method', () => {
     it('takes into account numbering offset', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
       seq.numberingOffset = 23;
       expect(seq.getBaseAtOffsetPosition(25)).toBe(seq.getBaseAtPosition(2));
@@ -610,13 +610,13 @@ describe('Sequence class', () => {
 
   describe('getBaseById method', () => {
     it('no base has the given ID', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
       expect(seq.getBaseById('asdfqwer')).toBeFalsy();
     });
 
     it('a base does have the given ID', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qeere');
       let b3 = seq.getBaseAtPosition(3);
       expect(seq.getBaseById(b3.id)).toBe(b3);
@@ -624,7 +624,7 @@ describe('Sequence class', () => {
   });
 
   it('getBasesInRange method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcvqwer');
     let bases = seq.getBasesInRange(3, 5);
     expect(bases.length).toBe(3);
@@ -634,7 +634,7 @@ describe('Sequence class', () => {
   });
 
   it('forEachBase method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let characters = 'cvbn';
     let seq = Sequence.createOutOfView(svg, 'adf', characters);
     let i = 0;
@@ -647,7 +647,7 @@ describe('Sequence class', () => {
   });
 
   it('baseIds method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let seq = Sequence.createOutOfView(svg, 'asdf', 'bh');
     let ids = seq.baseIds();
     expect(ids.length).toBe(2);
@@ -657,14 +657,14 @@ describe('Sequence class', () => {
 
   describe('positionOfBase method', () => {
     it('base is not in sequence', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
       let b = Base.create(svg, 'a', 2, 3);
       expect(seq.positionOfBase(b)).toBe(0);
     });
 
     it('returns correct position', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
       let b3 = seq.getBaseAtPosition(3);
       expect(seq.positionOfBase(b3)).toBe(3);
@@ -673,7 +673,7 @@ describe('Sequence class', () => {
 
   describe('offsetPositionOfBase method', () => {
     it('base is not in sequence', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'zxcv');
       seq.numberingOffset = -15;
       let b = Base.create(svg, 't', 3, 5);
@@ -681,7 +681,7 @@ describe('Sequence class', () => {
     });
 
     it('returns correct offset position', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'zxcv', 'asdf');
       seq.numberingOffset = 24;
       let b3 = seq.getBaseAtPosition(3);
@@ -691,14 +691,14 @@ describe('Sequence class', () => {
 
   describe('contains method', () => {
     it('base is in sequence', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwerqwer');
       let b6 = seq.getBaseAtPosition(6);
       expect(seq.contains(b6)).toBeTruthy();
     });
 
     it('base is not in sequence', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
       let b = Base.create(svg, 'a', 1, 2);
       expect(seq.contains(b)).toBeFalsy();
@@ -707,13 +707,13 @@ describe('Sequence class', () => {
 
   describe('clockwiseNormalAngleAtPosition method', () => {
     it('position is out of range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
       expect(seq.clockwiseNormalAngleAtPosition(5)).toBe(null);
     });
 
     it("no 5' or 3' base", () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       let b = Base.create(svg, 'a', 4, 7);
       seq.appendBase(b);
@@ -727,7 +727,7 @@ describe('Sequence class', () => {
     });
 
     it("has a 5' and 3' base", () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBases([
         Base.create(svg, 'e', 5, 10),
@@ -746,13 +746,13 @@ describe('Sequence class', () => {
 
   describe('counterClockwiseNormalAngleAtPosition method', () => {
     it('position is out of range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
       expect(seq.counterClockwiseNormalAngleAtPosition(6)).toBe(null);
     });
 
     it('position is in range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcvzxcv');
       expect(
         seq.counterClockwiseNormalAngleAtPosition(5)
@@ -764,13 +764,13 @@ describe('Sequence class', () => {
 
   describe('innerNormalAngleAtPosition method', () => {
     it('position is out of range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'zxcv', 'asdf');
       expect(seq.innerNormalAngleAtPosition(5)).toBe(null);
     });
 
     it("no 5' or 3' base", () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       seq.appendBase(
         Base.create(svg, 't', 5, 12),
@@ -785,7 +785,7 @@ describe('Sequence class', () => {
     });
 
     it("has a 5' and 3' base", () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('qwer');
       seq.appendBases([
         Base.create(svg, 'Q', 55, 44),
@@ -804,13 +804,13 @@ describe('Sequence class', () => {
 
   describe('outerNormalAngleAtPosition', () => {
     it('position out of range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'dd');
       expect(seq.outerNormalAngleAtPosition(3)).toBe(null);
     });
 
     it('position is in range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
       expect(
         seq.outerNormalAngleAtPosition(2)
@@ -822,7 +822,7 @@ describe('Sequence class', () => {
 
   describe('appendBase method', () => {
     it('already contains base', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
       let spy = jest.spyOn(seq, 'fireAddBase');
       expect(seq.length).toBe(4);
@@ -832,7 +832,7 @@ describe('Sequence class', () => {
     });
 
     it('appends base', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
       let spy = jest.spyOn(seq, 'fireAddBase');
       expect(seq.length).toBe(4);
@@ -845,7 +845,7 @@ describe('Sequence class', () => {
     });
     
     it('updates base numberings', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'asdfasdf');
       seq.numberingAnchor = 0;
       seq.numberingIncrement = 9;
@@ -858,7 +858,7 @@ describe('Sequence class', () => {
 
   describe('appendBases method', () => {
     it('sequence already contains one of the given bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
       let spy = jest.spyOn(seq, 'fireAddBase');
       let b1 = Base.create(svg, 'Q', 1, 5);
@@ -871,7 +871,7 @@ describe('Sequence class', () => {
     });
 
     it('sequence does not contain any of the given bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'QQE', 'qqe');
       let spy = jest.spyOn(seq, 'fireAddBase');
       let b1 = Base.create(svg, 'T', 3, 1);
@@ -887,7 +887,7 @@ describe('Sequence class', () => {
     });
 
     it('updates base numberings', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfasdfasdfasdfasdf');
       seq.setNumberingAnchor(12, svg);
       seq.setNumberingIncrement(10, svg);
@@ -909,7 +909,7 @@ describe('Sequence class', () => {
 
   describe('insertBaseAtPosition method', () => {
     it('already contains given base', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwe');
       let spy = jest.spyOn(seq, 'fireAddBase');
       let b2 = seq.getBaseAtPosition(2);
@@ -920,7 +920,7 @@ describe('Sequence class', () => {
     });
 
     it('position is out of range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'kkj');
       let spy = jest.spyOn(seq, 'fireAddBase');
       let b = Base.create(svg, 'q', 1, 2);
@@ -931,7 +931,7 @@ describe('Sequence class', () => {
     });
 
     it('positions at the beginning middle and end', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qer', 'bbm');
       expect(seq.length).toBe(3);
       seq.insertBaseAtPosition(Base.create(svg, 't', 2, 2), 1);
@@ -946,7 +946,7 @@ describe('Sequence class', () => {
     });
 
     it('updates base numberings and fire add base event', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'asdf');
       let spy = jest.spyOn(seq, 'fireAddBase');
       seq.numberingAnchor = 2;
@@ -960,7 +960,7 @@ describe('Sequence class', () => {
   });
 
   it('add base event', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
     seq._onAddBase = null;
     expect(() => seq.fireAddBase()).not.toThrow(); // firing with no binding
@@ -974,7 +974,7 @@ describe('Sequence class', () => {
 
   describe('removeBaseAtPosition method', () => {
     it('position is out of range', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
       expect(seq.length).toBe(4);
       seq.removeBaseAtPosition(5);
@@ -982,7 +982,7 @@ describe('Sequence class', () => {
     });
 
     it('removes the base', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
       let b3 = seq.getBaseAtPosition(3);
       let id3 = b3.id;
@@ -995,7 +995,7 @@ describe('Sequence class', () => {
     });
 
     it('updates base numberings', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwerqwer');
       seq.numberingAnchor = 5;
       let b6 = seq.getBaseAtPosition(6);
@@ -1007,7 +1007,7 @@ describe('Sequence class', () => {
 
   describe('remove method', () => {
     it('removes bases and resets bases array', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       let b1 = Base.create(svg, 'a', 1, 2);
       let id1 = b1.id;
@@ -1039,7 +1039,7 @@ describe('Sequence class', () => {
     });
 
     it('includes bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = new Sequence('asdf');
       let b1 = Base.create(svg, 't', 55, 66);
       let b2 = Base.create(svg, 'i', 10, -20);
@@ -1055,7 +1055,7 @@ describe('Sequence class', () => {
     });
 
     it('can be converted to and from a JSON string', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcvqwer');
       let savableState1 = seq.savableState();
       let json1 = JSON.stringify(savableState1);
@@ -1066,7 +1066,7 @@ describe('Sequence class', () => {
   });
 
   it('refreshIds method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
     let spies = [];
     seq.forEachBase(b => spies.push(jest.spyOn(b, 'refreshIds')));
