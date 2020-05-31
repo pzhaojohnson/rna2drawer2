@@ -1,4 +1,5 @@
 import Sequence from './Sequence';
+import { SequenceSavableState } from './SequenceInterface';
 import { BaseInterface as Base } from './BaseInterface';
 import { PrimaryBond, SecondaryBond } from './StraightBond';
 import { TertiaryBond } from './QuadraticBezierBond';
@@ -18,7 +19,7 @@ export interface ForEachSecondaryBondFunc {
 export interface DrawingSavableState {
   className: string;
   svg: string;
-  sequences: object[];
+  sequences: SequenceSavableState[];
   primaryBonds: object[];
   secondaryBonds: object[];
   tertiaryBonds: object[];

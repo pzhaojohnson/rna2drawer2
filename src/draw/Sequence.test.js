@@ -589,7 +589,7 @@ describe('Sequence class', () => {
     it('position is out of range', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'ui');
-      expect(seq.getBaseAtPosition(3)).toBe(null);
+      expect(seq.getBaseAtPosition(3)).toBeFalsy();
     });
 
     it('position is in range', () => {
@@ -612,7 +612,7 @@ describe('Sequence class', () => {
     it('no base has the given ID', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
-      expect(seq.getBaseById('asdfqwer')).toBe(null);
+      expect(seq.getBaseById('asdfqwer')).toBeFalsy();
     });
 
     it('a base does have the given ID', () => {

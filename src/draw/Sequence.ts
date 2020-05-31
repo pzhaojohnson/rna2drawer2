@@ -1,63 +1,56 @@
+import {
+  SequenceInterface,
+  SequenceMostRecentProps,
+  SequenceSavableState,
+} from './SequenceInterface';
+import { SvgInterface as Svg } from './SvgInterface';
 import Base from './Base';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
-class Sequence {
+interface BaseCoordinates {
+  xCenter: number;
+  yCenter: number;
+}
 
-  /**
-   * @typedef {Object} Sequence~MostRecentProps 
-   * @property {number} numberingAnchor 
-   * @property {number} numberingIncrement 
-   */
+class Sequence implements SequenceInterface {
+  static _mostRecentProps: {
+    numberingAnchor: number;
+    numberingIncrement: number;
+  };
 
-  /**
-   * @returns {Sequence~MostRecentProps} 
-   */
-  static mostRecentProps() {
+  _id: string;
+  _bases: Base[];
+  _numberingOffset: number;
+  _numberingAnchor: number;
+  _numberingIncrement: number;
+
+  _onAddBase: (b: Base) => void;
+
+  static mostRecentProps(): SequenceMostRecentProps {
     return { ...Sequence._mostRecentProps };
   }
 
-  /**
-   * @param {Sequence} seq 
-   */
-  static _applyMostRecentProps(seq) {
+  static _applyMostRecentProps(seq: Sequence) {
     let props = Sequence.mostRecentProps();
     seq.setNumberingAnchor(props.numberingAnchor);
     seq.setNumberingIncrement(props.numberingIncrement);
   }
 
-  /**
-   * @param {Sequence} seq 
-   */
-  static _copyPropsToMostRecent(seq) {
+  static _copyPropsToMostRecent(seq: Sequence) {
     Sequence._mostRecentProps.numberingAnchor = seq.numberingAnchor;
     Sequence._mostRecentProps.numberingIncrement = seq.numberingIncrement;
   }
 
-  /**
-   * @typedef {Object} Sequence~BaseCoordinates 
-   * @property {number} xCenter 
-   * @property {number} yCenter 
-   */
-
-  /**
-   * @param {Sequence~BaseCoordinates} cs1 
-   * @param {Sequence~BaseCoordinates} cs2 
-   * 
-   * @returns {number} 
-   */
-  static _angleBetweenBaseCenters(cs1, cs2) {
+  static _angleBetweenBaseCenters(cs1: BaseCoordinates, cs2: BaseCoordinates): number {
     return angleBetween(cs1.xCenter, cs1.yCenter, cs2.xCenter, cs2.yCenter);
   }
 
-  /**
-   * @param {Sequence~BaseCoordinates} cs 
-   * @param {Sequence~BaseCoordinates|null} cs5 
-   * @param {Sequence~BaseCoordinates|null} cs3 
-   * 
-   * @returns {number} 
-   */
-  static _clockwiseNormalAngleOfBase(cs, cs5, cs3) {
+  static _clockwiseNormalAngleOfBase(
+    cs: BaseCoordinates,
+    cs5?: BaseCoordinates,
+    cs3?: BaseCoordinates,
+  ): number {
     if (cs5 && cs3) {
       let a5 = Sequence._angleBetweenBaseCenters(cs, cs5);
       let a3 = Sequence._angleBetweenBaseCenters(cs, cs3);
@@ -71,14 +64,11 @@ class Sequence {
     return Math.PI / 2;
   }
 
-  /**
-   * @param {number} p 
-   * @param {Sequence~SavableState} savedState 
-   * @param {SVG.Svg} svg 
-   * 
-   * @returns {number} 
-   */
-  static _clockwiseNormalAngleAtPositionFromSavedState(p, savedState, svg) {
+  static _clockwiseNormalAngleAtPositionFromSavedState(
+    p: number,
+    savedState: SequenceSavableState,
+    svg: Svg,
+  ): number {
     let sb = savedState.bases[p - 1];
     let cs = {
       xCenter: Base.xFromSavedState(sb, svg),
@@ -103,14 +93,11 @@ class Sequence {
     return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
   }
 
-  /**
-   * @param {Sequence~BaseCoordinates} cs 
-   * @param {Sequence~BaseCoordinates|null} cs5 
-   * @param {Sequence~BaseCoordinates|null} cs3 
-   * 
-   * @returns {number} 
-   */
-  static _innerNormalAngleOfBase(cs, cs5, cs3) {
+  static _innerNormalAngleOfBase(
+    cs: BaseCoordinates,
+    cs5?: BaseCoordinates,
+    cs3?: BaseCoordinates,
+  ): number {
     let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
     if (!cs5 || !cs3) {
       return cna;
@@ -125,33 +112,32 @@ class Sequence {
   }
 
   /**
-   * @param {Sequence~SavableState} savedState 
-   * @param {SVG.Svg} svg 
-   * 
-   * @returns {Sequence} 
+   * Returns null if the saved state is invalid.
    */
-  static fromSavedState(savedState, svg) {
+  static fromSavedState(savedState: SequenceSavableState, svg: Svg): (Sequence | null) {
+    if (!savedState.id || !savedState.bases) {
+      return null;
+    }
     let seq = new Sequence(savedState.id);
-    seq.numberingOffset = savedState.numberingOffset;
-    seq.numberingAnchor = savedState.numberingAnchor;
-    seq.numberingIncrement = savedState.numberingIncrement;
-    let bases = [];
+    seq.numberingOffset = savedState.numberingOffset ?? 0;
+    seq.numberingAnchor = savedState.numberingAnchor ?? 0;
+    seq.numberingIncrement = savedState.numberingIncrement ?? 20;
+    let bases = [] as Base[];
+    let invalid = false;
     savedState.bases.forEach(sb => {
-      bases.push(Base.fromSavedState(sb, svg))
+      let b = Base.fromSavedState(sb, svg);
+      bases.push(b);
+      invalid = invalid || !b;
     });
+    if (invalid) {
+      return null;
+    }
     seq.appendBases(bases);
     Sequence._copyPropsToMostRecent(seq);
     return seq;
   }
 
-  /**
-   * @param {SVG.Svg} svg 
-   * @param {string} id 
-   * @param {string} characters 
-   * 
-   * @returns {Sequence} 
-   */
-  static createOutOfView(svg, id, characters) {
+  static createOutOfView(svg: Svg, id: string, characters: string): Sequence {
     let seq = new Sequence(id);
     let bases = [];
     for (let c of characters) {
@@ -162,10 +148,7 @@ class Sequence {
     return seq;
   }
 
-  /**
-   * @param {string} id 
-   */
-  constructor(id) {
+  constructor(id: string) {
     this._id = id;
     this._bases = [];
     this._numberingOffset = 0;
@@ -173,26 +156,20 @@ class Sequence {
     this._numberingIncrement = 20;
   }
 
-  /**
-   * @returns {string} 
-   */
-  get id() {
+  get id(): string {
     return this._id;
   }
 
-  /**
-   * @returns {string} 
-   */
-  get characters() {
+  get characters(): string {
     let cs = '';
-    this.forEachBase(b => {
+    this.forEachBase((b: Base) => {
       cs += b.character;
     });
     return cs;
   }
 
   _updateBaseNumberings() {
-    this.forEachBase((b, p) => {
+    this.forEachBase((b: Base, p: number) => {
       if ((p - this.numberingAnchor) % this.numberingIncrement == 0) {
         let n = b.addNumbering(p + this.numberingOffset);
         n.lineAngle = this.outerNormalAngleAtPosition(p);
@@ -202,28 +179,15 @@ class Sequence {
     });
   }
 
-  /**
-   * @returns {number} 
-   */
-  get numberingOffset() {
+  get numberingOffset(): number {
     return this._numberingOffset;
   }
 
-  /**
-   * Has no effect if the given number is not an integer.
-   * 
-   * @param {number} no 
-   */
-  set numberingOffset(no) {
+  set numberingOffset(no: number) {
     this.setNumberingOffset(no);
   }
 
-  /**
-   * Has no effect if the given number is not an integer.
-   * 
-   * @param {number} no 
-   */
-  setNumberingOffset(no) {
+  setNumberingOffset(no: number) {
     if (!isFinite(no) || Math.floor(no) !== no) {
       return;
     }
@@ -231,28 +195,15 @@ class Sequence {
     this._updateBaseNumberings();
   }
 
-  /**
-   * @returns {number} 
-   */
-  get numberingAnchor() {
+  get numberingAnchor(): number {
     return this._numberingAnchor;
   }
 
-  /**
-   * Has no effect if the given number is not an integer.
-   * 
-   * @param {number} na 
-   */
-  set numberingAnchor(na) {
+  set numberingAnchor(na: number) {
     this.setNumberingAnchor(na);
   }
 
-  /**
-   * Has no effect if the given number is not an integer.
-   * 
-   * @param {number} na 
-   */
-  setNumberingAnchor(na) {
+  setNumberingAnchor(na: number) {
     if (!isFinite(na) || Math.floor(na) !== na) {
       return;
     }
@@ -261,28 +212,15 @@ class Sequence {
     Sequence._mostRecentProps.numberingAnchor = na;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get numberingIncrement() {
+  get numberingIncrement(): number {
     return this._numberingIncrement;
   }
 
-  /**
-   * Has no effect if the given number is not an integer or is not positive.
-   * 
-   * @param {number} ni 
-   */
-  set numberingIncrement(ni) {
+  set numberingIncrement(ni: number) {
     this.setNumberingIncrement(ni);
   }
 
-  /**
-   * Has no effect if the given number is not an integer or is not positive.
-   * 
-   * @param {number} ni 
-   */
-  setNumberingIncrement(ni) {
+  setNumberingIncrement(ni: number) {
     if (!isFinite(ni) || Math.floor(ni) !== ni) {
       return;
     } else if (ni < 1) {
@@ -293,110 +231,47 @@ class Sequence {
     Sequence._mostRecentProps.numberingIncrement = ni;
   }
 
-  /**
-   * @returns {number} The length of this sequence.
-   */
-  get length() {
+  get length(): number {
     return this._bases.length;
   }
 
-  /**
-   * @param {number} p 
-   * 
-   * @returns {number} 
-   */
-  offsetPosition(p) {
+  offsetPosition(p: number): number {
     return p + this.numberingOffset;
   }
 
-  /**
-   * @param {number} op 
-   * 
-   * @returns {number} 
-   */
-  reversePositionOffset(op) {
+  reversePositionOffset(op: number): number {
     return op - this.numberingOffset;
   }
 
-  /**
-   * @param {number} p 
-   * 
-   * @returns {boolean} 
-   */
-  positionOutOfRange(p) {
+  positionOutOfRange(p: number): boolean {
     return p < 1 || p > this.length;
   }
 
-  /**
-   * @param {number} p 
-   * 
-   * @returns {boolean} 
-   */
-  positionInRange(p) {
+  positionInRange(p: number): boolean {
     return !this.positionOutOfRange(p);
   }
 
-  /**
-   * @param {number} op 
-   * 
-   * @returns {boolean} 
-   */
-  offsetPositionOutOfRange(op) {
+  offsetPositionOutOfRange(op: number): boolean {
     let p = this.reversePositionOffset(op);
     return this.positionOutOfRange(p);
   }
 
-  /**
-   * @param {number} op 
-   * 
-   * @returns {boolean} 
-   */
-  offsetPositionInRange(op) {
+  offsetPositionInRange(op: number): boolean {
     let p = this.reversePositionOffset(op);
     return this.positionInRange(p);
   }
 
-  /**
-   * Returns null if the given position is out of range.
-   * 
-   * @param {number} p 
-   * 
-   * @returns {Base|null} 
-   */
-  getBaseAtPosition(p) {
-    if (this.positionOutOfRange(p)) {
-      return null;
-    }
+  getBaseAtPosition(p: number): (Base | undefined) {
     return this._bases[p - 1];
   }
 
-  /**
-   * Returns null if the given offset position is out of range.
-   * 
-   * @param {number} op 
-   * 
-   * @returns {Base|null} 
-   */
-  getBaseAtOffsetPosition(op) {
+  getBaseAtOffsetPosition(op: number): (Base | undefined) {
     let p = this.reversePositionOffset(op);
     return this.getBaseAtPosition(p);
   }
 
-  /**
-   * Returns null if no base in this sequence has the given ID.
-   * 
-   * @param {string} id 
-   * 
-   * @returns {Base|null} 
-   */
-  getBaseById(id) {
-    let base = null;
-    this.forEachBase(b => {
-      if (b.id === id) {
-        base = b;
-      }
-    });
-    return base;
+  getBaseById(id: string): (Base | undefined) {
+    return this._bases.find(b => b.id === id);
   }
 
   /**
@@ -404,91 +279,45 @@ class Sequence {
    * 5' and 3' most positions.
    * 
    * The bases are returned in ascending order.
-   * 
-   * @param {number} p5 
-   * @param {number} p3 
-   * 
-   * @returns {Array<Base>} 
    */
-  getBasesInRange(p5, p3) {
-    let bases = [];
-    this._bases.forEach((b, i) => {
-      let p = i + 1;
-      if (p >= p5 && p <= p3) {
-        bases.push(b);
-      }
-    });
-    return bases;
+  getBasesInRange(p5: number, p3: number): Base[] {
+    return this._bases.slice(p5 - 1, p3);
   }
 
-  /**
-   * @typedef Sequence~forEachBase 
-   * @param {Base} b 
-   * @param {number} p The position of the base.
-   */
-
-  /**
-   * @param {Sequence~forEachBase} cb 
-   */
-  forEachBase(cb) {
-    this._bases.forEach((b, i) => cb(b, i + 1));
+  forEachBase(f: (b: Base, position: number) => void) {
+    this._bases.forEach((b, i) => f(b, i + 1));
   }
 
-  /**
-   * @returns {Array<string>} 
-   */
-  baseIds() {
-    let ids = [];
+  baseIds(): string[] {
+    let ids = [] as string[];
     this.forEachBase(b => ids.push(b.id));
     return ids;
   }
 
   /**
    * Returns zero if the given base is not in this sequence.
-   * 
-   * @param {Base} b 
-   * 
-   * @returns {number} 
    */
-  positionOfBase(b) {
-    for (let p = 1; p <= this.length; p++) {
-      if (this.getBaseAtPosition(p).id === b.id) {
-        return p;
-      }
-    }
-    return 0;
+  positionOfBase(b: Base): number {
+    return this._bases.findIndex(base => base.id === b.id) + 1;
   }
 
   /**
    * Returns the minimum offset position of this sequence minus one if
    * the given base is not in this sequence.
-   * 
-   * @param {Base} b 
-   * 
-   * @returns {number} 
    */
-  offsetPositionOfBase(b) {
+  offsetPositionOfBase(b: Base) {
     let p = this.positionOfBase(b);
     return this.offsetPosition(p);
   }
 
-  /**
-   * @param {Base} b 
-   * 
-   * @returns {boolean} 
-   */
-  contains(b) {
+  contains(b: Base): boolean {
     return this.positionOfBase(b) > 0;
   }
 
   /**
    * Returns null if the given position is out of range.
-   * 
-   * @param {number} p 
-   * 
-   * @returns {number|null} 
    */
-  clockwiseNormalAngleAtPosition(p) {
+  clockwiseNormalAngleAtPosition(p: number): (number | null) {
     if (this.positionOutOfRange(p)) {
       return null;
     }
@@ -509,12 +338,8 @@ class Sequence {
 
   /**
    * Returns null if the given position is out of range.
-   * 
-   * @param {number} p 
-   * 
-   * @returns {number|null} 
    */
-  counterClockwiseNormalAngleAtPosition(p) {
+  counterClockwiseNormalAngleAtPosition(p: number): (number | null) {
     if (this.positionOutOfRange(p)) {
       return null;
     }
@@ -523,12 +348,8 @@ class Sequence {
 
   /**
    * Returns null if the given position is out of range.
-   * 
-   * @param {number} p 
-   * 
-   * @returns {number|null} 
    */
-  innerNormalAngleAtPosition(p) {
+  innerNormalAngleAtPosition(p: number): (number | null) {
     if (this.positionOutOfRange(p)) {
       return null;
     }
@@ -549,12 +370,8 @@ class Sequence {
 
   /**
    * Returns null if the given position is out of range.
-   * 
-   * @param {number} p 
-   * 
-   * @returns {number|null} 
    */
-  outerNormalAngleAtPosition(p) {
+  outerNormalAngleAtPosition(p: number): (number | null) {
     if (this.positionOutOfRange(p)) {
       return null;
     }
@@ -565,10 +382,8 @@ class Sequence {
    * Appends the given base to the end of this sequence.
    * 
    * Has no effect if the given base is already in this sequence.
-   * 
-   * @param {Base} b 
    */
-  appendBase(b) {
+  appendBase(b: Base) {
     if (this.contains(b)) {
       return;
     }
@@ -580,10 +395,8 @@ class Sequence {
   /**
    * This method has no effect if this sequence already contains
    * any of the given bases.
-   * 
-   * @param {Array<Base>} bs 
    */
-  appendBases(bs) {
+  appendBases(bs: Base[]) {
     let alreadyContains = false;
     bs.forEach(b => {
       if (this.contains(b)) {
@@ -606,11 +419,8 @@ class Sequence {
    * 
    * Has no effect if the given base is already in this sequence or if the
    * given position is out of range.
-   * 
-   * @param {Base} b 
-   * @param {number} p 
    */
-  insertBaseAtPosition(b, p) {
+  insertBaseAtPosition(b: Base, p: number) {
     if (this.contains(b)) {
       return;
     } else if (this.positionOutOfRange(p) && p !== this.length + 1) {
@@ -625,11 +435,11 @@ class Sequence {
     this._updateBaseNumberings();
   }
 
-  onAddBase(cb) {
-    this._onAddBase = cb;
+  onAddBase(f: (b: Base) => void) {
+    this._onAddBase = f;
   }
 
-  fireAddBase(b) {
+  fireAddBase(b: Base) {
     if (this._onAddBase) {
       this._onAddBase(b);
     }
@@ -637,17 +447,14 @@ class Sequence {
 
   /**
    * Has no effect if the given position is out of range.
-   * 
-   * @param {number} p 
    */
-  removeBaseAtPosition(p) {
-    if (this.positionOutOfRange(p)) {
-      return;
-    }
+  removeBaseAtPosition(p: number) {
     let b = this.getBaseAtPosition(p);
-    b.remove();
-    this._bases.splice(p - 1, 1);
-    this._updateBaseNumberings();
+    if (b) {
+      b.remove();
+      this._bases.splice(p - 1, 1);
+      this._updateBaseNumberings();
+    }
   }
 
   remove() {
@@ -655,24 +462,11 @@ class Sequence {
     this._bases = [];
   }
 
-  /**
-   * @typedef {Object} Sequence~SavableState 
-   * @property {string} className 
-   * @property {string} id 
-   * @property {Array<Base~SavableState>} bases 
-   * @property {number} numberingOffset 
-   * @property {number} numberingAnchor 
-   * @property {number} numberingIncrement 
-   */
-
-  /**
-   * @returns {Sequence~SavableState} 
-   */
-  savableState() {
+  savableState(): SequenceSavableState {
     let savableState = {
       className: 'Sequence',
       id: this.id,
-      bases: [],
+      bases: [] as Base[],
       numberingOffset: this.numberingOffset,
       numberingAnchor: this.numberingAnchor,
       numberingIncrement: this.numberingIncrement,

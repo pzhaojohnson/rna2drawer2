@@ -5,6 +5,7 @@ import {
 } from './DrawingInterface';
 import { SvgInterface as Svg } from './SvgInterface';
 import Sequence from './Sequence';
+import { SequenceSavableState } from './SequenceInterface';
 import Base from './Base';
 import {
   PrimaryBond,
@@ -318,7 +319,7 @@ class Drawing implements DrawingInterface {
   }
 
   savableState(): DrawingSavableState {
-    let sequences = [] as object[];
+    let sequences = [] as SequenceSavableState[];
     this.forEachSequence(seq => sequences.push(seq.savableState()));
     let primaryBonds = [] as object[];
     this.forEachPrimaryBond(pb => primaryBonds.push(pb.savableState()));
