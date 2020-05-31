@@ -824,18 +824,24 @@ describe('Sequence class', () => {
     it('already contains base', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
+      let spy = jest.spyOn(seq, 'fireAddBase');
       expect(seq.length).toBe(4);
       seq.appendBase(seq.getBaseAtPosition(3));
       expect(seq.length).toBe(4);
+      expect(spy).not.toHaveBeenCalled();
     });
 
     it('appends base', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
+      let spy = jest.spyOn(seq, 'fireAddBase');
       expect(seq.length).toBe(4);
-      seq.appendBase(Base.create(svg, 'q', 4, 5));
+      let b = Base.create(svg, 'q', 4, 5);
+      seq.appendBase(b);
       expect(seq.length).toBe(5);
-      expect(seq.getBaseAtPosition(5).character).toBe('q');
+      expect(seq.getBaseAtPosition(5)).toBe(b);
+      expect(spy.mock.calls.length).toBe(1);
+      expect(spy.mock.calls[0][0]).toBe(b);
     });
     
     it('updates base numberings', () => {
@@ -854,17 +860,20 @@ describe('Sequence class', () => {
     it('sequence already contains one of the given bases', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
+      let spy = jest.spyOn(seq, 'fireAddBase');
       let b1 = Base.create(svg, 'Q', 1, 5);
       let b2 = seq.getBaseAtPosition(3);
       let b3 = Base.create(svg, 'H', 5, 6);
       expect(seq.length).toBe(4);
       seq.appendBases([b1, b2, b3], svg);
       expect(seq.length).toBe(4);
+      expect(spy).not.toHaveBeenCalled();
     });
 
     it('sequence does not contain any of the given bases', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'QQE', 'qqe');
+      let spy = jest.spyOn(seq, 'fireAddBase');
       let b1 = Base.create(svg, 'T', 3, 1);
       let b2 = Base.create(svg, 'B', 3, 3);
       expect(seq.length).toBe(3);
@@ -872,6 +881,9 @@ describe('Sequence class', () => {
       expect(seq.length).toBe(5);
       expect(seq.getBaseAtPosition(4).id).toBe(b1.id);
       expect(seq.getBaseAtPosition(5).id).toBe(b2.id);
+      expect(spy.mock.calls.length).toBe(2);
+      expect(spy.mock.calls[0][0]).toBe(b1);
+      expect(spy.mock.calls[1][0]).toBe(b2);
     });
 
     it('updates base numberings', () => {
@@ -899,19 +911,23 @@ describe('Sequence class', () => {
     it('already contains given base', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'asdf', 'qwe');
+      let spy = jest.spyOn(seq, 'fireAddBase');
       let b2 = seq.getBaseAtPosition(2);
       expect(seq.length).toBe(3);
       seq.insertBaseAtPosition(b2, 3);
       expect(seq.length).toBe(3);
+      expect(spy).not.toHaveBeenCalled();
     });
 
     it('position is out of range', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'kkj');
+      let spy = jest.spyOn(seq, 'fireAddBase');
       let b = Base.create(svg, 'q', 1, 2);
       expect(seq.length).toBe(3);
       seq.insertBaseAtPosition(b, 5);
       expect(seq.length).toBe(3);
+      expect(spy).not.toHaveBeenCalled();
     });
 
     it('positions at the beginning middle and end', () => {
@@ -929,15 +945,31 @@ describe('Sequence class', () => {
       expect(seq.getBaseAtPosition(6).character).toBe('e');
     });
 
-    it('updates base numberings', () => {
+    it('updates base numberings and fire add base event', () => {
       let svg = createNodeSVG();
       let seq = Sequence.createOutOfView(svg, 'qwer', 'asdf');
+      let spy = jest.spyOn(seq, 'fireAddBase');
       seq.numberingAnchor = 2;
       let b = Base.create(svg, 'q', 2, 2);
       expect(b.hasNumbering()).toBeFalsy();
       seq.insertBaseAtPosition(b, 2);
       expect(b.hasNumbering()).toBeTruthy();
+      expect(spy.mock.calls.length).toBe(1);
+      expect(spy.mock.calls[0][0]).toBe(b);
     });
+  });
+
+  it('add base event', () => {
+    let svg = createNodeSVG();
+    let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
+    seq._onAddBase = null;
+    expect(() => seq.fireAddBase()).not.toThrow(); // firing with no binding
+    let f = jest.fn();
+    let b = jest.fn();
+    seq.onAddBase(f);
+    seq.fireAddBase(b);
+    expect(f.mock.calls.length).toBe(1);
+    expect(f.mock.calls[0][0]).toBe(b);
   });
 
   describe('removeBaseAtPosition method', () => {
