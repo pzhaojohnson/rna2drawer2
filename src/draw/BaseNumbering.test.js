@@ -603,4 +603,14 @@ describe('BaseNumbering class', () => {
     expect(savableState.textId).toBe(n._text.id());
     expect(savableState.lineId).toBe(n._line.id());
   });
+
+  it('refreshIds method', () => {
+    let svg = createNodeSVG();
+    let n = BaseNumbering.create(svg, 12, 8, 20);
+    let oldTextId = n._text.id();
+    let oldLineId = n._line.id();
+    n.refreshIds();
+    expect(n._text.id()).not.toBe(oldTextId);
+    expect(n._line.id()).not.toBe(oldLineId);
+  });
 });
