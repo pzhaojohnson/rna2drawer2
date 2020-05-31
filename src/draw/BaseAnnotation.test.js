@@ -1,7 +1,4 @@
-import {
-  BaseAnnotation,
-  CircleBaseAnnotation,
-} from './BaseAnnotation';
+import { CircleBaseAnnotation } from './BaseAnnotation';
 import createNodeSVG from './createNodeSVG';
 import distanceBetween from './distanceBetween';
 import normalizeAngle from './normalizeAngle';
@@ -235,5 +232,13 @@ describe('CircleBaseAnnotation class', () => {
       let json2 = JSON.stringify(savableState2);
       expect(json2).toBe(json1);
     });
+  });
+
+  it('refreshIds method', () => {
+    let svg = createNodeSVG();
+    let cba = CircleBaseAnnotation.createNondisplaced(svg, 10, 50);
+    let oldId = cba._circle.id();
+    cba.refreshIds();
+    expect(cba._circle.id()).not.toBe(oldId);
   });
 });
