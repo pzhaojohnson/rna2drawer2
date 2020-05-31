@@ -14,6 +14,7 @@ import UndoRedo from './undo/UndoRedo';
 
 import StrictDrawing from './draw/StrictDrawing';
 import { StrictDrawingSavableState } from './draw/StrictDrawingInterface';
+import { SvgInterface as Svg } from './draw/SvgInterface';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 
 import createMenuForApp from './menu/createMenuForApp';
@@ -22,10 +23,6 @@ import createInfobarForApp from './infobar/createInfobarForApp';
 import renderCreateNewDrawingInApp from './forms/renderCreateNewDrawingInApp';
 
 import saveDrawingForApp from './export/saveDrawingForApp';
-
-interface Svg {
-  addTo: () => Svg;
-}
 
 class App {
   _SVG: () => Svg;

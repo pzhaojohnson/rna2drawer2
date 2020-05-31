@@ -2,8 +2,8 @@ import {
   StrictDrawingInterface,
   StrictDrawingSavableState,
 } from './StrictDrawingInterface';
-
 import Drawing from './Drawing';
+import { SvgInterface as Svg } from './SvgInterface';
 
 import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
 
@@ -17,10 +17,6 @@ import {
   appendStructureToStrictDrawing,
   Structure,
 } from './edit/appendStructureToStrictDrawing';
-
-interface Svg {
-  addTo: () => Svg;
-}
 
 interface PerBaseLayoutPropsSavableState {};
 
