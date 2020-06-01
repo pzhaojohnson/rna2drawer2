@@ -1,24 +1,35 @@
+import {
+  StraightBondInterface,
+  PrimaryBondInterface,
+  SecondaryBondInterface,
+  StraightBondSavableState,
+  PrimaryBondMostRecentProps,
+  SecondaryBondMostRecentProps,
+} from './StraightBondInterface';
+import { BaseInterface as Base } from './BaseInterface';
+import {
+  SvgInterface as Svg,
+  SvgLineInterface as SvgLine,
+  SvgElementInterface as SvgElement,
+} from './SvgInterface';
 import distanceBetween from './distanceBetween';
 
-class StraightBond {
+interface LineCoordinates {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+}
 
-  /**
-   * @typedef {Object} StraightBond~LineCoordinates 
-   * @property {number} x1 
-   * @property {number} y1 
-   * @property {number} x2 
-   * @property {number} y2 
-   */
+class StraightBond implements StraightBondInterface {
+  _line: SvgLine;
+  _base1: Base;
+  _base2: Base;
 
-  /**
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * @param {number} padding1 
-   * @param {number} padding2 
-   * 
-   * @returns {StraightBond~LineCoordinates} 
-   */
-  static _lineCoordinates(b1, b2, padding1, padding2) {
+  _padding1: number;
+  _padding2: number;
+
+  static _lineCoordinates(b1: Base, b2: Base, padding1: number, padding2: number): LineCoordinates {
     let angle = b1.angleBetweenCenters(b2);
     return {
       x1: b1.xCenter + (padding1 * Math.cos(angle)),
@@ -28,27 +39,14 @@ class StraightBond {
     };
   }
 
-  /**
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * @param {number} padding1 
-   * @param {number} padding2 
-   * 
-   * @returns {number} 
-   */
-  static _opacity(b1, b2, padding1, padding2) {
+  static _opacity(b1: Base, b2: Base, padding1: number, padding2: number): number {
     if (padding1 + padding2 > b1.distanceBetweenCenters(b2)) {
       return 0;
     }
     return 1;
   }
 
-  /**
-   * @param {SVG.Line} line 
-   * @param {Base} b1 
-   * @param {Base} b2 
-   */
-  constructor(line, b1, b2) {
+  constructor(line: SvgLine, b1: Base, b2: Base) {
     this._base1 = b1;
     this._base2 = b2;
     
@@ -65,52 +63,31 @@ class StraightBond {
     this._line.id();
   }
 
-  /**
-   * @returns {string} 
-   */
-  get id() {
+  get id(): string {
     return this._line.attr('id');
   }
 
-  /**
-   * @returns {Base} 
-   */
-  get base1() {
+  get base1(): Base {
     return this._base1;
   }
 
-  /**
-   * @returns {Base} 
-   */
-  get base2() {
+  get base2(): Base {
     return this._base2;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get x1() {
+  get x1(): number {
     return this._line.attr('x1');
   }
 
-  /**
-   * @returns {number} 
-   */
-  get y1() {
+  get y1(): number {
     return this._line.attr('y1');
   }
 
-  /**
-   * @returns {number} 
-   */
-  get x2() {
+  get x2(): number {
     return this._line.attr('x2');
   }
 
-  /**
-   * @returns {number} 
-   */
-  get y2() {
+  get y2(): number {
     return this._line.attr('y2');
   }
 
@@ -132,31 +109,35 @@ class StraightBond {
     );
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding1() {
+  get padding1(): number {
+    return this.getPadding1();
+  }
+
+  getPadding1(): number {
     return this._padding1;
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding1(p) {
+  set padding1(p: number) {
+    this.setPadding1(p);
+  }
+
+  setPadding1(p: number) {
     this._reposition(p, this.padding2);
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding2() {
+  get padding2(): number {
+    return this.getPadding2();
+  }
+
+  getPadding2(): number {
     return this._padding2;
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding2(p) {
+  set padding2(p: number) {
+    this.setPadding2(p);
+  }
+
+  setPadding2(p: number) {
     this._reposition(this.padding1, p);
   }
 
@@ -167,11 +148,7 @@ class StraightBond {
     this._reposition(this.padding1, this.padding2);
   }
 
-  /**
-   * @param {number} padding1 
-   * @param {number} padding2 
-   */
-  _reposition(padding1, padding2) {
+  _reposition(padding1: number, padding2: number) {
     let cs = StraightBond._lineCoordinates(this.base1, this.base2, padding1, padding2);
     this._line.attr({
       'x1': cs.x1,
@@ -185,59 +162,51 @@ class StraightBond {
     this._storePaddings();
   }
 
-  /**
-   * @param {SVG.Element} ele 
-   */
-  insertBefore(ele) {
+  insertBefore(ele: SvgElement) {
     this._line.insertBefore(ele);
   }
 
-  /**
-   * @param {SVG.Element} ele 
-   */
-  insertAfter(ele) {
+  insertAfter(ele: SvgElement) {
     this._line.insertAfter(ele);
   }
 
-  /**
-   * @returns {string} 
-   */
-  get stroke() {
+  get stroke(): string {
+    return this.getStroke();
+  }
+
+  getStroke(): string {
     return this._line.attr('stroke');
   }
 
-  /**
-   * @param {string} s 
-   */
-  set stroke(s) {
+  set stroke(s: string) {
+    this.setStroke(s);
+  }
+
+  setStroke(s: string) {
     this._line.attr({ 'stroke': s });
   }
 
-  /**
-   * @returns {number} 
-   */
-  get strokeWidth() {
+  get strokeWidth(): number {
+    return this.getStrokeWidth();
+  }
+
+  getStrokeWidth(): number {
     return this._line.attr('stroke-width');
   }
 
-  /**
-   * @param {number} sw 
-   */
-  set strokeWidth(sw) {
+  set strokeWidth(sw: number) {
+    this.setStrokeWidth(sw);
+  }
+
+  setStrokeWidth(sw: number) {
     this._line.attr({ 'stroke-width': sw });
   }
 
-  /**
-   * @returns {number} 
-   */
-  get opacity() {
+  get opacity(): number {
     return this._line.attr('opacity');
   }
 
-  /**
-   * @param {number} o 
-   */
-  _setOpacity(o) {
+  _setOpacity(o: number) {
     this._line.attr({ 'opacity': o });
   }
 
@@ -245,18 +214,7 @@ class StraightBond {
     this._line.remove();
   }
 
-  /**
-   * @typedef {Object} StraightBond~SavableState 
-   * @property {string} className 
-   * @property {string} lineId 
-   * @property {string} baseId1 
-   * @property {string} baseId2 
-   */
-
-  /**
-   * @returns {StraightBond~SavableState} 
-   */
-  savableState() {
+  savableState(): StraightBondSavableState {
     return {
       className: 'StraightBond',
       lineId: this._line.id(),
@@ -271,85 +229,51 @@ class StraightBond {
   }
 }
 
-class PrimaryBond extends StraightBond {
-  
-  /**
-   * @typedef {Object} PrimaryBond~MostRecentProps 
-   * @property {number} padding1 
-   * @property {number} padding2 
-   * @property {string} stroke 
-   * @property {number} strokeWidth 
-   */
+class PrimaryBond extends StraightBond implements PrimaryBondInterface {
+  static _mostRecentProps: PrimaryBondMostRecentProps;
 
-  /**
-   * @returns {PrimaryBond~MostRecentProps} 
-   */
-  static mostRecentProps() {
+  static mostRecentProps(): PrimaryBondMostRecentProps {
     return { ...PrimaryBond._mostRecentProps };
   }
 
-  /**
-   * @param {PrimaryBond} sb 
-   */
-  static _applyMostRecentProps(sb) {
+  static _applyMostRecentProps(pb: PrimaryBond) {
     let mrps = PrimaryBond.mostRecentProps();
-    sb.padding1 = mrps.padding1;
-    sb.padding2 = mrps.padding2;
-    sb.stroke = mrps.stroke;
-    sb.strokeWidth = mrps.strokeWidth;
+    pb.padding1 = mrps.padding1;
+    pb.padding2 = mrps.padding2;
+    pb.stroke = mrps.stroke;
+    pb.strokeWidth = mrps.strokeWidth;
   }
 
-  /**
-   * @param {PrimaryBond} sb 
-   */
-  static _copyPropsToMostRecent(sb) {
-    PrimaryBond._mostRecentProps.padding1 = sb.padding1;
-    PrimaryBond._mostRecentProps.padding2 = sb.padding2;
-    PrimaryBond._mostRecentProps.stroke = sb.stroke;
-    PrimaryBond._mostRecentProps.strokeWidth = sb.strokeWidth;
+  static _copyPropsToMostRecent(pb: PrimaryBond) {
+    PrimaryBond._mostRecentProps.padding1 = pb.padding1;
+    PrimaryBond._mostRecentProps.padding2 = pb.padding2;
+    PrimaryBond._mostRecentProps.stroke = pb.stroke;
+    PrimaryBond._mostRecentProps.strokeWidth = pb.strokeWidth;
   }
-
-  /**
-   * @callback PrimaryBond~getBaseById 
-   * @param {string} id 
-   * 
-   * @returns {Base} 
-   */
 
   /**
    * Returns null if the saved state is invalid.
-   * 
-   * @param {StraightBond~SavableState} savedState 
-   * @param {SVG.Svg} svg 
-   * @param {PrimaryBond~getBaseById} getBaseById 
-   * 
-   * @returns {PrimaryBond|null} 
    */
-  static fromSavedState(savedState, svg, getBaseById) {
-    if (savedState.className !== 'StraightBond') {
-      return null;
-    }
-    let line = svg.findOne('#' + savedState.lineId);
-    let b1 = getBaseById(savedState.baseId1);
-    let b2 = getBaseById(savedState.baseId2);
+  static fromSavedState(
+    savedState: StraightBondSavableState,
+    svg: Svg,
+    getBaseById: (id: string) => Base,
+  ): (PrimaryBond | null) {
     let pb = null;
     try {
+      let line = svg.findOne('#' + savedState.lineId);
+      let b1 = getBaseById(savedState.baseId1);
+      let b2 = getBaseById(savedState.baseId2);
       pb = new PrimaryBond(line, b1, b2);
     } catch (err) {
+      console.error('Unable to create primary bond from saved state.');
       return null;
     }
     PrimaryBond._copyPropsToMostRecent(pb);
     return pb;
   }
 
-  /**
-   * @param {SVG.Svg} svg 
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * 
-   * @returns {PrimaryBond} 
-   */
-  static create(svg, b1, b2) {
+  static create(svg: Svg, b1: Base, b2: Base): PrimaryBond {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id();
@@ -358,65 +282,39 @@ class PrimaryBond extends StraightBond {
     return pb;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding1() {
-    return super.padding1;
+  get padding1(): number {
+    return super.getPadding1();
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding1(p) {
-    super.padding1 = p;
+  set padding1(p: number) {
+    super.setPadding1(p);
     PrimaryBond._mostRecentProps.padding1 = p;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding2() {
-    return super.padding2;
+  get padding2(): number {
+    return super.getPadding2();
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding2(p) {
-    super.padding2 = p;
+  set padding2(p: number) {
+    super.setPadding2(p);
     PrimaryBond._mostRecentProps.padding2 = p;
   }
 
-  /**
-   * @returns {string} 
-   */
-  
-  get stroke() {
-    return super.stroke;
+  get stroke(): string {
+    return super.getStroke();
   }
-  
 
-  /**
-   * @param {string} s 
-   */
-  set stroke(s) {
-    super.stroke = s;
+  set stroke(s: string) {
+    super.setStroke(s);
     PrimaryBond._mostRecentProps.stroke = s;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get strokeWidth() {
-    return super.strokeWidth;
+  get strokeWidth(): number {
+    return super.getStrokeWidth();
   }
 
-  /**
-   * @param {number} sw 
-   */
-  set strokeWidth(sw) {
-    super.strokeWidth = sw;
+  set strokeWidth(sw: number) {
+    super.setStrokeWidth(sw);
     PrimaryBond._mostRecentProps.strokeWidth = sw;
   }
 }
@@ -428,29 +326,14 @@ PrimaryBond._mostRecentProps = {
   strokeWidth: 1,
 };
 
-class SecondaryBond extends StraightBond {
+class SecondaryBond extends StraightBond implements SecondaryBondInterface {
+  static _mostRecentProps: SecondaryBondMostRecentProps;
 
-  /**
-   * @typedef {Object} SecondaryBond~MostRecentProps 
-   * @property {number} padding1 
-   * @property {number} padding2 
-   * @property {string} autStroke 
-   * @property {string} gcStroke 
-   * @property {string} gutStroke 
-   * @property {number} strokeWidth 
-   */
-
-  /**
-   * @returns {SecondaryBond~MostRecentProps} 
-   */
-  static mostRecentProps() {
+  static mostRecentProps(): SecondaryBondMostRecentProps {
     return { ...SecondaryBond._mostRecentProps };
   }
 
-  /**
-   * @param {SecondaryBond} sb 
-   */
-  static _applyMostRecentProps(sb) {
+  static _applyMostRecentProps(sb: SecondaryBond) {
     let mrps = SecondaryBond.mostRecentProps();
     sb.padding1 = mrps.padding1;
     sb.padding2 = mrps.padding2;
@@ -466,10 +349,7 @@ class SecondaryBond extends StraightBond {
     }
   }
 
-  /**
-   * @param {SecondaryBond} sb 
-   */
-  static _copyPropsToMostRecent(sb) {
+  static _copyPropsToMostRecent(sb: SecondaryBond) {
     SecondaryBond._mostRecentProps.padding1 = sb.padding1;
     SecondaryBond._mostRecentProps.padding2 = sb.padding2;
     SecondaryBond._mostRecentProps.strokeWidth = sb.strokeWidth;
@@ -485,46 +365,28 @@ class SecondaryBond extends StraightBond {
   }
 
   /**
-   * @callback SecondaryBond~getBaseById 
-   * @param {string} id 
-   * 
-   * @returns {Base} 
-   */
-
-  /**
    * Returns null if the saved state is invalid.
-   * 
-   * @param {StraightBond~SavableState} savedState 
-   * @param {SVG.Svg} svg 
-   * @param {SecondaryBond~getBaseById} getBaseById 
-   * 
-   * @returns {SecondaryBond|null} 
    */
-  static fromSavedState(savedState, svg, getBaseById) {
-    if (savedState.className !== 'StraightBond') {
-      return null;
-    }
-    let line = svg.findOne('#' + savedState.lineId);
-    let b1 = getBaseById(savedState.baseId1);
-    let b2 = getBaseById(savedState.baseId2);
+  static fromSavedState(
+    savedState: StraightBondSavableState,
+    svg: Svg,
+    getBaseById: (id: string) => Base,
+  ): (SecondaryBond | null) {
     let sb = null;
     try {
+      let line = svg.findOne('#' + savedState.lineId);
+      let b1 = getBaseById(savedState.baseId1);
+      let b2 = getBaseById(savedState.baseId2);
       sb = new SecondaryBond(line, b1, b2);
     } catch (err) {
+      console.error('Unable to create secondary bond from saved state.');
       return null;
     }
     SecondaryBond._copyPropsToMostRecent(sb);
     return sb;
   }
 
-  /**
-   * @param {SVG.Svg} svg 
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * 
-   * @returns {SecondaryBond} 
-   */
-  static create(svg, b1, b2) {
+  static create(svg: Svg, b1: Base, b2: Base): SecondaryBond {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id();
@@ -533,10 +395,7 @@ class SecondaryBond extends StraightBond {
     return sb;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  isAUT() {
+  isAUT(): boolean {
     let l1 = this.base1.character.toUpperCase();
     let l2 = this.base2.character.toUpperCase();
     if (l1 === 'A') {
@@ -547,10 +406,7 @@ class SecondaryBond extends StraightBond {
     return false;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  isGC() {
+  isGC(): boolean {
     let l1 = this.base1.character.toUpperCase();
     let l2 = this.base2.character.toUpperCase();
     if (l1 === 'G') {
@@ -561,10 +417,7 @@ class SecondaryBond extends StraightBond {
     return false;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  isGUT() {
+  isGUT(): boolean {
     let l1 = this.base1.character.toUpperCase();
     let l2 = this.base2.character.toUpperCase();
     if (l1 === 'G') {
@@ -575,48 +428,30 @@ class SecondaryBond extends StraightBond {
     return false;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding1() {
-    return super.padding1;
+  get padding1(): number {
+    return super.getPadding1();
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding1(p) {
-    super.padding1 = p;
+  set padding1(p: number) {
+    super.setPadding1(p);
     SecondaryBond._mostRecentProps.padding1 = p;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding2() {
-    return super.padding2;
+  get padding2(): number {
+    return super.getPadding2();
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding2(p) {
-    super.padding2 = p;
+  set padding2(p: number) {
+    super.setPadding2(p);
     SecondaryBond._mostRecentProps.padding2 = p;
   }
 
-  /**
-   * @returns {string} 
-   */
-  get stroke() {
-    return super.stroke;
+  get stroke(): string {
+    return super.getStroke();
   }
 
-  /**
-   * @param {string} s 
-   */
-  set stroke(s) {
-    super.stroke = s;
+  set stroke(s: string) {
+    super.setStroke(s);
     if (this.isAUT()) {
       SecondaryBond._mostRecentProps.autStroke = s;
     } else if (this.isGC()) {
@@ -628,18 +463,12 @@ class SecondaryBond extends StraightBond {
     }
   }
 
-  /**
-   * @returns {number} 
-   */
-  get strokeWidth() {
-    return super.strokeWidth;
+  get strokeWidth(): number {
+    return super.getStrokeWidth();
   }
 
-  /**
-   * @param {number} sw 
-   */
-  set strokeWidth(sw) {
-    super.strokeWidth = sw;
+  set strokeWidth(sw: number) {
+    super.setStrokeWidth(sw);
     SecondaryBond._mostRecentProps.strokeWidth = sw;
   }
 }

@@ -305,26 +305,6 @@ describe('PrimaryBond class', () => {
 
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
-      it('wrong className', () => {
-        let svg = createNodeSVG();
-        let b1 = Base.create(svg, 'a', 5, 3);
-        let b2 = Base.create(svg, 'A', 1, 10);
-        let pb = PrimaryBond.create(svg, b1, b2);
-        let savableState = pb.savableState();
-        savableState.className = 'StraightBnd';
-        expect(PrimaryBond.fromSavedState(
-          savableState,
-          svg,
-          id => {
-            if (id === b1.id) {
-              return b1;
-            } else if (id === b2.id) {
-              return b2;
-            }
-          }
-        )).toBe(null);
-      });
-
       it('constructor throws', () => {
         let svg = createNodeSVG();
         let b1 = Base.create(svg, 'a', 1, 2);
@@ -575,26 +555,6 @@ describe('SecondaryBond class', () => {
 
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
-      it('invalid className', () => {
-        let svg = createNodeSVG();
-        let b1 = Base.create(svg, 'w', 2, 3);
-        let b2 = Base.create(svg, 'q', 1, 5);
-        let sb = SecondaryBond.create(svg, b1, b2);
-        let savableState = sb.savableState();
-        savableState.className = 'StraghtBond';
-        expect(SecondaryBond.fromSavedState(
-          savableState,
-          svg,
-          id => {
-            if (id === b1.id) {
-              return b1;
-            } else if (id === b2.id) {
-              return b2;
-            }
-          }
-        )).toBe(null);
-      });
-
       it('constructor throws', () => {
         let svg = createNodeSVG();
         let b1 = Base.create(svg, 'a', 1, 2);
