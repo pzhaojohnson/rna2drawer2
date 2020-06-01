@@ -131,6 +131,13 @@ select:focus {
   border-color: #404040;
 }
 
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 svg text {
   user-select: none;
   -webkit-user-select: none;
