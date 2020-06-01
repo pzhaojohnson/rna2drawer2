@@ -315,6 +315,17 @@ describe('QuadraticBezierBond class', () => {
       expect(json2).toBe(json1);
     });
   });
+
+  it('refreshIds method', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 1 2 Q 5 5 6 7');
+    let b1 = Base.create(svg, 'b', 1, 5);
+    let b2 = Base.create(svg, 'N', 5, 3);
+    let qbb = new QuadraticBezierBond(p, b1, b2);
+    let oldPathId = qbb._path.id();
+    qbb.refreshIds();
+    expect(qbb._path.id()).not.toBe(oldPathId);
+  });
 });
 
 function getBasebyId(id, bases) {
