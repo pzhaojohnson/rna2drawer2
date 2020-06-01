@@ -23,19 +23,15 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
     svg: Svg,
     xBaseCenter: number,
     yBaseCenter: number,
-  ): (CircleBaseAnnotation | null) {
+  ): (CircleBaseAnnotation | never) {
     if (savedState.className !== 'CircleBaseAnnotation') {
-      return null;
+      throw new Error('Wrong class name.');
     }
-    try {
-      let circle = svg.findOne('#' + savedState.circleId);
-      return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
-    } catch (err) {
-      return null;
-    }
+    let circle = svg.findOne('#' + savedState.circleId);
+    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
   }
   
-  static createNondisplaced(svg: Svg, xBaseCenter: number, yBaseCenter: number) {
+  static createNondisplaced(svg: Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
     let circle = svg.circle(20);
     circle.id();
     circle.attr({ 'cx': xBaseCenter, 'cy': yBaseCenter });
