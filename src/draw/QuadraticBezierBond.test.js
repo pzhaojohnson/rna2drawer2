@@ -2,7 +2,7 @@ import {
   QuadraticBezierBond,
   TertiaryBond,
 } from './QuadraticBezierBond';
-import createNodeSVG from './createNodeSVG';
+import NodeSVG from './NodeSVG';
 import Base from './Base';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
@@ -10,7 +10,7 @@ import normalizeAngle from './normalizeAngle';
 
 describe('QuadraticBezierBond class', () => {
   it('_dPath static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'Q', 2, 8);
     let b2 = Base.create(svg, 'B', 45, 200);
     let d = QuadraticBezierBond._dPath(b1, b2, 10, 12, 98, 2 * Math.PI / 3);
@@ -30,7 +30,7 @@ describe('QuadraticBezierBond class', () => {
 
   describe('constructor', () => {
     it('stores path and bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 1 2 Q 1 2 3 4');
       let b1 = Base.create(svg, 'h', 1, 4);
       let b2 = Base.create(svg, 'n', 1, 1);
@@ -41,7 +41,7 @@ describe('QuadraticBezierBond class', () => {
     });
 
     it('validates path', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 1 2 Q 3 4 5 6');
       let b1 = Base.create(svg, 'b', 1, 4);
       let b2 = Base.create(svg, 'j', 4, 2);
@@ -51,7 +51,7 @@ describe('QuadraticBezierBond class', () => {
     });
 
     it('stores paddings and control height and angle', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'b', 3, 30);
       let b2 = Base.create(svg, 'Q', 40, 5000);
       let d = QuadraticBezierBond._dPath(b1, b2, 12, 16, 76, Math.PI / 3);
@@ -68,7 +68,7 @@ describe('QuadraticBezierBond class', () => {
 
   describe('_validatePath method', () => {
     it('initializes ID and sets fill-opacity to zero', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 4 5 Q 10 1 2 3');
       let b1 = Base.create(svg, 'g', 1, 2);
       let b2 = Base.create(svg, 'n', 4, 5);
@@ -80,7 +80,7 @@ describe('QuadraticBezierBond class', () => {
     });
 
     it('invalid segments', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'n', 1, 2);
       let b2 = Base.create(svg, 'j', 1, 5);
       let p1 = svg.path('M 1 2 Q 1 2 3 4 Z'); // wrong number of segments
@@ -99,7 +99,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('id and base getters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let p = svg.path('M 1 2 Q 4 5 6 7');
     let pid = p.id();
     let b1 = Base.create(svg, 'h', 1, 5);
@@ -111,7 +111,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('x1, y1, x2, y2, xControl and yControl getters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let p = svg.path('M 1.2 4.3 Q 100 200.3 30 45.5');
     let b1 = Base.create(svg, 'b', 1, 2);
     let b2 = Base.create(svg, 'n', 4, 4);
@@ -125,7 +125,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('_storePaddings and _storeControlHeightAndAngle methods', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'B', 1, 20);
     let b2 = Base.create(svg, 'r', 1000, 250);
     let d = QuadraticBezierBond._dPath(b1, b2, 14, 12, 239, Math.PI / 5);
@@ -140,7 +140,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('padding1 and padding2 getters and setters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 't', 50, 40);
     let b2 = Base.create(svg, 't', 300, 400);
     let d = QuadraticBezierBond._dPath(b1, b2, 4, 5, 50, Math.PI / 3);
@@ -161,7 +161,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('shiftControl method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'T', 20, 30);
     let b2 = Base.create(svg, 'b', 2000, 300);
     let d = QuadraticBezierBond._dPath(b1, b2, 8, 12, 300, Math.PI / 3);
@@ -181,7 +181,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('reposition method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'H', 4, 9);
     let b2 = Base.create(svg, 'j', -2000, -500);
     let d = QuadraticBezierBond._dPath(b1, b2, 20, 15, 1000, 2 * Math.PI / 3);
@@ -210,7 +210,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('stroke, strokeWidth and strokeDasharray getters and setters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'a', 50, 40);
     let b2 = Base.create(svg, 'n', 100, 300);
     let d = QuadraticBezierBond._dPath(b1, b2, 6, 8, 200, Math.PI / 6);
@@ -228,7 +228,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('cursor getter and setter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'q', 1, 3);
     let b2 = Base.create(svg, 't', 5, 1000);
     let d = QuadraticBezierBond._dPath(b1, b2, 10, 30, 35, Math.PI / 3);
@@ -241,7 +241,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   describe('binding events', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'b', 1, 2);
     let b2 = Base.create(svg, 'r', 5, 9);
     let d = QuadraticBezierBond._dPath(b1, b2, 7, 8, 25, Math.PI / 3);
@@ -278,7 +278,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('remove method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let p = svg.path('M 1 2 Q 3 4 5 6');
     let b1 = Base.create(svg, 'v', 1, 2);
     let b2 = Base.create(svg, 'n', 5, 10);
@@ -290,7 +290,7 @@ describe('QuadraticBezierBond class', () => {
 
   describe('savableState method', () => {
     it('includes className, path and bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 1 2 Q 5 5 6 7');
       let b1 = Base.create(svg, 'b', 1, 5);
       let b2 = Base.create(svg, 'N', 5, 3);
@@ -303,7 +303,7 @@ describe('QuadraticBezierBond class', () => {
     });
 
     it('can be converted to and from a JSON string', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 1 2 Q 5 5 6 7');
       let b1 = Base.create(svg, 'b', 1, 5);
       let b2 = Base.create(svg, 'N', 5, 3);
@@ -317,7 +317,7 @@ describe('QuadraticBezierBond class', () => {
   });
 
   it('refreshIds method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let p = svg.path('M 1 2 Q 5 5 6 7');
     let b1 = Base.create(svg, 'b', 1, 5);
     let b2 = Base.create(svg, 'N', 5, 3);
@@ -360,7 +360,7 @@ describe('TeritaryBond class', () => {
   });
 
   it('_applyMostRecentProps static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 't', 300, 400);
     let b2 = Base.create(svg, 'a', 0, 0);
     let tb = TertiaryBond.create(svg, b1, b2);
@@ -378,7 +378,7 @@ describe('TeritaryBond class', () => {
   });
 
   it('_copyPropsToMostRecent static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'q', 40, 30);
     let b2 = Base.create(svg, 'Q', 500, 400);
     let tb = TertiaryBond.create(svg, b1, b2);
@@ -399,7 +399,7 @@ describe('TeritaryBond class', () => {
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
       it('constructor throws', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b1 = Base.create(svg, 'Y', 1, 5);
         let b2 = Base.create(svg, 'y', 50, 40);
         let tb = TertiaryBond.create(svg, b1, b2);
@@ -416,7 +416,7 @@ describe('TeritaryBond class', () => {
     });
 
     it('creates with path and bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'r', 1, 5);
       let b2 = Base.create(svg, 'E', 200, 300);
       let tb1 = TertiaryBond.create(svg, b1, b2);
@@ -432,7 +432,7 @@ describe('TeritaryBond class', () => {
     });
 
     it('copies properties to most recent', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'e', 1, 5);
       let b2 = Base.create(svg, 't', 11, 55);
       let tb1 = TertiaryBond.create(svg, b1, b2);
@@ -450,7 +450,7 @@ describe('TeritaryBond class', () => {
 
   describe('create static method', () => {
     it('creates with bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 1, 5);
       let b2 = Base.create(svg, 'r', 200, 300);
       let tb = TertiaryBond.create(svg, b1, b2);
@@ -459,7 +459,7 @@ describe('TeritaryBond class', () => {
     });
 
     it('applies most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 't', 50, 40);
       let b2 = Base.create(svg, 'b', 300, 5000);
       TertiaryBond._mostRecentProps.stroke = '#44bbca';
@@ -469,7 +469,7 @@ describe('TeritaryBond class', () => {
   });
 
   it('padding1 and padding2 getters and setters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'q', 1, 4);
     let b2 = Base.create(svg, 't', 400, 3000);
     let tb = TertiaryBond.create(svg, b1, b2);
@@ -483,7 +483,7 @@ describe('TeritaryBond class', () => {
   });
 
   it('stroke, strokeWidth and strokeDasharray getters and setters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 't', 50, 40);
     let b2 = Base.create(svg, 'q', -1000, -300);
     let tb = TertiaryBond.create(svg, b1, b2);
