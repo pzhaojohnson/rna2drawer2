@@ -401,38 +401,38 @@ describe('Base class', () => {
     expect(b.cursor).toBe('crosshair');
   });
 
-  it('bindMouseover method', () => {
+  it('onMouseover method', () => {
     let svg = createNodeSVG();
     let b = Base.create(svg, 'A', 1.3, 1.4);
     let v = false;
-    b.bindMouseover(e => { v = true; });
+    b.onMouseover(e => { v = true; });
     b._text.fire('mouseover');
     expect(v).toBeTruthy();
   });
 
-  it('bindMouseout method', () => {
+  it('onMouseout method', () => {
     let svg = createNodeSVG();
     let b = Base.create(svg, 'A', 1.3, 1.4);
     let v = false;
-    b.bindMouseout(e => { v = true; });
+    b.onMouseout(e => { v = true; });
     b._text.fire('mouseout');
     expect(v).toBeTruthy();
   });
 
-  it('bindMousedown method', () => {
+  it('onMousedown method', () => {
     let svg = createNodeSVG();
     let b = Base.create(svg, 'A', 1.3, 1.4);
     let v = false;
-    b.bindMousedown(e => { v = true; });
+    b.onMousedown(e => { v = true; });
     b._text.fire('mousedown');
     expect(v).toBeTruthy();
   });
 
-  it('bindDblclick method', () => {
+  it('onDblclick method', () => {
     let svg = createNodeSVG();
     let b = Base.create(svg, 'A', 1.3, 1.4);
     let v = false;
-    b.bindDblclick(e => { v = true; });
+    b.onDblclick(e => { v = true; });
     b._text.fire('dblclick');
     expect(v).toBeTruthy();
   });

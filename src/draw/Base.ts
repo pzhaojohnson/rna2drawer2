@@ -1,29 +1,33 @@
+import {
+  BaseInterface,
+  BaseMostRecentProps,
+  BaseSavableState,
+} from './BaseInterface';
+import {
+  SvgInterface as Svg,
+  SvgTextInterface as SvgText,
+  SvgBBox,
+} from './SvgInterface';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import BaseNumbering from './BaseNumbering';
+import { CircleBaseAnnotationSavableState } from './BaseAnnotationInterface';
+import { BaseNumberingSavableState } from './BaseNumberingInterface';
 
-class Base {
+class Base implements BaseInterface {
+  static _mostRecentProps: BaseMostRecentProps;
 
-  /**
-   * @typedef {Object} Base~MostRecentProps 
-   * @property {string} fontFamily 
-   * @property {number} fontSize 
-   * @property {string|number} fontWeight 
-   * @property {string} fontStyle 
-   */
+  _text: SvgText;
+  _highlighting?: CircleBaseAnnotation;
+  _outline?: CircleBaseAnnotation;
+  _numbering?: BaseNumbering;
 
-  /**
-   * @returns {Base~MostRecentProps} 
-   */
-  static mostRecentProps() {
+  static mostRecentProps(): BaseMostRecentProps {
     return { ...Base._mostRecentProps };
   }
 
-  /**
-   * @param {Base} b 
-   */
-  static _applyMostRecentProps(b) {
+  static _applyMostRecentProps(b: Base) {
     let props = Base.mostRecentProps();
     b.fontFamily = props.fontFamily;
     b.fontSize = props.fontSize;
@@ -31,10 +35,7 @@ class Base {
     b.fontStyle = props.fontStyle;
   }
 
-  /**
-   * @param {Base} b 
-   */
-  static _copyPropsToMostRecent(b) {
+  static _copyPropsToMostRecent(b: Base) {
     Base._mostRecentProps.fontFamily = b.fontFamily;
     Base._mostRecentProps.fontSize = b.fontSize;
     Base._mostRecentProps.fontWeight = b.fontWeight;
@@ -43,19 +44,14 @@ class Base {
 
   /**
    * Returns null if the saved state is invalid.
-   * 
-   * @param {Base~SavableState} savedState 
-   * @param {SVG.Svg} svg 
-   * 
-   * @returns {Base|null} 
    */
-  static fromSavedState(savedState, svg) {
+  static fromSavedState(savedState: BaseSavableState, svg: Svg): (Base | null) {
     if (savedState.className !== 'Base') {
       return null;
     }
-    let text = svg.findOne('#' + savedState.textId);
     let b = null;
     try {
+      let text = svg.findOne('#' + savedState.textId) as SvgText;
       b = new Base(text);
     } catch (err) {
       return null;
@@ -73,39 +69,20 @@ class Base {
     return b;
   }
 
-  /**
-   * @param {Base~SavableState} savedState 
-   * @param {SVG.Svg} svg 
-   * 
-   * @returns {number} 
-   */
-  static xFromSavedState(savedState, svg) {
+  static xFromSavedState(savedState: BaseSavableState, svg: Svg): number {
     let text = svg.findOne('#' + savedState.textId);
     return text.attr('x');
   }
 
-  /**
-   * @param {Base~SavableState} savedState 
-   * @param {SVG.Doc} svg 
-   * 
-   * @returns {number} 
-   */
-  static yFromSavedState(savedState, svg) {
+  static yFromSavedState(savedState: BaseSavableState, svg: Svg): number {
     let text = svg.findOne('#' + savedState.textId);
     return text.attr('y');
   }
 
   /**
    * Returns null if the given string is not a single character.
-   * 
-   * @param {SVG.Svg} svg 
-   * @param {string} character 
-   * @param {number} xCenter 
-   * @param {number} yCenter 
-   * 
-   * @returns {Base|null} 
    */
-  static create(svg, character, xCenter, yCenter) {
+  static create(svg: Svg, character: string, xCenter: number, yCenter: number): (Base | null) {
     let text = svg.text((add) => add.tspan(character));
     text.id();
     text.attr({
@@ -126,22 +103,15 @@ class Base {
 
   /**
    * Returns null if the given string is not a single character.
-   * 
-   * @param {SVG.Doc} svg 
-   * @param {string} character 
-   * 
-   * @returns {Base|null} 
    */
-  static createOutOfView(svg, character) {
+  static createOutOfView(svg: Svg, character: string): (Base | null) {
     return Base.create(svg, character, 0, -200);
   }
 
   /**
-   * @param {SVG.Text} text 
-   * 
-   * @throws {Error} If the text content is not a single character.
+   * Throws if the text content is not a single character.
    */
-  constructor(text) {
+  constructor(text: SvgText) {
     this._text = text;
     this._validateText();
     
@@ -173,26 +143,18 @@ class Base {
     this._text.attr({ 'x': x, 'y': y });
   }
 
-  /**
-   * @returns {string} 
-   */
-  get id() {
+  get id(): string {
     return this._text.id();
   }
 
-  /**
-   * @returns {string} 
-   */
-  get character() {
+  get character(): string {
     return this._text.text();
   }
 
   /**
    * Has no effect if the given string is not a single character.
-   * 
-   * @param {string} c 
    */
-  set character(c) {
+  set character(c: string) {
     if (c.length !== 1) {
       return;
     }
@@ -200,25 +162,15 @@ class Base {
     this._text.tspan(c);
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xCenter() {
+  get xCenter(): number {
     return this._text.attr('x');
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yCenter() {
+  get yCenter(): number {
     return this._text.attr('y');
   }
 
-  /**
-   * @param {number} xCenter 
-   * @param {number} yCenter 
-   */
-  moveTo(xCenter, yCenter) {
+  moveTo(xCenter: number, yCenter: number) {
     this._text.attr({
       'x': xCenter,
       'y': yCenter
@@ -234,12 +186,7 @@ class Base {
     }
   }
 
-  /**
-   * @param {Base} other 
-   * 
-   * @returns {number} 
-   */
-  distanceBetweenCenters(other) {
+  distanceBetweenCenters(other: Base): number {
     return distanceBetween(
       this.xCenter,
       this.yCenter,
@@ -248,12 +195,7 @@ class Base {
     );
   }
 
-  /**
-   * @param {Base} other 
-   * 
-   * @returns {number} 
-   */
-  angleBetweenCenters(other) {
+  angleBetweenCenters(other: Base): number {
     return angleBetween(
       this.xCenter,
       this.yCenter,
@@ -262,138 +204,75 @@ class Base {
     );
   }
 
-  /**
-   * @returns {string} 
-   */
-  get fontFamily() {
+  get fontFamily(): string {
     return this._text.attr('font-family');
   }
 
-  /**
-   * @param {string} ff 
-   */
-  set fontFamily(ff) {
+  set fontFamily(ff: string) {
     this._text.attr({ 'font-family': ff });
     Base._mostRecentProps.fontFamily = ff;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get fontSize() {
+  get fontSize(): number {
     return this._text.attr('font-size');
   }
 
-  /**]
-   * @param {number} fs 
-   */
-  set fontSize(fs) {
+  set fontSize(fs: number) {
     this._text.attr({ 'font-size': fs });
     Base._mostRecentProps.fontSize = fs;
   }
 
-  /**
-   * @returns {string|number} 
-   */
-  get fontWeight() {
+  get fontWeight(): (string | number) {
     return this._text.attr('font-weight');
   }
 
-  /**
-   * @param {string|number} fw 
-   */
-  set fontWeight(fw) {
+  set fontWeight(fw: (string | number)) {
     this._text.attr({ 'font-weight': fw });
     Base._mostRecentProps.fontWeight = fw;
   }
 
-  /**
-   * @returns {string} 
-   */
-  get fontStyle() {
+  get fontStyle(): string {
     return this._text.attr('font-style');
   }
 
-  /**
-   * @param {string} fs 
-   */
-  set fontStyle(fs) {
+  set fontStyle(fs: string) {
     this._text.attr({ 'font-style': fs });
     Base._mostRecentProps.fontStyle = fs;
   }
 
-  /**
-   * @returns {string} 
-   */
-  get fill() {
+  get fill(): string {
     return this._text.attr('fill');
   }
 
-  /**
-   * @param {string} f 
-   */
-  set fill(f) {
+  set fill(f: string) {
     this._text.attr({ 'fill': f });
   }
 
-  /**
-   * @returns {string} 
-   */
-  get cursor() {
+  get cursor(): string {
     return this._text.css('cursor');
   }
 
-  /**
-   * @param {string} c 
-   */
-  set cursor(c) {
+  set cursor(c: string) {
     this._text.css({ 'cursor': c });
   }
 
-  /**
-   * @param {function} callback 
-   */
-  bindMouseover(callback) {
-    this._text.mouseover(callback);
+  onMouseover(f: () => void) {
+    this._text.mouseover(f);
   }
 
-  onMouseover(cb) {
-    this._text.mouseover(cb);
+  onMouseout(f: () => void) {
+    this._text.mouseout(f);
   }
 
-  /**
-   * @param {function} callback 
-   */
-  bindMouseout(callback) {
-    this._text.mouseout(callback);
+  onMousedown(f: () => void) {
+    this._text.mousedown(f);
   }
 
-  onMouseout(cb) {
-    this._text.mouseout(cb);
+  onDblclick(f: () => void) {
+    this._text.dblclick(f);
   }
 
-  /**
-   * @param {function} callback 
-   */
-  bindMousedown(callback) {
-    this._text.mousedown(callback);
-  }
-
-  onMousedown(cb) {
-    this._text.mousedown(cb);
-  }
-
-  /**
-   * @param {function} callback 
-   */
-  bindDblclick(callback) {
-    this._text.dblclick(callback);
-  }
-
-  /**
-   * @returns {CircleBaseAnnotation} 
-   */
-  addCircleHighlighting() {
+  addCircleHighlighting(): CircleBaseAnnotation {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.createNondisplaced(
       this._text.root(),
@@ -404,12 +283,7 @@ class Base {
     return this._highlighting;
   }
 
-  /**
-   * @param {CircleBaseAnnotation~SavableState} savedState 
-   * 
-   * @returns {CircleBaseAnnotation} 
-   */
-  addCircleHighlightingFromSavedState(savedState) {
+  addCircleHighlightingFromSavedState(savedState: CircleBaseAnnotationSavableState): CircleBaseAnnotation {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.fromSavedState(
       savedState,
@@ -421,26 +295,17 @@ class Base {
     return this._highlighting;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  hasHighlighting() {
+  hasHighlighting(): boolean {
     if (this._highlighting) {
       return true;
     }
     return false;
   }
 
-  /**
-   * @returns {CircleBaseAnnotation|null} 
-   */
-  get highlighting() {
+  get highlighting(): (CircleBaseAnnotation | null) {
     return this._highlighting;
   }
 
-  /**
-   * Has no effect if this base has no highlighting.
-   */
   removeHighlighting() {
     if (this.hasHighlighting()) {
       this._highlighting.remove();
@@ -448,10 +313,7 @@ class Base {
     }
   }
 
-  /**
-   * @returns {CircleBaseAnnotation} 
-   */
-  addCircleOutline() {
+  addCircleOutline(): CircleBaseAnnotation {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.createNondisplaced(
       this._text.root(),
@@ -461,12 +323,7 @@ class Base {
     return this._outline;
   }
 
-  /**
-   * @param {CircleBaseAnnotation~SavableState} savedState 
-   * 
-   * @returns {CircleBaseAnnotation} 
-   */
-  addCircleOutlineFromSavedState(savedState) {
+  addCircleOutlineFromSavedState(savedState: CircleBaseAnnotationSavableState): CircleBaseAnnotation {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(
       savedState,
@@ -477,26 +334,17 @@ class Base {
     return this._outline;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  hasOutline() {
+  hasOutline(): boolean {
     if (this._outline) {
       return true;
     }
     return false;
   }
 
-  /**
-   * @returns {CircleBaseAnnotation|null} 
-   */
-  get outline() {
+  get outline(): (CircleBaseAnnotation | null) {
     return this._outline;
   }
 
-  /**
-   * Has no effect if this base has no outline.
-   */
   removeOutline() {
     if (this.hasOutline()) {
       this._outline.remove();
@@ -506,12 +354,8 @@ class Base {
 
   /**
    * Returns null if the given number is not accepted by the BaseNumbering class.
-   * 
-   * @param {number} number 
-   * 
-   * @returns {BaseNumbering|null} 
    */
-  addNumbering(number) {
+  addNumbering(number: number): (BaseNumbering | null) {
     this.removeNumbering();
     this._numbering = BaseNumbering.create(
       this._text.root(),
@@ -522,12 +366,7 @@ class Base {
     return this._numbering;
   }
 
-  /**
-   * @param {BaseNumbering~SavableState} savedState 
-   * 
-   * @returns {BaseNumbering} 
-   */
-  addNumberingFromSavedState(savedState) {
+  addNumberingFromSavedState(savedState: BaseNumberingSavableState): BaseNumbering {
     this.removeNumbering();
     this._numbering = BaseNumbering.fromSavedState(
       savedState,
@@ -538,26 +377,17 @@ class Base {
     return this._numbering;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  hasNumbering() {
+  hasNumbering(): boolean {
     if (this._numbering) {
       return true;
     }
     return false;
   }
 
-  /**
-   * @returns {BaseNumbering|null} 
-   */
-  get numbering() {
+  get numbering(): (BaseNumbering | null) {
     return this._numbering;
   }
 
-  /**
-   * Has no effect if this base has no numbering.
-   */
   removeNumbering() {
     if (this.hasNumbering()) {
       this._numbering.remove();
@@ -572,33 +402,14 @@ class Base {
     this._text.remove();
   }
 
-  /**
-   * @typedef {Object} Base~SavableState 
-   * @property {string} className 
-   * @property {string} textId 
-   * @property {CircleBaseAnnotation~SavableState|undefined} highlighting 
-   * @property {CircleBaseAnnotation~SavableState|undefined} outline 
-   * @property {BaseNumbering~SavableState|undefined} numbering 
-   */
-
-  /**
-   * @returns {Base~SavableState} 
-   */
-  savableState() {
-    let savableState = {
+  savableState(): BaseSavableState {
+    return {
       className: 'Base',
       textId: this._text.id(),
+      highlighting: this.hasHighlighting() ? this.highlighting.savableState() : null,
+      outline: this.hasOutline() ? this.outline.savableState() : null,
+      numbering: this.hasNumbering() ? this.numbering.savableState() : null,
     };
-    if (this.hasHighlighting()) {
-      savableState.highlighting = this._highlighting.savableState();
-    }
-    if (this.hasOutline()) {
-      savableState.outline = this._outline.savableState();
-    }
-    if (this.hasNumbering()) {
-      savableState.numbering = this._numbering.savableState();
-    }
-    return savableState;
   }
 
   refreshIds() {

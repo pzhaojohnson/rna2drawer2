@@ -2,6 +2,19 @@ interface Func {
   (): void;
 }
 
+export interface SvgBBox {
+  width: number;
+  height: number;
+  w: number;
+  h: number;
+  x: number;
+  y: number;
+  cx: number;
+  cy: number;
+  x2: number;
+  y2: number;
+}
+
 export interface SvgTextAdd {
   tspan(s: string): void;
 }
@@ -15,12 +28,22 @@ export interface SvgTextInterface {
   id(n: null): void;
   attr(a: string): any;
   attr(o: object): void;
+  css(a: string): string;
+  css(o: object): void;
+  bbox(): SvgBBox;
   text(): string;
+  
+  mouseover(f: () => void): void;
+  mouseout(f: () => void): void;
+  mousedown(f: () => void): void;
+  dblclick(f: () => void): void;
+  
   insertBefore(ele: SvgElementInterface): void;
   insertAfter(ele: SvgElementInterface): void;
   clear(): void;
   tspan(s: string): void;
   remove(): void;
+  root(): (SvgInterface | null);
 }
 
 export interface SvgLineInterface {
