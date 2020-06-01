@@ -1,5 +1,5 @@
 import Base from './Base';
-import createNodeSVG from './createNodeSVG';
+import NodeSVG from './NodeSVG';
 import normalizeAngle from './normalizeAngle';
 import BaseNumbering from './BaseNumbering';
 import { CircleBaseAnnotation } from './BaseAnnotation';
@@ -29,7 +29,7 @@ describe('Base class', () => {
   });
 
   it('_applyMostRecentProps static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'G', 3, 4);
     Base._mostRecentProps.fontFamily = 'Cambria';
     Base._mostRecentProps.fontSize = 4.88;
@@ -47,7 +47,7 @@ describe('Base class', () => {
   });
 
   it('_copyPropsToMostRecent static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t = svg.text(add => add.tspan('A'));
     t.attr({
       'font-family': 'Impact',
@@ -72,7 +72,7 @@ describe('Base class', () => {
   describe('fromSavedState static method', () => {
     describe('valid saved state', () => {
       it('handles undefined highlighting, outline and numbering', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b1 = Base.create(svg, 'B', 5, 5);
         let savableState1 = b1.savableState();
         expect(savableState1.highlighting).toBeFalsy();
@@ -85,7 +85,7 @@ describe('Base class', () => {
       });
 
       it('includes highlighting', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b1 = Base.create(svg, 'Y', 4, 6);
         let h1 = b1.addCircleHighlighting();
         h1.shift(5, 8);
@@ -100,7 +100,7 @@ describe('Base class', () => {
       });
 
       it('includes outline', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b1 = Base.create(svg, 'N', 3, 2);
         let o1 = b1.addCircleOutline();
         o1.shift(-2, -9);
@@ -115,7 +115,7 @@ describe('Base class', () => {
       });
 
       it('includes numbering', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b1 = Base.create(svg, 'U', 5, 5);
         let n1 = b1.addNumbering(192837, 0);
         let savableState1 = b1.savableState();
@@ -124,7 +124,7 @@ describe('Base class', () => {
       });
 
       it('copies properties to most recent', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b1 = Base.create(svg, 'T', 1, 1);
         b1.fontFamily = 'Consolas';
         let savableState1 = b1.savableState();
@@ -136,7 +136,7 @@ describe('Base class', () => {
 
     describe('invalid saved state', () => {
       it('invalid className', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b = Base.create(svg, 'A', 4, 5);
         let savableState = b.savableState();
         savableState.className = 'Bse';
@@ -144,7 +144,7 @@ describe('Base class', () => {
       });
 
       it('constructor throws', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let t = svg.text(add => add.tspan('A'));
         let b = new Base(t);
         let savableState = b.savableState();
@@ -156,7 +156,7 @@ describe('Base class', () => {
   });
 
   it('xFromSavedState and yFromSavedState static methods', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'T', 9, 12);
     let savableState = b.savableState();
     expect(Base.xFromSavedState(savableState, svg)).toBe(9);
@@ -165,7 +165,7 @@ describe('Base class', () => {
 
   describe('create static method', () => {
     it('creates text element with correct values', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'r', 8, 77);
       expect(b.character).toBe('r');
       expect(b._text.id()).toBeTruthy();
@@ -176,12 +176,12 @@ describe('Base class', () => {
     });
 
     it('constructor throws', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       expect(Base.create(svg, 'ab', 3, 5)).toBe(null);
     });
 
     it('applies most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       Base._mostRecentProps.fontSize = 19.228;
       let b = Base.create(svg, 'A', 4, 5);
       expect(b.fontSize).toBe(19.228);
@@ -189,7 +189,7 @@ describe('Base class', () => {
   });
 
   it('createOutOfView static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.createOutOfView(svg, 'I');
     expect(b.character).toBe('I');
     expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
@@ -197,20 +197,20 @@ describe('Base class', () => {
 
   describe('constructor', () => {
     it('stores text', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let t = svg.text(add => add.tspan('w'));
       let b = new Base(t);
       expect(b._text).toBe(t);
     });
 
     it('validates text', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let t = svg.text(add => add.tspan('qwe'));
       expect(() => { new Base(t) }).toThrow();
     });
 
     it('initializes _highlighting, _outline and _numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let t = svg.text(add => add.tspan('Q'));
       let b = new Base(t);
       expect(b._highlighting).toBe(null);
@@ -221,7 +221,7 @@ describe('Base class', () => {
 
   describe('_validateText method', () => {
     it('initializes ID', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let t = svg.text(add => add.tspan('T'));
       expect(t.attr('id')).toBe(undefined);
       let b = new Base(t);
@@ -229,7 +229,7 @@ describe('Base class', () => {
     });
 
     it('text content is not a single character', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let t1 = svg.text('');
       expect(t1.text().length).toBe(0);
       expect(() => { new Base(t1) }).toThrow();
@@ -238,7 +238,7 @@ describe('Base class', () => {
     });
 
     it('sets text-anchor and dominant-baseline to middle', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let t = svg.text(add => add.tspan('T'));
       t.attr({ 'text-anchor': 'start', 'dominant-baseline': 'hanging' });
       let bboxPrev = t.bbox();
@@ -254,7 +254,7 @@ describe('Base class', () => {
   });
 
   it('id getter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let text = svg.text(add => add.tspan('T'));
     let id = text.id();
     let b = new Base(text);
@@ -262,14 +262,14 @@ describe('Base class', () => {
   });
 
   it('character getter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'h', 1, 2);
     expect(b.character).toBe('h');
   });
 
   describe('character setter', () => {
     it('given string is not a single character', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'y', 2, 5);
       b.character = '';
       expect(b.character).toBe('y');
@@ -278,7 +278,7 @@ describe('Base class', () => {
     });
 
     it('sets the character', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 't', 3, 3);
       b.character = 'J';
       expect(b.character).toBe('J');
@@ -286,7 +286,7 @@ describe('Base class', () => {
   });
 
   it('xCenter and yCenter getters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'A', -1, -2);
     expect(b.xCenter).toBe(-1);
     expect(b.yCenter).toBe(-2);
@@ -294,7 +294,7 @@ describe('Base class', () => {
 
   describe('moveTo method', () => {
     it('no highlighting, outline or numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'g', 3, 5);
       expect(b.hasHighlighting()).toBeFalsy();
       expect(b.hasOutline()).toBeFalsy();
@@ -305,7 +305,7 @@ describe('Base class', () => {
     });
 
     it('repositions highlighting', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 't', 1, 2);
       let h = b.addCircleHighlighting();
       h.shift(5, 4);
@@ -317,7 +317,7 @@ describe('Base class', () => {
     });
 
     it('repositions outline', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'e', 3, 8);
       let o = b.addCircleOutline();
       o.shift(-2, 55);
@@ -329,7 +329,7 @@ describe('Base class', () => {
     });
 
     it('repositions numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'e', 1, 5);
       let n = b.addNumbering(112);
       n.lineAngle = Math.PI / 5;
@@ -341,14 +341,14 @@ describe('Base class', () => {
   });
 
   it('distanceBetweenCenters method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'A', 1, 2);
     let b2 = Base.create(svg, 'U', 4, 6);
     expect(b1.distanceBetweenCenters(b2)).toBeCloseTo(5, 3);
   });
 
   it('angleBetweenCenters method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'A', 1, 2);
     let b2 = Base.create(svg, 'U', 44, 5);
     expect(
@@ -360,49 +360,49 @@ describe('Base class', () => {
   });
 
   it('fontFamily getter and setter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'a', 1, 2);
     b.fontFamily = 'Cambria';
     expect(b.fontFamily).toBe('Cambria');
   });
 
   it('fontSize getter and setter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'e', 5, 6);
     b.fontSize = 5.123;
     expect(b.fontSize).toBe(5.123);
   });
 
   it('fontWeight getter and setter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'a', 1, 4);
     b.fontWeight = 650;
     expect(b.fontWeight).toBe(650);
   });
 
   it('fontStyle getter and setter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'E', 5, 5);
     b.fontStyle = 'italic';
     expect(b.fontStyle).toBe('italic');
   });
 
   it('fill getter and setter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 't', 4, 5);
     b.fill = '#4523ab';
     expect(b.fill).toBe('#4523ab');
   });
 
   it('cursor getter and setter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'e', 4, 5);
     b.cursor = 'crosshair';
     expect(b.cursor).toBe('crosshair');
   });
 
   it('onMouseover method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'A', 1.3, 1.4);
     let v = false;
     b.onMouseover(e => { v = true; });
@@ -411,7 +411,7 @@ describe('Base class', () => {
   });
 
   it('onMouseout method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'A', 1.3, 1.4);
     let v = false;
     b.onMouseout(e => { v = true; });
@@ -420,7 +420,7 @@ describe('Base class', () => {
   });
 
   it('onMousedown method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'A', 1.3, 1.4);
     let v = false;
     b.onMousedown(e => { v = true; });
@@ -429,7 +429,7 @@ describe('Base class', () => {
   });
 
   it('onDblclick method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'A', 1.3, 1.4);
     let v = false;
     b.onDblclick(e => { v = true; });
@@ -439,7 +439,7 @@ describe('Base class', () => {
 
   describe('addCircleHighlighting method', () => {
     it('removes previous highlighting', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'e', 4, 6);
       let h1 = b.addCircleHighlighting();
       expect(svg.findOne('#' + h1.id)).toBeTruthy();
@@ -448,14 +448,14 @@ describe('Base class', () => {
     });
 
     it('returns added circle highlighting', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'e', 4, 4);
       let h = b.addCircleHighlighting();
       expect(h).toBe(b._highlighting);
     });
 
     it('creates circle highlighting with correct position', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'r', 2, 9);
       let h = b.addCircleHighlighting();
       expect(h.xCenter).toBe(2);
@@ -465,7 +465,7 @@ describe('Base class', () => {
 
   describe('addCircleHighlightingFromSavedState method', () => {
     it('removes previous highlighting', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'w', 3, 5);
       let h = b.addCircleHighlighting();
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 5);
@@ -476,7 +476,7 @@ describe('Base class', () => {
     });
 
     it('returns added circle highlighting', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'g', 3, 9);
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 9);
       let savableState = cba.savableState();
@@ -485,7 +485,7 @@ describe('Base class', () => {
     });
 
     it('passes base center', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'q', 2, 9);
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 2, 9);
       cba.shift(8, 10);
@@ -499,7 +499,7 @@ describe('Base class', () => {
   });
 
   it('hasHighlighting method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'C', 0.99, 100.2357);
     expect(b.hasHighlighting()).toBeFalsy();
     b.addCircleHighlighting();
@@ -509,7 +509,7 @@ describe('Base class', () => {
   });
 
   it('highlighting getter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'C', 0.99, 100.2357);
     expect(b.highlighting).toBe(null);
     let h = b.addCircleHighlighting();
@@ -518,14 +518,14 @@ describe('Base class', () => {
 
   describe('removeHighlighting method', () => {
     it('has no highlighting in the first place', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'a', 3, 5);
       expect(b.hasHighlighting()).toBeFalsy();
       expect(() => b.removeHighlighting()).not.toThrow();
     });
 
     it('removes highlighting', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 't', 1, 9);
       let h = b.addCircleHighlighting();
       expect(b.hasHighlighting()).toBeTruthy();
@@ -538,7 +538,7 @@ describe('Base class', () => {
 
   describe('addCircleOutline method', () => {
     it('removes previous outline', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'q', 3, 5);
       let o1 = b.addCircleOutline();
       expect(svg.findOne('#' + o1.id)).toBeTruthy();
@@ -547,14 +547,14 @@ describe('Base class', () => {
     });
 
     it('returns added circle outline', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'b', 2, 4);
       let o = b.addCircleOutline();
       expect(o).toBe(b._outline);
     });
 
     it('creates circle outline with correct position', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'b', 5, 6);
       let o = b.addCircleOutline();
       expect(o.xCenter).toBe(5);
@@ -564,7 +564,7 @@ describe('Base class', () => {
 
   describe('addCircleOutlineFromSavedState method', () => {
     it('removes previous outline', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'e', 3, 9);
       let o1 = b.addCircleOutline();
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 9);
@@ -575,7 +575,7 @@ describe('Base class', () => {
     });
 
     it('returns added circle outline', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'q', 2, 9);
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 44, 7);
       let savableState = cba.savableState();
@@ -584,7 +584,7 @@ describe('Base class', () => {
     });
 
     it('passes base center', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'w', 12, 16);
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 12, 16);
       cba.shift(4, 8);
@@ -598,7 +598,7 @@ describe('Base class', () => {
   });
 
   it('hasOutline method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'C', 0.99, 100.2357);
     expect(b.hasOutline()).toBeFalsy();
     b.addCircleOutline();
@@ -608,7 +608,7 @@ describe('Base class', () => {
   });
 
   it('outline getter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'C', 0.99, 100.2357);
     expect(b.outline).toBe(null);
     let o = b.addCircleOutline();
@@ -617,14 +617,14 @@ describe('Base class', () => {
 
   describe('removeOutline method', () => {
     it('has no outline in the first place', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 't', 1, 2);
       expect(b.hasOutline()).toBeFalsy();
       expect(() => b.removeOutline()).not.toThrow();
     });
 
     it('removes outline', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'g', 5, 7);
       let o  = b.addCircleOutline();
       expect(b.hasOutline()).toBeTruthy();
@@ -637,7 +637,7 @@ describe('Base class', () => {
 
   describe('addNumbering method', () => {
     it('removes previous numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'a', 1, 2);
       let n1 = b.addNumbering(5, 0);
       expect(svg.findOne('#' + n1._text.id())).toBeTruthy();
@@ -646,14 +646,14 @@ describe('Base class', () => {
     });
 
     it('returns added numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'b', 4, 5);
       let n = b.addNumbering(9, 0);
       expect(n).toBe(b._numbering);
     });
 
     it('invalid number', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'h', 3, 5);
       let n = b.addNumbering(1.2, 0);
       expect(n).toBe(null);
@@ -661,7 +661,7 @@ describe('Base class', () => {
     });
 
     it('passes number and base center', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'w', 5, 9);
       let n = b.addNumbering(12);
       n.lineAngle = Math.PI / 3;
@@ -677,7 +677,7 @@ describe('Base class', () => {
 
   describe('addNumberingFromSavedState method', () => {
     it('removes previous numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'y', 5, 9);
       let n1 = b.addNumbering(30, 0);
       let n2 = BaseNumbering.create(svg, 15, 5, 9, Math.PI / 6);
@@ -688,7 +688,7 @@ describe('Base class', () => {
     });
 
     it('returns added numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'p', 7, 8);
       let n1 = BaseNumbering.create(svg, 20, 7, 8, 0);
       let savableState1 = n1.savableState();
@@ -697,7 +697,7 @@ describe('Base class', () => {
     });
 
     it('passes base center', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'e', 4, 9);
       let n1 = BaseNumbering.create(svg, 40, 4, 9, Math.PI / 3);
       n1.basePadding = 12;
@@ -708,7 +708,7 @@ describe('Base class', () => {
   });
 
   it('hasNumbering method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'C', 0.99, 100.2357);
     expect(b.hasNumbering()).toBeFalsy();
     b.addNumbering(12, Math.PI / 6);
@@ -718,7 +718,7 @@ describe('Base class', () => {
   });
 
   it('numbering getter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b = Base.create(svg, 'C', 0.99, 100.2357);
     expect(b.numbering).toBe(null);
     let n = b.addNumbering(-9, Math.PI / 7);
@@ -727,14 +727,14 @@ describe('Base class', () => {
 
   describe('removeNumbering method', () => {
     it('has no numbering in the first place', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'g', 1, 2);
       expect(b.hasNumbering()).toBeFalsy();
       expect(() => b.removeNumbering()).not.toThrow();
     });
 
     it('removes numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 't', 4, 5);
       let n = b.addNumbering(12, Math.PI / 3);
       expect(b.hasNumbering()).toBeTruthy();
@@ -747,7 +747,7 @@ describe('Base class', () => {
 
   describe('remove method', () => {
     it('removes text', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 't', 1, 4);
       expect(svg.findOne('#' + b._text.id())).toBeTruthy();
       b.remove();
@@ -755,7 +755,7 @@ describe('Base class', () => {
     });
 
     it('removes highlighting, outline and numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'r', 5, 5);
       let h = b.addCircleHighlighting();
       let o = b.addCircleOutline();
@@ -772,7 +772,7 @@ describe('Base class', () => {
 
   describe('savableState method', () => {
     it('includes className and text', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'a', 1, 2);
       let savableState = b.savableState();
       expect(savableState.className).toBe('Base');
@@ -780,7 +780,7 @@ describe('Base class', () => {
     });
 
     it('with no highlighting, outline or numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 't', 1, 5);
       let savableState = b.savableState();
       expect(savableState.highlighting).toBeFalsy();
@@ -789,7 +789,7 @@ describe('Base class', () => {
     });
 
     it('includes highlighting, outline and numbering', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b = Base.create(svg, 'k', 5, 8);
       let h = b.addCircleHighlighting();
       let o = b.addCircleOutline();
@@ -808,7 +808,7 @@ describe('Base class', () => {
   });
 
   describe('refreshIds method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     
     it('with no highlighting, outline or numbering', () => {
       let b = Base.create(svg, 'A', 1, 5);
