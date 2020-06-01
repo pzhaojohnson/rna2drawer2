@@ -806,4 +806,34 @@ describe('Base class', () => {
       ).toBe(JSON.stringify(n.savableState()));
     });
   });
+
+  describe('refreshIds method', () => {
+    let svg = createNodeSVG();
+    
+    it('with no highlighting, outline or numbering', () => {
+      let b = Base.create(svg, 'A', 1, 5);
+      b.removeHighlighting();
+      b.removeOutline();
+      b.removeNumbering();
+      let oldTextId = b._text.id();
+      b.refreshIds();
+      expect(b._text.id()).not.toBe(oldTextId);
+    });
+
+    it('with highlighting, outline and numbering', () => {
+      let b = Base.create(svg, 'A', 1, 5);
+      let h = b.addCircleHighlighting();
+      let o = b.addCircleOutline();
+      let n = b.addNumbering(5);
+      let oldTextId = b._text.id();
+      let spies = [
+        jest.spyOn(h, 'refreshIds'),
+        jest.spyOn(o, 'refreshIds'),
+        jest.spyOn(n, 'refreshIds'),
+      ];
+      b.refreshIds();
+      expect(b._text.id()).not.toBe(oldTextId);
+      spies.forEach(s => expect(s).toHaveBeenCalled());
+    });
+  });
 });
