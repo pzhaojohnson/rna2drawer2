@@ -387,22 +387,6 @@ describe('TeritaryBond class', () => {
 
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
-      it('wrong className', () => {
-        let svg = createNodeSVG();
-        let b1 = Base.create(svg, 'H', 1, 10);
-        let b2 = Base.create(svg, 'h', 200, 300);
-        let tb = TertiaryBond.create(svg, b1, b2);
-        let savableState = tb.savableState();
-        savableState.className = 'TertiaryBnd';
-        expect(
-          TertiaryBond.fromSavedState(
-            savableState,
-            svg,
-            id => getBasebyId(id, [b1, b2])
-          )
-        ).toBe(null);
-      });
-
       it('constructor throws', () => {
         let svg = createNodeSVG();
         let b1 = Base.create(svg, 'Y', 1, 5);

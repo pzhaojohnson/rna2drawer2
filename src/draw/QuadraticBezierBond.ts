@@ -1,20 +1,36 @@
+import {
+  QuadraticBezierBondInterface,
+  TertiaryBondInterface,
+  QuadraticBezierBondSavableState,
+  TertiaryBondMostRecentProps,
+} from './QuadraticBezierBondInterface';
+import {
+  SvgInterface as Svg,
+  SvgPathInterface as SvgPath,
+} from './SvgInterface';
+import { BaseInterface as Base } from './BaseInterface';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
-class QuadraticBezierBond {
+class QuadraticBezierBond implements QuadraticBezierBondInterface {
+  _path: SvgPath;
+  _base1: Base;
+  _base2: Base;
 
-  /**
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * @param {number} padding1 
-   * @param {number} padding2 
-   * @param {number} controlHeight 
-   * @param {number} controlAngle 
-   * 
-   * @returns {string} 
-   */
-  static _dPath(b1, b2, padding1, padding2, controlHeight, controlAngle) {
+  _padding1: number;
+  _padding2: number;
+  _controlHeight: number;
+  _controlAngle: number;
+
+  static _dPath(
+    b1: Base,
+    b2: Base,
+    padding1: number,
+    padding2: number,
+    controlHeight: number,
+    controlAngle: number,
+  ): string {
     let xMiddle = (b1.xCenter + b2.xCenter) / 2;
     let yMiddle = (b1.yCenter + b2.yCenter) / 2;
     let ca = b1.angleBetweenCenters(b2) + controlAngle;
@@ -29,12 +45,7 @@ class QuadraticBezierBond {
     return ['M', x1, y1, 'Q', xControl, yControl, x2, y2].join(' ');
   }
 
-  /**
-   * @param {SVG.Path} path 
-   * @param {Base} b1 
-   * @param {Base} b2 
-   */
-  constructor(path, b1, b2) {
+  constructor(path: SvgPath, b1: Base, b2: Base) {
     this._base1 = b1;
     this._base2 = b2;
 
@@ -50,9 +61,9 @@ class QuadraticBezierBond {
    * 
    * Sets fill-opacity to zero.
    * 
-   * @throws {Error} If the path is not composed of an M and Q segment.
+   * Throws if the path is not composed of an M and Q segment.
    */
-  _validatePath() {
+  _validatePath(): (void | never) {
     this._path.id();
     this._path.attr({ 'fill-opacity': 0 });
     let pa = this._path.array();
@@ -66,79 +77,52 @@ class QuadraticBezierBond {
     }
   }
 
-  /**
-   * @returns {string} 
-   */
-  get id() {
+  get id(): string {
     return this._path.id();
   }
 
-  /**
-   * @returns {Base} 
-   */
-  get base1() {
+  get base1(): Base {
     return this._base1;
   }
 
-  /**
-   * @returns {Base} 
-   */
-  get base2() {
+  get base2(): Base {
     return this._base2;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get x1() {
+  get x1(): number {
     let pa = this._path.array();
     let m = pa[0];
-    return m[1];
+    return m[1] as number;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get y1() {
+  get y1(): number {
     let pa = this._path.array();
     let m = pa[0];
-    return m[2];
+    return m[2] as number;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get x2() {
+  get x2(): number {
     let pa = this._path.array();
     let q = pa[1];
-    return q[3];
+    return q[3] as number;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get y2() {
+  get y2(): number {
     let pa = this._path.array();
     let q = pa[1];
-    return q[4];
+    return q[4] as number;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xControl() {
+  get xControl(): number {
     let pa = this._path.array();
     let q = pa[1];
-    return q[1];
+    return q[1] as number;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yControl() {
+  get yControl(): number {
     let pa = this._path.array();
     let q = pa[1];
-    return q[2];
+    return q[2] as number;
   }
 
   /**
@@ -159,17 +143,19 @@ class QuadraticBezierBond {
     );
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding1() {
+  get padding1(): number {
+    return this.getPadding1();
+  }
+
+  getPadding1(): number {
     return this._padding1;
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding1(p) {
+  set padding1(p: number) {
+    this.setPadding1(p);
+  }
+
+  setPadding1(p: number) {
     this._reposition(
       p,
       this.padding2,
@@ -178,17 +164,19 @@ class QuadraticBezierBond {
     );
   }
 
-  /**
-   * @returns {number} 
-   */
   get padding2() {
+    return this.getPadding2();
+  }
+
+  getPadding2(): number {
     return this._padding2;
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding2(p) {
+  set padding2(p: number) {
+    this.setPadding2(p);
+  }
+
+  setPadding2(p: number) {
     this._reposition(
       this.padding1,
       p,
@@ -219,11 +207,7 @@ class QuadraticBezierBond {
     this._controlAngle = normalizeAngle(ca, a12) - a12;
   }
 
-  /**
-   * @param {number} xShift 
-   * @param {number} yShift 
-   */
-  shiftControl(xShift, yShift) {
+  shiftControl(xShift: number, yShift: number) {
     let xMiddle = (this.base1.xCenter + this.base2.xCenter) / 2;
     let yMiddle = (this.base1.yCenter + this.base2.yCenter) / 2;
     let xControl = this.xControl + xShift;
@@ -244,11 +228,7 @@ class QuadraticBezierBond {
     );
   }
 
-  /**
-   * @param {number} padding1 
-   * @param {number} padding2 
-   */
-  _reposition(padding1, padding2, controlHeight, controlAngle) {
+  _reposition(padding1: number, padding2: number, controlHeight: number, controlAngle: number) {
     this._path.plot(
       QuadraticBezierBond._dPath(
         this.base1,
@@ -257,129 +237,109 @@ class QuadraticBezierBond {
         padding2,
         controlHeight,
         controlAngle,
-      )
+      ),
     );
     this._storePaddings();
     this._storeControlHeightAndAngle();
   }
 
-  /**
-   * @returns {string} 
-   */
-  get stroke() {
+  get stroke(): string {
+    return this.getStroke();
+  }
+
+  getStroke(): string {
     return this._path.attr('stroke');
   }
 
-  /**
-   * @param {string} s 
-   */
-  set stroke(s) {
+  set stroke(s: string) {
+    this.setStroke(s);
+  }
+
+  setStroke(s: string) {
     this._path.attr({ 'stroke': s });
   }
 
-  /**
-   * @returns {number} 
-   */
-  get strokeWidth() {
+  get strokeWidth(): number {
+    return this.getStrokeWidth();
+  }
+
+  getStrokeWidth(): number {
     return this._path.attr('stroke-width');
   }
 
-  /**
-   * @param {number} sw 
-   */
-  set strokeWidth(sw) {
+  set strokeWidth(sw: number) {
+    this.setStrokeWidth(sw);
+  }
+
+  setStrokeWidth(sw: number) {
     return this._path.attr({ 'stroke-width': sw });
   }
 
-  /**
-   * @returns {string} 
-   */
-  get strokeDasharray() {
+  get strokeDasharray(): string {
+    return this.getStrokeDasharray();
+  }
+
+  getStrokeDasharray(): string {
     return this._path.attr('stroke-dasharray');
   }
 
-  /**
-   * @param {string} sd 
-   */
-  set strokeDasharray(sd) {
+  set strokeDasharray(sd: string) {
+    this.setStrokeDasharray(sd);
+  }
+
+  setStrokeDasharray(sd: string) {
     this._path.attr({ 'stroke-dasharray': sd });
   }
 
-  get fill() {
+  get fill(): string {
     return this._path.attr('fill');
   }
 
-  set fill(f) {
+  set fill(f: string) {
     this._path.attr({ 'fill': f });
   }
 
-  get fillOpacity() {
+  get fillOpacity(): number {
     return this._path.attr('fill-opacity');
   }
 
-  set fillOpacity(fo) {
+  set fillOpacity(fo: number) {
     this._path.attr({ 'fill-opacity': fo });
   }
 
-  /**
-   * @returns {string} 
-   */
-  get cursor() {
+  get cursor(): string {
     return this._path.css('cursor');
   }
 
-  /**
-   * @param {string} c 
-   */
-  set cursor(c) {
+  set cursor(c: string) {
     this._path.css({ 'cursor': c });
   }
 
-  onMouseover(cb) {
-    this._path.mouseover(cb);
+  onMouseover(f: () => void) {
+    this._path.mouseover(f);
   }
 
-  onMouseout(cb) {
-    this._path.mouseout(cb);
+  onMouseout(f: () => void) {
+    this._path.mouseout(f);
   }
 
-  /**
-   * @param {function} cb 
-   */
-  onMousedown(cb) {
-    this._path.mousedown(cb);
+  onMousedown(f: () => void) {
+    this._path.mousedown(f);
   }
 
-  /**
-   * @param {function} cb 
-   */
-  onDblclick(cb) {
-    this._path.dblclick(cb);
+  onDblclick(f: () => void) {
+    this._path.dblclick(f);
   }
 
   remove() {
     this._path.remove();
   }
 
-  /**
-   * @returns {boolean} 
-   */
   hasBeenRemoved() {
     return !this._path.root();
   }
 
-  /**
-   * @typedef {Object} QuadraticBezierBond~SavableState 
-   * @property {string} className 
-   * @property {string} pathId 
-   * @property {string} baseId1 
-   * @property {string} baseId2 
-   */
-
-  /**
-   * @returns {QuadraticBezierBond~SavableState} 
-   */
-  savableState() {
+  savableState(): QuadraticBezierBondSavableState {
     return {
       className: 'QuadraticBezierBond',
       pathId: this._path.id(),
@@ -394,28 +354,14 @@ class QuadraticBezierBond {
   }
 }
 
-class TertiaryBond extends QuadraticBezierBond {
+class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface {
+  static _mostRecentProps: TertiaryBondMostRecentProps;
 
-  /**
-   * @typedef {Object} TertiaryBond~MostRecentProps 
-   * @property {number} padding1 
-   * @property {number} padding2 
-   * @property {string} stroke 
-   * @property {number} strokeWidth 
-   * @property {string} strokeDasharray 
-   */
-
-  /**
-   * @returns {TertiaryBond~MostRecentProps} 
-   */
-  static mostRecentProps() {
+  static mostRecentProps(): TertiaryBondMostRecentProps {
     return { ...TertiaryBond._mostRecentProps };
   }
 
-  /**
-   * @param {TertiaryBond} tb 
-   */
-  static _applyMostRecentProps(tb) {
+  static _applyMostRecentProps(tb: TertiaryBond) {
     let mrps = TertiaryBond.mostRecentProps();
     tb.padding1 = mrps.padding1;
     tb.padding2 = mrps.padding2;
@@ -424,10 +370,7 @@ class TertiaryBond extends QuadraticBezierBond {
     tb.strokeDasharray = mrps.strokeDasharray;
   }
 
-  /**
-   * @param {TertiaryBond} tb 
-   */
-  static _copyPropsToMostRecent(tb) {
+  static _copyPropsToMostRecent(tb: TertiaryBond) {
     TertiaryBond._mostRecentProps.padding1 = tb.padding1;
     TertiaryBond._mostRecentProps.padding2 = tb.padding2;
     TertiaryBond._mostRecentProps.stroke = tb.stroke;
@@ -436,30 +379,18 @@ class TertiaryBond extends QuadraticBezierBond {
   }
 
   /**
-   * @callback TertiaryBond~getBaseById 
-   * @param {string} id 
-   * 
-   * @returns {Base} 
-   */
-
-  /**
    * Returns null if the saved state is invalid.
-   * 
-   * @param {QuadraticBezierBond~SavableState} savedState 
-   * @param {SVG.Svg} svg 
-   * @param {TertiaryBond~getBaseById} getBaseById 
-   * 
-   * @returns {TertiaryBond|null} 
    */
-  static fromSavedState(savedState, svg, getBaseById) {
-    if (savedState.className !== 'QuadraticBezierBond') {
-      return null;
-    }
-    let p = svg.findOne('#' + savedState.pathId);
-    let b1 = getBaseById(savedState.baseId1);
-    let b2 = getBaseById(savedState.baseId2);
+  static fromSavedState(
+    savedState: QuadraticBezierBondSavableState,
+    svg: Svg,
+    getBaseById: (id: string) => Base,
+  ): (TertiaryBond | null) {
     let tb = null;
     try {
+      let p = svg.findOne('#' + savedState.pathId) as SvgPath;
+      let b1 = getBaseById(savedState.baseId1);
+      let b2 = getBaseById(savedState.baseId2);
       tb = new TertiaryBond(p, b1, b2);
     } catch (err) {
       return null;
@@ -468,14 +399,7 @@ class TertiaryBond extends QuadraticBezierBond {
     return tb;
   }
 
-  /**
-   * @param {SVG.Svg} svg 
-   * @param {Base} b1 
-   * @param {Base} b2 
-   * 
-   * @returns {TertiaryBond} 
-   */
-  static create(svg, b1, b2) {
+  static create(svg: Svg, b1: Base, b2: Base): TertiaryBond {
     let d = QuadraticBezierBond._dPath(b1, b2, 6, 6, 100, -Math.PI / 2);
     let p = svg.path(d);
     let tb = new TertiaryBond(p, b1, b2);
@@ -483,78 +407,48 @@ class TertiaryBond extends QuadraticBezierBond {
     return tb;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding1() {
-    return super.padding1;
+  get padding1(): number {
+    return super.getPadding1();
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding1(p) {
-    super.padding1 = p;
+  set padding1(p: number) {
+    super.setPadding1(p);
     TertiaryBond._mostRecentProps.padding1 = p;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get padding2() {
-    return super.padding2;
+  get padding2(): number {
+    return super.getPadding2();
   }
 
-  /**
-   * @param {number} p 
-   */
-  set padding2(p) {
-    super.padding2 = p;
+  set padding2(p: number) {
+    super.setPadding2(p);
     TertiaryBond._mostRecentProps.padding2 = p;
   }
 
-  /**
-   * @returns {string} 
-   */
-  get stroke() {
-    return super.stroke;
+  get stroke(): string {
+    return super.getStroke();
   }
 
-  /**
-   * @param {string} s 
-   */
-  set stroke(s) {
-    super.stroke = s;
+  set stroke(s: string) {
+    super.setStroke(s);
     TertiaryBond._mostRecentProps.stroke = s;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get strokeWidth() {
-    return super.strokeWidth;
+  get strokeWidth(): number {
+    return super.getStrokeWidth();
   }
 
-  /**
-   * @param {number} sw 
-   */
-  set strokeWidth(sw) {
-    super.strokeWidth = sw;
+  set strokeWidth(sw: number) {
+    super.setStrokeWidth(sw);
     TertiaryBond._mostRecentProps.strokeWidth = sw;
   }
 
-  /**
-   * @returns {string} 
-   */
-  get strokeDasharray() {
-    return super.strokeDasharray;
+  get strokeDasharray(): string {
+    return super.getStrokeDasharray();
   }
 
-  /**
-   * @param {string} sd 
-   */
-  set strokeDasharray(sd) {
-    super.strokeDasharray = sd;
+  set strokeDasharray(sd: string) {
+    super.setStrokeDasharray(sd);
     TertiaryBond._mostRecentProps.strokeDasharray = sd;
   }
 }

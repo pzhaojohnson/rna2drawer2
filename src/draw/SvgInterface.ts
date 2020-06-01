@@ -33,6 +33,25 @@ export interface SvgLineInterface {
   remove(): void;
 }
 
+export interface SvgPathInterface {
+  id(): string;
+  id(n: null): void;
+  array(): (string | number)[][];
+  plot(d: string): void;
+  attr(a: string): any;
+  attr(o: object): void;
+  css(s: string): any;
+  css(o: object): void;
+  mouseover(f: () => void): void;
+  mouseout(f: () => void): void;
+  mousedown(f: () => void): void;
+  dblclick(f: () => void): void;
+  insertBefore(ele: SvgElementInterface): void;
+  insertAfter(ele: SvgElementInterface): void;
+  remove(): void;
+  root(): (SvgInterface | null);
+}
+
 export interface SvgCircleInterface {
   id(): string;
   id(n: null): void;
@@ -45,6 +64,7 @@ export interface SvgCircleInterface {
 
 export type SvgElementInterface = SvgTextInterface
   | SvgLineInterface
+  | SvgPathInterface
   | SvgCircleInterface;
 
 export interface SvgInterface {
@@ -60,6 +80,7 @@ export interface SvgInterface {
 
   text(add: SvgTextAddFunc): SvgTextInterface;
   line(x1: number, y1: number, x2: number, y2: number): SvgLineInterface;
+  path(d: string): SvgPathInterface;
   circle(r: number): SvgCircleInterface;
 
   mousedown(f: Func): void;
