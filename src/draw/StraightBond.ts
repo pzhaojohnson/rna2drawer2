@@ -6,7 +6,7 @@ import {
   PrimaryBondMostRecentProps,
   SecondaryBondMostRecentProps,
 } from './StraightBondInterface';
-import { BaseInterface as Base } from './BaseInterface';
+import Base from './Base';
 import {
   SvgInterface as Svg,
   SvgLineInterface as SvgLine,

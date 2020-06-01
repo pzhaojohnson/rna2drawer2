@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from './BaseInterface';
+import Base from './Base'
 
 export interface StraightBondSavableState {
   className: string;
@@ -8,6 +8,8 @@ export interface StraightBondSavableState {
 }
 
 export interface StraightBondInterface {
+  base1: Base;
+  base2: Base;
   padding1: number;
   padding2: number;
 }

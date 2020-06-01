@@ -6,7 +6,8 @@ import {
   SecondaryBondInterface as SecondaryBond,
   StraightBondSavableState,
 } from './StraightBondInterface';
-import { TertiaryBond } from './QuadraticBezierBond';
+import { TertiaryBond, QuadraticBezierBond } from './QuadraticBezierBond';
+import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
 
 export interface ForEachSequenceFunc {
   (seq: Sequence): void;
@@ -26,7 +27,7 @@ export interface DrawingSavableState {
   sequences: SequenceSavableState[];
   primaryBonds: StraightBondSavableState[];
   secondaryBonds: StraightBondSavableState[];
-  tertiaryBonds: object[];
+  tertiaryBonds: QuadraticBezierBondSavableState[];
 }
 
 export interface DrawingInterface {

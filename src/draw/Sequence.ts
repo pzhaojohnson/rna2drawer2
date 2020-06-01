@@ -5,6 +5,7 @@ import {
 } from './SequenceInterface';
 import { SvgInterface as Svg } from './SvgInterface';
 import Base from './Base';
+import { BaseSavableState } from './BaseInterface';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
@@ -466,7 +467,7 @@ class Sequence implements SequenceInterface {
     let savableState = {
       className: 'Sequence',
       id: this.id,
-      bases: [] as Base[],
+      bases: [] as BaseSavableState[],
       numberingOffset: this.numberingOffset,
       numberingAnchor: this.numberingAnchor,
       numberingIncrement: this.numberingIncrement,

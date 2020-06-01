@@ -13,6 +13,7 @@ import {
 } from './StraightBond';
 import { StraightBondSavableState } from './StraightBondInterface';
 import { TertiaryBond } from './QuadraticBezierBond';
+import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
 import { adjustBaseNumbering } from './edit/adjustBaseNumbering';
 
 class Drawing implements DrawingInterface {
@@ -326,7 +327,7 @@ class Drawing implements DrawingInterface {
     this.forEachPrimaryBond(pb => primaryBonds.push(pb.savableState()));
     let secondaryBonds = [] as StraightBondSavableState[];
     this.forEachSecondaryBond(sb => secondaryBonds.push(sb.savableState()));
-    let tertiaryBonds = [] as object[];
+    let tertiaryBonds = [] as QuadraticBezierBondSavableState[];
     this.forEachTertiaryBond(tb => tertiaryBonds.push(tb.savableState()));
     return {
       className: 'Drawing',
