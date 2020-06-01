@@ -1,5 +1,5 @@
 import { StraightBond, PrimaryBond, SecondaryBond } from './StraightBond';
-import createNodeSVG from './createNodeSVG';
+import NodeSVG from './NodeSVG';
 import Base from './Base';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
@@ -7,7 +7,7 @@ import normalizeAngle from './normalizeAngle';
 
 describe('StraightBond class', () => {
   it('_lineCoordinates static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'A', 5, 8);
     let b2 = Base.create(svg, 'r', 77, 980);
     let lcs = StraightBond._lineCoordinates(b1, b2, 4, 7);
@@ -24,14 +24,14 @@ describe('StraightBond class', () => {
 
   describe('_opacity static method', () => {
     it('paddings are too big', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'A', 5, 9);
       let b2 = Base.create(svg, 'T', 8, 13);
       expect(StraightBond._opacity(b1, b2, 3, 4)).toBe(0);
     });
 
     it('paddings fit', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 't', 1, 5);
       let b2 = Base.create(svg, 'b', 80, 75);
       expect(StraightBond._opacity(b1, b2, 3, 6)).toBe(1);
@@ -40,7 +40,7 @@ describe('StraightBond class', () => {
 
   describe('constructor', () => {
     it('stores bases and line', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let l = svg.line(1, 3, 5, 7);
       let b1 = Base.create(svg, 't', 1, 2);
       let b2 = Base.create(svg, 'n', 3, 3);
@@ -51,7 +51,7 @@ describe('StraightBond class', () => {
     });
 
     it('validates line', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let l = svg.line(1, 2, 3, 4);
       let b1 = Base.create(svg, 't', 1, 2);
       let b2 = Base.create(svg, 't', 2, 3);
@@ -61,7 +61,7 @@ describe('StraightBond class', () => {
     });
 
     it('stores paddings', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 3, 6);
       let b2 = Base.create(svg, 'b', 90, 87);
       let lcs = StraightBond._lineCoordinates(b1, b2, 8, 5);
@@ -74,7 +74,7 @@ describe('StraightBond class', () => {
 
   describe('_validateLine method', () => {
     it('initializes ID', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let l = svg.line(1, 2, 3, 4);
       let b1 = Base.create(svg, 't', 1, 3);
       let b2 = Base.create(svg, 'n', 5, 5);
@@ -85,7 +85,7 @@ describe('StraightBond class', () => {
   });
 
   it('id getter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let l = svg.line(1, 2, 3, 4);
     let lid = l.id();
     let b1 = Base.create(svg, 'e', 1, 4);
@@ -95,7 +95,7 @@ describe('StraightBond class', () => {
   });
 
   it('base1 and base2 getters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let l = svg.line(1, 2, 3, 4);
     let b1 = Base.create(svg, 'y', 5, 4);
     let b2 = Base.create(svg, 'n', 4, 5);
@@ -105,7 +105,7 @@ describe('StraightBond class', () => {
   });
 
   it('x1, y1, x2 and y2 getters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'e', 1, 5);
     let b2 = Base.create(svg, 'k', 600, 700);
     let lcs = StraightBond._lineCoordinates(b1, b2, 6.7, 13.9);
@@ -118,7 +118,7 @@ describe('StraightBond class', () => {
   });
 
   it('padding1 and padding2 getters and setters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'e', 3, 6);
     let b2 = Base.create(svg, 'm', 200, 330);
     let lcs = StraightBond._lineCoordinates(b1, b2, 8, 12);
@@ -138,7 +138,7 @@ describe('StraightBond class', () => {
 
   describe('reposition method', () => {
     it('moves line', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'e', 4, 9);
       let b2 = Base.create(svg, 'q', 200, 300);
       let lcs = StraightBond._lineCoordinates(b1, b2, 12, 16);
@@ -157,7 +157,7 @@ describe('StraightBond class', () => {
     });
 
     it('updates opacity', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'm', 3, 5);
       let b2 = Base.create(svg, 'y', 500, 400);
       let lcs = StraightBond._lineCoordinates(b1, b2, 6, 8);
@@ -171,7 +171,7 @@ describe('StraightBond class', () => {
   });
 
   it('insertBefore and insertAfter methods', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let c = svg.circle(50);
     let l = svg.line(1, 2, 3, 4);
     let b1 = Base.create(svg, 'b', 2, 3);
@@ -185,7 +185,7 @@ describe('StraightBond class', () => {
   });
 
   it('stroke and strokeWidth getters and setters', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let l = svg.line(5, 5, 3, 3);
     let b1 = Base.create(svg, 'b', 1, 4);
     let b2 = Base.create(svg, 'n', 10, 12);
@@ -197,7 +197,7 @@ describe('StraightBond class', () => {
   });
 
   it('opacity getter and private setter', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let l = svg.line(5, 2, 1, 6);
     let b1 = Base.create(svg, 'b', 5, 4);
     let b2 = Base.create(svg, 'n', 3, 5);
@@ -207,7 +207,7 @@ describe('StraightBond class', () => {
   });
 
   it('remove method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let l = svg.line(1, 2, 4, 5);
     let b1 = Base.create(svg, 'n', 1, 4);
     let b2 = Base.create(svg, 'n', 4, 4);
@@ -220,7 +220,7 @@ describe('StraightBond class', () => {
 
   describe('savableState method', () => {
     it('includes className, line and base IDs', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let l = svg.line(5, 5, 4, 3);
       let b1 = Base.create(svg, 'n', 4, 3);
       let b2 = Base.create(svg, 'j', 5, 10);
@@ -233,7 +233,7 @@ describe('StraightBond class', () => {
     });
 
     it('can be converted to and from a JSON string', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let l = svg.line(5, 5, 4, 3);
       let b1 = Base.create(svg, 'n', 4, 3);
       let b2 = Base.create(svg, 'j', 5, 10);
@@ -247,7 +247,7 @@ describe('StraightBond class', () => {
   });
 
   it('refreshIds method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let l = svg.line(1, 2, 3, 4);
     let b1 = Base.create(svg, 'a', 1, 4);
     let b2 = Base.create(svg, 'h', 5, 5);
@@ -278,7 +278,7 @@ describe('PrimaryBond class', () => {
   });
 
   it('_applyMostRecentProps static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'a', 1, 2);
     let b2 = Base.create(svg, 'b', 5, 4);
     let pb = PrimaryBond.create(svg, b1, b2);
@@ -294,7 +294,7 @@ describe('PrimaryBond class', () => {
   });
 
   it('_copyPropsToMostRecent static method', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let b1 = Base.create(svg, 'g', 1, 4);
     let b2 = Base.create(svg, 'n', 5, 10);
     let pb = PrimaryBond.create(svg, b1, b2);
@@ -317,7 +317,7 @@ describe('PrimaryBond class', () => {
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
       it('constructor throws', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b1 = Base.create(svg, 'a', 1, 2);
         let b2 = Base.create(svg, 'g', 5, 4);
         let pb = PrimaryBond.create(svg, b1, b2);
@@ -338,7 +338,7 @@ describe('PrimaryBond class', () => {
     });
 
     it('creates with line and bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 2, 3);
       let b2 = Base.create(svg, 'Y', 5, 5);
       let pb1 = PrimaryBond.create(svg, b1, b2);
@@ -361,7 +361,7 @@ describe('PrimaryBond class', () => {
     });
 
     it('copies properties to most recent', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 4, 5);
       let b2 = Base.create(svg, 'b', 50, 200);
       let pb1 = PrimaryBond.create(svg, b1, b2);
@@ -384,7 +384,7 @@ describe('PrimaryBond class', () => {
 
   describe('create static method', () => {
     it('creates with line and bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'b', 1, 5);
       let b2 = Base.create(svg, 'Y', 10, 20);
       let pb = PrimaryBond.create(svg, b1, b2);
@@ -394,7 +394,7 @@ describe('PrimaryBond class', () => {
     });
 
     it('applies most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'g', 1, 3);
       let b2 = Base.create(svg, 'u', 5, 5);
       PrimaryBond._mostRecentProps.strokeWidth = 5.804;
@@ -405,7 +405,7 @@ describe('PrimaryBond class', () => {
 
   describe('padding1 and padding2 getters and setters', () => {
     it('return and set values', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'E', 1, 5);
       let b2 = Base.create(svg, 'h', 55, 44);
       let pb = PrimaryBond.create(svg, b1, b2);
@@ -416,7 +416,7 @@ describe('PrimaryBond class', () => {
     });
 
     it('update most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'E', 1, 5);
       let b2 = Base.create(svg, 'h', 55, 44);
       let pb = PrimaryBond.create(svg, b1, b2);
@@ -430,7 +430,7 @@ describe('PrimaryBond class', () => {
 
   describe('stroke and strokeWidth getters and setters', () => {
     it('return and set values', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'Q', 1, 1);
       let b2 = Base.create(svg, 'o', 200, 300);
       let pb = PrimaryBond.create(svg, b1, b2);
@@ -441,7 +441,7 @@ describe('PrimaryBond class', () => {
     });
 
     it('update most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'Q', 1, 1);
       let b2 = Base.create(svg, 'o', 200, 300);
       let pb = PrimaryBond.create(svg, b1, b2);
@@ -481,7 +481,7 @@ describe('SecondaryBond class', () => {
 
   describe('_applyMostRecentProps static method', () => {
     it('applies padding1, padding2 and strokeWidth properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 1, 5);
       let b2 = Base.create(svg, 'g', 555, 55);
       let sb = SecondaryBond.create(svg, b1, b2);
@@ -495,7 +495,7 @@ describe('SecondaryBond class', () => {
     });
 
     it('applies stroke properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let ba = Base.create(svg, 'a', 1, 2);
       let bu = Base.create(svg, 'u', 3, 5);
       let bg = Base.create(svg, 'G', 1, 5);
@@ -521,7 +521,7 @@ describe('SecondaryBond class', () => {
 
   describe('_copyPropsToMostRecent static method', () => {
     it('copies padding1, padding2 and strokeWidth properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'g', 1, 2);
       let b2 = Base.create(svg, 't', 300, 3);
       let sb = SecondaryBond.create(svg, b1, b2);
@@ -536,7 +536,7 @@ describe('SecondaryBond class', () => {
     });
 
     it('copies stroke properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let ba = Base.create(svg, 'A', 1, 2);
       let bt = Base.create(svg, 't', 5, 5);
       let bg = Base.create(svg, 'g', 2, 2);
@@ -567,7 +567,7 @@ describe('SecondaryBond class', () => {
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
       it('constructor throws', () => {
-        let svg = createNodeSVG();
+        let svg = NodeSVG();
         let b1 = Base.create(svg, 'a', 1, 2);
         let b2 = Base.create(svg, 'w', 30, 40);
         let sb = SecondaryBond.create(svg, b1, b2);
@@ -589,7 +589,7 @@ describe('SecondaryBond class', () => {
     });
 
     it('creates with line and bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 1, 2);
       let b2 = Base.create(svg, 'b', 5, 5);
       let sb1 = SecondaryBond.create(svg, b1, b2);
@@ -612,7 +612,7 @@ describe('SecondaryBond class', () => {
     });
 
     it('copies properties to most recent', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'g', 1, 2);
       let b2 = Base.create(svg, 'y', 4, 9);
       let sb1 = SecondaryBond.create(svg, b1, b2);
@@ -636,7 +636,7 @@ describe('SecondaryBond class', () => {
 
   describe('create static method', () => {
     it('creates with bases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 1, 5);
       let b2 = Base.create(svg, 'T', 40, 30);
       let sb = SecondaryBond.create(svg, b1, b2);
@@ -645,7 +645,7 @@ describe('SecondaryBond class', () => {
     });
 
     it('applies most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'g', 1, 5);
       let b2 = Base.create(svg, 'n', 55, 66);
       SecondaryBond._mostRecentProps.strokeWidth = 10.24;
@@ -656,7 +656,7 @@ describe('SecondaryBond class', () => {
 
   describe('isAUT method', () => {
     it('works with lowercase characters', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let bu = Base.create(svg, 'u', 4, 5);
       let ba = Base.create(svg, 'a', 3, 5);
       let sbua = SecondaryBond.create(svg, bu, ba);
@@ -664,7 +664,7 @@ describe('SecondaryBond class', () => {
     });
   
     it('all possible true cases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let ba = Base.create(svg, 'A', 1, 2);
       let bu = Base.create(svg, 'U', 5, 7);
       let bt = Base.create(svg, 't', 0, 0);
@@ -679,7 +679,7 @@ describe('SecondaryBond class', () => {
     });
   
     it('a false case', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let ba = Base.create(svg, 'A', 1, 5);
       let bc = Base.create(svg, 'C', 1, 5);
       let sbac = SecondaryBond.create(svg, ba, bc);
@@ -689,7 +689,7 @@ describe('SecondaryBond class', () => {
 
   describe('isGC method', () => {
     it('works with lowercase characters', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let bc = Base.create(svg, 'c', 3, 5);
       let bg = Base.create(svg, 'g', 8, 9);
       let sbcg = SecondaryBond.create(svg, bc, bg);
@@ -697,7 +697,7 @@ describe('SecondaryBond class', () => {
     });
   
     it('all possible true cases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let bg = Base.create(svg, 'G', 3, 5);
       let bc = Base.create(svg, 'c', 7, 9);
       let sbgc = SecondaryBond.create(svg, bg, bc);
@@ -707,7 +707,7 @@ describe('SecondaryBond class', () => {
     });
   
     it('a false case', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let bg = Base.create(svg, 'G', 4, 5);
       let bu = Base.create(svg, 'U', 1, 2);
       let sbgu = SecondaryBond.create(svg, bg, bu);
@@ -717,7 +717,7 @@ describe('SecondaryBond class', () => {
 
   describe('isGUT method', () => {
     it('works with lowercase characters', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let bu = Base.create(svg, 'u', 5, 5);
       let bg = Base.create(svg, 'g', 3, 4);
       let sbug = SecondaryBond.create(svg, bu, bg);
@@ -725,7 +725,7 @@ describe('SecondaryBond class', () => {
     });
   
     it('all possible true cases', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let bg = Base.create(svg, 'g', 1, 4);
       let bu = Base.create(svg, 'U', 2, 2);
       let bt = Base.create(svg, 't', 9, 8);
@@ -740,7 +740,7 @@ describe('SecondaryBond class', () => {
     });
   
     it('a false case', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let bu = Base.create(svg, 'U', 2, 5);
       let ba = Base.create(svg, 'A', 2, 5);
       let sbua = SecondaryBond.create(svg, bu, ba);
@@ -750,7 +750,7 @@ describe('SecondaryBond class', () => {
 
   describe('padding1 and padding2 getters and setters', () => {
     it('return and set values and update most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'e', 1, 5);
       let b2 = Base.create(svg, 'w', 200, 300);
       let sb = SecondaryBond.create(svg, b1, b2);
@@ -766,7 +766,7 @@ describe('SecondaryBond class', () => {
 
   describe('stroke getter and setter', () => {
     it('return and set values', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'q', 3, 5);
       let b2 = Base.create(svg, 'b', 2, 3);
       let sb = SecondaryBond.create(svg, b1, b2);
@@ -775,7 +775,7 @@ describe('SecondaryBond class', () => {
     });
 
     it('update most recent properties', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let ba = Base.create(svg, 'A', 4, 5);
       let bu = Base.create(svg, 'U', 4, 8);
       let bg = Base.create(svg, 'G', 10, 12);
@@ -798,7 +798,7 @@ describe('SecondaryBond class', () => {
 
   describe('strokeWidth getter and setter', () => {
     it('return and set value and update most recent property', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let b1 = Base.create(svg, 'b', 1, 5);
       let b2 = Base.create(svg, 'q', -100, 200);
       let sb = SecondaryBond.create(svg, b1, b2);
