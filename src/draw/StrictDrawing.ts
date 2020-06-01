@@ -190,19 +190,30 @@ class StrictDrawing implements StrictDrawingInterface {
    * 
    * Returns true if the saved state was successfully applied.
    */
-  applySavedState(savedState: StrictDrawingSavableState) {
+  applySavedState(savedState: StrictDrawingSavableState): boolean {
     let prevState = this.savableState();
     try {
-      this.drawing.applySavedState(savedState.drawing);
-      this._applySavedGeneralLayoutProps(savedState);
-      this._applySavedPerBaseLayoutProps(savedState);
-      this._applySavedBaseWidthAndHeight(savedState);
+      this._applySavedState(savedState);
+      return true;
     } catch (err) {
+      console.error(err.toString());
       console.error('Unable to apply saved state.');
-      this.applySavedState(prevState);
-      return false;
     }
-    return true;
+    console.log('Attempting to reapply previous state...');
+    try {
+      this._applySavedState(prevState);
+    } catch (err) {
+      console.error(err.toString());
+      console.error('Unable to apply previous state.');
+    }
+    return false;
+  }
+
+  _applySavedState(savedState: StrictDrawingSavableState): (void | never) {
+    this.drawing.applySavedState(savedState.drawing);
+    this._applySavedGeneralLayoutProps(savedState);
+    this._applySavedPerBaseLayoutProps(savedState);
+    this._applySavedBaseWidthAndHeight(savedState);
   }
 
   _applySavedGeneralLayoutProps(savedState: StrictDrawingSavableState) {
