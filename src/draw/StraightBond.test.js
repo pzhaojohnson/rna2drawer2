@@ -245,6 +245,17 @@ describe('StraightBond class', () => {
       expect(json2).toBe(json1);
     });
   });
+
+  it('refreshIds method', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(1, 2, 3, 4);
+    let b1 = Base.create(svg, 'a', 1, 4);
+    let b2 = Base.create(svg, 'h', 5, 5);
+    let sb = new StraightBond(l, b1, b2);
+    let oldLineId = sb._line.id();
+    sb.refreshIds();
+    expect(sb._line.id()).not.toBe(oldLineId);
+  });
 });
 
 describe('PrimaryBond class', () => {
