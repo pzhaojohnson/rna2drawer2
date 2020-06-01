@@ -1,3 +1,5 @@
+import BaseNumbering from "./BaseNumbering";
+
 export interface BaseSavableState {}
 
 export interface BaseInterface {
@@ -9,6 +11,9 @@ export interface BaseInterface {
 
   distanceBetweenCenters(b: BaseInterface): number;
   angleBetweenCenters(b: BaseInterface): number;
+
+  hasNumbering(): boolean;
+  readonly numbering: BaseNumbering;
 }
 
 export default BaseInterface;
