@@ -110,8 +110,23 @@ class ExportSvg extends React.Component {
           margin: '24px 40px 18px 40px',
         }}
       >
-        {this.baseFontSizeDescription()}
         {this.baseFontSizeField()}
+        {this.baseFontSizeDescription()}
+      </div>
+    );
+  }
+
+  baseFontSizeField() {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}
+      >
+        {this.baseFontSizeLabel()}
+        {this.baseFontSizeInput()}
       </div>
     );
   }
@@ -121,27 +136,12 @@ class ExportSvg extends React.Component {
       <p
         className={'unselectable-text'}
         style={{
+          margin: '6px 0px 0px 8px',
           fontSize: '12px',
         }}
       >
-        Scale the exported drawing by setting the font size of bases.
+        The exported drawing is scaled according to the font size of bases.
       </p>
-    );
-  }
-
-  baseFontSizeField() {
-    return (
-      <div
-        style={{
-          margin: '8px 0px 0px 8px',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        {this.baseFontSizeLabel()}
-        {this.baseFontSizeInput()}
-      </div>
     );
   }
 

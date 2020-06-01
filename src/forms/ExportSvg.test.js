@@ -39,7 +39,7 @@ function getBaseFontSizeSection() {
 
 function getBaseFontSizeField() {
   let section = getBaseFontSizeSection();
-  return section.childNodes[1];
+  return section.childNodes[0];
 }
 
 function getBaseFontSizeInput() {
