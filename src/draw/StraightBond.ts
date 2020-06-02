@@ -251,24 +251,18 @@ class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     PrimaryBond._mostRecentProps.strokeWidth = pb.strokeWidth;
   }
 
-  /**
-   * Returns null if the saved state is invalid.
-   */
   static fromSavedState(
     savedState: StraightBondSavableState,
     svg: Svg,
     getBaseById: (id: string) => Base,
-  ): (PrimaryBond | null) {
-    let pb = null;
-    try {
-      let line = svg.findOne('#' + savedState.lineId);
-      let b1 = getBaseById(savedState.baseId1);
-      let b2 = getBaseById(savedState.baseId2);
-      pb = new PrimaryBond(line, b1, b2);
-    } catch (err) {
-      console.error('Unable to create primary bond from saved state.');
-      return null;
+  ): (PrimaryBond | never) {
+    if (savedState.className !== 'StraightBond') {
+      throw new Error('Wrong class name.');
     }
+    let line = svg.findOne('#' + savedState.lineId);
+    let b1 = getBaseById(savedState.baseId1);
+    let b2 = getBaseById(savedState.baseId2);
+    let pb = new PrimaryBond(line, b1, b2);
     PrimaryBond._copyPropsToMostRecent(pb);
     return pb;
   }

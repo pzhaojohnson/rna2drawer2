@@ -5,6 +5,8 @@ import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
+let svg = NodeSVG();
+
 describe('StraightBond class', () => {
   it('_lineCoordinates static method', () => {
     let svg = NodeSVG();
@@ -220,7 +222,6 @@ describe('StraightBond class', () => {
 
   describe('savableState method', () => {
     it('includes className, line and base IDs', () => {
-      let svg = NodeSVG();
       let l = svg.line(5, 5, 4, 3);
       let b1 = Base.create(svg, 'n', 4, 3);
       let b2 = Base.create(svg, 'j', 5, 10);
@@ -233,7 +234,6 @@ describe('StraightBond class', () => {
     });
 
     it('can be converted to and from a JSON string', () => {
-      let svg = NodeSVG();
       let l = svg.line(5, 5, 4, 3);
       let b1 = Base.create(svg, 'n', 4, 3);
       let b2 = Base.create(svg, 'j', 5, 10);
@@ -316,46 +316,36 @@ describe('PrimaryBond class', () => {
 
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
-      it('constructor throws', () => {
-        let svg = NodeSVG();
-        let b1 = Base.create(svg, 'a', 1, 2);
-        let b2 = Base.create(svg, 'g', 5, 4);
-        let pb = PrimaryBond.create(svg, b1, b2);
+      let b1 = Base.create(svg, 'a', 1, 2);
+      let b2 = Base.create(svg, 'i', 10, 11);
+      let getBaseById = id => id === b1.id ? b1 : b2;
+      let pb = PrimaryBond.create(svg, b1, b2);
+
+      it('wrong class name', () => {
         let savableState = pb.savableState();
-        pb._line.remove();
-        expect(PrimaryBond.fromSavedState(
-          savableState,
-          svg,
-          id => {
-            if (id === b1.id) {
-              return b1;
-            } else if (id === b2.id) {
-              return b2;
-            }
-          }
-        )).toBe(null);
+        savableState.className = 'StraightBnd';
+        expect(
+          () => PrimaryBond.fromSavedState(savableState, svg, getBaseById)
+        ).toThrow();
+      });
+
+      it('constructor throws', () => {
+        let savableState = pb.savableState();
+        savableState.lineId += 'asdf';
+        expect(
+          () => PrimaryBond.fromSavedState(savableState, svg, getBaseById)
+        ).toThrow();
       });
     });
 
     it('creates with line and bases', () => {
-      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 2, 3);
       let b2 = Base.create(svg, 'Y', 5, 5);
+      let getBaseById = id => id === b1.id ? b1 : b2;
       let pb1 = PrimaryBond.create(svg, b1, b2);
-      let l = pb1._line;
-      let savableState1 = pb1.savableState();
-      let pb2 = PrimaryBond.fromSavedState(
-        savableState1,
-        svg,
-        id => {
-          if (id === b1.id) {
-            return b1;
-          } else if (id === b2.id) {
-            return b2;
-          }
-        }
-      );
-      expect(pb2._line.id()).toBe(l.id());
+      let savableState = pb1.savableState();
+      let pb2 = PrimaryBond.fromSavedState(savableState, svg, getBaseById);
+      expect(pb2._line.id()).toBe(pb1._line.id());
       expect(pb2.base1.id).toBe(b1.id);
       expect(pb2.base2.id).toBe(b2.id);
     });
