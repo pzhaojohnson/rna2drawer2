@@ -281,27 +281,61 @@ it('savableString method', () => {
 });
 
 describe('applySavedState method', () => {
-  it('handles failure to apply saved state', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => NodeSVG());
-    let savableState1 = sd.savableState();
-    sd.appendSequence('asdf', 'asdf');
-    let savableState2 = sd.savableState();
-    savableState1.drawing.sequences = 'asdf';
-    let applied = sd.applySavedState(savableState1);
-    expect(applied).toBeFalsy();
-    expect(JSON.stringify(sd.savableState())).toBe(JSON.stringify(savableState2));
+  describe('handles failure to apply saved state', () => {
+    it('wrong class name', () => {
+      let sd = new StrictDrawing();
+      sd.addTo(document.body, () => NodeSVG());
+      sd.appendSequence('asdf', 'asdf');
+      let savableState1 = sd.savableState();
+      savableState1.className = 'StrctDrawing';
+      sd.appendSequence('qwer', 'qwer');
+      let savableState2 = sd.savableState();
+      expect(JSON.stringify(savableState2)).not.toBe(JSON.stringify(savableState1));
+      let applied = sd.applySavedState(savableState1);
+      expect(applied).toBeFalsy();
+      // the drawing is not changed
+      expect(JSON.stringify(sd.savableState())).toBe(JSON.stringify(savableState2));
+    });
+
+    it('handles failure to apply saved state to underlying drawing', () => {
+      let sd = new StrictDrawing();
+      sd.addTo(document.body, () => NodeSVG());
+      let savableState1 = sd.savableState();
+      savableState1.drawing.sequences = 'asdf';
+      sd.appendSequence('asdf', 'asdf');
+      let savableState2 = sd.savableState();
+      expect(JSON.stringify(savableState2)).not.toBe(JSON.stringify(savableState1));
+      let applied = sd.applySavedState(savableState1);
+      expect(applied).toBeFalsy();
+      // the drawing is not changed
+      expect(JSON.stringify(sd.savableState())).toBe(JSON.stringify(savableState2));
+    });
   });
 
-  it('applies saved state', () => {
+  it('can successfully apply saved state', () => {
     let sd = new StrictDrawing();
     sd.addTo(document.body, () => NodeSVG());
+    sd.appendSequence('asdf', 'asdf');
+    sd.flatOutermostLoop();
+    let perBaseProps = sd.perBaseLayoutProps();
+    perBaseProps[0].stretch3 = 1200;
+    sd.setPerBaseLayoutProps(perBaseProps);
+    sd.baseWidth = 12.885;
+    sd.baseHeight = 16.902;
     let savableState1 = sd.savableState();
     sd.appendSequence('qwer', 'qwerqwer');
+    sd.roundOutermostLoop();
+    perBaseProps = sd.perBaseLayoutProps();
+    perBaseProps[1].stretch3 = 802;
+    sd.setPerBaseLayoutProps(perBaseProps);
+    sd.baseWidth = 19;
+    sd.baseHeight = 23.01;
     let savableState2 = sd.savableState();
-    expect(JSON.stringify(savableState1)).not.toBe(JSON.stringify(savableState2));
+    expect(JSON.stringify(savableState2)).not.toBe(JSON.stringify(savableState1));
     let applied = sd.applySavedState(savableState1);
     expect(applied).toBeTruthy();
+    // requires that saved drawing and general and per base layout props and base width
+    // and height are applied correctly
     expect(JSON.stringify(sd.savableState())).toBe(JSON.stringify(savableState1));
   });
 });

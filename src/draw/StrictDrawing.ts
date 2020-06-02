@@ -199,17 +199,16 @@ class StrictDrawing implements StrictDrawingInterface {
       console.error(err.toString());
       console.error('Unable to apply saved state.');
     }
-    console.log('Attempting to reapply previous state...');
-    try {
-      this._applySavedState(prevState);
-    } catch (err) {
-      console.error(err.toString());
-      console.error('Unable to apply previous state.');
-    }
+    console.log('Reapplying previous state...');
+    this._applySavedState(prevState);
+    console.log('Reapplied previous state.');
     return false;
   }
 
   _applySavedState(savedState: StrictDrawingSavableState): (void | never) {
+    if (savedState.className !== 'StrictDrawing') {
+      throw new Error('Wrong class name.');
+    }
     if (!this.drawing.applySavedState(savedState.drawing)) {
       throw new Error('Unable to apply saved state to drawing.');
     };
@@ -218,19 +217,16 @@ class StrictDrawing implements StrictDrawingInterface {
     this._applySavedBaseWidthAndHeight(savedState);
   }
 
-  _applySavedGeneralLayoutProps(savedState: StrictDrawingSavableState) {
+  _applySavedGeneralLayoutProps(savedState: StrictDrawingSavableState): (void | never) {
     if (!savedState.generalLayoutProps) {
       this._generalLayoutProps = new GeneralStrictLayoutProps();
       return;
     }
     let props = GeneralStrictLayoutProps.fromSavedState(savedState.generalLayoutProps);
-    if (!props) {
-      throw new Error('Unable to apply general layout properties.');
-    }
     this._generalLayoutProps = props;
   }
 
-  _applySavedPerBaseLayoutProps(savedState: StrictDrawingSavableState) {
+  _applySavedPerBaseLayoutProps(savedState: StrictDrawingSavableState): (void | never) {
     this._perBaseLayoutProps = [];
     if (!savedState.perBaseLayoutProps) {
       return;
@@ -238,20 +234,17 @@ class StrictDrawing implements StrictDrawingInterface {
     savedState.perBaseLayoutProps.forEach((savedProps, i) => {
       if (savedProps) {
         let props = PerBaseStrictLayoutProps.fromSavedState(savedProps);
-        if (!props) {
-          throw new Error('Unable to apply per base layout properties.');
-        }
         this._perBaseLayoutProps[i] = props;
       }
     });
   }
 
-  _applySavedBaseWidthAndHeight(savedState: StrictDrawingSavableState) {
+  _applySavedBaseWidthAndHeight(savedState: StrictDrawingSavableState): (void | never) {
     if (typeof savedState.baseWidth !== 'number') {
-      throw new Error('Unable to apply base width.');
+      throw new Error('Unable to apply saved base width.');
     }
     if (typeof savedState.baseHeight !== 'number') {
-      throw new Error('Unable to apply base height.');
+      throw new Error('Unable to apply saved base height.');
     }
     this._baseWidth = savedState.baseWidth;
     this._baseHeight = savedState.baseHeight;
