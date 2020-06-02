@@ -13,6 +13,9 @@ function renderOpenRna2drawerInApp(app) {
 
           // needed for the SVG ID generator function to work correctly
           app.strictDrawing.refreshIds();
+
+          // adjusts padding of drawing to current screen
+          app.strictDrawing.applyLayout();
           
           app.unmountCurrForm();
           app.renderPeripherals();
