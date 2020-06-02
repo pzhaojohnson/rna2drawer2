@@ -63,6 +63,7 @@ class ExportPptx extends React.Component {
         {this.baseFontSizeSection()}
         {this.errorMessageSection()}
         {this.exportSection()}
+        {this.powerPointVersionNote()}
         {this.tertiaryBondsNote()}
       </div>
     );
@@ -250,8 +251,8 @@ class ExportPptx extends React.Component {
       </button>
     );
   }
-
-  tertiaryBondsNote() {
+  
+  powerPointVersionNote() {
     return (
       <p
         className={'unselectable-text'}
@@ -260,10 +261,22 @@ class ExportPptx extends React.Component {
           fontSize: '12px',
         }}
       >
-        <b>Note:</b> Tertiary bonds are exported as SVG images in the exported
-        PPTX file and require PowerPoint 2016 or later to open. Once opened,
-        they can be converted to PowerPoint objects via the "Convert to
-        Shape" feature.
+        <b>Note:</b> The exported PPTX file requires PowerPoint 2016 or later to open.
+      </p>
+    );
+  }
+
+  tertiaryBondsNote() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: '8px 40px 0px 40px',
+          fontSize: '12px',
+        }}
+      >
+        <b>Note:</b> Tertiary bonds are included as SVG images in the exported PPTX file
+        and can be converted to PowerPoint objects via the "Convert to Shape" feature.
       </p>
     );
   }
