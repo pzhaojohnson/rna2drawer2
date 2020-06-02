@@ -177,30 +177,26 @@ describe('BaseNumbering class', () => {
 
   describe('create static method', () => {
     describe('creates with correct values', () => {
+      let n = BaseNumbering.create(svg, 19, 27.5, 98);
+
       it('number', () => {
-        let svg = NodeSVG();
-        let n = BaseNumbering.create(svg, 19, 1, 5);
         expect(n.number).toBe(19);
       });
 
       it('line coordinates', () => {
-        let svg = NodeSVG();
-        let n = BaseNumbering.create(svg, 1, 6, 9);
         let x1 = n._line.attr('x1');
         let y1 = n._line.attr('y1');
         let x2 = n._line.attr('x2');
         let y2 = n._line.attr('y2');
         expect(
-          normalizeAngle(angleBetween(6, 9, x1, y1))
-        ).toBeCloseTo(0, 3);
+          distanceBetween(27.5, 98, x1, y1)
+        ).toBeCloseTo(n.basePadding);
         expect(
-          normalizeAngle(angleBetween(x1, y1, x2, y2))
-        ).toBeCloseTo(0, 3);
+          normalizeAngle(angleBetween(27.5, 98, x1, y1))
+        ).toBeCloseTo(normalizeAngle(angleBetween(27.5, 98, x2, y2)));
       });
 
       it('text positioning', () => {
-        let svg = NodeSVG();
-        let n = BaseNumbering.create(svg, 9, 3, 8);
         let tp = BaseNumbering._textPositioning(n._line);
         expect(n._text.attr('x')).toBe(tp.x);
         expect(n._text.attr('y')).toBe(tp.y);
@@ -210,8 +206,9 @@ describe('BaseNumbering class', () => {
     });
 
     it('constructor throws', () => {
-      let svg = NodeSVG();
-      expect(BaseNumbering.create(svg, 5.5, 1, 2)).toBe(null);
+      expect(
+        () => BaseNumbering.create(svg, 5.5, 1, 2)
+      ).toThrow();
     });
 
     it('applies most recent properties', () => {

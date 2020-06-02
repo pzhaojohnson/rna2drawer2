@@ -357,13 +357,18 @@ class Base implements BaseInterface {
    */
   addNumbering(number: number): (BaseNumbering | null) {
     this.removeNumbering();
-    this._numbering = BaseNumbering.create(
-      this._text.root(),
-      number,
-      this.xCenter,
-      this.yCenter,
-    );
-    return this._numbering;
+    try {
+      this._numbering = BaseNumbering.create(
+        this._text.root(),
+        number,
+        this.xCenter,
+        this.yCenter,
+      );
+      return this._numbering;
+    } catch (err) {
+      console.error(err.toString());
+      return null;
+    }
   }
 
   addNumberingFromSavedState(savedState: BaseNumberingSavableState): BaseNumbering {

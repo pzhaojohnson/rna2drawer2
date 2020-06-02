@@ -123,20 +123,15 @@ class BaseNumbering implements BaseNumberingInterface {
     return n;
   }
 
-  /**
-   * Returns null if the given number is not an integer.
-   */
   static create(
     svg: Svg,
     number: number,
     xBaseCenter: number,
     yBaseCenter: number,
-  ): (BaseNumbering | null) {
+  ): (BaseNumbering | never) {
     let lc = BaseNumbering._lineCoordinates(xBaseCenter, yBaseCenter, 0, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
-    line.id();
     let text = svg.text((add) => add.tspan(number.toString()));
-    text.id();
     let tp = BaseNumbering._textPositioning(line);
     text.attr({
       'x': tp.x,
@@ -144,13 +139,7 @@ class BaseNumbering implements BaseNumberingInterface {
       'text-anchor': tp.textAnchor,
       'dominant-baseline': tp.dominantBaseline,
     });
-    let n = null;
-    try {
-      n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
-    } catch (err) {}
-    if (!n) {
-      return null;
-    }
+    let n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
     BaseNumbering._applyMostRecentProps(n);
     return n;
   }
