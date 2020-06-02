@@ -42,20 +42,12 @@ class Base implements BaseInterface {
     Base._mostRecentProps.fontStyle = b.fontStyle;
   }
 
-  /**
-   * Returns null if the saved state is invalid.
-   */
-  static fromSavedState(savedState: BaseSavableState, svg: Svg): (Base | null) {
+  static fromSavedState(savedState: BaseSavableState, svg: Svg): (Base | never) {
     if (savedState.className !== 'Base') {
-      return null;
+      throw new Error('Wrong class name.');
     }
-    let b = null;
-    try {
-      let text = svg.findOne('#' + savedState.textId) as SvgText;
-      b = new Base(text);
-    } catch (err) {
-      return null;
-    }
+    let text = svg.findOne('#' + savedState.textId) as SvgText;
+    let b = new Base(text);
     if (savedState.highlighting) {
       b.addCircleHighlightingFromSavedState(savedState.highlighting);
     }
@@ -283,7 +275,9 @@ class Base implements BaseInterface {
     return this._highlighting;
   }
 
-  addCircleHighlightingFromSavedState(savedState: CircleBaseAnnotationSavableState): CircleBaseAnnotation {
+  addCircleHighlightingFromSavedState(
+    savedState: CircleBaseAnnotationSavableState,
+  ): (CircleBaseAnnotation | never) {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.fromSavedState(
       savedState,
@@ -291,7 +285,6 @@ class Base implements BaseInterface {
       this.xCenter,
       this.yCenter,
     );
-    this._highlighting.insertBefore(this._text);
     return this._highlighting;
   }
 
@@ -323,7 +316,9 @@ class Base implements BaseInterface {
     return this._outline;
   }
 
-  addCircleOutlineFromSavedState(savedState: CircleBaseAnnotationSavableState): CircleBaseAnnotation {
+  addCircleOutlineFromSavedState(
+    savedState: CircleBaseAnnotationSavableState,
+  ): (CircleBaseAnnotation | never) {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(
       savedState,
@@ -371,7 +366,9 @@ class Base implements BaseInterface {
     }
   }
 
-  addNumberingFromSavedState(savedState: BaseNumberingSavableState): BaseNumbering {
+  addNumberingFromSavedState(
+    savedState: BaseNumberingSavableState,
+  ): (BaseNumbering | never) {
     this.removeNumbering();
     this._numbering = BaseNumbering.fromSavedState(
       savedState,

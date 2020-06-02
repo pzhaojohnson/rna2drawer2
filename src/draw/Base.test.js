@@ -6,6 +6,8 @@ import { CircleBaseAnnotation } from './BaseAnnotation';
 import angleBetween from './angleBetween';
 import distanceBetween from './distanceBetween';
 
+let svg = NodeSVG();
+
 describe('Base class', () => {
   describe('mostRecentProps static method', () => {
     it('returns a new object', () => {
@@ -71,56 +73,37 @@ describe('Base class', () => {
 
   describe('fromSavedState static method', () => {
     describe('valid saved state', () => {
-      it('handles undefined highlighting, outline and numbering', () => {
-        let svg = NodeSVG();
+      it('handles nullish highlighting, outline and numbering', () => {
         let b1 = Base.create(svg, 'B', 5, 5);
-        let savableState1 = b1.savableState();
-        expect(savableState1.highlighting).toBeFalsy();
-        expect(savableState1.outline).toBeFalsy();
-        expect(savableState1.numbering).toBeFalsy();
-        let b2 = Base.fromSavedState(savableState1, svg, 0);
+        let savableState = b1.savableState();
+        let b2 = Base.fromSavedState(savableState, svg);
         expect(b2.hasHighlighting()).toBeFalsy();
         expect(b2.hasOutline()).toBeFalsy();
         expect(b2.hasNumbering()).toBeFalsy();
       });
 
-      it('includes highlighting', () => {
-        let svg = NodeSVG();
-        let b1 = Base.create(svg, 'Y', 4, 6);
-        let h1 = b1.addCircleHighlighting();
-        h1.shift(5, 8);
-        let dl = h1.displacementLength;
-        let da = h1.displacementAngle;
-        let savableState1 = b1.savableState();
-        let b2 = Base.fromSavedState(savableState1, svg);
-        expect(b2.highlighting.displacementLength).toBeCloseTo(dl, 3);
-        expect(
-          normalizeAngle(b2.highlighting.displacementAngle)
-        ).toBeCloseTo(normalizeAngle(da), 3);
+      it('can include highlighting', () => {
+        let b1 = Base.create(svg, 'a', 4, 5);
+        let h = b1.addCircleHighlighting();
+        let savableState = b1.savableState();
+        let b2 = Base.fromSavedState(savableState, svg);
+        expect(b2.highlighting.id).toBe(h.id);
       });
 
-      it('includes outline', () => {
-        let svg = NodeSVG();
-        let b1 = Base.create(svg, 'N', 3, 2);
-        let o1 = b1.addCircleOutline();
-        o1.shift(-2, -9);
-        let dl = o1.displacementLength;
-        let da = o1.displacementAngle;
-        let savableState1 = b1.savableState();
-        let b2 = Base.fromSavedState(savableState1, svg);
-        expect(b2.outline.displacementLength).toBeCloseTo(dl, 3);
-        expect(
-          normalizeAngle(b2.outline.displacementAngle)
-        ).toBeCloseTo(normalizeAngle(da), 3);
+      it('can include outline', () => {
+        let b1 = Base.create(svg, 'b', 5, 6);
+        let o = b1.addCircleOutline();
+        let savableState = b1.savableState();
+        let b2 = Base.fromSavedState(savableState, svg);
+        expect(b2.outline.id).toBe(o.id);
       });
 
-      it('includes numbering', () => {
-        let svg = NodeSVG();
-        let b1 = Base.create(svg, 'U', 5, 5);
-        let n1 = b1.addNumbering(192837, 0);
-        let savableState1 = b1.savableState();
-        let b2 = Base.fromSavedState(savableState1, svg, 0);
-        expect(b2.numbering.number).toBe(192837);
+      it('can include numbering', () => {
+        let b1 = Base.create(svg, 't', 10, 11);
+        let n = b1.addNumbering(10);
+        let savableState = b1.savableState();
+        let b2 = Base.fromSavedState(savableState, svg);
+        expect(b2.numbering.id).toBe(n.id);
       });
 
       it('copies properties to most recent', () => {
@@ -129,28 +112,30 @@ describe('Base class', () => {
         b1.fontFamily = 'Consolas';
         let savableState1 = b1.savableState();
         Base._mostRecentProps.fontFamily = 'Times New Roman';
-        let b2 = Base.fromSavedState(savableState1, svg, 0);
+        let b2 = Base.fromSavedState(savableState1, svg);
         expect(Base.mostRecentProps().fontFamily).toBe('Consolas');
       });
     });
 
     describe('invalid saved state', () => {
       it('invalid className', () => {
-        let svg = NodeSVG();
         let b = Base.create(svg, 'A', 4, 5);
         let savableState = b.savableState();
         savableState.className = 'Bse';
-        expect(Base.fromSavedState(savableState, svg, 0)).toBe(null);
+        expect(
+          () => Base.fromSavedState(savableState, svg)
+        ).toThrow();
       });
 
       it('constructor throws', () => {
-        let svg = NodeSVG();
         let t = svg.text(add => add.tspan('A'));
         let b = new Base(t);
         let savableState = b.savableState();
         t.clear();
         t.tspan('ab');
-        expect(Base.fromSavedState(savableState, svg, 0)).toBe(null);
+        expect(
+          () => Base.fromSavedState(savableState, svg)
+        ).toThrow();
       });
     });
   });
@@ -772,7 +757,6 @@ describe('Base class', () => {
 
   describe('savableState method', () => {
     it('includes className and text', () => {
-      let svg = NodeSVG();
       let b = Base.create(svg, 'a', 1, 2);
       let savableState = b.savableState();
       expect(savableState.className).toBe('Base');
@@ -780,7 +764,6 @@ describe('Base class', () => {
     });
 
     it('with no highlighting, outline or numbering', () => {
-      let svg = NodeSVG();
       let b = Base.create(svg, 't', 1, 5);
       let savableState = b.savableState();
       expect(savableState.highlighting).toBeFalsy();
@@ -789,11 +772,10 @@ describe('Base class', () => {
     });
 
     it('includes highlighting, outline and numbering', () => {
-      let svg = NodeSVG();
       let b = Base.create(svg, 'k', 5, 8);
       let h = b.addCircleHighlighting();
       let o = b.addCircleOutline();
-      let n = b.addNumbering(55, 0);
+      let n = b.addNumbering(55);
       let savableState = b.savableState();
       expect(
         JSON.stringify(savableState.highlighting)
