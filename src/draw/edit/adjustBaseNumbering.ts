@@ -6,7 +6,15 @@ export function adjustBaseNumbering(drawing: Drawing) {
   drawing.forEachSequence(seq => {
     seq.forEachBase((b: Base, p: number) => {
       if (b.hasNumbering()) {
-        b.numbering.lineAngle = seq.outerNormalAngleAtPosition(p);
+        let ona = normalizeAngle(seq.outerNormalAngleAtPosition(p));
+        let a3 = ona + (Math.PI / 2);
+        if (seq.length > p) {
+          let b3 = seq.getBaseAtPosition(p + 1);
+          a3 = normalizeAngle(b.angleBetweenCenters(b3), ona);
+        }
+        if (a3 - ona > (Math.PI / 2) + 0.01) {
+          b.numbering.lineAngle = ona;
+        }
       }
     });
   });

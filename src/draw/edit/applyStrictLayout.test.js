@@ -73,20 +73,14 @@ it('adjusts base numbering line angles', () => {
     characters: 'qwerqwerqw',
     secondaryPartners: parsed.secondaryPartners,
   });
-  let seq = drawing.getSequenceById('qwer');
-  seq.numberingAnchor = 5;
+  let spy = jest.spyOn(drawing, 'adjustNumberingLineAngles');
   let layout = new StrictLayout(
     parsed.secondaryPartners,
     new GeneralStrictLayoutProps(),
     perBaseProps(10),
   );
   applyStrictLayout(drawing, layout, 8, 12);
-  let b5 = seq.getBaseAtPosition(5);
-  let n = b5.numbering;
-  let la = normalizeAngle(n.lineAngle);
-  let ona = seq.outerNormalAngleAtPosition(5);
-  ona = normalizeAngle(ona);
-  expect(la).toBeCloseTo(ona);
+  expect(spy).toHaveBeenCalled();
 });
 
 it('sets width and height of drawing', () => {
