@@ -6,6 +6,7 @@ export interface SequenceMostRecentProps {
 }
 
 export interface SequenceSavableState {
+  className: string;
   id: string;
   bases: BaseSavableState[];
   numberingOffset: number;

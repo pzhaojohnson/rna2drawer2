@@ -112,27 +112,19 @@ class Sequence implements SequenceInterface {
     return cna + Math.PI;
   }
 
-  /**
-   * Returns null if the saved state is invalid.
-   */
-  static fromSavedState(savedState: SequenceSavableState, svg: Svg): (Sequence | null) {
-    if (!savedState.id || !savedState.bases) {
-      return null;
+  static fromSavedState(savedState: SequenceSavableState, svg: Svg): (Sequence | never) {
+    if (savedState.className !== 'Sequence') {
+      throw new Error('Wrong class name.');
     }
     let seq = new Sequence(savedState.id);
     seq.numberingOffset = savedState.numberingOffset ?? 0;
     seq.numberingAnchor = savedState.numberingAnchor ?? 0;
     seq.numberingIncrement = savedState.numberingIncrement ?? 20;
     let bases = [] as Base[];
-    let invalid = false;
     savedState.bases.forEach(sb => {
       let b = Base.fromSavedState(sb, svg);
       bases.push(b);
-      invalid = invalid || !b;
     });
-    if (invalid) {
-      return null;
-    }
     seq.appendBases(bases);
     Sequence._copyPropsToMostRecent(seq);
     return seq;

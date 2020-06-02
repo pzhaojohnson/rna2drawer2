@@ -4,6 +4,8 @@ import Base from './Base';
 import normalizeAngle from './normalizeAngle';
 import angleBetween from './angleBetween';
 
+let svg = NodeSVG();
+
 describe('Sequence class', () => {
   describe('mostRecentProps static method', () => {
     it('returns a new object', () => {
@@ -210,8 +212,14 @@ describe('Sequence class', () => {
   });
 
   describe('fromSavedState static method', () => {
+    it('wrong class name', () => {
+      let seq = new Sequence('qwer');
+      let savableState = seq.savableState();
+      savableState.className = 'Squence';
+      expect(() => Sequence.fromSavedState(savableState, svg)).toThrow();
+    });
+
     it('creates with id and numbering properties', () => {
-      let svg = NodeSVG();
       let seq1 = new Sequence('zxcvasdfqwer');
       seq1.numberingOffset = -200;
       seq1.numberingAnchor = 249;
@@ -224,8 +232,19 @@ describe('Sequence class', () => {
       expect(seq2.numberingIncrement).toBe(134);
     });
 
+    it('handles nullish numbering properties', () => {
+      let seq1 = new Sequence('asdf');
+      let savableState = seq1.savableState();
+      savableState.numberingOffset = undefined;
+      savableState.numberingAnchor = undefined;
+      savableState.numberingIncrement = undefined;
+      let seq2 = Sequence.fromSavedState(savableState, svg);
+      expect(seq2.numberingOffset).toBe(0);
+      expect(seq2.numberingAnchor).toBe(0);
+      expect(seq2.numberingIncrement).toBeGreaterThan(0);
+    });
+
     it('creates bases', () => {
-      let svg = NodeSVG();
       let seq1 = new Sequence('asdf');
       seq1.appendBases([
         Base.create(svg, 'y', 2, 4),
