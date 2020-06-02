@@ -374,90 +374,108 @@ it('svgString getter', () => {
   expect(drawing.svgString).toBe(drawing._svg.svg());
 });
 
-describe('savableState and applySavedState methods', () => {
+describe('savableState method', () => {
   let drawing = new Drawing();
   drawing.addTo(container, () => NodeSVG());
-  let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
-  let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerzxcvzxcv');
+  let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdf');
+  let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerzx');
+  let b1 = seq1.getBaseAtPosition(1);
   let b2 = seq1.getBaseAtPosition(2);
-  let b5 = seq1.getBaseAtPosition(5);
-  let b12 = seq2.getBaseAtPosition(4);
-  let b17 = seq2.getBaseAtPosition(9);
-  drawing.addPrimaryBond(b2, b5);
-  drawing.addPrimaryBond(b5, b12);
-  drawing.addSecondaryBond(b2, b17);
-  drawing.addSecondaryBond(b5, b12);
-  drawing.addTertiaryBond(b12, b2);
-  drawing.addTertiaryBond(b5, b17);
+  let b3 = seq1.getBaseAtPosition(3);
+  let b6 = seq2.getBaseAtPosition(2);
+  let b8 = seq2.getBaseAtPosition(4);
+  let pb1 = drawing.addPrimaryBond(b1, b3);
+  let pb2 = drawing.addPrimaryBond(b3, b6);
+  let sb1 = drawing.addSecondaryBond(b2, b8);
+  let sb2 = drawing.addSecondaryBond(b6, b3);
+  let tb1 = drawing.addTertiaryBond(b6, b1);
+  let tb2 = drawing.addTertiaryBond(b2, b6);
   let savableState = drawing.savableState();
   let svgString = drawing._svg.svg();
+  
+  it('includes class name and svg', () => {
+    expect(savableState.className).toBe('Drawing');
+    expect(savableState.svg).toBe(svgString);
+  });
+
+  it('includes sequences', () => {
+    let sequences = savableState.sequences;
+    expect(sequences.length).toBe(2);
+    expect(JSON.stringify(sequences[0])).toBe(JSON.stringify(seq1.savableState()));
+    expect(JSON.stringify(sequences[1])).toBe(JSON.stringify(seq2.savableState()));
+  });
+
+  it('includes primary bonds', () => {
+    let primaryBonds = savableState.primaryBonds;
+    expect(primaryBonds.length).toBe(2);
+    expect(JSON.stringify(primaryBonds[0])).toBe(JSON.stringify(pb1.savableState()));
+    expect(JSON.stringify(primaryBonds[1])).toBe(JSON.stringify(pb2.savableState()));
+  });
+
+  it('includes secondary bonds', () => {
+    let secondaryBonds = savableState.secondaryBonds;
+    expect(secondaryBonds.length).toBe(2);
+    expect(JSON.stringify(secondaryBonds[0])).toBe(JSON.stringify(sb1.savableState()));
+    expect(JSON.stringify(secondaryBonds[1])).toBe(JSON.stringify(sb2.savableState()));
+  });
+
+  it('includes tertiary bonds', () => {
+    let tertiaryBonds = savableState.tertiaryBonds;
+    expect(tertiaryBonds.length).toBe(2);
+    expect(JSON.stringify(tertiaryBonds[0])).toBe(JSON.stringify(tb1.savableState()));
+    expect(JSON.stringify(tertiaryBonds[1])).toBe(JSON.stringify(tb2.savableState()));
+  });
 
   it('can be converted to and from a JSON string', () => {
     let json = JSON.stringify(savableState);
     let parsed = JSON.parse(json);
     expect(JSON.stringify(parsed)).toBe(json);
   });
+});
 
-  it('has class name and svg', () => {
-    expect(savableState.className).toBe('Drawing');
-    expect(savableState.svg).toBe(svgString);
-  });
-
-  it('has sequences', () => {
-    expect(savableState.sequences.length).toBe(drawing.numSequences);
-    savableState.sequences.forEach((saved, i) => {
-      let seq = drawing.getSequenceAtIndex(i);
-      expect(JSON.stringify(saved)).toBe(JSON.stringify(seq.savableState()));
-    });
-  });
-
-  it('has primary bonds', () => {
-    expect(savableState.primaryBonds.length).toBe(drawing.numPrimaryBonds);
-    savableState.primaryBonds.forEach((saved, i) => {
-      let pb = drawing._primaryBonds[i];
-      expect(JSON.stringify(saved)).toBe(JSON.stringify(pb.savableState()));
-    });
-  });
-
-  it('has secondary bonds', () => {
-    expect(savableState.secondaryBonds.length).toBe(drawing.numSecondaryBonds);
-    savableState.secondaryBonds.forEach((saved, i) => {
-      let sb = drawing._secondaryBonds[i];
-      expect(JSON.stringify(saved)).toBe(JSON.stringify(sb.savableState()));
-    });
-  });
-
-  it('has tertiary bonds', () => {
-    expect(savableState.tertiaryBonds.length).toBe(drawing.numTertiaryBonds);
-    savableState.tertiaryBonds.forEach((saved, i) => {
-      let tb = drawing._tertiaryBonds[i];
-      expect(JSON.stringify(saved)).toBe(JSON.stringify(tb.savableState()));
-    });
-  });
-
-  it('can apply saved state', () => {
+describe('applySavedState method', () => {
+  it('can successfully apply saved state', () => {
     let drawing = new Drawing();
     drawing.addTo(container, () => NodeSVG());
-    drawing.applySavedState(savableState);
-    expect(savableState.svg.includes(drawing._svg.svg(false))).toBeTruthy();
-    let appliedState = drawing.savableState();
-    expect(JSON.stringify({
-      ...appliedState,
-      svg: '',
-    })).toBe(JSON.stringify({
-      ...savableState,
-      svg: '',
-    }));
+    let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+    let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerzxcvzxcv');
+    let b2 = seq1.getBaseAtPosition(2);
+    let b5 = seq1.getBaseAtPosition(5);
+    let b12 = seq2.getBaseAtPosition(4);
+    let b17 = seq2.getBaseAtPosition(9);
+    let pb1 = drawing.addPrimaryBond(b2, b5);
+    let pb2 = drawing.addPrimaryBond(b5, b12);
+    let sb1 = drawing.addSecondaryBond(b2, b17);
+    let sb2 = drawing.addSecondaryBond(b5, b12);
+    let tb1 = drawing.addTertiaryBond(b12, b2);
+    let tb2 = drawing.addTertiaryBond(b5, b17);
+    let savableState = drawing.savableState();
+    let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcvzxcv');
+    let pb3 = drawing.addPrimaryBond(b12, b17);
+    drawing.removeSecondaryBondById(sb1.id);
+    drawing.removeTertiaryBondById(tb2.id);
+    expect(JSON.stringify(drawing.savableState())).not.toBe(JSON.stringify(savableState));
+    let applied = drawing.applySavedState(savableState);
+    expect(applied).toBeTruthy();
+    // requires that saved svg, sequences and primary, secondary and tertiary bonds
+    // have been applied correctly
+    expect(JSON.stringify(drawing.savableState())).toBe(JSON.stringify(savableState));
   });
 
-  it('applySavedState method can throw', () => {
-    let invalidState = {
-      ...savableState,
-      sequences: 'asdf',
-    };
+  it('handles failure to apply saved state', () => {
     let drawing = new Drawing();
     drawing.addTo(container, () => NodeSVG());
-    expect(() => drawing.applySavedState(invalidState)).toThrow();
+    let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+    let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
+    let savableState1 = drawing.savableState();
+    savableState1.className = 'Drwing';
+    let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcvzxcv');
+    let savableState2 = drawing.savableState();
+    expect(JSON.stringify(savableState2)).not.toBe(JSON.stringify(savableState1));
+    let applied = drawing.applySavedState(savableState1);
+    expect(applied).toBeFalsy();
+    // drawing state is not changed
+    expect(JSON.stringify(drawing.savableState())).toBe(JSON.stringify(savableState2));
   });
 });
 

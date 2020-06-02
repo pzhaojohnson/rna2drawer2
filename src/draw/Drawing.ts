@@ -339,7 +339,31 @@ class Drawing implements DrawingInterface {
     };
   }
 
-  applySavedState(savedState: DrawingSavableState): (void | never) {
+  /**
+   * If the saved state cannot be successfully applied, the state
+   * of the drawing will not be changed.
+   * 
+   * Returns true if the saved state was successfully applied.
+   */
+  applySavedState(savedState: DrawingSavableState): boolean {
+    let prevState = this.savableState();
+    try {
+      this._applySavedState(savedState);
+      return true;
+    } catch (err) {
+      console.error(err.toString());
+      console.error('Unable to apply saved state.');
+    }
+    console.log('Reapplying previous state...');
+    this._applySavedState(prevState);
+    console.log('Reapplied previous state.');
+    return false;
+  }
+
+  _applySavedState(savedState: DrawingSavableState): (void | never) {
+    if (savedState.className !== 'Drawing') {
+      throw new Error('Wrong class name.');
+    }
     let wasEmpty = this.isEmpty();
     this.clear();
     this._applySavedSvg(savedState);
@@ -369,9 +393,6 @@ class Drawing implements DrawingInterface {
   _appendSavedSequences(savedState: DrawingSavableState): (void | never) {
     savedState.sequences.forEach(saved => {
       let seq = Sequence.fromSavedState(saved, this._svg);
-      if (!seq) {
-        throw new Error('Unable to create sequence from saved state.');
-      }
       this._sequences.push(seq);
       this.fireAddSequence(seq);
     });
@@ -384,9 +405,6 @@ class Drawing implements DrawingInterface {
         this._svg,
         (id: string) => this.getBaseById(id),
       );
-      if (!pb) {
-        throw new Error('Unable to create primary bond from saved state.');
-      }
       this._primaryBonds.push(pb);
     });
   }
@@ -398,9 +416,6 @@ class Drawing implements DrawingInterface {
         this._svg,
         (id: string) => this.getBaseById(id),
       );
-      if (!sb) {
-        throw new Error('Unable to create secondary bond from saved state.');
-      }
       this._secondaryBonds.push(sb);
     });
   }
@@ -412,9 +427,6 @@ class Drawing implements DrawingInterface {
         this._svg,
         (id: string) => this.getBaseById(id),
       );
-      if (!tb) {
-        throw new Error('Unable to create tertiary bond from saved state.');
-      }
       this._tertiaryBonds.push(tb);
       this.fireAddTertiaryBond(tb);
     });

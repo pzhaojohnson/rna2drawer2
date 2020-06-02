@@ -210,7 +210,9 @@ class StrictDrawing implements StrictDrawingInterface {
   }
 
   _applySavedState(savedState: StrictDrawingSavableState): (void | never) {
-    this.drawing.applySavedState(savedState.drawing);
+    if (!this.drawing.applySavedState(savedState.drawing)) {
+      throw new Error('Unable to apply saved state to drawing.');
+    };
     this._applySavedGeneralLayoutProps(savedState);
     this._applySavedPerBaseLayoutProps(savedState);
     this._applySavedBaseWidthAndHeight(savedState);
