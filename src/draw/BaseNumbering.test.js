@@ -4,6 +4,8 @@ import angleBetween from './angleBetween';
 import distanceBetween from './distanceBetween';
 import normalizeAngle from './normalizeAngle';
 
+let svg = NodeSVG();
+
 describe('BaseNumbering class', () => {
   it('_lineCoordinates static method', () => {
     let lcs = BaseNumbering._lineCoordinates(1.1, -2, 4 * Math.PI / 3, 4.6, 8.05);
@@ -125,33 +127,34 @@ describe('BaseNumbering class', () => {
 
   describe('fromSavedState static method', () => {
     it('valid saved state', () => {
-      let svg = NodeSVG();
       let n1 = BaseNumbering.create(svg, 10, 5, 8);
-      n1.lineAngle = Math.PI / 3;
-      let savableState1 = n1.savableState();
-      let n2 = BaseNumbering.fromSavedState(savableState1, svg, 5, 8);
-      let savableState2 = n2.savableState();
-      expect(JSON.stringify(savableState2)).toBe(JSON.stringify(savableState1));
+      n1.basePadding = 27.83;
+      let savableState = n1.savableState();
+      let n2 = BaseNumbering.fromSavedState(savableState, svg, 5, 8);
+      expect(n2._text.id()).toBe(savableState.textId);
+      expect(n2._line.id()).toBe(savableState.lineId);
+      // requires that base coordinates are passed correctly to constructor
+      expect(n2.basePadding).toBeCloseTo(27.83);
     });
 
     describe('invalid saved state', () => {
       it('wrong className', () => {
-        let svg = NodeSVG();
         let n = BaseNumbering.create(svg, 5, 1, 2);
-        n.lineAngle = Math.PI / 6;
         let savableState = n.savableState();
         savableState.className = 'Nmbering';
-        expect(BaseNumbering.fromSavedState(savableState, svg, 1, 2)).toBe(null);
+        expect(
+          () => BaseNumbering.fromSavedState(savableState, svg, 1, 2)
+        ).toThrow();
       });
 
       it('constructor throws', () => {
-        let svg = NodeSVG();
         let n = BaseNumbering.create(svg, 8, 3, 5);
-        n.lineAngle = 2 * Math.PI / 3;
         let savableState = n.savableState();
         n._text.clear();
         n._text.tspan('9.9');
-        expect(BaseNumbering.fromSavedState(savableState, svg, 3, 5)).toBe(null);
+        expect(
+          () => BaseNumbering.fromSavedState(savableState, svg, 3, 5)
+        ).toThrow();
       });
     });
 
@@ -596,7 +599,6 @@ describe('BaseNumbering class', () => {
   });
 
   it('savableState method', () => {
-    let svg = NodeSVG();
     let n = BaseNumbering.create(svg, 8, 3, 9);
     let savableState = n.savableState();
     expect(savableState.className).toBe('BaseNumbering');

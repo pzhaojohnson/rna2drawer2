@@ -107,26 +107,18 @@ class BaseNumbering implements BaseNumberingInterface {
     BaseNumbering._mostRecentProps.lineStrokeWidth = n.lineStrokeWidth;
   }
 
-  /**
-   * Returns null if the saved state is invalid.
-   */
   static fromSavedState(
     savedState: BaseNumberingSavableState,
     svg: Svg,
     xBaseCenter: number,
     yBaseCenter: number,
-  ): (BaseNumbering | null) {
+  ): (BaseNumbering | never) {
     if (savedState.className !== 'BaseNumbering') {
-      return null;
+      throw new Error('Wrong class name.');
     }
-    let n = null;
-    try {
-      let text = svg.findOne('#' + savedState.textId) as SvgText;
-      let line = svg.findOne('#' + savedState.lineId) as SvgLine;
-      n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
-    } catch (err) {
-      return null;
-    }
+    let text = svg.findOne('#' + savedState.textId) as SvgText;
+    let line = svg.findOne('#' + savedState.lineId) as SvgLine;
+    let n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
     BaseNumbering._copyPropsToMostRecent(n);
     return n;
   }
