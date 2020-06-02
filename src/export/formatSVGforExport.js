@@ -16,8 +16,8 @@ function _removeInvisibleLines(svg) {
   toBeRemoved.forEach(line => line.remove());
 }
 
-const _X_PADDING = 100;
-const _Y_PADDING = 100;
+const _X_PADDING = 500;
+const _Y_PADDING = 500;
 
 /**
  * Returns zero if there are no text elements.

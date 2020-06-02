@@ -194,7 +194,7 @@ describe('_shiftElements function', () => {
   it('shifts by the right amounts', () => {
     let svg = createNodeSVG();
     let t = svg.text(add => add.tspan('a'));
-    t.attr({ 'x': 500, 'y': 400 });
+    t.attr({ 'x': 900, 'y': 400 });
     expect(t.attr('x')).not.toBe(_X_PADDING);
     expect(t.attr('y')).not.toBe(_Y_PADDING);
     _shiftElements(svg);
