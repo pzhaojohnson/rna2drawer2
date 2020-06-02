@@ -358,24 +358,18 @@ class SecondaryBond extends StraightBond implements SecondaryBondInterface {
     }
   }
 
-  /**
-   * Returns null if the saved state is invalid.
-   */
   static fromSavedState(
     savedState: StraightBondSavableState,
     svg: Svg,
     getBaseById: (id: string) => Base,
-  ): (SecondaryBond | null) {
-    let sb = null;
-    try {
-      let line = svg.findOne('#' + savedState.lineId);
-      let b1 = getBaseById(savedState.baseId1);
-      let b2 = getBaseById(savedState.baseId2);
-      sb = new SecondaryBond(line, b1, b2);
-    } catch (err) {
-      console.error('Unable to create secondary bond from saved state.');
-      return null;
+  ): (SecondaryBond | never) {
+    if (savedState.className !== 'StraightBond') {
+      throw new Error('Wrong class name.');
     }
+    let line = svg.findOne('#' + savedState.lineId);
+    let b1 = getBaseById(savedState.baseId1);
+    let b2 = getBaseById(savedState.baseId2);
+    let sb = new SecondaryBond(line, b1, b2);
     SecondaryBond._copyPropsToMostRecent(sb);
     return sb;
   }

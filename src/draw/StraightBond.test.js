@@ -556,49 +556,38 @@ describe('SecondaryBond class', () => {
 
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
-      it('constructor throws', () => {
-        let svg = NodeSVG();
-        let b1 = Base.create(svg, 'a', 1, 2);
-        let b2 = Base.create(svg, 'w', 30, 40);
-        let sb = SecondaryBond.create(svg, b1, b2);
-        let l = sb._line;
+      let b1 = Base.create(svg, 'a', 1, 2);
+      let b2 = Base.create(svg, 'w', 30, 40);
+      let getBaseById = id => id === b1.id ? b1 : b2;
+      let sb = SecondaryBond.create(svg, b1, b2);
+
+      it('wrong class name', () => {
         let savableState = sb.savableState();
-        l.remove();
-        expect(SecondaryBond.fromSavedState(
-          savableState,
-          svg,
-          id => {
-            if (id === b1.id) {
-              return b1;
-            } else if (id === b2.id) {
-              return b2;
-            }
-          }
-        )).toBe(null);
+        savableState.className = 'StraghtBond';
+        expect(
+          () => SecondaryBond.fromSavedState(savableState, svg, getBaseById)
+        ).toThrow();
+      });
+      
+      it('constructor throws', () => {
+        let savableState = sb.savableState();
+        savableState.lineId += 'blah';
+        expect(
+          () => SecondaryBond.fromSavedState(savableState, svg, getBaseById)
+        ).toThrow();
       });
     });
 
     it('creates with line and bases', () => {
-      let svg = NodeSVG();
       let b1 = Base.create(svg, 'a', 1, 2);
       let b2 = Base.create(svg, 'b', 5, 5);
+      let getBaseById = id => b1.id === id ? b1 : b2;
       let sb1 = SecondaryBond.create(svg, b1, b2);
-      let l = sb1._line;
-      let savableState1 = sb1.savableState();
-      let sb2 = SecondaryBond.fromSavedState(
-        savableState1,
-        svg,
-        id => {
-          if (id === b1.id) {
-            return b1;
-          } else if (id === b2.id) {
-            return b2;
-          }
-        }
-      );
+      let savableState = sb1.savableState();
+      let sb2 = SecondaryBond.fromSavedState(savableState, svg, getBaseById);
       expect(sb2.base1).toBe(b1);
       expect(sb2.base2).toBe(b2);
-      expect(sb2._line.id()).toBe(l.id());
+      expect(sb2._line.id()).toBe(sb1._line.id());
     });
 
     it('copies properties to most recent', () => {
