@@ -8,6 +8,8 @@ import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
+let svg = NodeSVG();
+
 describe('QuadraticBezierBond class', () => {
   it('_dPath static method', () => {
     let svg = NodeSVG();
@@ -398,37 +400,40 @@ describe('TeritaryBond class', () => {
 
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
-      it('constructor throws', () => {
-        let svg = NodeSVG();
-        let b1 = Base.create(svg, 'Y', 1, 5);
-        let b2 = Base.create(svg, 'y', 50, 40);
-        let tb = TertiaryBond.create(svg, b1, b2);
+      let b1 = Base.create(svg, 'Y', 1, 5);
+      let b2 = Base.create(svg, 'y', 50, 40);
+      let tb = TertiaryBond.create(svg, b1, b2);
+
+      it('wrong class name', () => {
         let savableState = tb.savableState();
-        tb._path.remove();
+        savableState.className = 'QuadraticBezierBnd';
         expect(
-          TertiaryBond.fromSavedState(
-            savableState,
-            svg,
-            id => getBasebyId(id, [b1, b2])
-          )
-        ).toBe(null);
+          () => TertiaryBond.fromSavedState(savableState, svg, id => getBasebyId(id, [b1, b2]))
+        ).toThrow();
+      });
+      
+      it('constructor throws', () => {
+        let savableState = tb.savableState();
+        tb.pathId += 'asdf';
+        expect(
+          () => TertiaryBond.fromSavedState(savableState, svg, id => getBasebyId(id, [b1, b2]))
+        ).toThrow();
       });
     });
 
     it('creates with path and bases', () => {
-      let svg = NodeSVG();
       let b1 = Base.create(svg, 'r', 1, 5);
       let b2 = Base.create(svg, 'E', 200, 300);
       let tb1 = TertiaryBond.create(svg, b1, b2);
-      let savableState1 = tb1.savableState();
+      let savableState = tb1.savableState();
       let tb2 = TertiaryBond.fromSavedState(
-        savableState1,
+        savableState,
         svg,
         id => getBasebyId(id, [b1, b2])
       );
       expect(tb2._path.id()).toBe(tb1._path.id());
-      expect(tb2.base1).toBe(b1);
-      expect(tb2.base2).toBe(b2);
+      expect(tb2.base1.id).toBe(b1.id);
+      expect(tb2.base2.id).toBe(b2.id);
     });
 
     it('copies properties to most recent', () => {

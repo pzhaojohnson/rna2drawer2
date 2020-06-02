@@ -378,23 +378,18 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
     TertiaryBond._mostRecentProps.strokeDasharray = tb.strokeDasharray;
   }
 
-  /**
-   * Returns null if the saved state is invalid.
-   */
   static fromSavedState(
     savedState: QuadraticBezierBondSavableState,
     svg: Svg,
     getBaseById: (id: string) => Base,
-  ): (TertiaryBond | null) {
-    let tb = null;
-    try {
-      let p = svg.findOne('#' + savedState.pathId) as SvgPath;
-      let b1 = getBaseById(savedState.baseId1);
-      let b2 = getBaseById(savedState.baseId2);
-      tb = new TertiaryBond(p, b1, b2);
-    } catch (err) {
-      return null;
+  ): (TertiaryBond | never) {
+    if (savedState.className !== 'QuadraticBezierBond') {
+      throw new Error('Wrong class name.');
     }
+    let p = svg.findOne('#' + savedState.pathId) as SvgPath;
+    let b1 = getBaseById(savedState.baseId1);
+    let b2 = getBaseById(savedState.baseId2);
+    let tb = new TertiaryBond(p, b1, b2);
     TertiaryBond._copyPropsToMostRecent(tb);
     return tb;
   }
