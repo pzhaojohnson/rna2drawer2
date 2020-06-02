@@ -15,9 +15,6 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
   _displacementLength: number;
   _displacementAngle: number;
 
-  /**
-   * Returns null if the saved state is invalid.
-   */
   static fromSavedState(
     savedState: CircleBaseAnnotationSavableState,
     svg: Svg,
