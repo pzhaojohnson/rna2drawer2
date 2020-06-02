@@ -155,8 +155,6 @@ describe('Base class', () => {
       expect(b._text.id()).toBeTruthy();
       expect(b.xCenter).toBe(8);
       expect(b.yCenter).toBe(77);
-      expect(b._text.attr('text-anchor')).toBe('middle');
-      expect(b._text.attr('dominant-baseline')).toBe('middle');
     });
 
     it('constructor throws', () => {
@@ -217,21 +215,6 @@ describe('Base class', () => {
       let t2 = svg.text(add => add.tspan('ab'));
       expect(() => { new Base(t2) }).toThrow();
     });
-
-    it('sets text-anchor and dominant-baseline to middle', () => {
-      let svg = NodeSVG();
-      let t = svg.text(add => add.tspan('T'));
-      t.attr({ 'text-anchor': 'start', 'dominant-baseline': 'hanging' });
-      let bboxPrev = t.bbox();
-      let cxPrev = bboxPrev.cx;
-      let cyPrev = bboxPrev.cy;
-      let b = new Base(t);
-      expect(t.attr('text-anchor')).toBe('middle');
-      expect(t.attr('dominant-baseline')).toBe('middle');
-      let bbox = t.bbox();
-      expect(bbox.cx).toBeCloseTo(cxPrev, 3);
-      expect(bbox.cy).toBeCloseTo(cyPrev, 3);
-    });
   });
 
   it('id getter', () => {
@@ -269,8 +252,8 @@ describe('Base class', () => {
   it('xCenter and yCenter getters', () => {
     let svg = NodeSVG();
     let b = Base.create(svg, 'A', -1, -2);
-    expect(b.xCenter).toBe(-1);
-    expect(b.yCenter).toBe(-2);
+    expect(b.xCenter).toBeCloseTo(-1);
+    expect(b.yCenter).toBeCloseTo(-2);
   });
 
   describe('moveTo method', () => {
@@ -345,6 +328,9 @@ describe('Base class', () => {
     let b = Base.create(svg, 'a', 1, 2);
     b.fontFamily = 'Cambria';
     expect(b.fontFamily).toBe('Cambria');
+    // maintains center coordinates
+    expect(b.xCenter).toBeCloseTo(1);
+    expect(b.yCenter).toBeCloseTo(2);
   });
 
   it('fontSize getter and setter', () => {
@@ -352,6 +338,9 @@ describe('Base class', () => {
     let b = Base.create(svg, 'e', 5, 6);
     b.fontSize = 5.123;
     expect(b.fontSize).toBe(5.123);
+    // maintains center coordinates
+    expect(b.xCenter).toBeCloseTo(5);
+    expect(b.yCenter).toBeCloseTo(6);
   });
 
   it('fontWeight getter and setter', () => {
@@ -359,13 +348,19 @@ describe('Base class', () => {
     let b = Base.create(svg, 'a', 1, 4);
     b.fontWeight = 650;
     expect(b.fontWeight).toBe(650);
+    // maintains center coordinates
+    expect(b.xCenter).toBeCloseTo(1);
+    expect(b.yCenter).toBeCloseTo(4);
   });
 
   it('fontStyle getter and setter', () => {
     let svg = NodeSVG();
-    let b = Base.create(svg, 'E', 5, 5);
+    let b = Base.create(svg, 'E', 5, 15);
     b.fontStyle = 'italic';
     expect(b.fontStyle).toBe('italic');
+    // maintains center coordinates
+    expect(b.xCenter).toBeCloseTo(5);
+    expect(b.yCenter).toBeCloseTo(15);
   });
 
   it('fill getter and setter', () => {
@@ -439,8 +434,8 @@ describe('Base class', () => {
       let svg = NodeSVG();
       let b = Base.create(svg, 'r', 2, 9);
       let h = b.addCircleHighlighting();
-      expect(h.xCenter).toBe(2);
-      expect(h.yCenter).toBe(9);
+      expect(h.xCenter).toBeCloseTo(2);
+      expect(h.yCenter).toBeCloseTo(9);
     });
   });
 
@@ -538,8 +533,8 @@ describe('Base class', () => {
       let svg = NodeSVG();
       let b = Base.create(svg, 'b', 5, 6);
       let o = b.addCircleOutline();
-      expect(o.xCenter).toBe(5);
-      expect(o.yCenter).toBe(6);
+      expect(o.xCenter).toBeCloseTo(5);
+      expect(o.yCenter).toBeCloseTo(6);
     });
   });
 

@@ -61,27 +61,28 @@ class Base implements BaseInterface {
     return b;
   }
 
+  /**
+   * Returns the center X coordinates of the text element.
+   */
   static xFromSavedState(savedState: BaseSavableState, svg: Svg): number {
-    let text = svg.findOne('#' + savedState.textId);
-    return text.attr('x');
+    let text = svg.findOne('#' + savedState.textId) as SvgText;
+    return text.cx();
   }
 
+  /**
+   * Returns the center Y coordinate of the text element.
+   */
   static yFromSavedState(savedState: BaseSavableState, svg: Svg): number {
-    let text = svg.findOne('#' + savedState.textId);
-    return text.attr('y');
+    let text = svg.findOne('#' + savedState.textId) as SvgText;
+    return text.cy();
   }
 
   static create(svg: Svg, character: string, xCenter: number, yCenter: number): (Base | never) {
     let text = svg.text((add) => add.tspan(character));
     text.id();
-    text.attr({
-      'x': xCenter,
-      'y': yCenter,
-      'text-anchor': 'middle',
-      'dominant-baseline': 'middle',
-    });
     let b = new Base(text);
     Base._applyMostRecentProps(b);
+    b.moveTo(xCenter, yCenter);
     return b;
   }
 
@@ -104,9 +105,6 @@ class Base implements BaseInterface {
   /**
    * Initializes the ID of the text if it is not already initialized.
    * 
-   * Sets the text-anchor and dominant-baseline attributes to middle
-   * without changing where the text is displayed.
-   * 
    * @throws {Error} If the text content is not a single character.
    */
   _validateText() {
@@ -114,14 +112,6 @@ class Base implements BaseInterface {
     if (this._text.text().length !== 1) {
       throw new Error('The text content must be a single character.');
     }
-    let b = this._text.bbox();
-    let cxPrev = b.cx;
-    let cyPrev = b.cy;
-    this._text.attr({ 'text-anchor': 'middle', 'dominant-baseline': 'middle' });
-    b = this._text.bbox();
-    let x = this._text.attr('x') - (b.cx - cxPrev);
-    let y = this._text.attr('y') - (b.cy - cyPrev);
-    this._text.attr({ 'x': x, 'y': y });
   }
 
   get id(): string {
@@ -144,18 +134,15 @@ class Base implements BaseInterface {
   }
 
   get xCenter(): number {
-    return this._text.attr('x');
+    return this._text.cx();
   }
 
   get yCenter(): number {
-    return this._text.attr('y');
+    return this._text.cy();
   }
 
   moveTo(xCenter: number, yCenter: number) {
-    this._text.attr({
-      'x': xCenter,
-      'y': yCenter
-    });
+    this._text.center(xCenter, yCenter);
     if (this.hasHighlighting()) {
       this._highlighting.reposition(xCenter, yCenter);
     }
@@ -190,7 +177,10 @@ class Base implements BaseInterface {
   }
 
   set fontFamily(ff: string) {
+    let cx = this.xCenter;
+    let cy = this.yCenter;
     this._text.attr({ 'font-family': ff });
+    this.moveTo(cx, cy);
     Base._mostRecentProps.fontFamily = ff;
   }
 
@@ -199,7 +189,10 @@ class Base implements BaseInterface {
   }
 
   set fontSize(fs: number) {
+    let cx = this.xCenter;
+    let cy = this.yCenter;
     this._text.attr({ 'font-size': fs });
+    this.moveTo(cx, cy);
     Base._mostRecentProps.fontSize = fs;
   }
 
@@ -208,7 +201,10 @@ class Base implements BaseInterface {
   }
 
   set fontWeight(fw: (string | number)) {
+    let cx = this.xCenter;
+    let cy = this.yCenter;
     this._text.attr({ 'font-weight': fw });
+    this.moveTo(cx, cy);
     Base._mostRecentProps.fontWeight = fw;
   }
 
@@ -217,7 +213,10 @@ class Base implements BaseInterface {
   }
 
   set fontStyle(fs: string) {
+    let cx = this.xCenter;
+    let cy = this.yCenter;
     this._text.attr({ 'font-style': fs });
+    this.moveTo(cx, cy);
     Base._mostRecentProps.fontStyle = fs;
   }
 

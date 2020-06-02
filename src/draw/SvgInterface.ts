@@ -31,6 +31,9 @@ export interface SvgTextInterface {
   css(a: string): string;
   css(o: object): void;
   bbox(): SvgBBox;
+  center(cx: number, cy: number): void;
+  cx(): number;
+  cy(): number;
   text(): string;
   
   mouseover(f: () => void): void;
