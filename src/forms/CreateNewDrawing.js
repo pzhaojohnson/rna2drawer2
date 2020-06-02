@@ -266,7 +266,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceAndStructureSections() {
     return (
-      <div style={{ margin: '0px 0px 18px 0px', flexGrow: '1' }} >
+      <div style={{ margin: '0px 0px 18px 0px', flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
         {this._sequenceSection()}
         {this._structureSection()}
       </div>
@@ -275,7 +275,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceSection() {
     return (
-      <div style={{ height: '50%', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ minHeight: '50%', flexGrow: '1', display: 'flex', flexDirection: 'row' }} >
         <div style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
           {this._sequenceHeader()}
           {this._sequenceTextarea()}
@@ -437,7 +437,7 @@ class CreateNewDrawing extends React.Component {
 
   _structureSection() {
     return (
-      <div style={{ height: '50%', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ minHeight: '50%', flexGrow: '1', display: 'flex', flexDirection: 'row' }} >
         <div style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
           {this._structureHeader()}
           {this._structureTextarea()}
