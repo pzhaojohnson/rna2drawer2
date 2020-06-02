@@ -71,10 +71,7 @@ class Base implements BaseInterface {
     return text.attr('y');
   }
 
-  /**
-   * Returns null if the given string is not a single character.
-   */
-  static create(svg: Svg, character: string, xCenter: number, yCenter: number): (Base | null) {
+  static create(svg: Svg, character: string, xCenter: number, yCenter: number): (Base | never) {
     let text = svg.text((add) => add.tspan(character));
     text.id();
     text.attr({
@@ -83,20 +80,12 @@ class Base implements BaseInterface {
       'text-anchor': 'middle',
       'dominant-baseline': 'middle',
     });
-    let b = null;
-    try {
-      b = new Base(text);
-    } catch (err) {
-      return null;
-    }
+    let b = new Base(text);
     Base._applyMostRecentProps(b);
     return b;
   }
 
-  /**
-   * Returns null if the given string is not a single character.
-   */
-  static createOutOfView(svg: Svg, character: string): (Base | null) {
+  static createOutOfView(svg: Svg, character: string): (Base | never) {
     return Base.create(svg, character, 0, -200);
   }
 

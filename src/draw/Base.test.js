@@ -150,7 +150,6 @@ describe('Base class', () => {
 
   describe('create static method', () => {
     it('creates text element with correct values', () => {
-      let svg = NodeSVG();
       let b = Base.create(svg, 'r', 8, 77);
       expect(b.character).toBe('r');
       expect(b._text.id()).toBeTruthy();
@@ -161,12 +160,10 @@ describe('Base class', () => {
     });
 
     it('constructor throws', () => {
-      let svg = NodeSVG();
-      expect(Base.create(svg, 'ab', 3, 5)).toBe(null);
+      expect(() => Base.create(svg, 'ab', 3, 5)).toThrow();
     });
 
     it('applies most recent properties', () => {
-      let svg = NodeSVG();
       Base._mostRecentProps.fontSize = 19.228;
       let b = Base.create(svg, 'A', 4, 5);
       expect(b.fontSize).toBe(19.228);
@@ -174,7 +171,6 @@ describe('Base class', () => {
   });
 
   it('createOutOfView static method', () => {
-    let svg = NodeSVG();
     let b = Base.createOutOfView(svg, 'I');
     expect(b.character).toBe('I');
     expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
