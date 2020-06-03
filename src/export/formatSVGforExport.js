@@ -417,12 +417,10 @@ function _scaleElements(svg, scaling) {
 function _resetTextDominantBaselines(svg) {
   svg.children().forEach(c => {
     if (c.type === 'text') {
-      let b = c.bbox();
-      let cy = b.cy;
+      let cx = c.cx();
+      let cy = c.cy();
       c.attr({ 'dominant-baseline': 'auto' });
-      b = c.bbox();
-      let y = c.attr('y') - (b.cy - cy);
-      c.attr({ 'y': y });
+      c.center(cx, cy);
     }
   });
 }
