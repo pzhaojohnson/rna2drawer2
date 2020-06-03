@@ -32,8 +32,14 @@ export interface SvgTextInterface {
   css(o: object): void;
   bbox(): SvgBBox;
   center(cx: number, cy: number): void;
+  x(): number;
+  x(lx: number): void;
+  y(): number;
+  y(ly: number): void;
   cx(): number;
+  cx(x: number): void;
   cy(): number;
+  cy(y: number): void;
   dmove(dx: number, dy: number): void;
   text(): string;
   

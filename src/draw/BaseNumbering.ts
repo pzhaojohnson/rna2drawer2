@@ -48,7 +48,7 @@ class BaseNumbering implements BaseNumberingInterface {
     return { x1: x1, y1: y1, x2: x2, y2: y2 };
   }
 
-  static _textPositioning(line: SvgLine): TextPositioning {
+  static _textPositioning(text: SvgText, line: SvgLine): TextPositioning {
     let lineAngle = angleBetween(
       line.attr('x1'),
       line.attr('y1'),
@@ -57,20 +57,21 @@ class BaseNumbering implements BaseNumberingInterface {
     );
     lineAngle = normalizeAngle(lineAngle, 0);
     let textPadding = 4;
+    let fs = text.attr('font-size');
     let tp = {
       x: line.attr('x2') + textPadding,
-      y: line.attr('y2'),
+      y: line.attr('y2') + (fs / 2),
       textAnchor: 'start',
       dominantBaseline: 'middle',
     };
     if (lineAngle >= Math.PI / 4 && lineAngle < 3 * Math.PI / 4) {
       tp.x = line.attr('x2');
-      tp.y = line.attr('y2') + textPadding;
+      tp.y = line.attr('y2') + textPadding + fs;
       tp.textAnchor = 'middle';
       tp.dominantBaseline = 'hanging';
     } else if (lineAngle >= 3 * Math.PI / 4 && lineAngle < 5 * Math.PI / 4) {
       tp.x = line.attr('x2') - textPadding;
-      tp.y = line.attr('y2');
+      tp.y = line.attr('y2') + (fs / 2);
       tp.textAnchor = 'end';
       tp.dominantBaseline = 'middle';
     } else if (lineAngle >= 5 * Math.PI / 4 && lineAngle < 7 * Math.PI / 4) {
@@ -80,6 +81,15 @@ class BaseNumbering implements BaseNumberingInterface {
       tp.dominantBaseline = 'baseline';
     }
     return tp;
+  }
+
+  static _positionText(text: SvgText, line: SvgLine) {
+    let tp = BaseNumbering._textPositioning(text, line);
+    text.attr({
+      'x': tp.x,
+      'y': tp.y,
+      'text-anchor': tp.textAnchor,
+    });
   }
 
   static mostRecentProps(): BaseNumberingMostRecentProps {
@@ -132,13 +142,7 @@ class BaseNumbering implements BaseNumberingInterface {
     let lc = BaseNumbering._lineCoordinates(xBaseCenter, yBaseCenter, 0, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     let text = svg.text((add) => add.tspan(number.toString()));
-    let tp = BaseNumbering._textPositioning(line);
-    text.attr({
-      'x': tp.x,
-      'y': tp.y,
-      'text-anchor': tp.textAnchor,
-      'dominant-baseline': tp.dominantBaseline,
-    });
+    BaseNumbering._positionText(text, line);
     let n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
     BaseNumbering._applyMostRecentProps(n);
     return n;
@@ -282,13 +286,7 @@ class BaseNumbering implements BaseNumberingInterface {
       lineLength,
     );
     this._line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
-    let tp = BaseNumbering._textPositioning(this._line);
-    this._text.attr({
-      'x': tp.x,
-      'y': tp.y,
-      'text-anchor': tp.textAnchor,
-      'dominant-baseline': tp.dominantBaseline,
-    });
+    BaseNumbering._positionText(this._text, this._line);
     this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
@@ -323,6 +321,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   set fontFamily(ff: string) {
     this._text.attr({ 'font-family': ff });
+    BaseNumbering._positionText(this._text, this._line);
     BaseNumbering._mostRecentProps.fontFamily = ff;
   }
 
@@ -332,6 +331,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   set fontSize(fs: number) {
     this._text.attr({ 'font-size': fs });
+    BaseNumbering._positionText(this._text, this._line);
     BaseNumbering._mostRecentProps.fontSize = fs;
   }
 
@@ -341,6 +341,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   set fontWeight(fw: (number | string)) {
     this._text.attr({ 'font-weight': fw });
+    BaseNumbering._positionText(this._text, this._line);
     BaseNumbering._mostRecentProps.fontWeight = fw;
   }
 

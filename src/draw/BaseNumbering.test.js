@@ -15,45 +15,45 @@ describe('BaseNumbering class', () => {
     expect(lcs.y2).toBeCloseTo(-2 + (12.65 * Math.sin(4 * Math.PI / 3)), 3);
   });
 
-  describe('_textPositioning static method', () => {
+  describe('_positionText static method', () => {
     it('in right quadrant', () => {
-      let svg = NodeSVG();
-      let tp = BaseNumbering._textPositioning(svg.line(1, 2, 3, 2));
-      expect(
-        normalizeAngle(angleBetween(3, 2, tp.x, tp.y))
-      ).toBeCloseTo(0, 3);
-      expect(tp.textAnchor).toBe('start');
-      expect(tp.dominantBaseline).toBe('middle');
+      let text = svg.text(add => add.tspan('140'));
+      text.attr({ 'font-size': 12 });
+      let line = svg.line(1, 2, 3, 2);
+      BaseNumbering._positionText(text, line);
+      expect(text.attr('x')).toBeCloseTo(7);
+      expect(text.attr('y')).toBeCloseTo(8);
+      expect(text.attr('text-anchor')).toBe('start');
     });
 
     it('in bottom quadrant', () => {
-      let svg = NodeSVG();
-      let tp = BaseNumbering._textPositioning(svg.line(-1, -4, -1, -3));
-      expect(
-        normalizeAngle(angleBetween(-1, -3, tp.x, tp.y))
-      ).toBeCloseTo(Math.PI / 2, 3);
-      expect(tp.textAnchor).toBe('middle');
-      expect(tp.dominantBaseline).toBe('hanging');
+      let text = svg.text(add => add.tspan('1000'));
+      text.attr({ 'font-size': 16 });
+      let line = svg.line(-1, -4, -1, -3);
+      BaseNumbering._positionText(text, line);
+      expect(text.attr('x')).toBeCloseTo(-1);
+      expect(text.attr('y')).toBeCloseTo(17);
+      expect(text.attr('text-anchor')).toBe('middle');
     });
 
     it('in left quadrant', () => {
-      let svg = NodeSVG();
-      let tp = BaseNumbering._textPositioning(svg.line(1, -1, -1, -1));
-      expect(
-        normalizeAngle(angleBetween(-1, -1, tp.x, tp.y))
-      ).toBeCloseTo(Math.PI, 3);
-      expect(tp.textAnchor).toBe('end');
-      expect(tp.dominantBaseline).toBe('middle');
+      let text = svg.text(add => add.tspan('54'));
+      text.attr({ 'font-size': 9 });
+      let line = svg.line(1, -1, -1, -1);
+      BaseNumbering._positionText(text, line);
+      expect(text.attr('x')).toBeCloseTo(-5);
+      expect(text.attr('y')).toBeCloseTo(3.5);
+      expect(text.attr('text-anchor')).toBe('end');
     });
 
     it('in top quadrant', () => {
-      let svg = NodeSVG();
-      let tp = BaseNumbering._textPositioning(svg.line(2, 5, 2, 3));
-      expect(
-        normalizeAngle(angleBetween(2, 3, tp.x, tp.y))
-      ).toBeCloseTo(3 * Math.PI / 2, 3);
-      expect(tp.textAnchor).toBe('middle');
-      expect(tp.dominantBaseline).toBe('baseline');
+      let text = svg.text(add => add.tspan('101'));
+      text.attr({ 'font-size': 24 });
+      let line = svg.line(2, 5, 2, 3);
+      BaseNumbering._positionText(text, line);
+      expect(text.attr('x')).toBeCloseTo(2);
+      expect(text.attr('y')).toBeCloseTo(-1);
+      expect(text.attr('text-anchor')).toBe('middle');
     });
   });
 
@@ -197,11 +197,11 @@ describe('BaseNumbering class', () => {
       });
 
       it('text positioning', () => {
-        let tp = BaseNumbering._textPositioning(n._line);
+        let n = BaseNumbering.create(svg, 19, 27.5, 98);
+        let tp = BaseNumbering._textPositioning(n._text, n._line);
         expect(n._text.attr('x')).toBe(tp.x);
         expect(n._text.attr('y')).toBe(tp.y);
         expect(n._text.attr('text-anchor')).toBe(tp.textAnchor);
-        expect(n._text.attr('dominant-baseline')).toBe(tp.dominantBaseline);
       });
     });
 
@@ -479,11 +479,10 @@ describe('BaseNumbering class', () => {
       let n = BaseNumbering.create(svg, 90, 80, 50);
       n.lineAngle = Math.PI / 7;
       n._reposition(-3, -2, Math.PI / 3.5, 100, 200);
-      let tp = BaseNumbering._textPositioning(n._line);
-      expect(n._text.attr('x')).toBeCloseTo(tp.x, 3);
-      expect(n._text.attr('y')).toBeCloseTo(tp.y, 3);
+      let tp = BaseNumbering._textPositioning(n._text, n._line);
+      expect(n._text.attr('x')).toBeCloseTo(tp.x);
+      expect(n._text.attr('y')).toBeCloseTo(tp.y);
       expect(n._text.attr('text-anchor')).toBe(tp.textAnchor);
-      expect(n._text.attr('dominant-baseline')).toBe(tp.dominantBaseline);
     });
 
     it('stores base padding', () => {
@@ -542,27 +541,39 @@ describe('BaseNumbering class', () => {
   });
 
   it('fontFamily getter and setter', () => {
-    let svg = NodeSVG();
     let n = BaseNumbering.create(svg, 9, 0, 0);
     n.fontFamily = 'Consolas';
     expect(n.fontFamily).toBe('Consolas');
     expect(BaseNumbering.mostRecentProps().fontFamily).toBe('Consolas');
+    // updates text positioning
+    let tp = BaseNumbering._textPositioning(n._text, n._line);
+    expect(n._text.attr('x')).toBe(tp.x);
+    expect(n._text.attr('y')).toBe(tp.y);
+    expect(n._text.attr('text-anchor')).toBe(tp.textAnchor);
   });
 
   it('fontSize getter and setter', () => {
-    let svg = NodeSVG();
     let n = BaseNumbering.create(svg, 12, 0, 0);
     n.fontSize = 19.87;
     expect(n.fontSize).toBe(19.87);
     expect(BaseNumbering.mostRecentProps().fontSize).toBe(19.87);
+    // updates text positioning
+    let tp = BaseNumbering._textPositioning(n._text, n._line);
+    expect(n._text.attr('x')).toBe(tp.x);
+    expect(n._text.attr('y')).toBe(tp.y);
+    expect(n._text.attr('text-anchor')).toBe(tp.textAnchor);
   });
 
   it('fontWeight getter and setter', () => {
-    let svg = NodeSVG();
     let n = BaseNumbering.create(svg, 100, 0, 0);
     n.fontWeight = 600;
     expect(n.fontWeight).toBe(600);
     expect(BaseNumbering.mostRecentProps().fontWeight).toBe(600);
+    // updates text positioning
+    let tp = BaseNumbering._textPositioning(n._text, n._line);
+    expect(n._text.attr('x')).toBe(tp.x);
+    expect(n._text.attr('y')).toBe(tp.y);
+    expect(n._text.attr('text-anchor')).toBe(tp.textAnchor);
   });
 
   it('color getter and setter', () => {
