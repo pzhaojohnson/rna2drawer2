@@ -261,7 +261,7 @@ class ExportPptx extends React.Component {
           fontSize: '12px',
         }}
       >
-        <b>Note:</b> The exported PPTX file requires PowerPoint 2016 or later to open.
+        <b>Note:</b> Exported PPTX files require PowerPoint 2016 or later to open.
       </p>
     );
   }
@@ -275,7 +275,7 @@ class ExportPptx extends React.Component {
           fontSize: '12px',
         }}
       >
-        <b>Note:</b> Tertiary bonds are included as SVG images in the exported PPTX file
+        <b>Note:</b> Tertiary bonds are included as SVG images in exported PPTX files
         and can be converted to PowerPoint objects via the "Convert to Shape" feature.
       </p>
     );
