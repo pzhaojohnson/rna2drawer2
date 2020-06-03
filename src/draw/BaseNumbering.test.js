@@ -22,7 +22,7 @@ describe('BaseNumbering class', () => {
       let line = svg.line(1, 2, 3, 2);
       BaseNumbering._positionText(text, line);
       expect(text.attr('x')).toBeCloseTo(7);
-      expect(text.attr('y')).toBeCloseTo(8);
+      expect(text.attr('y')).toBeCloseTo(6.8);
       expect(text.attr('text-anchor')).toBe('start');
     });
 
@@ -32,7 +32,7 @@ describe('BaseNumbering class', () => {
       let line = svg.line(-1, -4, -1, -3);
       BaseNumbering._positionText(text, line);
       expect(text.attr('x')).toBeCloseTo(-1);
-      expect(text.attr('y')).toBeCloseTo(17);
+      expect(text.attr('y')).toBeCloseTo(13.8);
       expect(text.attr('text-anchor')).toBe('middle');
     });
 
@@ -42,7 +42,7 @@ describe('BaseNumbering class', () => {
       let line = svg.line(1, -1, -1, -1);
       BaseNumbering._positionText(text, line);
       expect(text.attr('x')).toBeCloseTo(-5);
-      expect(text.attr('y')).toBeCloseTo(3.5);
+      expect(text.attr('y')).toBeCloseTo(2.6);
       expect(text.attr('text-anchor')).toBe('end');
     });
 

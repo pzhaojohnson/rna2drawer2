@@ -57,7 +57,7 @@ class BaseNumbering implements BaseNumberingInterface {
     );
     lineAngle = normalizeAngle(lineAngle, 0);
     let textPadding = 4;
-    let fs = text.attr('font-size');
+    let fs = 0.8 * text.attr('font-size');
     let tp = {
       x: line.attr('x2') + textPadding,
       y: line.attr('y2') + (fs / 2),
