@@ -23,6 +23,9 @@ class Base implements BaseInterface {
   _outline?: CircleBaseAnnotation;
   _numbering?: BaseNumbering;
 
+  _xCenter: number;
+  _yCenter: number;
+
   static mostRecentProps(): BaseMostRecentProps {
     return { ...Base._mostRecentProps };
   }
@@ -96,6 +99,7 @@ class Base implements BaseInterface {
   constructor(text: SvgText) {
     this._text = text;
     this._validateText();
+    this._storeCenterCoordinates();
     
     this._highlighting = null;
     this._outline = null;
@@ -112,6 +116,11 @@ class Base implements BaseInterface {
     if (this._text.text().length !== 1) {
       throw new Error('The text content must be a single character.');
     }
+  }
+
+  _storeCenterCoordinates() {
+    this._xCenter = this._text.cx();
+    this._yCenter = this._text.cy();
   }
 
   get id(): string {
@@ -134,15 +143,21 @@ class Base implements BaseInterface {
   }
 
   get xCenter(): number {
-    return this._text.cx();
+    return this._xCenter;
   }
 
   get yCenter(): number {
-    return this._text.cy();
+    return this._yCenter;
   }
 
   moveTo(xCenter: number, yCenter: number) {
-    this._text.center(xCenter, yCenter);
+    let xShift = xCenter - this._xCenter;
+    let yShift = yCenter - this._yCenter;
+    let x = this._text.attr('x') + xShift;
+    let y = this._text.attr('y') + yShift;
+    this._text.attr({ 'x': x, 'y': y });
+    this._xCenter = xCenter;
+    this._yCenter = yCenter;
     if (this.hasHighlighting()) {
       this._highlighting.reposition(xCenter, yCenter);
     }
@@ -177,10 +192,8 @@ class Base implements BaseInterface {
   }
 
   set fontFamily(ff: string) {
-    let cx = this.xCenter;
-    let cy = this.yCenter;
     this._text.attr({ 'font-family': ff });
-    this.moveTo(cx, cy);
+    this._text.center(this._xCenter, this._yCenter);
     Base._mostRecentProps.fontFamily = ff;
   }
 
@@ -189,10 +202,8 @@ class Base implements BaseInterface {
   }
 
   set fontSize(fs: number) {
-    let cx = this.xCenter;
-    let cy = this.yCenter;
     this._text.attr({ 'font-size': fs });
-    this.moveTo(cx, cy);
+    this._text.center(this._xCenter, this._yCenter);
     Base._mostRecentProps.fontSize = fs;
   }
 
@@ -201,10 +212,8 @@ class Base implements BaseInterface {
   }
 
   set fontWeight(fw: (string | number)) {
-    let cx = this.xCenter;
-    let cy = this.yCenter;
     this._text.attr({ 'font-weight': fw });
-    this.moveTo(cx, cy);
+    this._text.center(this._xCenter, this._yCenter);
     Base._mostRecentProps.fontWeight = fw;
   }
 
@@ -213,10 +222,8 @@ class Base implements BaseInterface {
   }
 
   set fontStyle(fs: string) {
-    let cx = this.xCenter;
-    let cy = this.yCenter;
     this._text.attr({ 'font-style': fs });
-    this.moveTo(cx, cy);
+    this._text.center(this._xCenter, this._yCenter);
     Base._mostRecentProps.fontStyle = fs;
   }
 

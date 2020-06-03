@@ -266,6 +266,8 @@ describe('Base class', () => {
       b.moveTo(-10, 200);
       expect(b.xCenter).toBe(-10);
       expect(b.yCenter).toBe(200);
+      expect(b._text.cx()).toBeCloseTo(-10);
+      expect(b._text.cy()).toBeCloseTo(200);
     });
 
     it('repositions highlighting', () => {
@@ -329,8 +331,8 @@ describe('Base class', () => {
     b.fontFamily = 'Cambria';
     expect(b.fontFamily).toBe('Cambria');
     // maintains center coordinates
-    expect(b.xCenter).toBeCloseTo(1);
-    expect(b.yCenter).toBeCloseTo(2);
+    expect(b._text.cx()).toBeCloseTo(1);
+    expect(b._text.cy()).toBeCloseTo(2);
   });
 
   it('fontSize getter and setter', () => {
@@ -339,8 +341,8 @@ describe('Base class', () => {
     b.fontSize = 5.123;
     expect(b.fontSize).toBe(5.123);
     // maintains center coordinates
-    expect(b.xCenter).toBeCloseTo(5);
-    expect(b.yCenter).toBeCloseTo(6);
+    expect(b._text.cx()).toBeCloseTo(5);
+    expect(b._text.cy()).toBeCloseTo(6);
   });
 
   it('fontWeight getter and setter', () => {
@@ -349,8 +351,8 @@ describe('Base class', () => {
     b.fontWeight = 650;
     expect(b.fontWeight).toBe(650);
     // maintains center coordinates
-    expect(b.xCenter).toBeCloseTo(1);
-    expect(b.yCenter).toBeCloseTo(4);
+    expect(b._text.cx()).toBeCloseTo(1);
+    expect(b._text.cy()).toBeCloseTo(4);
   });
 
   it('fontStyle getter and setter', () => {
@@ -359,8 +361,8 @@ describe('Base class', () => {
     b.fontStyle = 'italic';
     expect(b.fontStyle).toBe('italic');
     // maintains center coordinates
-    expect(b.xCenter).toBeCloseTo(5);
-    expect(b.yCenter).toBeCloseTo(15);
+    expect(b._text.cx()).toBeCloseTo(5);
+    expect(b._text.cy()).toBeCloseTo(15);
   });
 
   it('fill getter and setter', () => {

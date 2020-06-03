@@ -34,6 +34,7 @@ export interface SvgTextInterface {
   center(cx: number, cy: number): void;
   cx(): number;
   cy(): number;
+  dmove(dx: number, dy: number): void;
   text(): string;
   
   mouseover(f: () => void): void;
