@@ -78,48 +78,6 @@ function _textHeight(text) {
 }
 
 /**
- * If text-anchor was undefined, this function will set it to 'start',
- * which should not change how the text element is displayed.
- * 
- * @param {SVG.Text} text 
- * 
- * @returns {number} 
- */
-function _xTextCenter(text) {
-  let taPrev = text.attr('text-anchor');
-  if (!taPrev) {
-    taPrev = 'start';
-  }
-  let cx = text.bbox().cx;
-  text.attr({ 'text-anchor': 'middle' });
-  let shift = text.bbox().cx - cx;
-  text.attr({ 'text-anchor': taPrev });
-  return text.attr('x') - shift;
-}
-
-/**
- * If dominant-baseline was undefined, this function will set it to 'auto',
- * which should not change how the text element is displayed.
- * 
- * @param {SVG.Text} text 
- * 
- * @returns {number} 
- */
-function _yTextCenter(text) {
-  let dblPrev = text.attr('dominant-baseline');
-  if (!dblPrev) {
-    dblPrev = 'auto';
-  }
-  let b = text.bbox();
-  let cy = b.cy;
-  text.attr({ 'dominant-baseline': 'middle' });
-  b = text.bbox();
-  let shift = b.cy - cy;
-  text.attr({ 'dominant-baseline': dblPrev });
-  return text.attr('y') - shift;
-}
-
-/**
  * @param {SVG.Text} text 
  * 
  * @returns {Object} 
@@ -128,8 +86,8 @@ function _textOptions(text) {
   let fs = pixelsToPoints(text.attr('font-size'));
   let w = _textWidth(text);
   let h = _textHeight(text);
-  let x = pixelsToInches(_xTextCenter(text)) - (w / 2);
-  let y = pixelsToInches(_yTextCenter(text)) - (h / 2);
+  let x = pixelsToInches(text.cx()) - (w / 2);
+  let y = pixelsToInches(text.cy()) - (h / 2);
   let fw = text.attr('font-weight');
   let bold = false;
   if (fw === 'bold' || fw === 'bolder') {
@@ -460,8 +418,6 @@ export {
   _pptxHex,
   _NUMBER_TRIM,
   _trimNum,
-  _xTextCenter,
-  _yTextCenter,
   _textOptions,
   _lineOptions,
   _pathIsOnlyLines,
