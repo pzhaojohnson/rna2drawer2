@@ -41,7 +41,7 @@ class App {
     this._initializeDrawingInteraction();
     this.renderPeripherals();
 
-    this._setKeyBindings();
+    this._setBindings();
     
     renderCreateNewDrawingInApp(this);
   }
@@ -155,13 +155,19 @@ class App {
     this.drawingChangedNotByInteraction();
   }
 
-  _setKeyBindings() {
+  _setBindings() {
     document.addEventListener('keydown', event => {
       let k = event.key.toUpperCase();
       if (event.ctrlKey && event.shiftKey && k == 'Z') {
         this.redo();
       } else if (event.ctrlKey && k == 'Z') {
         this.undo();
+      }
+    });
+    window.addEventListener('beforeunload', event => {
+      if (!this.strictDrawing.isEmpty() || this.canUndo() || this.canRedo()) {
+        (event || window.event).returnValue = 'Are you sure?';
+        return 'Are you sure?';
       }
     });
   }
