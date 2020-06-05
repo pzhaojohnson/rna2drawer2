@@ -25,4 +25,6 @@ export interface BaseAnnotationInterface {
   refreshIds(): void;
 }
 
+export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {}
+
 export default BaseAnnotationInterface;
