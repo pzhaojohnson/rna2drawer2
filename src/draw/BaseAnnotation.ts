@@ -12,6 +12,7 @@ import angleBetween from './angleBetween';
 
 export class CircleBaseAnnotation implements BaseAnnotationInterface {
   _circle: SvgCircle;
+
   _displacementLength: number;
   _displacementAngle: number;
 
@@ -42,9 +43,14 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
   }
 
   /**
+   * Throws if the circle is not actually a circle.
+   * 
    * Initializes the ID of the circle if it is not already initialized.
    */
-  _validateCircle() {
+  _validateCircle(): (void | never) {
+    if (this._circle.type !== 'circle') {
+      throw new Error('Passed SVG element must be a circle.');
+    }
     this._circle.id();
   }
 

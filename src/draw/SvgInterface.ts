@@ -86,6 +86,7 @@ export interface SvgPathInterface {
 }
 
 export interface SvgCircleInterface {
+  readonly type: string;
   id(): string;
   id(n: null): void;
   attr(a: string): any;
