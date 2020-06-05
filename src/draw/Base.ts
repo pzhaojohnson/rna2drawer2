@@ -64,22 +64,6 @@ class Base implements BaseInterface {
     return b;
   }
 
-  /**
-   * Returns the center X coordinates of the text element.
-   */
-  static xFromSavedState(savedState: BaseSavableState, svg: Svg): number {
-    let text = svg.findOne('#' + savedState.textId) as SvgText;
-    return text.cx();
-  }
-
-  /**
-   * Returns the center Y coordinate of the text element.
-   */
-  static yFromSavedState(savedState: BaseSavableState, svg: Svg): number {
-    let text = svg.findOne('#' + savedState.textId) as SvgText;
-    return text.cy();
-  }
-
   static create(svg: Svg, character: string, xCenter: number, yCenter: number): (Base | never) {
     let text = svg.text((add) => add.tspan(character));
     text.id();

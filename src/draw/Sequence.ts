@@ -65,35 +65,6 @@ class Sequence implements SequenceInterface {
     return Math.PI / 2;
   }
 
-  static _clockwiseNormalAngleAtPositionFromSavedState(
-    p: number,
-    savedState: SequenceSavableState,
-    svg: Svg,
-  ): number {
-    let sb = savedState.bases[p - 1];
-    let cs = {
-      xCenter: Base.xFromSavedState(sb, svg),
-      yCenter: Base.yFromSavedState(sb, svg),
-    };
-    let cs5 = null;
-    let cs3 = null;
-    if (p > 1) {
-      let sb5 = savedState.bases[p - 2];
-      cs5 = {
-        xCenter: Base.xFromSavedState(sb5, svg),
-        yCenter: Base.yFromSavedState(sb5, svg),
-      };
-    }
-    if (p < savedState.bases.length) {
-      let sb3 = savedState.bases[p];
-      cs3 = {
-        xCenter: Base.xFromSavedState(sb3, svg),
-        yCenter: Base.yFromSavedState(sb3, svg),
-      };
-    }
-    return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
-  }
-
   static _innerNormalAngleOfBase(
     cs: BaseCoordinates,
     cs5?: BaseCoordinates,

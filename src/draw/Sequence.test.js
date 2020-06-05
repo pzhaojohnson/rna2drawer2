@@ -104,46 +104,6 @@ describe('Sequence class', () => {
     });
   });
 
-  describe('_clockwiseNormalAngleAtPositionFromSavedState static method', () => {
-    it("no 5' or 3' neighboring base", () => {
-      let svg = NodeSVG();
-      let seq = new Sequence('asdf');
-      seq.appendBase(Base.create(svg, 'A', 3, 5));
-      let savableState = seq.savableState();
-      expect(
-        Sequence._clockwiseNormalAngleAtPositionFromSavedState(1, savableState, svg)
-      ).toBeCloseTo(
-        Sequence._clockwiseNormalAngleOfBase(
-          { xCenter: 3, yCenter: 5 },
-          null,
-          null,
-        ),
-        3,
-      );
-    });
-
-    it("5' and 3' neighboring bases", () => {
-      let svg = NodeSVG();
-      let seq = new Sequence('qwer');
-      seq.appendBases([
-        Base.create(svg, 'g', 5, 9),
-        Base.create(svg, 'n', 100, 200),
-        Base.create(svg, 'J', 6, -10),
-      ]);
-      let savableState = seq.savableState();
-      expect(
-        Sequence._clockwiseNormalAngleAtPositionFromSavedState(2, savableState, svg)
-      ).toBeCloseTo(
-        Sequence._clockwiseNormalAngleOfBase(
-          { xCenter: 100, yCenter: 200 },
-          { xCenter: 5, yCenter: 9 },
-          { xCenter: 6, yCenter: -10 },
-        ),
-        3,
-      );
-    });
-  });
-
   describe('_innerNormalAngleOfBase static method', () => {
     it("no 5' neighboring base", () => {
       expect(

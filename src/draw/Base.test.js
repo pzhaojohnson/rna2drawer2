@@ -140,14 +140,6 @@ describe('Base class', () => {
     });
   });
 
-  it('xFromSavedState and yFromSavedState static methods', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'T', 9, 12);
-    let savableState = b.savableState();
-    expect(Base.xFromSavedState(savableState, svg)).toBe(9);
-    expect(Base.yFromSavedState(savableState, svg)).toBe(12);
-  });
-
   describe('create static method', () => {
     it('creates text element with correct values', () => {
       let b = Base.create(svg, 'r', 8, 77);
