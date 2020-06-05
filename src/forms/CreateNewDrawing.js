@@ -495,7 +495,7 @@ class CreateNewDrawing extends React.Component {
         spellCheck={'false'}
         placeholder={
           ' ...the secondary structure in dot-bracket notation, e.g. "((((....))))"'
-          + '\n\n ...also called "Vienna" format on Mfold'
+          + '\n\n ...also called "Vienna" format by Mfold'
         }
         style={{
           flexGrow: '1',
