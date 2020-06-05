@@ -493,7 +493,10 @@ class CreateNewDrawing extends React.Component {
         value={this.state.structure}
         onChange={event => this._onStructureTextareaChange(event)}
         spellCheck={'false'}
-        placeholder={' ...the secondary structure in dot-bracket notation, e.g. "((((....))))"'}
+        placeholder={
+          ' ...the secondary structure in dot-bracket notation, e.g. "((((....))))"'
+          + '\n\n ...also called "Vienna" format on Mfold'
+        }
         style={{
           flexGrow: '1',
           margin: '4px 0px 0px 0px',
