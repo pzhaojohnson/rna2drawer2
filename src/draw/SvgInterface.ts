@@ -24,6 +24,7 @@ export interface SvgTextAddFunc {
 }
 
 export interface SvgTextInterface {
+  type: string;
   id(): string;
   id(n: null): void;
   attr(a: string): any;
@@ -57,6 +58,7 @@ export interface SvgTextInterface {
 }
 
 export interface SvgLineInterface {
+  type: string;
   id(): string;
   id(n: null): void;
   attr(a: string): any;
@@ -67,6 +69,7 @@ export interface SvgLineInterface {
 }
 
 export interface SvgPathInterface {
+  type: string;
   id(): string;
   id(n: null): void;
   array(): (string | number)[][];
