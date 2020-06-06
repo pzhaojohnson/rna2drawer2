@@ -351,311 +351,232 @@ describe('Base class', () => {
     });
   });
 
-  describe('addCircleHighlighting method', () => {
-    it('removes previous highlighting', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'e', 4, 6);
-      let h1 = b.addCircleHighlighting();
-      expect(svg.findOne('#' + h1.id)).toBeTruthy();
-      let h2 = b.addCircleHighlighting();
-      expect(svg.findOne('#' + h1.id)).toBe(null);
+  describe('highlighting', () => {
+    describe('addCircleHighlighting method', () => {
+      it('passes center base coordinates and stores reference', () => {
+        let b = Base.create(svg, 'a', 5, 10);
+        let h = b.addCircleHighlighting();
+        expect(h.xCenter).toBeCloseTo(5);
+        expect(h.yCenter).toBeCloseTo(10);
+        expect(h.displacementLength).toBeCloseTo(0);
+        expect(b.highlighting).toBe(h); // check reference
+      });
+
+      it('removes previous highlighting', () => {
+        let b = Base.create(svg, 't', 5, 12);
+        let h1 = b.addCircleHighlighting();
+        let spy = jest.spyOn(h1, 'remove');
+        let h2 = b.addCircleHighlighting();
+        expect(spy).toHaveBeenCalled();
+      });
     });
 
-    it('returns added circle highlighting', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'e', 4, 4);
-      let h = b.addCircleHighlighting();
-      expect(h).toBe(b._highlighting);
+    describe('addCircleHighlightingFromSavedState method', () => {
+      it('passes center base coordinates and stores reference', () => {
+        let b = Base.create(svg, 'g', 30, 82);
+        let h1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+        let savableState1 = h1.savableState();
+        let h2 = b.addCircleHighlightingFromSavedState(savableState1);
+        // requires that center base coordinates were passed
+        expect(h2.displacementLength).toBeCloseTo(0);
+        expect(b.highlighting).toBe(h2); // check reference
+      });
+
+      it('removes previous highlighting', () => {
+        let b = Base.create(svg, 'b', 5, 6);
+        let h1 = b.addCircleHighlighting();
+        let spy = jest.spyOn(h1, 'remove');
+        let h2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+        let savableState2 = h2.savableState();
+        let h3 = b.addCircleHighlightingFromSavedState(savableState2);
+        expect(spy).toHaveBeenCalled();
+      });
     });
 
-    it('creates circle highlighting with correct position', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'r', 2, 9);
-      let h = b.addCircleHighlighting();
-      expect(h.xCenter).toBeCloseTo(2);
-      expect(h.yCenter).toBeCloseTo(9);
-    });
-  });
-
-  describe('addCircleHighlightingFromSavedState method', () => {
-    it('removes previous highlighting', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'w', 3, 5);
-      let h = b.addCircleHighlighting();
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 5);
-      let savableState = cba.savableState();
-      expect(svg.findOne('#' + h.id)).toBeTruthy();
-      b.addCircleHighlightingFromSavedState(savableState, 0);
-      expect(svg.findOne('#' + h.id)).toBe(null);
-    });
-
-    it('returns added circle highlighting', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'g', 3, 9);
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 9);
-      let savableState = cba.savableState();
-      let h = b.addCircleHighlightingFromSavedState(savableState, 0);
-      expect(h).toBe(b._highlighting);
-    });
-
-    it('passes base center', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'q', 2, 9);
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 2, 9);
-      cba.shift(8, 10);
-      let dl = cba.displacementLength;
-      let da = cba.displacementAngle;
-      let savableState = cba.savableState();
-      let h = b.addCircleHighlightingFromSavedState(savableState);
-      expect(h.displacementLength).toBeCloseTo(dl, 3);
-      expect(normalizeAngle(h.displacementAngle)).toBeCloseTo(normalizeAngle(da), 3);
-    });
-  });
-
-  it('hasHighlighting method', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'C', 0.99, 100.2357);
-    expect(b.hasHighlighting()).toBeFalsy();
-    b.addCircleHighlighting();
-    expect(b.hasHighlighting()).toBeTruthy();
-    b.removeHighlighting();
-    expect(b.hasHighlighting()).toBeFalsy();
-  });
-
-  it('highlighting getter', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'C', 0.99, 100.2357);
-    expect(b.highlighting).toBe(null);
-    let h = b.addCircleHighlighting();
-    expect(b.highlighting).toBe(h);
-  });
-
-  describe('removeHighlighting method', () => {
-    it('has no highlighting in the first place', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'a', 3, 5);
+    it('hasHighlighting method and highlighting getter', () => {
+      let b = Base.create(svg, 'h', 10, 20);
       expect(b.hasHighlighting()).toBeFalsy();
-      expect(() => b.removeHighlighting()).not.toThrow();
-    });
-
-    it('removes highlighting', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 't', 1, 9);
+      expect(b.highlighting).toBe(null);
       let h = b.addCircleHighlighting();
       expect(b.hasHighlighting()).toBeTruthy();
-      expect(svg.findOne('#' + h.id)).toBeTruthy();
+      expect(b.highlighting).toBe(h);
       b.removeHighlighting();
       expect(b.hasHighlighting()).toBeFalsy();
-      expect(svg.findOne('#' + h.id)).toBe(null);
+      expect(b.highlighting).toBe(null);
+    });
+
+    describe('removeHighlighting method', () => {
+      it('removes highlighting and reference', () => {
+        let b = Base.create(svg, 'b', 1, 5);
+        let h = b.addCircleHighlighting();
+        let spy = jest.spyOn(h, 'remove');
+        b.removeHighlighting();
+        expect(spy).toHaveBeenCalled();
+        expect(b.highlighting).toBe(null); // check reference
+      });
+
+      it('can be called with no highlighting', () => {
+        let b = Base.create(svg, 'a', 1, 2);
+        expect(b.hasHighlighting()).toBeFalsy();
+        expect(() => b.removeHighlighting()).not.toThrow();
+      });
     });
   });
 
-  describe('addCircleOutline method', () => {
-    it('removes previous outline', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'q', 3, 5);
-      let o1 = b.addCircleOutline();
-      expect(svg.findOne('#' + o1.id)).toBeTruthy();
-      let o2 = b.addCircleOutline();
-      expect(svg.findOne('#' + o1.id)).toBe(null);
+  describe('outline', () => {
+    describe('addCircleOutline method', () => {
+      it('passes center base coordinates and stores reference', () => {
+        let b = Base.create(svg, 'g', 10, 28);
+        let o = b.addCircleOutline();
+        expect(o.xCenter).toBeCloseTo(10);
+        expect(o.yCenter).toBeCloseTo(28);
+        expect(o.displacementLength).toBeCloseTo(0);
+        expect(b.outline).toBe(o); // check reference
+      });
+
+      it('removes previous outline', () => {
+        let b = Base.create(svg, 'Q', 5, 8);
+        let o1 = b.addCircleOutline();
+        let spy = jest.spyOn(o1, 'remove');
+        let o2 = b.addCircleOutline();
+        expect(spy).toHaveBeenCalled();
+      });
     });
 
-    it('returns added circle outline', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'b', 2, 4);
-      let o = b.addCircleOutline();
-      expect(o).toBe(b._outline);
+    describe('addCircleOutlineFromSavedState method', () => {
+      it('passes saved state and center base coordinates and stores reference', () => {
+        let b = Base.create(svg, 'H', 30, 60);
+        let o1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+        let savableState1 = o1.savableState();
+        let o2 = b.addCircleOutlineFromSavedState(savableState1);
+        expect(o2.id).toBe(o1.id);
+        // requires that center base coordinates were passed
+        expect(o2.displacementLength).toBeCloseTo(0);
+        expect(b.outline).toBe(o2); // check reference
+      });
+
+      it('removes previous outline', () => {
+        let b = Base.create(svg, 'q', 5, 10);
+        let o1 = b.addCircleOutline();
+        let spy = jest.spyOn(o1, 'remove');
+        let o2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+        let savableState2 = o2.savableState();
+        let o3 = b.addCircleOutlineFromSavedState(savableState2);
+        expect(spy).toHaveBeenCalled();
+      });
     });
 
-    it('creates circle outline with correct position', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'b', 5, 6);
-      let o = b.addCircleOutline();
-      expect(o.xCenter).toBeCloseTo(5);
-      expect(o.yCenter).toBeCloseTo(6);
-    });
-  });
-
-  describe('addCircleOutlineFromSavedState method', () => {
-    it('removes previous outline', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'e', 3, 9);
-      let o1 = b.addCircleOutline();
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 3, 9);
-      let savableState = cba.savableState();
-      expect(svg.findOne('#' + o1.id)).toBeTruthy();
-      let o2 = b.addCircleOutlineFromSavedState(savableState, 0);
-      expect(svg.findOne('#' + o1.id)).toBe(null);
-    });
-
-    it('returns added circle outline', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'q', 2, 9);
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 44, 7);
-      let savableState = cba.savableState();
-      let o = b.addCircleOutlineFromSavedState(savableState, 0);
-      expect(o).toBe(b._outline);
-    });
-
-    it('passes base center', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'w', 12, 16);
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 12, 16);
-      cba.shift(4, 8);
-      let dl = cba.displacementLength;
-      let da = cba.displacementAngle;
-      let savableState = cba.savableState();
-      let o = b.addCircleOutlineFromSavedState(savableState);
-      expect(o.displacementLength).toBeCloseTo(dl, 3);
-      expect(normalizeAngle(o.displacementAngle)).toBeCloseTo(normalizeAngle(da), 3);
-    });
-  });
-
-  it('hasOutline method', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'C', 0.99, 100.2357);
-    expect(b.hasOutline()).toBeFalsy();
-    b.addCircleOutline();
-    expect(b.hasOutline()).toBeTruthy();
-    b.removeOutline();
-    expect(b.hasOutline()).toBeFalsy();
-  });
-
-  it('outline getter', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'C', 0.99, 100.2357);
-    expect(b.outline).toBe(null);
-    let o = b.addCircleOutline();
-    expect(b.outline).toBe(o);
-  });
-
-  describe('removeOutline method', () => {
-    it('has no outline in the first place', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 't', 1, 2);
+    it('hasOutline method and outline getter', () => {
+      let b = Base.create(svg, 'h', 100, 112);
       expect(b.hasOutline()).toBeFalsy();
-      expect(() => b.removeOutline()).not.toThrow();
-    });
-
-    it('removes outline', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'g', 5, 7);
-      let o  = b.addCircleOutline();
+      expect(b.outline).toBe(null);
+      let o = b.addCircleOutline();
       expect(b.hasOutline()).toBeTruthy();
-      expect(svg.findOne('#' + o.id)).toBeTruthy();
+      expect(b.outline).toBe(o);
       b.removeOutline();
       expect(b.hasOutline()).toBeFalsy();
-      expect(svg.findOne('#' + o.id)).toBe(null);
+      expect(b.outline).toBe(null);
+    });
+
+    describe('removeOutline method', () => {
+      it('removes outline and reference', () => {
+        let b = Base.create(svg, 'b', 5, 2);
+        let o = b.addCircleOutline();
+        let spy = jest.spyOn(o, 'remove');
+        b.removeOutline();
+        expect(spy).toHaveBeenCalled();
+        expect(b.outline).toBe(null);
+      });
+
+      it('can be called without outline', () => {
+        let b = Base.create(svg, 'a', 1, 2);
+        expect(b.hasOutline()).toBeFalsy();
+        expect(() => b.removeOutline()).not.toThrow();
+      });
     });
   });
 
-  describe('addNumbering method', () => {
-    it('removes previous numbering', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'a', 1, 2);
-      let n1 = b.addNumbering(5, 0);
-      expect(svg.findOne('#' + n1._text.id())).toBeTruthy();
-      let n2 = b.addNumbering(6, 0);
-      expect(svg.findOne('#' + n1._text.id())).toBe(null);
+  describe('numbering', () => {
+    describe('addNumbering method', () => {
+      it('creates with number and passes center base coordinates and stores reference', () => {
+        let b = Base.create(svg, 'G', 20, 80);
+        let spy = jest.spyOn(BaseNumbering, 'create');
+        let n = b.addNumbering(2056);
+        expect(n.number).toBe(2056);
+        let c = spy.mock.calls[0];
+        expect(c[2]).toBe(b.xCenter);
+        expect(c[3]).toBe(b.yCenter);
+        expect(b.numbering).toBe(n); // check reference
+      });
+
+      it('removes previous numbering', () => {
+        let b = Base.create(svg, 'G', 200, 800);
+        let n1 = b.addNumbering(1);
+        let spy = jest.spyOn(n1, 'remove');
+        let n2 = b.addNumbering(2);
+        expect(b.numbering).toBe(n2);
+        expect(spy).toHaveBeenCalled();
+      });
+
+      it('handles throw by BaseNumbering class', () => {
+        let b = Base.create(svg, 'G', 2, 8);
+        let n = b.addNumbering('asdf');
+        expect(n).toBe(null);
+        expect(b.numbering).toBe(null);
+      });
     });
 
-    it('returns added numbering', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'b', 4, 5);
-      let n = b.addNumbering(9, 0);
-      expect(n).toBe(b._numbering);
+    describe('addNumberingFromSavedState method', () => {
+      it('passes saved state and center base coordinates and stores reference', () => {
+        let b = Base.create(svg, 'G', 15, 30);
+        let n1 = BaseNumbering.create(svg, 852, b.xCenter, b.yCenter);
+        let savableState1 = n1.savableState();
+        let n2 = b.addNumberingFromSavedState(savableState1);
+        expect(n2.number).toBe(852);
+        // requires that center base coordinates were passed
+        expect(n2.basePadding).toBeCloseTo(n1.basePadding);
+        expect(b.numbering).toBe(n2); // check reference
+      });
+
+      it('removes previous numbering', () => {
+        let b = Base.create(svg, 'G', 30, 6);
+        let n1 = BaseNumbering.create(svg, 1, b.xCenter, b.yCenter);
+        let savableState1 = n1.savableState();
+        let n2 = b.addNumbering(2);
+        let spy = jest.spyOn(n2, 'remove');
+        b.addNumberingFromSavedState(savableState1);
+        expect(b.numbering.number).toBe(1);
+        expect(spy).toHaveBeenCalled();
+      });
     });
 
-    it('invalid number', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'h', 3, 5);
-      let n = b.addNumbering(1.2, 0);
-      expect(n).toBe(null);
+    it('hasNumbering method and numbering getter', () => {
+      let b = Base.create(svg, 'Q', 5, 12);
       expect(b.hasNumbering()).toBeFalsy();
-    });
-
-    it('passes number and base center', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'w', 5, 9);
-      let n = b.addNumbering(12);
-      n.lineAngle = Math.PI / 3;
-      expect(n.number).toBe(12);
-      expect(
-        distanceBetween(5, 9, n._line.attr('x1'), n._line.attr('y1'))
-      ).toBeCloseTo(n.basePadding, 3);
-      expect(
-        normalizeAngle(angleBetween(5, 9, n._line.attr('x1'), n._line.attr('y1')))
-      ).toBeCloseTo(Math.PI / 3, 3);
-    });
-  });
-
-  describe('addNumberingFromSavedState method', () => {
-    it('removes previous numbering', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'y', 5, 9);
-      let n1 = b.addNumbering(30, 0);
-      let n2 = BaseNumbering.create(svg, 15, 5, 9, Math.PI / 6);
-      let savableState2 = n2.savableState();
-      expect(svg.findOne('#' + n1._text.id())).toBeTruthy();
-      let n3 = b.addNumberingFromSavedState(savableState2);
-      expect(svg.findOne('#' + n1._text.id())).toBe(null);
-    });
-
-    it('returns added numbering', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'p', 7, 8);
-      let n1 = BaseNumbering.create(svg, 20, 7, 8, 0);
-      let savableState1 = n1.savableState();
-      let n2 = b.addNumberingFromSavedState(savableState1);
-      expect(n2).toBe(b._numbering);
-    });
-
-    it('passes base center', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'e', 4, 9);
-      let n1 = BaseNumbering.create(svg, 40, 4, 9, Math.PI / 3);
-      n1.basePadding = 12;
-      let savableState1 = n1.savableState();
-      let n2 = b.addNumberingFromSavedState(savableState1);
-      expect(n2.basePadding).toBeCloseTo(12, 3);
-    });
-  });
-
-  it('hasNumbering method', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'C', 0.99, 100.2357);
-    expect(b.hasNumbering()).toBeFalsy();
-    b.addNumbering(12, Math.PI / 6);
-    expect(b.hasNumbering()).toBeTruthy();
-    b.removeNumbering();
-    expect(b.hasNumbering()).toBeFalsy();
-  });
-
-  it('numbering getter', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'C', 0.99, 100.2357);
-    expect(b.numbering).toBe(null);
-    let n = b.addNumbering(-9, Math.PI / 7);
-    expect(b.numbering).toBe(n);
-  });
-
-  describe('removeNumbering method', () => {
-    it('has no numbering in the first place', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'g', 1, 2);
-      expect(b.hasNumbering()).toBeFalsy();
-      expect(() => b.removeNumbering()).not.toThrow();
-    });
-
-    it('removes numbering', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 't', 4, 5);
-      let n = b.addNumbering(12, Math.PI / 3);
+      expect(b.numbering).toBe(null);
+      b.addNumbering(6);
       expect(b.hasNumbering()).toBeTruthy();
-      expect(svg.findOne('#' + n._text.id())).toBeTruthy();
+      expect(b.numbering.number).toBe(6);
       b.removeNumbering();
       expect(b.hasNumbering()).toBeFalsy();
-      expect(svg.findOne('#' + n._text.id())).toBe(null);
+      expect(b.numbering).toBe(null);
+    });
+
+    describe('removeNumbering method', () => {
+      it('removes numbering and reference', () => {
+        let b = Base.create(svg, 'G', 50, 25);
+        let n = b.addNumbering(1);
+        let spy = jest.spyOn(n, 'remove');
+        b.removeNumbering();
+        expect(spy).toHaveBeenCalled();
+        expect(b.numbering).toBe(null);
+      });
+
+      it('can be called without numbering', () => {
+        let b = Base.create(svg, 'G', 100, 200);
+        expect(b.hasNumbering()).toBeFalsy();
+        expect(() => b.removeNumbering()).not.toThrow();
+      });
     });
   });
 

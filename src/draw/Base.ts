@@ -340,11 +340,11 @@ class Base implements BaseInterface {
         this.xCenter,
         this.yCenter,
       );
-      return this._numbering;
     } catch (err) {
       console.error(err.toString());
-      return null;
+      this._numbering = null;
     }
+    return this._numbering;
   }
 
   addNumberingFromSavedState(
