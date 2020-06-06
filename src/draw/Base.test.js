@@ -9,38 +9,25 @@ import distanceBetween from './distanceBetween';
 let svg = NodeSVG();
 
 describe('Base class', () => {
-  describe('mostRecentProps static method', () => {
-    it('returns a new object', () => {
-      let _mrps = Base._mostRecentProps;
-      expect(_mrps).toBe(Base._mostRecentProps);
-      let mrps = Base.mostRecentProps();
-      expect(mrps).not.toBe(Base._mostRecentProps);
-    });
-
-    it('returns correct values', () => {
-      Base._mostRecentProps.fontFamily = 'Tahoe';
-      Base._mostRecentProps.fontSize = 4.567;
-      Base._mostRecentProps.fontWeight = 'bolder';
-      Base._mostRecentProps.fontStyle = 'oblique';
-      let mrps = Base.mostRecentProps();
-      expect(mrps.fontFamily).toBe('Tahoe');
-      expect(mrps.fontSize).toBeCloseTo(4.567, 6);
-      expect(mrps.fontWeight).toBe('bolder');
-      expect(mrps.fontStyle).toBe('oblique');
-    });
+  it('mostRecentProps static method returns a copy', () => {
+    Base._mostRecentProps.fontFamily = 'Tahoe';
+    Base._mostRecentProps.fontSize = 4.567;
+    Base._mostRecentProps.fontWeight = 'bolder';
+    Base._mostRecentProps.fontStyle = 'oblique';
+    let mrps = Base.mostRecentProps();
+    expect(mrps.fontFamily).toBe('Tahoe');
+    expect(mrps.fontSize).toBeCloseTo(4.567, 6);
+    expect(mrps.fontWeight).toBe('bolder');
+    expect(mrps.fontStyle).toBe('oblique');
+    expect(mrps).not.toBe(Base._mostRecentProps); // is a new object
   });
 
   it('_applyMostRecentProps static method', () => {
-    let svg = NodeSVG();
     let b = Base.create(svg, 'G', 3, 4);
     Base._mostRecentProps.fontFamily = 'Cambria';
     Base._mostRecentProps.fontSize = 4.88;
     Base._mostRecentProps.fontWeight = 600;
     Base._mostRecentProps.fontStyle = 'italic';
-    expect(b.fontFamily).not.toBe('Cambria');
-    expect(b.fontSize).not.toBe(4.88);
-    expect(b.fontWeight).not.toBe(600);
-    expect(b.fontStyle).not.toBe('italic');
     Base._applyMostRecentProps(b);
     expect(b.fontFamily).toBe('Cambria');
     expect(b.fontSize).toBe(4.88);
@@ -49,7 +36,6 @@ describe('Base class', () => {
   });
 
   it('_copyPropsToMostRecent static method', () => {
-    let svg = NodeSVG();
     let t = svg.text(add => add.tspan('A'));
     t.attr({
       'font-family': 'Impact',
@@ -59,10 +45,6 @@ describe('Base class', () => {
     });
     let b = new Base(t);
     let mrps = Base.mostRecentProps();
-    expect(mrps.fontFamily).not.toBe('Impact');
-    expect(mrps.fontSize).not.toBe(4.447);
-    expect(mrps.fontWeight).not.toBe('lighter');
-    expect(mrps.fontStyle).not.toBe('oblique');
     Base._copyPropsToMostRecent(b);
     mrps = Base.mostRecentProps();
     expect(mrps.fontFamily).toBe('Impact');
@@ -72,53 +54,57 @@ describe('Base class', () => {
   });
 
   describe('fromSavedState static method', () => {
-    describe('valid saved state', () => {
-      it('handles nullish highlighting, outline and numbering', () => {
-        let b1 = Base.create(svg, 'B', 5, 5);
+    describe('from valid saved state', () => {
+      /* By only including one of highlighting, outline and numbering
+      in the saved state, we test that the if clauses in the fromSavedState
+      method each check for the presence of the correct element. */
+
+      it('includes text', () => {
+        let b1 = Base.create(svg, 'v', 90, 80);
         let savableState = b1.savableState();
         let b2 = Base.fromSavedState(savableState, svg);
-        expect(b2.hasHighlighting()).toBeFalsy();
-        expect(b2.hasOutline()).toBeFalsy();
-        expect(b2.hasNumbering()).toBeFalsy();
+        expect(b2.character).toBe('v');
       });
 
       it('can include highlighting', () => {
+        // and handles missing outline and numbering
         let b1 = Base.create(svg, 'a', 4, 5);
-        let h = b1.addCircleHighlighting();
+        let h1 = b1.addCircleHighlighting();
         let savableState = b1.savableState();
         let b2 = Base.fromSavedState(savableState, svg);
-        expect(b2.highlighting.id).toBe(h.id);
+        let h2 = b2.highlighting;
+        expect(h2.id).toBe(h1.id);
       });
 
       it('can include outline', () => {
+        // and handles missing highlighting and numbering
         let b1 = Base.create(svg, 'b', 5, 6);
-        let o = b1.addCircleOutline();
+        let o1 = b1.addCircleOutline();
         let savableState = b1.savableState();
         let b2 = Base.fromSavedState(savableState, svg);
-        expect(b2.outline.id).toBe(o.id);
+        expect(b2.outline.id).toBe(o1.id);
       });
 
       it('can include numbering', () => {
+        // and handles missing highlighting and outline
         let b1 = Base.create(svg, 't', 10, 11);
-        let n = b1.addNumbering(10);
+        let n1 = b1.addNumbering(10);
         let savableState = b1.savableState();
         let b2 = Base.fromSavedState(savableState, svg);
-        expect(b2.numbering.id).toBe(n.id);
+        expect(b2.numbering.id).toBe(n1.id);
       });
 
-      it('copies properties to most recent', () => {
-        let svg = NodeSVG();
+      it('copies props to most recent', () => {
         let b1 = Base.create(svg, 'T', 1, 1);
-        b1.fontFamily = 'Consolas';
-        let savableState1 = b1.savableState();
-        Base._mostRecentProps.fontFamily = 'Times New Roman';
-        let b2 = Base.fromSavedState(savableState1, svg);
-        expect(Base.mostRecentProps().fontFamily).toBe('Consolas');
+        let savableState = b1.savableState();
+        let spy = jest.spyOn(Base, '_copyPropsToMostRecent');
+        let b2 = Base.fromSavedState(savableState, svg);
+        expect(spy.mock.calls[0][0]).toBe(b2);
       });
     });
 
-    describe('invalid saved state', () => {
-      it('invalid className', () => {
+    describe('from invalid saved state', () => {
+      it('wrong className', () => {
         let b = Base.create(svg, 'A', 4, 5);
         let savableState = b.savableState();
         savableState.className = 'Bse';
@@ -141,270 +127,228 @@ describe('Base class', () => {
   });
 
   describe('create static method', () => {
-    it('creates text element with correct values', () => {
+    it('creates with character and center coordinates', () => {
       let b = Base.create(svg, 'r', 8, 77);
       expect(b.character).toBe('r');
-      expect(b._text.id()).toBeTruthy();
       expect(b.xCenter).toBe(8);
       expect(b.yCenter).toBe(77);
     });
 
-    it('constructor throws', () => {
-      expect(() => Base.create(svg, 'ab', 3, 5)).toThrow();
-    });
-
-    it('applies most recent properties', () => {
-      Base._mostRecentProps.fontSize = 19.228;
+    it('applies most recent props', () => {
+      let spy = jest.spyOn(Base, '_applyMostRecentProps');
       let b = Base.create(svg, 'A', 4, 5);
-      expect(b.fontSize).toBe(19.228);
+      expect(spy.mock.calls[0][0]).toBe(b);
     });
   });
 
-  it('createOutOfView static method', () => {
-    let b = Base.createOutOfView(svg, 'I');
-    expect(b.character).toBe('I');
-    expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
+  describe('createOutOfView static method', () => {
+    it('creates with character and out of view', () => {
+      let b = Base.createOutOfView(svg, 'I');
+      expect(b.character).toBe('I');
+      expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
+    });
   });
 
   describe('constructor', () => {
     it('stores text', () => {
-      let svg = NodeSVG();
       let t = svg.text(add => add.tspan('w'));
       let b = new Base(t);
       expect(b._text).toBe(t);
     });
 
-    it('validates text', () => {
-      let svg = NodeSVG();
-      let t = svg.text(add => add.tspan('qwe'));
-      expect(() => { new Base(t) }).toThrow();
-    });
+    describe('validates text', () => {
+      it('missing argument', () => {
+        expect(() => new Base()).toThrow();
+      });
 
-    it('initializes _highlighting, _outline and _numbering', () => {
-      let svg = NodeSVG();
-      let t = svg.text(add => add.tspan('Q'));
-      let b = new Base(t);
-      expect(b._highlighting).toBe(null);
-      expect(b._outline).toBe(null);
-      expect(b._numbering).toBe(null);
-    });
-  });
+      it('wrong element type', () => {
+        let c = svg.circle(20);
+        expect(() => new Base(c)).toThrow();
+      });
 
-  describe('_validateText method', () => {
-    it('initializes ID', () => {
-      let svg = NodeSVG();
-      let t = svg.text(add => add.tspan('T'));
-      expect(t.attr('id')).toBe(undefined);
-      let b = new Base(t);
-      expect(t.attr('id')).toBeTruthy();
-    });
+      it('initializes ID', () => {
+        let t = svg.text(add => add.tspan('T'));
+        expect(t.attr('id')).toBe(undefined);
+        let b = new Base(t);
+        expect(t.attr('id')).toBeTruthy();
+      });
 
-    it('text content is not a single character', () => {
-      let svg = NodeSVG();
-      let t1 = svg.text('');
-      expect(t1.text().length).toBe(0);
-      expect(() => { new Base(t1) }).toThrow();
-      let t2 = svg.text(add => add.tspan('ab'));
-      expect(() => { new Base(t2) }).toThrow();
+      it('no characters', () => {
+        let t = svg.text(add => add.tspan(''));
+        expect(() => new Base(t)).toThrow();
+      });
+
+      it('too many characters', () => {
+        let t = svg.text(add => add.tspan('qwe'));
+        expect(() => new Base(t)).toThrow();
+      });
     });
   });
 
   it('id getter', () => {
-    let svg = NodeSVG();
-    let text = svg.text(add => add.tspan('T'));
-    let id = text.id();
-    let b = new Base(text);
-    expect(b.id).toEqual(id);
+    let t = svg.text(add => add.tspan('T'));
+    let id = t.id('asdfqwer');
+    let b = new Base(t);
+    expect(b.id).toEqual('asdfqwer');
   });
 
-  it('character getter', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'h', 1, 2);
-    expect(b.character).toBe('h');
-  });
-
-  describe('character setter', () => {
-    it('given string is not a single character', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'y', 2, 5);
-      b.character = '';
-      expect(b.character).toBe('y');
-      b.character = 'asdf';
-      expect(b.character).toBe('y');
-    });
-
-    it('sets the character', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 't', 3, 3);
-      b.character = 'J';
-      expect(b.character).toBe('J');
-    });
+  it('character getter and setter', () => {
+    let b = Base.create(svg, 'k', 1, 2);
+    expect(b.character).toBe('k');
+    b.character = 'P';
+    expect(b.character).toBe('P');
+    b.character = ''; // an empty string
+    expect(b.character).toBe('P');
+    b.character = 'mn'; // more than a single character
+    expect(b.character).toBe('P');
   });
 
   it('xCenter and yCenter getters', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'A', -1, -2);
-    expect(b.xCenter).toBeCloseTo(-1);
-    expect(b.yCenter).toBeCloseTo(-2);
+    let b = Base.create(svg, 'q', 55.8, 245);
+    expect(b.xCenter).toBeCloseTo(55.8);
+    expect(b.yCenter).toBeCloseTo(245);
   });
 
   describe('moveTo method', () => {
-    it('no highlighting, outline or numbering', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'g', 3, 5);
-      expect(b.hasHighlighting()).toBeFalsy();
-      expect(b.hasOutline()).toBeFalsy();
-      expect(b.hasNumbering()).toBeFalsy();
-      b.moveTo(-10, 200);
-      expect(b.xCenter).toBe(-10);
-      expect(b.yCenter).toBe(200);
-      expect(b._text.cx()).toBeCloseTo(-10);
-      expect(b._text.cy()).toBeCloseTo(200);
+    it('shifts text and updates center coordinates', () => {
+      let b = Base.create(svg, 'W', 55.8, 103.9);
+      b.moveTo(805.2, 651.8);
+      expect(b._text.cx()).toBeCloseTo(805.2);
+      expect(b._text.cy()).toBeCloseTo(651.8);
+      expect(b.xCenter).toBeCloseTo(805.2);
+      expect(b.yCenter).toBeCloseTo(651.8);
     });
 
-    it('repositions highlighting', () => {
-      let svg = NodeSVG();
+    /* By testing highlighting, outline and numbering separately,
+    we test that the if clauses of the moveTo method work correctly. */
+    
+    it('can reposition highlighting', () => {
+      // with no outline or numbering
       let b = Base.create(svg, 't', 1, 2);
       let h = b.addCircleHighlighting();
       h.shift(5, 4);
-      let da = h.displacementAngle;
+      let da = normalizeAngle(h.displacementAngle);
       b.moveTo(8, 9);
-      expect(
-        normalizeAngle(angleBetween(8, 9, h.xCenter, h.yCenter))
-      ).toBeCloseTo(normalizeAngle(da));
+      let a = angleBetween(8, 9, h.xCenter, h.yCenter);
+      // requires that base center coordinates were passed
+      expect(normalizeAngle(a)).toBeCloseTo(da);
     });
 
-    it('repositions outline', () => {
-      let svg = NodeSVG();
+    it('can reposition outline', () => {
+      // with no highlighting or numbering
       let b = Base.create(svg, 'e', 3, 8);
       let o = b.addCircleOutline();
       o.shift(-2, 55);
-      let da = o.displacementAngle;
+      let da = normalizeAngle(o.displacementAngle);
       b.moveTo(55, 38);
-      expect(
-        normalizeAngle(angleBetween(55, 38, o.xCenter, o.yCenter))
-      ).toBeCloseTo(normalizeAngle(da));
+      let a = angleBetween(55, 38, o.xCenter, o.yCenter);
+      // requires that base center coordinates were passed
+      expect(normalizeAngle(a)).toBeCloseTo(da);
     });
 
-    it('repositions numbering', () => {
-      let svg = NodeSVG();
+    it('can reposition numbering', () => {
+      // with no highlighting or outline
       let b = Base.create(svg, 'e', 1, 5);
       let n = b.addNumbering(112);
-      n.lineAngle = Math.PI / 5;
+      let bp = n.basePadding;
       b.moveTo(20, 40);
-      expect(
-        normalizeAngle(angleBetween(20, 40, n._line.attr('x1'), n._line.attr('y1')))
-      ).toBeCloseTo(Math.PI / 5);
+      // requires that base center coordinates were passed
+      expect(n.basePadding).toBeCloseTo(bp);
     });
   });
 
-  it('distanceBetweenCenters method', () => {
-    let svg = NodeSVG();
+  it('distanceBetweenCenters and angleBetweenCenters methods', () => {
     let b1 = Base.create(svg, 'A', 1, 2);
     let b2 = Base.create(svg, 'U', 4, 6);
     expect(b1.distanceBetweenCenters(b2)).toBeCloseTo(5, 3);
-  });
-
-  it('angleBetweenCenters method', () => {
-    let svg = NodeSVG();
-    let b1 = Base.create(svg, 'A', 1, 2);
-    let b2 = Base.create(svg, 'U', 44, 5);
-    expect(
-      normalizeAngle(b1.angleBetweenCenters(b2))
-    ).toBeCloseTo(
-      normalizeAngle(angleBetween(1, 2, 44, 5)),
-      3,
-    );
+    let a = angleBetween(1, 2, 4, 6);
+    expect(normalizeAngle(a)).toBeCloseTo(Math.asin(4 / 5));
   });
 
   it('fontFamily getter and setter', () => {
-    let svg = NodeSVG();
     let b = Base.create(svg, 'a', 1, 2);
     b.fontFamily = 'Cambria';
-    expect(b.fontFamily).toBe('Cambria');
+    expect(b.fontFamily).toBe('Cambria'); // check getter
+    expect(b._text.attr('font-family')).toBe('Cambria'); // check actual value
     // maintains center coordinates
     expect(b._text.cx()).toBeCloseTo(1);
     expect(b._text.cy()).toBeCloseTo(2);
   });
 
   it('fontSize getter and setter', () => {
-    let svg = NodeSVG();
     let b = Base.create(svg, 'e', 5, 6);
     b.fontSize = 5.123;
-    expect(b.fontSize).toBe(5.123);
+    expect(b.fontSize).toBe(5.123); // check getter
+    expect(b._text.attr('font-size')).toBe(5.123); // check actual value
     // maintains center coordinates
     expect(b._text.cx()).toBeCloseTo(5);
     expect(b._text.cy()).toBeCloseTo(6);
   });
 
   it('fontWeight getter and setter', () => {
-    let svg = NodeSVG();
     let b = Base.create(svg, 'a', 1, 4);
     b.fontWeight = 650;
-    expect(b.fontWeight).toBe(650);
+    expect(b.fontWeight).toBe(650); // check getter
+    expect(b._text.attr('font-weight')).toBe(650); // check actual value
     // maintains center coordinates
     expect(b._text.cx()).toBeCloseTo(1);
     expect(b._text.cy()).toBeCloseTo(4);
   });
 
   it('fontStyle getter and setter', () => {
-    let svg = NodeSVG();
     let b = Base.create(svg, 'E', 5, 15);
     b.fontStyle = 'italic';
-    expect(b.fontStyle).toBe('italic');
+    expect(b.fontStyle).toBe('italic'); // check getter
+    expect(b._text.attr('font-style')).toBe('italic'); // check actual value
     // maintains center coordinates
     expect(b._text.cx()).toBeCloseTo(5);
     expect(b._text.cy()).toBeCloseTo(15);
   });
 
   it('fill getter and setter', () => {
-    let svg = NodeSVG();
     let b = Base.create(svg, 't', 4, 5);
     b.fill = '#4523ab';
-    expect(b.fill).toBe('#4523ab');
+    expect(b.fill).toBe('#4523ab'); // check getter
+    expect(b._text.attr('fill')).toBe('#4523ab'); // check actual value
   });
 
   it('cursor getter and setter', () => {
-    let svg = NodeSVG();
     let b = Base.create(svg, 'e', 4, 5);
     b.cursor = 'crosshair';
-    expect(b.cursor).toBe('crosshair');
+    expect(b.cursor).toBe('crosshair'); // check getter
+    expect(b._text.css('cursor')).toBe('crosshair'); // check actual value
   });
+  
+  describe('binding events', () => {
+    let b = Base.create(svg, 'h', 50, 100);
 
-  it('onMouseover method', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'A', 1.3, 1.4);
-    let v = false;
-    b.onMouseover(e => { v = true; });
-    b._text.fire('mouseover');
-    expect(v).toBeTruthy();
-  });
+    it('onMouseover method', () => {
+      let f = jest.fn();
+      b.onMouseover(f);
+      b._text.fire('mouseover');
+      expect(f).toHaveBeenCalled();
+    });
 
-  it('onMouseout method', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'A', 1.3, 1.4);
-    let v = false;
-    b.onMouseout(e => { v = true; });
-    b._text.fire('mouseout');
-    expect(v).toBeTruthy();
-  });
+    it('onMouseout method', () => {
+      let f = jest.fn();
+      b.onMouseout(f);
+      b._text.fire('mouseout');
+      expect(f).toHaveBeenCalled();
+    });
 
-  it('onMousedown method', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'A', 1.3, 1.4);
-    let v = false;
-    b.onMousedown(e => { v = true; });
-    b._text.fire('mousedown');
-    expect(v).toBeTruthy();
-  });
+    it('onMousedown method', () => {
+      let f = jest.fn();
+      b.onMousedown(f);
+      b._text.fire('mousedown');
+      expect(f).toHaveBeenCalled();
+    });
 
-  it('onDblclick method', () => {
-    let svg = NodeSVG();
-    let b = Base.create(svg, 'A', 1.3, 1.4);
-    let v = false;
-    b.onDblclick(e => { v = true; });
-    b._text.fire('dblclick');
-    expect(v).toBeTruthy();
+    it('onDblclick method', () => {
+      let f = jest.fn();
+      b.onDblclick(f);
+      b._text.fire('dblclick');
+      expect(f).toHaveBeenCalled();
+    });
   });
 
   describe('addCircleHighlighting method', () => {
@@ -715,29 +659,18 @@ describe('Base class', () => {
     });
   });
 
-  describe('remove method', () => {
-    it('removes text', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 't', 1, 4);
-      expect(svg.findOne('#' + b._text.id())).toBeTruthy();
-      b.remove();
-      expect(svg.findOne('#' + b._text.id())).toBe(null);
-    });
-
-    it('removes highlighting, outline and numbering', () => {
-      let svg = NodeSVG();
-      let b = Base.create(svg, 'r', 5, 5);
-      let h = b.addCircleHighlighting();
-      let o = b.addCircleOutline();
-      let n = b.addNumbering(12, 0);
-      expect(svg.findOne('#' + h.id)).toBeTruthy();
-      expect(svg.findOne('#' + o.id)).toBeTruthy();
-      expect(svg.findOne('#' + n.id)).toBeTruthy();
-      b.remove();
-      expect(svg.findOne('#' + h.id)).toBe(null);
-      expect(svg.findOne('#' + o.id)).toBe(null);
-      expect(svg.findOne('#' + n.id)).toBe(null);
-    });
+  it('remove method', () => {
+    let b = Base.create(svg, 'a', 5, 5);
+    let textId = '#' + b._text.id();
+    expect(svg.findOne(textId)).toBeTruthy();
+    let spies = [
+      jest.spyOn(b, 'removeHighlighting'),
+      jest.spyOn(b, 'removeOutline'),
+      jest.spyOn(b, 'removeNumbering'),
+    ];
+    b.remove();
+    expect(svg.findOne(textId)).toBeFalsy();
+    spies.forEach(s => expect(s).toHaveBeenCalled());
   });
 
   describe('savableState method', () => {
@@ -748,58 +681,69 @@ describe('Base class', () => {
       expect(savableState.textId).toBe(b._text.id());
     });
 
-    it('with no highlighting, outline or numbering', () => {
-      let b = Base.create(svg, 't', 1, 5);
+    /* By testing highlighting, outline and numbering separately,
+    we test that the conditional clauses work correctly. */
+
+    it('can include highlighting', () => {
+      // with no outline or numbering
+      let b = Base.create(svg, 'q', 10, 20);
+      let h = b.addCircleHighlighting();
       let savableState = b.savableState();
-      expect(savableState.highlighting).toBeFalsy();
-      expect(savableState.outline).toBeFalsy();
-      expect(savableState.numbering).toBeFalsy();
+      expect(JSON.stringify(savableState.highlighting)).toBe(JSON.stringify(h.savableState()));
     });
 
-    it('includes highlighting, outline and numbering', () => {
-      let b = Base.create(svg, 'k', 5, 8);
-      let h = b.addCircleHighlighting();
+    it('can include outline', () => {
+      // with no highlighting or numbering
+      let b = Base.create(svg, 'b', 100, 200);
       let o = b.addCircleOutline();
-      let n = b.addNumbering(55);
       let savableState = b.savableState();
-      expect(
-        JSON.stringify(savableState.highlighting)
-      ).toBe(JSON.stringify(h.savableState()));
-      expect(
-        JSON.stringify(savableState.outline)
-      ).toBe(JSON.stringify(o.savableState()));
-      expect(
-        JSON.stringify(savableState.numbering)
-      ).toBe(JSON.stringify(n.savableState()));
+      expect(JSON.stringify(savableState.outline)).toBe(JSON.stringify(o.savableState()));
+    });
+
+    it('can include numbering', () => {
+      // with no highlighting or outline
+      let b = Base.create(svg, 'R', 0, 1);
+      let n = b.addNumbering(1000);
+      let savableState = b.savableState();
+      expect(JSON.stringify(savableState.numbering)).toBe(JSON.stringify(n.savableState()));
+    });
+
+    describe('can be converted to and from a JSON string', () => {
+      it('with highlighting, outline and numbering', () => {
+        let b = Base.create(svg, 'n', 20, 50);
+        b.addCircleHighlighting();
+        b.addCircleOutline();
+        b.addNumbering(100);
+        let savableState = b.savableState();
+        let json = JSON.stringify(savableState);
+        let parsed = JSON.parse(json);
+        expect(JSON.stringify(parsed)).toBe(json);
+      });
     });
   });
 
   describe('refreshIds method', () => {
-    let svg = NodeSVG();
-    
-    it('with no highlighting, outline or numbering', () => {
+    it('refreshes text ID and handles no highlighting, outline or numbering', () => {
       let b = Base.create(svg, 'A', 1, 5);
-      b.removeHighlighting();
-      b.removeOutline();
-      b.removeNumbering();
+      expect(b.hasHighlighting()).toBeFalsy();
+      expect(b.hasOutline()).toBeFalsy();
+      expect(b.hasNumbering()).toBeFalsy();
       let oldTextId = b._text.id();
       b.refreshIds();
       expect(b._text.id()).not.toBe(oldTextId);
     });
 
-    it('with highlighting, outline and numbering', () => {
+    it('can refresh highlighting, outline and numbering IDs', () => {
       let b = Base.create(svg, 'A', 1, 5);
       let h = b.addCircleHighlighting();
       let o = b.addCircleOutline();
       let n = b.addNumbering(5);
-      let oldTextId = b._text.id();
       let spies = [
         jest.spyOn(h, 'refreshIds'),
         jest.spyOn(o, 'refreshIds'),
         jest.spyOn(n, 'refreshIds'),
       ];
       b.refreshIds();
-      expect(b._text.id()).not.toBe(oldTextId);
       spies.forEach(s => expect(s).toHaveBeenCalled());
     });
   });

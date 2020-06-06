@@ -6,7 +6,6 @@ import {
 import {
   SvgInterface as Svg,
   SvgTextInterface as SvgText,
-  SvgBBox,
 } from './SvgInterface';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
@@ -78,7 +77,7 @@ class Base implements BaseInterface {
   }
 
   /**
-   * Throws if the text content is not a single character.
+   * Throws if the content of the text element is not a single character.
    */
   constructor(text: SvgText) {
     this._text = text;
@@ -91,14 +90,17 @@ class Base implements BaseInterface {
   }
 
   /**
-   * Initializes the ID of the text if it is not already initialized.
+   * Throws if the text element is not actually a text element.
    * 
-   * @throws {Error} If the text content is not a single character.
+   * Initializes the ID of the text if it is not already initialized.
    */
   _validateText() {
+    if (this._text.type !== 'text') {
+      throw new Error('Passed SVG element is not text.');
+    }
     this._text.id();
     if (this._text.text().length !== 1) {
-      throw new Error('The text content must be a single character.');
+      throw new Error('Text content must be a single character.');
     }
   }
 
