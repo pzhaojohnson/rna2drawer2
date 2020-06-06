@@ -1,3 +1,5 @@
+import { SvgElementInterface as SvgElement } from './SvgInterface';
+
 export interface BaseNumberingMostRecentProps {
   basePadding: number;
   lineLength: number;
@@ -14,6 +16,23 @@ export interface BaseNumberingSavableState {
   lineId: string;
 }
 
-export interface BaseNumberingInterface {}
+export interface BaseNumberingInterface {
+  readonly id: string;
+  basePadding: number;
+  lineAngle: number;
+  lineLength: number;
+  reposition(xBaseCenter: number, yBaseCenter: number): void;
+  insertBefore(ele: SvgElement): void;
+  insertAfter(ele: SvgElement): void;
+  number: number;
+  fontFamily: string;
+  fontSize: number;
+  fontWeight: number | string;
+  color: string;
+  lineStrokeWidth: number;
+  remove(): void;
+  savableState(): BaseNumberingSavableState;
+  refreshIds(): void;
+}
 
 export default BaseNumberingInterface;
