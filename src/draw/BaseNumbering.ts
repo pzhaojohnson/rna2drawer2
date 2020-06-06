@@ -24,7 +24,6 @@ interface TextPositioning {
   x: number;
   y: number;
   textAnchor: string;
-  dominantBaseline: string;
 }
 
 class BaseNumbering implements BaseNumberingInterface {
@@ -62,23 +61,19 @@ class BaseNumbering implements BaseNumberingInterface {
       x: line.attr('x2') + textPadding,
       y: line.attr('y2') + (fs / 2),
       textAnchor: 'start',
-      dominantBaseline: 'middle',
     };
     if (lineAngle >= Math.PI / 4 && lineAngle < 3 * Math.PI / 4) {
       tp.x = line.attr('x2');
       tp.y = line.attr('y2') + textPadding + fs;
       tp.textAnchor = 'middle';
-      tp.dominantBaseline = 'hanging';
     } else if (lineAngle >= 3 * Math.PI / 4 && lineAngle < 5 * Math.PI / 4) {
       tp.x = line.attr('x2') - textPadding;
       tp.y = line.attr('y2') + (fs / 2);
       tp.textAnchor = 'end';
-      tp.dominantBaseline = 'middle';
     } else if (lineAngle >= 5 * Math.PI / 4 && lineAngle < 7 * Math.PI / 4) {
       tp.x = line.attr('x2');
       tp.y = line.attr('y2') - textPadding;
       tp.textAnchor = 'middle';
-      tp.dominantBaseline = 'baseline';
     }
     return tp;
   }
@@ -158,22 +153,32 @@ class BaseNumbering implements BaseNumberingInterface {
   }
 
   /**
+   * Throws if the text element is not actually a text element.
+   * 
    * Initializes the ID of the text if it is not already initialized.
    * 
    * Throws if the text content is not an integer.
    */
   _validateText(): (void | never) {
+    if (this._text.type !== 'text') {
+      throw new Error('Passed element is not a text element.');
+    }
     this._text.id();
     let n = Number(this._text.text());
-    if (!isFinite(n) || Math.floor(n) !== n) {
+    if (!Number.isFinite(n) || Math.floor(n) !== n) {
       throw new Error('Text content is not an integer.');
     }
   }
 
   /**
+   * Throws if the line element is not actually a line element.
+   * 
    * Initializes the ID of the line if it is not already initialized.
    */
   _validateLine() {
+    if (this._line.type !== 'line') {
+      throw new Error('Passed element is not a line element.');
+    }
     this._line.id();
   }
 
@@ -309,6 +314,7 @@ class BaseNumbering implements BaseNumberingInterface {
    */
   set number(n: number) {
     if (!Number.isFinite(n) || Math.floor(n) !== n) {
+      console.error('Given number is not an integer.');
       return;
     }
     this._text.clear();
@@ -321,7 +327,6 @@ class BaseNumbering implements BaseNumberingInterface {
 
   set fontFamily(ff: string) {
     this._text.attr({ 'font-family': ff });
-    BaseNumbering._positionText(this._text, this._line);
     BaseNumbering._mostRecentProps.fontFamily = ff;
   }
 
@@ -341,7 +346,6 @@ class BaseNumbering implements BaseNumberingInterface {
 
   set fontWeight(fw: (number | string)) {
     this._text.attr({ 'font-weight': fw });
-    BaseNumbering._positionText(this._text, this._line);
     BaseNumbering._mostRecentProps.fontWeight = fw;
   }
 
