@@ -172,10 +172,12 @@ describe('StraightBond class', () => {
     let b1 = Base.create(svg, 'b', 1, 4);
     let b2 = Base.create(svg, 'n', 10, 12);
     let sb = new StraightBond(l, b1, b2);
-    sb.setStroke('#44bb99');
-    expect(sb.getStroke()).toBe('#44bb99');
-    sb.setStrokeWidth(5.43);
-    expect(sb.getStrokeWidth()).toBe(5.43);
+    sb.setStroke('#44bb99'); // use setter
+    expect(sb.getStroke()).toBe('#44bb99'); // check getter
+    expect(sb._line.attr('stroke')).toBe('#44bb99'); // check actual value
+    sb.setStrokeWidth(5.43); // use setter
+    expect(sb.getStrokeWidth()).toBe(5.43); // check getter
+    expect(sb._line.attr('stroke-width')).toBe(5.43); // check actual value
   });
 
   it('opacity getter and private setter', () => {
@@ -183,8 +185,9 @@ describe('StraightBond class', () => {
     let b1 = Base.create(svg, 'b', 5, 4);
     let b2 = Base.create(svg, 'n', 3, 5);
     let sb = new StraightBond(l, b1, b2);
-    sb._setOpacity(0.55);
-    expect(sb.opacity).toBe(0.55);
+    sb._setOpacity(0.55); // use setter
+    expect(sb.opacity).toBe(0.55); // check getter
+    expect(sb._line.attr('opacity')).toBe(0.55); // check actual value
   });
 
   it('remove method', () => {
@@ -369,10 +372,10 @@ describe('PrimaryBond class', () => {
     let b2 = Base.create(svg, 'o', 200, 300);
     let pb = PrimaryBond.create(svg, b1, b2);
     pb.stroke = '#4455bc'; // use setter
-    pb.strokeWidth = 4.011; // check getter
+    expect(pb.stroke).toBe('#4455bc'); // check getter
     // updates most recent prop
     expect(PrimaryBond.mostRecentProps().stroke).toBe('#4455bc');
-    expect(pb.stroke).toBe('#4455bc'); // use setter
+    pb.strokeWidth = 4.011; // use setter
     expect(pb.strokeWidth).toBe(4.011); // check getter
     // updates most recent prop
     expect(PrimaryBond.mostRecentProps().strokeWidth).toBe(4.011);
