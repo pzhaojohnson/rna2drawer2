@@ -6,12 +6,12 @@ import {
   PrimaryBondMostRecentProps,
   SecondaryBondMostRecentProps,
 } from './StraightBondInterface';
-import Base from './Base';
 import {
   SvgInterface as Svg,
-  SvgLineInterface as SvgLine,
   SvgElementInterface as SvgElement,
+  SvgLineInterface as SvgLine,
 } from './SvgInterface';
+import Base from './Base';
 import distanceBetween from './distanceBetween';
 
 interface LineCoordinates {
@@ -21,7 +21,7 @@ interface LineCoordinates {
   y2: number;
 }
 
-class StraightBond implements StraightBondInterface {
+export class StraightBond implements StraightBondInterface {
   _line: SvgLine;
   _base1: Base;
   _base2: Base;
@@ -57,9 +57,14 @@ class StraightBond implements StraightBondInterface {
   }
 
   /**
+   * Throws if the line element is not actually a line element.
+   * 
    * Initializes the ID of the line if it is not already initialized.
    */
-  _validateLine() {
+  _validateLine(): (void | never) {
+    if (this._line.type !== 'line') {
+      throw new Error('The given element is not a line element.');
+    }
     this._line.id();
   }
 
@@ -109,43 +114,27 @@ class StraightBond implements StraightBondInterface {
     );
   }
 
-  get padding1(): number {
-    return this.getPadding1();
-  }
-
   getPadding1(): number {
     return this._padding1;
   }
 
-  set padding1(p: number) {
-    this.setPadding1(p);
-  }
-
   setPadding1(p: number) {
-    this._reposition(p, this.padding2);
-  }
-
-  get padding2(): number {
-    return this.getPadding2();
+    this._reposition(p, this.getPadding2());
   }
 
   getPadding2(): number {
     return this._padding2;
   }
 
-  set padding2(p: number) {
-    this.setPadding2(p);
-  }
-
   setPadding2(p: number) {
-    this._reposition(this.padding1, p);
+    this._reposition(this.getPadding1(), p);
   }
 
   /**
    * Repositions this straight bond based on the current positions of its bases.
    */
   reposition() {
-    this._reposition(this.padding1, this.padding2);
+    this._reposition(this.getPadding1(), this.getPadding2());
   }
 
   _reposition(padding1: number, padding2: number) {
@@ -170,32 +159,16 @@ class StraightBond implements StraightBondInterface {
     this._line.insertAfter(ele);
   }
 
-  get stroke(): string {
-    return this.getStroke();
-  }
-
   getStroke(): string {
     return this._line.attr('stroke');
-  }
-
-  set stroke(s: string) {
-    this.setStroke(s);
   }
 
   setStroke(s: string) {
     this._line.attr({ 'stroke': s });
   }
 
-  get strokeWidth(): number {
-    return this.getStrokeWidth();
-  }
-
   getStrokeWidth(): number {
     return this._line.attr('stroke-width');
-  }
-
-  set strokeWidth(sw: number) {
-    this.setStrokeWidth(sw);
   }
 
   setStrokeWidth(sw: number) {
@@ -229,7 +202,7 @@ class StraightBond implements StraightBondInterface {
   }
 }
 
-class PrimaryBond extends StraightBond implements PrimaryBondInterface {
+export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
   static _mostRecentProps: PrimaryBondMostRecentProps;
 
   static mostRecentProps(): PrimaryBondMostRecentProps {
@@ -320,7 +293,7 @@ PrimaryBond._mostRecentProps = {
   strokeWidth: 1,
 };
 
-class SecondaryBond extends StraightBond implements SecondaryBondInterface {
+export class SecondaryBond extends StraightBond implements SecondaryBondInterface {
   static _mostRecentProps: SecondaryBondMostRecentProps;
 
   static mostRecentProps(): SecondaryBondMostRecentProps {
@@ -471,8 +444,4 @@ SecondaryBond._mostRecentProps = {
   strokeWidth: 2,
 };
 
-export {
-  StraightBond,
-  PrimaryBond,
-  SecondaryBond,
-};
+export default StraightBond;
