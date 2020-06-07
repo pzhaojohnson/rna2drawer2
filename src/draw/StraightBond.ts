@@ -244,6 +244,7 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id();
+    line.attr({ 'opacity': StraightBond._opacity(b1, b2, 8, 8) });
     let pb = new PrimaryBond(line, b1, b2);
     PrimaryBond._applyMostRecentProps(pb);
     return pb;
@@ -351,6 +352,7 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id();
+    line.attr({ 'opacity': StraightBond._opacity(b1, b2, 8, 8) });
     let sb = new SecondaryBond(line, b1, b2);
     SecondaryBond._applyMostRecentProps(sb);
     return sb;

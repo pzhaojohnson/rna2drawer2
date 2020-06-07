@@ -4,6 +4,7 @@ import Base from './Base';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
+import pair from './interact/fold/pair';
 
 let svg = NodeSVG();
 
@@ -335,6 +336,18 @@ describe('PrimaryBond class', () => {
     it('applies most recent props', () => {
       expect(spy.mock.calls[0][0]).toBe(pb);
     });
+
+    it('sets opacity', () => {
+      let b1 = Base.create(svg, 'a', 5, 50);
+      let b2 = Base.create(svg, 'g', 5, 50);
+      let b3 = Base.create(svg, 'f', 1000, 2000);
+      // zero distance between bases
+      let pb1 = PrimaryBond.create(svg, b1, b2);
+      expect(pb1.opacity).toBe(0);
+      // far away bases
+      let pb2 = PrimaryBond.create(svg, b1, b3);
+      expect(pb2.opacity).toBe(1);
+    });
   });
   
   it('padding1 and padding2 getters and setters', () => {
@@ -520,6 +533,18 @@ describe('SecondaryBond class', () => {
 
     it('applies most recent props', () => {
       expect(spy.mock.calls[0][0]).toBe(sb);
+    });
+
+    it('sets opacity', () => {
+      let b1 = Base.create(svg, 'g', 100, 200);
+      let b2 = Base.create(svg, 't', 100, 200);
+      let b3 = Base.create(svg, 'B', 500, 1500);
+      // zero distance between bases
+      let sb1 = SecondaryBond.create(svg, b1, b2);
+      expect(sb1.opacity).toBe(0);
+      // far away bases
+      let sb2 = SecondaryBond.create(svg, b1, b3);
+      expect(sb2.opacity).toBe(1);
     });
   });
 
