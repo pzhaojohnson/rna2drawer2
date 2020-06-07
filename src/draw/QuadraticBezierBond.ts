@@ -45,6 +45,15 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     return ['M', x1, y1, 'Q', xControl, yControl, x2, y2].join(' ');
   }
 
+  /**
+   * Throws if the path element is not actually a path element.
+   * 
+   * Initializes the ID of the path if it is not already initialized.
+   * 
+   * Sets fill-opacity to zero.
+   * 
+   * Throws if the path is not composed of an M and Q segment.
+   */
   constructor(path: SvgPath, b1: Base, b2: Base) {
     this._base1 = b1;
     this._base2 = b2;
@@ -56,14 +65,10 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this._storeControlHeightAndAngle();
   }
 
-  /**
-   * Initializes the ID of the path if it is not already initialized.
-   * 
-   * Sets fill-opacity to zero.
-   * 
-   * Throws if the path is not composed of an M and Q segment.
-   */
   _validatePath(): (void | never) {
+    if (this._path.type !== 'path') {
+      throw new Error('The given element is not a path element.');
+    }
     this._path.id();
     this._path.attr({ 'fill-opacity': 0 });
     let pa = this._path.array();
@@ -143,42 +148,26 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     );
   }
 
-  get padding1(): number {
-    return this.getPadding1();
-  }
-
   getPadding1(): number {
     return this._padding1;
-  }
-
-  set padding1(p: number) {
-    this.setPadding1(p);
   }
 
   setPadding1(p: number) {
     this._reposition(
       p,
-      this.padding2,
+      this.getPadding2(),
       this._controlHeight,
       this._controlAngle,
     );
-  }
-
-  get padding2() {
-    return this.getPadding2();
   }
 
   getPadding2(): number {
     return this._padding2;
   }
 
-  set padding2(p: number) {
-    this.setPadding2(p);
-  }
-
   setPadding2(p: number) {
     this._reposition(
-      this.padding1,
+      this.getPadding1(),
       p,
       this._controlHeight,
       this._controlAngle,
@@ -216,13 +205,13 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     let ca = angleBetween(xMiddle, yMiddle, xControl, yControl);
     let a12 = this.base1.angleBetweenCenters(this.base2);
     let controlAngle = normalizeAngle(ca, a12) - a12;
-    this._reposition(this.padding1, this.padding2, controlHeight, controlAngle);
+    this._reposition(this.getPadding1(), this.getPadding2(), controlHeight, controlAngle);
   }
 
   reposition() {
     this._reposition(
-      this.padding1,
-      this.padding2,
+      this.getPadding1(),
+      this.getPadding2(),
       this._controlHeight,
       this._controlAngle
     );
@@ -243,48 +232,24 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this._storeControlHeightAndAngle();
   }
 
-  get stroke(): string {
-    return this.getStroke();
-  }
-
   getStroke(): string {
     return this._path.attr('stroke');
-  }
-
-  set stroke(s: string) {
-    this.setStroke(s);
   }
 
   setStroke(s: string) {
     this._path.attr({ 'stroke': s });
   }
 
-  get strokeWidth(): number {
-    return this.getStrokeWidth();
-  }
-
   getStrokeWidth(): number {
     return this._path.attr('stroke-width');
-  }
-
-  set strokeWidth(sw: number) {
-    this.setStrokeWidth(sw);
   }
 
   setStrokeWidth(sw: number) {
     return this._path.attr({ 'stroke-width': sw });
   }
 
-  get strokeDasharray(): string {
-    return this.getStrokeDasharray();
-  }
-
   getStrokeDasharray(): string {
     return this._path.attr('stroke-dasharray');
-  }
-
-  set strokeDasharray(sd: string) {
-    this.setStrokeDasharray(sd);
   }
 
   setStrokeDasharray(sd: string) {

@@ -12,7 +12,6 @@ let svg = NodeSVG();
 
 describe('QuadraticBezierBond class', () => {
   it('_dPath static method', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 'Q', 2, 8);
     let b2 = Base.create(svg, 'B', 45, 200);
     let d = QuadraticBezierBond._dPath(b1, b2, 10, 12, 98, 2 * Math.PI / 3);
@@ -31,89 +30,56 @@ describe('QuadraticBezierBond class', () => {
   });
 
   describe('constructor', () => {
-    it('stores path and bases', () => {
-      let svg = NodeSVG();
-      let p = svg.path('M 1 2 Q 1 2 3 4');
-      let b1 = Base.create(svg, 'h', 1, 4);
-      let b2 = Base.create(svg, 'n', 1, 1);
-      let qbb = new QuadraticBezierBond(p, b1, b2);
-      expect(qbb._path).toBe(p);
-      expect(qbb.base1).toBe(b1);
-      expect(qbb.base2).toBe(b2);
+    let b1 = Base.create(svg, 'a', 5, 10);
+    let b2 = Base.create(svg, 'Q', 100, 200);
+
+    it('throws on missing path element', () => {
+      expect(() => new QuadraticBezierBond(undefined, b1, b2)).toThrow();
     });
 
-    it('validates path', () => {
-      let svg = NodeSVG();
-      let p = svg.path('M 1 2 Q 3 4 5 6');
-      let b1 = Base.create(svg, 'b', 1, 4);
-      let b2 = Base.create(svg, 'j', 4, 2);
-      expect(p.attr('id')).toBe(undefined);
-      let qbb = new QuadraticBezierBond(p, b1, b2);
-      expect(p.attr('id')).toBeTruthy();
+    it('throws on wrong element type', () => {
+      let c = svg.circle(20);
+      expect(() => new QuadraticBezierBond(c, b1, b2)).toThrow();
     });
 
-    it('stores paddings and control height and angle', () => {
-      let svg = NodeSVG();
-      let b1 = Base.create(svg, 'b', 3, 30);
-      let b2 = Base.create(svg, 'Q', 40, 5000);
-      let d = QuadraticBezierBond._dPath(b1, b2, 12, 16, 76, Math.PI / 3);
+    it('initializes path ID', () => {
+      let d = QuadraticBezierBond._dPath(b1, b2, 5, 5, 20, Math.PI / 2);
       let p = svg.path(d);
-      let qbb = new QuadraticBezierBond(p, b1, b2);
-      expect(qbb.padding1).toBeCloseTo(12);
-      expect(qbb.padding2).toBeCloseTo(16);
-      expect(qbb._controlHeight).toBeCloseTo(76);
-      expect(
-        normalizeAngle(qbb._controlAngle)
-      ).toBeCloseTo(Math.PI / 3);
-    });
-  });
-
-  describe('_validatePath method', () => {
-    it('initializes ID and sets fill-opacity to zero', () => {
-      let svg = NodeSVG();
-      let p = svg.path('M 4 5 Q 10 1 2 3');
-      let b1 = Base.create(svg, 'g', 1, 2);
-      let b2 = Base.create(svg, 'n', 4, 5);
       expect(p.attr('id')).toBe(undefined);
-      expect(p.attr('fill-opacity')).toBeGreaterThan(0);
       let qbb = new QuadraticBezierBond(p, b1, b2);
       expect(p.attr('id')).toBeTruthy();
+    });
+
+    it('sets path fill opacity to zero', () => {
+      let d = QuadraticBezierBond._dPath(b1, b2, 10, 15, 10, Math.PI / 3);
+      let p = svg.path(d);
+      p.attr({ 'fill-opacity': 1 });
+      let qbb = new QuadraticBezierBond(p, b1, b2);
       expect(p.attr('fill-opacity')).toBe(0);
     });
 
-    it('invalid segments', () => {
-      let svg = NodeSVG();
-      let b1 = Base.create(svg, 'n', 1, 2);
-      let b2 = Base.create(svg, 'j', 1, 5);
-      let p1 = svg.path('M 1 2 Q 1 2 3 4 Z'); // wrong number of segments
-      expect(
-        () => { new QuadraticBezierBond(p1, b1, b2) }
-      ).toThrow();
-      let p2 = svg.path('L 5 5 Q 4 5 6 2'); // first segment is not M
-      expect(
-        () => { new QuadraticBezierBond(p2, b1, b2) }
-      ).toThrow();
-      let p3 = svg.path('M 5 6 L 2 3'); // second segment is not Q
-      expect(
-        () => { new QuadraticBezierBond(p3, b1, b2) }
-      ).toThrow();
+    it('throws on wrong path segments', () => {
+      let p = svg.path('M 1 2 Q 1 5 8 9 Q 2 10 11 20'); // too many segments
+      expect(() => new QuadraticBezierBond(p, b1, b2)).toThrow();
+      p = svg.path('L 1 2 Q 1 5 10 15'); // first segment is not M
+      expect(() => new QuadraticBezierBond(p, b1, b2)).toThrow();
+      p = svg.path('M 5 8 L 5 9'); // second segment is not Q
+      expect(() => new QuadraticBezierBond(p, b1, b2)).toThrow();
     });
   });
 
   it('id and base getters', () => {
-    let svg = NodeSVG();
     let p = svg.path('M 1 2 Q 4 5 6 7');
-    let pid = p.id();
+    p.id('asdfzxcv');
     let b1 = Base.create(svg, 'h', 1, 5);
     let b2 = Base.create(svg, 'y', 1, 1);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.id).toBe(pid);
+    expect(qbb.id).toBe('asdfzxcv');
     expect(qbb.base1).toBe(b1);
     expect(qbb.base2).toBe(b2);
   });
 
   it('x1, y1, x2, y2, xControl and yControl getters', () => {
-    let svg = NodeSVG();
     let p = svg.path('M 1.2 4.3 Q 100 200.3 30 45.5');
     let b1 = Base.create(svg, 'b', 1, 2);
     let b2 = Base.create(svg, 'n', 4, 4);
@@ -126,64 +92,58 @@ describe('QuadraticBezierBond class', () => {
     expect(qbb.yControl).toBeCloseTo(200.3);
   });
 
-  it('_storePaddings and _storeControlHeightAndAngle methods', () => {
-    let svg = NodeSVG();
-    let b1 = Base.create(svg, 'B', 1, 20);
-    let b2 = Base.create(svg, 'r', 1000, 250);
-    let d = QuadraticBezierBond._dPath(b1, b2, 14, 12, 239, Math.PI / 5);
+  it('padding1 getter and setter', () => {
+    let b1 = Base.create(svg, 'a', 100, 200);
+    let b2 = Base.create(svg, 'q', 500, 800);
+    let d = QuadraticBezierBond._dPath(b1, b2, 12, 20, 100, Math.PI / 3);
     let p = svg.path(d);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.padding1).toBeCloseTo(14);
-    expect(qbb.padding2).toBeCloseTo(12);
-    expect(qbb._controlHeight).toBeCloseTo(239);
-    expect(
-      normalizeAngle(qbb._controlAngle)
-    ).toBeCloseTo(Math.PI / 5);
+    expect(qbb.getPadding1()).toBeCloseTo(12); // check getter
+    qbb.setPadding1(30); // use setter
+    expect(qbb.getPadding1()).toBeCloseTo(30); // check getter
+    // check actual value
+    expect(distanceBetween(100, 200, qbb.x1, qbb.y1)).toBeCloseTo(30);
+    // maintains other aspects of path positioning
+    expect(qbb.getPadding2()).toBeCloseTo(20);
+    expect(qbb._controlHeight).toBeCloseTo(100);
+    expect(normalizeAngle(qbb._controlAngle)).toBeCloseTo(Math.PI / 3);
   });
 
-  it('padding1 and padding2 getters and setters', () => {
-    let svg = NodeSVG();
-    let b1 = Base.create(svg, 't', 50, 40);
-    let b2 = Base.create(svg, 't', 300, 400);
-    let d = QuadraticBezierBond._dPath(b1, b2, 4, 5, 50, Math.PI / 3);
+  it('padding2 getter and setter', () => {
+    let b1 = Base.create(svg, 'q', 800, 1000);
+    let b2 = Base.create(svg, 'a', 200, 500);
+    let d = QuadraticBezierBond._dPath(b1, b2, 10, 18, 25, 2 * Math.PI / 3);
     let p = svg.path(d);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    qbb.padding1 = 12.2;
-    expect(qbb.padding1).toBeCloseTo(12.2);
-    let pa = p.array();
-    expect(
-      distanceBetween(b1.xCenter, b1.yCenter, pa[0][1], pa[0][2])
-    ).toBeCloseTo(12.2);
-    qbb.padding2 = 14.5;
-    expect(qbb.padding2).toBeCloseTo(14.5);
-    pa = p.array();
-    expect(
-      distanceBetween(b2.xCenter, b2.yCenter, pa[1][3], pa[1][4])
-    ).toBeCloseTo(14.5);
+    expect(qbb.getPadding2()).toBeCloseTo(18); // check getter
+    qbb.setPadding2(28); // use setter
+    expect(qbb.getPadding2()).toBeCloseTo(28); // check getter
+    // check actual value
+    expect(distanceBetween(200, 500, qbb.x2, qbb.y2)).toBeCloseTo(28);
+    // maintains other aspects of path positioning
+    expect(qbb.getPadding1()).toBeCloseTo(10);
+    expect(qbb._controlHeight).toBeCloseTo(25);
+    expect(normalizeAngle(qbb._controlAngle)).toBeCloseTo(2 * Math.PI / 3);
   });
 
   it('shiftControl method', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 'T', 20, 30);
     let b2 = Base.create(svg, 'b', 2000, 300);
     let d = QuadraticBezierBond._dPath(b1, b2, 8, 12, 300, Math.PI / 3);
     let p = svg.path(d);
-    let unshifted = p.array();
     let qbb = new QuadraticBezierBond(p, b1, b2);
+    let unshifted = p.array();
     qbb.shiftControl(-50, 120);
     let shifted = p.array();
+    // check control coordinates
     expect(shifted[1][1]).toBeCloseTo(unshifted[1][1] - 50);
     expect(shifted[1][2]).toBeCloseTo(unshifted[1][2] + 120);
-    expect(
-      distanceBetween(b1.xCenter, b1.yCenter, shifted[0][1], shifted[0][2])
-    ).toBeCloseTo(8);
-    expect(
-      distanceBetween(b2.xCenter, b2.yCenter, shifted[1][3], shifted[1][4])
-    ).toBeCloseTo(12);
+    // maintains paddings
+    expect(qbb.getPadding1()).toBeCloseTo(8);
+    expect(qbb.getPadding2()).toBeCloseTo(12);
   });
 
   it('reposition method', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 'H', 4, 9);
     let b2 = Base.create(svg, 'j', -2000, -500);
     let d = QuadraticBezierBond._dPath(b1, b2, 20, 15, 1000, 2 * Math.PI / 3);
@@ -192,58 +152,57 @@ describe('QuadraticBezierBond class', () => {
     b1.moveTo(200, 259);
     b2.moveTo(-2500, -800);
     qbb.reposition();
-    let pa = p.array();
-    expect(
-      distanceBetween(b1.xCenter, b1.yCenter, pa[0][1], pa[0][2])
-    ).toBeCloseTo(20);
-    expect(
-      distanceBetween(b2.xCenter, b2.yCenter, pa[1][3], pa[1][4])
-    ).toBeCloseTo(15);
+    // check padding1
+    expect(qbb.getPadding1()).toBeCloseTo(20); // check getter
+    expect(distanceBetween(200, 259, qbb.x1, qbb.y1)).toBeCloseTo(20); // check actual value
+    // check padding2
+    expect(qbb.getPadding2()).toBeCloseTo(15); // check getter
+    expect(distanceBetween(-2500, -800, qbb.x2, qbb.y2)).toBeCloseTo(15); // check actual value
+    // check control coordinates
     let xMiddle = (b1.xCenter + b2.xCenter) / 2;
     let yMiddle = (b1.yCenter + b2.yCenter) / 2;
-    expect(
-      distanceBetween(xMiddle, yMiddle, pa[1][1], pa[1][2])
-    ).toBeCloseTo(1000);
-    let ca = angleBetween(xMiddle, yMiddle, pa[1][1], pa[1][2]);
+    expect(distanceBetween(xMiddle, yMiddle, qbb.xControl, qbb.yControl)).toBeCloseTo(1000);
+    let ca = angleBetween(xMiddle, yMiddle, qbb.xControl, qbb.yControl);
     let a12 = b1.angleBetweenCenters(b2);
-    expect(
-      normalizeAngle(ca, a12) - a12
-    ).toBeCloseTo(2 * Math.PI / 3);
+    expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
   });
 
   it('stroke, strokeWidth and strokeDasharray getters and setters', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 'a', 50, 40);
     let b2 = Base.create(svg, 'n', 100, 300);
     let d = QuadraticBezierBond._dPath(b1, b2, 6, 8, 200, Math.PI / 6);
     let p = svg.path(d);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    qbb.stroke = '#132435';
-    expect(qbb.stroke).toBe('#132435');
-    expect(p.attr('stroke')).toBe('#132435');
-    qbb.strokeWidth = 3.44;
-    expect(qbb.strokeWidth).toBe(3.44);
-    expect(p.attr('stroke-width')).toBe(3.44);
-    qbb.strokeDasharray = '3 1 6 7';
-    expect(qbb.strokeDasharray).toBe('3 1 6 7');
-    expect(p.attr('stroke-dasharray')).toBe('3 1 6 7');
+    qbb.setStroke('#132435'); // use setter
+    expect(qbb.getStroke()).toBe('#132435'); // check getter
+    expect(p.attr('stroke')).toBe('#132435'); // check actual value
+    qbb.setStrokeWidth(3.44); // use setter
+    expect(qbb.getStrokeWidth()).toBe(3.44); // check getter
+    expect(p.attr('stroke-width')).toBe(3.44); // check actual value
+    qbb.setStrokeDasharray('3 1 6 7'); // use setter
+    expect(qbb.getStrokeDasharray()).toBe('3 1 6 7'); // check getter
+    expect(p.attr('stroke-dasharray')).toBe('3 1 6 7'); // check actual value
   });
 
-  it('cursor getter and setter', () => {
-    let svg = NodeSVG();
-    let b1 = Base.create(svg, 'q', 1, 3);
-    let b2 = Base.create(svg, 't', 5, 1000);
-    let d = QuadraticBezierBond._dPath(b1, b2, 10, 30, 35, Math.PI / 3);
+  it('fill, fillOpacity and cursor getters and setters', () => {
+    let b1 = Base.create(svg, 'A', 10, 20);
+    let b2 = Base.create(svg, 'g', 800, 200);
+    let d = QuadraticBezierBond._dPath(b1, b2, 10, 50, 80, Math.PI / 5);
     let p = svg.path(d);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.cursor).not.toBe('pointer');
-    qbb.cursor = 'pointer';
-    expect(qbb.cursor).toBe('pointer');
-    expect(p.css('cursor')).toBe('pointer');
+    qbb.fill = '#1324ab'; // use setter
+    expect(qbb.fill).toBe('#1324ab'); // check getter
+    expect(qbb._path.attr('fill')).toBe('#1324ab'); // check actual value
+    qbb.fillOpacity = 0.29; // use setter
+    expect(qbb.fillOpacity).toBe(0.29); // check getter
+    expect(qbb._path.attr('fill-opacity')).toBe(0.29); // check actual value
+    expect(qbb.cursor).not.toBe('pointer'); // below test of setter will be valid
+    qbb.cursor = 'pointer'; // use setter
+    expect(qbb.cursor).toBe('pointer'); // check getter
+    expect(p.css('cursor')).toBe('pointer'); // check actual value
   });
 
   describe('binding events', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 'b', 1, 2);
     let b2 = Base.create(svg, 'r', 5, 9);
     let d = QuadraticBezierBond._dPath(b1, b2, 7, 8, 25, Math.PI / 3);
@@ -251,48 +210,49 @@ describe('QuadraticBezierBond class', () => {
     let qbb = new QuadraticBezierBond(p, b1, b2);
 
     it('onMouseover method', () => {
-      let over = false;
-      qbb.onMouseover(e => over = e);
+      let f = jest.fn();
+      qbb.onMouseover(f);
       p.fire('mouseover');
-      expect(over).toBeTruthy();
+      expect(f).toHaveBeenCalled();
     });
 
     it('onMouseout method', () => {
-      let out = false;
-      qbb.onMouseout(e => out = e);
+      let f = jest.fn();
+      qbb.onMouseout(f);
       p.fire('mouseout');
-      expect(out).toBeTruthy();
+      expect(f).toHaveBeenCalled();
     });
 
     it('onMousedown method', () => {
-      let down = false;
-      qbb.onMousedown(e => down = e);
+      let f = jest.fn();
+      qbb.onMousedown(f);
       p.fire('mousedown');
-      expect(down).toBeTruthy();
+      expect(f).toHaveBeenCalled();
     });
 
     it('onDblclick method', () => {
-      let dbl = false;
-      qbb.onDblclick(e => dbl = e);
+      let f = jest.fn();
+      qbb.onDblclick(f);
       p.fire('dblclick');
-      expect(dbl).toBeTruthy();
+      expect(f).toHaveBeenCalled();
     });
   });
 
-  it('remove method', () => {
-    let svg = NodeSVG();
+  it('remove and hasBeenRemoved methods', () => {
     let p = svg.path('M 1 2 Q 3 4 5 6');
     let b1 = Base.create(svg, 'v', 1, 2);
     let b2 = Base.create(svg, 'n', 5, 10);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(svg.findOne('#' + p.id())).toBeTruthy();
+    let id = '#' + p.id();
+    expect(svg.findOne(id)).toBeTruthy();
+    expect(qbb.hasBeenRemoved()).toBeFalsy();
     qbb.remove();
-    expect(svg.findOne('#' + p.id())).toBe(null);
+    expect(svg.findOne(id)).toBeFalsy();
+    expect(qbb.hasBeenRemoved()).toBeTruthy();
   });
 
   describe('savableState method', () => {
     it('includes className, path and bases', () => {
-      let svg = NodeSVG();
       let p = svg.path('M 1 2 Q 5 5 6 7');
       let b1 = Base.create(svg, 'b', 1, 5);
       let b2 = Base.create(svg, 'N', 5, 3);
@@ -305,28 +265,25 @@ describe('QuadraticBezierBond class', () => {
     });
 
     it('can be converted to and from a JSON string', () => {
-      let svg = NodeSVG();
       let p = svg.path('M 1 2 Q 5 5 6 7');
       let b1 = Base.create(svg, 'b', 1, 5);
       let b2 = Base.create(svg, 'N', 5, 3);
       let qbb = new QuadraticBezierBond(p, b1, b2);
-      let savableState1 = qbb.savableState();
-      let json1 = JSON.stringify(savableState1);
-      let savableState2 = JSON.parse(json1);
-      let json2 = JSON.stringify(savableState2);
-      expect(json2).toBe(json1);
+      let savableState = qbb.savableState();
+      let json = JSON.stringify(savableState);
+      let parsed = JSON.parse(json);
+      expect(JSON.stringify(parsed)).toBe(json);
     });
   });
 
   it('refreshIds method', () => {
-    let svg = NodeSVG();
     let p = svg.path('M 1 2 Q 5 5 6 7');
     let b1 = Base.create(svg, 'b', 1, 5);
     let b2 = Base.create(svg, 'N', 5, 3);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    let oldPathId = qbb._path.id();
+    let oldId = qbb._path.id();
     qbb.refreshIds();
-    expect(qbb._path.id()).not.toBe(oldPathId);
+    expect(qbb._path.id()).not.toBe(oldId);
   });
 });
 
@@ -342,17 +299,14 @@ function getBasebyId(id, bases) {
 
 describe('TeritaryBond class', () => {
   describe('mostRecentProps static method', () => {
-    it('returns a new object', () => {
-      expect(TertiaryBond.mostRecentProps()).not.toBe(TertiaryBond._mostRecentProps);
-    });
-
-    it('returns correct values', () => {
+    it('returns a copy', () => {
       TertiaryBond._mostRecentProps.padding1 = 2.45;
       TertiaryBond._mostRecentProps.padding2 = 5.68;
       TertiaryBond._mostRecentProps.stroke = '#45abc3';
       TertiaryBond._mostRecentProps.strokeWidth = 3.47;
       TertiaryBond._mostRecentProps.strokeDasharray = '3 3 1 5 6 9';
       let mrps = TertiaryBond.mostRecentProps();
+      expect(mrps).not.toBe(TertiaryBond._mostRecentProps); // a new object
       expect(mrps.padding1).toBe(2.45);
       expect(mrps.padding2).toBe(5.68);
       expect(mrps.stroke).toBe('#45abc3');
@@ -362,7 +316,6 @@ describe('TeritaryBond class', () => {
   });
 
   it('_applyMostRecentProps static method', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 't', 300, 400);
     let b2 = Base.create(svg, 'a', 0, 0);
     let tb = TertiaryBond.create(svg, b1, b2);
@@ -380,7 +333,6 @@ describe('TeritaryBond class', () => {
   });
 
   it('_copyPropsToMostRecent static method', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 'q', 40, 30);
     let b2 = Base.create(svg, 'Q', 500, 400);
     let tb = TertiaryBond.create(svg, b1, b2);
@@ -389,6 +341,12 @@ describe('TeritaryBond class', () => {
     tb.stroke = '#4455aa';
     tb.strokeWidth = 5.42;
     tb.strokeDasharray = '3 3 1 4';
+    // necessary since the setters used above also update the most recent props
+    TertiaryBond._mostRecentProps.padding1 = 20;
+    TertiaryBond._mostRecentProps.padding2 = 30;
+    TertiaryBond._mostRecentProps.stroke = '#abcdef';
+    TertiaryBond._mostRecentProps.strokeWidth = 2;
+    TertiaryBond._mostRecentProps.strokeDasharray = '';
     TertiaryBond._copyPropsToMostRecent(tb);
     let mrps = TertiaryBond.mostRecentProps();
     expect(mrps.padding1).toBeCloseTo(14.7);
@@ -402,105 +360,89 @@ describe('TeritaryBond class', () => {
     describe('invalid saved state', () => {
       let b1 = Base.create(svg, 'Y', 1, 5);
       let b2 = Base.create(svg, 'y', 50, 40);
+      let getBasebyId = id => id === b1.id ? b1 : b2;
       let tb = TertiaryBond.create(svg, b1, b2);
 
       it('wrong class name', () => {
         let savableState = tb.savableState();
         savableState.className = 'QuadraticBezierBnd';
         expect(
-          () => TertiaryBond.fromSavedState(savableState, svg, id => getBasebyId(id, [b1, b2]))
-        ).toThrow();
-      });
-      
-      it('constructor throws', () => {
-        let savableState = tb.savableState();
-        tb.pathId += 'asdf';
-        expect(
-          () => TertiaryBond.fromSavedState(savableState, svg, id => getBasebyId(id, [b1, b2]))
+          () => TertiaryBond.fromSavedState(savableState, svg, getBasebyId)
         ).toThrow();
       });
     });
 
-    it('creates with path and bases', () => {
-      let b1 = Base.create(svg, 'r', 1, 5);
-      let b2 = Base.create(svg, 'E', 200, 300);
+    it('valid saved state', () => {
+      let b1 = Base.create(svg, 'g', 1000, 800);
+      let b2 = Base.create(svg, 'A', 200, 300);
+      let getBasebyId = id => id === b1.id ? b1 : b2;
       let tb1 = TertiaryBond.create(svg, b1, b2);
       let savableState = tb1.savableState();
-      let tb2 = TertiaryBond.fromSavedState(
-        savableState,
-        svg,
-        id => getBasebyId(id, [b1, b2])
-      );
-      expect(tb2._path.id()).toBe(tb1._path.id());
-      expect(tb2.base1.id).toBe(b1.id);
-      expect(tb2.base2.id).toBe(b2.id);
-    });
-
-    it('copies properties to most recent', () => {
-      let svg = NodeSVG();
-      let b1 = Base.create(svg, 'e', 1, 5);
-      let b2 = Base.create(svg, 't', 11, 55);
-      let tb1 = TertiaryBond.create(svg, b1, b2);
-      tb1.stroke = '#12bbc5';
-      let savableState1 = tb1.savableState();
-      let tb2 = TertiaryBond.fromSavedState(
-        savableState1,
-        svg,
-        id => getBasebyId(id, [b1, b2]),
-      );
-      let mrps = TertiaryBond.mostRecentProps();
-      expect(mrps.stroke).toBe('#12bbc5');
+      let spy = jest.spyOn(TertiaryBond, '_copyPropsToMostRecent');
+      let tb2 = TertiaryBond.fromSavedState(savableState, svg, getBasebyId);
+      expect(tb2._path.id()).toBe(tb2._path.id()); // finds path
+      // gets bases
+      expect(tb2.base1).toBe(b1);
+      expect(tb2.base2).toBe(b2);
+      // copies most recent props
+      expect(spy.mock.calls[0][0]).toBe(tb2);
     });
   });
 
   describe('create static method', () => {
+    let b1 = Base.create(svg, 'a', 1, 5);
+    let b2 = Base.create(svg, 'r', 200, 300);
+    let spy = jest.spyOn(TertiaryBond, '_applyMostRecentProps');
+    let tb = TertiaryBond.create(svg, b1, b2);
+
     it('creates with bases', () => {
-      let svg = NodeSVG();
-      let b1 = Base.create(svg, 'a', 1, 5);
-      let b2 = Base.create(svg, 'r', 200, 300);
-      let tb = TertiaryBond.create(svg, b1, b2);
       expect(tb.base1).toBe(b1);
       expect(tb.base2).toBe(b2);
     });
 
-    it('applies most recent properties', () => {
-      let svg = NodeSVG();
-      let b1 = Base.create(svg, 't', 50, 40);
-      let b2 = Base.create(svg, 'b', 300, 5000);
-      TertiaryBond._mostRecentProps.stroke = '#44bbca';
-      let tb = TertiaryBond.create(svg, b1, b2);
-      expect(tb.stroke).toBe('#44bbca');
+    it('creates with valid path', () => {
+      let toEnd1 = angleBetween(1, 5, tb.x1, tb.y1);
+      let toControl1 = angleBetween(1, 5, tb.xControl, tb.yControl);
+      expect(normalizeAngle(toEnd1)).toBeCloseTo(normalizeAngle(toControl1));
+      let toEnd2 = angleBetween(200, 300, tb.x2, tb.y2);
+      let toControl2 = angleBetween(200, 300, tb.xControl, tb.yControl);
+      expect(normalizeAngle(toEnd2)).toBeCloseTo(normalizeAngle(toControl2));
+    });
+
+    it('applies most recent props', () => {
+      expect(spy.mock.calls[0][0]).toBe(tb);
     });
   });
 
   it('padding1 and padding2 getters and setters', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 'q', 1, 4);
     let b2 = Base.create(svg, 't', 400, 3000);
     let tb = TertiaryBond.create(svg, b1, b2);
-    tb.padding1 = 6.6;
-    expect(tb.padding1).toBeCloseTo(6.6);
-    tb.padding2 = 12.8;
-    expect(tb.padding2).toBeCloseTo(12.8);
-    let mrps = TertiaryBond.mostRecentProps();  // update most recent properties
-    expect(mrps.padding1).toBeCloseTo(6.6);
-    expect(mrps.padding2).toBeCloseTo(12.8);
+    tb.padding1 = 6.6; // use setter
+    expect(tb.padding1).toBeCloseTo(6.6); // check getter
+    // updates most recent prop
+    expect(TertiaryBond.mostRecentProps().padding1).toBeCloseTo(6.6);
+    tb.padding2 = 12.8; // use setter
+    expect(tb.padding2).toBeCloseTo(12.8); // check getter
+    // updates most recent prop
+    expect(TertiaryBond.mostRecentProps().padding2).toBeCloseTo(12.8);
   });
 
   it('stroke, strokeWidth and strokeDasharray getters and setters', () => {
-    let svg = NodeSVG();
     let b1 = Base.create(svg, 't', 50, 40);
     let b2 = Base.create(svg, 'q', -1000, -300);
     let tb = TertiaryBond.create(svg, b1, b2);
-    tb.stroke = '#44bbcc';
-    expect(tb.stroke).toBe('#44bbcc');
-    tb.strokeWidth = 3.96;
-    expect(tb.strokeWidth).toBe(3.96);
-    tb.strokeDasharray = '3 2 8 7';
-    expect(tb.strokeDasharray).toBe('3 2 8 7');
-    let mrps = TertiaryBond.mostRecentProps();  // update most recent properties
-    expect(mrps.stroke).toBe('#44bbcc');
-    expect(mrps.strokeWidth).toBe(3.96);
-    expect(mrps.strokeDasharray).toBe('3 2 8 7');
+    tb.stroke = '#44bbcc'; // use setter
+    expect(tb.stroke).toBe('#44bbcc'); // check getter
+    // updates most recent prop
+    expect(TertiaryBond.mostRecentProps().stroke).toBe('#44bbcc');
+    tb.strokeWidth = 3.96; // use setter
+    expect(tb.strokeWidth).toBe(3.96); // check getter
+    // updates most recent prop
+    expect(TertiaryBond.mostRecentProps().strokeWidth).toBe(3.96);
+    tb.strokeDasharray = '3 2 8 7'; // use setter
+    expect(tb.strokeDasharray).toBe('3 2 8 7'); // check getter
+    // updates most recent prop
+    expect(TertiaryBond.mostRecentProps().strokeDasharray).toBe('3 2 8 7');
   });
 });
