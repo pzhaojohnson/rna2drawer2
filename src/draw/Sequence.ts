@@ -34,8 +34,8 @@ class Sequence implements SequenceInterface {
 
   static _applyMostRecentProps(seq: Sequence) {
     let props = Sequence.mostRecentProps();
-    seq.setNumberingAnchor(props.numberingAnchor);
-    seq.setNumberingIncrement(props.numberingIncrement);
+    seq.numberingAnchor = props.numberingAnchor;
+    seq.numberingIncrement = props.numberingIncrement;
   }
 
   static _copyPropsToMostRecent(seq: Sequence) {
@@ -148,11 +148,7 @@ class Sequence implements SequenceInterface {
   }
 
   set numberingOffset(no: number) {
-    this.setNumberingOffset(no);
-  }
-
-  setNumberingOffset(no: number) {
-    if (!isFinite(no) || Math.floor(no) !== no) {
+    if (!Number.isFinite(no) || Math.floor(no) !== no) {
       return;
     }
     this._numberingOffset = no;
@@ -164,11 +160,7 @@ class Sequence implements SequenceInterface {
   }
 
   set numberingAnchor(na: number) {
-    this.setNumberingAnchor(na);
-  }
-
-  setNumberingAnchor(na: number) {
-    if (!isFinite(na) || Math.floor(na) !== na) {
+    if (!Number.isFinite(na) || Math.floor(na) !== na) {
       return;
     }
     this._numberingAnchor = na;
@@ -181,11 +173,7 @@ class Sequence implements SequenceInterface {
   }
 
   set numberingIncrement(ni: number) {
-    this.setNumberingIncrement(ni);
-  }
-
-  setNumberingIncrement(ni: number) {
-    if (!isFinite(ni) || Math.floor(ni) !== ni) {
+    if (!Number.isFinite(ni) || Math.floor(ni) !== ni) {
       return;
     } else if (ni < 1) {
       return;
@@ -243,6 +231,9 @@ class Sequence implements SequenceInterface {
    * 5' and 3' most positions.
    * 
    * The bases are returned in ascending order.
+   * 
+   * It is undefined what bases are returned when the given
+   * positions are out of range.
    */
   getBasesInRange(p5: number, p3: number): Base[] {
     return this._bases.slice(p5 - 1, p3);
@@ -279,9 +270,9 @@ class Sequence implements SequenceInterface {
   }
 
   /**
-   * Returns null if the given position is out of range.
+   * Returns zero if the given position is out of range.
    */
-  clockwiseNormalAngleAtPosition(p: number): (number | null) {
+  clockwiseNormalAngleAtPosition(p: number): number {
     if (this.positionOutOfRange(p)) {
       return null;
     }
@@ -301,21 +292,18 @@ class Sequence implements SequenceInterface {
   }
 
   /**
-   * Returns null if the given position is out of range.
+   * Returns Math.PI if the given position is out of range.
    */
-  counterClockwiseNormalAngleAtPosition(p: number): (number | null) {
-    if (this.positionOutOfRange(p)) {
-      return null;
-    }
+  counterClockwiseNormalAngleAtPosition(p: number): number {
     return Math.PI + this.clockwiseNormalAngleAtPosition(p);
   }
 
   /**
-   * Returns null if the given position is out of range.
+   * Returns zero if the given position is out of range.
    */
-  innerNormalAngleAtPosition(p: number): (number | null) {
+  innerNormalAngleAtPosition(p: number): number {
     if (this.positionOutOfRange(p)) {
-      return null;
+      return 0;
     }
     let b = this.getBaseAtPosition(p);
     let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
@@ -333,12 +321,9 @@ class Sequence implements SequenceInterface {
   }
 
   /**
-   * Returns null if the given position is out of range.
+   * Returns Math.PI if the given position is out of range.
    */
-  outerNormalAngleAtPosition(p: number): (number | null) {
-    if (this.positionOutOfRange(p)) {
-      return null;
-    }
+  outerNormalAngleAtPosition(p: number): number {
     return Math.PI + this.innerNormalAngleAtPosition(p);
   }
 
