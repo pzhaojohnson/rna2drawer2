@@ -274,7 +274,7 @@ class Sequence implements SequenceInterface {
    */
   clockwiseNormalAngleAtPosition(p: number): number {
     if (this.positionOutOfRange(p)) {
-      return null;
+      return 0;
     }
     let b = this.getBaseAtPosition(p);
     let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
