@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
-import Base from '../Base';
+import { BaseInterface as Base } from '../BaseInterface';
 import normalizeAngle from '../normalizeAngle';
 
 export function adjustBaseNumbering(drawing: Drawing) {

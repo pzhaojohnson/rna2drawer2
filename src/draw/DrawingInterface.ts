@@ -1,25 +1,18 @@
-import Sequence from './Sequence';
-import { SequenceSavableState } from './SequenceInterface';
+import { SvgInterface as Svg } from './SvgInterface';
+import {
+  SequenceInterface as Sequence,
+  SequenceSavableState,
+} from './SequenceInterface';
 import { BaseInterface as Base } from './BaseInterface';
 import {
   PrimaryBondInterface as PrimaryBond,
   SecondaryBondInterface as SecondaryBond,
   StraightBondSavableState,
 } from './StraightBondInterface';
-import { TertiaryBond, QuadraticBezierBond } from './QuadraticBezierBond';
-import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
-
-export interface ForEachSequenceFunc {
-  (seq: Sequence): void;
-}
-
-export interface ForEachBaseFunc {
-  (b: Base, overallPosition: number): void;
-}
-
-export interface ForEachSecondaryBondFunc {
-  (sb: SecondaryBond): void;
-}
+import {
+  TertiaryBondInterface as TertiaryBond,
+  QuadraticBezierBondSavableState,
+} from './QuadraticBezierBondInterface';
 
 export interface DrawingSavableState {
   className: string;
@@ -31,22 +24,61 @@ export interface DrawingSavableState {
 }
 
 export interface DrawingInterface {
+  addTo(container: Node, SVG: () => Svg): void;
   centerView: () => void;
   
-  getSequenceById: (id: string) => Sequence;
-  forEachSequence(f: ForEachSequenceFunc): void;
-  appendSequenceOutOfView: (id: string, characters: string) => Sequence;
-
-  overallPositionOfBase: (b: Base) => number;
-
-  addPrimaryBond: (b1: Base, b2: Base) => PrimaryBond;
-
-  addSecondaryBond: (b1: Base, b2: Base) => SecondaryBond;
-  forEachSecondaryBond(f: ForEachSecondaryBondFunc): void;
+  width: number;
+  height: number;
+  setWidthAndHeight(w: number, h: number): void;
+  zoom: number;
   
-  addTertiaryBond: (b1: Base, b2: Base) => TertiaryBond;
+  numSequences: number;
+  isEmpty(): boolean;
+  getSequenceById(id: string): Sequence | undefined;
+  getSequenceAtIndex(i: number): Sequence | undefined;
+  forEachSequence(f: (seq: Sequence) => void): void;
+  sequenceIds(): string[];
+  sequenceIdIsTaken(id: string): boolean;
+  overallCharacters: string;
+  appendSequenceOutOfView(id: string, characters: string): Sequence | null;
+  onAddSequence(f: (seq: Sequence) => void): void;
+  fireAddSequence(seq: Sequence): void;
 
-  savableState: () => DrawingSavableState;
+  numBases: number;
+  getBaseById(id: string): Base | null;
+  getBaseAtOverallPosition(p: number): Base | null;
+  overallPositionOfBase(b: Base): number;
+  forEachBase(f: (b: Base, position: number) => void): void;
+  baseIds(): string[];
+  sequenceOfBase(b: Base): Sequence | undefined;
+
+  numPrimaryBonds: number;
+  forEachPrimaryBond(f: (pb: PrimaryBond) => void): void;
+  addPrimaryBond(b1: Base, b2: Base): PrimaryBond;
+
+  numSecondaryBonds: number;
+  getSecondaryBondById(id: string): SecondaryBond | undefined;
+  forEachSecondaryBond(f: (sb: SecondaryBond) => void): void;
+  addSecondaryBond(b1: Base, b2: Base): SecondaryBond;
+  removeSecondaryBondById(id: string): void;
+
+  numTertiaryBonds: number;
+  getTertiaryBondById(id: string): TertiaryBond | undefined;
+  forEachTertiaryBond(f: (tb: TertiaryBond) => void): void;
+  addTertiaryBond(b1: Base, b2: Base): TertiaryBond;
+  onAddTertiaryBond(f: (tb: TertiaryBond) => void): void;
+  fireAddTertiaryBond(tb: TertiaryBond): void;
+  removeTertiaryBondById(id: string): void;
+
+  repositionBonds(): void;
+  adjustNumberingLineAngles(): void;
+  adjustBaseNumbering(): void;
+  onMousedown(f: () => void): void;
+  clear(): void;
+  svgString: string;
+  savableState(): DrawingSavableState;
+  applySavedState(savedState: DrawingSavableState): boolean;
+  refreshIds(): void;
 }
 
 export default DrawingInterface;

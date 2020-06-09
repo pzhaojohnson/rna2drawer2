@@ -1,6 +1,5 @@
 import {
   DrawingInterface,
-  ForEachBaseFunc,
   DrawingSavableState,
 } from './DrawingInterface';
 import { SvgInterface as Svg } from './SvgInterface';
@@ -193,7 +192,7 @@ class Drawing implements DrawingInterface {
     return p;
   }
 
-  forEachBase(f: ForEachBaseFunc) {
+  forEachBase(f: (b: Base, p: number) => void) {
     let p = 1;
     this.forEachSequence(seq => {
       seq.forEachBase((b: Base) => {
