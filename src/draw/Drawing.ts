@@ -380,7 +380,7 @@ class Drawing implements DrawingInterface {
   _applySavedSvg(savedState: DrawingSavableState): (void | never) {
     this._svg.clear();
     this._svg.svg(savedState.svg);
-    let nested = this._svg.first();
+    let nested = this._svg.first() as Svg;
     let vb = nested.viewbox();
     let w = vb.width;
     let h = vb.height;

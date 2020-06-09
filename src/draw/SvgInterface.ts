@@ -15,6 +15,37 @@ export interface SvgBBox {
   y2: number;
 }
 
+export interface SvgElementInterface {
+  type: string;
+  id(): string;
+  id(n: null): void;
+  attr(a: string): any;
+  attr(o: object): void;
+  css(a: string): any;
+  css(o: object): void;
+  bbox(): SvgBBox;
+  center(cx: number, cy: number): void;
+  x(): number;
+  x(lx: number): void;
+  y(): number;
+  y(ty: number): void;
+  cx(): number;
+  cx(x: number): void;
+  cy(): number;
+  cy(y: number): void;
+  dmove(dx: number, dy: number): void;
+  
+  mouseover(f: () => void): void;
+  mouseout(f: () => void): void;
+  mousedown(f: () => void): void;
+  dblclick(f: () => void): void;
+
+  insertBefore(ele: SvgElementInterface): void;
+  insertAfter(ele: SvgElementInterface): void;
+  remove(): void;
+  root(): SvgInterface | null;
+}
+
 export interface SvgTextAdd {
   tspan(s: string): void;
 }
@@ -23,86 +54,20 @@ export interface SvgTextAddFunc {
   (add: SvgTextAdd): void;
 }
 
-export interface SvgTextInterface {
-  type: string;
-  id(): string;
-  id(n: null): void;
-  attr(a: string): any;
-  attr(o: object): void;
-  css(a: string): string;
-  css(o: object): void;
-  bbox(): SvgBBox;
-  center(cx: number, cy: number): void;
-  x(): number;
-  x(lx: number): void;
-  y(): number;
-  y(ly: number): void;
-  cx(): number;
-  cx(x: number): void;
-  cy(): number;
-  cy(y: number): void;
-  dmove(dx: number, dy: number): void;
+export interface SvgTextInterface extends SvgElementInterface {
   text(): string;
-  
-  mouseover(f: () => void): void;
-  mouseout(f: () => void): void;
-  mousedown(f: () => void): void;
-  dblclick(f: () => void): void;
-  
-  insertBefore(ele: SvgElementInterface): void;
-  insertAfter(ele: SvgElementInterface): void;
   clear(): void;
   tspan(s: string): void;
-  remove(): void;
-  root(): (SvgInterface | null);
 }
 
-export interface SvgLineInterface {
-  type: string;
-  id(): string;
-  id(n: null): void;
-  attr(a: string): any;
-  attr(o: object): void;
-  insertBefore(ele: SvgElementInterface): void;
-  insertAfter(ele: SvgElementInterface): void;
-  remove(): void;
-}
+export interface SvgLineInterface extends SvgElementInterface {}
 
-export interface SvgPathInterface {
-  type: string;
-  id(): string;
-  id(n: null): void;
+export interface SvgPathInterface extends SvgElementInterface {
   array(): (string | number)[][];
   plot(d: string): void;
-  attr(a: string): any;
-  attr(o: object): void;
-  css(s: string): any;
-  css(o: object): void;
-  mouseover(f: () => void): void;
-  mouseout(f: () => void): void;
-  mousedown(f: () => void): void;
-  dblclick(f: () => void): void;
-  insertBefore(ele: SvgElementInterface): void;
-  insertAfter(ele: SvgElementInterface): void;
-  remove(): void;
-  root(): (SvgInterface | null);
 }
 
-export interface SvgCircleInterface {
-  readonly type: string;
-  id(): string;
-  id(n: null): void;
-  attr(a: string): any;
-  attr(o: object): void;
-  insertBefore(ele: SvgElementInterface): void;
-  insertAfter(ele: SvgElementInterface): void;
-  remove(): void;
-}
-
-export type SvgElementInterface = SvgTextInterface
-  | SvgLineInterface
-  | SvgPathInterface
-  | SvgCircleInterface;
+export interface SvgCircleInterface extends SvgElementInterface {}
 
 export interface SvgInterface {
   addTo(e: HTMLElement): SvgInterface;
@@ -126,7 +91,7 @@ export interface SvgInterface {
   svg(b: boolean): string;
   svg(s: string): void;
   svg(s: string, b: boolean): void;
-  first(): SvgInterface;
+  first(): SvgInterface | SvgElementInterface;
 }
 
 export default SvgInterface;
