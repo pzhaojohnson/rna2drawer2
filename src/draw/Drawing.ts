@@ -59,6 +59,9 @@ class Drawing implements DrawingInterface {
   }
 
   setWidthAndHeight(width: number, height: number) {
+    if (width < 0 || height < 0) {
+      return;
+    }
     let z = this.zoom;
     this._svg.viewbox(0, 0, width, height);
     this._svg.attr({
@@ -76,6 +79,9 @@ class Drawing implements DrawingInterface {
   }
 
   set zoom(z: number) {
+    if (z <= 0) {
+      return;
+    }
     let vb = this._svg.viewbox();
     let w = z * vb.width;
     let h = z * vb.height;
@@ -87,12 +93,12 @@ class Drawing implements DrawingInterface {
     this._div.scrollTop = st;
   }
 
-  get numSequences(): number {
-    return this._sequences.length;
-  }
-
   isEmpty(): boolean {
     return this.numSequences == 0;
+  }
+
+  get numSequences(): number {
+    return this._sequences.length;
   }
 
   getSequenceById(id: string): (Sequence | undefined) {
