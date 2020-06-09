@@ -2,12 +2,17 @@ import {
   DrawingInterface as Drawing,
   DrawingSavableState,
 } from './DrawingInterface';
-import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
-import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
-
-interface GeneralLayoutPropsSavableState {}
-
-interface PerBaseLayoutPropsSavableState {}
+import { SvgInterface as Svg } from './SvgInterface';
+import {
+  GeneralStrictLayoutProps as GeneralLayoutProps,
+  GeneralStrictLayoutPropsSavableState as GeneralLayoutPropsSavableState,
+} from './layout/singleseq/strict/GeneralStrictLayoutProps';
+import {
+  PerBaseStrictLayoutProps as PerBaseLayoutProps,
+  PerBaseStrictLayoutPropsSavableState as PerBaseLayoutPropsSavableState
+} from './layout/singleseq/strict/PerBaseStrictLayoutProps';
+import StrictLayout from './layout/singleseq/strict/StrictLayout';
+import { Structure } from './edit/appendStructureToStrictDrawing';
 
 export interface StrictDrawingSavableState {
   className: string;
@@ -20,19 +25,30 @@ export interface StrictDrawingSavableState {
 
 export interface StrictDrawingInterface {
   readonly drawing: Drawing;
-  layoutPartners: () => (number | null)[];
-  generalLayoutProps: () => GeneralStrictLayoutProps;
-  setGeneralLayoutProps: (props: GeneralStrictLayoutProps) => void;
-  perBaseLayoutProps: () => PerBaseStrictLayoutProps[];
-  setPerBaseLayoutProps: (props: PerBaseStrictLayoutProps[]) => void;
+  addTo(container: Node, SVG: () => Svg): void;
+  layoutPartners(): (number | null)[];
+  generalLayoutProps(): GeneralLayoutProps;
+  setGeneralLayoutProps(props: GeneralLayoutProps): void;
+  perBaseLayoutProps(): PerBaseLayoutProps[];
+  setPerBaseLayoutProps(props: PerBaseLayoutProps[]): void;
   baseWidth: number;
   baseHeight: number;
-
-  isEmpty: () => boolean;
-
-  applyLayout: () => void;
-
-  savableState: () => StrictDrawingSavableState;
+  layout(): StrictLayout | null;
+  applyLayout(): void;
+  hasFlatOutermostLoop(): boolean;
+  flatOutermostLoop(): void;
+  hasRoundOutermostLoop(): boolean;
+  roundOutermostLoop(): void;
+  savableState(): StrictDrawingSavableState;
+  savableString: string;
+  applySavedState(savedState: StrictDrawingSavableState): boolean;
+  refreshIds(): void;
+  zoom: number;
+  isEmpty(): boolean;
+  sequenceIds(): string[];
+  appendSequence(id: string, characters: string): boolean;
+  appendStructure(s: Structure): boolean;
+  svgString: string;
 }
 
 export default StrictDrawingInterface;

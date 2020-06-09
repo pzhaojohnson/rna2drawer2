@@ -7,8 +7,13 @@ import { SvgInterface as Svg } from './SvgInterface';
 
 import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
 
-import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
-import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
+import {
+  GeneralStrictLayoutProps as GeneralLayoutProps,
+} from './layout/singleseq/strict/GeneralStrictLayoutProps';
+import {
+  PerBaseStrictLayoutProps as PerBaseLayoutProps,
+  PerBaseStrictLayoutPropsSavableState as PerBaseLayoutPropsSavableState,
+} from './layout/singleseq/strict/PerBaseStrictLayoutProps';
 
 import { StrictLayout } from './layout/singleseq/strict/StrictLayout';
 import { applyStrictLayout } from './edit/applyStrictLayout';
@@ -18,19 +23,17 @@ import {
   Structure,
 } from './edit/appendStructureToStrictDrawing';
 
-interface PerBaseLayoutPropsSavableState {};
-
 class StrictDrawing implements StrictDrawingInterface {
   _drawing: Drawing;
-  _generalLayoutProps: GeneralStrictLayoutProps;
-  _perBaseLayoutProps: PerBaseStrictLayoutProps[];
+  _generalLayoutProps: GeneralLayoutProps;
+  _perBaseLayoutProps: PerBaseLayoutProps[];
   _baseWidth: number;
   _baseHeight: number;
 
   constructor() {
     this._drawing = new Drawing();
 
-    this._generalLayoutProps = new GeneralStrictLayoutProps();
+    this._generalLayoutProps = new GeneralLayoutProps();
     this._perBaseLayoutProps = [];
     this._baseWidth = 13.5;
     this._baseHeight = 13.5;
@@ -48,29 +51,29 @@ class StrictDrawing implements StrictDrawingInterface {
     return layoutPartnersOfStrictDrawing(this);
   }
 
-  generalLayoutProps(): GeneralStrictLayoutProps {
+  generalLayoutProps(): GeneralLayoutProps {
     if (!this._generalLayoutProps) {
-      this._generalLayoutProps = new GeneralStrictLayoutProps();
+      this._generalLayoutProps = new GeneralLayoutProps();
     }
     return this._generalLayoutProps.deepCopy();
   }
 
-  setGeneralLayoutProps(props: GeneralStrictLayoutProps) {
+  setGeneralLayoutProps(props: GeneralLayoutProps) {
     if (props) {
       this._generalLayoutProps = props;
     }
   }
 
-  perBaseLayoutProps(): PerBaseStrictLayoutProps[] {
+  perBaseLayoutProps(): PerBaseLayoutProps[] {
     if (!this._perBaseLayoutProps) {
       this._perBaseLayoutProps = [];
     }
-    return PerBaseStrictLayoutProps.deepCopyArray(
+    return PerBaseLayoutProps.deepCopyArray(
       this._perBaseLayoutProps
     );
   }
 
-  setPerBaseLayoutProps(props: PerBaseStrictLayoutProps[]) {
+  setPerBaseLayoutProps(props: PerBaseLayoutProps[]) {
     if (props) {
       this._perBaseLayoutProps = props;
     }
@@ -135,7 +138,7 @@ class StrictDrawing implements StrictDrawingInterface {
       return;
     }
     if (!this._generalLayoutProps) {
-      this._generalLayoutProps = new GeneralStrictLayoutProps();
+      this._generalLayoutProps = new GeneralLayoutProps();
     }
     this._generalLayoutProps.outermostLoopShape = 'flat';
     this.applyLayout();
@@ -150,7 +153,7 @@ class StrictDrawing implements StrictDrawingInterface {
       return;
     }
     if (!this._generalLayoutProps) {
-      this._generalLayoutProps = new GeneralStrictLayoutProps();
+      this._generalLayoutProps = new GeneralLayoutProps();
     }
     this._generalLayoutProps.outermostLoopShape = 'round';
     this.applyLayout();
@@ -158,7 +161,7 @@ class StrictDrawing implements StrictDrawingInterface {
   
   savableState(): StrictDrawingSavableState {
     if (!this._generalLayoutProps) {
-      this._generalLayoutProps = new GeneralStrictLayoutProps();
+      this._generalLayoutProps = new GeneralLayoutProps();
     }
     if (!this._perBaseLayoutProps) {
       this._perBaseLayoutProps = [];
@@ -219,10 +222,10 @@ class StrictDrawing implements StrictDrawingInterface {
 
   _applySavedGeneralLayoutProps(savedState: StrictDrawingSavableState): (void | never) {
     if (!savedState.generalLayoutProps) {
-      this._generalLayoutProps = new GeneralStrictLayoutProps();
+      this._generalLayoutProps = new GeneralLayoutProps();
       return;
     }
-    let props = GeneralStrictLayoutProps.fromSavedState(savedState.generalLayoutProps);
+    let props = GeneralLayoutProps.fromSavedState(savedState.generalLayoutProps);
     this._generalLayoutProps = props;
   }
 
@@ -233,7 +236,7 @@ class StrictDrawing implements StrictDrawingInterface {
     }
     savedState.perBaseLayoutProps.forEach((savedProps, i) => {
       if (savedProps) {
-        let props = PerBaseStrictLayoutProps.fromSavedState(savedProps);
+        let props = PerBaseLayoutProps.fromSavedState(savedProps);
         this._perBaseLayoutProps[i] = props;
       }
     });

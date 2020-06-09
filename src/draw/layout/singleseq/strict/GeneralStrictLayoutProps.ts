@@ -1,11 +1,20 @@
-class GeneralStrictLayoutProps {
-  
-  /**
-   * @param {GeneralStrictLayoutProps~SavableState} savedState 
-   * 
-   * @returns {GeneralStrictLayoutProps} 
-   */
-  static fromSavedState(savedState) {
+export interface GeneralStrictLayoutPropsSavableState {
+  className: string;
+  outermostLoopShape: string;
+  rotation: number;
+  basePairBondLength: number;
+  basePairPadding: number;
+  terminiGap: number;
+}
+
+export class GeneralStrictLayoutProps {
+  outermostLoopShape: string;
+  rotation: number;
+  basePairBondLength: number;
+  basePairPadding: number;
+  terminiGap: number;
+
+  static fromSavedState(savedState: GeneralStrictLayoutPropsSavableState): GeneralStrictLayoutProps {
     let gps = new GeneralStrictLayoutProps();
     if (savedState.outermostLoopShape !== undefined) {
       gps.outermostLoopShape = savedState.outermostLoopShape;
@@ -35,28 +44,12 @@ class GeneralStrictLayoutProps {
     this.terminiGap = 4;
   }
 
-  /**
-   * @returns {GeneralStrictLayoutProps} 
-   */
-  deepCopy() {
+  deepCopy(): GeneralStrictLayoutProps {
     let savableState = this.savableState();
     return GeneralStrictLayoutProps.fromSavedState(savableState);
   }
 
-  /**
-   * @typedef {Object} GeneralStrictLayoutProps~SavableState 
-   * @property {string} className 
-   * @property {string} outermostLoopShape 
-   * @property {number} rotation 
-   * @property {number} basePairBondLength 
-   * @property {number} basePairPadding 
-   * @property {number} terminiGap 
-   */
-
-  /**
-   * @returns {GeneralStrictLayoutProps~SavableState} 
-   */
-  savableState() {
+  savableState(): GeneralStrictLayoutPropsSavableState {
     return {
       className: 'GeneralStrictLayoutProps',
       outermostLoopShape: this.outermostLoopShape,

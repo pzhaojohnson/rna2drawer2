@@ -1,24 +1,28 @@
-class PerBaseStrictLayoutProps {
+export interface PerBaseStrictLayoutPropsSavableState {
+  className: string;
+  stretch3: number;
+  flatLoopAngle3: number;
+  flipStem: boolean;
+  loopShape: string;
+  triangleLoopHeight: number;
+}
 
-  /**
-   * @param {Array<PerBaseStrictLayoutProps>} arr 
-   * 
-   * @returns {Array<PerBaseStrictLayoutProps>} 
-   */
-  static deepCopyArray(arr) {
-    let copyArr = [];
+export class PerBaseStrictLayoutProps {
+  stretch3: number;
+  flatLoopAngle3: number;
+  flipStem: boolean;
+  loopShape: string;
+  triangleLoopHeight: number;
+
+  static deepCopyArray(arr: PerBaseStrictLayoutProps[]): PerBaseStrictLayoutProps[] {
+    let copyArr = [] as PerBaseStrictLayoutProps[];
     arr.forEach(props => {
       copyArr.push(props.deepCopy());
     });
     return copyArr;
   }
 
-  /**
-   * @param {PerBaseStrictLayoutProps~SavableState} savedState 
-   * 
-   * @returns {PerBaseStrictLayoutProps} 
-   */
-  static fromSavedState(savedState) {
+  static fromSavedState(savedState: PerBaseStrictLayoutPropsSavableState): PerBaseStrictLayoutProps {
     let pbps = new PerBaseStrictLayoutProps();
     if (savedState.stretch3 !== undefined) {
       pbps.stretch3 = savedState.stretch3;
@@ -46,28 +50,12 @@ class PerBaseStrictLayoutProps {
     this.triangleLoopHeight = 4;
   }
 
-  /**
-   * @returns {PerBaseStrictLayoutProps} 
-   */
-  deepCopy() {
+  deepCopy(): PerBaseStrictLayoutProps {
     let savableState = this.savableState();
     return PerBaseStrictLayoutProps.fromSavedState(savableState);
   }
 
-  /**
-   * @typedef {Object} PerBaseStrictLayoutProps~SavableState 
-   * @property {string} className 
-   * @property {number} stretch3 
-   * @property {number} flatLoopAngle3 
-   * @property {boolean} flipStem 
-   * @property {string} loopShape 
-   * @property {number} triangleLoopHeight 
-   */
-
-  /**
-   * @returns {PerBaseStrictLayoutProps~SavableState} 
-   */
-  savableState() {
+  savableState(): PerBaseStrictLayoutPropsSavableState {
     return {
       className: 'PerBaseStrictLayoutProps',
       stretch3: this.stretch3,
