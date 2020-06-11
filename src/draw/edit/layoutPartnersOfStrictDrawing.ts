@@ -1,16 +1,18 @@
+import { StrictDrawingInterface as StrictDrawing } from '../StrictDrawingInterface';
+import { DrawingInterface as Drawing } from '../DrawingInterface';
 import splitSecondaryAndTertiaryPairs from '../../parse/splitSecondaryAndTertiaryPairs';
 
-function _idsToPositions(drawing) {
-  let dict = {};
+function _idsToPositions(drawing: Drawing): { [id: string]: number } {
+  let dict = {} as { [id: string]: number };
   drawing.forEachBase((b, p) => {
     dict[b.id] = p;
   });
   return dict;
 }
 
-function _overallSecondaryPartners(drawing) {
+function _overallSecondaryPartners(drawing: Drawing) {
   let idsToPositions = _idsToPositions(drawing);
-  let partners = [];
+  let partners = [] as (number | null)[];
   drawing.forEachBase(() => {
     partners.push(null);
   });
@@ -23,7 +25,7 @@ function _overallSecondaryPartners(drawing) {
   return partners;
 }
 
-function _removeKnots(partners) {
+function _removeKnots(partners: (number | null)[]) {
   return splitSecondaryAndTertiaryPairs(partners).secondaryPartners;
 }
 
@@ -34,12 +36,8 @@ function _removeKnots(partners) {
  * This function also handles secondary bonds that share bases,
  * though it is undefined which pair of two overlapping pairs will
  * be included in the returned partners notation.
- * 
- * @param {StrictDrawing} sd 
- * 
- * @returns {Array<number|null>} 
  */
-function layoutPartnersOfStrictDrawing(sd) {
+function layoutPartnersOfStrictDrawing(sd: StrictDrawing): (number | null)[] {
   let partners = _overallSecondaryPartners(sd.drawing);
   return _removeKnots(partners);
 }

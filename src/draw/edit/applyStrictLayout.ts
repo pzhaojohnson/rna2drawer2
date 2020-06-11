@@ -1,4 +1,7 @@
-function _moveBases(drawing, layout, baseWidth, baseHeight) {
+import { DrawingInterface as Drawing } from '../DrawingInterface';
+import StrictLayout from '../layout/singleseq/strict/StrictLayout';
+
+function _moveBases(drawing: Drawing, layout: StrictLayout, baseWidth: number, baseHeight: number) {
   let xMin = layout.xMin;
   let yMin = layout.yMin;
   drawing.forEachBase((b, p) => {
@@ -10,7 +13,7 @@ function _moveBases(drawing, layout, baseWidth, baseHeight) {
   });
 }
 
-function _setWidthAndHeight(drawing, layout, baseWidth, baseHeight) {
+function _setWidthAndHeight(drawing: Drawing, layout: StrictLayout, baseWidth: number, baseHeight: number) {
   let xMin = layout.xMin;
   let xMax = layout.xMax;
   let yMin = layout.yMin;
@@ -21,13 +24,7 @@ function _setWidthAndHeight(drawing, layout, baseWidth, baseHeight) {
   );
 }
 
-/**
- * @param {Drawing} drawing 
- * @param {StrictLayout} layout 
- * @param {number} baseWidth 
- * @param {number} baseHeight 
- */
-export function applyStrictLayout(drawing, layout, baseWidth, baseHeight) {
+export function applyStrictLayout(drawing: Drawing, layout: StrictLayout, baseWidth: number, baseHeight: number) {
   _moveBases(drawing, layout, baseWidth, baseHeight);
   drawing.repositionBonds();
   drawing.adjustNumberingLineAngles();
