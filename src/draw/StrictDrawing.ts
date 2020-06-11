@@ -68,6 +68,15 @@ class StrictDrawing implements StrictDrawingInterface {
     if (!this._perBaseLayoutProps) {
       this._perBaseLayoutProps = [];
     }
+    let missing = [] as number[];
+    this._perBaseLayoutProps.forEach((props, i) => {
+      if (!props) {
+        missing.push(i);
+      }
+    });
+    missing.forEach(i => {
+      this._perBaseLayoutProps[i] = new PerBaseLayoutProps();
+    });
     return PerBaseLayoutProps.deepCopyArray(
       this._perBaseLayoutProps
     );
@@ -189,7 +198,7 @@ class StrictDrawing implements StrictDrawingInterface {
 
   /**
    * If the saved state cannot be successfully applied, the state of
-   * this drawing will not be affected.
+   * the drawing will not be affected.
    * 
    * Returns true if the saved state was successfully applied.
    */

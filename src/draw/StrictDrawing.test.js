@@ -11,15 +11,27 @@ import * as AppendStructureToStrictDrawing from './edit/appendStructureToStrictD
 import isKnotless from '../parse/isKnotless';
 import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
+import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
 
 let sd = new StrictDrawing();
-sd.addTo(document.body, () => NodeSVG());
-let dotBracket = '(((.[[[.))).]]].';
+let container = document.createElement('div');
+document.body.appendChild(container);
+sd.addTo(container, () => NodeSVG());
+let dotBracket1 = '(((.[[[.))).]]].';
+let partners1 = parseDotBracket(dotBracket1);
 sd.appendStructure({
   id: 'asdf',
   characters: 'asdfasdfasdfasdf',
-  secondaryPartners: parseDotBracket(dotBracket).secondaryPartners,
-  tertiaryPartners: parseDotBracket(dotBracket).tertiaryPartners,
+  secondaryPartners: partners1.secondaryPartners,
+  tertiaryPartners: partners1.tertiaryPartners,
+});
+let dotBracket2 = '..((..((....))..))';
+let partners2 = parseDotBracket(dotBracket2);
+sd.appendStructure({
+  id: 'qwer',
+  characters: 'qwerqwerqwerqwerqw',
+  secondaryPartners: partners2.secondaryPartners,
+  tertiaryPartners: partners2.tertiaryPartners,
 });
 let generalProps = sd.generalLayoutProps();
 generalProps.basePairBondLength = 6.78;
@@ -31,68 +43,41 @@ sd.setPerBaseLayoutProps(perBaseProps);
 sd.baseWidth = 20.78;
 sd.baseHeight = 18.012;
 
-it('constructor initializes props', () => {
-  let sd = new StrictDrawing();
-  expect(sd.drawing).toBeTruthy();
-  expect(sd.generalLayoutProps()).toBeTruthy();
-  expect(sd.perBaseLayoutProps()).toBeTruthy();
-  expect(sd.baseWidth).toBeTruthy();
-  expect(sd.baseHeight).toBeTruthy();
-});
-
 it('drawing getter', () => {
-  expect(sd.drawing.savableState().className).toBe('Drawing');
+  expect(sd.drawing).toBe(sd._drawing);
 });
 
 it('addTo method', () => {
   let sd = new StrictDrawing();
-  sd._drawing = {
-    addTo: jest.fn(),
-  };
-  let node = jest.fn();
-  let svg = jest.fn();
-  sd.addTo(node, svg);
-  expect(sd._drawing.addTo.mock.calls[0][0]).toBe(node);
-  expect(sd._drawing.addTo.mock.calls[0][1]).toBe(svg);
+  let spy = jest.spyOn(sd._drawing, 'addTo');
+  let container = document.createElement('div');
+  document.body.appendChild(container);
+  let svg = () => NodeSVG();
+  sd.addTo(container, svg);
+  let c = spy.mock.calls[0];
+  expect(c[0]).toBe(container);
+  expect(c[1]).toBe(svg);
+  expect(container.childNodes.length).toBe(1); // drawing was added
 });
 
-describe('layoutPartners method', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
-  sd.appendStructure({
-    id: 'asdf',
-    characters: 'asdfasdfasdfasdf',
-    secondaryPartners: parseDotBracket('((..((....))..))').secondaryPartners,
-  });
-  
-  it('no knots', () => {
-    let partners = sd.layoutPartners();
-    expect(() => validatePartners(partners)).not.toThrow();
-    expect(partners.length).toBe(16);
-  });
-
-  it('removes knots', () => {
-    let seq = sd.drawing.getSequenceById('asdf');
-    sd.drawing.addSecondaryBond(
-      seq.getBaseAtPosition(8),
-      seq.getBaseAtPosition(14),
-    );
-    let partners = sd.layoutPartners();
-    expect(() => validatePartners(partners)).not.toThrow();
-    expect(isKnotless(partners)).toBeTruthy();
-  });
+it('layoutPartners method', () => {
+  expect(sd.drawing.numSequences).toBeGreaterThan(1); // handles multiple sequences
+  expect(sd.drawing.numSecondaryBonds).toBeGreaterThan(1); // has a secondary structure
+  let received = sd.layoutPartners();
+  let expected = layoutPartnersOfStrictDrawing(sd);
+  expect(JSON.stringify(received)).toBe(JSON.stringify(expected));
 });
 
 describe('generalLayoutProps method', () => {
   it('handles nullish props', () => {
     sd._generalLayoutProps = undefined;
     expect(sd.generalLayoutProps()).toBeTruthy();
-    expect(sd._generalLayoutProps).toBeTruthy();
+    expect(sd._generalLayoutProps).toBeTruthy(); // initializes new props
   });
 
-  it('returns a deep copy', () => {
+  it('returns a copy', () => {
     let props = sd.generalLayoutProps();
-    expect(props).not.toBe(sd._generalLayoutProps);
+    expect(props).not.toBe(sd._generalLayoutProps); // a new object
     expect(JSON.stringify(props)).toBe(JSON.stringify(sd._generalLayoutProps));
   });
 });
@@ -104,23 +89,36 @@ describe('setGeneralLayoutProps method', () => {
   });
 
   it('sets props', () => {
-    let props = new GeneralStrictLayoutProps();
-    props.basePairPadding = 3.487;
+    let props = sd.generalLayoutProps();
+    props.basePairPadding += 5.5;
     sd.setGeneralLayoutProps(props);
-    expect(sd.generalLayoutProps().basePairPadding).toBe(3.487);
+    expect(JSON.stringify(sd.generalLayoutProps())).toBe(JSON.stringify(props));
   });
 });
 
 describe('perBaseLayoutProps method', () => {
-  it('handles nullish props', () => {
+  it('handles nullish list', () => {
     sd._perBaseLayoutProps = undefined;
     expect(sd.perBaseLayoutProps()).toBeTruthy();
-    expect(sd._perBaseLayoutProps).toBeTruthy();
+    expect(sd._perBaseLayoutProps.length).toBe(0); // initializes new list
   });
 
-  it('returns a deep copy', () => {
+  it('handles nullish props in list', () => {
+    let props = [
+      new PerBaseStrictLayoutProps(),
+      null,
+      new PerBaseStrictLayoutProps(),
+    ];
+    sd.setPerBaseLayoutProps(props);
+    expect(sd._perBaseLayoutProps[1]).toBeFalsy();
+    let received = sd.perBaseLayoutProps();
+    expect(received[1]).toBeTruthy();
+    expect(sd._perBaseLayoutProps[1]).toBeTruthy(); // initializes new props
+  });
+
+  it('returns a copy', () => {
     let props = sd.perBaseLayoutProps();
-    expect(props).not.toBe(sd._perBaseLayoutProps);
+    expect(props).not.toBe(sd._perBaseLayoutProps); // a new object
     expect(JSON.stringify(props)).toBe(JSON.stringify(sd._perBaseLayoutProps));
   });
 });
@@ -132,17 +130,14 @@ describe('setPerBaseLayoutProps method', () => {
   });
 
   it('sets props', () => {
-    let props = [
-      new PerBaseStrictLayoutProps(),
-      new PerBaseStrictLayoutProps(),
-    ];
-    props[1].stretch3 = 7.89;
+    let props = sd.perBaseLayoutProps();
+    props[0].stretch3 += 10.12;
     sd.setPerBaseLayoutProps(props);
-    expect(sd.perBaseLayoutProps()[1].stretch3).toBe(7.89);
+    expect(JSON.stringify(sd.perBaseLayoutProps())).toBe(JSON.stringify(props));
   });
 });
 
-it('baseWidth and baseHeight getters', () => {
+it('baseWidth and baseHeight getters and setters', () => {
   sd.baseWidth = 2.59;
   sd.baseHeight = 23.09;
   expect(sd.baseWidth).toBe(2.59);
@@ -176,7 +171,7 @@ describe('applyLayout method', () => {
     sd.addTo(document.body, () => NodeSVG());
     sd.layout = () => null;
     sd.applyLayout();
-    expect(spy.mock.calls.length).toBe(0);
+    expect(spy).not.toHaveBeenCalled();
   });
 
   it('calls applyStrictLayout function', () => {
@@ -197,17 +192,19 @@ describe('outermost loop shape methods', () => {
     sd._generalLayoutProps = undefined;
     sd.flatOutermostLoop();
     expect(sd.hasFlatOutermostLoop()).toBeTruthy();
+    expect(sd._generalLayoutProps).toBeTruthy(); // initializes new props
     sd._generalLayoutProps = undefined;
     expect(sd.hasRoundOutermostLoop()).toBeTruthy();
     sd._generalLayoutProps = undefined;
     expect(sd.roundOutermostLoop());
     expect(sd.hasRoundOutermostLoop()).toBeTruthy();
-    sd.generalLayoutProps();
-    expect(sd._generalLayoutProps).toBeTruthy();
+    // does not have to initialize new props since loop is round by default
   });
 
   it('can change and report the outermost loop shape', () => {
     sd.flatOutermostLoop();
+    expect(sd.hasRoundOutermostLoop()).toBeFalsy();
+    expect(sd.hasFlatOutermostLoop()).toBeTruthy();
     sd.roundOutermostLoop();
     expect(sd.hasRoundOutermostLoop()).toBeTruthy();
     expect(sd.hasFlatOutermostLoop()).toBeFalsy();
@@ -219,58 +216,66 @@ describe('outermost loop shape methods', () => {
 
 describe('savableState method', () => {
   it('handles nullish general layout props', () => {
-    let original = sd.generalLayoutProps();
     sd._generalLayoutProps = undefined;
     let savableState = sd.savableState();
-    expect(
-      savableState.generalLayoutProps.toString()
-    ).toBe((new GeneralStrictLayoutProps()).toString());
-    sd.setGeneralLayoutProps(original);
+    expect(savableState.generalLayoutProps).toBeTruthy();
+    expect(sd._generalLayoutProps).toBeTruthy(); // initializes new props
   });
 
-  it('handles nullish per base layout props array', () => {
-    let original = sd.perBaseLayoutProps();
+  it('handles nullish per base layout props list', () => {
     sd._perBaseLayoutProps = undefined;
     let savableState = sd.savableState();
-    expect(savableState.perBaseLayoutProps.toString()).toBe(([]).toString());
-    sd.setPerBaseLayoutProps(original);
+    expect(savableState.perBaseLayoutProps.length).toBe(0);
+    expect(sd._perBaseLayoutProps.length).toBe(0); // initializes new list
   });
 
   it('handles nullish per base layout props in array', () => {
-    let original = sd.perBaseLayoutProps();
-    let modified = sd.perBaseLayoutProps();
-    modified[0] = undefined;
-    sd.setPerBaseLayoutProps(modified);
+    let props = [
+      new PerBaseStrictLayoutProps(),
+      undefined,
+      new PerBaseStrictLayoutProps(),
+      null,
+      new PerBaseStrictLayoutProps(),
+    ];
+    sd.setPerBaseLayoutProps(props);
     let savableState = sd.savableState();
-    expect(savableState.perBaseLayoutProps.length).toBe(modified.length);
-    expect(savableState.perBaseLayoutProps[0]).toBeFalsy();
-    sd.setPerBaseLayoutProps(original);
+    expect(savableState.perBaseLayoutProps.length).toBe(5);
+    expect(savableState.perBaseLayoutProps[0]).toBeTruthy();
+    expect(savableState.perBaseLayoutProps[1]).toBeFalsy();
+    expect(savableState.perBaseLayoutProps[2]).toBeTruthy();
+    expect(savableState.perBaseLayoutProps[3]).toBeFalsy();
+    expect(savableState.perBaseLayoutProps[4]).toBeTruthy();
   });
 
   it('gives correct values', () => {
     let generalProps = sd.generalLayoutProps();
-    generalProps.basePairPadding = 12.71;
+    generalProps.basePairPadding += 12.71;
     sd.setGeneralLayoutProps(generalProps);
     let perBaseProps = sd.perBaseLayoutProps();
-    perBaseProps[0].triangleLoopHeight = 12.91;
+    perBaseProps[0].triangleLoopHeight += 12.91;
     sd.setPerBaseLayoutProps(perBaseProps);
     sd.baseWidth = 18.02;
     sd.baseHeight = 22.34;
     let savableState = sd.savableState();
     expect(savableState.drawing.className).toBe('Drawing');
-    expect(savableState.generalLayoutProps.basePairPadding).toBe(12.71);
+    expect(savableState.generalLayoutProps.toString()).toBe(generalProps.savableState().toString());
     expect(savableState.perBaseLayoutProps.length).toBe(perBaseProps.length);
-    expect(savableState.perBaseLayoutProps[0].triangleLoopHeight).toBe(12.91);
+    savableState.perBaseLayoutProps.forEach((props, i) => {
+      if (props) {
+        expect(props.toString()).toBe(perBaseProps[i].savableState().toString());
+      } else {
+        expect(props).toBe(perBaseProps[i]);
+      }
+    });
     expect(savableState.baseWidth).toBe(18.02);
     expect(savableState.baseHeight).toBe(22.34);
   });
 
   it('can be converted to and from a JSON string', () => {
-    let savableState1 = sd.savableState();
-    let json1 = JSON.stringify(savableState1);
-    let savableState2 = JSON.parse(json1);
-    let json2 = JSON.stringify(savableState2);
-    expect(json2).toBe(json1);
+    let savableState = sd.savableState();
+    let json = JSON.stringify(savableState);
+    let parsed = JSON.parse(json);
+    expect(JSON.stringify(parsed)).toBe(json);
   });
 });
 
@@ -287,10 +292,10 @@ describe('applySavedState method', () => {
       sd.addTo(document.body, () => NodeSVG());
       sd.appendSequence('asdf', 'asdf');
       let savableState1 = sd.savableState();
-      savableState1.className = 'StrctDrawing';
       sd.appendSequence('qwer', 'qwer');
       let savableState2 = sd.savableState();
       expect(JSON.stringify(savableState2)).not.toBe(JSON.stringify(savableState1));
+      savableState1.className = 'StrctDrawing';
       let applied = sd.applySavedState(savableState1);
       expect(applied).toBeFalsy();
       // the drawing is not changed
@@ -301,10 +306,10 @@ describe('applySavedState method', () => {
       let sd = new StrictDrawing();
       sd.addTo(document.body, () => NodeSVG());
       let savableState1 = sd.savableState();
-      savableState1.drawing.sequences = 'asdf';
       sd.appendSequence('asdf', 'asdf');
       let savableState2 = sd.savableState();
       expect(JSON.stringify(savableState2)).not.toBe(JSON.stringify(savableState1));
+      savableState1.drawing = null;
       let applied = sd.applySavedState(savableState1);
       expect(applied).toBeFalsy();
       // the drawing is not changed
@@ -318,24 +323,25 @@ describe('applySavedState method', () => {
     sd.appendSequence('asdf', 'asdf');
     sd.flatOutermostLoop();
     let perBaseProps = sd.perBaseLayoutProps();
-    perBaseProps[0].stretch3 = 1200;
+    perBaseProps[0].stretch3 += 1200;
     sd.setPerBaseLayoutProps(perBaseProps);
-    sd.baseWidth = 12.885;
-    sd.baseHeight = 16.902;
+    sd.baseWidth = 128.885;
+    sd.baseHeight = 59.902;
     let savableState1 = sd.savableState();
-    sd.appendSequence('qwer', 'qwerqwer');
-    sd.roundOutermostLoop();
+    sd.appendSequence('qwer', 'qwerqwer'); // change underlying drawing
+    sd.roundOutermostLoop(); // change general layout props
     perBaseProps = sd.perBaseLayoutProps();
-    perBaseProps[1].stretch3 = 802;
-    sd.setPerBaseLayoutProps(perBaseProps);
+    perBaseProps[1].stretch3 += 802;
+    sd.setPerBaseLayoutProps(perBaseProps); // change per base layout props
+    // change base width and height
     sd.baseWidth = 19;
     sd.baseHeight = 23.01;
     let savableState2 = sd.savableState();
     expect(JSON.stringify(savableState2)).not.toBe(JSON.stringify(savableState1));
     let applied = sd.applySavedState(savableState1);
     expect(applied).toBeTruthy();
-    // requires that saved drawing and general and per base layout props and base width
-    // and height are applied correctly
+    // requires that the saved drawing and general and per base layout props
+    // and base width and height were applied correctly
     expect(JSON.stringify(sd.savableState())).toBe(JSON.stringify(savableState1));
   });
 });
@@ -349,8 +355,9 @@ it('refreshIds method', () => {
 it('zoom getter and setter', () => {
   let getSpy = jest.spyOn(sd.drawing, 'zoom', 'get');
   let setSpy = jest.spyOn(sd.drawing, 'zoom', 'set');
-  sd.zoom = 0.78;
-  expect(sd.zoom).toBeCloseTo(0.78);
+  sd.zoom = 0.78; // use setter
+  expect(sd.zoom).toBeCloseTo(0.78); // check getter
+  // uses drawing getter and setter
   expect(getSpy).toHaveBeenCalled();
   expect(setSpy).toHaveBeenCalled();
 });
@@ -364,8 +371,8 @@ it('isEmpty method', () => {
 });
 
 it('sequenceIds method', () => {
+  expect(sd.drawing.numSequences).toBeGreaterThan(1);
   expect(sd.sequenceIds().toString()).toBe(sd.drawing.sequenceIds().toString());
-  expect(sd.sequenceIds().length).toBeGreaterThan(0);
 });
 
 it('appendSequence method', () => {
@@ -391,5 +398,6 @@ it('appendStructure method', () => {
 });
 
 it('svgString getter', () => {
+  expect(sd.isEmpty()).toBeFalsy();
   expect(sd.svgString).toBe(sd.drawing.svgString);
 });
