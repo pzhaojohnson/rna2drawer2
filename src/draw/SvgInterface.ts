@@ -44,6 +44,10 @@ export interface SvgElementInterface {
   insertAfter(ele: SvgElementInterface): void;
   remove(): void;
   root(): SvgInterface | null;
+  svg(): string;
+  svg(b: boolean): string;
+  svg(s: string): void;
+  svg(s: string, b: boolean): void;
 }
 
 export interface SvgTextAdd {
@@ -69,6 +73,8 @@ export interface SvgPathInterface extends SvgElementInterface {
 
 export interface SvgCircleInterface extends SvgElementInterface {}
 
+export interface SvgRectInterface extends SvgElementInterface {}
+
 export interface SvgInterface {
   addTo(e: HTMLElement): SvgInterface;
   attr(s: string): any;
@@ -79,6 +85,9 @@ export interface SvgInterface {
   };
   viewbox(x: number, y: number, width: number, height: number): void;
   findOne(id: string): SvgElementInterface;
+  children(): (SvgElementInterface | SvgInterface)[];
+  first(): SvgInterface | SvgElementInterface;
+  nested(): SvgInterface;
 
   text(add: SvgTextAddFunc): SvgTextInterface;
   line(x1: number, y1: number, x2: number, y2: number): SvgLineInterface;
@@ -87,11 +96,11 @@ export interface SvgInterface {
 
   mousedown(f: Func): void;
   clear(): void;
+  remove(): void;
   svg(): string;
   svg(b: boolean): string;
   svg(s: string): void;
   svg(s: string, b: boolean): void;
-  first(): SvgInterface | SvgElementInterface;
 }
 
 export default SvgInterface;

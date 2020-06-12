@@ -1,10 +1,21 @@
-import PptxGenJs from 'pptxgenjs';
+import PptxGenJS from 'pptxgenjs';
+import {
+  SvgInterface as Svg,
+  SvgElementInterface as SvgElement,
+  SvgTextInterface as SvgText,
+  SvgLineInterface as SvgLine,
+  SvgPathInterface as SvgPath,
+  SvgCircleInterface as SvgCircle,
+  SvgRectInterface as SvgRect,
+} from '../draw/SvgInterface';
 import { pixelsToInches } from './pixelsToInches';
 import { pixelsToPoints } from './pixelsToPoints';
 import { pointsToInches } from './pointsToInches';
 import { trimNum } from './trimNum';
 
 /**
+ * Converts the given hex code to a format compatible with PptxGenJS.
+ * 
  * If the given hex code is a string and the first character is a '#',
  * this function will remove the '#'. Otherwise, this function will simply
  * return the given string.
@@ -14,12 +25,8 @@ import { trimNum } from './trimNum';
  * 
  * If the given hex code has a different type (e.g. undefined), this function
  * will return '000000'.
- * 
- * @param {string|number} hex 
- * 
- * @returns {string} The hex code in a format compatible with PptxGenJs.
  */
-function _pptxHex(hex) {
+function _pptxHex(hex: (string | number)): string {
   if (typeof hex === 'string') {
     if (hex.charAt(0) === '#') {
       return hex.substring(1);
@@ -33,20 +40,11 @@ function _pptxHex(hex) {
 
 const _NUMBER_TRIM = 2;
 
-/**
- * @param {number} n 
- * 
- * @returns {number} 
- */
-function _trimNum(n) {
+function _trimNum(n: number): number {
   return trimNum(n, _NUMBER_TRIM);
 }
 
-/**
- * @param {PptxGenJs.PptxGenJs} pres 
- * @param {SVG.Svg} svg 
- */
-function _setSlideDimensions(pres, svg) {
+function _setSlideDimensions(pres: PptxGenJS, svg: Svg) {
   let w = pixelsToInches(svg.viewbox().width);
   let h = pixelsToInches(svg.viewbox().height);
   pres.defineLayout({
@@ -57,32 +55,17 @@ function _setSlideDimensions(pres, svg) {
   pres.layout = 'CUSTOM_LAYOUT';
 }
 
-/**
- * @param {SVG.Text} text 
- * 
- * @returns {number} 
- */
-function _textWidth(text) {
+function _textWidth(text: SvgText): number {
   let bb = text.bbox();
   return pixelsToInches(4 * bb.width);
 }
 
-/**
- * @param {SVG.Text} text 
- * 
- * @returns {number} 
- */
-function _textHeight(text) {
+function _textHeight(text: SvgText): number {
   let bb = text.bbox();
   return pixelsToInches(2 * bb.height);
 }
 
-/**
- * @param {SVG.Text} text 
- * 
- * @returns {Object} 
- */
-function _textOptions(text) {
+function _textOptions(text: SvgText): object {
   let fs = pixelsToPoints(text.attr('font-size'));
   let w = _textWidth(text);
   let h = _textHeight(text);
@@ -109,23 +92,14 @@ function _textOptions(text) {
   };
 }
 
-/**
- * @param {PptxGenJs.Slide} slide 
- * @param {SVG.Text} text 
- */
-function _addText(slide, text) {
+function _addText(slide: PptxGenJS.Slide, text: SvgText) {
   slide.addText(
     text.text(),
     _textOptions(text),
   );
 }
 
-/**
- * @param {SVG.Line} line 
- * 
- * @returns {Object} 
- */
-function _lineOptions(line) {
+function _lineOptions(line: SvgLine): object {
   let xMin = Math.min(line.attr('x1'), line.attr('x2'));
   let xMax = Math.max(line.attr('x1'), line.attr('x2'));
   let yMin = Math.min(line.attr('y1'), line.attr('y2'));
@@ -146,12 +120,7 @@ function _lineOptions(line) {
   };
 }
 
-/**
- * @param {PptxGenJs.PptxGenJs} pres 
- * @param {PptxGenJs.Slide} slide 
- * @param {SVG.Line} line 
- */
-function _addLine(pres, slide, line) {
+function _addLine(pres: PptxGenJS, slide: PptxGenJS.Slide, line: SvgLine) {
   slide.addShape(
     pres.ShapeType.line,
     _lineOptions(line),
@@ -161,18 +130,14 @@ function _addLine(pres, slide, line) {
 /**
  * Returns null if the SVG XML of the path is unable to
  * be converted to base64 using the window.btoa function.
- * 
- * @param {SVG.Path} path 
- * 
- * @returns {Object|null} 
  */
-function _pathImageOptions(path) {
+function _pathImageOptions(path: SvgPath): (object | null) {
   let b = path.bbox();
   let sw = path.attr('stroke-width');
   let svg = path.root();
   let nested = svg.nested();
   nested.svg(path.svg());
-  let np = nested.first();
+  let np = nested.first() as SvgElement;
   nested.viewbox(0, 0, b.width + sw, b.height + sw);
   nested.attr({ 'width': b.width + sw, 'height': b.height + sw });
   np.dmove(-b.x + (sw / 2), -b.y + (sw / 2));
@@ -195,32 +160,18 @@ function _pathImageOptions(path) {
   };
 }
 
-/**
- * @param {PptxGenJs.Slide} slide 
- * @param {SVG.Path} path 
- */
-function _addPathAsImage(slide, path) {
+function _addPathAsImage(slide: PptxGenJS.Slide, path: SvgPath) {
   let options = _pathImageOptions(path);
   if (options) {
     slide.addImage(options);
   }
 }
 
-/**
- * @param {PptxGenJs.PptxGenJs} pres 
- * @param {PptxGenJs.Slide} slide 
- * @param {SVG.Path} path 
- */
-function _addPath(pres, slide, path) {
+function _addPath(pres: PptxGenJS, slide: PptxGenJS.Slide, path: SvgPath) {
   _addPathAsImage(slide, path);
 }
 
-/**
- * @param {SVG.Circle} circle 
- * 
- * @returns {Object} 
- */
-function _circleOptions(circle) {
+function _circleOptions(circle: SvgCircle): object {
   let x = circle.attr('cx') - circle.attr('r');
   let y = circle.attr('cy') - circle.attr('r');
   let w = 2 * circle.attr('r');
@@ -244,24 +195,14 @@ function _circleOptions(circle) {
   };
 }
 
-/**
- * @param {PptxGenJs.PptxGenJs} pres 
- * @param {PptxGenJs.Slide} slide 
- * @param {SVG.Circle} circle 
- */
-function _addCircle(pres, slide, circle) {
+function _addCircle(pres: PptxGenJS, slide: PptxGenJS.Slide, circle: SvgCircle) {
   slide.addShape(
     pres.ShapeType.ellipse,
     _circleOptions(circle),
   );
 }
 
-/**
- * @param {SVG.Rect} rect 
- * 
- * @returns {Object} 
- */
-function _rectOptions(rect) {
+function _rectOptions(rect: SvgRect): object {
   return {
     x: _trimNum(pixelsToInches(rect.attr('x'))),
     y: _trimNum(pixelsToInches(rect.attr('y'))),
@@ -281,38 +222,28 @@ function _rectOptions(rect) {
   };
 }
 
-/**
- * @param {PptxGenJs.PptxGenJs} pres 
- * @param {PptxGenJs.Slide} slide 
- * @param {SVG.Rect} rect 
- */
-function _addRect(pres, slide, rect) {
+function _addRect(pres: PptxGenJS, slide: PptxGenJS.Slide, rect: SvgRect) {
   slide.addShape(
     pres.ShapeType.rect,
     _rectOptions(rect),
   );
 }
 
-/**
- * @param {SVG.Svg} svg 
- * 
- * @returns {PptxGenJs.PptxGenJs} 
- */
-function createPptxFromSvg(svg) {
-  let pres = new PptxGenJs();
+function createPptxFromSvg(svg: Svg): PptxGenJS {
+  let pres = new PptxGenJS();
   _setSlideDimensions(pres, svg);
   let slide = pres.addSlide();
-  svg.children().forEach(c => {
+  svg.children().forEach((c: SvgElement) => {
     if (c.type === 'text') {
-      _addText(slide, c);
+      _addText(slide, c as SvgText);
     } else if (c.type === 'line') {
-      _addLine(pres, slide, c);
+      _addLine(pres, slide, c as SvgLine);
     } else if (c.type === 'path') {
-      _addPath(pres, slide, c);
+      _addPath(pres, slide, c as SvgPath);
     } else if (c.type === 'circle') {
-      _addCircle(pres, slide, c);
+      _addCircle(pres, slide, c as SvgCircle);
     } else if (c.type === 'rect') {
-      _addRect(pres, slide, c);
+      _addRect(pres, slide, c as SvgRect);
     }
   });
   return pres;

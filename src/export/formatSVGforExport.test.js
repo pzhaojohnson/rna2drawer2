@@ -168,7 +168,7 @@ describe('_shiftPath function', () => {
     let h = segments[1];
     expect(h.length).toBe(2);
     expect(h[0]).toBe('H');
-    expect(h[1]).toBe(12);
+    expect(h[1]).toBe(17);
   });
 });
 

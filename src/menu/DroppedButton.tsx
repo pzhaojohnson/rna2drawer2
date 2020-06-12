@@ -39,7 +39,7 @@ class DroppedButton extends React.Component {
         }}
       >
         <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
-          <div style={{ flexGrow: '1' }} >
+          <div style={{ flexGrow: 1 }} >
             {this.props.text}
           </div>
           <div>

@@ -1,14 +1,10 @@
-/**
- * @typedef {Object} FileProps 
- * @property {string} name 
- * @property {string} type 
- * @property {string} contents 
- */
+export interface FileProps {
+  name: string;
+  type: string;
+  contents: string;
+}
 
-/**
- * @param {FileProps} fileProps 
- */
-function offerFileForDownload(fileProps) {
+export function offerFileForDownload(fileProps: FileProps) {
   if (!fileProps.name || !fileProps.type || !fileProps.contents) {
     return;
   }
