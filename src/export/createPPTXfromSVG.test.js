@@ -5,9 +5,6 @@ import {
   _trimNum,
   _textOptions,
   _lineOptions,
-  _pathIsOnlyLines,
-  _pathLineOptions,
-  _linesPathOptions,
   _pathImageOptions,
   _circleOptions,
   _rectOptions,
@@ -216,143 +213,6 @@ describe('_lineOptions function', () => {
     l.attr({ 'stroke-width': sw });
     let los = _lineOptions(l);
     expect(_trimNum(los.lineSize)).toEqual(los.lineSize);
-  });
-});
-
-describe('_pathIsOnlyLines function', () => {
-  it('fill-opacity is greater than zero and is only lines', () => {
-    let svg = createNodeSVG();
-    let p = svg.path('M 3 4 L 6 8');
-    p.attr({ 'fill-opacity': 0.5 });
-    expect(_pathIsOnlyLines(p)).toBeFalsy();
-  });
-
-  it('fill-opacity is zero and is only lines', () => {
-    let svg = createNodeSVG();
-    let p = svg.path('M 1 3 L 6 9 L 20 1');
-    p.attr({ 'fill-opacity': 0 });
-    expect(_pathIsOnlyLines(p)).toBeTruthy();
-  });
-
-  it('fill-opacity is zero and is not just lines', () => {
-    let svg = createNodeSVG();
-    let p = svg.path('M 1 2 Q 10 12 5 9');
-    p.attr({ 'fill-opacity': 0 });
-    expect(_pathIsOnlyLines(p)).toBeFalsy();
-  });
-});
-
-describe('_pathLineOptions function', () => {
-  describe('x, y, w, h, flipH and flipV', () => {
-    it('is flippped horizontally', () => {
-      let svg = createNodeSVG();
-      let p = svg.path('M 120 30 L 100 200');
-      let plos = _pathLineOptions(p, 120, 30, 100, 200);
-      expect(plos.x).toBeCloseTo(pixelsToInches(100), 2);
-      expect(plos.y).toBeCloseTo(pixelsToInches(30), 2);
-      expect(plos.w).toBeCloseTo(pixelsToInches(20), 2);
-      expect(plos.h).toBeCloseTo(pixelsToInches(170), 2);
-      expect(plos.flipH).toBe(true);
-      expect(plos.flipV).toBe(false);
-    });
-
-    it('is flipped vertically', () => {
-      let svg = createNodeSVG();
-      let p = svg.path('M 40 1000 L 80 800');
-      let plos = _pathLineOptions(p, 40, 1000, 80, 800);
-      expect(plos.x).toBeCloseTo(pixelsToInches(40), 2);
-      expect(plos.y).toBeCloseTo(pixelsToInches(800), 2);
-      expect(plos.w).toBeCloseTo(pixelsToInches(40), 2);
-      expect(plos.h).toBeCloseTo(pixelsToInches(200), 2);
-      expect(plos.flipH).toBe(false);
-      expect(plos.flipV).toBe(true);
-    });
-
-    it('trims numbers', () => {
-      let svg = createNodeSVG();
-      let x1 = 4.128418247;
-      let y1 = 6.12948712847;
-      let x2 = 10.847128474;
-      let y2 = 20.23987238753;
-      expect(_trimNum(x1)).not.toEqual(x1);
-      expect(_trimNum(y1)).not.toEqual(y1);
-      expect(_trimNum(x2)).not.toEqual(x2);
-      expect(_trimNum(y2)).not.toEqual(y2);
-      let d = ['M', x1, y1, 'L', x2, y2].join(' ');
-      let p = svg.path(d)
-      let plos = _pathLineOptions(p, x1, y1, x2, y2);
-      expect(_trimNum(plos.x)).toEqual(plos.x);
-      expect(_trimNum(plos.y)).toEqual(plos.y);
-      expect(_trimNum(plos.w)).toEqual(plos.w);
-      expect(_trimNum(plos.h)).toEqual(plos.h);
-    });
-  });
-
-  it('gives correct line (and uses _pptxHex function)', () => {
-    let svg = createNodeSVG();
-    let p = svg.path('M 1 2 L 3 4');
-    p.attr({ 'stroke': '#871234' });
-    let plos = _pathLineOptions(p);
-    expect(plos.line).toBe('871234');
-  });
-
-  describe('lineSize', () => {
-    it('gives correct value', () => {
-      let svg = createNodeSVG();
-      let p = svg.path('M 1 2 L 3 4');
-      p.attr({ 'stroke-width': pointsToPixels(2) });
-      let plos = _pathLineOptions(p, 1, 2, 3, 4);
-      expect(plos.lineSize).toBeCloseTo(2, 2);
-    });
-
-    it('trims the number', () => {
-      let svg = createNodeSVG();
-      let p = svg.path('M 1 2 L 3 4');
-      let sw = 3.1294872412;
-      expect(_trimNum(sw)).not.toEqual(sw);
-      p.attr({ 'stroke-width': sw });
-      let plos = _pathLineOptions(p);
-      expect(_trimNum(plos.lineSize)).toEqual(plos.lineSize);
-    });
-  });
-
-  describe('lineDash', () => {
-    it('undefined stroke-dasharray', () => {
-      let svg = createNodeSVG();
-      let p = svg.path('M 1 2 L 3 4');
-      expect(p.attr('stroke-dasharray')).toBe(undefined);
-      let plos = _pathLineOptions(p, 1, 2, 3, 4);
-      expect(plos.lineDash).toBe('solid');
-    });
-
-    it('defined stroke-dasharray', () => {
-      let svg = createNodeSVG();
-      let p = svg.path('M 5 6 L 100 200');
-      p.attr({ 'stroke-dasharray': '3 2' });
-      let plos = _pathLineOptions(p, 5, 6, 100, 200);
-      expect(plos.lineDash).toBe('lgDash');
-    });
-  });
-});
-
-it('_linesPathOptions function', () => {
-  let svg = createNodeSVG();
-  let p = svg.path('M 2.5 1.2 L 10 12 L 100 25.3');
-  let options = _linesPathOptions(p);
-  expect(options.length).toBe(2);
-  let opts1 = _pathLineOptions(p, 2.5, 1.2, 10, 12);
-  expect(
-    Object.keys(options[0]).length
-  ).toBe(Object.keys(opts1).length);
-  Object.keys(opts1).forEach(k => {
-    expect(options[0][k]).toBe(opts1[k]);
-  });
-  let opts2 = _pathLineOptions(p, 10, 12, 100, 25.3);
-  expect(
-    Object.keys(options[1]).length
-  ).toBe(Object.keys(opts2).length);
-  Object.keys(opts2).forEach(k => {
-    expect(options[1][k]).toBe(opts2[k]);
   });
 });
 
@@ -646,39 +506,21 @@ describe('createPptxFromSvg function', () => {
     });
   });
 
-  describe('adds path elements', () => {
-    it('path has only lines', () => {
-      let svg = createNodeSVG();
-      svg.viewbox(0, 0, 1200, 1200);
-      let p = svg.path('M 0 0 L 100 200 L 1000 500 L 300 10 L 40 50 L 750 200');
-      p.attr({
-        'stroke': '#0000bb',
-        'stroke-width': 5,
-        'fill-opacity': 0,
-      });
-      let pres = createPptxFromSvg(svg);
-      return pres.write('blob').then(data => {
-        let expectedData = fs.readFileSync('testinput/pptx/path_is_only_lines_blob');
-        expect(data.toString()).toBe(expectedData.toString());
-      });
+  it('adds path elements', () => {
+    let svg = createNodeSVG();
+    svg.viewbox(0, 0, 1000, 1000);
+    let p = svg.path('M 100 100 Q 800 750 200 400');
+    p.attr({
+      'stroke': '#004400',
+      'stroke-width': 8,
+      'fill-opacity': 0,
     });
-
-    it('path is not just lines', () => {
-      let svg = createNodeSVG();
-      svg.viewbox(0, 0, 1000, 1000);
-      let p = svg.path('M 100 100 Q 800 750 200 400');
-      p.attr({
-        'stroke': '#004400',
-        'stroke-width': 8,
-        'fill-opacity': 0,
-      });
-      let pres = createPptxFromSvg(svg);
-      // TODO: stop the following from stalling...
-      /*
-      return pres.write('nodebuffer').then(data => {
-        fs.writeFile('testinput/pptx/path_is_not_just_lines_nodebuffer.pptx', data, () => {});
-      });
-      */
+    let pres = createPptxFromSvg(svg);
+    // TODO: stop the following from stalling...
+    /*
+    return pres.write('nodebuffer').then(data => {
+      fs.writeFile('testinput/pptx/path_is_not_just_lines_nodebuffer.pptx', data, () => {});
     });
+    */
   });
 });

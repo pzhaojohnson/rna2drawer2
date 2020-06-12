@@ -159,95 +159,6 @@ function _addLine(pres, slide, line) {
 }
 
 /**
- * @param {SVG.Path} path 
- * 
- * @returns {boolean} 
- */
-function _pathIsOnlyLines(path) {
-  if (path.attr('fill-opacity') > 0) {
-    return false;
-  }
-  let onlyLines = true;
-  let pa = path.array();
-  if (pa[0][0] !== 'M') {
-    onlyLines = false;
-  }
-  pa.slice(1).forEach(segment => {
-    if (segment[0] !== 'L') {
-      onlyLines = false;
-    }
-  });
-  return onlyLines;
-}
-
-/**
- * @param {SVG.Path} path 
- * @param {number} x1 
- * @param {number} y1 
- * @param {number} x2 
- * @param {number} y2 
- * 
- * @returns {Object} 
- */
-function _pathLineOptions(path, x1, y1, x2, y2) {
-  let x = Math.min(x1, x2);
-  let y = Math.min(y1, y2);
-  let w = Math.max(x1, x2) - x;
-  let h = Math.max(y1, y2) - y;
-  let lineDash = 'solid';
-  if (path.attr('stroke-dasharray')) {
-    lineDash = 'lgDash';
-  }
-  return {
-    x: _trimNum(pixelsToInches(x)),
-    y: _trimNum(pixelsToInches(y)),
-    w: _trimNum(pixelsToInches(w)),
-    h: _trimNum(pixelsToInches(h)),
-    flipH: x1 > x2,
-    flipV: y1 > y2,
-    line: _pptxHex(path.attr('stroke')),
-    lineSize: _trimNum(pixelsToPoints(path.attr('stroke-width'))),
-    lineDash: lineDash,
-  };
-}
-
-/**
- * @param {SVG.Path} path 
- * 
- * @returns {Array<Object>} 
- */
-function _linesPathOptions(path) {
-  let options = [];
-  let pa = path.array();
-  let m = pa[0];
-  let xPrev = m[1];
-  let yPrev = m[2];
-  pa.slice(1).forEach(segment => {
-    options.push(
-      _pathLineOptions(path, xPrev, yPrev, segment[1], segment[2])
-    );
-    xPrev = segment[1];
-    yPrev = segment[2];
-  });
-  return options;
-}
-
-/**
- * @param {PptxGenJs.PptxGenJs} pres 
- * @param {PptxGenJs.Slide} slide 
- * @param {SVG.Path} path 
- */
-function _addLinesPath(pres, slide, path) {
-  let options = _linesPathOptions(path);
-  options.forEach(opts => {
-    slide.addShape(
-      pres.ShapeType.line,
-      opts,
-    );
-  });
-}
-
-/**
  * Returns null if the SVG XML of the path is unable to
  * be converted to base64 using the window.btoa function.
  * 
@@ -301,10 +212,6 @@ function _addPathAsImage(slide, path) {
  * @param {SVG.Path} path 
  */
 function _addPath(pres, slide, path) {
-  if (_pathIsOnlyLines(path)) {
-    _addLinesPath(pres, slide, path);
-    return;
-  }
   _addPathAsImage(slide, path);
 }
 
@@ -420,9 +327,6 @@ export {
   _trimNum,
   _textOptions,
   _lineOptions,
-  _pathIsOnlyLines,
-  _pathLineOptions,
-  _linesPathOptions,
   _pathImageOptions,
   _circleOptions,
   _rectOptions,
