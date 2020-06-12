@@ -127,11 +127,7 @@ function _addLine(pres: PptxGenJS, slide: PptxGenJS.Slide, line: SvgLine) {
   );
 }
 
-/**
- * Returns null if the SVG XML of the path is unable to
- * be converted to base64 using the window.btoa function.
- */
-function _pathImageOptions(path: SvgPath): (object | null) {
+function _pathImageOptions(path: SvgPath): object {
   let b = path.bbox();
   let sw = path.attr('stroke-width');
   let svg = path.root();
@@ -144,13 +140,7 @@ function _pathImageOptions(path: SvgPath): (object | null) {
   let xml = nested.svg();
   nested.clear();
   nested.remove();
-  let base64 = null;
-  try {
-    base64 = window.btoa(xml);
-  } catch (err) {}
-  if (!base64) {
-    return null;
-  }
+  let base64 = window.btoa(xml);
   return {
     data: 'data:image/svg+xml;base64,' + base64,
     x: _trimNum(pixelsToInches(b.x - (sw / 2))),
@@ -162,9 +152,7 @@ function _pathImageOptions(path: SvgPath): (object | null) {
 
 function _addPathAsImage(slide: PptxGenJS.Slide, path: SvgPath) {
   let options = _pathImageOptions(path);
-  if (options) {
-    slide.addImage(options);
-  }
+  slide.addImage(options);
 }
 
 function _addPath(pres: PptxGenJS, slide: PptxGenJS.Slide, path: SvgPath) {
