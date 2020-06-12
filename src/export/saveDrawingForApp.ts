@@ -1,4 +1,4 @@
-import offerFileForDownload from './offerFileForDownload';
+import { offerFileForDownload } from './offerFileForDownload';
 
 interface StrictDrawing {
   savableString: string;

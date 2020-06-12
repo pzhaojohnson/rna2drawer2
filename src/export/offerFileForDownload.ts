@@ -5,7 +5,14 @@ export interface FileProps {
 }
 
 export function offerFileForDownload(fileProps: FileProps) {
-  if (!fileProps.name || !fileProps.type || !fileProps.contents) {
+  if (!fileProps.name) {
+    console.error('Missing file name.');
+    return;
+  } else if (!fileProps.type) {
+    console.error('Missing file type.');
+    return;
+  } else if (!fileProps.contents) {
+    console.error('Missing file contents.');
     return;
   }
   let b = new Blob(

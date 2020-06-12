@@ -1,6 +1,5 @@
 /**
- * The places argument specifies the number of decimal places
- * to trim the number to.
+ * Trims the number to the specified number of decimal places.
  */
 export function trimNum(n: number, places: number): number {
   let trimmed = n.toFixed(places);

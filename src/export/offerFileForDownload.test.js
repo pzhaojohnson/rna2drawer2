@@ -1,15 +1,14 @@
 import offerFileForDownload from './offerFileForDownload';
 
 describe('returns early on missing file props', () => {
-  let createObjectURL = jest.fn();
-  URL.createObjectURL = createObjectURL;
+  URL.createObjectURL = jest.fn();
 
   it('missing name', () => {
     offerFileForDownload({
       type: 'text/plain',
       contents: 'asdf',
     });
-    expect(createObjectURL.mock.calls.length).toBe(0);
+    expect(URL.createObjectURL).not.toHaveBeenCalled();
   });
 
   it('missing type', () => {
@@ -17,7 +16,7 @@ describe('returns early on missing file props', () => {
       name: 'asdf.txt',
       contents: 'asdf',
     });
-    expect(createObjectURL.mock.calls.length).toBe(0);
+    expect(URL.createObjectURL).not.toHaveBeenCalled();
   });
 
   it('missing contents', () => {
@@ -25,6 +24,6 @@ describe('returns early on missing file props', () => {
       name: 'asdf.txt',
       type: 'text/plain',
     });
-    expect(createObjectURL.mock.calls.length).toBe(0);
+    expect(URL.createObjectURL).not.toHaveBeenCalled();
   });
 });
