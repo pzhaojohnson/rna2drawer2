@@ -97,51 +97,11 @@ function _yTextMax(svg: Svg): number {
   return y;
 }
 
-function _shiftText(text: SvgText, xShift: number, yShift: number) {
-  let x = text.attr('x') + xShift;
-  let y = text.attr('y') + yShift;
-  text.attr({ 'x': x, 'y': y });
-}
-
-function _shiftLine(line: SvgLine, xShift: number, yShift: number) {
-  let x1 = line.attr('x1') + xShift;
-  let y1 = line.attr('y1') + yShift;
-  let x2 = line.attr('x2') + xShift;
-  let y2 = line.attr('y2') + yShift;
-  line.attr({ 'x1': x1, 'y1': y1, 'x2': x2, 'y2': y2 });
-}
-
-function _shiftPath(path: SvgPath, xShift: number, yShift: number) {
-  path.dmove(xShift, yShift);
-}
-
-function _shiftCircle(circle: SvgCircle, xShift: number, yShift: number) {
-  let cx = circle.attr('cx') + xShift;
-  let cy = circle.attr('cy') + yShift;
-  circle.attr({ 'cx': cx, 'cy': cy });
-}
-
-function _shiftRect(rect: SvgRect, xShift: number, yShift: number) {
-  let x = rect.attr('x') + xShift;
-  let y = rect.attr('y') + yShift;
-  rect.attr({ 'x': x, 'y': y });
-}
-
 function _shiftElements(svg: Svg) {
   let xShift = _X_PADDING - _xTextMin(svg);
   let yShift = _Y_PADDING - _yTextMin(svg);
   svg.children().forEach((c: SvgElement) => {
-    if (c.type === 'text') {
-      _shiftText(c as SvgText, xShift, yShift);
-    } else if (c.type === 'line') {
-      _shiftLine(c as SvgLine, xShift, yShift);
-    } else if (c.type === 'path') {
-      _shiftPath(c as SvgPath, xShift, yShift);
-    } else if (c.type === 'circle') {
-      _shiftCircle(c as SvgCircle, xShift, yShift);
-    } else if (c.type === 'rect') {
-      _shiftRect(c as SvgRect, xShift, yShift);
-    }
+    c.dmove(xShift, yShift);
   });
 }
 
@@ -445,11 +405,6 @@ export {
   _xTextMax,
   _yTextMin,
   _yTextMax,
-  _shiftText,
-  _shiftLine,
-  _shiftPath,
-  _shiftCircle,
-  _shiftRect,
   _shiftElements,
   _scaleCoordinate,
   _scaleText,
