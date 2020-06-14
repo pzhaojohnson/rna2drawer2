@@ -20,7 +20,7 @@
     "@testing-library/react": "^9.5.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.1.0",
-    "css-loader": "^3.5.3",
+    "css-loader": "^3.6.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "file-loader": "^5.1.0",
