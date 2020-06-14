@@ -348,6 +348,21 @@ describe('_scaleElements function', () => {
     expect(r.attr('x')).toBeCloseTo(20.5, 3);
     expect(r.attr('y')).toBeCloseTo(27, 3);
   });
+
+  it('scales the center of unrecognized elements', () => {
+    let svg = createNodeSVG();
+    let e = svg.ellipse(200, 500);
+    e.center(800, 1200);
+    let t = svg.text(add => add.tspan('A'));
+    t.attr({ 'x': 200, 'y': 1000 });
+    _scaleElements(svg, 2.5);
+    // center was moved
+    expect(e.cx()).toBeCloseTo(1700);
+    expect(e.cy()).toBeCloseTo(1500);
+    // size was not changed
+    expect(e.attr('rx')).toBe(100);
+    expect(e.attr('ry')).toBe(250);
+  });
 });
 
 describe('_resetTextDominantBaselines function', () => {

@@ -165,6 +165,7 @@ function _scalePathSegments(path: SvgPath, scaling: number, xOrigin: number, yOr
       ];
       d += s.join(' ') + ' ';
     } else {
+      console.log('Unrecognized segment in path: ' + segment[0]);
       d += segment.join(' ') + ' ';
     }
   });
@@ -224,6 +225,12 @@ function _scaleRect(rect: SvgRect, scaling: number, xOrigin: number, yOrigin: nu
   });
 }
 
+function _scaleOther(ele: SvgElement, scaling: number, xOrigin: number, yOrigin: number) {
+  let cx = _scaleCoordinate(ele.cx(), scaling, xOrigin);
+  let cy = _scaleCoordinate(ele.cy(), scaling, yOrigin);
+  ele.center(cx, cy);
+}
+
 function _scaleElements(svg: Svg, scaling: number) {
   let xOrigin = _xTextMin(svg);
   let yOrigin = _yTextMin(svg);
@@ -238,6 +245,9 @@ function _scaleElements(svg: Svg, scaling: number) {
       _scaleCircle(c as SvgCircle, scaling, xOrigin, yOrigin);
     } else if (c.type === 'rect') {
       _scaleRect(c as SvgRect, scaling, xOrigin, yOrigin);
+    } else {
+      console.log('Unrecognized element type: ' + c.type);
+      _scaleOther(c, scaling, xOrigin, yOrigin);
     }
   });
 }
