@@ -5,9 +5,9 @@ import {
   _trimNum,
   _textOptions,
   _lineOptions,
-  _pathImageOptions,
   _circleOptions,
   _rectOptions,
+  _elementImageOptions,
 } from './createPptxFromSvg';
 import { trimNum } from './trimNum';
 import createNodeSVG from '../draw/createNodeSVG';
@@ -216,68 +216,6 @@ describe('_lineOptions function', () => {
   });
 });
 
-describe('_pathImageOptions function', () => {
-  it('gives correct x, y, w and h', () => {
-    let svg = createNodeSVG();
-    let p = svg.path('M 30 100 Q 150 200 30 300');
-    p.attr({ 'stroke-width': 6 });
-    let pios = _pathImageOptions(p);
-    expect(pios.x).toBeCloseTo(pixelsToInches(27), 2);
-    expect(pios.y).toBeCloseTo(pixelsToInches(97), 2);
-    expect(pios.w).toBeCloseTo(pixelsToInches(66), 2);
-    expect(pios.h).toBeCloseTo(pixelsToInches(206), 2);
-  });
-
-  it('gives correct data', () => {
-    let svg = createNodeSVG();
-    let p = svg.path('M 100 2 Q 1 200 100 400');
-    p.attr({
-      'stroke': '#ff0000',
-      'stroke-width': 5,
-      'fill-opacity': 0,
-    });
-    let pios = _pathImageOptions(p);
-    expect(pios.data).toBe('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpzdmdqcz0iaHR0cDovL3N2Z2pzLmNvbS9zdmdqcyIgdmlld0JveD0iMCAwIDU0LjUwMDAwMDAwMDAwMDAxIDQwMyIgd2lkdGg9IjU0LjUwMDAwMDAwMDAwMDAxIiBoZWlnaHQ9IjQwMyI+PHBhdGggZD0iTTUyLjAwMDAwMDAwMDAwMDAxIDIuNVEtNDYuOTk5OTk5OTk5OTk5OTkgMjAwLjUgNTIuMDAwMDAwMDAwMDAwMDEgNDAwLjUgIiBzdHJva2U9IiNmZjAwMDAiIHN0cm9rZS13aWR0aD0iNSIgZmlsbC1vcGFjaXR5PSIwIj48L3BhdGg+PC9zdmc+');
-  });
-
-  it('nested SVG document is removed', () => {
-    let svg = createNodeSVG();
-    svg.viewbox(2, 10, 120, 140);
-    svg.attr({ 'width': 200, 'height': 250 });
-    let p = svg.path('M 4 15 Q 80 90 4 165');
-    p.id();
-    p.dmove(0, 0);
-    expect(svg.children().length).toBe(2);
-    expect(svg.findOne('#' + p.id()).id()).toBe(p.id());
-    _pathImageOptions(p);
-    expect(svg.children().length).toBe(2);
-    expect(svg.findOne('#' + p.id()).id()).toBe(p.id());
-  });
-
-  it('trims numbers', () => {
-    let svg = createNodeSVG();
-    let mx = 5.12984712814;
-    let my = 7.19871824748;
-    let qcx = 10.2384418244;
-    let qcy = 40.129481724;
-    let qex = 3.12984712847;
-    let qey = 80.198472814;
-    expect(_trimNum(mx)).not.toEqual(mx);
-    expect(_trimNum(my)).not.toEqual(my);
-    expect(_trimNum(qcx)).not.toEqual(qcx);
-    expect(_trimNum(qcy)).not.toEqual(qcy);
-    expect(_trimNum(qex)).not.toEqual(qex);
-    expect(_trimNum(qey)).not.toEqual(qey);
-    let d = ['M', mx, my, 'Q', qcx, qcy, qex, qey].join(' ');
-    let p = svg.path(d);
-    let pios = _pathImageOptions(p);
-    expect(_trimNum(pios.x)).toEqual(pios.x);
-    expect(_trimNum(pios.y)).toEqual(pios.y);
-    expect(_trimNum(pios.w)).toEqual(pios.w);
-    expect(_trimNum(pios.h)).toEqual(pios.h);
-  });
-});
-
 describe('_circleOptions function', () => {
   describe('x, y, w and h', () => {
     it('gives correct values', () => {
@@ -443,6 +381,99 @@ describe('_rectOptions function', () => {
     expect(ros.fill.type).toBe('solid');
     expect(ros.fill.color).toBe('ab12cd');
     expect(ros.fill.alpha).toBeCloseTo(20, 2);
+  });
+});
+
+describe('_elementImageOptions function', () => {
+  it('gives correct x, y, w and h', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 30 100 Q 150 200 30 300');
+    p.attr({ 'stroke-width': 6 });
+    let pios = _elementImageOptions(p);
+    expect(pios.x).toBeCloseTo(pixelsToInches(27), 2);
+    expect(pios.y).toBeCloseTo(pixelsToInches(97), 2);
+    expect(pios.w).toBeCloseTo(pixelsToInches(66), 2);
+    expect(pios.h).toBeCloseTo(pixelsToInches(206), 2);
+  });
+
+  it('handles non-number stroke-width', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 300 150 Q 1000 2000 800 450');
+    p.attr({ 'stroke-width': '8px' }); // not a number
+    expect(typeof p.attr('stroke-width')).not.toBe('number');
+    let pios = _elementImageOptions(p);
+    expect(typeof pios.x).toBe('number');
+    expect(Number.isFinite(pios.x)).toBeTruthy();
+    expect(typeof pios.y).toBe('number');
+    expect(Number.isFinite(pios.y)).toBeTruthy();
+    expect(typeof pios.w).toBe('number');
+    expect(Number.isFinite(pios.w)).toBeTruthy();
+    expect(typeof pios.h).toBe('number');
+    expect(Number.isFinite(pios.h)).toBeTruthy();
+  });
+
+  it('handles nonfinite stroke-width', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 300 150 Q 1000 2000 800 450');
+    p.attr({ 'stroke-width': NaN }); // nonfinite
+    let pios = _elementImageOptions(p);
+    expect(typeof pios.x).toBe('number');
+    expect(Number.isFinite(pios.x)).toBeTruthy();
+    expect(typeof pios.y).toBe('number');
+    expect(Number.isFinite(pios.y)).toBeTruthy();
+    expect(typeof pios.w).toBe('number');
+    expect(Number.isFinite(pios.w)).toBeTruthy();
+    expect(typeof pios.h).toBe('number');
+    expect(Number.isFinite(pios.h)).toBeTruthy();
+  });
+
+  it('gives correct data', () => {
+    let svg = createNodeSVG();
+    let p = svg.path('M 100 2 Q 1 200 100 400');
+    p.attr({
+      'stroke': '#ff0000',
+      'stroke-width': 5,
+      'fill-opacity': 0,
+    });
+    let pios = _elementImageOptions(p);
+    expect(pios.data).toBe('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpzdmdqcz0iaHR0cDovL3N2Z2pzLmNvbS9zdmdqcyIgdmlld0JveD0iMCAwIDU0LjUwMDAwMDAwMDAwMDAxIDQwMyIgd2lkdGg9IjU0LjUwMDAwMDAwMDAwMDAxIiBoZWlnaHQ9IjQwMyI+PHBhdGggZD0iTTUyLjAwMDAwMDAwMDAwMDAxIDIuNVEtNDYuOTk5OTk5OTk5OTk5OTkgMjAwLjUgNTIuMDAwMDAwMDAwMDAwMDEgNDAwLjUgIiBzdHJva2U9IiNmZjAwMDAiIHN0cm9rZS13aWR0aD0iNSIgZmlsbC1vcGFjaXR5PSIwIj48L3BhdGg+PC9zdmc+');
+  });
+
+  it('nested SVG document is removed', () => {
+    let svg = createNodeSVG();
+    svg.viewbox(2, 10, 120, 140);
+    svg.attr({ 'width': 200, 'height': 250 });
+    let p = svg.path('M 4 15 Q 80 90 4 165');
+    p.id();
+    p.dmove(0, 0);
+    expect(svg.children().length).toBe(2);
+    expect(svg.findOne('#' + p.id()).id()).toBe(p.id());
+    _elementImageOptions(p);
+    expect(svg.children().length).toBe(2);
+    expect(svg.findOne('#' + p.id()).id()).toBe(p.id());
+  });
+
+  it('trims numbers', () => {
+    let svg = createNodeSVG();
+    let mx = 5.12984712814;
+    let my = 7.19871824748;
+    let qcx = 10.2384418244;
+    let qcy = 40.129481724;
+    let qex = 3.12984712847;
+    let qey = 80.198472814;
+    expect(_trimNum(mx)).not.toEqual(mx);
+    expect(_trimNum(my)).not.toEqual(my);
+    expect(_trimNum(qcx)).not.toEqual(qcx);
+    expect(_trimNum(qcy)).not.toEqual(qcy);
+    expect(_trimNum(qex)).not.toEqual(qex);
+    expect(_trimNum(qey)).not.toEqual(qey);
+    let d = ['M', mx, my, 'Q', qcx, qcy, qex, qey].join(' ');
+    let p = svg.path(d);
+    let pios = _elementImageOptions(p);
+    expect(_trimNum(pios.x)).toEqual(pios.x);
+    expect(_trimNum(pios.y)).toEqual(pios.y);
+    expect(_trimNum(pios.w)).toEqual(pios.w);
+    expect(_trimNum(pios.h)).toEqual(pios.h);
   });
 });
 

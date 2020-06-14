@@ -127,38 +127,6 @@ function _addLine(pres: PptxGenJS, slide: PptxGenJS.Slide, line: SvgLine) {
   );
 }
 
-function _pathImageOptions(path: SvgPath): object {
-  let b = path.bbox();
-  let sw = path.attr('stroke-width');
-  let svg = path.root();
-  let nested = svg.nested();
-  nested.svg(path.svg());
-  let np = nested.first() as SvgElement;
-  nested.viewbox(0, 0, b.width + sw, b.height + sw);
-  nested.attr({ 'width': b.width + sw, 'height': b.height + sw });
-  np.dmove(-b.x + (sw / 2), -b.y + (sw / 2));
-  let xml = nested.svg();
-  nested.clear();
-  nested.remove();
-  let base64 = window.btoa(xml);
-  return {
-    data: 'data:image/svg+xml;base64,' + base64,
-    x: _trimNum(pixelsToInches(b.x - (sw / 2))),
-    y: _trimNum(pixelsToInches(b.y - (sw / 2))),
-    w: _trimNum(pixelsToInches(b.width + sw)),
-    h: _trimNum(pixelsToInches(b.height + sw)),
-  };
-}
-
-function _addPathAsImage(slide: PptxGenJS.Slide, path: SvgPath) {
-  let options = _pathImageOptions(path);
-  slide.addImage(options);
-}
-
-function _addPath(pres: PptxGenJS, slide: PptxGenJS.Slide, path: SvgPath) {
-  _addPathAsImage(slide, path);
-}
-
 function _circleOptions(circle: SvgCircle): object {
   let x = circle.attr('cx') - circle.attr('r');
   let y = circle.attr('cy') - circle.attr('r');
@@ -217,6 +185,38 @@ function _addRect(pres: PptxGenJS, slide: PptxGenJS.Slide, rect: SvgRect) {
   );
 }
 
+function _elementImageOptions(ele: SvgElement): object {
+  let bb = ele.bbox();
+  let sw = ele.attr('stroke-width');
+  if (typeof sw !== 'number' || !Number.isFinite(sw)) {
+    sw = 0;
+  }
+  let svg = ele.root();
+  let nested = svg.nested();
+  nested.svg(ele.svg());
+  let nele = nested.first() as SvgElement;
+  nested.viewbox(0, 0, bb.width + sw, bb.height + sw);
+  nested.attr({ 'width': bb.width + sw, 'height': bb.height + sw });
+  nele.dmove(-bb.x + (sw / 2), -bb.y + (sw / 2));
+  let xml = nested.svg();
+  nested.clear();
+  nested.remove();
+  let base64 = window.btoa(xml);
+  return {
+    data: 'data:image/svg+xml;base64,' + base64,
+    x: _trimNum(pixelsToInches(bb.x - (sw / 2))),
+    y: _trimNum(pixelsToInches(bb.y - (sw / 2))),
+    w: _trimNum(pixelsToInches(bb.width + sw)),
+    h: _trimNum(pixelsToInches(bb.height + sw)),
+  };
+}
+
+function _addElementAsImage(slide: PptxGenJS.Slide, ele: SvgElement) {
+  slide.addImage(
+    _elementImageOptions(ele)
+  );
+}
+
 function createPptxFromSvg(svg: Svg): PptxGenJS {
   let pres = new PptxGenJS();
   _setSlideDimensions(pres, svg);
@@ -226,12 +226,12 @@ function createPptxFromSvg(svg: Svg): PptxGenJS {
       _addText(slide, c as SvgText);
     } else if (c.type === 'line') {
       _addLine(pres, slide, c as SvgLine);
-    } else if (c.type === 'path') {
-      _addPath(pres, slide, c as SvgPath);
     } else if (c.type === 'circle') {
       _addCircle(pres, slide, c as SvgCircle);
     } else if (c.type === 'rect') {
       _addRect(pres, slide, c as SvgRect);
+    } else {
+      _addElementAsImage(slide, c);
     }
   });
   return pres;
@@ -246,7 +246,7 @@ export {
   _trimNum,
   _textOptions,
   _lineOptions,
-  _pathImageOptions,
   _circleOptions,
   _rectOptions,
+  _elementImageOptions,
 };
