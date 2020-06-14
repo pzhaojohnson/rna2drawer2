@@ -1,6 +1,8 @@
 import UnpairedRegion from './UnpairedRegion';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
+import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 
 /**
  * The outermost stem of a layout is an imaginary base pair between positions
@@ -9,23 +11,33 @@ import normalizeAngle from '../../../normalizeAngle';
  * of the outermost stem should have no influence on the rest of the layout.
  */
 class Stem {
+  _partners: (number | null)[];
+  _generalProps: GeneralStrictLayoutProps;
+  _perBaseProps: PerBaseStrictLayoutProps[];
 
-  /**
-   * @param {GeneralStrictLayoutProps} generalProps 
-   * 
-   * @returns {number} 
-   */
-  static width(generalProps) {
+  _position5: number;
+  _position3: number;
+  _size: number;
+
+  _xBottomCenter: number;
+  _yBottomCenter: number;
+  _angle: number;
+
+  _loop: (UnpairedRegion | Stem)[];
+
+  static width(generalProps: GeneralStrictLayoutProps): number {
     return 2 + generalProps.basePairBondLength;
   }
 
   /**
-   * @param {number} p5 The 5' most position of this stem.
-   * @param {Array<number|null>} partners 
-   * @param {GeneralStrictLayoutProps} generalProps 
-   * @param {Array<PerBaseStrictLayoutProps>} perBaseProps 
+   * p5 is the 5' most position of this stem.
    */
-  constructor(p5, partners, generalProps, perBaseProps) {
+  constructor(
+    p5: number,
+    partners: (number | null)[],
+    generalProps: GeneralStrictLayoutProps,
+    perBaseProps: PerBaseStrictLayoutProps[],
+  ) {
     this._partners = partners;
     this._generalProps = generalProps;
     this._perBaseProps = perBaseProps;
@@ -65,14 +77,14 @@ class Stem {
   }
 
   /**
-   * @throws {Error} If a knot is encountered.
+   * Throws if a knot is encountered.
    */
-  _initializeLoop() {
+  _initializeLoop(): (void | never) {
     this._loop = [];
     let partners = this._partners;
     let gps = this._generalProps;
     let pbps = this._perBaseProps;
-    let bst5 = this;
+    let bst5 = this as Stem;
     let p = this.position5 + this.size;
     while (partners[p - 1] === null) {
       p++;
@@ -94,57 +106,54 @@ class Stem {
   }
 
   /**
-   * The 5' most position of the outermost stem is zero.
+   * The 5' most position of the stem.
    * 
-   * @returns {number} The 5' most position of this stem.
+   * The 5' most position of the outermost stem is zero.
    */
-  get position5() {
+  get position5(): number {
     return this._position5;
   }
 
   /**
-   * The 3' most position of the outermost stem is the sequence length plus one.
+   * The 3' most position of the stem.
    * 
-   * @returns {number} The 3' most position of this stem.
+   * The 3' most position of the outermost stem is the sequence length plus one.
    */
-  get position3() {
+  get position3(): number {
     return this._position3;
   }
 
   /**
-   * @returns {number} The 5' position of the top base pair of this stem.
+   * The 5' position of the top base pair of this stem.
    */
-  get positionTop5() {
+  get positionTop5(): number {
     return this.position5 + this.size - 1;
   }
 
   /**
-   * @returns {number} The 3' position of the top base pair of this stem.
+   * The 3' position of the top base pair of this stem.
    */
-  get positionTop3() {
+  get positionTop3(): number {
     return this.position3 - this.size + 1;
   }
 
   /**
-   * The size of the outermost stem is one.
+   * The number of base pairs in this stem.
    * 
-   * @returns {number} The number of base pairs in this stem.
+   * The size of the outermost stem is one.
    */
-  get size() {
+  get size(): number {
     return this._size;
   }
 
-  /**
-   * @returns {Object} 
-   */
   loopIterator() {
     return this._loop[Symbol.iterator]();
   }
 
   /**
-   * @returns {number} The number of stems in the loop of this stem.
+   * The number of stems in the loop of this stem.
    */
-  get numBranches() {
+  get numBranches(): number {
     let it = this.loopIterator();
     let num = 0;
     it.next();
@@ -157,18 +166,12 @@ class Stem {
     return num;
   }
 
-  /**
-   * @returns {UnpairedRegion} 
-   */
-  get firstUnpairedRegionInLoop() {
+  get firstUnpairedRegionInLoop(): UnpairedRegion {
     let it = this.loopIterator();
     return it.next().value;
   }
 
-  /**
-   * @returns {UnpairedRegion} 
-   */
-  get lastUnpairedRegionInLoop() {
+  get lastUnpairedRegionInLoop(): UnpairedRegion {
     let it = this.loopIterator();
     let next = it.next();
     let value;
@@ -179,10 +182,7 @@ class Stem {
     return value;
   }
 
-  /**
-   * @returns {Array<UnpairedRegion>} 
-   */
-  unpairedRegionsInLoop() {
+  unpairedRegionsInLoop(): UnpairedRegion[] {
     let urs = [];
     let it = this.loopIterator();
     urs.push(it.next().value);
@@ -196,10 +196,8 @@ class Stem {
 
   /**
    * Returns null if the loop contains no stems.
-   * 
-   * @returns {Stem|null} 
    */
-  get firstStemInLoop() {
+  get firstStemInLoop(): (Stem | null) {
     if (this.numBranches === 0) {
       return null;
     }
@@ -210,10 +208,8 @@ class Stem {
 
   /**
    * Returns null if the loop contains no stems.
-   * 
-   * @returns {Stem|null} 
    */
-  get lastStemInLoop() {
+  get lastStemInLoop(): (Stem | null) {
     if (this.numBranches === 0) {
       return null;
     }
@@ -229,10 +225,7 @@ class Stem {
     return st;
   }
 
-  /**
-   * @returns {Array<Stem>} 
-   */
-  stemsInLoop() {
+  stemsInLoop(): Stem[] {
     let sts = [];
     let it = this.loopIterator();
     it.next();
@@ -245,65 +238,50 @@ class Stem {
     return sts;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xBottomCenter() {
+  get xBottomCenter(): number {
     return this._xBottomCenter;
   }
 
-  set xBottomCenter(x) {
+  set xBottomCenter(x: number) {
     this._xBottomCenter = x;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yBottomCenter() {
+  get yBottomCenter(): number {
     return this._yBottomCenter;
   }
 
-  set yBottomCenter(y) {
+  set yBottomCenter(y: number) {
     this._yBottomCenter = y;
   }
 
   /**
-   * @returns {number} The angle from bottom to top of this stem.
+   * The angle of this stem from bottom to top.
    */
-  get angle() {
+  get angle(): number {
     return this._angle;
   }
 
-  set angle(a) {
+  set angle(a: number) {
     this._angle = a;
   }
 
   /**
-   * @returns {number} 
+   * The angle of this stem from top to bottom.
    */
-  get reverseAngle() {
+  get reverseAngle(): number {
     return this.angle + Math.PI;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get width() {
+  get width(): number {
     return Stem.width(this._generalProps);
   }
 
-  /**
-   * @returns {number} 
-   */
-  get height() {
+  get height(): number {
     let basePairPadding = this._generalProps.basePairPadding;
     return this.size + ((this.size - 1) * basePairPadding);
   }
 
-  /**
-   * @returns {number} 
-   */
-  get loopLength() {
+  get loopLength(): number {
     let ll = 0;
     let it = this.loopIterator();
     let next = it.next();
@@ -318,80 +296,47 @@ class Stem {
     return ll;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xTopCenter() {
+  get xTopCenter(): number {
     return this.xBottomCenter + (Math.cos(this.angle) * this.height);
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yTopCenter() {
+  get yTopCenter(): number {
     return this.yBottomCenter + (Math.sin(this.angle) * this.height);
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xBottomLeft() {
+  get xBottomLeft(): number {
     return this.xBottomCenter + ((this.width / 2) * Math.cos(this.angle - (Math.PI / 2)));
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yBottomLeft() {
+  get yBottomLeft(): number {
     return this.yBottomCenter + ((this.width / 2) * Math.sin(this.angle - (Math.PI / 2)));
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xBottomRight() {
+  get xBottomRight(): number {
     return this.xBottomCenter + ((this.width / 2) * Math.cos(this.angle + (Math.PI / 2)));
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yBottomRight() {
+  get yBottomRight(): number {
     return this.yBottomCenter + ((this.width / 2) * Math.sin(this.angle + (Math.PI / 2)));
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xTopLeft() {
+  get xTopLeft(): number {
     return this.xTopCenter + ((this.width / 2) * Math.cos(this.angle - (Math.PI / 2)));
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yTopLeft() {
+  get yTopLeft(): number {
     return this.yTopCenter + ((this.width / 2) * Math.sin(this.angle - (Math.PI / 2)));
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xTopRight() {
+  get xTopRight(): number {
     return this.xTopCenter + ((this.width / 2) * Math.cos(this.angle + (Math.PI / 2)));
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yTopRight() {
+  get yTopRight(): number {
     return this.yTopCenter + ((this.width / 2) * Math.sin(this.angle + (Math.PI / 2)));
   }
 
-  /**
-   * @returns {NormalizedBaseCoordinates} 
-   */
-  baseCoordinates5() {
+  baseCoordinates5(): NormalizedBaseCoordinates {
     let x = this.xBottomCenter + (0.5 * Math.cos(this.angle));
     let y = this.yBottomCenter + (0.5 * Math.sin(this.angle));
     x += ((this.width / 2) - 0.5) * Math.cos(this.angle - (Math.PI / 2));
@@ -401,10 +346,7 @@ class Stem {
     return new NormalizedBaseCoordinates(x, y);
   }
 
-  /**
-   * @returns {NormalizedBaseCoordinates} 
-   */
-  baseCoordinatesTop5() {
+  baseCoordinatesTop5(): NormalizedBaseCoordinates {
     let bc5 = this.baseCoordinates5();
     return new NormalizedBaseCoordinates(
       bc5.xLeft + ((this.height - 1) * Math.cos(this.angle)),
@@ -412,10 +354,7 @@ class Stem {
     );
   }
 
-  /**
-   * @returns {NormalizedBaseCoordinates} 
-   */
-  baseCoordinates3() {
+  baseCoordinates3(): NormalizedBaseCoordinates {
     let bc5 = this.baseCoordinates5();
     return new NormalizedBaseCoordinates(
       bc5.xLeft + ((this.width - 1) * Math.cos(this.angle + (Math.PI / 2))),
@@ -423,10 +362,7 @@ class Stem {
     );
   }
 
-  /**
-   * @returns {NormalizedBaseCoordinates} 
-   */
-  baseCoordinatesTop3() {
+  baseCoordinatesTop3(): NormalizedBaseCoordinates {
     let bc3 = this.baseCoordinates3();
     return new NormalizedBaseCoordinates(
       bc3.xLeft + ((this.height - 1) * Math.cos(this.angle)),
@@ -434,33 +370,19 @@ class Stem {
     );
   }
 
-  /**
-   * @param {Stem} other 
-   * 
-   * @returns {boolean} 
-   */
-  isOuterTo(other) {
+  isOuterTo(other: Stem): boolean {
     return this.position5 < other.position5 && this.position3 > other.position3;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  isOutermostStem() {
+  isOutermostStem(): boolean {
     return this.position5 === 0;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  hasHairpinLoop() {
+  hasHairpinLoop(): boolean {
     return this.numBranches === 0;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  hasRoundLoop() {
+  hasRoundLoop(): boolean {
     if (this.isOutermostStem()) {
       return this._generalProps.outermostLoopShape !== 'flat';
     } else {
@@ -470,10 +392,8 @@ class Stem {
 
   /**
    * The outermost stem never has a triangle loop.
-   * 
-   * @returns {boolean} 
    */
-  hasTriangleLoop() {
+  hasTriangleLoop(): boolean {
     if (this.isOutermostStem()) {
       return false;
     } else {
@@ -481,10 +401,7 @@ class Stem {
     }
   }
 
-  /**
-   * @returns {number} 
-   */
-  get triangleLoopHeight() {
+  get triangleLoopHeight(): number {
     if (this.isOutermostStem()) {
       return 0;
     }
@@ -493,10 +410,8 @@ class Stem {
 
   /**
    * The outermost stem is never flipped.
-   * 
-   * @returns {boolean} 
    */
-  isFlipped() {
+  isFlipped(): boolean {
     if (this.isOutermostStem()) {
       return false;
     } else {
@@ -504,10 +419,7 @@ class Stem {
     }
   }
 
-  /**
-   * @returns {Array<NormalizedBaseCoordinates>} 
-   */
-  baseCoordinates() {
+  baseCoordinates(): NormalizedBaseCoordinates[] {
     let coordinates = [];
     let step = 1 + this._generalProps.basePairPadding;
     if (!this.isOutermostStem()) {
@@ -553,14 +465,12 @@ class Stem {
    * 
    * If this stem is the outermost stem, this method simply returns the unflipped
    * base coordinates.
-   * 
-   * @returns {Array<NormalizedBaseCoordinates>} 
    */
-  flippedBaseCoordinates() {
+  flippedBaseCoordinates(): NormalizedBaseCoordinates[] {
     if (this.isOutermostStem()) {
       return this.baseCoordinates();
     } else {
-      let flippedCoordinates = [];
+      let flippedCoordinates = [] as NormalizedBaseCoordinates[];
       let coordinates = this.baseCoordinates();
       let bc5 = this.baseCoordinates5();
       let bc3 = this.baseCoordinates3();

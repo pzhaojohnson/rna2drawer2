@@ -1,17 +1,29 @@
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
+import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
+import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
+import Stem from './Stem';
 
 class UnpairedRegion {
+  _partners: (number | null)[];
+  _generalProps: GeneralStrictLayoutProps;
+  _perBaseProps: PerBaseStrictLayoutProps[];
+
+  _boundingStem5: Stem;
+  _boundingStem3: Stem;
 
   /**
-   * @param {Stem} bs5 The stem immediately 5' to this unpaired region.
-   * @param {Stem} bs3 The stem immediately 3' to this unpaired region.
-   * @param {Array<number|null>} partners 
-   * @param {GeneralStrictLayoutProps} generalProps 
-   * @param {Array<PerBaseStrictLayoutProps>} perBaseProps 
+   * bs5 is the stem immediately 5' to this unpaired region.
+   * bs3 is the stem immediately 3' to this unpaired region.
    */
-  constructor(bs5, bs3, partners, generalProps, perBaseProps) {
+  constructor(
+    bs5: Stem,
+    bs3: Stem,
+    partners: (number | null)[],
+    generalProps: GeneralStrictLayoutProps,
+    perBaseProps: PerBaseStrictLayoutProps[],
+  ) {
     this._partners = partners;
     this._generalProps = generalProps;
     this._perBaseProps = perBaseProps;
@@ -21,23 +33,23 @@ class UnpairedRegion {
   }
 
   /**
-   * @returns {Stem} The stem immediately 5' to this unpaired region.
+   * The stem immediately 5' to this unpaired region.
    */
-  get boundingStem5() {
+  get boundingStem5(): Stem {
     return this._boundingStem5;
   }
 
   /**
-   * @returns {Stem} The stem immediately 3' to this unpaired region.
+   * The stem immediately 3' to this unpaired region.
    */
-  get boundingStem3() {
+  get boundingStem3(): Stem {
     return this._boundingStem3;
   }
 
   /**
-   * @returns {number} The 5' position just outside of this unpaired region.
+   * The 5' position just outside of this unpaired region.
    */
-  get boundingPosition5() {
+  get boundingPosition5(): number {
     if (this.isHairpinLoop()) {
       return this.boundingStem5.positionTop5;
     } else if (this.boundingStem5.isOuterTo(this.boundingStem3)) {
@@ -48,9 +60,9 @@ class UnpairedRegion {
   }
 
   /**
-   * @returns {number} The 3' position just outside of this unpaired region.
+   * The 3' position just outside of this unpaired region.
    */
-  get boundingPosition3() {
+  get boundingPosition3(): number {
     if (this.isHairpinLoop()) {
       return this.boundingStem5.positionTop3;
     } else if (this.boundingStem3.isOuterTo(this.boundingStem5)) {
@@ -60,10 +72,7 @@ class UnpairedRegion {
     }
   }
 
-  /**
-   * @returns {number} 
-   */
-  get boundingStemOutwardAngle5() {
+  get boundingStemOutwardAngle5(): number {
     if (this.isHairpinLoop()) {
       return this.boundingStem5.reverseAngle;
     } else if (this.boundingStem5.isOuterTo(this.boundingStem3)) {
@@ -73,10 +82,7 @@ class UnpairedRegion {
     }
   }
 
-  /**
-   * @returns {number} 
-   */
-  get boundingStemOutwardAngle3() {
+  get boundingStemOutwardAngle3(): number {
     if (this.isHairpinLoop()) {
       return this.boundingStem3.reverseAngle;
     } else if (this.boundingStem3.isOuterTo(this.boundingStem5)) {
@@ -86,10 +92,7 @@ class UnpairedRegion {
     }
   }
 
-  /**
-   * @returns {NormalizedBaseCoordinates} 
-   */
-  baseCoordinatesBounding5() {
+  baseCoordinatesBounding5(): NormalizedBaseCoordinates {
     if (this.isHairpinLoop()) {
       return this.boundingStem5.baseCoordinatesTop5();
     } else if (this.boundingStem5.isOuterTo(this.boundingStem3)) {
@@ -99,10 +102,7 @@ class UnpairedRegion {
     }
   }
 
-  /**
-   * @returns {NormalizedBaseCoordinates} 
-   */
-  baseCoordinatesBounding3() {
+  baseCoordinatesBounding3(): NormalizedBaseCoordinates {
     if (this.isHairpinLoop()) {
       return this.boundingStem5.baseCoordinatesTop3();
     } else if (this.boundingStem3.isOuterTo(this.boundingStem5)) {
@@ -113,37 +113,25 @@ class UnpairedRegion {
   }
 
   /**
-   * @returns {number} The number of bases in this unpaired region.
+   * The number of bases in this unpaired region.
    */
-  get size() {
+  get size(): number {
     return this.boundingPosition3 - this.boundingPosition5 - 1;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  isHairpinLoop() {
+  isHairpinLoop(): boolean {
     return this.boundingStem5.position5 === this.boundingStem3.position5;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  isDangling5() {
+  isDangling5(): boolean {
     return this.boundingStem5.isOutermostStem() && !this.isHairpinLoop();
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  isDangling3() {
+  isDangling3(): boolean {
     return this.boundingStem3.isOutermostStem() && !this.isHairpinLoop();
   }
 
-  /**
-   * @returns {number} 
-   */
-  get length() {
+  get length(): number {
     let length = 0;
     if (this.boundingPosition5 > 0) {
       length += this._perBaseProps[this.boundingPosition5 - 1].stretch3;
@@ -154,12 +142,7 @@ class UnpairedRegion {
     return Math.max(length, 0);
   }
 
-  /**
-   * @param {boolean} inOutermostLoop 
-   * 
-   * @returns {Array<NormalizedBaseCoordinates>} 
-   */
-  baseCoordinates(inOutermostLoop) {
+  baseCoordinates(inOutermostLoop: boolean): NormalizedBaseCoordinates[] {
     if (inOutermostLoop && this._generalProps.outermostLoopShape === 'flat') {
       return baseCoordinatesFlatOutermostLoop(this, this._generalProps, this._perBaseProps);
     } else {

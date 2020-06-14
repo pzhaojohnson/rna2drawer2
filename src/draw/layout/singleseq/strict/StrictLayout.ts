@@ -3,15 +3,24 @@ import { StemLayout } from './StemLayout';
 import splitSecondaryAndTertiaryPairs from '../../../../parse/splitSecondaryAndTertiaryPairs'
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
+import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 
 export class StrictLayout {
+  _partners: (number | null)[];
+  _generalProps: GeneralStrictLayoutProps;
+  _perBaseProps: PerBaseStrictLayoutProps[];
+
+  _outermostStem: Stem;
+  _baseCoordinates: NormalizedBaseCoordinates[];
 
   /**
-   * @param {Array<number|null>} partners The partners notation of the secondary structure.
-   * @param {GeneralStrictLayoutProps} generalProps 
-   * @param {Array<PerBaseStrictLayoutProps>} perBaseProps 
+   * The partners argument is the partners notation of the secondary structure.
    */
-  constructor(partners, generalProps, perBaseProps) {
+  constructor(
+    partners: (number | null)[],
+    generalProps: GeneralStrictLayoutProps,
+    perBaseProps: PerBaseStrictLayoutProps[],
+  ) {
     this._partners = partners;
     this._validatePartners();
     
@@ -65,32 +74,21 @@ export class StrictLayout {
   }
 
   /**
-   * @returns {number} The number of bases in the layout.
+   * The number of bases in the layout.
    */
-  get size() {
+  get size(): number {
     return this._partners.length;
   }
 
-  /**
-   * @returns {boolean} 
-   */
-  isEmpty() {
+  isEmpty(): boolean {
     return this.size === 0;
   }
   
-  /**
-   * @param {number} p 
-   * 
-   * @returns {NormalizedBaseCoordinates} 
-   */
-  baseCoordinatesAtPosition(p) {
+  baseCoordinatesAtPosition(p: number): (NormalizedBaseCoordinates | undefined) {
     return this._baseCoordinates[p - 1];
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xMin() {
+  get xMin(): number {
     if (this.isEmpty()) {
       return 0;
     } else {
@@ -105,10 +103,7 @@ export class StrictLayout {
     }
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xMax() {
+  get xMax(): number {
     if (this.isEmpty()) {
       return 0;
     } else {
@@ -124,10 +119,7 @@ export class StrictLayout {
     }
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yMin() {
+  get yMin(): number {
     if (this.isEmpty()) {
       return 0;
     } else {
@@ -142,10 +134,7 @@ export class StrictLayout {
     }
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yMax() {
+  get yMax(): number {
     if (this.isEmpty()) {
       return 0;
     } else {
@@ -160,31 +149,19 @@ export class StrictLayout {
     }
   }
 
-  /**
-   * @returns {number} 
-   */
-  get xCenter() {
+  get xCenter(): number {
     return (this.xMin + this.xMax) / 2;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get yCenter() {
+  get yCenter(): number {
     return (this.yMin + this.yMax) / 2;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get width() {
+  get width(): number {
     return this.xMax - this.xMin;
   }
 
-  /**
-   * @returns {number} 
-   */
-  get height() {
+  get height(): number {
     return this.yMax - this.yMin;
   }
 }

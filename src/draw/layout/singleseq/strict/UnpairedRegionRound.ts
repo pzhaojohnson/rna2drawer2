@@ -4,22 +4,17 @@ import { circleCenter } from './circleCenter';
 import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
 import { RoundLoop } from './StemLayout';
+import UnpairedRegion from './UnpairedRegion';
+import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 
 const _VERY_SMALL_THRESHOLD = 0.001;
 
-/**
- * @typedef {Object} Coordinates 
- * @property {number} x 
- * @property {number} y 
- */
+interface Coordinates {
+  x: number;
+  y: number;
+}
 
-/**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * 
- * @returns {Coordinates} 
- */
-function _coordinatesBounding5(ur, generalProps) {
+function _coordinatesBounding5(ur: UnpairedRegion, generalProps: GeneralStrictLayoutProps): Coordinates {
   if (ur.boundingStem5.isOutermostStem()) {
     let c = RoundLoop.center(ur.boundingStem5, generalProps);
     let r = RoundLoop.radius(ur.boundingStem5, generalProps);
@@ -34,13 +29,7 @@ function _coordinatesBounding5(ur, generalProps) {
   }
 }
 
-/**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * 
- * @returns {Coordinates} 
- */
-function _coordinatesBounding3(ur, generalProps) {
+function _coordinatesBounding3(ur: UnpairedRegion, generalProps: GeneralStrictLayoutProps): Coordinates {
   if (ur.boundingStem3.isOutermostStem()) {
     let c = RoundLoop.center(ur.boundingStem3, generalProps);
     let r = RoundLoop.radius(ur.boundingStem3, generalProps);
@@ -57,12 +46,8 @@ function _coordinatesBounding3(ur, generalProps) {
 
 /**
  * The polar length to fit between the bounds.
- * 
- * @param {UnpairedRegion} ur 
- * 
- * @returns {number} 
  */
-function _polarLengthToFit(ur) {
+function _polarLengthToFit(ur: UnpairedRegion): number {
   if (ur.boundingStem5.isOutermostStem() && ur.boundingStem3.isOutermostStem()) {
     return ur.size;
   } else if (ur.boundingStem5.isOutermostStem() || ur.boundingStem3.isOutermostStem()) {
@@ -73,19 +58,20 @@ function _polarLengthToFit(ur) {
 }
 
 /**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * @param {Coordinates} cb5 The 5' bounding coordinates.
- * @param {Coordinates} cb3 The 3' bounding coordinates.
- * 
- * @returns {Coordinates} 
+ * cb5 are the 5' bounding coordinates.
+ * cb3 are the 3' bounding coordinates.
  */
-function _center(ur, generalProps, cb5, cb3) {
+function _center(
+  ur: UnpairedRegion,
+  generalProps: GeneralStrictLayoutProps,
+  cb5: Coordinates,
+  cb3: Coordinates,
+): Coordinates {
   let bs5 = ur.boundingStem5;
   let bs3 = ur.boundingStem3;
   let verySmallTerminiGap = generalProps.terminiGap < _VERY_SMALL_THRESHOLD;
   if (bs5.isOutermostStem() && bs3.isOutermostStem() && verySmallTerminiGap) {
-    let circumference = _polarLengthToFit(ur, generalProps);
+    let circumference = _polarLengthToFit(ur);
     let radius = circumference / (2 * Math.PI);
     let angle = RoundLoop.originAngle(bs5, generalProps) + Math.PI;
     return {
@@ -99,53 +85,57 @@ function _center(ur, generalProps, cb5, cb3) {
 }
 
 /**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * @param {Coordinates} cb5 The 5' bounding coordinates.
- * @param {Coordinates} cb3 The 3' bounding coordinates.
- * 
- * @returns {number} 
+ * cb5 are the 5' bounding coordinates.
+ * cb3 are the 3' bounding coordinates.
  */
-function _radius(ur, generalProps, cb5, cb3) {
+function _radius(
+  ur: UnpairedRegion,
+  generalProps: GeneralStrictLayoutProps,
+  cb5: Coordinates,
+  cb3: Coordinates,
+): number {
   let center = _center(ur, generalProps, cb5, cb3);
   return distanceBetween(center.x, center.y, cb5.x, cb5.y);
 }
 
 /**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * @param {Coordinates} cb5 The 5' bounding coordinates.
- * @param {Coordinates} cb3 The 3' bounding coordinates.
- * 
- * @returns {number} 
+ * cb5 are the 5' bounding coordinates.
+ * cb3 are the 3' bounding coordinates.
  */
-function _angleBounding5(ur, generalProps, cb5, cb3) {
+function _angleBounding5(
+  ur: UnpairedRegion,
+  generalProps: GeneralStrictLayoutProps,
+  cb5: Coordinates,
+  cb3: Coordinates,
+): number {
   let center = _center(ur, generalProps, cb5, cb3);
   return angleBetween(center.x, center.y, cb5.x, cb5.y);
 }
 
 /**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * @param {Coordinates} cb5 The 5' bounding coordinates.
- * @param {Coordinates} cb3 The 3' bounding coordinates.
- * 
- * @returns {number} 
+ * cb5 are the 5' bounding coordinates.
+ * cb3 are the 3' bounding coordinates.
  */
-function _angleBounding3(ur, generalProps, cb5, cb3) {
+function _angleBounding3(
+  ur: UnpairedRegion,
+  generalProps: GeneralStrictLayoutProps,
+  cb5: Coordinates,
+  cb3: Coordinates,
+): number {
   let center = _center(ur, generalProps, cb5, cb3);
   return angleBetween(center.x, center.y, cb3.x, cb3.y);
 }
 
 /**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * @param {Coordinates} cb5 The 5' bounding coordinates.
- * @param {Coordinates} cb3 The 3' bounding coordinates.
- * 
- * @returns {number} 
+ * cb5 are the 5' bounding coordinates.
+ * cb3 are the 3' bounding coordinates.
  */
-function _angleSpanBetweenBounds(ur, generalProps, cb5, cb3) {
+function _angleSpanBetweenBounds(
+  ur: UnpairedRegion,
+  generalProps: GeneralStrictLayoutProps,
+  cb5: Coordinates,
+  cb3: Coordinates,
+): number {
   let bs5 = ur.boundingStem5;
   let bs3 = ur.boundingStem3;
   let verySmallTerminiGap = generalProps.terminiGap < _VERY_SMALL_THRESHOLD;
@@ -160,28 +150,30 @@ function _angleSpanBetweenBounds(ur, generalProps, cb5, cb3) {
 }
 
 /**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * @param {Coordinates} cb5 The 5' bounding coordinates.
- * @param {Coordinates} cb3 The 3' bounding coordinates.
- * 
- * @returns {number} 
+ * cb5 are the 5' bounding coordinates.
+ * cb3 are the 3' bounding coordinates.
  */
-function _polarLengthBetweenBounds(ur, generalProps, cb5, cb3) {
+function _polarLengthBetweenBounds(
+  ur: UnpairedRegion,
+  generalProps: GeneralStrictLayoutProps,
+  cb5: Coordinates,
+  cb3: Coordinates,
+): number {
   let angleSpan = _angleSpanBetweenBounds(ur, generalProps, cb5, cb3);
   let radius = _radius(ur, generalProps, cb5, cb3);
   return angleSpan * radius;
 }
 
 /**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * @param {Coordinates} cb5 The 5' bounding coordinates.
- * @param {Coordinates} cb3 The 3' bounding coordinates.
- * 
- * @returns {number} 
+ * cb5 are the 5' bounding coordinates.
+ * cb3 are the 3' bounding coordinates.
  */
-function _startingAngle(ur, generalProps, cb5, cb3) {
+function _startingAngle(
+  ur: UnpairedRegion,
+  generalProps: GeneralStrictLayoutProps,
+  cb5: Coordinates,
+  cb3: Coordinates,
+): number {
   if (ur.size === 0) {
     return 0;
   } else if (ur.boundingStem5.isOutermostStem()) {
@@ -201,14 +193,15 @@ function _startingAngle(ur, generalProps, cb5, cb3) {
 }
 
 /**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * @param {Coordinates} cb5 The 5' bounding coordinates.
- * @param {Coordinates} cb3 The 3' bounding coordinates.
- * 
- * @returns {number} 
+ * cb5 are the 5' bounding coordinates.
+ * cb3 are the 3' bounding coordinates.
  */
-function _angleIncrement(ur, generalProps, cb5, cb3) {
+function _angleIncrement(
+  ur: UnpairedRegion,
+  generalProps: GeneralStrictLayoutProps,
+  cb5: Coordinates,
+  cb3: Coordinates,
+): number {
   if (ur.size === 0) {
     return 0;
   } else {
@@ -224,13 +217,7 @@ function _angleIncrement(ur, generalProps, cb5, cb3) {
   }
 }
 
-/**
- * @param {UnpairedRegion} ur 
- * @param {GeneralStrictLayoutProps} generalProps 
- * 
- * @returns {Array<NormalizedBaseCoordinates>} 
- */
-function baseCoordinatesRound(ur, generalProps) {
+function baseCoordinatesRound(ur: UnpairedRegion, generalProps: GeneralStrictLayoutProps): NormalizedBaseCoordinates[] {
   if (ur.size === 0) {
     return [];
   } else {

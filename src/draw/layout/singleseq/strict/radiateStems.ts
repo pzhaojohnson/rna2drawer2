@@ -1,16 +1,11 @@
 import normalizeAngle from '../../../normalizeAngle';
 import Stem from './Stem';
+import UnpairedRegion from './UnpairedRegion';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import isKnotless from '../../../../parse/isKnotless';
 
-/**
- * @param {Stem} st 
- * @param {number} structureLength 
- * 
- * @returns {number} 
- */
-function _radialAngle(st, structureLength) {
+function _radialAngle(st: Stem, structureLength: number): number {
   if (structureLength === 0) {
     return 0;
   } else if (st.isOutermostStem()) {
@@ -20,12 +15,7 @@ function _radialAngle(st, structureLength) {
   return ((2 * Math.PI) * (p / structureLength)) - Math.PI;
 }
 
-/**
- * @param {Stem} st 
- * 
- * @returns {number} 
- */
-function _numBasesInLoop(st) {
+function _numBasesInLoop(st: Stem): number {
   let n = 0;
   if (!st.isOutermostStem()) {
     n += 2;
@@ -43,12 +33,7 @@ function _numBasesInLoop(st) {
   return n;
 }
 
-/**
- * @param {UnpairedRegion} ur 
- * @param {Array<number>} stretches3 
- * @param {number} stretch 
- */
-function _setStretchForUnpairedRegion(ur, stretches3, stretch) {
+function _setStretchForUnpairedRegion(ur: UnpairedRegion, stretches3: number[], stretch: number) {
   let positions = ur.size + 1;
   let p = ur.boundingPosition5;
   if (p === 0) {
@@ -65,11 +50,8 @@ const _ONE_BRANCH_RADIATION = Math.PI;
 
 /**
  * Assumes that the loop of the given stem has one branch.
- * 
- * @param {Stem} st 
- * @param {Array<number>} stretches3 
  */
-function _radiateOneBranch(st, stretches3) {
+function _radiateOneBranch(st: Stem, stretches3: number[]) {
   if (st.isOutermostStem()) {
     return;
   }
@@ -95,11 +77,8 @@ const _MULTIPLE_BRANCHES_SPREAD_ANGLE = Math.PI;
 
 /**
  * Assumes that the loop of the given stem has multiple branches.
- * 
- * @param {Stem} st 
- * @param {Array<number>} stretches3 
  */
-function _spreadMultipleBranches(st, stretches3) {
+function _spreadMultipleBranches(st: Stem, stretches3: number[]) {
   st.unpairedRegionsInLoop().forEach(ur => {
     let st5 = ur.boundingStem5;
     let st3 = ur.boundingStem3;
@@ -129,11 +108,8 @@ const _MULTIPLE_BRANCHES_RADIATION = Math.PI / 2;
 
 /**
  * Assumes that the loop of the given stem has multiple branches.
- * 
- * @param {Stem} st 
- * @param {Array<number>} stretches3 
  */
-function _radiateMultipleBranchesOutward(st, stretches3) {
+function _radiateMultipleBranchesOutward(st: Stem, stretches3: number[]) {
   let remainingBases = _numBasesInLoop(st);
   remainingBases -= st.firstUnpairedRegionInLoop.size;
   remainingBases -= st.lastUnpairedRegionInLoop.size;
@@ -159,11 +135,8 @@ function _radiateMultipleBranchesOutward(st, stretches3) {
 
 /**
  * Assumes that the loop of the given stem has multiple branches.
- * 
- * @param {Stem} st 
- * @param {Array<number>} stretches3 
  */
-function _radiateMultipleBranches(st, stretches3) {
+function _radiateMultipleBranches(st: Stem, stretches3: number[]) {
   if (st.isOutermostStem()) {
     _spreadMultipleBranches(st, stretches3);
     return;
@@ -181,7 +154,7 @@ function _radiateMultipleBranches(st, stretches3) {
   _spreadMultipleBranches(st, stretches3);
 }
 
-function _radiateLoop(st, stretches3) {
+function _radiateLoop(st: Stem, stretches3: number[]) {
   if (st.numBranches === 1) {
     _radiateOneBranch(st, stretches3);
   } else if (st.numBranches > 1) {
@@ -193,18 +166,19 @@ function _radiateLoop(st, stretches3) {
 }
 
 /**
+ * Given the partners notation of a secondary structure, this function
+ * will return an array of numbers of the same length as the partners
+ * notation containing the 3' stretches for each position to radiate
+ * the stems of the structure
+ * 
  * Will not radiate any stems if there are knots in the structure.
- * 
- * @param {Array<number|null>} partners The secondary structure.
- * 
- * @returns {Array<number>} 3' base stretches to radiate the stems.
  */
-function radiateStems(partners) {
-  let stretches3 = [];
+function radiateStems(partners: (number | null)[]): number[] {
+  let stretches3 = [] as number[];
   partners.forEach(p => stretches3.push(0));
   if (isKnotless(partners)) {
     let gps = new GeneralStrictLayoutProps();
-    let pbps = [];
+    let pbps = [] as PerBaseStrictLayoutProps[];
     partners.forEach(p => pbps.push(new PerBaseStrictLayoutProps()));
     let st = new Stem(0, partners, gps, pbps);
     _radiateLoop(st, stretches3);

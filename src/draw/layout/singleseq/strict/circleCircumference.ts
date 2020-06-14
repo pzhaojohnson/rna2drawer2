@@ -2,37 +2,17 @@ import { circleCenter } from './circleCenter';
 
 const _VERY_SMALL_THRESHOLD = 0.001;
 
-/**
- * @param {number} straightLength 
- * @param {number} remainingPolarLength 
- * 
- * @returns {number} 
- */
-function _oneStraightCircumference(straightLength, remainingPolarLength) {
+function _oneStraightCircumference(straightLength: number, remainingPolarLength: number): number {
   let center = circleCenter(0, 0, straightLength, 0, remainingPolarLength);
   let radius = ((center.x ** 2) + (center.y ** 2)) ** 0.5;
   return 2 * Math.PI * radius;
 }
 
-/**
- * @param {number} straightLength 
- * @param {number} numStraights 
- * @param {number} remainingPolarLength 
- * 
- * @param {number} 
- */
-function _lowerBound(straightLength, numStraights, remainingPolarLength) {
+function _lowerBound(straightLength: number, numStraights: number, remainingPolarLength: number): number {
   return (numStraights * straightLength) + remainingPolarLength;
 }
 
-/**
- * @param {number} straightLength 
- * @param {number} numStraights 
- * @param {number} remainingPolarLength 
- * 
- * @param {number} 
- */
-function _upperBound(straightLength, numStraights, remainingPolarLength) {
+function _upperBound(straightLength: number, numStraights: number, remainingPolarLength: number): number {
   if (numStraights === 0) {
     return remainingPolarLength;
   } else if (straightLength < _VERY_SMALL_THRESHOLD) {
@@ -48,15 +28,7 @@ function _upperBound(straightLength, numStraights, remainingPolarLength) {
   }
 }
 
-/**
- * @param {number} estimate 
- * @param {number} straightLength 
- * @param {number} numStraights 
- * @param {number} remainingPolarLength 
- * 
- * @param {boolean} 
- */
-function _estimateIsTooLow(estimate, straightLength, numStraights, remainingPolarLength) {
+function _estimateIsTooLow(estimate: number, straightLength: number, numStraights: number, remainingPolarLength: number): boolean {
   if (numStraights === 0) {
     return estimate < remainingPolarLength;
   } else if (straightLength < _VERY_SMALL_THRESHOLD) {
@@ -71,14 +43,7 @@ function _estimateIsTooLow(estimate, straightLength, numStraights, remainingPola
   }
 }
 
-/**
- * @param {number} straightLength 
- * @param {number} numStraights 
- * @param {number} remainingPolarLength 
- * 
- * @returns {number} 
- */
-function circleCircumference(straightLength, numStraights, remainingPolarLength) {
+function circleCircumference(straightLength: number, numStraights: number, remainingPolarLength: number): number {
   if (numStraights === 0) {
     return remainingPolarLength;
   } else if (straightLength < _VERY_SMALL_THRESHOLD) {

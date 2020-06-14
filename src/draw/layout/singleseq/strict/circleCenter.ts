@@ -6,14 +6,14 @@ import angleBetween from './../../../angleBetween';
  * two points on the periphery of the circle and the tangent to
  * the circle at either point.
  */
-function _straightTangentAngle(clockwisePolarDistance, straightDistance) {
+function _straightTangentAngle(clockwisePolarDistance: number, straightDistance: number): number {
   let p = clockwisePolarDistance / 2;
   let s = straightDistance / 2;
   
   // 20 iterations seems to work well
   let iters = 20;
   
-  function moreThanSemicircle() {
+  function moreThanSemicircle(): number {
 
     // Math.PI seems to work well as an initial guess
     let b = Math.PI;
@@ -28,7 +28,7 @@ function _straightTangentAngle(clockwisePolarDistance, straightDistance) {
     return Math.PI - b;
   }
 
-  function lessThanSemicircle() {
+  function lessThanSemicircle(): number {
     
     // Math.PI / 2 seems to work well as an initial guess.
     let a = Math.PI / 2;
@@ -50,11 +50,10 @@ function _straightTangentAngle(clockwisePolarDistance, straightDistance) {
   }
 }
 
-/**
- * @typedef {Object} CircleCenter 
- * @property {number} x 
- * @property {number} y 
- */
+export interface CircleCenter {
+  x: number;
+  y: number;
+}
 
 /**
  * Calculates the center point of a circle given two points on the periphery
@@ -70,16 +69,8 @@ function _straightTangentAngle(clockwisePolarDistance, straightDistance) {
  * the two points on the periphery of the circle, then this function will calculate
  * the center point of the circle using a clockwise polar distance "slightly" larger
  * than the straight distance.
- * 
- * @param {number} x1 
- * @param {number} y1 
- * @param {number} x2 
- * @param {number} y2 
- * @param {number} clockwisePolarDistance 
- * 
- * @returns {CircleCenter} 
  */
-function circleCenter(x1, y1, x2, y2, clockwisePolarDistance) {
+function circleCenter(x1: number, y1: number, x2: number, y2: number, clockwisePolarDistance: number): CircleCenter {
   let straightDistance = Math.max(
     distanceBetween(x1, y1, x2, y2),
     0.001,

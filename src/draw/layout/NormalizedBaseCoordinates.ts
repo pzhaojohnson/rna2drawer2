@@ -1,42 +1,40 @@
 import distanceBetween from '../distanceBetween';
 import angleBetween from '../angleBetween';
 
-class NormalizedBaseCoordinates {
-  constructor(xLeft, yTop) {
+export class NormalizedBaseCoordinates {
+  _xLeft: number;
+  _yTop: number;
+
+  constructor(xLeft: number, yTop: number) {
     this._xLeft = xLeft;
     this._yTop = yTop;
   }
 
-  get xLeft() {
+  get xLeft(): number {
     return this._xLeft;
   }
 
-  get xRight() {
+  get xRight(): number {
     return this.xLeft + 1;
   }
 
-  get xCenter() {
+  get xCenter(): number {
     return this.xLeft + 0.5;
   }
 
-  get yTop() {
+  get yTop(): number {
     return this._yTop;
   }
 
-  get yBottom() {
+  get yBottom(): number {
     return this.yTop + 1;
   }
 
-  get yCenter() {
+  get yCenter(): number {
     return this.yTop + 0.5;
   }
 
-  /**
-   * @param {VirtualBaseCoordinates} other 
-   * 
-   * @returns {number} The distance between the center points of two sets of base coordinates.
-   */
-  distanceBetweenCenters(other) {
+  distanceBetweenCenters(other: NormalizedBaseCoordinates): number {
     return distanceBetween(
       this.xCenter,
       this.yCenter,
@@ -45,13 +43,7 @@ class NormalizedBaseCoordinates {
     );
   }
 
-  /**
-   * @param {VirtualBaseCoordinates} other 
-   * 
-   * @returns {number} The angle from the center of this set of base coordinates
-   *  to the center of another set of base coordinates.
-   */
-  angleBetweenCenters(other) {
+  angleBetweenCenters(other: NormalizedBaseCoordinates): number {
     return angleBetween(
       this.xCenter,
       this.yCenter,
