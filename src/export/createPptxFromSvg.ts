@@ -221,7 +221,8 @@ function createPptxFromSvg(svg: Svg): PptxGenJS {
   let pres = new PptxGenJS();
   _setSlideDimensions(pres, svg);
   let slide = pres.addSlide();
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'text') {
       _addText(slide, c as SvgText);
     } else if (c.type === 'line') {

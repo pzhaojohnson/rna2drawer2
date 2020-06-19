@@ -6,6 +6,7 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "strictBindCallApply": true,
+    "strictFunctionTypes": true,
     "moduleResolution": "Node",
     "module": "es6",
     "target": "es5",

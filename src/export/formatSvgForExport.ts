@@ -12,7 +12,8 @@ import { trimNum } from './trimNum';
 
 function _removeInvisibleLines(svg: Svg) {
   let toBeRemoved = [] as SvgLine[];
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'line') {
       if (c.attr('opacity') === 0 || c.attr('stroke-opacity') === 0) {
         toBeRemoved.push(c);
@@ -30,7 +31,8 @@ const _Y_PADDING = 500;
  */
 function _xTextMin(svg: Svg): number {
   let x = NaN;
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'text') {
       if (!Number.isFinite(x) || c.attr('x') < x) {
         x = c.attr('x');
@@ -48,7 +50,8 @@ function _xTextMin(svg: Svg): number {
  */
 function _xTextMax(svg: Svg): number {
   let x = NaN;
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'text') {
       if (!Number.isFinite(x) || c.attr('x') > x) {
         x = c.attr('x');
@@ -66,7 +69,8 @@ function _xTextMax(svg: Svg): number {
  */
 function _yTextMin(svg: Svg): number {
   let y = NaN;
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'text') {
       if (!Number.isFinite(y) || c.attr('y') < y) {
         y = c.attr('y');
@@ -84,7 +88,8 @@ function _yTextMin(svg: Svg): number {
  */
 function _yTextMax(svg: Svg): number {
   let y = NaN;
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'text') {
       if (!Number.isFinite(y) || c.attr('y') > y) {
         y = c.attr('y');
@@ -100,7 +105,8 @@ function _yTextMax(svg: Svg): number {
 function _shiftElements(svg: Svg) {
   let xShift = _X_PADDING - _xTextMin(svg);
   let yShift = _Y_PADDING - _yTextMin(svg);
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     c.dmove(xShift, yShift);
   });
 }
@@ -234,7 +240,8 @@ function _scaleOther(ele: SvgElement, scaling: number, xOrigin: number, yOrigin:
 function _scaleElements(svg: Svg, scaling: number) {
   let xOrigin = _xTextMin(svg);
   let yOrigin = _yTextMin(svg);
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'text') {
       _scaleText(c as SvgText, scaling, xOrigin, yOrigin);
     } else if (c.type === 'line') {
@@ -261,7 +268,8 @@ function _scaleElements(svg: Svg, scaling: number) {
  * do not support the dominant-baseline attribute.
  */
 function _resetTextDominantBaselines(svg: Svg) {
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'text') {
       let cx = c.cx();
       let cy = c.cy();
@@ -310,7 +318,8 @@ function _trimPathSegmentNumbers(path: SvgPath) {
   let d = '';
   pa.forEach(segment => {
     d += segment[0] + ' ';
-    segment.slice(1).forEach((n: number) => {
+    segment.slice(1).forEach(v => {
+      let n = v as number;
       d += _trimNum(n) + ' ';
     });
   });
@@ -371,7 +380,8 @@ function _trimRectNumbers(rect: SvgRect) {
 }
 
 function _trimNumbers(svg: Svg) {
-  svg.children().forEach((c: SvgElement) => {
+  svg.children().forEach(v => {
+    let c = v as SvgElement;
     if (c.type === 'text') {
       _trimTextNumbers(c as SvgText);
     } else if (c.type === 'line') {
