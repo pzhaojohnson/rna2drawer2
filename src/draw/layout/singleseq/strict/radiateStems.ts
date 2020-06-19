@@ -143,8 +143,8 @@ function _radiateMultipleBranches(st: Stem, stretches3: number[]) {
   }
   let outerAngle = _radialAngle(st, stretches3.length);
   outerAngle += Math.PI;
-  let firstAngle = _radialAngle(st.firstStemInLoop, stretches3.length);
-  let lastAngle = _radialAngle(st.lastStemInLoop, stretches3.length);
+  let firstAngle = _radialAngle(st.firstStemInLoop as Stem, stretches3.length);
+  let lastAngle = _radialAngle(st.lastStemInLoop as Stem, stretches3.length);
   let firstExceeded = normalizeAngle(firstAngle, outerAngle) - outerAngle > _MULTIPLE_BRANCHES_RADIATION;
   let lastExceeded = normalizeAngle(outerAngle, lastAngle) - lastAngle > _MULTIPLE_BRANCHES_RADIATION;
   if (firstExceeded && lastExceeded) {

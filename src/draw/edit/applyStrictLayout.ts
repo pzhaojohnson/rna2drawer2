@@ -6,10 +6,12 @@ function _moveBases(drawing: Drawing, layout: StrictLayout, baseWidth: number, b
   let yMin = layout.yMin;
   drawing.forEachBase((b, p) => {
     let bcs = layout.baseCoordinatesAtPosition(p);
-    b.moveTo(
-      window.screen.width + (baseWidth * (bcs.xCenter - xMin)),
-      window.screen.height + (baseHeight * (bcs.yCenter - yMin)),
-    );
+    if (bcs) {
+      b.moveTo(
+        window.screen.width + (baseWidth * (bcs.xCenter - xMin)),
+        window.screen.height + (baseHeight * (bcs.yCenter - yMin)),
+      );
+    }
   });
 }
 

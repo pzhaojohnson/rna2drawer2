@@ -32,8 +32,8 @@ interface Drawing {
 
 class TertiaryBondsInteraction {
   _drawing: Drawing;
-  _hovered: TertiaryBond;
-  _selected: TertiaryBond;
+  _hovered: TertiaryBond | null;
+  _selected: TertiaryBond | null;
   _dragging: boolean;
   _dragged: boolean;
 

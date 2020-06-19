@@ -43,7 +43,7 @@ export function evenOutStretches(mode: FoldingMode) {
     while (partners[p - 1]) {
       p++;
     }
-    let ur = unpairedRegionOfPosition(p, partners);
+    let ur = unpairedRegionOfPosition(p, partners) as UnpairedRegion;
     evenOutStretch(ur, perBaseProps);
     p = ur.boundingPosition3;
   }

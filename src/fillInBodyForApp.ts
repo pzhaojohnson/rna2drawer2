@@ -30,19 +30,19 @@ function fillInBodyForApp() {
   outermostDiv.appendChild(infobarContainer);
 }
 
-function getMenuContainer(): Element {
+function getMenuContainer(): Element | null {
   return document.getElementById(MENU_CONTAINER_ID);
 }
 
-function getDrawingContainer(): Element {
+function getDrawingContainer(): Element | null {
   return document.getElementById(DRAWING_CONTAINER_ID);
 }
 
-function getFormContainer(): Element {
+function getFormContainer(): Element | null {
   return document.getElementById(FORM_CONTAINER_ID);
 }
 
-function getInfobarContainer(): Element {
+function getInfobarContainer(): Element | null {
   return document.getElementById(INFOBAR_CONTAINER_ID);
 }
 

@@ -227,14 +227,14 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
   static fromSavedState(
     savedState: StraightBondSavableState,
     svg: Svg,
-    getBaseById: (id: string) => Base,
+    getBaseById: (id: string) => (Base | null),
   ): (PrimaryBond | never) {
     if (savedState.className !== 'StraightBond') {
       throw new Error('Wrong class name.');
     }
     let line = svg.findOne('#' + savedState.lineId);
-    let b1 = getBaseById(savedState.baseId1);
-    let b2 = getBaseById(savedState.baseId2);
+    let b1 = getBaseById(savedState.baseId1) as Base;
+    let b2 = getBaseById(savedState.baseId2) as Base;
     let pb = new PrimaryBond(line, b1, b2);
     PrimaryBond._copyPropsToMostRecent(pb);
     return pb;
@@ -335,14 +335,14 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
   static fromSavedState(
     savedState: StraightBondSavableState,
     svg: Svg,
-    getBaseById: (id: string) => Base,
+    getBaseById: (id: string) => (Base | null),
   ): (SecondaryBond | never) {
     if (savedState.className !== 'StraightBond') {
       throw new Error('Wrong class name.');
     }
     let line = svg.findOne('#' + savedState.lineId);
-    let b1 = getBaseById(savedState.baseId1);
-    let b2 = getBaseById(savedState.baseId2);
+    let b1 = getBaseById(savedState.baseId1) as Base;
+    let b2 = getBaseById(savedState.baseId2) as Base;
     let sb = new SecondaryBond(line, b1, b2);
     SecondaryBond._copyPropsToMostRecent(sb);
     return sb;

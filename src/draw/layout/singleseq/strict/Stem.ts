@@ -57,7 +57,7 @@ class Stem {
     if (this.isOutermostStem()) {
       this._position3 = this._partners.length + 1;
     } else {
-      this._position3 = this._partners[this._position5 - 1];
+      this._position3 = this._partners[this._position5 - 1] as number;
     }
   }
 
@@ -86,11 +86,11 @@ class Stem {
     let pbps = this._perBaseProps;
     let bst5 = this as Stem;
     let p = this.position5 + this.size;
-    while (partners[p - 1] === null) {
+    while (partners[p - 1] == null && p < this.positionTop3) {
       p++;
     }
     while (p < this.positionTop3) {
-      if (partners[p - 1] < p) {
+      if ((partners[p - 1] as number) < p) {
         throw new Error('Knot encountered in loop.');
       }
       let bst3 = new Stem(p, partners, gps, pbps);
@@ -98,7 +98,7 @@ class Stem {
       this._loop.push(bst3);
       bst5 = bst3;
       p = bst5.position3 + 1;
-      while (partners[p - 1] === null) {
+      while (partners[p - 1] == null && p < this.positionTop3) {
         p++;
       }
     }
@@ -179,7 +179,7 @@ class Stem {
       value = next.value;
       next = it.next();
     }
-    return value;
+    return value as UnpairedRegion;
   }
 
   unpairedRegionsInLoop(): UnpairedRegion[] {
@@ -215,10 +215,10 @@ class Stem {
     }
     let it = this.loopIterator();
     it.next();
-    let st;
+    let st = null;
     let next = it.next();
     while (!next.done) {
-      st = next.value;
+      st = next.value as Stem;
       it.next();
       next = it.next();
     }
@@ -231,7 +231,7 @@ class Stem {
     it.next();
     let next = it.next();
     while (!next.done) {
-      sts.push(next.value);
+      sts.push(next.value as Stem);
       it.next();
       next = it.next();
     }
@@ -288,9 +288,9 @@ class Stem {
     ll += next.value.length;
     next = it.next();
     while (!next.done) {
-      ll += next.value.width;
+      ll += (next.value as Stem).width;
       next = it.next();
-      ll += next.value.length;
+      ll += (next.value as UnpairedRegion).length;
       next = it.next();
     }
     return ll;
@@ -437,7 +437,7 @@ class Stem {
     coordinates = coordinates.concat(ur.baseCoordinates(inOutermostLoop));
     let next = it.next();
     while (!next.done) {
-      let st = next.value;
+      let st = next.value as Stem;
       if (st.isFlipped()) {
         coordinates = coordinates.concat(st.flippedBaseCoordinates());
       } else {

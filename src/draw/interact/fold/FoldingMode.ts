@@ -62,14 +62,14 @@ class FoldingMode implements FoldingModeInterface {
     if (!this.selected) {
       return 0;
     }
-    return this.maxSelected - this.minSelected + 1;
+    return (this.maxSelected as number) - (this.minSelected as number) + 1;
   }
 
   withinSelected(p: number): boolean {
     if (!this.selected) {
       return false;
     }
-    return p >= this.minSelected && p <= this.maxSelected;
+    return p >= (this.minSelected as number) && p <= (this.maxSelected as number);
   }
 
   overlapsSelected(position5: number, position3: number): boolean {

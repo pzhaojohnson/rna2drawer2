@@ -128,7 +128,7 @@ class StrictDrawing implements StrictDrawingInterface {
     if (layout) {
       applyStrictLayout(
         this._drawing,
-        this.layout(),
+        layout,
         this.baseWidth,
         this.baseHeight,
       );

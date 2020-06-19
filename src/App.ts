@@ -29,7 +29,7 @@ class App {
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing: StrictDrawing;
   _strictDrawingInteraction: StrictDrawingInteraction;
-  _currFormFactory: () => ReactElement;
+  _currFormFactory: (() => ReactElement) | null;
 
   constructor(SVG: () => Svg) {
     this._SVG = SVG;
@@ -52,7 +52,7 @@ class App {
 
   _initializeDrawing() {
     this._strictDrawing = new StrictDrawing();
-    let container = getDrawingContainer();
+    let container = getDrawingContainer() as Element;
     this._strictDrawing.addTo(container, () => this.SVG());
   }
 
@@ -113,9 +113,10 @@ class App {
 
   unmountCurrForm() {
     this._currFormFactory = null;
-    ReactDOM.unmountComponentAtNode(
-      getFormContainer()
-    );
+    let container = getFormContainer();
+    if (container) {
+      ReactDOM.unmountComponentAtNode(container);
+    }
   }
 
   pushUndo() {

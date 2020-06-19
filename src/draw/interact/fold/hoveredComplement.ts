@@ -15,8 +15,8 @@ export function hoveredComplement(mode: FoldingMode): (Complement | null) {
     return null;
   }
   let selected = charactersInRange(mode, {
-    position5: mode.minSelected,
-    position3: mode.maxSelected,
+    position5: mode.minSelected as number,
+    position3: mode.maxSelected as number,
   });
   for (let i = 0; i < mode.selectedLength; i++) {
     let p5 = mode.hovered - i;

@@ -18,9 +18,9 @@ class Base implements BaseInterface {
   static _mostRecentProps: BaseMostRecentProps;
 
   _text: SvgText;
-  _highlighting?: CircleBaseAnnotation;
-  _outline?: CircleBaseAnnotation;
-  _numbering?: BaseNumbering;
+  _highlighting: CircleBaseAnnotation | null;
+  _outline: CircleBaseAnnotation | null;
+  _numbering: BaseNumbering | null;
 
   _xCenter: number;
   _yCenter: number;
@@ -144,13 +144,13 @@ class Base implements BaseInterface {
     this._text.attr({ 'x': x, 'y': y });
     this._xCenter = xCenter;
     this._yCenter = yCenter;
-    if (this.hasHighlighting()) {
+    if (this._highlighting) {
       this._highlighting.reposition(xCenter, yCenter);
     }
-    if (this.hasOutline()) {
+    if (this._outline) {
       this._outline.reposition(xCenter, yCenter);
     }
-    if (this.hasNumbering()) {
+    if (this._numbering) {
       this._numbering.reposition(xCenter, yCenter);
     }
   }
@@ -248,7 +248,7 @@ class Base implements BaseInterface {
   addCircleHighlighting(): CircleBaseAnnotation {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.createNondisplaced(
-      this._text.root(),
+      this._text.root() as Svg,
       this.xCenter,
       this.yCenter,
     );
@@ -262,7 +262,7 @@ class Base implements BaseInterface {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.fromSavedState(
       savedState,
-      this._text.root(),
+      this._text.root() as Svg,
       this.xCenter,
       this.yCenter,
     );
@@ -281,7 +281,7 @@ class Base implements BaseInterface {
   }
 
   removeHighlighting() {
-    if (this.hasHighlighting()) {
+    if (this._highlighting) {
       this._highlighting.remove();
       this._highlighting = null;
     }
@@ -290,7 +290,7 @@ class Base implements BaseInterface {
   addCircleOutline(): CircleBaseAnnotation {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.createNondisplaced(
-      this._text.root(),
+      this._text.root() as Svg,
       this.xCenter,
       this.yCenter,
     );
@@ -303,7 +303,7 @@ class Base implements BaseInterface {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(
       savedState,
-      this._text.root(),
+      this._text.root() as Svg,
       this.xCenter,
       this.yCenter,
     );
@@ -322,7 +322,7 @@ class Base implements BaseInterface {
   }
 
   removeOutline() {
-    if (this.hasOutline()) {
+    if (this._outline) {
       this._outline.remove();
       this._outline = null;
     }
@@ -335,7 +335,7 @@ class Base implements BaseInterface {
     this.removeNumbering();
     try {
       this._numbering = BaseNumbering.create(
-        this._text.root(),
+        this._text.root() as Svg,
         number,
         this.xCenter,
         this.yCenter,
@@ -353,7 +353,7 @@ class Base implements BaseInterface {
     this.removeNumbering();
     this._numbering = BaseNumbering.fromSavedState(
       savedState,
-      this._text.root(),
+      this._text.root() as Svg,
       this.xCenter,
       this.yCenter,
     );
@@ -372,7 +372,7 @@ class Base implements BaseInterface {
   }
 
   removeNumbering() {
-    if (this.hasNumbering()) {
+    if (this._numbering) {
       this._numbering.remove();
       this._numbering = null;
     }
@@ -389,22 +389,22 @@ class Base implements BaseInterface {
     return {
       className: 'Base',
       textId: this._text.id(),
-      highlighting: this.hasHighlighting() ? this.highlighting.savableState() : null,
-      outline: this.hasOutline() ? this.outline.savableState() : null,
-      numbering: this.hasNumbering() ? this.numbering.savableState() : null,
+      highlighting: this.highlighting ? this.highlighting.savableState() : undefined,
+      outline: this.outline ? this.outline.savableState() : undefined,
+      numbering: this.numbering ? this.numbering.savableState() : undefined,
     };
   }
 
   refreshIds() {
     this._text.id(null);
     this._text.id();
-    if (this.hasHighlighting()) {
+    if (this.highlighting) {
       this.highlighting.refreshIds();
     }
-    if (this.hasOutline()) {
+    if (this.outline) {
       this.outline.refreshIds();
     }
-    if (this.hasNumbering()) {
+    if (this.numbering) {
       this.numbering.refreshIds();
     }
   }

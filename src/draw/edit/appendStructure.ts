@@ -1,5 +1,6 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
 import { BaseInterface as Base } from '../BaseInterface';
+import { SequenceInterface as Sequence } from '../SequenceInterface';
 
 export interface Structure {
   id: string;
@@ -37,12 +38,12 @@ function _appendSequence(drawing: Drawing, structure: Structure) {
 }
 
 function _addPrimaryBonds(drawing: Drawing, structure: Structure) {
-  let seq = drawing.getSequenceById(structure.id);
+  let seq = drawing.getSequenceById(structure.id) as Sequence;
   seq.forEachBase((b: Base, p: number) => {
     if (p < seq.length) {
       drawing.addPrimaryBond(
-        seq.getBaseAtPosition(p),
-        seq.getBaseAtPosition(p + 1),
+        seq.getBaseAtPosition(p) as Base,
+        seq.getBaseAtPosition(p + 1) as Base,
       );
     }
   });
@@ -52,13 +53,14 @@ function _addSecondaryBonds(drawing: Drawing, structure: Structure) {
   if (!structure.secondaryPartners) {
     return;
   }
-  let seq = drawing.getSequenceById(structure.id);
+  let secondaryPartners = structure.secondaryPartners as (number | null)[];
+  let seq = drawing.getSequenceById(structure.id) as Sequence;
   seq.forEachBase((b: Base, p: number) => {
-    let q = structure.secondaryPartners[p - 1];
+    let q = secondaryPartners[p - 1];
     if (q != null && p < q) {
       drawing.addSecondaryBond(
-        seq.getBaseAtPosition(p),
-        seq.getBaseAtPosition(q),
+        seq.getBaseAtPosition(p) as Base,
+        seq.getBaseAtPosition(q) as Base,
       );
     }
   });
@@ -68,13 +70,14 @@ function _addTertiaryBonds(drawing: Drawing, structure: Structure) {
   if (!structure.tertiaryPartners) {
     return;
   }
-  let seq = drawing.getSequenceById(structure.id);
+  let tertiaryPartners = structure.tertiaryPartners as (number | null)[];
+  let seq = drawing.getSequenceById(structure.id) as Sequence;
   seq.forEachBase((b: Base, p: number) => {
-    let q = structure.tertiaryPartners[p - 1];
+    let q = tertiaryPartners[p - 1];
     if (q != null && p < q) {
       drawing.addTertiaryBond(
-        seq.getBaseAtPosition(p),
-        seq.getBaseAtPosition(q),
+        seq.getBaseAtPosition(p) as Base,
+        seq.getBaseAtPosition(q) as Base,
       );
     }
   });

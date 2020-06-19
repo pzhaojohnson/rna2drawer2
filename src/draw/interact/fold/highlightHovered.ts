@@ -7,10 +7,10 @@ import {
   Complement,
 } from './hoveredComplement';
 
-function highlightUnpair(mode: FoldingMode) {
+function _highlightUnpair(mode: FoldingMode) {
   let r = {
-    position5: mode.minSelected,
-    position3: mode.maxSelected,
+    position5: mode.minSelected as number,
+    position3: mode.maxSelected as number,
   };
   basesInRange(mode, r).forEach(b => {
     highlightBase(b, {
@@ -20,7 +20,7 @@ function highlightUnpair(mode: FoldingMode) {
   });
 }
 
-function highlightPair(mode: FoldingMode, c: Complement) {
+function _highlightPair(mode: FoldingMode, c: Complement) {
   basesInRange(mode, c).forEach(b => {
     highlightBase(b, {
       fill: '#0000ff',
@@ -29,9 +29,9 @@ function highlightPair(mode: FoldingMode, c: Complement) {
   });
 }
 
-function highlightSelect(mode: FoldingMode) {
+function _highlightSelect(mode: FoldingMode) {
   let drawing = mode.strictDrawing.drawing;
-  let b = drawing.getBaseAtOverallPosition(mode.hovered);
+  let b = drawing.getBaseAtOverallPosition(mode.hovered as number);
   if (b) {
     highlightBase(b, {
       fill: '#ffd700',
@@ -46,16 +46,16 @@ export function highlightHovered(mode: FoldingMode) {
   }
   if (mode.hoveringSelected()) {
     if (!selectedAreSecondaryUnpaired(mode) && !mode.selecting) {
-      highlightUnpair(mode);
+      _highlightUnpair(mode);
     }
     return;
   }
   let c = hoveredComplement(mode);
   if (c) {
-    highlightPair(mode, c);
+    _highlightPair(mode, c);
     return;
   }
-  highlightSelect(mode);
+  _highlightSelect(mode);
 }
 
 export default highlightHovered;

@@ -5,10 +5,10 @@ import {
 } from './hoveredComplement';
 import canSecondaryPair from './canSecondaryPair';
 
-function addSecondaryBonds(mode: FoldingMode, comp: Complement) {
+function _addSecondaryBonds(mode: FoldingMode, comp: Complement) {
   let drawing = mode.strictDrawing.drawing;
   for (let i = 0; i < mode.selectedLength; i++) {
-    let p1 = mode.minSelected + i;
+    let p1 = (mode.minSelected as number) + i;
     let p2 = comp.position3 - i;
     let b1 = drawing.getBaseAtOverallPosition(p1);
     let b2 = drawing.getBaseAtOverallPosition(p2);
@@ -18,10 +18,10 @@ function addSecondaryBonds(mode: FoldingMode, comp: Complement) {
   }
 }
 
-function removeStretches(mode: FoldingMode, comp: Complement) {
+function _removeStretches(mode: FoldingMode, comp: Complement) {
   let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
   for (let i = 0; i < mode.selectedLength; i++) {
-    let p1 = mode.minSelected + i;
+    let p1 = (mode.minSelected as number) + i;
     let p2 = comp.position3 - i;
     let props1 = perBaseProps[p1 - 1];
     if (props1) {
@@ -44,8 +44,8 @@ export function secondaryPair(mode: FoldingMode) {
     return;
   }
   mode.fireShouldPushUndo();
-  addSecondaryBonds(mode, comp);
-  removeStretches(mode, comp);
+  _addSecondaryBonds(mode, comp);
+  _removeStretches(mode, comp);
   mode.strictDrawing.applyLayout();
   mode.reset();
 }

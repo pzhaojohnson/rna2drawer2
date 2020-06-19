@@ -6,7 +6,7 @@ export function highlightSelected(mode: FoldingMode) {
     return;
   }
   let drawing = mode.strictDrawing.drawing;
-  for (let p = mode.minSelected; p <= mode.maxSelected; p++) {
+  for (let p = mode.minSelected as number; p <= (mode.maxSelected as number); p++) {
     let b = drawing.getBaseAtOverallPosition(p);
     if (b) {
       highlightBase(b, {

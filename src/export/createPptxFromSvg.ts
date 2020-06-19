@@ -191,7 +191,7 @@ function _elementImageOptions(ele: SvgElement): object {
   if (typeof sw !== 'number' || !Number.isFinite(sw)) {
     sw = 0;
   }
-  let svg = ele.root();
+  let svg = ele.root() as Svg;
   let nested = svg.nested();
   nested.svg(ele.svg());
   let nele = nested.first() as SvgElement;

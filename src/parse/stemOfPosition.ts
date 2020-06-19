@@ -1,5 +1,5 @@
 function _parsePosition5(p: number, partners: (number | null)[]): number {
-  let q = partners[p - 1];
+  let q = partners[p - 1] as number;
   let p5 = Math.min(p, q);
   let p3 = Math.max(p, q);
   while (p5 > 1 && partners[p5 - 2] === p3 + 1) {
@@ -10,7 +10,7 @@ function _parsePosition5(p: number, partners: (number | null)[]): number {
 }
 
 function _parsePositionTop5(p: number, partners: (number | null)[]): number {
-  let q = partners[p - 1];
+  let q = partners[p - 1] as number;
   let p5 = Math.min(p, q);
   let p3 = Math.max(p, q);
   while (p5 < p3 - 2 && partners[p5] === p3 - 1) {
@@ -43,7 +43,7 @@ export function stemOfPosition(p: number, partners: (number | null)[]): (Stem | 
   let pt5 = _parsePositionTop5(p, partners);
   return {
     position5: p5,
-    position3: partners[p5 - 1],
+    position3: partners[p5 - 1] as number,
     size: pt5 - p5 + 1,
   };
 }

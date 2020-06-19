@@ -18,7 +18,7 @@ class UndoRedo<E> {
     return !this._undoStack.isEmpty();
   }
 
-  peekUndo(): E {
+  peekUndo(): E | undefined {
     return this._undoStack.peek();
   }
 
@@ -34,14 +34,14 @@ class UndoRedo<E> {
       return ele;
     }
     this._redoStack.push(ele);
-    return this._undoStack.pop();
+    return this._undoStack.pop() as E;
   }
 
   canRedo(): boolean {
     return !this._redoStack.isEmpty();
   }
 
-  peekRedo(): E {
+  peekRedo(): E | undefined {
     return this._redoStack.peek();
   }
 
@@ -57,7 +57,7 @@ class UndoRedo<E> {
       return ele;
     }
     this._undoStack.push(ele);
-    return this._redoStack.pop();
+    return this._redoStack.pop() as E;
   }
 }
 

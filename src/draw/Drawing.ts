@@ -172,7 +172,7 @@ class Drawing implements DrawingInterface {
     return base;
   }
 
-  getBaseAtOverallPosition(p: number): (Base | null) {
+  getBaseAtOverallPosition(p: number): (Base | undefined) {
     let seqStart = 1;
     for (let s = 0; s < this.numSequences; s++) {
       let seq = this._sequences[s];
@@ -182,7 +182,7 @@ class Drawing implements DrawingInterface {
       }
       seqStart = seqEnd + 1;
     }
-    return null;
+    return undefined;
   }
 
   /**

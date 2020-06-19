@@ -136,7 +136,9 @@ class Sequence implements SequenceInterface {
     this.forEachBase((b: Base, p: number) => {
       if ((p - this.numberingAnchor) % this.numberingIncrement == 0) {
         let n = b.addNumbering(p + this.numberingOffset);
-        n.lineAngle = this.outerNormalAngleAtPosition(p);
+        if (n) {
+          n.lineAngle = this.outerNormalAngleAtPosition(p);
+        }
       } else {
         b.removeNumbering();
       }
@@ -276,16 +278,16 @@ class Sequence implements SequenceInterface {
     if (this.positionOutOfRange(p)) {
       return 0;
     }
-    let b = this.getBaseAtPosition(p);
+    let b = this.getBaseAtPosition(p) as Base;
     let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
-    let cs5 = null;
-    let cs3 = null;
+    let cs5;
+    let cs3;
     if (p > 1) {
-      let b5 = this.getBaseAtPosition(p - 1);
+      let b5 = this.getBaseAtPosition(p - 1) as Base;
       cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
     }
     if (p < this.length) {
-      let b3 = this.getBaseAtPosition(p + 1);
+      let b3 = this.getBaseAtPosition(p + 1) as Base;
       cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
     }
     return Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
@@ -305,16 +307,16 @@ class Sequence implements SequenceInterface {
     if (this.positionOutOfRange(p)) {
       return 0;
     }
-    let b = this.getBaseAtPosition(p);
+    let b = this.getBaseAtPosition(p) as Base;
     let cs = { xCenter: b.xCenter, yCenter: b.yCenter };
-    let cs5 = null;
-    let cs3 = null;
+    let cs5;
+    let cs3;
     if (p > 1) {
-      let b5 = this.getBaseAtPosition(p - 1);
+      let b5 = this.getBaseAtPosition(p - 1) as Base;
       cs5 = { xCenter: b5.xCenter, yCenter: b5.yCenter };
     }
     if (p < this.length) {
-      let b3 = this.getBaseAtPosition(p + 1);
+      let b3 = this.getBaseAtPosition(p + 1) as Base;
       cs3 = { xCenter: b3.xCenter, yCenter: b3.yCenter };
     }
     return Sequence._innerNormalAngleOfBase(cs, cs5, cs3);

@@ -92,9 +92,11 @@ export class StrictLayout {
     if (this.isEmpty()) {
       return 0;
     } else {
-      let xMin = this.baseCoordinatesAtPosition(1).xLeft;
+      let bcs1 = this.baseCoordinatesAtPosition(1) as NormalizedBaseCoordinates;
+      let xMin = bcs1.xLeft;
       for (let p = 2; p <= this.size; p++) {
-        let x = this.baseCoordinatesAtPosition(p).xLeft;
+        let bcs = this.baseCoordinatesAtPosition(p) as NormalizedBaseCoordinates;
+        let x = bcs.xLeft;
         if (x < xMin) {
           xMin = x;
         }
@@ -107,10 +109,11 @@ export class StrictLayout {
     if (this.isEmpty()) {
       return 0;
     } else {
-      let xMax = this.baseCoordinatesAtPosition(1).xRight;
+      let bcs1 = this.baseCoordinatesAtPosition(1) as NormalizedBaseCoordinates;
+      let xMax = bcs1.xRight;
       for (let p = 2; p <= this.size; p++) {
-        let x = this.baseCoordinatesAtPosition(p).xRight;
-
+        let bcs = this.baseCoordinatesAtPosition(p) as NormalizedBaseCoordinates;
+        let x = bcs.xRight;
         if (x > xMax) {
           xMax = x;
         }
@@ -123,9 +126,11 @@ export class StrictLayout {
     if (this.isEmpty()) {
       return 0;
     } else {
-      let yMin = this.baseCoordinatesAtPosition(1).yTop;
+      let bcs1 = this.baseCoordinatesAtPosition(1) as NormalizedBaseCoordinates;
+      let yMin = bcs1.yTop;
       for (let p = 2; p <= this.size; p++) {
-        let y = this.baseCoordinatesAtPosition(p).yTop;
+        let bcs = this.baseCoordinatesAtPosition(p) as NormalizedBaseCoordinates;
+        let y = bcs.yTop;
         if (y < yMin) {
           yMin = y;
         }
@@ -138,9 +143,11 @@ export class StrictLayout {
     if (this.isEmpty()) {
       return 0;
     } else {
-      let yMax = this.baseCoordinatesAtPosition(1).yBottom;
+      let bcs1 = this.baseCoordinatesAtPosition(1) as NormalizedBaseCoordinates;
+      let yMax = bcs1.yBottom;
       for (let p = 2; p <= this.size; p++) {
-        let y = this.baseCoordinatesAtPosition(p).yBottom;
+        let bcs = this.baseCoordinatesAtPosition(p) as NormalizedBaseCoordinates;
+        let y = bcs.yBottom;
         if (y > yMax) {
           yMax = y;
         }

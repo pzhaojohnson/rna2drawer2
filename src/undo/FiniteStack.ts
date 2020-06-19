@@ -21,11 +21,11 @@ class FiniteStack<E> {
     }
   }
 
-  pop(): E {
+  pop(): E | undefined {
     return this._stack.pop();
   }
 
-  peek(): E {
+  peek(): E | undefined {
     return this._stack[this.size - 1];
   }
 

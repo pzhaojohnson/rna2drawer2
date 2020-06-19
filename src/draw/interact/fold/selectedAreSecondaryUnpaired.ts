@@ -5,7 +5,7 @@ export function selectedAreSecondaryUnpaired(mode: FoldingMode): boolean {
     return false;
   }
   let partners = mode.strictDrawing.layoutPartners();
-  for (let p = mode.minSelected; p <= mode.maxSelected; p++) {
+  for (let p = mode.minSelected as number; p <= (mode.maxSelected as number); p++) {
     if (partners[p - 1]) {
       return false;
     }

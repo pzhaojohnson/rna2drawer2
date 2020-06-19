@@ -156,7 +156,7 @@ class RoundLoop {
       let next = it.next();
       while (!next.done) {
         angle += (2 * Math.PI) * (iur.length / circumference);
-        let ist = next.value;
+        let ist = next.value as Stem;
         ist.xBottomCenter = center.x + (bottomCenterRadius * Math.cos(angle));
         ist.yBottomCenter = center.y + (bottomCenterRadius * Math.sin(angle));
         ist.angle = angle;
@@ -177,7 +177,7 @@ class TriangleLoop {
     it.next();
     let next = it.next();
     while (!next.done) {
-      let ist = next.value;
+      let ist = next.value as Stem;
       length += ist.width;
       let ur = it.next().value;
       if (ur.boundingPosition3 < st.positionTop3) {
@@ -211,7 +211,7 @@ class TriangleLoop {
       it.next();
       let next = it.next();
       while (!next.done) {
-        let ist = next.value;
+        let ist = next.value as Stem;
         x += (ist.width / 2) * Math.cos(st.angle + (Math.PI / 2));
         y += (ist.width / 2) * Math.sin(st.angle + (Math.PI / 2));
         ist.xBottomCenter = x;
@@ -337,7 +337,7 @@ class FlatOutermostLoop {
     let ur = it.next().value;
     let next = it.next();
     while (!next.done) {
-      let st = next.value;
+      let st = next.value as Stem;
       FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, generalProps, perBaseProps);
       StemLayout.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
       ur = it.next().value;
