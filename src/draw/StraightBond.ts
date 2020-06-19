@@ -26,8 +26,8 @@ export class StraightBond implements StraightBondInterface {
   _base1: Base;
   _base2: Base;
 
-  _padding1: number;
-  _padding2: number;
+  _padding1!: number;
+  _padding2!: number;
 
   static _lineCoordinates(b1: Base, b2: Base, padding1: number, padding2: number): LineCoordinates {
     let angle = b1.angleBetweenCenters(b2);

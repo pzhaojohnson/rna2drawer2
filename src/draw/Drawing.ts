@@ -16,16 +16,16 @@ import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface'
 import { adjustBaseNumbering } from './edit/adjustBaseNumbering';
 
 class Drawing implements DrawingInterface {
-  _div: HTMLElement;
-  _svg: Svg;
+  _div!: HTMLElement;
+  _svg!: Svg;
 
   _sequences: Sequence[];
   _primaryBonds: PrimaryBond[];
   _secondaryBonds: SecondaryBond[];
   _tertiaryBonds: TertiaryBond[];
 
-  _onAddSequence: (seq: Sequence) => void;
-  _onAddTertiaryBond: (tb: TertiaryBond) => void;
+  _onAddSequence?: (seq: Sequence) => void;
+  _onAddTertiaryBond?: (tb: TertiaryBond) => void;
 
   constructor() {
     this._sequences = [];

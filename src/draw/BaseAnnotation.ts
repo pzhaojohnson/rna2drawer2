@@ -13,8 +13,8 @@ import angleBetween from './angleBetween';
 export class CircleBaseAnnotation implements BaseAnnotationInterface {
   _circle: SvgCircle;
 
-  _displacementLength: number;
-  _displacementAngle: number;
+  _displacementLength!: number;
+  _displacementAngle!: number;
 
   static fromSavedState(
     savedState: CircleBaseAnnotationSavableState,

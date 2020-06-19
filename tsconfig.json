@@ -8,6 +8,7 @@
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
     "strictNullChecks": true,
+    "strict": true,
     "moduleResolution": "Node",
     "module": "es6",
     "target": "es5",

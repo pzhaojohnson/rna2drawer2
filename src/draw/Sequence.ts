@@ -26,7 +26,7 @@ class Sequence implements SequenceInterface {
   _numberingAnchor: number;
   _numberingIncrement: number;
 
-  _onAddBase: (b: Base) => void;
+  _onAddBase?: (b: Base) => void;
 
   static mostRecentProps(): SequenceMostRecentProps {
     return { ...Sequence._mostRecentProps };

@@ -32,16 +32,16 @@ interface Drawing {
 
 class TertiaryBondsInteraction {
   _drawing: Drawing;
-  _hovered: TertiaryBond | null;
-  _selected: TertiaryBond | null;
-  _dragging: boolean;
-  _dragged: boolean;
+  _hovered?: TertiaryBond | null;
+  _selected?: TertiaryBond | null;
+  _dragging?: boolean;
+  _dragged?: boolean;
 
-  _xMousePrev: number;
-  _yMousePrev: number;
+  _xMousePrev!: number;
+  _yMousePrev!: number;
 
-  _onShouldPushUndo: () => void;
-  _onChange: () => void;
+  _onShouldPushUndo?: () => void;
+  _onChange?: () => void;
 
   constructor(drawing: Drawing) {
     this._drawing = drawing;

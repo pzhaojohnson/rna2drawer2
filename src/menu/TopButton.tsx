@@ -8,7 +8,7 @@ class TopButton extends React.Component {
     disabledButtonColor: string;
   };
 
-  props: {
+  props!: {
     backgroundColor: string;
     text: string;
     disabled: boolean;

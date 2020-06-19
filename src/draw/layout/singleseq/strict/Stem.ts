@@ -16,14 +16,14 @@ class Stem {
   _perBaseProps: PerBaseStrictLayoutProps[];
 
   _position5: number;
-  _position3: number;
-  _size: number;
+  _position3!: number;
+  _size!: number;
 
   _xBottomCenter: number;
   _yBottomCenter: number;
   _angle: number;
 
-  _loop: (UnpairedRegion | Stem)[];
+  _loop!: (UnpairedRegion | Stem)[];
 
   static width(generalProps: GeneralStrictLayoutProps): number {
     return 2 + generalProps.basePairBondLength;

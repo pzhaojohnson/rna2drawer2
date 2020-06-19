@@ -31,7 +31,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   _text: SvgText;
   _line: SvgLine;
-  _basePadding: number;
+  _basePadding!: number;
 
   static _lineCoordinates(
     xBaseCenter: number,

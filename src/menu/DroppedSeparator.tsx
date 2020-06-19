@@ -6,7 +6,7 @@ class DroppedSeparator extends React.Component {
     borderColor: string;
   };
 
-  props: {
+  props!: {
     backgroundColor: string;
     borderColor: string;
   };

@@ -11,7 +11,7 @@ class DroppedButton extends React.Component {
     disabledButtonColor: string;
   }
 
-  props: {
+  props!: {
     text: string;
     onClick: () => void;
     keyBinding: string;

@@ -12,17 +12,17 @@ import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings'
 class FoldingMode implements FoldingModeInterface {
   _strictDrawing: StrictDrawing;
 
-  hovered: number | null;
-  selected: {
+  hovered?: number | null;
+  selected?: {
     tightEnd: number,
     looseEnd: number
   } | null;
-  selecting: boolean;
+  selecting?: boolean;
   
-  _disabled: boolean;
+  _disabled?: boolean;
   
-  _onShouldPushUndo: () => void;
-  _onChange: () => void;
+  _onShouldPushUndo?: () => void;
+  _onChange?: () => void;
 
   constructor(strictDrawing: StrictDrawing) {
     this._strictDrawing = strictDrawing;
@@ -120,7 +120,10 @@ class FoldingMode implements FoldingModeInterface {
   }
 
   disabled(): boolean {
-    return this._disabled;
+    if (this._disabled) {
+      return true;
+    }
+    return false;
   }
 
   enable() {

@@ -27,9 +27,9 @@ import saveDrawingForApp from './export/saveDrawingForApp';
 class App {
   _SVG: () => Svg;
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
-  _strictDrawing: StrictDrawing;
-  _strictDrawingInteraction: StrictDrawingInteraction;
-  _currFormFactory: (() => ReactElement) | null;
+  _strictDrawing!: StrictDrawing;
+  _strictDrawingInteraction!: StrictDrawingInteraction;
+  _currFormFactory?: () => ReactElement;
 
   constructor(SVG: () => Svg) {
     this._SVG = SVG;
@@ -112,7 +112,7 @@ class App {
   }
 
   unmountCurrForm() {
-    this._currFormFactory = null;
+    this._currFormFactory = undefined;
     let container = getFormContainer();
     if (container) {
       ReactDOM.unmountComponentAtNode(container);

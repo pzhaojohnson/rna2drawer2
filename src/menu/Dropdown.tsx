@@ -5,7 +5,7 @@ class Dropdown extends React.Component {
     borderColor: string;
   }
 
-  props: {
+  props!: {
     borderColor: string;
     topButton: React.ReactElement;
     droppedElements: Array<React.ReactElement>;

@@ -16,8 +16,8 @@ export class PivotingMode implements PivotingModeInterface {
   
   _disabled: boolean;
 
-  _onShouldPushUndo: () => void;
-  _onChange: () => void;
+  _onShouldPushUndo?: () => void;
+  _onChange?: () => void;
 
   constructor(strictDrawing: StrictDrawing) {
     this._strictDrawing = strictDrawing;

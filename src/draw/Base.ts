@@ -22,8 +22,8 @@ class Base implements BaseInterface {
   _outline: CircleBaseAnnotation | null;
   _numbering: BaseNumbering | null;
 
-  _xCenter: number;
-  _yCenter: number;
+  _xCenter!: number;
+  _yCenter!: number;
 
   static mostRecentProps(): BaseMostRecentProps {
     return { ...Base._mostRecentProps };

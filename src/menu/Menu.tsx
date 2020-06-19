@@ -7,7 +7,7 @@ class Menu extends React.Component {
     backgroundColor: string;
   }
 
-  props: {
+  props!: {
     borderColor: string;
     backgroundColor: string;
     

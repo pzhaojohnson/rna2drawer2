@@ -18,10 +18,10 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   _base1: Base;
   _base2: Base;
 
-  _padding1: number;
-  _padding2: number;
-  _controlHeight: number;
-  _controlAngle: number;
+  _padding1!: number;
+  _padding2!: number;
+  _controlHeight!: number;
+  _controlAngle!: number;
 
   static _dPath(
     b1: Base,

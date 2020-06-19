@@ -3,12 +3,12 @@ import StrictDrawing from '../../StrictDrawing';
 export interface FoldingModeInterface {
   readonly strictDrawing: StrictDrawing;
 
-  hovered: number | null;
-  selected: {
+  hovered?: number | null;
+  selected?: {
     tightEnd: number;
     looseEnd: number;
   } | null;
-  selecting: boolean;
+  selecting?: boolean;
 
   readonly minSelected: number | null;
   readonly maxSelected: number | null;
