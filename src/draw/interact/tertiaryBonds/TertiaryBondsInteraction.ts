@@ -5,30 +5,8 @@ import {
 import areSameTertiaryBond from './areSameTertiaryBond';
 import dragTertiaryBond from './dragTertiaryBond';
 import removeTertiaryBondFromDrawing from './removeTertiaryBondFromDrawing';
-
-interface MouseEventCallback { (me: MouseEvent): void; }
-
-interface TertiaryBond {
-  id: string;
-  stroke: string;
-  cursor: string;
-  fill: string;
-  fillOpacity: number;
-  onMouseover: (ec: MouseEventCallback) => void;
-  onMouseout: (ec: MouseEventCallback) => void;
-  onMousedown: (ec: MouseEventCallback) => void;
-  shiftControl: (xShift: number, yShift: number) => void;
-  hasBeenRemoved: () => boolean;
-}
-
-interface TertiaryBondCallback { (tb: TertiaryBond): void; }
-
-interface Drawing {
-  zoom: number;
-  forEachTertiaryBond: (tbc: TertiaryBondCallback) => void;
-  onAddTertiaryBond: (tbc: TertiaryBondCallback) => void;
-  removeTertiaryBondById: (id: string) => void;
-}
+import Drawing from '../../Drawing';
+import { TertiaryBond } from '../../QuadraticBezierBond';
 
 class TertiaryBondsInteraction {
   _drawing: Drawing;

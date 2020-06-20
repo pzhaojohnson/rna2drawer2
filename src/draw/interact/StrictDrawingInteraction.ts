@@ -1,9 +1,23 @@
 import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './fold/FoldingMode';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
+import StrictDrawing from '../StrictDrawing';
+import Sequence from '../Sequence';
+import Base from '../Base';
 
 class StrictDrawingInteraction {
-  constructor(strictDrawing) {
+  _strictDrawing: StrictDrawing;
+
+  _tertiaryBondsInteraction!: TertiaryBondsInteraction;
+
+  _pivotingMode!: PivotingMode;
+  _foldingMode!: FoldingMode;
+  _currMode: PivotingMode | FoldingMode;
+
+  _onShouldPushUndo?: () => void;
+  _onChange?: () => void;
+
+  constructor(strictDrawing: StrictDrawing) {
     this._strictDrawing = strictDrawing;
 
     this._setBindings();
@@ -14,13 +28,13 @@ class StrictDrawingInteraction {
     this._currMode = this._pivotingMode;
   }
 
-  get strictDrawing() {
+  get strictDrawing(): StrictDrawing {
     return this._strictDrawing;
   }
 
   _setBindings() {
     let drawing = this.strictDrawing.drawing;
-    this._bindDrawing(drawing);
+    this._bindDrawing();
   }
 
   _bindDrawing() {
@@ -34,27 +48,27 @@ class StrictDrawingInteraction {
     this._currMode.handleMousedownOnDrawing();
   }
 
-  _bindSequence(seq) {
+  _bindSequence(seq: Sequence) {
     seq.forEachBase(b => this._bindBase(b));
     seq.onAddBase(b => this._bindBase(b));
   }
 
-  _bindBase(b) {
-    b.onMouseover(event => this._handleMouseoverOnBase(b, event));
-    b.onMouseout(event => this._handleMouseoutOnBase(b, event));
-    b.onMousedown(event => this._handleMousedownOnBase(b, event));
+  _bindBase(b: Base) {
+    b.onMouseover(() => this._handleMouseoverOnBase(b));
+    b.onMouseout(() => this._handleMouseoutOnBase(b));
+    b.onMousedown(() => this._handleMousedownOnBase(b));
   }
 
-  _handleMouseoverOnBase(b, event) {
-    this._currMode.handleMouseoverOnBase(b, event);
+  _handleMouseoverOnBase(b: Base) {
+    this._currMode.handleMouseoverOnBase(b);
   }
 
-  _handleMouseoutOnBase(b, event) {
-    this._currMode.handleMouseoutOnBase(b, event);
+  _handleMouseoutOnBase(b: Base) {
+    this._currMode.handleMouseoutOnBase(b);
   }
 
-  _handleMousedownOnBase(b, event) {
-    this._currMode.handleMousedownOnBase(b, event);
+  _handleMousedownOnBase(b: Base) {
+    this._currMode.handleMousedownOnBase(b);
   }
 
   _initializePivotingMode() {
@@ -87,7 +101,7 @@ class StrictDrawingInteraction {
     this._currMode.reset();
   }
 
-  onShouldPushUndo(cb) {
+  onShouldPushUndo(cb: () => void) {
     this._onShouldPushUndo = cb;
   }
 
@@ -97,7 +111,7 @@ class StrictDrawingInteraction {
     }
   }
 
-  onChange(cb) {
+  onChange(cb: () => void) {
     this._onChange = cb;
   }
 
@@ -107,11 +121,11 @@ class StrictDrawingInteraction {
     }
   }
 
-  pivoting() {
+  pivoting(): boolean {
     return this._currMode.className == 'PivotingMode';
   }
 
-  folding() {
+  folding(): boolean {
     return this._currMode.className == 'FoldingMode';
   }
 
