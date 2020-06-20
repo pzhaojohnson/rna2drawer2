@@ -3,12 +3,7 @@ import isAllWhitespace from './isAllWhitespace';
 import { nonemptySplitByWhitespace } from './nonemptySplitByWhitespace';
 import { partnersAreValid } from './partnersAreValid';
 
-/**
- * @param {string} line 
- * 
- * @returns {boolean} 
- */
-function _lineShouldBeIgnored(line) {
+function _lineShouldBeIgnored(line: string): boolean {
   if (isAllWhitespace(line)) {
     return true;
   } else {
@@ -19,12 +14,8 @@ function _lineShouldBeIgnored(line) {
 
 /**
  * Returns null if a header line cannot be found.
- * 
- * @param {Array<string>} lines 
- * 
- * @returns {number|null} 
  */
-function _headerLineIndex(lines) {
+function _headerLineIndex(lines: string[]): (number | null) {
   let i = 0;
   while (i < lines.length && _lineShouldBeIgnored(lines[i])) {
     i++;
@@ -38,12 +29,8 @@ function _headerLineIndex(lines) {
 
 /**
  * Returns null if the letter cannot be parsed.
- * 
- * @param {string} bodyLine 
- * 
- * @returns {string|null} 
  */
-function _letter(bodyLine) {
+function _letter(bodyLine: string): (string | null) {
   let items = nonemptySplitByWhitespace(bodyLine);
   if (items.length < 2) {
     return null;
@@ -59,12 +46,8 @@ function _letter(bodyLine) {
 
 /**
  * Returns null if the sequence cannot be parsed.
- * 
- * @param {string} ct 
- * 
- * @returns {string|null} 
  */
-function _parseSequence(ct) {
+function _parseSequence(ct: string): (string | null) {
   let lines = splitLines(ct);
   let i = _headerLineIndex(lines);
   if (i === null) {
@@ -91,12 +74,8 @@ function _parseSequence(ct) {
  *  The partner is not a number.
  *  The partner is not an integer.
  *  The partner is zero.
- * 
- * @param {string} bodyLine 
- * 
- * @returns {number|null} 
  */
-function _partner(bodyLine) {
+function _partner(bodyLine: string): (number | null) {
   let items = nonemptySplitByWhitespace(bodyLine);
   if (items.length < 5) {
     return null;
@@ -118,12 +97,8 @@ function _partner(bodyLine) {
  * Returns null if:
  *  The structure cannot be parsed.
  *  The parsed structure is invalid.
- * 
- * @param {string} ct 
- * 
- * @returns {Array<number|null>|null} 
  */
-function _parsePartners(ct) {
+function _parsePartners(ct: string): ((number | null)[] | null) {
   let lines = splitLines(ct);
   let i = _headerLineIndex(lines);
   if (i === null) {
@@ -148,12 +123,8 @@ function _parsePartners(ct) {
  *  The position or offset position not specified.
  *  The position or offset position are not numbers.
  *  The position or offset position are not integers.
- * 
- * @param {string} bodyLine 
- * 
- * @returns {number} 
  */
-function _numberingOffset(bodyLine) {
+function _numberingOffset(bodyLine: string): number {
   let items = nonemptySplitByWhitespace(bodyLine);
   if (items.length < 6) {
     return 0;
@@ -172,12 +143,8 @@ function _numberingOffset(bodyLine) {
 
 /**
  * Returns zero if the numbering offset cannot be parsed.
- * 
- * @param {string} ct 
- * 
- * @returns {number} 
  */
-function _parseNumberingOffset(ct) {
+function _parseNumberingOffset(ct: string): number {
   let lines = splitLines(ct);
   let i = _headerLineIndex(lines);
   if (i === null) {
@@ -192,12 +159,11 @@ function _parseNumberingOffset(ct) {
   }
 }
 
-/**
- * @typedef {Object} ParsedCT 
- * @property {string} sequence 
- * @property {Array<number|null>} partners 
- * @property {number} numberingOffset 
- */
+export interface ParsedCt {
+  sequence: string;
+  partners: (number | null)[];
+  numberingOffset: number;
+}
 
 /**
  * Returns null if:
@@ -205,12 +171,8 @@ function _parseNumberingOffset(ct) {
  *  The sequence or structure cannot be parsed.
  *  The parsed structure is invalid.
  *  The parsed sequence or structure are different lengths.
- * 
- * @param {string} ct 
- * 
- * @returns {ParsedCT|null} 
  */
-function parseCt(ct) {
+function parseCt(ct: string): (ParsedCt | null) {
   if(numSequencesInCT(ct) !== 1) {
     return null;
   }
@@ -232,12 +194,8 @@ function parseCt(ct) {
 
 /**
  * This will always return at least one.
- * 
- * @param {string} headerLine 
- * 
- * @returns {number} 
  */
-function _numSequences(headerLine) {
+function _numSequences(headerLine: string): number {
   let items = nonemptySplitByWhitespace(headerLine);
   if (items.length < 2) {
     return 1;
@@ -253,12 +211,7 @@ function _numSequences(headerLine) {
   }
 }
 
-/**
- * @param {string} ct 
- * 
- * @returns {number} 
- */
-function numSequencesInCT(ct) {
+function numSequencesInCT(ct: string): number {
   let lines = splitLines(ct);
   let i = _headerLineIndex(lines);
   if (i === null) {

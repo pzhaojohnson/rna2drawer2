@@ -1,19 +1,25 @@
 import isAllWhitespace from './isAllWhitespace';
 
-function _isNumber(c) {
+function _isNumber(c: string) {
   return c.match(/[0-9]/);
 }
 
-function _isLetter(c) {
+function _isLetter(c: string) {
   return c.match(/[A-Z]|[a-z]/)
 }
 
-function _isAUGCT(c) {
+function _isAUGCT(c: string) {
   return c.match(/A|a|U|u|G|g|C|c|T|t/);
 }
 
-function _isNonAlphanumeric(c) {
+function _isNonAlphanumeric(c: string) {
   return !_isNumber(c) && !_isLetter(c);
+}
+
+interface Options {
+  ignoreNumbers?: boolean;
+  ignoreNonAUGCTLetters?: boolean;
+  ignoreNonAlphanumerics?: boolean;
 }
 
 /**
@@ -23,16 +29,8 @@ function _isNonAlphanumeric(c) {
  * Non-alphanumeric characters are those that are not letters or numbers.
  * 
  * Whitespace characters are always ignored.
- * 
- * @param {string} unparsed What the user input.
- * @param {Object} options 
- * @param {boolean|undefined} [options.ignoreNumbers=undefined] 
- * @param {boolean|undefined} [options.ignoreNonAUGCTLetters=undefined] 
- * @param {boolean|undefined} [options.ignoreNonAlphanumerics=undefined] 
- * 
- * @returns {string} The parsed sequence.
  */
-function parseSequence(unparsed, options={}) {
+function parseSequence(unparsed: string, options=({} as Options)): string {
   let parsed = '';
   for (let i = 0; i < unparsed.length; i++) {
     let c = unparsed.charAt(i);

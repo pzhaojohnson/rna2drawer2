@@ -1,27 +1,22 @@
-/**
- * @typedef {object} StemDescription
- * @property {number} start The 5' most position of the stem.
- * @property {number} end The 3' most position of the stem.
- * @property {number} size The number of base pairs in the stem.
- */
+export interface StemDescription {
+  start: number; // the 5' most position of the stem
+  end: number; // the 3' most position of the stem
+  size: number; // the number of base pairs in the stem
+}
 
 /**
  * Stem descriptions are not guaranteed to be returned in any particular order.
  * 
  * This function can handle knotted structures.
- * 
- * @param {Array<number|null>} partners The partners notation of the structure.
- * 
- * @returns {Array<StemDescription>} Descriptions of all the stems in the structure.
  */
-function parseStems(partners) {
+function parseStems(partners: (number | null)[]): StemDescription[] {
   let stems = [];
   let p = 1;
 
   while (p <= partners.length) {
     let q = partners[p - 1];
     
-    if (p < q) {
+    if (q != null && p < q) {
       let size = 1;
 
       // checking p + 1 < q - 1 handles hairpins with loops of size zero

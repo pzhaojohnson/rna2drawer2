@@ -1,26 +1,21 @@
-/**
- * @typedef {object} SecondaryAndTertiaryPartners 
- * @property {Array<number|null>} secondaryPartners The partners notation of the secondary structure.
- * @property {Array<number|null>} tertiaryPartners The partners notation of the tertiary structure.
- */
+export interface SecondaryAndTertiaryPartners {
+  secondaryPartners: (number | null)[];
+  tertiaryPartners: (number | null)[];
+}
 
 /**
- * .
+ * Splits the given partners notation into secondary and tertiary partners notations.
  * 
- * The partners notation of the secondary structure will not contain any knots,
+ * The partners notation of the secondary structure won't contain any knots,
  * while the partners notation of the tertiary structure may contain knots.
- * 
- * @param {Array<number|null>} allPartners The partners notation containing both secondary and tertiary pairs.
- * 
- * @returns {SecondaryAndTertiaryPartners} 
  */
-function splitSecondaryAndTertiaryPairs(allPartners) {
+function splitSecondaryAndTertiaryPairs(allPartners: (number | null)[]): SecondaryAndTertiaryPartners {
 
   // the partners notation of the secondary structure
-  let secondaryPartners = [];
+  let secondaryPartners = [] as (number | null)[];
 
   // the partners notation of the tertiary structure
-  let tertiaryPartners = [];
+  let tertiaryPartners = [] as (number | null)[];
 
   // initialize with all nulls
   allPartners.forEach(p => {
@@ -29,33 +24,25 @@ function splitSecondaryAndTertiaryPairs(allPartners) {
   });
 
   // the stack of upstream partners
-  let ups = [];
+  let ups = [] as number[];
 
   /**
    * @param {number} p The position to be removed from ups.
    */
-  function removeUp(p) {
+  function removeUp(p: number) {
     let i = ups.findIndex(e => e === p);
     ups.splice(i, 1);
   }
 
-  /**
-   * @param {Array<number|null>} partners The partners notation to add the pair to.
-   * @param {number} p A position of the pair.
-   * @param {number} q The other position of the pair.
-   */
-  function addPair(partners, p, q) {
+  function addPair(partners: (number | null)[], p: number, q: number) {
     partners[p - 1] = q;
     partners[q - 1] = p;
   }
 
   /**
-   * @param {number} p A position of the pair.
-   * @param {number} q The other position of the pair.
-   * 
-   * @returns {number} The number of pairs that are knotted with the given pair.
+   * Returns the number of pairs that are knotted with the given pair.
    */
-  function numKnottedPairs(p, q) {
+  function numKnottedPairs(p: number, q: number): number {
     let u = Math.min(p, q);
     let d = Math.max(p, q);
     let ct = 0;
@@ -74,16 +61,16 @@ function splitSecondaryAndTertiaryPairs(allPartners) {
   }
 
   /**
-   * @param {number} d The position of the downstream partner to handle.
+   * d is the position of the downstream partner to handle.
    */
-  function handleDown(d) {
+  function handleDown(d: number) {
 
     // the position of the upstream parter
-    let u = allPartners[d - 1];
+    let u = allPartners[d - 1] as number;
 
     // the pair whose upstream partner is at the top of ups
     let p = ups[ups.length - 1];
-    let q = allPartners[p - 1];
+    let q = allPartners[p - 1] as number;
 
     if (!ups.includes(u)) {
       // u and d pair has already been added
@@ -95,8 +82,8 @@ function splitSecondaryAndTertiaryPairs(allPartners) {
       removeUp(u);
     } else {
       while (ups[ups.length - 1] !== u) {
-        let r = ups.pop();
-        let s = allPartners[r - 1];
+        let r = ups.pop() as number;
+        let s = allPartners[r - 1] as number;
         addPair(tertiaryPartners, r, s);
       }
 

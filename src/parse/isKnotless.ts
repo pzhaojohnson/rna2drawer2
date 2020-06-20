@@ -1,9 +1,7 @@
 /**
- * @param {Array<number|null>} partners The partners notation of a secondary structure.
- * 
- * @returns {boolean} True if the secondary structure contains no knots.
+ * Returns true if the given partners notation contains no knots.
  */
-function isKnotless(partners) {
+function isKnotless(partners: (number | null)[]): boolean {
   let upPartners = [];
   
   for (let p = 1; p <= partners.length; p++) {

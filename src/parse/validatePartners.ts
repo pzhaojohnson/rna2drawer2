@@ -1,10 +1,8 @@
 /**
- * @param {Array<number|null>} parters The partners notation.
- * 
- * @throws {Error} If an element in the partners notation is neither a number nor null.
- * @throws {Error} If the entries for any two positions are inconsistent with one another.
+ * Throws if an element in the partners notation is neither a number nor null.
+ * Throws if the entries for any two positions are inconsistent with one another.
  */
-function validatePartners(partners) {
+function validatePartners(partners: (number | null)[]): (void | never) {
   for (let p = 1; p <= partners.length; p++) {
     let q = partners[p - 1];
 

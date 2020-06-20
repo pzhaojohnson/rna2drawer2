@@ -1,11 +1,9 @@
 import isAllWhitespace from './isAllWhitespace';
 
 /**
- * @param {string} s 
- * 
- * @returns {string} The given string with all whitespace characters removed.
+ * Returns the given string with all whitespace characters removed.
  */
-function removeWhitespace(s) {
+function removeWhitespace(s: string): string {
   let noWhitespace = '';
 
   for (let i = 0; i < s.length; i++) {

@@ -1,9 +1,8 @@
 /**
- * @param {string} dotBracket The dot-bracket notation input by the user.
- * 
- * @returns {boolean} True if any of the characters [ '['|']' | '{'|'}' | '<'|'>' ] are present.
+ * Returns true if the given dot-bracket notation contains any
+ * of the characters [ '['|']' | '{'|'}' | '<'|'>' ].
  */
-function containsTertiaryPairings(dotBracket) {
+function containsTertiaryPairings(dotBracket: string): boolean {
   for (let i = 0; i < dotBracket.length; i++) {
     let c = dotBracket.charAt(i);
 

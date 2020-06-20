@@ -4,12 +4,8 @@
  *  Any number is not an integer.
  *  A partner is out of bounds.
  *  The partners for two positions disagree with one another.
- * 
- * @param {Array} partners 
- * 
- * @returns {boolean} If the given array is valid partners notation.
  */
-function partnersAreValid(partners) {
+function partnersAreValid(partners: (number | null)[]): boolean {
   for (let p = 1; p <= partners.length; p++) {
     let q = partners[p - 1];
     if (typeof(q) !== 'number' && q !== null) {
