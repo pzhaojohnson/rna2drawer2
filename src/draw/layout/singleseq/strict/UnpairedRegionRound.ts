@@ -4,7 +4,7 @@ import { circleCenter } from './circleCenter';
 import distanceBetween from '../../../distanceBetween';
 import angleBetween from '../../../angleBetween';
 import { RoundLoop } from './StemLayout';
-import UnpairedRegion from './UnpairedRegion';
+import { UnpairedRegionInterface as UnpairedRegion } from './StemInterface';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 
 const _VERY_SMALL_THRESHOLD = 0.001;

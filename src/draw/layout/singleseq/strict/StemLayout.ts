@@ -1,16 +1,14 @@
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import { circleCenter } from './circleCenter';
 import { circleCircumference } from './circleCircumference';
-import StemInterface from './StemInterface';
-import Stem from './Stem';
-import UnpairedRegion from './UnpairedRegion';
+import { StemInterface, UnpairedRegionInterface } from './StemInterface';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 
 class RoundLoop {
 
   static circumference(st: StemInterface, generalProps: GeneralStrictLayoutProps): number {
-    let straightLength = Stem.width(generalProps) - 1;
+    let straightLength = st.width - 1;
     let numStraights = st.numBranches;
     if (!st.isOutermostStem()) {
       numStraights += 1;
@@ -73,7 +71,7 @@ class RoundLoop {
       return 0;
     } else {
       let radius = RoundLoop.radius(st, generalProps);
-      let basePairWidth = Stem.width(generalProps) - 1;
+      let basePairWidth = st.width - 1;
       let halfBasePairWidth = basePairWidth / 2;
       halfBasePairWidth = Math.min(halfBasePairWidth, 0.9999 * radius);
       let basePairAngleSpan = 2 * Math.asin(halfBasePairWidth / radius);
@@ -91,7 +89,7 @@ class RoundLoop {
     if (outermostStem.numBranches === 0) {
       return outermostStem.loopLength;
     } else {
-      let stemWidth = Stem.width(generalProps);
+      let stemWidth = outermostStem.width;
       let stemPolarWidth = RoundLoop.polarLengthPerStem(outermostStem, generalProps);
       return outermostStem.loopLength
         - (outermostStem.numBranches * stemWidth)
@@ -119,7 +117,7 @@ class RoundLoop {
    * Sets the coordinates and angles for all stems in the layout.
    */
   static setCoordinatesAndAngles(
-    outermostStem: Stem,
+    outermostStem: StemInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
@@ -130,7 +128,7 @@ class RoundLoop {
    * Recursively sets the coordinates and angles of stems inner to the given stem.
    */
   static setInnerCoordinatesAndAngles(
-    st: Stem,
+    st: StemInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
@@ -157,7 +155,7 @@ class RoundLoop {
       let next = it.next();
       while (!next.done) {
         angle += (2 * Math.PI) * (iur.length / circumference);
-        let ist = next.value as Stem;
+        let ist = next.value as StemInterface;
         ist.xBottomCenter = center.x + (bottomCenterRadius * Math.cos(angle));
         ist.yBottomCenter = center.y + (bottomCenterRadius * Math.sin(angle));
         ist.angle = angle;
@@ -172,13 +170,13 @@ class RoundLoop {
 
 class TriangleLoop {
 
-  static platformLength(st: Stem): number {
+  static platformLength(st: StemInterface): number {
     let length = 0;
     let it = st.loopIterator();
     it.next();
     let next = it.next();
     while (!next.done) {
-      let ist = next.value as Stem;
+      let ist = next.value as StemInterface;
       length += ist.width;
       let ur = it.next().value;
       if (ur.boundingPosition3 < st.positionTop3) {
@@ -193,7 +191,7 @@ class TriangleLoop {
    * Recursively sets the coordinates and angles of stems inner to the given stem.
    */
   static setInnerCoordinatesAndAngles(
-    st: Stem,
+    st: StemInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
@@ -212,7 +210,7 @@ class TriangleLoop {
       it.next();
       let next = it.next();
       while (!next.done) {
-        let ist = next.value as Stem;
+        let ist = next.value as StemInterface;
         x += (ist.width / 2) * Math.cos(st.angle + (Math.PI / 2));
         y += (ist.width / 2) * Math.sin(st.angle + (Math.PI / 2));
         ist.xBottomCenter = x;
@@ -237,7 +235,7 @@ class FlatOutermostLoop {
    * Returns the base coordinates for the unpaired region.
    */
   static traverseUnpairedRegion53(
-    ur: UnpairedRegion,
+    ur: UnpairedRegionInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ): NormalizedBaseCoordinates[] {
@@ -272,7 +270,7 @@ class FlatOutermostLoop {
    * 5' to 3' starting with the coordinates and angle of its 5' bounding stem.
    */
   static unpairedRegionAngle53(
-    ur: UnpairedRegion,
+    ur: UnpairedRegionInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ): number {
@@ -298,7 +296,7 @@ class FlatOutermostLoop {
    * based on the coordinates and angle of the 5' bounding stem of the unpaired region.
    */
   static setNextCoordinatesAndAngle53(
-    ur: UnpairedRegion,
+    ur: UnpairedRegionInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
@@ -330,7 +328,7 @@ class FlatOutermostLoop {
    * Sets the coordinates and angles for all stems in the layout.
    */
   static setCoordinatesAndAngles(
-    outermostStem: Stem,
+    outermostStem: StemInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
@@ -338,7 +336,7 @@ class FlatOutermostLoop {
     let ur = it.next().value;
     let next = it.next();
     while (!next.done) {
-      let st = next.value as Stem;
+      let st = next.value as StemInterface;
       FlatOutermostLoop.setNextCoordinatesAndAngle53(ur, generalProps, perBaseProps);
       StemLayout.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
       ur = it.next().value;
@@ -353,7 +351,7 @@ class StemLayout {
    * Sets the coordinates and angles for all stems in the layout.
    */
   static setCoordinatesAndAngles(
-    outermostStem: Stem,
+    outermostStem: StemInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
@@ -368,7 +366,7 @@ class StemLayout {
    * Recursively sets the coordinates and angles of stems inner to the given stem.
    */
   static setInnerCoordinatesAndAngles(
-    st: Stem,
+    st: StemInterface,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {

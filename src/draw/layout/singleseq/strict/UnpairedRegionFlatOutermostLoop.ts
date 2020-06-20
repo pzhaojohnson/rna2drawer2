@@ -1,5 +1,5 @@
 import { FlatOutermostLoop } from './StemLayout';
-import UnpairdRegion from './UnpairedRegion';
+import { UnpairedRegionInterface as UnpairdRegion } from './StemInterface';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
