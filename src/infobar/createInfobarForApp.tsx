@@ -1,17 +1,13 @@
-import React from 'react';
+import * as React from 'react';
 import Infobar from './Infobar';
+import App from '../App';
 
-/**
- * @param {App} app 
- * 
- * @returns {React.Element} 
- */
-function createInfobarForApp(app) {
+function createInfobarForApp(app: App): React.ReactElement {
   return (
     <Infobar
       drawingIsEmpty={app.strictDrawing.isEmpty()}
       zoom={app.strictDrawing.zoom}
-      setZoom={z => {
+      setZoom={(z: number) => {
         app.strictDrawing.zoom = z;
         app.renderInfobar();
       }}

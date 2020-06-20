@@ -1,13 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
 import plus from '../icons/plus.svg';
 import minus from '../icons/minus.svg';
 
 const _ZOOMS = [0.05, 0.1, 0.25, 0.35, 0.5, 0.6, 0.75, 0.9, 1, 1.1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 7.5, 10];
 
+interface Props {
+  drawingIsEmpty: boolean;
+  zoom: number;
+  setZoom: (z: number) => void;
+}
+
 class Infobar extends React.Component {
-  constructor(props) {
+  static defaultProps: Props;
+
+  props!: Props;
+  state: {
+    zoomMinusHovered: boolean;
+    zoomPlusHovered: boolean;
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -43,7 +56,7 @@ class Infobar extends React.Component {
     return (
       <div
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
         }}
       ></div>
     );
@@ -129,9 +142,9 @@ class Infobar extends React.Component {
   }
 
   zoomDisplay() {
-    let z = 100 * this.props.zoom;
-    z = z.toFixed(0);
-    z += '%';
+    let zn = 100 * this.props.zoom;
+    let zs = zn.toFixed(0);
+    zs += '%';
     return (
       <p
         className={'unselectable-text'}
@@ -140,7 +153,7 @@ class Infobar extends React.Component {
           fontSize: '12px',
         }}
       >
-        {z}
+        {zs}
       </p>
     );
   }
@@ -208,12 +221,6 @@ class Infobar extends React.Component {
     );
   }
 }
-
-Infobar.propTypes = {
-  drawingIsEmpty: PropTypes.bool,
-  zoom: PropTypes.number,
-  setZoom: PropTypes.func,
-};
 
 Infobar.defaultProps = {
   drawingIsEmpty: true,
