@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import parseSequence from '../parse/parseSequence';
 import {
   parseDotBracket,
@@ -37,8 +36,45 @@ const _EXAMPLE_INPUTS = [
   },
 ];
 
+interface Structure {
+  id: string;
+  characters: string;
+  secondaryPartners: (number | null)[];
+  tertiaryPartners: (number | null)[];
+}
+
+interface Props {
+  width: string;
+  submit?: (s: Structure) => void;
+}
+
+interface ParsedStructure {
+  secondaryPartners: (number | null)[];
+  tertiaryPartners: (number | null)[];
+}
+
 class CreateNewDrawing extends React.Component {
-  constructor(props) {
+  static defaultProps: Props;
+
+  props!: Props;
+  state: {
+    exampleInput: string;
+    sequenceId: string;
+    sequence: string;
+    structure: string;
+
+    showSequenceParsingDetails: boolean;
+    ignoreNumbers: boolean;
+    ignoreNonAUGCTLetters: boolean;
+    ignoreNonAlphanumerics: boolean;
+
+    showStructureParsingDetails: boolean;
+
+    errorMessageKey: string;
+    errorMessage: string;
+  }
+
+  constructor(props: Props) {
     super(props);
 
     let ei = _EXAMPLE_INPUTS[0];
@@ -75,7 +111,7 @@ class CreateNewDrawing extends React.Component {
       >
         <div
           style={{
-            flexGrow: '1',
+            flexGrow: 1,
             maxHeight: '824px',
             display: 'flex',
             flexDirection: 'row',
@@ -84,7 +120,7 @@ class CreateNewDrawing extends React.Component {
         >
           <div
             style={{
-              flexGrow: '1',
+              flexGrow: 1,
               maxWidth: '1200px',
               margin: '12px',
               border: 'thin solid #bfbfbf',
@@ -104,7 +140,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           margin: '32px 80px 32px 80px',
           display: 'flex',
           flexDirection: 'column',
@@ -151,7 +187,7 @@ class CreateNewDrawing extends React.Component {
     return (
       <div
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           margin: '24px 40px 0px 40px',
           display: 'flex',
           flexDirection: 'column',
@@ -204,18 +240,22 @@ class CreateNewDrawing extends React.Component {
     );
   }
 
-  _onExampleInputSelectChange(event) {
+  _onExampleInputSelectChange(event: React.ChangeEvent) {
     let ei = _EXAMPLE_INPUTS.find(
-      ei => ei.exampleInput === event.target.value
+      ei => ei.exampleInput === (event.target as HTMLSelectElement).value
     );
-    this.setState({
-      exampleInput: ei.exampleInput,
-      sequenceId: ei.sequenceId,
-      sequence: ei.sequence,
-      structure: ei.structure,
-      errorMessageKey: uuidv1(),
-      errorMessage: '',
-    });
+    if (ei) {
+      this.setState({
+        exampleInput: ei.exampleInput,
+        sequenceId: ei.sequenceId,
+        sequence: ei.sequence,
+        structure: ei.structure,
+        errorMessageKey: uuidv1(),
+        errorMessage: '',
+      });
+    } else {
+      console.error('No example input has given name: ' + (event.target as HTMLSelectElement).value);
+    }
   }
 
   _sequenceIdSection() {
@@ -253,20 +293,20 @@ class CreateNewDrawing extends React.Component {
         onChange={event => this._onSequenceIdInputChange(event)}
         spellCheck={'false'}
         placeholder={' ...the name of your sequence'}
-        style={{ flexGrow: '1' }}
+        style={{ flexGrow: 1 }}
       />
     );
   }
 
-  _onSequenceIdInputChange(event) {
+  _onSequenceIdInputChange(event: React.ChangeEvent) {
     this.setState({
-      sequenceId: event.target.value,
+      sequenceId: (event.target as HTMLInputElement).value,
     });
   }
 
   _sequenceAndStructureSections() {
     return (
-      <div style={{ margin: '0px 0px 18px 0px', flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
+      <div style={{ margin: '0px 0px 18px 0px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
         {this._sequenceSection()}
         {this._structureSection()}
       </div>
@@ -275,8 +315,8 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceSection() {
     return (
-      <div style={{ minHeight: '50%', flexGrow: '1', display: 'flex', flexDirection: 'row' }} >
-        <div style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
+      <div style={{ minHeight: '50%', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+        <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
           {this._sequenceHeader()}
           {this._sequenceTextarea()}
         </div>
@@ -296,7 +336,7 @@ class CreateNewDrawing extends React.Component {
 
   _sequenceLabel() {
     return (
-      <p className={'unselectable-text'} style={{ flexGrow: '1', fontSize: '12px' }} >
+      <p className={'unselectable-text'} style={{ flexGrow: 1, fontSize: '12px' }} >
         Sequence:
       </p>
     );
@@ -333,7 +373,7 @@ class CreateNewDrawing extends React.Component {
         spellCheck={'false'}
         placeholder={' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"'}
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           margin: '4px 0px 0px 0px',
           fontSize: '12px',
         }}
@@ -341,9 +381,9 @@ class CreateNewDrawing extends React.Component {
     );
   }
 
-  _onSequenceTextareaChange(event) {
+  _onSequenceTextareaChange(event: React.ChangeEvent) {
     this.setState({
-      sequence: event.target.value
+      sequence: (event.target as HTMLTextAreaElement).value
     });
   }
 
@@ -437,8 +477,8 @@ class CreateNewDrawing extends React.Component {
 
   _structureSection() {
     return (
-      <div style={{ minHeight: '50%', flexGrow: '1', display: 'flex', flexDirection: 'row' }} >
-        <div style={{ flexGrow: '1', display: 'flex', flexDirection: 'column' }} >
+      <div style={{ minHeight: '50%', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+        <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
           {this._structureHeader()}
           {this._structureTextarea()}
         </div>
@@ -458,7 +498,7 @@ class CreateNewDrawing extends React.Component {
 
   _structureLabel() {
     return (
-      <p className={'unselectable-text'} style={{ flexGrow: '1', fontSize: '12px' }} >
+      <p className={'unselectable-text'} style={{ flexGrow: 1, fontSize: '12px' }} >
         Structure (optional):
       </p>
     );
@@ -498,7 +538,7 @@ class CreateNewDrawing extends React.Component {
           + '\n\n ...also called "Vienna" format by Mfold'
         }
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           margin: '4px 0px 0px 0px',
           fontSize: '12px'
         }}
@@ -506,9 +546,9 @@ class CreateNewDrawing extends React.Component {
     );
   }
 
-  _onStructureTextareaChange(event) {
+  _onStructureTextareaChange(event: React.ChangeEvent) {
     this.setState({
-      structure: event.target.value
+      structure: (event.target as HTMLTextAreaElement).value
     });
   }
 
@@ -590,31 +630,33 @@ class CreateNewDrawing extends React.Component {
 
   _submit() {
     let sequenceId = this._parseSequenceId();
-    if (sequenceId === null) {
+    if (sequenceId == null) {
       return;
     }
     let sequence = this._parseSequence();
-    if (sequence === null) {
+    if (sequence == null) {
       return;
     }
     let structure = this._parseStructure(sequence);
-    if (structure === null) {
+    if (structure == null) {
       return;
     }
-    this.props.submit({
-      id: sequenceId,
-      characters: sequence,
-      secondaryPartners: structure.secondaryPartners,
-      tertiaryPartners: structure.tertiaryPartners,
-    });
+    if (this.props.submit) {
+      this.props.submit({
+        id: sequenceId,
+        characters: sequence,
+        secondaryPartners: structure.secondaryPartners,
+        tertiaryPartners: structure.tertiaryPartners,
+      });
+    } else {
+      console.error('Missing submit callback.');
+    }
   }
 
   /**
    * Returns null if the sequence ID is empty.
-   * 
-   * @returns {string|null} 
    */
-  _parseSequenceId() {
+  _parseSequenceId(): (string | null) {
     let sequenceId = this.state.sequenceId.trim();
     if (sequenceId.length === 0) {
       this.setState({
@@ -629,10 +671,8 @@ class CreateNewDrawing extends React.Component {
 
   /**
    * Returns null if the sequence is empty.
-   * 
-   * @returns {string|null} 
    */
-  _parseSequence() {
+  _parseSequence(): (string | null) {
     let sequence = parseSequence(
       this.state.sequence,
       {
@@ -653,24 +693,14 @@ class CreateNewDrawing extends React.Component {
   }
 
   /**
-   * @typedef {Object} CreateNewDrawing~ParsedStructure 
-   * @property {Array<number|null>} secondaryPartners 
-   * @property {Array<number|null>} tertiaryPartners 
-   */
-
-  /**
    * Returns null if the structure is invalid.
    * 
    * Also returns null if the length of the parsed structure does not
    * match the length of the sequence. However, if the length of the
    * parsed structure is zero, then this method will return entirely
    * unpaired partners notations of the same length as the sequence.
-   * 
-   * @param {string} sequence 
-   * 
-   * @returns {CreateNewDrawing~ParsedStructure|null} 
    */
-  _parseStructure(sequence) {
+  _parseStructure(sequence: string): (ParsedStructure | null) {
     let parsed = parseDotBracket(this.state.structure);
     if (parsed === null) {
       if (hasUnmatchedUpPartner(this.state.structure)) {
@@ -695,7 +725,10 @@ class CreateNewDrawing extends React.Component {
     }
 
     if (parsed.secondaryPartners.length === 0) {
-      let structure = { secondaryPartners: [], tertiaryPartners: [] };
+      let structure = {
+        secondaryPartners: [] as (number | null)[],
+        tertiaryPartners: [] as (number | null)[],
+      };
       for (let i = 0; i < sequence.length; i++) {
         structure.secondaryPartners.push(null);
         structure.tertiaryPartners.push(null);
@@ -714,11 +747,6 @@ class CreateNewDrawing extends React.Component {
     }
   }
 }
-
-CreateNewDrawing.propTypes = {
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  submit: PropTypes.func,
-};
 
 CreateNewDrawing.defaultProps = {
   width: '100vw',

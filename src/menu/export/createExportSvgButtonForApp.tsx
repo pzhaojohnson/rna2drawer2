@@ -4,8 +4,7 @@ const uuidv1 = require('uuid/v1');
 import DroppedButton from '../DroppedButton';
 
 import renderExportSvgInApp from '../../forms/renderExportSvgInApp';
-
-interface App {}
+import App from '../../App';
 
 function createExportSvgButtonForApp(app: App): React.ReactElement {
   return (

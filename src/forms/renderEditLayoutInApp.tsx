@@ -1,10 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import EditLayout from './EditLayout';
+import App from '../App';
 
-/**
- * @param {App} app 
- */
-function renderEditLayoutInApp(app) {
+function renderEditLayoutInApp(app: App) {
   app.renderForm(() => {
     let generalProps = app.strictDrawing.generalLayoutProps();
     return (

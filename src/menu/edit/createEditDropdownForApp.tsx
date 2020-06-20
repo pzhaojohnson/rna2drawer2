@@ -11,21 +11,7 @@ import createFlatOutermostLoopButtonForApp from './createFlatOutermostLoopButton
 import createRoundOutermostLoopButtonForApp from './createRoundOutermostLoopButtonForApp';
 import createEditLayoutButtonForApp from './createEditLayoutButtonForApp';
 
-interface App {
-  strictDrawing: {
-    isEmpty: () => boolean;
-    hasFlatOutermostLoop: () => boolean;
-    flatOutermostLoop: () => void;
-    hasRoundOutermostLoop: () => boolean;
-    roundOutermostLoop: () => void;
-  }
-  undo: () => void;
-  canUndo: () => boolean;
-  redo: () => void;
-  canRedo: () => boolean;
-  pushUndo: () => void;
-  drawingChangedNotByInteraction: () => void;
-}
+import App from '../../App';
 
 function createModeDropdownForApp(app: App): React.ReactElement {
   let drawingIsEmpty = app.strictDrawing.isEmpty();

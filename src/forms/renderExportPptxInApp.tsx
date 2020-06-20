@@ -1,7 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import ExportPptx from './ExportPptx';
+import App from '../App';
 
-function renderExportPptxInApp(app) {
+function renderExportPptxInApp(app: App) {
   app.renderForm(() => (
     <ExportPptx
       SVG={() => app.SVG()}

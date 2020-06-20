@@ -5,12 +5,7 @@ import DroppedButton from '../DroppedButton';
 
 import openNewTab from '../openNewTab';
 import renderCreateNewDrawingInApp from '../../forms/renderCreateNewDrawingInApp';
-
-interface App {
-  strictDrawing: {
-    isEmpty: () => boolean;
-  }
-}
+import App from '../../App';
 
 function createNewButtonForApp(app: App): React.ReactElement {
   return (

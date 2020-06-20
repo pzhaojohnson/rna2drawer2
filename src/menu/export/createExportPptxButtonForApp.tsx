@@ -4,8 +4,7 @@ const uuidv1 = require('uuid/v1');
 import DroppedButton from '../DroppedButton';
 
 import renderExportPptxInApp from '../../forms/renderExportPptxInApp';
-
-interface App {}
+import App from '../../App';
 
 function createExportPptxButtonForApp(app: App): React.ReactElement {
   return (

@@ -1,13 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import {
   parseCt,
   numSequencesInCT,
 } from '../parse/parseCt';
 const uuidv1 = require('uuid/v1');
 
+interface SubmitCallback {
+  (id: string, characters: string, partners: (number | null)[], numberingOffset: number): void;
+}
+
+interface Props {
+  width: string | number;
+  submit?: SubmitCallback;
+}
+
 class OpenCt extends React.Component {
-  constructor(props) {
+  static defaultProps: Props;
+
+  props!: Props;
+  state: {
+    sequenceId: string;
+
+    attemptedFileLoad: boolean;
+    fileContents: string | null;
+
+    errorMessageKey: string;
+    errorMessage: string;
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -35,7 +56,7 @@ class OpenCt extends React.Component {
       >
         <div
           style={{
-            flexGrow: '1',
+            flexGrow: 1,
             maxHeight: '824px',
             display: 'flex',
             flexDirection: 'row',
@@ -44,7 +65,7 @@ class OpenCt extends React.Component {
         >
           <div
             style={{
-              flexGrow: '1',
+              flexGrow: 1,
               maxWidth: '1200px',
               margin: '12px',
               border: 'thin solid #bfbfbf',
@@ -64,7 +85,7 @@ class OpenCt extends React.Component {
     return (
       <div
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           margin: '32px 80px 32px 80px',
           display: 'flex',
           flexDirection: 'column',
@@ -99,7 +120,7 @@ class OpenCt extends React.Component {
     return (
       <div
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           margin: '24px 40px 0px 40px',
           display: 'flex',
           flexDirection: 'column',
@@ -148,14 +169,14 @@ class OpenCt extends React.Component {
         onChange={event => this._onSequenceIdInputChange(event)}
         spellCheck={'false'}
         placeholder={' ...the name of your sequence'}
-        style={{ flexGrow: '1' }}
+        style={{ flexGrow: 1 }}
       />
     );
   }
 
-  _onSequenceIdInputChange(event) {
+  _onSequenceIdInputChange(event: React.ChangeEvent) {
     this.setState({
-      sequenceId: event.target.value,
+      sequenceId: (event.target as HTMLInputElement).value,
     });
   }
 
@@ -170,8 +191,8 @@ class OpenCt extends React.Component {
     );
   }
 
-  _onFileInputChange(event) {
-    if (event.target.files.length > 0) {
+  _onFileInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.files && event.target.files.length > 0) {
       this.setState({
         attemptedFileLoad: true,
         errorMessageKey: uuidv1(),
@@ -244,12 +265,16 @@ class OpenCt extends React.Component {
     if (ct === null) {
       return;
     }
-    this.props.submit(
-      sequenceId,
-      ct.sequence,
-      ct.partners,
-      ct.numberingOffset,
-    );
+    if (this.props.submit) {
+      this.props.submit(
+        sequenceId,
+        ct.sequence,
+        ct.partners,
+        ct.numberingOffset,
+      );
+    } else {
+      console.error('Missing submit callback.');
+    }
   }
 
   /**
@@ -281,8 +306,6 @@ class OpenCt extends React.Component {
    * Returns null if the user has not uploaded a file, if the file
    * is unable to be read, if the CT file is invalid, or if the CT
    * file specifies a structure of length zero.
-   * 
-   * @returns {OpenCt~ParsedCT|null}
    */
   _parseCT() {
     if (this.state.fileContents === null) {
@@ -311,11 +334,6 @@ class OpenCt extends React.Component {
     return ct;
   }
 }
-
-OpenCt.propTypes = {
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  submit: PropTypes.func,
-};
 
 OpenCt.defaultProps = {
   width: '100vw',

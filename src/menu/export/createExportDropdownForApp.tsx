@@ -6,11 +6,7 @@ import TopButton from '../TopButton';
 import createExportSvgButtonForApp from './createExportSvgButtonForApp';
 import createExportPptxButtonForApp from './createExportPptxButtonForApp';
 
-interface App {
-  strictDrawing: {
-    isEmpty: () => boolean;
-  }
-}
+import App from '../../App';
 
 function createExportDropdownForApp(app: App): React.ReactElement {
   let drawingIsEmpty = app.strictDrawing.isEmpty();

@@ -1,11 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import blackCrossMark from '../icons/blackCrossMark.svg';
 import grayCrossMark from '../icons/grayCrossMark.svg';
 import whiteCrossMark from '../icons/whiteCrossMark.svg';
 
+interface Props {
+  position: 'absolute';
+  top: string;
+  right: string;
+  onClick: () => void;
+}
+
 class CloseButton extends React.Component {
-  constructor(props) {
+  static defaultProps: Props;
+
+  props!: Props;
+  state: {
+    hovered: boolean;
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -13,7 +26,7 @@ class CloseButton extends React.Component {
     };
   }
 
-  _crossMark() {
+  _crossMark(): React.ReactElement {
     let src = this.state.hovered ? whiteCrossMark : grayCrossMark;
     return (
       <img
@@ -25,7 +38,7 @@ class CloseButton extends React.Component {
     );
   }
 
-  render() {
+  render(): React.ReactElement {
     return (
       <div
         onMouseEnter={() => this.onMouseEnter()}
@@ -63,14 +76,10 @@ class CloseButton extends React.Component {
   }
 }
 
-CloseButton.propTypes = {
-  position: PropTypes.string,
-  top: PropTypes.string,
-  right: PropTypes.string,
-  onClick: PropTypes.func,
-};
-
 CloseButton.defaultProps = {
+  position: 'absolute',
+  top: '0px',
+  right: '0px',
   onClick: () => {},
 };
 

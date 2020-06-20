@@ -1,14 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { CloseButton } from './CloseButton';
 const uuidv1 = require('uuid/v1');
 import Base from '../draw/Base';
 import { pointsToPixels } from '../export/pointsToPixels';
 import { formatSvgForExport } from '../export/formatSvgForExport';
 import { createPptxFromSvg } from '../export/createPptxFromSvg';
+import { SvgInterface as Svg } from '../draw/SvgInterface';
+import PptxGenJS from 'pptxgenjs';
+
+interface Props {
+  SVG: () => Svg;
+  getSvgString: () => string;
+  close?: () => void;
+}
 
 class ExportPptx extends React.Component {
-  constructor(props) {
+  props!: Props;
+  state: {
+    baseFontSize: string;
+
+    errorMessage: string;
+    errorMessageKey: string;
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -171,7 +186,7 @@ class ExportPptx extends React.Component {
         onChange={event => this.onBaseFontSizeInputChange(event)}
         spellCheck={'false'}
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           fontSize: '12px',
           textAlign: 'right',
         }}
@@ -179,9 +194,9 @@ class ExportPptx extends React.Component {
     );
   }
   
-  onBaseFontSizeInputChange(event) {
+  onBaseFontSizeInputChange(event: React.ChangeEvent) {
     this.setState({
-      baseFontSize: event.target.value,
+      baseFontSize: (event.target as HTMLInputElement).value,
     });
   }
 
@@ -319,12 +334,8 @@ class ExportPptx extends React.Component {
   /**
    * Returns null if either of the SVG or getSvgString callback
    * props are missing.
-   * 
-   * @param {number} scaling 
-   * 
-   * @returns {PptxGenJs.PptxGenJs|null} 
    */
-  createPptx(scaling) {
+  createPptx(scaling: number): (PptxGenJS | null) {
     if (!this.props.SVG) {
       console.error('Missing SVG callback.');
       return null;
@@ -348,10 +359,7 @@ class ExportPptx extends React.Component {
     return pres;
   }
 
-  /**
-   * @param {PptxGenJs.PptxGenJs} pres 
-   */
-  savePptx(pres) {
+  savePptx(pres: PptxGenJS) {
     let name = 'Drawing';
     if (document.title) {
       name = document.title;
@@ -360,18 +368,12 @@ class ExportPptx extends React.Component {
   }
 
   close() {
-    if (!this.props.close) {
+    if (this.props.close) {
+      this.props.close();
+    } else {
       console.error('Missing close callback.');
-      return;
     }
-    this.props.close();
   }
 }
-
-ExportPptx.propTypes = {
-  SVG: PropTypes.func.isRequired,
-  getSvgString: PropTypes.func.isRequired,
-  close: PropTypes.func.isRequired,
-};
 
 export default ExportPptx;

@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 const uuidv1 = require('uuid/v1');
 
 import { CloseButton } from './CloseButton';
@@ -9,21 +8,44 @@ import normalizeAngle from '../draw/normalizeAngle';
 import isAllWhitespace from '../parse/isAllWhitespace';
 import parseNonnegativeFloat from '../parse/number/parseNonnegativeFloat';
 
+interface LayoutProps {
+  rotation: number;
+  terminiGap: number;
+}
+
+interface Props {
+  rotation: number;
+  terminiGap: number;
+  apply?: (lps: LayoutProps) => void;
+  close?: () => void;
+}
+
 class EditLayout extends React.Component {
-  constructor(props) {
+  static defaultProps: Props;
+
+  props!: Props;
+  state: {
+    rotation: string;
+    terminiGap: string;
+
+    errorMessage: string;
+    errorMessageKey: string;
+  }
+
+  constructor(props: Props) {
     super(props);
 
-    let r = normalizeAngle(this.props.rotation);
-    r *= 360 / (2 * Math.PI);
-    r = r.toFixed(2);
-    r = Number(r);
+    let rn = normalizeAngle(this.props.rotation);
+    rn *= 360 / (2 * Math.PI);
+    let rs = rn.toFixed(2);
+    rn = Number(rs);
 
-    let tg = this.props.terminiGap.toFixed(2);
-    tg = Number(tg);
+    let tgs = this.props.terminiGap.toFixed(2);
+    let tgn = Number(tgs);
     
     this.state = {
-      rotation: r.toString(),
-      terminiGap: tg.toString(),
+      rotation: rn.toString(),
+      terminiGap: tgn.toString(),
 
       errorMessage: '',
       errorMessageKey: uuidv1(),
@@ -55,7 +77,7 @@ class EditLayout extends React.Component {
         position={'absolute'}
         top={'0px'}
         right={'0px'}
-        onClick={() => this.props.close()}
+        onClick={() => this.props.close ? this.props.close() : undefined}
       />
     );
   }
@@ -137,7 +159,7 @@ class EditLayout extends React.Component {
       <p
         className={'unselectable-text'}
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           marginRight: '8px',
           fontSize: '12px',
           display: 'inline-block',
@@ -164,9 +186,9 @@ class EditLayout extends React.Component {
     );
   }
   
-  onRotationInputChange(event) {
+  onRotationInputChange(event: React.ChangeEvent) {
     this.setState({
-      rotation: event.target.value,
+      rotation: (event.target as HTMLInputElement).value,
     });
   }
 
@@ -191,7 +213,7 @@ class EditLayout extends React.Component {
       <p
         className={'unselectable-text'}
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           marginRight: '8px',
           fontSize: '12px',
           display: 'inline-block',
@@ -218,9 +240,9 @@ class EditLayout extends React.Component {
     );
   }
   
-  onTerminiGapInputChange(event) {
+  onTerminiGapInputChange(event: React.ChangeEvent) {
     this.setState({
-      terminiGap: event.target.value,
+      terminiGap: (event.target as HTMLInputElement).value,
     });
   }
 
@@ -300,13 +322,20 @@ class EditLayout extends React.Component {
     if (!tg && tg != 0) {
       return;
     }
-    this.props.apply({
-      rotation: r,
-      terminiGap: tg,
-    });
+    if (this.props.apply) {
+      this.props.apply({
+        rotation: r,
+        terminiGap: tg,
+      });
+    } else {
+      console.error('Missing apply callback.');
+    }
   }
 
-  parseRotation() {
+  /**
+   * Returns null if the entered rotation is invalid.
+   */
+  parseRotation(): (number | null) {
     let n = Number(this.state.rotation);
     if (!Number.isFinite(n) || isAllWhitespace(this.state.rotation)) {
       this.setState({
@@ -320,7 +349,10 @@ class EditLayout extends React.Component {
     return n;
   }
 
-  parseTerminiGap() {
+  /**
+   * Returns null if the entered termini gap is invalid.
+   */
+  parseTerminiGap(): (number | null) {
     let tg = parseNonnegativeFloat(this.state.terminiGap);
     if (!tg && tg != 0) {
       this.setState({
@@ -333,18 +365,9 @@ class EditLayout extends React.Component {
   }
 }
 
-EditLayout.propTypes = {
-  rotation: PropTypes.number,
-  terminiGap: PropTypes.number,
-  apply: PropTypes.func,
-  close: PropTypes.func,
-};
-
 EditLayout.defaultProps = {
   rotation: 0,
   terminiGap: 0,
-  apply: () => {},
-  close: () => {},
 };
 
 export default EditLayout;

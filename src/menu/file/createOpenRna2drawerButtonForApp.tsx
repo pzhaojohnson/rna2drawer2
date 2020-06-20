@@ -5,12 +5,7 @@ import DroppedButton from '../DroppedButton';
 
 import openNewTab from '../openNewTab';
 import renderOpenRna2drawerInApp from '../../forms/renderOpenRna2drawerInApp';
-
-interface App {
-  strictDrawing: {
-    isEmpty: () => boolean;
-  }
-}
+import App from '../../App';
 
 function createOpenRna2drawerButtonForApp(app: App): React.ReactElement {
   return (

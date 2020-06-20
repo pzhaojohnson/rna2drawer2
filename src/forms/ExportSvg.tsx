@@ -1,13 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { CloseButton } from './CloseButton';
 const uuidv1 = require('uuid/v1');
 import Base from '../draw/Base';
 import { formatSvgForExport } from '../export/formatSvgForExport';
 import offerFileForDownload from '../export/offerFileForDownload';
+import { SvgInterface as Svg } from '../draw/SvgInterface';
+
+interface Props {
+  SVG: () => Svg;
+  getSvgString: () => string;
+  close?: () => void;
+}
 
 class ExportSvg extends React.Component {
-  constructor(props) {
+  props!: Props;
+  state: {
+    baseFontSize: string;
+
+    errorMessage: string;
+    errorMessageKey: string;
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -168,7 +182,7 @@ class ExportSvg extends React.Component {
         onChange={event => this.onBaseFontSizeInputChange(event)}
         spellCheck={'false'}
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           fontSize: '12px',
           textAlign: 'right',
         }}
@@ -176,9 +190,9 @@ class ExportSvg extends React.Component {
     );
   }
   
-  onBaseFontSizeInputChange(event) {
+  onBaseFontSizeInputChange(event: React.ChangeEvent) {
     this.setState({
-      baseFontSize: event.target.value,
+      baseFontSize: (event.target as HTMLInputElement).value,
     });
   }
 
@@ -285,12 +299,8 @@ class ExportSvg extends React.Component {
   /**
    * Returns an empty string if either of the SVG or getSvgString callback
    * props are missing.
-   * 
-   * @param {number} scaling 
-   * 
-   * @returns {string} 
    */
-  getSvgStringForExport(scaling) {
+  getSvgStringForExport(scaling: number): string {
     if (!this.props.SVG) {
       console.error('Missing SVG callback.');
       return '';
@@ -314,17 +324,7 @@ class ExportSvg extends React.Component {
     return svgString;
   }
 
-  /**
-   * @typedef {Object} FileProps 
-   * @property {string} name 
-   * @property {string} type 
-   * @property {string} contents 
-   */
-
-  /**
-   * @param {string} svgString 
-   */
-  offerSvgFileForDownload(svgString) {
+  offerSvgFileForDownload(svgString: string) {
     let name = 'Drawing';
     if (document.title) {
       name = document.title;
@@ -337,18 +337,12 @@ class ExportSvg extends React.Component {
   }
 
   close() {
-    if (!this.props.close) {
+    if (this.props.close) {
+      this.props.close();
+    } else {
       console.error('Missing close callback.');
-      return;
     }
-    this.props.close();
   }
 }
-
-ExportSvg.propTypes = {
-  SVG: PropTypes.func.isRequired,
-  getSvgString: PropTypes.func.isRequired,
-  close: PropTypes.func.isRequired,
-};
 
 export default ExportSvg;

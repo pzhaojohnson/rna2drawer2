@@ -1,10 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import CreateNewDrawing from './CreateNewDrawing';
+import App from '../App';
 
-/**
- * @param {App} app 
- */
-function renderCreateNewDrawingInApp(app) {
+function renderCreateNewDrawingInApp(app: App) {
   app.renderForm(() => (
     <CreateNewDrawing
       width={'100vw'}

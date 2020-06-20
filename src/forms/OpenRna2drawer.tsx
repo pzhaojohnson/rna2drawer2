@@ -1,10 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 const uuidv1 = require('uuid/v1');
 import parseFileExtension from '../parse/parseFileExtension';
 
+interface Props {
+  width: string | number;
+  submit?: (o: object) => boolean;
+  errorMessages?: {
+    noFileUploaded?: string;
+    fileUploadError?: string;
+    wrongFileType?: string;
+    invalidFile?: string;
+  }
+}
+
 class OpenRna2drawer extends React.Component {
-  constructor(props) {
+  static defaultProps: Props;
+
+  props!: Props;
+  state: {
+    attemptedFileUpload: boolean;
+    fileExtension: string;
+    fileContents: string | null;
+
+    errorMessage: string;
+    errorMessageKey: string;
+  }
+
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -38,7 +60,7 @@ class OpenRna2drawer extends React.Component {
     return (
       <div
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           maxHeight: '824px',
           display: 'flex',
           flexDirection: 'row',
@@ -47,7 +69,7 @@ class OpenRna2drawer extends React.Component {
       >
         <div
           style={{
-            flexGrow: '1',
+            flexGrow: 1,
             maxWidth: '1200px',
             margin: '12px',
             border: 'thin solid #bfbfbf',
@@ -66,7 +88,7 @@ class OpenRna2drawer extends React.Component {
     return (
       <div
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           margin: '32px 80px 32px 80px',
           display: 'flex',
           flexDirection: 'column',
@@ -119,7 +141,7 @@ class OpenRna2drawer extends React.Component {
     return (
       <div
         style={{
-          flexGrow: '1',
+          flexGrow: 1,
           margin: '32px 40px 0px 40px',
           display: 'flex',
           flexDirection: 'column',
@@ -143,8 +165,8 @@ class OpenRna2drawer extends React.Component {
     );
   }
 
-  onFileInputChange(event) {
-    if (event.target.files.length == 0) {
+  onFileInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+    if (!event.target.files || event.target.files.length == 0) {
       return;
     }
     let f = event.target.files[0];
@@ -231,9 +253,17 @@ class OpenRna2drawer extends React.Component {
     if (!savedState) {
       return;
     }
+    if (!this.props.submit) {
+      console.error('Missing submit callback.');
+      return;
+    }
     if (!this.props.submit(savedState)) {
+      let em = 'Invalid RNA2Drawer 2 file.';
+      if (this.props.errorMessages && this.props.errorMessages.invalidFile) {
+        em = this.props.errorMessages.invalidFile;
+      }
       this.setState({
-        errorMessage: this.props.errorMessages.invalidFile,
+        errorMessage: em,
         errorMessageKey: uuidv1(),
       });
     }
@@ -244,14 +274,22 @@ class OpenRna2drawer extends React.Component {
       return true;
     }
     if (this.state.attemptedFileUpload) {
+      let em = 'Unable to read selected file.';
+      if (this.props.errorMessages && this.props.errorMessages.fileUploadError) {
+        em = this.props.errorMessages.fileUploadError;
+      }
       this.setState({
-        errorMessage: this.props.errorMessages.fileUploadError,
+        errorMessage: em,
         errorMessageKey: uuidv1(),
       });
       return false;
     }
+    let em = 'No file uploaded.';
+    if (this.props.errorMessages && this.props.errorMessages.noFileUploaded) {
+      em = this.props.errorMessages.noFileUploaded;
+    }
     this.setState({
-      errorMessage: this.props.errorMessages.noFileUploaded,
+      errorMessage: em,
       errorMessageKey: uuidv1(),
     });
     return false;
@@ -261,8 +299,12 @@ class OpenRna2drawer extends React.Component {
     if (this.state.fileExtension === 'rna2drawer2') {
       return true;
     }
+    let em = 'File must have .rna2drawer2 extension.';
+    if (this.props.errorMessages && this.props.errorMessages.wrongFileType) {
+      em = this.props.errorMessages.wrongFileType;
+    }
     this.setState({
-      errorMessage: this.props.errorMessages.wrongFileType,
+      errorMessage: em,
       errorMessageKey: uuidv1(),
     });
     return false;
@@ -270,10 +312,18 @@ class OpenRna2drawer extends React.Component {
 
   parseSavedState() {
     try {
-      return JSON.parse(this.state.fileContents);
+      if (!this.state.fileContents) {
+        throw new Error('Invalid RNA2Drawer 2 file.');
+      } else {
+        return JSON.parse(this.state.fileContents);
+      }
     } catch (err) {
+      let em = 'Invalid RNA2Drawer 2 file.';
+      if (this.props.errorMessages && this.props.errorMessages.invalidFile) {
+        em = this.props.errorMessages.invalidFile;
+      }
       this.setState({
-        errorMessage: this.props.errorMessages.invalidFile,
+        errorMessage: em,
         errorMessageKey: uuidv1(),
       });
       return null;
@@ -281,20 +331,8 @@ class OpenRna2drawer extends React.Component {
   }
 }
 
-OpenRna2drawer.propTypes = {
-  width: PropTypes.string,
-  submit: PropTypes.func,
-  errorMessages: PropTypes.shape({
-    noFileUploaded: PropTypes.string,
-    fileUploadError: PropTypes.string,
-    wrongFileType: PropTypes.string,
-    invalidFile: PropTypes.string,
-  }),
-};
-
 OpenRna2drawer.defaultProps = {
   width: '100vw',
-  submit: () => {},
   errorMessages: {
     noFileUploaded: 'No file uploaded.',
     fileUploadError: 'Unable to read selected file.',

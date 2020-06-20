@@ -1,7 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import ExportSvg from './ExportSvg';
+import App from '../App';
 
-function renderExportSvgInApp(app) {
+function renderExportSvgInApp(app: App) {
   app.renderForm(() => (
     <ExportSvg
       SVG={() => app.SVG()}

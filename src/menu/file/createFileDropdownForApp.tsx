@@ -7,12 +7,7 @@ import createNewButtonForApp from './createNewButtonForApp';
 import createOpenRna2drawerButtonForApp from './createOpenRna2drawerButtonForApp';
 import createSaveButtonForApp from './createSaveButtonForApp';
 
-interface App {
-  strictDrawing: {
-    isEmpty: () => boolean;
-  };
-  save: () => void;
-}
+import App from '../../App';
 
 function createFileDropdownForApp(app: App): React.ReactElement {
   return (
