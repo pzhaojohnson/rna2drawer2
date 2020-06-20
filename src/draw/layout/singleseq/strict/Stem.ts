@@ -1,3 +1,4 @@
+import StemInterface from './StemInterface';
 import UnpairedRegion from './UnpairedRegion';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
@@ -10,7 +11,7 @@ import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
  * store the entire recursive structure in one object. The coordinates and angle
  * of the outermost stem should have no influence on the rest of the layout.
  */
-class Stem {
+class Stem implements StemInterface {
   _partners: (number | null)[];
   _generalProps: GeneralStrictLayoutProps;
   _perBaseProps: PerBaseStrictLayoutProps[];

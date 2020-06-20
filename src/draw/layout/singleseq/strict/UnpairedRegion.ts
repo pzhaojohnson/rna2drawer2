@@ -1,11 +1,14 @@
+import {
+  UnpairedRegionInterface,
+  StemInterface as Stem,
+} from './StemInterface';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
-import Stem from './Stem';
 
-class UnpairedRegion {
+class UnpairedRegion implements UnpairedRegionInterface {
   _partners: (number | null)[];
   _generalProps: GeneralStrictLayoutProps;
   _perBaseProps: PerBaseStrictLayoutProps[];

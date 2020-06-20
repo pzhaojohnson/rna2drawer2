@@ -1,6 +1,7 @@
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import { circleCenter } from './circleCenter';
 import { circleCircumference } from './circleCircumference';
+import StemInterface from './StemInterface';
 import Stem from './Stem';
 import UnpairedRegion from './UnpairedRegion';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
@@ -8,7 +9,7 @@ import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 
 class RoundLoop {
 
-  static circumference(st: Stem, generalProps: GeneralStrictLayoutProps): number {
+  static circumference(st: StemInterface, generalProps: GeneralStrictLayoutProps): number {
     let straightLength = Stem.width(generalProps) - 1;
     let numStraights = st.numBranches;
     if (!st.isOutermostStem()) {
@@ -23,11 +24,11 @@ class RoundLoop {
     return circleCircumference(straightLength, numStraights, remainingPolarLength);
   }
 
-  static radius(st: Stem, generalProps: GeneralStrictLayoutProps): number {
+  static radius(st: StemInterface, generalProps: GeneralStrictLayoutProps): number {
     return RoundLoop.circumference(st, generalProps) / (2 * Math.PI);
   }
 
-  static center(st: Stem, generalProps: GeneralStrictLayoutProps): { x: number, y: number } {
+  static center(st: StemInterface, generalProps: GeneralStrictLayoutProps): { x: number, y: number } {
     if (st.isOutermostStem()) {
       return { x: 0, y: 0 };
     } else if (st.numBranches === 0) {
@@ -55,7 +56,7 @@ class RoundLoop {
     }
   }
 
-  static originAngle(st: Stem, generalProps: GeneralStrictLayoutProps): number {
+  static originAngle(st: StemInterface, generalProps: GeneralStrictLayoutProps): number {
     if (st.isOutermostStem()) {
       return generalProps.rotation + Math.PI;
     } else {
@@ -63,7 +64,7 @@ class RoundLoop {
     }
   }
 
-  static polarLengthPerStem(st: Stem, generalProps: GeneralStrictLayoutProps): number {
+  static polarLengthPerStem(st: StemInterface, generalProps: GeneralStrictLayoutProps): number {
     let numStems = st.numBranches;
     if (!st.isOutermostStem()) {
       numStems++;
@@ -80,13 +81,13 @@ class RoundLoop {
     }
   }
 
-  static angleSpanPerStem(st: Stem, generalProps: GeneralStrictLayoutProps): number {
+  static angleSpanPerStem(st: StemInterface, generalProps: GeneralStrictLayoutProps): number {
     let polarLength = RoundLoop.polarLengthPerStem(st, generalProps);
     let circumference = RoundLoop.circumference(st, generalProps);
     return (2 * Math.PI) * (polarLength / circumference);
   }
 
-  static polarLengthBetweenTermini(outermostStem: Stem, generalProps: GeneralStrictLayoutProps): number {
+  static polarLengthBetweenTermini(outermostStem: StemInterface, generalProps: GeneralStrictLayoutProps): number {
     if (outermostStem.numBranches === 0) {
       return outermostStem.loopLength;
     } else {
@@ -98,7 +99,7 @@ class RoundLoop {
     }
   }
 
-  static terminusAngle5(outermostStem: Stem, generalProps: GeneralStrictLayoutProps): number {
+  static terminusAngle5(outermostStem: StemInterface, generalProps: GeneralStrictLayoutProps): number {
     let circumference = RoundLoop.circumference(outermostStem, generalProps);
     let polarLength = RoundLoop.polarLengthBetweenTermini(outermostStem, generalProps);
     return RoundLoop.originAngle(outermostStem, generalProps)
@@ -106,7 +107,7 @@ class RoundLoop {
       - ((2 * Math.PI) * ((polarLength / 2) / circumference));
   }
 
-  static terminusAngle3(outermostStem: Stem, generalProps: GeneralStrictLayoutProps): number {
+  static terminusAngle3(outermostStem: StemInterface, generalProps: GeneralStrictLayoutProps): number {
     let circumference = RoundLoop.circumference(outermostStem, generalProps);
     let polarLength = RoundLoop.polarLengthBetweenTermini(outermostStem, generalProps);
     return RoundLoop.originAngle(outermostStem, generalProps)

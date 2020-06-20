@@ -1,11 +1,12 @@
 import normalizeAngle from '../../../normalizeAngle';
+import StemInterface from './StemInterface';
 import Stem from './Stem';
 import UnpairedRegion from './UnpairedRegion';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import isKnotless from '../../../../parse/isKnotless';
 
-function _radialAngle(st: Stem, structureLength: number): number {
+function _radialAngle(st: StemInterface, structureLength: number): number {
   if (structureLength === 0) {
     return 0;
   } else if (st.isOutermostStem()) {
