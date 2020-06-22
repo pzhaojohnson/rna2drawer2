@@ -29,6 +29,16 @@ it('basic test of constructor', () => {
   expect(() => { new GeneralStrictLayoutProps() }).not.toThrow();
 });
 
+it('stemWidth getter', () => {
+  let gps = new GeneralStrictLayoutProps();
+  gps.basePairBondLength = 1.28;
+  expect(gps.stemWidth).toBeCloseTo(3.28);
+  gps.basePairBondLength = 0;
+  expect(gps.stemWidth).toBeCloseTo(2);
+  gps.basePairBondLength = 5.09;
+  expect(gps.stemWidth).toBeCloseTo(7.09);
+});
+
 it('deepCopy', () => {
   let gps1 = new GeneralStrictLayoutProps();
   gps1.outermostLoopShape = 'flat';

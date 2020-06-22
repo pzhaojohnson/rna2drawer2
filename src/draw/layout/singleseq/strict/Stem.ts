@@ -27,7 +27,7 @@ class Stem implements StemInterface {
   _loop!: (UnpairedRegion | Stem)[];
 
   static width(generalProps: GeneralStrictLayoutProps): number {
-    return 2 + generalProps.basePairBondLength;
+    return generalProps.stemWidth;
   }
 
   /**

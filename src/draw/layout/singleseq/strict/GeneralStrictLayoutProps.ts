@@ -44,6 +44,10 @@ export class GeneralStrictLayoutProps {
     this.terminiGap = 4;
   }
 
+  get stemWidth(): number {
+    return 2 + this.basePairBondLength;
+  }
+
   deepCopy(): GeneralStrictLayoutProps {
     let savableState = this.savableState();
     return GeneralStrictLayoutProps.fromSavedState(savableState);

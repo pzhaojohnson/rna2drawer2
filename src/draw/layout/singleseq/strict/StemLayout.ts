@@ -8,7 +8,7 @@ import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 class RoundLoop {
 
   static circumference(st: StemInterface, generalProps: GeneralStrictLayoutProps): number {
-    let straightLength = st.width - 1;
+    let straightLength = generalProps.stemWidth - 1;
     let numStraights = st.numBranches;
     if (!st.isOutermostStem()) {
       numStraights += 1;
@@ -71,7 +71,7 @@ class RoundLoop {
       return 0;
     } else {
       let radius = RoundLoop.radius(st, generalProps);
-      let basePairWidth = st.width - 1;
+      let basePairWidth = generalProps.stemWidth - 1;
       let halfBasePairWidth = basePairWidth / 2;
       halfBasePairWidth = Math.min(halfBasePairWidth, 0.9999 * radius);
       let basePairAngleSpan = 2 * Math.asin(halfBasePairWidth / radius);
@@ -89,7 +89,7 @@ class RoundLoop {
     if (outermostStem.numBranches === 0) {
       return outermostStem.loopLength;
     } else {
-      let stemWidth = outermostStem.width;
+      let stemWidth = generalProps.stemWidth;
       let stemPolarWidth = RoundLoop.polarLengthPerStem(outermostStem, generalProps);
       return outermostStem.loopLength
         - (outermostStem.numBranches * stemWidth)
