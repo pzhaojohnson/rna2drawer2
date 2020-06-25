@@ -13,6 +13,7 @@ import createTsToUsButtonForApp from './createTsToUsButtonForApp';
 import createUsToTsButtonForApp from './createUsToTsButtonForApp';
 import createFlatOutermostLoopButtonForApp from './createFlatOutermostLoopButtonForApp';
 import createRoundOutermostLoopButtonForApp from './createRoundOutermostLoopButtonForApp';
+import createEditSequenceIdButtonForApp from './createEditSequenceIdButtonForApp';
 import createEditLayoutButtonForApp from './createEditLayoutButtonForApp';
 
 import App from '../../App';
@@ -39,6 +40,7 @@ function createModeDropdownForApp(app: App): React.ReactElement {
         createFlatOutermostLoopButtonForApp(app),
         createRoundOutermostLoopButtonForApp(app),
         <DroppedSeparator key={uuidv1()} />,
+        createEditSequenceIdButtonForApp(app),
         createEditLayoutButtonForApp(app),
       ]}
     />

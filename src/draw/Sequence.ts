@@ -124,6 +124,10 @@ class Sequence implements SequenceInterface {
     return this._id;
   }
 
+  set id(i: string) {
+    this._id = i;
+  }
+
   get characters(): string {
     let cs = '';
     this.forEachBase((b: Base) => {
