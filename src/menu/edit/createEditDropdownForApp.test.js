@@ -12,6 +12,12 @@ import createCapitalizeButtonForApp from './createCapitalizeButtonForApp';
 jest.mock('./createDecapitalizeButtonForApp');
 import createDecapitalizeButtonForApp from './createDecapitalizeButtonForApp';
 
+jest.mock('./createTsToUsButtonForApp');
+import createTsToUsButtonForApp from './createTsToUsButtonForApp';
+
+jest.mock('./createUsToTsButtonForApp');
+import createUsToTsButtonForApp from './createUsToTsButtonForApp';
+
 jest.mock('./createFlatOutermostLoopButtonForApp');
 import createFlatOutermostLoopButtonForApp from './createFlatOutermostLoopButtonForApp';
 
@@ -66,6 +72,8 @@ describe('passes dropped elements', () => {
     createRedoButtonForApp.mockImplementation(() => 'RedoButton');
     createCapitalizeButtonForApp.mockImplementation(() => 'CapitalizeButton');
     createDecapitalizeButtonForApp.mockImplementation(() => 'DecapitalizeButton');
+    createTsToUsButtonForApp.mockImplementation(() => 'TsToUsButton');
+    createUsToTsButtonForApp.mockImplementation(() => 'UsToTsButton');
     createFlatOutermostLoopButtonForApp.mockImplementation(() => 'FlatOutermostLoopButton');
     createRoundOutermostLoopButtonForApp.mockImplementation(() => 'RoundOutermostLoopButton');
     createEditLayoutButtonForApp.mockImplementation(() => 'EditLayoutButton');
@@ -77,6 +85,8 @@ describe('passes dropped elements', () => {
       expect(createRedoButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createCapitalizeButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createDecapitalizeButtonForApp.mock.calls[0][0]).toBe(app);
+      expect(createTsToUsButtonForApp.mock.calls[0][0]).toBe(app);
+      expect(createUsToTsButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createFlatOutermostLoopButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createRoundOutermostLoopButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createEditLayoutButtonForApp.mock.calls[0][0]).toBe(app);
@@ -89,11 +99,13 @@ describe('passes dropped elements', () => {
       expect(des[2].type).toBe(DroppedSeparator);
       expect(des[3]).toBe('CapitalizeButton');
       expect(des[4]).toBe('DecapitalizeButton');
-      expect(des[5].type).toBe(DroppedSeparator);
-      expect(des[6]).toBe('FlatOutermostLoopButton');
-      expect(des[7]).toBe('RoundOutermostLoopButton');
-      expect(des[8].type).toBe(DroppedSeparator);
-      expect(des[9]).toBe('EditLayoutButton');
+      expect(des[5]).toBe('TsToUsButton');
+      expect(des[6]).toBe('UsToTsButton');
+      expect(des[7].type).toBe(DroppedSeparator);
+      expect(des[8]).toBe('FlatOutermostLoopButton');
+      expect(des[9]).toBe('RoundOutermostLoopButton');
+      expect(des[10].type).toBe(DroppedSeparator);
+      expect(des[11]).toBe('EditLayoutButton');
     });
   });
 });
