@@ -1,7 +1,8 @@
 import {
   hasCapitalBaseLetters,
+  onlyHasCapitalBaseLetters,
   capitalizeBaseLetters,
-  decapitalizeBaseletters,
+  decapitalizeBaseLetters,
 } from './capitalize';
 import Drawing from '../Drawing';
 import NodeSVG from '../NodeSVG';
@@ -18,6 +19,19 @@ it('hasCapitalBaseLetters function', () => {
   let b = drawing.getBaseAtOverallPosition(10);
   b.character = 's';
   expect(hasCapitalBaseLetters(drawing)).toBeFalsy();
+});
+
+it('onlyHasCapitalBaseLetters function', () => {
+  let drawing = new Drawing();
+  drawing.addTo(document.body, () => NodeSVG());
+  // test handling of multiple sequences
+  let seq1 = drawing.appendSequenceOutOfView('qwer', 'QWER');
+  let seq2 = drawing.appendSequenceOutOfView('asdf', 'ASDFASDF');
+  // only has uppercase letters
+  expect(onlyHasCapitalBaseLetters(drawing)).toBeTruthy();
+  // add a lowercase letter
+  seq2.getBaseAtPosition(3).character = 'd';
+  expect(onlyHasCapitalBaseLetters(drawing)).toBeFalsy();
 });
 
 it('capitalizeBaseLetters function', () => {
@@ -38,6 +52,6 @@ it('decapitalizeBaseLetters function', () => {
   drawing.appendSequenceOutOfView('ghjk', 'Ghjk');
   drawing.appendSequenceOutOfView('qwer', 'QWer');
   drawing.appendSequenceOutOfView('zxc', 'zXC');
-  decapitalizeBaseletters(drawing);
+  decapitalizeBaseLetters(drawing);
   expect(drawing.overallCharacters).toBe('ghjkqwerzxc');
 });

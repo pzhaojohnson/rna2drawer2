@@ -7,6 +7,8 @@ import DroppedSeparator from '../DroppedSeparator';
 
 import createUndoButtonForApp from './createUndoButtonForApp';
 import createRedoButtonForApp from './createRedoButtonForApp';
+import createCapitalizeButtonForApp from './createCapitalizeButtonForApp';
+import createDecapitalizeButtonForApp from './createDecapitalizeButtonForApp';
 import createFlatOutermostLoopButtonForApp from './createFlatOutermostLoopButtonForApp';
 import createRoundOutermostLoopButtonForApp from './createRoundOutermostLoopButtonForApp';
 import createEditLayoutButtonForApp from './createEditLayoutButtonForApp';
@@ -26,6 +28,9 @@ function createModeDropdownForApp(app: App): React.ReactElement {
       droppedElements={drawingIsEmpty ? [] : [
         createUndoButtonForApp(app),
         createRedoButtonForApp(app),
+        <DroppedSeparator key={uuidv1()} />,
+        createCapitalizeButtonForApp(app),
+        createDecapitalizeButtonForApp(app),
         <DroppedSeparator key={uuidv1()} />,
         createFlatOutermostLoopButtonForApp(app),
         createRoundOutermostLoopButtonForApp(app),
