@@ -27,6 +27,9 @@ import createRoundOutermostLoopButtonForApp from './createRoundOutermostLoopButt
 jest.mock('./createEditSequenceIdButtonForApp');
 import createEditSequenceIdButtonForApp from './createEditSequenceIdButtonForApp';
 
+jest.mock('./createEditBaseNumberingButtonForApp');
+import createEditBaseNumberingButtonForApp from './createEditBaseNumberingButtonForApp';
+
 jest.mock('./createEditLayoutButtonForApp');
 import createEditLayoutButtonForApp from './createEditLayoutButtonForApp';
 
@@ -80,6 +83,7 @@ describe('passes dropped elements', () => {
     createFlatOutermostLoopButtonForApp.mockImplementation(() => 'FlatOutermostLoopButton');
     createRoundOutermostLoopButtonForApp.mockImplementation(() => 'RoundOutermostLoopButton');
     createEditSequenceIdButtonForApp.mockImplementation(() => 'EditSequenceIdButton');
+    createEditBaseNumberingButtonForApp.mockImplementation(() => 'EditBaseNumberingButton');
     createEditLayoutButtonForApp.mockImplementation(() => 'EditLayoutButton');
     app.strictDrawing.isEmpty = () => false;
     let ed = createEditDropdownForApp(app);
@@ -94,6 +98,7 @@ describe('passes dropped elements', () => {
       expect(createFlatOutermostLoopButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createRoundOutermostLoopButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createEditSequenceIdButtonForApp.mock.calls[0][0]).toBe(app);
+      expect(createEditBaseNumberingButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createEditLayoutButtonForApp.mock.calls[0][0]).toBe(app);
     });
 
@@ -111,7 +116,8 @@ describe('passes dropped elements', () => {
       expect(des[9]).toBe('RoundOutermostLoopButton');
       expect(des[10].type).toBe(DroppedSeparator);
       expect(des[11]).toBe('EditSequenceIdButton');
-      expect(des[12]).toBe('EditLayoutButton');
+      expect(des[12]).toBe('EditBaseNumberingButton');
+      expect(des[13]).toBe('EditLayoutButton');
     });
   });
 });
