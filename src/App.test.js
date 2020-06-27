@@ -215,11 +215,13 @@ describe('redo method', () => {
 
 it('drawingChangedNotByInteraction method', () => {
   let app = new App(() => NodeSVG());
-  app.strictDrawingInteraction.reset = jest.fn();
-  app.renderPeripherals = jest.fn();
+  let spies = [
+    jest.spyOn(app.strictDrawingInteraction, 'reset'),
+    jest.spyOn(app, 'renderPeripherals'),
+    jest.spyOn(app, 'updateDocumentTitle'),
+  ];
   app.drawingChangedNotByInteraction();
-  expect(app.strictDrawingInteraction.reset.mock.calls.length).toBe(1);
-  expect(app.renderPeripherals.mock.calls.length).toBe(1);
+  spies.forEach(s => expect(s).toHaveBeenCalled());
 });
 
 it('binds undo', () => {

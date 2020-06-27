@@ -176,6 +176,7 @@ class App {
   drawingChangedNotByInteraction() {
     this._strictDrawingInteraction.reset();
     this.renderPeripherals();
+    this.updateDocumentTitle();
   }
 
   updateDocumentTitle() {
