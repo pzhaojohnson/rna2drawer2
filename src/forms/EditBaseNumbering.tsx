@@ -33,7 +33,7 @@ export class EditBaseNumbering extends React.Component {
 
     this.state = {
       offset: this.props.offset.toString(),
-      anchor: this.props.anchor.toString(),
+      anchor: (this.props.anchor + this.props.offset).toString(),
       increment: this.props.increment.toString(),
 
       errorMessage: '',
@@ -359,9 +359,15 @@ export class EditBaseNumbering extends React.Component {
 
   apply() {
     let offset = this.parseOffset();
+    if (offset === null) {
+      return;
+    }
     let anchor = this.parseAnchor();
+    if (anchor === null) {
+      return;
+    }
     let increment = this.parseIncrement();
-    if (offset === null || anchor === null || increment === null) {
+    if (increment === null) {
       return;
     }
     this.setState({ errorMessage: '', errorMessageKey: uuidv1() });
@@ -390,7 +396,8 @@ export class EditBaseNumbering extends React.Component {
       this.setState({ errorMessage: 'Numbering anchor must be an integer.', errorMessageKey: uuidv1() });
       return null;
     } else {
-      return a;
+      // use previous offset (not entered offset)
+      return a - this.props.offset;
     }
   }
 
