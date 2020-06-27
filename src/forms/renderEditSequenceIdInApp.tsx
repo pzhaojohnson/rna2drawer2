@@ -16,10 +16,10 @@ export function renderEditSequenceIdInApp(app: App) {
         apply={(id: string) => {
           let drawing = app.strictDrawing.drawing;
           let seq = drawing.getSequenceAtIndex(0);
-          if (seq) {
+          if (seq && id !== seq.id) {
+            app.pushUndo();
             seq.id = id;
             app.drawingChangedNotByInteraction();
-            app.updateDocumentTitle();
           }
         }}
         close={() => app.unmountCurrForm()}
