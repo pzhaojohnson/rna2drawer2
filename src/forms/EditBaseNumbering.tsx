@@ -18,6 +18,8 @@ interface Props {
 }
 
 export class EditBaseNumbering extends React.Component {
+  static defaultProps: Props;
+  
   props!: Props;
   state: {
     offset: string;
@@ -411,5 +413,11 @@ export class EditBaseNumbering extends React.Component {
     }
   }
 }
+
+EditBaseNumbering.defaultProps = {
+  offset: 0,
+  anchor: 0,
+  increment: 20,
+};
 
 export default EditBaseNumbering;
