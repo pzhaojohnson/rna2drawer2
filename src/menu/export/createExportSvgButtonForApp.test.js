@@ -1,7 +1,7 @@
 import createExportSvgButtonForApp from './createExportSvgButtonForApp';
 
-jest.mock('../../forms/renderExportSvgInApp');
-import renderExportSvgInApp from '../../forms/renderExportSvgInApp';
+jest.mock('../../forms/export/svg/renderExportSvgInApp');
+import renderExportSvgInApp from '../../forms/export/svg/renderExportSvgInApp';
 
 let app = {};
 

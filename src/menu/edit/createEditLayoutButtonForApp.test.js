@@ -1,7 +1,7 @@
 import createEditLayoutButtonForApp from './createEditLayoutButtonForApp';
 
-jest.mock('../../forms/renderEditLayoutInApp');
-import renderEditLayoutInApp from '../../forms/renderEditLayoutInApp';
+jest.mock('../../forms/edit/layout/renderEditLayoutInApp');
+import renderEditLayoutInApp from '../../forms/edit/layout/renderEditLayoutInApp';
 
 let app = {};
 

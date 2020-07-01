@@ -3,7 +3,7 @@ const uuidv1 = require('uuid/v1');
 
 import DroppedButton from '../DroppedButton';
 
-import renderEditLayoutInApp from '../../forms/renderEditLayoutInApp';
+import renderEditLayoutInApp from '../../forms/edit/layout/renderEditLayoutInApp';
 import App from '../../App';
 
 function createEditLayoutButtonForApp(app: App): React.ReactElement {

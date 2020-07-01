@@ -1,6 +1,6 @@
 import * as React from 'react';
 const uuidv1 = require('uuid/v1');
-import parseFileExtension from '../parse/parseFileExtension';
+import parseFileExtension from '../../../parse/parseFileExtension';
 
 interface Props {
   width: string | number;

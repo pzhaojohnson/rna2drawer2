@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ExportPptx from './ExportPptx';
-import App from '../App';
+import App from '../../../App';
 
 function renderExportPptxInApp(app: App) {
   app.renderForm(() => (

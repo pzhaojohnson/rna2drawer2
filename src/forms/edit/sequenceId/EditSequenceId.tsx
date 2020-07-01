@@ -1,7 +1,7 @@
 import * as React from 'react';
 const uuidv1 = require('uuid/v1');
-import { CloseButton } from './CloseButton';
-import isAllWhitespace from '../parse/isAllWhitespace';
+import { CloseButton } from '../../CloseButton';
+import isAllWhitespace from '../../../parse/isAllWhitespace';
 
 interface Props {
   currId: string;

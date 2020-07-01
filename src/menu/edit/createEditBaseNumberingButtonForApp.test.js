@@ -1,7 +1,7 @@
 import createEditBaseNumberingButtonForApp from './createEditBaseNumberingButtonForApp';
 import App from '../../App';
 import NodeSVG from '../../draw/NodeSVG';
-import * as RenderEditBaseNumberingInApp from '../../forms/renderEditBaseNumberingInApp';
+import * as RenderEditBaseNumberingInApp from '../../forms/edit/baseNumbering/renderEditBaseNumberingInApp';
 
 let app = new App(() => NodeSVG());
 let b = createEditBaseNumberingButtonForApp(app);

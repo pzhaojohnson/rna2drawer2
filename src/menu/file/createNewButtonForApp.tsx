@@ -4,7 +4,7 @@ const uuidv1 = require('uuid/v1');
 import DroppedButton from '../DroppedButton';
 
 import openNewTab from '../openNewTab';
-import renderCreateNewDrawingInApp from '../../forms/renderCreateNewDrawingInApp';
+import renderCreateNewDrawingInApp from '../../forms/new/renderCreateNewDrawingInApp';
 import App from '../../App';
 
 function createNewButtonForApp(app: App): React.ReactElement {

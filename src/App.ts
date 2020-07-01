@@ -20,7 +20,7 @@ import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 import createMenuForApp from './menu/createMenuForApp';
 import createInfobarForApp from './infobar/createInfobarForApp';
 
-import renderCreateNewDrawingInApp from './forms/renderCreateNewDrawingInApp';
+import renderCreateNewDrawingInApp from './forms/new/renderCreateNewDrawingInApp';
 
 import saveDrawingForApp from './export/saveDrawingForApp';
 

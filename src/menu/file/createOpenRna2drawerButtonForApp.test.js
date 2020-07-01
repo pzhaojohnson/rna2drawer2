@@ -3,8 +3,8 @@ import createOpenRna2drawerButtonForApp from './createOpenRna2drawerButtonForApp
 jest.mock('../openNewTab');
 import openNewTab from '../openNewTab';
 
-jest.mock('../../forms/renderOpenRna2drawerInApp');
-import renderOpenRna2drawerInApp from '../../forms/renderOpenRna2drawerInApp';
+jest.mock('../../forms/open/rna2drawer/renderOpenRna2drawerInApp');
+import renderOpenRna2drawerInApp from '../../forms/open/rna2drawer/renderOpenRna2drawerInApp';
 
 import DroppedButton from '../DroppedButton';
 

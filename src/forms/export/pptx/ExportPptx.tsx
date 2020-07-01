@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { CloseButton } from './CloseButton';
+import { CloseButton } from '../../CloseButton';
 const uuidv1 = require('uuid/v1');
-import Base from '../draw/Base';
-import { formatSvgForExport } from '../export/formatSvgForExport';
-import offerFileForDownload from '../export/offerFileForDownload';
-import { SvgInterface as Svg } from '../draw/SvgInterface';
+import Base from '../../../draw/Base';
+import { pointsToPixels } from '../../../export/pointsToPixels';
+import { formatSvgForExport } from '../../../export/formatSvgForExport';
+import { createPptxFromSvg } from '../../../export/createPptxFromSvg';
+import { SvgInterface as Svg } from '../../../draw/SvgInterface';
+import PptxGenJS from 'pptxgenjs';
 
 interface Props {
   SVG: () => Svg;
@@ -12,7 +14,7 @@ interface Props {
   close?: () => void;
 }
 
-class ExportSvg extends React.Component {
+class ExportPptx extends React.Component {
   props!: Props;
   state: {
     baseFontSize: string;
@@ -76,6 +78,8 @@ class ExportSvg extends React.Component {
         {this.baseFontSizeSection()}
         {this.errorMessageSection()}
         {this.exportSection()}
+        {this.powerPointVersionNote()}
+        {this.tertiaryBondsNote()}
       </div>
     );
   }
@@ -98,7 +102,7 @@ class ExportSvg extends React.Component {
           fontSize: '24px',
         }}
       >
-        Export SVG
+        Export PPTX
       </p>
     );
   }
@@ -203,7 +207,7 @@ class ExportSvg extends React.Component {
     return (
       <div
         key={this.state.errorMessageKey}
-        id={this.state.errorMessageKey} 
+        id={this.state.errorMessageKey}
       >
         {this.errorMessageText()}
       </div>
@@ -262,6 +266,35 @@ class ExportSvg extends React.Component {
       </button>
     );
   }
+  
+  powerPointVersionNote() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: '16px 40px 0px 40px',
+          fontSize: '12px',
+        }}
+      >
+        <b>Note:</b> Exported PPTX files require PowerPoint 2016 or later to open.
+      </p>
+    );
+  }
+
+  tertiaryBondsNote() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: '8px 40px 0px 40px',
+          fontSize: '12px',
+        }}
+      >
+        <b>Note:</b> Tertiary bonds are included as SVG images in exported PPTX files
+        and can be converted to PowerPoint objects via the "Convert to Shape" feature.
+      </p>
+    );
+  }
 
   export() {
     let bfs = this.parseBaseFrontSize();
@@ -273,8 +306,10 @@ class ExportSvg extends React.Component {
       errorMessageKey: uuidv1(),
     });
     let scaling = bfs / Base.mostRecentProps().fontSize;
-    let svgString = this.getSvgStringForExport(scaling);
-    this.offerSvgFileForDownload(svgString);
+    let pres = this.createPptx(scaling);
+    if (pres) {
+      this.savePptx(pres);
+    }
   }
 
   parseBaseFrontSize() {
@@ -293,20 +328,20 @@ class ExportSvg extends React.Component {
       });
       return null;
     }
-    return bfs;
+    return pointsToPixels(bfs);
   }
 
   /**
-   * Returns an empty string if either of the SVG or getSvgString callback
+   * Returns null if either of the SVG or getSvgString callback
    * props are missing.
    */
-  getSvgStringForExport(scaling: number): string {
+  createPptx(scaling: number): (PptxGenJS | null) {
     if (!this.props.SVG) {
       console.error('Missing SVG callback.');
-      return '';
+      return null;
     } else if (!this.props.getSvgString) {
       console.error('Missing getSvgString callback.');
-      return '';
+      return null;
     }
     let div = document.createElement('div');
     div.style.cssText = 'max-width: 0px; max-height: 0px';
@@ -319,21 +354,17 @@ class ExportSvg extends React.Component {
     svg.clear();
     svg.svg(content);
     formatSvgForExport(svg, scaling);
-    let svgString = svg.svg();
+    let pres = createPptxFromSvg(svg);
     document.body.removeChild(div);
-    return svgString;
+    return pres;
   }
 
-  offerSvgFileForDownload(svgString: string) {
+  savePptx(pres: PptxGenJS) {
     let name = 'Drawing';
     if (document.title) {
       name = document.title;
     }
-    offerFileForDownload({
-      name: name + '.svg',
-      type: 'text/plain',
-      contents: svgString,
-    });
+    pres.writeFile(name + '.pptx');
   }
 
   close() {
@@ -345,4 +376,4 @@ class ExportSvg extends React.Component {
   }
 }
 
-export default ExportSvg;
+export default ExportPptx;

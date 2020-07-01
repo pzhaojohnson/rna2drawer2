@@ -1,7 +1,7 @@
 import * as React from 'react';
 const uuidv1 = require('uuid/v1');
 import DroppedButton from '../DroppedButton';
-import { renderEditSequenceIdInApp } from '../../forms/renderEditSequenceIdInApp';
+import { renderEditSequenceIdInApp } from '../../forms/edit/sequenceId/renderEditSequenceIdInApp';
 import App from '../../App';
 
 export function createEditSequenceIdButtonForApp(app: App): React.ReactElement {

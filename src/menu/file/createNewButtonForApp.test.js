@@ -3,8 +3,8 @@ import createNewButtonForApp from './createNewButtonForApp';
 jest.mock('../openNewTab');
 import openNewTab from '../openNewTab';
 
-jest.mock('../../forms/renderCreateNewDrawingInApp');
-import renderCreateNewDrawingInApp from '../../forms/renderCreateNewDrawingInApp';
+jest.mock('../../forms/new/renderCreateNewDrawingInApp');
+import renderCreateNewDrawingInApp from '../../forms/new/renderCreateNewDrawingInApp';
 
 import DroppedButton from '../DroppedButton';
 

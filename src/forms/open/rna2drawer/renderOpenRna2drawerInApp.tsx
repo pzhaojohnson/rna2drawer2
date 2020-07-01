@@ -1,7 +1,7 @@
 import * as React from 'react';
 import OpenRna2drawer from './OpenRna2drawer';
-import App from '../App';
-import { StrictDrawingSavableState } from '../draw/StrictDrawingInterface';
+import App from '../../../App';
+import { StrictDrawingSavableState } from '../../../draw/StrictDrawingInterface';
 
 function renderOpenRna2drawerInApp(app: App) {
   app.renderForm(() => (

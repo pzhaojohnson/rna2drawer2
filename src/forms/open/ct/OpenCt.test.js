@@ -3,7 +3,7 @@ import { shallow, mount, render } from 'enzyme';
 const fs = require('fs');
 
 import { OpenCt } from './OpenCt';
-import { parseCt } from '../parse/parseCt';
+import { parseCt } from '../../../parse/parseCt';
 
 function getTitleAndContent(componentWrapper) {
   return componentWrapper.getDOMNode().childNodes[0].childNodes[0].childNodes[0];

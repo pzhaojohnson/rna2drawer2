@@ -1,7 +1,7 @@
 import createEditSequenceIdButtonForApp from './createEditSequenceIdButtonForApp';
 import App from '../../App';
 import NodeSVG from '../../draw/NodeSVG';
-import * as RenderEditSequenceIdInApp from '../../forms/renderEditSequenceIdInApp';
+import * as RenderEditSequenceIdInApp from '../../forms/edit/sequenceId/renderEditSequenceIdInApp';
 
 let app = new App(() => NodeSVG());
 let b = createEditSequenceIdButtonForApp(app);

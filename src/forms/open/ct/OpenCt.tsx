@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   parseCt,
   numSequencesInCT,
-} from '../parse/parseCt';
+} from '../../../parse/parseCt';
 const uuidv1 = require('uuid/v1');
 
 interface SubmitCallback {

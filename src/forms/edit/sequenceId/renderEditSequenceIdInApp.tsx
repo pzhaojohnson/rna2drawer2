@@ -1,6 +1,6 @@
 import * as React from 'react';
 import EditSequenceId from './EditSequenceId';
-import App from '../App';
+import App from '../../../App';
 
 export function renderEditSequenceIdInApp(app: App) {
   app.renderForm(() => {

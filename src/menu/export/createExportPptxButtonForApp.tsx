@@ -3,7 +3,7 @@ const uuidv1 = require('uuid/v1');
 
 import DroppedButton from '../DroppedButton';
 
-import renderExportPptxInApp from '../../forms/renderExportPptxInApp';
+import renderExportPptxInApp from '../../forms/export/pptx/renderExportPptxInApp';
 import App from '../../App';
 
 function createExportPptxButtonForApp(app: App): React.ReactElement {

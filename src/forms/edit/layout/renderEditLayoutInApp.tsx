@@ -1,6 +1,6 @@
 import * as React from 'react';
 import EditLayout from './EditLayout';
-import App from '../App';
+import App from '../../../App';
 
 function renderEditLayoutInApp(app: App) {
   app.renderForm(() => {

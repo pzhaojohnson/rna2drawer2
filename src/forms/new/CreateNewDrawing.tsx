@@ -1,12 +1,12 @@
 import * as React from 'react';
-import parseSequence from '../parse/parseSequence';
+import parseSequence from '../../parse/parseSequence';
 import {
   parseDotBracket,
   hasUnmatchedUpPartner,
   lastUnmatchedUpPartner,
   hasUnmatchedDownPartner,
   lastUnmatchedDownPartner,
-} from '../parse/parseDotBracket';
+} from '../../parse/parseDotBracket';
 const uuidv1 = require('uuid/v1');
 
 const _EXAMPLE_INPUTS = [

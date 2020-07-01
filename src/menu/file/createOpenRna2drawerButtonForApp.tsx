@@ -4,7 +4,7 @@ const uuidv1 = require('uuid/v1');
 import DroppedButton from '../DroppedButton';
 
 import openNewTab from '../openNewTab';
-import renderOpenRna2drawerInApp from '../../forms/renderOpenRna2drawerInApp';
+import renderOpenRna2drawerInApp from '../../forms/open/rna2drawer/renderOpenRna2drawerInApp';
 import App from '../../App';
 
 function createOpenRna2drawerButtonForApp(app: App): React.ReactElement {

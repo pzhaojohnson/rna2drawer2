@@ -3,7 +3,7 @@ import {
   EditBaseNumbering,
   NumberingProps,
 } from './EditBaseNumbering';
-import App from '../App';
+import App from '../../../App';
 
 export function renderEditBaseNumberingInApp(app: App) {
   app.renderForm(() => {

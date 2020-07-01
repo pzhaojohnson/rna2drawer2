@@ -1,7 +1,7 @@
 import createExportPptxButtonForApp from './createExportPptxButtonForApp';
 
-jest.mock('../../forms/renderExportPptxInApp');
-import renderExportPptxInApp from '../../forms/renderExportPptxInApp';
+jest.mock('../../forms/export/pptx/renderExportPptxInApp');
+import renderExportPptxInApp from '../../forms/export/pptx/renderExportPptxInApp';
 
 let app = {};
 

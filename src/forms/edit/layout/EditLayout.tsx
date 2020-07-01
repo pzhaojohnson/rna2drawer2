@@ -1,42 +1,51 @@
 import * as React from 'react';
 const uuidv1 = require('uuid/v1');
-import { CloseButton } from './CloseButton';
-import parseNonemptyFloat from '../parse/number/parseNonemptyFloat';
 
-export interface NumberingProps {
-  offset: number;
-  anchor: number;
-  increment: number;
+import { CloseButton } from '../../CloseButton';
+
+import normalizeAngle from '../../../draw/normalizeAngle';
+
+import isAllWhitespace from '../../../parse/isAllWhitespace';
+import parseNonnegativeFloat from '../../../parse/number/parseNonnegativeFloat';
+
+interface LayoutProps {
+  rotation: number;
+  terminiGap: number;
 }
 
 interface Props {
-  offset: number;
-  anchor: number;
-  increment: number;
-  apply?(props: NumberingProps): void;
-  close?(): void;
+  rotation: number;
+  terminiGap: number;
+  apply?: (lps: LayoutProps) => void;
+  close?: () => void;
 }
 
-export class EditBaseNumbering extends React.Component {
+class EditLayout extends React.Component {
   static defaultProps: Props;
-  
+
   props!: Props;
   state: {
-    offset: string;
-    anchor: string;
-    increment: string;
+    rotation: string;
+    terminiGap: string;
 
     errorMessage: string;
     errorMessageKey: string;
-  };
+  }
 
   constructor(props: Props) {
     super(props);
 
+    let rn = normalizeAngle(this.props.rotation);
+    rn *= 360 / (2 * Math.PI);
+    let rs = rn.toFixed(2);
+    rn = Number(rs);
+
+    let tgs = this.props.terminiGap.toFixed(2);
+    let tgn = Number(tgs);
+    
     this.state = {
-      offset: this.props.offset.toString(),
-      anchor: (this.props.anchor + this.props.offset).toString(),
-      increment: this.props.increment.toString(),
+      rotation: rn.toString(),
+      terminiGap: tgn.toString(),
 
       errorMessage: '',
       errorMessageKey: uuidv1(),
@@ -84,9 +93,8 @@ export class EditBaseNumbering extends React.Component {
         }}
       >
         {this.titleSection()}
-        {this.offsetField()}
-        {this.anchorField()}
-        {this.incrementField()}
+        {this.rotationField()}
+        {this.terminiGapField()}
         {this.errorMessageSection()}
         {this.applySection()}
       </div>
@@ -111,7 +119,7 @@ export class EditBaseNumbering extends React.Component {
           fontSize: '24px',
         }}
       >
-        Edit Numbering
+        Edit Layout
       </p>
     );
   }
@@ -130,7 +138,7 @@ export class EditBaseNumbering extends React.Component {
     );
   }
 
-  offsetField() {
+  rotationField() {
     return (
       <div
         style={{
@@ -140,13 +148,13 @@ export class EditBaseNumbering extends React.Component {
           alignItems: 'center',
         }}
       >
-        {this.offsetLabel()}
-        {this.offsetInput()}
+        {this.rotationLabel()}
+        {this.rotationInput()}
       </div>
     );
   }
 
-  offsetLabel() {
+  rotationLabel() {
     return (
       <p
         className={'unselectable-text'}
@@ -157,17 +165,17 @@ export class EditBaseNumbering extends React.Component {
           display: 'inline-block',
         }}
       >
-        Offset:
+        Rotation (degrees):
       </p>
     );
   }
 
-  offsetInput() {
+  rotationInput() {
     return (
       <input
         type={'text'}
-        value={this.state.offset}
-        onChange={event => this.onOffsetInputChange(event)}
+        value={this.state.rotation}
+        onChange={event => this.onRotationInputChange(event)}
         spellCheck={'false'}
         style={{
           width: '180px',
@@ -178,29 +186,29 @@ export class EditBaseNumbering extends React.Component {
     );
   }
   
-  onOffsetInputChange(event: React.ChangeEvent) {
+  onRotationInputChange(event: React.ChangeEvent) {
     this.setState({
-      offset: (event.target as HTMLInputElement).value,
+      rotation: (event.target as HTMLInputElement).value,
     });
   }
 
-  anchorField() {
+  terminiGapField() {
     return (
       <div
         style={{
-          margin: '12px 40px 0px 40px',
+          margin: '16px 40px 18px 40px',
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
         }}
       >
-        {this.anchorLabel()}
-        {this.anchorInput()}
+        {this.terminiGapLabel()}
+        {this.terminiGapInput()}
       </div>
     );
   }
 
-  anchorLabel() {
+  terminiGapLabel() {
     return (
       <p
         className={'unselectable-text'}
@@ -211,17 +219,17 @@ export class EditBaseNumbering extends React.Component {
           display: 'inline-block',
         }}
       >
-        Anchor:
+        Termini Gap:
       </p>
     );
   }
 
-  anchorInput() {
+  terminiGapInput() {
     return (
       <input
         type={'text'}
-        value={this.state.anchor}
-        onChange={event => this.onAnchorInputChange(event)}
+        value={this.state.terminiGap}
+        onChange={event => this.onTerminiGapInputChange(event)}
         spellCheck={'false'}
         style={{
           width: '180px',
@@ -232,63 +240,9 @@ export class EditBaseNumbering extends React.Component {
     );
   }
   
-  onAnchorInputChange(event: React.ChangeEvent) {
+  onTerminiGapInputChange(event: React.ChangeEvent) {
     this.setState({
-      anchor: (event.target as HTMLInputElement).value,
-    });
-  }
-
-  incrementField() {
-    return (
-      <div
-        style={{
-          margin: '12px 40px 18px 40px',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        {this.incrementLabel()}
-        {this.incrementInput()}
-      </div>
-    );
-  }
-
-  incrementLabel() {
-    return (
-      <p
-        className={'unselectable-text'}
-        style={{
-          flexGrow: 1,
-          marginRight: '8px',
-          fontSize: '12px',
-          display: 'inline-block',
-        }}
-      >
-        Increment:
-      </p>
-    );
-  }
-
-  incrementInput() {
-    return (
-      <input
-        type={'text'}
-        value={this.state.increment}
-        onChange={event => this.onIncrementInputChange(event)}
-        spellCheck={'false'}
-        style={{
-          width: '180px',
-          fontSize: '12px',
-          textAlign: 'right',
-        }}
-      />
-    );
-  }
-  
-  onIncrementInputChange(event: React.ChangeEvent) {
-    this.setState({
-      increment: (event.target as HTMLInputElement).value,
+      terminiGap: (event.target as HTMLInputElement).value,
     });
   }
 
@@ -360,64 +314,60 @@ export class EditBaseNumbering extends React.Component {
   }
 
   apply() {
-    let offset = this.parseOffset();
-    if (offset === null) {
+    let r = this.parseRotation();
+    if (!r && r != 0) {
       return;
     }
-    let anchor = this.parseAnchor();
-    if (anchor === null) {
+    let tg = this.parseTerminiGap();
+    if (!tg && tg != 0) {
       return;
     }
-    let increment = this.parseIncrement();
-    if (increment === null) {
-      return;
-    }
-    this.setState({ errorMessage: '', errorMessageKey: uuidv1() });
     if (this.props.apply) {
       this.props.apply({
-        offset: offset,
-        anchor: anchor,
-        increment: increment,
+        rotation: r,
+        terminiGap: tg,
       });
+    } else {
+      console.error('Missing apply callback.');
     }
   }
 
-  parseOffset(): (number | null) {
-    let o = parseNonemptyFloat(this.state.offset);
-    if (o === null || Math.floor(o) !== o) {
-      this.setState({ errorMessage: 'Numbering offset must be an integer.', errorMessageKey: uuidv1() });
+  /**
+   * Returns null if the entered rotation is invalid.
+   */
+  parseRotation(): (number | null) {
+    let n = Number(this.state.rotation);
+    if (!Number.isFinite(n) || isAllWhitespace(this.state.rotation)) {
+      this.setState({
+        errorMessage: 'Rotation must be a number.',
+        errorMessageKey: uuidv1(),
+      });
       return null;
-    } else {
-      return o;
     }
+    n *= (2 * Math.PI) / 360;
+    n = normalizeAngle(n);
+    return n;
   }
 
-  parseAnchor(): (number | null) {
-    let a = parseNonemptyFloat(this.state.anchor);
-    if (a === null || Math.floor(a) !== a) {
-      this.setState({ errorMessage: 'Numbering anchor must be an integer.', errorMessageKey: uuidv1() });
+  /**
+   * Returns null if the entered termini gap is invalid.
+   */
+  parseTerminiGap(): (number | null) {
+    let tg = parseNonnegativeFloat(this.state.terminiGap);
+    if (!tg && tg != 0) {
+      this.setState({
+        errorMessage: 'Termini gap must be a nonnegative number.',
+        errorMessageKey: uuidv1(),
+      });
       return null;
-    } else {
-      // use previous offset (not entered offset)
-      return a - this.props.offset;
     }
-  }
-
-  parseIncrement(): (number | null) {
-    let i = parseNonemptyFloat(this.state.increment);
-    if (i === null || Math.floor(i) !== i || i < 1) {
-      this.setState({ errorMessage: 'Numbering increment must be a positive integer.', errorMessageKey: uuidv1() });
-      return null;
-    } else {
-      return i;
-    }
+    return tg;
   }
 }
 
-EditBaseNumbering.defaultProps = {
-  offset: 0,
-  anchor: 0,
-  increment: 20,
+EditLayout.defaultProps = {
+  rotation: 0,
+  terminiGap: 0,
 };
 
-export default EditBaseNumbering;
+export default EditLayout;

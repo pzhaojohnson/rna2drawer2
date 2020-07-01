@@ -1,6 +1,6 @@
 import * as React from 'react';
 import CreateNewDrawing from './CreateNewDrawing';
-import App from '../App';
+import App from '../../App';
 
 function renderCreateNewDrawingInApp(app: App) {
   app.renderForm(() => (
