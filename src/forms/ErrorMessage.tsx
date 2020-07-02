@@ -14,26 +14,32 @@ export class ErrorMessage extends React.Component {
 
   render() {
     let id = uuidv1();
-    if (!this.props.message) {
-      return <div key={id} id={id} style={{ margin: this.props.margin }} ></div>;
-    } else {
-      return (
-        <div key={id} id={id} style={{ margin: this.props.margin }} >
-          <p
-            className={'unselectable-text'}
-            style={{
-              margin: this.props.margin,
-              fontSize: this.props.fontSize,
-              color: 'red',
-              animationName: 'fadein',
-              animationDuration: '0.75s',
-            }}
-          >
-            {this.props.message}
-          </p>
-        </div>
-      );
-    }
+    return (
+      <div
+        key={id}
+        id={id}
+        style={{ margin: this.props.margin }}
+      >
+        {this.props.message ? this.p() : null}
+      </div>
+    );
+  }
+
+  p() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: this.props.margin,
+          fontSize: this.props.fontSize,
+          color: 'red',
+          animationName: 'fadein',
+          animationDuration: '0.75s',
+        }}
+      >
+        {this.props.message}
+      </p>
+    );
   }
 }
 

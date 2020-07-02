@@ -20,23 +20,13 @@ function getErrorMessage() {
   return container.childNodes[0];
 }
 
-describe('renders with unique ID', () => {
+it('renders with unique ID', () => {
   /* Necessary for the fade in animation to occur when the component
   is rerendered without the message or other props changing. */
-
-  it('with empty message', () => {
-    act(() => {
-      render(<ErrorMessage message={''} />, container);
-    });
-    expect(getErrorMessage().id).toBeTruthy();
+  act(() => {
+    render(<ErrorMessage />, container);
   });
-
-  it('with nonempty message', () => {
-    act(() => {
-      render(<ErrorMessage message={'Error'} />, container);
-    });
-    expect(getErrorMessage().id).toBeTruthy();
-  });
+  expect(getErrorMessage().id).toBeTruthy();
 });
 
 describe('message prop', () => {
@@ -56,22 +46,12 @@ describe('message prop', () => {
 });
 
 describe('margin prop', () => {
-  describe('renders with given margin prop', () => {
-    it('with empty message', () => {
-      act(() => {
-        render(<ErrorMessage message={''} margin={'37px 112px'} />, container);
-      });
-      let style = window.getComputedStyle(getErrorMessage());
-      expect(style.margin).toBe('37px 112px');
+  it('renders with given margin prop', () => {
+    act(() => {
+      render(<ErrorMessage margin={'37px 112px'} />, container);
     });
-
-    it('with nonempty message', () => {
-      act(() => {
-        render(<ErrorMessage message={'nonempty'} margin={'112.3px'} />, container);
-      });
-      let style = window.getComputedStyle(getErrorMessage());
-      expect(style.margin).toBe('112.3px');
-    });
+    let style = window.getComputedStyle(getErrorMessage());
+    expect(style.margin).toBe('37px 112px');
   });
 
   it('is zero by default', () => {
@@ -81,6 +61,13 @@ describe('margin prop', () => {
     let style = window.getComputedStyle(getErrorMessage());
     expect(style.margin).toBe('0px');
   });
+});
+
+it('does not render p element when message is empty', () => {
+  act(() => {
+    render(<ErrorMessage message={''} />, container);
+  });
+  expect(getErrorMessage().childNodes.length).toBe(0);
 });
 
 describe('fontSize prop', () => {
