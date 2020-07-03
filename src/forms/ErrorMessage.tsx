@@ -37,7 +37,7 @@ export class ErrorMessage extends React.Component {
           animationDuration: '0.75s',
         }}
       >
-        {this.props.message}
+        <b>{this.props.message}</b>
       </p>
     );
   }

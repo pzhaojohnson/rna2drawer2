@@ -1,7 +1,7 @@
 import createEditSequenceIdButtonForApp from './createEditSequenceIdButtonForApp';
 import App from '../../App';
 import NodeSVG from '../../draw/NodeSVG';
-import * as RenderEditSequenceIdInApp from '../../forms/edit/sequenceId/renderEditSequenceIdInApp';
+import EditSequenceId from '../../forms/edit/sequenceId/EditSequenceId';
 
 let app = new App(() => NodeSVG());
 let b = createEditSequenceIdButtonForApp(app);
@@ -15,8 +15,8 @@ it('creates with text', () => {
 });
 
 it('onClick callback renders form', () => {
-  let spy = jest.spyOn(RenderEditSequenceIdInApp, 'renderEditSequenceIdInApp');
+  let spy = jest.spyOn(app, 'renderForm');
   b.props.onClick();
-  expect(spy).toHaveBeenCalled();
-  expect(spy.mock.calls[0][0]).toBe(app);
+  let factory = spy.mock.calls[0][0];
+  expect(factory().type).toBe(EditSequenceId);
 });

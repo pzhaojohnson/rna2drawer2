@@ -10,7 +10,7 @@ interface Props {
   onClick: () => void;
 }
 
-class CloseButton extends React.Component {
+export class CloseButton extends React.Component {
   static defaultProps: Props;
 
   props!: Props;
@@ -83,6 +83,4 @@ CloseButton.defaultProps = {
   onClick: () => {},
 };
 
-export {
-  CloseButton,
-};
+export default CloseButton;
