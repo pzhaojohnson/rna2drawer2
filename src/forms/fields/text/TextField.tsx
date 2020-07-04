@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from '../../ErrorMessage';
 
 interface Props {
   name: string;

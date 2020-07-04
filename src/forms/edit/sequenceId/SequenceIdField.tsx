@@ -1,6 +1,6 @@
 import * as React from 'react';
 import isAllWhitespace from '../../../parse/isAllWhitespace';
-import TextField from '../../TextField';
+import TextField from '../../fields/text/TextField';
 import App from '../../../App';
 
 interface Props {
