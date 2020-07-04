@@ -18,11 +18,13 @@ describe('create static method', () => {
     it('can set the rotation', () => {
       let app = new App(() => NodeSVG());
       let ele = RotationField.create(app);
-      let spy = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      let spy1 = jest.spyOn(app.strictDrawing, 'applyLayout');
+      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
       ele.props.setRotation(-30);
       // normalizes and converts to radians
       expect(app.strictDrawing.generalLayoutProps().rotation).toBeCloseTo(11 * Math.PI / 6);
-      expect(spy).toHaveBeenCalled(); // refreshes form
+      expect(spy1).toHaveBeenCalled(); // updates layout
+      expect(spy2).toHaveBeenCalled(); // refreshes form
       app.undo();
       expect(app.strictDrawing.generalLayoutProps().rotation).toBeCloseTo(0); // pushed undo
     });

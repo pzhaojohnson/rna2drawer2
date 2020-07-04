@@ -30,9 +30,11 @@ export class RotationField extends React.Component {
             app.pushUndo();
             generalProps.rotation = r;
             app.strictDrawing.setGeneralLayoutProps(generalProps);
+            app.strictDrawing.applyLayout();
             app.drawingChangedNotByInteraction();
           }
         }}
+        minLabelWidth={'64px'}
       />
     );
   }

@@ -1,12 +1,10 @@
 import createEditLayoutButtonForApp from './createEditLayoutButtonForApp';
-
-jest.mock('../../forms/edit/layout/renderEditLayoutInApp');
-import renderEditLayoutInApp from '../../forms/edit/layout/renderEditLayoutInApp';
-
-let app = {};
+import App from '../../App';
+import NodeSVG from '../../draw/NodeSVG';
+import EditLayout from '../../forms/edit/layout/EditLayout';
 
 describe('createEditLayoutButtonForApp function', () => {
-  renderEditLayoutInApp.mockImplementation(() => {});
+  let app = new App(() => NodeSVG());
   let elb = createEditLayoutButtonForApp(app);
 
   it('passes a key', () => {
@@ -17,8 +15,10 @@ describe('createEditLayoutButtonForApp function', () => {
     expect(elb.props.text).toBe('Layout');
   });
 
-  it('passes onClick callback', () => {
+  it('onClick callback opens form', () => {
+    let spy = jest.spyOn(app, 'renderForm');
     elb.props.onClick();
-    expect(renderEditLayoutInApp.mock.calls[0][0]).toBe(app);
+    let factory = spy.mock.calls[0][0];
+    expect(factory().type).toBe(EditLayout);
   });
 });

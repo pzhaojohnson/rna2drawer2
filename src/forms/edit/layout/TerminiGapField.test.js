@@ -18,11 +18,13 @@ describe('create static method', () => {
       let app = new App(() => NodeSVG());
       let ele = TerminiGapField.create(app);
       let prev = app.strictDrawing.generalLayoutProps().terminiGap;
-      let spy = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      let spy1 = jest.spyOn(app.strictDrawing, 'applyLayout');
+      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
       ele.props.setTerminiGap(94.821);
       // sets termini gap
       expect(app.strictDrawing.generalLayoutProps().terminiGap).toBe(94.821);
-      expect(spy).toHaveBeenCalled(); // refreshes field
+      expect(spy1).toHaveBeenCalled(); // updates layout
+      expect(spy2).toHaveBeenCalled(); // refreshes field
       app.undo();
       expect(app.strictDrawing.generalLayoutProps().terminiGap).toBe(prev); // pushed undo
     });
