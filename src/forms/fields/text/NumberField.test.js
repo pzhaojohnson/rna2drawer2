@@ -9,7 +9,7 @@ it('passes name, initialValue and minLabelWidth props', () => {
   let ele = comp.render();
   expect(ele.props.name).toBe('asdf zxcv');
   expect(ele.props.initialValue).toBe('123.5');
-  expect(minLabelWidth).toBe('78px');
+  expect(ele.props.minLabelWidth).toBe('78px');
 });
 
 describe('checkValue callback', () => {
