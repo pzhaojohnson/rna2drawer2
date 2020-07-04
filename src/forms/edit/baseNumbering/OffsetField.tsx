@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TextField from '../../fields/text/TextField';
+import IntegerField from '../../fields/text/IntegerField';
 import App from '../../../App';
 
 interface Props {
@@ -37,22 +37,10 @@ export class OffsetField extends React.Component {
 
   render(): React.ReactElement {
     return (
-      <TextField
+      <IntegerField
         name={'Offset'}
-        initialValue={this.props.currOffset.toString()}
-        checkValue={(v: string) => {
-          let o = Number.parseInt(v);
-          if (typeof o !== 'number' || !Number.isFinite(o)) {
-            return 'Numbering offset must be a number.';
-          } else if (Math.floor(o) !== o) {
-            return 'Numbering offset must be an integer.';
-          }
-          return '';
-        }}
-        set={(v: string) => {
-          let o = Number.parseInt(v);
-          this.props.setOffset(o);
-        }}
+        initialValue={this.props.currOffset}
+        set={(n: number) => this.props.setOffset(n)}
         minLabelWidth={this.props.minLabelWidth}
       />
     );

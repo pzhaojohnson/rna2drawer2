@@ -1,6 +1,5 @@
 import * as React from 'react';
-import TextField from '../../fields/text/TextField';
-import App from '../../../App';
+import IntegerField from '../../fields/text/IntegerField';import App from '../../../App';
 
 interface Props {
   currAnchor: number;
@@ -40,22 +39,10 @@ export class AnchorField extends React.Component {
 
   render(): React.ReactElement {
     return (
-      <TextField
+      <IntegerField
         name={'Anchor'}
-        initialValue={this.props.currAnchor.toString()}
-        checkValue={(v: string) => {
-          let a = Number.parseInt(v);
-          if (typeof a !== 'number' || !Number.isFinite(a)) {
-            return 'Numbering anchor must be a number.';
-          } else if (Math.floor(a) !== a) {
-            return 'Numbering anchor must be an integer.';
-          }
-          return '';
-        }}
-        set={(v: string) => {
-          let a = Number.parseInt(v);
-          this.props.setAnchor(a);
-        }}
+        initialValue={this.props.currAnchor}
+        set={(n: number) => this.props.setAnchor(n)}
         minLabelWidth={this.props.minLabelWidth}
       />
     );

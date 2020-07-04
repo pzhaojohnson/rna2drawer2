@@ -1,6 +1,7 @@
 import OffsetField from './OffsetField';
 import App from '../../../App';
 import NodeSVG from '../../../draw/NodeSVG';
+import IntegerField from '../../fields/text/IntegerField';
 
 describe('create static method', () => {
   describe('passing the current offset', () => {
@@ -65,32 +66,17 @@ describe('create static method', () => {
 });
 
 describe('render method', () => {
-  it('passes currAnchor and minLabelWidth props', () => {
-    let comp = new OffsetField({ currOffset: 208, minLabelWidth: '81px' });
-    let ele = comp.render();
-    expect(ele.props.initialValue).toBe('208');
-    expect(ele.props.minLabelWidth).toBe('81px');
-  });
-
-  describe('checkValue callback', () => {
+  it('renders as an integer field', () => {
     let comp = new OffsetField({ currOffset: 0 });
     let ele = comp.render();
+    expect(ele.type).toBe(IntegerField);
+  });
 
-    it('rejects non-numbers', () => {
-      expect(ele.props.checkValue('qwer')).toBeTruthy();
-    });
-
-    it('rejects nonfinite numbers', () => {
-      let nf = 'NaN';
-      expect(typeof Number.parseInt(nf)).toBe('number');
-      expect(ele.props.checkValue(nf)).toBeTruthy();
-    });
-
-    it('accepts integers', () => {
-      expect(ele.props.checkValue('12')).toBeFalsy(); // positive
-      expect(ele.props.checkValue('0')).toBeFalsy(); // zero
-      expect(ele.props.checkValue('-6')).toBeFalsy(); // negative
-    });
+  it('passes currOffset and minLabelWidth props', () => {
+    let comp = new OffsetField({ currOffset: 208, minLabelWidth: '81px' });
+    let ele = comp.render();
+    expect(ele.props.initialValue).toBe(208);
+    expect(ele.props.minLabelWidth).toBe('81px');
   });
 
   describe('set callback', () => {
@@ -98,17 +84,9 @@ describe('render method', () => {
       let setOffset = jest.fn();
       let comp = new OffsetField({ currOffset: 0, setOffset: setOffset });
       let ele = comp.render();
-      ele.props.set('33');
+      ele.props.set(33);
       expect(setOffset).toHaveBeenCalled();
       expect(setOffset.mock.calls[0][0]).toBe(33);
-    });
-
-    it('parses integers from floats', () => {
-      let setOffset = jest.fn();
-      let comp = new OffsetField({ currOffset: 0, setOffset: setOffset });
-      let ele = comp.render();
-      ele.props.set('12.5');
-      expect(setOffset.mock.calls[0][0]).toBe(12);
     });
   });
 });

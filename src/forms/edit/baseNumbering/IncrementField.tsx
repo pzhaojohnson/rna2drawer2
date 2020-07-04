@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TextField from '../../fields/text/TextField';
+import PositiveIntegerField from '../../fields/text/PositiveIntegerField';
 import App from '../../../App';
 
 interface Props {
@@ -37,24 +37,10 @@ export class IncrementField extends React.Component {
 
   render(): React.ReactElement {
     return (
-      <TextField
+      <PositiveIntegerField
         name={'Increment'}
-        initialValue={this.props.currIncrement.toString()}
-        checkValue={(v: string) => {
-          let i = Number.parseInt(v);
-          if (typeof i !== 'number' || !Number.isFinite(i)) {
-            return 'Numbering increment must be a number.';
-          } else if (Math.floor(i) !== i) {
-            return 'Numbering increment must be an integer.';
-          } else if (i < 1) {
-            return 'Numbering increment must be positive.';
-          }
-          return '';
-        }}
-        set={(v: string) => {
-          let i = Number.parseInt(v);
-          this.props.setIncrement(i);
-        }}
+        initialValue={this.props.currIncrement}
+        set={(n: number) => this.props.setIncrement(n)}
         minLabelWidth={this.props.minLabelWidth}
       />
     );

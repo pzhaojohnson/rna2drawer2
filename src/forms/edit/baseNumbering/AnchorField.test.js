@@ -1,6 +1,7 @@
 import AnchorField from './AnchorField';
 import App from '../../../App';
 import NodeSVG from '../../../draw/NodeSVG';
+import IntegerField from '../../fields/text/IntegerField';
 
 describe('create static method', () => {
   describe('passing the current anchor', () => {
@@ -67,32 +68,17 @@ describe('create static method', () => {
 });
 
 describe('render method', () => {
+  it('renders as an integer field', () => {
+    let comp = new AnchorField({ currAnchor: 0 });
+    let ele = comp.render();
+    expect(ele.type).toBe(IntegerField);
+  });
+
   it('passes currAnchor and minLabelWidth props', () => {
     let comp = new AnchorField({ currAnchor: 212, minLabelWidth: '92px' });
     let ele = comp.render();
-    expect(ele.props.initialValue).toBe('212');
+    expect(ele.props.initialValue).toBe(212);
     expect(ele.props.minLabelWidth).toBe('92px');
-  });
-
-  describe('checkValue callback', () => {
-    let comp = new AnchorField({ currAnchor: 0 });
-    let ele = comp.render();
-
-    it('rejects non-numbers', () => {
-      expect(ele.props.checkValue('asdf')).toBeTruthy();
-    });
-
-    it('rejects nonfinite numbers', () => {
-      let nf = 'NaN';
-      expect(typeof Number.parseInt(nf)).toBe('number');
-      expect(ele.props.checkValue(nf)).toBeTruthy();
-    });
-
-    it('accepts integers', () => {
-      expect(ele.props.checkValue('5')).toBeFalsy(); // positive
-      expect(ele.props.checkValue('0')).toBeFalsy(); // zero
-      expect(ele.props.checkValue('-11')).toBeFalsy(); // negative
-    });
   });
 
   describe('set callback', () => {
@@ -100,17 +86,9 @@ describe('render method', () => {
       let setAnchor = jest.fn();
       let comp = new AnchorField({ currAnchor: 0, setAnchor: setAnchor });
       let ele = comp.render();
-      ele.props.set('102');
+      ele.props.set(102);
       expect(setAnchor).toHaveBeenCalled();
       expect(setAnchor.mock.calls[0][0]).toBe(102);
-    });
-
-    it('parses an integer from a float', () => {
-      let setAnchor = jest.fn();
-      let comp = new AnchorField({ currAnchor: 0, setAnchor: setAnchor });
-      let ele = comp.render();
-      ele.props.set('10.3');
-      expect(setAnchor.mock.calls[0][0]).toBe(10);
     });
   });
 });

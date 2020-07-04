@@ -1,6 +1,7 @@
 import IncrementField from './IncrementField';
 import App from '../../../App';
 import NodeSVG from '../../../draw/NodeSVG';
+import PositiveIntegerField from '../../fields/text/PositiveIntegerField';
 
 describe('create static method', () => {
   describe('passing the current increment', () => {
@@ -65,35 +66,17 @@ describe('create static method', () => {
 });
 
 describe('render method', () => {
+  it('renders as a positive integer field', () => {
+    let comp = new IncrementField({ currIncrement: 1 });
+    let ele = comp.render();
+    expect(ele.type).toBe(PositiveIntegerField);
+  });
+
   it('passes currIncrement and minLabelWidth props', () => {
     let comp = new IncrementField({ currIncrement: 23, minLabelWidth: '206px' });
     let ele = comp.render();
-    expect(ele.props.initialValue).toBe('23');
+    expect(ele.props.initialValue).toBe(23);
     expect(ele.props.minLabelWidth).toBe('206px');
-  });
-
-  describe('checkValue callback', () => {
-    let comp = new IncrementField({ currIncrement: 20 });
-    let ele = comp.render();
-
-    it('rejects non-numbers', () => {
-      expect(ele.props.checkValue('asdf')).toBeTruthy();
-    });
-
-    it('rejects nonfinite numbers', () => {
-      let nf = 'NaN';
-      expect(typeof Number.parseInt(nf)).toBe('number');
-      expect(ele.props.checkValue(nf)).toBeTruthy();
-    });
-
-    it('rejects nonpositive numbers', () => {
-      expect(ele.props.checkValue('-2')).toBeTruthy(); // negative
-      expect(ele.props.checkValue('0')).toBeTruthy(); // zero
-    });
-
-    it('accepts positive numbers', () => {
-      expect(ele.props.checkValue('8')).toBeFalsy();
-    });
   });
 
   describe('set callback', () => {
@@ -101,17 +84,9 @@ describe('render method', () => {
       let setIncrement = jest.fn();
       let comp = new IncrementField({ currIncrement: 20, setIncrement: setIncrement });
       let ele = comp.render();
-      ele.props.set('12');
+      ele.props.set(12);
       expect(setIncrement).toHaveBeenCalled();
       expect(setIncrement.mock.calls[0][0]).toBe(12);
-    });
-
-    it('parses an integer from a float', () => {
-      let setIncrement = jest.fn();
-      let comp = new IncrementField({ currIncrement: 20, setIncrement: setIncrement });
-      let ele = comp.render();
-      ele.props.set('9.2');
-      expect(setIncrement.mock.calls[0][0]).toBe(9);
     });
   });
 });
