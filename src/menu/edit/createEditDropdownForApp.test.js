@@ -18,12 +18,6 @@ import createTsToUsButtonForApp from './createTsToUsButtonForApp';
 jest.mock('./createUsToTsButtonForApp');
 import createUsToTsButtonForApp from './createUsToTsButtonForApp';
 
-jest.mock('./createFlatOutermostLoopButtonForApp');
-import createFlatOutermostLoopButtonForApp from './createFlatOutermostLoopButtonForApp';
-
-jest.mock('./createRoundOutermostLoopButtonForApp');
-import createRoundOutermostLoopButtonForApp from './createRoundOutermostLoopButtonForApp';
-
 jest.mock('./createEditSequenceIdButtonForApp');
 import createEditSequenceIdButtonForApp from './createEditSequenceIdButtonForApp';
 
@@ -80,8 +74,6 @@ describe('passes dropped elements', () => {
     createDecapitalizeButtonForApp.mockImplementation(() => 'DecapitalizeButton');
     createTsToUsButtonForApp.mockImplementation(() => 'TsToUsButton');
     createUsToTsButtonForApp.mockImplementation(() => 'UsToTsButton');
-    createFlatOutermostLoopButtonForApp.mockImplementation(() => 'FlatOutermostLoopButton');
-    createRoundOutermostLoopButtonForApp.mockImplementation(() => 'RoundOutermostLoopButton');
     createEditSequenceIdButtonForApp.mockImplementation(() => 'EditSequenceIdButton');
     createEditBaseNumberingButtonForApp.mockImplementation(() => 'EditBaseNumberingButton');
     createEditLayoutButtonForApp.mockImplementation(() => 'EditLayoutButton');
@@ -95,8 +87,6 @@ describe('passes dropped elements', () => {
       expect(createDecapitalizeButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createTsToUsButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createUsToTsButtonForApp.mock.calls[0][0]).toBe(app);
-      expect(createFlatOutermostLoopButtonForApp.mock.calls[0][0]).toBe(app);
-      expect(createRoundOutermostLoopButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createEditSequenceIdButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createEditBaseNumberingButtonForApp.mock.calls[0][0]).toBe(app);
       expect(createEditLayoutButtonForApp.mock.calls[0][0]).toBe(app);
@@ -112,12 +102,9 @@ describe('passes dropped elements', () => {
       expect(des[5]).toBe('TsToUsButton');
       expect(des[6]).toBe('UsToTsButton');
       expect(des[7].type).toBe(DroppedSeparator);
-      expect(des[8]).toBe('FlatOutermostLoopButton');
-      expect(des[9]).toBe('RoundOutermostLoopButton');
-      expect(des[10].type).toBe(DroppedSeparator);
-      expect(des[11]).toBe('EditSequenceIdButton');
-      expect(des[12]).toBe('EditBaseNumberingButton');
-      expect(des[13]).toBe('EditLayoutButton');
+      expect(des[8]).toBe('EditSequenceIdButton');
+      expect(des[9]).toBe('EditBaseNumberingButton');
+      expect(des[10]).toBe('EditLayoutButton');
     });
   });
 });

@@ -11,8 +11,6 @@ import createCapitalizeButtonForApp from './createCapitalizeButtonForApp';
 import createDecapitalizeButtonForApp from './createDecapitalizeButtonForApp';
 import createTsToUsButtonForApp from './createTsToUsButtonForApp';
 import createUsToTsButtonForApp from './createUsToTsButtonForApp';
-import createFlatOutermostLoopButtonForApp from './createFlatOutermostLoopButtonForApp';
-import createRoundOutermostLoopButtonForApp from './createRoundOutermostLoopButtonForApp';
 import createEditSequenceIdButtonForApp from './createEditSequenceIdButtonForApp';
 import createEditBaseNumberingButtonForApp from './createEditBaseNumberingButtonForApp';
 import createEditLayoutButtonForApp from './createEditLayoutButtonForApp';
@@ -37,9 +35,6 @@ function createModeDropdownForApp(app: App): React.ReactElement {
         createDecapitalizeButtonForApp(app),
         createTsToUsButtonForApp(app),
         createUsToTsButtonForApp(app),
-        <DroppedSeparator key={uuidv1()} />,
-        createFlatOutermostLoopButtonForApp(app),
-        createRoundOutermostLoopButtonForApp(app),
         <DroppedSeparator key={uuidv1()} />,
         createEditSequenceIdButtonForApp(app),
         createEditBaseNumberingButtonForApp(app),
