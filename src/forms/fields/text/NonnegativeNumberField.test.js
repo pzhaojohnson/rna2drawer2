@@ -21,7 +21,7 @@ it('passes name, initialValue and minLabelWidth props', () => {
 
 describe('checkValue callback', () => {
   it('rejects negative numbers', () => {
-    let comp = new NonnegativeNumberField({ initialValue: 0 });
+    let comp = new NonnegativeNumberField({ name: 'name', initialValue: 0 });
     let ele = comp.render();
     expect(ele.props.checkValue(-5)).toBeTruthy(); // negative
     expect(ele.props.checkValue(-0.2)).toBeTruthy() // negative

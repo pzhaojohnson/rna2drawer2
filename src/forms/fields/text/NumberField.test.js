@@ -14,14 +14,14 @@ it('passes name, initialValue and minLabelWidth props', () => {
 
 describe('checkValue callback', () => {
   it('rejects non-numbers', () => {
-    let comp = new NumberField({ initialValue: 0 });
+    let comp = new NumberField({ name: 'name', initialValue: 0 });
     let ele = comp.render();
     expect(ele.props.checkValue('')).toBeTruthy(); // empty
     expect(ele.props.checkValue('qwer')).toBeTruthy(); // not a number
   });
 
   it('rejects nonfinite numbers', () => {
-    let comp = new NumberField({ initialValue: 0 });
+    let comp = new NumberField({ name: 'name', initialValue: 0 });
     let ele = comp.render();
     let nf = 'NaN';
     expect(typeof Number.parseFloat(nf)).toBe('number'); // does parse as a number
@@ -29,7 +29,7 @@ describe('checkValue callback', () => {
   });
 
   it('accepts numbers when no custom checkValue callback given', () => {
-    let comp = new NumberField({ initialValue: 0 });
+    let comp = new NumberField({ name: 'name', initialValue: 0 });
     let ele = comp.render();
     expect(ele.props.checkValue('1.1')).toBeFalsy(); // a positive number
     expect(ele.props.checkValue('-10.9')).toBeFalsy(); // a negative number
@@ -37,6 +37,7 @@ describe('checkValue callback', () => {
 
   it('rejects numbers rejected by custom checkValue callback', () => {
     let comp = new NumberField({
+      name: 'name',
       initialValue: 0,
       checkValue: v => v == '2' ? 'Rejected' : '',
     });
@@ -46,6 +47,7 @@ describe('checkValue callback', () => {
 
   it('accepts numbers accepted by custom checkValue callback', () => {
     let comp = new NumberField({
+      name: 'name',
       initialValue: 0,
       checkValue: v => v == '2' ? '' : 'Rejected',
     });

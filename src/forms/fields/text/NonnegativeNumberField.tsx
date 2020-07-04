@@ -1,5 +1,6 @@
 import * as React from 'react';
 import NumberField from './NumberField';
+import capitalizeFirstLetter from './capitalizeFirstLetter';
 
 interface Props {
   name: string;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 export class NonnegativeNumberField extends React.Component {
+  static defaultProps: Props;
+
   props!: Props;
 
   render(): React.ReactElement {
@@ -17,8 +20,9 @@ export class NonnegativeNumberField extends React.Component {
         name={this.props.name}
         initialValue={this.props.initialValue}
         checkValue={(n: number) => {
+          let name = capitalizeFirstLetter(this.props.name.toLowerCase());
           if (n < 0) {
-            return this.props.name + ' cannot be less than zero.';
+            return name + ' cannot be less than zero.';
           }
           return '';
         }}
