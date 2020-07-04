@@ -26,7 +26,7 @@ export class RotationField extends React.Component {
           r = normalizeAngle(r);
           let generalProps = app.strictDrawing.generalLayoutProps();
           let currRotation = generalProps.rotation;
-          if (!anglesAreClose(r, currRotation)) {
+          if (!anglesAreClose(r, currRotation, 2)) {
             app.pushUndo();
             generalProps.rotation = r;
             app.strictDrawing.setGeneralLayoutProps(generalProps);
