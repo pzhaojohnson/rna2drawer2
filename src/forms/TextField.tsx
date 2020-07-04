@@ -6,11 +6,12 @@ interface Props {
   initialValue: string;
   checkValue: (v: string) => string;
   set: (v: string) => void;
+  minLabelWidth?: string;
 }
 
 export class TextField extends React.Component {
   static defaultProps: Props;
-  static wasEntered: boolean;
+  static nameOfLastEntered: string;
 
   props!: Props;
   state: {
@@ -48,6 +49,7 @@ export class TextField extends React.Component {
         className={'unselectable-text'}
         style={{
           marginRight: '12px',
+          minWidth: this.props.minLabelWidth,
           fontSize: '12px',
           display: 'inline-block',
         }}
@@ -65,7 +67,7 @@ export class TextField extends React.Component {
         onChange={event => this.onInputChange(event)}
         onBlur={() => this.onBlur()}
         onKeyUp={event => this.onKeyUp(event)}
-        autoFocus={TextField.wasEntered}
+        autoFocus={TextField.nameOfLastEntered == this.props.name}
         spellCheck={'false'}
         style={{ flexGrow: 1, fontSize: '12px', textAlign: 'right' }}
       />
@@ -82,13 +84,13 @@ export class TextField extends React.Component {
   }
 
   onBlur() {
-    TextField.wasEntered = false;
+    TextField.nameOfLastEntered = '';
     this.onBlurAndEnter();
   }
 
   onKeyUp(event: React.KeyboardEvent) {
     if (event.key.toLowerCase() == 'enter') {
-      TextField.wasEntered = true;
+      TextField.nameOfLastEntered = this.props.name;
       this.onBlurAndEnter();
     }
   }
@@ -105,6 +107,7 @@ TextField.defaultProps = {
   initialValue: '',
   checkValue: () => '',
   set: () => console.error('Missing set callback.'),
+  minLabelWidth: 'auto',
 };
 
 export default TextField;

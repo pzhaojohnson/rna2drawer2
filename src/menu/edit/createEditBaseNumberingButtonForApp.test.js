@@ -1,7 +1,7 @@
 import createEditBaseNumberingButtonForApp from './createEditBaseNumberingButtonForApp';
 import App from '../../App';
 import NodeSVG from '../../draw/NodeSVG';
-import * as RenderEditBaseNumberingInApp from '../../forms/edit/baseNumbering/renderEditBaseNumberingInApp';
+import EditBaseNumbering from '../../forms/edit/baseNumbering/EditBaseNumbering';
 
 let app = new App(() => NodeSVG());
 let b = createEditBaseNumberingButtonForApp(app);
@@ -15,8 +15,8 @@ it('creates with text', () => {
 });
 
 it('onClick callback opens form', () => {
-  let spy = jest.spyOn(RenderEditBaseNumberingInApp, 'renderEditBaseNumberingInApp');
+  let spy = jest.spyOn(app, 'renderForm');
   b.props.onClick();
-  expect(spy).toHaveBeenCalled();
-  expect(spy.mock.calls[0][0]).toBe(app);
+  let factory = spy.mock.calls[0][0];
+  expect(factory().type).toBe(EditBaseNumbering);
 });
