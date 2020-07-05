@@ -26,7 +26,7 @@ export function highlightComplements(mode: FoldingMode) {
     (mode.minSelected as number) - 1,
     mode.maxSelected as number,
   );
-  for (let p5 = 1; p5 <= overall.length - selected.length; p5++) {
+  for (let p5 = 1; p5 <= overall.length - selected.length + 1; p5++) {
     let p3 = p5 + selected.length - 1;
     let complementary = areComplementary(selected, overall.substring(p5 - 1, p3));
     let overlapsSelected = mode.overlapsSelected(p5, p3);
