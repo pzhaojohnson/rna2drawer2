@@ -121,6 +121,10 @@ class StrictDrawingInteraction {
     }
   }
 
+  get tertiaryBondsInteraction(): TertiaryBondsInteraction {
+    return this._tertiaryBondsInteraction;
+  }
+
   pivoting(): boolean {
     return this._currMode.className == 'PivotingMode';
   }

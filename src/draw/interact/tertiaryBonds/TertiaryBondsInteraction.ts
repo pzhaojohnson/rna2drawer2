@@ -74,6 +74,10 @@ class TertiaryBondsInteraction {
     }
   }
 
+  get selected(): (TertiaryBond | null | undefined) {
+    return this._selected;
+  }
+
   _dehover() {
     if (this._hovered) {
       dehighlightTertiaryBond(this._hovered);
