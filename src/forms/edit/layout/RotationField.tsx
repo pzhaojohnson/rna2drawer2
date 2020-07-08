@@ -2,7 +2,7 @@ import * as React from 'react';
 import NumberField from '../../fields/text/NumberField';
 import App from '../../../App';
 import normalizeAngle from '../../../draw/normalizeAngle';
-import anglesAreClose from '../../../draw/anglesAreClose';
+import degreesAreClose from './degreesAreClose';
 
 interface Props {
   currRotation: number;
@@ -22,12 +22,12 @@ export class RotationField extends React.Component {
       <RotationField
         currRotation={currRotation}
         setRotation={(r: number) => {
-          r *= (2 * Math.PI) / 360;
-          r = normalizeAngle(r);
           let generalProps = app.strictDrawing.generalLayoutProps();
-          let currRotation = generalProps.rotation;
-          if (!anglesAreClose(r, currRotation, 2)) {
+          let currRotation = generalProps.rotation * 360 / (2 * Math.PI);
+          if (!degreesAreClose(r, currRotation, 2)) {
             app.pushUndo();
+            r *= (2 * Math.PI) / 360;
+            r = normalizeAngle(r);
             generalProps.rotation = r;
             app.strictDrawing.setGeneralLayoutProps(generalProps);
             app.strictDrawing.applyLayout();
