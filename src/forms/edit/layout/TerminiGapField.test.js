@@ -7,10 +7,10 @@ describe('create static method', () => {
   it('passes the current termini gap', () => {
     let app = new App(() => NodeSVG());
     let generalProps = app.strictDrawing.generalLayoutProps();
-    generalProps.terminiGap = 18.92873561;
+    generalProps.terminiGap = 18.92873;
     app.strictDrawing.setGeneralLayoutProps(generalProps);
     let ele = TerminiGapField.create(app);
-    expect(ele.props.currTerminiGap).toBe(18.93); // trimmed decimal places
+    expect(ele.props.currTerminiGap).toBe(18.92873);
   });
 
   describe('setTerminiGap callback', () => {

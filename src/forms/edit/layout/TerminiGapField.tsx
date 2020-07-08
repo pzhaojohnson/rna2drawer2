@@ -1,7 +1,6 @@
 import * as React from 'react';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 import App from '../../../App';
-import areClose from '../../../draw/areClose';
 
 interface Props {
   currTerminiGap: number;
@@ -14,13 +13,12 @@ export class TerminiGapField extends React.Component {
 
   static create(app: App): React.ReactElement {
     let currTerminiGap = app.strictDrawing.generalLayoutProps().terminiGap;
-    currTerminiGap = Number.parseFloat(currTerminiGap.toFixed(2));
     return (
       <TerminiGapField
         currTerminiGap={currTerminiGap}
         setTerminiGap={(tg: number) => {
           let generalProps = app.strictDrawing.generalLayoutProps();
-          if (!areClose(tg, generalProps.terminiGap, 2)) {
+          if (tg != generalProps.terminiGap) {
             app.pushUndo();
             generalProps.terminiGap = tg;
             app.strictDrawing.setGeneralLayoutProps(generalProps);
