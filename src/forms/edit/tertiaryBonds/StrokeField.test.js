@@ -1,40 +1,81 @@
 import StrokeField from './StrokeField';
 import ColorField from '../../fields/ColorField';
 
-describe('create static method', () => {
-  let app = {
+function mockApp() {
+  return {
     strictDrawingInteraction: {
       tertiaryBondsInteraction: {},
     },
+    pushUndo: () => {},
+    drawingChangedNotByInteraction: () => {},
   };
+}
 
-  describe('no tertiary bond selected', () => {
-    app.strictDrawingInteraction.tertiaryBondsInteraction.selected = undefined;
-    let ele = StrokeField.create(app);
+let app = null;
 
-    it('passes a default value for current stroke', () => {
-      expect(ele.props.currStroke).toBe('#000000');
+beforeEach(() => {
+  app = mockApp();
+});
+
+afterEach(() => {
+  app = null;
+});
+
+describe('create static method', () => {
+  describe('passing the current stroke', () => {
+    it('when no tertiary bond is selected', () => {
+      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = undefined;
+      let ele = StrokeField.create(app);
+      expect(ele.props.currStroke).toBe('#000000'); // passes a default value
     });
 
-    it('setStroke callback does not throw', () => {
-      expect(() => ele.props.setStroke('#123456')).not.toThrow();
-    });
-  });
-
-  describe('a tertiary bond is selected', () => {
-    let selected = {};
-    app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-    
-    it('passes current stroke', () => {
-      selected.stroke = '#ab1155';
+    it('when a tertiary bond is selected', () => {
+      let selected = { stroke: '#ab1155' };
+      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
       let ele = StrokeField.create(app);
       expect(ele.props.currStroke).toBe('#ab1155');
     });
+  });
 
-    describe('setStroke callback', () => {
+  describe('setStroke callback', () => {
+    it('has no effect when no tertiary bond is selected', () => {
+      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = undefined;
+      let ele = StrokeField.create(app);
+      let spy1 = jest.spyOn(app, 'pushUndo');
+      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      expect(() => ele.props.setStroke('#123456')).not.toThrow();
+      expect(spy1).not.toHaveBeenCalled(); // does not push undo
+      expect(spy2).not.toHaveBeenCalled(); // does not refresh app
+    });
+
+    it('pushes undo and refreshes app when setting stroke', () => {
+      let selected = { stroke: '#abcdef' };
+      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
+      let ele = StrokeField.create(app);
+      let spy1 = jest.spyOn(app, 'pushUndo');
+      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      ele.props.setStroke('#aa32ff');
+      expect(selected.stroke).toBe('#aa32ff'); // sets stroke
+      expect(spy1).toHaveBeenCalled(); // pushes undo
+      expect(spy2).toHaveBeenCalled(); // refreshes app
+    });
+
+    it('has no effect if given stroke is same as current stroke', () => {
+      let selected = { stroke: '#aa32bb' };
+      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
+      let ele = StrokeField.create(app);
+      let spy1 = jest.spyOn(app, 'pushUndo');
+      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      ele.props.setStroke('#aa32bb');
+      expect(selected.stroke).toBe('#aa32bb'); // does not change
+      expect(spy1).not.toHaveBeenCalled(); // does not push undo
+      expect(spy2).not.toHaveBeenCalled(); // does not refresh app
+    });
+
+    describe('setting fill alongside stroke', () => {
       it('has fill', () => {
-        selected.stroke = '#123456';
-        selected.fill = '#123456';
+        let selected = { stroke: '#123456', fill: '#123456' };
+        app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
         let ele = StrokeField.create(app);
         ele.props.setStroke('#aa32ff');
         expect(selected.stroke).toBe('#aa32ff');
@@ -42,8 +83,8 @@ describe('create static method', () => {
       });
 
       it('fill is falsy', () => {
-        selected.stroke = '#abcdef';
-        selected.fill = undefined;
+        let selected = { stroke: '#abcdef', fill: undefined };
+        app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
         let ele = StrokeField.create(app);
         ele.props.setStroke('#aaccbb');
         expect(selected.stroke).toBe('#aaccbb');
@@ -51,8 +92,8 @@ describe('create static method', () => {
       });
 
       it('fill is none', () => {
-        selected.stroke = '#aabbcc';
-        selected.fill = 'none';
+        let selected = { stroke: '#aabbcc', fill: 'none' };
+        app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
         let ele = StrokeField.create(app);
         ele.props.setStroke('#aafd21');
         expect(selected.stroke).toBe('#aafd21');

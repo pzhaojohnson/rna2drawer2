@@ -19,11 +19,13 @@ export class StrokeField extends React.Component {
         setStroke={(s: string) => {
           let interaction = app.strictDrawingInteraction.tertiaryBondsInteraction;
           let selected = interaction.selected;
-          if (selected) {
+          if (selected && s != selected.stroke) {
+            app.pushUndo();
             selected.stroke = s;
             if (selected.fill && selected.fill.toLowerCase() != 'none') {
               selected.fill = s;
             }
+            app.drawingChangedNotByInteraction();
           }
         }}
       />
