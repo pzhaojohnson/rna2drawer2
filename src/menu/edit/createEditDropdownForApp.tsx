@@ -13,6 +13,7 @@ import createTsToUsButtonForApp from './createTsToUsButtonForApp';
 import createUsToTsButtonForApp from './createUsToTsButtonForApp';
 import createEditSequenceIdButtonForApp from './createEditSequenceIdButtonForApp';
 import createEditBaseNumberingButtonForApp from './createEditBaseNumberingButtonForApp';
+import createEditTertiaryBondsButtonForApp from './createEditTertiaryBondsButtonForApp';
 import createEditLayoutButtonForApp from './createEditLayoutButtonForApp';
 
 import App from '../../App';
@@ -38,6 +39,7 @@ function createModeDropdownForApp(app: App): React.ReactElement {
         <DroppedSeparator key={uuidv1()} />,
         createEditSequenceIdButtonForApp(app),
         createEditBaseNumberingButtonForApp(app),
+        createEditTertiaryBondsButtonForApp(app),
         createEditLayoutButtonForApp(app),
       ]}
     />
