@@ -59,11 +59,13 @@ describe('renderPeripherals method', () => {
     app.renderMenu = jest.fn();
     app.renderInfobar = jest.fn();
     app.renderForm = jest.fn();
+    app.updateDocumentTitle = jest.fn();
     app.renderPeripherals();
     expect(app.renderMenu.mock.calls.length).toBe(1);
     expect(app.renderInfobar.mock.calls.length).toBe(1);
     expect(app.renderForm.mock.calls.length).toBe(1);
     expect(app.renderForm.mock.calls[0][0]).toBe(formFactory);
+    expect(app.updateDocumentTitle.mock.calls.length).toBe(1);
   });
 
   it('when there is no form', () => {
@@ -72,10 +74,12 @@ describe('renderPeripherals method', () => {
     app.renderMenu = jest.fn();
     app.renderInfobar = jest.fn();
     app.renderForm = jest.fn();
+    app.updateDocumentTitle = jest.fn();
     app.renderPeripherals();
     expect(app.renderMenu.mock.calls.length).toBe(1);
     expect(app.renderInfobar.mock.calls.length).toBe(1);
     expect(app.renderForm.mock.calls.length).toBe(0);
+    expect(app.updateDocumentTitle.mock.calls.length).toBe(1);
   });
 });
 
@@ -218,7 +222,6 @@ it('drawingChangedNotByInteraction method', () => {
   let spies = [
     jest.spyOn(app.strictDrawingInteraction, 'reset'),
     jest.spyOn(app, 'renderPeripherals'),
-    jest.spyOn(app, 'updateDocumentTitle'),
   ];
   app.drawingChangedNotByInteraction();
   spies.forEach(s => expect(s).toHaveBeenCalled());

@@ -82,6 +82,7 @@ class App {
     if (this._currFormFactory) {
       this.renderForm(this._currFormFactory);
     }
+    this.updateDocumentTitle();
   }
 
   renderMenu() {
@@ -117,6 +118,14 @@ class App {
     if (container) {
       ReactDOM.unmountComponentAtNode(container);
     }
+  }
+
+  updateDocumentTitle() {
+    if (this.strictDrawing.isEmpty()) {
+      document.title = 'RNA2Drawer 2';
+      return;
+    }
+    document.title = this.strictDrawing.sequenceIds().join(', ');
   }
 
   pushUndo() {
@@ -176,15 +185,6 @@ class App {
   drawingChangedNotByInteraction() {
     this._strictDrawingInteraction.reset();
     this.renderPeripherals();
-    this.updateDocumentTitle();
-  }
-
-  updateDocumentTitle() {
-    if (this.strictDrawing.isEmpty()) {
-      document.title = 'RNA2Drawer 2';
-      return;
-    }
-    document.title = this.strictDrawing.sequenceIds().join(', ');
   }
 
   save() {
