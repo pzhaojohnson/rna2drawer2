@@ -3,7 +3,7 @@ import { TertiaryBond } from '../../../draw/QuadraticBezierBond';
 
 let app = null;
 let pushUndoSpy = null;
-let drawingChangedNotByInteractionSpy = null;
+let renderPeripheralsSpy = null;
 
 beforeEach(() => {
   app = {
@@ -11,10 +11,10 @@ beforeEach(() => {
       tertiaryBondsInteraction: {},
     },
     pushUndo: () => {},
-    drawingChangedNotByInteraction: () => {},
+    renderPeripherals: () => {},
   };
   pushUndoSpy = jest.spyOn(app, 'pushUndo');
-  drawingChangedNotByInteractionSpy = jest.spyOn(app, 'drawingChangedNotByInteraction');
+  renderPeripheralsSpy = jest.spyOn(app, 'renderPeripherals');
 });
 
 afterEach(() => {
@@ -50,7 +50,7 @@ describe('create static method', () => {
       let ele = DashedField.create(app);
       ele.props.set(true);
       expect(pushUndoSpy).not.toHaveBeenCalled();
-      expect(drawingChangedNotByInteractionSpy).not.toHaveBeenCalled();
+      expect(renderPeripheralsSpy).not.toHaveBeenCalled();
     });
 
     it('has no effect if setting to the same dashed state', () => {
@@ -61,7 +61,7 @@ describe('create static method', () => {
       selected.strokeDasharray = '';
       ele.props.set(false);
       expect(pushUndoSpy).not.toHaveBeenCalled();
-      expect(drawingChangedNotByInteractionSpy).not.toHaveBeenCalled();
+      expect(renderPeripheralsSpy).not.toHaveBeenCalled();
     });
 
     it('can make dashed', () => {
@@ -71,7 +71,7 @@ describe('create static method', () => {
       ele.props.set(true);
       expect(selected.strokeDasharray).toBe(TertiaryBond.defaultStrokeDasharray);
       expect(pushUndoSpy).toHaveBeenCalled(); // pushes undo
-      expect(drawingChangedNotByInteractionSpy).toHaveBeenCalled(); // refreshes app
+      expect(renderPeripheralsSpy).toHaveBeenCalled(); // refreshes app
     });
 
     it('can remove dashes', () => {
@@ -81,7 +81,7 @@ describe('create static method', () => {
       ele.props.set(false);
       expect(selected.strokeDasharray).toBe('');
       expect(pushUndoSpy).toHaveBeenCalled(); // pushes undo
-      expect(drawingChangedNotByInteractionSpy).toHaveBeenCalled(); // refreshes app
+      expect(renderPeripheralsSpy).toHaveBeenCalled(); // refreshes app
     });
   });
 });

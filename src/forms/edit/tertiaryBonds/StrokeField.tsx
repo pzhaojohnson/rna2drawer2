@@ -25,7 +25,7 @@ export class StrokeField extends React.Component {
             if (selected.fill && selected.fill.toLowerCase() != 'none') {
               selected.fill = s;
             }
-            app.drawingChangedNotByInteraction();
+            app.renderPeripherals();
           }
         }}
       />

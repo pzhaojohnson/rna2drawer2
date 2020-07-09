@@ -7,7 +7,7 @@ function mockApp() {
       tertiaryBondsInteraction: {},
     },
     pushUndo: () => {},
-    drawingChangedNotByInteraction: () => {},
+    renderPeripherals: () => {},
   };
 }
 
@@ -42,7 +42,7 @@ describe('create static method', () => {
       app.strictDrawingInteraction.tertiaryBondsInteraction.selected = undefined;
       let ele = StrokeField.create(app);
       let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      let spy2 = jest.spyOn(app, 'renderPeripherals');
       expect(() => ele.props.setStroke('#123456')).not.toThrow();
       expect(spy1).not.toHaveBeenCalled(); // does not push undo
       expect(spy2).not.toHaveBeenCalled(); // does not refresh app
@@ -53,7 +53,7 @@ describe('create static method', () => {
       app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
       let ele = StrokeField.create(app);
       let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      let spy2 = jest.spyOn(app, 'renderPeripherals');
       ele.props.setStroke('#aa32ff');
       expect(selected.stroke).toBe('#aa32ff'); // sets stroke
       expect(spy1).toHaveBeenCalled(); // pushes undo
@@ -65,7 +65,7 @@ describe('create static method', () => {
       app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
       let ele = StrokeField.create(app);
       let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      let spy2 = jest.spyOn(app, 'renderPeripherals');
       ele.props.setStroke('#aa32bb');
       expect(selected.stroke).toBe('#aa32bb'); // does not change
       expect(spy1).not.toHaveBeenCalled(); // does not push undo
