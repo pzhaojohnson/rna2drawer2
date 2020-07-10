@@ -65,7 +65,7 @@ describe('render method', () => {
     let ele = comp.render();
     let children = prettyFormat(ele.props.children);
     // indicates that no tertiary bond is selected
-    expect(children.includes('No tertiary bond selected.')).toBeTruthy();
+    expect(children.includes('No tertiary bond is selected.')).toBeTruthy();
     // does not render fields
     expect(children.includes('Field')).toBeFalsy();
   });
@@ -80,7 +80,7 @@ describe('render method', () => {
     let ele = comp.render();
     let children = prettyFormat(ele.props.children);
     // does not say that no tertiary bond is selected
-    expect(children.includes('No tertiary bond selected.')).toBeFalsy();
+    expect(children.includes('No tertiary bond is selected.')).toBeFalsy();
     // renders fields
     expect(children.includes('Stroke Field')).toBeTruthy();
     expect(children.includes('Stroke Width Field')).toBeTruthy();

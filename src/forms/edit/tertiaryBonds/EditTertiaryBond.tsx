@@ -54,7 +54,7 @@ export class EditTertiaryBond extends React.Component {
   noSelectionMessage(): React.ReactElement {
     return (
       <p style={{ margin: '24px 40px 0px 40px' }} >
-        No tertiary bond selected.
+        No tertiary bond is selected.
       </p>
     );
   }
