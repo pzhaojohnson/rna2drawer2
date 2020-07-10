@@ -11,13 +11,18 @@ export class ColorField extends React.Component {
   state: {
     value: string;
   }
+  prevValue: string;
 
   constructor(props: Props) {
     super(props);
 
+    let initialValue = this.props.initialValue ?? '#000000';
+
     this.state = {
-      value: this.props.initialValue ?? '#000000',
+      value: initialValue,
     };
+
+    this.prevValue = initialValue;
   }
 
   render(): React.ReactElement {
@@ -27,6 +32,8 @@ export class ColorField extends React.Component {
           type={'color'}
           value={this.state.value}
           onChange={event => this.onChange(event)}
+          onFocus={() => this.setIfDifferent()}
+          onBlur={() => this.setIfDifferent()}
         />
         <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
           {this.props.name}
@@ -38,7 +45,13 @@ export class ColorField extends React.Component {
   onChange(event: React.ChangeEvent) {
     let value = (event.target as HTMLInputElement).value;
     this.setState({ value: value });
-    this.props.set(value);
+  }
+
+  setIfDifferent() {
+    if (this.state.value != this.prevValue) {
+      this.prevValue = this.state.value;
+      this.props.set(this.state.value);
+    }
   }
 }
 
