@@ -92,6 +92,7 @@ class TertiaryBondsInteraction {
     this._selected = tb;
     this._dragging = true;
     this._dragged = false;
+    this.fireChange();
   }
 
   _deselect() {
@@ -103,9 +104,10 @@ class TertiaryBondsInteraction {
   }
 
   _bindMousedown() {
-    window.addEventListener('mousedown', () => {
-      if (!this._hovered) {
+    this.drawing.onMousedown(() => {
+      if (!this._hovered && this._selected) {
         this._deselect();
+        this.fireChange();
       }
     });
   }
@@ -152,7 +154,10 @@ class TertiaryBondsInteraction {
     window.addEventListener('keydown', event => {
       let k = event.key.toLowerCase();
       if (k == 'backspace' || k == 'delete') {
-        this._removeSelected();
+        if (this._selected) {
+          this._removeSelected();
+          this.fireChange();
+        }
       }
     });
   }
