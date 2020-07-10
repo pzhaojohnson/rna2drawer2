@@ -102,6 +102,12 @@ class StrictDrawingInteraction {
     this._currMode.reset();
   }
 
+  refresh() {
+    this.tertiaryBondsInteraction.refresh();
+    this._currMode.reset();
+    this.fireChange();
+  }
+
   onShouldPushUndo(cb: () => void) {
     this._onShouldPushUndo = cb;
   }

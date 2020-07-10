@@ -220,7 +220,7 @@ describe('redo method', () => {
 it('drawingChangedNotByInteraction method', () => {
   let app = new App(() => NodeSVG());
   let spies = [
-    jest.spyOn(app.strictDrawingInteraction, 'reset'),
+    jest.spyOn(app.strictDrawingInteraction, 'refresh'),
     jest.spyOn(app, 'renderPeripherals'),
   ];
   app.drawingChangedNotByInteraction();

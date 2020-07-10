@@ -183,7 +183,7 @@ class App {
   }
 
   drawingChangedNotByInteraction() {
-    this._strictDrawingInteraction.reset();
+    this._strictDrawingInteraction.refresh();
     this.renderPeripherals();
   }
 

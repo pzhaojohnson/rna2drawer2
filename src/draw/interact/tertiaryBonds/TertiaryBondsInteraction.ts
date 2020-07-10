@@ -10,8 +10,8 @@ import { TertiaryBond } from '../../QuadraticBezierBond';
 
 class TertiaryBondsInteraction {
   _drawing: Drawing;
-  _hovered?: TertiaryBond | null;
-  _selected?: TertiaryBond | null;
+  _hoveredId?: string;
+  _selectedId?: string;
   _dragging?: boolean;
   _dragged?: boolean;
 
@@ -68,9 +68,41 @@ class TertiaryBondsInteraction {
   }
 
   _handleMouseoutOnTertiaryBond(tb: TertiaryBond) {
-    this._hovered = null;
+    this._hovered = undefined;
     if (!this._selected || !areSameTertiaryBond(tb, this._selected)) {
       dehighlightTertiaryBond(tb);
+    }
+  }
+
+  get _hovered(): (TertiaryBond | undefined) {
+    if (this._hoveredId) {
+      return this.drawing.getTertiaryBondById(this._hoveredId);
+    } else {
+      return undefined;
+    }
+  }
+
+  set _hovered(tb: (TertiaryBond | undefined)) {
+    if (tb) {
+      this._hoveredId = tb.id;
+    } else {
+      this._hoveredId = undefined;
+    }
+  }
+
+  get _selected(): (TertiaryBond | undefined) {
+    if (this._selectedId) {
+      return this.drawing.getTertiaryBondById(this._selectedId);
+    } else {
+      return undefined;
+    }
+  }
+
+  set _selected(tb: (TertiaryBond | undefined)) {
+    if (tb) {
+      this._selectedId = tb.id;
+    } else {
+      this._selectedId = undefined;
     }
   }
 
@@ -81,7 +113,7 @@ class TertiaryBondsInteraction {
   _dehover() {
     if (this._hovered) {
       dehighlightTertiaryBond(this._hovered);
-      this._hovered = null;
+      this._hovered = undefined;
     }
   }
 
@@ -98,7 +130,7 @@ class TertiaryBondsInteraction {
   _deselect() {
     if (this._selected) {
       dehighlightTertiaryBond(this._selected);
-      this._selected = null;
+      this._selected = undefined;
       this._dragging = false;
     }
   }
@@ -196,6 +228,27 @@ class TertiaryBondsInteraction {
   reset() {
     this._dehover();
     this._deselect();
+    this.fireChange();
+  }
+
+  refresh() {
+    if (this._hoveredId) {
+      let hovered = this.drawing.getTertiaryBondById(this._hoveredId);
+      if (hovered) {
+        dehighlightTertiaryBond(hovered);
+      }
+      this._hoveredId = undefined;
+    }
+    if (this._selectedId) {
+      let selected = this.drawing.getTertiaryBondById(this._selectedId);
+      if (selected) {
+        highlightTertiaryBond(selected);
+      } else {
+        this._selectedId = undefined;
+      }
+    }
+    this._dragging = false;
+    this._dragged = false;
     this.fireChange();
   }
 }
