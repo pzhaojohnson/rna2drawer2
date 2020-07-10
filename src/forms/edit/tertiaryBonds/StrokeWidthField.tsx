@@ -22,7 +22,7 @@ export class StrokeWidthField extends React.Component {
           if (selected && sw != selected.strokeWidth) {
             app.pushUndo();
             selected.strokeWidth = sw;
-            app.renderPeripherals();
+            app.drawingChangedNotByInteraction();
           }
         }}
       />

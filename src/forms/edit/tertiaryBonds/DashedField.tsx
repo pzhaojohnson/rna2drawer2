@@ -24,7 +24,7 @@ export class DashedField extends React.Component {
           if (selected && v != isDashed) {
             app.pushUndo();
             selected.strokeDasharray = v ? TertiaryBond.defaultStrokeDasharray : '';
-            app.renderPeripherals();
+            app.drawingChangedNotByInteraction();
           }
         }}
       />

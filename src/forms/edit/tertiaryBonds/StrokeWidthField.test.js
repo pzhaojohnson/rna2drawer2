@@ -7,7 +7,7 @@ function mockApp() {
       tertiaryBondsInteraction: {},
     },
     pushUndo: () => {},
-    renderPeripherals: () => {},
+    drawingChangedNotByInteraction: () => {},
   };
 }
 
@@ -43,7 +43,7 @@ describe('create static method', () => {
       app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
       let ele = StrokeWidthField.create(app);
       let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'renderPeripherals');
+      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
       ele.props.setStrokeWidth(10.2);
       expect(selected.strokeWidth).toBe(10.2); // sets stroke width
       expect(spy1).toHaveBeenCalled(); // pushes undo
@@ -56,7 +56,7 @@ describe('create static method', () => {
       app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
       let ele = StrokeWidthField.create(app);
       let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'renderPeripherals');
+      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
       ele.props.setStrokeWidth(3.91);
       expect(selected.strokeWidth).toBe(3.91); // does not change
       expect(spy1).not.toHaveBeenCalled(); // does not push undo
