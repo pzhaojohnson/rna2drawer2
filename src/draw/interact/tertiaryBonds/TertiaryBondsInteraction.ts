@@ -154,9 +154,11 @@ class TertiaryBondsInteraction {
     window.addEventListener('keydown', event => {
       let k = event.key.toLowerCase();
       if (k == 'backspace' || k == 'delete') {
-        if (this._selected) {
-          this._removeSelected();
-          this.fireChange();
+        if (document.activeElement?.tagName.toLowerCase() != 'input') {
+          if (this._selected) {
+            this._removeSelected();
+            this.fireChange();
+          }
         }
       }
     });
