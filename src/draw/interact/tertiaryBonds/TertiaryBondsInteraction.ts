@@ -196,6 +196,7 @@ class TertiaryBondsInteraction {
   reset() {
     this._dehover();
     this._deselect();
+    this.fireChange();
   }
 }
 

@@ -98,6 +98,7 @@ class StrictDrawingInteraction {
   }
 
   reset() {
+    this.tertiaryBondsInteraction.reset();
     this._currMode.reset();
   }
 
