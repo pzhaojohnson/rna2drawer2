@@ -1,142 +1,168 @@
-import * as React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
-import { act } from 'react-dom/test-utils';
-import { fireEvent } from '@testing-library/react';
-import ColorField from './ColorField';
+import prettyFormat from 'pretty-format';
+import { ColorField, PRESET_COLORS } from './ColorField';
 
-let container = null;
+describe('render method', () => {
+  it('shows and hides picker as toggled', () => {
+    let comp = new ColorField({});
+    expect(comp.state.showPicker).toBe(false);
+    let ele = comp.render();
+    let shown = prettyFormat(ele.props.children[1]);
+    let display = prettyFormat(comp.currentColorDisplay());
+    expect(shown).toBe(display);
 
-beforeEach(() => {
-  container = document.createElement('div');
-  document.body.appendChild(container);
+    comp.state.showPicker = true;
+    ele = comp.render();
+    shown = prettyFormat(ele.props.children[1]);
+    let picker = prettyFormat(comp.picker());
+    expect(shown).toBe(picker);
+
+    comp.state.showPicker = false;
+    ele = comp.render();
+    shown = prettyFormat(ele.props.children[1]);
+    display = prettyFormat(comp.currentColorDisplay());
+    expect(shown).toBe(display);
+  });
 });
 
-afterEach(() => {
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
+describe('label', () => {
+  it('shows field name when picker is shown and not shown', () => {
+    let comp = new ColorField({ name: 'asdf qwer'});
+    comp.state.showPicker = false; // picker is not shown
+    let label = comp.label();
+    expect(prettyFormat(label).includes('asdf qwer:')).toBeTruthy();
+
+    comp.state.showPicker = true; // picker is shown
+    label = comp.label();
+    expect(prettyFormat(label).includes('asdf qwer:')).toBeTruthy();
+  });
+
+  it('can be clicked to hide picker', () => {
+    let comp = new ColorField({});
+    comp.state.showPicker = true; // picker is shown
+    let label = comp.label();
+    let spy = jest.spyOn(comp, 'setState');
+    label.props.onClick();
+    expect(spy).toHaveBeenCalled();
+    expect(spy.mock.calls[0][0].showPicker).toBe(false);
+  });
 });
 
-function getComponent() {
-  return container.childNodes[0];
-}
-
-function getInput() {
-  return getComponent().childNodes[0];
-}
-
-function getLabel() {
-  return getComponent().childNodes[1];
-}
-
-it('renders with given name', () => {
-  act(() => {
-    render(<ColorField name={'qwer zxcv'} />, container);
+describe('current color display', () => {
+  it('displays current color if provided', () => {
+    let comp = new ColorField({ initialValue: '#00ffaa' });
+    let display = comp.currentColorDisplay();
+    expect(display.props.style.backgroundColor).toBe('#00ffaa');
   });
-  expect(getLabel().textContent).toBe('qwer zxcv');
+
+  it('displays black if no current color is provided', () => {
+    let comp = new ColorField({});
+    let display = comp.currentColorDisplay();
+    expect(display.props.style.backgroundColor).toBe('#000000');
+  });
+
+  it('toggles picker to be shown when clicked', () => {
+    let comp = new ColorField({});
+    let spy = jest.spyOn(comp, 'setState');
+    let display = comp.currentColorDisplay();
+    expect(spy).not.toHaveBeenCalled();
+    display.props.onClick();
+    // sets state
+    expect(spy).toHaveBeenCalled();
+    expect(spy.mock.calls[0][0].showPicker).toBe(true);
+  });
 });
 
-it('renders with given initial value', () => {
-  act(() => {
-    render(<ColorField initialValue={'#24abf1'} />, container);
+describe('picker', () => {
+  it('shows current color if provided', () => {
+    let comp = new ColorField({ initialValue: '#00abef' });
+    let picker = comp.picker();
+    expect(picker.props.color).toBe('#00abef');
   });
-  expect(getInput().value).toBe('#24abf1');
-});
 
-it('can render with a default value', () => {
-  act(() => {
-    render(<ColorField />, container);
+  it('shows black if no current color provided', () => {
+    let comp = new ColorField({});
+    let picker = comp.picker();
+    expect(picker.props.color).toBe('#000000');
+    // preset colors should also include black
+    expect(PRESET_COLORS.includes('#000000')).toBeTruthy();
   });
-  expect(getInput().value).toBe('#000000');
-});
 
-it('handler for change event changes state', () => {
-  act(() => {
-    render(<ColorField initialValue={'#000000'} set={() => {}} />, container);
-    fireEvent.change(getInput(), { target: { value: '#123456' } });
+  it('preset colors fit evenly into rows', () => {
+    let comp = new ColorField({ initialValue: '#000000' });
+    let picker = comp.picker();
+    let width = Number.parseInt(picker.props.width);
+    expect(Number.isFinite(width)).toBeTruthy();
+    expect(width).toBeGreaterThan(0);
+    let fitInRow = Math.floor(width / (picker.props.circleSize + picker.props.circleSpacing));
+    expect(PRESET_COLORS.length % fitInRow).toBe(0);
   });
-  expect(getInput().value).toBe('#123456');
-  act(() => {
-    fireEvent.change(getInput(), { target: { value: '#abfe16' } });
-  });
-  expect(getInput().value).toBe('#abfe16');
-  act(() => {
-    fireEvent.change(getInput(), { target: { value: '#0012bb' } });
-  });
-  expect(getInput().value).toBe('#0012bb');
-});
 
-it('change event does not cause set callback to be called', () => {
-  let set = jest.fn();
-  act(() => {
-    render(<ColorField initialValue={'#000000'} set={set} />, container);
-    fireEvent.change(getInput(), { target: { value: '#abcdef' } });
-  });
-  expect(getInput().value).toBe('#abcdef'); // value was changed
-  expect(set).not.toHaveBeenCalled();
-});
-
-it('does not call set callback on first focus event', () => {
-  let set = jest.fn();
-  act(() => {
-    render(<ColorField initialValue={'#123234'} set={set} />, container);
-  });
-  act(() => fireEvent.focus(getInput()));
-  expect(set).not.toHaveBeenCalled();
-});
-
-describe('handling of a focus event after a blur event', () => {
-  it('calls set callback if value changed', () => {
-    let set = jest.fn();
-    act(() => {
-      render(<ColorField initialValue={'#1123ba'} set={set} />, container);
+  describe('showing custom colors', () => {
+    it('when the given color is one of the preset colors', () => {
+      let color = PRESET_COLORS[5].toLowerCase();
+      // hex code does have letters that were decapitalized
+      expect(color).not.toBe(PRESET_COLORS[5]);
+      ColorField.customColors = [];
+      let comp = new ColorField({ initialValue: color });
+      let picker = comp.picker();
+      // is displayed as a preset color
+      expect(picker.props.colors.toString()).toBe(PRESET_COLORS.toString());
+      // was not added to custom colors list
+      expect(ColorField.customColors.length).toBe(0);
     });
-    act(() => fireEvent.focus(getInput()));
-    act(() => fireEvent.blur(getInput()));
-    expect(set).not.toHaveBeenCalled(); // value has yet to change
-    act(() => fireEvent.change(getInput(), { target: { value: '#aabbcc' } }));
-    act(() => fireEvent.focus(getInput()));
-    expect(set).toHaveBeenCalled();
-    expect(set.mock.calls[0][0]).toBe('#aabbcc');
+
+    it('when the custom color has not been seen before', () => {
+      let color = '#abcdef';
+      expect(PRESET_COLORS.includes(color.toUpperCase())).toBeFalsy();
+      ColorField.customColors = ['#00AA22', '#BBC233'];
+      let comp = new ColorField({ initialValue: color });
+      let picker = comp.picker();
+      // is displayed at front of custom colors row
+      expect(picker.props.colors.toString()).toBe(
+        PRESET_COLORS.concat(['#ABCDEF', '#00AA22', '#BBC233']).toString()
+      );
+      // was added to front of custom colors list
+      expect(ColorField.customColors.toString()).toBe(['#ABCDEF', '#00AA22', '#BBC233'].toString());
+    });
+
+    it('when the custom color has been seen before', () => {
+      let color = '#aabbcc';
+      expect(PRESET_COLORS.includes(color.toUpperCase())).toBeFalsy();
+      ColorField.customColors = ['#00BBB2', '#AABBCC', '#330011'];
+      let comp = new ColorField({ initialValue: color });
+      let picker = comp.picker();
+      // is displayed at front of custom colors row
+      expect(picker.props.colors.toString()).toBe(
+        PRESET_COLORS.concat(['#AABBCC', '#00BBB2', '#330011']).toString()
+      );
+      // is moved to front of custom colors list
+      expect(ColorField.customColors.toString()).toBe(['#AABBCC', '#00BBB2', '#330011'].toString());
+    });
   });
 
-  it('but not when value stayed the same', () => {
+  describe('onChangeComplete callback', () => {
     let set = jest.fn();
-    act(() => {
-      render(<ColorField initialValue={'#123123'} set={set} />, container);
-    });
-    act(() => fireEvent.focus(getInput()));
-    act(() => fireEvent.blur(getInput()));
-    expect(set).not.toHaveBeenCalled(); // value has yet to change
-    act(() => fireEvent.change(getInput(), { target: { value: '#123123' } }));
-    act(() => fireEvent.focus(getInput()));
-    expect(set).not.toHaveBeenCalled();
-  });
-});
+    let comp = new ColorField({ initialValue: '#000000', set: set });
+    let picker = comp.picker();
 
-describe('handling of a blur event after a focus event', () => {
-  it('calls set callback if value changed', () => {
-    let set = jest.fn();
-    act(() => {
-      render(<ColorField initialValue={'#112266'} set={set} />, container);
-    });
-    act(() => fireEvent.focus(getInput()));
-    expect(set).not.toHaveBeenCalled(); // value has yet to change
-    act(() => fireEvent.change(getInput(), { target: { value: '#662211' } }));
-    act(() => fireEvent.blur(getInput()));
-    expect(set).toHaveBeenCalled();
-    expect(set.mock.calls[0][0]).toBe('#662211');
-  });
+    it('handles hex codes of lengths 4 and 7', () => {
+      set.mockClear();
+      picker.props.onChangeComplete({ hex: '#00abdd' });
+      expect(set.mock.calls[0][0]).toBe('#00abdd');
 
-  it('but not when value stayed the same', () => {
-    let set = jest.fn();
-    act(() => {
-      render(<ColorField initialValue={'#332211'} set={set} />, container);
+      set.mockClear();
+      picker.props.onChangeComplete({ hex: '#fa2' });
+      expect(set.mock.calls[0][0]).toBe('#ffaa22');
     });
-    fireEvent.focus(getInput());
-    expect(set).not.toHaveBeenCalled(); // value has yet to change
-    act(() => fireEvent.change(getInput(), { target: { value: '#332211' } }));
-    act(() => fireEvent.blur(getInput()));
-    expect(set).not.toHaveBeenCalled();
+
+    it('converts hex code to lower case', () => {
+      set.mockClear();
+      picker.props.onChangeComplete({ hex: '#AB12BA' }); // 7 characters
+      expect(set.mock.calls[0][0]).toBe('#ab12ba');
+
+      set.mockClear();
+      picker.props.onChangeComplete({ hex: '#AC2' }); // 4 characters
+      expect(set.mock.calls[0][0]).toBe('#aacc22');
+    });
   });
 });

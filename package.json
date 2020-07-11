@@ -34,11 +34,13 @@
   },
   "dependencies": {
     "@svgdotjs/svg.js": "^3.0.16",
+    "@types/react-color": "^3.0.4",
     "circular-dependency-plugin": "^5.2.0",
     "lodash": "^4.17.17",
     "pptxgenjs": "^3.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
     "svgdom": "0.0.21"
   },
