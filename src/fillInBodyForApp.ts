@@ -6,6 +6,8 @@ const INFOBAR_CONTAINER_ID = 'infobarContainer';
 function fillInBodyForApp() {
   let outermostDiv = document.createElement('div');
   outermostDiv.style.cssText = 'height: 100vh; display: flex; flex-direction: column;';
+  outermostDiv.ondragstart = () => false;
+  outermostDiv.ondrop = () => false;
   document.body.appendChild(outermostDiv);
 
   let menuContainer = document.createElement('div');
