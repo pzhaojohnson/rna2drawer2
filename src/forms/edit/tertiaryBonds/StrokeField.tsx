@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ColorField from '../../fields/ColorField';
+import ColorField from '../../fields/color/ColorField';
 import App from '../../../App';
 
 interface Props {

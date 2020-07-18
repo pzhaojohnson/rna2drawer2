@@ -1,5 +1,5 @@
 import StrokeField from './StrokeField';
-import ColorField from '../../fields/ColorField';
+import ColorField from '../../fields/color/ColorField';
 
 function mockApp() {
   return {
