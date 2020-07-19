@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.10.4",
+    "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
@@ -27,7 +27,7 @@
     "jest": "^24.9.0",
     "style-loader": "^1.2.1",
     "ts-loader": "^7.0.5",
-    "typescript": "^3.9.6",
+    "typescript": "^3.9.7",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
@@ -36,7 +36,7 @@
     "@svgdotjs/svg.js": "^3.0.16",
     "@types/react-color": "^3.0.4",
     "circular-dependency-plugin": "^5.2.0",
-    "lodash": "^4.17.17",
+    "lodash": "^4.17.19",
     "pptxgenjs": "^3.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
