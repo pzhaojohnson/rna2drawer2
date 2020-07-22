@@ -7,7 +7,7 @@ export function mouseMoveToStretch(mode: PivotingMode, xMove: number, yMove: num
   s /= sd.drawing.zoom;
   
   // pivoting feels a bit too fast otherwise
-  s *= 0.6;
+  s *= 0.5;
   
   if (Number.isFinite(s)) {
     return s;

@@ -23,5 +23,5 @@ it('calculates stretch', () => {
       baseHeight: 8,
     },
   };
-  expect(mouseMoveToStretch(mode, 3, 4)).toBeCloseTo(0.15);
+  expect(mouseMoveToStretch(mode, 3, 4)).toBeCloseTo(0.125);
 });
