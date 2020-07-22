@@ -18,7 +18,7 @@ class Dropdown extends React.Component {
         <div
           className={'dropdown-menu-content'}
           style={{
-            borderWidth: '0px thin thin thin',
+            borderWidth: '0px 1px 1px 1px',
             borderStyle: 'solid',
             borderColor: this.props.borderColor,
           }}
@@ -31,7 +31,7 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.defaultProps = {
-  borderColor: '#bfbfbf',
+  borderColor: 'rgba(0,0,0,0.15)',
 };
 
 export default Dropdown;

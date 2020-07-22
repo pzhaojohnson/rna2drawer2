@@ -24,7 +24,7 @@ class DroppedSeparator extends React.Component {
         <div
           style={{
             height: '0px',
-            borderWidth: '0px 0px thin 0px',
+            borderWidth: '0px 0px 1px 0px',
             borderStyle: 'solid',
             borderColor: this.props.borderColor,
             margin: '0px 4px 0px 4px',
@@ -37,7 +37,7 @@ class DroppedSeparator extends React.Component {
 
 DroppedSeparator.defaultProps = {
   backgroundColor: '#ffffff',
-  borderColor: '#bfbfbf',
+  borderColor: 'rgba(0,0,0,0.15)',
 };
 
 export default DroppedSeparator;

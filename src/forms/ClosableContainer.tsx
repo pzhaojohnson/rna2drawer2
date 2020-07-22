@@ -20,9 +20,9 @@ export class ClosableContainer extends React.Component {
           width: this.props.width,
           height: '100%',
           backgroundColor: '#ffffff',
-          borderWidth: '0px 0px 0px thin',
+          borderWidth: '0px 0px 0px 1px',
           borderStyle: 'solid',
-          borderColor: '#bfbfbf',
+          borderColor: 'rgba(0,0,0,0.15)',
         }}
       >
         <CloseButton

@@ -21,7 +21,7 @@ class Menu extends React.Component {
     return (
       <div
         style={{
-          borderWidth: '0px 0px thin 0px',
+          borderWidth: '0px 0px 1px 0px',
           borderStyle: 'solid',
           borderColor: this.props.borderColor,
           backgroundColor: this.props.backgroundColor,
@@ -41,7 +41,7 @@ class Menu extends React.Component {
 }
 
 Menu.defaultProps = {
-  borderColor: '#bfbfbf',
+  borderColor: 'rgba(0,0,0,0.15)',
   backgroundColor: '#ffffff',
 };
 
