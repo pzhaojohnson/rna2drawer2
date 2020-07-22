@@ -67,7 +67,7 @@ export class ColorField extends React.Component {
           padding: '5px',
           background: '#ffffff',
           borderRadius: '1px',
-          boxShadow: '0 0 0 1px rgba(0,0,0,0.15)',
+          boxShadow: '0 0 0 1px rgba(0,0,0,0.2)',
           display: 'inline-block',
           cursor: 'pointer',
         }}

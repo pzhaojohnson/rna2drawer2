@@ -42,7 +42,7 @@ class ExportSvg extends React.Component {
           backgroundColor: '#ffffff',
           borderWidth: '0px 0px 0px 1px',
           borderStyle: 'solid',
-          borderColor: 'rgba(0,0,0,0.15)',
+          borderColor: 'rgba(0,0,0,0.2)',
         }}
       >
         {this.closeButton()}

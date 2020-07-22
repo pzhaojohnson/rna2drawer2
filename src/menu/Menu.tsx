@@ -41,7 +41,7 @@ class Menu extends React.Component {
 }
 
 Menu.defaultProps = {
-  borderColor: 'rgba(0,0,0,0.15)',
+  borderColor: 'rgba(0,0,0,0.2)',
   backgroundColor: '#ffffff',
 };
 

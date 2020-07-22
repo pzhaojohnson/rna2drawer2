@@ -31,7 +31,7 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.defaultProps = {
-  borderColor: 'rgba(0,0,0,0.15)',
+  borderColor: 'rgba(0,0,0,0.2)',
 };
 
 export default Dropdown;

@@ -16,7 +16,7 @@ export class Underline extends React.Component {
           height: '0px',
           borderWidth: '0px 0px 1px 0px',
           borderStyle: 'solid',
-          borderColor: 'rgba(0,0,0,0.15)',
+          borderColor: 'rgba(0,0,0,0.2)',
           margin: this.props.margin,
         }}
       ></div>
