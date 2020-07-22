@@ -69,7 +69,7 @@ describe('create static method', () => {
       app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
       let ele = DashedField.create(app);
       ele.props.set(true);
-      expect(selected.strokeDasharray).toBe(TertiaryBond.defaultStrokeDasharray);
+      expect(selected.strokeDasharray).toBe(TertiaryBond.dashedStrokeDasharray);
       expect(pushUndoSpy).toHaveBeenCalled(); // pushes undo
       expect(drawingChangedNotByInteractionSpy).toHaveBeenCalled(); // refreshes app
     });

@@ -321,7 +321,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
 class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface {
   static _mostRecentProps: TertiaryBondMostRecentProps;
-  static defaultStrokeDasharray: string;
+  static dashedStrokeDasharray: string;
 
   static mostRecentProps(): TertiaryBondMostRecentProps {
     return { ...TertiaryBond._mostRecentProps };
@@ -414,14 +414,14 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
   }
 }
 
-TertiaryBond.defaultStrokeDasharray = '8 2';
+TertiaryBond.dashedStrokeDasharray = '8 2';
 
 TertiaryBond._mostRecentProps = {
   padding1: 8,
   padding2: 8,
-  stroke: '#0000ff',
-  strokeWidth: 1,
-  strokeDasharray: TertiaryBond.defaultStrokeDasharray,
+  stroke: '#4a90e2',
+  strokeWidth: 1.25,
+  strokeDasharray: '',
 };
 
 export {
