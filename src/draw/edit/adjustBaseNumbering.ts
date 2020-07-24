@@ -1,21 +1,22 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
 import { BaseInterface as Base } from '../BaseInterface';
 import normalizeAngle from '../normalizeAngle';
+import anglesAreClose from '../anglesAreClose';
 
 export function adjustBaseNumbering(drawing: Drawing) {
   drawing.forEachSequence(seq => {
     seq.forEachBase((b: Base, p: number) => {
       if (b.numbering) {
+        let ona = seq.outerNormalAngleAtPosition(p);
+        let ina = ona + Math.PI;
         let cna = normalizeAngle(seq.clockwiseNormalAngleAtPosition(p));
-        let a3 = cna + (Math.PI / 2);
+        let a3 = cna - (Math.PI / 2);
         if (seq.length > p) {
           let b3 = seq.getBaseAtPosition(p + 1) as Base;
-          let a3 = b.angleBetweenCenters(b3);
-          cna = normalizeAngle(cna, a3);
+          a3 = b.angleBetweenCenters(b3);
         }
-        let diff = cna - a3 - (Math.PI / 2);
-        if (diff < 0.1 || diff > 0.1) {
-          b.numbering.lineAngle = seq.outerNormalAngleAtPosition(p);
+        if (!anglesAreClose(cna, a3 + (Math.PI / 2)) || !anglesAreClose(b.numbering.lineAngle, ina)) {
+          b.numbering.lineAngle = ona;
         }
       }
     });
