@@ -15,6 +15,11 @@ import { TertiaryBond } from './QuadraticBezierBond';
 import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
 import { adjustBaseNumbering } from './edit/adjustBaseNumbering';
 
+interface Coordinates {
+  x: number;
+  y: number;
+}
+
 class Drawing implements DrawingInterface {
   _div!: HTMLElement;
   _svg!: Svg;
@@ -45,9 +50,27 @@ class Drawing implements DrawingInterface {
     });
   }
 
+  centerOfView(): Coordinates {
+    return {
+      x: this._div.scrollLeft + (window.innerWidth / 2),
+      y: this._div.scrollTop + (window.innerHeight / 2),
+    };
+  }
+
+  centerViewOn(cs: Coordinates) {
+    let sl = cs.x - (window.innerWidth / 2);
+    sl = Number.isFinite(sl) ? sl : 0;
+    let st = cs.y - (window.innerHeight / 2);
+    st = Number.isFinite(st) ? st : 0;
+    this._div.scrollLeft = sl;
+    this._div.scrollTop = st;
+  }
+
   centerView() {
-    this._div.scrollLeft = (this._div.scrollWidth - window.innerWidth) / 2;
-    this._div.scrollTop = (this._div.scrollHeight - this._div.clientHeight) / 2;
+    this.centerViewOn({
+      x: this._div.scrollWidth / 2,
+      y: this._div.scrollHeight / 2,
+    });
   }
 
   get width(): number {
@@ -63,11 +86,15 @@ class Drawing implements DrawingInterface {
       return;
     }
     let z = this.zoom;
+    let cv = this.centerOfView();
+    cv.x *= width / this.width;
+    cv.y *= height / this.height;
     this._svg.viewbox(0, 0, width, height);
     this._svg.attr({
       'width': z * width,
       'height': z * height,
     });
+    this.centerViewOn(cv);
   }
 
   get zoom(): number {
@@ -85,12 +112,11 @@ class Drawing implements DrawingInterface {
     let vb = this._svg.viewbox();
     let w = z * vb.width;
     let h = z * vb.height;
-    let change = z / this.zoom;
-    let sl = Math.floor(change * this._div.scrollLeft);
-    let st = Math.floor(change * this._div.scrollTop);
+    let cv = this.centerOfView();
+    cv.x *= z / this.zoom;
+    cv.y *= z / this.zoom;
     this._svg.attr({ 'width': w, 'height': h });
-    this._div.scrollLeft = sl;
-    this._div.scrollTop = st;
+    this.centerViewOn(cv);
   }
 
   isEmpty(): boolean {
