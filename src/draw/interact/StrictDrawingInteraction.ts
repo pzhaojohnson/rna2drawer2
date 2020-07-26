@@ -132,6 +132,14 @@ class StrictDrawingInteraction {
     return this._tertiaryBondsInteraction;
   }
 
+  get pivotingMode(): PivotingMode {
+    return this._pivotingMode;
+  }
+
+  get foldingMode(): FoldingMode {
+    return this._foldingMode;
+  }
+
   pivoting(): boolean {
     return this._currMode.className == 'PivotingMode';
   }

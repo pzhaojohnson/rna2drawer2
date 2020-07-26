@@ -1,22 +1,15 @@
 import * as React from 'react';
+const uuidv1 = require('uuid/v1');
 
 import Dropdown from '../Dropdown';
 import TopButton from '../TopButton';
+import DroppedSeparator from '../DroppedSeparator';
 
 import createPivotButtonForApp from './createPivotButtonForApp';
+import createExpandButtonForApp from './createExpandButtonForApp';
 import createFoldButtonForApp from './createFoldButtonForApp';
 
-interface App {
-  strictDrawing: {
-    isEmpty: () => boolean;
-  }
-  strictDrawingInteraction: {
-    pivoting: () => boolean;
-    startPivoting: () => void;
-    folding: () => boolean;
-    startFolding: () => void;
-  }
-}
+import App from '../../App';
 
 function createModeDropdownForApp(app: App): React.ReactElement {
   let drawingIsEmpty = app.strictDrawing.isEmpty();
@@ -30,6 +23,8 @@ function createModeDropdownForApp(app: App): React.ReactElement {
       }
       droppedElements={drawingIsEmpty ? [] : [
         createPivotButtonForApp(app),
+        createExpandButtonForApp(app),
+        <DroppedSeparator key={uuidv1()} />,
         createFoldButtonForApp(app),
       ]}
     />

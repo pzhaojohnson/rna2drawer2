@@ -3,29 +3,29 @@ const uuidv1 = require('uuid/v1');
 import DroppedButton from '../DroppedButton';
 import App from '../../App';
 
-function alreadyPivoting(app: App): boolean {
+function alreadyExpanding(app: App): boolean {
   let interaction = app.strictDrawingInteraction;
   let pivotingMode = interaction.pivotingMode;
-  return interaction.pivoting() && pivotingMode.addingAndRemovingStretch();
+  return interaction.pivoting() && pivotingMode.onlyAddingStretch();
 }
 
-function createPivotButtonForApp(app: App): React.ReactElement {
+function createExpandButtonForApp(app: App): React.ReactElement {
   return (
     <DroppedButton
       key={uuidv1()}
-      text={'Pivot'}
+      text={'Pivot (Expand)'}
       onClick={() => {
-        if (!alreadyPivoting(app)) {
+        if (!alreadyExpanding(app)) {
           let interaction = app.strictDrawingInteraction;
           let pivotingMode = interaction.pivotingMode;
           interaction.startPivoting();
-          pivotingMode.addAndRemoveStretch();
+          pivotingMode.onlyAddStretch();
         }
       }}
-      disabled={alreadyPivoting(app)}
-      checked={alreadyPivoting(app)}
+      disabled={alreadyExpanding(app)}
+      checked={alreadyExpanding(app)}
     />
   );
 }
 
-export default createPivotButtonForApp;
+export default createExpandButtonForApp;

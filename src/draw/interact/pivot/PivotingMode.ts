@@ -69,17 +69,11 @@ export class PivotingMode implements PivotingModeInterface {
     });
   }
 
-  _bindKeys() {
-    window.addEventListener('keydown', event => {
-      let k = event.key.toLowerCase();
-      if (k == 'shift') {
-        this.onlyAddStretch();
-      }
-    });
-  }
+  _bindKeys() {}
 
   onlyAddStretch() {
     this._onlyAddStretch = true;
+    this.fireChange();
   }
 
   onlyAddingStretch() {
@@ -88,6 +82,11 @@ export class PivotingMode implements PivotingModeInterface {
 
   addAndRemoveStretch() {
     this._onlyAddStretch = false;
+    this.fireChange();
+  }
+
+  addingAndRemovingStretch(): boolean {
+    return !this.onlyAddingStretch();
   }
 
   reset() {
