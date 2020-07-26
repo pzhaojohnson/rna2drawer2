@@ -72,7 +72,7 @@ class OpenRna2drawer extends React.Component {
             flexGrow: 1,
             maxWidth: '1200px',
             margin: '12px',
-            border: '1px solid rgba(0,0,0,0.15)',
+            border: '1px solid rgba(0,0,0,0.2)',
             borderRadius: '4px',
             display: 'flex',
             flexDirection: 'column',
@@ -130,7 +130,7 @@ class OpenRna2drawer extends React.Component {
           height: '0px',
           borderWidth: '0px 0px 1px 0px',
           borderStyle: 'solid',
-          borderColor: 'rgba(0,0,0,0.15)',
+          borderColor: 'rgba(0,0,0,0.2)',
           margin: '8px 0px 0px 0px',
         }}
       ></div>
