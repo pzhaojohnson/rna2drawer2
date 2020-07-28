@@ -14,7 +14,11 @@ export function tertiaryPair(mode: FoldingMode) {
     let b1 = drawing.getBaseAtOverallPosition(p1);
     let b2 = drawing.getBaseAtOverallPosition(p2);
     if (b1 && b2) {
-      drawing.addTertiaryBond(b1, b2);
+      if (p1 < p2) {
+        drawing.addTertiaryBond(b1, b2);
+      } else {
+        drawing.addTertiaryBond(b2, b1);
+      }
     }
   }
   mode.reset();
