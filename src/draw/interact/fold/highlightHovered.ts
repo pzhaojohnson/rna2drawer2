@@ -23,8 +23,8 @@ function _highlightUnpair(mode: FoldingMode) {
 function _highlightPair(mode: FoldingMode, c: Complement) {
   basesInRange(mode, c).forEach(b => {
     highlightBase(b, {
-      fill: '#0000ff',
-      fillOpacity: 0.45,
+      fill: '#aea1ff',
+      fillOpacity: 0.75,
     });
   });
 }
@@ -34,7 +34,7 @@ function _highlightSelect(mode: FoldingMode) {
   let b = drawing.getBaseAtOverallPosition(mode.hovered as number);
   if (b) {
     highlightBase(b, {
-      fill: '#ffd700',
+      fill: '#fcdc00',
       fillOpacity: 0.75,
     });
   }

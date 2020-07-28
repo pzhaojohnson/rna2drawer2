@@ -10,7 +10,7 @@ export function highlightSelected(mode: FoldingMode) {
     let b = drawing.getBaseAtOverallPosition(p);
     if (b) {
       highlightBase(b, {
-        fill: '#ffd700',
+        fill: '#fcdc00',
         fillOpacity: 0.75,
       });
     }

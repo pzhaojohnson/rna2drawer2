@@ -18,12 +18,12 @@ export function highlightBase(b: Base, props?: HighlightingProps) {
     props = {};
   }
   let h = b.addCircleHighlighting();
-  h.radius = props.radius ?? 1.25 * b.fontSize;
+  h.radius = props.radius ?? 1.1 * b.fontSize;
   h.stroke = props.stroke ?? '#000000';
   h.strokeWidth = props.strokeWidth ?? 0;
   h.strokeOpacity = props.strokeOpacity ?? 1;
   h.fill = props.fill ?? '#ffd700';
-  h.fillOpacity = props.fillOpacity ?? 0.75;
+  h.fillOpacity = props.fillOpacity ?? 0.5;
 }
 
 export default highlightBase;

@@ -11,8 +11,8 @@ interface Complement {
 function highlightComp(mode: FoldingMode, comp: Complement) {
   basesInRange(mode, comp).forEach(b => {
     highlightBase(b, {
-      fill: '#0000ff',
-      fillOpacity: 0.15,
+      fill: '#aea1ff',
+      fillOpacity: 0.25,
     });
   });
 }
