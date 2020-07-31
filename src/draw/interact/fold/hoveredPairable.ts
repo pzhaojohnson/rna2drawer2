@@ -7,7 +7,7 @@ import IntegerRange from './IntegerRange';
 /**
  * Returns null if nothing is selected or no complement is hovered.
  */
-export function hoveredComplement(mode: FoldingMode): (IntegerRange | null) {
+export function hoveredPairable(mode: FoldingMode): (IntegerRange | null) {
   if (!mode.hovered) {
     return null;
   }
@@ -30,4 +30,4 @@ export function hoveredComplement(mode: FoldingMode): (IntegerRange | null) {
   return null;
 }
 
-export default hoveredComplement;
+export default hoveredPairable;

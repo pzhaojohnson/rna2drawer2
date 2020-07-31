@@ -1,4 +1,4 @@
-import hoveredComplement from './hoveredComplement';
+import hoveredPairable from './hoveredPairable';
 import StrictDrawing from '../../StrictDrawing';
 import NodeSVG from '../../NodeSVG';
 import FoldingMode from './FoldingMode';
@@ -16,25 +16,25 @@ sd.appendSequence('zxcv', 'uugg');
 it('nothing hovered', () => {
   mode.hovered = undefined;
   mode.selected = { tightEnd: 8, looseEnd: 12 };
-  expect(hoveredComplement(mode)).toBeFalsy();
+  expect(hoveredPairable(mode)).toBeFalsy();
 });
 
 it('nothing selected', () => {
   mode.hovered = 10;
   mode.selected = undefined;
-  expect(hoveredComplement(mode)).toBeFalsy();
+  expect(hoveredPairable(mode)).toBeFalsy();
 });
 
 it('no hovered complements', () => {
   mode.hovered = 6;
   mode.selected = { tightEnd: 9, looseEnd: 12 };
-  expect(hoveredComplement(mode)).toBeFalsy();
+  expect(hoveredPairable(mode)).toBeFalsy();
 });
 
 it("returns the 3' most hovered complement", () => {
   mode.hovered = 4;
   mode.selected = { tightEnd: 13, looseEnd: 16 };
-  let c = hoveredComplement(mode);
+  let c = hoveredPairable(mode);
   expect(c.start).toBe(4);
   expect(c.end).toBe(7);
 });
@@ -44,5 +44,5 @@ it('does not return a complement that overlaps with selected', () => {
   mode.selected = { tightEnd: 26, looseEnd: 28 };
   expect(selectedCharacters(mode)).toBe('ugg');
   expect(charactersInRange(mode, new IntegerRange(25, 27))).toBe('uug');
-  expect(hoveredComplement(mode)).toBeFalsy();
+  expect(hoveredPairable(mode)).toBeFalsy();
 });
