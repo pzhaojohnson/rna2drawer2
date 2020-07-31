@@ -39,6 +39,22 @@ it("returns the 3' most hovered complement", () => {
   expect(c.end).toBe(7);
 });
 
+it("hovering the 5' most end of a complement", () => {
+  mode.hovered = 9;
+  mode.selected = { tightEnd: 17, looseEnd: 21 };
+  let c = hoveredPairable(mode);
+  expect(c.start).toBe(9);
+  expect(c.end).toBe(12);
+});
+
+it("hovering the 3' most end of a complement", () => {
+  mode.hovered = 16;
+  mode.selected = { tightEnd: 5, looseEnd: 8 };
+  let c = hoveredPairable(mode);
+  expect(c.start).toBe(13);
+  expect(c.end).toBe(16);
+});
+
 it('does not return a complement that overlaps with selected', () => {
   mode.hovered = 25;
   mode.selected = { tightEnd: 26, looseEnd: 28 };
