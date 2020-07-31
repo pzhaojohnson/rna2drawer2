@@ -2,49 +2,34 @@ import basesInRange from './basesInRange';
 import NodeSVG from '../../NodeSVG';
 import StrictDrawing from '../../StrictDrawing';
 import FoldingMode from './FoldingMode';
+import IntegerRange from './IntegerRange';
 
 let sd = new StrictDrawing();
 sd.addTo(document.body, () => NodeSVG());
 let mode = new FoldingMode(sd);
+sd.appendSequence('asdf', 'asdf');
+sd.appendSequence('qwer', 'qwerqwer');
 
-it('handles multiple sequences', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
-  sd.appendSequence('asdf', 'asdf');
-  sd.appendSequence('qwer', 'qwer');
-  let mode = new FoldingMode(sd);
-  let bases = basesInRange(mode, {
-    position5: 2,
-    position3: 6,
-  });
+it('a range spanning multiple sequences', () => {
+  let bases = basesInRange(mode, new IntegerRange(3, 7));
   expect(bases.length).toBe(5);
+  let characters = '';
+  bases.forEach(b => characters += b.character);
+  expect(characters).toBe('dfqwe');
+});
+
+it('a range of size one', () => {
+  let bases = basesInRange(mode, new IntegerRange(2, 2));
+  expect(bases.length).toBe(1);
   expect(bases[0].character).toBe('s');
-  expect(bases[1].character).toBe('d');
-  expect(bases[2].character).toBe('f');
-  expect(bases[3].character).toBe('q');
-  expect(bases[4].character).toBe('w');
 });
 
-it('handles positions out of range', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
-  sd.appendSequence('asdf', 'asdf');
-  let mode = new FoldingMode(sd);
-  let bases = basesInRange(mode, {
-    position5: -1,
-    position3: 6,
-  });
-  expect(bases.length).toBe(4);
-  expect(bases[0].character).toBe('a');
-  expect(bases[1].character).toBe('s');
-  expect(bases[2].character).toBe('d');
-  expect(bases[3].character).toBe('f');
+it('an invalid range', () => {
+  let bases = basesInRange(mode, new IntegerRange(6, 2));
+  expect(bases.length).toBe(0);
 });
 
-it('handles invalid range', () => {
-  let bases = basesInRange(mode, {
-    position5: 4,
-    position3: 2,
-  });
+it('does not return undefineds', () => {
+  let bases = basesInRange(mode, new IntegerRange(100, 200));
   expect(bases.length).toBe(0);
 });
