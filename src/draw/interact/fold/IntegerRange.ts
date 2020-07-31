@@ -5,6 +5,9 @@ export class IntegerRange {
   /**
    * It is undefined what happens when start is greater than end,
    * or when start or end are not integers.
+   * 
+   * @param start The inclusive start of the range.
+   * @param end The inclusive end of the range.
    */
   constructor(start: number, end: number) {
     this._start = start;
@@ -17,6 +20,10 @@ export class IntegerRange {
 
   get end(): number {
     return this._end;
+  }
+
+  get size(): number {
+    return this.end - this.start + 1;
   }
 
   contains(v: (number | IntegerRange)): boolean {

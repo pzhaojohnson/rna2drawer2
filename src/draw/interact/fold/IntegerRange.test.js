@@ -6,6 +6,13 @@ it('start and end getters', () => {
   expect(ir.end).toBe(99);
 });
 
+it('size getter', () => {
+  let ir1 = new IntegerRange(-2, 12); // size greater than one
+  expect(ir1.size).toBe(15);
+  let ir2 = new IntegerRange(20, 20); // size of one
+  expect(ir2.size).toBe(1);
+});
+
 describe('contains method', () => {
   let ir = new IntegerRange(-6, 33);
 
