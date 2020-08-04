@@ -4,108 +4,45 @@ import NodeSVG from '../../NodeSVG';
 import FoldingMode from './FoldingMode';
 import parseDotBracket from '../../../parse/parseDotBracket';
 
-jest.mock('./selectedAreSecondaryUnpaired');
-import selectedAreSecondaryUnpaired from './selectedAreSecondaryUnpaired';
-
-jest.mock('./hoveredComplement');
-import hoveredComplement from './hoveredComplement';
-
-jest.mock('../../../parse/isKnotless');
-import isKnotless from '../../../parse/isKnotless';
-
-let strictDrawing = null;
-let mode = null;
-
-beforeEach(() => {
-  strictDrawing = new StrictDrawing();
-  strictDrawing.addTo(document.body, () => NodeSVG());
-  mode = new FoldingMode(strictDrawing);
-});
-
-afterEach(() => {
-  strictDrawing = null;
-  mode = null;
-  while (document.body.firstChild) {
-    document.body.removeChild(document.body.lastChild);
-  }
-  jest.resetAllMocks();
-});
+let sd = new StrictDrawing();
+sd.addTo(document.body, () => NodeSVG());
+let mode = new FoldingMode(sd);
+let chars = 'AAAAGGGGUUUUCCCCUUUU';
+let secondaryPartners = parseDotBracket('....((((....))))....').secondaryPartners;
+sd.appendStructure({ id: 'asdf', characters: chars, secondaryPartners: secondaryPartners });
 
 it('nothing selected', () => {
-  mode.selected = null;
+  mode.hovered = 2;
+  mode.selected = undefined;
   expect(canSecondaryPair(mode)).toBeFalsy();
 });
 
-it('selected have secondary partners', () => {
-  mode.selected = {
-    tightEnd: 3,
-    looseEnd: 5,
-  };
-  selectedAreSecondaryUnpaired.mockImplementation(() => false);
+it('selected already have secondary bonds', () => {
+  mode.hovered = 19;
+  mode.selected = { tightEnd: 5, looseEnd: 8 };
   expect(canSecondaryPair(mode)).toBeFalsy();
 });
 
-it('no hovered complement', () => {
-  mode.selected = {
-    tightEnd: 3,
-    looseEnd: 4,
-  };
-  selectedAreSecondaryUnpaired.mockImplementation(() => true);
-  hoveredComplement.mockImplementation(() => null);
+it('no hovered pairable', () => {
+  mode.hovered = undefined;
+  mode.selected = { tightEnd: 1, looseEnd: 4 };
   expect(canSecondaryPair(mode)).toBeFalsy();
 });
 
-it('secondary pairing would form knots', () => {
-  strictDrawing.appendStructure({
-    id: 'asdf',
-    characters: 'aaccuugg',
-    secondaryPartners: parseDotBracket('..((..))').secondaryPartners,
-  });
-  mode.selected = {
-    tightEnd: 5,
-    looseEnd: 6,
-  };
+it('hovered pairable already has secondary bonds', () => {
+  mode.hovered = 5;
+  mode.selected = { tightEnd: 17, looseEnd: 20 };
+  expect(canSecondaryPair(mode)).toBeFalsy();
+});
+
+it('adding secondary bonds would form a knot', () => {
+  mode.hovered = 10;
+  mode.selected = { tightEnd: 1, looseEnd: 4 };
+  expect(canSecondaryPair(mode)).toBeFalsy();
+});
+
+it('adding secondary bonds would not form a knot', () => {
   mode.hovered = 1;
-  selectedAreSecondaryUnpaired.mockImplementation(() => true);
-  hoveredComplement.mockImplementation(() => {
-    return {
-      position5: 1,
-      position3: 2,
-    };
-  });
-  let f = jest.fn(() => false);
-  isKnotless.mockImplementation(f);
-  expect(canSecondaryPair(mode)).toBeFalsy();
-  let partners = f.mock.calls[0][0];
-  expect(partners[0]).toBe(6);
-  expect(partners[1]).toBe(5);
-  expect(partners[4]).toBe(2);
-  expect(partners[5]).toBe(1);
-});
-
-it('secondary pairing would not form knots', () => {
-  strictDrawing.appendStructure({
-    id: 'asdf',
-    characters: 'aaccuugguu',
-    secondaryPartners: parseDotBracket('..((..))..').secondaryPartners,
-  });
-  mode.selected = {
-    tightEnd: 9,
-    looseEnd: 10,
-  };
-  selectedAreSecondaryUnpaired.mockImplementation(() => true);
-  hoveredComplement.mockImplementation(() => {
-    return {
-      position5: 1,
-      position3: 2,
-    };
-  });
-  let f = jest.fn(() => true);
-  isKnotless.mockImplementation(f);
+  mode.selected = { tightEnd: 17, looseEnd: 20 };
   expect(canSecondaryPair(mode)).toBeTruthy();
-  let partners = f.mock.calls[0][0];
-  expect(partners[0]).toBe(10);
-  expect(partners[1]).toBe(9);
-  expect(partners[8]).toBe(2);
-  expect(partners[9]).toBe(1);
 });

@@ -1,4 +1,4 @@
-const COMPLEMENTS: { [key: string]: string[] } = {
+const _COMPLEMENTS: { [key: string]: string[] } = {
   'A': ['U', 'T'],
   'U': ['A', 'G'],
   'G': ['C', 'U', 'T'],
@@ -6,19 +6,19 @@ const COMPLEMENTS: { [key: string]: string[] } = {
   'T': ['A', 'G'],
 };
 
-export function areComplementary(characters1: string, characters2: string): boolean {
-  if (characters1.length !== characters2.length) {
+export function areComplementary(chars1: string, chars2: string): boolean {
+  if (chars1.length !== chars2.length) {
     return false;
   }
-  if (characters1.length == 0 && characters2.length == 0) {
+  if (chars1.length == 0 && chars2.length == 0) {
     return false;
   }
-  characters1 = characters1.toUpperCase();
-  characters2 = characters2.toUpperCase();
-  for (let i = 0; i < characters1.length; i++) {
-    let c1 = characters1.charAt(i);
-    let c2 = characters2.charAt(characters2.length - i - 1);
-    let comps1 = COMPLEMENTS[c1];
+  chars1 = chars1.toUpperCase();
+  chars2 = chars2.toUpperCase();
+  for (let i = 0; i < chars1.length; i++) {
+    let c1 = chars1.charAt(i);
+    let c2 = chars2.charAt(chars2.length - i - 1);
+    let comps1 = _COMPLEMENTS[c1];
     if (!comps1 || !comps1.includes(c2)) {
       return false;
     }
