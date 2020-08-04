@@ -2,7 +2,7 @@ import { StrictDrawingInterface as StrictDrawing } from '../StrictDrawingInterfa
 import {
   appendStructure,
   Structure,
-} from './appendStructure';
+} from './addStructure';
 import PerBaseStrictLayoutProps from '../layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { BaseInterface as Base } from '../BaseInterface';
 import { radiateStems } from '../layout/singleseq/strict/radiateStems';

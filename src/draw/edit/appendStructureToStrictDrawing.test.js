@@ -5,7 +5,7 @@ import { PerBaseStrictLayoutProps as PerBaseLayoutProps } from '../layout/single
 import { radiateStems } from '../layout/singleseq/strict/radiateStems';
 import parseDotBracket from '../../parse/parseDotBracket';
 
-import * as AppendStructure from './appendStructure';
+import * as AppendStructure from './addStructure';
 
 it('appends structure to underlying drawing', () => {
   let sd = new StrictDrawing();
