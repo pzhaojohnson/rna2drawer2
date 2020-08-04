@@ -2,7 +2,7 @@ import applyStrictLayout from './applyStrictLayout';
 import Drawing from '../Drawing';
 import createNodeSVG from '../createNodeSVG';
 import parseDotBracket from '../../parse/parseDotBracket';
-import appendStructure from './appendStructure';
+import { appendStructure } from './addStructure';
 import GeneralStrictLayoutProps from '../layout/singleseq/strict/GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from '../layout/singleseq/strict/PerBaseStrictLayoutProps';
 import StrictLayout from '../layout/singleseq/strict/StrictLayout';

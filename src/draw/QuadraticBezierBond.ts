@@ -361,7 +361,8 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
   }
 
   static create(svg: Svg, b1: Base, b2: Base): TertiaryBond {
-    let d = QuadraticBezierBond._dPath(b1, b2, 6, 6, 100, -Math.PI / 2);
+    let ch = 0.35 * b1.distanceBetweenCenters(b2);
+    let d = QuadraticBezierBond._dPath(b1, b2, 6, 6, ch, -Math.PI / 2);
     let p = svg.path(d);
     let tb = new TertiaryBond(p, b1, b2);
     TertiaryBond._applyMostRecentProps(tb);

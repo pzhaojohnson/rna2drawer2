@@ -2,6 +2,7 @@ import { StrictDrawingInterface as StrictDrawing } from '../StrictDrawingInterfa
 import {
   appendStructure,
   Structure,
+  addTertiaryBonds,
 } from './addStructure';
 import PerBaseStrictLayoutProps from '../layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { BaseInterface as Base } from '../BaseInterface';
@@ -57,6 +58,8 @@ function _radiateStructure(sd: StrictDrawing, structure: Structure) {
  */
 export function appendStructureToStrictDrawing(sd: StrictDrawing, structure: Structure): boolean {
   let wasEmpty = sd.isEmpty();
+  let tertiaryPartners = structure.tertiaryPartners;
+  structure = { ...structure, tertiaryPartners: undefined };
   let appended = appendStructure(sd.drawing, structure);
   if (!appended) {
     return false;
@@ -64,6 +67,9 @@ export function appendStructureToStrictDrawing(sd: StrictDrawing, structure: Str
   _appendPerBaseLayoutProps(sd, structure);
   _radiateStructure(sd, structure);
   sd.applyLayout();
+  if (tertiaryPartners) {
+    addTertiaryBonds(sd.drawing, structure.id, tertiaryPartners);
+  }
   if (wasEmpty) {
     sd.drawing.centerView();
   }

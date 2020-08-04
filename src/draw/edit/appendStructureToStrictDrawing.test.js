@@ -5,18 +5,13 @@ import { PerBaseStrictLayoutProps as PerBaseLayoutProps } from '../layout/single
 import { radiateStems } from '../layout/singleseq/strict/radiateStems';
 import parseDotBracket from '../../parse/parseDotBracket';
 
-import * as AppendStructure from './addStructure';
-
 it('appends structure to underlying drawing', () => {
   let sd = new StrictDrawing();
   sd.addTo(document.body, () => NodeSVG());
   let s = { id: 'asdf', characters: 'asdf' };
-  let spy = jest.spyOn(AppendStructure, 'appendStructure');
   let appended = appendStructureToStrictDrawing(sd, s);
-  expect(appended).toBeTruthy(); // structure was appended
-  let c = spy.mock.calls[0];
-  expect(c[0]).toBe(sd.drawing);
-  expect(c[1]).toBe(s);
+  expect(appended).toBeTruthy();
+  expect(sd.drawing.getSequenceById('asdf')).toBeTruthy();
 });
 
 it('handles failure to append structure to underlying drawing', () => {
