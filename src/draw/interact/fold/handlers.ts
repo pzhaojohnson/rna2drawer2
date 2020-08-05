@@ -18,7 +18,7 @@ export function handleMouseoverOnBase(mode: FoldingMode, b: Base) {
 }
 
 export function handleMouseoutOnBase(mode: FoldingMode, b: Base) {
-  mode.hovered = null;
+  mode.hovered = undefined;
   setAllBaseHighlightings(mode);
 }
 
@@ -34,13 +34,14 @@ export function handleMousedownOnBase(mode: FoldingMode, b: Base) {
     }
   } else if (pairable) {
     pair(mode);
+  } else {
+    mode.selected = {
+      tightEnd: mode.hovered,
+      looseEnd: mode.hovered,
+    };
+    mode.selecting = true;
+    setAllBaseHighlightings(mode);
   }
-  mode.selected = {
-    tightEnd: mode.hovered,
-    looseEnd: mode.hovered,
-  };
-  mode.selecting = true;
-  setAllBaseHighlightings(mode);
 }
 
 export function handleMousedownOnDrawing(mode: FoldingMode) {
