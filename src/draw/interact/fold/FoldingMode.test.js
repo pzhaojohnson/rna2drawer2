@@ -14,6 +14,23 @@ it('strictDrawing getter', () => {
   expect(mode.strictDrawing).toBe(sd);
 });
 
+it('switching between submodes', () => {
+  mode.onlyAddTertiaryBonds();
+  expect(mode.pairingComplements()).toBeFalsy();
+  expect(mode.forcePairing()).toBeFalsy();
+  expect(mode.onlyAddingTertiaryBonds()).toBeTruthy();
+
+  mode.forcePair();
+  expect(mode.pairingComplements()).toBeFalsy();
+  expect(mode.forcePairing()).toBeTruthy();
+  expect(mode.onlyAddingTertiaryBonds()).toBeFalsy();
+  
+  mode.pairComplements();
+  expect(mode.pairingComplements()).toBeTruthy();
+  expect(mode.forcePairing()).toBeFalsy();
+  expect(mode.onlyAddingTertiaryBonds()).toBeFalsy();
+});
+
 it('disabling and enabling', () => {
   mode.disable();
   expect(mode.disabled()).toBeTruthy();

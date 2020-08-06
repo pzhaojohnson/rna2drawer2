@@ -46,3 +46,10 @@ it('adding secondary bonds would not form a knot', () => {
   mode.selected = { tightEnd: 17, looseEnd: 20 };
   expect(canSecondaryPair(mode)).toBeTruthy();
 });
+
+it('could otherwise secondary pair but only adding tertiary bonds', () => {
+  mode.onlyAddTertiaryBonds();
+  mode.hovered = 1;
+  mode.selected = { tightEnd: 17, looseEnd: 20 };
+  expect(canSecondaryPair(mode)).toBeFalsy();
+});

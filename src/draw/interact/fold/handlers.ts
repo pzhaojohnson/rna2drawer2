@@ -29,7 +29,7 @@ export function handleMousedownOnBase(mode: FoldingMode, b: Base) {
   let rSelected = selectedRange(mode);
   let pairable = hoveredPairable(mode);
   if (rSelected && rSelected.contains(mode.hovered)) {
-    if (secondaryBondsWith(mode, rSelected).length > 0) {
+    if (secondaryBondsWith(mode, rSelected).length > 0 && !mode.onlyAddingTertiaryBonds()) {
       unpair(mode);
     }
   } else if (pairable) {

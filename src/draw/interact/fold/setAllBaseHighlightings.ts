@@ -41,7 +41,7 @@ function _highlightHovered(mode: FoldingMode, highlightings: HighlightingProps[]
   let rSelected = selectedRange(mode);
   let pairable = hoveredPairable(mode);
   if (rSelected && rSelected.contains(hovered)) {
-    if (secondaryBondsWith(mode, rSelected).length > 0) {
+    if (secondaryBondsWith(mode, rSelected).length > 0 && !mode.onlyAddingTertiaryBonds()) {
       rSelected.fromStartToEnd(p => highlightings[p - 1] = { ...unpairProps });
     }
   } else if (pairable) {
@@ -53,7 +53,9 @@ function _highlightHovered(mode: FoldingMode, highlightings: HighlightingProps[]
 
 export function setAllBaseHighlightings(mode: FoldingMode) {
   let highlightings = [] as HighlightingProps[];
-  _highlightPairables(mode, highlightings);
+  if (mode.pairingComplements()) {
+    _highlightPairables(mode, highlightings);
+  }
   _highlightSelected(mode, highlightings);
   _highlightHovered(mode, highlightings);
   mode.strictDrawing.drawing.forEachBase((b, p) => {

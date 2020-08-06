@@ -17,7 +17,10 @@ export function isPairable(mode: FoldingMode, r: IntegerRange): boolean {
   }
   let csSelected = charactersInRange(mode, rSelected);
   let cs = charactersInRange(mode, r);
-  return areComplementary(csSelected, cs);
+  if (mode.pairingComplements() && !areComplementary(csSelected, cs)) {
+    return false;
+  }
+  return true;
 }
 
 export default isPairable;

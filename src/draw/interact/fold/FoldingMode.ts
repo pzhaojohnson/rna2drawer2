@@ -10,8 +10,16 @@ import {
   reset,
 } from './handlers';
 
+enum SubMode {
+  pairingComplements,
+  forcePairing,
+  onlyAddingTertiaryBonds,
+}
+
 class FoldingMode implements FoldingModeInterface {
   _strictDrawing: StrictDrawing;
+
+  _subMode: SubMode;
 
   hovered?: number | null;
   selected?: {
@@ -27,6 +35,7 @@ class FoldingMode implements FoldingModeInterface {
 
   constructor(strictDrawing: StrictDrawing) {
     this._strictDrawing = strictDrawing;
+    this._subMode = SubMode.pairingComplements;
 
     this._setBindings();
   }
@@ -63,6 +72,30 @@ class FoldingMode implements FoldingModeInterface {
 
   reset() {
     reset(this);
+  }
+
+  pairComplements() {
+    this._subMode = SubMode.pairingComplements;
+  }
+
+  pairingComplements(): boolean {
+    return this._subMode == SubMode.pairingComplements;
+  }
+
+  forcePair() {
+    this._subMode = SubMode.forcePairing;
+  }
+
+  forcePairing(): boolean {
+    return this._subMode == SubMode.forcePairing;
+  }
+
+  onlyAddTertiaryBonds() {
+    this._subMode = SubMode.onlyAddingTertiaryBonds;
+  }
+
+  onlyAddingTertiaryBonds(): boolean {
+    return this._subMode == SubMode.onlyAddingTertiaryBonds;
   }
 
   disable() {

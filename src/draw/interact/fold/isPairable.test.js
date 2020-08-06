@@ -25,14 +25,23 @@ it('overlaps with selected', () => {
   expect(isPairable(mode, r)).toBeFalsy();
 });
 
-it('is not complementary', () => {
+it('is not complementary and pairing complements', () => {
+  mode.pairComplements();
   mode.selected = { tightEnd: 1, looseEnd: 4 };
   let r = new IntegerRange(13, 16);
   expect(isPairable(mode, r)).toBeFalsy();
 });
 
-it('is complementary', () => {
+it('is complementary and pairing complements', () => {
+  mode.pairComplements();
   mode.selected = { tightEnd: 17, looseEnd: 20 };
   let r = new IntegerRange(9, 12);
+  expect(isPairable(mode, r)).toBeTruthy();
+});
+
+it('is not complementary but not pairing complements', () => {
+  mode.forcePair();
+  mode.selected = { tightEnd: 1, looseEnd: 4 };
+  let r = new IntegerRange(13, 16);
   expect(isPairable(mode, r)).toBeTruthy();
 });

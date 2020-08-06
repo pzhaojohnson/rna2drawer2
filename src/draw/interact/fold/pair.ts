@@ -43,7 +43,7 @@ export function pair(mode: FoldingMode) {
   }
   mode.fireShouldPushUndo();
   let pairs = _basePairs(mode, rSelected, pairable);
-  if (canSecondaryPair(mode)) {
+  if (canSecondaryPair(mode) && !mode.onlyAddingTertiaryBonds()) {
     _secondaryPair(mode, pairs);
   } else {
     _tertiaryPair(mode, pairs);

@@ -6,6 +6,9 @@ import { partnersAreValid } from '../../../parse/partnersAreValid';
 import isKnotless from '../../../parse/isKnotless';
 
 export function canSecondaryPair(mode: FoldingMode): boolean {
+  if (mode.onlyAddingTertiaryBonds()) {
+    return false;
+  }
   let rSelected = selectedRange(mode);
   if (!rSelected || secondaryBondsWith(mode, rSelected).length > 0) {
     return false;
