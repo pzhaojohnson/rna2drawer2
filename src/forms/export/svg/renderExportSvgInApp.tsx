@@ -6,7 +6,13 @@ function renderExportSvgInApp(app: App) {
   app.renderForm(() => (
     <ExportSvg
       SVG={() => app.SVG()}
-      getSvgString={() => app.strictDrawing.svgString}
+      getSvgString={() => {
+
+        // removes base highlighting, which may not be exportable
+        app.strictDrawingInteraction.reset();
+        
+        return app.strictDrawing.svgString;
+      }}
       close={() => app.unmountCurrForm()}
     />
   ));

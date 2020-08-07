@@ -6,7 +6,13 @@ function renderExportPptxInApp(app: App) {
   app.renderForm(() => (
     <ExportPptx
       SVG={() => app.SVG()}
-      getSvgString={() => app.strictDrawing.svgString}
+      getSvgString={() => {
+
+        // removes base highlighting, which may not be exportable
+        app.strictDrawingInteraction.reset();
+        
+        return app.strictDrawing.svgString;
+      }}
       close={() => app.unmountCurrForm()}
     />
   ));
