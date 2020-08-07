@@ -7,7 +7,9 @@ import DroppedSeparator from '../DroppedSeparator';
 
 import createPivotButtonForApp from './createPivotButtonForApp';
 import createExpandButtonForApp from './createExpandButtonForApp';
-import createFoldButtonForApp from './createFoldButtonForApp';
+import PairComplementsButton from './PairComplementsButton';
+import ForcePairButton from './ForcePairButton';
+import AddTertiaryBondsButton from './AddTertiaryBondsButton';
 
 import App from '../../App';
 
@@ -25,7 +27,9 @@ function createModeDropdownForApp(app: App): React.ReactElement {
         createPivotButtonForApp(app),
         createExpandButtonForApp(app),
         <DroppedSeparator key={uuidv1()} />,
-        createFoldButtonForApp(app),
+        PairComplementsButton(app),
+        ForcePairButton(app),
+        AddTertiaryBondsButton(app),
       ]}
     />
   );

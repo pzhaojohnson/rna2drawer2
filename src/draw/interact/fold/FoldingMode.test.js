@@ -15,20 +15,25 @@ it('strictDrawing getter', () => {
 });
 
 it('switching between submodes', () => {
+  let spy = jest.spyOn(mode, 'fireChange');
+
   mode.onlyAddTertiaryBonds();
   expect(mode.pairingComplements()).toBeFalsy();
   expect(mode.forcePairing()).toBeFalsy();
   expect(mode.onlyAddingTertiaryBonds()).toBeTruthy();
+  expect(spy).toHaveBeenCalledTimes(1);
 
   mode.forcePair();
   expect(mode.pairingComplements()).toBeFalsy();
   expect(mode.forcePairing()).toBeTruthy();
   expect(mode.onlyAddingTertiaryBonds()).toBeFalsy();
+  expect(spy).toHaveBeenCalledTimes(2);
   
   mode.pairComplements();
   expect(mode.pairingComplements()).toBeTruthy();
   expect(mode.forcePairing()).toBeFalsy();
   expect(mode.onlyAddingTertiaryBonds()).toBeFalsy();
+  expect(spy).toHaveBeenCalledTimes(3);
 });
 
 it('disabling and enabling', () => {

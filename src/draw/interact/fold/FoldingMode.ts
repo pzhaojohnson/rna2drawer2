@@ -75,7 +75,10 @@ class FoldingMode implements FoldingModeInterface {
   }
 
   pairComplements() {
-    this._subMode = SubMode.pairingComplements;
+    if (!this.pairingComplements()) {
+      this._subMode = SubMode.pairingComplements;
+      this.fireChange();
+    }
   }
 
   pairingComplements(): boolean {
@@ -83,7 +86,10 @@ class FoldingMode implements FoldingModeInterface {
   }
 
   forcePair() {
-    this._subMode = SubMode.forcePairing;
+    if (!this.forcePairing()) {
+      this._subMode = SubMode.forcePairing;
+      this.fireChange();
+    }
   }
 
   forcePairing(): boolean {
@@ -91,7 +97,10 @@ class FoldingMode implements FoldingModeInterface {
   }
 
   onlyAddTertiaryBonds() {
-    this._subMode = SubMode.onlyAddingTertiaryBonds;
+    if (!this.onlyAddingTertiaryBonds()) {
+      this._subMode = SubMode.onlyAddingTertiaryBonds;
+      this.fireChange();
+    }
   }
 
   onlyAddingTertiaryBonds(): boolean {
