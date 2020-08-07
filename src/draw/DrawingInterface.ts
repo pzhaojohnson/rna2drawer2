@@ -1,4 +1,4 @@
-import { SvgInterface as Svg } from './SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import {
   SequenceInterface as Sequence,
   SequenceSavableState,
@@ -24,7 +24,7 @@ export interface DrawingSavableState {
 }
 
 export interface DrawingInterface {
-  addTo(container: Node, SVG: () => Svg): void;
+  addTo(container: Node, SVG: () => Svg.Svg): void;
   centerView: () => void;
   
   width: number;

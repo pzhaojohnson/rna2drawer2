@@ -3,7 +3,7 @@ import {
   SequenceMostRecentProps,
   SequenceSavableState,
 } from './SequenceInterface';
-import { SvgInterface as Svg } from './SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import Base from './Base';
 import { BaseSavableState } from './BaseInterface';
 import angleBetween from './angleBetween';
@@ -83,7 +83,7 @@ class Sequence implements SequenceInterface {
     return cna + Math.PI;
   }
 
-  static fromSavedState(savedState: SequenceSavableState, svg: Svg): (Sequence | never) {
+  static fromSavedState(savedState: SequenceSavableState, svg: Svg.Svg): (Sequence | never) {
     if (savedState.className !== 'Sequence') {
       throw new Error('Wrong class name.');
     }
@@ -101,7 +101,7 @@ class Sequence implements SequenceInterface {
     return seq;
   }
 
-  static createOutOfView(svg: Svg, id: string, characters: string): Sequence {
+  static createOutOfView(svg: Svg.Svg, id: string, characters: string): Sequence {
     let seq = new Sequence(id);
     let bases = [];
     for (let c of characters) {

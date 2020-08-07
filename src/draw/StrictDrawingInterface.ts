@@ -2,7 +2,7 @@ import {
   DrawingInterface as Drawing,
   DrawingSavableState,
 } from './DrawingInterface';
-import { SvgInterface as Svg } from './SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import {
   GeneralStrictLayoutProps as GeneralLayoutProps,
   GeneralStrictLayoutPropsSavableState as GeneralLayoutPropsSavableState,
@@ -25,7 +25,7 @@ export interface StrictDrawingSavableState {
 
 export interface StrictDrawingInterface {
   readonly drawing: Drawing;
-  addTo(container: Node, SVG: () => Svg): void;
+  addTo(container: Node, SVG: () => Svg.Svg): void;
   layoutPartners(): (number | null)[];
   generalLayoutProps(): GeneralLayoutProps;
   setGeneralLayoutProps(props: GeneralLayoutProps): void;

@@ -1,7 +1,4 @@
-import {
-  SvgInterface as Svg,
-  SvgElementInterface as SvgElement,
-} from './SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 
 export interface CircleBaseAnnotationSavableState {
   className: string;
@@ -18,8 +15,8 @@ export interface BaseAnnotationInterface {
   
   shift(xShift: number, yShift: number): void;
   reposition(xBaseCenter: number, yBaseCenter: number): void;
-  insertBefore(ele: SvgElement): void;
-  insertAfter(ele: SvgElement): void;
+  insertBefore(ele: Svg.Element): void;
+  insertAfter(ele: Svg.Element): void;
   remove(): void;
   savableState(): object;
   refreshIds(): void;

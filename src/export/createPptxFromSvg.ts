@@ -1,13 +1,5 @@
 import PptxGenJS from 'pptxgenjs';
-import {
-  SvgInterface as Svg,
-  SvgElementInterface as SvgElement,
-  SvgTextInterface as SvgText,
-  SvgLineInterface as SvgLine,
-  SvgPathInterface as SvgPath,
-  SvgCircleInterface as SvgCircle,
-  SvgRectInterface as SvgRect,
-} from '../draw/SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import { pixelsToInches } from './pixelsToInches';
 import { pixelsToPoints } from './pixelsToPoints';
 import { pointsToInches } from './pointsToInches';
@@ -44,7 +36,7 @@ function _trimNum(n: number): number {
   return trimNum(n, _NUMBER_TRIM);
 }
 
-function _setSlideDimensions(pres: PptxGenJS, svg: Svg) {
+function _setSlideDimensions(pres: PptxGenJS, svg: Svg.Svg) {
   let w = pixelsToInches(svg.viewbox().width);
   let h = pixelsToInches(svg.viewbox().height);
   pres.defineLayout({
@@ -55,17 +47,17 @@ function _setSlideDimensions(pres: PptxGenJS, svg: Svg) {
   pres.layout = 'CUSTOM_LAYOUT';
 }
 
-function _textWidth(text: SvgText): number {
+function _textWidth(text: Svg.Text): number {
   let bb = text.bbox();
   return pixelsToInches(4 * bb.width);
 }
 
-function _textHeight(text: SvgText): number {
+function _textHeight(text: Svg.Text): number {
   let bb = text.bbox();
   return pixelsToInches(2 * bb.height);
 }
 
-function _textOptions(text: SvgText): object {
+function _textOptions(text: Svg.Text): object {
   let fs = pixelsToPoints(text.attr('font-size'));
   let w = _textWidth(text);
   let h = _textHeight(text);
@@ -92,14 +84,14 @@ function _textOptions(text: SvgText): object {
   };
 }
 
-function _addText(slide: PptxGenJS.Slide, text: SvgText) {
+function _addText(slide: PptxGenJS.Slide, text: Svg.Text) {
   slide.addText(
     text.text(),
     _textOptions(text),
   );
 }
 
-function _lineOptions(line: SvgLine): object {
+function _lineOptions(line: Svg.Line): object {
   let xMin = Math.min(line.attr('x1'), line.attr('x2'));
   let xMax = Math.max(line.attr('x1'), line.attr('x2'));
   let yMin = Math.min(line.attr('y1'), line.attr('y2'));
@@ -120,14 +112,14 @@ function _lineOptions(line: SvgLine): object {
   };
 }
 
-function _addLine(pres: PptxGenJS, slide: PptxGenJS.Slide, line: SvgLine) {
+function _addLine(pres: PptxGenJS, slide: PptxGenJS.Slide, line: Svg.Line) {
   slide.addShape(
     pres.ShapeType.line,
     _lineOptions(line),
   );
 }
 
-function _circleOptions(circle: SvgCircle): object {
+function _circleOptions(circle: Svg.Circle): object {
   let x = circle.attr('cx') - circle.attr('r');
   let y = circle.attr('cy') - circle.attr('r');
   let w = 2 * circle.attr('r');
@@ -151,14 +143,14 @@ function _circleOptions(circle: SvgCircle): object {
   };
 }
 
-function _addCircle(pres: PptxGenJS, slide: PptxGenJS.Slide, circle: SvgCircle) {
+function _addCircle(pres: PptxGenJS, slide: PptxGenJS.Slide, circle: Svg.Circle) {
   slide.addShape(
     pres.ShapeType.ellipse,
     _circleOptions(circle),
   );
 }
 
-function _rectOptions(rect: SvgRect): object {
+function _rectOptions(rect: Svg.Rect): object {
   return {
     x: _trimNum(pixelsToInches(rect.attr('x'))),
     y: _trimNum(pixelsToInches(rect.attr('y'))),
@@ -178,23 +170,23 @@ function _rectOptions(rect: SvgRect): object {
   };
 }
 
-function _addRect(pres: PptxGenJS, slide: PptxGenJS.Slide, rect: SvgRect) {
+function _addRect(pres: PptxGenJS, slide: PptxGenJS.Slide, rect: Svg.Rect) {
   slide.addShape(
     pres.ShapeType.rect,
     _rectOptions(rect),
   );
 }
 
-function _elementImageOptions(ele: SvgElement): object {
+function _elementImageOptions(ele: Svg.Element): object {
   let bb = ele.bbox();
   let sw = ele.attr('stroke-width');
   if (typeof sw !== 'number' || !Number.isFinite(sw)) {
     sw = 0;
   }
-  let svg = ele.root() as Svg;
+  let svg = ele.root();
   let nested = svg.nested();
   nested.svg(ele.svg());
-  let nele = nested.first() as SvgElement;
+  let nele = nested.first();
   nested.viewbox(0, 0, bb.width + sw, bb.height + sw);
   nested.attr({ 'width': bb.width + sw, 'height': bb.height + sw });
   nele.dmove(-bb.x + (sw / 2), -bb.y + (sw / 2));
@@ -211,26 +203,26 @@ function _elementImageOptions(ele: SvgElement): object {
   };
 }
 
-function _addElementAsImage(slide: PptxGenJS.Slide, ele: SvgElement) {
+function _addElementAsImage(slide: PptxGenJS.Slide, ele: Svg.Element) {
   slide.addImage(
     _elementImageOptions(ele)
   );
 }
 
-function createPptxFromSvg(svg: Svg): PptxGenJS {
+function createPptxFromSvg(svg: Svg.Svg): PptxGenJS {
   let pres = new PptxGenJS();
   _setSlideDimensions(pres, svg);
   let slide = pres.addSlide();
   svg.children().forEach(v => {
-    let c = v as SvgElement;
+    let c = v as Svg.Element;
     if (c.type === 'text') {
-      _addText(slide, c as SvgText);
+      _addText(slide, c as Svg.Text);
     } else if (c.type === 'line') {
-      _addLine(pres, slide, c as SvgLine);
+      _addLine(pres, slide, c as Svg.Line);
     } else if (c.type === 'circle') {
-      _addCircle(pres, slide, c as SvgCircle);
+      _addCircle(pres, slide, c as Svg.Circle);
     } else if (c.type === 'rect') {
-      _addRect(pres, slide, c as SvgRect);
+      _addRect(pres, slide, c as Svg.Rect);
     } else {
       _addElementAsImage(slide, c);
     }

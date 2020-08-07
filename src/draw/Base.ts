@@ -3,10 +3,7 @@ import {
   BaseMostRecentProps,
   BaseSavableState,
 } from './BaseInterface';
-import {
-  SvgInterface as Svg,
-  SvgTextInterface as SvgText,
-} from './SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
@@ -17,7 +14,7 @@ import { BaseNumberingSavableState } from './BaseNumberingInterface';
 class Base implements BaseInterface {
   static _mostRecentProps: BaseMostRecentProps;
 
-  _text: SvgText;
+  _text: Svg.Text;
   _highlighting: CircleBaseAnnotation | null;
   _outline: CircleBaseAnnotation | null;
   _numbering: BaseNumbering | null;
@@ -44,11 +41,11 @@ class Base implements BaseInterface {
     Base._mostRecentProps.fontStyle = b.fontStyle;
   }
 
-  static fromSavedState(savedState: BaseSavableState, svg: Svg): (Base | never) {
+  static fromSavedState(savedState: BaseSavableState, svg: Svg.Svg): (Base | never) {
     if (savedState.className !== 'Base') {
       throw new Error('Wrong class name.');
     }
-    let text = svg.findOne('#' + savedState.textId) as SvgText;
+    let text = svg.findOne('#' + savedState.textId) as Svg.Text;
     let b = new Base(text);
     if (savedState.highlighting) {
       b.addCircleHighlightingFromSavedState(savedState.highlighting);
@@ -63,7 +60,7 @@ class Base implements BaseInterface {
     return b;
   }
 
-  static create(svg: Svg, character: string, xCenter: number, yCenter: number): (Base | never) {
+  static create(svg: Svg.Svg, character: string, xCenter: number, yCenter: number): (Base | never) {
     let text = svg.text((add) => add.tspan(character));
     text.id();
     let b = new Base(text);
@@ -72,14 +69,14 @@ class Base implements BaseInterface {
     return b;
   }
 
-  static createOutOfView(svg: Svg, character: string): (Base | never) {
+  static createOutOfView(svg: Svg.Svg, character: string): (Base | never) {
     return Base.create(svg, character, 0, -200);
   }
 
   /**
    * Throws if the content of the text element is not a single character.
    */
-  constructor(text: SvgText) {
+  constructor(text: Svg.Text) {
     this._text = text;
     this._validateText();
     this._storeCenterCoordinates();
@@ -226,7 +223,7 @@ class Base implements BaseInterface {
   }
 
   set cursor(c: string) {
-    this._text.css({ 'cursor': c });
+    this._text.css('cursor', c);
   }
 
   onMouseover(f: () => void) {
@@ -248,7 +245,7 @@ class Base implements BaseInterface {
   addCircleHighlighting(): CircleBaseAnnotation {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.createNondisplaced(
-      this._text.root() as Svg,
+      this._text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -262,7 +259,7 @@ class Base implements BaseInterface {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.fromSavedState(
       savedState,
-      this._text.root() as Svg,
+      this._text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -290,7 +287,7 @@ class Base implements BaseInterface {
   addCircleOutline(): CircleBaseAnnotation {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.createNondisplaced(
-      this._text.root() as Svg,
+      this._text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -303,7 +300,7 @@ class Base implements BaseInterface {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(
       savedState,
-      this._text.root() as Svg,
+      this._text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -335,7 +332,7 @@ class Base implements BaseInterface {
     this.removeNumbering();
     try {
       this._numbering = BaseNumbering.create(
-        this._text.root() as Svg,
+        this._text.root(),
         number,
         this.xCenter,
         this.yCenter,
@@ -353,7 +350,7 @@ class Base implements BaseInterface {
     this.removeNumbering();
     this._numbering = BaseNumbering.fromSavedState(
       savedState,
-      this._text.root() as Svg,
+      this._text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -396,7 +393,7 @@ class Base implements BaseInterface {
   }
 
   refreshIds() {
-    this._text.id(null);
+    this._text.id('');
     this._text.id();
     if (this.highlighting) {
       this.highlighting.refreshIds();

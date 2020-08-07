@@ -1,4 +1,4 @@
-import { SvgElementInterface as SvgElement } from './SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 
 export interface BaseNumberingMostRecentProps {
   basePadding: number;
@@ -22,8 +22,8 @@ export interface BaseNumberingInterface {
   lineAngle: number;
   lineLength: number;
   reposition(xBaseCenter: number, yBaseCenter: number): void;
-  insertBefore(ele: SvgElement): void;
-  insertAfter(ele: SvgElement): void;
+  insertBefore(ele: Svg.Element): void;
+  insertAfter(ele: Svg.Element): void;
   number: number;
   fontFamily: string;
   fontSize: number;

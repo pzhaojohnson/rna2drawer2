@@ -2,23 +2,19 @@ import {
   BaseAnnotationInterface,
   CircleBaseAnnotationSavableState,
 } from './BaseAnnotationInterface';
-import {
-  SvgInterface as Svg,
-  SvgElementInterface as SvgElement,
-  SvgCircleInterface as SvgCircle,
-} from './SvgInterface';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
+import * as Svg from '@svgdotjs/svg.js';
 
 export class CircleBaseAnnotation implements BaseAnnotationInterface {
-  _circle: SvgCircle;
+  _circle: Svg.Circle;
 
   _displacementLength!: number;
   _displacementAngle!: number;
 
   static fromSavedState(
     savedState: CircleBaseAnnotationSavableState,
-    svg: Svg,
+    svg: Svg.Svg,
     xBaseCenter: number,
     yBaseCenter: number,
   ): (CircleBaseAnnotation | never) {
@@ -26,17 +22,17 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
       throw new Error('Wrong class name.');
     }
     let circle = svg.findOne('#' + savedState.circleId);
-    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
+    return new CircleBaseAnnotation(circle as Svg.Circle, xBaseCenter, yBaseCenter);
   }
   
-  static createNondisplaced(svg: Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
+  static createNondisplaced(svg: Svg.Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
     let circle = svg.circle(20);
     circle.id();
     circle.attr({ 'cx': xBaseCenter, 'cy': yBaseCenter });
     return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
   }
 
-  constructor(circle: SvgCircle, xBaseCenter: number, yBaseCenter: number) {
+  constructor(circle: Svg.Circle, xBaseCenter: number, yBaseCenter: number) {
     this._circle = circle;
     this._validateCircle();
     this._storeDisplacement(xBaseCenter, yBaseCenter);
@@ -113,11 +109,11 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
     });
   }
 
-  insertBefore(ele: SvgElement) {
+  insertBefore(ele: Svg.Element) {
     this._circle.insertBefore(ele);
   }
 
-  insertAfter(ele: SvgElement) {
+  insertAfter(ele: Svg.Element) {
     this._circle.insertAfter(ele);
   }
 
@@ -181,7 +177,7 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
   }
 
   refreshIds() {
-    this._circle.id(null);
+    this._circle.id('');
     this._circle.id();
   }
 }

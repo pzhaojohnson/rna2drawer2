@@ -4,17 +4,14 @@ import {
   QuadraticBezierBondSavableState,
   TertiaryBondMostRecentProps,
 } from './QuadraticBezierBondInterface';
-import {
-  SvgInterface as Svg,
-  SvgPathInterface as SvgPath,
-} from './SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from './BaseInterface';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
 class QuadraticBezierBond implements QuadraticBezierBondInterface {
-  _path: SvgPath;
+  _path: Svg.Path;
   _base1: Base;
   _base2: Base;
 
@@ -54,7 +51,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
    * 
    * Throws if the path is not composed of an M and Q segment.
    */
-  constructor(path: SvgPath, b1: Base, b2: Base) {
+  constructor(path: Svg.Path, b1: Base, b2: Base) {
     this._base1 = b1;
     this._base2 = b2;
 
@@ -277,7 +274,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   set cursor(c: string) {
-    this._path.css({ 'cursor': c });
+    this._path.css('cursor', c);
   }
 
   onMouseover(f: () => void) {
@@ -314,7 +311,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   refreshIds() {
-    this._path.id(null);
+    this._path.id('');
     this._path.id();
   }
 }
@@ -346,13 +343,13 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
 
   static fromSavedState(
     savedState: QuadraticBezierBondSavableState,
-    svg: Svg,
+    svg: Svg.Svg,
     getBaseById: (id: string) => (Base | null),
   ): (TertiaryBond | never) {
     if (savedState.className !== 'QuadraticBezierBond') {
       throw new Error('Wrong class name.');
     }
-    let p = svg.findOne('#' + savedState.pathId) as SvgPath;
+    let p = svg.findOne('#' + savedState.pathId) as Svg.Path;
     let b1 = getBaseById(savedState.baseId1) as Base;
     let b2 = getBaseById(savedState.baseId2) as Base;
     let tb = new TertiaryBond(p, b1, b2);
@@ -360,7 +357,7 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
     return tb;
   }
 
-  static create(svg: Svg, b1: Base, b2: Base): TertiaryBond {
+  static create(svg: Svg.Svg, b1: Base, b2: Base): TertiaryBond {
     let ch = 0.35 * b1.distanceBetweenCenters(b2);
     let d = QuadraticBezierBond._dPath(b1, b2, 6, 6, ch, -Math.PI / 2);
     let p = svg.path(d);

@@ -5,11 +5,11 @@ import Base from '../../../draw/Base';
 import { pointsToPixels } from '../../../export/pointsToPixels';
 import { formatSvgForExport } from '../../../export/formatSvgForExport';
 import { createPptxFromSvg } from '../../../export/createPptxFromSvg';
-import { SvgInterface as Svg } from '../../../draw/SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import PptxGenJS from 'pptxgenjs';
 
 interface Props {
-  SVG: () => Svg;
+  SVG: () => Svg.Svg;
   getSvgString: () => string;
   close?: () => void;
 }

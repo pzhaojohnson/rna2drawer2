@@ -14,7 +14,7 @@ import UndoRedo from './undo/UndoRedo';
 
 import StrictDrawing from './draw/StrictDrawing';
 import { StrictDrawingSavableState } from './draw/StrictDrawingInterface';
-import { SvgInterface as Svg } from './draw/SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 
 import createMenuForApp from './menu/createMenuForApp';
@@ -25,13 +25,13 @@ import renderCreateNewDrawingInApp from './forms/new/renderCreateNewDrawingInApp
 import saveDrawingForApp from './export/saveDrawingForApp';
 
 class App {
-  _SVG: () => Svg;
+  _SVG: () => Svg.Svg;
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing!: StrictDrawing;
   _strictDrawingInteraction!: StrictDrawingInteraction;
   _currFormFactory?: () => ReactElement;
 
-  constructor(SVG: () => Svg) {
+  constructor(SVG: () => Svg.Svg) {
     this._SVG = SVG;
 
     fillInBodyForApp();
@@ -46,7 +46,7 @@ class App {
     renderCreateNewDrawingInApp(this);
   }
 
-  get SVG(): () => Svg {
+  get SVG(): () => Svg.Svg {
     return this._SVG;
   }
 

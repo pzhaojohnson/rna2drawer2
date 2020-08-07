@@ -3,12 +3,7 @@ import {
   BaseNumberingMostRecentProps,
   BaseNumberingSavableState,
 } from './BaseNumberingInterface';
-import {
-  SvgInterface as Svg,
-  SvgTextInterface as SvgText,
-  SvgLineInterface as SvgLine,
-  SvgElementInterface as SvgElement,
-} from './SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
@@ -29,8 +24,8 @@ interface TextPositioning {
 class BaseNumbering implements BaseNumberingInterface {
   static _mostRecentProps: BaseNumberingMostRecentProps;
 
-  _text: SvgText;
-  _line: SvgLine;
+  _text: Svg.Text;
+  _line: Svg.Line;
   _basePadding!: number;
 
   static _lineCoordinates(
@@ -47,7 +42,7 @@ class BaseNumbering implements BaseNumberingInterface {
     return { x1: x1, y1: y1, x2: x2, y2: y2 };
   }
 
-  static _textPositioning(text: SvgText, line: SvgLine): TextPositioning {
+  static _textPositioning(text: Svg.Text, line: Svg.Line): TextPositioning {
     let lineAngle = angleBetween(
       line.attr('x1'),
       line.attr('y1'),
@@ -78,7 +73,7 @@ class BaseNumbering implements BaseNumberingInterface {
     return tp;
   }
 
-  static _positionText(text: SvgText, line: SvgLine) {
+  static _positionText(text: Svg.Text, line: Svg.Line) {
     let tp = BaseNumbering._textPositioning(text, line);
     text.attr({
       'x': tp.x,
@@ -114,22 +109,22 @@ class BaseNumbering implements BaseNumberingInterface {
 
   static fromSavedState(
     savedState: BaseNumberingSavableState,
-    svg: Svg,
+    svg: Svg.Svg,
     xBaseCenter: number,
     yBaseCenter: number,
   ): (BaseNumbering | never) {
     if (savedState.className !== 'BaseNumbering') {
       throw new Error('Wrong class name.');
     }
-    let text = svg.findOne('#' + savedState.textId) as SvgText;
-    let line = svg.findOne('#' + savedState.lineId) as SvgLine;
-    let n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
+    let text = svg.findOne('#' + savedState.textId);
+    let line = svg.findOne('#' + savedState.lineId);
+    let n = new BaseNumbering(text as Svg.Text, line as Svg.Line, xBaseCenter, yBaseCenter);
     BaseNumbering._copyPropsToMostRecent(n);
     return n;
   }
 
   static create(
-    svg: Svg,
+    svg: Svg.Svg,
     number: number,
     xBaseCenter: number,
     yBaseCenter: number,
@@ -143,7 +138,7 @@ class BaseNumbering implements BaseNumberingInterface {
     return n;
   }
 
-  constructor(text: SvgText, line: SvgLine, xBaseCenter: number, yBaseCenter: number) {
+  constructor(text: Svg.Text, line: Svg.Line, xBaseCenter: number, yBaseCenter: number) {
     this._text = text;
     this._validateText();
 
@@ -295,12 +290,12 @@ class BaseNumbering implements BaseNumberingInterface {
     this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
-  insertBefore(ele: SvgElement) {
+  insertBefore(ele: Svg.Element) {
     this._text.insertBefore(ele);
     this._line.insertBefore(ele);
   }
 
-  insertAfter(ele: SvgElement) {
+  insertAfter(ele: Svg.Element) {
     this._text.insertAfter(ele);
     this._line.insertAfter(ele);
   }
@@ -382,9 +377,9 @@ class BaseNumbering implements BaseNumberingInterface {
   }
 
   refreshIds() {
-    this._text.id(null);
+    this._text.id('');
     this._text.id();
-    this._line.id(null);
+    this._line.id('');
     this._line.id();
   }
 }

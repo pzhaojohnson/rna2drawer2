@@ -4,10 +4,10 @@ const uuidv1 = require('uuid/v1');
 import Base from '../../../draw/Base';
 import { formatSvgForExport } from '../../../export/formatSvgForExport';
 import offerFileForDownload from '../../../export/offerFileForDownload';
-import { SvgInterface as Svg } from '../../../draw/SvgInterface';
+import * as Svg from '@svgdotjs/svg.js';
 
 interface Props {
-  SVG: () => Svg;
+  SVG: () => Svg.Svg;
   getSvgString: () => string;
   close?: () => void;
 }
