@@ -165,6 +165,10 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
     this._circle.attr({ 'stroke-opacity': so });
   }
 
+  animate(duration: number): Svg.Runner {
+    return this._circle.animate(duration);
+  }
+
   remove() {
     this._circle.remove();
   }
