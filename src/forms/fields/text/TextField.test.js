@@ -47,6 +47,13 @@ it('renders initial value in input element', () => {
   expect(getInput().value).toBe('qwezxcv');
 });
 
+it('sets initial value to empty string by default', () => {
+  act(() => {
+    render(<TextField />, container);
+  });
+  expect(getInput().value).toBe('');
+});
+
 it('input element can be typed into', () => {
   act(() => {
     render(<TextField initialValue={'asdf'} />, container);

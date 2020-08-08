@@ -12,6 +12,12 @@ it('passes name, initialValue and minLabelWidth props', () => {
   expect(ele.props.minLabelWidth).toBe('78px');
 });
 
+it('initialValue is optional', () => {
+  let comp = new NumberField({ name: 'asdf' });
+  let ele = comp.render();
+  expect(ele.props.initialValue).toBeFalsy();
+});
+
 describe('checkValue callback', () => {
   it('rejects non-numbers', () => {
     let comp = new NumberField({ name: 'name', initialValue: 0 });

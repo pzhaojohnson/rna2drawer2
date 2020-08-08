@@ -3,7 +3,7 @@ import ErrorMessage from '../../ErrorMessage';
 
 interface Props {
   name: string;
-  initialValue: string;
+  initialValue?: string;
   checkValue: (v: string) => string;
   set: (v: string) => void;
   minLabelWidth?: string;
@@ -23,7 +23,7 @@ export class TextField extends React.Component {
     super(props);
 
     this.state = {
-      value: props.initialValue,
+      value: props.initialValue ?? '',
       errorMessage: '',
     };
   }

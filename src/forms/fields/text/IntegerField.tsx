@@ -4,7 +4,7 @@ import capitalizeFirstLetter from './capitalizeFirstLetter';
 
 interface Props {
   name: string;
-  initialValue: number;
+  initialValue?: number;
   checkValue?: (n: number) => string;
   set: (n: number) => void;
   minLabelWidth?: string;

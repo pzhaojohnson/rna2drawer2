@@ -15,6 +15,12 @@ it('passes name, initialValue and minLabelWidth props', () => {
   expect(ele.props.minLabelWidth).toBe('119px');
 });
 
+it('initialValue is optional', () => {
+  let comp = new IntegerField({ name: 'asdf' });
+  let ele = comp.render();
+  expect(ele.props.initialValue).toBe(undefined);
+});
+
 describe('checkValue callback', () => {
   it('rejects non-integers', () => {
     let comp = new IntegerField({ name: 'asdf', initialValue: 0 });

@@ -4,7 +4,7 @@ import capitalizeFirstLetter from './capitalizeFirstLetter';
 
 interface Props {
   name: string;
-  initialValue: number;
+  initialValue?: number;
   checkValue?: (n: number) => string;
   set: (n: number) => void;
   minLabelWidth?: string;
@@ -19,7 +19,7 @@ export class NumberField extends React.Component {
     return (
       <TextField
         name={this.props.name}
-        initialValue={this.props.initialValue.toString()}
+        initialValue={this.props.initialValue?.toString()}
         checkValue={(v: string) => {
           let n = Number.parseFloat(v);
           let name = capitalizeFirstLetter(this.props.name.toLowerCase());

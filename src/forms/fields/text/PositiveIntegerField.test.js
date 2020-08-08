@@ -15,6 +15,12 @@ it('passes name, initialValue and minLabelWidth props', () => {
   expect(ele.props.minLabelWidth).toBe('182px');
 });
 
+it('initialValue is optional', () => {
+  let comp = new PositiveIntegerField({ name: 'asdf' });
+  let ele = comp.render();
+  expect(ele.props.initialValue).toBe(undefined);
+});
+
 describe('checkValue callback', () => {
   it('rejects nonpositive numbers', () => {
     let comp = new PositiveIntegerField({ name: 'asdf', initialValue: 1 });
