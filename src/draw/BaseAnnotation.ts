@@ -1,6 +1,7 @@
 import {
   BaseAnnotationInterface,
   CircleBaseAnnotationSavableState,
+  PulsableProps,
 } from './BaseAnnotationInterface';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
@@ -165,8 +166,18 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
     this._circle.attr({ 'stroke-opacity': so });
   }
 
-  animate(duration: number): Svg.Runner {
-    return this._circle.animate(duration);
+  pulsateBetween(props: PulsableProps) {
+    if (Object.keys(props).length > 0) {
+      let attrs = {
+        'r': props.radius ?? this.radius,
+        'fill': props.fill ?? this.fill,
+        'fill-opacity': props.fillOpacity ?? this.fillOpacity,
+        'stroke': props.stroke ?? this.stroke,
+        'stroke-width': props.strokeWidth ?? this.strokeWidth,
+        'stroke-opacity': props.strokeOpacity ?? this.strokeOpacity,
+      };
+      this._circle.animate(1800).attr(attrs).loop(undefined, true);
+    }
   }
 
   remove() {

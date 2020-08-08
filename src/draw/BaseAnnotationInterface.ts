@@ -5,6 +5,15 @@ export interface CircleBaseAnnotationSavableState {
   circleId: string;
 }
 
+export interface PulsableProps {
+  radius?: number;
+  fill?: string;
+  fillOpacity?: number;
+  stroke?: string;
+  strokeWidth?: number;
+  strokeOpacity?: number;
+}
+
 export interface BaseAnnotationInterface {
   readonly type: string;
   readonly id: string;
@@ -17,6 +26,7 @@ export interface BaseAnnotationInterface {
   reposition(xBaseCenter: number, yBaseCenter: number): void;
   insertBefore(ele: Svg.Element): void;
   insertAfter(ele: Svg.Element): void;
+  pulsateBetween(props: PulsableProps): void;
   remove(): void;
   savableState(): object;
   refreshIds(): void;
