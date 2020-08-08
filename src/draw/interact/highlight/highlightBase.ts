@@ -1,4 +1,4 @@
-import Base from '../../Base';
+import { BaseInterface as Base } from '../../BaseInterface';
 
 export interface HighlightingProps {
   radius?: number;

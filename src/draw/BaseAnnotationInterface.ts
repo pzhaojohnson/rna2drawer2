@@ -32,6 +32,13 @@ export interface BaseAnnotationInterface {
   refreshIds(): void;
 }
 
-export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {}
+export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
+  radius: number;
+  fill: string;
+  fillOpacity: number;
+  stroke: string;
+  strokeWidth: number;
+  strokeOpacity: number;
+}
 
 export default BaseAnnotationInterface;
