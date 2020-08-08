@@ -242,7 +242,15 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   setStrokeWidth(sw: number) {
-    return this._path.attr({ 'stroke-width': sw });
+    this._path.attr({ 'stroke-width': sw });
+  }
+
+  getStrokeOpacity(): number {
+    return this._path.attr('stroke-opacity');
+  }
+
+  setStrokeOpacity(so: number) {
+    this._path.attr({ 'stroke-opacity': so });
   }
 
   getStrokeDasharray(): string {
@@ -330,6 +338,7 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
     tb.padding2 = mrps.padding2;
     tb.stroke = mrps.stroke;
     tb.strokeWidth = mrps.strokeWidth;
+    tb.strokeOpacity = mrps.strokeOpacity;
     tb.strokeDasharray = mrps.strokeDasharray;
   }
 
@@ -338,6 +347,7 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
     TertiaryBond._mostRecentProps.padding2 = tb.padding2;
     TertiaryBond._mostRecentProps.stroke = tb.stroke;
     TertiaryBond._mostRecentProps.strokeWidth = tb.strokeWidth;
+    TertiaryBond._mostRecentProps.strokeOpacity = tb.strokeOpacity;
     TertiaryBond._mostRecentProps.strokeDasharray = tb.strokeDasharray;
   }
 
@@ -402,6 +412,15 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
     TertiaryBond._mostRecentProps.strokeWidth = sw;
   }
 
+  get strokeOpacity(): number {
+    return super.getStrokeOpacity();
+  }
+
+  set strokeOpacity(so: number) {
+    super.setStrokeOpacity(so);
+    TertiaryBond._mostRecentProps.strokeOpacity = so;
+  }
+
   get strokeDasharray(): string {
     return super.getStrokeDasharray();
   }
@@ -419,6 +438,7 @@ TertiaryBond._mostRecentProps = {
   padding2: 8,
   stroke: '#4a90e2',
   strokeWidth: 1.25,
+  strokeOpacity: 1,
   strokeDasharray: '',
 };
 

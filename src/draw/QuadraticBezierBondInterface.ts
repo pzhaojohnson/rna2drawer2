@@ -27,6 +27,8 @@ export interface QuadraticBezierBondInterface {
   setStroke(s: string): void;
   getStrokeWidth(): number;
   setStrokeWidth(sw: number): void;
+  getStrokeOpacity(): number;
+  setStrokeOpacity(so: number): void;
   getStrokeDasharray(): string;
   setStrokeDasharray(sd: string): void;
   fill: string;
@@ -47,6 +49,7 @@ export interface TertiaryBondMostRecentProps {
   padding2: number;
   stroke: string;
   strokeWidth: number;
+  strokeOpacity: number;
   strokeDasharray: string;
 }
 

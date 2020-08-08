@@ -167,7 +167,7 @@ describe('QuadraticBezierBond class', () => {
     expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
   });
 
-  it('stroke, strokeWidth and strokeDasharray getters and setters', () => {
+  it('stroke, strokeWidth, strokeOpacity and strokeDasharray getters and setters', () => {
     let b1 = Base.create(svg, 'a', 50, 40);
     let b2 = Base.create(svg, 'n', 100, 300);
     let d = QuadraticBezierBond._dPath(b1, b2, 6, 8, 200, Math.PI / 6);
@@ -179,6 +179,9 @@ describe('QuadraticBezierBond class', () => {
     qbb.setStrokeWidth(3.44); // use setter
     expect(qbb.getStrokeWidth()).toBe(3.44); // check getter
     expect(p.attr('stroke-width')).toBe(3.44); // check actual value
+    qbb.setStrokeOpacity(0.41); // use setter
+    expect(qbb.getStrokeOpacity()).toBe(0.41); // check getter
+    expect(qbb._path.attr('stroke-opacity')).toBe(0.41); // check actual value
     qbb.setStrokeDasharray('3 1 6 7'); // use setter
     expect(qbb.getStrokeDasharray()).toBe('3 1 6 7'); // check getter
     expect(p.attr('stroke-dasharray')).toBe('3 1 6 7'); // check actual value
@@ -304,6 +307,7 @@ describe('TeritaryBond class', () => {
       TertiaryBond._mostRecentProps.padding2 = 5.68;
       TertiaryBond._mostRecentProps.stroke = '#45abc3';
       TertiaryBond._mostRecentProps.strokeWidth = 3.47;
+      TertiaryBond._mostRecentProps.strokeOpacity = 0.82;
       TertiaryBond._mostRecentProps.strokeDasharray = '3 3 1 5 6 9';
       let mrps = TertiaryBond.mostRecentProps();
       expect(mrps).not.toBe(TertiaryBond._mostRecentProps); // a new object
@@ -311,6 +315,7 @@ describe('TeritaryBond class', () => {
       expect(mrps.padding2).toBe(5.68);
       expect(mrps.stroke).toBe('#45abc3');
       expect(mrps.strokeWidth).toBe(3.47);
+      expect(mrps.strokeOpacity).toBe(0.82);
       expect(mrps.strokeDasharray).toBe('3 3 1 5 6 9');
     });
   });
@@ -323,12 +328,14 @@ describe('TeritaryBond class', () => {
     TertiaryBond._mostRecentProps.padding2 = 17.3;
     TertiaryBond._mostRecentProps.stroke = '#243511';
     TertiaryBond._mostRecentProps.strokeWidth = 3.22;
+    TertiaryBond._mostRecentProps.strokeOpacity = 0.39;
     TertiaryBond._mostRecentProps.strokeDasharray = '3 1 9';
     TertiaryBond._applyMostRecentProps(tb);
     expect(tb.padding1).toBeCloseTo(16.4);
     expect(tb.padding2).toBeCloseTo(17.3);
     expect(tb.stroke).toBe('#243511');
     expect(tb.strokeWidth).toBe(3.22);
+    expect(tb.strokeOpacity).toBe(0.39);
     expect(tb.strokeDasharray).toBe('3 1 9');
   });
 
@@ -340,12 +347,14 @@ describe('TeritaryBond class', () => {
     tb.padding2 = 15.33;
     tb.stroke = '#4455aa';
     tb.strokeWidth = 5.42;
+    tb.strokeOpacity = 0.54;
     tb.strokeDasharray = '3 3 1 4';
     // necessary since the setters used above also update the most recent props
     TertiaryBond._mostRecentProps.padding1 = 20;
     TertiaryBond._mostRecentProps.padding2 = 30;
     TertiaryBond._mostRecentProps.stroke = '#abcdef';
     TertiaryBond._mostRecentProps.strokeWidth = 2;
+    TertiaryBond._mostRecentProps.strokeOpacity = 1;
     TertiaryBond._mostRecentProps.strokeDasharray = '';
     TertiaryBond._copyPropsToMostRecent(tb);
     let mrps = TertiaryBond.mostRecentProps();
@@ -353,6 +362,7 @@ describe('TeritaryBond class', () => {
     expect(mrps.padding2).toBeCloseTo(15.33);
     expect(mrps.stroke).toBe('#4455aa');
     expect(mrps.strokeWidth).toBe(5.42);
+    expect(mrps.strokeOpacity).toBe(0.54);
     expect(mrps.strokeDasharray).toBe('3 3 1 4');
   });
 
@@ -428,7 +438,7 @@ describe('TeritaryBond class', () => {
     expect(TertiaryBond.mostRecentProps().padding2).toBeCloseTo(12.8);
   });
 
-  it('stroke, strokeWidth and strokeDasharray getters and setters', () => {
+  it('stroke, strokeWidth, strokeOpacity and strokeDasharray getters and setters', () => {
     let b1 = Base.create(svg, 't', 50, 40);
     let b2 = Base.create(svg, 'q', -1000, -300);
     let tb = TertiaryBond.create(svg, b1, b2);
@@ -440,6 +450,10 @@ describe('TeritaryBond class', () => {
     expect(tb.strokeWidth).toBe(3.96); // check getter
     // updates most recent prop
     expect(TertiaryBond.mostRecentProps().strokeWidth).toBe(3.96);
+    tb.strokeOpacity = 0.76; // use setter
+    expect(tb.strokeOpacity).toBe(0.76); // check getter
+    // updates most recent prop
+    expect(TertiaryBond.mostRecentProps().strokeOpacity).toBe(0.76);
     tb.strokeDasharray = '3 2 8 7'; // use setter
     expect(tb.strokeDasharray).toBe('3 2 8 7'); // check getter
     // updates most recent prop
