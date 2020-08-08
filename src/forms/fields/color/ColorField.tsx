@@ -2,16 +2,40 @@ import * as React from 'react';
 import { SketchPicker, ColorResult } from 'react-color';
 import ColorSet from './ColorSet';
 import RecentColorsList from './RecentColorsList';
+import * as Svg from '@svgdotjs/svg.js';
 
 export const PRESET_COLORS = new ColorSet([
   '#D0021B', '#F5A623', '#F8E71C', '#8B572A', '#7ED321', '#417505', '#BD10E0', '#9013FE',
   '#4A90E2', '#50E3C2', '#B8E986', '#000000', '#4A4A4A', '#9B9B9B', '#FFFFFF',
 ]);
 
+export interface ColorAndOpacity {
+  color: string;
+  opacity: number;
+}
+
+interface Rgba {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
+function toRgba(co: ColorAndOpacity): Rgba {
+  let c = new Svg.Color(co.color);
+  let rgb = c.rgb();
+  return { r: rgb.r, g: rgb.g, b: rgb.b, a: co.opacity };
+}
+
+function toRgbaString(co: ColorAndOpacity): string {
+  let rgba = toRgba(co);
+  return 'rgba(' + rgba.r + ',' + rgba.g + ',' + rgba.b + ',' + rgba.a + ')';
+}
+
 interface Props {
   name: string;
-  initialValue?: string;
-  set: (v: string) => void;
+  initialValue?: ColorAndOpacity;
+  set: (v: ColorAndOpacity) => void;
 }
 
 export class ColorField extends React.Component {
@@ -19,19 +43,19 @@ export class ColorField extends React.Component {
   
   props!: Props;
   state: {
-    value: string;
+    value: ColorAndOpacity;
     showPicker: boolean;
   }
   
   constructor(props: Props) {
     super(props);
 
-    if (this.props.initialValue && !PRESET_COLORS.has(this.props.initialValue)) {
-      ColorField.recentColors.push(this.props.initialValue);
+    if (this.props.initialValue && !PRESET_COLORS.has(this.props.initialValue.color)) {
+      ColorField.recentColors.push(this.props.initialValue.color);
     }
 
     this.state = {
-      value: this.props.initialValue ?? '#000000',
+      value: this.props.initialValue ?? { color: '#ffffff', opacity: 0 },
       showPicker: false,
     };
   }
@@ -77,7 +101,7 @@ export class ColorField extends React.Component {
             width: '36px',
             height: '14px',
             borderRadius: '2px',
-            background: this.state.value,
+            background: toRgbaString(this.state.value),
           }}
         ></div>
       </div>
@@ -102,9 +126,8 @@ export class ColorField extends React.Component {
           }}
         ></div>
         <SketchPicker
-          disableAlpha={true}
           presetColors={PRESET_COLORS.toArray().concat(ColorField.recentColors.slice())}
-          color={this.state.value}
+          color={toRgba(this.state.value)}
           onChange={color => this.onChange(color)}
         />
       </div>
@@ -116,12 +139,12 @@ export class ColorField extends React.Component {
     if (hex.length == 4) {
       hex = '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
     }
-    this.setState({ value: hex });
+    this.setState({ value: { color: hex, opacity: result.rgb.a } });
   }
 
   closePicker() {
-    if (!PRESET_COLORS.has(this.state.value)) {
-      ColorField.recentColors.push(this.state.value);
+    if (!PRESET_COLORS.has(this.state.value.color)) {
+      ColorField.recentColors.push(this.state.value.color);
     }
     this.setState({ showPicker: false });
     this.props.set(this.state.value);

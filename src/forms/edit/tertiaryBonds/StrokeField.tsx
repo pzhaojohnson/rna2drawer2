@@ -1,10 +1,10 @@
 import * as React from 'react';
-import ColorField from '../../fields/color/ColorField';
+import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import App from '../../../App';
 
 interface Props {
-  currStroke: string;
-  setStroke: (s: string) => void;
+  currStroke?: ColorAndOpacity;
+  setStroke: (s: ColorAndOpacity) => void;
 }
 
 export class StrokeField extends React.Component {
@@ -15,17 +15,20 @@ export class StrokeField extends React.Component {
     let selected = interaction.selected;
     return (
       <StrokeField
-        currStroke={selected ? selected.stroke : '#000000'}
-        setStroke={(s: string) => {
+        currStroke={selected ? { color: selected.stroke, opacity: selected.strokeOpacity } : undefined}
+        setStroke={(s: ColorAndOpacity) => {
           let interaction = app.strictDrawingInteraction.tertiaryBondsInteraction;
           let selected = interaction.selected;
-          if (selected && s != selected.stroke) {
-            app.pushUndo();
-            selected.stroke = s;
-            if (selected.fill && selected.fill.toLowerCase() != 'none') {
-              selected.fill = s;
+          if (selected) {
+            if (s.color != selected.stroke || s.opacity != selected.strokeOpacity) {
+              app.pushUndo();
+              selected.stroke = s.color;
+              if (selected.fill && selected.fill.toLowerCase() != 'none') {
+                selected.fill = s.color;
+              }
+              selected.strokeOpacity = s.opacity;
+              app.drawingChangedNotByInteraction();
             }
-            app.drawingChangedNotByInteraction();
           }
         }}
       />
@@ -37,7 +40,7 @@ export class StrokeField extends React.Component {
       <ColorField
         name={'Color'}
         initialValue={this.props.currStroke}
-        set={(s: string) => this.props.setStroke(s)}
+        set={(s: ColorAndOpacity) => this.props.setStroke(s)}
       />
     );
   }

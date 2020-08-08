@@ -46,7 +46,10 @@ it('displays name in label', () => {
 describe('adding initial value to recent colors', () => {
   it('is added when provided', () => {
     act(() => {
-      render(<ColorField name={'asdf'} initialValue={'#11bbfa'} />, container);
+      render(<ColorField
+        name={'asdf'}
+        initialValue={{ color: '#11bbfa', opacity: 1 }}
+      />, container);
     });
     expect(ColorField.recentColors.slice(-1)[0]).toBe('#11bbfa');
   });
@@ -54,7 +57,10 @@ describe('adding initial value to recent colors', () => {
   it('is not added when is one of the preset colors', () => {
     let prev = ColorField.recentColors.slice();
     act(() => {
-      render(<ColorField name={'asdf'} initialValue={PRESET_COLORS.toArray()[1]} />, container);
+      render(<ColorField
+        name={'asdf'}
+        initialValue={{ color: PRESET_COLORS.toArray()[1], opacity: 1 }}
+      />, container);
     });
     // are unchanged
     expect(ColorField.recentColors.slice().toString()).toBe(prev.toString());
@@ -62,20 +68,22 @@ describe('adding initial value to recent colors', () => {
 });
 
 describe('current color display', () => {
-  it('shows current color if provided', () => {
+  it('shows current color and opacity if provided', () => {
     act(() => {
-      render(<ColorField initialValue={'#aa1123'} />, container);
+      render(<ColorField
+        initialValue={{ color: '#aa1123', opacity: 0.56 }}
+      />, container);
     });
     let style = window.getComputedStyle(getCurrentColorDisplay().childNodes[0]);
-    expect(style.background).toBe('rgb(170, 17, 35)');
+    expect(style.background).toBe('rgba(170, 17, 35, 0.56)');
   });
 
-  it('shows black by default', () => {
+  it('is completely transparent by default', () => {
     act(() => {
       render(<ColorField />, container);
     });
     let style = window.getComputedStyle(getCurrentColorDisplay().childNodes[0]);
-    expect(style.background).toBe('rgb(0, 0, 0)');
+    expect(style.background).toBe('rgba(255, 255, 255, 0)');
   });
 
   it('clicking on it toggles the picker', () => {
@@ -90,15 +98,15 @@ describe('current color display', () => {
   });
 
   it('is updated when color changes', () => {
-    let comp = new ColorField({ initialValue: '#aabb23' });
+    let comp = new ColorField({ initialValue: { color: '#aabb23', opacity: 0.48 } });
     let ele = comp.currentColorDisplay().props.children;
-    expect(ele.props.style.background).toBe('#aabb23');
-    comp.state.value = '#4455aa';
+    expect(ele.props.style.background).toBe('rgba(170,187,35,0.48)');
+    comp.state.value = { color: '#4455aa', opacity: 0.11 };
     ele = comp.currentColorDisplay().props.children;
-    expect(ele.props.style.background).toBe('#4455aa');
-    comp.state.value = '#123456';
+    expect(ele.props.style.background).toBe('rgba(68,85,170,0.11)');
+    comp.state.value = { color: '#123456', opacity: 0.91 };
     ele = comp.currentColorDisplay().props.children;
-    expect(ele.props.style.background).toBe('#123456');
+    expect(ele.props.style.background).toBe('rgba(18,52,86,0.91)');
   });
 });
 
@@ -119,52 +127,51 @@ describe('picker', () => {
     expect(getPicker()).toBeFalsy(); // picker was closed
   });
 
-  it('setting alpha value is disabled', () => {
-    // handling alpha values is to be implemented in the future
-    let comp = new ColorField({ initialValue: '#112233' });
+  it('displays the current color and opacity when rendered', () => {
+    let comp = new ColorField({ initialValue: { color: '#5564ab', opacity: 0.42 } });
     let picker = comp.picker().props.children[1];
-    expect(picker.props.disableAlpha).toBe(true);
+    expect(picker.props.color).toStrictEqual({ r: 85, g: 100, b: 171, a: 0.42 });
+    comp.state.value = { color: '#bbca22', opacity: 0.19 };
+    picker = comp.picker().props.children[1];
+    expect(picker.props.color).toStrictEqual({ r: 187, g: 202, b: 34, a: 0.19 });
+    comp.state.value = { color: '#ffca33', opacity: 0.66 };
+    picker = comp.picker().props.children[1];
+    expect(picker.props.color).toStrictEqual({ r: 255, g: 202, b: 51, a: 0.66 });
   });
 
-  it('displays the current color when first rendered', () => {
-    let comp = new ColorField({ initialValue: '#5564ab' });
-    let picker = comp.picker().props.children[1];
-    expect(picker.props.color).toBe('#5564ab');
-    comp.state.value = '#bbca22';
-    picker = comp.picker().props.children[1];
-    expect(picker.props.color).toBe('#bbca22');
-    comp.state.value = '#ffca33';
-    picker = comp.picker().props.children[1];
-    expect(picker.props.color).toBe('#ffca33');
-  });
-
-  it('onChange callback updates the current color', () => {
-    let comp = new ColorField({ initialValue: '#11298a' });
+  it('onChange callback updates the current color and opacity', () => {
+    let comp = new ColorField({ initialValue: { color: '#11298a', opacity: 0.2 } });
     let picker = comp.picker().props.children[1];
     let spy = jest.spyOn(comp, 'setState');
-    picker.props.onChange({ hex: '#4412bc' });
-    expect(spy.mock.calls[0][0].value).toBe('#4412bc');
-    picker.props.onChange({ hex: '#AB11F5' });
-    expect(spy.mock.calls[1][0].value).toBe('#ab11f5'); // decapitalizes letters
-    picker.props.onChange({ hex: '#f12' });
-    expect(spy.mock.calls[2][0].value).toBe('#ff1122'); // expands to 7 characters
-    picker.props.onChange({ hex: '#A2D' });
-    expect(spy.mock.calls[3][0].value).toBe('#aa22dd'); // expands and decapitalizes
+    picker.props.onChange({ hex: '#4412bc', rgb: { a: 0.33 } });
+    expect(spy.mock.calls[0][0].value).toStrictEqual({ color: '#4412bc', opacity: 0.33 });
+    picker.props.onChange({ hex: '#AB11F5', rgb: { a: 0.71 } });
+    expect(spy.mock.calls[1][0].value).toStrictEqual({ color: '#ab11f5', opacity: 0.71 }); // decapitalizes letters
+    picker.props.onChange({ hex: '#f12', rgb: { a: 0.99 } });
+    expect(spy.mock.calls[2][0].value).toStrictEqual({ color: '#ff1122', opacity: 0.99 }); // expands to 7 characters
+    picker.props.onChange({ hex: '#A2D', rgb: { a: 0.58 } });
+    expect(spy.mock.calls[3][0].value).toStrictEqual({ color: '#aa22dd', opacity: 0.58 }); // expands and decapitalizes
   });
 
   describe('adding value to recent colors when closed', () => {
     it('adds value when it is not a preset color', () => {
-      let comp = new ColorField({ initialValue: '#123456', set: jest.fn() });
+      let comp = new ColorField({
+        initialValue: { color: '#123456', opacity: 1 },
+        set: jest.fn()
+      });
       let closingDiv = comp.picker().props.children[0];
-      comp.state.value = '#4455ab';
+      comp.state.value = { color: '#4455ab', opacity: 0.55 };
       closingDiv.props.onClick();
       expect(ColorField.recentColors.slice(-1)[0]).toBe('#4455ab');
     });
 
     it('does not add value when it is a preset color', () => {
-      let comp = new ColorField({ initialValue: '#12bbca', set: jest.fn() });
+      let comp = new ColorField({
+        initialValue: { color: '#12bbca', opacity: 0.11 },
+        set: jest.fn(),
+      });
       let closingDiv = comp.picker().props.children[0];
-      comp.state.value = PRESET_COLORS.toArray()[2];
+      comp.state.value = { color: PRESET_COLORS.toArray()[2], opacity: 0.1 };
       let prev = ColorField.recentColors.slice();
       closingDiv.props.onClick();
       // are unchanged
@@ -174,11 +181,14 @@ describe('picker', () => {
 
   it('closing passes the current value to the set callback', () => {
     let set = jest.fn();
-    let comp = new ColorField({ initialValue: '#abcdef', set: set });
+    let comp = new ColorField({
+      initialValue: { color: '#abcdef', opacity: 0.3 },
+      set: set,
+    });
     let closingDiv = comp.picker().props.children[0];
-    comp.state.value = '#bbca56';
+    comp.state.value = { color: '#bbca56', opacity: 0.2 };
     expect(set).not.toHaveBeenCalled();
     closingDiv.props.onClick();
-    expect(set.mock.calls[0][0]).toBe('#bbca56');
+    expect(set.mock.calls[0][0]).toStrictEqual({ color: '#bbca56', opacity: 0.2 });
   });
 });
