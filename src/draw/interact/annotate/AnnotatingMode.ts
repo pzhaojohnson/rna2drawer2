@@ -1,4 +1,4 @@
-import AnnotatingModeInterface from './AnnotatingModeInterface';
+import { AnnotatingModeInterface, FormFactory } from './AnnotatingModeInterface';
 import { DrawingInterface as Drawing } from '../../DrawingInterface';
 import { BaseInterface as Base } from '../../BaseInterface';
 import {
@@ -9,6 +9,7 @@ import {
   handleMouseup,
   reset,
 } from './handlers';
+import AnnotateBasesBySelection from '../../../forms/annotate/bases/AnnotateBasesBySelection';
 
 export class AnnotatingMode implements AnnotatingModeInterface {
   _drawing: Drawing;
@@ -21,6 +22,8 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
   _onShouldPushUndo: (() => void)[];
   _onChange: (() => void)[];
+  _onRequestToRenderForm?: (ff: FormFactory) => void;
+  _closeForm?: () => void;
 
   constructor(drawing: Drawing) {
     this._drawing = drawing;
@@ -31,7 +34,7 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
     this._onShouldPushUndo = [];
     this._onChange = [];
-
+    
     this._setBindings();
   }
 
@@ -99,6 +102,26 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
   fireChange() {
     this._onChange.forEach(f => f());
+  }
+
+  onRequestToRenderForm(f: (ff: FormFactory) => void) {
+    this._onRequestToRenderForm = f;
+  }
+
+  requestToRenderForm() {
+    if (this._onRequestToRenderForm) {
+      this._onRequestToRenderForm(close => {
+        this._closeForm = close;
+        return AnnotateBasesBySelection(this, close);
+      });
+    }
+  }
+
+  closeForm() {
+    if (this._closeForm) {
+      this._closeForm();
+      this._closeForm = undefined;
+    }
   }
 }
 

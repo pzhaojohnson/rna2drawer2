@@ -218,6 +218,14 @@ class Base implements BaseInterface {
     this._text.attr({ 'fill': f });
   }
 
+  get fillOpacity(): number {
+    return this._text.attr('fill-opacity');
+  }
+
+  set fillOpacity(fo: number) {
+    this._text.attr({ 'fill-opacity': fo });
+  }
+
   get cursor(): string {
     return this._text.css('cursor');
   }

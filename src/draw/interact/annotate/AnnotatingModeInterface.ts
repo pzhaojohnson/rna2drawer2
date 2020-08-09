@@ -1,5 +1,10 @@
 import { DrawingInterface as Drawing } from "../../DrawingInterface";
 import { BaseInterface as Base } from '../../BaseInterface';
+import * as React from 'react';
+
+export interface FormFactory {
+  (close?: () => void): React.ReactElement;
+}
 
 export interface AnnotatingModeInterface {
   hovered?: number;
@@ -25,6 +30,9 @@ export interface AnnotatingModeInterface {
   fireShouldPushUndo(): void;
   onChange(f: () => void): void;
   fireChange(): void;
+  onRequestToRenderForm(f: (ff: FormFactory) => void): void;
+  requestToRenderForm(): void;
+  closeForm(): void;
 }
 
 export default AnnotatingModeInterface;

@@ -1,10 +1,13 @@
 import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './fold/FoldingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
+import { FormFactory } from './annotate/AnnotatingModeInterface';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
 import StrictDrawing from '../StrictDrawing';
 import Sequence from '../Sequence';
 import Base from '../Base';
+
+type Mode = PivotingMode | FoldingMode | AnnotatingMode;
 
 class StrictDrawingInteraction {
   _strictDrawing: StrictDrawing;
@@ -14,10 +17,11 @@ class StrictDrawingInteraction {
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
   _annotatingMode!: AnnotatingMode;
-  _currMode: PivotingMode | FoldingMode | AnnotatingMode;
+  _currMode: Mode;
 
   _onShouldPushUndo?: () => void;
   _onChange?: () => void;
+  _onRequestToRenderForm?: (ff: FormFactory) => void;
 
   constructor(strictDrawing: StrictDrawing) {
     this._strictDrawing = strictDrawing;
@@ -92,6 +96,7 @@ class StrictDrawingInteraction {
     this._annotatingMode = new AnnotatingMode(this.strictDrawing.drawing);
     this._annotatingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
     this._annotatingMode.onChange(() => this.fireChange());
+    this._annotatingMode.onRequestToRenderForm(ff => this.requestToRenderForm(ff));
     this._annotatingMode.disable();
   }
 
@@ -138,6 +143,16 @@ class StrictDrawingInteraction {
     }
   }
 
+  onRequestToRenderForm(f: (ff: FormFactory) => void) {
+    this._onRequestToRenderForm = f;
+  }
+
+  requestToRenderForm(ff: FormFactory) {
+    if (this._onRequestToRenderForm) {
+      this._onRequestToRenderForm(ff);
+    }
+  }
+
   get tertiaryBondsInteraction(): TertiaryBondsInteraction {
     return this._tertiaryBondsInteraction;
   }
@@ -166,40 +181,33 @@ class StrictDrawingInteraction {
     return this._currMode.className == 'AnnotatingMode';
   }
 
-  startPivoting() {
-    if (this.pivoting()) {
-      return;
+  _start(mode: Mode) {
+    if (this._currMode != mode) {
+      this._currMode.reset();
+      if (this._currMode == this._annotatingMode) {
+        this._annotatingMode.closeForm();
+      }
+      this._currMode.disable();
+      mode.enable();
+      mode.reset();
+      if (mode == this._annotatingMode) {
+        this._annotatingMode.requestToRenderForm();
+      }
+      this._currMode = mode;
+      this.fireChange();
     }
-    this._currMode.reset();
-    this._currMode.disable();
-    this._pivotingMode.enable();
-    this._pivotingMode.reset();
-    this._currMode = this._pivotingMode;
-    this.fireChange();
+  }
+
+  startPivoting() {
+    this._start(this._pivotingMode);
   }
 
   startFolding() {
-    if (this.folding()) {
-      return;
-    }
-    this._currMode.reset();
-    this._currMode.disable();
-    this._foldingMode.enable();
-    this._foldingMode.reset();
-    this._currMode = this._foldingMode;
-    this.fireChange();
+    this._start(this._foldingMode);
   }
 
   startAnnotating() {
-    if (this.annotating()) {
-      return;
-    }
-    this._currMode.reset();
-    this._currMode.disable();
-    this._annotatingMode.enable();
-    this._annotatingMode.reset();
-    this._currMode = this._annotatingMode;
-    this.fireChange();
+    this._start(this._annotatingMode);
   }
 }
 

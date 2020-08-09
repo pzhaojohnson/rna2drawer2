@@ -146,6 +146,15 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba._circle.position()).toBeGreaterThan(r.position());
   });
 
+  it('back method', () => {
+    let r = svg.rect(10, 20);
+    let l = svg.line(1, 2, 3, 4);
+    let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 10);
+    expect(cba._circle.position()).toBeGreaterThan(0);
+    cba.back();
+    expect(cba._circle.position()).toBe(0);
+  });
+
   it('radius getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
     cba.radius = 8;

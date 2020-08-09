@@ -70,6 +70,9 @@ class App {
     this._strictDrawingInteraction.onChange(() => {
       this.renderPeripherals();
     });
+    this._strictDrawingInteraction.onRequestToRenderForm(ff => {
+      this.renderForm(close => ff(close));
+    });
   }
 
   get strictDrawingInteraction(): StrictDrawingInteraction {
@@ -99,14 +102,19 @@ class App {
     );
   }
 
-  renderForm(formFactory: () => ReactElement) {
+  renderForm(formFactory: (close?: () => void) => ReactElement) {
 
     /* Seems to be necessary for user entered values (e.g. in input elements)
     to be updated in a currently rendered form. */
     this.unmountCurrForm();
-    
+
+    let close = () => {
+      if (this._currFormFactory == formFactory) {
+        this.unmountCurrForm();
+      }
+    }
     ReactDOM.render(
-      formFactory(),
+      formFactory(close),
       getFormContainer(),
     );
     this._currFormFactory = formFactory;

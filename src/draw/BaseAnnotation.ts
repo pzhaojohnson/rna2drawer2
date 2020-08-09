@@ -118,6 +118,10 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
     this._circle.insertAfter(ele);
   }
 
+  back() {
+    this._circle.back();
+  }
+
   get radius(): number {
     return this._circle.attr('r');
   }

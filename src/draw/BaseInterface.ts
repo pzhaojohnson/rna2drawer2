@@ -37,6 +37,7 @@ export interface BaseInterface {
   fontWeight: number | string;
   fontStyle: string;
   fill: string;
+  fillOpacity: number;
   cursor: string;
   
   onMouseover(f: () => void): void;
@@ -47,13 +48,13 @@ export interface BaseInterface {
   addCircleHighlighting(): CircleBaseAnnotation;
   addCircleHighlightingFromSavedState(s: CircleBaseAnnotationSavableState): CircleBaseAnnotation | never;
   hasHighlighting(): boolean;
-  readonly highlighting: BaseAnnotation | null;
+  readonly highlighting: CircleBaseAnnotation | null;
   removeHighlighting(): void;
   
   addCircleOutline(): CircleBaseAnnotation;
   addCircleOutlineFromSavedState(s: CircleBaseAnnotationSavableState): CircleBaseAnnotation | never;
   hasOutline(): boolean;
-  readonly outline: BaseAnnotation | null;
+  readonly outline: CircleBaseAnnotation | null;
   removeOutline(): void;
   
   addNumbering(n: number): BaseNumbering | null;
