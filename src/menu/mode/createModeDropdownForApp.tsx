@@ -10,6 +10,7 @@ import createExpandButtonForApp from './createExpandButtonForApp';
 import PairComplementsButton from './PairComplementsButton';
 import ForcePairButton from './ForcePairButton';
 import AddTertiaryBondsButton from './AddTertiaryBondsButton';
+import AnnotateButton from './AnnotateButton';
 
 import App from '../../App';
 
@@ -30,6 +31,8 @@ function createModeDropdownForApp(app: App): React.ReactElement {
         PairComplementsButton(app),
         ForcePairButton(app),
         AddTertiaryBondsButton(app),
+        <DroppedSeparator key={uuidv1()} />,
+        AnnotateButton(app),
       ]}
     />
   );

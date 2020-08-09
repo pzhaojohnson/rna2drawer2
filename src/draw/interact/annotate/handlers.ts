@@ -23,21 +23,30 @@ export function handleMouseoutOnBase(mode: AnnotatingMode, b: Base) {
 }
 
 export function handleMousedownOnBase(mode: AnnotatingMode, b: Base) {
-  let p = mode.drawing.overallPositionOfBase(b);
-  if (p != 0) {
-    mode.selected.add(p);
-    mode.selectingFrom = p;
-    setAllBaseHighlightings(mode);
+  if (mode.hovered) {
+    if (mode.selected.has(mode.hovered)) {
+      mode.selected.delete(mode.hovered);
+      setAllBaseHighlightings(mode);
+      b.removeHighlighting();
+    } else {
+      mode.selected.add(mode.hovered);
+      mode.selectingFrom = mode.hovered;
+      setAllBaseHighlightings(mode);
+    }
   }
 }
 
 export function handleMousedownOnDrawing(mode: AnnotatingMode) {
-  mode.selected = new Set<number>();
-  setAllBaseHighlightings(mode);
+  if (!mode.hovered) {
+    mode.selected = new Set<number>();
+    setAllBaseHighlightings(mode);
+  }
 }
 
 export function handleMouseup(mode: AnnotatingMode) {
-  mode.selectingFrom = undefined;
+  if (mode.enabled()) {
+    mode.selectingFrom = undefined;
+  }
 }
 
 export function reset(mode: AnnotatingMode) {

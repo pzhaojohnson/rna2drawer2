@@ -1,7 +1,7 @@
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
 import { highlightBase, HighlightingProps } from '../highlight/highlightBase';
 
-let selectedProps = { fill: '#ff0000', fillOpacity: 0.5 };
+let selectedProps = { fill: '#ff0000', fillOpacity: 0.75 };
 
 function _highlightBases(mode: AnnotatingMode, highlightings: HighlightingProps[]) {
   mode.selected.forEach(p => {
@@ -20,8 +20,10 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
     if (props) {
       highlightBase(b, {
         ...props,
-        radius: 0.1 * b.fontSize,
+        radius: 0.5 * b.fontSize,
       });
+    } else {
+      b.removeHighlighting();
     }
   });
 }

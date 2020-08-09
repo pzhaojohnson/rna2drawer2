@@ -1,5 +1,6 @@
 import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './fold/FoldingMode';
+import AnnotatingMode from './annotate/AnnotatingMode';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
 import StrictDrawing from '../StrictDrawing';
 import Sequence from '../Sequence';
@@ -12,7 +13,8 @@ class StrictDrawingInteraction {
 
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
-  _currMode: PivotingMode | FoldingMode;
+  _annotatingMode!: AnnotatingMode;
+  _currMode: PivotingMode | FoldingMode | AnnotatingMode;
 
   _onShouldPushUndo?: () => void;
   _onChange?: () => void;
@@ -23,6 +25,7 @@ class StrictDrawingInteraction {
     this._setBindings();
     this._initializePivotingMode();
     this._initializeFoldingMode();
+    this._initializeAnnotatingMode();
     this._initializeTertiaryBondsInteraction();
 
     this._currMode = this._pivotingMode;
@@ -85,6 +88,13 @@ class StrictDrawingInteraction {
     this._foldingMode.disable();
   }
 
+  _initializeAnnotatingMode() {
+    this._annotatingMode = new AnnotatingMode(this.strictDrawing.drawing);
+    this._annotatingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
+    this._annotatingMode.onChange(() => this.fireChange());
+    this._annotatingMode.disable();
+  }
+
   _initializeTertiaryBondsInteraction() {
     this._tertiaryBondsInteraction = new TertiaryBondsInteraction(
       this.strictDrawing.drawing
@@ -140,12 +150,20 @@ class StrictDrawingInteraction {
     return this._foldingMode;
   }
 
+  get annotatingMode(): AnnotatingMode {
+    return this._annotatingMode;
+  }
+
   pivoting(): boolean {
     return this._currMode.className == 'PivotingMode';
   }
 
   folding(): boolean {
     return this._currMode.className == 'FoldingMode';
+  }
+
+  annotating(): boolean {
+    return this._currMode.className == 'AnnotatingMode';
   }
 
   startPivoting() {
@@ -169,6 +187,18 @@ class StrictDrawingInteraction {
     this._foldingMode.enable();
     this._foldingMode.reset();
     this._currMode = this._foldingMode;
+    this.fireChange();
+  }
+
+  startAnnotating() {
+    if (this.annotating()) {
+      return;
+    }
+    this._currMode.reset();
+    this._currMode.disable();
+    this._annotatingMode.enable();
+    this._annotatingMode.reset();
+    this._currMode = this._annotatingMode;
     this.fireChange();
   }
 }

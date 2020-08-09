@@ -1,5 +1,14 @@
 import AnnotatingModeInterface from './AnnotatingModeInterface';
 import { DrawingInterface as Drawing } from '../../DrawingInterface';
+import { BaseInterface as Base } from '../../BaseInterface';
+import {
+  handleMouseoverOnBase,
+  handleMouseoutOnBase,
+  handleMousedownOnBase,
+  handleMousedownOnDrawing,
+  handleMouseup,
+  reset,
+} from './handlers';
 
 export class AnnotatingMode implements AnnotatingModeInterface {
   _drawing: Drawing;
@@ -28,12 +37,36 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
   _setBindings() {
     window.addEventListener('mouseup', () => {
-
+      handleMouseup(this);
     });
+  }
+
+  get className(): string {
+    return 'AnnotatingMode';
   }
 
   get drawing(): Drawing {
     return this._drawing;
+  }
+
+  handleMouseoverOnBase(b: Base) {
+    handleMouseoverOnBase(this, b);
+  }
+
+  handleMouseoutOnBase(b: Base) {
+    handleMouseoutOnBase(this, b);
+  }
+
+  handleMousedownOnBase(b: Base) {
+    handleMousedownOnBase(this, b);
+  }
+
+  handleMousedownOnDrawing() {
+    handleMousedownOnDrawing(this);
+  }
+
+  reset() {
+    reset(this);
   }
 
   disabled(): boolean {
