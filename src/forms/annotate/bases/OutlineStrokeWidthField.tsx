@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
+import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function _sharedOutlineStrokeWidth(bs: Base[]): number | undefined {
   let strokeWidths = new Set<number>();
@@ -31,6 +32,7 @@ export function OutlineStrokeWidthField(selectedBases: () => Base[], pushUndo: (
               b.outline.strokeWidth = sw;
             }
           });
+          MostRecentOutlineProps.strokeWidth = sw;
           changed();
         }
       }}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
+import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function _sharedOutlineStrokeColor(bs: Base[]): string | undefined {
   let strokes = new Set<string>();
@@ -58,6 +59,8 @@ export function OutlineStrokeField(selectedBases: () => Base[], pushUndo: () => 
               b.outline.strokeOpacity = co.opacity;
             }
           });
+          MostRecentOutlineProps.stroke = co.color;
+          MostRecentOutlineProps.strokeOpacity = co.opacity;
           changed();
         }
       }}

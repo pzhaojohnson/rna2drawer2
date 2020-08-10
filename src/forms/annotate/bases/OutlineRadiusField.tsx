@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
+import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function _sharedOutlineRadius(bs: Base[]): number | undefined {
   let radii = new Set<number>();
@@ -31,6 +32,7 @@ export function OutlineRadiusField(selectedBases: () => Base[], pushUndo: () => 
               b.outline.radius = r;
             }
           });
+          MostRecentOutlineProps.radius = r;
           changed();
         }
       }}

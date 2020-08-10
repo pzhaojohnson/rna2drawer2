@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
+import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function _sharedOutlineFillColor(bs: Base[]): string | undefined {
   let colors = new Set<string>();
@@ -58,6 +59,8 @@ export function OutlineFillField(selectedBases: () => Base[], pushUndo: () => vo
               b.outline.fillOpacity = co.opacity;
             }
           });
+          MostRecentOutlineProps.fill = co.color;
+          MostRecentOutlineProps.fillOpacity = co.opacity;
           changed();
         }
       }}
