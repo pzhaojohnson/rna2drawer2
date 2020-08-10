@@ -49,14 +49,18 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
       throw new Error('Wrong class name.');
     }
     let circle = svg.findOne('#' + savedState.circleId);
-    return new CircleBaseAnnotation(circle as Svg.Circle, xBaseCenter, yBaseCenter);
+    let cba = new CircleBaseAnnotation(circle as Svg.Circle, xBaseCenter, yBaseCenter);
+    CircleBaseAnnotation._copyPropsToMostRecent(cba);
+    return cba;
   }
   
   static createNondisplaced(svg: Svg.Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
     let circle = svg.circle(20);
     circle.id();
     circle.attr({ 'cx': xBaseCenter, 'cy': yBaseCenter });
-    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
+    let cba = new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
+    CircleBaseAnnotation._applyMostRecentProps(cba);
+    return cba;
   }
 
   constructor(circle: Svg.Circle, xBaseCenter: number, yBaseCenter: number) {
@@ -154,6 +158,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   set radius(r: number) {
     this._circle.attr({ 'r': r });
+    CircleBaseAnnotation._mostRecentProps.radius = r;
   }
 
   get fill(): string {
@@ -162,6 +167,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   set fill(f: string) {
     this._circle.attr({ 'fill': f });
+    CircleBaseAnnotation._mostRecentProps.fill = f;
   }
 
   get fillOpacity(): number {
@@ -170,6 +176,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   set fillOpacity(fo: number) {
     this._circle.attr({ 'fill-opacity': fo });
+    CircleBaseAnnotation._mostRecentProps.fillOpacity = fo;
   }
 
   get stroke(): string {
@@ -178,6 +185,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   set stroke(s: string) {
     this._circle.attr({ 'stroke': s });
+    CircleBaseAnnotation._mostRecentProps.stroke = s;
   }
 
   get strokeWidth(): number {
@@ -186,6 +194,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   set strokeWidth(sw: number) {
     this._circle.attr({ 'stroke-width': sw });
+    CircleBaseAnnotation._mostRecentProps.strokeWidth = sw;
   }
 
   get strokeOpacity(): number {
@@ -194,6 +203,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   set strokeOpacity(so: number) {
     this._circle.attr({ 'stroke-opacity': so });
+    CircleBaseAnnotation._mostRecentProps.strokeOpacity = so;
   }
 
   pulsateBetween(props: CircleBaseAnnotationPulsableProps) {

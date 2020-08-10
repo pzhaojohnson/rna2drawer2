@@ -37,11 +37,13 @@ describe('CircleBaseAnnotation class', () => {
       let dl = cba1.displacementLength;
       let da = cba1.displacementAngle;
       let savableState = cba1.savableState();
+      let spy = jest.spyOn(CircleBaseAnnotation, '_copyPropsToMostRecent');
       let cba2 = CircleBaseAnnotation.fromSavedState(savableState, svg, 19.6, 100.1);
       expect(cba2._circle.id()).toBe(savableState.circleId);
       // requires that base center coordinates were passed correctly
       expect(cba2.displacementLength).toBeCloseTo(dl);
       expect(cba2.displacementAngle).toBeCloseTo(da);
+      expect(spy.mock.calls[0][0]).toBe(cba2); // copies props to most recent
     });
 
     describe('invalid saved state', () => {
@@ -66,9 +68,11 @@ describe('CircleBaseAnnotation class', () => {
   });
   
   it('createNondisplaced static method', () => {
+    let spy = jest.spyOn(CircleBaseAnnotation, '_applyMostRecentProps');
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 1.5, 3);
     expect(cba.xCenter).toBeCloseTo(1.5);
     expect(cba.yCenter).toBeCloseTo(3);
+    expect(spy.mock.calls[0][0]).toBe(cba); // applies most recent props
   });
 
   describe('constructor', () => {
@@ -180,9 +184,11 @@ describe('CircleBaseAnnotation class', () => {
 
   it('radius getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
-    cba.radius = 8;
-    expect(cba.radius).toBeCloseTo(8); // check getter
-    expect(cba._circle.attr('r')).toBeCloseTo(8); // check actual value
+    cba.radius = 8.05;
+    expect(cba.radius).toBeCloseTo(8.05); // check getter
+    expect(cba._circle.attr('r')).toBeCloseTo(8.05); // check actual value
+    // updates most recent prop
+    expect(CircleBaseAnnotation.mostRecentProps().radius).toBe(8.05);
   });
 
   it('fill getter and setter', () => {
@@ -190,13 +196,17 @@ describe('CircleBaseAnnotation class', () => {
     cba.fill = '#654321';
     expect(cba.fill).toBe('#654321'); // check getter
     expect(cba._circle.attr('fill')).toBe('#654321'); // check actual value
+    // updates most recent prop
+    expect(CircleBaseAnnotation.mostRecentProps().fill).toBe('#654321');
   });
 
   it('fillOpacity getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 9, 2);
-    cba.fillOpacity = 0.6;
-    expect(cba.fillOpacity).toBe(0.6); // check getter
-    expect(cba._circle.attr('fill-opacity')).toBe(0.6); // check actual value
+    cba.fillOpacity = 0.62;
+    expect(cba.fillOpacity).toBe(0.62); // check getter
+    expect(cba._circle.attr('fill-opacity')).toBe(0.62); // check actual value
+    // updates most recent prop
+    expect(CircleBaseAnnotation.mostRecentProps().fillOpacity).toBe(0.62);
   });
 
   it('stroke getter and setter', () => {
@@ -204,20 +214,26 @@ describe('CircleBaseAnnotation class', () => {
     cba.stroke = '#abcdef';
     expect(cba.stroke).toBe('#abcdef'); // check getter
     expect(cba._circle.attr('stroke')).toBe('#abcdef'); // check actual value
+    // updates most recent prop
+    expect(CircleBaseAnnotation.mostRecentProps().stroke).toBe('#abcdef');
   });
 
   it('strokeWidth getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, -1, 21);
-    cba.strokeWidth = 5.5;
-    expect(cba.strokeWidth).toBe(5.5); // check getter
-    expect(cba._circle.attr('stroke-width')).toBe(5.5); // check actual value
+    cba.strokeWidth = 5.51;
+    expect(cba.strokeWidth).toBe(5.51); // check getter
+    expect(cba._circle.attr('stroke-width')).toBe(5.51); // check actual value
+    // updates most recent prop
+    expect(CircleBaseAnnotation.mostRecentProps().strokeWidth).toBe(5.51);
   });
 
   it('strokeOpacity getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 10, 92);
-    cba.strokeOpacity = 0.3;
-    expect(cba.strokeOpacity).toBe(0.3); // check getter
-    expect(cba._circle.attr('stroke-opacity')).toBe(0.3); // check actual value
+    cba.strokeOpacity = 0.36;
+    expect(cba.strokeOpacity).toBe(0.36); // check getter
+    expect(cba._circle.attr('stroke-opacity')).toBe(0.36); // check actual value
+    // updates most recent prop
+    expect(CircleBaseAnnotation.mostRecentProps().strokeOpacity).toBe(0.36);
   });
 
   describe('pulsateBetween method', () => {
