@@ -1,4 +1,5 @@
 import { BaseInterface as Base } from '../../BaseInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../BaseAnnotationInterface';
 
 export interface HighlightingProps {
   radius?: number;
@@ -9,21 +10,15 @@ export interface HighlightingProps {
   fillOpacity?: number;
 }
 
-export function highlightBase(b: Base, props?: HighlightingProps) {
-  if (!b) {
-    console.error('No base provided.');
-    return;
-  }
-  if (!props) {
-    props = {};
-  }
-  let h = b.addCircleHighlighting();
-  h.radius = props.radius ?? 1.1 * b.fontSize;
-  h.stroke = props.stroke ?? '#000000';
-  h.strokeWidth = props.strokeWidth ?? 0;
-  h.strokeOpacity = props.strokeOpacity ?? 1;
-  h.fill = props.fill ?? '#ffd700';
-  h.fillOpacity = props.fillOpacity ?? 0.5;
+export function highlightBase(b: Base, props?: HighlightingProps): CircleBaseAnnotation {
+  let h = b.highlighting ?? b.addCircleHighlighting();
+  h.radius = props?.radius ?? h.radius;
+  h.stroke = props?.stroke ?? h.stroke;
+  h.strokeWidth = props?.strokeWidth ?? h.strokeWidth;
+  h.strokeOpacity = props?.strokeOpacity ?? h.strokeOpacity;
+  h.fill = props?.fill ?? h.fill;
+  h.fillOpacity = props?.fillOpacity ?? h.fillOpacity;
+  return h;
 }
 
 export default highlightBase;
