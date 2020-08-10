@@ -1,10 +1,5 @@
 import * as Svg from '@svgdotjs/svg.js';
 
-export interface CircleBaseAnnotationSavableState {
-  className: string;
-  circleId: string;
-}
-
 export interface PulsableProps {
   radius?: number;
   fill?: string;
@@ -33,6 +28,11 @@ export interface BaseAnnotationInterface {
   refreshIds(): void;
 }
 
+export interface CircleBaseAnnotationSavableState {
+  className: string;
+  circleId: string;
+}
+
 export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
   radius: number;
   fill: string;
@@ -40,6 +40,7 @@ export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
   stroke: string;
   strokeWidth: number;
   strokeOpacity: number;
+  savableState(): CircleBaseAnnotationSavableState;
 }
 
 export default BaseAnnotationInterface;
