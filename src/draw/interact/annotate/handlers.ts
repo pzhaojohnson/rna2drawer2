@@ -57,5 +57,4 @@ export function reset(mode: AnnotatingMode) {
   mode.selected = new Set<number>();
   mode.selectingFrom = undefined;
   setAllBaseHighlightings(mode);
-  mode.closeForm();
 }
