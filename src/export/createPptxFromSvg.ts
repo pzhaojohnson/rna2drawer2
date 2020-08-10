@@ -124,6 +124,10 @@ function _circleOptions(circle: Svg.Circle): object {
   let y = circle.attr('cy') - circle.attr('r');
   let w = 2 * circle.attr('r');
   let h = 2 * circle.attr('r');
+  let lineAlpha = 100 * (1 - circle.attr('stroke-opacity'));
+  if (circle.attr('stroke-width') == 0) {
+    lineAlpha = 100;
+  }
   return {
     x: _trimNum(pixelsToInches(x)),
     y: _trimNum(pixelsToInches(y)),
@@ -132,7 +136,7 @@ function _circleOptions(circle: Svg.Circle): object {
     line: {
       type: 'solid',
       color: _pptxHex(circle.attr('stroke')),
-      alpha: 100 * (1 - circle.attr('stroke-opacity')),
+      alpha: lineAlpha,
     },
     lineSize: _trimNum(pixelsToPoints(circle.attr('stroke-width'))),
     fill: {
@@ -151,6 +155,10 @@ function _addCircle(pres: PptxGenJS, slide: PptxGenJS.Slide, circle: Svg.Circle)
 }
 
 function _rectOptions(rect: Svg.Rect): object {
+  let lineAlpha = 100 * (1 - rect.attr('stroke-opacity'));
+  if (rect.attr('stroke-width') == 0 ) {
+    lineAlpha = 100;
+  }
   return {
     x: _trimNum(pixelsToInches(rect.attr('x'))),
     y: _trimNum(pixelsToInches(rect.attr('y'))),
@@ -159,7 +167,7 @@ function _rectOptions(rect: Svg.Rect): object {
     line: {
       type: 'solid',
       color: _pptxHex(rect.attr('stroke')),
-      alpha: 100 * (1 - rect.attr('stroke-opacity')),
+      alpha: lineAlpha,
     },
     lineSize: _trimNum(pixelsToPoints(rect.attr('stroke-width'))),
     fill: {

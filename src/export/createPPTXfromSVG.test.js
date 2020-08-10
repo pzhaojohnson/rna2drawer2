@@ -255,12 +255,24 @@ describe('_circleOptions function', () => {
     let c = svg.circle(100);
     c.attr({
       'stroke': '#987654',
+      'stroke-width': 2,
       'stroke-opacity': 0.4,
     });
     let cos = _circleOptions(c);
     expect(cos.line.type).toBe('solid');
     expect(cos.line.color).toBe('987654');
     expect(cos.line.alpha).toBeCloseTo(60, 2);
+  });
+
+  it('sets line alpha to 100 when line size is 0', () => {
+    /* For some reason setting line size to 0 results in a line size
+    of 0.75 pt when the PPTX file is opened in PowerPoint. Setting alpha
+    to 100 keeps the line invisible. */
+    let svg = createNodeSVG();
+    let c = svg.circle(25);
+    c.attr({ 'stroke-width': 0, 'stroke-opacity': 0.5 });
+    let cos = _circleOptions(c);
+    expect(cos.line.alpha).toBe(100);
   });
 
   describe('lineSize', () => {
@@ -339,12 +351,24 @@ describe('_rectOptions function', () => {
     let r = svg.rect(40, 30);
     r.attr({
       'stroke': '#56ab32',
+      'stroke-width': 3,
       'stroke-opacity': 0.45,
     });
     let ros = _rectOptions(r);
     expect(ros.line.type).toBe('solid');
     expect(ros.line.color).toBe('56ab32');
     expect(ros.line.alpha).toBeCloseTo(55, 2);
+  });
+
+  it('sets line alpha to 100 when line size is 0', () => {
+    /* For some reason setting line size to 0 results in a line size
+    of 0.75 pt when the PPTX file is opened in PowerPoint. Setting alpha
+    to 100 keeps the line invisible. */
+    let svg = createNodeSVG();
+    let r = svg.rect(25);
+    r.attr({ 'stroke-width': 0, 'stroke-opacity': 0.5 });
+    let ros = _rectOptions(r);
+    expect(ros.line.alpha).toBe(100);
   });
 
   describe('lineSize', () => {
