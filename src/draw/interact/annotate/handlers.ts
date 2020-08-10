@@ -15,12 +15,14 @@ export function handleMouseoverOnBase(mode: AnnotatingMode, b: Base) {
       mode.requestToRenderForm();
     }
     setAllBaseHighlightings(mode);
+    mode.fireChange();
   }
 }
 
 export function handleMouseoutOnBase(mode: AnnotatingMode, b: Base) {
   mode.hovered = undefined;
   setAllBaseHighlightings(mode);
+  mode.fireChange();
 }
 
 export function handleMousedownOnBase(mode: AnnotatingMode, b: Base) {
@@ -35,6 +37,7 @@ export function handleMousedownOnBase(mode: AnnotatingMode, b: Base) {
       setAllBaseHighlightings(mode);
     }
     mode.requestToRenderForm();
+    mode.fireChange();
   }
 }
 
@@ -42,7 +45,7 @@ export function handleMousedownOnDrawing(mode: AnnotatingMode) {
   if (!mode.hovered) {
     mode.selected = new Set<number>();
     setAllBaseHighlightings(mode);
-    mode.requestToRenderForm();
+    mode.fireChange();
   }
 }
 
@@ -57,4 +60,5 @@ export function reset(mode: AnnotatingMode) {
   mode.selected = new Set<number>();
   mode.selectingFrom = undefined;
   setAllBaseHighlightings(mode);
+  mode.fireChange();
 }
