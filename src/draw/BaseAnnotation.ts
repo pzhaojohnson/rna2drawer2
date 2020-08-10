@@ -1,17 +1,43 @@
 import {
-  BaseAnnotationInterface,
+  CircleBaseAnnotationInterface,
+  CircleBaseAnnotationMostRecentProps,
+  CircleBaseAnnotationPulsableProps,
   CircleBaseAnnotationSavableState,
-  PulsableProps,
 } from './BaseAnnotationInterface';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import * as Svg from '@svgdotjs/svg.js';
 
-export class CircleBaseAnnotation implements BaseAnnotationInterface {
+export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
+  static _mostRecentProps: CircleBaseAnnotationMostRecentProps;
+
   _circle: Svg.Circle;
 
   _displacementLength!: number;
   _displacementAngle!: number;
+
+  static mostRecentProps(): CircleBaseAnnotationMostRecentProps {
+    return { ...CircleBaseAnnotation._mostRecentProps };
+  }
+
+  static _applyMostRecentProps(cba: CircleBaseAnnotation) {
+    let mrps = CircleBaseAnnotation.mostRecentProps();
+    cba.radius = mrps.radius;
+    cba.fill = mrps.fill;
+    cba.fillOpacity = mrps.fillOpacity;
+    cba.stroke = mrps.stroke;
+    cba.strokeWidth = mrps.strokeWidth;
+    cba.strokeOpacity = mrps.strokeOpacity;
+  }
+
+  static _copyPropsToMostRecent(cba: CircleBaseAnnotation) {
+    CircleBaseAnnotation._mostRecentProps.radius = cba.radius;
+    CircleBaseAnnotation._mostRecentProps.fill = cba.fill;
+    CircleBaseAnnotation._mostRecentProps.fillOpacity = cba.fillOpacity;
+    CircleBaseAnnotation._mostRecentProps.stroke = cba.stroke;
+    CircleBaseAnnotation._mostRecentProps.strokeWidth = cba.strokeWidth;
+    CircleBaseAnnotation._mostRecentProps.strokeOpacity = cba.strokeOpacity;
+  }
 
   static fromSavedState(
     savedState: CircleBaseAnnotationSavableState,
@@ -170,7 +196,7 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
     this._circle.attr({ 'stroke-opacity': so });
   }
 
-  pulsateBetween(props: PulsableProps) {
+  pulsateBetween(props: CircleBaseAnnotationPulsableProps) {
     if (Object.keys(props).length > 0) {
       let attrs = {
         'r': props.radius ?? this.radius,
@@ -200,3 +226,12 @@ export class CircleBaseAnnotation implements BaseAnnotationInterface {
     this._circle.id();
   }
 }
+
+CircleBaseAnnotation._mostRecentProps = {
+  radius: 7.5,
+  fill: '#00ffff',
+  fillOpacity: 0.5,
+  stroke: '#0000ff',
+  strokeWidth: 1.25,
+  strokeOpacity: 0.75,
+};

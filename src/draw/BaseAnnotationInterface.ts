@@ -1,14 +1,5 @@
 import * as Svg from '@svgdotjs/svg.js';
 
-export interface PulsableProps {
-  radius?: number;
-  fill?: string;
-  fillOpacity?: number;
-  stroke?: string;
-  strokeWidth?: number;
-  strokeOpacity?: number;
-}
-
 export interface BaseAnnotationInterface {
   readonly type: string;
   readonly id: string;
@@ -22,10 +13,27 @@ export interface BaseAnnotationInterface {
   insertBefore(ele: Svg.Element): void;
   insertAfter(ele: Svg.Element): void;
   back(): void;
-  pulsateBetween(props: PulsableProps): void;
   remove(): void;
   savableState(): object;
   refreshIds(): void;
+}
+
+export interface CircleBaseAnnotationMostRecentProps {
+  radius: number;
+  fill: string;
+  fillOpacity: number;
+  stroke: string;
+  strokeWidth: number;
+  strokeOpacity: number;
+}
+
+export interface CircleBaseAnnotationPulsableProps {
+  radius?: number;
+  fill?: string;
+  fillOpacity?: number;
+  stroke?: string;
+  strokeWidth?: number;
+  strokeOpacity?: number;
 }
 
 export interface CircleBaseAnnotationSavableState {
@@ -40,6 +48,7 @@ export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
   stroke: string;
   strokeWidth: number;
   strokeOpacity: number;
+  pulsateBetween(props: CircleBaseAnnotationPulsableProps): void;
   savableState(): CircleBaseAnnotationSavableState;
 }
 

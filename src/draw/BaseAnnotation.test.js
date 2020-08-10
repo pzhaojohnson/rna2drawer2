@@ -7,6 +7,29 @@ import angleBetween from './angleBetween';
 let svg = NodeSVG();
 
 describe('CircleBaseAnnotation class', () => {
+  describe('mostRecentProps static method', () => {
+    let mrps = CircleBaseAnnotation.mostRecentProps();
+    expect(mrps).not.toBe(CircleBaseAnnotation._mostRecentProps); // is a new object
+    expect(mrps).toStrictEqual(CircleBaseAnnotation._mostRecentProps);
+  });
+
+  describe('applying and copying to most recent props', () => {
+    let props = Object.keys(CircleBaseAnnotation.mostRecentProps());
+    let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 3, 5);
+    let cba2 = CircleBaseAnnotation.createNondisplaced(svg, 5, 55);
+    cba1.radius = 55.02;
+    cba1.fill = '#43bacc';
+    cba1.fillOpacity = 0.42;
+    cba1.stroke = '#aabbcd';
+    cba1.strokeWidth = 12.2;
+    cba1.strokeOpacity = 0.91;
+    CircleBaseAnnotation._copyPropsToMostRecent(cba1);
+    let mrps = CircleBaseAnnotation.mostRecentProps();
+    props.forEach(p => expect(mrps[p]).toBe(cba1[p]));
+    CircleBaseAnnotation._applyMostRecentProps(cba2);
+    props.forEach(p => expect(cba2[p]).toBe(mrps[p]));
+  });
+
   describe('fromSavedState static method', () => {
     it('valid saved state', () => {
       let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 19.6, 100.1);
