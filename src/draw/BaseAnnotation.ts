@@ -1,6 +1,7 @@
 import {
   CircleBaseAnnotationInterface,
   CircleBaseAnnotationPulsableProps,
+  PulseProps,
   CircleBaseAnnotationSavableState,
 } from './BaseAnnotationInterface';
 import distanceBetween from './distanceBetween';
@@ -170,17 +171,18 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this._circle.attr({ 'stroke-opacity': so });
   }
 
-  pulsateBetween(props: CircleBaseAnnotationPulsableProps) {
-    if (Object.keys(props).length > 0) {
+  pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
+    if (Object.keys(pulsedProps).length > 0) {
       let attrs = {
-        'r': props.radius ?? this.radius,
-        'fill': props.fill ?? this.fill,
-        'fill-opacity': props.fillOpacity ?? this.fillOpacity,
-        'stroke': props.stroke ?? this.stroke,
-        'stroke-width': props.strokeWidth ?? this.strokeWidth,
-        'stroke-opacity': props.strokeOpacity ?? this.strokeOpacity,
+        'r': pulsedProps.radius ?? this.radius,
+        'fill': pulsedProps.fill ?? this.fill,
+        'fill-opacity': pulsedProps.fillOpacity ?? this.fillOpacity,
+        'stroke': pulsedProps.stroke ?? this.stroke,
+        'stroke-width': pulsedProps.strokeWidth ?? this.strokeWidth,
+        'stroke-opacity': pulsedProps.strokeOpacity ?? this.strokeOpacity,
       };
-      this._circle.animate(1800).attr(attrs).loop(undefined, true);
+      let duration = pulseProps?.duration ?? 2000;
+      this._circle.animate(duration).attr(attrs).loop(undefined, true);
     }
   }
 

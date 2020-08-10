@@ -10,8 +10,7 @@ function _highlightPairables(mode: FoldingMode, highlightings: HighlightingProps
   pairables.forEach(r => {
     r.fromStartToEnd(p => {
       highlightings[p - 1] = {
-        fill: '#aea1ff',
-        fillOpacity: 0.25,
+        stroke: '#aea1ff',
       };
     });
   });
@@ -22,16 +21,15 @@ function _highlightSelected(mode: FoldingMode, highlightings: HighlightingProps[
   if (rSelected) {
     rSelected.fromStartToEnd(p => {
       highlightings[p - 1] = {
-        fill: '#fcdc00',
-        fillOpacity: 0.75,
+        stroke: '#fcdc00',
       };
     });
   }
 }
 
-let selectProps = { fill: '#fcdc00', fillOpacity: 0.5 };
-let pairProps = { fill: '#aea1ff', fillOpacity: 0.75 };
-let unpairProps = { fill: '#ff0000', fillOpacity: 1 };
+let selectProps = { stroke: '#fcdc00' };
+let pairProps = { stroke: '#aea1ff'};
+let unpairProps = { stroke: '#ff0000' };
 
 function _highlightHovered(mode: FoldingMode, highlightings: HighlightingProps[]) {
   let hovered = mode.hovered;
@@ -61,7 +59,21 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
   mode.strictDrawing.drawing.forEachBase((b, p) => {
     let props = highlightings[p - 1];
     if (props) {
-      highlightBase(b, props);
+      let radius = b.fontSize;
+      if (b.outline) {
+        radius = Math.max(radius, 1.1 * (b.outline.radius + b.outline.strokeWidth));
+      }
+      let h = highlightBase(b, {
+        ...props,
+        radius: radius,
+        fillOpacity: 0,
+        strokeWidth: 1.25,
+        strokeOpacity: 1,
+      });
+      h.pulsateBetween({
+        radius: 1.35 * radius,
+        strokeOpacity: 0.5,
+      }, { duration: 750 });
     } else {
       b.removeHighlighting();
     }

@@ -1,5 +1,5 @@
 import { PivotingModeInterface as PivotingMode } from './PivotingModeInterface';
-import setAllBaseHighlightings from '../highlight/setAllBaseHighlightings';
+import highlightBase from '../highlight/highlightBase';
 
 export interface Stem {
   position5: number;
@@ -7,20 +7,38 @@ export interface Stem {
   size: number;
 }
 
-export function highlightStem(mode: PivotingMode, st: Stem) {
-  let highlightings = [];
+function _stemPositions(st: Stem): Set<number> {
+  let ps = new Set<number>();
   for (let i = 0; i < st.size; i++) {
-    let h = {
-      fill: '#00ffff',
-      fillOpacity: 0.5,
-    };
-    highlightings[st.position5 + i - 1] = { ...h };
-    highlightings[st.position3 - i - 1] = { ...h };
+    ps.add(st.position5 + i);
+    ps.add(st.position3 - i);
   }
-  setAllBaseHighlightings(
-    mode.strictDrawing.drawing,
-    highlightings,
-  );
+  return ps;
+}
+
+export function highlightStem(mode: PivotingMode, st: Stem) {
+  let ps = _stemPositions(st);
+  mode.strictDrawing.drawing.forEachBase((b, p) => {
+    if (ps.has(p)) {
+      let radius = 0.85 * b.fontSize;
+      if (b.outline) {
+        radius = Math.max(radius, 1.1 * (b.outline.radius + b.outline.strokeWidth));
+      }
+      let h = highlightBase(b, {
+        radius: radius,
+        fillOpacity: 0,
+        stroke: '#00bfff',
+        strokeWidth: 1.25,
+        strokeOpacity: 1,
+      });
+      h.pulsateBetween({
+        radius: 1.25 * radius,
+        strokeOpacity: 0.5,
+      }, { duration: 750 });
+    } else {
+      b.removeHighlighting();
+    }
+  });
 }
 
 export default highlightStem;

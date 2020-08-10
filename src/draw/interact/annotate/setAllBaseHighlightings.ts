@@ -1,26 +1,19 @@
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
-import { highlightBase, HighlightingProps } from '../highlight/highlightBase';
-
-let selectedProps = { fill: '#ff0000', fillOpacity: 0.75 };
-
-function _highlightBases(mode: AnnotatingMode, highlightings: HighlightingProps[]) {
-  mode.selected.forEach(p => {
-    highlightings[p - 1] = { ...selectedProps };
-  });
-  if (mode.hovered) {
-    highlightings[mode.hovered - 1] = { ...selectedProps };
-  }
-}
+import highlightBase from '../highlight/highlightBase';
 
 export function setAllBaseHighlightings(mode: AnnotatingMode) {
-  let highlightings = [] as HighlightingProps[];
-  _highlightBases(mode, highlightings);
   mode.drawing.forEachBase((b, p) => {
-    let props = highlightings[p - 1];
-    if (props) {
-      highlightBase(b, {
-        ...props,
-        radius: 0.5 * b.fontSize,
+    if (mode.selected.has(p) || p == mode.hovered) {
+      let h = highlightBase(b, {
+        radius: 1.35 * b.fontSize,
+        fillOpacity: 0,
+        stroke: '#000000',
+        strokeWidth: 1.25,
+        strokeOpacity: 0.1,
+      });
+      h.pulsateBetween({
+        radius: 1.65 * b.fontSize,
+        strokeOpacity: 0.075,
       });
     } else {
       b.removeHighlighting();

@@ -27,6 +27,10 @@ export interface CircleBaseAnnotationPulsableProps {
   strokeOpacity?: number;
 }
 
+export interface PulseProps {
+  duration?: number;
+}
+
 export interface CircleBaseAnnotationSavableState {
   className: string;
   circleId: string;
@@ -39,7 +43,7 @@ export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
   stroke: string;
   strokeWidth: number;
   strokeOpacity: number;
-  pulsateBetween(props: CircleBaseAnnotationPulsableProps): void;
+  pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps): void;
   savableState(): CircleBaseAnnotationSavableState;
 }
 
