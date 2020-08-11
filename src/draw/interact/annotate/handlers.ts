@@ -55,6 +55,23 @@ export function handleMouseup(mode: AnnotatingMode) {
   }
 }
 
+export function refresh(mode: AnnotatingMode) {
+  if (typeof mode.hovered == 'number' && mode.hovered > mode.drawing.numBases) {
+    mode.hovered = undefined;
+  }
+  let toDeselect = [] as number[];
+  mode.selected.forEach(p => {
+    if (p > mode.drawing.numBases) {
+      toDeselect.push(p);
+    }
+  });
+  toDeselect.forEach(p => mode.selected.delete(p));
+  if (typeof mode.selectingFrom == 'number' && mode.selectingFrom > mode.drawing.numBases) {
+    mode.selectingFrom = undefined;
+  }
+  setAllBaseHighlightings(mode);
+}
+
 export function reset(mode: AnnotatingMode) {
   mode.hovered = undefined;
   mode.selected = new Set<number>();

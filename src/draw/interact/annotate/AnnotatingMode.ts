@@ -7,6 +7,7 @@ import {
   handleMousedownOnBase,
   handleMousedownOnDrawing,
   handleMouseup,
+  refresh,
   reset,
 } from './handlers';
 import AnnotateBasesBySelection from '../../../forms/annotate/bases/AnnotateBasesBySelection';
@@ -66,6 +67,10 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
   handleMousedownOnDrawing() {
     handleMousedownOnDrawing(this);
+  }
+
+  refresh() {
+    refresh(this);
   }
 
   reset() {
