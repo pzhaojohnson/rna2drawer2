@@ -14,6 +14,8 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   _displacementLength!: number;
   _displacementAngle!: number;
 
+  _currPulsation?: Svg.Runner;
+
   static fromSavedState(
     savedState: CircleBaseAnnotationSavableState,
     svg: Svg.Svg,
@@ -128,6 +130,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   set radius(r: number) {
+    this.stopPulsating();
     this._circle.attr({ 'r': r });
   }
 
@@ -136,6 +139,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   set fill(f: string) {
+    this.stopPulsating();
     this._circle.attr({ 'fill': f });
   }
 
@@ -144,6 +148,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   set fillOpacity(fo: number) {
+    this.stopPulsating();
     this._circle.attr({ 'fill-opacity': fo });
   }
 
@@ -152,6 +157,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   set stroke(s: string) {
+    this.stopPulsating();
     this._circle.attr({ 'stroke': s });
   }
 
@@ -160,6 +166,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   set strokeWidth(sw: number) {
+    this.stopPulsating();
     this._circle.attr({ 'stroke-width': sw });
   }
 
@@ -168,21 +175,28 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   set strokeOpacity(so: number) {
+    this.stopPulsating();
     this._circle.attr({ 'stroke-opacity': so });
   }
 
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
-    if (Object.keys(pulsedProps).length > 0) {
-      let attrs = {
-        'r': pulsedProps.radius ?? this.radius,
-        'fill': pulsedProps.fill ?? this.fill,
-        'fill-opacity': pulsedProps.fillOpacity ?? this.fillOpacity,
-        'stroke': pulsedProps.stroke ?? this.stroke,
-        'stroke-width': pulsedProps.strokeWidth ?? this.strokeWidth,
-        'stroke-opacity': pulsedProps.strokeOpacity ?? this.strokeOpacity,
-      };
-      let duration = pulseProps?.duration ?? 2000;
-      this._circle.animate(duration).attr(attrs).loop(undefined, true);
+    this.stopPulsating();
+    let attrs = {
+      'r': pulsedProps.radius ?? this.radius,
+      'fill': pulsedProps.fill ?? this.fill,
+      'fill-opacity': pulsedProps.fillOpacity ?? this.fillOpacity,
+      'stroke': pulsedProps.stroke ?? this.stroke,
+      'stroke-width': pulsedProps.strokeWidth ?? this.strokeWidth,
+      'stroke-opacity': pulsedProps.strokeOpacity ?? this.strokeOpacity,
+    };
+    let duration = pulseProps?.duration ?? 2000;
+    this._currPulsation = this._circle.animate(duration).attr(attrs).loop(undefined, true);
+  }
+
+  stopPulsating() {
+    if (this._currPulsation) {
+      this._circle.timeline().unschedule(this._currPulsation);
+      this._currPulsation = undefined;
     }
   }
 

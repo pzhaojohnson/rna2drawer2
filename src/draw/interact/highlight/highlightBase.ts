@@ -11,7 +11,11 @@ export interface HighlightingProps {
 }
 
 export function highlightBase(b: Base, props?: HighlightingProps): CircleBaseAnnotation {
-  let h = b.highlighting ?? b.addCircleHighlighting();
+  let h = b.highlighting;
+  if (!h) {
+    h = b.addCircleHighlighting();
+    h.back();
+  }
   h.radius = props?.radius ?? h.radius;
   h.stroke = props?.stroke ?? h.stroke;
   h.strokeWidth = props?.strokeWidth ?? h.strokeWidth;

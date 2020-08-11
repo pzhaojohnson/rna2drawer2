@@ -22,19 +22,19 @@ export function highlightStem(mode: PivotingMode, st: Stem) {
     if (ps.has(p)) {
       let radius = 0.85 * b.fontSize;
       if (b.outline) {
-        radius = Math.max(radius, 1.1 * (b.outline.radius + b.outline.strokeWidth));
+        radius = Math.max(radius, 1.15 * (b.outline.radius + b.outline.strokeWidth));
       }
       let h = highlightBase(b, {
         radius: radius,
         fillOpacity: 0,
         stroke: '#00bfff',
-        strokeWidth: 1.25,
-        strokeOpacity: 1,
+        strokeWidth: 1.5,
+        strokeOpacity: 0.75,
       });
       h.pulsateBetween({
         radius: 1.25 * radius,
         strokeOpacity: 0.5,
-      }, { duration: 750 });
+      }, { duration: 1000 });
     } else {
       b.removeHighlighting();
     }
