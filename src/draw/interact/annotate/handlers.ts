@@ -1,6 +1,7 @@
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
 import { BaseInterface as Base } from '../../BaseInterface';
 import setAllBaseHighlightings from './setAllBaseHighlightings';
+import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings';
 
 export function handleMouseoverOnBase(mode: AnnotatingMode, b: Base) {
   let p = mode.drawing.overallPositionOfBase(b);
@@ -69,6 +70,7 @@ export function refresh(mode: AnnotatingMode) {
   if (typeof mode.selectingFrom == 'number' && mode.selectingFrom > mode.drawing.numBases) {
     mode.selectingFrom = undefined;
   }
+  removeAllBaseHighlightings(mode.drawing);
   setAllBaseHighlightings(mode);
 }
 

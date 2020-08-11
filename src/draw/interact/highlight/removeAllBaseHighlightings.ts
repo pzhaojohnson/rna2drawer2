@@ -1,5 +1,5 @@
-import Drawing from '../../Drawing';
-import Base from '../../Base';
+import { DrawingInterface as Drawing } from '../../DrawingInterface';
+import { BaseInterface as Base } from '../../BaseInterface';
 
 export function removeAllBaseHighlightings(drawing: Drawing) {
   if (!drawing) {

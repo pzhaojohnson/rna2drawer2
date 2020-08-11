@@ -118,6 +118,11 @@ class StrictDrawingInteraction {
   }
 
   refresh() {
+    if (this._currMode == this._annotatingMode) {
+      this._currMode.refresh();
+    } else {
+      this._currMode.reset();
+    }
     this.tertiaryBondsInteraction.refresh();
     this.fireChange();
   }
