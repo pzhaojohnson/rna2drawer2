@@ -10,28 +10,28 @@ function _highlightPairables(mode: FoldingMode, highlightings: HighlightingProps
   pairables.forEach(r => {
     r.fromStartToEnd(p => {
       highlightings[p - 1] = {
-        stroke: '#051094',
-        strokeOpacity: 0.25,
+        stroke: '#0047ab',
+        strokeOpacity: 0.85,
+        fill: '#0047ab',
+        fillOpacity: 0.075,
       };
     });
   });
 }
 
+let selectedProps = { stroke: '#ffbf00', strokeOpacity: 0.85, fill: '#ffbf00', fillOpacity: 0.15 };
+
 function _highlightSelected(mode: FoldingMode, highlightings: HighlightingProps[]) {
   let rSelected = selectedRange(mode);
   if (rSelected) {
     rSelected.fromStartToEnd(p => {
-      highlightings[p - 1] = {
-        stroke: '#fcdc00',
-        strokeOpacity: 0.75,
-      };
+      highlightings[p - 1] = { ...selectedProps };
     });
   }
 }
 
-let selectProps = { stroke: '#fcdc00', strokeOpacity: 0.75 };
-let pairProps = { stroke: '#000080', strokeOpacity: 0.75, fill: '#000080', fillOpacity: 0.25 };
-let unpairProps = { stroke: '#ff0000', strokeOpacity: 0.75, fill: '#ff0000', fillOpacity: 0.5 };
+let pairProps = { stroke: '#ff0080', strokeOpacity: 0.85, fill: '#ff0080', fillOpacity: 0.125 };
+let unpairProps = { stroke: '#ff0000', strokeOpacity: 0.85, fill: '#ff0000', fillOpacity: 0.45 };
 
 function _highlightHovered(mode: FoldingMode, highlightings: HighlightingProps[]) {
   let hovered = mode.hovered;
@@ -47,7 +47,7 @@ function _highlightHovered(mode: FoldingMode, highlightings: HighlightingProps[]
   } else if (pairable) {
     pairable.fromStartToEnd(p => highlightings[p - 1] = { ...pairProps });
   } else {
-    highlightings[hovered - 1] = { ...selectProps };
+    highlightings[hovered - 1] = { ...selectedProps };
   }
 }
 

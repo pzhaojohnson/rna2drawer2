@@ -20,21 +20,25 @@ export function highlightStem(mode: PivotingMode, st: Stem) {
   let ps = _stemPositions(st);
   mode.strictDrawing.drawing.forEachBase((b, p) => {
     if (ps.has(p)) {
-      let radius = 0.85 * b.fontSize;
-      if (b.outline) {
-        radius = Math.max(radius, 1.15 * (b.outline.radius + b.outline.strokeWidth));
+      if (!b.highlighting) {
+        let radius = 0.85 * b.fontSize;
+        if (b.outline) {
+          radius = Math.max(radius, 1.15 * (b.outline.radius + b.outline.strokeWidth));
+        }
+        let h = highlightBase(b, {
+          radius: radius,
+          fill: '#00bfff',
+          fillOpacity: 0.15,
+          stroke: '#00bfff',
+          strokeWidth: 1.5,
+          strokeOpacity: 0.85,
+        });
+        h.pulsateBetween({
+          radius: 1.25 * radius,
+          fillOpacity: 0.075,
+          strokeOpacity: 0.425,
+        }, { duration: 1000 });
       }
-      let h = highlightBase(b, {
-        radius: radius,
-        fillOpacity: 0,
-        stroke: '#00bfff',
-        strokeWidth: 1.5,
-        strokeOpacity: 0.75,
-      });
-      h.pulsateBetween({
-        radius: 1.25 * radius,
-        strokeOpacity: 0.5,
-      }, { duration: 1000 });
     } else {
       b.removeHighlighting();
     }
