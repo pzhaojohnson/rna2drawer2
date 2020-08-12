@@ -56,7 +56,7 @@ export class ColorField extends React.Component {
     }
 
     this.state = {
-      value: this.props.initialValue ?? { color: '#ffffff', opacity: 0 },
+      value: this.props.initialValue ?? { color: '#e5e5e5', opacity: 1 },
       showPicker: false,
     };
 
