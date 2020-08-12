@@ -436,7 +436,7 @@ TertiaryBond.dashedStrokeDasharray = '8 2';
 TertiaryBond._mostRecentProps = {
   padding1: 8,
   padding2: 8,
-  stroke: '#4a90e2',
+  stroke: '#63c5da',
   strokeWidth: 1.25,
   strokeOpacity: 1,
   strokeDasharray: '',
