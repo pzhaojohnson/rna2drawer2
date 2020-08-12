@@ -32,16 +32,26 @@ describe('create static method', () => {
     expect(ele.props.strokeField).toBeFalsy();
     expect(ele.props.strokeWidthField).toBeFalsy();
     expect(ele.props.dashedField).toBeFalsy();
+    expect(ele.props.paddingField1).toBeFalsy();
+    expect(ele.props.paddingField2).toBeFalsy();
   });
 
   it('when a tertiary bond is selected', () => {
-    let selected = { stroke: '#000000', strokeWidth: 1, strokeDasharray: '' };
+    let selected = {
+      stroke: '#000000',
+      strokeWidth: 1,
+      strokeDasharray: '',
+      padding1: 8.8,
+      padding2: 4.902,
+    };
     app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
     let ele = EditTertiaryBond.create(app);
     expect(ele.props.noSelection).toBeFalsy();
     expect(ele.props.strokeField).toBeTruthy();
     expect(ele.props.strokeWidthField).toBeTruthy();
     expect(ele.props.dashedField).toBeTruthy();
+    expect(ele.props.paddingField1).toBeTruthy();
+    expect(ele.props.paddingField2).toBeTruthy();
   });
 });
 
@@ -76,6 +86,8 @@ describe('render method', () => {
       strokeField: 'Stroke Field',
       strokeWidthField: 'Stroke Width Field',
       dashedField: 'Dashed Field',
+      paddingField1: 'Padding Field 1',
+      paddingField2: 'Padding Field 2',
     });
     let ele = comp.render();
     let children = prettyFormat(ele.props.children);
@@ -85,5 +97,7 @@ describe('render method', () => {
     expect(children.includes('Stroke Field')).toBeTruthy();
     expect(children.includes('Stroke Width Field')).toBeTruthy();
     expect(children.includes('Dashed Field')).toBeTruthy();
+    expect(children.includes('Padding Field 1')).toBeTruthy();
+    expect(children.includes('Padding Field 2')).toBeTruthy();
   });
 });

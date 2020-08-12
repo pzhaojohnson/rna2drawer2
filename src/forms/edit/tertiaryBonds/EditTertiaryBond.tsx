@@ -6,6 +6,8 @@ import Underline from '../../Underline';
 import StrokeField from './StrokeField';
 import StrokeWidthField from './StrokeWidthField';
 import DashedField from './DashedField';
+import PaddingField1 from './PaddingField1';
+import PadddingField2, { PaddingField2 } from './PaddingField2';
 import App from '../../../App';
 
 interface Props {
@@ -14,6 +16,8 @@ interface Props {
   strokeField?: React.ReactElement;
   strokeWidthField?: React.ReactElement;
   dashedField?: React.ReactElement;
+  paddingField1?: React.ReactElement;
+  paddingField2?: React.ReactElement;
 }
 
 export class EditTertiaryBond extends React.Component {
@@ -29,6 +33,8 @@ export class EditTertiaryBond extends React.Component {
         strokeField={selected ? StrokeField.create(app) : undefined}
         strokeWidthField={selected ? StrokeWidthField.create(app) : undefined}
         dashedField={selected ? DashedField.create(app) : undefined}
+        paddingField1={selected ? PaddingField1(app) : undefined}
+        paddingField2={selected ? PaddingField2(app) : undefined}
       />
     );
   }
@@ -70,6 +76,12 @@ export class EditTertiaryBond extends React.Component {
         </div>
         <div style={{ margin: '16px 40px 0px 40px' }} >
           {this.props.dashedField}
+        </div>
+        <div style={{ margin: '16px 40px 0px 40px' }} >
+          {this.props.paddingField1}
+        </div>
+        <div style={{ margin: '16px 40px 0px 40px' }} >
+          {this.props.paddingField2}
         </div>
       </div>
     );
