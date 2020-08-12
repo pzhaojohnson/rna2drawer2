@@ -1,67 +1,53 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../../draw/BaseAnnotationInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
+import baseOutlines from './baseOutlines';
+import { areAllSameNumber, areAllSameColor } from './areAllSame';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
-function _sharedOutlineFillColor(bs: Base[]): string | undefined {
-  let colors = new Set<string>();
-  let lastAdded = undefined;
-  bs.forEach(b => {
-    if (b.outline) {
-      let c = new Svg.Color(b.outline.fill);
-      let h = c.toHex().toLowerCase();
-      colors.add(h);
-      lastAdded = h;
-    }
-  });
-  return colors.size == 1 ? lastAdded : undefined;
+function outlineFills(os: CircleBaseAnnotation[]): Svg.Color[] {
+  let fs = [] as Svg.Color[];
+  os.forEach(o => fs.push(new Svg.Color(o.fill)));
+  return fs;
 }
 
-function _sharedOutlineFillOpacity(bs: Base[]): number | undefined {
-  let opacities = new Set<number>();
-  let lastAdded = undefined;
-  bs.forEach(b => {
-    if (b.outline) {
-      opacities.add(b.outline.fillOpacity);
-      lastAdded = b.outline.fillOpacity;
-    }
-  });
-  return opacities.size == 1 ? lastAdded : undefined;
+function outlineFillOpacities(os: CircleBaseAnnotation[]): number[] {
+  let fos = [] as number[];
+  os.forEach(o => fos.push(o.fillOpacity));
+  return fos;
 }
 
-function _sharedOutlineFillColorAndOpacity(bs: Base[]): ColorAndOpacity | undefined {
-  let color = _sharedOutlineFillColor(bs);
-  let opacity = _sharedOutlineFillOpacity(bs);
-  if (color && (opacity || opacity == 0)) {
-    return { color: color, opacity: opacity };
-  } else {
-    return undefined;
-  }
+function outlinesAllHaveSameFillColor(os: CircleBaseAnnotation[]): boolean {
+  return areAllSameColor(outlineFills(os)) && areAllSameNumber(outlineFillOpacities(os));
 }
 
 export function OutlineFillField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
+  let os = baseOutlines(selectedBases());
+  let o1 = os[0];
+  let initialValue = undefined;
+  if (o1 && outlinesAllHaveSameFillColor(os)) {
+    initialValue = { color: o1.fill, opacity: o1.fillOpacity };
+  }
   return (
     <ColorField
       name={'Fill'}
-      initialValue={_sharedOutlineFillColorAndOpacity(selectedBases())}
+      initialValue={initialValue}
       set={co => {
-        let bs = selectedBases();
-        if (bs.length == 0) {
-          return;
-        }
-        let shared = _sharedOutlineFillColorAndOpacity(bs);
-        if (!shared || co.color != shared.color || co.opacity != shared.opacity) {
-          pushUndo();
-          bs.forEach(b => {
-            if (b.outline) {
-              b.outline.fill = co.color;
-              b.outline.fillOpacity = co.opacity;
-            }
-          });
-          MostRecentOutlineProps.fill = co.color;
-          MostRecentOutlineProps.fillOpacity = co.opacity;
-          changed();
+        let os = baseOutlines(selectedBases());
+        let o1 = os[0];
+        if (o1) {
+          if (!outlinesAllHaveSameFillColor(os) || co.color != o1.fill || co.opacity != o1.fillOpacity) {
+            pushUndo();
+            os.forEach(o => {
+              o.fill = co.color;
+              o.fillOpacity = co.opacity;
+            });
+            MostRecentOutlineProps.fill = co.color;
+            MostRecentOutlineProps.fillOpacity = co.opacity;
+            changed();
+          }
         }
       }}
     />

@@ -1,39 +1,42 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../../draw/BaseAnnotationInterface';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
+import baseOutlines from './baseOutlines';
+import { areAllSameNumber } from './areAllSame';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
-function _sharedOutlineRadius(bs: Base[]): number | undefined {
-  let radii = new Set<number>();
-  let lastAdded = undefined;
-  bs.forEach(b => {
-    if (b.outline) {
-      radii.add(b.outline.radius);
-      lastAdded = b.outline.radius;
-    }
-  });
-  return radii.size == 1 ? lastAdded : undefined;
+function outlineRadii(os: CircleBaseAnnotation[]): number[] {
+  let rs = [] as number[];
+  os.forEach(o => rs.push(o.radius));
+  return rs;
+}
+
+function outlinesAllHaveSameRadius(os: CircleBaseAnnotation[]): boolean {
+  return areAllSameNumber(outlineRadii(os));
 }
 
 export function OutlineRadiusField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
+  let os = baseOutlines(selectedBases());
+  let rs = outlineRadii(os);
+  let initialValue = undefined;
+  if (os.length > 0 && outlinesAllHaveSameRadius(os)) {
+    initialValue = rs[0];
+  }
   return (
     <NonnegativeNumberField
       name={'Radius'}
-      initialValue={_sharedOutlineRadius(selectedBases())}
+      initialValue={initialValue}
       set={r => {
-        let bs = selectedBases();
-        if (bs.length == 0) {
-          return;
-        }
-        if (r != _sharedOutlineRadius(bs)) {
-          pushUndo();
-          bs.forEach(b => {
-            if (b.outline) {
-              b.outline.radius = r;
-            }
-          });
-          MostRecentOutlineProps.radius = r;
-          changed();
+        let os = baseOutlines(selectedBases());
+        if (os.length > 0) {
+          let rs = outlineRadii(os);
+          if (!outlinesAllHaveSameRadius(os) || r != rs[0]) {
+            pushUndo();
+            os.forEach(o => o.radius = r);
+            MostRecentOutlineProps.radius = r;
+            changed();
+          }
         }
       }}
     />

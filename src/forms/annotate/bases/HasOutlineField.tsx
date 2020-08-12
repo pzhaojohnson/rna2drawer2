@@ -1,26 +1,15 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import CheckboxField from '../../fields/CheckboxField';
+import baseOutlines from './baseOutlines';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 export function allBasesHaveOutlines(bs: Base[]): boolean {
-  let allHave = true;
-  bs.forEach(b => {
-    if (!b.hasOutline()) {
-      allHave = false;
-    }
-  });
-  return allHave;
+  return bs.length == baseOutlines(bs).length;
 }
 
 export function allBasesLackOutlines(bs: Base[]): boolean {
-  let allLack = true;
-  bs.forEach(b => {
-    if (b.hasOutline()) {
-      allLack = false;
-    }
-  });
-  return allLack;
+  return baseOutlines(bs).length == 0;
 }
 
 function _addOutlines(bs: Base[]) {
@@ -51,17 +40,16 @@ export function HasOutlineField(selectedBases: () => Base[], pushUndo: () => voi
       initialValue={initialValue}
       set={v => {
         let bs = selectedBases();
-        if (bs.length == 0) {
-          return;
-        }
-        if (v && !allBasesHaveOutlines(bs)) {
-          pushUndo();
-          _addOutlines(bs);
-          changed();
-        } else if (!v && !allBasesLackOutlines(bs)) {
-          pushUndo();
-          _removeOutlines(bs);
-          changed();
+        if (bs.length > 0) {
+          if (v && !allBasesHaveOutlines(bs)) {
+            pushUndo();
+            _addOutlines(bs);
+            changed();
+          } else if (!v && !allBasesLackOutlines(bs)) {
+            pushUndo();
+            _removeOutlines(bs);
+            changed();
+          }
         }
       }}
     />

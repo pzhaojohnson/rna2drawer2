@@ -1,67 +1,53 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../../draw/BaseAnnotationInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
+import baseOutlines from './baseOutlines';
+import { areAllSameColor, areAllSameNumber } from './areAllSame';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
-function _sharedOutlineStrokeColor(bs: Base[]): string | undefined {
-  let strokes = new Set<string>();
-  let lastAdded = undefined;
-  bs.forEach(b => {
-    if (b.outline) {
-      let c = new Svg.Color(b.outline.stroke);
-      let h = c.toHex().toLowerCase();
-      strokes.add(h);
-      lastAdded = h;
-    }
-  });
-  return strokes.size == 1 ? lastAdded : undefined;
+function outlineStrokes(os: CircleBaseAnnotation[]): Svg.Color[] {
+  let ss = [] as Svg.Color[];
+  os.forEach(o => ss.push(new Svg.Color(o.stroke)));
+  return ss;
 }
 
-function _sharedOutlineStrokeOpacity(bs: Base[]): number | undefined {
-  let opacities = new Set<number>();
-  let lastAdded = undefined;
-  bs.forEach(b => {
-    if (b.outline) {
-      opacities.add(b.outline.strokeOpacity);
-      lastAdded = b.outline.strokeOpacity;
-    }
-  });
-  return opacities.size == 1 ? lastAdded : undefined;
+function outlineStrokeOpacities(os: CircleBaseAnnotation[]): number[] {
+  let sos = [] as number[];
+  os.forEach(o => sos.push(o.strokeOpacity));
+  return sos;
 }
 
-function _sharedOutlineStrokeColorAndOpacity(bs: Base[]): ColorAndOpacity | undefined {
-  let color = _sharedOutlineStrokeColor(bs);
-  let opacity = _sharedOutlineStrokeOpacity(bs);
-  if (color && (opacity || opacity == 0)) {
-    return { color: color, opacity: opacity };
-  } else {
-    return undefined;
-  }
+function outlinesAllHaveSameStrokeColor(os: CircleBaseAnnotation[]): boolean {
+  return areAllSameColor(outlineStrokes(os)) && areAllSameNumber(outlineStrokeOpacities(os));
 }
 
 export function OutlineStrokeField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
+  let os = baseOutlines(selectedBases());
+  let o1 = os[0];
+  let initialValue = undefined;
+  if (o1 && outlinesAllHaveSameStrokeColor(os)) {
+    initialValue = { color: o1.stroke, opacity: o1.strokeOpacity };
+  }
   return (
     <ColorField
       name={'Line Color'}
-      initialValue={_sharedOutlineStrokeColorAndOpacity(selectedBases())}
+      initialValue={initialValue}
       set={co => {
-        let bs = selectedBases();
-        if (bs.length == 0) {
-          return;
-        }
-        let shared = _sharedOutlineStrokeColorAndOpacity(bs);
-        if (!shared || co.color != shared.color || co.opacity != shared.opacity) {
-          pushUndo();
-          bs.forEach(b => {
-            if (b.outline) {
-              b.outline.stroke = co.color;
-              b.outline.strokeOpacity = co.opacity;
-            }
-          });
-          MostRecentOutlineProps.stroke = co.color;
-          MostRecentOutlineProps.strokeOpacity = co.opacity;
-          changed();
+        let os = baseOutlines(selectedBases());
+        let o1 = os[0];
+        if (o1) {
+          if (!outlinesAllHaveSameStrokeColor(os) || co.color != o1.stroke || co.opacity != o1.strokeOpacity) {
+            pushUndo();
+            os.forEach(o => {
+              o.stroke = co.color;
+              o.strokeOpacity = co.opacity;
+            });
+            MostRecentOutlineProps.stroke = co.color;
+            MostRecentOutlineProps.strokeOpacity = co.opacity;
+            changed();
+          }
         }
       }}
     />

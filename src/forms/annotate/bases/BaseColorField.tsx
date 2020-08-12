@@ -2,57 +2,47 @@ import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
+import { areAllSameColor, areAllSameNumber } from './areAllSame';
 
-function _sharedBaseFill(bs: Base[]): string | undefined {
-  let colors = new Set<string>();
-  let lastAdded = undefined;
-  bs.forEach(b => {
-    let c = new Svg.Color(b.fill);
-    let h = c.toHex().toLowerCase();
-    colors.add(h);
-    lastAdded = h;
-  });
-  return colors.size == 1 ? lastAdded : undefined;
+function baseFills(bs: Base[]): Svg.Color[] {
+  let fs = [] as Svg.Color[];
+  bs.forEach(b => fs.push(new Svg.Color(b.fill)));
+  return fs;
 }
 
-function _sharedBaseFillOpacity(bs: Base[]): number | undefined {
-  let opacities = new Set<number>();
-  let lastAdded = undefined;
-  bs.forEach(b => {
-    opacities.add(b.fillOpacity);
-    lastAdded = b.fillOpacity;
-  });
-  return opacities.size == 1 ? lastAdded : undefined;
+function baseFillOpacities(bs: Base[]): number[] {
+  let fos = [] as number[];
+  bs.forEach(b => fos.push(b.fillOpacity));
+  return fos;
 }
 
-function _sharedBaseColorAndOpacity(bs: Base[]): ColorAndOpacity | undefined {
-  let color = _sharedBaseFill(bs);
-  let opacity = _sharedBaseFillOpacity(bs);
-  if (color && (opacity || opacity == 0)) {
-    return { color: color, opacity: opacity };
-  } else {
-    return undefined;
-  }
+function basesAllHaveSameColor(bs: Base[]): boolean {
+  return areAllSameColor(baseFills(bs)) && areAllSameNumber(baseFillOpacities(bs));
 }
 
 export function BaseColorField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
+  let bs = selectedBases();
+  let b1 = bs[0];
+  let initialValue = undefined;
+  if (b1 && basesAllHaveSameColor(bs)) {
+    initialValue = { color: b1.fill, opacity: b1.fillOpacity };
+  }
   return (
     <ColorField
       name={'Base Color'}
-      initialValue={_sharedBaseColorAndOpacity(selectedBases())}
+      initialValue={initialValue}
       set={co => {
         let bs = selectedBases();
-        if (bs.length == 0) {
-          return;
-        }
-        let shared = _sharedBaseColorAndOpacity(bs);
-        if (!shared || co.color != shared.color || co.opacity != shared.opacity) {
-          pushUndo();
-          bs.forEach(b => {
-            b.fill = co.color;
-            b.fillOpacity = co.opacity;
-          });
-          changed();
+        let b1 = bs[0];
+        if (b1) {
+          if (!basesAllHaveSameColor(bs) || co.color != b1.fill || co.opacity != b1.fillOpacity) {
+            pushUndo();
+            bs.forEach(b => {
+              b.fill = co.color;
+              b.fillOpacity = co.opacity;
+            });
+            changed();
+          }
         }
       }}
     />

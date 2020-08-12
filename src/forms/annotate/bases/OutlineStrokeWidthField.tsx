@@ -1,39 +1,42 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../../draw/BaseAnnotationInterface';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
+import baseOutlines from './baseOutlines';
+import { areAllSameNumber } from './areAllSame';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
-function _sharedOutlineStrokeWidth(bs: Base[]): number | undefined {
-  let strokeWidths = new Set<number>();
-  let lastAdded = undefined;
-  bs.forEach(b => {
-    if (b.outline) {
-      strokeWidths.add(b.outline.strokeWidth);
-      lastAdded = b.outline.strokeWidth;
-    }
-  });
-  return strokeWidths.size == 1 ? lastAdded : undefined;
+function outlinesStrokeWidths(os: CircleBaseAnnotation[]): number[] {
+  let sws = [] as number[];
+  os.forEach(o => sws.push(o.strokeWidth));
+  return sws;
+}
+
+function outlinesAllHaveSameStrokeWidth(os: CircleBaseAnnotation[]): boolean {
+  return areAllSameNumber(outlinesStrokeWidths(os));
 }
 
 export function OutlineStrokeWidthField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
+  let os = baseOutlines(selectedBases());
+  let sws = outlinesStrokeWidths(os);
+  let initialValue = undefined;
+  if (os.length > 0 && outlinesAllHaveSameStrokeWidth(os)) {
+    initialValue = sws[0];
+  }
   return (
     <NonnegativeNumberField
       name={'Line Width'}
-      initialValue={_sharedOutlineStrokeWidth(selectedBases())}
+      initialValue={initialValue}
       set={sw => {
-        let bs = selectedBases();
-        if (bs.length == 0) {
-          return;
-        }
-        if (sw != _sharedOutlineStrokeWidth(bs)) {
-          pushUndo();
-          bs.forEach(b => {
-            if (b.outline) {
-              b.outline.strokeWidth = sw;
-            }
-          });
-          MostRecentOutlineProps.strokeWidth = sw;
-          changed();
+        let os = baseOutlines(selectedBases());
+        if (os.length > 0) {
+          let sws = outlinesStrokeWidths(os);
+          if (!outlinesAllHaveSameStrokeWidth(os) || sw != sws[0]) {
+            pushUndo();
+            os.forEach(o => o.strokeWidth = sw);
+            MostRecentOutlineProps.strokeWidth = sw;
+            changed();
+          }
         }
       }}
     />
