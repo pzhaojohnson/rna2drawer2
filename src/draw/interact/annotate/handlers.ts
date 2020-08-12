@@ -33,8 +33,8 @@ export function handleMousedownOnBase(mode: AnnotatingMode, b: Base) {
       mode.selected.add(mode.hovered);
       mode.selectingFrom = mode.hovered;
       setAllBaseHighlightings(mode);
+      mode.requestToRenderForm();
     }
-    mode.requestToRenderForm();
     mode.fireChange();
   }
 }
