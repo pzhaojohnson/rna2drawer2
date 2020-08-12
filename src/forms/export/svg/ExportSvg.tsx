@@ -5,6 +5,7 @@ import Base from '../../../draw/Base';
 import { formatSvgForExport } from '../../../export/formatSvgForExport';
 import offerFileForDownload from '../../../export/offerFileForDownload';
 import * as Svg from '@svgdotjs/svg.js';
+import LastExported from '../LastExported';
 
 interface Props {
   SVG: () => Svg.Svg;
@@ -25,7 +26,7 @@ class ExportSvg extends React.Component {
     super(props);
 
     this.state = {
-      baseFontSize: '6.0',
+      baseFontSize: LastExported.baseFontSize,
 
       errorMessage: '',
       errorMessageKey: uuidv1(),
@@ -268,6 +269,7 @@ class ExportSvg extends React.Component {
     if (!bfs) {
       return;
     }
+    LastExported.baseFontSize = this.state.baseFontSize.trim();
     this.setState({
       errorMessage: '',
       errorMessageKey: uuidv1(),

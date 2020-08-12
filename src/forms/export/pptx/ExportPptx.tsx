@@ -7,6 +7,7 @@ import { formatSvgForExport } from '../../../export/formatSvgForExport';
 import { createPptxFromSvg } from '../../../export/createPptxFromSvg';
 import * as Svg from '@svgdotjs/svg.js';
 import PptxGenJS from 'pptxgenjs';
+import LastExported from '../LastExported';
 
 interface Props {
   SVG: () => Svg.Svg;
@@ -27,7 +28,7 @@ class ExportPptx extends React.Component {
     super(props);
 
     this.state = {
-      baseFontSize: '6.0',
+      baseFontSize: LastExported.baseFontSize,
 
       errorMessage: '',
       errorMessageKey: uuidv1(),
@@ -301,6 +302,7 @@ class ExportPptx extends React.Component {
     if (!bfs) {
       return;
     }
+    LastExported.baseFontSize = this.state.baseFontSize.trim();
     this.setState({
       errorMessage: '',
       errorMessageKey: uuidv1(),
