@@ -46,6 +46,7 @@ export class ColorField extends React.Component {
     value: ColorAndOpacity;
     showPicker: boolean;
   }
+  _changedSinceOpening: boolean;
   
   constructor(props: Props) {
     super(props);
@@ -58,6 +59,8 @@ export class ColorField extends React.Component {
       value: this.props.initialValue ?? { color: '#ffffff', opacity: 0 },
       showPicker: false,
     };
+
+    this._changedSinceOpening = false;
   }
 
   render(): React.ReactElement {
@@ -109,7 +112,11 @@ export class ColorField extends React.Component {
   }
 
   togglePicker() {
-    this.setState({ showPicker: !this.state.showPicker });
+    let showPicker = !this.state.showPicker;
+    if (showPicker) {
+      this._changedSinceOpening = false;
+    }
+    this.setState({ showPicker: showPicker });
   }
 
   picker(): React.ReactElement {
@@ -135,6 +142,7 @@ export class ColorField extends React.Component {
   }
 
   onChange(result: ColorResult) {
+    this._changedSinceOpening = true;
     let hex = result.hex.toLowerCase();
     if (hex.length == 4) {
       hex = '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
@@ -147,7 +155,9 @@ export class ColorField extends React.Component {
       ColorField.recentColors.push(this.state.value.color);
     }
     this.setState({ showPicker: false });
-    this.props.set(this.state.value);
+    if (this._changedSinceOpening) {
+      this.props.set(this.state.value);
+    }
   }
 }
 

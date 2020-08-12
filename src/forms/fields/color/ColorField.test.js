@@ -185,10 +185,43 @@ describe('picker', () => {
       initialValue: { color: '#abcdef', opacity: 0.3 },
       set: set,
     });
-    let closingDiv = comp.picker().props.children[0];
+    comp.onChange({ hex: '#bbca56', rgb: { a: 0.2 } });
+    // the on change callback would otherwise set the current value...
     comp.state.value = { color: '#bbca56', opacity: 0.2 };
+    let closingDiv = comp.picker().props.children[0];
     expect(set).not.toHaveBeenCalled();
     closingDiv.props.onClick();
     expect(set.mock.calls[0][0]).toStrictEqual({ color: '#bbca56', opacity: 0.2 });
+  });
+});
+
+describe('does not call set callback if just opened and closed', () => {
+  it('first opening after creation', () => {
+    let set = jest.fn();
+    let comp = new ColorField({
+      initialValue: { color: '#bbcc12', opacity: 0.45 },
+      set: set,
+    });
+    comp.currentColorDisplay().props.onClick(); // open picker
+    let closingDiv = comp.picker().props.children[0];
+    closingDiv.props.onClick(); // close picker
+    expect(set).not.toHaveBeenCalled();
+  });
+
+  it('not the first opening', () => {
+    let set = jest.fn();
+    let comp = new ColorField({
+      initialValue: { color: '#acdef1', opacity: 1 },
+      set: set,
+    });
+    comp.currentColorDisplay().props.onClick(); // open for first time
+    comp.onChange({ hex: '#111222', rgb: { a: 0.5 } }); // change color
+    let closingDiv = comp.picker().props.children[0];
+    closingDiv.props.onClick(); // close picker
+    expect(set).toHaveBeenCalledTimes(1);
+    comp.currentColorDisplay().props.onClick(); // open for second time
+    closingDiv = comp.picker().props.children[0];
+    closingDiv.props.onClick(); // close without changing
+    expect(set).toHaveBeenCalledTimes(1); // was not called again
   });
 });
