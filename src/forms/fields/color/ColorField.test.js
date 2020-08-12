@@ -2,6 +2,7 @@ import * as React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { ColorField, PRESET_COLORS } from './ColorField';
+import * as Svg from '@svgdotjs/svg.js';
 
 let container = null;
 
@@ -78,12 +79,12 @@ describe('current color display', () => {
     expect(style.background).toBe('rgba(170, 17, 35, 0.56)');
   });
 
-  it('is completely transparent by default', () => {
+  it('has a nontransparent default color', () => {
     act(() => {
       render(<ColorField />, container);
     });
     let style = window.getComputedStyle(getCurrentColorDisplay().childNodes[0]);
-    expect(style.background).toBe('rgba(255, 255, 255, 0)');
+    expect(style.background).toBe('rgb(229, 229, 229)');
   });
 
   it('clicking on it toggles the picker', () => {
