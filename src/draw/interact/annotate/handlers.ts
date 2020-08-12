@@ -28,7 +28,7 @@ export function handleMousedownOnBase(mode: AnnotatingMode, b: Base) {
     if (mode.selected.has(mode.hovered)) {
       mode.selected.delete(mode.hovered);
       setAllBaseHighlightings(mode);
-      b.removeHighlighting();
+      b.removeHighlighting(); // remove highlighting from hovering
     } else {
       mode.selected.add(mode.hovered);
       mode.selectingFrom = mode.hovered;
@@ -67,7 +67,7 @@ export function refresh(mode: AnnotatingMode) {
   if (typeof mode.selectingFrom == 'number' && mode.selectingFrom > mode.drawing.numBases) {
     mode.selectingFrom = undefined;
   }
-  removeAllBaseHighlightings(mode.drawing);
+  removeAllBaseHighlightings(mode.drawing); // required to restart animations
   setAllBaseHighlightings(mode);
 }
 
