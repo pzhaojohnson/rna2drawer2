@@ -17,24 +17,25 @@ import { pixelsToInches } from './pixelsToInches';
 import { pointsToPixels } from './pointsToPixels';
 import { pointsToInches } from './pointsToInches';
 import PptxGenJs from 'pptxgenjs';
+import * as Svg from '@svgdotjs/svg.js';
 
 describe('_pptxHex function', () => {
-  describe('given hex code is a string', () => {
-    it("starts with '#'", () => {
-      expect(_pptxHex('#a1b5c8')).toBe('a1b5c8');
-    });
-
-    it("does not start with '#'", () => {
-      expect(_pptxHex('198237')).toBe('198237');
-    });
+  it('removes leading #', () => {
+    let c = new Svg.Color('#ab12dd');
+    let hex = _pptxHex(c);
+    expect(hex).toBe('AB12DD');
   });
 
-  it('given hex code is a number', () => {
-    expect(_pptxHex(986532)).toBe('986532');
+  it('expands hex codes with 3 numbers to 6 numbers', () => {
+    let c = new Svg.Color('#1fd');
+    let hex = _pptxHex(c);
+    expect(hex).toBe('11FFDD');
   });
 
-  it('given hex code is neither a string nor number', () => {
-    expect(_pptxHex(undefined)).toBe('000000');
+  it('capitalizes hex code', () => {
+    let c = new Svg.Color('#aabbde');
+    let hex = _pptxHex(c);
+    expect(hex).toBe('AABBDE');
   });
 });
 
@@ -201,7 +202,7 @@ describe('_lineOptions function', () => {
       'stroke-width': pointsToPixels(2),
     });
     let los = _lineOptions(l);
-    expect(los.line).toBe('aabbcc');
+    expect(los.line).toBe('AABBCC');
     expect(los.lineSize).toBeCloseTo(2, 2);
   });
 
@@ -356,7 +357,7 @@ describe('_rectOptions function', () => {
     });
     let ros = _rectOptions(r);
     expect(ros.line.type).toBe('solid');
-    expect(ros.line.color).toBe('56ab32');
+    expect(ros.line.color).toBe('56AB32');
     expect(ros.line.alpha).toBeCloseTo(55, 2);
   });
 
@@ -403,7 +404,7 @@ describe('_rectOptions function', () => {
     });
     let ros = _rectOptions(r);
     expect(ros.fill.type).toBe('solid');
-    expect(ros.fill.color).toBe('ab12cd');
+    expect(ros.fill.color).toBe('AB12CD');
     expect(ros.fill.alpha).toBeCloseTo(20, 2);
   });
 });

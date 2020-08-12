@@ -6,28 +6,18 @@ import { pointsToInches } from './pointsToInches';
 import { trimNum } from './trimNum';
 
 /**
- * Converts the given hex code to a format compatible with PptxGenJS.
- * 
- * If the given hex code is a string and the first character is a '#',
- * this function will remove the '#'. Otherwise, this function will simply
- * return the given string.
- * 
- * If the given hex code is a number, this function will return the string
- * of that number.
- * 
- * If the given hex code has a different type (e.g. undefined), this function
- * will return '000000'.
+ * Converts the given color to a hex code compatible with PptxGenJS.
  */
-function _pptxHex(hex: (string | number)): string {
-  if (typeof hex === 'string') {
-    if (hex.charAt(0) === '#') {
-      return hex.substring(1);
-    }
-    return hex;
-  } else if (typeof hex === 'number') {
-    return hex.toString();
+function _pptxHex(color: Svg.Color): string {
+  let hex = color.toHex();
+  if (hex.charAt(0) == '#') {
+    hex = hex.substring(1);
   }
-  return '000000';
+  if (hex.length == 3) {
+    hex = hex.charAt(0) + hex.charAt(0) + hex.charAt(1) + hex.charAt(1) + hex.charAt(2) + hex.charAt(2);
+  }
+  hex = hex.toUpperCase();
+  return hex;
 }
 
 const _NUMBER_TRIM = 2;
@@ -80,7 +70,7 @@ function _textOptions(text: Svg.Text): object {
     fontFace: text.attr('font-family'),
     fontSize: _trimNum(fs),
     bold: bold,
-    color: _pptxHex(text.attr('fill')),
+    color: _pptxHex(new Svg.Color(text.attr('fill'))),
   };
 }
 
@@ -107,7 +97,7 @@ function _lineOptions(line: Svg.Line): object {
     h: _trimNum(h),
     flipH: line.attr('x1') > xMin,
     flipV: line.attr('y1') > yMin,
-    line: _pptxHex(line.attr('stroke')),
+    line: _pptxHex(new Svg.Color(line.attr('stroke'))),
     lineSize: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
   };
 }
@@ -135,13 +125,13 @@ function _circleOptions(circle: Svg.Circle): object {
     h: _trimNum(pixelsToInches(h)),
     line: {
       type: 'solid',
-      color: _pptxHex(circle.attr('stroke')),
+      color: _pptxHex(new Svg.Color(circle.attr('stroke'))),
       alpha: lineAlpha,
     },
     lineSize: _trimNum(pixelsToPoints(circle.attr('stroke-width'))),
     fill: {
       type: 'solid',
-      color: _pptxHex(circle.attr('fill')),
+      color: _pptxHex(new Svg.Color(circle.attr('fill'))),
       alpha: 100 * (1 - circle.attr('fill-opacity')),
     },
   };
@@ -166,13 +156,13 @@ function _rectOptions(rect: Svg.Rect): object {
     h: _trimNum(pixelsToInches(rect.attr('height'))),
     line: {
       type: 'solid',
-      color: _pptxHex(rect.attr('stroke')),
+      color: _pptxHex(new Svg.Color(rect.attr('stroke'))),
       alpha: lineAlpha,
     },
     lineSize: _trimNum(pixelsToPoints(rect.attr('stroke-width'))),
     fill: {
       type: 'solid',
-      color: _pptxHex(rect.attr('fill')),
+      color: _pptxHex(new Svg.Color(rect.attr('fill'))),
       alpha: 100 * (1 - rect.attr('fill-opacity')),
     },
   };
