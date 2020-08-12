@@ -2,17 +2,14 @@ import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInter
 import { BaseInterface as Base } from '../../BaseInterface';
 import setAllBaseHighlightings from './setAllBaseHighlightings';
 import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings';
+import positionsBetween from './positionsBetween';
 
 export function handleMouseoverOnBase(mode: AnnotatingMode, b: Base) {
   let p = mode.drawing.overallPositionOfBase(b);
   if (p != 0) {
     mode.hovered = p;
     if (mode.selectingFrom) {
-      let min = Math.min(p, mode.selectingFrom);
-      let max = Math.max(p, mode.selectingFrom);
-      for (let q = min; q <= max; q++) {
-        mode.selected.add(q);
-      }
+      positionsBetween(p, mode.selectingFrom).forEach(q => mode.selected.add(q));
       mode.requestToRenderForm();
     }
     setAllBaseHighlightings(mode);
