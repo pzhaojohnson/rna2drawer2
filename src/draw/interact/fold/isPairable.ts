@@ -17,6 +17,9 @@ export function isPairable(mode: FoldingMode, r: IntegerRange): boolean {
   }
   let csSelected = charactersInRange(mode, rSelected);
   let cs = charactersInRange(mode, r);
+  if (csSelected.length != cs.length) {
+    return false;
+  }
   if (mode.pairingComplements() && !areComplementary(csSelected, cs)) {
     return false;
   }

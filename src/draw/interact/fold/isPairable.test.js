@@ -3,8 +3,6 @@ import StrictDrawing from '../../StrictDrawing';
 import NodeSVG from '../../NodeSVG';
 import FoldingMode from './FoldingMode';
 import IntegerRange from './IntegerRange';
-import { selectedCharacters } from './selected';
-import charactersInRange from './charactersInRange';
 
 let sd = new StrictDrawing();
 sd.addTo(document.body, () => NodeSVG());
@@ -17,11 +15,33 @@ it('nothing selected', () => {
   expect(isPairable(mode, r)).toBeFalsy();
 });
 
+it('selected range and given range are different sizes', () => {
+  mode.forcePair();
+  mode.selected = { tightEnd: 2, looseEnd: 5 };
+  let r = new IntegerRange(8, 10);
+  expect(isPairable(mode, r)).toBeFalsy();
+});
+
+describe('selected and given ranges are same size but one is out of bounds', () => {
+  it('selected range is out of bounds', () => {
+    mode.forcePair();
+    mode.selected = { tightEnd: 18, looseEnd: 22 };
+    let r = new IntegerRange(10, 14);
+    expect(isPairable(mode, r)).toBeFalsy();
+  });
+
+  it('given range is out of bounds', () => {
+    mode.forcePair();
+    mode.selected = { tightEnd: 3, looseEnd: 8 };
+    let r = new IntegerRange(16, 21);
+    expect(isPairable(mode, r)).toBeFalsy();
+  });
+});
+
 it('overlaps with selected', () => {
+  mode.forcePair();
   mode.selected = { tightEnd: 8, looseEnd: 10 };
   let r = new IntegerRange(7, 9);
-  expect(selectedCharacters(mode)).toBe('UGG');
-  expect(charactersInRange(mode, r)).toBe('UUG');
   expect(isPairable(mode, r)).toBeFalsy();
 });
 
