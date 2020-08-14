@@ -140,6 +140,15 @@ describe('picker', () => {
     expect(picker.props.color).toStrictEqual({ r: 255, g: 202, b: 51, a: 0.66 });
   });
 
+  it('alpha can be disabled', () => {
+    let comp = new ColorField({
+      initialValue: { color: '#aabbcc', opacity: 1 },
+      disableAlpha: true,
+    });
+    let picker = comp.picker().props.children[1];
+    expect(picker.props.disableAlpha).toBeTruthy();
+  });
+
   it('onChange callback updates the current color and opacity', () => {
     let comp = new ColorField({ initialValue: { color: '#11298a', opacity: 0.2 } });
     let picker = comp.picker().props.children[1];

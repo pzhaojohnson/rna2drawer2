@@ -36,6 +36,7 @@ interface Props {
   name: string;
   initialValue?: ColorAndOpacity;
   set: (v: ColorAndOpacity) => void;
+  disableAlpha?: boolean;
 }
 
 export class ColorField extends React.Component {
@@ -134,6 +135,7 @@ export class ColorField extends React.Component {
         ></div>
         <SketchPicker
           presetColors={PRESET_COLORS.toArray().concat(ColorField.recentColors.slice())}
+          disableAlpha={this.props.disableAlpha}
           color={toRgba(this.state.value)}
           onChange={color => this.onChange(color)}
         />
