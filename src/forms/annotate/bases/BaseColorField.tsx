@@ -30,7 +30,7 @@ export function BaseColorField(selectedBases: () => Base[], pushUndo: () => void
   return (
     <ColorField
       name={'Base Color'}
-      disableAlpha={true}
+      disableAlpha={true} // since text transparency cannot be set when exporting PPTX files
       initialValue={initialValue}
       set={co => {
         let bs = selectedBases();
