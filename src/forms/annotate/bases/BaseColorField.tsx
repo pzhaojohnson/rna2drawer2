@@ -17,7 +17,7 @@ function baseFillOpacities(bs: Base[]): number[] {
 }
 
 function basesAllHaveSameColor(bs: Base[]): boolean {
-  return areAllSameColor(baseFills(bs)) && areAllSameNumber(baseFillOpacities(bs));
+  return areAllSameColor(baseFills(bs));
 }
 
 export function BaseColorField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
@@ -25,21 +25,21 @@ export function BaseColorField(selectedBases: () => Base[], pushUndo: () => void
   let b1 = bs[0];
   let initialValue = undefined;
   if (b1 && basesAllHaveSameColor(bs)) {
-    initialValue = { color: b1.fill, opacity: b1.fillOpacity };
+    initialValue = { color: b1.fill, opacity: 1 };
   }
   return (
     <ColorField
       name={'Base Color'}
+      disableAlpha={true}
       initialValue={initialValue}
       set={co => {
         let bs = selectedBases();
         let b1 = bs[0];
         if (b1) {
-          if (!basesAllHaveSameColor(bs) || co.color != b1.fill || co.opacity != b1.fillOpacity) {
+          if (!basesAllHaveSameColor(bs) || co.color != b1.fill) {
             pushUndo();
             bs.forEach(b => {
               b.fill = co.color;
-              b.fillOpacity = co.opacity;
             });
             changed();
           }
