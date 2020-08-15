@@ -145,7 +145,9 @@ export class ColorField extends React.Component {
 
   onChange(result: ColorResult) {
     this._changedSinceOpening = true;
-    let hex = result.hex.toLowerCase();
+    let rgb = result.rgb;
+    let c = new Svg.Color(rgb.r, rgb.g, rgb.b, 'rgb');
+    let hex = c.toHex();
     if (hex.length == 4) {
       hex = '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
     }

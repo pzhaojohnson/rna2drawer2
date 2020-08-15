@@ -153,14 +153,21 @@ describe('picker', () => {
     let comp = new ColorField({ initialValue: { color: '#11298a', opacity: 0.2 } });
     let picker = comp.picker().props.children[1];
     let spy = jest.spyOn(comp, 'setState');
-    picker.props.onChange({ hex: '#4412bc', rgb: { a: 0.33 } });
-    expect(spy.mock.calls[0][0].value).toStrictEqual({ color: '#4412bc', opacity: 0.33 });
-    picker.props.onChange({ hex: '#AB11F5', rgb: { a: 0.71 } });
-    expect(spy.mock.calls[1][0].value).toStrictEqual({ color: '#ab11f5', opacity: 0.71 }); // decapitalizes letters
-    picker.props.onChange({ hex: '#f12', rgb: { a: 0.99 } });
-    expect(spy.mock.calls[2][0].value).toStrictEqual({ color: '#ff1122', opacity: 0.99 }); // expands to 7 characters
-    picker.props.onChange({ hex: '#A2D', rgb: { a: 0.58 } });
-    expect(spy.mock.calls[3][0].value).toStrictEqual({ color: '#aa22dd', opacity: 0.58 }); // expands and decapitalizes
+    picker.props.onChange({ hex: '#42B', rgb: { r: 68, g: 34, b: 187, a: 0.33 } });
+    // expands and decapitalizes hex code
+    expect(spy.mock.calls[0][0].value).toStrictEqual({ color: '#4422bb', opacity: 0.33 });
+  });
+
+  it('onChange callback handles "transparent" hex code', () => {
+    /* When the color is #000000 (black) and alpha is 0, the color result
+    will have a hex code of "transparent". */
+    let comp = new ColorField({ initialValue: { color: '#111111', opacity: 1 } });
+    let picker = comp.picker().props.children[1];
+    let spy = jest.spyOn(comp, 'setState');
+    expect(
+      () => picker.props.onChange({ hex: 'transparent', rgb: { r: 0, g: 0, b: 0, a: 0 } })
+    ).not.toThrow();
+    expect(spy.mock.calls[0][0].value).toStrictEqual({ color: '#000000', opacity: 0 });
   });
 
   describe('adding value to recent colors when closed', () => {
@@ -195,7 +202,7 @@ describe('picker', () => {
       initialValue: { color: '#abcdef', opacity: 0.3 },
       set: set,
     });
-    comp.onChange({ hex: '#bbca56', rgb: { a: 0.2 } });
+    comp.onChange({ hex: '#bbca56', rgb: { r: 187, g: 202, b: 86, a: 0.2 } });
     // the on change callback would otherwise set the current value...
     comp.state.value = { color: '#bbca56', opacity: 0.2 };
     let closingDiv = comp.picker().props.children[0];
@@ -225,7 +232,7 @@ describe('does not call set callback if just opened and closed', () => {
       set: set,
     });
     comp.currentColorDisplay().props.onClick(); // open for first time
-    comp.onChange({ hex: '#111222', rgb: { a: 0.5 } }); // change color
+    comp.onChange({ hex: '#111222', rgb: { r: 17, g: 18, b: 34, a: 0.5 } }); // change color
     let closingDiv = comp.picker().props.children[0];
     closingDiv.props.onClick(); // close picker
     expect(set).toHaveBeenCalledTimes(1);
