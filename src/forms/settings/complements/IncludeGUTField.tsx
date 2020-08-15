@@ -9,6 +9,7 @@ export function IncludeGUTField(app: App): React.ReactElement {
       initialValue={app.strictDrawingInteraction.foldingMode.includeGUT}
       set={v => {
         app.strictDrawingInteraction.foldingMode.includeGUT = v;
+        app.renderPeripherals();
       }}
     />
   );

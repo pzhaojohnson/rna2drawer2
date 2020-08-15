@@ -12,25 +12,23 @@ import createEditDropdownForApp from './edit/createEditDropdownForApp';
 jest.mock('./export/createExportDropdownForApp');
 import createExportDropdownForApp from './export/createExportDropdownForApp';
 
+jest.mock('./settings/SettingsDropdown');
+import SettingsDropdown from './settings/SettingsDropdown';
+
 describe('createMenuForApp function', () => {
   createFileDropdownForApp.mockImplementation(() => 'FileDropdown');
   createModeDropdownForApp.mockImplementation(() => 'ModeDropdown');
   createEditDropdownForApp.mockImplementation(() => 'EditDropdown');
   createExportDropdownForApp.mockImplementation(() => 'ExportDropdown');
+  SettingsDropdown.mockImplementation(() => 'SettingsDropdown');
   let app = jest.fn();
   let menu = createMenuForApp(app);
   
-  it('passes app to create dropdown functions', () => {
-    expect(createFileDropdownForApp.mock.calls[0][0]).toBe(app);
-    expect(createModeDropdownForApp.mock.calls[0][0]).toBe(app);
-    expect(createEditDropdownForApp.mock.calls[0][0]).toBe(app);
-    expect(createExportDropdownForApp.mock.calls[0][0]).toBe(app);
-  });
-
   it('passes dropdowns to menu component', () => {
     expect(menu.props.fileDropdown).toBe('FileDropdown');
     expect(menu.props.modeDropdown).toBe('ModeDropdown');
     expect(menu.props.editDropdown).toBe('EditDropdown');
     expect(menu.props.exportDropdown).toBe('ExportDropdown');
+    expect(menu.props.settingsDropdown).toBe('SettingsDropdown');
   });
 });

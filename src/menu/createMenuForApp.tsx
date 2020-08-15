@@ -4,6 +4,7 @@ import createFileDropdownForApp from './file/createFileDropdownForApp';
 import createModeDropdownForApp from './mode/createModeDropdownForApp';
 import createEditDropdownForApp from './edit/createEditDropdownForApp';
 import createExportDropdownForApp from './export/createExportDropdownForApp';
+import SettingsDropdown from './settings/SettingsDropdown';
 import App from '../App';
 
 function createMenuForApp(app: App): React.ReactElement {
@@ -13,6 +14,7 @@ function createMenuForApp(app: App): React.ReactElement {
       modeDropdown={createModeDropdownForApp(app)}
       editDropdown={createEditDropdownForApp(app)}
       exportDropdown={createExportDropdownForApp(app)}
+      settingsDropdown={SettingsDropdown(app)}
     />
   );
 }

@@ -15,6 +15,7 @@ class Menu extends React.Component {
     modeDropdown: React.ReactElement;
     editDropdown: React.ReactElement;
     exportDropdown: React.ReactElement;
+    settingsDropdown: React.ReactElement;
   }
 
   render() {
@@ -35,6 +36,7 @@ class Menu extends React.Component {
         {this.props.modeDropdown}
         {this.props.editDropdown}
         {this.props.exportDropdown}
+        {this.props.settingsDropdown}
       </div>
     );
   }
