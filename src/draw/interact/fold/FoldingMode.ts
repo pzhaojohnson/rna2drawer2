@@ -28,8 +28,8 @@ class FoldingMode implements FoldingModeInterface {
   } | null;
   selecting?: boolean;
 
-  includeGUT: boolean;
-  allowedMismatch: number;
+  _includeGUT: boolean;
+  _allowedMismatch: number;
   
   _disabled?: boolean;
   
@@ -40,8 +40,8 @@ class FoldingMode implements FoldingModeInterface {
     this._strictDrawing = strictDrawing;
     this._subMode = SubMode.pairingComplements;
 
-    this.includeGUT = true;
-    this.allowedMismatch = 0;
+    this._includeGUT = true;
+    this._allowedMismatch = 0;
 
     this._setBindings();
   }
@@ -52,6 +52,24 @@ class FoldingMode implements FoldingModeInterface {
 
   get strictDrawing(): StrictDrawing {
     return this._strictDrawing;
+  }
+
+  get includeGUT(): boolean {
+    return this._includeGUT;
+  }
+
+  set includeGUT(b: boolean) {
+    this._includeGUT = b;
+    this.fireChange();
+  }
+
+  get allowedMismatch(): number {
+    return this._allowedMismatch;
+  }
+
+  set allowedMismatch(am: number) {
+    this._allowedMismatch = am;
+    this.fireChange();
   }
 
   handleMouseoverOnBase(b: Base) {
