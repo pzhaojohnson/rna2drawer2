@@ -5,7 +5,7 @@ import App from '../../../App';
 export function IncludeGUTField(app: App): React.ReactElement {
   return (
     <CheckboxField
-      name={'Include GUT Pairs'}
+      name={'Include GU and GT Pairs'}
       initialValue={app.strictDrawingInteraction.foldingMode.includeGUT}
       set={v => {
         app.strictDrawingInteraction.foldingMode.includeGUT = v;
