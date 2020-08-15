@@ -27,6 +27,9 @@ class FoldingMode implements FoldingModeInterface {
     looseEnd: number
   } | null;
   selecting?: boolean;
+
+  includeGUT: boolean;
+  allowedMismatch: number;
   
   _disabled?: boolean;
   
@@ -36,6 +39,9 @@ class FoldingMode implements FoldingModeInterface {
   constructor(strictDrawing: StrictDrawing) {
     this._strictDrawing = strictDrawing;
     this._subMode = SubMode.pairingComplements;
+
+    this.includeGUT = true;
+    this.allowedMismatch = 0;
 
     this._setBindings();
   }

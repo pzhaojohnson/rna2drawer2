@@ -20,7 +20,7 @@ export function isPairable(mode: FoldingMode, r: IntegerRange): boolean {
   if (csSelected.length != cs.length) {
     return false;
   }
-  if (mode.pairingComplements() && !areComplementary(csSelected, cs)) {
+  if (mode.pairingComplements() && !areComplementary(mode, csSelected, cs)) {
     return false;
   }
   return true;

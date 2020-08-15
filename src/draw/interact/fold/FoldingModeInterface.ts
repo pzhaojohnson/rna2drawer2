@@ -10,6 +10,12 @@ export interface FoldingModeInterface {
   } | null;
   selecting?: boolean;
 
+  // whether to include GUT pairs in complments
+  includeGUT: boolean;
+
+  // allowed mismatch proportion in complements
+  allowedMismatch: number;
+
   reset: () => void;
 
   pairComplements: () => void;
