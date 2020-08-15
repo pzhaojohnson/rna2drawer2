@@ -8,6 +8,11 @@ function renderCreateNewDrawingInApp(app: App) {
       width={'100vw'}
       submit={structure => {
         app.strictDrawing.appendStructure(structure);
+        if (app.strictDrawing.drawing.numSecondaryBonds == 0) {
+          app.strictDrawing.flatOutermostLoop();
+          app.strictDrawingInteraction.startFolding();
+          app.strictDrawingInteraction.foldingMode.forcePair();
+        }
         app.unmountCurrForm();
         app.renderPeripherals();
         app.updateDocumentTitle();
