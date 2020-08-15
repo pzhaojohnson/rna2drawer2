@@ -3,10 +3,12 @@ import NumberField from '../../fields/text/NumberField';
 import App from '../../../App';
 
 export function AllowedMismatchField(app: App): React.ReactElement {
+  let initialValue = 100 * app.strictDrawingInteraction.foldingMode.allowedMismatch;
+  initialValue = Number.parseFloat(initialValue.toFixed(2));
   return (
     <NumberField
       name={'Allowed % of Mismatches'}
-      initialValue={100 * app.strictDrawingInteraction.foldingMode.allowedMismatch}
+      initialValue={initialValue}
       checkValue={v => {
         let name = 'Allowed % of mismatches';
         if (v < 0) {
@@ -18,7 +20,9 @@ export function AllowedMismatchField(app: App): React.ReactElement {
         return '';
       }}
       set={v => {
-        app.strictDrawingInteraction.foldingMode.allowedMismatch = v / 100;
+        v /= 100;
+        v = Number.parseFloat(v.toFixed(2));
+        app.strictDrawingInteraction.foldingMode.allowedMismatch = v;
       }}
     />
   );
