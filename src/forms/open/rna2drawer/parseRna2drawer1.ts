@@ -46,8 +46,8 @@ function colorFromName(name: string): Svg.Color | null {
   return color;
 }
 
-function parseSequenceId(saved: string): string | null {
-  let line = splitLines(saved)[0];
+function parseSequenceId(savedRna2drawer1: string): string | null {
+  let line = splitLines(savedRna2drawer1)[0];
   if (line) {
     let id = line.substring(1).trim();
     return id ? id : 'Unnamed Sequence';
@@ -55,13 +55,13 @@ function parseSequenceId(saved: string): string | null {
   return null;
 }
 
-function parseCharacters(saved: string): string | null {
-  let line = splitLines(saved)[1];
+function parseCharacters(savedRna2drawer1: string): string | null {
+  let line = splitLines(savedRna2drawer1)[1];
   return line ? line : null;
 }
 
-function parseSecondaryPartners(saved: string): (number | null)[] | null {
-  let line = splitLines(saved)[2];
+function parseSecondaryPartners(savedRna2drawer1: string): (number | null)[] | null {
+  let line = splitLines(savedRna2drawer1)[2];
   if (line) {
     let partners = parseDotBracket(line)?.secondaryPartners;
     if (partners) {
@@ -71,60 +71,59 @@ function parseSecondaryPartners(saved: string): (number | null)[] | null {
   return null;
 }
 
-function parseSavedTertiaryInteraction(savedTertiaryInteraction: string): TertiaryInteraction | null {
-  let props = savedTertiaryInteraction.split(',');
-  let [p51, p31] = props[0].split(':');
-  let [p52, p32] = props[1].split(':');
+function parseTertiaryInteraction(savedTi: string): TertiaryInteraction | null {
+  let props = savedTi.split(',');
   let color = props[2] ? colorFromName(props[2]) : null;
-  if (!color) {
-    return null;
-  }
-  let ti = {
-    side1: [
-      p51 ? Number.parseInt(p51) : NaN,
-      p31 ? Number.parseInt(p31) : NaN,
-    ] as [number, number],
-    side2: [
-      p52 ? Number.parseInt(p52) : NaN,
-      p32 ? Number.parseInt(p32) : NaN,
-    ] as [number, number],
-    color: color,
-  };
-  let allFinite = true;
-  ti.side1.concat(ti.side2).forEach(n => {
-    if (!Number.isFinite(n)) {
-      allFinite = false;
+  if (color) {
+    let [p51, p31] = props[0].split(':');
+    let [p52, p32] = props[1].split(':');
+    let ti = {
+      side1: [
+        p51 ? Number.parseInt(p51) : NaN,
+        p31 ? Number.parseInt(p31) : NaN,
+      ] as [number, number],
+      side2: [
+        p52 ? Number.parseInt(p52) : NaN,
+        p32 ? Number.parseInt(p32) : NaN,
+      ] as [number, number],
+      color: color,
+    };
+    let allFinite = true;
+    ti.side1.concat(ti.side2).forEach(n => {
+      if (!Number.isFinite(n)) {
+        allFinite = false;
+      }
+    });
+    if (allFinite && ti.color) {
+      return ti;
     }
-  });
-  if (allFinite && ti.color) {
-    return ti;
   }
   return null;
 }
 
-function parseTertiaryInteractions(saved: string): TertiaryInteraction[] | null {
-  let line = splitLines(saved).find(l => l.split(' ')[0] == 'tert_inters');
+function parseTertiaryInteractions(savedRna2drawer1: string): TertiaryInteraction[] | null {
+  let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'tert_inters');
   if (line) {
-    let savedTertiaryInteractions = line.split(' ')[1].split(';');
-    let tertiaryInteractions = [] as TertiaryInteraction[];
+    let savedTis = line.split(' ')[1].split(';');
+    let tis = [] as TertiaryInteraction[];
     let allParsable = true;
-    savedTertiaryInteractions.forEach(sti => {
-      let ti = parseSavedTertiaryInteraction(sti);
+    savedTis.forEach(sti => {
+      let ti = parseTertiaryInteraction(sti);
       if (ti) {
-        tertiaryInteractions.push(ti);
+        tis.push(ti);
       } else {
         allParsable = false;
       }
     });
     if (allParsable) {
-      return tertiaryInteractions;
+      return tis;
     }
   }
   return null;
 }
 
-function parseNumberingOffset(saved: string): number | null {
-  let line = splitLines(saved).find(l => l.split(' ')[0] == 'misc_seq_num_offset');
+function parseNumberingOffset(savedRna2drawer1: string): number | null {
+  let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'misc_seq_num_offset');
   if (line) {
     let offset = Number.parseInt(line.split(' ')[1], 10);
     if (Number.isFinite(offset)) {
@@ -134,8 +133,8 @@ function parseNumberingOffset(saved: string): number | null {
   return null;
 }
 
-function parseNumberingAnchor(saved: string): number | null {
-  let line = splitLines(saved).find(l => l.split(' ')[0] == 'misc_numbering_start');
+function parseNumberingAnchor(savedRna2drawer1: string): number | null {
+  let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'misc_numbering_start');
   if (line) {
     let anchor = Number.parseInt(line.split(' ')[1], 10);
     if (Number.isFinite(anchor)) {
@@ -145,8 +144,8 @@ function parseNumberingAnchor(saved: string): number | null {
   return null;
 }
 
-function parseNumberingIncrement(saved: string): number | null {
-  let line = splitLines(saved).find(l => l.split(' ')[0] == 'misc_numbering_increment');
+function parseNumberingIncrement(savedRna2drawer1: string): number | null {
+  let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'misc_numbering_increment');
   if (line) {
     let increment = Number.parseInt(line.split(' ')[1], 10);
     if (Number.isFinite(increment)) {
@@ -156,8 +155,8 @@ function parseNumberingIncrement(saved: string): number | null {
   return null;
 }
 
-function parseBaseColors(saved: string): Svg.Color[] | null {
-  let line = splitLines(saved).find(l => l.split(' ')[0] == 'base_colors');
+function parseBaseColors(savedRna2drawer1: string): Svg.Color[] | null {
+  let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'base_colors');
   if (line) {
     let names = line.split(' ')[1].split(',');
     let colors = [] as Svg.Color[];
@@ -175,8 +174,8 @@ function parseBaseColors(saved: string): Svg.Color[] | null {
   return null;
 }
 
-function parseBaseOutline(savedOutline: string): BaseOutline | null {
-  let props = savedOutline.split(',');
+function parseBaseOutline(savedBaseOutline: string): BaseOutline | null {
+  let props = savedBaseOutline.split(',');
   let stroke = props[0] ? colorFromName(props[0]) : new Svg.Color('#00ffff');
   if (!stroke) {
     return null;
@@ -205,8 +204,8 @@ function parseBaseOutline(savedOutline: string): BaseOutline | null {
   };
 }
 
-function parseBaseOutlines(saved: string): (BaseOutline | null)[] | null {
-  let line = splitLines(saved).find(l => l.split(' ')[0] == 'base_outlines');
+function parseBaseOutlines(savedRna2drawer1: string): (BaseOutline | null)[] | null {
+  let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'base_outlines');
   if (line) {
     let savedOutlines = line.split(' ')[1].split(';');
     let outlines = [] as (BaseOutline | null)[];
@@ -229,9 +228,39 @@ function parseBaseOutlines(saved: string): (BaseOutline | null)[] | null {
 /**
  * Returns null if unable to parse.
  */
-export function parseRna2drawer1(saved: string): Rna2drawer1 | null {
-  let lines = splitLines(saved);
-
+export function parseRna2drawer1(savedRna2drawer1: string): Rna2drawer1 | null {
+  let sequenceId = parseSequenceId(savedRna2drawer1);
+  let characters = parseCharacters(savedRna2drawer1);
+  let secondaryPartners = parseSecondaryPartners(savedRna2drawer1);
+  let tertiaryInteractions = parseTertiaryInteractions(savedRna2drawer1);
+  let numberingOffset = parseNumberingOffset(savedRna2drawer1);
+  let numberingAnchor = parseNumberingAnchor(savedRna2drawer1);
+  let numberingIncrement = parseNumberingIncrement(savedRna2drawer1);
+  let baseColors = parseBaseColors(savedRna2drawer1);
+  let baseOutlines = parseBaseOutlines(savedRna2drawer1);
+  if (
+    sequenceId != null
+    && characters != null
+    && secondaryPartners != null
+    && tertiaryInteractions != null
+    && numberingOffset != null
+    && numberingAnchor != null
+    && numberingIncrement != null
+    && baseColors != null
+    && baseOutlines != null
+  ) {
+    return {
+      sequenceId: sequenceId,
+      characters: characters,
+      secondaryPartners: secondaryPartners,
+      tertiaryInteractions: tertiaryInteractions,
+      numberingOffset: numberingOffset,
+      numberingAnchor: numberingAnchor,
+      numberingIncrement: numberingIncrement,
+      baseColors: baseColors,
+      baseOutlines: baseOutlines,
+    };
+  }
   return null;
 }
 
