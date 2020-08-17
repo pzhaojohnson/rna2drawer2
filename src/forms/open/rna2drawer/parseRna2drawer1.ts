@@ -32,7 +32,7 @@ export interface Rna2drawer1 {
 function colorFromName(name: string): Svg.Color | null {
   let div = document.createElement('div');
   div.style.height = '0px';
-  document.appendChild(div);
+  document.body.appendChild(div);
   let color = null;
   try {
     div.style.color = name;
@@ -42,7 +42,7 @@ function colorFromName(name: string): Svg.Color | null {
   } catch (err) {
     color = null;
   }
-  document.removeChild(div);
+  document.body.removeChild(div);
   return color;
 }
 
@@ -103,23 +103,27 @@ function parseTertiaryInteraction(savedTi: string): TertiaryInteraction | null {
 
 function parseTertiaryInteractions(savedRna2drawer1: string): TertiaryInteraction[] | null {
   let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'tert_inters');
-  if (line) {
-    let savedTis = line.split(' ')[1].split(';');
-    let tis = [] as TertiaryInteraction[];
-    let allParsable = true;
-    savedTis.forEach(sti => {
-      let ti = parseTertiaryInteraction(sti);
-      if (ti) {
-        tis.push(ti);
-      } else {
-        allParsable = false;
-      }
-    });
-    if (allParsable) {
-      return tis;
-    }
+  if (!line) {
+    return [];
   }
-  return null;
+  let savedTis = line.split(' ')[1];
+  if (!savedTis || savedTis.trim().length == 0) {
+    return [];
+  }
+  let tis = [] as TertiaryInteraction[];
+  let allParsable = true;
+  savedTis.split(';').forEach(sti => {
+    let ti = parseTertiaryInteraction(sti);
+    if (ti) {
+      tis.push(ti);
+    } else {
+      allParsable = false;
+    }
+  });
+  if (!allParsable) {
+    return null;
+  }
+  return tis;
 }
 
 function parseNumberingOffset(savedRna2drawer1: string): number | null {
@@ -238,6 +242,8 @@ export function parseRna2drawer1(savedRna2drawer1: string): Rna2drawer1 | null {
   let numberingIncrement = parseNumberingIncrement(savedRna2drawer1);
   let baseColors = parseBaseColors(savedRna2drawer1);
   let baseOutlines = parseBaseOutlines(savedRna2drawer1);
+  console.log(sequenceId, characters, secondaryPartners, tertiaryInteractions, numberingOffset,
+    numberingAnchor, numberingIncrement, baseColors, baseOutlines);
   if (
     sequenceId != null
     && characters != null
