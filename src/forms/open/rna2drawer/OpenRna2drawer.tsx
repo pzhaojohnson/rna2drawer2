@@ -4,7 +4,7 @@ import parseFileExtension from '../../../parse/parseFileExtension';
 
 interface Props {
   width: string | number;
-  submit: (saved: string, fileExtension: string) => boolean;
+  submit?: (o: object) => boolean;
   errorMessages?: {
     noFileUploaded?: string;
     fileUploadError?: string;
@@ -118,7 +118,7 @@ class OpenRna2drawer extends React.Component {
           fontSize: '24px',
         }}
       >
-        Open an RNA2Drawer File
+        Open an RNA2Drawer 2 File
       </p>
     );
   }
@@ -243,50 +243,101 @@ class OpenRna2drawer extends React.Component {
   }
 
   submit() {
-    if (!this.state.fileContents) {
-      let em = this.props.errorMessages?.noFileUploaded ?? 'No file uploaded.';
-      if (this.state.attemptedFileUpload) {
-        em = this.props.errorMessages?.fileUploadError ?? 'Unable to read selected file.';
-      }
-      this.setState({ errorMessage: em, errorMessageKey: uuidv1() });
+    if (!this.checkUpload()) {
       return;
     }
     if (!this.checkFileExtension()) {
       return;
     }
-    let opened = this.props.submit(
-      this.state.fileContents,
-      this.state.fileExtension,
-    )
-    if (!opened) {
+    let savedState = this.parseSavedState();
+    if (!savedState) {
+      return;
+    }
+    if (!this.props.submit) {
+      console.error('Missing submit callback.');
+      return;
+    }
+    if (!this.props.submit(savedState)) {
+      let em = 'Invalid RNA2Drawer 2 file.';
+      if (this.props.errorMessages && this.props.errorMessages.invalidFile) {
+        em = this.props.errorMessages.invalidFile;
+      }
       this.setState({
-        errorMessage: this.props.errorMessages?.invalidFile ?? 'Invalid RNA2Drawer file.',
+        errorMessage: em,
         errorMessageKey: uuidv1(),
       });
     }
   }
 
-  checkFileExtension() {
-    let fe = this.state.fileExtension.toLowerCase();
-    if (fe == 'rna2drawer' || fe == 'rna2drawer2') {
+  checkUpload() {
+    if (this.state.fileContents) {
       return true;
     }
+    if (this.state.attemptedFileUpload) {
+      let em = 'Unable to read selected file.';
+      if (this.props.errorMessages && this.props.errorMessages.fileUploadError) {
+        em = this.props.errorMessages.fileUploadError;
+      }
+      this.setState({
+        errorMessage: em,
+        errorMessageKey: uuidv1(),
+      });
+      return false;
+    }
+    let em = 'No file uploaded.';
+    if (this.props.errorMessages && this.props.errorMessages.noFileUploaded) {
+      em = this.props.errorMessages.noFileUploaded;
+    }
     this.setState({
-      errorMessage: this.props.errorMessages?.wrongFileType ?? 'File must have .rna2drawer extension.',
+      errorMessage: em,
       errorMessageKey: uuidv1(),
     });
     return false;
+  }
+
+  checkFileExtension() {
+    if (this.state.fileExtension === 'rna2drawer2') {
+      return true;
+    }
+    let em = 'File must have .rna2drawer2 extension.';
+    if (this.props.errorMessages && this.props.errorMessages.wrongFileType) {
+      em = this.props.errorMessages.wrongFileType;
+    }
+    this.setState({
+      errorMessage: em,
+      errorMessageKey: uuidv1(),
+    });
+    return false;
+  }
+
+  parseSavedState() {
+    try {
+      if (!this.state.fileContents) {
+        throw new Error('Invalid RNA2Drawer 2 file.');
+      } else {
+        return JSON.parse(this.state.fileContents);
+      }
+    } catch (err) {
+      let em = 'Invalid RNA2Drawer 2 file.';
+      if (this.props.errorMessages && this.props.errorMessages.invalidFile) {
+        em = this.props.errorMessages.invalidFile;
+      }
+      this.setState({
+        errorMessage: em,
+        errorMessageKey: uuidv1(),
+      });
+      return null;
+    }
   }
 }
 
 OpenRna2drawer.defaultProps = {
   width: '100vw',
-  submit: () => false,
   errorMessages: {
     noFileUploaded: 'No file uploaded.',
     fileUploadError: 'Unable to read selected file.',
-    wrongFileType: 'File must have .rna2drawer extension.',
-    invalidFile: 'Invalid RNA2Drawer file.',
+    wrongFileType: 'File must have .rna2drawer2 extension.',
+    invalidFile: 'Invalid RNA2Drawer 2 file.',
   },
 };
 

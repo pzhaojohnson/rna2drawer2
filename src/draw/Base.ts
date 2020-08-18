@@ -134,11 +134,6 @@ class Base implements BaseInterface {
   }
 
   moveTo(xCenter: number, yCenter: number) {
-    let xDiff = Math.abs(this.xCenter - xCenter);
-    let yDiff = Math.abs(this.yCenter - yCenter);
-    if (xDiff < 0.01 && yDiff < 0.01) {
-      return;
-    }
     let xShift = xCenter - this._xCenter;
     let yShift = yCenter - this._yCenter;
     let x = this._text.attr('x') + xShift;
