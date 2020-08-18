@@ -23,9 +23,14 @@ function getContent(componentWrapper) {
   return tc.childNodes[1];
 }
 
-function getErrorSection(componentWrapper) {
+function getOldFileDisclaimer(componentWrapper) {
   let c = getContent(componentWrapper);
   return c.childNodes[1];
+}
+
+function getErrorSection(componentWrapper) {
+  let c = getContent(componentWrapper);
+  return c.childNodes[2];
 }
 
 function getFileInputWrapper(componentWrapper) {
@@ -240,4 +245,24 @@ it('handles undefined submit callback', () => {
   fi.simulate('change', { target: { files: [f] } });
   let sb = getSubmitButtonWrapper(wrapper);
   sb.simulate('click', { target: {} });
+});
+
+it('shows disclaimer when an old RNA2Drawer file is uploaded', () => {
+  let fileContents = 'asdfqqwweerr';
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: fileContents,
+    };
+  };
+  let wrapper = mount(
+    <OpenRna2drawer />
+  );
+  let fi = getFileInputWrapper(wrapper);
+  let b = new Blob([fileContents]);
+  let f = new File([b], 'aa.rna2drawer');
+  expect(getOldFileDisclaimer(wrapper).childNodes.length).toBe(0);
+  fi.simulate('change', { target: { files: [f] } });
+  expect(getOldFileDisclaimer(wrapper).childNodes.length).toBeGreaterThan(0);
 });

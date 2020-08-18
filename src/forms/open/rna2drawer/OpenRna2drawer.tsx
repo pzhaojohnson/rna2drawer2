@@ -150,6 +150,7 @@ class OpenRna2drawer extends React.Component {
         }}
       >
         {this.fileUpload()}
+        {this.oldFileDisclaimer()}
         {this.errorSection()}
         {this.submitSection()}
       </div>
@@ -158,7 +159,7 @@ class OpenRna2drawer extends React.Component {
 
   fileUpload() {
     return (
-      <div style={{ margin: '0px 0px 26px 0px' }} >
+      <div style={{ margin: '0px 0px 0px 0px' }} >
         <input
           type={'file'}
           onChange={event => this.onFileInputChange(event)}
@@ -186,6 +187,29 @@ class OpenRna2drawer extends React.Component {
       });
     });
     fr.readAsText(f);
+  }
+
+  oldFileDisclaimer() {
+    let fe = this.state.fileExtension.toLowerCase();
+    let marginBottom = fe == 'rna2drawer' ? '18px' : '14px';
+    let margin = '12px 0px ' + marginBottom + ' 0px';
+    return (
+      <div style={{ margin: margin }} >
+        {fe != 'rna2drawer' ? null : (
+          <div style={{ animationName: 'fadein', animationDuration: '0.75s' }} >
+            <p className={'unselectable-text'} >
+              <b>Note:</b> Old files from the first version of RNA2Drawer are not fully supported. The following will be read in:
+            </p>
+            <div style={{ margin: '6px 0px 0px 12px' }} >
+              <p className={'unselectable-text'} >
+                The sequence and its ID, the secondary structure, tertiary interactions and their colors,
+                base numbering and the numbering offset, and base colors and outlines.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    );
   }
 
   errorSection() {
