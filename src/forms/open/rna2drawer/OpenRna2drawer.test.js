@@ -135,41 +135,13 @@ it('handles files of wrong type', () => {
   );
   let fi = getFileInputWrapper(wrapper);
   let b = new Blob(['qwer']);
-  let f = new File([b], 'qwer.rna2drawer');
+  let f = new File([b], 'qwer.asdfqwer');
   fi.simulate('change', { target: { files: [f] } });
   let sb = getSubmitButtonWrapper(wrapper);
   sb.simulate('click', { target: {} });
   let es = getErrorSection(wrapper);
   expect(es.textContent).toBe(wrongFileType);
   expect(submit.mock.calls.length).toBe(0); // does not call
-});
-
-it('handles invalid JSON', () => {
-  let fileContents = '{ "blah": 1234 ';
-  window.FileReader = () => {
-    return {
-      addEventListener: (_, callback) => { callback() },
-      readAsText: () => {},
-      result: fileContents,
-    };
-  };
-  let submit = jest.fn();
-  let invalidFile = 'Invalid file.';
-  let wrapper = mount(
-    <OpenRna2drawer
-      submit={submit}
-      errorMessages={{ invalidFile: invalidFile }}
-    />
-  );
-  let fi = getFileInputWrapper(wrapper);
-  let b = new Blob([fileContents]);
-  let f = new File([b], 'asdf.rna2drawer2');
-  fi.simulate('change', { target: { files: [f] } });
-  let sb = getSubmitButtonWrapper(wrapper);
-  sb.simulate('click', { target: {} });
-  let es = getErrorSection(wrapper);
-  expect(es.textContent).toBe(invalidFile);
-  expect(submit.mock.calls.length).toBe(0);
 });
 
 it('handles rejection by submit callback', () => {
@@ -201,9 +173,33 @@ it('handles rejection by submit callback', () => {
   expect(es.textContent).toBe(invalidFile);
 });
 
-it('passes saved state to submit callback', () => {
-  let savedState = { blah: 1234 };
-  let fileContents = JSON.stringify(savedState);
+it('accepts .rna2drawer files', () => {
+  let fileContents = 'asdfqqwweerr';
+  window.FileReader = () => {
+    return {
+      addEventListener: (_, callback) => { callback() },
+      readAsText: () => {},
+      result: fileContents,
+    };
+  };
+  let submit = jest.fn();
+  let wrapper = mount(
+    <OpenRna2drawer submit={submit} />
+  );
+  let fi = getFileInputWrapper(wrapper);
+  let b = new Blob([fileContents]);
+  let f = new File([b], 'aa.rna2drawer');
+  fi.simulate('change', { target: { files: [f] } });
+  let sb = getSubmitButtonWrapper(wrapper);
+  sb.simulate('click', { target: {} });
+  expect(submit.mock.calls.length).toBe(1);
+  let c = submit.mock.calls[0];
+  expect(c[0]).toBe(fileContents);
+  expect(c[1]).toBe('rna2drawer');
+});
+
+it('accepts .rna2drawer2 files', () => {
+  let fileContents = 'asdfqqwweerr';
   window.FileReader = () => {
     return {
       addEventListener: (_, callback) => { callback() },
@@ -223,9 +219,8 @@ it('passes saved state to submit callback', () => {
   sb.simulate('click', { target: {} });
   expect(submit.mock.calls.length).toBe(1);
   let c = submit.mock.calls[0];
-  expect(
-    JSON.stringify(c[0])
-  ).toBe(fileContents);
+  expect(c[0]).toBe(fileContents);
+  expect(c[1]).toBe('rna2drawer2');
 });
 
 it('handles undefined submit callback', () => {

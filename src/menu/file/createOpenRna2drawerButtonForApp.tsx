@@ -11,7 +11,7 @@ function createOpenRna2drawerButtonForApp(app: App): React.ReactElement {
   return (
     <DroppedButton
       key={uuidv1()}
-      text={'Open RNA2Drawer 2'}
+      text={'Open'}
       onClick={() => {
         if (!app.strictDrawing.isEmpty()) {
           openNewTab();

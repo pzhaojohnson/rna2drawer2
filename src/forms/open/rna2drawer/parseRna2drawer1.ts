@@ -32,7 +32,7 @@ export interface Rna2drawer1 {
 function colorFromName(name: string): Svg.Color | null {
   let div = document.createElement('div');
   div.style.height = '0px';
-  document.appendChild(div);
+  document.body.appendChild(div);
   let color = null;
   try {
     div.style.color = name;
@@ -42,7 +42,7 @@ function colorFromName(name: string): Svg.Color | null {
   } catch (err) {
     color = null;
   }
-  document.removeChild(div);
+  document.body.removeChild(div);
   return color;
 }
 
