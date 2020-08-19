@@ -55,7 +55,32 @@ it('parses secondary structure', () => {
 });
 
 describe('parsing tertiary interactions', () => {
-  it('', () => {});
+  let rna2drawer1 = parseRna2drawer1(readRna2drawer1('tertiaryInteractions'));
+
+  it('parses all tertiary interactions', () => {
+    expect(rna2drawer1.tertiaryInteractions.length).toBe(3);
+  });
+
+  it('parses sides', () => {
+    let ti = rna2drawer1.tertiaryInteractions[1];
+    expect(ti.side1).toStrictEqual([11, 13]);
+    expect(ti.side2).toStrictEqual([6, 8]);
+  });
+
+  it('parses color', () => {
+    let ti = rna2drawer1.tertiaryInteractions[1];
+    expect(ti.color.toHex()).toBe('#ffa500');
+  });
+
+  it('can parse a drawing with no tertiary interactions', () => {
+    let rna2drawer1 = parseRna2drawer1(readRna2drawer1('noTertiaryInteractions'));
+    expect(rna2drawer1).toBeTruthy();
+  });
+
+  it('handles invalid side positions', () => {
+    let rna2drawer1 = parseRna2drawer1(readRna2drawer1('tertiaryInteractionWithInvalidSidePosition'));
+    expect(rna2drawer1).toBe(null);
+  });
 });
 
 it('parses numbering props', () => {
