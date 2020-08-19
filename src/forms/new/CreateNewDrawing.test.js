@@ -380,7 +380,7 @@ it('sequence is all ignored characters', () => {
     );
     fireEvent.change(
       getSequenceTextarea(),
-      { target: { value: ' 1dd >\n<.. () 345 ' } },
+      { target: { value: ' 122 >\n<.. () 345 ' } },
     );
   });
   act(() => {
@@ -428,7 +428,7 @@ it('default sequence parsing options', () => {
   });
   expect(getSequenceParsingDetails().childNodes.length).toBeGreaterThan(0);
   expect(getIgnoreNumbersCheckbox().checked).toBeTruthy();
-  expect(getIgnoreNonAUGCTLettersCheckbox().checked).toBeTruthy();
+  expect(getIgnoreNonAUGCTLettersCheckbox().checked).toBeFalsy();
   expect(getIgnoreNonAlphanumericsCheckbox().checked).toBeTruthy();
 });
 
@@ -496,6 +496,14 @@ it('ignores non-AUGCT letters when checked', () => {
       getSequenceTextarea(),
       { target: { value: 'aAhjmUtlpw CC' } },
     );
+    getSequenceParsingDetailsToggle().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
+  });
+  act(() => {
+    getIgnoreNonAUGCTLettersCheckbox().dispatchEvent(
+      new Event('click', { bubbles: true }),
+    );
   });
   act(() => {
     getSubmitButton().dispatchEvent(
@@ -517,14 +525,6 @@ it('includes non-AUGCT letters when unchecked', () => {
     fireEvent.change(
       getSequenceTextarea(),
       { target: { value: 'aAhjmUtlpw CC' } },
-    );
-    getSequenceParsingDetailsToggle().dispatchEvent(
-      new Event('click', { bubbles: true }),
-    );
-  });
-  act(() => {
-    getIgnoreNonAUGCTLettersCheckbox().dispatchEvent(
-      new Event('click', { bubbles: true }),
     );
   });
   act(() => {
@@ -607,7 +607,7 @@ it('ignores whitespace', () => {
     );
   });
   expect(submit.mock.calls.length).toBe(1);
-  expect(submit.mock.calls[0][0].characters).toBe('aAtctTT');
+  expect(submit.mock.calls[0][0].characters).toBe('aAqqwretctTT');
 });
 
 function unpairedPartners(length) {

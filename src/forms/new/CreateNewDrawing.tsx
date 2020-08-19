@@ -87,7 +87,7 @@ class CreateNewDrawing extends React.Component {
 
       showSequenceParsingDetails: false,
       ignoreNumbers: true,
-      ignoreNonAUGCTLetters: true,
+      ignoreNonAUGCTLetters: false,
       ignoreNonAlphanumerics: true,
 
       showStructureParsingDetails: false,
