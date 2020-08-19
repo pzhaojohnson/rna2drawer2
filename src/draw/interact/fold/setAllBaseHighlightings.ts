@@ -53,7 +53,7 @@ function _highlightHovered(mode: FoldingMode, highlightings: HighlightingProps[]
 
 export function setAllBaseHighlightings(mode: FoldingMode) {
   let highlightings = [] as HighlightingProps[];
-  if (mode.pairingComplements()) {
+  if (mode.pairingComplements() && !mode.selecting) {
     _highlightPairables(mode, highlightings);
   }
   _highlightSelected(mode, highlightings);
