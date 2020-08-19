@@ -55,6 +55,7 @@ export function handleMouseup(mode: FoldingMode) {
     return;
   }
   mode.selecting = false;
+  setAllBaseHighlightings(mode);
 }
 
 export function reset(mode: FoldingMode) {
