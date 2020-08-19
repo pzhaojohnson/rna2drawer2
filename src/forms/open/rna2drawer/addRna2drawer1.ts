@@ -60,7 +60,8 @@ export function addRna2drawer1(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   sd.appendStructure({
     id: rna2drawer1.sequenceId,
     characters: rna2drawer1.characters,
-    secondaryPartners: rna2drawer1.secondaryPartners,
+    secondaryPartners: rna2drawer1.secondaryStructure.secondaryPartners,
+    tertiaryPartners: rna2drawer1.secondaryStructure.tertiaryPartners,
   });
   sd.applyLayout();
   addTertiaryInteractions(sd, rna2drawer1);

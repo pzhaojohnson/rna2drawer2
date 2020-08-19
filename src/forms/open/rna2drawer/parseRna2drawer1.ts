@@ -2,6 +2,11 @@ import * as Svg from '@svgdotjs/svg.js';
 import { splitLines } from '../../../parse/splitLines';
 import parseDotBracket from '../../../parse/parseDotBracket';
 
+interface SecondaryStructure {
+  secondaryPartners: (number | null)[];
+  tertiaryPartners: (number | null)[];
+}
+
 interface TertiaryInteraction {
   side1: [number, number];
   side2: [number, number];
@@ -20,7 +25,7 @@ interface BaseOutline {
 export interface Rna2drawer1 {
   sequenceId: string;
   characters: string;
-  secondaryPartners: (number | null)[];
+  secondaryStructure: SecondaryStructure;
   tertiaryInteractions: TertiaryInteraction[],
   numberingOffset: number;
   numberingAnchor: number;
@@ -60,10 +65,10 @@ function parseCharacters(savedRna2drawer1: string): string | null {
   return line ? line : null;
 }
 
-function parseSecondaryPartners(savedRna2drawer1: string): (number | null)[] | null {
+function parseSecondaryStructure(savedRna2drawer1: string): SecondaryStructure | null {
   let line = splitLines(savedRna2drawer1)[2];
   if (line) {
-    let partners = parseDotBracket(line)?.secondaryPartners;
+    let partners = parseDotBracket(line);
     if (partners) {
       return partners;
     }
@@ -104,17 +109,19 @@ function parseTertiaryInteraction(savedTi: string): TertiaryInteraction | null {
 function parseTertiaryInteractions(savedRna2drawer1: string): TertiaryInteraction[] | null {
   let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'tert_inters');
   if (line) {
-    let savedTis = line.split(' ')[1].split(';');
+    let savedTis = line.split(' ')[1];
     let tis = [] as TertiaryInteraction[];
     let allParsable = true;
-    savedTis.forEach(sti => {
-      let ti = parseTertiaryInteraction(sti);
-      if (ti) {
-        tis.push(ti);
-      } else {
-        allParsable = false;
-      }
-    });
+    if (savedTis) {
+      savedTis.split(';').forEach(sti => {
+        let ti = parseTertiaryInteraction(sti);
+        if (ti) {
+          tis.push(ti);
+        } else {
+          allParsable = false;
+        }
+      });
+    }
     if (allParsable) {
       return tis;
     }
@@ -207,17 +214,19 @@ function parseBaseOutline(savedBaseOutline: string): BaseOutline | null {
 function parseBaseOutlines(savedRna2drawer1: string): (BaseOutline | null)[] | null {
   let line = splitLines(savedRna2drawer1).find(l => l.split(' ')[0] == 'base_outlines');
   if (line) {
-    let savedOutlines = line.split(' ')[1].split(';');
+    let savedOutlines = line.split(' ')[1];
     let outlines = [] as (BaseOutline | null)[];
     let allParsable = true;
-    savedOutlines.forEach(so => {
-      let o = parseBaseOutline(so);
-      if (o) {
-        outlines.push(o.strokeOpacity > 0 || o.fillOpacity > 0 ? o : null);
-      } else {
-        allParsable = false;
-      }
-    });
+    if (savedOutlines) {
+      savedOutlines.split(';').forEach(so => {
+        let o = parseBaseOutline(so);
+        if (o) {
+          outlines.push(o.strokeOpacity > 0 || o.fillOpacity > 0 ? o : null);
+        } else {
+          allParsable = false;
+        }
+      });
+    }
     if (allParsable) {
       return outlines;
     }
@@ -231,7 +240,7 @@ function parseBaseOutlines(savedRna2drawer1: string): (BaseOutline | null)[] | n
 export function parseRna2drawer1(savedRna2drawer1: string): Rna2drawer1 | null {
   let sequenceId = parseSequenceId(savedRna2drawer1);
   let characters = parseCharacters(savedRna2drawer1);
-  let secondaryPartners = parseSecondaryPartners(savedRna2drawer1);
+  let secondaryStructure = parseSecondaryStructure(savedRna2drawer1);
   let tertiaryInteractions = parseTertiaryInteractions(savedRna2drawer1);
   let numberingOffset = parseNumberingOffset(savedRna2drawer1);
   let numberingAnchor = parseNumberingAnchor(savedRna2drawer1);
@@ -241,7 +250,7 @@ export function parseRna2drawer1(savedRna2drawer1: string): Rna2drawer1 | null {
   if (
     sequenceId != null
     && characters != null
-    && secondaryPartners != null
+    && secondaryStructure != null
     && tertiaryInteractions != null
     && numberingOffset != null
     && numberingAnchor != null
@@ -252,7 +261,7 @@ export function parseRna2drawer1(savedRna2drawer1: string): Rna2drawer1 | null {
     return {
       sequenceId: sequenceId,
       characters: characters,
-      secondaryPartners: secondaryPartners,
+      secondaryStructure: secondaryStructure,
       tertiaryInteractions: tertiaryInteractions,
       numberingOffset: numberingOffset,
       numberingAnchor: numberingAnchor,
