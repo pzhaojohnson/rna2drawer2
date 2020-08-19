@@ -198,7 +198,7 @@ class OpenRna2drawer extends React.Component {
         {fe != 'rna2drawer' ? null : (
           <div style={{ animationName: 'fadein', animationDuration: '0.75s' }} >
             <p className={'unselectable-text'} >
-              <b>Note:</b> Old files from the first version of RNA2Drawer are not fully supported. The following will be read in:
+              <b>Note:</b> Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
             </p>
             <div style={{ margin: '6px 0px 0px 12px' }} >
               <p className={'unselectable-text'} >
