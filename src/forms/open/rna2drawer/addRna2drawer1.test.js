@@ -114,9 +114,11 @@ describe('adding tertiary interactions', () => {
     rna2drawer1.characters = 'asdfasdf';
     rna2drawer1.tertiaryInteractions = [{ side1: [2, 2], side2: [6, 6], color: new Svg.Color('#aabc43') }];
     addRna2drawer1(app.strictDrawing, rna2drawer1);
-    let tb;
-    app.strictDrawing.drawing.forEachTertiaryBond(b => tb = b);
-    expect(tb.stroke).toBe('#aabc43');
+    let drawing = app.strictDrawing.drawing;
+    expect(drawing.numTertiaryBonds).toBe(1);
+    drawing.forEachTertiaryBond(tb => {
+      expect(tb.stroke).toBe('#aabc43');
+    });
   });
 });
 
