@@ -1,5 +1,6 @@
 import { Rna2drawer1 } from './parseRna2drawer1';
 import { StrictDrawingInterface as StrictDrawing } from '../../../draw/StrictDrawingInterface';
+import { pixelsToPoints } from '../../../export/pixelsToPoints';
 
 function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);
@@ -14,10 +15,10 @@ function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
       for (let i = 0; i < Math.max(size1, size2); i++) {
         let p1 = Math.min(p51 + i, p31);
         let p2 = Math.max(p32 - i, p52);
-        let b1 = seq?.getBaseAtPosition(p1);
-        let b2 = seq?.getBaseAtPosition(p2);
-        if (b1 && b2) {
-          let tb = sd.drawing.addTertiaryBond(b1, b2);
+        let b5 = seq?.getBaseAtPosition(Math.min(p1, p2));
+        let b3 = seq?.getBaseAtPosition(Math.max(p1, p2));
+        if (b5 && b3) {
+          let tb = sd.drawing.addTertiaryBond(b5, b3);
           tb.setStroke(ti.color.toHex());
           tb.setStrokeWidth(0.75);
         }
@@ -46,8 +47,9 @@ function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
       if (outline) {
         let o = b.addCircleOutline();
         o.back();
-        o.radius = outline.relativeRadius * b.fontSize;
+        o.radius = outline.relativeRadius * pixelsToPoints(b.fontSize);
         o.stroke = outline.stroke.toHex();
+        o.strokeWidth = outline.strokeWidth;
         o.strokeOpacity = outline.strokeOpacity;
         o.fill = outline.fill.toHex();
         o.fillOpacity = outline.fillOpacity;
