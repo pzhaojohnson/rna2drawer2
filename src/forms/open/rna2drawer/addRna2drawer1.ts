@@ -20,7 +20,8 @@ function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
         if (b5 && b3) {
           let tb = sd.drawing.addTertiaryBond(b5, b3);
           tb.setStroke(ti.color.toHex());
-          tb.setStrokeWidth(0.75);
+          tb.setStrokeWidth(1.5);
+          tb.setStrokeOpacity(0.1);
         }
       }
     });
