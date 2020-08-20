@@ -65,7 +65,6 @@ export function addRna2drawer1(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
     secondaryPartners: rna2drawer1.secondaryStructure.secondaryPartners,
     tertiaryPartners: rna2drawer1.secondaryStructure.tertiaryPartners,
   });
-  sd.applyLayout();
   addTertiaryInteractions(sd, rna2drawer1);
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);
   if (seq) {
@@ -73,6 +72,7 @@ export function addRna2drawer1(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
     seq.numberingAnchor = rna2drawer1.numberingAnchor;
     seq.numberingIncrement = rna2drawer1.numberingIncrement;
   }
+  sd.drawing.adjustBaseNumbering();
   addBaseColors(sd, rna2drawer1);
   addBaseOutlines(sd, rna2drawer1);
 }
