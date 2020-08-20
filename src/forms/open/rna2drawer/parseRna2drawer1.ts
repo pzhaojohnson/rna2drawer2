@@ -84,12 +84,12 @@ function parseTertiaryInteraction(savedTi: string): TertiaryInteraction | null {
     let [p52, p32] = props[1].split(':');
     let ti = {
       side1: [
-        p51 ? Number.parseInt(p51) : NaN,
-        p31 ? Number.parseInt(p31) : NaN,
+        p51 ? Number.parseInt(p51, 10) : NaN,
+        p31 ? Number.parseInt(p31, 10) : NaN,
       ] as [number, number],
       side2: [
-        p52 ? Number.parseInt(p52) : NaN,
-        p32 ? Number.parseInt(p32) : NaN,
+        p52 ? Number.parseInt(p52, 10) : NaN,
+        p32 ? Number.parseInt(p32, 10) : NaN,
       ] as [number, number],
       color: color,
     };
