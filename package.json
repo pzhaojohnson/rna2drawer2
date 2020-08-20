@@ -37,7 +37,7 @@
     "@types/react-color": "^3.0.4",
     "circular-dependency-plugin": "^5.2.0",
     "lodash": "^4.17.20",
-    "pptxgenjs": "^3.2.1",
+    "pptxgenjs": "^3.3.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
