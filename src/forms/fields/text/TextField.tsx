@@ -5,6 +5,7 @@ interface Props {
   name: string;
   initialValue?: string;
   checkValue?: (v: string) => string;
+  onInvalidInput?: () => void;
   set: (v: string) => void;
   minLabelWidth?: string;
 }
@@ -82,6 +83,9 @@ export class TextField extends React.Component {
       value: value,
       errorMessage: errorMessage,
     });
+    if (errorMessage && this.props.onInvalidInput) {
+      this.props.onInvalidInput();
+    }
   }
 
   onBlur() {

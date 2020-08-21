@@ -105,6 +105,28 @@ it('checkValue callback prop is optional', () => {
   expect(getErrorMessage().textContent).toBeFalsy();
 });
 
+it('calls onInvalidInput callback on invalid input', () => {
+  let onInvalidInput = jest.fn();
+  act(() => {
+    render(
+      <TextField
+        checkValue={v => v == 'asdf' ? 'error' : ''}
+        onInvalidInput={onInvalidInput}
+      />,
+      container,
+    );
+  });
+  expect(onInvalidInput).not.toHaveBeenCalled();
+  act(() => fireEvent.change(getInput(), { target: { value: 'asdf' } }));
+  expect(onInvalidInput).toHaveBeenCalledTimes(1);
+  act(() => fireEvent.change(getInput(), { target: { value: 'qwer' } }));
+  expect(onInvalidInput).toHaveBeenCalledTimes(1);
+  act(() => fireEvent.change(getInput(), { target: { value: 'asdf' } }));
+  expect(onInvalidInput).toHaveBeenCalledTimes(2);
+  act(() => fireEvent.change(getInput(), { target: { value: 'asd' } }));
+  expect(onInvalidInput).toHaveBeenCalledTimes(2);
+});
+
 describe('calling set callback on blur', () => {
   it('calls set callback on blur', () => {
     let set = jest.fn();
