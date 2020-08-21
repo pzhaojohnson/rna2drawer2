@@ -1,6 +1,7 @@
 import * as ReactDOM from 'react-dom';
 import { ReactElement } from 'react';
 import './App.css';
+import { AppInterface, FormFactory } from './AppInterface';
 
 import {
   fillInBodyForApp,
@@ -24,7 +25,7 @@ import renderCreateNewDrawingInApp from './forms/new/renderCreateNewDrawingInApp
 
 import saveDrawingForApp from './export/saveDrawingForApp';
 
-class App {
+class App implements AppInterface {
   _SVG: () => Svg.Svg;
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing!: StrictDrawing;
@@ -42,7 +43,7 @@ class App {
     this.renderPeripherals();
 
     this._setBindings();
-    
+
     renderCreateNewDrawingInApp(this);
   }
 
@@ -102,7 +103,7 @@ class App {
     );
   }
 
-  renderForm(formFactory: (close?: () => void) => ReactElement) {
+  renderForm(formFactory: FormFactory) {
 
     /* Seems to be necessary for user entered values (e.g. in input elements)
     to be updated in a currently rendered form. */
