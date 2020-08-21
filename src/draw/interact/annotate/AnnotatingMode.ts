@@ -10,7 +10,7 @@ import {
   refresh,
   reset,
 } from './handlers';
-import AnnotateBasesBySelection from '../../../forms/annotate/bases/AnnotateBasesBySelection';
+import { AnnotatingForm } from './AnnotatingForm';
 
 export class AnnotatingMode implements AnnotatingModeInterface {
   _drawing: Drawing;
@@ -35,7 +35,7 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
     this._onShouldPushUndo = [];
     this._onChange = [];
-    
+
     this._setBindings();
   }
 
@@ -117,7 +117,7 @@ export class AnnotatingMode implements AnnotatingModeInterface {
     if (this._onRequestToRenderForm) {
       this._onRequestToRenderForm(close => {
         this._closeForm = close;
-        return AnnotateBasesBySelection(this, close);
+        return AnnotatingForm(this, close);
       });
     }
   }

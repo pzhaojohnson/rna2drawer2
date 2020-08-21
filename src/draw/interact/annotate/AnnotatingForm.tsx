@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { BaseInterface as Base } from '../../../draw/BaseInterface';
-import { AnnotatingModeInterface as AnnotatingMode } from '../../../draw/interact/annotate/AnnotatingModeInterface';
-import ClosableContainer from '../../ClosableContainer';
-import Title from '../../Title';
-import Underline from '../../Underline';
-import BaseAnnotationFields from './BaseAnnotationFields';
+import { BaseInterface as Base } from '../../BaseInterface';
+import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
+import ClosableContainer from '../../../forms/ClosableContainer';
+import Title from '../../../forms/Title';
+import Underline from '../../../forms/Underline';
+import BaseAnnotationFields from '../../../forms/annotate/bases/BaseAnnotationFields';
 const uuidv1 = require('uuid/v1');
 
 function selectedBases(mode: AnnotatingMode): Base[] {
@@ -18,7 +18,7 @@ function selectedBases(mode: AnnotatingMode): Base[] {
   return bs;
 }
 
-export function AnnotateBasesBySelection(mode: AnnotatingMode, close?: () => void): React.ReactElement {
+export function AnnotatingForm(mode: AnnotatingMode, close?: () => void): React.ReactElement {
   return (
     <ClosableContainer
       close={() => close ? close() : undefined}
@@ -42,5 +42,3 @@ export function AnnotateBasesBySelection(mode: AnnotatingMode, close?: () => voi
     />
   );
 }
-
-export default AnnotateBasesBySelection;
