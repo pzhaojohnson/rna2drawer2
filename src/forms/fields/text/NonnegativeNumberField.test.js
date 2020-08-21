@@ -37,6 +37,14 @@ describe('checkValue callback', () => {
   });
 });
 
+it('passes onInvalidInput callback', () => {
+  let onInvalidInput = jest.fn();
+  let comp = new NonnegativeNumberField({ onInvalidInput: onInvalidInput });
+  expect(onInvalidInput).not.toHaveBeenCalled();
+  comp.props.onInvalidInput();
+  expect(onInvalidInput).toHaveBeenCalled();
+});
+
 it('passes value between set callbacks', () => {
   let set = jest.fn();
   let comp = new NonnegativeNumberField({ initialValue: 0, set: set });

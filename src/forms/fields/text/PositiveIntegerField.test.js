@@ -35,6 +35,14 @@ describe('checkValue callback', () => {
   });
 });
 
+it('passes onInvalidInput callback', () => {
+  let onInvalidInput = jest.fn();
+  let comp = new PositiveIntegerField({ onInvalidInput: onInvalidInput });
+  expect(onInvalidInput).not.toHaveBeenCalled();
+  comp.props.onInvalidInput();
+  expect(onInvalidInput).toHaveBeenCalled();
+});
+
 it('passes value between set callbacks', () => {
   let set = jest.fn();
   let comp = new PositiveIntegerField({ name: 'asdf', initialValue: 1, set: set });

@@ -5,6 +5,7 @@ import capitalizeFirstLetter from './capitalizeFirstLetter';
 interface Props {
   name: string;
   initialValue?: number;
+  onInvalidInput?: () => void;
   set: (n: number) => void;
   minLabelWidth?: string;
 }
@@ -24,6 +25,7 @@ export class PositiveIntegerField extends React.Component {
           }
           return '';
         }}
+        onInvalidInput={this.props.onInvalidInput}
         set={(n: number) => this.props.set(n)}
         minLabelWidth={this.props.minLabelWidth}
       />
