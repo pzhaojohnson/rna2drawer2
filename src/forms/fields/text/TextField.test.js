@@ -95,6 +95,16 @@ it('removes any previous error message when checkValue callback returns none', (
   expect(getErrorMessage().textContent).toBeFalsy();
 });
 
+it('checkValue callback prop is optional', () => {
+  act(() => {
+    render(<TextField />, container);
+  });
+  act(() => fireEvent.change(getInput(), { target: { value: 'asdf' } }));
+  act(() => fireEvent.change(getInput(), { target: { value: 'qwer' } }));
+  act(() => fireEvent.change(getInput(), { target: { value: 'zxcv' } }));
+  expect(getErrorMessage().textContent).toBeFalsy();
+});
+
 describe('calling set callback on blur', () => {
   it('calls set callback on blur', () => {
     let set = jest.fn();
@@ -139,7 +149,7 @@ describe('calling set callback on enter key up', () => {
     expect(set).toHaveBeenCalled();
     expect(set.mock.calls[0][0]).toBe('zzxxcc');
   });
-  
+
   it('but not when there is an error message', () => {
     let set = jest.fn();
     act(() => {

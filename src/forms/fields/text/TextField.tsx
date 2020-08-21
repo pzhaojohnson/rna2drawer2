@@ -4,7 +4,7 @@ import ErrorMessage from '../../ErrorMessage';
 interface Props {
   name: string;
   initialValue?: string;
-  checkValue: (v: string) => string;
+  checkValue?: (v: string) => string;
   set: (v: string) => void;
   minLabelWidth?: string;
 }
@@ -76,7 +76,8 @@ export class TextField extends React.Component {
 
   onInputChange(event: React.ChangeEvent) {
     let value = (event.target as HTMLInputElement).value;
-    let errorMessage = this.props.checkValue(value);
+    let checkValue = this.props.checkValue;
+    let errorMessage = checkValue ? checkValue(value) : '';
     this.setState({
       value: value,
       errorMessage: errorMessage,
