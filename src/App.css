@@ -198,6 +198,17 @@ overrides the background-color on hover setting below. */
   background-color: gainsboro;
 }
 
+.action-button {
+  background-color: navy;
+  color: white;
+}
+
+.action-button:hover {
+  background-color: #ff0080;
+  transition-duration: 0.25s;
+  -webkit-transition-duration: 0.25s;
+}
+
 @keyframes fadein {
   from {
     opacity: 0.25;
