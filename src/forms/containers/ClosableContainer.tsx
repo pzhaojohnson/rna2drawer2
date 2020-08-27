@@ -4,7 +4,7 @@ import { Underline } from './Underline';
 
 interface Props {
   close: () => void;
-  title?: string;
+  title: string;
   contained: React.ReactElement;
   width?: string;
 }
