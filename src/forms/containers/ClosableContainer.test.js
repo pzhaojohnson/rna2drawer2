@@ -37,16 +37,6 @@ describe('close callback', () => {
     });
     expect(close).toHaveBeenCalled();
   });
-
-  it('handles missing close callback', () => {
-    act(() => {
-      render(<ClosableContainer />, container);
-    });
-    let cb = getCloseButton();
-    act(() => {
-      cb.dispatchEvent(new Event('click', { bubbles : true }));
-    });
-  });
 });
 
 describe('children', () => {
@@ -87,7 +77,8 @@ describe('width prop', () => {
   });
 
   it('has a default width', () => {
-    let width = Number.parseInt(ClosableContainer.defaultProps.width);
-    expect(width).toBeGreaterThan(0);
+    act(() => render(<ClosableContainer />, container));
+    let style = window.getComputedStyle(getComponent());
+    expect(style.width).toBe('400px'); // not sure how to avoid hard coding this...
   });
 });
