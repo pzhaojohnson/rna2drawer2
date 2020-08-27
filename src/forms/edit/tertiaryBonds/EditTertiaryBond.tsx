@@ -1,7 +1,5 @@
 import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
-import Title from '../../Title';
-import Underline from '../../Underline';
 import StrokeField from './StrokeField';
 import StrokeWidthField from './StrokeWidthField';
 import DashedField from './DashedField';
@@ -42,12 +40,11 @@ export class EditTertiaryBond extends React.Component {
     return (
       <ClosableContainer
         close={() => this.props.close()}
+        title={'Edit Tertiary Bond'}
         contained={
           <div
             style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
           >
-            <Title text={'Edit Tertiary Bond'} margin={'16px 32px 0px 32px'} />
-            <Underline margin={'8px 16px 0px 16px'} />
             {this.props.noSelection ? this.noSelectionMessage() : this.fields()}
           </div>
         }
@@ -56,29 +53,23 @@ export class EditTertiaryBond extends React.Component {
   }
 
   noSelectionMessage(): React.ReactElement {
-    return (
-      <p style={{ margin: '24px 40px 0px 40px' }} >
-        No tertiary bond is selected.
-      </p>
-    );
+    return <p>No tertiary bond is selected.</p>;
   }
 
   fields(): React.ReactElement {
     return (
       <div>
-        <div style={{ margin: '24px 40px 0px 40px' }} >
-          {this.props.strokeField}
-        </div>
-        <div style={{ margin: '16px 40px 0px 40px' }} >
+        {this.props.strokeField}
+        <div style={{ marginTop: '16px' }} >
           {this.props.strokeWidthField}
         </div>
-        <div style={{ margin: '16px 40px 0px 40px' }} >
+        <div style={{ marginTop: '16px' }} >
           {this.props.dashedField}
         </div>
-        <div style={{ margin: '16px 40px 0px 40px' }} >
+        <div style={{ marginTop: '16px' }} >
           {this.props.paddingField1}
         </div>
-        <div style={{ margin: '16px 40px 0px 40px' }} >
+        <div style={{ marginTop: '16px' }} >
           {this.props.paddingField2}
         </div>
       </div>

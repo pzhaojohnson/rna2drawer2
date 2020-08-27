@@ -1,7 +1,5 @@
 import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
-import Title from '../../Title';
-import Underline from '../../Underline';
 import RotationField from './RotationField';
 import FlatOutermostLoopField from './FlatOutermostLoopField';
 import TerminiGapField from './TerminiGapField';
@@ -33,19 +31,16 @@ class EditLayout extends React.Component {
     return (
       <ClosableContainer
         close={() => this.props.close()}
+        title={'Edit Layout'}
         contained={
           <div
             style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
           >
-            <Title text={'Edit Layout'} margin={'16px 32px 0px 32px'} />
-            <Underline margin={'8px 16px 0px 16px'} />
-            <div style={{ margin: '24px 40px 0px 40px' }} >
-              {this.props.rotationField}
-            </div>
-            <div style={{ margin: '16px 40px 0px 40px' }} >
+            {this.props.rotationField}
+            <div style={{ marginTop: '16px' }} >
               {this.props.flatOutermostLoopField}
             </div>
-            <div style={{ margin: '16px 40px 0px 40px' }} >
+            <div style={{ marginTop: '16px' }} >
               {this.props.terminiGapField}
             </div>
           </div>

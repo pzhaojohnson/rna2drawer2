@@ -1,8 +1,10 @@
 import * as React from 'react';
 import CloseButton from '../buttons/CloseButton';
+import { Underline } from './Underline';
 
 interface Props {
   close: () => void;
+  title?: string;
   contained: React.ReactElement;
   width?: string;
 }
@@ -26,7 +28,17 @@ export function ClosableContainer(props: Props): React.ReactElement {
         right={'0px'}
         onClick={() => props.close()}
       />
-      {props.contained}
+      {props.title ? (
+        <div style={{ padding: '16px 32px 0px 32px'}} >
+          <p className={'unselectable-text'} style={{ fontSize: '24px' }} >
+            {props.title}
+          </p>
+        </div>
+      ) : null}
+      {props.title ? <Underline margin={'8px 16px 0px 16px'} /> : null}
+      <div style={{ margin: '24px 40px 0px 40px' }} >
+        {props.contained}
+      </div>
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
-import Title from '../../Title';
-import Underline from '../../Underline';
 import OffsetField from './OffsetField';
 import AnchorField from './AnchorField';
 import IncrementField from './IncrementField';
@@ -32,19 +30,16 @@ export class EditBaseNumbering extends React.Component {
     return (
       <ClosableContainer
         close={() => this.props.close()}
+        title={'Edit Numbering'}
         contained={
           <div
             style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
           >
-            <Title text={'Edit Numbering'} margin={'16px 32px 0px 32px'} />
-            <Underline margin={'8px 16px 0px 16px'} />
-            <div style={{ margin: '24px 40px 0px 40px' }} >
-              {this.props.offsetField}
-            </div>
-            <div style={{ margin: '16px 40px 0px 40px' }} >
+            {this.props.offsetField}
+            <div style={{ marginTop: '16px' }} >
               {this.props.anchorField}
             </div>
-            <div style={{ margin: '16px 40px 0px 40px' }} >
+            <div style={{ marginTop: '16px' }} >
               {this.props.incrementField}
             </div>
           </div>
