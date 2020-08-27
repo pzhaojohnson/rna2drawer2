@@ -1,7 +1,7 @@
 import * as React from 'react';
-import blackCrossMark from '../icons/blackCrossMark.svg';
-import grayCrossMark from '../icons/grayCrossMark.svg';
-import whiteCrossMark from '../icons/whiteCrossMark.svg';
+import blackCrossMark from '../../icons/blackCrossMark.svg';
+import grayCrossMark from '../../icons/grayCrossMark.svg';
+import whiteCrossMark from '../../icons/whiteCrossMark.svg';
 
 interface Props {
   position: 'absolute';
@@ -60,7 +60,7 @@ export class CloseButton extends React.Component {
       </div>
     );
   }
-  
+
   onMouseEnter() {
     this.setState({ hovered: true });
   }

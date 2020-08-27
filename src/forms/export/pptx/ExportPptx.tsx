@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CloseButton } from '../../CloseButton';
+import { CloseButton } from '../../buttons/CloseButton';
 const uuidv1 = require('uuid/v1');
 import Base from '../../../draw/Base';
 import { pointsToPixels } from '../../../export/pointsToPixels';
@@ -194,7 +194,7 @@ class ExportPptx extends React.Component {
       />
     );
   }
-  
+
   onBaseFontSizeInputChange(event: React.ChangeEvent) {
     this.setState({
       baseFontSize: (event.target as HTMLInputElement).value,
@@ -267,7 +267,7 @@ class ExportPptx extends React.Component {
       </button>
     );
   }
-  
+
   powerPointVersionNote() {
     return (
       <p
