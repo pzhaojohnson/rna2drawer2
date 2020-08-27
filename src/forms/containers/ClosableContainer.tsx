@@ -3,7 +3,7 @@ import CloseButton from '../buttons/CloseButton';
 
 interface Props {
   close: () => void;
-  children: React.ReactElement[],
+  contained: React.ReactElement;
   width?: string;
 }
 
@@ -26,7 +26,7 @@ export function ClosableContainer(props: Props): React.ReactElement {
         right={'0px'}
         onClick={() => props.close()}
       />
-      {props.children}
+      {props.contained}
     </div>
   );
 }

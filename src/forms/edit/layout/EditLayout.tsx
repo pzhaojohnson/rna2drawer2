@@ -1,6 +1,5 @@
 import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
-const uuidv1 = require('uuid/v1');
 import Title from '../../Title';
 import Underline from '../../Underline';
 import RotationField from './RotationField';
@@ -34,9 +33,8 @@ class EditLayout extends React.Component {
     return (
       <ClosableContainer
         close={() => this.props.close()}
-        children={[
+        contained={
           <div
-            key={uuidv1()}
             style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
           >
             <Title text={'Edit Layout'} margin={'16px 32px 0px 32px'} />
@@ -51,7 +49,7 @@ class EditLayout extends React.Component {
               {this.props.terminiGapField}
             </div>
           </div>
-        ]}
+        }
       />
     );
   }

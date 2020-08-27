@@ -5,7 +5,6 @@ import ClosableContainer from '../../../forms/containers/ClosableContainer';
 import Title from '../../../forms/Title';
 import Underline from '../../../forms/Underline';
 import BaseAnnotationFields from '../../../forms/annotate/bases/BaseAnnotationFields';
-const uuidv1 = require('uuid/v1');
 
 function selectedBases(mode: AnnotatingMode): Base[] {
   let bs = [] as Base[];
@@ -22,9 +21,8 @@ export function AnnotatingForm(mode: AnnotatingMode, close?: () => void): React.
   return (
     <ClosableContainer
       close={() => close ? close() : undefined}
-      children={[(
+      contained={
         <div
-          key={uuidv1()}
           style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
         >
           <Title text={'Annotate Bases'} margin={'16px 32px 0px 32px'} />
@@ -37,7 +35,7 @@ export function AnnotatingForm(mode: AnnotatingMode, close?: () => void): React.
             )}
           </div>
         </div>
-      )]}
+      }
       width={'400px'}
     />
   );

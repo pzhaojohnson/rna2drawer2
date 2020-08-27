@@ -1,6 +1,5 @@
 import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
-const uuidv1 = require('uuid/v1');
 import Title from '../../Title';
 import Underline from '../../Underline';
 import IncludeGUTField from './IncludeGUTField';
@@ -11,9 +10,8 @@ export function ComplementRules(app: App): React.ReactElement {
   return (
     <ClosableContainer
       close={() => app.unmountCurrForm()}
-      children={[
+      contained={
         <div
-          key={uuidv1()}
           style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
         >
           <Title text={'Complement Rules'} margin={'16px 32px 0px 32px'} />
@@ -27,7 +25,7 @@ export function ComplementRules(app: App): React.ReactElement {
             </div>
           </div>
         </div>
-      ]}
+      }
     />
   );
 }

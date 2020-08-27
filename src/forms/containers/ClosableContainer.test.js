@@ -39,31 +39,20 @@ describe('close callback', () => {
   });
 });
 
-describe('children', () => {
-  it('renders children', () => {
+describe('rendering the contained element', () => {
+  it('renders the contained element', () => {
     act(() => {
       render(
-        <ClosableContainer children={[
-          <div>Child 1</div>,
-          <div>Child 2</div>,
-          <p>Child 3</p>,
-        ]} />,
+        <ClosableContainer contained={<div>Contained Div</div>} />,
         container,
       );
     });
     let c = getComponent();
-    expect(c.childNodes[1].textContent).toBe('Child 1');
-    expect(c.childNodes[2].textContent).toBe('Child 2');
-    expect(c.childNodes[3].textContent).toBe('Child 3');
+    expect(c.textContent.includes('Contained Div')).toBeTruthy();
   });
 
-  it('handles missing children', () => {
-    act(() => {
-      render(<ClosableContainer />, container);
-    });
-    let c = getComponent();
-    expect(c.childNodes[0]).toBe(getCloseButton());
-    expect(c.childNodes.length).toBe(1);
+  it('renders without a contained element', () => {
+    act(() => render(<ClosableContainer />, container));
   });
 });
 

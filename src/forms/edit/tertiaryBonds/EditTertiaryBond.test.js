@@ -73,11 +73,11 @@ describe('render method', () => {
       dashedField: 'Dashed Field',
     });
     let ele = comp.render();
-    let children = prettyFormat(ele.props.children);
+    let contained = prettyFormat(ele.props.contained);
     // indicates that no tertiary bond is selected
-    expect(children.includes('No tertiary bond is selected.')).toBeTruthy();
+    expect(contained.includes('No tertiary bond is selected.')).toBeTruthy();
     // does not render fields
-    expect(children.includes('Field')).toBeFalsy();
+    expect(contained.includes('Field')).toBeFalsy();
   });
 
   it('with a selection', () => {
@@ -90,14 +90,14 @@ describe('render method', () => {
       paddingField2: 'Padding Field 2',
     });
     let ele = comp.render();
-    let children = prettyFormat(ele.props.children);
+    let contained = prettyFormat(ele.props.contained);
     // does not say that no tertiary bond is selected
-    expect(children.includes('No tertiary bond is selected.')).toBeFalsy();
+    expect(contained.includes('No tertiary bond is selected.')).toBeFalsy();
     // renders fields
-    expect(children.includes('Stroke Field')).toBeTruthy();
-    expect(children.includes('Stroke Width Field')).toBeTruthy();
-    expect(children.includes('Dashed Field')).toBeTruthy();
-    expect(children.includes('Padding Field 1')).toBeTruthy();
-    expect(children.includes('Padding Field 2')).toBeTruthy();
+    expect(contained.includes('Stroke Field')).toBeTruthy();
+    expect(contained.includes('Stroke Width Field')).toBeTruthy();
+    expect(contained.includes('Dashed Field')).toBeTruthy();
+    expect(contained.includes('Padding Field 1')).toBeTruthy();
+    expect(contained.includes('Padding Field 2')).toBeTruthy();
   });
 });
