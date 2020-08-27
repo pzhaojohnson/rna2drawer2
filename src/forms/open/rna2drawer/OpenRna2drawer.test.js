@@ -14,13 +14,13 @@ function getBoundingDivs(componentWrapper) {
 }
 
 function getTitleAndContent(componentWrapper) {
-  let divs = getBoundingDivs(componentWrapper);
-  return divs.childNodes[0].childNodes[0];
+  let c = getComponent(componentWrapper);
+  return c.childNodes[0].childNodes[0].childNodes[0];
 }
 
 function getContent(componentWrapper) {
   let tc = getTitleAndContent(componentWrapper);
-  return tc.childNodes[1];
+  return tc.childNodes[2].childNodes[0];
 }
 
 function getOldFileDisclaimer(componentWrapper) {

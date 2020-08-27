@@ -30,7 +30,7 @@ function getTitleAndContent() {
 }
 
 function getContent() {
-  return getTitleAndContent().childNodes[1];
+  return getTitleAndContent().childNodes[2].childNodes[0];
 }
 
 function getExampleInputSection() {

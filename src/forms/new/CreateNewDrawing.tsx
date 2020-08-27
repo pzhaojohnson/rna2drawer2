@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { UnclosableFlexContainer } from '../containers/UnclosableFlexContainer';
 import { ActionButton } from '../buttons/ActionButton';
 import parseSequence from '../../parse/parseSequence';
 import {
@@ -100,106 +101,18 @@ class CreateNewDrawing extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          width: this.props.width,
-          height: '100%',
-          backgroundColor: '#ffffff',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}
-      >
-        <div
-          style={{
-            flexGrow: 1,
-            maxHeight: '824px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}
-        >
-          <div
-            style={{
-              flexGrow: 1,
-              maxWidth: '1200px',
-              margin: '12px',
-              border: '1px solid rgba(0,0,0,0.2)',
-              borderRadius: '4px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            {this._titleAndContent()}
+      <UnclosableFlexContainer
+        title={'Create a New Drawing'}
+        contained={(
+          <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+            {this._exampleInputSection()}
+            {this._sequenceIdSection()}
+            {this._sequenceAndStructureSections()}
+            {this._errorMessageSection()}
+            {this._submitSection()}
           </div>
-        </div>
-      </div>
-    );
-  }
-
-  _titleAndContent() {
-    return (
-      <div
-        style={{
-          flexGrow: 1,
-          margin: '32px 80px 32px 80px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {this._title()}
-        {this._content()}
-      </div>
-    );
-  }
-
-  _title() {
-    return (
-      <div>
-        {this._titleText()}
-        {this._titleUnderline()}
-      </div>
-    );
-  }
-
-  _titleText() {
-    return (
-      <p className={'unselectable-text'} style={{ margin: '0px 24px 0px 24px', fontSize: '24px' }} >
-        Create a New Drawing
-      </p>
-    );
-  }
-
-  _titleUnderline() {
-    return (
-      <div
-        style={{
-          height: '0px',
-          borderWidth: '0px 0px 1px 0px',
-          borderStyle: 'solid',
-          borderColor: 'rgba(0,0,0,0.2)',
-          margin: '8px 0px 0px 0px',
-        }}
-      ></div>
-    );
-  }
-
-  _content() {
-    return (
-      <div
-        style={{
-          flexGrow: 1,
-          margin: '24px 40px 0px 40px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {this._exampleInputSection()}
-        {this._sequenceIdSection()}
-        {this._sequenceAndStructureSections()}
-        {this._errorMessageSection()}
-        {this._submitSection()}
-      </div>
+        )}
+      />
     );
   }
 

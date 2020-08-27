@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { UnclosableFlexContainer } from '../../containers/UnclosableFlexContainer';
 import { ActionButton } from '../../buttons/ActionButton';
 const uuidv1 = require('uuid/v1');
 import parseFileExtension from '../../../parse/parseFileExtension';
@@ -44,123 +45,29 @@ class OpenRna2drawer extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          width: this.props.width,
-          height: '100%',
-          backgroundColor: '#ffffff',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}
-      >
-        {this.boundingDivs()}
-      </div>
-    );
-  }
-
-  boundingDivs() {
-    return (
-      <div
-        style={{
-          flexGrow: 1,
-          maxHeight: '824px',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-        }}
-      >
-        <div
-          style={{
-            flexGrow: 1,
-            maxWidth: '1200px',
-            margin: '12px',
-            border: '1px solid rgba(0,0,0,0.2)',
-            borderRadius: '4px',
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          {this.titleAndContent()}
-        </div>
-      </div>
-    );
-  }
-
-  titleAndContent() {
-    return (
-      <div
-        style={{
-          flexGrow: 1,
-          margin: '32px 80px 32px 80px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {this.title()}
-        {this.content()}
-      </div>
-    );
-  }
-
-  title() {
-    return (
-      <div>
-        {this.titleText()}
-        {this.titleUnderline()}
-      </div>
-    );
-  }
-
-  titleText() {
-    return (
-      <p
-        className={'unselectable-text'}
-        style={{
-          margin: '0px 24px 0px 24px',
-          fontSize: '24px',
-        }}
-      >
-        Open an RNA2Drawer File
-      </p>
-    );
-  }
-
-  titleUnderline() {
-    return (
-      <div
-        style={{
-          height: '0px',
-          borderWidth: '0px 0px 1px 0px',
-          borderStyle: 'solid',
-          borderColor: 'rgba(0,0,0,0.2)',
-          margin: '8px 0px 0px 0px',
-        }}
-      ></div>
-    );
-  }
-
-  content() {
-    return (
-      <div
-        style={{
-          flexGrow: 1,
-          margin: '32px 40px 0px 40px',
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {this.fileUpload()}
-        {this.oldFileDisclaimer()}
-        {this.errorSection()}
-        {this.submitSection()}
-      </div>
+      <UnclosableFlexContainer
+        title={'Open an RNA2Drawer File'}
+        contained={(
+          <div
+            style={{
+              flexGrow: 1,
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {this.fileUpload()}
+            {this.oldFileDisclaimer()}
+            {this.errorSection()}
+            {this.submitSection()}
+          </div>
+        )}
+      />
     );
   }
 
   fileUpload() {
     return (
-      <div style={{ margin: '0px 0px 0px 0px' }} >
+      <div style={{ margin: '8px 0px 0px 0px' }} >
         <input
           type={'file'}
           onChange={event => this.onFileInputChange(event)}
