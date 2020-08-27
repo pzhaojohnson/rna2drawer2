@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ActionButton } from '../../buttons/ActionButton';
 const uuidv1 = require('uuid/v1');
 import parseFileExtension from '../../../parse/parseFileExtension';
 
@@ -35,7 +36,7 @@ class OpenRna2drawer extends React.Component {
       fileUploaded: false,
       fileExtension: '',
       fileContents: '',
-      
+
       errorMessage: '',
       errorMessageKey: uuidv1(),
     };
@@ -255,16 +256,7 @@ class OpenRna2drawer extends React.Component {
   submitSection() {
     return (
       <div style={{ margin: '6px 0px 0px 0px' }} >
-        <button
-          onClick={() => this.submit()}
-          style={{
-            padding: '4px 32px 4px 32px',
-            fontSize: '12px',
-            borderRadius: '2px',
-          }}
-        >
-          Submit
-        </button>
+        <ActionButton text={'Submit'} onClick={() => this.submit()} />
       </div>
     );
   }

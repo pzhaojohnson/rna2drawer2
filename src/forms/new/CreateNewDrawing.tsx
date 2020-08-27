@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ActionButton } from '../buttons/ActionButton';
 import parseSequence from '../../parse/parseSequence';
 import {
   parseDotBracket,
@@ -614,16 +615,7 @@ class CreateNewDrawing extends React.Component {
   _submitSection() {
     return (
       <div style={{ margin: '6px 0px 0px 0px' }} >
-        <button
-          onClick={() => this._submit()}
-          style={{
-            padding: '4px 32px 4px 32px',
-            fontSize: '12px',
-            borderRadius: '2px',
-          }}
-        >
-          Submit
-        </button>
+        <ActionButton text={'Submit'} onClick={() => this._submit()} />
       </div>
     );
   }
@@ -694,7 +686,7 @@ class CreateNewDrawing extends React.Component {
 
   /**
    * Returns null if the structure is invalid.
-   * 
+   *
    * Also returns null if the length of the parsed structure does not
    * match the length of the sequence. However, if the length of the
    * parsed structure is zero, then this method will return entirely

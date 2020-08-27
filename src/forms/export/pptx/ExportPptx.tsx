@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { CloseButton } from '../../buttons/CloseButton';
+import { ActionButton } from '../../buttons/ActionButton';
 const uuidv1 = require('uuid/v1');
 import Base from '../../../draw/Base';
 import { pointsToPixels } from '../../../export/pointsToPixels';
@@ -243,28 +244,9 @@ class ExportPptx extends React.Component {
 
   exportSection() {
     return (
-      <div
-        style={{
-          margin: '6px 40px 0px 40px',
-        }}
-      >
-        {this.exportButton()}
+      <div style={{ margin: '6px 40px 0px 40px' }} >
+        <ActionButton text={'Export'} onClick={() => this.export()} />
       </div>
-    );
-  }
-
-  exportButton() {
-    return (
-      <button
-        onClick={() => this.export()}
-        style={{
-          padding: '4px 32px 4px 32px',
-          fontSize: '12px',
-          borderRadius: '2px',
-        }}
-      >
-        Export
-      </button>
     );
   }
 
