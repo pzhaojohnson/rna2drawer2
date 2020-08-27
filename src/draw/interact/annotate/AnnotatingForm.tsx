@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../BaseInterface';
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
-import ClosableContainer from '../../../forms/ClosableContainer';
+import ClosableContainer from '../../../forms/containers/ClosableContainer';
 import Title from '../../../forms/Title';
 import Underline from '../../../forms/Underline';
 import BaseAnnotationFields from '../../../forms/annotate/bases/BaseAnnotationFields';

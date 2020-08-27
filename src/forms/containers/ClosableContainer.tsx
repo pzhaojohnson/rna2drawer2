@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CloseButton from './buttons/CloseButton';
+import CloseButton from '../buttons/CloseButton';
 
 interface Props {
   close: () => void;

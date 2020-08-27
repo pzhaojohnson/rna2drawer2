@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ClosableContainer from '../../ClosableContainer';
+import ClosableContainer from '../../containers/ClosableContainer';
 const uuidv1 = require('uuid/v1');
 import Title from '../../Title';
 import Underline from '../../Underline';
@@ -22,7 +22,7 @@ export class EditSequenceId extends React.Component {
       />
     );
   }
-  
+
   render(): React.ReactElement {
     return (
       <ClosableContainer
