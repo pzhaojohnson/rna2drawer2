@@ -28,18 +28,14 @@ export function ClosableContainer(props: Props): React.ReactElement {
         right={'0px'}
         onClick={() => props.close()}
       />
-      {props.title ? (
-        <div style={{ padding: '16px 32px 0px 32px'}} >
-          <p className={'unselectable-text'} style={{ fontSize: '24px' }} >
-            {props.title}
-          </p>
-        </div>
-      ) : null}
-      {props.title ? (
-        <div style={{ marginTop: '8px', width: '100%', display: 'flex', flexDirection: 'column' }} >
-          <Underline margin={'0px 16px 0px 16px'} />
-        </div>
-      ) : null}
+      <div style={{ padding: '16px 32px 0px 32px'}} >
+        <p className={'unselectable-text'} style={{ fontSize: '24px' }} >
+          {props.title}
+        </p>
+      </div>
+      <div style={{ marginTop: '8px', width: '100%', display: 'flex', flexDirection: 'column' }} >
+        <Underline margin={'0px 16px 0px 16px'} />
+      </div>
       <div style={{ margin: '24px 40px 0px 40px' }} >
         {props.contained}
       </div>
