@@ -1,6 +1,6 @@
 import { Rna2drawer1 } from './parseRna2drawer1';
-import { StrictDrawingInterface as StrictDrawing } from '../../../draw/StrictDrawingInterface';
-import { pixelsToPoints } from '../../../export/pixelsToPoints';
+import { StrictDrawingInterface as StrictDrawing } from '../../draw/StrictDrawingInterface';
+import { pixelsToPoints } from '../../export/pixelsToPoints';
 
 function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);

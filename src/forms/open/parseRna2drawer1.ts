@@ -1,6 +1,6 @@
 import * as Svg from '@svgdotjs/svg.js';
-import { splitLines } from '../../../parse/splitLines';
-import parseDotBracket from '../../../parse/parseDotBracket';
+import { splitLines } from '../../parse/splitLines';
+import parseDotBracket from '../../parse/parseDotBracket';
 
 interface SecondaryStructure {
   secondaryPartners: (number | null)[];

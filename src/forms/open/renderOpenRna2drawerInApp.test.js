@@ -1,6 +1,6 @@
 import renderOpenRna2drawerInApp from './renderOpenRna2drawerInApp';
-import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import App from '../../App';
+import NodeSVG from '../../draw/NodeSVG';
 import * as fs from 'fs';
 import { parseRna2drawer1 } from './parseRna2drawer1';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import OpenRna2drawer from './OpenRna2drawer';
-import App from '../../../App';
-import { StrictDrawingSavableState } from '../../../draw/StrictDrawingInterface';
+import App from '../../App';
+import { StrictDrawingSavableState } from '../../draw/StrictDrawingInterface';
 import parseRna2drawer1 from './parseRna2drawer1';
 import addRna2drawer1 from './addRna2drawer1';
 

@@ -1,8 +1,8 @@
 import { addRna2drawer1 } from './addRna2drawer1';
-import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import App from '../../App';
+import NodeSVG from '../../draw/NodeSVG';
 import * as Svg from '@svgdotjs/svg.js';
-import { pixelsToPoints } from '../../../export/pixelsToPoints';
+import { pixelsToPoints } from '../../export/pixelsToPoints';
 
 let app = null;
 let rna2drawer1 = null;
