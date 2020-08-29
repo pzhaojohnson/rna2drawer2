@@ -3,15 +3,14 @@ import createNewButtonForApp from './createNewButtonForApp';
 jest.mock('../openNewTab');
 import openNewTab from '../openNewTab';
 
-jest.mock('../../forms/new/renderCreateNewDrawingInApp');
-import renderCreateNewDrawingInApp from '../../forms/new/renderCreateNewDrawingInApp';
-
 import DroppedButton from '../DroppedButton';
+import { CreateNewDrawing } from '../../forms/new/CreateNewDrawing';
 
 let app = {
   strictDrawing: {
     isEmpty: () => true,
   },
+  renderForm: () => {},
 };
 
 it('returns a dropped button', () => {
@@ -26,16 +25,16 @@ it('passes a key', () => {
 
 describe('onClick callback', () => {
   openNewTab.mockImplementation(() => {});
-  renderCreateNewDrawingInApp.mockImplementation(() => {});
 
   it('when drawing is empty', () => {
     jest.clearAllMocks();
     app.strictDrawing.isEmpty = () => true;
+    app.renderForm = jest.fn();
     let nb = createNewButtonForApp(app);
     nb.props.onClick();
     expect(openNewTab.mock.calls.length).toBe(0);
-    expect(renderCreateNewDrawingInApp.mock.calls.length).toBe(1);
-    expect(renderCreateNewDrawingInApp.mock.calls[0][0]).toBe(app);
+    let form = app.renderForm.mock.calls[0][0]();
+    expect(form.type).toBe(CreateNewDrawing);
   });
 
   it('when drawing is not empty', () => {
@@ -44,6 +43,5 @@ describe('onClick callback', () => {
     let nb = createNewButtonForApp(app);
     nb.props.onClick();
     expect(openNewTab.mock.calls.length).toBe(1);
-    expect(renderCreateNewDrawingInApp.mock.calls.length).toBe(0);
   });
 });

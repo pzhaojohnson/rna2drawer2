@@ -1,11 +1,9 @@
 import * as React from 'react';
+import { AppInterface as App } from '../../AppInterface';
 const uuidv1 = require('uuid/v1');
-
 import DroppedButton from '../DroppedButton';
-
 import openNewTab from '../openNewTab';
-import renderCreateNewDrawingInApp from '../../forms/new/renderCreateNewDrawingInApp';
-import App from '../../App';
+import { CreateNewDrawing } from '../../forms/new/CreateNewDrawing';
 
 function createNewButtonForApp(app: App): React.ReactElement {
   return (
@@ -15,9 +13,11 @@ function createNewButtonForApp(app: App): React.ReactElement {
       onClick={() => {
         if (!app.strictDrawing.isEmpty()) {
           openNewTab();
-          return;
+        } else {
+          app.renderForm(close => (
+            <CreateNewDrawing app={app} close={close ? close : () => app.unmountCurrForm()} />
+          ));
         }
-        renderCreateNewDrawingInApp(app);
       }}
     />
   );

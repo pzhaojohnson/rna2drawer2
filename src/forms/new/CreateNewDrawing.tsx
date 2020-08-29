@@ -1,667 +1,160 @@
 import * as React from 'react';
+import { useState } from 'react';
+import { AppInterface as App } from '../../AppInterface';
 import { UnclosableFlexContainer } from '../containers/UnclosableFlexContainer';
+import { ExampleSelect } from './ExampleSelect';
+import { SequenceIdField } from './SequenceIdField';
+import { SequenceField } from './SequenceField';
+import { SequenceParsingDetails } from './SequenceParsingDetails';
+import { DotBracketField } from './DotBracketField';
+import { DotBracketParsingDetails } from './DotBracketParsingDetails';
 import { ActionButton } from '../buttons/ActionButton';
-import parseSequence from '../../parse/parseSequence';
-import {
-  parseDotBracket,
-  hasUnmatchedUpPartner,
-  lastUnmatchedUpPartner,
-  hasUnmatchedDownPartner,
-  lastUnmatchedDownPartner,
-} from '../../parse/parseDotBracket';
-const uuidv1 = require('uuid/v1');
+import { parseInputs } from './parseInputs';
 
-const _EXAMPLE_INPUTS = [
+let examples = [
   {
-    exampleInput: '--- None ---',
+    name: '--- None ---',
     sequenceId: '',
     sequence: '',
-    structure: '',
+    dotBracket: '',
   },
   {
-    exampleInput: 'A Small Structure',
+    name: 'A Small Structure',
     sequenceId: 'A Small Structure',
     sequence: 'UAAGCGCAUAGACGAUGCAACCGCAUCGCCUAGCGCUUAGAUCGGCCAACAGCAUCGGUUGGCCAAUAGGCUGCACGCCAUCAUUUGCAUGGUGUGUAAAGCUU',
-    structure:'...((((.....((((((....))))))....)))).......(((((((.......))))))).......(((((((((.........)))))))))......',
+    dotBracket:'...((((.....((((((....))))))....)))).......(((((((.......))))))).......(((((((((.........)))))))))......',
   },
   {
-    exampleInput: 'A Big Structure',
+    name: 'A Big Structure',
     sequenceId: 'A Big Structure',
     sequence: 'GCCGCUAUAACAAUACUAGAUGGAAUUUCACAGUAUUCACUGAGACUCAUUGAUGCUAUGAUGUUCACAUCUGAUUUGGCUACUAACAAUCUAGUUGUAAUGGCCUACAUUACAGGUGGUGUUGUUCAGUUGACUUCGCAGUGGCUAACUAACAUCUUUGGCACUGUUUAUGAAAAACUCAAACCCGUCCUUGAUUGGCUUGAAGAGAAGUUUAAGGAAGGUGUAGAGUUUCUUAGAGACGGUUGGGAAAUUGUUAAAUUUAUCUCAACCUGUGCUUGUGAAAUUGUCGGUGGACAAAUUGUCACCUGUGCAAAGGAAAUUAAGGAGAGUGUUCAGACAUUCUUUAAGCUUGUAAAUAAAUUUUUGGCUUUGUGUGCUGACUCUAUCAUUAUUGGUGGAGCUAAACUUAAAGCCUUGAAUUUAGGUGAAACAUUUGUCACGCACUCAAAGGGAUUGUACAGAAAGUGUGUUAAAUCCAGAGAAGAAACUGGCCUACUCAUGCCUCUAAAAGCCCCAAAAGAAAUUAUCUUCUUAGAGGGA',
-    structure: '((((((..........((((((((((.(((.(((((.((.((.....)).))))))).))).)))).))))))..(..(((...(((((((((.((((((((.....)))))))).))).)))))).)))..)......))))))..((..(((((...(((((.((((.(((.((((((..(((..(((((((...((((......))))))))))).)))...)))))).))).))))((((((((((((....))))..)))))))).)))))...))...)))..)).(((((((..(((((.................(((((((((....)))))))))...........(((((((..(((((((.((..((.((((((((....)))))))).)).)).)))))))..))))))))))))...))))))).....(((...(((..(....(((..(((((......((((........))))......))))).)))...)..)))..(((((......))))).)))...',
+    dotBracket: '((((((..........((((((((((.(((.(((((.((.((.....)).))))))).))).)))).))))))..(..(((...(((((((((.((((((((.....)))))))).))).)))))).)))..)......))))))..((..(((((...(((((.((((.(((.((((((..(((..(((((((...((((......))))))))))).)))...)))))).))).))))((((((((((((....))))..)))))))).)))))...))...)))..)).(((((((..(((((.................(((((((((....)))))))))...........(((((((..(((((((.((..((.((((((((....)))))))).)).)).)))))))..))))))))))))...))))))).....(((...(((..(....(((..(((((......((((........))))......))))).)))...)..)))..(((((......))))).)))...',
   },
   {
-    exampleInput: 'Pseudoknots',
+    name: 'Pseudoknots',
     sequenceId: 'Pseudoknots',
     sequence: 'UUUUAUAGAAACCAUCUCACUUGCUGGUUCCUAUAAAGAUUGGUCCUAUUCUGGACAAUCUACACAACUAGGUAUAGAAUCUGGUAAGAGAGGUGAUAAAAGUGUAUAUUACACUAGUAAUCCUACCACAUUCCACCUAGAUGGUGAAGUUAUCACCUUUGACAAUCUUAAGACACUUCUUUCUUUGAGAGAAGUGAGGACUAUUAAGGUGUUUAAAACAGUAGACAACAUUAACCUCCACACUGUUGUUGUGGACACCAUGUCAAUGACAUAUGGACAUGGUGUUGGUCCAACUUAUUUGGAUG',
-    structure: '...[[[[[...((((....((((.((((((]]]]].((((((((((......))))..((((.((......)).))))...{{{{{..(((((((((((.((((((...))))))........}}}}}.....((((.....))))...)))))))))))..)))))).....((((((((((...)))))))))).)))))).)))).((((((......)))))).((((.((.((((((.......))))))<<<<<.)).))))....))))...>>>>>...((((((.....)))))).',
+    dotBracket: '...[[[[[...((((....((((.((((((]]]]].((((((((((......))))..((((.((......)).))))...{{{{{..(((((((((((.((((((...))))))........}}}}}.....((((.....))))...)))))))))))..)))))).....((((((((((...)))))))))).)))))).)))).((((((......)))))).((((.((.((((((.......))))))<<<<<.)).))))....))))...>>>>>...((((((.....)))))).',
   },
 ];
 
-interface Structure {
-  id: string;
-  characters: string;
-  secondaryPartners: (number | null)[];
-  tertiaryPartners: (number | null)[];
-}
-
 interface Props {
-  width: string;
-  submit?: (s: Structure) => void;
+  app: App;
+  close: () => void;
 }
 
-interface ParsedStructure {
-  secondaryPartners: (number | null)[];
-  tertiaryPartners: (number | null)[];
-}
+export function CreateNewDrawing(props: Props): React.ReactElement {
+  let e0 = examples[0];
+  let [example, setExample] = useState(e0 ? e0.name : '');
+  let [sequenceId, setSequenceId] = useState(e0 ? e0.sequenceId : '');
+  let [sequence, setSequence] = useState(e0 ? e0.sequence : '');
+  let [dotBracket, setDotBracket] = useState(e0 ? e0.dotBracket : '');
 
-class CreateNewDrawing extends React.Component {
-  static defaultProps: Props;
+  let [showingSequenceParsingDetails, showSequenceParsingDetails] = useState(false);
+  let [ignoringNumbers, ignoreNumbers] = useState(true);
+  let [ignoringNonAugctLetters, ignoreNonAugctLetters] = useState(false);
+  let [ignoringNonAlphanumerics, ignoreNonAlphanumerics] = useState(true);
 
-  props!: Props;
-  state: {
-    exampleInput: string;
-    sequenceId: string;
-    sequence: string;
-    structure: string;
+  let [showingDotBracketParsingDetails, showDotBracketParsingDetails] = useState(false);
 
-    showSequenceParsingDetails: boolean;
-    ignoreNumbers: boolean;
-    ignoreNonAUGCTLetters: boolean;
-    ignoreNonAlphanumerics: boolean;
+  let [errorMessage, setErrorMessage] = useState('');
+  let [errorMessageKey, setErrorMessageKey] = useState(0);
 
-    showStructureParsingDetails: boolean;
-
-    errorMessageKey: string;
-    errorMessage: string;
-  }
-
-  constructor(props: Props) {
-    super(props);
-
-    let ei = _EXAMPLE_INPUTS[0];
-
-    this.state = {
-      exampleInput: ei.exampleInput,
-      sequenceId: ei.sequenceId,
-      sequence: ei.sequence,
-      structure: ei.structure,
-
-      showSequenceParsingDetails: false,
-      ignoreNumbers: true,
-      ignoreNonAUGCTLetters: false,
-      ignoreNonAlphanumerics: true,
-
-      showStructureParsingDetails: false,
-
-      errorMessageKey: uuidv1(),
-      errorMessage: '',
-    };
-  }
-
-  render() {
-    return (
-      <UnclosableFlexContainer
-        title={'Create a New Drawing'}
-        contained={(
-          <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
-            {this._exampleInputSection()}
-            {this._sequenceIdSection()}
-            {this._sequenceAndStructureSections()}
-            {this._errorMessageSection()}
-            {this._submitSection()}
-          </div>
-        )}
-      />
-    );
-  }
-
-  _exampleInputSection() {
-    return (
-      <div style={{ margin: '0px', alignItems: 'center' }} >
-        {this._exampleInputLabel()}
-        {this._exampleInputSelect()}
-      </div>
-    );
-  }
-
-  _exampleInputLabel() {
-    return (
-      <p
-        className={'unselectable-text'}
-        style={{ margin: '0px 8px 0px 0px', fontSize: '12px', display: 'inline-block' }}
-      >
-        Example Input:
-      </p>
-    );
-  }
-
-  _exampleInputSelect() {
-    return (
-      <select
-        value={this.state.exampleInput}
-        onChange={event => this._onExampleInputSelectChange(event)}
-        style={{ fontSize: '12px' }}
-      >
-        {_EXAMPLE_INPUTS.map(ei => {
-          return (
-            <option key={ei.exampleInput} value={ei.exampleInput}>
-              {ei.exampleInput}
-            </option>
-          );
-        })}
-      </select>
-    );
-  }
-
-  _onExampleInputSelectChange(event: React.ChangeEvent) {
-    let ei = _EXAMPLE_INPUTS.find(
-      ei => ei.exampleInput === (event.target as HTMLSelectElement).value
-    );
-    if (ei) {
-      this.setState({
-        exampleInput: ei.exampleInput,
-        sequenceId: ei.sequenceId,
-        sequence: ei.sequence,
-        structure: ei.structure,
-        errorMessageKey: uuidv1(),
-        errorMessage: '',
-      });
-    } else {
-      console.error('No example input has given name: ' + (event.target as HTMLSelectElement).value);
-    }
-  }
-
-  _sequenceIdSection() {
-    return (
-      <div
-        style={{
-          margin: '16px 0px 0px 0px',
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        {this._sequenceIdLabel()}
-        {this._sequenceIdInput()}
-      </div>
-    );
-  }
-
-  _sequenceIdLabel() {
-    return (
-      <p
-        className={'unselectable-text'}
-        style={{ margin: '0px 8px 0px 0px', fontSize: '12px', display: 'inline-block' }}
-      >
-        Sequence ID:
-      </p>
-    );
-  }
-
-  _sequenceIdInput() {
-    return (
-      <input
-        type={'text'}
-        value={this.state.sequenceId}
-        onChange={event => this._onSequenceIdInputChange(event)}
-        spellCheck={'false'}
-        placeholder={' ...the name of your sequence'}
-        style={{ flexGrow: 1 }}
-      />
-    );
-  }
-
-  _onSequenceIdInputChange(event: React.ChangeEvent) {
-    this.setState({
-      sequenceId: (event.target as HTMLInputElement).value,
-    });
-  }
-
-  _sequenceAndStructureSections() {
-    return (
-      <div style={{ margin: '0px 0px 18px 0px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
-        {this._sequenceSection()}
-        {this._structureSection()}
-      </div>
-    );
-  }
-
-  _sequenceSection() {
-    return (
-      <div style={{ minHeight: '50%', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+  return (
+    <UnclosableFlexContainer
+      title={'Create a New Drawing'}
+      contained={
         <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
-          {this._sequenceHeader()}
-          {this._sequenceTextarea()}
-        </div>
-        {this._sequenceParsingDetails()}
-      </div>
-    );
-  }
-
-  _sequenceHeader() {
-    return (
-      <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'row' }} >
-        {this._sequenceLabel()}
-        {this._sequenceParsingDetailsToggle()}
-      </div>
-    );
-  }
-
-  _sequenceLabel() {
-    return (
-      <p className={'unselectable-text'} style={{ flexGrow: 1, fontSize: '12px' }} >
-        Sequence:
-      </p>
-    );
-  }
-
-  _sequenceParsingDetailsToggle() {
-    return (
-      <p
-        className={'unselectable-text'}
-        onClick={() => this._toggleSequenceParsingDetails()}
-        style={{
-          marginRight: '4px',
-          fontSize: '12px',
-          color: 'blue',
-          cursor: 'pointer',
-        }}
-      >
-        Details
-      </p>
-    );
-  }
-
-  _toggleSequenceParsingDetails() {
-    this.setState({
-      showSequenceParsingDetails: !this.state.showSequenceParsingDetails,
-    });
-  }
-
-  _sequenceTextarea() {
-    return (
-      <textarea
-        value={this.state.sequence}
-        onChange={event => this._onSequenceTextareaChange(event)}
-        spellCheck={'false'}
-        placeholder={' ...an RNA or DNA sequence, e.g. "AUGCAUUACGUA"'}
-        style={{
-          flexGrow: 1,
-          margin: '4px 0px 0px 0px',
-          fontSize: '12px',
-        }}
-      />
-    );
-  }
-
-  _onSequenceTextareaChange(event: React.ChangeEvent) {
-    this.setState({
-      sequence: (event.target as HTMLTextAreaElement).value
-    });
-  }
-
-  _sequenceParsingDetails() {
-    if (!this.state.showSequenceParsingDetails) {
-      return <div></div>;
-    } else {
-      return (
-        <div style={{ width: '360px', margin: '16px 0px 0px 8px' }} >
-          <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
-            Sequence Parsing Details:
-          </p>
-          <div style={{ marginLeft: '8px' }} >
-            <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }} >
-              All letters, numbers, and non-alphanumeric characters are read in as individual bases, unless specified to be ignored below:
-            </p>
-            {this._ignoreNumbersCheckbox()}
-            {this._ignoreNonAUGCTLettersCheckbox()}
-            {this._ignoreNonAlphanumericsCheckbox()}
-            <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }}>
-              All whitespace is ignored.
-            </p>
-          </div>
-        </div>
-      );
-    }
-  }
-
-  _ignoreNumbersCheckbox() {
-    return (
-      <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type={'checkbox'}
-          checked={this.state.ignoreNumbers}
-          onChange={() => this._toggleIgnoreNumbers()}
-        />
-        <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
-          Ignore numbers.
-        </p>
-      </div>
-    );
-  }
-
-  _toggleIgnoreNumbers() {
-    this.setState({
-      ignoreNumbers: !this.state.ignoreNumbers,
-    });
-  }
-
-  _ignoreNonAUGCTLettersCheckbox() {
-    return (
-      <div style={{ marginTop: '4px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type={'checkbox'}
-          checked={this.state.ignoreNonAUGCTLetters}
-          onChange={() => this._toggleIgnoreNonAUGCTLetters()}
-        />
-        <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
-          Ignore non-AUGCT letters.
-        </p>
-      </div>
-    );
-  }
-
-  _toggleIgnoreNonAUGCTLetters() {
-    this.setState({
-      ignoreNonAUGCTLetters: !this.state.ignoreNonAUGCTLetters,
-    });
-  }
-
-  _ignoreNonAlphanumericsCheckbox() {
-    return (
-      <div style={{ marginTop: '4px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type={'checkbox'}
-          checked={this.state.ignoreNonAlphanumerics}
-          onChange={() => this._toggleIgnoreNonAlphanumerics()}
-        />
-        <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
-          Ignore non-alphanumeric characters.
-        </p>
-      </div>
-    );
-  }
-
-  _toggleIgnoreNonAlphanumerics() {
-    this.setState({
-      ignoreNonAlphanumerics: !this.state.ignoreNonAlphanumerics,
-    });
-  }
-
-  _structureSection() {
-    return (
-      <div style={{ minHeight: '50%', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
-        <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
-          {this._structureHeader()}
-          {this._structureTextarea()}
-        </div>
-        {this._structureParsingDetails()}
-      </div>
-    );
-  }
-
-  _structureHeader() {
-    return (
-      <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'row' }} >
-        {this._structureLabel()}
-        {this._structureParsingDetailsToggle()}
-      </div>
-    );
-  }
-
-  _structureLabel() {
-    return (
-      <p className={'unselectable-text'} style={{ flexGrow: 1, fontSize: '12px' }} >
-        Structure (optional):
-      </p>
-    );
-  }
-
-  _structureParsingDetailsToggle() {
-    return (
-      <p
-        className={'unselectable-text'}
-        onClick={() => this._toggleStructureParsingDetails()}
-        style={{
-          marginRight: '4px',
-          fontSize: '12px',
-          color: 'blue',
-          cursor: 'pointer',
-        }}
-      >
-        Details
-      </p>
-    );
-  }
-
-  _toggleStructureParsingDetails() {
-    this.setState({
-      showStructureParsingDetails: !this.state.showStructureParsingDetails,
-    })
-  }
-
-  _structureTextarea() {
-    return (
-      <textarea
-        value={this.state.structure}
-        onChange={event => this._onStructureTextareaChange(event)}
-        spellCheck={'false'}
-        placeholder={
-          ' ...the secondary structure in dot-bracket notation, e.g. "((((....))))"'
-          + '\n\n ...also called "Vienna" format by Mfold'
-        }
-        style={{
-          flexGrow: 1,
-          margin: '4px 0px 0px 0px',
-          fontSize: '12px'
-        }}
-      />
-    );
-  }
-
-  _onStructureTextareaChange(event: React.ChangeEvent) {
-    this.setState({
-      structure: (event.target as HTMLTextAreaElement).value
-    });
-  }
-
-  _structureParsingDetails() {
-    if (!this.state.showStructureParsingDetails) {
-      return <div></div>;
-    } else {
-      return (
-        <div style={{ width: '360px', margin: '16px 0px 0px 8px' }} >
-          <p className={'unselectable-text'} style={{ fontWeight: 'bold', fontSize: '14px' }} >
-            Structure Parsing Details:
-          </p>
-          <div style={{ marginLeft: '8px' }} >
-            <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }} >
-              Periods "." indicate unpaired bases.
-            </p>
-            <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }} >
-              Matching parentheses "( )" indicate base pairs in the secondary structure.
-            </p>
-            <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }} >
-              {'Pseudoknotted base pairs are specified by "[ ]", "{ }", or "< >".'}
-            </p>
-            <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }} >
-              All other characters and whitespace are ignored.
-            </p>
-          </div>
-        </div>
-      );
-    }
-  }
-
-  _errorMessageSection() {
-    if (this.state.errorMessage.length === 0) {
-      return (
-        <div
-          key={this.state.errorMessageKey}
-          id={this.state.errorMessageKey}
-        ></div>
-      );
-    } else {
-      return (
-        <div
-          key={this.state.errorMessageKey}
-          id={this.state.errorMessageKey}
-        >
-          <p
-            className={'unselectable-text'}
-            style={{
-              margin: '0px',
-              fontSize: '14px',
-              color: 'red',
-              animationName: 'fadein',
-              animationDuration: '0.75s',
+          <ExampleSelect
+            examples={examples.map(e => e.name)}
+            selected={example}
+            select={name => {
+              let example = examples.find(e => e.name == name);
+              if (example) {
+                setExample(name);
+                setSequenceId(example.sequenceId);
+                setSequence(example.sequence);
+                setDotBracket(example.dotBracket);
+                setErrorMessage('');
+              }
             }}
-          >
-            <b>{this.state.errorMessage}</b>
-          </p>
+          />
+          <div style={{ marginTop: '16px' }} >
+            <SequenceIdField
+              initialValue={sequenceId}
+              set={id => setSequenceId(id)}
+            />
+          </div>
+          <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+            <div style={{ flexBasis: '0px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+              <SequenceField
+                initialValue={sequence}
+                set={s => setSequence(s)}
+                toggleParsingDetails={() => showSequenceParsingDetails(!showingSequenceParsingDetails)}
+                flexGrow={1}
+              />
+              {!showingSequenceParsingDetails ? null : (
+                <SequenceParsingDetails
+                  ignoringNumbers={ignoringNumbers}
+                  ignoreNumbers={b => ignoreNumbers(b)}
+                  ignoringNonAugctLetters={ignoringNonAugctLetters}
+                  ignoreNonAugctLetters={b => ignoreNonAugctLetters(b)}
+                  ignoringNonAlphanumerics={ignoringNonAlphanumerics}
+                  ignoreNonAlphanumerics={b => ignoreNonAlphanumerics(b)}
+                />
+              )}
+            </div>
+            <div style={{ flexBasis: '0px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+              <DotBracketField
+                initialValue={dotBracket}
+                set={s => setDotBracket(s)}
+                toggleParsingDetails={() => showDotBracketParsingDetails(!showingDotBracketParsingDetails)}
+                flexGrow={1}
+              />
+              {showingDotBracketParsingDetails ? <DotBracketParsingDetails /> : null}
+            </div>
+          </div>
+          {!errorMessage ? null : (
+            <div style={{ marginTop: '12px' }} >
+              <p
+                key={errorMessageKey}
+                className={'unselectable-text'}
+                style={{ fontSize: '14px', color: 'red', animationName: 'fadein', animationDuration: '0.75s' }}
+              >
+                <b>{errorMessage}</b>
+              </p>
+            </div>
+          )}
+          <div style={{ marginTop: errorMessage ? '6px' : '18px' }} >
+            <ActionButton
+              text={'Submit'}
+              onClick={() => {
+                let parsed = parseInputs({
+                  sequenceId: sequenceId,
+                  sequence: sequence,
+                  ignoreNumbers: ignoringNumbers,
+                  ignoreNonAugctLetters: ignoringNonAugctLetters,
+                  ignoreNonAlphanumerics: ignoringNonAlphanumerics,
+                  dotBracket: dotBracket,
+                });
+                if (typeof parsed == 'string') {
+                  setErrorMessage(parsed);
+                  setErrorMessageKey(errorMessageKey + 1);
+                } else {
+                  props.app.strictDrawing.appendStructure({ ...parsed, characters: parsed.sequence });
+                  if (props.app.strictDrawing.drawing.numSecondaryBonds == 0) {
+                    props.app.strictDrawing.flatOutermostLoop();
+                    props.app.strictDrawingInteraction.startFolding();
+                    props.app.strictDrawingInteraction.foldingMode.forcePair();
+                  }
+                  props.close();
+                  props.app.drawingChangedNotByInteraction();
+                }
+              }}
+            />
+          </div>
         </div>
-      );
-    }
-  }
-
-  _submitSection() {
-    return (
-      <div style={{ margin: '6px 0px 0px 0px' }} >
-        <ActionButton text={'Submit'} onClick={() => this._submit()} />
-      </div>
-    );
-  }
-
-  _submit() {
-    let sequenceId = this._parseSequenceId();
-    if (sequenceId == null) {
-      return;
-    }
-    let sequence = this._parseSequence();
-    if (sequence == null) {
-      return;
-    }
-    let structure = this._parseStructure(sequence);
-    if (structure == null) {
-      return;
-    }
-    if (this.props.submit) {
-      this.props.submit({
-        id: sequenceId,
-        characters: sequence,
-        secondaryPartners: structure.secondaryPartners,
-        tertiaryPartners: structure.tertiaryPartners,
-      });
-    } else {
-      console.error('Missing submit callback.');
-    }
-  }
-
-  /**
-   * Returns null if the sequence ID is empty.
-   */
-  _parseSequenceId(): (string | null) {
-    let sequenceId = this.state.sequenceId.trim();
-    if (sequenceId.length === 0) {
-      this.setState({
-        errorMessageKey: uuidv1(),
-        errorMessage: 'Sequence ID is empty.',
-      });
-      return null;
-    } else {
-      return sequenceId;
-    }
-  }
-
-  /**
-   * Returns null if the sequence is empty.
-   */
-  _parseSequence(): (string | null) {
-    let sequence = parseSequence(
-      this.state.sequence,
-      {
-        ignoreNumbers: this.state.ignoreNumbers,
-        ignoreNonAUGCTLetters: this.state.ignoreNonAUGCTLetters,
-        ignoreNonAlphanumerics: this.state.ignoreNonAlphanumerics,
-      },
-    );
-    if (sequence.length === 0) {
-      this.setState({
-        errorMessageKey: uuidv1(),
-        errorMessage: 'Sequence is empty.',
-      });
-      return null;
-    } else {
-      return sequence;
-    }
-  }
-
-  /**
-   * Returns null if the structure is invalid.
-   *
-   * Also returns null if the length of the parsed structure does not
-   * match the length of the sequence. However, if the length of the
-   * parsed structure is zero, then this method will return entirely
-   * unpaired partners notations of the same length as the sequence.
-   */
-  _parseStructure(sequence: string): (ParsedStructure | null) {
-    let parsed = parseDotBracket(this.state.structure);
-    if (parsed === null) {
-      if (hasUnmatchedUpPartner(this.state.structure)) {
-        let c = lastUnmatchedUpPartner(this.state.structure);
-        this.setState({
-          errorMessageKey: uuidv1(),
-          errorMessage: 'Unmatched "' + c + '" in structure.',
-        });
-      } else if (hasUnmatchedDownPartner(this.state.structure)) {
-        let c = lastUnmatchedDownPartner(this.state.structure);
-        this.setState({
-          errorMessageKey: uuidv1(),
-          errorMessage: 'Unmatched "' + c + '" in structure.',
-        });
-      } else {
-        this.setState({
-          errorMessageKey: uuidv1(),
-          errorMessage: 'Invalid structure.',
-        });
       }
-      return null;
-    }
-
-    if (parsed.secondaryPartners.length === 0) {
-      let structure = {
-        secondaryPartners: [] as (number | null)[],
-        tertiaryPartners: [] as (number | null)[],
-      };
-      for (let i = 0; i < sequence.length; i++) {
-        structure.secondaryPartners.push(null);
-        structure.tertiaryPartners.push(null);
-      }
-      return structure;
-    } else {
-      if (parsed.secondaryPartners.length !== sequence.length) {
-        this.setState({
-          errorMessageKey: uuidv1(),
-          errorMessage: 'Sequence and structure are different lengths.',
-        });
-        return null;
-      } else {
-        return parsed;
-      }
-    }
-  }
+    />
+  );
 }
-
-CreateNewDrawing.defaultProps = {
-  width: '100vw',
-};
-
-export default CreateNewDrawing;
-
-export {
-  CreateNewDrawing,
-
-  // only exported to aid testing
-  _EXAMPLE_INPUTS,
-};

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { ReactElement } from 'react';
 import './App.css';
@@ -21,7 +22,7 @@ import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 import createMenuForApp from './menu/createMenuForApp';
 import createInfobarForApp from './infobar/createInfobarForApp';
 
-import renderCreateNewDrawingInApp from './forms/new/renderCreateNewDrawingInApp';
+import { CreateNewDrawing } from './forms/new/CreateNewDrawing';
 
 import saveDrawingForApp from './export/saveDrawingForApp';
 
@@ -44,7 +45,9 @@ class App implements AppInterface {
 
     this._setBindings();
 
-    renderCreateNewDrawingInApp(this);
+    this.renderForm(close => (
+      <CreateNewDrawing app={this} close={close ? close : () => this.unmountCurrForm()} />
+    ));
   }
 
   get SVG(): () => Svg.Svg {
