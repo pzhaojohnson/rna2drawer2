@@ -34,6 +34,11 @@ it('sequence of length zero', () => {
   expect(typeof parseInputs(inputs)).toBe('string');
 });
 
+it('sequence is all whitespace', () => {
+  inputs.sequence = '  \t\t  \n\n    ';
+  expect(typeof parseInputs(inputs)).toBe('string');
+});
+
 it('sequence is all ignored characters', () => {
   inputs.sequence = '12345<<>>';
   inputs.ignoreNumbers = true;

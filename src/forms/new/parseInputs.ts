@@ -54,6 +54,9 @@ export function parseInputs(inputs: Inputs): Structure | string {
     ignoreNonAlphanumerics: inputs.ignoreNonAlphanumerics,
   });
   if (sequence.length == 0) {
+    if (inputs.sequence.trim().length > 0) {
+      return 'Sequence has only ignored characters.';
+    }
     return 'Sequence is empty.';
   }
   let partners = parsePartners(inputs.dotBracket);
