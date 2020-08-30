@@ -27,8 +27,8 @@ class App implements AppInterface {
   _infobarContainer: HTMLDivElement;
 
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
-  _strictDrawing!: StrictDrawing;
-  _strictDrawingInteraction!: StrictDrawingInteraction;
+  _strictDrawing: StrictDrawing;
+  _strictDrawingInteraction: StrictDrawingInteraction;
   _currFormFactory?: () => ReactElement;
 
   constructor(SVG: () => Svg.Svg) {
@@ -41,8 +41,10 @@ class App implements AppInterface {
     this._appendContainers();
     this._disableDragAndDrop();
 
+    this._strictDrawing = new StrictDrawing();
     this._initializeDrawing();
     this._undoRedo = new UndoRedo();
+    this._strictDrawingInteraction = new StrictDrawingInteraction(this.strictDrawing);
     this._initializeDrawingInteraction();
     this.renderPeripherals();
 
@@ -77,7 +79,6 @@ class App implements AppInterface {
   }
 
   _initializeDrawing() {
-    this._strictDrawing = new StrictDrawing();
     this._strictDrawing.addTo(this._drawingContainer, () => this.SVG());
   }
 
@@ -86,9 +87,6 @@ class App implements AppInterface {
   }
 
   _initializeDrawingInteraction() {
-    this._strictDrawingInteraction = new StrictDrawingInteraction(
-      this.strictDrawing
-    );
     this._strictDrawingInteraction.onShouldPushUndo(() => {
       this.pushUndo();
     });
