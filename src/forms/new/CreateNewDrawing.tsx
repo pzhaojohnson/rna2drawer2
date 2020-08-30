@@ -125,7 +125,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
               </p>
             </div>
           )}
-          <div style={{ marginTop: errorMessage ? '6px' : '18px' }} >
+          <div style={{ marginTop: errorMessage ? '6px' : '24px' }} >
             <ActionButton
               text={'Submit'}
               onClick={() => {
