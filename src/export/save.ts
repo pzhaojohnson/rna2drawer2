@@ -1,14 +1,7 @@
+import { AppInterface as App } from '../AppInterface';
 import { offerFileForDownload } from './offerFileForDownload';
 
-interface StrictDrawing {
-  savableString: string;
-}
-
-interface App {
-  strictDrawing: StrictDrawing;
-}
-
-function saveDrawingForApp(app: App) {
+export function save(app: App) {
   let name = 'Drawing';
   if (document.title) {
     name = document.title;
@@ -19,5 +12,3 @@ function saveDrawingForApp(app: App) {
     contents: app.strictDrawing.savableString,
   });
 }
-
-export default saveDrawingForApp;

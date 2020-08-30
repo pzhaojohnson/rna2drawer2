@@ -8,8 +8,7 @@ import createMenuForApp from './menu/createMenuForApp';
 jest.mock('./infobar/createInfobarForApp');
 import createInfobarForApp from './infobar/createInfobarForApp';
 
-jest.mock('./export/saveDrawingForApp');
-import saveDrawingForApp from './export/saveDrawingForApp';
+import * as Save from './export/save';
 
 it('renders', () => {
   new App(() => NodeSVG());
@@ -267,12 +266,4 @@ it('updateDocumentTitle method', () => {
   app.strictDrawing.appendSequence('asdf', 'asdf');
   app.updateDocumentTitle(); // drawing has multiple sequences
   expect(document.title).toBe('qwer, zxcv, asdf');
-});
-
-it('save method', () => {
-  let app = new App(() => NodeSVG());
-  saveDrawingForApp.mockImplementation(jest.fn());
-  app.save();
-  expect(saveDrawingForApp.mock.calls.length).toBe(1);
-  expect(saveDrawingForApp.mock.calls[0][0]).toBe(app); // passes self
 });

@@ -1,4 +1,4 @@
-import saveDrawingForApp from './saveDrawingForApp';
+import { save } from './save';
 import * as OfferFileForDownload from './offerFileForDownload';
 
 it('calls offerFileForDownload function', () => {
@@ -9,7 +9,7 @@ it('calls offerFileForDownload function', () => {
     },
   };
   OfferFileForDownload.offerFileForDownload = jest.fn();
-  saveDrawingForApp(app);
+  save(app);
   let c = OfferFileForDownload.offerFileForDownload.mock.calls[0];
   let fileProps = c[0];
   expect(fileProps.name).toBe('Name of Drawing.rna2drawer2');

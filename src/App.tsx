@@ -17,7 +17,7 @@ import createInfobarForApp from './infobar/createInfobarForApp';
 
 import { CreateNewDrawing } from './forms/new/CreateNewDrawing';
 
-import saveDrawingForApp from './export/saveDrawingForApp';
+import { save } from './export/save';
 
 class App implements AppInterface {
   _SVG: () => Svg.Svg;
@@ -195,7 +195,7 @@ class App implements AppInterface {
   }
 
   save() {
-    saveDrawingForApp(this);
+    save(this);
   }
 }
 
