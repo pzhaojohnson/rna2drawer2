@@ -1,4 +1,8 @@
-import { StrictDrawingInterface as StrictDrawing } from './draw/StrictDrawingInterface';
+import {
+  StrictDrawingInterface as StrictDrawing,
+  StrictDrawingSavableState,
+} from './draw/StrictDrawingInterface';
+import UndoRedo from './undo/UndoRedo';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 import * as React from 'react';
 
@@ -8,6 +12,7 @@ export interface FormFactory {
 
 export interface AppInterface {
   readonly strictDrawing: StrictDrawing;
+  readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawingInteraction: StrictDrawingInteraction;
 
   renderPeripherals(): void;

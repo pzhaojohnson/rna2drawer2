@@ -5,6 +5,7 @@ import './App.css';
 import { AppInterface, FormFactory } from './AppInterface';
 
 import UndoRedo from './undo/UndoRedo';
+import { pushUndo, undo, redo } from './undo/undo';
 
 import StrictDrawing from './draw/StrictDrawing';
 import { StrictDrawingSavableState } from './draw/StrictDrawingInterface';
@@ -43,7 +44,7 @@ class App implements AppInterface {
 
     this._strictDrawing = new StrictDrawing();
     this._initializeDrawing();
-    this._undoRedo = new UndoRedo();
+    this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
     this._strictDrawingInteraction = new StrictDrawingInteraction(this.strictDrawing);
     this._initializeDrawingInteraction();
     this.renderPeripherals();
@@ -86,6 +87,10 @@ class App implements AppInterface {
     return this._strictDrawing;
   }
 
+  get undoRedo(): UndoRedo<StrictDrawingSavableState> {
+    return this._undoRedo;
+  }
+
   _initializeDrawingInteraction() {
     this._strictDrawingInteraction.onShouldPushUndo(() => {
       this.pushUndo();
@@ -100,97 +105,6 @@ class App implements AppInterface {
 
   get strictDrawingInteraction(): StrictDrawingInteraction {
     return this._strictDrawingInteraction;
-  }
-
-  renderPeripherals() {
-    this.renderMenu();
-    this.renderInfobar();
-    if (this._currFormFactory) {
-      this.renderForm(this._currFormFactory);
-    }
-    this.updateDocumentTitle();
-  }
-
-  renderMenu() {
-    ReactDOM.render(
-      createMenuForApp(this),
-      this._menuContainer,
-    );
-  }
-
-  renderInfobar() {
-    ReactDOM.render(
-      createInfobarForApp(this),
-      this._infobarContainer,
-    );
-  }
-
-  renderForm(formFactory: FormFactory) {
-
-    /* Seems to be necessary for user entered values (e.g. in input elements)
-    to be updated in a currently rendered form. */
-    this.unmountCurrForm();
-
-    let close = () => {
-      if (this._currFormFactory == formFactory) {
-        this.unmountCurrForm();
-      }
-    }
-    ReactDOM.render(
-      formFactory(close),
-      this._formContainer,
-    );
-    this._currFormFactory = formFactory;
-  }
-
-  unmountCurrForm() {
-    this._currFormFactory = undefined;
-    ReactDOM.unmountComponentAtNode(this._formContainer);
-  }
-
-  updateDocumentTitle() {
-    if (this.strictDrawing.isEmpty()) {
-      document.title = 'RNA2Drawer 2';
-      return;
-    }
-    document.title = this.strictDrawing.sequenceIds().join(', ');
-  }
-
-  pushUndo() {
-    this._undoRedo.pushUndo(
-      this.strictDrawing.savableState()
-    );
-    this.renderPeripherals();
-  }
-
-  canUndo(): boolean {
-    return this._undoRedo.canUndo();
-  }
-
-  undo() {
-    if (!this.canUndo()) {
-      return;
-    }
-    let currState = this.strictDrawing.savableState();
-    this.strictDrawing.applySavedState(
-      this._undoRedo.undo(currState)
-    );
-    this.drawingChangedNotByInteraction();
-  }
-
-  canRedo(): boolean {
-    return this._undoRedo.canRedo();
-  }
-
-  redo() {
-    if (!this.canRedo()) {
-      return;
-    }
-    let currState = this.strictDrawing.savableState();
-    this.strictDrawing.applySavedState(
-      this._undoRedo.redo(currState)
-    );
-    this.drawingChangedNotByInteraction();
   }
 
   _setBindings() {
@@ -210,9 +124,74 @@ class App implements AppInterface {
     });
   }
 
+  renderPeripherals() {
+    this.renderMenu();
+    this.renderInfobar();
+    if (this._currFormFactory) {
+      this.renderForm(this._currFormFactory);
+    }
+    this.updateDocumentTitle();
+  }
+
+  renderMenu() {
+    ReactDOM.render(createMenuForApp(this), this._menuContainer);
+  }
+
+  renderInfobar() {
+    ReactDOM.render(createInfobarForApp(this), this._infobarContainer);
+  }
+
+  renderForm(formFactory: FormFactory) {
+
+    /* Seems to be necessary for user entered values (e.g. in input elements)
+    to be updated in a currently rendered form. */
+    this.unmountCurrForm();
+
+    let close = () => {
+      if (this._currFormFactory == formFactory) {
+        this.unmountCurrForm();
+      }
+    }
+    ReactDOM.render(formFactory(close), this._formContainer);
+    this._currFormFactory = formFactory;
+  }
+
+  unmountCurrForm() {
+    this._currFormFactory = undefined;
+    ReactDOM.unmountComponentAtNode(this._formContainer);
+  }
+
+  updateDocumentTitle() {
+    if (this.strictDrawing.isEmpty()) {
+      document.title = 'RNA2Drawer 2';
+      return;
+    }
+    document.title = this.strictDrawing.sequenceIds().join(', ');
+  }
+
   drawingChangedNotByInteraction() {
     this._strictDrawingInteraction.refresh();
     this.renderPeripherals();
+  }
+
+  pushUndo() {
+    pushUndo(this);
+  }
+
+  canUndo(): boolean {
+    return this._undoRedo.canUndo();
+  }
+
+  undo() {
+    undo(this);
+  }
+
+  canRedo(): boolean {
+    return this._undoRedo.canRedo();
+  }
+
+  redo() {
+    redo(this);
   }
 
   save() {
