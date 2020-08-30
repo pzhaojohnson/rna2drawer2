@@ -4,14 +4,6 @@ import { ReactElement } from 'react';
 import './App.css';
 import { AppInterface, FormFactory } from './AppInterface';
 
-import {
-  fillInBodyForApp,
-  getMenuContainer,
-  getDrawingContainer,
-  getFormContainer,
-  getInfobarContainer,
-} from './fillInBodyForApp';
-
 import UndoRedo from './undo/UndoRedo';
 
 import StrictDrawing from './draw/StrictDrawing';
@@ -28,6 +20,12 @@ import saveDrawingForApp from './export/saveDrawingForApp';
 
 class App implements AppInterface {
   _SVG: () => Svg.Svg;
+
+  _menuContainer: HTMLDivElement;
+  _drawingContainer: HTMLDivElement;
+  _formContainer: HTMLDivElement;
+  _infobarContainer: HTMLDivElement;
+
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing!: StrictDrawing;
   _strictDrawingInteraction!: StrictDrawingInteraction;
@@ -36,7 +34,12 @@ class App implements AppInterface {
   constructor(SVG: () => Svg.Svg) {
     this._SVG = SVG;
 
-    fillInBodyForApp();
+    this._menuContainer = document.createElement('div');
+    this._drawingContainer = document.createElement('div');
+    this._formContainer = document.createElement('div');
+    this._infobarContainer = document.createElement('div');
+    this._appendContainers();
+    this._disableDragAndDrop();
 
     this._initializeDrawing();
     this._undoRedo = new UndoRedo();
@@ -54,10 +57,28 @@ class App implements AppInterface {
     return this._SVG;
   }
 
+  _appendContainers() {
+    let div1 = document.createElement('div');
+    div1.style.cssText = 'height: 100vh; display: flex; flex-direction: column;';
+    document.body.appendChild(div1);
+    div1.appendChild(this._menuContainer);
+    let div2 = document.createElement('div');
+    div2.style.cssText = 'min-height: 0px; flex-grow: 1; display: flex; flex-direction: row;';
+    div1.appendChild(div2);
+    this._drawingContainer.style.cssText = 'flex-grow: 1; overflow: auto;';
+    div2.appendChild(this._drawingContainer);
+    div2.appendChild(this._formContainer);
+    div1.appendChild(this._infobarContainer);
+  }
+
+  _disableDragAndDrop() {
+    document.body.ondragstart = () => false;
+    document.body.ondrop = () => false;
+  }
+
   _initializeDrawing() {
     this._strictDrawing = new StrictDrawing();
-    let container = getDrawingContainer() as Element;
-    this._strictDrawing.addTo(container, () => this.SVG());
+    this._strictDrawing.addTo(this._drawingContainer, () => this.SVG());
   }
 
   get strictDrawing(): StrictDrawing {
@@ -95,14 +116,14 @@ class App implements AppInterface {
   renderMenu() {
     ReactDOM.render(
       createMenuForApp(this),
-      getMenuContainer(),
+      this._menuContainer,
     );
   }
 
   renderInfobar() {
     ReactDOM.render(
       createInfobarForApp(this),
-      getInfobarContainer(),
+      this._infobarContainer,
     );
   }
 
@@ -119,17 +140,14 @@ class App implements AppInterface {
     }
     ReactDOM.render(
       formFactory(close),
-      getFormContainer(),
+      this._formContainer,
     );
     this._currFormFactory = formFactory;
   }
 
   unmountCurrForm() {
     this._currFormFactory = undefined;
-    let container = getFormContainer();
-    if (container) {
-      ReactDOM.unmountComponentAtNode(container);
-    }
+    ReactDOM.unmountComponentAtNode(this._formContainer);
   }
 
   updateDocumentTitle() {

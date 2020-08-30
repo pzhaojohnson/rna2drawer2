@@ -2,13 +2,6 @@ import App from './App';
 import NodeSVG from './draw/NodeSVG';
 import React from 'react';
 
-import {
-  getMenuContainer,
-  getDrawingContainer,
-  getFormContainer,
-  getInfobarContainer,
-} from './fillInBodyForApp';
-
 jest.mock('./menu/createMenuForApp');
 import createMenuForApp from './menu/createMenuForApp';
 
@@ -34,7 +27,7 @@ it('initializes drawing and adds it to its container', () => {
     () => app.strictDrawing.appendSequence('asdf', 'asdf')
   ).not.toThrow(); // will throw if SVG callback not passed
   expect(
-    getDrawingContainer().childNodes.length
+    app._drawingContainer.childNodes.length
   ).toBeGreaterThan(0);
 });
 
@@ -91,7 +84,7 @@ it('renderMenu method', () => {
   app.renderMenu();
   expect(createMenuForApp.mock.calls.length).toBe(c + 1);
   expect(createMenuForApp.mock.calls[c][0]).toBe(app); // passes self
-  expect(getMenuContainer().textContent).toBe(textContent);
+  expect(app._menuContainer.textContent).toBe(textContent);
 });
 
 it('renderInfobar method', () => {
@@ -102,7 +95,7 @@ it('renderInfobar method', () => {
   app.renderInfobar();
   expect(createInfobarForApp.mock.calls.length).toBe(c + 1);
   expect(createInfobarForApp.mock.calls[c][0]).toBe(app); // passes self
-  expect(getInfobarContainer().textContent).toBe(textContent);
+  expect(app._infobarContainer.textContent).toBe(textContent);
 });
 
 it('renderForm method', () => {
@@ -112,7 +105,7 @@ it('renderForm method', () => {
   app.unmountCurrForm = jest.fn();
   app.renderForm(formFactory);
   expect(app.unmountCurrForm.mock.calls.length).toBe(1);
-  expect(getFormContainer().textContent).toBe(textContent);
+  expect(app._formContainer.textContent).toBe(textContent);
   expect(app._currFormFactory).toBe(formFactory);
 });
 
@@ -121,10 +114,10 @@ it('unmountCurrForm method', () => {
   let formFactory = jest.fn(() => <div>{textContent}</div>);
   let app = new App(() => NodeSVG());
   app.renderForm(formFactory);
-  expect(getFormContainer().textContent).toBe(textContent);
+  expect(app._formContainer.textContent).toBe(textContent);
   expect(app._currFormFactory).toBe(formFactory);
   app.unmountCurrForm();
-  expect(getFormContainer().textContent).toBeFalsy();
+  expect(app._formContainer.textContent).toBeFalsy();
   expect(app._currFormFactory).toBeFalsy();
 });
 
@@ -192,7 +185,7 @@ describe('redo method', () => {
     app.pushUndo();
     app.strictDrawing.appendSequence('qwer', 'qwer');
     app.undo();
-    
+
     app.strictDrawing.savableState = jest.fn(() => 'current state');
     app._undoRedo.redo = jest.fn(() => 'undone state');
     app.strictDrawing.applySavedState = jest.fn();
@@ -249,7 +242,7 @@ it('binds redo', () => {
     new KeyboardEvent('keydown', { ctrlKey: true, shiftKey: false, key: 'z' })
   ); // shift key not pressed
   expect(app.redo.mock.calls.length).toBe(0);
-  
+
   // this causes infinite recursion somehow...
   /*
   document.dispatchEvent(
