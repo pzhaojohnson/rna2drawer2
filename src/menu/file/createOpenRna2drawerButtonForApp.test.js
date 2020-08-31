@@ -3,8 +3,7 @@ import createOpenRna2drawerButtonForApp from './createOpenRna2drawerButtonForApp
 jest.mock('../openNewTab');
 import openNewTab from '../openNewTab';
 
-jest.mock('../../forms/open/renderOpenRna2drawerInApp');
-import renderOpenRna2drawerInApp from '../../forms/open/renderOpenRna2drawerInApp';
+import { OpenRna2drawer } from '../../forms/open/OpenRna2drawer';
 
 import DroppedButton from '../DroppedButton';
 
@@ -26,16 +25,15 @@ it('passes a key', () => {
 
 describe('onClick callback', () => {
   openNewTab.mockImplementation(() => {});
-  renderOpenRna2drawerInApp.mockImplementation(() => {});
 
   it('when drawing is empty', () => {
     jest.clearAllMocks();
     app.strictDrawing.isEmpty = () => true;
+    app.renderForm = jest.fn();
     let orb = createOpenRna2drawerButtonForApp(app);
     orb.props.onClick();
     expect(openNewTab.mock.calls.length).toBe(0);
-    expect(renderOpenRna2drawerInApp.mock.calls.length).toBe(1);
-    expect(renderOpenRna2drawerInApp.mock.calls[0][0]).toBe(app);
+    expect(app.renderForm.mock.calls[0][0]().type).toBe(OpenRna2drawer);
   });
 
   it('when drawing is not empty', () => {
@@ -44,7 +42,6 @@ describe('onClick callback', () => {
     let orb = createOpenRna2drawerButtonForApp(app);
     orb.props.onClick();
     expect(openNewTab.mock.calls.length).toBe(1);
-    expect(renderOpenRna2drawerInApp.mock.calls.length).toBe(0);
   });
 });
 

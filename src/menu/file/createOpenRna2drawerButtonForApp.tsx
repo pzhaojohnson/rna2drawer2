@@ -4,7 +4,7 @@ const uuidv1 = require('uuid/v1');
 import DroppedButton from '../DroppedButton';
 
 import openNewTab from '../openNewTab';
-import renderOpenRna2drawerInApp from '../../forms/open/renderOpenRna2drawerInApp';
+import { OpenRna2drawer } from '../../forms/open/OpenRna2drawer';
 import App from '../../App';
 
 function createOpenRna2drawerButtonForApp(app: App): React.ReactElement {
@@ -15,9 +15,14 @@ function createOpenRna2drawerButtonForApp(app: App): React.ReactElement {
       onClick={() => {
         if (!app.strictDrawing.isEmpty()) {
           openNewTab();
-          return;
+        } else {
+          app.renderForm(close => (
+            <OpenRna2drawer
+              app={app}
+              close={() => close ? close() : app.unmountCurrForm()}
+            />
+          ));
         }
-        renderOpenRna2drawerInApp(app);
       }}
       disabled={!app.strictDrawing.isEmpty()}
     />
