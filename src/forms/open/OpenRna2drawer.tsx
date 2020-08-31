@@ -43,8 +43,8 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
               </p>
               <div style={{ margin: '6px 0px 0px 12px' }} >
                 <p className={'unselectable-text'} >
-                  The sequence and its ID, the secondary structure, tertiary interactions and their colors,
-                  base numbering and the numbering offset, and base colors and outlines.
+                  (1) The sequence and its ID, (2) the secondary structure, (3) tertiary interactions and their colors,
+                  (4) base numbering and the numbering offset, and (5) base colors and outlines.
                 </p>
               </div>
             </div>
