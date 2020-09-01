@@ -4,8 +4,8 @@ import StrokeField from './StrokeField';
 import StrokeWidthField from './StrokeWidthField';
 import DashedField from './DashedField';
 import PaddingField1 from './PaddingField1';
-import PadddingField2, { PaddingField2 } from './PaddingField2';
-import App from '../../../App';
+import PaddingField2 from './PaddingField2';
+import { AppInterface as App } from '../../../AppInterface';
 
 interface Props {
   close: () => void;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PositiveIntegerField from '../../fields/text/PositiveIntegerField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 interface Props {
   currIncrement: number;

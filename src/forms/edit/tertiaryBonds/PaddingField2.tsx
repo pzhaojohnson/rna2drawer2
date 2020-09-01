@@ -1,7 +1,7 @@
 import * as React from 'react';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 import trimPadding from './trimPadding';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 export function PaddingField2(app: App): React.ReactElement {
   let interaction = app.strictDrawingInteraction.tertiaryBondsInteraction;

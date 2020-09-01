@@ -1,19 +1,21 @@
 import * as React from 'react';
-const uuidv1 = require('uuid/v1');
+import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-import ComplementRules from '../../forms/settings/complements/ComplementRules';
-import App from '../../App';
+const uuidv1 = require('uuid/v1');
+import { ComplementRules } from '../../forms/settings/complements/ComplementRules';
 
-export function ComplementRulesButton(app: App): React.ReactElement {
+interface Props {
+  app: App;
+}
+
+export function ComplementRulesButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
       key={uuidv1()}
       text={'Complement Rules'}
       onClick={() => {
-        app.renderForm(() => ComplementRules(app));
+        props.app.renderForm(() => ComplementRules(props.app));
       }}
     />
   );
 }
-
-export default ComplementRulesButton;

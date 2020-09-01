@@ -2,7 +2,7 @@ import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
 import IncludeGUTField from './IncludeGUTField';
 import AllowedMismatchField from './AllowedMismatchField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 export function ComplementRules(app: App): React.ReactElement {
   return (

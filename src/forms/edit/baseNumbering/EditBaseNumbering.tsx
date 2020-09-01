@@ -3,7 +3,7 @@ import ClosableContainer from '../../containers/ClosableContainer';
 import OffsetField from './OffsetField';
 import AnchorField from './AnchorField';
 import IncrementField from './IncrementField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 interface Props {
   offsetField: React.ReactElement;

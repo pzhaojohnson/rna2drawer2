@@ -1,6 +1,6 @@
 import * as React from 'react';
 import CheckboxField from '../../fields/CheckboxField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 import { TertiaryBond } from '../../../draw/QuadraticBezierBond';
 
 interface Props {

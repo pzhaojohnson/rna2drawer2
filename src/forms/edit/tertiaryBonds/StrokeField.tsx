@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 interface Props {
   currStroke?: ColorAndOpacity;

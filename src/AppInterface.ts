@@ -1,3 +1,4 @@
+import * as Svg from '@svgdotjs/svg.js';
 import {
   StrictDrawingInterface as StrictDrawing,
   StrictDrawingSavableState,
@@ -11,6 +12,7 @@ export interface FormFactory {
 }
 
 export interface AppInterface {
+  readonly SVG: () => Svg.Svg;
   readonly strictDrawing: StrictDrawing;
   readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawingInteraction: StrictDrawingInteraction;

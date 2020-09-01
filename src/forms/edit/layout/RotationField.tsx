@@ -1,6 +1,6 @@
 import * as React from 'react';
 import NumberField from '../../fields/text/NumberField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 import normalizeAngle from '../../../draw/normalizeAngle';
 import degreesAreClose from './degreesAreClose';
 

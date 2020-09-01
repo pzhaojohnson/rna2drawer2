@@ -1,7 +1,7 @@
 import * as React from 'react';
 import isAllWhitespace from '../../../parse/isAllWhitespace';
 import TextField from '../../fields/text/TextField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 interface Props {
   currSequenceId: string;
@@ -10,9 +10,9 @@ interface Props {
 
 export class SequenceIdField extends React.Component {
   static defaultProps: Props;
-  
+
   props!: Props;
-  
+
   static create(app: App): React.ReactElement {
     let currId = '';
     let seq = app.strictDrawing.drawing.getSequenceAtIndex(0);

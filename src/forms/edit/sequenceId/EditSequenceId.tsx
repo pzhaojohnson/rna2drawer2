@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
 import SequenceIdField from './SequenceIdField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 interface Props {
   sequenceIdField: React.ReactElement;

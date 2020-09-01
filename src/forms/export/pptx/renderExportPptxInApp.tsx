@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ExportPptx from './ExportPptx';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 function renderExportPptxInApp(app: App) {
   app.renderForm(() => (
@@ -10,7 +10,7 @@ function renderExportPptxInApp(app: App) {
 
         // removes base highlighting, which may not be exportable
         app.strictDrawingInteraction.reset();
-        
+
         return app.strictDrawing.svgString;
       }}
       close={() => app.unmountCurrForm()}

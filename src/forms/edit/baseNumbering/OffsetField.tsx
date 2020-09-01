@@ -1,6 +1,6 @@
 import * as React from 'react';
 import IntegerField from '../../fields/text/IntegerField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 interface Props {
   currOffset: number;

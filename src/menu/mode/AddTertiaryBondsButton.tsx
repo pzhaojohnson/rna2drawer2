@@ -1,7 +1,7 @@
 import * as React from 'react';
-const uuidv1 = require('uuid/v1');
+import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-import App from '../../App';
+const uuidv1 = require('uuid/v1');
 
 function onlyAddingTertiaryBonds(app: App): boolean {
   let interaction = app.strictDrawingInteraction;
@@ -9,21 +9,23 @@ function onlyAddingTertiaryBonds(app: App): boolean {
   return interaction.folding() && mode.onlyAddingTertiaryBonds();
 }
 
-export function AddTertiaryBondsButton(app: App): React.ReactElement {
+interface Props {
+  app: App;
+}
+
+export function AddTertiaryBondsButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
       key={uuidv1()}
       text={'Add Tertiary Bonds'}
       onClick={() => {
-        if (!onlyAddingTertiaryBonds(app)) {
-          app.strictDrawingInteraction.startFolding();
-          app.strictDrawingInteraction.foldingMode.onlyAddTertiaryBonds();
+        if (!onlyAddingTertiaryBonds(props.app)) {
+          props.app.strictDrawingInteraction.startFolding();
+          props.app.strictDrawingInteraction.foldingMode.onlyAddTertiaryBonds();
         }
       }}
-      disabled={onlyAddingTertiaryBonds(app)}
-      checked={onlyAddingTertiaryBonds(app)}
+      disabled={onlyAddingTertiaryBonds(props.app)}
+      checked={onlyAddingTertiaryBonds(props.app)}
     />
   );
 }
-
-export default AddTertiaryBondsButton;

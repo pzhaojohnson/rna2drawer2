@@ -1,23 +1,26 @@
 import * as React from 'react';
+import { AppInterface as App } from '../../AppInterface';
 import Dropdown from '../Dropdown';
 import TopButton from '../TopButton';
-import ComplementRulesButton from './ComplementRulesButton';
-import App from '../../App';
+import { ComplementRulesButton } from './ComplementRulesButton';
 
-export function SettingsDropdown(app: App): React.ReactElement {
+interface Props {
+  app: App;
+}
+
+export function SettingsDropdown(props: Props): React.ReactElement {
+  let drawing = props.app.strictDrawing;
   return (
     <Dropdown
       topButton={(
         <TopButton
           text={'Settings'}
-          disabled={app.strictDrawing.isEmpty()}
+          disabled={drawing.isEmpty()}
         />
       )}
-      droppedElements={app.strictDrawing.isEmpty() ? [] : [
-        ComplementRulesButton(app),
+      droppedElements={drawing.isEmpty() ? [] : [
+        <ComplementRulesButton app={props.app} />,
       ]}
     />
   );
 }
-
-export default SettingsDropdown;

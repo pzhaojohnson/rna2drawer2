@@ -1,22 +1,24 @@
 import * as React from 'react';
-const uuidv1 = require('uuid/v1');
+import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-import App from '../../App';
+const uuidv1 = require('uuid/v1');
 
-export function AnnotateButton(app: App): React.ReactElement {
+interface Props {
+  app: App;
+}
+
+export function AnnotateButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
       key={uuidv1()}
       text={'Annotate Bases'}
       onClick={() => {
-        if (!app.strictDrawingInteraction.annotating()) {
-          app.strictDrawingInteraction.startAnnotating();
+        if (!props.app.strictDrawingInteraction.annotating()) {
+          props.app.strictDrawingInteraction.startAnnotating();
         }
       }}
-      disabled={app.strictDrawingInteraction.annotating()}
-      checked={app.strictDrawingInteraction.annotating()}
+      disabled={props.app.strictDrawingInteraction.annotating()}
+      checked={props.app.strictDrawingInteraction.annotating()}
     />
   );
 }
-
-export default AnnotateButton;

@@ -1,12 +1,10 @@
 import * as React from 'react';
-
+import App from '../../App';
 import Dropdown from '../Dropdown';
 import TopButton from '../TopButton';
 
-import createExportSvgButtonForApp from './createExportSvgButtonForApp';
-import createExportPptxButtonForApp from './createExportPptxButtonForApp';
-
-import App from '../../App';
+import { ExportSvgButton } from './ExportSvgButton';
+import { ExportPptxButton } from './ExportPptxButton';
 
 function createExportDropdownForApp(app: App): React.ReactElement {
   let drawingIsEmpty = app.strictDrawing.isEmpty();
@@ -19,8 +17,8 @@ function createExportDropdownForApp(app: App): React.ReactElement {
         />
       }
       droppedElements={drawingIsEmpty ? [] : [
-        createExportSvgButtonForApp(app),
-        createExportPptxButtonForApp(app),
+        <ExportSvgButton app={app} />,
+        <ExportPptxButton app={app} />,
       ]}
     />
   );

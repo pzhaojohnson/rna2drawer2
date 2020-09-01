@@ -1,9 +1,8 @@
 import App from './App';
 import NodeSVG from './draw/NodeSVG';
 import React from 'react';
-
-jest.mock('./menu/createMenuForApp');
-import createMenuForApp from './menu/createMenuForApp';
+import ReactDOM from 'react-dom';
+import { Menu } from './menu/Menu';
 
 jest.mock('./infobar/createInfobarForApp');
 import createInfobarForApp from './infobar/createInfobarForApp';
@@ -73,17 +72,6 @@ describe('renderPeripherals method', () => {
     expect(app.renderForm.mock.calls.length).toBe(0);
     expect(app.updateDocumentTitle.mock.calls.length).toBe(1);
   });
-});
-
-it('renderMenu method', () => {
-  let textContent = 'Menu was rendered.';
-  createMenuForApp.mockImplementation(() => <div>{textContent}</div>);
-  let app = new App(() => NodeSVG());
-  let c = createMenuForApp.mock.calls.length;
-  app.renderMenu();
-  expect(createMenuForApp.mock.calls.length).toBe(c + 1);
-  expect(createMenuForApp.mock.calls[c][0]).toBe(app); // passes self
-  expect(app._menuContainer.textContent).toBe(textContent);
 });
 
 it('renderInfobar method', () => {

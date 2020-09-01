@@ -1,6 +1,6 @@
 import * as React from 'react';
 import NumberField from '../../fields/text/NumberField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 export function AllowedMismatchField(app: App): React.ReactElement {
   let initialValue = 100 * app.strictDrawingInteraction.foldingMode.allowedMismatch;

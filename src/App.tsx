@@ -12,7 +12,7 @@ import { StrictDrawingSavableState } from './draw/StrictDrawingInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 
-import createMenuForApp from './menu/createMenuForApp';
+import { Menu } from './menu/Menu';
 import createInfobarForApp from './infobar/createInfobarForApp';
 
 import { CreateNewDrawing } from './forms/new/CreateNewDrawing';
@@ -134,7 +134,7 @@ class App implements AppInterface {
   }
 
   renderMenu() {
-    ReactDOM.render(createMenuForApp(this), this._menuContainer);
+    ReactDOM.render(<Menu app={this} />, this._menuContainer);
   }
 
   renderInfobar() {

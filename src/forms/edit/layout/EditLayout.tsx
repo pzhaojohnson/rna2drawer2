@@ -3,7 +3,7 @@ import ClosableContainer from '../../containers/ClosableContainer';
 import RotationField from './RotationField';
 import FlatOutermostLoopField from './FlatOutermostLoopField';
 import TerminiGapField from './TerminiGapField';
-import App from '../../../App';
+import { AppInterface as App } from '../../../AppInterface';
 
 interface Props {
   rotationField: React.ReactElement;

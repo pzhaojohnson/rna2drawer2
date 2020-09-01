@@ -1,50 +1,35 @@
 import * as React from 'react';
+import { AppInterface as App } from '../AppInterface';
 import Logo from './Logo';
+import { FileDropdown } from './file/FileDropdown';
+import { ModeDropdown } from './mode/ModeDropdown';
+import { EditDropdown } from './edit/EditDropdown';
+import { ExportDropdown } from './export/ExportDropdown';
+import { SettingsDropdown } from './settings/SettingsDropdown';
 
-class Menu extends React.Component {
-  static defaultProps: {
-    borderColor: string;
-    backgroundColor: string;
-  }
-
-  props!: {
-    borderColor: string;
-    backgroundColor: string;
-    
-    fileDropdown: React.ReactElement;
-    modeDropdown: React.ReactElement;
-    editDropdown: React.ReactElement;
-    exportDropdown: React.ReactElement;
-    settingsDropdown: React.ReactElement;
-  }
-
-  render() {
-    return (
-      <div
-        style={{
-          borderWidth: '0px 0px 1px 0px',
-          borderStyle: 'solid',
-          borderColor: this.props.borderColor,
-          backgroundColor: this.props.backgroundColor,
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center'
-        }}
-      >
-        <Logo />
-        {this.props.fileDropdown}
-        {this.props.modeDropdown}
-        {this.props.editDropdown}
-        {this.props.exportDropdown}
-        {this.props.settingsDropdown}
-      </div>
-    );
-  }
+interface Props {
+  app: App;
 }
 
-Menu.defaultProps = {
-  borderColor: 'rgba(0,0,0,0.2)',
-  backgroundColor: '#ffffff',
-};
-
-export default Menu;
+export function Menu(props: Props) {
+  return (
+    <div
+      style={{
+        borderWidth: '0px 0px 1px 0px',
+        borderStyle: 'solid',
+        borderColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: '#ffffff',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+      }}
+    >
+      <Logo />
+      <FileDropdown app={props.app} />
+      <ModeDropdown app={props.app} />
+      <EditDropdown app={props.app} />
+      <ExportDropdown app={props.app} />
+      <SettingsDropdown app={props.app} />
+    </div>
+  );
+}

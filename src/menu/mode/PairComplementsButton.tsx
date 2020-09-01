@@ -1,7 +1,7 @@
 import * as React from 'react';
-const uuidv1 = require('uuid/v1');
+import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-import App from '../../App';
+const uuidv1 = require('uuid/v1');
 
 function pairingComplements(app: App): boolean {
   let interaction = app.strictDrawingInteraction;
@@ -9,21 +9,23 @@ function pairingComplements(app: App): boolean {
   return interaction.folding() && mode.pairingComplements();
 }
 
-export function PairComplementsButton(app: App): React.ReactElement {
+interface Props {
+  app: App;
+}
+
+export function PairComplementsButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
       key={uuidv1()}
       text={'Pair Complements'}
       onClick={() => {
-        if (!pairingComplements(app)) {
-          app.strictDrawingInteraction.startFolding();
-          app.strictDrawingInteraction.foldingMode.pairComplements();
+        if (!pairingComplements(props.app)) {
+          props.app.strictDrawingInteraction.startFolding();
+          props.app.strictDrawingInteraction.foldingMode.pairComplements();
         }
       }}
-      disabled={pairingComplements(app)}
-      checked={pairingComplements(app)}
+      disabled={pairingComplements(props.app)}
+      checked={pairingComplements(props.app)}
     />
   );
 }
-
-export default PairComplementsButton;

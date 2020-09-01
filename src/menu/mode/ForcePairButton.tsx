@@ -1,7 +1,7 @@
 import * as React from 'react';
-const uuidv1 = require('uuid/v1');
+import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-import App from '../../App';
+const uuidv1 = require('uuid/v1');
 
 function forcePairing(app: App): boolean {
   let interaction = app.strictDrawingInteraction;
@@ -9,21 +9,23 @@ function forcePairing(app: App): boolean {
   return interaction.folding() && mode.forcePairing();
 }
 
-export function ForcePairButton(app: App): React.ReactElement {
+interface Props {
+  app: App;
+}
+
+export function ForcePairButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
       key={uuidv1()}
       text={'Force Pair'}
       onClick={() => {
-        if (!forcePairing(app)) {
-          app.strictDrawingInteraction.startFolding();
-          app.strictDrawingInteraction.foldingMode.forcePair();
+        if (!forcePairing(props.app)) {
+          props.app.strictDrawingInteraction.startFolding();
+          props.app.strictDrawingInteraction.foldingMode.forcePair();
         }
       }}
-      disabled={forcePairing(app)}
-      checked={forcePairing(app)}
+      disabled={forcePairing(props.app)}
+      checked={forcePairing(props.app)}
     />
   );
 }
-
-export default ForcePairButton;
