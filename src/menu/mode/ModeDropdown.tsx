@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
-import Dropdown from '../Dropdown';
-import TopButton from '../TopButton';
+import { Dropdown } from '../Dropdown';
 import DroppedSeparator from '../DroppedSeparator';
 import { PivotButton } from './PivotButton';
 import { ExpandButton } from './ExpandButton';

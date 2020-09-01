@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import Dropdown from './Dropdown';
+import { Dropdown } from './Dropdown';
 
 let container = null;
 
@@ -32,9 +32,8 @@ it('renders dropped element', () => {
 
 describe('when disabled', () => {
   it('disables top button', () => {
-    let dd = new Dropdown({ name: 'asdf', dropped: <div></div>, disabled: true });
-    let ele = dd.render();
-    expect(ele.props.children[0].props.disabled).toBeTruthy();
+    let dd = Dropdown({ name: 'asdf', dropped: <div></div>, disabled: true });
+    expect(dd.props.children[0].props.disabled).toBeTruthy();
   });
 
   it('does not render dropped element', () => {

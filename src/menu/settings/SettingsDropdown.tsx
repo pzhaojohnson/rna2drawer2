@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
-import Dropdown from '../Dropdown';
-import TopButton from '../TopButton';
+import { Dropdown } from '../Dropdown';
 import { ComplementRulesButton } from './ComplementRulesButton';
 
 interface Props {

@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
-
-import Dropdown from '../Dropdown';
-import TopButton from '../TopButton';
-
+import { Dropdown } from '../Dropdown';
 import { NewButton } from './NewButton';
 import { OpenButton } from './OpenButton';
 import { SaveButton } from './SaveButton';
