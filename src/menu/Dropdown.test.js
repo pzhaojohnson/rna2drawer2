@@ -16,35 +16,6 @@ afterEach(() => {
   container = null;
 });
 
-function getDropdown() {
-  return container.childNodes[0];
-}
-
-function getTopButton() {
-  let d = getDropdown();
-  return d.childNodes[0];
-}
-
-function getDropped() {
-  let d = getDropdown();
-  return d.childNodes[1];
-}
-
-it('renders with border color', () => {
-  act(() => {
-    render(
-      <Dropdown
-        borderColor={'brown'}
-        name={'asdf'}
-        dropped={<div></div>}
-      />,
-      container,
-    );
-  });
-  let dropped = getDropped();
-  expect(dropped.style.borderColor).toBe('brown');
-});
-
 it('renders name', () => {
   act(() => {
     render(<Dropdown name={'Dropdown Name'} dropped={<div></div>} />, container);

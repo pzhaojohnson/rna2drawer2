@@ -7,7 +7,6 @@ class Dropdown extends React.Component {
   }
 
   props!: {
-    borderColor: string;
     name: string;
     dropped: React.ReactElement;
     disabled?: boolean;
@@ -26,7 +25,7 @@ class Dropdown extends React.Component {
             style={{
               borderWidth: '0px 1px 1px 1px',
               borderStyle: 'solid',
-              borderColor: this.props.borderColor,
+              borderColor: 'rgba(0,0,0,0.2)',
             }}
           >
             {this.props.dropped}
@@ -36,9 +35,5 @@ class Dropdown extends React.Component {
     );
   }
 }
-
-Dropdown.defaultProps = {
-  borderColor: 'rgba(0,0,0,0.2)',
-};
 
 export default Dropdown;
