@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-const uuidv1 = require('uuid/v1');
 
 function pairingComplements(app: App): boolean {
   let interaction = app.strictDrawingInteraction;
@@ -16,7 +15,6 @@ interface Props {
 export function PairComplementsButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      key={uuidv1()}
       text={'Pair Complements'}
       onClick={() => {
         if (!pairingComplements(props.app)) {

@@ -8,7 +8,7 @@ class Dropdown extends React.Component {
   props!: {
     borderColor: string;
     topButton: React.ReactElement;
-    droppedElements: Array<React.ReactElement>;
+    dropped: React.ReactElement;
   }
 
   render() {
@@ -23,7 +23,7 @@ class Dropdown extends React.Component {
             borderColor: this.props.borderColor,
           }}
         >
-          {this.props.droppedElements}
+          {this.props.dropped}
         </div>
       </div>
     );

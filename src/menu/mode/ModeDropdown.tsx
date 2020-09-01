@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import Dropdown from '../Dropdown';
-const uuidv1 = require('uuid/v1');
 import TopButton from '../TopButton';
 import DroppedSeparator from '../DroppedSeparator';
 import { PivotButton } from './PivotButton';
@@ -25,16 +24,18 @@ export function ModeDropdown(props: Props): React.ReactElement {
           disabled={drawing.isEmpty()}
         />
       }
-      droppedElements={drawing.isEmpty() ? [] : [
-        <PivotButton app={props.app} />,
-        <ExpandButton app={props.app} />,
-        <DroppedSeparator key={uuidv1()} />,
-        <PairComplementsButton app={props.app} />,
-        <ForcePairButton app={props.app} />,
-        <AddTertiaryBondsButton app={props.app} />,
-        <DroppedSeparator key={uuidv1()} />,
-        <AnnotateButton app={props.app} />,
-      ]}
+      dropped={drawing.isEmpty() ? <div></div> : (
+        <div>
+          <PivotButton app={props.app} />
+          <ExpandButton app={props.app} />
+          <DroppedSeparator />
+          <PairComplementsButton app={props.app} />
+          <ForcePairButton app={props.app} />
+          <AddTertiaryBondsButton app={props.app} />
+          <DroppedSeparator />
+          <AnnotateButton app={props.app} />
+        </div>
+      )}
     />
   );
 }

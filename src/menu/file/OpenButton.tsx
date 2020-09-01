@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-const uuidv1 = require('uuid/v1');
 import openNewTab from '../openNewTab';
 import { OpenRna2drawer } from '../../forms/open/OpenRna2drawer';
 
@@ -12,7 +11,6 @@ interface Props {
 export function OpenButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      key={uuidv1()}
       text={'Open'}
       onClick={() => {
         if (!props.app.strictDrawing.isEmpty()) {

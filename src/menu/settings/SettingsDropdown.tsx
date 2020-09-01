@@ -18,9 +18,11 @@ export function SettingsDropdown(props: Props): React.ReactElement {
           disabled={drawing.isEmpty()}
         />
       )}
-      droppedElements={drawing.isEmpty() ? [] : [
-        <ComplementRulesButton app={props.app} />,
-      ]}
+      dropped={drawing.isEmpty() ? <div></div> : (
+        <div>
+          <ComplementRulesButton app={props.app} />
+        </div>
+      )}
     />
   );
 }

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-const uuidv1 = require('uuid/v1');
 import {
   hasUs,
   usToTs,
@@ -14,7 +13,6 @@ interface Props {
 export function UsToTsButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      key={uuidv1()}
       text={'Us to Ts'}
       onClick={() => {
         let drawing = props.app.strictDrawing.drawing;

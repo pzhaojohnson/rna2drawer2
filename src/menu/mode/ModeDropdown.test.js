@@ -12,7 +12,7 @@ it('when drawing is empty', () => {
   expect(app.strictDrawing.isEmpty()).toBeTruthy();
   let dd = ModeDropdown({ app: app });
   expect(dd.props.topButton.props.disabled).toBeTruthy();
-  expect(dd.props.droppedElements.length).toBe(0);
+  expect(dd.props.dropped.props.children.length).toBe(0);
 });
 
 it('when drawing is not empty', () => {
@@ -20,5 +20,5 @@ it('when drawing is not empty', () => {
   expect(app.strictDrawing.isEmpty()).toBeFalsy();
   let dd = ModeDropdown({ app: app });
   expect(dd.props.topButton.props.disabled).toBeFalsy();
-  expect(dd.props.droppedElements.length).toBeGreaterThan(0);
+  expect(dd.props.dropped.props.children.length).toBeGreaterThan(0);
 });

@@ -19,10 +19,12 @@ export function ExportDropdown(props: Props): React.ReactElement {
           disabled={drawing.isEmpty()}
         />
       }
-      droppedElements={drawing.isEmpty() ? [] : [
-        <ExportSvgButton app={props.app} />,
-        <ExportPptxButton app={props.app} />,
-      ]}
+      dropped={drawing.isEmpty() ? <div></div> : (
+        <div>
+          <ExportSvgButton app={props.app} />
+          <ExportPptxButton app={props.app} />
+        </div>
+      )}
     />
   );
 }
