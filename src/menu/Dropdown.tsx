@@ -16,7 +16,7 @@ export function Dropdown(props: Props): React.ReactElement {
       />
       {props.disabled ? null : (
         <div
-          className={'dropdown-menu-content'}
+          className={'dropdown-menu-dropped'}
           style={{
             borderWidth: '0px 1px 1px 1px',
             borderStyle: 'solid',

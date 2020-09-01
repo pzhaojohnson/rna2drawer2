@@ -168,17 +168,17 @@ svg text {
   display: inline-block;
 }
 
-.dropdown-menu-content {
+.dropdown-menu-dropped {
   display: none;
   position: absolute;
   z-index: 1;
 }
 
-.dropdown-menu-content button {
+.dropdown-menu-dropped button {
   display: block;
 }
 
-.dropdown-menu:hover .dropdown-menu-content {
+.dropdown-menu:hover .dropdown-menu-dropped {
   display: block;
 }
 
