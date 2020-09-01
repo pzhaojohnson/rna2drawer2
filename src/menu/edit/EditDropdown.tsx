@@ -19,16 +19,10 @@ interface Props {
 }
 
 export function EditDropdown(props: Props): React.ReactElement {
-  let drawing = props.app.strictDrawing;
   return (
     <Dropdown
-      topButton={
-        <TopButton
-          text={'Edit'}
-          disabled={drawing.isEmpty()}
-        />
-      }
-      dropped={drawing.isEmpty() ? <div></div> : (
+      name={'Edit'}
+      dropped={(
         <div>
           <UndoButton app={props.app} />
           <RedoButton app={props.app} />
@@ -44,6 +38,7 @@ export function EditDropdown(props: Props): React.ReactElement {
           <EditLayoutButton app={props.app} />
         </div>
       )}
+      disabled={props.app.strictDrawing.isEmpty()}
     />
   );
 }

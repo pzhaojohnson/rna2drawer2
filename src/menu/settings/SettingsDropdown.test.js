@@ -1,6 +1,6 @@
 import App from '../../App';
 import NodeSVG from '../../draw/NodeSVG';
-import { ModeDropdown } from './ModeDropdown';
+import { SettingsDropdown } from './SettingsDropdown';
 
 let app = null;
 
@@ -10,13 +10,13 @@ beforeEach(() => {
 
 it('when drawing is empty', () => {
   expect(app.strictDrawing.isEmpty()).toBeTruthy();
-  let dd = ModeDropdown({ app: app });
+  let dd = SettingsDropdown({ app: app });
   expect(dd.props.disabled).toBeTruthy();
 });
 
 it('when drawing is not empty', () => {
   app.strictDrawing.appendSequence('asdf', 'asdf');
   expect(app.strictDrawing.isEmpty()).toBeFalsy();
-  let dd = ModeDropdown({ app: app });
+  let dd = SettingsDropdown({ app: app });
   expect(dd.props.disabled).toBeFalsy();
 });

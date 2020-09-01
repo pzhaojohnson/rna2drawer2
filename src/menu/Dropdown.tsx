@@ -1,4 +1,5 @@
 import * as React from 'react';
+import TopButton from './TopButton';
 
 class Dropdown extends React.Component {
   static defaultProps: {
@@ -7,24 +8,30 @@ class Dropdown extends React.Component {
 
   props!: {
     borderColor: string;
-    topButton: React.ReactElement;
+    name: string;
     dropped: React.ReactElement;
+    disabled?: boolean;
   }
 
   render() {
     return (
       <div className={'dropdown-menu'} >
-        {this.props.topButton}
-        <div
-          className={'dropdown-menu-content'}
-          style={{
-            borderWidth: '0px 1px 1px 1px',
-            borderStyle: 'solid',
-            borderColor: this.props.borderColor,
-          }}
-        >
-          {this.props.dropped}
-        </div>
+        <TopButton
+          text={this.props.name}
+          disabled={this.props.disabled}
+        />
+        {this.props.disabled ? null : (
+          <div
+            className={'dropdown-menu-content'}
+            style={{
+              borderWidth: '0px 1px 1px 1px',
+              borderStyle: 'solid',
+              borderColor: this.props.borderColor,
+            }}
+          >
+            {this.props.dropped}
+          </div>
+        )}
       </div>
     );
   }

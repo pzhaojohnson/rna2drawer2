@@ -11,14 +11,12 @@ beforeEach(() => {
 it('when drawing is empty', () => {
   expect(app.strictDrawing.isEmpty()).toBeTruthy();
   let dd = EditDropdown({ app: app });
-  expect(dd.props.topButton.props.disabled).toBeTruthy();
-  expect(dd.props.dropped.props.children.length).toBe(0);
+  expect(dd.props.disabled).toBeTruthy();
 });
 
 it('when drawing is not empty', () => {
   app.strictDrawing.appendSequence('asdf', 'asdf');
   expect(app.strictDrawing.isEmpty()).toBeFalsy();
   let dd = EditDropdown({ app: app });
-  expect(dd.props.topButton.props.disabled).toBeFalsy();
-  expect(dd.props.dropped.props.children.length).toBeGreaterThan(0);
+  expect(dd.props.disabled).toBeFalsy();
 });

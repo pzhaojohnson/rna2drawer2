@@ -15,16 +15,10 @@ interface Props {
 }
 
 export function ModeDropdown(props: Props): React.ReactElement {
-  let drawing = props.app.strictDrawing;
   return (
     <Dropdown
-      topButton={
-        <TopButton
-          text={'Mode'}
-          disabled={drawing.isEmpty()}
-        />
-      }
-      dropped={drawing.isEmpty() ? <div></div> : (
+      name={'Mode'}
+      dropped={(
         <div>
           <PivotButton app={props.app} />
           <ExpandButton app={props.app} />
@@ -36,6 +30,7 @@ export function ModeDropdown(props: Props): React.ReactElement {
           <AnnotateButton app={props.app} />
         </div>
       )}
+      disabled={props.app.strictDrawing.isEmpty()}
     />
   );
 }

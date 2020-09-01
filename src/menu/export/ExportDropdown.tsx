@@ -10,21 +10,16 @@ interface Props {
 }
 
 export function ExportDropdown(props: Props): React.ReactElement {
-  let drawing = props.app.strictDrawing;
   return (
     <Dropdown
-      topButton={
-        <TopButton
-          text={'Export'}
-          disabled={drawing.isEmpty()}
-        />
-      }
-      dropped={drawing.isEmpty() ? <div></div> : (
+      name={'Export'}
+      dropped={(
         <div>
           <ExportSvgButton app={props.app} />
           <ExportPptxButton app={props.app} />
         </div>
       )}
+      disabled={props.app.strictDrawing.isEmpty()}
     />
   );
 }

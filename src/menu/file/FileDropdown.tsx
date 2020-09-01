@@ -15,7 +15,7 @@ interface Props {
 export function FileDropdown(props: Props): React.ReactElement {
   return (
     <Dropdown
-      topButton={<TopButton text={'File'} />}
+      name={'File'}
       dropped={
         <div>
           <NewButton app={props.app} />

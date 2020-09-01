@@ -9,20 +9,15 @@ interface Props {
 }
 
 export function SettingsDropdown(props: Props): React.ReactElement {
-  let drawing = props.app.strictDrawing;
   return (
     <Dropdown
-      topButton={(
-        <TopButton
-          text={'Settings'}
-          disabled={drawing.isEmpty()}
-        />
-      )}
-      dropped={drawing.isEmpty() ? <div></div> : (
+      name={'Settings'}
+      dropped={(
         <div>
           <ComplementRulesButton app={props.app} />
         </div>
       )}
+      disabled={props.app.strictDrawing.isEmpty()}
     />
   );
 }

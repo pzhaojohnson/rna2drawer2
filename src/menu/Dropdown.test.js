@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-
 import Dropdown from './Dropdown';
 
 let container = null;
@@ -26,7 +25,7 @@ function getTopButton() {
   return d.childNodes[0];
 }
 
-function getDroppedElements() {
+function getDropped() {
   let d = getDropdown();
   return d.childNodes[1];
 }
@@ -36,46 +35,44 @@ it('renders with border color', () => {
     render(
       <Dropdown
         borderColor={'brown'}
-        topButton={<div></div>}
-        droppedElements={[]}
+        name={'asdf'}
+        dropped={<div></div>}
       />,
       container,
     );
   });
-  let des = getDroppedElements();
-  expect(des.style.borderColor).toBe('brown');
+  let dropped = getDropped();
+  expect(dropped.style.borderColor).toBe('brown');
 });
 
-it('renders top button', () => {
+it('renders name', () => {
   act(() => {
-    render(
-      <Dropdown
-        topButton={<div>Top Button</div>}
-        droppedElements={[]}
-      />,
-      container,
-    );
+    render(<Dropdown name={'Dropdown Name'} dropped={<div></div>} />, container);
   });
-  let tb = getTopButton();
-  expect(tb.textContent).toBe('Top Button');
+  expect(container.textContent.includes('Dropdown Name')).toBeTruthy();
 });
 
-it('renders dropped elements', () => {
+it('renders dropped element', () => {
   act(() => {
-    render(
-      <Dropdown
-        topButton={<div></div>}
-        droppedElements={[
-          <div key={'1'} >Dropped Button 1</div>,
-          <div key={'2'} >Separator</div>,
-          <div key={'3'} >Dropped Button 2</div>,
-        ]}
-      />,
-      container,
-    );
+    render(<Dropdown name={'asdf'} dropped={<div>Asdf Qwer</div>} />, container);
   });
-  let des = getDroppedElements();
-  expect(des.childNodes[0].textContent).toBe('Dropped Button 1');
-  expect(des.childNodes[1].textContent).toBe('Separator');
-  expect(des.childNodes[2].textContent).toBe('Dropped Button 2');
+  expect(container.textContent.includes('Asdf Qwer')).toBeTruthy();
+});
+
+describe('when disabled', () => {
+  it('disables top button', () => {
+    let dd = new Dropdown({ name: 'asdf', dropped: <div></div>, disabled: true });
+    let ele = dd.render();
+    expect(ele.props.children[0].props.disabled).toBeTruthy();
+  });
+
+  it('does not render dropped element', () => {
+    act(() => {
+      render(
+        <Dropdown name={'asdf'} dropped={<div>Asdf Qwer</div>} disabled={true} />,
+        container,
+      );
+    });
+    expect(container.textContent.includes('Asdf Qwer')).toBeFalsy();
+  });
 });
