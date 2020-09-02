@@ -3,9 +3,7 @@ import NodeSVG from './draw/NodeSVG';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Menu } from './menu/Menu';
-
-jest.mock('./infobar/createInfobarForApp');
-import createInfobarForApp from './infobar/createInfobarForApp';
+import { Infobar } from './infobar/Infobar';
 
 import * as Save from './export/save';
 
@@ -72,17 +70,6 @@ describe('renderPeripherals method', () => {
     expect(app.renderForm.mock.calls.length).toBe(0);
     expect(app.updateDocumentTitle.mock.calls.length).toBe(1);
   });
-});
-
-it('renderInfobar method', () => {
-  let textContent = 'Infobar was rendered.';
-  createInfobarForApp.mockImplementation(() => <div>{textContent}</div>);
-  let app = new App(() => NodeSVG());
-  let c = createInfobarForApp.mock.calls.length;
-  app.renderInfobar();
-  expect(createInfobarForApp.mock.calls.length).toBe(c + 1);
-  expect(createInfobarForApp.mock.calls[c][0]).toBe(app); // passes self
-  expect(app._infobarContainer.textContent).toBe(textContent);
 });
 
 it('renderForm method', () => {

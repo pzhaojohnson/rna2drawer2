@@ -13,7 +13,7 @@ import * as Svg from '@svgdotjs/svg.js';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 
 import { Menu } from './menu/Menu';
-import createInfobarForApp from './infobar/createInfobarForApp';
+import { Infobar } from './infobar/Infobar';
 
 import { CreateNewDrawing } from './forms/new/CreateNewDrawing';
 
@@ -138,7 +138,7 @@ class App implements AppInterface {
   }
 
   renderInfobar() {
-    ReactDOM.render(createInfobarForApp(this), this._infobarContainer);
+    ReactDOM.render(<Infobar app={this} />, this._infobarContainer);
   }
 
   renderForm(formFactory: FormFactory) {
