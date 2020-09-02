@@ -53,6 +53,20 @@ export function handleMouseup(mode: AnnotatingMode) {
   }
 }
 
+export function select(mode: AnnotatingMode, ps: number[]) {
+  clearSelection(mode);
+  ps.forEach(p => mode.selected.add(p));
+  setAllBaseHighlightings(mode);
+  mode.fireChange();
+  mode.requestToRenderForm();
+}
+
+export function clearSelection(mode: AnnotatingMode) {
+  mode.selected = new Set<number>();
+  setAllBaseHighlightings(mode);
+  mode.fireChange();
+}
+
 export function refresh(mode: AnnotatingMode) {
   if (typeof mode.hovered == 'number' && mode.hovered > mode.drawing.numBases) {
     mode.hovered = undefined;
