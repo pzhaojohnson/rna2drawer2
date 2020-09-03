@@ -37,7 +37,7 @@ export function highlightStem(mode: PivotingMode, st: Stem) {
           radius: 1.25 * radius,
           fillOpacity: 0.075,
           strokeOpacity: 0.425,
-        }, { duration: 1000 });
+        }, { duration: 750 });
       }
     } else {
       b.removeHighlighting();
