@@ -4,6 +4,7 @@ import Logo from './Logo';
 import { FileDropdown } from './file/FileDropdown';
 import { ModeDropdown } from './mode/ModeDropdown';
 import { EditDropdown } from './edit/EditDropdown';
+import { AnnotateDropdown } from './annotate/AnnotateDropdown';
 import { ExportDropdown } from './export/ExportDropdown';
 import { SettingsDropdown } from './settings/SettingsDropdown';
 
@@ -28,6 +29,7 @@ export function Menu(props: Props) {
       <FileDropdown app={props.app} />
       <ModeDropdown app={props.app} />
       <EditDropdown app={props.app} />
+      <AnnotateDropdown app={props.app} />
       <ExportDropdown app={props.app} />
       <SettingsDropdown app={props.app} />
     </div>
