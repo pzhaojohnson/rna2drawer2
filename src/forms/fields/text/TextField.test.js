@@ -105,25 +105,36 @@ it('checkValue callback prop is optional', () => {
   expect(getErrorMessage().textContent).toBeFalsy();
 });
 
-it('calls onInvalidInput callback on invalid input', () => {
+it('calls onInput, onValidInput and onInvalidInput callbacks when appropriate', () => {
+  let onInput = jest.fn();
+  let onValidInput = jest.fn();
   let onInvalidInput = jest.fn();
   act(() => {
     render(
       <TextField
         checkValue={v => v == 'asdf' ? 'error' : ''}
+        onInput={onInput}
+        onValidInput={onValidInput}
         onInvalidInput={onInvalidInput}
       />,
       container,
     );
   });
-  expect(onInvalidInput).not.toHaveBeenCalled();
   act(() => fireEvent.change(getInput(), { target: { value: 'asdf' } }));
+  expect(onInput).toHaveBeenCalledTimes(1);
+  expect(onValidInput).not.toHaveBeenCalled();
   expect(onInvalidInput).toHaveBeenCalledTimes(1);
   act(() => fireEvent.change(getInput(), { target: { value: 'qwer' } }));
+  expect(onInput).toHaveBeenCalledTimes(2);
+  expect(onValidInput).toHaveBeenCalledTimes(1);
   expect(onInvalidInput).toHaveBeenCalledTimes(1);
   act(() => fireEvent.change(getInput(), { target: { value: 'asdf' } }));
+  expect(onInput).toHaveBeenCalledTimes(3);
+  expect(onValidInput).toHaveBeenCalledTimes(1);
   expect(onInvalidInput).toHaveBeenCalledTimes(2);
   act(() => fireEvent.change(getInput(), { target: { value: 'asd' } }));
+  expect(onInput).toHaveBeenCalledTimes(4);
+  expect(onValidInput).toHaveBeenCalledTimes(2);
   expect(onInvalidInput).toHaveBeenCalledTimes(2);
 });
 
