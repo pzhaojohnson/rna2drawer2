@@ -17,6 +17,11 @@ afterEach(() => {
   container = null;
 });
 
+it('has enabled CSS styles when enabled', () => {
+  let b = ActionButton({});
+  expect(b.props.className).toBe('action-button');
+});
+
 it('renders text', () => {
   act(() => render(<ActionButton text={'Asdf Qwer'} />, container));
   expect(container.textContent.includes('Asdf Qwer')).toBeTruthy();
@@ -33,4 +38,23 @@ it('binds onClick callback', () => {
     );
   });
   expect(onClick).toHaveBeenCalled();
+});
+
+describe('when disabled', () => {
+  it('has disabled CSS styles', () => {
+    let b = ActionButton({ disabled: true });
+    expect(b.props.className).toBe('disabled-action-button');
+  });
+
+  it('does not bind onClick callback', () => {
+    let onClick = jest.fn();
+    act(() => render(<ActionButton onClick={onClick} disabled={true} />, container));
+    act(() => {
+      fireEvent(
+        container.childNodes[0],
+        new MouseEvent('click', { bubbles: true })
+      );
+    });
+    expect(onClick).not.toHaveBeenCalled();
+  });
 });

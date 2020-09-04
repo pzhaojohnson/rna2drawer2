@@ -35,26 +35,25 @@ export function SelectBasesByCharacter(props: Props): React.ReactElement {
             {errorMessage.join('') ? <ErrorMessage message={errorMessage.join('')} /> : null}
           </div>
           <div style={{ marginTop: '6px' }} >
-            {!inputIsValid ? null : (
-              <ActionButton
-                text={'Select'}
-                onClick={() => {
-                  let drawing = props.app.strictDrawing.drawing;
-                  let ps = positionsWithCharacter(drawing, character);
-                  if (ps.length == 0) {
-                    setErrorMessage(['No bases have the entered character.']);
-                  } else {
-                    props.close();
-                    props.app.strictDrawingInteraction.startAnnotating();
-                    let annotatingMode = props.app.strictDrawingInteraction.annotatingMode;
-                    annotatingMode.clearSelection();
-                    annotatingMode.select(ps);
-                    annotatingMode.requestToRenderForm();
-                    lastSelected = character;
-                  }
-                }}
-              />
-            )}
+            <ActionButton
+              text={'Select'}
+              onClick={() => {
+                let drawing = props.app.strictDrawing.drawing;
+                let ps = positionsWithCharacter(drawing, character);
+                if (ps.length == 0) {
+                  setErrorMessage(['No bases have the entered character.']);
+                } else {
+                  props.close();
+                  props.app.strictDrawingInteraction.startAnnotating();
+                  let annotatingMode = props.app.strictDrawingInteraction.annotatingMode;
+                  annotatingMode.clearSelection();
+                  annotatingMode.select(ps);
+                  annotatingMode.requestToRenderForm();
+                  lastSelected = character;
+                }
+              }}
+              disabled={!inputIsValid}
+            />
           </div>
         </div>
       }

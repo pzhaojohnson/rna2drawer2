@@ -209,6 +209,19 @@ overrides the background-color on hover setting below. */
   -webkit-transition-duration: 0.25s;
 }
 
+.disabled-action-button {
+  background-color: navy;
+  color: white;
+  opacity: 0.25;
+  transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+}
+
+.disabled-action-button:hover {
+  background-color: navy;
+  color: white;
+}
+
 @keyframes fadein {
   from {
     opacity: 0.25;
