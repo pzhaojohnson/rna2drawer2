@@ -105,6 +105,16 @@ it('checkValue callback prop is optional', () => {
   expect(getErrorMessage().textContent).toBeFalsy();
 });
 
+it('passes onFocus callback', () => {
+  let onFocus = jest.fn();
+  act(() => {
+    render(<TextField initialValue={'asdf'} onFocus={onFocus} />, container);
+  });
+  expect(onFocus).not.toHaveBeenCalled();
+  act(() => fireEvent.focus(getInput(), { bubbles: true }));
+  expect(onFocus).toHaveBeenCalled();
+});
+
 it('calls onInput, onValidInput and onInvalidInput callbacks when appropriate', () => {
   let onInput = jest.fn();
   let onValidInput = jest.fn();

@@ -5,6 +5,7 @@ interface Props {
   name: string;
   initialValue?: string;
   checkValue?: (v: string) => string;
+  onFocus?: () => void;
   onInput?: () => void;
   onValidInput?: () => void;
   onInvalidInput?: () => void;
@@ -68,6 +69,7 @@ export class TextField extends React.Component {
         type={'text'}
         value={this.state.value}
         onChange={event => this.onInputChange(event)}
+        onFocus={this.props.onFocus}
         onBlur={() => this.onBlur()}
         onKeyUp={event => this.onKeyUp(event)}
         autoFocus={TextField.nameOfLastEntered == this.props.name}

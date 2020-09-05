@@ -6,6 +6,9 @@ interface Props {
   name: string;
   initialValue?: number;
   checkValue?: (n: number) => string;
+  onFocus?: () => void;
+  onInput?: () => void;
+  onValidInput?: () => void;
   onInvalidInput?: () => void;
   set: (n: number) => void;
   minLabelWidth?: string;
@@ -32,6 +35,9 @@ export class NumberField extends React.Component {
           }
           return '';
         }}
+        onFocus={this.props.onFocus}
+        onInput={this.props.onInput}
+        onValidInput={this.props.onValidInput}
         onInvalidInput={this.props.onInvalidInput}
         set={(v: string) => {
           let n = Number.parseFloat(v);

@@ -6,6 +6,8 @@ interface Props {
   name: string;
   initialValue?: number;
   checkValue?: (n: number) => string;
+  onInput?: () => void;
+  onValidInput?: () => void;
   onInvalidInput?: () => void;
   set: (n: number) => void;
   minLabelWidth?: string;
@@ -29,6 +31,8 @@ export class IntegerField extends React.Component {
           }
           return '';
         }}
+        onInput={this.props.onInput}
+        onValidInput={this.props.onValidInput}
         onInvalidInput={this.props.onInvalidInput}
         set={(n: number) => this.props.set(n)}
         minLabelWidth={this.props.minLabelWidth}

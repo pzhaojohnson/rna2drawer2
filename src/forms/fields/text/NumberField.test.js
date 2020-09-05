@@ -62,12 +62,21 @@ describe('checkValue callback', () => {
   });
 });
 
-it('passes onInvalidInput callback', () => {
+it('passes on focus and input callbacks', () => {
+  let onFocus = jest.fn();
+  let onInput = jest.fn();
+  let onValidInput = jest.fn();
   let onInvalidInput = jest.fn();
-  let comp = new NumberField({ onInvalidInput: onInvalidInput });
-  expect(onInvalidInput).not.toHaveBeenCalled();
-  comp.props.onInvalidInput();
-  expect(onInvalidInput).toHaveBeenCalled();
+  let comp = new NumberField({
+    onFocus: onFocus,
+    onInput: onInput,
+    onValidInput: onValidInput,
+    onInvalidInput: onInvalidInput,
+  });
+  expect(comp.props.onFocus).toBe(onFocus);
+  expect(comp.props.onInput).toBe(onInput);
+  expect(comp.props.onValidInput).toBe(onValidInput);
+  expect(comp.props.onInvalidInput).toBe(onInvalidInput);
 });
 
 it('passes value between set callbacks', () => {
