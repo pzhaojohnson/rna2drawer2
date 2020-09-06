@@ -13,14 +13,12 @@ export function handleMouseoverOnBase(mode: AnnotatingMode, b: Base) {
       mode.requestToRenderForm();
     }
     setAllBaseHighlightings(mode);
-    mode.fireChange();
   }
 }
 
 export function handleMouseoutOnBase(mode: AnnotatingMode, b: Base) {
   mode.hovered = undefined;
   setAllBaseHighlightings(mode);
-  mode.fireChange();
 }
 
 export function handleMousedownOnBase(mode: AnnotatingMode, b: Base) {
