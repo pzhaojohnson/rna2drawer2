@@ -22,8 +22,18 @@ describe('checkValue callback', () => {
   it('rejects non-numbers', () => {
     let comp = new NumberField({ name: 'name', initialValue: 0 });
     let ele = comp.render();
-    expect(ele.props.checkValue('')).toBeTruthy(); // empty
+    expect(ele.props.checkValue('')).toBeTruthy(); // an empty string
+    expect(ele.props.checkValue(' \t \n \r\n ')).toBeTruthy(); // all whitespace
     expect(ele.props.checkValue('qwer')).toBeTruthy(); // not a number
+  });
+
+  it('rejects strings whose first parts can be parsed as a number', () => {
+    let comp = new NumberField({ name: 'asdf', initialValue: 0 });
+    let ele = comp.render();
+    let s = '100a';
+    expect(Number.parseFloat(s)).toBe(100); // first part can be parsed as a number
+    expect(Number(s)).toBe(NaN); // whole string cannot be parsed as a number
+    expect(ele.props.checkValue(s)).toBeTruthy();
   });
 
   it('rejects nonfinite numbers', () => {

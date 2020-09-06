@@ -25,9 +25,12 @@ export class NumberField extends React.Component {
         name={this.props.name}
         initialValue={this.props.initialValue?.toString()}
         checkValue={(v: string) => {
-          let n = Number.parseFloat(v);
           let name = capitalizeFirstLetter(this.props.name.toLowerCase());
-          if (typeof n !== 'number' || !Number.isFinite(n)) {
+          if (v.trim().length == 0) {
+            return name + ' must be a number.';
+          }
+          let n = Number(v);
+          if (typeof n != 'number' || !Number.isFinite(n)) {
             return name + ' must be a number.';
           }
           if (this.props.checkValue) {
