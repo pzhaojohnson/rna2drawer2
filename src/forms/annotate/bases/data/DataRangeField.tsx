@@ -36,6 +36,7 @@ export function DataRangeField(props: Props): React.ReactElement {
           }}
           onFocus={() => {
             setMaxKey(maxKey + 1);
+            props.onInput ? props.onInput() : undefined;
             props.onValidInput ? props.onValidInput() : undefined;
           }}
           onInput={props.onInput}
@@ -56,6 +57,7 @@ export function DataRangeField(props: Props): React.ReactElement {
             }}
             onFocus={() => {
               setMinKey(minKey + 1);
+              props.onInput ? props.onInput() : undefined;
               props.onValidInput ? props.onValidInput() : undefined;
             }}
             onInput={props.onInput}
