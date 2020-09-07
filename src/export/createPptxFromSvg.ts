@@ -31,8 +31,8 @@ function _setSlideDimensions(pres: PptxGenJS, svg: Svg.Svg) {
   let h = pixelsToInches(svg.viewbox().height);
   pres.defineLayout({
     name: 'CUSTOM_LAYOUT',
-    width: _trimNum(w),
-    height: _trimNum(h),
+    width: trimNum(w, 1),
+    height: trimNum(h, 1),
   });
   pres.layout = 'CUSTOM_LAYOUT';
 }
