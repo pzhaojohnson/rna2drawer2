@@ -39,12 +39,12 @@ function _setSlideDimensions(pres: PptxGenJS, svg: Svg.Svg) {
 
 function _textWidth(text: Svg.Text): number {
   let bb = text.bbox();
-  return pixelsToInches(4 * bb.width);
+  return pixelsToInches(3 * bb.width);
 }
 
 function _textHeight(text: Svg.Text): number {
   let bb = text.bbox();
-  return pixelsToInches(2 * bb.height);
+  return pixelsToInches(2.5 * bb.height);
 }
 
 function _textOptions(text: Svg.Text): object {
@@ -65,6 +65,7 @@ function _textOptions(text: Svg.Text): object {
     y: _trimNum(y),
     w: _trimNum(w),
     h: _trimNum(h),
+    margin: 0,
     align: 'center',
     valign: 'middle',
     fontFace: text.attr('font-family'),

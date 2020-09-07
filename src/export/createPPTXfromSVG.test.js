@@ -54,8 +54,8 @@ describe('_textOptions function', () => {
       t.attr({ 'font-size': pointsToPixels(20) });
       let tos = _textOptions(t);
       expect(tos.fontSize).toBeCloseTo(20, 2);
-      expect(tos.w).toBeCloseTo(0.61, 2);
-      expect(tos.h).toBeCloseTo(0.76, 2);
+      expect(tos.w).toBeCloseTo(0.46, 2);
+      expect(tos.h).toBeCloseTo(0.95, 2);
     });
 
     it('trims numbers', () => {
@@ -81,8 +81,8 @@ describe('_textOptions function', () => {
         'font-size': pointsToPixels(12),
       });
       let tos = _textOptions(t);
-      expect(tos.x).toBeCloseTo(0.36, 2);
-      expect(tos.y).toBeCloseTo(0.75, 2);
+      expect(tos.x).toBeCloseTo(0.42, 2);
+      expect(tos.y).toBeCloseTo(0.69, 2);
     });
 
     it('trims numbers', () => {
