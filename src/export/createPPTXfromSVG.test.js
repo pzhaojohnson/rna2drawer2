@@ -66,8 +66,8 @@ describe('_textOptions function', () => {
       t.attr({ 'font-size': fs });
       let tos = _textOptions(t);
       expect(_trimNum(tos.fontSize)).toEqual(tos.fontSize);
-      expect(_trimNum(tos.w)).toEqual(tos.w);
-      expect(_trimNum(tos.h)).toEqual(tos.h);
+      expect(trimNum(tos.w, 4)).toEqual(tos.w);
+      expect(trimNum(tos.h, 4)).toEqual(tos.h);
     });
   });
 
@@ -89,13 +89,11 @@ describe('_textOptions function', () => {
       let svg = createNodeSVG();
       let x = 6.19847129847;
       let y = 7.1893781257;
-      expect(_trimNum(x)).not.toEqual(x);
-      expect(_trimNum(y)).not.toEqual(y);
       let t = svg.text(add => add.tspan('Y'));
       t.attr({ 'x': x, 'y': y });
       let tos = _textOptions(t);
-      expect(_trimNum(tos.x)).toEqual(tos.x);
-      expect(_trimNum(tos.y)).toEqual(tos.y);
+      expect(trimNum(tos.x, 4)).toEqual(tos.x);
+      expect(trimNum(tos.y, 4)).toEqual(tos.y);
     });
   });
 
@@ -163,16 +161,12 @@ describe('_lineOptions function', () => {
       let y1 = 6.1841289414;
       let x2 = 12.2358738471;
       let y2 = 5.12984712847;
-      expect(_trimNum(x1)).not.toEqual(x1);
-      expect(_trimNum(y1)).not.toEqual(y1);
-      expect(_trimNum(x2)).not.toEqual(x2);
-      expect(_trimNum(y2)).not.toEqual(y2);
       let l = svg.line(x1, y1, x2, y2);
       let los = _lineOptions(l);
-      expect(_trimNum(los.x)).toEqual(los.x);
-      expect(_trimNum(los.y)).toEqual(los.y);
-      expect(_trimNum(los.w)).toEqual(los.w);
-      expect(_trimNum(los.h)).toEqual(los.h);
+      expect(trimNum(los.x, 4)).toEqual(los.x);
+      expect(trimNum(los.y, 4)).toEqual(los.y);
+      expect(trimNum(los.w, 4)).toEqual(los.w);
+      expect(trimNum(los.h, 4)).toEqual(los.h);
     });
   });
 
@@ -238,16 +232,13 @@ describe('_circleOptions function', () => {
       let d = 6.12481724871;
       let cx = 6.12984718247;
       let cy = 8.39857128471;
-      expect(_trimNum(d)).not.toEqual(d);
-      expect(_trimNum(cx)).not.toEqual(cx);
-      expect(_trimNum(cy)).not.toEqual(cy);
       let c = svg.circle(d);
       c.attr({ 'cx': cx, 'cy': cy });
       let cos = _circleOptions(c);
-      expect(_trimNum(cos.x)).toEqual(cos.x);
-      expect(_trimNum(cos.y)).toEqual(cos.y);
-      expect(_trimNum(cos.w)).toEqual(cos.w);
-      expect(_trimNum(cos.h)).toEqual(cos.h);
+      expect(trimNum(cos.x, 4)).toEqual(cos.x);
+      expect(trimNum(cos.y, 4)).toEqual(cos.y);
+      expect(trimNum(cos.w, 4)).toEqual(cos.w);
+      expect(trimNum(cos.h, 4)).toEqual(cos.h);
     });
   });
 
@@ -333,17 +324,13 @@ describe('_rectOptions function', () => {
       let y = 12.29857387;
       let w = 56.1298471847;
       let h = 100.23857387;
-      expect(_trimNum(x)).not.toEqual(x);
-      expect(_trimNum(y)).not.toEqual(y);
-      expect(_trimNum(w)).not.toEqual(w);
-      expect(_trimNum(h)).not.toEqual(h);
       let r = svg.rect(w, h);
       r.attr({ 'x': x, 'y': y });
       let ros = _rectOptions(r);
-      expect(_trimNum(ros.x)).toEqual(ros.x);
-      expect(_trimNum(ros.y)).toEqual(ros.y);
-      expect(_trimNum(ros.w)).toEqual(ros.w);
-      expect(_trimNum(ros.h)).toEqual(ros.h);
+      expect(trimNum(ros.x, 4)).toEqual(ros.x);
+      expect(trimNum(ros.y, 4)).toEqual(ros.y);
+      expect(trimNum(ros.w, 4)).toEqual(ros.w);
+      expect(trimNum(ros.h, 4)).toEqual(ros.h);
     });
   });
 
@@ -486,19 +473,13 @@ describe('_elementImageOptions function', () => {
     let qcy = 40.129481724;
     let qex = 3.12984712847;
     let qey = 80.198472814;
-    expect(_trimNum(mx)).not.toEqual(mx);
-    expect(_trimNum(my)).not.toEqual(my);
-    expect(_trimNum(qcx)).not.toEqual(qcx);
-    expect(_trimNum(qcy)).not.toEqual(qcy);
-    expect(_trimNum(qex)).not.toEqual(qex);
-    expect(_trimNum(qey)).not.toEqual(qey);
     let d = ['M', mx, my, 'Q', qcx, qcy, qex, qey].join(' ');
     let p = svg.path(d);
     let pios = _elementImageOptions(p);
-    expect(_trimNum(pios.x)).toEqual(pios.x);
-    expect(_trimNum(pios.y)).toEqual(pios.y);
-    expect(_trimNum(pios.w)).toEqual(pios.w);
-    expect(_trimNum(pios.h)).toEqual(pios.h);
+    expect(trimNum(pios.x, 4)).toEqual(pios.x);
+    expect(trimNum(pios.y, 4)).toEqual(pios.y);
+    expect(trimNum(pios.w, 4)).toEqual(pios.w);
+    expect(trimNum(pios.h, 4)).toEqual(pios.h);
   });
 });
 

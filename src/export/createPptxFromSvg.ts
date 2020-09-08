@@ -61,10 +61,10 @@ function _textOptions(text: Svg.Text): object {
     bold = true;
   }
   return {
-    x: _trimNum(x),
-    y: _trimNum(y),
-    w: _trimNum(w),
-    h: _trimNum(h),
+    x: trimNum(x, 4),
+    y: trimNum(y, 4),
+    w: trimNum(w, 4),
+    h: trimNum(h, 4),
     margin: 0,
     align: 'center',
     valign: 'middle',
@@ -92,10 +92,10 @@ function _lineOptions(line: Svg.Line): object {
   let w = pixelsToInches(xMax - xMin);
   let h = pixelsToInches(yMax - yMin);
   return {
-    x: _trimNum(x),
-    y: _trimNum(y),
-    w: _trimNum(w),
-    h: _trimNum(h),
+    x: trimNum(x, 4),
+    y: trimNum(y, 4),
+    w: trimNum(w, 4),
+    h: trimNum(h, 4),
     flipH: line.attr('x1') > xMin,
     flipV: line.attr('y1') > yMin,
     line: _pptxHex(new Svg.Color(line.attr('stroke'))),
@@ -120,10 +120,10 @@ function _circleOptions(circle: Svg.Circle): object {
     lineAlpha = 100;
   }
   return {
-    x: _trimNum(pixelsToInches(x)),
-    y: _trimNum(pixelsToInches(y)),
-    w: _trimNum(pixelsToInches(w)),
-    h: _trimNum(pixelsToInches(h)),
+    x: trimNum(pixelsToInches(x), 4),
+    y: trimNum(pixelsToInches(y), 4),
+    w: trimNum(pixelsToInches(w), 4),
+    h: trimNum(pixelsToInches(h), 4),
     line: {
       type: 'solid',
       color: _pptxHex(new Svg.Color(circle.attr('stroke'))),
@@ -151,10 +151,10 @@ function _rectOptions(rect: Svg.Rect): object {
     lineAlpha = 100;
   }
   return {
-    x: _trimNum(pixelsToInches(rect.attr('x'))),
-    y: _trimNum(pixelsToInches(rect.attr('y'))),
-    w: _trimNum(pixelsToInches(rect.attr('width'))),
-    h: _trimNum(pixelsToInches(rect.attr('height'))),
+    x: trimNum(pixelsToInches(rect.attr('x')), 4),
+    y: trimNum(pixelsToInches(rect.attr('y')), 4),
+    w: trimNum(pixelsToInches(rect.attr('width')), 4),
+    h: trimNum(pixelsToInches(rect.attr('height')), 4),
     line: {
       type: 'solid',
       color: _pptxHex(new Svg.Color(rect.attr('stroke'))),
@@ -195,10 +195,10 @@ function _elementImageOptions(ele: Svg.Element): object {
   let base64 = window.btoa(xml);
   return {
     data: 'data:image/svg+xml;base64,' + base64,
-    x: _trimNum(pixelsToInches(bb.x - (sw / 2))),
-    y: _trimNum(pixelsToInches(bb.y - (sw / 2))),
-    w: _trimNum(pixelsToInches(bb.width + sw)),
-    h: _trimNum(pixelsToInches(bb.height + sw)),
+    x: trimNum(pixelsToInches(bb.x - (sw / 2)), 4),
+    y: trimNum(pixelsToInches(bb.y - (sw / 2)), 4),
+    w: trimNum(pixelsToInches(bb.width + sw), 4),
+    h: trimNum(pixelsToInches(bb.height + sw), 4),
   };
 }
 
