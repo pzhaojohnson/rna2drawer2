@@ -45,7 +45,7 @@ export class StraightBond implements StraightBondInterface {
   constructor(line: Svg.Line, b1: Base, b2: Base) {
     this._base1 = b1;
     this._base2 = b2;
-    
+
     this._line = line;
     this._validateLine();
 
@@ -54,7 +54,7 @@ export class StraightBond implements StraightBondInterface {
 
   /**
    * Throws if the line element is not actually a line element.
-   * 
+   *
    * Initializes the ID of the line if it is not already initialized.
    */
   _validateLine(): (void | never) {
@@ -437,8 +437,8 @@ SecondaryBond._mostRecentProps = {
   padding2: 6,
   autStroke: '#000000',
   gcStroke: '#000000',
-  gutStroke: '#808080',
-  otherStroke: '#808080',
+  gutStroke: '#000000',
+  otherStroke: '#000000',
   strokeWidth: 2,
 };
 
