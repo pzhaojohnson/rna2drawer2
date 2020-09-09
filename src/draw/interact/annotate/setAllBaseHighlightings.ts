@@ -4,7 +4,7 @@ import highlightBase from '../highlight/highlightBase';
 export function setAllBaseHighlightings(mode: AnnotatingMode) {
   mode.drawing.forEachBase((b, p) => {
     if (mode.selected.has(p) || p == mode.hovered) {
-      let stroke = p == mode.hovered ? '#000000': '#a6a6a6';
+      let stroke = p == mode.hovered ? '#404040': '#808080';
       if (!b.highlighting || b.highlighting.stroke != stroke) {
         let radius = 1.25 * b.fontSize;
         if (b.outline) {
@@ -15,11 +15,11 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
           fillOpacity: 0,
           stroke: stroke,
           strokeWidth: 1.25,
-          strokeOpacity: 0.6,
+          strokeOpacity: 0.75,
         });
         h.pulsateBetween({
           radius: 1.25 * radius,
-          strokeOpacity: 0.15,
+          strokeOpacity: 0.1,
         }, { duration: 1500 });
       }
     } else {
