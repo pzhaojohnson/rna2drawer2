@@ -192,15 +192,30 @@ describe('Base class', () => {
     expect(b.id).toEqual('asdfqwer');
   });
 
-  it('character getter and setter', () => {
-    let b = Base.create(svg, 'k', 1, 2);
-    expect(b.character).toBe('k');
-    b.character = 'P';
-    expect(b.character).toBe('P');
-    b.character = ''; // an empty string
-    expect(b.character).toBe('P');
-    b.character = 'mn'; // more than a single character
-    expect(b.character).toBe('P');
+  describe('character property', () => {
+    it('setter only accepts a single character', () => {
+      let b = Base.create(svg, 'k', 1, 2);
+      expect(b.character).toBe('k');
+      b.character = 'P';
+      expect(b.character).toBe('P');
+      b.character = ''; // no characters
+      expect(b.character).toBe('P');
+      b.character = 'mn'; // multiple characters
+      expect(b.character).toBe('P');
+    });
+
+    it('setter maintains center coordinates', () => {
+      let b = Base.create(svg, 'G', 22, 53);
+      let cx = b.xCenter;
+      let cy = b.yCenter;
+      let w = b._text.bbox().width;
+      b.character = 'i';
+      // dimensions did change
+      expect(b._text.bbox().width).not.toBeCloseTo(w);
+      // but center was still maintained
+      expect(b._text.cx()).toBeCloseTo(cx);
+      expect(b._text.cy()).toBeCloseTo(cy);
+    });
   });
 
   it('xCenter and yCenter getters', () => {
@@ -221,7 +236,7 @@ describe('Base class', () => {
 
     /* By testing highlighting, outline and numbering separately,
     we test that the if clauses of the moveTo method work correctly. */
-    
+
     it('can reposition highlighting', () => {
       // with no outline or numbering
       let b = Base.create(svg, 't', 1, 2);
@@ -321,7 +336,7 @@ describe('Base class', () => {
     expect(b.cursor).toBe('crosshair'); // check getter
     expect(b._text.css('cursor')).toBe('crosshair'); // check actual value
   });
-  
+
   describe('binding events', () => {
     let b = Base.create(svg, 'h', 50, 100);
 

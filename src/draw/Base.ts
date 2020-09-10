@@ -80,7 +80,7 @@ class Base implements BaseInterface {
     this._text = text;
     this._validateText();
     this._storeCenterCoordinates();
-    
+
     this._highlighting = null;
     this._outline = null;
     this._numbering = null;
@@ -88,7 +88,7 @@ class Base implements BaseInterface {
 
   /**
    * Throws if the text element is not actually a text element.
-   * 
+   *
    * Initializes the ID of the text if it is not already initialized.
    */
   _validateText() {
@@ -123,6 +123,7 @@ class Base implements BaseInterface {
     }
     this._text.clear();
     this._text.tspan(c);
+    this._text.center(this._xCenter, this._yCenter);
   }
 
   get xCenter(): number {
