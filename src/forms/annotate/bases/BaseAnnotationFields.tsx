@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
+import { BaseCharacterField } from './BaseCharacterField';
 import BaseColorField from './BaseColorField';
 import { HasOutlineField, allBasesHaveOutlines } from './HasOutlineField';
 import OutlineRadiusField from './OutlineRadiusField';
@@ -8,11 +9,17 @@ import OutlineStrokeWidthField from './OutlineStrokeWidthField';
 import OutlineFillField from './OutlineFillField';
 
 export function BaseAnnotationFields(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
-  if (selectedBases().length == 0) {
+  let bs = selectedBases();
+  if (bs.length == 0) {
     return <p>No bases are selected.</p>;
   } else {
     return (
       <div>
+        {bs.length != 1 ? null : (
+          <div style={{ marginBottom: '12px' }} >
+            {BaseCharacterField(selectedBases, pushUndo, changed)}
+          </div>
+        )}
         {BaseColorField(selectedBases, pushUndo, changed)}
         <div style={{ marginTop: '16px' }} >
           {HasOutlineField(selectedBases, pushUndo, changed)}
