@@ -49,6 +49,7 @@ export interface SequenceInterface {
   onAddBase(f: (b: Base) => void): void;
   fireAddBase(b: Base): void;
   removeBaseAtPosition(p: number): void;
+  removeBasesInRange(p5: number, p3: number): void;
   remove(): void;
   savableState(): SequenceSavableState;
   refreshIds(): void;

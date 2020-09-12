@@ -401,6 +401,21 @@ class Sequence implements SequenceInterface {
     }
   }
 
+  /**
+   * The bases at the boundary positions p5 and p3 of the range will be removed
+   * along with the bases in the middle of the range.
+   */
+  removeBasesInRange(p5: number, p3: number) {
+    for (let p = p5; p <= p3; p++) {
+      let b = this.getBaseAtPosition(p);
+      if (b) {
+        b.remove();
+      }
+    }
+    this._bases.splice(p5 - 1, p3 - p5 + 1);
+    this._updateBaseNumberings();
+  }
+
   remove() {
     this.forEachBase(b => b.remove());
     this._bases = [];

@@ -626,6 +626,37 @@ describe('Sequence class', () => {
     });
   });
 
+  describe('removeBasesInRange method', () => {
+    it('removes the bases in the range', () => {
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfqwerzxcv');
+      let bs = [];
+      seq.forEachBase(b => bs.push(b));
+      let spies = [];
+      bs.forEach(b => spies.push(jest.spyOn(b, 'remove')));
+      seq.removeBasesInRange(3, 6);
+      expect(seq.characters).toBe('aserzxcv'); // removes bases from list
+      // removes bases themselves
+      for (let i = 0; i < spies.length; i++) {
+        let spy = spies[i];
+        let p = i + 1;
+        if (p >= 3 && p <= 6) {
+          expect(spy).toHaveBeenCalled();
+        } else {
+          expect(spy).not.toHaveBeenCalled();
+        }
+      }
+    });
+
+    it('updates base numberings', () => {
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'adsfasdf');
+      seq.numberingIncrement = 1;
+      let b7 = seq.getBaseAtPosition(7);
+      expect(b7.numbering.number).toBe(7);
+      seq.removeBasesInRange(2, 4);
+      expect(b7.numbering.number).toBe(4);
+    });
+  });
+
   describe('remove method', () => {
     it('removes bases and references to bases', () => {
       let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
