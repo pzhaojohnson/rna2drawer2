@@ -248,6 +248,10 @@ class Drawing implements DrawingInterface {
     return this._primaryBonds.length;
   }
 
+  getPrimaryBondById(id: string): PrimaryBond | undefined {
+    return this._primaryBonds.find(pb => pb.id === id);
+  }
+
   forEachPrimaryBond(f: (pb: PrimaryBond) => void) {
     this._primaryBonds.forEach(pb => f(pb));
   }
@@ -258,6 +262,14 @@ class Drawing implements DrawingInterface {
     return sb;
   }
 
+  removePrimaryBondById(id: string) {
+    let pb = this.getPrimaryBondById(id);
+    if (pb) {
+      pb.remove();
+      this._primaryBonds = this._primaryBonds.filter(pb => pb.id != id);
+    }
+  }
+
   get numSecondaryBonds(): number {
     return this._secondaryBonds.length;
   }
@@ -265,7 +277,7 @@ class Drawing implements DrawingInterface {
   getSecondaryBondById(id: string): (SecondaryBond | undefined) {
     return this._secondaryBonds.find(sb => sb.id === id);
   }
-  
+
   forEachSecondaryBond(f: (sb: SecondaryBond) => void) {
     this._secondaryBonds.forEach(sb => f(sb));
   }
@@ -373,7 +385,7 @@ class Drawing implements DrawingInterface {
   /**
    * If the saved state cannot be successfully applied, the state
    * of the drawing will not be changed.
-   * 
+   *
    * Returns true if the saved state was successfully applied.
    */
   applySavedState(savedState: DrawingSavableState): boolean {

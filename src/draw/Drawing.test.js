@@ -94,7 +94,7 @@ describe('width, height and zoom properties', () => {
     expect(drawing.width).toBe(250);
     expect(drawing.height).toBe(300);
   });
-  
+
   it('zoom getter handles drawing with zero width and height', () => {
     drawing.setWidthAndHeight(0, 0);
     expect(drawing.zoom).toBe(1);
@@ -276,6 +276,11 @@ describe('primary bonds attributes', () => {
     expect(drawing.numPrimaryBonds).toBe(3);
   });
 
+  it('getPrimaryBondById method', () => {
+    expect(drawing.getPrimaryBondById(pb2.id)).toBe(pb2);
+    expect(drawing.getPrimaryBondById('random ID')).toBeFalsy();
+  });
+
   it('forEachPrimaryBond method', () => {
     let pbs = [pb1, pb2, pb3];
     let i = 0;
@@ -294,6 +299,19 @@ describe('primary bonds attributes', () => {
     expect(drawing.numPrimaryBonds).toBe(n + 1);
     expect(pb.base1.id).toBe(b1.id);
     expect(pb.base2.id).toBe(b2.id);
+  });
+
+  it('removePrimaryBondById method', () => {
+    let pb = drawing.addPrimaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(5));
+    let id = pb.id;
+    let spy = jest.spyOn(pb, 'remove');
+    drawing.removePrimaryBondById(id);
+    expect(spy).toHaveBeenCalled(); // removes bond
+    expect(drawing.getPrimaryBondById(id)).toBeFalsy(); // removes from list
+
+    let n = drawing.numPrimaryBonds;
+    drawing.removePrimaryBondById('random ID');
+    expect(drawing.numPrimaryBonds).toBe(n); // no change in number of primary bonds
   });
 });
 
@@ -504,7 +522,7 @@ describe('savableState method', () => {
   let tb2 = drawing.addTertiaryBond(b2, b6);
   let savableState = drawing.savableState();
   let svgString = drawing._svg.svg();
-  
+
   it('includes class name and svg', () => {
     expect(savableState.className).toBe('Drawing');
     expect(savableState.svg).toBe(svgString);
