@@ -45,7 +45,7 @@ export interface SequenceInterface {
   outerNormalAngleAtPosition(p: number): number;
   appendBase(b: Base): void;
   appendBases(bs: Base[]): void;
-  insertBaseAtPosition(b: Base, p: number): void;
+  insertBasesAtPosition(bs: Base[], p: number): void;
   onAddBase(f: (b: Base) => void): void;
   fireAddBase(b: Base): void;
   removeBaseAtPosition(p: number): void;

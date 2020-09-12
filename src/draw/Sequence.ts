@@ -235,9 +235,9 @@ class Sequence implements SequenceInterface {
   /**
    * The returned bases will include the bases at the given
    * 5' and 3' most positions.
-   * 
+   *
    * The bases are returned in ascending order.
-   * 
+   *
    * It is undefined what bases are returned when the given
    * positions are out of range.
    */
@@ -335,7 +335,7 @@ class Sequence implements SequenceInterface {
 
   /**
    * Appends the given base to the end of this sequence.
-   * 
+   *
    * Has no effect if the given base is already in this sequence.
    */
   appendBase(b: Base) {
@@ -368,25 +368,14 @@ class Sequence implements SequenceInterface {
     this._updateBaseNumberings();
   }
 
-  /**
-   * If the position is one plus the length of this sequence, the base will
-   * be appended to the end of this sequence.
-   * 
-   * Has no effect if the given base is already in this sequence or if the
-   * given position is out of range.
-   */
-  insertBaseAtPosition(b: Base, p: number) {
-    if (this.contains(b)) {
-      return;
-    } else if (this.positionOutOfRange(p) && p !== this.length + 1) {
-      return;
+  insertBasesAtPosition(bs: Base[], p: number) {
+    if (p > this.length) {
+      p = this.length + 1;
+    } else if (p < 1) {
+      p = 1;
     }
-    if (p === this.length + 1) {
-      this.appendBase(b);
-    } else if (this.positionInRange(p)) {
-      this._bases.splice(p - 1, 0, b);
-    }
-    this.fireAddBase(b);
+    this._bases.splice(p - 1, 0, ...bs);
+    bs.forEach(b => this.fireAddBase(b));
     this._updateBaseNumberings();
   }
 

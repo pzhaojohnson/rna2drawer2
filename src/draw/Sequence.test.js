@@ -17,7 +17,7 @@ describe('Sequence class', () => {
       expect(mrps.numberingIncrement).toBe(99);
     });
   });
-  
+
   it('_applyMostRecentProps static method', () => {
     let seq = new Sequence('asdf');
     Sequence._mostRecentProps.numberingAnchor = 980;
@@ -71,7 +71,7 @@ describe('Sequence class', () => {
     let cs = { xCenter: 15, yCenter: 33 };
     let cs5 = { xCenter: 52, yCenter: 80 };
     let cs3 = { xCenter: 2, yCenter: 45 };
-    
+
     it("no 5' or 3' neighboring bases", () => {
       let ina = Sequence._innerNormalAngleOfBase(cs, null, null);
       let cna = Sequence._clockwiseNormalAngleOfBase(cs, null, null);
@@ -534,49 +534,60 @@ describe('Sequence class', () => {
     });
   });
 
-  describe('insertBaseAtPosition method', () => {
-    it('already contains given base', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwe');
-      let spy = jest.spyOn(seq, 'fireAddBase');
-      let b2 = seq.getBaseAtPosition(2);
-      seq.insertBaseAtPosition(b2, 3);
-      expect(seq.length).toBe(3);
-      expect(spy).not.toHaveBeenCalled();
+  describe('insertBasesAtPosition method', () => {
+    it('positions in and around sequence', () => {
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
+      seq.insertBasesAtPosition([Base.create(svg, 'q', 1, 2)], -2); // less than one
+      expect(seq.characters).toBe('qasdf');
+      seq.insertBasesAtPosition([Base.create(svg, 'g', 5, 5)], 1); // one
+      expect(seq.characters).toBe('gqasdf');
+      seq.insertBasesAtPosition([Base.create(svg, 'e', 0, 0)], 3); // in middle
+      expect(seq.characters).toBe('gqeasdf');
+      seq.insertBasesAtPosition([Base.create(svg, 'v', 1, 1)], 7); // last position
+      expect(seq.characters).toBe('gqeasdvf');
+      seq.insertBasesAtPosition([Base.create(svg, 'c', 1, 1)], 9); // just after end
+      expect(seq.characters).toBe('gqeasdvfc');
+      seq.insertBasesAtPosition([Base.create(svg, 't', 2, 2)], 20); // far past end
+      expect(seq.characters).toBe('gqeasdvfct');
     });
 
-    it('position is out of range', () => {
-      let seq = Sequence.createOutOfView(svg, 'qwer', 'kkj');
-      let spy = jest.spyOn(seq, 'fireAddBase');
-      let b = Base.create(svg, 'q', 1, 2);
-      seq.insertBaseAtPosition(b, 5); // too high
-      seq.insertBaseAtPosition(b, 0); // too low
-      expect(seq.length).toBe(3);
-      expect(spy).not.toHaveBeenCalled();
+    it('can insert multiple bases', () => {
+      let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
+      seq.insertBasesAtPosition([
+        Base.create(svg, 'z', 1, 2),
+        Base.create(svg, 'x', 3, 3),
+        Base.create(svg, 'v', 1, 1),
+      ], 5);
+      expect(seq.characters).toBe('qwerzxvasdf');
     });
 
-    it('inserting at the beginning, middle and end', () => {
-      let seq = Sequence.createOutOfView(svg, 'qer', 'bbm');
-      expect(seq.length).toBe(3);
-      // insert at beginning
-      seq.insertBaseAtPosition(Base.create(svg, 't', 2, 2), 1);
-      // insert in middle
-      seq.insertBaseAtPosition(Base.create(svg, 'p', 5, 5), 3);
-      // insert at end
-      expect(seq.length).toBe(5);
-      seq.insertBaseAtPosition(Base.create(svg, 'e', 3, 9), 6);
-      expect(seq.length).toBe(6);
-      expect(seq.characters).toBe('tbpbme');
-    });
-
-    it('updates base numberings and fires add base event', () => {
+    it('updates base numberings', () => {
       let seq = Sequence.createOutOfView(svg, 'qwer', 'asdf');
-      let spy1 = jest.spyOn(seq, 'fireAddBase');
-      let spy2 = jest.spyOn(seq, '_updateBaseNumberings');
-      let b = Base.create(svg, 'q', 2, 2);
-      seq.insertBaseAtPosition(b, 2);
-      expect(spy1.mock.calls.length).toBe(1);
-      expect(spy1.mock.calls[0][0]).toBe(b);
-      expect(spy2).toHaveBeenCalled();
+      seq.numberingIncrement = 1;
+      let n = seq.getBaseAtPosition(4).numbering;
+      expect(n.number).toBe(4);
+      seq.insertBasesAtPosition([
+        Base.create(svg, 't', 1, 2),
+        Base.create(svg, 'g', 1, 1),
+      ], 3);
+      n = seq.getBaseAtPosition(6).numbering;
+      expect(n.number).toBe(6);
+    });
+
+    it('fires add base event for each base inserted', () => {
+      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
+      let bs = [
+        Base.create(svg, 'a', 1, 2),
+        Base.create(svg, 'g', 5, 5),
+        Base.create(svg, 'b', 1, 1),
+      ];
+      let f = jest.fn();
+      seq.onAddBase(f);
+      seq.insertBasesAtPosition(bs, 2);
+      expect(f).toHaveBeenCalledTimes(3);
+      for (let i = 0; i < 3; i++) {
+        expect(f.mock.calls[i][0]).toBe(bs[i]);
+      }
     });
   });
 
@@ -614,7 +625,7 @@ describe('Sequence class', () => {
       expect(spy2).toHaveBeenCalled(); // updates base numberings
     });
   });
-  
+
   describe('remove method', () => {
     it('removes bases and references to bases', () => {
       let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
@@ -626,7 +637,7 @@ describe('Sequence class', () => {
       expect(seq.length).toBe(0); // removed references
     });
   });
-  
+
   describe('savableState method', () => {
     let seq = Sequence.createOutOfView(svg, 'qwerasdf', 'qwer');
     seq.numberingOffset = 23;
@@ -658,7 +669,7 @@ describe('Sequence class', () => {
       expect(JSON.stringify(parsed)).toBe(json);
     });
   });
-  
+
   it('refreshIds method', () => {
     let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
     let spies = [];
