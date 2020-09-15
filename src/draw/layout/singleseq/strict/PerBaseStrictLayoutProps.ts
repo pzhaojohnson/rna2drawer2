@@ -22,6 +22,15 @@ export class PerBaseStrictLayoutProps {
     return copyArr;
   }
 
+  static getOrCreatePropsAtPosition(arr: (PerBaseStrictLayoutProps | undefined)[], p: number): PerBaseStrictLayoutProps {
+    let props = arr[p - 1];
+    if (!props) {
+      props = new PerBaseStrictLayoutProps();
+      arr[p - 1] = props;
+    }
+    return props;
+  }
+
   static fromSavedState(savedState: PerBaseStrictLayoutPropsSavableState): PerBaseStrictLayoutProps {
     let pbps = new PerBaseStrictLayoutProps();
     if (savedState.stretch3 !== undefined) {

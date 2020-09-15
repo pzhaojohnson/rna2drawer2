@@ -26,12 +26,12 @@ export interface DrawingSavableState {
 export interface DrawingInterface {
   addTo(container: Node, SVG: () => Svg.Svg): void;
   centerView: () => void;
-  
+
   width: number;
   height: number;
   setWidthAndHeight(w: number, h: number): void;
   zoom: number;
-  
+
   numSequences: number;
   isEmpty(): boolean;
   getSequenceById(id: string): Sequence | undefined;
@@ -53,8 +53,10 @@ export interface DrawingInterface {
   sequenceOfBase(b: Base): Sequence | undefined;
 
   numPrimaryBonds: number;
+  getPrimaryBondById(id: string): PrimaryBond | undefined;
   forEachPrimaryBond(f: (pb: PrimaryBond) => void): void;
   addPrimaryBond(b1: Base, b2: Base): PrimaryBond;
+  removePrimaryBondById(id: string): void;
 
   numSecondaryBonds: number;
   getSecondaryBondById(id: string): SecondaryBond | undefined;

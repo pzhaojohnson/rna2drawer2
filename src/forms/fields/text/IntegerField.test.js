@@ -48,15 +48,18 @@ describe('checkValue callback', () => {
   });
 });
 
-it('passes on input callbacks', () => {
+it('passes on focus and input callbacks', () => {
+  let onFocus = jest.fn();
   let onInput = jest.fn();
   let onValidInput = jest.fn();
   let onInvalidInput = jest.fn();
   let comp = new IntegerField({
+    onFocus: onFocus,
     onInput: onInput,
     onValidInput: onValidInput,
     onInvalidInput: onInvalidInput,
   });
+  expect(comp.props.onFocus).toBe(onFocus);
   expect(comp.props.onInput).toBe(onInput);
   expect(comp.props.onValidInput).toBe(onValidInput);
   expect(comp.props.onInvalidInput).toBe(onInvalidInput);

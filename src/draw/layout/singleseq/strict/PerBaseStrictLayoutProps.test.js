@@ -7,7 +7,7 @@ describe('deepCopyArray static method', () => {
     new PerBaseStrictLayoutProps(),
   ];
   let copyArr = PerBaseStrictLayoutProps.deepCopyArray(arr);
-  
+
   it('returns no shared objects', () => {
     expect(copyArr).not.toBe(arr);
     copyArr.forEach((props, i) => {
@@ -19,6 +19,29 @@ describe('deepCopyArray static method', () => {
     expect(
       JSON.stringify(arr)
     ).toBe(JSON.stringify(copyArr));
+  });
+});
+
+describe('getOrCreatePropsAtPosition static method', () => {
+  let arr = [
+    new PerBaseStrictLayoutProps(),
+    undefined,
+    undefined,
+    new PerBaseStrictLayoutProps(),
+    new PerBaseStrictLayoutProps(),
+  ];
+  arr[3].triangleLoopHeight = 123.123;
+
+  it('can retrieve props', () => {
+    let props = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(arr, 2);
+    expect(props).toStrictEqual(new PerBaseStrictLayoutProps()); // returns new props
+    expect(props).toBe(arr[1]); // adds props to array
+  });
+
+  it('can create props', () => {
+    let props = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(arr, 4);
+    expect(props.triangleLoopHeight).toBe(123.123); // returns right props
+    expect(props).toBe(arr[3]); // does not modify array
   });
 });
 

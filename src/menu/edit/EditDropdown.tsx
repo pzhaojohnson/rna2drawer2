@@ -4,6 +4,7 @@ import { Dropdown } from '../Dropdown';
 import DroppedSeparator from '../DroppedSeparator';
 import { UndoButton } from './UndoButton';
 import { RedoButton } from './RedoButton';
+import { RemoveSubsequenceButton } from './RemoveSubsequenceButton';
 import { CapitalizeButton } from './CapitalizeButton';
 import { DecapitalizeButton } from './DecapitalizeButton';
 import { TsToUsButton } from './TsToUsButton';
@@ -25,6 +26,8 @@ export function EditDropdown(props: Props): React.ReactElement {
         <div>
           <UndoButton app={props.app} />
           <RedoButton app={props.app} />
+          <DroppedSeparator />
+          <RemoveSubsequenceButton app={props.app} />
           <DroppedSeparator />
           <CapitalizeButton app={props.app} />
           <DecapitalizeButton app={props.app} />

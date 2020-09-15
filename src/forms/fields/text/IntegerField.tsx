@@ -6,6 +6,7 @@ interface Props {
   name: string;
   initialValue?: number;
   checkValue?: (n: number) => string;
+  onFocus?: () => void;
   onInput?: () => void;
   onValidInput?: () => void;
   onInvalidInput?: () => void;
@@ -31,6 +32,7 @@ export class IntegerField extends React.Component {
           }
           return '';
         }}
+        onFocus={this.props.onFocus}
         onInput={this.props.onInput}
         onValidInput={this.props.onValidInput}
         onInvalidInput={this.props.onInvalidInput}
