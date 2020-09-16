@@ -55,6 +55,9 @@ export function SelectBasesByCharacter(props: Props): React.ReactElement {
               disabled={!inputIsValid}
             />
           </div>
+          <p style={{ marginTop: '16px' }} >
+            <b>Note:</b> Once selected, bases can be annotated (e.g., colored and circled).
+          </p>
         </div>
       }
     />

@@ -100,8 +100,8 @@ export function SelectBasesByData(props: Props): React.ReactElement {
             />
           </div>
           <p style={{ marginTop: '16px' }} >
-            <b>Note:</b> This forms allows selecting bases in one range of data.
-            Once selected, the bases can be annotated (e.g., colored and circled).
+            <b>Note:</b> This form allows selecting bases in one range of data.
+            Once selected, bases can be annotated (e.g., colored and circled).
           </p>
           <p style={{ marginTop: '6px' }} >
             To select and annotate bases in another range of data, come back to this form and enter the other range of data.
