@@ -23,7 +23,7 @@ export function DataRangeField(props: Props): React.ReactElement {
       <p className={'unselectable-text'} >
         Range of Data to Select:
       </p>
-      <div style={{ margin: '8px 0px 0px 8px' }} >
+      <div style={{ margin: '12px 0px 0px 12px' }} >
         <NumberField
           key={minKey}
           name={'Min'}

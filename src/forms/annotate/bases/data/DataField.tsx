@@ -36,7 +36,7 @@ export function DataField(props: Props): React.ReactElement {
         }
       }}
       placeholder={' ...separated by whitespace, commas or line endings'}
-      rows={10}
+      rows={12}
     />
   );
 }

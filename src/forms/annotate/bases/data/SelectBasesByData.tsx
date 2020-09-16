@@ -16,7 +16,7 @@ interface Props {
 
 let lastEntered = {
   startPosition: 1,
-  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8],
+  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75, 0.6],
   dataRange: {
     min: 0,
     max: 1,
