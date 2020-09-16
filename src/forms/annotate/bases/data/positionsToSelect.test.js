@@ -97,3 +97,8 @@ it('returns positions with values in range', () => {
     [6, 7, 10, 11, 12]
   );
 });
+
+it('min of data to select is greater than max', () => {
+  inputs.dataRange = { min: 12, max: 8 };
+  expect(typeof positionsToSelect(drawing, inputs)).toBe('string');
+});

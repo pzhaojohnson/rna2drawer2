@@ -30,6 +30,9 @@ export function positionsToSelect(drawing: Drawing, inputs: Inputs): number[] | 
   if (inputs.data.length > seq.length - sp + 1) {
     return 'Data exceeds number of bases.';
   }
+  if (inputs.dataRange.min > inputs.dataRange.max) {
+    return 'Min of data to select cannot be greater than max.';
+  }
   let ps = [] as number[];
   inputs.data.forEach((v, i) => {
     let p = sp + i;
