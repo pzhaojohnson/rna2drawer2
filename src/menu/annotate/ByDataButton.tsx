@@ -10,7 +10,7 @@ interface Props {
 export function ByDataButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      text={'By Data'}
+      text={'By Data (e.g., SHAPE)'}
       onClick={() => {
         props.app.renderForm(close => (
           <SelectBasesByData
