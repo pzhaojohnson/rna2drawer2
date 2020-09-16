@@ -19,7 +19,7 @@ export function ClosableContainer(props: Props): React.ReactElement {
         backgroundColor: '#ffffff',
         borderWidth: '0px 0px 0px 1px',
         borderStyle: 'solid',
-        borderColor: 'rgba(0,0,0,0.25)',
+        borderColor: 'rgba(0,0,0,0.3)',
       }}
     >
       <CloseButton

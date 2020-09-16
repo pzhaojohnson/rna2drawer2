@@ -32,7 +32,7 @@ export function UnclosableFlexContainer(props: Props): React.ReactElement {
             margin: '4px',
             maxWidth: '1160px',
             flexGrow: 1,
-            border: '1px solid rgba(0,0,0,0.25)',
+            border: '1px solid rgba(0,0,0,0.3)',
             borderRadius: '4px',
             display: 'flex',
             flexDirection: 'column',
