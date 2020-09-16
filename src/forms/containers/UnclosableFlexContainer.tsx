@@ -29,8 +29,8 @@ export function UnclosableFlexContainer(props: Props): React.ReactElement {
       >
         <div
           style={{
-            margin: '12px',
-            maxWidth: '1200px',
+            margin: '4px',
+            maxWidth: '1160px',
             flexGrow: 1,
             border: '1px solid rgba(0,0,0,0.25)',
             borderRadius: '4px',
@@ -38,7 +38,7 @@ export function UnclosableFlexContainer(props: Props): React.ReactElement {
             flexDirection: 'column',
           }}
         >
-          <div style={{ margin: '32px 80px 32px 80px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+          <div style={{ margin: '36px 72px 36px 72px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ padding: '0px 24px 0px 24px'}} >
               <p className={'unselectable-text'} style={{fontSize: '24px' }} >
                 {props.title}
