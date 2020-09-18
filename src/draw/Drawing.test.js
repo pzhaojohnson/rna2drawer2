@@ -220,6 +220,15 @@ describe('sequence and base attributes', () => {
     let b3 = Base.create(drawing._svg, 'q', 4, 5); // not in drawing
     expect(drawing.sequenceOfBase(b3)).toBeFalsy();
   });
+
+  it('createBases method', () => {
+    let characters = 'asdfqwerZXCV';
+    let bs = drawing.createBases(characters);
+    for (let i = 0; i < characters.length; i++) {
+      expect(bs[i].character).toBe(characters.charAt(i));
+    }
+    expect(bs.length).toBe(characters.length);
+  });
 });
 
 describe('appendSequenceOutOfView method', () => {

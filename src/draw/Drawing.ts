@@ -244,6 +244,16 @@ class Drawing implements DrawingInterface {
     return this._sequences.find(seq => seq.contains(b));
   }
 
+  createBases(characters: string): Base[] {
+    let bs = [] as Base[];
+    let x = 0;
+    characters.split('').forEach(c => {
+      bs.push(Base.create(this._svg, c, x, 0));
+      x += 10;
+    });
+    return bs;
+  }
+
   get numPrimaryBonds(): number {
     return this._primaryBonds.length;
   }
