@@ -51,6 +51,7 @@ export interface DrawingInterface {
   forEachBase(f: (b: Base, position: number) => void): void;
   baseIds(): string[];
   sequenceOfBase(b: Base): Sequence | undefined;
+  createBases(characters: string): Base[];
 
   numPrimaryBonds: number;
   getPrimaryBondById(id: string): PrimaryBond | undefined;

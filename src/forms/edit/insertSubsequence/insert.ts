@@ -132,10 +132,14 @@ export function insert(strictDrawing: StrictDrawing, inputs: Inputs) {
       let subsequence = parseSubsequence(inputs);
       transferStemProps(strictDrawing, insertPosition);
       breakStrand(drawing, insertPosition);
-      // insert bases
+      seq.insertBasesAtPosition(
+        drawing.createBases(subsequence),
+        insertPosition,
+      );
       repairStrand(drawing, insertPosition, subsequence);
       insertPerBaseProps(strictDrawing, insertPosition, subsequence);
       evenOutStretches(strictDrawing, insertPosition, subsequence);
+      strictDrawing.applyLayout();
     }
   }
 }
