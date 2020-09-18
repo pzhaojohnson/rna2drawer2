@@ -44,11 +44,11 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
   /**
    * Throws if the path element is not actually a path element.
-   * 
+   *
    * Initializes the ID of the path if it is not already initialized.
-   * 
+   *
    * Sets fill-opacity to zero.
-   * 
+   *
    * Throws if the path is not composed of an M and Q segment.
    */
   constructor(path: Svg.Path, b1: Base, b2: Base) {
@@ -89,6 +89,10 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
   get base2(): Base {
     return this._base2;
+  }
+
+  contains(b: Base): boolean {
+    return this.base1.id == b.id || this.base2.id == b.id;
   }
 
   get x1(): number {

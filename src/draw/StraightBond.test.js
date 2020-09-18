@@ -79,6 +79,17 @@ describe('StraightBond class', () => {
     expect(sb.base2).toBe(b2);
   });
 
+  it('contais method', () => {
+    let l = svg.line(5, 10, 12, 18);
+    let b1 = Base.create(svg, 'g', 1, 1);
+    let b2 = Base.create(svg, 'A', 20, 20);
+    let sb = new StraightBond(l, b1, b2);
+    expect(sb.contains(b1)).toBeTruthy();
+    expect(sb.contains(b2)).toBeTruthy();
+    let b3 = Base.create(svg, 'a', 5, 10);
+    expect(sb.contains(b3)).toBeFalsy();
+  });
+
   it('x1, y1, x2 and y2 getters', () => {
     let l = svg.line(101, 138, 259, 809);
     let b1 = Base.create(svg, 'e', 1, 5);
@@ -304,7 +315,7 @@ describe('PrimaryBond class', () => {
         ).toThrow();
       });
     });
-    
+
     it('valid saved state', () => {
       let pb1 = PrimaryBond.create(svg, b1, b2);
       let lineId = pb1._line.id();
@@ -324,7 +335,7 @@ describe('PrimaryBond class', () => {
     let b2 = Base.create(svg, 'Y', 10, 20);
     let spy = jest.spyOn(PrimaryBond, '_applyMostRecentProps');
     let pb = PrimaryBond.create(svg, b1, b2);
-    
+
     it('creates with bases', () => {
       expect(pb.base1).toBe(b1);
       expect(pb.base2).toBe(b2);
@@ -352,7 +363,7 @@ describe('PrimaryBond class', () => {
       expect(pb2.opacity).toBe(1);
     });
   });
-  
+
   it('padding1 and padding2 getters and setters', () => {
     let b1 = Base.create(svg, 'E', 1, 5);
     let b2 = Base.create(svg, 'h', 55, 44);
@@ -558,7 +569,7 @@ describe('SecondaryBond class', () => {
       let sbua = SecondaryBond.create(svg, bu, ba);
       expect(sbua.isAUT()).toBeTruthy();
     });
-  
+
     it('all possible true cases', () => {
       let ba = Base.create(svg, 'A', 1, 2);
       let bu = Base.create(svg, 'U', 5, 7);
@@ -572,7 +583,7 @@ describe('SecondaryBond class', () => {
       let sbta = SecondaryBond.create(svg, bt, ba);
       expect(sbta.isAUT()).toBeTruthy();
     });
-  
+
     it('a false case', () => {
       let ba = Base.create(svg, 'A', 1, 5);
       let bc = Base.create(svg, 'C', 1, 5);
@@ -588,7 +599,7 @@ describe('SecondaryBond class', () => {
       let sbcg = SecondaryBond.create(svg, bc, bg);
       expect(sbcg.isGC()).toBeTruthy();
     });
-  
+
     it('all possible true cases', () => {
       let bg = Base.create(svg, 'G', 3, 5);
       let bc = Base.create(svg, 'c', 7, 9);
@@ -597,7 +608,7 @@ describe('SecondaryBond class', () => {
       let sbcg = SecondaryBond.create(svg, bc, bg);
       expect(sbcg.isGC()).toBeTruthy();
     });
-  
+
     it('a false case', () => {
       let bg = Base.create(svg, 'G', 4, 5);
       let bu = Base.create(svg, 'U', 1, 2);
@@ -613,7 +624,7 @@ describe('SecondaryBond class', () => {
       let sbug = SecondaryBond.create(svg, bu, bg);
       expect(sbug.isGUT()).toBeTruthy();
     });
-  
+
     it('all possible true cases', () => {
       let bg = Base.create(svg, 'g', 1, 4);
       let bu = Base.create(svg, 'U', 2, 2);
@@ -627,7 +638,7 @@ describe('SecondaryBond class', () => {
       let sbtg = SecondaryBond.create(svg, bt, bg);
       expect(sbtg.isGUT()).toBeTruthy();
     });
-  
+
     it('a false case', () => {
       let bu = Base.create(svg, 'U', 2, 5);
       let ba = Base.create(svg, 'A', 2, 5);

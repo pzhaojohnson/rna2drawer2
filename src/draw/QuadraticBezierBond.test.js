@@ -79,6 +79,17 @@ describe('QuadraticBezierBond class', () => {
     expect(qbb.base2).toBe(b2);
   });
 
+  it('contains method', () => {
+    let p = svg.path('M 1 2 Q 4 5 6 7');
+    let b1 = Base.create(svg, 'h', 1, 5);
+    let b2 = Base.create(svg, 'y', 1, 1);
+    let qbb = new QuadraticBezierBond(p, b1, b2);
+    expect(qbb.contains(b1)).toBeTruthy();
+    expect(qbb.contains(b2)).toBeTruthy();
+    let b3 = Base.create(svg, 'b', 2, 2);
+    expect(qbb.contains(b3)).toBeFalsy();
+  });
+
   it('x1, y1, x2, y2, xControl and yControl getters', () => {
     let p = svg.path('M 1.2 4.3 Q 100 200.3 30 45.5');
     let b1 = Base.create(svg, 'b', 1, 2);

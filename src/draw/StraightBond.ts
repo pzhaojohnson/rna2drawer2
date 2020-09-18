@@ -76,6 +76,10 @@ export class StraightBond implements StraightBondInterface {
     return this._base2;
   }
 
+  contains(b: Base): boolean {
+    return this.base1.id == b.id || this.base2.id == b.id;
+  }
+
   get x1(): number {
     return this._line.attr('x1');
   }

@@ -11,6 +11,7 @@ export interface QuadraticBezierBondInterface {
   readonly id: string;
   base1: Base;
   base2: Base;
+  contains(b: Base): boolean;
   x1: number;
   y1: number;
   x2: number;
