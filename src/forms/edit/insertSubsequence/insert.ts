@@ -16,7 +16,7 @@ interface Inputs {
   ignoreNonAlphanumerics: boolean;
 }
 
-function parseSubsequence(inputs: Inputs): string {
+export function parseSubsequence(inputs: Inputs): string {
   return parseSequence(
     inputs.subsequence,
     {
@@ -52,10 +52,10 @@ function breakStrand(drawing: Drawing, insertPosition: number) {
     let b3 = seq.getBaseAtPosition(insertPosition);
     let toRemove = null as PrimaryBond | null;
     drawing.forEachPrimaryBond(pb => {
-      let contains5 = pb.base1.id == b5?.id || pb.base2.id == b5?.id;
-      let contains3 = pb.base1.id == b3?.id || pb.base2.id == b3?.id;
-      if (contains5 && contains3) {
-        toRemove = pb;
+      if (b5 && b3) {
+        if (pb.contains(b5) && pb.contains(b3)) {
+          toRemove = pb;
+        }
       }
     });
     if (toRemove) {
