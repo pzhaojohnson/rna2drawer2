@@ -38,14 +38,14 @@ export function UnclosableFlexContainer(props: Props): React.ReactElement {
             flexDirection: 'column',
           }}
         >
-          <div style={{ margin: '32px 96px 32px 96px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
-            <div style={{ padding: '0px 24px 0px 24px'}} >
+          <div style={{ margin: '32px 112px 32px 112px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+            <div style={{ padding: '0px 32px 0px 32px'}} >
               <p className={'unselectable-text'} style={{fontSize: '24px' }} >
                 {props.title}
               </p>
             </div>
             <Underline margin={'8px 0px 0px 0px'} />
-            <div style={{ margin: '24px 40px 0px 40px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+            <div style={{ margin: '24px 48px 0px 48px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
               {props.contained}
             </div>
           </div>
