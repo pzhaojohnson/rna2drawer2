@@ -62,9 +62,9 @@ describe('remove function', () => {
     let app = new App(() => NodeSVG());
     let strictDrawing = app.strictDrawing;
     let drawing = strictDrawing.drawing;
-    let characters =    'abcdefghijklmnopqrstuvwx';
-    let secondaryDtbr = '..((((((((....))))))))..';
-    let tertiaryDtbr =  '.{...{{{{......}}}}...}.';
+    let characters =    'abcdefghijklmnopqrstuvwxyzABCDEF';
+    let secondaryDtbr = '..((((((((....))))))))..((..))..';
+    let tertiaryDtbr =  '.{...{{{{......}}}}...}...{..}..';
     strictDrawing.appendStructure({
       id: 'asdf',
       characters: characters,
@@ -75,12 +75,26 @@ describe('remove function', () => {
     seq.numberingOffset = 1012; // must take into account numbering offset
 
     let perBaseProps = strictDrawing.perBaseLayoutProps();
+
+    // set stem props
     perBaseProps[2].flipStem = true;
     perBaseProps[2].loopShape = 'triangle';
     perBaseProps[2].triangleLoopHeight = 123.456;
+
+    // set stretches
+    for (let p = 22; p <= seq.length; p++) {
+      perBaseProps[p - 1].stretch3 = 0;
+    }
+    for (let p = 30; p <= seq.length; p++) {
+      perBaseProps[p - 1].stretch3 = 3;
+    }
+
     strictDrawing.setPerBaseLayoutProps(perBaseProps);
 
     let r = { start: 5 + seq.numberingOffset, end: 8 + seq.numberingOffset };
+    remove(strictDrawing, r);
+
+    r = { start: 21 + seq.numberingOffset, end: 22 + seq.numberingOffset };
     remove(strictDrawing, r);
 
     it('transfers stem props', () => {
@@ -96,31 +110,25 @@ describe('remove function', () => {
     });
 
     it('removes per base props of removed bases', () => {
-      // checking that stem props were transferred above checks that
-      // the right per base props were removed
+      // checking that stem props were transferred and that
+      // the stretches of unpaired regions were evened out
+      // checks that the right per base props were removed
       let perBaseProps = strictDrawing.perBaseLayoutProps();
-      expect(perBaseProps.length).toBe(20);
+      expect(perBaseProps.length).toBe(26);
     });
 
     it('removes primary bonds with removed bases and repairs strand break', () => {
-      // all primary bonds are between bases that still exist
-      let baseIds = drawing.baseIds();
-      drawing.forEachPrimaryBond(pb => {
-        expect(baseIds.includes(pb.base1.id)).toBeTruthy();
-        expect(baseIds.includes(pb.base2.id)).toBeTruthy();
-      });
-      // repaired strand break
-      let b4 = seq.getBaseAtPosition(4);
-      let b5 = seq.getBaseAtPosition(5);
-      let repaired = false;
-      drawing.forEachPrimaryBond(pb => {
-        if (pb.base1.id == b4.id && pb.base2.id == b5.id) {
-          repaired = true;
-        }
-      });
-      expect(repaired).toBeTruthy();
-      // only primary bonds with removed bases were removed
-      expect(drawing.numPrimaryBonds).toBe(19);
+      let pbs = [];
+      drawing.forEachPrimaryBond(pb => pbs.push(pb));
+      expect(drawing.numPrimaryBonds).toBe(seq.length - 1);
+      // each consecutive pair of bases has a primary bond
+      for (let p5 = 1; p5 < seq.length; p5++) {
+        let b5 = seq.getBaseAtPosition(p5);
+        let b3 = seq.getBaseAtPosition(p5 + 1);
+        expect(pbs.find(pb => (
+          pb.base1.id == b5.id && pb.base2.id == b3.id
+        ))).toBeTruthy();
+      }
     });
 
     it('removes secondary bonds with removed bases', () => {
@@ -142,11 +150,18 @@ describe('remove function', () => {
         expect(baseIds.includes(tb.base2.id)).toBeTruthy();
       });
       // only tertiary bonds with removed bases were removed
-      expect(drawing.numTertiaryBonds).toBe(2);
+      expect(drawing.numTertiaryBonds).toBe(3);
     });
 
     it('removes correct bases', () => {
-      expect(seq.characters).toBe('abcdijklmnopqrstuvwx');
+      expect(seq.characters).toBe('abcdijklmnopqrstuvwxABCDEF');
+    });
+
+    it('evens out stretches of unpaired regions', () => {
+      let perBaseProps = strictDrawing.perBaseLayoutProps();
+      for (let p = 18; p <= seq.length; p++) {
+        expect(perBaseProps[p - 1].stretch3).toBeCloseTo(1);
+      }
     });
   });
 });

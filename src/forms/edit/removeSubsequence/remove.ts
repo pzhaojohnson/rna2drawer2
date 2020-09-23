@@ -3,8 +3,10 @@ import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
 import { SequenceInterface as Sequence } from '../../../draw/SequenceInterface';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import { stemOfPosition } from '../../../parse/stemOfPosition';
+import { unpairedRegionOfPosition } from '../../../parse/unpairedRegionOfPosition';
 import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { copyStemProps, resetStemProps } from '../../../draw/layout/singleseq/strict/stemProps';
+import { evenOutStretch } from '../../../draw/layout/singleseq/strict/stretch';
 import {
   PrimaryBondInterface as PrimaryBond,
   SecondaryBondInterface as SecondaryBond,
@@ -100,6 +102,16 @@ function repairStrandBreak(drawing: Drawing, seq: Sequence, removedRange: Range)
   }
 }
 
+function evenOutStretches(strictDrawing: StrictDrawing, removedRange: Range) {
+  let partners = strictDrawing.layoutPartners();
+  let ur = unpairedRegionOfPosition(removedRange.start, partners);
+  if (ur) {
+    let perBaseProps = strictDrawing.perBaseLayoutProps();
+    evenOutStretch(perBaseProps, ur);
+    strictDrawing.setPerBaseLayoutProps(perBaseProps);
+  }
+}
+
 export function remove(strictDrawing: StrictDrawing, inputs: Range) {
   if (!cannotRemove(strictDrawing, inputs)) {
     let drawing = strictDrawing.drawing;
@@ -111,6 +123,7 @@ export function remove(strictDrawing: StrictDrawing, inputs: Range) {
       removeBondsWithBases(drawing, seq.getBasesInRange(r.start, r.end));
       seq.removeBasesInRange(r.start, r.end);
       repairStrandBreak(drawing, seq, r);
+      evenOutStretches(strictDrawing, r);
       strictDrawing.applyLayout();
     }
   }
