@@ -35,7 +35,10 @@ export function InsertSubsequence(props: Props): React.ReactElement {
             onInput={() => setErrorMessage([])}
             onValidInput={() => setInputsAreValid(true)}
             onInvalidInput={() => setInputsAreValid(false)}
-            set={vs => setInputs(vs)}
+            set={vs => {
+              setInputs(vs);
+              lastEntered = vs;
+            }}
           />
           <div style={{ marginTop: errorMessage.join('') ? '12px' : '18px' }} >
             {errorMessage.join('') ? <ErrorMessage message={errorMessage.join('')} /> : null}
@@ -52,7 +55,6 @@ export function InsertSubsequence(props: Props): React.ReactElement {
                   props.app.pushUndo();
                   insert(props.app.strictDrawing, inputs);
                   props.app.drawingChangedNotByInteraction();
-                  lastEntered = inputs;
                 }
               }}
               disabled={!inputsAreValid}

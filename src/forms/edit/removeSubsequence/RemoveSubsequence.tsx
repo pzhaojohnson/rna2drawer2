@@ -32,7 +32,10 @@ export function RemoveSubsequence(props: Props): React.ReactElement {
             onInput={() => setErrorMessage([])}
             onValidInput={() => setRangeIsValid(true)}
             onInvalidInput={() => setRangeIsValid(false)}
-            set={r => setRange(r)}
+            set={r => {
+              setRange(r);
+              lastEntered = r;
+            }}
           />
           <div style={{ marginTop: errorMessage.join('') ? '12px' : '18px' }} >
             {errorMessage.join('') ? <ErrorMessage message={errorMessage.join('')} /> : null}
@@ -49,7 +52,6 @@ export function RemoveSubsequence(props: Props): React.ReactElement {
                   props.app.pushUndo();
                   remove(props.app.strictDrawing, range);
                   props.app.drawingChangedNotByInteraction();
-                  lastEntered = range;
                 }
               }}
               disabled={!rangeIsValid}

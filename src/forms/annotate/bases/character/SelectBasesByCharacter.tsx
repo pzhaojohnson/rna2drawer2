@@ -12,10 +12,10 @@ interface Props {
   close: () => void;
 }
 
-let lastSelected = 'A';
+let lastEntered = 'A';
 
 export function SelectBasesByCharacter(props: Props): React.ReactElement {
-  let [character, setCharacter] = useState(lastSelected);
+  let [character, setCharacter] = useState(lastEntered);
   let [inputIsValid, setInputIsValid] = useState(true);
   let [errorMessage, setErrorMessage] = useState<string[]>([]);
   return (
@@ -29,7 +29,10 @@ export function SelectBasesByCharacter(props: Props): React.ReactElement {
             onInput={() => setErrorMessage([])}
             onValidInput={() => setInputIsValid(true)}
             onInvalidInput={() => setInputIsValid(false)}
-            set={c => setCharacter(c)}
+            set={c => {
+              setCharacter(c);
+              lastEntered = c;
+            }}
           />
           <div style={{ marginTop: errorMessage.join('') ? '12px' : '18px' }} >
             {errorMessage.join('') ? <ErrorMessage message={errorMessage.join('')} /> : null}
@@ -49,7 +52,6 @@ export function SelectBasesByCharacter(props: Props): React.ReactElement {
                   annotatingMode.clearSelection();
                   annotatingMode.select(ps);
                   annotatingMode.requestToRenderForm();
-                  lastSelected = character;
                 }
               }}
               disabled={!inputIsValid}
