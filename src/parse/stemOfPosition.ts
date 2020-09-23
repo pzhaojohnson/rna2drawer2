@@ -36,16 +36,19 @@ export interface Stem {
  * Returns null if the position is not in a stem.
  */
 export function stemOfPosition(p: number, partners: (number | null)[]): (Stem | null) {
-  if (!partners[p - 1]) {
+  if (p < 1 || p > partners.length) {
     return null;
+  } else if (typeof partners[p - 1] != 'number') {
+    return null;
+  } else {
+    let p5 = _parsePosition5(p, partners);
+    let pt5 = _parsePositionTop5(p, partners);
+    return {
+      position5: p5,
+      position3: partners[p5 - 1] as number,
+      size: pt5 - p5 + 1,
+    };
   }
-  let p5 = _parsePosition5(p, partners);
-  let pt5 = _parsePositionTop5(p, partners);
-  return {
-    position5: p5,
-    position3: partners[p5 - 1] as number,
-    size: pt5 - p5 + 1,
-  };
 }
 
 export default stemOfPosition;

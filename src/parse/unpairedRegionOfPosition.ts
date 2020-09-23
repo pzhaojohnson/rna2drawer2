@@ -25,13 +25,16 @@ export interface UnpairedRegion {
  * Returns null if the position is not in an unpaired region.
  */
 export function unpairedRegionOfPosition(p: number, partners: (number | null)[]): (UnpairedRegion | null) {
-  if (partners[p - 1]) {
+  if (p < 1 || p > partners.length) {
     return null;
+  } else if (typeof partners[p - 1] == 'number') {
+    return null;
+  } else {
+    return {
+      boundingPosition5: _parseBoundingPosition5(p, partners),
+      boundingPosition3: _parseBoundingPosition3(p, partners),
+    };
   }
-  return {
-    boundingPosition5: _parseBoundingPosition5(p, partners),
-    boundingPosition3: _parseBoundingPosition3(p, partners),
-  };
 }
 
 export default unpairedRegionOfPosition;

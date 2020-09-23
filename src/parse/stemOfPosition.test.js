@@ -1,23 +1,31 @@
-import stemOfPosition from './stemOfPosition';
+import { parseDotBracket } from './parseDotBracket';
+import { stemOfPosition } from './stemOfPosition';
 
-let partners = [null, 12, 11, 10, 9, null, null, null, 5, 4, 3, 2, null, null];
+let partners = parseDotBracket('((..))..(((..))).((((....))))...(.)').secondaryPartners;
+
+it('position is out of range', () => {
+  expect(stemOfPosition(0, partners)).toBe(null); // just below range
+  expect(stemOfPosition(1, partners)).toBeTruthy(); // start of range
+  expect(stemOfPosition(partners.length, partners)).toBeTruthy(); // end of range
+  expect(stemOfPosition(partners.length + 1, partners)).toBe(null); // just above range
+});
 
 it('position is not in stem', () => {
-  expect(stemOfPosition(13, partners)).toBe(null);
-  expect(stemOfPosition(6, partners)).toBe(null);
+  expect(stemOfPosition(8, partners)).toBe(null);
+  expect(stemOfPosition(12, partners)).toBe(null);
 });
 
 it("position is on 5' side of stem", () => {
-  let st = stemOfPosition(3, partners);
-  expect(st.position5).toBe(2);
-  expect(st.position3).toBe(12);
-  expect(st.size).toBe(4);
+  let st = stemOfPosition(10, partners);
+  expect(st.position5).toBe(9);
+  expect(st.position3).toBe(16);
+  expect(st.size).toBe(3);
 });
 
 it("position is on 3' side of stem", () => {
-  let st = stemOfPosition(10, partners);
-  expect(st.position5).toBe(2);
-  expect(st.position3).toBe(12);
+  let st = stemOfPosition(28, partners);
+  expect(st.position5).toBe(18);
+  expect(st.position3).toBe(29);
   expect(st.size).toBe(4);
 });
 

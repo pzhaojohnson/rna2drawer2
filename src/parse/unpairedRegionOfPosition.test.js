@@ -2,6 +2,13 @@ import unpairedRegionOfPosition from './unpairedRegionOfPosition';
 
 let partners = [null, null, 11, 10, 9, null, null, null, 5, 4, 3, null];
 
+it('out of range', () => {
+  expect(unpairedRegionOfPosition(0, partners)).toBe(null); // just below range
+  expect(unpairedRegionOfPosition(1, partners)).toBeTruthy(); // start of range
+  expect(unpairedRegionOfPosition(partners.length, partners)).toBeTruthy(); // end of range
+  expect(unpairedRegionOfPosition(partners.length + 1, partners)).toBe(null); // just above range
+});
+
 it('not in an unpaired region', () => {
   expect(unpairedRegionOfPosition(4, partners)).toBe(null);
 });
