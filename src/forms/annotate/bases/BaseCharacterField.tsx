@@ -22,7 +22,7 @@ export function BaseCharacterField(selectedBases: () => Base[], pushUndo: () => 
           c = c.trim();
           let bs = selectedBases();
           let b = bs[0];
-          if (bs.length == 1 && b) {
+          if (bs.length == 1 && b && b.character != c) {
             pushUndo();
             b.character = c;
             changed();
