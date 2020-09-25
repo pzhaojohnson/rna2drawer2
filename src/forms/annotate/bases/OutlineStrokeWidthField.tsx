@@ -3,7 +3,7 @@ import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../../draw/BaseAnnotationInterface';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 import baseOutlines from './baseOutlines';
-import { areAllSameNumber } from './areAllSame';
+import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function outlinesStrokeWidths(os: CircleBaseAnnotation[]): number[] {

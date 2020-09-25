@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
-import { areAllSameColor, areAllSameNumber } from './areAllSame';
+import { areAllSameColor } from '../../fields/color/areAllSameColor';
 
 function baseFills(bs: Base[]): Svg.Color[] {
   let fs = [] as Svg.Color[];

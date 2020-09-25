@@ -4,7 +4,8 @@ import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../../
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
 import baseOutlines from './baseOutlines';
-import { areAllSameColor, areAllSameNumber } from './areAllSame';
+import { areAllSameColor } from '../../fields/color/areAllSameColor';
+import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function outlineStrokes(os: CircleBaseAnnotation[]): Svg.Color[] {
