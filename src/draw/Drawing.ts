@@ -314,6 +314,16 @@ class Drawing implements DrawingInterface {
     return this._tertiaryBonds.find(tb => tb.id === id);
   }
 
+  getTertiaryBondsByIds(ids: Set<string>): TertiaryBond[] {
+    let tbs = [] as TertiaryBond[];
+    this.forEachTertiaryBond(tb => {
+      if (ids.has(tb.id)) {
+        tbs.push(tb);
+      }
+    });
+    return tbs;
+  }
+
   forEachTertiaryBond(f: (tb: TertiaryBond) => void) {
     this._tertiaryBonds.forEach(tb => f(tb));
   }

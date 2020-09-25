@@ -394,14 +394,26 @@ describe('tertiary bonds attributes', () => {
   let tb1 = drawing.addTertiaryBond(seq1.getBaseAtPosition(6), seq1.getBaseAtPosition(2));
   let tb2 = drawing.addTertiaryBond(seq2.getBaseAtPosition(1), seq2.getBaseAtPosition(4));
   let tb3 = drawing.addTertiaryBond(seq2.getBaseAtPosition(2), seq1.getBaseAtPosition(5));
+  let tb4 = drawing.addTertiaryBond(seq2.getBaseAtPosition(8), seq2.getBaseAtPosition(1));
+  let tb5 = drawing.addTertiaryBond(seq1.getBaseAtPosition(1), seq2.getBaseAtPosition(1));
 
   it('numTertiaryBonds getter', () => {
-    expect(drawing.numTertiaryBonds).toBe(3);
+    expect(drawing.numTertiaryBonds).toBe(5);
   });
 
   it('getTertiaryBondById method', () => {
     expect(drawing.getTertiaryBondById(tb2.id)).toBe(tb2);
     expect(drawing.getTertiaryBondById('nonexistent ID')).toBeFalsy();
+  });
+
+  it('getTertiaryBondsByIds method', () => {
+    let tbs = drawing.getTertiaryBondsByIds(
+      new Set([tb2.id, tb4.id, 'random ID', tb5.id])
+    );
+    expect(tbs.length).toBe(3);
+    [tb2, tb4, tb5].forEach(tb => {
+      expect(tbs.includes(tb)).toBeTruthy();
+    });
   });
 
   it('forEachTertiaryBond method', () => {
