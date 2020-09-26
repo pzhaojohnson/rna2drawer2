@@ -1,111 +1,81 @@
-import DashedField from './DashedField';
-import { TertiaryBond } from '../../../draw/QuadraticBezierBond';
+import App from '../../../App';
+import NodeSVG from '../../../draw/NodeSVG';
+import {
+  isDashed,
+  areAllDashed,
+  areAllNotDashed,
+  DashedField,
+} from './DashedField';
 
-let app = null;
-let pushUndoSpy = null;
-let drawingChangedNotByInteractionSpy = null;
 
-beforeEach(() => {
-  app = {
-    strictDrawingInteraction: {
-      tertiaryBondsInteraction: {},
-    },
-    pushUndo: () => {},
-    drawingChangedNotByInteraction: () => {},
-  };
-  pushUndoSpy = jest.spyOn(app, 'pushUndo');
-  drawingChangedNotByInteractionSpy = jest.spyOn(app, 'drawingChangedNotByInteraction');
+let app = new App(() => NodeSVG());
+app.strictDrawing.appendSequence('asdf', 'asdfasdfasdfasdfasdf');
+let drawing = app.strictDrawing.drawing;
+let seq = drawing.getSequenceAtIndex(0);
+let b1 = seq.getBaseAtPosition(1);
+let b2 = seq.getBaseAtPosition(2);
+let b3 = seq.getBaseAtPosition(3);
+let b4 = seq.getBaseAtPosition(4);
+let tb1 = drawing.addTertiaryBond(b1, b2);
+let tb2 = drawing.addTertiaryBond(b3, b4);
+let tb3 = drawing.addTertiaryBond(b4, b2);
+
+it('isDashed function', () => {
+  tb1.strokeDasharray = '';
+  expect(isDashed(tb1)).toBeFalsy();
+  tb1.strokeDasharray = 'none';
+  expect(isDashed(tb1)).toBeFalsy();
+  tb1.strokeDasharray = '2 1';
+  expect(isDashed(tb1)).toBeTruthy();
 });
 
-afterEach(() => {
-  app = null;
-});
-
-describe('create static method', () => {
-  describe('passing whether the selected tertiary bond is dashed', () => {
-    it('when no tertiary bond is selected', () => {
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = undefined;
-      let ele = DashedField.create(app);
-      expect(ele.props.isDashed).toBeFalsy();
-    });
-
-    it('when the selected tertiary bond is dashed', () => {
-      let selected = { strokeDasharray: '8 2' };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = DashedField.create(app);
-      expect(ele.props.isDashed).toBeTruthy();
-    });
-
-    it('when the selected tertiary bond is not dashed', () => {
-      let selected = { strokeDasharray: '' };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = DashedField.create(app);
-      expect(ele.props.isDashed).toBeFalsy();
-    });
+describe('areAllDashed function', () => {
+  it('are all dashed', () => {
+    tb1.strokeDasharray = '2 1';
+    tb2.strokeDasharray = '3 3';
+    tb3.strokeDasharray = '5 1';
+    expect(areAllDashed([tb1, tb2, tb3])).toBeTruthy();
   });
 
-  describe('set callback', () => {
-    it('has no effect when no tertiary bond is selected', () => {
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = undefined;
-      let ele = DashedField.create(app);
-      ele.props.set(true);
-      expect(pushUndoSpy).not.toHaveBeenCalled();
-      expect(drawingChangedNotByInteractionSpy).not.toHaveBeenCalled();
-    });
-
-    it('has no effect if setting to the same dashed state', () => {
-      let selected = { strokeDasharray: '8 2' };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = DashedField.create(app);
-      ele.props.set(true);
-      selected.strokeDasharray = '';
-      ele.props.set(false);
-      expect(pushUndoSpy).not.toHaveBeenCalled();
-      expect(drawingChangedNotByInteractionSpy).not.toHaveBeenCalled();
-    });
-
-    it('can make dashed', () => {
-      let selected = { strokeDasharray: '' };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = DashedField.create(app);
-      ele.props.set(true);
-      expect(selected.strokeDasharray).toBe(TertiaryBond.dashedStrokeDasharray);
-      expect(pushUndoSpy).toHaveBeenCalled(); // pushes undo
-      expect(drawingChangedNotByInteractionSpy).toHaveBeenCalled(); // refreshes app
-    });
-
-    it('can remove dashes', () => {
-      let selected = { strokeDasharray: '8 2' };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = DashedField.create(app);
-      ele.props.set(false);
-      expect(selected.strokeDasharray).toBe('');
-      expect(pushUndoSpy).toHaveBeenCalled(); // pushes undo
-      expect(drawingChangedNotByInteractionSpy).toHaveBeenCalled(); // refreshes app
-    });
+  it('one is not dashed', () => {
+    tb1.strokeDasharray = '5 6';
+    tb2.strokeDasharray = '';
+    tb3.strokeDasharray = '1 2';
+    expect(areAllDashed([tb1, tb2, tb3])).toBeFalsy();
   });
 });
 
-describe('render method', () => {
-  it('renders with a name', () => {
-    let comp = new DashedField({ isDashed: true });
-    expect(comp.render().props.name).toBeTruthy();
+describe('areAllNotDashed function', () => {
+  it('are all not dashed', () => {
+    tb1.strokeDasharray = '';
+    tb2.strokeDasharray = 'none';
+    tb3.strokeDasharray = '';
+    expect(areAllNotDashed([tb1, tb2, tb3])).toBeTruthy();
   });
 
-  it('can render checked and unchecked', () => {
-    let comp = new DashedField({ isDashed: true });
-    expect(comp.render().props.initialValue).toBe(true);
-    comp = new DashedField({ isDashed: false });
-    expect(comp.render().props.initialValue).toBe(false);
+  it('one is dashed', () => {
+    tb1.strokeDasharray = '';
+    tb2.strokeDasharray = 'none';
+    tb3.strokeDasharray = '1 5';
+    expect(areAllNotDashed([tb1, tb2, tb3])).toBeFalsy();
+  });
+});
+
+describe('field', () => {
+  let interaction = app.strictDrawingInteraction.tertiaryBondsInteraction;
+
+  it('renders when no tertiary bonds are selected', () => {
+    interaction.selected.clear();
+    expect(
+      () => DashedField({ app: app })
+    ).not.toThrow();
   });
 
-  it('passes value between set callbacks', () => {
-    let set = jest.fn();
-    let comp = new DashedField({ isDashed: true, set: set });
-    let ele = comp.render();
-    ele.props.set(false);
-    expect(set.mock.calls[0][0]).toBe(false);
-    ele.props.set(true);
-    expect(set.mock.calls[1][0]).toBe(true);
+  it('renders when tertiary bonds are selected', () => {
+    interaction.selected.add(tb1.id);
+    interaction.selected.add(tb2.id);
+    expect(
+      () => DashedField({ app: app })
+    ).not.toThrow();
   });
 });
