@@ -1,43 +1,42 @@
 import * as React from 'react';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 import { AppInterface as App } from '../../../AppInterface';
+import { getSelectedTertiaryBonds } from './getSelectedTertiaryBonds';
+import { TertiaryBondInterface as TertiaryBond } from '../../../draw/QuadraticBezierBondInterface';
+import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 
-interface Props {
-  currStrokeWidth: number;
-  setStrokeWidth: (sw: number) => void;
+function getStrokeWidths(tbs: TertiaryBond[]): number[] {
+  let sws = [] as number[];
+  tbs.forEach(tb => sws.push(tb.strokeWidth));
+  return sws;
 }
 
-export class StrokeWidthField extends React.Component {
-  props!: Props;
+interface Props {
+  app: App;
+}
 
-  static create(app: App): React.ReactElement {
-    let interaction = app.strictDrawingInteraction.tertiaryBondsInteraction;
-    let selected = interaction.selected;
+export function StrokeWidthField(props: Props): React.ReactElement | null {
+  let tbs = getSelectedTertiaryBonds(props.app);
+  if (tbs.length == 0) {
+    return null;
+  } else {
+    let sws = getStrokeWidths(tbs);
     return (
-      <StrokeWidthField
-        currStrokeWidth={selected ? selected.strokeWidth : 0}
-        setStrokeWidth={(sw: number) => {
-          let interaction = app.strictDrawingInteraction.tertiaryBondsInteraction;
-          let selected = interaction.selected;
-          if (selected && sw != selected.strokeWidth) {
-            app.pushUndo();
-            selected.strokeWidth = sw;
-            app.drawingChangedNotByInteraction();
+      <NonnegativeNumberField
+        name={'Line Width'}
+        initialValue={areAllSameNumber(sws) ? sws[0] : undefined}
+        set={sw => {
+          let tbs = getSelectedTertiaryBonds(props.app);
+          if (tbs.length > 0) {
+            let sws = getStrokeWidths(tbs);
+            if (!areAllSameNumber(sws) || sw != sws[0]) {
+              props.app.pushUndo();
+              tbs.forEach(tb => tb.strokeWidth = sw);
+              props.app.drawingChangedNotByInteraction();
+            }
           }
         }}
       />
     );
   }
-
-  render(): React.ReactElement {
-    return (
-      <NonnegativeNumberField
-        name={'Line Width'}
-        initialValue={this.props.currStrokeWidth}
-        set={(n: number) => this.props.setStrokeWidth(n)}
-      />
-    );
-  }
 }
-
-export default StrokeWidthField;
