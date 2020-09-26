@@ -65,5 +65,3 @@ export function DashedField(props: Props): React.ReactElement | null {
     );
   }
 }
-
-export default DashedField;

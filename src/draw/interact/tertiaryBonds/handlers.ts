@@ -20,27 +20,27 @@ export function handleMouseoutOnTertiaryBond(interaction: TertiaryBondsInteracti
 }
 
 export function handleMousedownOnTertiaryBond(interaction: TertiaryBondsInteraction, tb: TertiaryBond) {
-  if (interaction.selected.has(tb.id)) {
-    interaction.selected.delete(tb.id);
-    dehighlightTertiaryBond(tb);
-  } else {
-    interaction.selected.add(tb.id);
-    interaction.dragging = true;
-    interaction.dragged = false;
+  let alreadySelected = interaction.selected.has(tb.id);
+  interaction.selected.add(tb.id);
+  interaction.dragging = true;
+  interaction.dragged = false;
+  if (!alreadySelected) {
     interaction.fireChange();
   }
 }
 
 export function handleMousedownOnDrawing(interaction: TertiaryBondsInteraction) {
-  interaction.selected.forEach(id => {
-    let tb = interaction.drawing.getTertiaryBondById(id);
-    if (tb) {
-      dehighlightTertiaryBond(tb);
-    }
-  });
-  interaction.selected.clear();
-  interaction.dragging = false;
-  interaction.dragged = false;
+  if (!interaction.hovered) {
+    interaction.selected.forEach(id => {
+      let tb = interaction.drawing.getTertiaryBondById(id);
+      if (tb) {
+        dehighlightTertiaryBond(tb);
+      }
+    });
+    interaction.selected.clear();
+    interaction.dragging = false;
+    interaction.dragged = false;
+  }
 }
 
 interface Movement {
