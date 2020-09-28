@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
-import { AppInterface as App } from '../../../AppInterface';
 import { TertiaryBondInterface as TertiaryBond, TertiaryBondInterface } from '../../../draw/QuadraticBezierBondInterface';
-import { getSelectedTertiaryBonds } from './getSelectedTertiaryBonds';
 import { parseColor } from '../../../parse/parseColor';
 
 function getColorsAndOpacities(tbs: TertiaryBond[]): ColorAndOpacity[] {
@@ -41,11 +39,13 @@ function hasFill(tb: TertiaryBond): boolean {
 }
 
 interface Props {
-  app: App;
+  getTertiaryBonds: () => TertiaryBond[];
+  pushUndo: () => void;
+  changed: () => void;
 }
 
 export function StrokeField(props: Props): React.ReactElement | null {
-  let tbs = getSelectedTertiaryBonds(props.app);
+  let tbs = props.getTertiaryBonds();
   if (tbs.length == 0) {
     return null;
   } else {
@@ -55,11 +55,11 @@ export function StrokeField(props: Props): React.ReactElement | null {
         name={'Color'}
         initialValue={areAllSameColorAndOpacity(cos) ? cos[0] : undefined}
         set={co => {
-          let tbs = getSelectedTertiaryBonds(props.app);
+          let tbs = props.getTertiaryBonds();
           if (tbs.length > 0) {
             let cos = getColorsAndOpacities(tbs);
             if (!areAllSameColorAndOpacity(cos) || !areSameColorAndOpacity(co, cos[0])) {
-              props.app.pushUndo();
+              props.pushUndo();
               tbs.forEach(tb => {
                 tb.stroke = co.color;
                 tb.strokeOpacity = co.opacity;
@@ -67,7 +67,7 @@ export function StrokeField(props: Props): React.ReactElement | null {
                   tb.fill = co.color;
                 }
               });
-              props.app.drawingChangedNotByInteraction();
+              props.changed();
             }
           }
         }}

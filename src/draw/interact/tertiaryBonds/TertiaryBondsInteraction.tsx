@@ -1,3 +1,7 @@
+import {
+  TertiaryBondsInteractionInterface,
+  FormFactory,
+} from './TertiaryBondsInteractionInterface';
 import { DrawingInterface as Drawing } from '../../DrawingInterface';
 import { TertiaryBondInterface as TertiaryBond } from '../../QuadraticBezierBondInterface';
 import {
@@ -12,8 +16,10 @@ import {
 } from './handlers';
 import { addMousemoveListener } from '../listeners/addMousemoveListener';
 import { addMouseupListener } from '../listeners/addMouseupListener';
+import * as React from 'react';
+import { EditTertiaryBonds } from '../../../forms/edit/tertiaryBonds/EditTertiaryBonds';
 
-class TertiaryBondsInteraction {
+class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   _drawing: Drawing;
 
   hovered?: string;
@@ -24,6 +30,8 @@ class TertiaryBondsInteraction {
 
   _onShouldPushUndo?: () => void;
   _onChange?: () => void;
+
+  _onRequestToRenderForm?: (ff: FormFactory) => void;
 
   constructor(drawing: Drawing) {
     this._drawing = drawing;
@@ -117,6 +125,23 @@ class TertiaryBondsInteraction {
 
   reset() {
     reset(this);
+  }
+
+  onRequestToRenderForm(f: (ff: FormFactory) => void) {
+    this._onRequestToRenderForm = f;
+  }
+
+  requestToRenderForm() {
+    if (this._onRequestToRenderForm) {
+      this._onRequestToRenderForm(close => (
+        <EditTertiaryBonds
+          getTertiaryBonds={() => this.drawing.getTertiaryBondsByIds(this.selected)}
+          pushUndo={() => this.fireShouldPushUndo()}
+          changed={() => this.fireChange()}
+          close={close ? close : () => {}}
+        />
+      ));
+    }
   }
 }
 

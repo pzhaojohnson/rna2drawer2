@@ -1,14 +1,7 @@
 import * as React from 'react';
-import CheckboxField from '../../fields/CheckboxField';
-import { AppInterface as App } from '../../../AppInterface';
+import { CheckboxField } from '../../fields/CheckboxField';
 import { TertiaryBondInterface } from '../../../draw/QuadraticBezierBondInterface';
 import { TertiaryBond } from '../../../draw/QuadraticBezierBond';
-
-function getSelected(app: App): TertiaryBondInterface[] {
-  let drawing = app.strictDrawing.drawing;
-  let interaction = app.strictDrawingInteraction.tertiaryBondsInteraction;
-  return drawing.getTertiaryBondsByIds(interaction.selected);
-}
 
 export function isDashed(tb: TertiaryBondInterface): boolean {
   let sda = tb.strokeDasharray.trim().toLowerCase();
@@ -36,28 +29,30 @@ export function areAllNotDashed(tbs: TertiaryBondInterface[]): boolean {
 }
 
 interface Props {
-  app: App;
+  getTertiaryBonds: () => TertiaryBondInterface[];
+  pushUndo: () => void;
+  changed: () => void;
 }
 
 export function DashedField(props: Props): React.ReactElement | null {
-  if (getSelected(props.app).length == 0) {
+  if (props.getTertiaryBonds().length == 0) {
     return null;
   } else {
     return (
       <CheckboxField
         name={'Dashed'}
-        initialValue={areAllDashed(getSelected(props.app))}
+        initialValue={areAllDashed(props.getTertiaryBonds())}
         set={b => {
-          let tbs = getSelected(props.app);
+          let tbs = props.getTertiaryBonds();
           if (tbs.length > 0) {
             let shouldDash = b && !areAllDashed(tbs);
             let shouldUndash = !b && !areAllNotDashed(tbs);
             if (shouldDash || shouldUndash) {
-              props.app.pushUndo();
+              props.pushUndo();
               tbs.forEach(tb => {
                 tb.strokeDasharray = b ? TertiaryBond.dashedStrokeDasharray : '';
               });
-              props.app.drawingChangedNotByInteraction();
+              props.changed();
             }
           }
         }}

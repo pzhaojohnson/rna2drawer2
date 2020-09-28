@@ -1,7 +1,5 @@
 import * as React from 'react';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
-import { AppInterface as App } from '../../../AppInterface';
-import { getSelectedTertiaryBonds } from './getSelectedTertiaryBonds';
 import { TertiaryBondInterface as TertiaryBond } from '../../../draw/QuadraticBezierBondInterface';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 
@@ -12,11 +10,13 @@ function getStrokeWidths(tbs: TertiaryBond[]): number[] {
 }
 
 interface Props {
-  app: App;
+  getTertiaryBonds: () => TertiaryBond[];
+  pushUndo: () => void;
+  changed: () => void;
 }
 
 export function StrokeWidthField(props: Props): React.ReactElement | null {
-  let tbs = getSelectedTertiaryBonds(props.app);
+  let tbs = props.getTertiaryBonds();
   if (tbs.length == 0) {
     return null;
   } else {
@@ -26,13 +26,13 @@ export function StrokeWidthField(props: Props): React.ReactElement | null {
         name={'Line Width'}
         initialValue={areAllSameNumber(sws) ? sws[0] : undefined}
         set={sw => {
-          let tbs = getSelectedTertiaryBonds(props.app);
+          let tbs = props.getTertiaryBonds();
           if (tbs.length > 0) {
             let sws = getStrokeWidths(tbs);
             if (!areAllSameNumber(sws) || sw != sws[0]) {
-              props.app.pushUndo();
+              props.pushUndo();
               tbs.forEach(tb => tb.strokeWidth = sw);
-              props.app.drawingChangedNotByInteraction();
+              props.changed();
             }
           }
         }}

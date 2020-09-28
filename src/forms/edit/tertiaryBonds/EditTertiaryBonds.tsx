@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
 import { ClosableContainer } from '../../containers/ClosableContainer';
-import { getSelectedTertiaryBonds } from './getSelectedTertiaryBonds';
+import { TertiaryBondInterface as TertiaryBond } from '../../../draw/QuadraticBezierBondInterface';
 import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { DashedField } from './DashedField';
 import { PaddingField1, PaddingField2 } from './PaddingFields';
 
 interface Props {
-  app: App;
+  getTertiaryBonds: () => TertiaryBond[];
+  pushUndo: () => void;
+  changed: () => void;
   close: () => void;
 }
 
@@ -19,22 +20,22 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
       title={'Edit Tertiary Bonds'}
       contained={
         <div style={{ display: 'flex', flexDirection: 'column' }} >
-          {getSelectedTertiaryBonds(props.app).length == 0 ? (
+          {props.getTertiaryBonds().length == 0 ? (
             <p>No tertiary bonds are selected.</p>
           ) : (
             <div>
-              <StrokeField app={props.app} />
+              <StrokeField {...props} />
               <div style={{ marginTop: '16px' }} >
-                <StrokeWidthField app={props.app} />
+                <StrokeWidthField {...props} />
               </div>
               <div style={{ marginTop: '16px' }} >
-                <DashedField app={props.app} />
+                <DashedField {...props} />
               </div>
               <div style={{ marginTop: '16px' }} >
-                <PaddingField1 app={props.app} />
+                <PaddingField1 {...props} />
               </div>
               <div style={{ marginTop: '16px' }} >
-                <PaddingField2 app={props.app} />
+                <PaddingField2 {...props} />
               </div>
             </div>
           )}

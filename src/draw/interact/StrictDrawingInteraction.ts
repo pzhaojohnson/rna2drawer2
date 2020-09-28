@@ -110,6 +110,7 @@ class StrictDrawingInteraction {
     this._tertiaryBondsInteraction.onChange(() => {
       this.fireChange();
     });
+    this._tertiaryBondsInteraction.onRequestToRenderForm(ff => this.requestToRenderForm(ff));
   }
 
   reset() {
