@@ -441,8 +441,8 @@ TertiaryBond._mostRecentProps = {
   padding1: 8,
   padding2: 8,
   stroke: '#63c5da',
-  strokeWidth: 1.25,
-  strokeOpacity: 1,
+  strokeWidth: 1.5,
+  strokeOpacity: 0.5,
   strokeDasharray: '',
 };
 
