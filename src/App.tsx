@@ -163,7 +163,7 @@ class App implements AppInterface {
 
   updateDocumentTitle() {
     if (this.strictDrawing.isEmpty()) {
-      document.title = 'RNA2Drawer 2';
+      document.title = 'RNA2Drawer';
       return;
     }
     document.title = this.strictDrawing.sequenceIds().join(', ');

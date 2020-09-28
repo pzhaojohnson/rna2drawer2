@@ -233,7 +233,7 @@ it('updateDocumentTitle method', () => {
   let app = new App(() => NodeSVG());
   document.title = 'asdf';
   app.updateDocumentTitle(); // drawing is empty
-  expect(document.title).toBe('RNA2Drawer 2');
+  expect(document.title).toBe('RNA2Drawer');
   app.strictDrawing.appendSequence('qwer', 'qwer');
   app.updateDocumentTitle(); // drawing has one sequence
   expect(document.title).toBe('qwer');
