@@ -74,6 +74,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
     tb.onMouseover(() => handleMouseoverOnTertiaryBond(this, tb));
     tb.onMouseout(() => handleMouseoutOnTertiaryBond(this, tb));
     tb.onMousedown(() => handleMousedownOnTertiaryBond(this, tb));
+    tb.onDblclick(() => this.requestToRenderForm());
   }
 
   _bindMousedown() {
