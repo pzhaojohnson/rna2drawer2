@@ -41,6 +41,7 @@ class App implements AppInterface {
     this._infobarContainer = document.createElement('div');
     this._appendContainers();
     this._disableDragAndDrop();
+    this._preventDblclickDefaultWhenNotTyping();
 
     this._strictDrawing = new StrictDrawing();
     this._initializeDrawing();
@@ -77,6 +78,17 @@ class App implements AppInterface {
   _disableDragAndDrop() {
     document.body.ondragstart = () => false;
     document.body.ondrop = () => false;
+  }
+
+  _preventDblclickDefaultWhenNotTyping() {
+    document.addEventListener('mousedown', event => {
+      if (event.detail > 1) { // clicked more than once
+        let tn = document.activeElement?.tagName.toLowerCase();
+        if (tn != 'input' && tn != 'textarea') {
+          event.preventDefault();
+        }
+      }
+    }, false);
   }
 
   _initializeDrawing() {
