@@ -3,7 +3,7 @@ import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import { TertiaryBondInterface as TertiaryBond, TertiaryBondInterface } from '../../../draw/QuadraticBezierBondInterface';
 import { parseColor } from '../../../parse/parseColor';
 
-function getColorsAndOpacities(tbs: TertiaryBond[]): ColorAndOpacity[] {
+export function getColorsAndOpacities(tbs: TertiaryBond[]): ColorAndOpacity[] {
   let cos = [] as ColorAndOpacity[];
   tbs.forEach(tb => {
     let c = parseColor(tb.stroke);
@@ -14,7 +14,7 @@ function getColorsAndOpacities(tbs: TertiaryBond[]): ColorAndOpacity[] {
   return cos;
 }
 
-function areSameColorAndOpacity(co1?: ColorAndOpacity, co2?: ColorAndOpacity): boolean {
+export function areSameColorAndOpacity(co1?: ColorAndOpacity, co2?: ColorAndOpacity): boolean {
   if (co1 && co2) {
     return co1.color.toLowerCase() == co2.color.toLowerCase() && co1.opacity == co2.opacity;
   } else {
@@ -22,7 +22,7 @@ function areSameColorAndOpacity(co1?: ColorAndOpacity, co2?: ColorAndOpacity): b
   }
 }
 
-function areAllSameColorAndOpacity(cos: ColorAndOpacity[]): boolean {
+export function areAllSameColorAndOpacity(cos: ColorAndOpacity[]): boolean {
   let allSame = true;
   let first = cos[0];
   cos.forEach(co => {
@@ -33,7 +33,7 @@ function areAllSameColorAndOpacity(cos: ColorAndOpacity[]): boolean {
   return allSame;
 }
 
-function hasFill(tb: TertiaryBond): boolean {
+export function hasFill(tb: TertiaryBond): boolean {
   let f = tb.fill.trim().toLowerCase();
   return f != '' && f != 'none';
 }

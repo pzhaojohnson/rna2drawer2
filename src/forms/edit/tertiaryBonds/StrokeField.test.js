@@ -1,149 +1,158 @@
-import StrokeField from './StrokeField';
-import ColorField from '../../fields/color/ColorField';
+import App from '../../../App';
+import NodeSVG from '../../../draw/NodeSVG';
+import {
+  getColorsAndOpacities,
+  areSameColorAndOpacity,
+  areAllSameColorAndOpacity,
+  hasFill,
+  StrokeField,
+} from './StrokeField';
+import React from 'react';
+import { unmountComponentAtNode } from 'react-dom';
+import { act } from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 
-function mockApp() {
-  return {
-    strictDrawingInteraction: {
-      tertiaryBondsInteraction: {},
-    },
-    pushUndo: () => {},
-    drawingChangedNotByInteraction: () => {},
-  };
-}
-
-let app = null;
+let container = null;
 
 beforeEach(() => {
-  app = mockApp();
+  container = document.createElement('div');
+  document.body.appendChild(container);
 });
 
 afterEach(() => {
-  app = null;
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
 });
 
-describe('create static method', () => {
-  describe('passing the current stroke', () => {
-    it('when no tertiary bond is selected', () => {
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = undefined;
-      let ele = StrokeField.create(app);
-      expect(ele.props.currStroke).toBeFalsy();
-    });
+let app = new App(() => NodeSVG());
+app.strictDrawing.appendSequence('asdf', 'asdfasdfasdfasdfasdf');
+let drawing = app.strictDrawing.drawing;
+let seq = drawing.getSequenceAtIndex(0);
+let b1 = seq.getBaseAtPosition(1);
+let b2 = seq.getBaseAtPosition(2);
+let b3 = seq.getBaseAtPosition(3);
+let b4 = seq.getBaseAtPosition(4);
+let tb1 = drawing.addTertiaryBond(b1, b2);
+let tb2 = drawing.addTertiaryBond(b3, b4);
+let tb3 = drawing.addTertiaryBond(b4, b2);
+let tb4 = drawing.addTertiaryBond(b4, b1);
 
-    it('when a tertiary bond is selected', () => {
-      let selected = { stroke: '#ab1155', strokeOpacity: 0.61 };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = StrokeField.create(app);
-      expect(ele.props.currStroke).toStrictEqual({ color: '#ab1155', opacity: 0.61 });
-    });
+it('getColorsAndOpacities function', () => {
+  let tbs = [tb1, tb2, tb3, tb4];
+  let cos = [
+    { color: '#5561ab', opacity: 0.21 },
+    { color: '#05a1ab', opacity: 0.6 },
+    { color: '#89bbbb', opacity: 0.09 },
+    { color: '#563a22', opacity: 0.72 },
+  ];
+  tbs.forEach((tb, i) => {
+    tb.stroke = cos[i].color;
+    tb.strokeOpacity = cos[i].opacity;
+  });
+  expect(getColorsAndOpacities(tbs)).toStrictEqual(cos);
+});
+
+describe('areSameColorAndOpacity function', () => {
+  it('falsy first argument', () => {
+    expect(areSameColorAndOpacity(
+      undefined,
+      { color: '#123456', opacity: 0.2 },
+    )).toBeFalsy();
   });
 
-  describe('setStroke callback', () => {
-    it('no tertiary bond is selected', () => {
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = undefined;
-      let ele = StrokeField.create(app);
-      let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
-      ele.props.setStroke({ color: '#123456', opacity: 0.5 });
-      expect(spy1).not.toHaveBeenCalled(); // does not push undo
-      expect(spy2).not.toHaveBeenCalled(); // does not refresh app
-    });
+  it('falsy second argument', () => {
+    expect(areSameColorAndOpacity(
+      { color: '#abcdef', opacity: 0.5 },
+      undefined,
+    )).toBeFalsy();
+  });
 
-    it('no change in stroke or opacity', () => {
-      let selected = { stroke: '#aa32bb', strokeOpacity: 0.82 };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = StrokeField.create(app);
-      let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
-      ele.props.setStroke({ color: '#aa32bb', opacity: 0.82 });
-      expect(selected.stroke).toBe('#aa32bb'); // does not change
-      expect(selected.strokeOpacity).toBe(0.82); // does not change
-      expect(spy1).not.toHaveBeenCalled(); // does not push undo
-      expect(spy2).not.toHaveBeenCalled(); // does not refresh app
-    });
+  it('are the same', () => {
+    // different color capitalizations
+    expect(areSameColorAndOpacity(
+      { color: '#BC33FF', opacity: 0.89 },
+      { color: '#BC33ff', opacity: 0.89 },
+    )).toBeTruthy();
+  });
 
-    it('stroke changes but opacity stays the same', () => {
-      let selected = { stroke: '#abcdef', strokeOpacity: 0.56 };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = StrokeField.create(app);
-      let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
-      ele.props.setStroke({ color: '#aabbcc', opacity: 0.56 });
-      expect(selected.stroke).toBe('#aabbcc');
-      expect(selected.strokeOpacity).toBe(0.56);
-      expect(spy1).toHaveBeenCalled();
-      expect(spy2).toHaveBeenCalled();
-    });
+  it('different color', () => {
+    expect(areSameColorAndOpacity(
+      { color: '#BC23FF', opacity: 0.89 },
+      { color: '#BC33ff', opacity: 0.89 },
+    )).toBeFalsy();
+  });
 
-    it('stroke stays the same but opacity changes', () => {
-      let selected = { stroke: '#112233', strokeOpacity: 0.1 };
-      app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-      let ele = StrokeField.create(app);
-      let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
-      ele.props.setStroke({ color: '#112233', opacity: 0.2 });
-      expect(selected.stroke).toBe('#112233');
-      expect(selected.strokeOpacity).toBe(0.2);
-      expect(spy1).toHaveBeenCalled();
-      expect(spy2).toHaveBeenCalled();
-    });
-
-    describe('setting fill alongside stroke', () => {
-      it('has fill', () => {
-        let selected = { stroke: '#123456', strokeOpacity: 0.88, fill: '#224466' };
-        app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-        let ele = StrokeField.create(app);
-        ele.props.setStroke({ color: '#aa32ff', opacity: 0.77 });
-        expect(selected.stroke).toBe('#aa32ff');
-        expect(selected.strokeOpacity).toBe(0.77);
-        expect(selected.fill).toBe('#aa32ff');
-      });
-
-      it('fill is falsy', () => {
-        let selected = { stroke: '#abcdef', strokeOpacity: 0.75, fill: undefined };
-        app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-        let ele = StrokeField.create(app);
-        ele.props.setStroke({ color: '#aaccbb', opacity: 0.75 });
-        expect(selected.stroke).toBe('#aaccbb');
-        expect(selected.strokeOpacity).toBe(0.75);
-        expect(selected.fill).toBeFalsy();
-      });
-
-      it('fill is none', () => {
-        let selected = { stroke: '#aabbcc', strokeOpacity: 0.2, fill: 'none' };
-        app.strictDrawingInteraction.tertiaryBondsInteraction.selected = selected;
-        let ele = StrokeField.create(app);
-        ele.props.setStroke({ color: '#aafd21', opacity: 0.25 });
-        expect(selected.stroke).toBe('#aafd21');
-        expect(selected.strokeOpacity).toBe(0.25);
-        expect(selected.fill).toBe('none');
-      });
-    });
+  it('different opacity', () => {
+    expect(areSameColorAndOpacity(
+      { color: '#BC33FF', opacity: 0.89 },
+      { color: '#BC33ff', opacity: 0.88 },
+    )).toBeFalsy();
   });
 });
 
-describe('render method', () => {
-  let setStroke = jest.fn();
-  let comp = new StrokeField({
-    currStroke: { color: '#aa22ee', opacity: 0.24 },
-    setStroke: setStroke,
-  });
-  let ele = comp.render();
-
-  it('returns a color field', () => {
-    expect(ele.type).toBe(ColorField);
+describe('areAllSameColorAndOpacity function', () => {
+  it('are all same', () => {
+    // colors have different capitalizations
+    expect(areAllSameColorAndOpacity([
+      { color: '#AAbc45', opacity: 0.18 },
+      { color: '#aaBC45', opacity: 0.18 },
+      { color: '#aabc45', opacity: 0.18 },
+    ])).toBeTruthy();
   });
 
-  it('passes a name', () => {
-    expect(ele.props.name).toBeTruthy();
-  });
-  
-  it('passes current stroke', () => {
-    expect(ele.props.initialValue).toStrictEqual({ color: '#aa22ee', opacity: 0.24 });
+  it('one has different color', () => {
+    expect(areAllSameColorAndOpacity([
+      { color: '#aa1256', opacity: 0.51 },
+      { color: '#aa1256', opacity: 0.51 },
+      { color: '#aa1356', opacity: 0.51 },
+      { color: '#aa1256', opacity: 0.51 },
+    ])).toBeFalsy();
   });
 
-  it('passes set callback', () => {
-    ele.props.set({ color: '#16af22', opacity: 0.45 });
-    expect(setStroke).toHaveBeenCalled();
-    expect(setStroke.mock.calls[0][0]).toStrictEqual({ color: '#16af22', opacity: 0.45 });
+  it('one has different opacity', () => {
+    expect(areAllSameColorAndOpacity([
+      { color: '#aa1256', opacity: 0.51 },
+      { color: '#aa1256', opacity: 0.52 },
+      { color: '#aa1256', opacity: 0.51 },
+      { color: '#aa1256', opacity: 0.51 },
+    ])).toBeFalsy();
+  });
+});
+
+it('hasFill function', () => {
+  tb1.fill = '#abcdef'; // has fill
+  expect(hasFill(tb1)).toBeTruthy();
+  tb1.fill = ''; // falsy fill
+  expect(hasFill(tb1)).toBeFalsy();
+  tb1.fill = 'none'; // fill is none
+  expect(hasFill(tb1)).toBeFalsy();
+});
+
+describe('field', () => {
+  it('renders when no tertiary bonds are selected', () => {
+    act(() => {
+      render(
+        <StrokeField
+          getTertiaryBonds={() => []}
+          pushUndo={jest.fn()}
+          changed={jest.fn()}
+        />,
+        container,
+      );
+    });
+  });
+
+  it('renders when some tertiary bonds are selected', () => {
+    act(() => {
+      render(
+        <StrokeField
+          getTertiaryBonds={() => [tb1, tb2]}
+          pushUndo={jest.fn()}
+          changed={jest.fn()}
+        />,
+        container,
+      );
+    });
   });
 });

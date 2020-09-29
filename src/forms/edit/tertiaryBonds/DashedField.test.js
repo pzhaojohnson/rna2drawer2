@@ -6,7 +6,23 @@ import {
   areAllNotDashed,
   DashedField,
 } from './DashedField';
+import React from 'react';
+import { unmountComponentAtNode } from 'react-dom';
+import { act } from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 
+let container = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
 
 let app = new App(() => NodeSVG());
 app.strictDrawing.appendSequence('asdf', 'asdfasdfasdfasdfasdf');
@@ -62,20 +78,29 @@ describe('areAllNotDashed function', () => {
 });
 
 describe('field', () => {
-  let interaction = app.strictDrawingInteraction.tertiaryBondsInteraction;
-
   it('renders when no tertiary bonds are selected', () => {
-    interaction.selected.clear();
-    expect(
-      () => DashedField({ app: app })
-    ).not.toThrow();
+    act(() => {
+      render(
+        <DashedField
+          getTertiaryBonds={() => []}
+          pushUndo={jest.fn()}
+          changed={jest.fn()}
+        />,
+        container,
+      );
+    });
   });
 
   it('renders when tertiary bonds are selected', () => {
-    interaction.selected.add(tb1.id);
-    interaction.selected.add(tb2.id);
-    expect(
-      () => DashedField({ app: app })
-    ).not.toThrow();
+    act(() => {
+      render(
+        <DashedField
+          getTertiaryBonds={() => [tb1, tb2]}
+          pushUndo={jest.fn()}
+          changed={jest.fn()}
+        />,
+        container,
+      );
+    });
   });
 });

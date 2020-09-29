@@ -3,7 +3,7 @@ import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 import { TertiaryBondInterface as TertiaryBond } from '../../../draw/QuadraticBezierBondInterface';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 
-function getStrokeWidths(tbs: TertiaryBond[]): number[] {
+export function getStrokeWidths(tbs: TertiaryBond[]): number[] {
   let sws = [] as number[];
   tbs.forEach(tb => sws.push(tb.strokeWidth));
   return sws;
