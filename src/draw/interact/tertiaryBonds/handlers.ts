@@ -30,16 +30,13 @@ export function handleMousedownOnTertiaryBond(interaction: TertiaryBondsInteract
 }
 
 export function handleMousedownOnDrawing(interaction: TertiaryBondsInteraction) {
-  if (!interaction.hovered) {
-    interaction.selected.forEach(id => {
-      let tb = interaction.drawing.getTertiaryBondById(id);
-      if (tb) {
-        dehighlightTertiaryBond(tb);
-      }
-    });
+  if (!interaction.hovered && interaction.selected.size > 0) {
+    let tbs = interaction.drawing.getTertiaryBondsByIds(interaction.selected);
+    tbs.forEach(tb => dehighlightTertiaryBond(tb));
     interaction.selected.clear();
     interaction.dragging = false;
     interaction.dragged = false;
+    interaction.fireChange();
   }
 }
 
@@ -59,12 +56,8 @@ export function handleMousemove(interaction: TertiaryBondsInteraction, event: Mo
       if (!interaction.dragged) {
         interaction.fireShouldPushUndo();
       }
-      interaction.selected.forEach(id => {
-        let tb = interaction.drawing.getTertiaryBondById(id);
-        if (tb) {
-          tb.shiftControl(shift.x, shift.y);
-        }
-      });
+      let tbs = interaction.drawing.getTertiaryBondsByIds(interaction.selected);
+      tbs.forEach(tb => tb.shiftControl(shift.x, shift.y));
       interaction.dragged = true;
       interaction.fireChange();
     }
@@ -88,14 +81,23 @@ export function removeSelected(interaction: TertiaryBondsInteraction) {
 
 export function refresh(interaction: TertiaryBondsInteraction) {
   let drawing = interaction.drawing;
+  drawing.forEachTertiaryBond(tb => {
+    if (tb.id == interaction.hovered || interaction.selected.has(tb.id)) {
+      highlightTertiaryBond(tb);
+    } else {
+      dehighlightTertiaryBond(tb);
+    }
+  });
   if (interaction.hovered) {
-    if (!drawing.getTertiaryBondById(interaction.hovered)) {
+    let tb = drawing.getTertiaryBondById(interaction.hovered);
+    if (!tb) {
       interaction.hovered = undefined;
     }
   }
   let toDeselect = [] as string[];
   interaction.selected.forEach(id => {
-    if (!drawing.getTertiaryBondById(id)) {
+    let tb = drawing.getTertiaryBondById(id);
+    if (!tb) {
       toDeselect.push(id);
     }
   });
@@ -112,12 +114,8 @@ export function reset(interaction: TertiaryBondsInteraction) {
     }
     interaction.hovered = undefined;
   }
-  interaction.selected.forEach(id => {
-    let tb = drawing.getTertiaryBondById(id);
-    if (tb) {
-      dehighlightTertiaryBond(tb);
-    }
-  });
+  let tbs = drawing.getTertiaryBondsByIds(interaction.selected);
+  tbs.forEach(tb => dehighlightTertiaryBond(tb));
   interaction.selected.clear();
   interaction.dragging = false;
   interaction.dragged = false;
