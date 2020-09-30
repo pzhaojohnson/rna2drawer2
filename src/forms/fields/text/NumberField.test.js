@@ -89,11 +89,31 @@ it('passes on focus and input callbacks', () => {
   expect(comp.props.onInvalidInput).toBe(onInvalidInput);
 });
 
-it('passes value between set callbacks', () => {
-  let set = jest.fn();
-  let comp = new NumberField({ initialValue: 0, set: set });
-  let ele = comp.render();
-  ele.props.set('801.2');
-  expect(set).toHaveBeenCalled();
-  expect(set.mock.calls[0][0]).toBe(801.2); // converted string to number
+describe('setting', () => {
+  it('passes value between set callbacks', () => {
+    let set = jest.fn();
+    let comp = new NumberField({ initialValue: 0, set: set });
+    let ele = comp.render();
+    ele.props.set('801.2');
+    expect(set).toHaveBeenCalled();
+    expect(set.mock.calls[0][0]).toBe(801.2); // converted string to number
+  });
+
+  it('ignores empty strings and whitespace', () => {
+    let set = jest.fn();
+    let comp = new NumberField({ initialValue: 0, set: set });
+    let ele = comp.render();
+    ele.props.set(''); // empty string
+    ele.props.set('  \t\t\n  '); // whitespace
+    expect(set).not.toHaveBeenCalled();
+  });
+
+  it('ignores nonfinite values', () => {
+    let set = jest.fn();
+    let comp = new NumberField({ initialValue: 0, set: set });
+    let ele = comp.render();
+    ele.props.set('asdf');
+    ele.props.set('NaN');
+    expect(set).not.toHaveBeenCalled();
+  });
 });

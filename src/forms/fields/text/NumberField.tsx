@@ -43,8 +43,12 @@ export class NumberField extends React.Component {
         onValidInput={this.props.onValidInput}
         onInvalidInput={this.props.onInvalidInput}
         set={(v: string) => {
-          let n = Number.parseFloat(v);
-          this.props.set(n);
+          if (v.trim().length > 0) {
+            let n = Number(v);
+            if (Number.isFinite(n)) {
+              this.props.set(n);
+            }
+          }
         }}
         minLabelWidth={this.props.minLabelWidth}
       />
