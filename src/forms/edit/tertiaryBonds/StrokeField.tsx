@@ -65,6 +65,7 @@ export function StrokeField(props: Props): React.ReactElement | null {
                 tb.strokeOpacity = co.opacity;
                 if (hasFill(tb)) {
                   tb.fill = co.color;
+                  tb.fillOpacity = Math.max(0.1 * tb.strokeOpacity, 0.05);
                 }
               });
               props.changed();
