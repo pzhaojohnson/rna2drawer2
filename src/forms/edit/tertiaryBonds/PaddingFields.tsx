@@ -39,7 +39,7 @@ export function PaddingField1(props: Props): React.ReactElement | null {
           p1 = trimPadding(p1);
           let tbs = props.getTertiaryBonds();
           if (tbs.length > 0) {
-            let p1s = getPadding2s(tbs);
+            let p1s = getPadding1s(tbs);
             if (!areAllSameNumber(p1s) || p1 != p1s[0]) {
               props.pushUndo();
               tbs.forEach(tb => tb.padding1 = p1);
