@@ -108,7 +108,8 @@ export class TextField extends React.Component {
   }
 
   onBlurAndEnter() {
-    if (!this.state.errorMessage.trim()) {
+    let em = this.props.checkValue ? this.props.checkValue(this.state.value) : '';
+    if (!em) {
       this.props.set(this.state.value);
     }
   }

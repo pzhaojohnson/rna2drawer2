@@ -148,13 +148,12 @@ it('calls onInput, onValidInput and onInvalidInput callbacks when appropriate', 
   expect(onInvalidInput).toHaveBeenCalledTimes(2);
 });
 
-describe('calling set callback on blur', () => {
-  it('calls set callback on blur', () => {
+describe('setting value', () => {
+  it('sets on blur', () => {
     let set = jest.fn();
     act(() => {
       render(<TextField initialValue={'asdf'} set={set} />, container);
     });
-    expect(getErrorMessage().textContent).toBeFalsy();
     act(() => {
       fireEvent.blur(getInput());
     });
@@ -162,30 +161,11 @@ describe('calling set callback on blur', () => {
     expect(set.mock.calls[0][0]).toBe('asdf');
   });
 
-  it('but not when there is an error message', () => {
-    let set = jest.fn();
-    act(() => {
-      render(<TextField
-        checkValue={v => v == 'asd' ? 'Bad value.' : ''}
-        set={set}
-      />, container);
-      fireEvent.change(getInput(), { target: { value: 'asd' } });
-    });
-    expect(getErrorMessage().textContent).toBeTruthy();
-    act(() => {
-      fireEvent.blur(getInput());
-    });
-    expect(set).not.toHaveBeenCalled();
-  });
-});
-
-describe('calling set callback on enter key up', () => {
-  it('calls set callback on enter key up', () => {
+  it('sets on enter key up', () => {
     let set = jest.fn();
     act(() => {
       render(<TextField initialValue={'zzxxcc'} set={set} />, container);
     });
-    expect(getErrorMessage().textContent).toBeFalsy();
     act(() => {
       fireEvent.keyUp(getInput(), { key: 'Enter' })
     });
@@ -193,18 +173,44 @@ describe('calling set callback on enter key up', () => {
     expect(set.mock.calls[0][0]).toBe('zzxxcc');
   });
 
-  it('but not when there is an error message', () => {
+  it('does not set when there is an error message', () => {
     let set = jest.fn();
     act(() => {
-      render(<TextField
-        checkValue={v => v == 'ghjk' ? 'Bad value.' : ''}
-        set={set}
-      />, container);
-      fireEvent.change(getInput(), { target: { value: 'ghjk' } });
+      render(
+        <TextField
+          checkValue={v => v == 'asd' ? 'Bad value.' : ''}
+          set={set}
+        />,
+        container,
+      );
+      fireEvent.change(getInput(), { target: { value: 'asd' } });
     });
+    // there is an error message
     expect(getErrorMessage().textContent).toBeTruthy();
     act(() => {
-      fireEvent.keyUp(getInput(), { key: 'Enter' });
+      fireEvent.blur(getInput());
+    });
+    expect(set).not.toHaveBeenCalled();
+  });
+
+  it('does not set when input is invalid even when there is no error message', () => {
+    /* It is possible to have a blur event or enter key up event without there
+    ever being a change event, meaning that the input may be invalid without there
+    being an error message. */
+    let set = jest.fn();
+    act(() => {
+      render(
+        <TextField
+          initialValue={'asd'}
+          checkValue={v => v == 'asd' ? 'Bad value.' : ''}
+          set={set}
+        />,
+        container,
+      );
+    });
+    expect(getErrorMessage().textContent).toBeFalsy(); // no error message
+    act(() => {
+      fireEvent.blur(getInput());
     });
     expect(set).not.toHaveBeenCalled();
   });
