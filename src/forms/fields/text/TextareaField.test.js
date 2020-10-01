@@ -92,25 +92,41 @@ it('calls on input callback props when appropriate', () => {
 });
 
 it('calls set callback on blur only when input is valid', () => {
+  let checkValue = s => s == 'asdf' ? 'error' : '';
   let set = jest.fn();
   act(() => {
     render(
       <TextareaField
-        checkValue={s => s == 'asdf' ? 'error' : ''}
+        initialValue={'asdf'}
+        checkValue={checkValue}
         set={set}
       />,
       container,
     );
   });
   let ta = getTextarea();
-  act(() => fireEvent.change(ta, { target: { value: 'asdf' } }));
-  expect(getErrorMessage()).toBeTruthy(); // input is invalid
+  expect(checkValue(ta.value)).toBeTruthy(); // input is invalid
+  // there is no error message since there has been no change event
+  expect(getErrorMessage()).toBeFalsy();
+  // cannot only check if there is an error message to tell if the input is valid
   act(() => fireEvent.blur(ta, { bubbles: true }));
   expect(set).not.toHaveBeenCalled();
+
   act(() => fireEvent.change(ta, { target: { value: 'qwer' } }));
-  expect(getErrorMessage()).toBeFalsy(); // input is valid
+  expect(checkValue(ta.value)).toBeFalsy(); // input is valid
   act(() => fireEvent.blur(ta, { bubbles: true }));
   expect(set.mock.calls[0][0]).toBe('qwer');
+
+  act(() => fireEvent.change(ta, { target: { value: 'asdf' } }));
+  expect(checkValue(ta.value)).toBeTruthy(); // input is invalid
+  expect(getErrorMessage()).toBeTruthy(); // there is an error message
+  act(() => fireEvent.blur(ta, { bubbles: true }));
+  expect(set).toHaveBeenCalledTimes(1);
+
+  act(() => fireEvent.change(ta, { target: { value: 'asdfasdf' } }));
+  expect(checkValue(ta.value)).toBeFalsy(); // input is valid
+  act(() => fireEvent.blur(ta, { bubbles: true }));
+  expect(set.mock.calls[1][0]).toBe('asdfasdf');
 });
 
 it('passes placeholder and rows props', () => {

@@ -37,7 +37,8 @@ export function TextareaField(props: Props): React.ReactElement {
           }
         }}
         onBlur={() => {
-          if (!errorMessage) {
+          let em = props.checkValue ? props.checkValue(value) : '';
+          if (!em) {
             props.set(value);
           }
         }}
