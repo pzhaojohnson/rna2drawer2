@@ -1,5 +1,6 @@
 import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './fold/FoldingMode';
+import { FlippingMode } from './flip/FlippingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from './annotate/AnnotatingModeInterface';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
@@ -7,7 +8,7 @@ import StrictDrawing from '../StrictDrawing';
 import Sequence from '../Sequence';
 import Base from '../Base';
 
-type Mode = PivotingMode | FoldingMode | AnnotatingMode;
+type Mode = PivotingMode | FoldingMode | FlippingMode | AnnotatingMode;
 
 class StrictDrawingInteraction {
   _strictDrawing: StrictDrawing;
@@ -16,6 +17,7 @@ class StrictDrawingInteraction {
 
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
+  _flippingMode!: FlippingMode;
   _annotatingMode!: AnnotatingMode;
   _currMode: Mode;
 
@@ -29,6 +31,7 @@ class StrictDrawingInteraction {
     this._setBindings();
     this._initializePivotingMode();
     this._initializeFoldingMode();
+    this._initializeFlippingMode();
     this._initializeAnnotatingMode();
     this._initializeTertiaryBondsInteraction();
 
@@ -90,6 +93,13 @@ class StrictDrawingInteraction {
     this._foldingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
     this._foldingMode.onChange(() => this.fireChange());
     this._foldingMode.disable();
+  }
+
+  _initializeFlippingMode() {
+    this._flippingMode = new FlippingMode(this.strictDrawing);
+    this._flippingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
+    this._flippingMode.onChange(() => this.fireChange());
+    this._flippingMode.disable();
   }
 
   _initializeAnnotatingMode() {
@@ -170,6 +180,10 @@ class StrictDrawingInteraction {
     return this._foldingMode;
   }
 
+  get flippingMode(): FlippingMode {
+    return this._flippingMode;
+  }
+
   get annotatingMode(): AnnotatingMode {
     return this._annotatingMode;
   }
@@ -180,6 +194,10 @@ class StrictDrawingInteraction {
 
   folding(): boolean {
     return this._currMode.className == 'FoldingMode';
+  }
+
+  flipping(): boolean {
+    return this._currMode.className == 'FlippingMode';
   }
 
   annotating(): boolean {
@@ -209,6 +227,10 @@ class StrictDrawingInteraction {
 
   startFolding() {
     this._start(this._foldingMode);
+  }
+
+  startFlipping() {
+    this._start(this._flippingMode);
   }
 
   startAnnotating() {

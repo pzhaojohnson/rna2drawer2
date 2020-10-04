@@ -7,6 +7,7 @@ import { ExpandButton } from './ExpandButton';
 import { PairComplementsButton } from './PairComplementsButton';
 import { ForcePairButton } from './ForcePairButton';
 import { AddTertiaryBondsButton } from './AddTertiaryBondsButton';
+import { FlipButton } from './FlipButton';
 import { AnnotateButton } from './AnnotateButton';
 
 interface Props {
@@ -25,6 +26,8 @@ export function ModeDropdown(props: Props): React.ReactElement {
           <PairComplementsButton app={props.app} />
           <ForcePairButton app={props.app} />
           <AddTertiaryBondsButton app={props.app} />
+          <DroppedSeparator />
+          <FlipButton app={props.app} />
           <DroppedSeparator />
           <AnnotateButton app={props.app} />
         </div>
