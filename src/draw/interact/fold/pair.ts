@@ -4,9 +4,7 @@ import IntegerRange from './IntegerRange';
 import Base from '../../Base';
 import { selectedRange } from './selected';
 import hoveredPairable from './hoveredPairable';
-import { stemOfPosition } from '../../../parse/stemOfPosition';
-import { PerBaseStrictLayoutProps as PerBaseProps } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
-import { copyStemProps, resetStemProps } from '../../layout/singleseq/strict/stemProps';
+import { willPair } from '../../layout/singleseq/strict/stemProps';
 import adjustStretches from './adjustStretches';
 
 function _basePairs(mode: FoldingMode, r1: IntegerRange, r2: IntegerRange): [Base, Base][] {
@@ -29,15 +27,9 @@ function _transferStemProps(mode: FoldingMode) {
   let pairable = hoveredPairable(mode);
   if (rSelected && pairable) {
     let partners = mode.strictDrawing.layoutPartners();
-    let st = stemOfPosition(rSelected.end + 1, partners);
-    if (st && st.position3 == pairable.start - 1) {
-      let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
-      let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st.position5);
-      let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, rSelected.start);
-      copyStemProps(fromProps, toProps);
-      resetStemProps(fromProps);
-      mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
-    }
+    let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
+    willPair(partners, perBaseProps, rSelected, pairable);
+    mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
   }
 }
 

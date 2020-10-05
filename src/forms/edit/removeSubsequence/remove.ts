@@ -2,10 +2,8 @@ import { StrictDrawingInterface as StrictDrawing } from '../../../draw/StrictDra
 import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
 import { SequenceInterface as Sequence } from '../../../draw/SequenceInterface';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
-import { stemOfPosition } from '../../../parse/stemOfPosition';
 import { unpairedRegionOfPosition } from '../../../parse/unpairedRegionOfPosition';
-import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
-import { copyStemProps, resetStemProps } from '../../../draw/layout/singleseq/strict/stemProps';
+import { willUnpair } from '../../../draw/layout/singleseq/strict/stemProps';
 import { evenOutStretch } from '../../../draw/layout/singleseq/strict/stretch';
 import {
   PrimaryBondInterface as PrimaryBond,
@@ -52,20 +50,9 @@ function reversePositionOffsets(seq: Sequence, r: Range): Range {
 
 function transferStemProps(strictDrawing: StrictDrawing, r: Range) {
   let partners = strictDrawing.layoutPartners();
-  let st = stemOfPosition(r.end + 1, partners);
-  if (st) {
-    let perBaseProps = strictDrawing.perBaseLayoutProps();
-    let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st.position5);
-    let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, r.end + 1);
-    copyStemProps(fromProps, toProps);
-    let wasFlipped = fromProps.flipStem;
-    resetStemProps(fromProps);
-    if (wasFlipped && st.position5 < r.start) {
-      fromProps.flipStem = true;
-      toProps.flipStem = false;
-    }
-    strictDrawing.setPerBaseLayoutProps(perBaseProps);
-  }
+  let perBaseProps = strictDrawing.perBaseLayoutProps();
+  willUnpair(partners, perBaseProps, r);
+  strictDrawing.setPerBaseLayoutProps(perBaseProps);
 }
 
 function removePerBaseProps(strictDrawing: StrictDrawing, r: Range) {
