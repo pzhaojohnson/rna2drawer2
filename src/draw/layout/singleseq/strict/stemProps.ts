@@ -56,3 +56,22 @@ export function willUnpair(partners: (number | null)[], perBaseProps: PerBasePro
     }
   });
 }
+
+export function willRemove(partners: (number | null)[], perBaseProps: PerBaseProps[], r: IntegerRange) {
+  willUnpair(partners, perBaseProps, r);
+}
+
+export function willInsertAt(partners: (number | null)[], perBaseProps: PerBaseProps[], p: number) {
+  let st = stemOfPosition(p, partners);
+  if (st && st.position5 < p) {
+    let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st.position5);
+    let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, p);
+    copyStemProps(fromProps, toProps);
+    let wasFlipped = fromProps.flipStem;
+    resetStemProps(fromProps);
+    if (wasFlipped) {
+      fromProps.flipStem = true;
+      toProps.flipStem = false;
+    }
+  }
+}

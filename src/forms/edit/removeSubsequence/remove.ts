@@ -3,7 +3,7 @@ import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
 import { SequenceInterface as Sequence } from '../../../draw/SequenceInterface';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import { unpairedRegionOfPosition } from '../../../parse/unpairedRegionOfPosition';
-import { willUnpair } from '../../../draw/layout/singleseq/strict/stemProps';
+import { willRemove } from '../../../draw/layout/singleseq/strict/stemProps';
 import { evenOutStretch } from '../../../draw/layout/singleseq/strict/stretch';
 import {
   PrimaryBondInterface as PrimaryBond,
@@ -51,7 +51,7 @@ function reversePositionOffsets(seq: Sequence, r: Range): Range {
 function transferStemProps(strictDrawing: StrictDrawing, r: Range) {
   let partners = strictDrawing.layoutPartners();
   let perBaseProps = strictDrawing.perBaseLayoutProps();
-  willUnpair(partners, perBaseProps, r);
+  willRemove(partners, perBaseProps, r);
   strictDrawing.setPerBaseLayoutProps(perBaseProps);
 }
 

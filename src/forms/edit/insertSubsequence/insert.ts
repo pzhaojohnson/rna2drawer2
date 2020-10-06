@@ -1,8 +1,7 @@
 import { StrictDrawingInterface as StrictDrawing } from '../../../draw/StrictDrawingInterface';
 import { parseSequence } from '../../../parse/parseSequence';
-import { stemOfPosition } from '../../../parse/stemOfPosition';
 import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
-import { copyStemProps, resetStemProps } from '../../../draw/layout/singleseq/strict/stemProps';
+import { willInsertAt } from '../../../draw/layout/singleseq/strict/stemProps';
 import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
 import { PrimaryBondInterface as PrimaryBond } from '../../../draw/StraightBondInterface';
 import { unpairedRegionOfPosition } from '../../../parse/unpairedRegionOfPosition';
@@ -29,20 +28,9 @@ export function parseSubsequence(inputs: Inputs): string {
 
 function transferStemProps(strictDrawing: StrictDrawing, insertPosition: number) {
   let partners = strictDrawing.layoutPartners();
-  let st = stemOfPosition(insertPosition, partners);
-  if (st && st.position5 < insertPosition) {
-    let perBaseProps = strictDrawing.perBaseLayoutProps();
-    let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st.position5);
-    let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, insertPosition);
-    copyStemProps(fromProps, toProps);
-    let wasFlipped = fromProps.flipStem;
-    resetStemProps(fromProps);
-    if (wasFlipped) {
-      fromProps.flipStem = true;
-      toProps.flipStem = false;
-    }
-    strictDrawing.setPerBaseLayoutProps(perBaseProps);
-  }
+  let perBaseProps = strictDrawing.perBaseLayoutProps();
+  willInsertAt(partners, perBaseProps, insertPosition);
+  strictDrawing.setPerBaseLayoutProps(perBaseProps);
 }
 
 function breakStrand(drawing: Drawing, insertPosition: number) {
