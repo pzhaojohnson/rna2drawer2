@@ -1,6 +1,7 @@
 import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './fold/FoldingMode';
 import { FlippingMode } from './flip/FlippingMode';
+import { TriangularizingMode } from './triangularize/TriangularizingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from './annotate/AnnotatingModeInterface';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
@@ -8,7 +9,7 @@ import StrictDrawing from '../StrictDrawing';
 import Sequence from '../Sequence';
 import Base from '../Base';
 
-type Mode = PivotingMode | FoldingMode | FlippingMode | AnnotatingMode;
+type Mode = PivotingMode | FoldingMode | FlippingMode | TriangularizingMode | AnnotatingMode;
 
 class StrictDrawingInteraction {
   _strictDrawing: StrictDrawing;
@@ -18,6 +19,7 @@ class StrictDrawingInteraction {
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
   _flippingMode!: FlippingMode;
+  _triangularizingMode!: TriangularizingMode;
   _annotatingMode!: AnnotatingMode;
   _currMode: Mode;
 
@@ -32,6 +34,7 @@ class StrictDrawingInteraction {
     this._initializePivotingMode();
     this._initializeFoldingMode();
     this._initializeFlippingMode();
+    this._initializeTriangularizingMode();
     this._initializeAnnotatingMode();
     this._initializeTertiaryBondsInteraction();
 
@@ -100,6 +103,13 @@ class StrictDrawingInteraction {
     this._flippingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
     this._flippingMode.onChange(() => this.fireChange());
     this._flippingMode.disable();
+  }
+
+  _initializeTriangularizingMode() {
+    this._triangularizingMode = new TriangularizingMode(this.strictDrawing);
+    this._triangularizingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
+    this._triangularizingMode.onChange(() => this.fireChange());
+    this._triangularizingMode.disable();
   }
 
   _initializeAnnotatingMode() {
@@ -184,6 +194,10 @@ class StrictDrawingInteraction {
     return this._flippingMode;
   }
 
+  get triangularizingMode(): TriangularizingMode {
+    return this._triangularizingMode;
+  }
+
   get annotatingMode(): AnnotatingMode {
     return this._annotatingMode;
   }
@@ -198,6 +212,10 @@ class StrictDrawingInteraction {
 
   flipping(): boolean {
     return this._currMode.className == 'FlippingMode';
+  }
+
+  triangularizing(): boolean {
+    return this._currMode.className == 'TriangularizingMode';
   }
 
   annotating(): boolean {
@@ -231,6 +249,10 @@ class StrictDrawingInteraction {
 
   startFlipping() {
     this._start(this._flippingMode);
+  }
+
+  startTriangularizing() {
+    this._start(this._triangularizingMode);
   }
 
   startAnnotating() {
