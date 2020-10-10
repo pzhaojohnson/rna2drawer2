@@ -1,5 +1,6 @@
 import { PerBaseStrictLayoutProps as PerBaseProps } from './PerBaseStrictLayoutProps';
 import { stemOfPosition } from '../../../../parse/stemOfPosition';
+import { closestStemOuterTo } from '../../../../parse/closest';
 
 export function resetStemProps(props: PerBaseProps) {
   let defaults = new PerBaseProps();

@@ -1,35 +1,138 @@
-import { PivotingModeInterface as PivotingMode } from './PivotingModeInterface';
-import stemOfPosition from '../../../parse/stemOfPosition';
 import {
-  unpairedRegion5,
+  PivotingModeInterface as PivotingMode,
   UnpairedRegion,
-} from './unpairedRegion5';
-import unpairedRegion3 from './unpairedRegion3';
-import shouldPivot53 from './shouldPivot53';
-import stretchPerBaseProps53 from './stretchPerBaseProps53';
-import stretchPerBaseProps35 from './stretchPerBaseProps35';
+} from './PivotingModeInterface';
+import {
+  PerBaseStrictLayoutProps as PerBaseProps,
+} from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
+import {
+  Movement,
+  normalizedMagnitudeOfMovement,
+  movementIsOutward,
+  movementIsInward,
+  movementIsUpstream,
+  movementIsDownstream,
+} from './movement';
+import {
+  unpairedRegionBefore,
+  unpairedRegionAfter,
+  isInTriangleLoop,
+  isFirstUnpairedRegionInTriangleLoop,
+  isLastUnpairedRegionInTriangleLoop,
+} from './loop';
+import {
+  PerBasePropsArray,
+  stretchOfUnpairedRegion,
+  addStretchEvenly,
+} from '../../layout/singleseq/strict/stretch';
+import { closestStemOuterTo } from '../../../parse/closest';
 
-export function pivot(mode: PivotingMode, xMove: number, yMove: number) {
-  if (!mode.selectedPosition) {
-    return;
+export type PartnersNotation = (number | null)[];
+
+export function pivot(mode: PivotingMode, move: Movement) {
+  if (mode.selected) {
+    let partners = mode.strictDrawing.layoutPartners();
+    let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
+    let inTriangleLoop = isInTriangleLoop(partners, perBaseProps, mode.selected);
+    if (inTriangleLoop && movementIsOutward(mode, move)) {
+      pivotOutward(mode, move);
+    } else if (inTriangleLoop && movementIsInward(mode, move)) {
+      pivotInward(mode, move);
+    } else if (movementIsUpstream(mode, move)) {
+      pivotUpstream(mode, move);
+    } else if (movementIsDownstream(mode, move)) {
+      pivotDownstream(mode, move);
+    }
   }
-  let partners = mode.strictDrawing.layoutPartners();
-  let st = stemOfPosition(mode.selectedPosition, partners);
-  if (!st) {
-    return;
-  }
-  if (!mode.pivoted) {
-    mode.fireShouldPushUndo();
-    mode.pivoted = true;
-  }
-  let ur5 = unpairedRegion5(st, partners) as UnpairedRegion;
-  let ur3 = unpairedRegion3(st, partners) as UnpairedRegion;
-  if (shouldPivot53(mode, st, xMove, yMove)) {
-    stretchPerBaseProps53(mode, ur5, ur3, xMove, yMove);
-  } else {
-    stretchPerBaseProps35(mode, ur5, ur3, xMove, yMove);
-  }
-  mode.strictDrawing.applyLayout();
 }
 
-export default pivot;
+function canBeStretched(partners: PartnersNotation, perBaseProps: PerBasePropsArray, ur: UnpairedRegion): boolean {
+  return !isFirstUnpairedRegionInTriangleLoop(partners, perBaseProps, ur)
+    && !isLastUnpairedRegionInTriangleLoop(partners, perBaseProps, ur);
+}
+
+/**
+ * Returns how much the unpaired region was stretched.
+ */
+function stretchUnpairedRegion(perBaseProps: PerBasePropsArray, ur: UnpairedRegion, stretch: number): number {
+  if (stretch < 0) {
+    let toAdd = Math.max(
+      stretch,
+      -stretchOfUnpairedRegion(perBaseProps, ur),
+    );
+    addStretchEvenly(perBaseProps, ur, toAdd);
+    return toAdd;
+  } else {
+    addStretchEvenly(perBaseProps, ur, stretch);
+    return stretch;
+  }
+}
+
+function pivotOutward(mode: PivotingMode, move: Movement) {
+  if (mode.selected) {
+    let mag = normalizedMagnitudeOfMovement(mode, move);
+    let partners = mode.strictDrawing.layoutPartners();
+    let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
+    let outerStem = closestStemOuterTo(partners, mode.selected.position5);
+    if (outerStem) {
+      let props = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, outerStem.position5);
+      props.triangleLoopHeight += mag;
+      mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
+      mode.strictDrawing.applyLayout();
+    }
+  }
+}
+
+function pivotInward(mode: PivotingMode, move: Movement) {
+  if (mode.selected) {
+    let mag = normalizedMagnitudeOfMovement(mode, move);
+    let partners = mode.strictDrawing.layoutPartners();
+    let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
+    let outerStem = closestStemOuterTo(partners, mode.selected.position5);
+    if (outerStem) {
+      let props = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, outerStem.position5);
+      props.triangleLoopHeight = Math.max(
+        props.triangleLoopHeight - mag,
+        1,
+      );
+      mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
+      mode.strictDrawing.applyLayout();
+    }
+  }
+}
+
+function pivotUpstream(mode: PivotingMode, move: Movement) {
+  if (mode.selected) {
+    let mag = normalizedMagnitudeOfMovement(mode, move);
+    let partners = mode.strictDrawing.layoutPartners();
+    let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
+    let ur5 = unpairedRegionBefore(partners, mode.selected);
+    let ur3 = unpairedRegionAfter(partners, mode.selected);
+    if (!mode.onlyAddingStretch() && canBeStretched(partners, perBaseProps, ur5)) {
+      mag += stretchUnpairedRegion(perBaseProps, ur5, -mag);
+    }
+    if (canBeStretched(partners, perBaseProps, ur3)) {
+      stretchUnpairedRegion(perBaseProps, ur3, mag);
+    }
+    mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
+    mode.strictDrawing.applyLayout();
+  }
+}
+
+function pivotDownstream(mode: PivotingMode, move: Movement) {
+  if (mode.selected) {
+    let mag = normalizedMagnitudeOfMovement(mode, move);
+    let partners = mode.strictDrawing.layoutPartners();
+    let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
+    let ur5 = unpairedRegionBefore(partners, mode.selected);
+    let ur3 = unpairedRegionAfter(partners, mode.selected);
+    if (!mode.onlyAddingStretch() && canBeStretched(partners, perBaseProps, ur3)) {
+      mag += stretchUnpairedRegion(perBaseProps, ur3, -mag);
+    }
+    if (canBeStretched(partners, perBaseProps, ur5)) {
+      stretchUnpairedRegion(perBaseProps, ur5, mag);
+    }
+    mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
+    mode.strictDrawing.applyLayout();
+  }
+}

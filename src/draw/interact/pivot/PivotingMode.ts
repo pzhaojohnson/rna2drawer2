@@ -1,30 +1,36 @@
-import PivotingModeInterface from './PivotingModeInterface';
-import handleMouseoverOnBase from './handleMouseoverOnBase';
-import handleMouseoutOnBase from './handleMouseoutOnBase';
-import handleMousedownOnBase from './handleMousedownOnBase';
-import handleMousemove from './handleMousemove';
-import handleMouseup from './handleMouseup';
-import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings';
-import StrictDrawing from '../../StrictDrawing';
-import Base from '../../Base';
+import {
+  PivotingModeInterface,
+  Stem,
+} from './PivotingModeInterface';
+import { StrictDrawingInterface as StrictDrawing } from '../../StrictDrawingInterface';
+import { BaseInterface as Base } from '../../BaseInterface';
+import { addMousemoveListener } from '../listeners/addMousemoveListener';
+import { addMouseupListener } from '../listeners/addMouseupListener';
+import {
+  handleMouseoverOnBase,
+  handleMouseoutOnBase,
+  handleMousedownOnBase,
+  handleMousemove,
+  handleMouseup,
+  reset,
+} from './handlers';
 
 export class PivotingMode implements PivotingModeInterface {
-  _strictDrawing: StrictDrawing;
-  selectedPosition: number | null;
-  pivoted: boolean;
-  _onlyAddStretch: boolean;
-  
-  _disabled: boolean;
+  readonly strictDrawing: StrictDrawing;
+
+  hovered?: Stem;
+  selected?: Stem;
+
+  pivoted?: boolean;
+
+  _onlyAddStretch?: boolean;
+  _disabled?: boolean;
 
   _onShouldPushUndo?: () => void;
   _onChange?: () => void;
 
   constructor(strictDrawing: StrictDrawing) {
-    this._strictDrawing = strictDrawing;
-    this.selectedPosition = null;
-    this.pivoted = false;
-    this._onlyAddStretch = false;
-    this._disabled = false;
+    this.strictDrawing = strictDrawing;
 
     this._setBindings();
   }
@@ -33,20 +39,15 @@ export class PivotingMode implements PivotingModeInterface {
     return 'PivotingMode';
   }
 
-  get strictDrawing() {
-    return this._strictDrawing;
-  }
-
   _setBindings() {
     this._bindMousemove();
     this._bindMouseup();
-    this._bindKeys();
   }
 
   handleMouseoverOnBase(b: Base) {
     handleMouseoverOnBase(this, b);
   }
-  
+
   handleMouseoutOnBase(b: Base) {
     handleMouseoutOnBase(this, b);
   }
@@ -58,18 +59,12 @@ export class PivotingMode implements PivotingModeInterface {
   handleMousedownOnDrawing() {}
 
   _bindMousemove() {
-    window.addEventListener('mousemove', event => {
-      handleMousemove(this, event);
-    });
+    addMousemoveListener((event, movement) => handleMousemove(this, event, movement));
   }
 
   _bindMouseup() {
-    window.addEventListener('mouseup', () => {
-      handleMouseup(this);
-    });
+    addMouseupListener(event => handleMouseup(this));
   }
-
-  _bindKeys() {}
 
   onlyAddStretch() {
     this._onlyAddStretch = true;
@@ -77,7 +72,7 @@ export class PivotingMode implements PivotingModeInterface {
   }
 
   onlyAddingStretch() {
-    return this._onlyAddStretch;
+    return this._onlyAddStretch ? true : false;
   }
 
   addAndRemoveStretch() {
@@ -90,16 +85,15 @@ export class PivotingMode implements PivotingModeInterface {
   }
 
   reset() {
-    this.selectedPosition = null;
-    removeAllBaseHighlightings(this.strictDrawing.drawing);
+    reset(this);
   }
 
   disable() {
     this._disabled = true;
   }
-  
+
   disabled() {
-    return this._disabled;
+    return this._disabled ? true : false;
   }
 
   enable() {
