@@ -9,7 +9,7 @@ export function handleMouseoverOnBase(mode: PivotingMode, b: Base) {
   let p = mode.strictDrawing.drawing.overallPositionOfBase(b);
   if (p > 0) {
     let st = stemOfPosition(p, mode.strictDrawing.layoutPartners());
-    if (st) {
+    if (st && !mode.selected) {
       mode.hovered = st;
       highlightStem(mode, st);
     }
