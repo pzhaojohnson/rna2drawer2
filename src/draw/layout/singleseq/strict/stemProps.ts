@@ -1,6 +1,5 @@
 import { PerBaseStrictLayoutProps as PerBaseProps } from './PerBaseStrictLayoutProps';
 import { stemOfPosition } from '../../../../parse/stemOfPosition';
-import { closestStemOuterTo } from '../../../../parse/closest';
 
 export function resetStemProps(props: PerBaseProps) {
   let defaults = new PerBaseProps();
@@ -22,11 +21,20 @@ interface IntegerRange {
 
 export function willPair(partners: (number | null)[], perBaseProps: PerBaseProps[], r1: IntegerRange, r2: IntegerRange) {
   let [rBefore, rAfter] = r1.start < r2.start ? [r1, r2] : [r2, r1];
-  let st = stemOfPosition(rBefore.end + 1, partners);
-  if (st && st.position3 == rAfter.start - 1) {
-    let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st.position5);
-    let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, rBefore.start);
+  let paired = [...partners];
+  for (let p = rBefore.start; p <= rBefore.end; p++) {
+    let q = rAfter.end - (p - rBefore.start);
+    paired[p - 1] = q;
+    paired[q - 1] = p;
+  }
+  let st1 = stemOfPosition(rBefore.end + 1, partners);
+  let st2 = stemOfPosition(rBefore.end + 1, paired);
+  if (st1 && st2 && st1.position5 != st2.position5) {
+    let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st1.position5);
+    let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st2.position5);
+    let shouldFlip = st2.position5 < rBefore.start ? toProps.flipStem : fromProps.flipStem;
     copyStemProps(fromProps, toProps);
+    toProps.flipStem = shouldFlip;
     resetStemProps(fromProps);
   }
 }
