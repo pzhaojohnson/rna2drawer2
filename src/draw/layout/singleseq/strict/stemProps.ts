@@ -21,6 +21,8 @@ interface IntegerRange {
 
 export function willPair(partners: (number | null)[], perBaseProps: PerBaseProps[], r1: IntegerRange, r2: IntegerRange) {
   let [rBefore, rAfter] = r1.start < r2.start ? [r1, r2] : [r2, r1];
+  let props5 = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, rBefore.start);
+  resetStemProps(props5);
   let paired = [...partners];
   for (let p = rBefore.start; p <= rBefore.end; p++) {
     let q = rAfter.end - (p - rBefore.start);
