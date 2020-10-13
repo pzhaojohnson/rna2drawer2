@@ -16,7 +16,7 @@ import {
 import {
   unpairedRegionBefore,
   unpairedRegionAfter,
-  isInTriangleLoop,
+  hasTriangleLoop,
   isFirstUnpairedRegionInTriangleLoop,
   isLastUnpairedRegionInTriangleLoop,
 } from './loop';
@@ -33,10 +33,11 @@ export function pivot(mode: PivotingMode, move: Movement) {
   if (mode.selected) {
     let partners = mode.strictDrawing.layoutPartners();
     let perBaseProps = mode.strictDrawing.perBaseLayoutProps();
-    let inTriangleLoop = isInTriangleLoop(partners, perBaseProps, mode.selected);
-    if (inTriangleLoop && movementIsOutward(mode, move)) {
+    let outerStem = closestStemOuterTo(partners, mode.selected.position5);
+    let inTriangleLoop = outerStem ? hasTriangleLoop(perBaseProps, outerStem) : false;
+    if (inTriangleLoop && outerStem && movementIsOutward(mode, outerStem, move)) {
       pivotOutward(mode, move);
-    } else if (inTriangleLoop && movementIsInward(mode, move)) {
+    } else if (inTriangleLoop && outerStem && movementIsInward(mode, outerStem, move)) {
       pivotInward(mode, move);
     } else if (movementIsUpstream(mode, move)) {
       pivotUpstream(mode, move);
