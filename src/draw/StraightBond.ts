@@ -148,7 +148,8 @@ export class StraightBond implements StraightBondInterface {
         'x2': cs.x2,
         'y2': cs.y2,
       });
-      this._storePaddings();
+      this._padding1 = padding1;
+      this._padding2 = padding2;
     }
   }
 
