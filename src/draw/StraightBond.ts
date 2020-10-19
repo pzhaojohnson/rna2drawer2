@@ -138,17 +138,18 @@ export class StraightBond implements StraightBondInterface {
   }
 
   _reposition(padding1: number, padding2: number) {
-    let cs = StraightBond._lineCoordinates(this.base1, this.base2, padding1, padding2);
-    this._line.attr({
-      'x1': cs.x1,
-      'y1': cs.y1,
-      'x2': cs.x2,
-      'y2': cs.y2,
-    });
-    this._setOpacity(
-      StraightBond._opacity(this.base1, this.base2, padding1, padding2)
-    );
-    this._storePaddings();
+    let opacity = StraightBond._opacity(this.base1, this.base2, padding1, padding2);
+    this._setOpacity(opacity);
+    if (opacity > 0) {
+      let cs = StraightBond._lineCoordinates(this.base1, this.base2, padding1, padding2);
+      this._line.attr({
+        'x1': cs.x1,
+        'y1': cs.y1,
+        'x2': cs.x2,
+        'y2': cs.y2,
+      });
+      this._storePaddings();
+    }
   }
 
   insertBefore(ele: Svg.Element) {

@@ -130,7 +130,7 @@ describe('StraightBond class', () => {
   });
 
   describe('reposition method', () => {
-    it('moves line', () => {
+    it('moves line when opacity is greater than zero', () => {
       let b1 = Base.create(svg, 'T', 101, 92);
       let b2 = Base.create(svg, 'b', 312, 256);
       let lcs = StraightBond._lineCoordinates(b1, b2, 15, 28);
@@ -144,7 +144,7 @@ describe('StraightBond class', () => {
       let baseAngle = b1.angleBetweenCenters(b2);
       let lineAngle = angleBetween(sb.x1, sb.y1, sb.x2, sb.y2);
       expect(normalizeAngle(lineAngle)).toBeCloseTo(normalizeAngle(baseAngle));
-      // check padding getters
+      // maintans paddings
       expect(sb.getPadding1()).toBeCloseTo(15);
       expect(sb.getPadding2()).toBeCloseTo(28);
     });
@@ -265,7 +265,7 @@ describe('PrimaryBond class', () => {
   });
 
   it('_applyMostRecentProps static method', () => {
-    let b1 = Base.create(svg, 'a', 1, 2);
+    let b1 = Base.create(svg, 'a', 1012, 22);
     let b2 = Base.create(svg, 'b', 5, 4);
     let pb = PrimaryBond.create(svg, b1, b2);
     PrimaryBond._mostRecentProps.padding1 = 3.45;
@@ -281,7 +281,7 @@ describe('PrimaryBond class', () => {
 
   it('_copyPropsToMostRecent static method', () => {
     let b1 = Base.create(svg, 'g', 1, 4);
-    let b2 = Base.create(svg, 'n', 5, 10);
+    let b2 = Base.create(svg, 'n', 50, 100);
     let pb = PrimaryBond.create(svg, b1, b2);
     pb.padding1 = 5.67;
     pb.padding2 = 8.901;
