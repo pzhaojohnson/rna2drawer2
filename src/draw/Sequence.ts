@@ -333,34 +333,13 @@ class Sequence implements SequenceInterface {
     return Math.PI + this.innerNormalAngleAtPosition(p);
   }
 
-  /**
-   * Appends the given base to the end of this sequence.
-   *
-   * Has no effect if the given base is already in this sequence.
-   */
   appendBase(b: Base) {
-    if (this.contains(b)) {
-      return;
-    }
     this._bases.push(b);
     this.fireAddBase(b);
     this._updateBaseNumberings();
   }
 
-  /**
-   * This method has no effect if this sequence already contains
-   * any of the given bases.
-   */
   appendBases(bs: Base[]) {
-    let alreadyContains = false;
-    bs.forEach(b => {
-      if (this.contains(b)) {
-        alreadyContains = true;
-      }
-    });
-    if (alreadyContains) {
-      return;
-    }
     bs.forEach(b => {
       this._bases.push(b);
       this.fireAddBase(b);

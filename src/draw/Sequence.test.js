@@ -474,15 +474,6 @@ describe('Sequence class', () => {
   });
 
   describe('appendBase method', () => {
-    it('already contains base', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
-      let spy = jest.spyOn(seq, 'fireAddBase');
-      expect(seq.length).toBe(4);
-      seq.appendBase(seq.getBaseAtPosition(3));
-      expect(seq.length).toBe(4);
-      expect(spy).not.toHaveBeenCalled();
-    });
-
     it('appends base', () => {
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
       let spy1 = jest.spyOn(seq, 'fireAddBase');
@@ -500,19 +491,7 @@ describe('Sequence class', () => {
   });
 
   describe('appendBases method', () => {
-    it('sequence already contains one of the given bases', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
-      let spy = jest.spyOn(seq, 'fireAddBase');
-      let b1 = Base.create(svg, 'Q', 1, 5);
-      let b2 = seq.getBaseAtPosition(3);
-      let b3 = Base.create(svg, 'H', 5, 6);
-      expect(seq.length).toBe(4);
-      seq.appendBases([b1, b2, b3]);
-      expect(seq.length).toBe(4);
-      expect(spy).not.toHaveBeenCalled();
-    });
-
-    it('sequence does not contain any of the given bases', () => {
+    it('appends bases', () => {
       let seq = Sequence.createOutOfView(svg, 'QQE', 'qqe');
       let spy1 = jest.spyOn(seq, 'fireAddBase');
       let spy2 = jest.spyOn(seq, '_updateBaseNumberings');
