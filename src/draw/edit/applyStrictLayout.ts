@@ -4,12 +4,14 @@ import StrictLayout from '../layout/singleseq/strict/StrictLayout';
 function _moveBases(drawing: Drawing, layout: StrictLayout, baseWidth: number, baseHeight: number) {
   let xMin = layout.xMin;
   let yMin = layout.yMin;
+  let xPadding = window.screen.width;
+  let yPadding = window.screen.height;
   drawing.forEachBase((b, p) => {
     let bcs = layout.baseCoordinatesAtPosition(p);
     if (bcs) {
       b.moveTo(
-        window.screen.width + (baseWidth * (bcs.xCenter - xMin)),
-        window.screen.height + (baseHeight * (bcs.yCenter - yMin)),
+        xPadding + (baseWidth * (bcs.xCenter - xMin)),
+        yPadding + (baseHeight * (bcs.yCenter - yMin)),
       );
     }
   });
