@@ -214,6 +214,16 @@ describe('sequence and base attributes', () => {
     });
   });
 
+  it('basesByIds method', () => {
+    expect(drawing.numBases).toBeGreaterThan(3);
+    expect(drawing.numSequences).toBeGreaterThan(1); // handles multiple sequences
+    let basesByIds = drawing.basesByIds();
+    expect(Object.keys(basesByIds).length).toBe(drawing.numBases);
+    drawing.forEachBase(b => {
+      expect(basesByIds[b.id]).toBe(b);
+    });
+  });
+
   it('sequenceOfBase method', () => {
     let b2 = seq2.getBaseAtPosition(3);
     expect(drawing.sequenceOfBase(b2)).toBe(seq2);

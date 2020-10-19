@@ -20,6 +20,10 @@ interface Coordinates {
   y: number;
 }
 
+export interface BasesByIds {
+  [id: string]: Base | undefined;
+}
+
 class Drawing implements DrawingInterface {
   _div!: HTMLElement;
   _svg!: Svg.Svg;
@@ -240,6 +244,12 @@ class Drawing implements DrawingInterface {
     return ids;
   }
 
+  basesByIds(): BasesByIds {
+    let map = {} as BasesByIds;
+    this.forEachBase(b => map[b.id] = b);
+    return map;
+  }
+
   sequenceOfBase(b: Base): (Sequence | undefined) {
     return this._sequences.find(seq => seq.contains(b));
   }
@@ -431,9 +441,10 @@ class Drawing implements DrawingInterface {
     this.clear();
     this._applySavedSvg(savedState);
     this._appendSavedSequences(savedState);
-    this._addSavedPrimaryBonds(savedState);
-    this._addSavedSecondaryBonds(savedState);
-    this._addSavedTertiaryBonds(savedState);
+    let basesByIds = this.basesByIds();
+    this._addSavedPrimaryBonds(savedState, basesByIds);
+    this._addSavedSecondaryBonds(savedState, basesByIds);
+    this._addSavedTertiaryBonds(savedState, basesByIds);
     this.adjustBaseNumbering();
     if (wasEmpty) {
       this.centerView();
@@ -461,34 +472,34 @@ class Drawing implements DrawingInterface {
     });
   }
 
-  _addSavedPrimaryBonds(savedState: DrawingSavableState): (void | never) {
+  _addSavedPrimaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
     savedState.primaryBonds.forEach(saved => {
       let pb = PrimaryBond.fromSavedState(
         saved,
         this._svg,
-        (id: string) => this.getBaseById(id),
+        (id: string) => basesByIds[id],
       );
       this._primaryBonds.push(pb);
     });
   }
 
-  _addSavedSecondaryBonds(savedState: DrawingSavableState): (void | never) {
+  _addSavedSecondaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
     savedState.secondaryBonds.forEach(saved => {
       let sb = SecondaryBond.fromSavedState(
         saved,
         this._svg,
-        (id: string) => this.getBaseById(id),
+        (id: string) => basesByIds[id],
       );
       this._secondaryBonds.push(sb);
     });
   }
 
-  _addSavedTertiaryBonds(savedState: DrawingSavableState): (void | never) {
+  _addSavedTertiaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
     savedState.tertiaryBonds.forEach(saved => {
       let tb = TertiaryBond.fromSavedState(
         saved,
         this._svg,
-        (id: string) => this.getBaseById(id),
+        (id: string) => basesByIds[id],
       );
       this._tertiaryBonds.push(tb);
       this.fireAddTertiaryBond(tb);

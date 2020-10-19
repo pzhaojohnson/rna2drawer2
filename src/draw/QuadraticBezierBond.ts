@@ -358,7 +358,7 @@ class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface 
   static fromSavedState(
     savedState: QuadraticBezierBondSavableState,
     svg: Svg.Svg,
-    getBaseById: (id: string) => (Base | null),
+    getBaseById: (id: string) => (Base | undefined),
   ): (TertiaryBond | never) {
     if (savedState.className !== 'QuadraticBezierBond') {
       throw new Error('Wrong class name.');

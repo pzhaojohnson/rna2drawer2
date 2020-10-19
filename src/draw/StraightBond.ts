@@ -227,7 +227,7 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
   static fromSavedState(
     savedState: StraightBondSavableState,
     svg: Svg.Svg,
-    getBaseById: (id: string) => (Base | null),
+    getBaseById: (id: string) => (Base | undefined),
   ): (PrimaryBond | never) {
     if (savedState.className !== 'StraightBond') {
       throw new Error('Wrong class name.');
@@ -335,7 +335,7 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
   static fromSavedState(
     savedState: StraightBondSavableState,
     svg: Svg.Svg,
-    getBaseById: (id: string) => (Base | null),
+    getBaseById: (id: string) => (Base | undefined),
   ): (SecondaryBond | never) {
     if (savedState.className !== 'StraightBond') {
       throw new Error('Wrong class name.');
