@@ -225,13 +225,24 @@ describe('Base class', () => {
   });
 
   describe('moveTo method', () => {
-    it('shifts text and updates center coordinates', () => {
-      let b = Base.create(svg, 'W', 55.8, 103.9);
-      b.moveTo(805.2, 651.8);
-      expect(b._text.cx()).toBeCloseTo(805.2);
-      expect(b._text.cy()).toBeCloseTo(651.8);
-      expect(b.xCenter).toBeCloseTo(805.2);
-      expect(b.yCenter).toBeCloseTo(651.8);
+    describe('moving text when either X or Y coordinate is not close', () => {
+      it('X coordinate is not close', () => {
+        let b = Base.create(svg, 'W', 55.8, 103.9);
+        b.moveTo(805.2, 103.9);
+        expect(b._text.cx()).toBeCloseTo(805.2);
+        expect(b._text.cy()).toBeCloseTo(103.9);
+        expect(b.xCenter).toBeCloseTo(805.2);
+        expect(b.yCenter).toBeCloseTo(103.9);
+      });
+
+      it('Y coordinate is not close', () => {
+        let b = Base.create(svg, 'W', 55.8, 103.9);
+        b.moveTo(55.8, 651.8);
+        expect(b._text.cx()).toBeCloseTo(55.8);
+        expect(b._text.cy()).toBeCloseTo(651.8);
+        expect(b.xCenter).toBeCloseTo(55.8);
+        expect(b.yCenter).toBeCloseTo(651.8);
+      });
     });
 
     /* By testing highlighting, outline and numbering separately,

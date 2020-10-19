@@ -10,6 +10,7 @@ import { CircleBaseAnnotation } from './BaseAnnotation';
 import BaseNumbering from './BaseNumbering';
 import { CircleBaseAnnotationSavableState } from './BaseAnnotationInterface';
 import { BaseNumberingSavableState } from './BaseNumberingInterface';
+import { areClose } from './areClose';
 
 class Base implements BaseInterface {
   static _mostRecentProps: BaseMostRecentProps;
@@ -135,21 +136,23 @@ class Base implements BaseInterface {
   }
 
   moveTo(xCenter: number, yCenter: number) {
-    let xShift = xCenter - this._xCenter;
-    let yShift = yCenter - this._yCenter;
-    let x = this._text.attr('x') + xShift;
-    let y = this._text.attr('y') + yShift;
-    this._text.attr({ 'x': x, 'y': y });
-    this._xCenter = xCenter;
-    this._yCenter = yCenter;
-    if (this._highlighting) {
-      this._highlighting.reposition(xCenter, yCenter);
-    }
-    if (this._outline) {
-      this._outline.reposition(xCenter, yCenter);
-    }
-    if (this._numbering) {
-      this._numbering.reposition(xCenter, yCenter);
+    if (!areClose(xCenter, this.xCenter) || !areClose(yCenter, this.yCenter)) {
+      let xShift = xCenter - this._xCenter;
+      let yShift = yCenter - this._yCenter;
+      let x = this._text.attr('x') + xShift;
+      let y = this._text.attr('y') + yShift;
+      this._text.attr({ 'x': x, 'y': y });
+      this._xCenter = xCenter;
+      this._yCenter = yCenter;
+      if (this._highlighting) {
+        this._highlighting.reposition(xCenter, yCenter);
+      }
+      if (this._outline) {
+        this._outline.reposition(xCenter, yCenter);
+      }
+      if (this._numbering) {
+        this._numbering.reposition(xCenter, yCenter);
+      }
     }
   }
 
