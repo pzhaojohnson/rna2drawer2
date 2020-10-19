@@ -90,15 +90,11 @@ class Drawing implements DrawingInterface {
       return;
     }
     let z = this.zoom;
-    let cv = this.centerOfView();
-    cv.x *= width / this.width;
-    cv.y *= height / this.height;
     this._svg.viewbox(0, 0, width, height);
     this._svg.attr({
       'width': z * width,
       'height': z * height,
     });
-    this.centerViewOn(cv);
   }
 
   get zoom(): number {
