@@ -130,7 +130,7 @@ describe('StraightBond class', () => {
   });
 
   describe('reposition method', () => {
-    it('moves line when opacity is greater than zero', () => {
+    it('moves line', () => {
       let b1 = Base.create(svg, 'T', 101, 92);
       let b2 = Base.create(svg, 'b', 312, 256);
       let lcs = StraightBond._lineCoordinates(b1, b2, 15, 28);
