@@ -261,7 +261,6 @@ class Base implements BaseInterface {
       this.xCenter,
       this.yCenter,
     );
-    this._highlighting.insertBefore(this._text);
     return this._highlighting;
   }
 
