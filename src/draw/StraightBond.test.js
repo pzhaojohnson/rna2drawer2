@@ -1,10 +1,29 @@
-import { StraightBond, PrimaryBond, SecondaryBond } from './StraightBond';
+import {
+  StraightBond,
+  PrimaryBond,
+  SecondaryBond,
+  lineCoordinatesAreClose,
+} from './StraightBond';
 import NodeSVG from './NodeSVG';
 import Base from './Base';
 import distanceBetween from './distanceBetween';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 import pair from './interact/fold/pair';
+
+it('lineCoordinatesAreClose function', () => {
+  let lcs1 = { x1: 1, y1: 2, x2: 3, y2: 4 };
+  let lcs2 = { ...lcs1 };
+  expect(lineCoordinatesAreClose(lcs1, lcs2)).toBeTruthy(); // are close
+  lcs2 = { ...lcs1, x1: 5 };
+  expect(lineCoordinatesAreClose(lcs1, lcs2)).toBeFalsy(); // x1 is not close
+  lcs2 = { ...lcs1, y1: 10 };
+  expect(lineCoordinatesAreClose(lcs1, lcs2)).toBeFalsy(); // y1 is not close
+  lcs2 = { ...lcs1, x2: 12 };
+  expect(lineCoordinatesAreClose(lcs1, lcs2)).toBeFalsy(); // x2 is not close
+  lcs2 = { ...lcs1, y2: -1 };
+  expect(lineCoordinatesAreClose(lcs1, lcs2)).toBeFalsy(); // y2 is not close
+});
 
 let svg = NodeSVG();
 
