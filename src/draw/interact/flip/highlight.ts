@@ -4,6 +4,7 @@ import { highlightBase } from '../highlight/highlightBase';
 
 export function highlightStem(mode: FlippingMode, st: Stem) {
   let drawing = mode.strictDrawing.drawing;
+  let bHovered = typeof mode.hovered == 'number' ? drawing.getBaseAtOverallPosition(mode.hovered) : undefined;
   positionsOfStem(st).forEach(p => {
     let b = drawing.getBaseAtOverallPosition(p);
     if (b) {
@@ -13,17 +14,18 @@ export function highlightStem(mode: FlippingMode, st: Stem) {
       }
       let h = highlightBase(b, {
         radius: radius,
-        fill: '#00bfff',
-        fillOpacity: 0.15,
+        fill: 'none',
         stroke: '#00bfff',
         strokeWidth: 1.5,
         strokeOpacity: 0.85,
       });
       h.pulsateBetween({
-        radius: 1.25 * radius,
-        fillOpacity: 0.075,
+        radius: 1.5 * radius,
         strokeOpacity: 0.425,
-      }, { duration: 750 });
+      }, { duration: 1000 });
+      if (bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
+        h.back();
+      }
     }
   });
 }

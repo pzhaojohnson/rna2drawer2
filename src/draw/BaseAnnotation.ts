@@ -28,7 +28,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     let circle = svg.findOne('#' + savedState.circleId);
     return new CircleBaseAnnotation(circle as Svg.Circle, xBaseCenter, yBaseCenter);
   }
-  
+
   static createNondisplaced(svg: Svg.Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
     let circle = svg.circle(20);
     circle.id();
@@ -44,7 +44,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   /**
    * Throws if the circle is not actually a circle.
-   * 
+   *
    * Initializes the ID of the circle if it is not already initialized.
    */
   _validateCircle(): (void | never) {
@@ -181,14 +181,16 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
     this.stopPulsating();
-    let attrs = {
+    let withoutFill = {
       'r': pulsedProps.radius ?? this.radius,
-      'fill': pulsedProps.fill ?? this.fill,
       'fill-opacity': pulsedProps.fillOpacity ?? this.fillOpacity,
       'stroke': pulsedProps.stroke ?? this.stroke,
       'stroke-width': pulsedProps.strokeWidth ?? this.strokeWidth,
       'stroke-opacity': pulsedProps.strokeOpacity ?? this.strokeOpacity,
     };
+    let fill = pulsedProps.fill ?? this.fill;
+    let withFill = fill == 'none' ? {} : { 'fill': fill };
+    let attrs = { ...withoutFill, ...withFill };
     let duration = pulseProps?.duration ?? 2000;
     this._currPulsation = this._circle.animate(duration).attr(attrs).loop(undefined, true);
   }

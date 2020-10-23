@@ -11,6 +11,7 @@ export function handleMouseoverOnBase(mode: PivotingMode, b: Base) {
     let st = stemOfPosition(p, mode.strictDrawing.layoutPartners());
     if (st && !mode.selected) {
       mode.hovered = st;
+      mode.hoveredPosition = p;
       highlightStem(mode, st);
     }
   }
@@ -18,6 +19,7 @@ export function handleMouseoverOnBase(mode: PivotingMode, b: Base) {
 
 export function handleMouseoutOnBase(mode: PivotingMode, b: Base) {
   mode.hovered = undefined;
+  mode.hoveredPosition = undefined;
   if (!mode.selected) {
     removeAllBaseHighlightings(mode.strictDrawing.drawing);
   }
@@ -55,6 +57,7 @@ export function handleMouseup(mode: PivotingMode) {
 
 export function reset(mode: PivotingMode) {
   mode.hovered = undefined;
+  mode.hoveredPosition = undefined;
   mode.selected = undefined;
   removeAllBaseHighlightings(mode.strictDrawing.drawing);
   mode.fireChange();

@@ -7,7 +7,7 @@ export interface BaseAnnotationInterface {
   yCenter: number;
   displacementLength: number;
   displacementAngle: number;
-  
+
   shift(xShift: number, yShift: number): void;
   reposition(xBaseCenter: number, yBaseCenter: number): void;
   insertBefore(ele: Svg.Element): void;

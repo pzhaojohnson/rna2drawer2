@@ -19,6 +19,7 @@ export class PivotingMode implements PivotingModeInterface {
   readonly strictDrawing: StrictDrawing;
 
   hovered?: Stem;
+  hoveredPosition?: number;
   selected?: Stem;
 
   pivoted?: boolean;

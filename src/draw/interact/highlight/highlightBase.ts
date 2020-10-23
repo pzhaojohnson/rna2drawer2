@@ -14,7 +14,6 @@ export function highlightBase(b: Base, props?: HighlightingProps): CircleBaseAnn
   let h = b.highlighting;
   if (!h) {
     h = b.addCircleHighlighting();
-    h.back();
   }
   h.radius = props?.radius ?? h.radius;
   h.stroke = props?.stroke ?? h.stroke;

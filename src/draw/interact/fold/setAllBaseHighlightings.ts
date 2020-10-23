@@ -4,6 +4,7 @@ import allPairables from './allPairables';
 import { selectedRange } from './selected';
 import secondaryBondsWith from './secondaryBondsWith';
 import hoveredPairable from './hoveredPairable';
+import { BaseInterface as Base } from '../../BaseInterface';
 
 function _highlightPairables(mode: FoldingMode, highlightings: HighlightingProps[]) {
   let pairables = allPairables(mode);
@@ -12,14 +13,12 @@ function _highlightPairables(mode: FoldingMode, highlightings: HighlightingProps
       highlightings[p - 1] = {
         stroke: '#0047ab',
         strokeOpacity: 0.85,
-        fill: '#0047ab',
-        fillOpacity: 0.075,
       };
     });
   });
 }
 
-let selectedProps = { stroke: '#ffbf00', strokeOpacity: 0.85, fill: '#ffbf00', fillOpacity: 0.15 };
+let selectedProps = { stroke: '#ffbf00', strokeOpacity: 0.85 };
 
 function _highlightSelected(mode: FoldingMode, highlightings: HighlightingProps[]) {
   let rSelected = selectedRange(mode);
@@ -30,8 +29,8 @@ function _highlightSelected(mode: FoldingMode, highlightings: HighlightingProps[
   }
 }
 
-let pairProps = { stroke: '#ff0080', strokeOpacity: 0.85, fill: '#ff0080', fillOpacity: 0.125 };
-let unpairProps = { stroke: '#ff0000', strokeOpacity: 0.85, fill: '#ff0000', fillOpacity: 0.45 };
+let pairProps = { stroke: '#ff0080', strokeOpacity: 0.85, strokeWidth: 2.25 };
+let unpairProps = { stroke: '#ff0000', strokeOpacity: 0.85, strokeWidth: 2.25 };
 
 function _highlightHovered(mode: FoldingMode, highlightings: HighlightingProps[]) {
   let hovered = mode.hovered;
@@ -58,26 +57,34 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
   }
   _highlightSelected(mode, highlightings);
   _highlightHovered(mode, highlightings);
+  let drawing = mode.strictDrawing.drawing;
+  let bHovered = undefined as Base | undefined;
+  if (typeof mode.hovered == 'number') {
+    bHovered = drawing.getBaseAtOverallPosition(mode.hovered);
+  }
   mode.strictDrawing.drawing.forEachBase((b, p) => {
     let props = highlightings[p - 1];
     if (props) {
+      let radius = 0.85 * b.fontSize;
+      if (b.outline) {
+        radius = Math.max(radius, 1.15 * (b.outline.radius + b.outline.strokeWidth));
+      }
       if (!b.highlighting || b.highlighting.stroke != props.stroke) {
-        let radius = 0.85 * b.fontSize;
-        if (b.outline) {
-          radius = Math.max(radius, 1.15 * (b.outline.radius + b.outline.strokeWidth));
-        }
         let h = highlightBase(b, {
           ...props,
           radius: radius,
-          fill: props.fill ?? '#00ffff',
-          fillOpacity: props.fillOpacity ?? 0,
-          strokeWidth: 1.5,
+          fill: 'none',
+          strokeWidth: props.strokeWidth ?? 1.5,
         });
         h.pulsateBetween({
-          radius: 1.25 * radius,
-          strokeOpacity: props.strokeOpacity == undefined ? 0.5 : 0.5 * props.strokeOpacity,
-          fillOpacity: props.fillOpacity == undefined ? 0 : 0.5 * props.fillOpacity,
-        }, { duration: 750 });
+          radius: 1.5 * radius,
+          strokeOpacity: props.strokeOpacity == undefined ? 0.25 : 0.25 * props.strokeOpacity,
+        }, { duration: 1000 });
+      }
+      if (bHovered && bHovered.distanceBetweenCenters(b) < 5 * radius) {
+        if (b.highlighting) {
+          b.highlighting.back();
+        }
       }
     } else {
       b.removeHighlighting();

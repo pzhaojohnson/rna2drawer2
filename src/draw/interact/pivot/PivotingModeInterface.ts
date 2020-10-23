@@ -17,6 +17,7 @@ export interface PivotingModeInterface {
   strictDrawing: StrictDrawing;
 
   hovered?: Stem;
+  hoveredPosition?: number;
   selected?: Stem;
 
   pivoted?: boolean;
