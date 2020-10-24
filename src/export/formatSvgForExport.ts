@@ -99,7 +99,31 @@ function _shiftElements(svg: Svg.Svg) {
   let yShift = _Y_PADDING - _yTextMin(svg);
   svg.children().forEach(v => {
     let c = v as Svg.Element;
-    c.dmove(xShift, yShift);
+    if (c.type === 'text') {
+      c.attr({
+        'x': c.attr('x') + xShift,
+        'y': c.attr('y') + yShift,
+      });
+    } else if (c.type === 'line') {
+      c.attr({
+        'x1': c.attr('x1') + xShift,
+        'y1': c.attr('y1') + yShift,
+        'x2': c.attr('x2') + xShift,
+        'y2': c.attr('y2') + yShift,
+      });
+    } else if (c.type === 'circle') {
+      c.attr({
+        'cx': c.attr('cx') + xShift,
+        'cy': c.attr('cy') + yShift,
+      });
+    } else if (c.type === 'rect') {
+      c.attr({
+        'x': c.attr('x') + xShift,
+        'y': c.attr('y') + yShift,
+      });
+    } else {
+      c.dmove(xShift, yShift);
+    }
   });
 }
 

@@ -70,6 +70,8 @@ describe('_xTextMin, _xTextMax, _yTextMin and _yTextMax functions', () => {
 
 describe('_shiftElements function', () => {
   it('with no text elements', () => {
+    // worth testing since how much to shift elements is calculated
+    // from the text elements present (if there are any)
     let svg = createNodeSVG();
     let c = svg.circle(80);
     c.center(1200, 300);
@@ -103,6 +105,42 @@ describe('_shiftElements function', () => {
     expect(t2.attr('y')).toBeCloseTo(1009 + yShift);
     expect(l.cx()).toBeCloseTo(2000 + xShift);
     expect(l.cy()).toBeCloseTo(3000 + yShift);
+  });
+
+  it('should shift all types of elements', () => {
+    let svg = createNodeSVG();
+    let t1 = svg.text(add => add.tspan('G')); // text
+    t1.attr({ 'x': 1012, 'y': 2500 });
+    let t2 = svg.text(add => add.tspan('j')); // text
+    t2.attr({ 'x': 1600, 'y': 1268 });
+    let l = svg.line(1, 2, 3, 4); // line
+    l.center(809, 610);
+    let c = svg.circle(35); // circle
+    c.attr({ 'cx': 501.2, 'cy': 888 });
+    let r = svg.rect(12, 24); // rect
+    r.attr({ 'x': 188, 'y': 200.2 });
+    let p = svg.path('M 50 55 Q 200 205 200 55'); // path
+    let pcx = p.cx();
+    let pcy = p.cy();
+    let e = svg.ellipse(60, 88); // ellipse
+    e.attr({ 'cx': 2038, 'cy': 3001 });
+    _shiftElements(svg);
+    let xShift = _X_PADDING - 1012;
+    let yShift = _Y_PADDING - 1268;
+    expect(t1.attr('x')).toBeCloseTo(1012 + xShift);
+    expect(t1.attr('y')).toBeCloseTo(2500 + yShift);
+    expect(t2.attr('x')).toBeCloseTo(1600 + xShift);
+    expect(t2.attr('y')).toBeCloseTo(1268 + yShift);
+    expect(l.cx()).toBeCloseTo(809 + xShift);
+    expect(l.cy()).toBeCloseTo(610 + yShift);
+    expect(c.attr('cx')).toBeCloseTo(501.2 + xShift);
+    expect(c.attr('cy')).toBeCloseTo(888 + yShift);
+    expect(r.attr('x')).toBeCloseTo(188 + xShift);
+    expect(r.attr('y')).toBeCloseTo(200.2 + yShift);
+    expect(p.cx()).toBeCloseTo(pcx + xShift);
+    expect(p.cy()).toBeCloseTo(pcy + yShift);
+    expect(e.attr('cx')).toBeCloseTo(2038 + xShift);
+    expect(e.attr('cy')).toBeCloseTo(3001 + yShift);
   });
 });
 
