@@ -255,7 +255,7 @@ function _scaleElements(svg: Svg.Svg, scaling: number) {
  * Sets the dominant-baseline for all text elements to auto and
  * updates the y attribute such that where the text is displayed
  * remains the same.
- * 
+ *
  * This step is important because some applications (e.g. Illustrator)
  * do not support the dominant-baseline attribute.
  */
@@ -263,10 +263,14 @@ function _resetTextDominantBaselines(svg: Svg.Svg) {
   svg.children().forEach(v => {
     let c = v as Svg.Element;
     if (c.type === 'text') {
-      let cx = c.cx();
-      let cy = c.cy();
-      c.attr({ 'dominant-baseline': 'auto' });
-      c.center(cx, cy);
+      let db = c.attr('dominant-baseline');
+      // only reset if necessary to speed this up
+      if (db && db != 'auto') {
+        let cx = c.cx();
+        let cy = c.cy();
+        c.attr({ 'dominant-baseline': 'auto' });
+        c.center(cx, cy);
+      }
     }
   });
 }

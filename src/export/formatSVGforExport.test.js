@@ -391,6 +391,24 @@ describe('_resetTextDominantBaselines function', () => {
     expect(b.cy).toBeCloseTo(cy, 3);
   });
 
+  it('dominant-baseline is undefined or already auto', () => {
+    let svg = createNodeSVG();
+    let t1 = svg.text(add => add.tspan('h'));
+    let t2 = svg.text(add => add.tspan('T'));
+    t1.attr({ 'y': 52.08, 'font-size': 16 });
+    expect(t1.attr('dominant-baseline')).toBe(undefined);
+    t2.attr({ 'y': -12.5, 'font-size': 8, 'dominant-baseline': 'auto' });
+    let cy1 = t1.cy();
+    let cy2 = t2.cy();
+    _resetTextDominantBaselines(svg);
+    // maintains Y coordinates
+    expect(t1.cy()).toBeCloseTo(cy1);
+    expect(t2.cy()).toBeCloseTo(cy2);
+    // maintains dominant baselines
+    expect(t1.attr('dominant-baseline')).toBe(undefined);
+    expect(t2.attr('dominant-baseline')).toBe('auto');
+  });
+
   it('resets multiple text elements', () => {
     let svg = createNodeSVG();
     let t1 = svg.text(add => add.tspan('a'));
@@ -510,7 +528,7 @@ describe('_trimPathNumbers function', () => {
       expect(l[2]).toEqual(_trimNum(ly));
     });
   });
-  
+
   describe('trims stroke-dasharray', () => {
     it('handles undefined stroke-dasharray', () => {
       let svg = createNodeSVG();
@@ -541,7 +559,7 @@ describe('_trimPathNumbers function', () => {
       expect(ns[1]).toEqual(_trimNum(da[1]));
     });
   });
-  
+
   it('trims stroke-width', () => {
     let svg = createNodeSVG();
     let sw = 6.19847192847192;
