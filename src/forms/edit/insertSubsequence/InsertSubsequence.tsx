@@ -61,7 +61,7 @@ export function InsertSubsequence(props: Props): React.ReactElement {
             />
           </div>
           <p style={{ marginTop: '16px' }} >
-            <b>Note:</b> The numbering of bases must be updated manually after removing a subsequence.
+            <b>Note:</b> The numbering of bases must be updated manually after inserting a subsequence.
           </p>
         </div>
       }

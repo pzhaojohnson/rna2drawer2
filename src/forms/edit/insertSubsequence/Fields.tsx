@@ -97,7 +97,7 @@ export function Fields(props: Props): React.ReactElement {
         <SubsequenceField {...props} />
       </div>
       <p style={{ marginTop: '12px' }} >
-        Unless specified to be ignored below, all letters,
+        Unless specified to be ignored below,
         all letters, numbers and non-alphanumeric characters are read in as individual bases.
       </p>
       <div style={{ margin: '8px 0px 0px 8px' }} >
