@@ -100,6 +100,6 @@ it('sets width and height of drawing', () => {
   applyStrictLayout(drawing, layout, 20, 18);
   let ew = (2 * window.screen.width) + (20 * (layout.xMax - layout.xMin));
   let eh = (2 * window.screen.height) + (18 * (layout.yMax - layout.yMin));
-  expect(drawing.width).toBeCloseTo(ew);
-  expect(drawing.height).toBeCloseTo(eh);
+  expect(drawing.width).toBeGreaterThanOrEqual(ew);
+  expect(drawing.height).toBeGreaterThanOrEqual(eh);
 });
