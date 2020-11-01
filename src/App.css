@@ -183,6 +183,10 @@ svg text {
 
 .dropdown-menu-dropped button {
   display: block;
+  min-width: 200px;
+  margin: 0px;
+  padding: 6px 8px 6px 8px;
+  font-size: 12px;
 }
 
 .dropdown-menu:hover .dropdown-menu-dropped {
@@ -219,6 +223,10 @@ overrides the background-color on hover setting below. */
 
 .dropright-menu-dropped button {
   display: block;
+  min-width: 200px;
+  margin: 0px;
+  padding: 6px 8px 6px 8px;
+  font-size: 12px;
 }
 
 .dropright-menu:hover .dropright-menu-dropped {

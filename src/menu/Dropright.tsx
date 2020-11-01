@@ -17,12 +17,9 @@ export function Dropright(props: Props): React.ReactElement {
     <div className={'dropright-menu'} >
       <button
         style={{
-          minWidth: '200px',
           backgroundColor: 'white',
           color: 'black',
           textAlign: 'left',
-          margin: '0px',
-          padding: '6px 8px 6px 8px',
         }}
       >
         <div style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
