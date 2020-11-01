@@ -18,7 +18,6 @@ export function DroppedButton(props: Props): React.ReactElement {
       className={'dropped-menu-button'}
       onClick={props.disabled ? undefined : props.onClick}
       style={{
-        border: 'none',
         textAlign: 'left',
         color: props.disabled ? '#808080' : '#000000',
         borderStyle: props.borderStyle,
