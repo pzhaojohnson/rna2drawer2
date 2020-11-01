@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-
-import DroppedButton from './DroppedButton';
+import { fireEvent } from '@testing-library/react';
+import { DroppedButton } from './DroppedButton';
 
 let container = null;
 
@@ -17,130 +17,76 @@ afterEach(() => {
   container = null;
 });
 
-function getDroppedButton() {
+function getButton(container) {
   return container.childNodes[0];
 }
 
-function getButtonItems() {
-  let db = getDroppedButton();
-  return db.childNodes[0];
-}
-
-function getButtonText() {
-  let bis = getButtonItems();
-  return bis.childNodes[0].textContent;
-}
-
-function getKeyBinding() {
-  let bis = getButtonItems();
-  return bis.childNodes[1].textContent;
-}
-
-function getCheckMark() {
-  let bis = getButtonItems();
-  return bis.childNodes[2];
-}
-
-it('renders with text', () => {
+it('shows text', () => {
   act(() => {
     render(
-      <DroppedButton
-        text={'asdfasdf'}
-      />,
+      <DroppedButton text={'asdfasdf'} />,
       container,
     );
   });
-  expect(getButtonText()).toBe('asdfasdf');
+  expect(container.textContent.includes('asdfasdf')).toBeTruthy();
 });
 
-it('when disabled', () => {
+it('binds onClick callback (by default)', () => {
   let onClick = jest.fn();
   act(() => {
-    render(
-      <DroppedButton
-        onClick={onClick}
-        backgroundColor={'beige'}
-        disabled={true}
-        buttonColor={'black'}
-        disabledButtonColor={'yellow'}
-      />,
-      container,
-    );
+    render(<DroppedButton onClick={onClick} />, container);
   });
-  let db = getDroppedButton();
+  expect(onClick).not.toHaveBeenCalled();
   act(() => {
-    db.dispatchEvent(
-      new Event('click', { bubbles: true })
-    );
+    fireEvent.click(getButton(container), { bubbles: true });
   });
-  expect(onClick.mock.calls.length).toBe(0);
-  expect(db.style.backgroundColor).toBe('beige');
-  expect(db.style.color).toBe('yellow');
+  expect(onClick).toHaveBeenCalled();
 });
 
-it('when enabled', () => {
-  let onClick = jest.fn();
+it('shows key binding', () => {
   act(() => {
-    render(
-      <DroppedButton
-        onClick={onClick}
-        backgroundColor={'beige'}
-        disabled={false}
-        buttonColor={'brown'}
-        disabledButtonColor={'yellow'}
-      />,
-      container,
-    );
+    render(<DroppedButton keyBinding={'Ctrl-A'} />, container);
   });
-  let db = getDroppedButton();
-  act(() => {
-    db.dispatchEvent(
-      new Event('click', { bubbles: true })
-    );
-  });
-  expect(onClick.mock.calls.length).toBe(1);
-
-  /* This allows the background color to change on hover,
-  as specified in src/App.css. */
-  expect(db.style.backgroundColor).toBeFalsy();
-  
-  expect(db.style.color).toBe('brown');
+  expect(container.textContent.includes('Ctrl-A')).toBeTruthy();
 });
 
-it('with key binding', () => {
+it('can be checked', () => {
   act(() => {
-    render(
-      <DroppedButton
-        keyBinding={'Ctrl+A'}
-      />,
-      container,
-    );
+    render(<DroppedButton checked={true} />, container);
   });
-  expect(getKeyBinding()).toBe('Ctrl+A');
+  let imgs = container.getElementsByTagName('img');
+  expect(imgs[0].alt).toBe('Checkmark');
 });
 
-it('without key binding', () => {
+it('is not checked by default', () => {
   act(() => {
     render(<DroppedButton />, container);
   });
-  expect(getKeyBinding()).toBeFalsy();
+  let imgs = container.getElementsByTagName('img');
+  expect(imgs.length).toBe(0);
 });
 
-it('checked', () => {
-  act(() => {
-    render(
-      <DroppedButton
-        checked={true}
-      />,
-      container,
-    );
+describe('when disabled', () => {
+  it('does not bind onClick callback', () => {
+    let onClick = jest.fn();
+    act(() => {
+      render(
+        <DroppedButton onClick={onClick} disabled={true} />,
+        container,
+      );
+      fireEvent
+    });
+    act(() => {
+      fireEvent.click(getButton(container), { bubbles: true });
+    });
+    expect(onClick).not.toHaveBeenCalled();
   });
-  expect(getCheckMark()).toBeTruthy();
-});
 
-it('unchecked', () => {
-  act(() => {
-    render(<DroppedButton />, container);
+  it('changes color', () => {
+    act(() => {
+      render(<DroppedButton disabled={true} />, container);
+    });
+    let b = getButton(container);
+    expect(b.style.color).toBe('rgb(128, 128, 128)');
   });
-  expect(getCheckMark()).toBeFalsy();
 });
