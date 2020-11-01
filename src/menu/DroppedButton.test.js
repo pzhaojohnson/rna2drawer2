@@ -66,6 +66,23 @@ it('is not checked by default', () => {
   expect(imgs.length).toBe(0);
 });
 
+it('renders with border attributes', () => {
+  act(() => {
+    render(
+      <DroppedButton
+        borderStyle={'solid'}
+        borderColor={'#1234ab'}
+        borderWidth={'11px'}
+      />,
+      container,
+    );
+  });
+  let b = getButton(container);
+  expect(b.style.borderStyle).toBe('solid');
+  expect(b.style.borderColor).toBe('#1234ab');
+  expect(b.style.borderWidth).toBe('11px');
+});
+
 describe('when disabled', () => {
   it('does not bind onClick callback', () => {
     let onClick = jest.fn();

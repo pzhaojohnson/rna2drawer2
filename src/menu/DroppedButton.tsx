@@ -6,6 +6,9 @@ interface Props {
   onClick?: () => void;
   keyBinding?: string;
   checked?: boolean;
+  borderStyle?: string;
+  borderColor?: string;
+  borderWidth?: string;
   disabled?: boolean;
 }
 
@@ -22,6 +25,9 @@ export function DroppedButton(props: Props): React.ReactElement {
         textAlign: 'left',
         fontSize: '12px',
         color: props.disabled ? '#808080' : '#000000',
+        borderStyle: props.borderStyle,
+        borderColor: props.borderColor,
+        borderWidth: props.borderWidth,
       }}
     >
       <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
