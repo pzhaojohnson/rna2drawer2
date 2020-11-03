@@ -59,8 +59,13 @@ export interface SecondaryBondMostRecentProps {
 }
 
 export interface SecondaryBondInterface extends StraightBondInterface {
+  isAUT(): boolean;
+  isGC(): boolean;
+  isGUT(): boolean;
   padding1: number;
   padding2: number;
+  stroke: string;
+  strokeWidth: number;
 }
 
 export default StraightBondInterface;
