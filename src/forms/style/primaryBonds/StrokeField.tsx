@@ -4,6 +4,7 @@ import { ColorField } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
 import { parseColor } from '../../../parse/parseColor';
 import { areAllSameColor } from '../../fields/color/areAllSameColor';
+import { getAtIndex } from '../../../array/getAtIndex';
 
 function getStrokes(app: App): Svg.Color[] {
   let ss = [] as Svg.Color[];
@@ -22,7 +23,7 @@ interface Props {
 
 export function StrokeField(props: Props): React.ReactElement {
   let currSs = getStrokes(props.app);
-  let first = currSs[0];
+  let first = getAtIndex(currSs, 0);
   let initialValue = undefined;
   if (areAllSameColor(currSs) && first) {
     initialValue = { color: first.toHex(), opacity: 1 };
@@ -36,7 +37,8 @@ export function StrokeField(props: Props): React.ReactElement {
         if (s) {
           if (props.app.strictDrawing.drawing.numPrimaryBonds > 0) {
             let currSs = getStrokes(props.app);
-            if (!areAllSameColor(currSs) || s.toHex() != currSs[0].toHex()) {
+            let first = getAtIndex(currSs, 0);
+            if (!areAllSameColor(currSs) || (first && s.toHex() != first.toHex())) {
               props.app.pushUndo();
               props.app.strictDrawing.drawing.forEachPrimaryBond(pb => {
                 if (s) {
