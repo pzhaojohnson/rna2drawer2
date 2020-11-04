@@ -1,3 +1,6 @@
+// necessary for async functions to work
+import 'regenerator-runtime/runtime';
+
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 

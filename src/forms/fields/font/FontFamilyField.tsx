@@ -8,7 +8,7 @@ interface Props {
   set: (f: string) => void;
 }
 
-export function FontField(props: Props): React.ReactElement {
+export function FontFamilyField(props: Props): React.ReactElement {
   return (
     <SelectField
       name={props.name}
