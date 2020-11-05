@@ -40,7 +40,10 @@ export function SelectField(props: Props): React.ReactElement {
               let isObject = notArray;
               if (typeof isObject.value == 'string') {
                 let value = isObject.value;
-                props.set(value);
+                // setting the value will often unmount the field
+                // and unmounting the field too quickly after a change event
+                // can cause a memory leak involving the underlying select element
+                setTimeout(() => props.set(value), 350);
               }
             }
           }
