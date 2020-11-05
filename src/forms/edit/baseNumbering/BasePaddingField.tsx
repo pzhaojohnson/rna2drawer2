@@ -5,7 +5,12 @@ import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField
 
 function getBasePaddings(bns: BaseNumbering[]): Set<number> {
   let bps = new Set<number>();
-  bns.forEach(bn => bps.add(bn.basePadding));
+  bns.forEach(bn => {
+    let bp = Number.parseFloat(bn.basePadding.toFixed(2));
+    if (Number.isFinite(bp)) {
+      bps.add(bp);
+    }
+  });
   return bps;
 }
 

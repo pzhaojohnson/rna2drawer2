@@ -5,7 +5,12 @@ import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField
 
 function getLineLengths(bns: BaseNumbering[]): Set<number> {
   let lls = new Set<number>();
-  bns.forEach(bn => lls.add(bn.lineLength));
+  bns.forEach(bn => {
+    let ll = Number.parseFloat(bn.lineLength.toFixed(2));
+    if (Number.isFinite(ll)) {
+      lls.add(ll);
+    }
+  });
   return lls;
 }
 
