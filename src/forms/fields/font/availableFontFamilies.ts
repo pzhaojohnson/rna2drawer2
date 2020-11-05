@@ -1,4 +1,4 @@
-let windowsFonts = [
+let windowsFontFamilies = [
   'Arial',
   'Arial Black',
   'Bahnschrift',
@@ -60,7 +60,7 @@ let windowsFonts = [
   'Yu Gothic',
 ];
 
-let macFonts = [
+let macFontFamilies = [
   'American Typewriter',
   'Andale Mono',
   'Arial',
@@ -124,30 +124,35 @@ let macFonts = [
   'Zapfino',
 ];
 
-let otherFonts = ['Arial Narrow'];
+let otherFontFamilies = ['Arial Narrow'];
 
 interface FontFaceSet {
   readonly ready: Promise<FontFaceSet>;
   check(f: string): boolean;
 }
 
-let _availableFonts = [] as string[];
+let _availableFontFamilies = [] as string[];
 
-async function checkFonts() {
+async function checkFontFamilies() {
   let fonts = (document as any).fonts as FontFaceSet | undefined;
   if (fonts) {
     await fonts.ready;
-    let all = new Set([ ...windowsFonts, ...macFonts, ...otherFonts ].sort());
-    all.forEach(f => {
-      if (fonts?.check('12px ' + f)) {
-        _availableFonts.push(f);
+    let all = new Set([...windowsFontFamilies, ...macFontFamilies, ...otherFontFamilies].sort());
+    all.forEach(ff => {
+      let isAvailable;
+      try {
+        // check method can throw
+        isAvailable = fonts?.check('12px ' + ff);
+      } catch (err) {}
+      if (isAvailable) {
+        _availableFontFamilies.push(ff);
       }
     });
   }
 }
 
-export function availableFonts(): string[] {
-  return [ ..._availableFonts ];
+export function availableFontFamilies(): string[] {
+  return [ ..._availableFontFamilies ];
 }
 
-checkFonts();
+checkFontFamilies();

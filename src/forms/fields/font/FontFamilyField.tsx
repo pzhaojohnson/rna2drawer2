@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SelectField } from '../SelectField';
-import { availableFonts } from './availableFonts';
+import { availableFontFamilies } from './availableFontFamilies';
 
 interface Props {
   name: string;
@@ -13,7 +13,7 @@ export function FontFamilyField(props: Props): React.ReactElement {
     <SelectField
       name={props.name}
       initialValue={props.initialValue}
-      options={availableFonts()}
+      options={availableFontFamilies()}
       set={f => props.set(f)}
     />
   );
