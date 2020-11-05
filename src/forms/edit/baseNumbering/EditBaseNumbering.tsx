@@ -1,52 +1,83 @@
 import * as React from 'react';
-import ClosableContainer from '../../containers/ClosableContainer';
-import OffsetField from './OffsetField';
-import AnchorField from './AnchorField';
-import IncrementField from './IncrementField';
 import { AppInterface as App } from '../../../AppInterface';
+import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
+import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
+import { ClosableContainer } from '../../containers/ClosableContainer';
+import { OffsetField } from './OffsetField';
+import { AnchorField } from './AnchorField';
+import { IncrementField } from './IncrementField';
+import { ColorField } from './ColorField';
+import { FontFamilyField } from './FontFamilyField';
+import { FontSizeField } from './FontSizeField';
+import { BoldFontField } from './BoldFontField';
+import { LineWidthField } from './LineWidthField';
+import { LineLengthField } from './LineLengthField';
+import { BasePaddingField } from './BasePaddingField';
+
+export function getBaseNumberings(drawing: Drawing): BaseNumbering[] {
+  let bns = [] as BaseNumbering[];
+  drawing.forEachBase(b => {
+    if (b.numbering) {
+      bns.push(b.numbering);
+    }
+  });
+  return bns;
+}
 
 interface Props {
-  offsetField: React.ReactElement;
-  anchorField: React.ReactElement;
-  incrementField: React.ReactElement;
+  app: App;
   close: () => void;
 }
 
-export class EditBaseNumbering extends React.Component {
-  props!: Props;
-
-  static create(app: App): React.ReactElement {
-    return (
-      <EditBaseNumbering
-        offsetField={OffsetField.create(app)}
-        anchorField={AnchorField.create(app)}
-        incrementField={IncrementField.create(app)}
-        close={() => app.unmountCurrForm()}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <ClosableContainer
-        close={() => this.props.close()}
-        title={'Edit Numbering'}
-        contained={
-          <div
-            style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
-          >
-            {this.props.offsetField}
-            <div style={{ marginTop: '16px' }} >
-              {this.props.anchorField}
-            </div>
-            <div style={{ marginTop: '16px' }} >
-              {this.props.incrementField}
-            </div>
+export function EditBaseNumbering(props: Props): React.ReactElement {
+  let bns = getBaseNumberings(props.app.strictDrawing.drawing);
+  let fieldProps = {
+    getBaseNumberings: () => [...bns],
+    pushUndo: () => props.app.pushUndo(),
+    changed: () => props.app.drawingChangedNotByInteraction(),
+  };
+  return (
+    <ClosableContainer
+      close={props.close}
+      title='Edit Numbering'
+      contained={
+        <div
+          style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+        >
+          {OffsetField.create(props.app)}
+          <div style={{ marginTop: '12px' }} >
+            {AnchorField.create(props.app)}
           </div>
-        }
-      />
-    );
-  }
+          <div style={{ marginTop: '12px' }} >
+            {IncrementField.create(props.app)}
+          </div>
+          {bns.length == 0 ? null : (
+            <div>
+              <div style={{ marginTop: '12px' }} >
+                <ColorField {...fieldProps} />
+              </div>
+              <div style={{ marginTop: '12px' }} >
+                <FontFamilyField {...fieldProps} />
+              </div>
+              <div style={{ marginTop: '12px' }} >
+                <FontSizeField {...fieldProps} />
+              </div>
+              <div style={{ marginTop: '12px' }} >
+                <BoldFontField {...fieldProps} />
+              </div>
+              <div style={{ marginTop: '12px' }} >
+                <LineWidthField {...fieldProps} />
+              </div>
+              <div style={{ marginTop: '12px' }} >
+                <LineLengthField {...fieldProps} />
+              </div>
+              <div style={{ marginTop: '12px' }} >
+                <BasePaddingField {...fieldProps} />
+              </div>
+            </div>
+          )}
+        </div>
+      }
+    />
+  );
 }
-
-export default EditBaseNumbering;

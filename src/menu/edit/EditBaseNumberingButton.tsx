@@ -12,7 +12,12 @@ export function EditBaseNumberingButton(props: Props): React.ReactElement {
     <DroppedButton
       text={'Numbering'}
       onClick={() => {
-        props.app.renderForm(() => EditBaseNumbering.create(props.app));
+        props.app.renderForm(close => (
+          <EditBaseNumbering
+            app={props.app}
+            close={close ? close : () => props.app.unmountCurrForm()}
+          />
+        ));
       }}
     />
   );
