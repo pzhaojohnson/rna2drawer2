@@ -17,13 +17,21 @@ interface Props {
   initialValue?: string;
   options: string[];
   set: (v: string) => void;
+  style?: {
+    label?: {
+      marginRight?: string;
+    }
+    valueContainer?: {
+      padding?: string;
+    }
+  }
 }
 
 export function SelectField(props: Props): React.ReactElement {
   let fontFamilies = availableFontFamilies();
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <p style={{ display: 'inline-block', paddingRight: '12px' }} >
+      <p style={{ display: 'inline-block', marginRight: props.style?.label?.marginRight ?? '12px' }} >
         {props.name + ':'}
       </p>
       <Select
@@ -71,7 +79,7 @@ export function SelectField(props: Props): React.ReactElement {
           }),
           valueContainer: (provided, state) => ({
             ...provided,
-            padding: '5px 6px',
+            padding: props.style?.valueContainer?.padding ?? '5px 6px',
           }),
           indicatorsContainer: (provided, state) => ({
             ...provided,
@@ -101,13 +109,16 @@ export function SelectField(props: Props): React.ReactElement {
             ...provided,
             backgroundColor: state.isSelected ? 'gray' : 'white',
             fontFamily: fontFamilies.includes(state.data.value) ? state.data.value : 'Segoe UI',
+            color: state.isSelected ? 'white' : 'black',
             '&:hover': {
               backgroundColor: state.isSelected ? 'gray' : 'gainsboro',
+              color: state.isSelected ? 'white' : 'black',
             },
           }),
           singleValue: (provided, state) => ({
             ...provided,
             fontFamily: fontFamilies.includes(state.data.value) ? state.data.value : 'Segoe UI',
+            color: 'black',
           }),
         }}
       />
