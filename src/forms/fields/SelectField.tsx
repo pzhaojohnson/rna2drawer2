@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Select from 'react-select';
 import { getAtIndex } from '../../array/getAtIndex';
+import { availableFontFamilies } from './font/availableFontFamilies';
 
 interface ValueLabel {
   value: string;
@@ -19,10 +20,11 @@ interface Props {
 }
 
 export function SelectField(props: Props): React.ReactElement {
+  let fontFamilies = availableFontFamilies();
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <p style={{ display: 'inline-block', paddingRight: '4px' }} >
-        {props.name}
+      <p style={{ display: 'inline-block', paddingRight: '12px' }} >
+        {props.name + ':'}
       </p>
       <Select
         defaultValue={props.initialValue ? toValueLabel(props.initialValue) : undefined}
@@ -47,6 +49,66 @@ export function SelectField(props: Props): React.ReactElement {
               }
             }
           }
+        }}
+        styles={{
+          container: (provided, state) => ({
+            ...provided,
+            minWidth: '225px',
+            fontFamily: 'Segoe UI',
+            fontSize: '12px',
+          }),
+          control: (provided, state) => ({
+            ...provided,
+            minHeight: '22px',
+            borderStyle: 'solid',
+            borderWidth: '1px',
+            borderColor: state.isFocused ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)',
+            borderRadius: '2px',
+            boxShadow: 'none',
+            '&:hover': {
+              borderColor: 'rgba(0,0,0,0.6)',
+            },
+          }),
+          valueContainer: (provided, state) => ({
+            ...provided,
+            padding: '5px 6px',
+          }),
+          indicatorsContainer: (provided, state) => ({
+            ...provided,
+            padding: '0px',
+          }),
+          dropdownIndicator: (provided, state) => ({
+            ...provided,
+            margin: '0px 2px',
+            padding: '0px',
+            color: state.isFocused ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)',
+            transform: 'scale(0.75)',
+            '&:hover': {
+              color: 'rgba(0,0,0,0.6)',
+            },
+          }),
+          indicatorSeparator: (provided, state) => ({
+            ...provided,
+            marginTop: '4px',
+            marginBottom: '4px',
+            backgroundColor: 'rgba(0,0,0,0.3)',
+          }),
+          menu: (provided, state) => ({
+            ...provided,
+            margin: '6px 0px',
+          }),
+          option: (provided, state) => ({
+            ...provided,
+            backgroundColor: state.isSelected ? 'gray' : 'white',
+            fontFamily: fontFamilies.includes(state.data.value) ? state.data.value : 'Segoe UI',
+            '&:hover': {
+              backgroundColor: state.isSelected ? 'gray' : 'gainsboro',
+            },
+          }),
+          singleValue: (provided, state) => ({
+            ...provided,
+            fontFamily: fontFamilies.includes(state.data.value) ? state.data.value : 'Segoe UI',
+          }),
         }}
       />
     </div>
