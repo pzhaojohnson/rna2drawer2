@@ -120,7 +120,7 @@ TextField.defaultProps = {
   initialValue: '',
   checkValue: () => '',
   set: () => console.error('Missing set callback.'),
-  minLabelWidth: '64px',
+  minLabelWidth: '108px',
 };
 
 export default TextField;
