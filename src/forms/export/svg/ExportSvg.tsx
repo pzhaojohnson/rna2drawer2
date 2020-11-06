@@ -168,10 +168,10 @@ class ExportSvg extends React.Component {
         style={{
           fontSize: '12px',
           display: 'inline-block',
-          marginRight: '8px',
+          marginRight: '12px',
         }}
       >
-        Font size of bases:
+        Font Size of Bases:
       </p>
     );
   }
