@@ -74,11 +74,10 @@ describe('render method', () => {
     expect(ele.type).toBe(IntegerField);
   });
 
-  it('passes currAnchor and minLabelWidth props', () => {
-    let comp = new AnchorField({ currAnchor: 212, minLabelWidth: '92px' });
+  it('passes currAnchor prop', () => {
+    let comp = new AnchorField({ currAnchor: 212 });
     let ele = comp.render();
     expect(ele.props.initialValue).toBe(212);
-    expect(ele.props.minLabelWidth).toBe('92px');
   });
 
   describe('set callback', () => {

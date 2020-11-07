@@ -45,33 +45,33 @@ export function EditBaseNumbering(props: Props): React.ReactElement {
           style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
         >
           {OffsetField.create(props.app)}
-          <div style={{ marginTop: '12px' }} >
+          <div style={{ marginTop: '8px' }} >
             {AnchorField.create(props.app)}
           </div>
-          <div style={{ marginTop: '12px' }} >
+          <div style={{ marginTop: '8px' }} >
             {IncrementField.create(props.app)}
           </div>
           {bns.length == 0 ? null : (
             <div>
-              <div style={{ marginTop: '12px' }} >
+              <div style={{ marginTop: '20px' }} >
                 <ColorField {...fieldProps} />
               </div>
-              <div style={{ marginTop: '12px' }} >
+              <div style={{ marginTop: '20px' }} >
                 <FontFamilyField {...fieldProps} />
               </div>
-              <div style={{ marginTop: '12px' }} >
+              <div style={{ marginTop: '20px' }} >
                 <FontSizeField {...fieldProps} />
               </div>
-              <div style={{ marginTop: '12px' }} >
+              <div style={{ marginTop: '8px' }} >
                 <BoldFontField {...fieldProps} />
               </div>
-              <div style={{ marginTop: '12px' }} >
+              <div style={{ marginTop: '20px' }} >
                 <LineWidthField {...fieldProps} />
               </div>
-              <div style={{ marginTop: '12px' }} >
+              <div style={{ marginTop: '8px' }} >
                 <LineLengthField {...fieldProps} />
               </div>
-              <div style={{ marginTop: '12px' }} >
+              <div style={{ marginTop: '8px' }} >
                 <BasePaddingField {...fieldProps} />
               </div>
             </div>

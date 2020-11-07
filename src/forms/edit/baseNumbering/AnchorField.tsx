@@ -5,7 +5,6 @@ import { AppInterface as App } from '../../../AppInterface';
 interface Props {
   currAnchor: number;
   setAnchor: (a: number) => void;
-  minLabelWidth?: string;
 }
 
 export class AnchorField extends React.Component {
@@ -44,7 +43,6 @@ export class AnchorField extends React.Component {
         name={'Anchor'}
         initialValue={this.props.currAnchor}
         set={(n: number) => this.props.setAnchor(n)}
-        minLabelWidth={this.props.minLabelWidth}
       />
     );
   }
@@ -53,7 +51,6 @@ export class AnchorField extends React.Component {
 AnchorField.defaultProps = {
   currAnchor: 0,
   setAnchor: () => console.error('Missing callback to set anchor.'),
-  minLabelWidth: '64px',
 };
 
 export default AnchorField;

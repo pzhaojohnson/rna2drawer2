@@ -72,11 +72,10 @@ describe('render method', () => {
     expect(ele.type).toBe(PositiveIntegerField);
   });
 
-  it('passes currIncrement and minLabelWidth props', () => {
-    let comp = new IncrementField({ currIncrement: 23, minLabelWidth: '206px' });
+  it('passes currIncrement prop', () => {
+    let comp = new IncrementField({ currIncrement: 23 });
     let ele = comp.render();
     expect(ele.props.initialValue).toBe(23);
-    expect(ele.props.minLabelWidth).toBe('206px');
   });
 
   describe('set callback', () => {

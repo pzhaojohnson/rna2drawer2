@@ -72,11 +72,10 @@ describe('render method', () => {
     expect(ele.type).toBe(IntegerField);
   });
 
-  it('passes currOffset and minLabelWidth props', () => {
-    let comp = new OffsetField({ currOffset: 208, minLabelWidth: '81px' });
+  it('passes currOffset prop', () => {
+    let comp = new OffsetField({ currOffset: 208 });
     let ele = comp.render();
     expect(ele.props.initialValue).toBe(208);
-    expect(ele.props.minLabelWidth).toBe('81px');
   });
 
   describe('set callback', () => {

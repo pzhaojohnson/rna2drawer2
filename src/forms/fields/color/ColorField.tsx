@@ -41,14 +41,14 @@ interface Props {
 
 export class ColorField extends React.Component {
   static recentColors: RecentColorsList;
-  
+
   props!: Props;
   state: {
     value: ColorAndOpacity;
     showPicker: boolean;
   }
   _changedSinceOpening: boolean;
-  
+
   constructor(props: Props) {
     super(props);
 
@@ -80,7 +80,7 @@ export class ColorField extends React.Component {
     return (
       <p
         className={'unselectable-text'}
-        style={{ marginRight: '8px', fontSize: '12px' }}
+        style={{ marginRight: '12px', fontSize: '12px' }}
       >
         {this.props.name + ':'}
       </p>

@@ -5,7 +5,6 @@ import { AppInterface as App } from '../../../AppInterface';
 interface Props {
   currIncrement: number;
   setIncrement: (i: number) => void;
-  minLabelWidth?: string;
 }
 
 export class IncrementField extends React.Component {
@@ -41,7 +40,6 @@ export class IncrementField extends React.Component {
         name={'Increment'}
         initialValue={this.props.currIncrement}
         set={(n: number) => this.props.setIncrement(n)}
-        minLabelWidth={this.props.minLabelWidth}
       />
     );
   }
@@ -50,7 +48,6 @@ export class IncrementField extends React.Component {
 IncrementField.defaultProps = {
   currIncrement: 20,
   setIncrement: () => console.error('Missing callback to set increment.'),
-  minLabelWidth: '64px',
 };
 
 export default IncrementField;

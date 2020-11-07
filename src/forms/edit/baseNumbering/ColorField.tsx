@@ -56,6 +56,7 @@ export function ColorField(props: FieldProps): React.ReactElement | null {
             }
           }
         }}
+        disableAlpha={true}
       />
     );
   }

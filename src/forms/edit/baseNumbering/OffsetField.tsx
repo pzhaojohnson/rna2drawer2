@@ -5,7 +5,6 @@ import { AppInterface as App } from '../../../AppInterface';
 interface Props {
   currOffset: number;
   setOffset: (o: number) => void;
-  minLabelWidth: string;
 }
 
 export class OffsetField extends React.Component {
@@ -41,7 +40,6 @@ export class OffsetField extends React.Component {
         name={'Offset'}
         initialValue={this.props.currOffset}
         set={(n: number) => this.props.setOffset(n)}
-        minLabelWidth={this.props.minLabelWidth}
       />
     );
   }
@@ -50,7 +48,6 @@ export class OffsetField extends React.Component {
 OffsetField.defaultProps = {
   currOffset: 0,
   setOffset: () => console.error('Missing callback to set offset.'),
-  minLabelWidth: '64px',
 };
 
 export default OffsetField;
