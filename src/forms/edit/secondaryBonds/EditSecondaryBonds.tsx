@@ -30,26 +30,26 @@ export function EditSecondaryBonds(props: Props): React.ReactElement {
         ) : (
           <div>
             {getAutBonds(props.app).length == 0 ? null : (
-              <div style={{ paddingBottom: '8px' }} >
+              <div style={{ marginBottom: '16px' }} >
                 <AutStrokeField app={props.app} />
               </div>
             )}
             {getGcBonds(props.app).length == 0 ? null : (
-              <div style={{ paddingBottom: '8px' }} >
+              <div style={{ marginBottom: '16px' }} >
                 <GcStrokeField app={props.app} />
               </div>
             )}
             {getGutBonds(props.app).length == 0 ? null : (
-              <div style={{ paddingBottom: '8px' }} >
+              <div style={{ marginBottom: '16px' }} >
                 <GutStrokeField app={props.app} />
               </div>
             )}
             {getOtherBonds(props.app).length == 0 ? null : (
-              <div style={{ paddingBottom: '8px' }} >
+              <div style={{ marginBottom: '16px' }} >
                 <OtherStrokeField app={props.app} />
               </div>
             )}
-            <div style={{ paddingBottom: '8px' }} >
+            <div style={{ marginBottom: '8px' }} >
               <StrokeWidthField app={props.app} />
             </div>
             <PaddingField app={props.app} />

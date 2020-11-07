@@ -27,16 +27,16 @@ export function GeneralBaseStyles(props: Props): React.ReactElement {
         ) : (
           <div>
             <WidthField app={props.app} />
-            <div style={{ paddingTop: '8px' }} >
+            <div style={{ marginTop: '8px' }} >
               <HeightField app={props.app} />
             </div>
-            <div style={{ paddingTop: '8px' }} >
+            <div style={{ marginTop: '16px' }} >
               <FontFamilyField app={props.app} />
             </div>
-            <div style={{ paddingTop: '8px' }} >
+            <div style={{ marginTop: '16px' }} >
               <FontSizeField app={props.app} />
             </div>
-            <div style={{ paddingTop: '8px' }} >
+            <div style={{ marginTop: '8px' }} >
               <BoldFontField app={props.app} />
             </div>
           </div>
