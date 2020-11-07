@@ -106,7 +106,7 @@ function StrokeField(props: Props): React.ReactElement | null {
 export function AutStrokeField(props: { app: App }): React.ReactElement | null {
   return (
     <StrokeField
-      name='AUT Bonds'
+      name='AUT Color'
       getBonds={() => getAutBonds(props.app)}
       pushUndo={() => props.app.pushUndo()}
       changed={() => props.app.drawingChangedNotByInteraction()}
@@ -117,7 +117,7 @@ export function AutStrokeField(props: { app: App }): React.ReactElement | null {
 export function GcStrokeField(props: { app: App }): React.ReactElement | null {
   return (
     <StrokeField
-      name='GC Bonds'
+      name='GC Color'
       getBonds={() => getGcBonds(props.app)}
       pushUndo={() => props.app.pushUndo()}
       changed={() => props.app.drawingChangedNotByInteraction()}
@@ -128,7 +128,7 @@ export function GcStrokeField(props: { app: App }): React.ReactElement | null {
 export function GutStrokeField(props: { app: App }): React.ReactElement | null {
   return (
     <StrokeField
-      name='GUT Bonds'
+      name='GUT Color'
       getBonds={() => getGutBonds(props.app)}
       pushUndo={() => props.app.pushUndo()}
       changed={() => props.app.drawingChangedNotByInteraction()}
@@ -139,7 +139,7 @@ export function GutStrokeField(props: { app: App }): React.ReactElement | null {
 export function OtherStrokeField(props: { app: App }): React.ReactElement | null {
   return (
     <StrokeField
-      name='Other Bonds'
+      name='Noncanonical Color'
       getBonds={() => getOtherBonds(props.app)}
       pushUndo={() => props.app.pushUndo()}
       changed={() => props.app.drawingChangedNotByInteraction()}
