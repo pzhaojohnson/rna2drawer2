@@ -21,8 +21,10 @@ interface Props {
     label?: {
       marginRight?: string;
     }
-    valueContainer?: {
-      padding?: string;
+    select?: {
+      control?: {
+        minHeight?: string;
+      }
     }
   }
 }
@@ -68,7 +70,7 @@ export function SelectField(props: Props): React.ReactElement {
           }),
           control: (provided, state) => ({
             ...provided,
-            minHeight: '22px',
+            minHeight: props.style?.select?.control?.minHeight ?? '22px',
             borderStyle: 'solid',
             borderWidth: '1px',
             borderColor: state.isFocused ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)',
@@ -80,7 +82,7 @@ export function SelectField(props: Props): React.ReactElement {
           }),
           valueContainer: (provided, state) => ({
             ...provided,
-            padding: props.style?.valueContainer?.padding ?? '5px 6px',
+            padding: '0px',
           }),
           indicatorsContainer: (provided, state) => ({
             ...provided,
@@ -118,6 +120,8 @@ export function SelectField(props: Props): React.ReactElement {
           }),
           singleValue: (provided, state) => ({
             ...provided,
+            marginLeft: '6px',
+            marginRight: '6px',
             fontFamily: fontFamilies.includes(state.data.value) ? state.data.value : 'Segoe UI',
             color: 'black',
           }),
