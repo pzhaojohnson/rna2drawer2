@@ -19,6 +19,8 @@ export function DroppedButton(props: Props): React.ReactElement {
       onClick={props.disabled ? undefined : props.onClick}
       style={{
         textAlign: 'left',
+        // override background color on hover defined in CSS file when disabled
+        backgroundColor: props.disabled ? '#ffffff' : undefined,
         color: props.disabled ? '#808080' : '#000000',
         borderStyle: props.borderStyle,
         borderColor: props.borderColor,
