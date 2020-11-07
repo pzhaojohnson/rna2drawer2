@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-
-import DroppedSeparator from './DroppedSeparator';
+import { DroppedSeparator } from './DroppedSeparator';
 
 let container = null;
 
@@ -17,27 +16,21 @@ afterEach(() => {
   container = null;
 });
 
-function getDroppedSeparator() {
-  return container.childNodes[0];
-}
-
-function getLine() {
-  let ds = getDroppedSeparator();
-  return ds.childNodes[0];
-}
-
 it('renders with props', () => {
   act(() => {
     render(
       <DroppedSeparator
-        backgroundColor={'rgb(12, 97, 100)'}
-        borderColor={'rgb(100, 75, 43)'}
+        backgroundColor='rgb(12, 97, 100)'
+        borderStyle='dashed'
+        borderWidth='12.3px'
+        borderColor='rgb(100, 75, 43)'
       />,
       container,
     );
   });
-  let ds = getDroppedSeparator();
-  expect(ds.style.backgroundColor).toBe('rgb(12, 97, 100)');
-  let l = getLine();
-  expect(l.style.borderColor).toBe('rgb(100, 75, 43)');
+  let ele = container.childNodes[0];
+  expect(ele.style.backgroundColor).toBe('rgb(12, 97, 100)');
+  expect(ele.style.borderStyle).toBe('dashed');
+  expect(ele.style.borderWidth).toBe('12.3px');
+  expect(ele.style.borderColor).toBe('rgb(100, 75, 43)');
 });

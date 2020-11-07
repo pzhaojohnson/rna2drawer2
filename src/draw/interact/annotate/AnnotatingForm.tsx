@@ -19,7 +19,7 @@ export function AnnotatingForm(mode: AnnotatingMode, close?: () => void): React.
   return (
     <ClosableContainer
       close={() => close ? close() : undefined}
-      title={'Annotate Bases'}
+      title={'Edit Bases'}
       contained={
         <div
           style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}

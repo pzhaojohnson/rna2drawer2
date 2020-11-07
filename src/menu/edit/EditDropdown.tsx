@@ -4,14 +4,11 @@ import { Dropdown } from '../Dropdown';
 import DroppedSeparator from '../DroppedSeparator';
 import { UndoButton } from './UndoButton';
 import { RedoButton } from './RedoButton';
-import { InsertSubsequenceButton } from './InsertSubsequenceButton';
-import { RemoveSubsequenceButton } from './RemoveSubsequenceButton';
-import { CapitalizeButton } from './CapitalizeButton';
-import { DecapitalizeButton } from './DecapitalizeButton';
-import { TsToUsButton } from './TsToUsButton';
-import { UsToTsButton } from './UsToTsButton';
-import { EditSequenceIdButton } from './EditSequenceIdButton';
+import { EditSequenceDropright } from './sequence/EditSequenceDropright';
+import { EditBasesDropright } from './bases/EditBasesDropright';
 import { EditBaseNumberingButton } from './EditBaseNumberingButton';
+import { EditPrimaryBondsButton } from './EditPrimaryBondsButton';
+import { EditSecondaryBondsButton } from './EditSecondaryBondsButton';
 import { EditTertiaryBondsButton } from './EditTertiaryBondsButton';
 import { EditLayoutButton } from './EditLayoutButton';
 
@@ -28,17 +25,14 @@ export function EditDropdown(props: Props): React.ReactElement {
           <UndoButton app={props.app} />
           <RedoButton app={props.app} />
           <DroppedSeparator />
-          <InsertSubsequenceButton app={props.app} />
-          <RemoveSubsequenceButton app={props.app} />
+          <EditSequenceDropright app={props.app} />
+          <EditBasesDropright app={props.app} />
           <DroppedSeparator />
-          <CapitalizeButton app={props.app} />
-          <DecapitalizeButton app={props.app} />
-          <TsToUsButton app={props.app} />
-          <UsToTsButton app={props.app} />
-          <DroppedSeparator />
-          <EditSequenceIdButton app={props.app} />
-          <EditBaseNumberingButton app={props.app} />
+          <EditPrimaryBondsButton app={props.app} />
+          <EditSecondaryBondsButton app={props.app} />
           <EditTertiaryBondsButton app={props.app} />
+          <DroppedSeparator />
+          <EditBaseNumberingButton app={props.app} />
           <EditLayoutButton app={props.app} />
         </div>
       )}

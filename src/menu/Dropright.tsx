@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { RightCaret } from './RightCaret';
 
-export const trailingButtonBorderStyles = {
+export const trailingBorderStyles = {
   borderStyle: 'solid',
   borderColor: 'rgba(0,0,0,0.3)',
   borderWidth: '0px 0px 0px 1px',
-}
+};
 
 interface Props {
   name?: string;

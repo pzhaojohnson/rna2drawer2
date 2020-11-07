@@ -9,7 +9,7 @@ interface Props {
 export function AnnotateButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      text={'Annotate'}
+      text={'Edit'}
       onClick={() => {
         if (!props.app.strictDrawingInteraction.annotating()) {
           props.app.strictDrawingInteraction.startAnnotating();
