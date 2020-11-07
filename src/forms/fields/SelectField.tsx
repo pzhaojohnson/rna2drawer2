@@ -50,10 +50,11 @@ export function SelectField(props: Props): React.ReactElement {
               let isObject = notArray;
               if (typeof isObject.value == 'string') {
                 let value = isObject.value;
-                // setting the value will often unmount the field
-                // and unmounting the field too quickly after a change event
-                // can cause a memory leak involving the underlying select element
-                setTimeout(() => props.set(value), 350);
+                // in this app, setting a value often causes a field to be unmounted
+                // and unmounting this field immediately after a change event
+                // seems to cause a memory leak involving the underlying select element
+                // as reported by a console message from the React framework
+                setTimeout(() => props.set(value), 250);
               }
             }
           }
