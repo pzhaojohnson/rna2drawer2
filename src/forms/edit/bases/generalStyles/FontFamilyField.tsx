@@ -7,21 +7,6 @@ function getDrawing(app: App): Drawing {
   return app.strictDrawing.drawing;
 }
 
-function getFontFamilies(drawing: Drawing): Set<string> {
-  let ffs = new Set<string>();
-  drawing.forEachBase(b => {
-    ffs.add(b.fontFamily);
-  });
-  return ffs;
-}
-
-function getInitialValue(drawing: Drawing): string | undefined {
-  let ffs = getFontFamilies(drawing);
-  if (ffs.size == 1) {
-    return ffs.values().next().value;
-  }
-}
-
 interface Props {
   app: App;
 }
@@ -30,13 +15,15 @@ export function FontFamilyField(props: Props): React.ReactElement | null {
   if (getDrawing(props.app).numBases == 0) {
     return null;
   } else {
+    let first = getDrawing(props.app).getBaseAtOverallPosition(1);
     return (
       <Field
         name='Font'
-        initialValue={getInitialValue(getDrawing(props.app))}
+        initialValue={first ? first.fontFamily : undefined}
         set={ff => {
           if (getDrawing(props.app).numBases > 0) {
-            if (ff != getInitialValue(getDrawing(props.app))) {
+            let first = getDrawing(props.app).getBaseAtOverallPosition(1);
+            if (!first || ff != first.fontFamily) {
               props.app.pushUndo();
               getDrawing(props.app).forEachBase(b => {
                 b.fontFamily = ff;
