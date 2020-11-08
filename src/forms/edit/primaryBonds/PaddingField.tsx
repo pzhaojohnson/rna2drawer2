@@ -1,40 +1,26 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
+import { getAtIndex } from '../../../array/getAtIndex';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
+import { FieldProps } from './FieldProps';
 
-function getPaddings(app: App): Set<number> {
-  let ps = new Set<number>();
-  app.strictDrawing.drawing.forEachPrimaryBond(pb => {
-    ps.add(pb.padding1);
-  });
-  return ps;
-}
-
-function getFirstPadding(ps: Set<number>): number | undefined {
-  return ps.values().next().value;
-}
-
-interface Props {
-  app: App;
-}
-
-export function PaddingField(props: Props): React.ReactElement {
-  let currPs = getPaddings(props.app);
+export function PaddingField(props: FieldProps): React.ReactElement {
+  let pbs = props.getPrimaryBonds();
+  let first = getAtIndex(pbs, 0);
   return (
     <NonnegativeNumberField
       name='Padding'
-      initialValue={currPs.size == 1 ? getFirstPadding(currPs) : undefined}
+      initialValue={first ? first.padding1 : undefined}
       set={p => {
-        if (props.app.strictDrawing.drawing.numPrimaryBonds > 0) {
-          let currPs = getPaddings(props.app);
-          let first = getFirstPadding(currPs);
-          if (currPs.size != 1 || p != first) {
-            props.app.pushUndo();
-            props.app.strictDrawing.drawing.forEachPrimaryBond(pb => {
+        let pbs = props.getPrimaryBonds();
+        if (pbs.length > 0) {
+          let first = getAtIndex(pbs, 0);
+          if (!first || p != first.padding1) {
+            props.pushUndo();
+            pbs.forEach(pb => {
               pb.padding1 = p;
               pb.padding2 = p;
             });
-            props.app.drawingChangedNotByInteraction();
+            props.changed();
           }
         }
       }}

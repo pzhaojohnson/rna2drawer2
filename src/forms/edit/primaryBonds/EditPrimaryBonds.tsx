@@ -1,9 +1,17 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
+import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
+import { PrimaryBondInterface as PrimaryBond } from '../../../draw/StraightBondInterface';
 import { ClosableContainer } from '../../containers/ClosableContainer';
 import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { PaddingField } from './PaddingField';
+
+function getPrimaryBonds(drawing: Drawing): PrimaryBond[] {
+  let pbs = [] as PrimaryBond[];
+  drawing.forEachPrimaryBond(pb => pbs.push(pb));
+  return pbs;
+}
 
 interface Props {
   app: App;
@@ -11,6 +19,12 @@ interface Props {
 }
 
 export function EditPrimaryBonds(props: Props): React.ReactElement {
+  let pbs = getPrimaryBonds(props.app.strictDrawing.drawing);
+  let fieldProps = {
+    getPrimaryBonds: () => [...pbs],
+    pushUndo: () => props.app.pushUndo(),
+    changed: () => props.app.drawingChangedNotByInteraction(),
+  };
   return (
     <ClosableContainer
       close={props.close}
@@ -21,13 +35,13 @@ export function EditPrimaryBonds(props: Props): React.ReactElement {
         ) : (
           <div>
             <div>
-              <StrokeField app={props.app} />
+              <StrokeField {...fieldProps} />
             </div>
             <div style={{ marginTop: '16px' }} >
-              <StrokeWidthField app={props.app} />
+              <StrokeWidthField {...fieldProps} />
             </div>
             <div style={{ marginTop: '8px' }} >
-              <PaddingField app={props.app} />
+              <PaddingField {...fieldProps} />
             </div>
           </div>
         )
