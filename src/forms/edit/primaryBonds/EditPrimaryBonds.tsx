@@ -30,7 +30,7 @@ export function EditPrimaryBonds(props: Props): React.ReactElement {
       close={props.close}
       title='Edit Primary Bonds'
       contained={
-        props.app.strictDrawing.drawing.numPrimaryBonds == 0 ? (
+        pbs.length == 0 ? (
           <p>Drawing has no primary bonds.</p>
         ) : (
           <div>
