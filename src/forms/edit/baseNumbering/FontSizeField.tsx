@@ -1,36 +1,23 @@
 import * as React from 'react';
-import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
 import { FieldProps } from './FieldProps';
 import { FontSizeField as Field } from '../../fields/font/FontSizeField';
-
-function getFontSizes(bns: BaseNumbering[]): Set<number> {
-  let fss = new Set<number>();
-  bns.forEach(bn => {
-    fss.add(bn.fontSize);
-  });
-  return fss;
-}
-
-function getInitialValue(bns: BaseNumbering[]): number | undefined {
-  let fss = getFontSizes(bns);
-  if (fss.size == 1) {
-    return fss.values().next().value;
-  }
-}
+import { getAtIndex } from '../../../array/getAtIndex';
 
 export function FontSizeField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();
   if (bns.length == 0) {
     return null;
   } else {
+    let first = getAtIndex(bns, 0);
     return (
       <Field
         name='Font Size'
-        initialValue={getInitialValue(bns)}
+        initialValue={first ? first.fontSize : undefined}
         set={fs => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
-            if (fs != getInitialValue(bns)) {
+            let first = getAtIndex(bns, 0);
+            if (!first || fs != first.fontSize) {
               props.pushUndo();
               bns.forEach(bn => {
                 bn.fontSize = fs;

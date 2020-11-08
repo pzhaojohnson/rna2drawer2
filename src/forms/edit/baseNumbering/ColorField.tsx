@@ -1,50 +1,28 @@
 import * as React from 'react';
-import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
+import { ColorField as Field } from '../../fields/color/ColorField';
 import { FieldProps } from './FieldProps';
-import * as Svg from '@svgdotjs/svg.js';
 import { parseColor } from '../../../parse/parseColor';
-import { areAllSameColor } from '../../fields/color/areAllSameColor';
 import { getAtIndex } from '../../../array/getAtIndex';
-import { ColorField as Field, ColorAndOpacity } from '../../fields/color/ColorField';
-
-function getColors(bns: BaseNumbering[]): Svg.Color[] {
-  let cs = [] as Svg.Color[];
-  bns.forEach(bn => {
-    let c = parseColor(bn.color);
-    if (c) {
-      cs.push(c);
-    }
-  });
-  return cs;
-}
-
-function getInitialValue(bns: BaseNumbering[]): ColorAndOpacity | undefined {
-  if (bns.length > 0) {
-    let cs = getColors(bns);
-    if (areAllSameColor(cs)) {
-      let c = getAtIndex(cs, 0);
-      if (c) {
-        return { color: c.toHex(), opacity: 1 };
-      }
-    }
-  }
-}
 
 export function ColorField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();
   if (bns.length == 0) {
     return null;
   } else {
+    let first = getAtIndex(bns, 0);
+    let firstColor = first ? parseColor(first.color) : undefined;
     return (
       <Field
         name='Color'
-        initialValue={getInitialValue(bns)}
+        initialValue={firstColor ? { color: firstColor.toHex(), opacity: 1 } : undefined}
         set={co => {
           let c = parseColor(co.color);
           if (c) {
             let bns = props.getBaseNumberings();
             if (bns.length > 0) {
-              if (c.toHex() != getInitialValue(bns)?.color) {
+              let first = getAtIndex(bns, 0);
+              let firstColor = first ? parseColor(first.color) : undefined;
+              if (!firstColor || c.toHex() != firstColor.toHex()) {
                 props.pushUndo();
                 bns.forEach(bn => {
                   if (c) {

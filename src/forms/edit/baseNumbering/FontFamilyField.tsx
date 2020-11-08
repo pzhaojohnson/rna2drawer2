@@ -1,36 +1,23 @@
 import * as React from 'react';
-import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
-import { FieldProps } from './FieldProps';
 import { FontFamilyField as Field } from '../../fields/font/FontFamilyField';
-
-function getFontFamilies(bns: BaseNumbering[]): Set<string> {
-  let ffs = new Set<string>();
-  bns.forEach(bn => {
-    ffs.add(bn.fontFamily);
-  });
-  return ffs;
-}
-
-function getInitialValue(bns: BaseNumbering[]): string | undefined {
-  let ffs = getFontFamilies(bns);
-  if (ffs.size == 1) {
-    return ffs.values().next().value;
-  }
-}
+import { FieldProps } from './FieldProps';
+import { getAtIndex } from '../../../array/getAtIndex';
 
 export function FontFamilyField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();
   if (bns.length == 0) {
     return null;
   } else {
+    let first = getAtIndex(bns, 0);
     return (
       <Field
         name='Font'
-        initialValue={getInitialValue(bns)}
+        initialValue={first ? first.fontFamily : undefined}
         set={ff => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
-            if (ff != getInitialValue(bns)) {
+            let first = getAtIndex(bns, 0);
+            if (!first || ff != first.fontFamily) {
               props.pushUndo();
               bns.forEach(bn => {
                 bn.fontFamily = ff;

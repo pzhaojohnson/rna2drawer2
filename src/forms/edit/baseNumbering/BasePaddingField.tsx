@@ -1,24 +1,11 @@
 import * as React from 'react';
-import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
-import { FieldProps } from './FieldProps';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
+import { FieldProps } from './FieldProps';
+import { getAtIndex } from '../../../array/getAtIndex';
 
-function getBasePaddings(bns: BaseNumbering[]): Set<number> {
-  let bps = new Set<number>();
-  bns.forEach(bn => {
-    let bp = Number.parseFloat(bn.basePadding.toFixed(2));
-    if (Number.isFinite(bp)) {
-      bps.add(bp);
-    }
-  });
-  return bps;
-}
-
-function getInitialValue(bns: BaseNumbering[]): number | undefined {
-  let bps = getBasePaddings(bns);
-  if (bps.size == 1) {
-    return bps.values().next().value;
-  }
+function trim(n: number): number {
+  let trimmed = Number.parseFloat(n.toFixed(2));
+  return Number.isFinite(trimmed) ? trimmed : n;
 }
 
 export function BasePaddingField(props: FieldProps): React.ReactElement | null {
@@ -26,14 +13,16 @@ export function BasePaddingField(props: FieldProps): React.ReactElement | null {
   if (bns.length == 0) {
     return null;
   } else {
+    let first = getAtIndex(bns, 0);
     return (
       <NonnegativeNumberField
         name='Base Padding'
-        initialValue={getInitialValue(bns)}
+        initialValue={first ? trim(first.basePadding) : undefined}
         set={bp => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
-            if (bp != getInitialValue(bns)) {
+            let first = getAtIndex(bns, 0);
+            if (!first || bp != trim(first.basePadding)) {
               props.pushUndo();
               bns.forEach(bn => bn.basePadding = bp);
               props.changed();

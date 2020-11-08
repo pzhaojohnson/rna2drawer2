@@ -1,44 +1,25 @@
 import * as React from 'react';
-import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
-import { FieldProps } from './FieldProps';
-import { isBold } from '../../fields/font/isBold';
 import { CheckboxField } from '../../fields/CheckboxField';
-
-function allAreBold(bns: BaseNumbering[]): boolean {
-  let allBold = true;
-  bns.forEach(bn => {
-    if (!isBold(bn.fontWeight)) {
-      allBold = false;
-    }
-  });
-  return allBold;
-}
-
-function allAreNotBold(bns: BaseNumbering[]): boolean {
-  let allNotBold = true;
-  bns.forEach(bn => {
-    if (isBold(bn.fontWeight)) {
-      allNotBold = false;
-    }
-  });
-  return allNotBold;
-}
+import { FieldProps } from './FieldProps';
+import { getAtIndex } from '../../../array/getAtIndex';
+import { isBold } from '../../fields/font/isBold';
 
 export function BoldFontField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();
   if (bns.length == 0) {
     return null;
   } else {
+    let first = getAtIndex(bns, 0);
     return (
       <CheckboxField
         name='Bold'
-        initialValue={allAreBold(bns)}
+        initialValue={first ? isBold(first.fontWeight) : false}
         set={shouldBeBold => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
-            let allBold = allAreBold(bns);
-            let allNotBold = allAreNotBold(bns);
-            if ((shouldBeBold && !allBold) || (!shouldBeBold && !allNotBold)) {
+            let first = getAtIndex(bns, 0);
+            let firstIsBold = first ? isBold(first.fontWeight) : false;
+            if (!first || shouldBeBold != firstIsBold) {
               props.pushUndo();
               bns.forEach(bn => {
                 bn.fontWeight = shouldBeBold ? 'bold' : 'normal';
