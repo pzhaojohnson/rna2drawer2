@@ -53,7 +53,7 @@ export function EditSecondaryBonds(props: Props): React.ReactElement {
       close={props.close}
       title='Edit Secondary Bonds'
       contained={
-        props.app.strictDrawing.drawing.numSecondaryBonds == 0 ? (
+        allSbs.length == 0 ? (
           <p>Drawing has no secondary bonds.</p>
         ) : (
           <div>
