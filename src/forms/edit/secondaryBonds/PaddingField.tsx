@@ -1,40 +1,26 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
+import { FieldProps } from './FieldProps';
+import { getAtIndex } from '../../../array/getAtIndex';
 
-function getPaddings(app: App): Set<number> {
-  let ps = new Set<number>();
-  app.strictDrawing.drawing.forEachSecondaryBond(sb => {
-    ps.add(sb.padding1);
-  });
-  return ps;
-}
-
-function getFirstPadding(ps: Set<number>): number | undefined {
-  return ps.values().next().value;
-}
-
-interface Props {
-  app: App;
-}
-
-export function PaddingField(props: Props): React.ReactElement {
-  let currPs = getPaddings(props.app);
+export function PaddingField(props: FieldProps): React.ReactElement {
+  let sbs = props.getAllSecondaryBonds();
+  let first = getAtIndex(sbs, 0);
   return (
     <NonnegativeNumberField
       name='Padding'
-      initialValue={currPs.size == 1 ? getFirstPadding(currPs) : undefined}
+      initialValue={first ? first.padding1 : undefined}
       set={p => {
-        if (props.app.strictDrawing.drawing.numSecondaryBonds > 0) {
-          let currPs = getPaddings(props.app);
-          let first = getFirstPadding(currPs);
-          if (currPs.size != 1 || p != first) {
-            props.app.pushUndo();
-            props.app.strictDrawing.drawing.forEachSecondaryBond(sb => {
+        let sbs = props.getAllSecondaryBonds();
+        if (sbs.length > 0) {
+          let first = getAtIndex(sbs, 0);
+          if (!first || p != first.padding1) {
+            props.pushUndo();
+            sbs.forEach(sb => {
               sb.padding1 = p;
               sb.padding2 = p;
             });
-            props.app.drawingChangedNotByInteraction();
+            props.changed();
           }
         }
       }}

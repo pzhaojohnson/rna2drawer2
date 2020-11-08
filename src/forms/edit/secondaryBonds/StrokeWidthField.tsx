@@ -1,39 +1,25 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
+import { FieldProps } from './FieldProps';
+import { getAtIndex } from '../../../array/getAtIndex';
 
-function getStrokeWidths(app: App): Set<number> {
-  let sws = new Set<number>();
-  app.strictDrawing.drawing.forEachSecondaryBond(sb => {
-    sws.add(sb.strokeWidth);
-  });
-  return sws;
-}
-
-function getFirstStrokeWidth(sws: Set<number>): number | undefined {
-  return sws.values().next().value;
-}
-
-interface Props {
-  app: App;
-}
-
-export function StrokeWidthField(props: Props): React.ReactElement {
-  let currSws = getStrokeWidths(props.app);
+export function StrokeWidthField(props: FieldProps): React.ReactElement {
+  let sbs = props.getAllSecondaryBonds();
+  let first = getAtIndex(sbs, 0);
   return (
     <NonnegativeNumberField
       name='Line Width'
-      initialValue={currSws.size == 1 ? getFirstStrokeWidth(currSws) : undefined}
+      initialValue={first ? first.strokeWidth : undefined}
       set={sw => {
-        if (props.app.strictDrawing.drawing.numSecondaryBonds > 0) {
-          let currSws = getStrokeWidths(props.app);
-          let first = getFirstStrokeWidth(currSws);
-          if (currSws.size != 1 || sw != first) {
-            props.app.pushUndo();
-            props.app.strictDrawing.drawing.forEachSecondaryBond(sb => {
+        let sbs = props.getAllSecondaryBonds();
+        if (sbs.length > 0) {
+          let first = getAtIndex(sbs, 0);
+          if (!first || sw != first.strokeWidth) {
+            props.pushUndo();
+            sbs.forEach(sb => {
               sb.strokeWidth = sw;
             });
-            props.app.drawingChangedNotByInteraction();
+            props.changed();
           }
         }
       }}

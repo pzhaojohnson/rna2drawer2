@@ -1,148 +1,93 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
 import { SecondaryBondInterface as SecondaryBond } from '../../../draw/StraightBondInterface';
 import { ColorField } from '../../fields/color/ColorField';
-import * as Svg from '@svgdotjs/svg.js';
-import { parseColor } from '../../../parse/parseColor';
-import { areAllSameColor } from '../../fields/color/areAllSameColor';
+import { FieldProps as SpecificFieldProps } from './FieldProps';
 import { getAtIndex } from '../../../array/getAtIndex';
+import { parseColor } from '../../../parse/parseColor';
 
-export function getAutBonds(app: App): SecondaryBond[] {
-  let bs = [] as SecondaryBond[];
-  app.strictDrawing.drawing.forEachSecondaryBond(sb => {
-    if (sb.isAUT()) {
-      bs.push(sb);
-    }
-  });
-  return bs;
-}
-
-export function getGcBonds(app: App): SecondaryBond[] {
-  let bs = [] as SecondaryBond[];
-  app.strictDrawing.drawing.forEachSecondaryBond(sb => {
-    if (sb.isGC()) {
-      bs.push(sb);
-    }
-  });
-  return bs;
-}
-
-export function getGutBonds(app: App): SecondaryBond[] {
-  let bs = [] as SecondaryBond[];
-  app.strictDrawing.drawing.forEachSecondaryBond(sb => {
-    if (sb.isGUT()) {
-      bs.push(sb);
-    }
-  });
-  return bs;
-}
-
-export function getOtherBonds(app: App): SecondaryBond[] {
-  let bs = [] as SecondaryBond[];
-  app.strictDrawing.drawing.forEachSecondaryBond(sb => {
-    if (!sb.isAUT() && !sb.isGC() && !sb.isGUT()) {
-      bs.push(sb);
-    }
-  });
-  return bs;
-}
-
-function getStrokes(sbs: SecondaryBond[]): Svg.Color[] {
-  let ss = [] as Svg.Color[];
-  sbs.forEach(sb => {
-    let s = parseColor(sb.stroke);
-    if (s) {
-      ss.push(s);
-    }
-  });
-  return ss;
-}
-
-interface Props {
+interface GeneralFieldProps {
   name: string;
   getBonds: () => SecondaryBond[];
   pushUndo: () => void;
   changed: () => void;
 }
 
-function StrokeField(props: Props): React.ReactElement | null {
+function StrokeField(props: GeneralFieldProps): React.ReactElement | null {
   let bs = props.getBonds();
-  let initialValue = undefined;
-  if (bs.length > 0) {
-    let currSs = getStrokes(bs);
-    let first = getAtIndex(currSs, 0);
-    if (areAllSameColor(currSs) && first) {
-      initialValue = { color: first.toHex(), opacity: 1 };
-    }
-  }
-  return bs.length == 0 ? null : (
-    <ColorField
-      name={props.name}
-      initialValue={initialValue}
-      set={co => {
-        let s = parseColor(co.color);
-        if (s) {
-          let bs = props.getBonds();
-          if (bs.length > 0) {
-            let currSs = getStrokes(bs);
-            let first = getAtIndex(currSs, 0);
-            if (!areAllSameColor(currSs) || (first && s.toHex() != first.toHex())) {
-              props.pushUndo();
-              bs.forEach(b => {
-                if (s) {
-                  b.stroke = s.toHex();
-                }
-              });
-              props.changed();
+  if (bs.length == 0) {
+    return null;
+  } else {
+    let first = getAtIndex(bs, 0);
+    let firstStroke = first ? parseColor(first.stroke) : undefined;
+    return (
+      <ColorField
+        name={props.name}
+        initialValue={firstStroke ? { color: firstStroke.toHex(), opacity: 1 } : undefined}
+        set={co => {
+          let s = parseColor(co.color);
+          if (s) {
+            let bs = props.getBonds();
+            if (bs.length > 0) {
+              let first = getAtIndex(bs, 0);
+              let firstStroke = first ? parseColor(first.stroke) : undefined;
+              if (!firstStroke || s.toHex() != firstStroke.toHex()) {
+                props.pushUndo();
+                bs.forEach(b => {
+                  if (s) {
+                    b.stroke = s.toHex();
+                  }
+                });
+                props.changed();
+              }
             }
           }
-        }
-      }}
-      disableAlpha={true}
-    />
-  );
+        }}
+        disableAlpha={true}
+      />
+    );
+  }
 }
 
-export function AutStrokeField(props: { app: App }): React.ReactElement | null {
+export function AutStrokeField(props: SpecificFieldProps): React.ReactElement | null {
   return (
     <StrokeField
       name='AUT Color'
-      getBonds={() => getAutBonds(props.app)}
-      pushUndo={() => props.app.pushUndo()}
-      changed={() => props.app.drawingChangedNotByInteraction()}
+      getBonds={() => props.getSecondaryBondsByType().aut}
+      pushUndo={props.pushUndo}
+      changed={props.changed}
     />
   );
 }
 
-export function GcStrokeField(props: { app: App }): React.ReactElement | null {
+export function GcStrokeField(props: SpecificFieldProps): React.ReactElement | null {
   return (
     <StrokeField
       name='GC Color'
-      getBonds={() => getGcBonds(props.app)}
-      pushUndo={() => props.app.pushUndo()}
-      changed={() => props.app.drawingChangedNotByInteraction()}
+      getBonds={() => props.getSecondaryBondsByType().gc}
+      pushUndo={props.pushUndo}
+      changed={props.changed}
     />
   );
 }
 
-export function GutStrokeField(props: { app: App }): React.ReactElement | null {
+export function GutStrokeField(props: SpecificFieldProps): React.ReactElement | null {
   return (
     <StrokeField
       name='GUT Color'
-      getBonds={() => getGutBonds(props.app)}
-      pushUndo={() => props.app.pushUndo()}
-      changed={() => props.app.drawingChangedNotByInteraction()}
+      getBonds={() => props.getSecondaryBondsByType().gut}
+      pushUndo={props.pushUndo}
+      changed={props.changed}
     />
   );
 }
 
-export function OtherStrokeField(props: { app: App }): React.ReactElement | null {
+export function OtherStrokeField(props: SpecificFieldProps): React.ReactElement | null {
   return (
     <StrokeField
       name='Noncanonical Color'
-      getBonds={() => getOtherBonds(props.app)}
-      pushUndo={() => props.app.pushUndo()}
-      changed={() => props.app.drawingChangedNotByInteraction()}
+      getBonds={() => props.getSecondaryBondsByType().other}
+      pushUndo={props.pushUndo}
+      changed={props.changed}
     />
   );
 }

@@ -1,18 +1,38 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
+import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
+import { SecondaryBondInterface as SecondaryBond } from '../../../draw/StraightBondInterface';
 import { ClosableContainer } from '../../containers/ClosableContainer';
+import { SecondaryBondsByType } from './FieldProps';
 import {
-  getAutBonds,
   AutStrokeField,
-  getGcBonds,
   GcStrokeField,
-  getGutBonds,
   GutStrokeField,
-  getOtherBonds,
   OtherStrokeField,
 } from './StrokeFields';
 import { StrokeWidthField } from './StrokeWidthField';
 import { PaddingField } from './PaddingField';
+
+function getSecondaryBondsByType(drawing: Drawing): SecondaryBondsByType {
+  let sbs = {
+    aut: [] as SecondaryBond[],
+    gc: [] as SecondaryBond[],
+    gut: [] as SecondaryBond[],
+    other: [] as SecondaryBond[],
+  };
+  drawing.forEachSecondaryBond(sb => {
+    if (sb.isAUT()) {
+      sbs.aut.push(sb);
+    } else if (sb.isGC()) {
+      sbs.gc.push(sb);
+    } else if (sb.isGUT()) {
+      sbs.gut.push(sb);
+    } else {
+      sbs.other.push(sb);
+    }
+  });
+  return sbs;
+}
 
 interface Props {
   app: App;
@@ -20,6 +40,14 @@ interface Props {
 }
 
 export function EditSecondaryBonds(props: Props): React.ReactElement {
+  let sbsByType = getSecondaryBondsByType(props.app.strictDrawing.drawing);
+  let allSbs = [...sbsByType.aut, ...sbsByType.gc, ...sbsByType.gut, ...sbsByType.other];
+  let fieldProps = {
+    getSecondaryBondsByType: () => ({ ...sbsByType }),
+    getAllSecondaryBonds: () => [...allSbs],
+    pushUndo: () => props.app.pushUndo(),
+    changed: () => props.app.drawingChangedNotByInteraction(),
+  };
   return (
     <ClosableContainer
       close={props.close}
@@ -29,30 +57,30 @@ export function EditSecondaryBonds(props: Props): React.ReactElement {
           <p>Drawing has no secondary bonds.</p>
         ) : (
           <div>
-            {getAutBonds(props.app).length == 0 ? null : (
+            {sbsByType.aut.length == 0 ? null : (
               <div style={{ marginBottom: '16px' }} >
-                <AutStrokeField app={props.app} />
+                <AutStrokeField {...fieldProps} />
               </div>
             )}
-            {getGcBonds(props.app).length == 0 ? null : (
+            {sbsByType.gc.length == 0 ? null : (
               <div style={{ marginBottom: '16px' }} >
-                <GcStrokeField app={props.app} />
+                <GcStrokeField {...fieldProps} />
               </div>
             )}
-            {getGutBonds(props.app).length == 0 ? null : (
+            {sbsByType.gut.length == 0 ? null : (
               <div style={{ marginBottom: '16px' }} >
-                <GutStrokeField app={props.app} />
+                <GutStrokeField {...fieldProps} />
               </div>
             )}
-            {getOtherBonds(props.app).length == 0 ? null : (
+            {sbsByType.other.length == 0 ? null : (
               <div style={{ marginBottom: '16px' }} >
-                <OtherStrokeField app={props.app} />
+                <OtherStrokeField {...fieldProps} />
               </div>
             )}
             <div style={{ marginBottom: '8px' }} >
-              <StrokeWidthField app={props.app} />
+              <StrokeWidthField {...fieldProps} />
             </div>
-            <PaddingField app={props.app} />
+            <PaddingField {...fieldProps} />
           </div>
         )
       }
