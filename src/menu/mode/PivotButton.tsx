@@ -15,7 +15,7 @@ interface Props {
 export function PivotButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      text={'Pivot'}
+      text={'Pivot Stems'}
       onClick={() => {
         if (!alreadyPivoting(props.app)) {
           let interaction = props.app.strictDrawingInteraction;
