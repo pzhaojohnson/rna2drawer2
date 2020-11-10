@@ -9,6 +9,7 @@ import { createPptxFromSvg } from '../../../export/createPptxFromSvg';
 import * as Svg from '@svgdotjs/svg.js';
 import PptxGenJS from 'pptxgenjs';
 import LastExported from '../LastExported';
+import { offerBlobForDownload } from '../../../export/offerFileForDownload';
 
 interface Props {
   SVG: () => Svg.Svg;
@@ -348,7 +349,9 @@ class ExportPptx extends React.Component {
     if (document.title) {
       name = document.title;
     }
-    pres.writeFile(name + '.pptx');
+    pres.write('blob').then(blob => {
+      offerBlobForDownload(blob as Blob, name + '.pptx');
+    });
   }
 
   close() {
