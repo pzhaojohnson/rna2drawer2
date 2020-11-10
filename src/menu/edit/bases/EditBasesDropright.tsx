@@ -29,6 +29,7 @@ export function EditBasesDropright(props: Props): React.ReactElement {
           <DroppedSeparator {...trailingBorderStyles} />
           <CapitalizeButton app={props.app} {...trailingBorderStyles} />
           <DecapitalizeButton app={props.app} {...trailingBorderStyles} />
+          <DroppedSeparator {...trailingBorderStyles} />
           <TsToUsButton app={props.app} {...trailingBorderStyles} />
           <UsToTsButton app={props.app} {...trailingBorderStyles} />
         </div>
