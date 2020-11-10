@@ -82,7 +82,7 @@ class ExportPptx extends React.Component {
         {this.errorMessageSection()}
         {this.exportSection()}
         {this.powerPointVersionNote()}
-        {this.tertiaryBondsNote()}
+        {this.largeStructuresNote()}
       </div>
     );
   }
@@ -276,6 +276,20 @@ class ExportPptx extends React.Component {
       >
         <b>Note:</b> Tertiary bonds are included as SVG images in exported PPTX files
         and can be converted to PowerPoint objects via the "Convert to Shape" feature.
+      </p>
+    );
+  }
+
+  largeStructuresNote() {
+    return (
+      <p
+        className={'unselectable-text'}
+        style={{
+          margin: '8px 40px 0px 40px',
+          fontSize: '12px',
+        }}
+      >
+        <b>Note:</b> Large structures may take a while to export.
       </p>
     );
   }
