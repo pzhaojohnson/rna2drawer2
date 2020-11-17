@@ -1,33 +1,29 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../../AppInterface';
-import { DrawingInterface as Drawing } from '../../../../draw/DrawingInterface';
 import { isBold } from '../../../fields/font/isBold';
 import { CheckboxField } from '../../../fields/CheckboxField';
-
-function getDrawing(app: App): Drawing {
-  return app.strictDrawing.drawing;
-}
 
 interface Props {
   app: App;
 }
 
 export function BoldFontField(props: Props): React.ReactElement | null {
-  if (getDrawing(props.app).numBases == 0) {
+  let drawing = props.app.strictDrawing.drawing;
+  if (drawing.numBases == 0) {
     return null;
   } else {
-    let first = getDrawing(props.app).getBaseAtOverallPosition(1);
+    let first = drawing.getBaseAtOverallPosition(1);
     return (
       <CheckboxField
         name='Bold'
         initialValue={first ? isBold(first.fontWeight) : false}
         set={shouldBeBold => {
-          if (getDrawing(props.app).numBases > 0) {
-            let first = getDrawing(props.app).getBaseAtOverallPosition(1);
+          if (drawing.numBases > 0) {
+            let first = drawing.getBaseAtOverallPosition(1);
             let firstIsBold = first ? isBold(first.fontWeight) : false;
-            if (!first || shouldBeBold != firstIsBold) {
+            if (shouldBeBold != firstIsBold || !first) {
               props.app.pushUndo();
-              getDrawing(props.app).forEachBase(b => {
+              drawing.forEachBase(b => {
                 b.fontWeight = shouldBeBold ? 'bold' : 'normal';
               });
               props.app.drawingChangedNotByInteraction();

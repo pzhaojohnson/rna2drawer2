@@ -1,15 +1,10 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../../AppInterface';
-import { DrawingInterface as Drawing } from '../../../../draw/DrawingInterface';
 import { ClosableContainer } from '../../../containers/ClosableContainer';
 import { WidthField, HeightField } from './DimensionsFields';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
 import { BoldFontField } from './BoldFontField';
-
-function getDrawing(app: App): Drawing {
-  return app.strictDrawing.drawing;
-}
 
 interface Props {
   app: App;
@@ -17,12 +12,13 @@ interface Props {
 }
 
 export function GeneralBaseStyles(props: Props): React.ReactElement {
+  let drawing = props.app.strictDrawing.drawing;
   return (
     <ClosableContainer
       close={props.close}
       title='General Base Styles'
       contained={
-        getDrawing(props.app).numBases == 0 ? (
+        drawing.numBases == 0 ? (
           <p>Drawing has no bases.</p>
         ) : (
           <div>
