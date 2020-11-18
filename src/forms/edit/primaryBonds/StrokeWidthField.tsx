@@ -12,12 +12,12 @@ export function StrokeWidthField(props: FieldProps): React.ReactElement | null {
     return (
       <NonnegativeNumberField
         name='Line Width'
-        initialValue={first ? first.strokeWidth : undefined}
+        initialValue={first?.strokeWidth}
         set={sw => {
           let pbs = props.getPrimaryBonds();
           if (pbs.length > 0) {
             let first = getAtIndex(pbs, 0);
-            if (!first || sw != first.strokeWidth) {
+            if (sw != first?.strokeWidth) {
               props.pushUndo();
               pbs.forEach(pb => {
                 pb.strokeWidth = sw;
