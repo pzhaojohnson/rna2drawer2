@@ -15,7 +15,12 @@ export function FontFamilyField(props: Props): React.ReactElement {
       initialValue={props.initialValue}
       options={availableFontFamilies()}
       set={f => props.set(f)}
-      style={{ select: { control: { minHeight: '26px' } } }}
+      style={{
+        select: {
+          container: { minWidth: '215px' },
+          control: { minHeight: '26px' },
+        },
+      }}
     />
   );
 }

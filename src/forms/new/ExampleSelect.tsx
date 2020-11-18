@@ -16,7 +16,10 @@ export function ExampleSelect(props: Props): React.ReactElement {
       set={ex => props.select(ex)}
       style={{
         label: { marginRight: '8px' },
-        select: { control: { minHeight: '22px' } },
+        select: {
+          container: { minWidth: '200px' },
+          control: { minHeight: '22px' },
+        },
       }}
     />
   );

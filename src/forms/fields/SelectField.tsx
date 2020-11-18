@@ -22,6 +22,9 @@ interface Props {
       marginRight?: string;
     }
     select?: {
+      container?: {
+        minWidth?: string;
+      }
       control?: {
         minHeight?: string;
       }
@@ -64,7 +67,7 @@ export function SelectField(props: Props): React.ReactElement {
         styles={{
           container: (provided, state) => ({
             ...provided,
-            minWidth: '225px',
+            minWidth: props.style?.select?.container?.minWidth ?? '200px',
             fontFamily: 'Segoe UI',
             fontSize: '12px',
           }),
