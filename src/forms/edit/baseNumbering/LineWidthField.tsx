@@ -12,12 +12,12 @@ export function LineWidthField(props: FieldProps): React.ReactElement | null {
     return (
       <NonnegativeNumberField
         name='Line Width'
-        initialValue={first ? first.lineStrokeWidth : undefined}
+        initialValue={first?.lineStrokeWidth}
         set={lw => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
             let first = getAtIndex(bns, 0);
-            if (!first || lw != first.lineStrokeWidth) {
+            if (lw != first?.lineStrokeWidth) {
               props.pushUndo();
               bns.forEach(bn => bn.lineStrokeWidth = lw);
               props.changed();

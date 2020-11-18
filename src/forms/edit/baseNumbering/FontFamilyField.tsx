@@ -12,12 +12,12 @@ export function FontFamilyField(props: FieldProps): React.ReactElement | null {
     return (
       <Field
         name='Font'
-        initialValue={first ? first.fontFamily : undefined}
+        initialValue={first?.fontFamily}
         set={ff => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
             let first = getAtIndex(bns, 0);
-            if (!first || ff != first.fontFamily) {
+            if (ff != first?.fontFamily) {
               props.pushUndo();
               bns.forEach(bn => {
                 bn.fontFamily = ff;

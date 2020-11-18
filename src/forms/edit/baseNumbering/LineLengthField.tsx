@@ -1,11 +1,17 @@
+import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
 import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
 import { getAtIndex } from '../../../array/getAtIndex';
+import { round } from '../../../math/round';
 
-function trim(n: number): number {
-  let trimmed = Number.parseFloat(n.toFixed(2));
-  return Number.isFinite(trimmed) ? trimmed : n;
+const PRECISION = 2;
+
+function getFirstLineLength(bns: BaseNumbering[]): number | undefined {
+  let first = getAtIndex(bns, 0);
+  if (first) {
+    return round(first.lineLength, PRECISION);
+  }
 }
 
 export function LineLengthField(props: FieldProps): React.ReactElement | null {
@@ -13,16 +19,14 @@ export function LineLengthField(props: FieldProps): React.ReactElement | null {
   if (bns.length == 0) {
     return null;
   } else {
-    let first = getAtIndex(bns, 0);
     return (
       <NonnegativeNumberField
         name='Line Length'
-        initialValue={first ? trim(first.lineLength) : undefined}
+        initialValue={getFirstLineLength(bns)}
         set={ll => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
-            let first = getAtIndex(bns, 0);
-            if (!first || ll != trim(first.lineLength)) {
+            if (ll != getFirstLineLength(bns)) {
               props.pushUndo();
               bns.forEach(bn => bn.lineLength = ll);
               props.changed();

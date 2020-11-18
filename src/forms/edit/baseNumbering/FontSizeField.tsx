@@ -12,12 +12,12 @@ export function FontSizeField(props: FieldProps): React.ReactElement | null {
     return (
       <Field
         name='Font Size'
-        initialValue={first ? first.fontSize : undefined}
+        initialValue={first?.fontSize}
         set={fs => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
             let first = getAtIndex(bns, 0);
-            if (!first || fs != first.fontSize) {
+            if (fs != first?.fontSize) {
               props.pushUndo();
               bns.forEach(bn => {
                 bn.fontSize = fs;
