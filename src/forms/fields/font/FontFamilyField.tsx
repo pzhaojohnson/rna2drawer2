@@ -21,6 +21,7 @@ export function FontFamilyField(props: Props): React.ReactElement {
           control: { minHeight: '26px' },
         },
       }}
+      valuesAreFontFamilies={true}
     />
   );
 }

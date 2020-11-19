@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Select from 'react-select';
 import { getAtIndex } from '../../array/getAtIndex';
-import { availableFontFamilies } from './font/availableFontFamilies';
 
 interface ValueLabel {
   value: string;
@@ -30,10 +29,10 @@ interface Props {
       }
     }
   }
+  valuesAreFontFamilies?: boolean;
 }
 
 export function SelectField(props: Props): React.ReactElement {
-  let fontFamilies = availableFontFamilies();
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
       <p style={{ display: 'inline-block', marginRight: props.style?.label?.marginRight ?? '12px' }} >
@@ -114,7 +113,7 @@ export function SelectField(props: Props): React.ReactElement {
           option: (provided, state) => ({
             ...provided,
             backgroundColor: state.isSelected ? 'gray' : 'white',
-            fontFamily: fontFamilies.includes(state.data.value) ? state.data.value : 'Segoe UI',
+            fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Segoe UI',
             color: state.isSelected ? 'white' : 'black',
             '&:hover': {
               backgroundColor: state.isSelected ? 'gray' : 'gainsboro',
@@ -125,7 +124,7 @@ export function SelectField(props: Props): React.ReactElement {
             ...provided,
             marginLeft: '6px',
             marginRight: '6px',
-            fontFamily: fontFamilies.includes(state.data.value) ? state.data.value : 'Segoe UI',
+            fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Segoe UI',
             color: 'black',
           }),
         }}
