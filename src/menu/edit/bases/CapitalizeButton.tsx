@@ -16,7 +16,7 @@ interface Props {
 export function CapitalizeButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      text={'Capitalize'}
+      text={'UPPERCASE'}
       onClick={() => {
         let drawing = props.app.strictDrawing.drawing;
         if (!onlyHasCapitalBaseLetters(drawing)) {

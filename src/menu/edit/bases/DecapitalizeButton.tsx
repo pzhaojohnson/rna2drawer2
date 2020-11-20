@@ -16,7 +16,7 @@ interface Props {
 export function DecapitalizeButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      text={'Decapitalize'}
+      text={'lowercase'}
       onClick={() => {
         let drawing = props.app.strictDrawing.drawing;
         if (hasCapitalBaseLetters(drawing)) {
