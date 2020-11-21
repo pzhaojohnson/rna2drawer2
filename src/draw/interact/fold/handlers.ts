@@ -42,6 +42,7 @@ export function handleMousedownOnBase(mode: FoldingMode, b: Base) {
     mode.selecting = true;
     setAllBaseHighlightings(mode);
   }
+  mode.fireChange();
 }
 
 export function handleMousedownOnDrawing(mode: FoldingMode) {
@@ -63,4 +64,5 @@ export function reset(mode: FoldingMode) {
   mode.selected = undefined;
   mode.selecting = false;
   setAllBaseHighlightings(mode);
+  mode.fireChange();
 }
