@@ -1,0 +1,210 @@
+import { AppInterface as App } from '../../AppInterface';
+import * as React from 'react';
+import { Underline } from '../containers/Underline';
+import { CreateNewDrawing } from '../new/CreateNewDrawing';
+import { OpenRna2drawer } from '../open/OpenRna2drawer';
+import lowerLeftDrawing from './lowerLeftDrawing.svg';
+import upperRightDrawing from './upperRightDrawing.svg';
+
+interface Props {
+  app: App;
+}
+
+function Header() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column' }} >
+      <div style={{ margin: '0px 36px', display: 'flex', flexDirection: 'row' }} >
+        <p style={{ fontSize: '32px' }} >RNA2Drawer</p>
+        <div style={{ flexGrow: 1 }} ></div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
+          <div style={{ flexGrow: 1 }} ></div>
+          <p style={{ fontSize: '12px' }} ><em>Last Updated on Nov. 21, 2020</em></p>
+        </div>
+      </div>
+      <Underline margin={'8px 0px 0px 0px'} />
+    </div>
+  );
+}
+
+function Description() {
+  return (
+    <p style={{ fontSize: '16px' }} >
+      A tool for drawing and exploring nucleic acid structures...
+    </p>
+  );
+}
+
+const newAndOpenLinkStyles = {
+  fontSize: '24px',
+  color: 'blue',
+  cursor: 'pointer',
+};
+
+function NewLink(props: Props) {
+  return (
+    <p
+      className='home-page-new-and-open-links'
+      style={{ ...newAndOpenLinkStyles }}
+      onClick={() => props.app.renderForm(close => (
+        <CreateNewDrawing app={props.app} close={close ?? (() => props.app.unmountCurrForm())} />
+      ))}
+    >
+      Create a New Drawing
+    </p>
+  );
+}
+
+function OpenLink(props: Props) {
+  return (
+    <p
+      className='home-page-new-and-open-links'
+      style={{ ...newAndOpenLinkStyles }}
+      onClick={() => props.app.renderForm(close => (
+        <OpenRna2drawer app={props.app} close={close ?? (() => props.app.unmountCurrForm())} />
+      ))}
+    >
+      Open a Saved Drawing
+    </p>
+  );
+}
+
+function EmailLink() {
+  return (
+    <a
+      className='home-page-help-links'
+      href='mailto:help@rna2drawer.app'
+    >
+      help@rna2drawer.app
+    </a>
+  );
+}
+
+function GitHubPageLink() {
+  return (
+    <a
+      className='home-page-help-links'
+      href='https://github.com/pzhaojohnson/rna2drawer2#rna2drawer-2'
+    >
+      GitHub page
+    </a>
+  );
+}
+
+function HelpLinks() {
+  return (
+    <div style={{ minHeight: '28px' }} >
+      <p style={{ fontSize: '16px' }} >
+        Questions? Email <EmailLink /> or visit the <GitHubPageLink />.
+      </p>
+    </div>
+  );
+}
+
+const drawingsOpacity = 0.25;
+
+function LowerLeftDrawing() {
+  return (
+    <div
+      style={{
+        width: '939px',
+        height: '1390px',
+        overflow: 'hidden'
+      }}
+    >
+      <img
+        src={lowerLeftDrawing}
+        alt='Lower Left Drawing'
+        style={{
+          position: 'relative',
+          top: '-635px',
+          left: '-645px',
+          width: '2217px',
+          opacity: drawingsOpacity,
+        }}
+      />
+    </div>
+  );
+}
+
+function UpperRightDrawing() {
+  return (
+    <div
+      style={{
+        width: '531px',
+        height: '575px',
+        overflow: 'hidden'
+      }}
+    >
+      <img
+        src={upperRightDrawing}
+        alt='Upper Right Drawing'
+        style={{
+          position: 'relative',
+          top: '-640px',
+          left: '-650px',
+          width: '1811px',
+          opacity: drawingsOpacity,
+        }}
+      />
+    </div>
+  );
+}
+
+export function HomePage(props: Props): React.ReactElement {
+  return (
+    <div
+      style={{
+        width: '100vw',
+        height: '100%',
+        backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'stretch',
+        animation: 'home-page-enter 0.4s ease-in-out',
+      }}
+    >
+      <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', alignItems: 'stretch' }} >
+        <div style={{ marginRight: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+          <div style={{ flexGrow: 1, flexBasis: '0px' }} ></div>
+          <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
+            <div style={{ position: 'absolute', top: '0px', right: '0px', animation: 'home-page-float-lower-left 24s linear infinite' }} >
+              <LowerLeftDrawing />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
+        <div style={{ margin: '24px 0px', display: 'flex', flexDirection: 'column' }} >
+          <div style={{ width: '960px', display: 'flex', flexDirection: 'column' }} >
+            <Header />
+            <div style={{ margin: '0px 72px', display: 'flex', flexDirection: 'column' }} >
+              <div style={{ marginTop: '24px' }} >
+                <Description />
+              </div>
+              <div style={{ marginTop: '72px', display: 'flex', flexDirection: 'row' }} >
+                <div style={{ margin: '0px 72px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+                  <NewLink {...props} />
+                  <div style={{ flexGrow: 1 }} ></div>
+                  <OpenLink {...props} />
+                </div>
+              </div>
+              <div style={{ marginTop: '72px' }} >
+                <HelpLinks />
+              </div>
+            </div>
+          </div>
+          <div style={{ height: '176px' }} ></div>
+        </div>
+      </div>
+      <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
+          <div style={{ position: 'absolute', bottom: '0px', left: '0px', animation: 'home-page-float-upper-right 36s linear infinite' }} >
+            <UpperRightDrawing />
+          </div>
+        </div>
+        <div style={{ height: '48px' }} ></div>
+        <div style={{ flexGrow: 1, flexBasis: '0px' }} ></div>
+      </div>
+    </div>
+  );
+}

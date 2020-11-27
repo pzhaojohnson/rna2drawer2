@@ -15,7 +15,7 @@ import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 import { Menu } from './menu/Menu';
 import { Infobar } from './infobar/Infobar';
 
-import { CreateNewDrawing } from './forms/new/CreateNewDrawing';
+import { HomePage } from './forms/home/HomePage';
 
 import { save } from './export/save';
 
@@ -53,7 +53,7 @@ class App implements AppInterface {
     this._setBindings();
 
     this.renderForm(close => (
-      <CreateNewDrawing app={this} close={close ? close : () => this.unmountCurrForm()} />
+      <HomePage app={this} />
     ));
   }
 
