@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './ErrorMessage.css';
 const uuidv1 = require('uuid/v1');
 
 interface Props {
@@ -18,6 +19,7 @@ export class ErrorMessage extends React.Component {
       <div
         key={id}
         id={id}
+        className={styles.fadesIn}
         style={{ margin: this.props.margin }}
       >
         {this.props.message ? this.p() : null}
@@ -33,8 +35,6 @@ export class ErrorMessage extends React.Component {
           margin: this.props.margin,
           fontSize: this.props.fontSize,
           color: 'red',
-          animationName: 'fadein',
-          animationDuration: '0.75s',
         }}
       >
         <b>{this.props.message}</b>

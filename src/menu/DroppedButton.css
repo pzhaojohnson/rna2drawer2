@@ -1,0 +1,25 @@
+.droppedButton {
+  border: none;
+  margin: 0px;
+  background-color: #ffffff;
+  font-family: 'Segoe UI', Verdana, Arial;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  color: black;
+  border-radius: 0px;
+  box-shadow: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.droppedButton:focus {
+  outline: none;
+}
+
+.enabled:hover {
+  background-color: gainsboro;
+}

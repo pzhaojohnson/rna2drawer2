@@ -92,25 +92,17 @@ button {
   border: none;
   margin: 0px;
   padding: 4px 32px 4px 32px;
-  background-color: navy;
   font-family: 'Segoe UI', Verdana, Arial;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: white;
-  border-radius: 0px;
+  border-radius: 2px;
   box-shadow: none;
 
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-}
-
-button:hover {
-  background-color: #ff0080;
-  transition-duration: 0.25s;
-  -webkit-transition-duration: 0.25s;
 }
 
 button:focus {
@@ -168,161 +160,4 @@ svg text {
   -ms-user-select: none;
 
   cursor: default;
-}
-
-.dropdown-menu {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-menu-dropped {
-  display: none;
-  position: absolute;
-  z-index: 1;
-}
-
-.dropdown-menu-dropped button {
-  display: block;
-  min-width: 200px;
-  margin: 0px;
-  padding: 6px 8px 6px 8px;
-  font-size: 12px;
-}
-
-.dropdown-menu:hover .dropdown-menu-dropped {
-  display: block;
-}
-
-/* Override the background-color on hover setting for all buttons above. */
-.top-menu-button:hover {
-  background-color: #ffffff;
-}
-
-/* Must be specified here, as specifying this in the Menu component itself
-overrides the background-color on hover setting below. */
-.dropped-menu-button {
-  background-color: #ffffff;
-}
-
-/* Could not find a straightforward way to do this in React. */
-.dropped-menu-button:hover {
-  background-color: gainsboro;
-}
-
-.dropright-menu {
-  position: relative;
-}
-
-.dropright-menu-dropped {
-  display: none;
-  position: absolute;
-  top: -1px;
-  left: 200px;
-  z-index: 1;
-}
-
-.dropright-menu-dropped button {
-  display: block;
-  min-width: 200px;
-  margin: 0px;
-  padding: 6px 8px 6px 8px;
-  font-size: 12px;
-}
-
-.dropright-menu:hover .dropright-menu-dropped {
-  display: block;
-}
-
-@keyframes home-page-enter {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.home-page-new-and-open-links:hover {
-  transform: scale(1.15);
-  transition-duration: 0.3s;
-}
-
-.home-page-help-links {
-  text-decoration-line: none;
-}
-
-.home-page-help-links:hover {
-  transition-duration: 0.4s;
-  font-size: 18.4px;
-}
-
-@keyframes home-page-float-lower-left {
-  0% {
-    transform: translate(0px,0px);
-  }
-  25% {
-    transform: translate(-60px,15px);
-  }
-  50% {
-    transform: translate(-75px,75px);
-  }
-  75% {
-    transform: translate(-15px,60px);
-  }
-  100% {
-    transform: translate(0px,0px);
-  }
-}
-
-@keyframes home-page-float-upper-right {
-  0% {
-    transform: translate(0px,0px);
-  }
-  25% {
-    transform: translate(60px,-15px);
-  }
-  50% {
-    transform: translate(75px,-75px);
-  }
-  75% {
-    transform: translate(15px,-60px);
-  }
-  100% {
-    transform: translate(0px,0px);
-  }
-}
-
-.action-button {
-  background-color: navy;
-  color: white;
-}
-
-.action-button:hover {
-  background-color: #ff0080;
-  transition-duration: 0.25s;
-  -webkit-transition-duration: 0.25s;
-}
-
-.disabled-action-button {
-  background-color: navy;
-  color: white;
-  opacity: 0.25;
-  transition-duration: 0.5s;
-  -webkit-transition-duration: 0.5s;
-}
-
-.disabled-action-button:hover {
-  background-color: navy;
-  color: white;
-}
-
-@keyframes fadein {
-  from {
-    opacity: 0.25;
-  }
-  to {
-    opacity: 1;
-  }
 }

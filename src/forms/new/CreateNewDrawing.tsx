@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import errorMessageStyles from '../ErrorMessage.css';
 import { AppInterface as App } from '../../AppInterface';
 import { UnclosableFlexContainer } from '../containers/UnclosableFlexContainer';
 import { ExampleSelect } from './ExampleSelect';
@@ -118,8 +119,8 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
             <div style={{ marginTop: '12px' }} >
               <p
                 key={errorMessageKey}
-                className={'unselectable-text'}
-                style={{ fontSize: '14px', color: 'red', animationName: 'fadein', animationDuration: '0.75s' }}
+                className={errorMessageStyles.fadesIn}
+                style={{ fontSize: '14px', color: 'red' }}
               >
                 <b>{errorMessage}</b>
               </p>

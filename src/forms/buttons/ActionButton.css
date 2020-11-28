@@ -1,0 +1,34 @@
+.actionButton {
+  border: none;
+  margin: 0px;
+  padding: 4px 32px 4px 32px;
+  background-color: navy;
+  font-family: 'Segoe UI', Verdana, Arial;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  color: white;
+  border-radius: 2px;
+  box-shadow: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.actionButton:focus {
+  outline: none;
+}
+
+.enabled:hover {
+  background-color: #ff0080;
+  transition-duration: 0.25s;
+  -webkit-transition-duration: 0.25s;
+}
+
+.disabled {
+  opacity: 0.25;
+  transition-duration: 0.5s;
+  -webkit-transition-duration: 0.5s;
+}

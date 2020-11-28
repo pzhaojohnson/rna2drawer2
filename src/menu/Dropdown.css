@@ -1,0 +1,22 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropped {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropped button {
+  display: block;
+  min-width: 200px;
+  margin: 0px;
+  padding: 6px 8px 6px 8px;
+  font-size: 12px;
+}
+
+.dropdown:hover .dropped {
+  display: block;
+}

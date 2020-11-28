@@ -1,5 +1,6 @@
 import { AppInterface as App } from '../../AppInterface';
 import * as React from 'react';
+import styles from './HomePage.css';
 import { Underline } from '../containers/Underline';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';
 import { OpenRna2drawer } from '../open/OpenRna2drawer';
@@ -43,7 +44,7 @@ const newAndOpenLinkStyles = {
 function NewLink(props: Props) {
   return (
     <p
-      className='home-page-new-and-open-links'
+      className={styles.newAndOpenLinks}
       style={{ ...newAndOpenLinkStyles }}
       onClick={() => props.app.renderForm(close => (
         <CreateNewDrawing app={props.app} close={close ?? (() => props.app.unmountCurrForm())} />
@@ -57,7 +58,7 @@ function NewLink(props: Props) {
 function OpenLink(props: Props) {
   return (
     <p
-      className='home-page-new-and-open-links'
+      className={styles.newAndOpenLinks}
       style={{ ...newAndOpenLinkStyles }}
       onClick={() => props.app.renderForm(close => (
         <OpenRna2drawer app={props.app} close={close ?? (() => props.app.unmountCurrForm())} />
@@ -71,7 +72,7 @@ function OpenLink(props: Props) {
 function EmailLink() {
   return (
     <a
-      className='home-page-help-links'
+      className={styles.helpLinks}
       href='mailto:help@rna2drawer.app'
     >
       help@rna2drawer.app
@@ -82,7 +83,7 @@ function EmailLink() {
 function GitHubPageLink() {
   return (
     <a
-      className='home-page-help-links'
+      className={styles.helpLinks}
       href='https://github.com/pzhaojohnson/rna2drawer2#rna2drawer-2'
     >
       GitHub page
@@ -153,6 +154,7 @@ function UpperRightDrawing() {
 export function HomePage(props: Props): React.ReactElement {
   return (
     <div
+      className={styles.homePage}
       style={{
         width: '100vw',
         height: '100%',
@@ -160,14 +162,13 @@ export function HomePage(props: Props): React.ReactElement {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'stretch',
-        animation: 'home-page-enter 0.4s ease-in-out',
       }}
     >
       <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', alignItems: 'stretch' }} >
         <div style={{ marginRight: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1, flexBasis: '0px' }} ></div>
           <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
-            <div style={{ position: 'absolute', top: '0px', right: '0px', animation: 'home-page-float-lower-left 24s linear infinite' }} >
+            <div className={styles.lowerLeftFloater} style={{ position: 'absolute', top: '0px', right: '0px' }} >
               <LowerLeftDrawing />
             </div>
           </div>
@@ -198,7 +199,7 @@ export function HomePage(props: Props): React.ReactElement {
       </div>
       <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', flexDirection: 'column' }} >
         <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
-          <div style={{ position: 'absolute', bottom: '0px', left: '0px', animation: 'home-page-float-upper-right 36s linear infinite' }} >
+          <div className={styles.upperRightFloater} style={{ position: 'absolute', bottom: '0px', left: '0px' }} >
             <UpperRightDrawing />
           </div>
         </div>

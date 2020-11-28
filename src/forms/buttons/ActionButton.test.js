@@ -19,7 +19,8 @@ afterEach(() => {
 
 it('has enabled CSS styles when enabled', () => {
   let b = ActionButton({});
-  expect(b.props.className).toBe('action-button');
+  expect(b.props.className).toMatch(/enabled/);
+  expect(b.props.className).not.toMatch(/disabled/);
 });
 
 it('renders text', () => {
@@ -43,7 +44,8 @@ it('binds onClick callback', () => {
 describe('when disabled', () => {
   it('has disabled CSS styles', () => {
     let b = ActionButton({ disabled: true });
-    expect(b.props.className).toBe('disabled-action-button');
+    expect(b.props.className).toMatch(/disabled/);
+    expect(b.props.className).not.toMatch(/enabled/);
   });
 
   it('does not bind onClick callback', () => {

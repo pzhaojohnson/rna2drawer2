@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './ActionButton.css';
 
 interface Props {
   text: string;
@@ -9,14 +10,8 @@ interface Props {
 export function ActionButton(props: Props): React.ReactElement {
   return (
     <button
-      className={props.disabled ? 'disabled-action-button' : 'action-button'}
+      className={`${styles.actionButton} ${props.disabled ? styles.disabled : styles.enabled}`}
       onClick={props.disabled ? undefined : () => props.onClick()}
-      style={{
-        borderRadius: '2px',
-        padding: '4px 32px 4px 32px',
-        fontSize: '12px',
-        color: 'white',
-      }}
     >
       {props.text}
     </button>

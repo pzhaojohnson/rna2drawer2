@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './Dropright.css';
 import { RightCaret } from './RightCaret';
 
 export const trailingBorderStyles = {
@@ -14,7 +15,7 @@ interface Props {
 
 export function Dropright(props: Props): React.ReactElement {
   return (
-    <div className={'dropright-menu'} >
+    <div className={styles.dropright} >
       <button
         style={{
           backgroundColor: 'white',
@@ -30,7 +31,7 @@ export function Dropright(props: Props): React.ReactElement {
         </div>
       </button>
       <div
-        className={'dropright-menu-dropped'}
+        className={styles.dropped}
         style={{
           borderStyle: 'solid',
           borderColor: 'rgba(0,0,0,0.3) rgba(0,0,0,0.3) rgba(0,0,0,0.3) white',

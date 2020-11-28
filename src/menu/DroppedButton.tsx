@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './DroppedButton.css';
 import CheckMark from './CheckMark';
 
 interface Props {
@@ -15,12 +16,10 @@ interface Props {
 export function DroppedButton(props: Props): React.ReactElement {
   return (
     <button
-      className={'dropped-menu-button'}
+      className={`${styles.droppedButton} ${props.disabled ? '' : styles.enabled}`}
       onClick={props.disabled ? undefined : props.onClick}
       style={{
         textAlign: 'left',
-        // override background color on hover defined in CSS file when disabled
-        backgroundColor: props.disabled ? '#ffffff' : undefined,
         color: props.disabled ? '#808080' : '#000000',
         borderStyle: props.borderStyle,
         borderColor: props.borderColor,
