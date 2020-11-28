@@ -23,6 +23,8 @@
 
 .enabled:hover {
   background-color: #ff0080;
+  transform: scale(1.075);
+  box-shadow: 0px 0px 8px 0px #ff0080;
   transition-duration: 0.25s;
   -webkit-transition-duration: 0.25s;
 }
