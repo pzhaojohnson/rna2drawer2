@@ -198,13 +198,15 @@ export function HomePage(props: Props): React.ReactElement {
         </div>
       </div>
       <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', flexDirection: 'column' }} >
-        <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
-          <div className={styles.upperRightFloater} style={{ position: 'absolute', bottom: '0px', left: '0px' }} >
-            <UpperRightDrawing />
+        <div style={{ marginLeft: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+          <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
+            <div className={styles.upperRightFloater} style={{ position: 'absolute', bottom: '0px', left: '0px' }} >
+              <UpperRightDrawing />
+            </div>
           </div>
+          <div style={{ height: '48px' }} ></div>
+          <div style={{ flexGrow: 1, flexBasis: '0px' }} ></div>
         </div>
-        <div style={{ height: '48px' }} ></div>
-        <div style={{ flexGrow: 1, flexBasis: '0px' }} ></div>
       </div>
     </div>
   );
