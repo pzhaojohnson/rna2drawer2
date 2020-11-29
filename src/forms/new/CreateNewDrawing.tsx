@@ -43,7 +43,7 @@ let examples = [
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p style={{ margin: '0px 54px', fontSize: '24px' }} >
+      <p style={{ margin: '0px 60px', fontSize: '24px' }} >
         Create a New Drawing
       </p>
       <Underline margin={'8px 0px 0px 0px'} />
@@ -76,9 +76,9 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
   return (
     <FloatingDrawingsContainer
       contained={
-        <div style={{ margin: '0px 20px', width: '920px', height: '580px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ margin: '0px 20px', width: '920px', height: '600px', display: 'flex', flexDirection: 'column' }} >
           <Header />
-          <div style={{ margin: '0px 72px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+          <div style={{ margin: '0px 80px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '24px' }} >
               <ExampleSelect
                 examples={examples.map(e => e.name)}
