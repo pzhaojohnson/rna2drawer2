@@ -1,11 +1,10 @@
 import { AppInterface as App } from '../../AppInterface';
 import * as React from 'react';
 import styles from './HomePage.css';
+import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
 import { Underline } from '../containers/Underline';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';
 import { OpenRna2drawer } from '../open/OpenRna2drawer';
-import lowerLeftDrawing from './lowerLeftDrawing.svg';
-import upperRightDrawing from './upperRightDrawing.svg';
 
 interface Props {
   app: App;
@@ -19,7 +18,7 @@ function Header() {
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1 }} ></div>
-          <p style={{ fontSize: '12px' }} ><em>Last Updated on Nov. 21, 2020</em></p>
+          <p style={{ fontSize: '12px' }} ><em>Last Updated on Nov. 29, 2020</em></p>
         </div>
       </div>
       <Underline margin={'8px 0px 0px 0px'} />
@@ -101,81 +100,11 @@ function HelpLinks() {
   );
 }
 
-const drawingsOpacity = 0.25;
-
-function LowerLeftDrawing() {
-  return (
-    <div
-      style={{
-        width: '939px',
-        height: '1390px',
-        overflow: 'hidden'
-      }}
-    >
-      <img
-        src={lowerLeftDrawing}
-        alt='Lower Left Drawing'
-        style={{
-          position: 'relative',
-          top: '-635px',
-          left: '-645px',
-          width: '2217px',
-          opacity: drawingsOpacity,
-        }}
-      />
-    </div>
-  );
-}
-
-function UpperRightDrawing() {
-  return (
-    <div
-      style={{
-        width: '531px',
-        height: '575px',
-        overflow: 'hidden'
-      }}
-    >
-      <img
-        src={upperRightDrawing}
-        alt='Upper Right Drawing'
-        style={{
-          position: 'relative',
-          top: '-640px',
-          left: '-650px',
-          width: '1811px',
-          opacity: drawingsOpacity,
-        }}
-      />
-    </div>
-  );
-}
-
 export function HomePage(props: Props): React.ReactElement {
   return (
-    <div
-      className={styles.homePage}
-      style={{
-        width: '100vw',
-        height: '100%',
-        backgroundColor: 'white',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'stretch',
-      }}
-    >
-      <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', alignItems: 'stretch' }} >
-        <div style={{ marginRight: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
-          <div style={{ flexGrow: 1, flexBasis: '0px' }} ></div>
-          <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
-            <div className={styles.lowerLeftFloater} style={{ position: 'absolute', top: '0px', right: '0px' }} >
-              <LowerLeftDrawing />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
-        <div style={{ margin: '24px 0px', display: 'flex', flexDirection: 'column' }} >
+    <FloatingDrawingsContainer
+      contained={
+        <div>
           <div style={{ width: '960px', display: 'flex', flexDirection: 'column' }} >
             <Header />
             <div style={{ margin: '0px 72px', display: 'flex', flexDirection: 'column' }} >
@@ -196,18 +125,7 @@ export function HomePage(props: Props): React.ReactElement {
           </div>
           <div style={{ height: '176px' }} ></div>
         </div>
-      </div>
-      <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', flexDirection: 'column' }} >
-        <div style={{ marginLeft: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
-          <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
-            <div className={styles.upperRightFloater} style={{ position: 'absolute', bottom: '0px', left: '0px' }} >
-              <UpperRightDrawing />
-            </div>
-          </div>
-          <div style={{ height: '48px' }} ></div>
-          <div style={{ flexGrow: 1, flexBasis: '0px' }} ></div>
-        </div>
-      </div>
-    </div>
+      }
+    />
   );
 }
