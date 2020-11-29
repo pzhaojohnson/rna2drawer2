@@ -4,7 +4,7 @@
 
 @keyframes fadeIn {
   from {
-    opacity: 0.25;
+    opacity: 0.15;
   }
   to {
     opacity: 1;
