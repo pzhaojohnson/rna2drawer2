@@ -95,7 +95,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                 }}
               />
             </div>
-            <div style={{ marginTop: '16px' }} >
+            <div style={{ marginTop: '18px' }} >
               <SequenceIdField
                 initialValue={sequenceId}
                 set={id => setSequenceId(id)}

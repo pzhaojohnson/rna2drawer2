@@ -10,7 +10,7 @@ interface Props {
 export function SequenceField(props: Props): React.ReactElement {
   return (
     <div style={{ flexGrow: props.flexGrow, display: 'flex', flexDirection: 'column' }} >
-      <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'row' }} >
         <p className={'unselectable-text'} style={{ flexGrow: 1, fontSize: '12px' }} >
           Sequence:
         </p>
