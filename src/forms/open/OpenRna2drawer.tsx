@@ -11,7 +11,7 @@ import { open } from './open';
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p style={{ margin: '0px 72px', fontSize: '24px' }} >
+      <p style={{ margin: '0px 78px', fontSize: '24px' }} >
         Open an RNA2Drawer File
       </p>
       <Underline margin={'8px 0px 0px 0px'} />
@@ -35,7 +35,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
       contained={
         <div style={{ margin: '0px 20px', width: '920px', height: '548px', display: 'flex', flexDirection: 'column' }} >
           <Header />
-          <div style={{ margin: '0px 96px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+          <div style={{ margin: '0px 102px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '32px' }} >
               <FileInput
                 onLoadStart={() => {
