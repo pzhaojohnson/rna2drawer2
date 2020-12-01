@@ -1,0 +1,12 @@
+.fadesIn {
+  animation: fadeIn 0.75s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0.15;
+  }
+  100% {
+    opacity: 1;
+  }
+}

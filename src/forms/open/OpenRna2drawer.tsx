@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { AppInterface as App } from '../../AppInterface';
+import styles from './OpenRna2drawer.css';
 import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
 import { Underline } from '../containers/Underline';
 import { FileInput } from '../fields/FileInput';
@@ -50,7 +51,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
               />
             </div>
             {fileExtension != 'rna2drawer' ? null : (
-              <div style={{ marginTop: '12px', animationName: 'fadein', animationDuration: '0.75s' }} >
+              <div className={styles.fadesIn} style={{ marginTop: '12px' }} >
                 <p className={'unselectable-text'} >
                   <b>Note:</b> Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
                 </p>
