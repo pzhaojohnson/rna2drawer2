@@ -1,4 +1,5 @@
 import * as React from 'react';
+import errorMessageStyles from '../../ErrorMessage.css';
 import { CloseButton } from '../../buttons/CloseButton';
 import { ActionButton } from '../../buttons/ActionButton';
 const uuidv1 = require('uuid/v1');
@@ -206,6 +207,7 @@ class ExportSvg extends React.Component {
       <div
         key={this.state.errorMessageKey}
         id={this.state.errorMessageKey}
+        className={errorMessageStyles.fadesIn}
       >
         {this.errorMessageText()}
       </div>
@@ -224,13 +226,10 @@ class ExportSvg extends React.Component {
   errorMessageText() {
     return (
       <p
-        className={'unselectable-text'}
         style={{
           margin: '0px 40px 0px 40px',
           fontSize: '14px',
           color: 'red',
-          animationName: 'fadein',
-          animationDuration: '0.75s',
         }}
       >
         <b>{this.state.errorMessage}</b>
