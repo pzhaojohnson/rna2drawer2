@@ -10,6 +10,7 @@ import { EditBaseNumberingButton } from './EditBaseNumberingButton';
 import { EditPrimaryBondsButton } from './EditPrimaryBondsButton';
 import { EditSecondaryBondsButton } from './EditSecondaryBondsButton';
 import { EditTertiaryBondsButton } from './EditTertiaryBondsButton';
+import { EditDrawingTitleButton } from './EditDrawingTitleButton';
 import { EditLayoutButton } from './EditLayoutButton';
 
 interface Props {
@@ -32,6 +33,7 @@ export function EditDropdown(props: Props): React.ReactElement {
           <EditSecondaryBondsButton app={props.app} />
           <EditTertiaryBondsButton app={props.app} />
           <DroppedSeparator />
+          <EditDrawingTitleButton app={props.app} />
           <EditBaseNumberingButton app={props.app} />
           <EditLayoutButton app={props.app} />
         </div>

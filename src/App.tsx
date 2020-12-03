@@ -31,6 +31,7 @@ class App implements AppInterface {
   _strictDrawing: StrictDrawing;
   _strictDrawingInteraction: StrictDrawingInteraction;
   _currFormFactory?: () => ReactElement;
+  _drawingTitle?: string;
 
   constructor(SVG: () => Svg.Svg) {
     this._SVG = SVG;
@@ -173,12 +174,28 @@ class App implements AppInterface {
     ReactDOM.unmountComponentAtNode(this._formContainer);
   }
 
-  updateDocumentTitle() {
-    if (this.strictDrawing.isEmpty()) {
-      document.title = 'RNA2Drawer';
-      return;
+  get drawingTitle(): string {
+    if (this._drawingTitle) {
+      return this._drawingTitle;
+    } else {
+      let ids = this.strictDrawing.drawing.sequenceIds();
+      return ids.join(', ');
     }
-    document.title = this.strictDrawing.sequenceIds().join(', ');
+  }
+
+  set drawingTitle(title: string) {
+    this._drawingTitle = title;
+    this.drawingChangedNotByInteraction();
+  }
+
+  unspecifyDrawingTitle() {
+    this._drawingTitle = undefined;
+    this.drawingChangedNotByInteraction();
+  }
+
+  updateDocumentTitle() {
+    let title = this.drawingTitle;
+    document.title = title ? title : 'RNA2Drawer';
   }
 
   drawingChangedNotByInteraction() {

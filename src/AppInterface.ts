@@ -16,10 +16,12 @@ export interface AppInterface {
   readonly strictDrawing: StrictDrawing;
   readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawingInteraction: StrictDrawingInteraction;
-
+  
   renderPeripherals(): void;
   renderForm(f: FormFactory): void;
   unmountCurrForm(): void;
+  drawingTitle: string;
+  unspecifyDrawingTitle(): void;
   updateDocumentTitle(): void;
   drawingChangedNotByInteraction(): void;
 

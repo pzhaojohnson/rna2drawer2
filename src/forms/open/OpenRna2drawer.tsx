@@ -8,6 +8,18 @@ import { FileInput } from '../fields/FileInput';
 import { ErrorMessage } from '../ErrorMessage';
 import { ActionButton } from '../buttons/ActionButton';
 import { open } from './open';
+import { removeFileExtension } from '../../parse/parseFileExtension';
+
+function updateDrawingTitle(app: App, fileName: string) {
+  let titleFromFileName = removeFileExtension(fileName).trim();
+  app.unspecifyDrawingTitle();
+  let autoUpdatingTitle = app.drawingTitle;
+  if (titleFromFileName != autoUpdatingTitle) {
+    // only specify if necessary since a specified title doesn't update
+    // automatically as the drawing changes
+    app.drawingTitle = titleFromFileName;
+  }
+}
 
 function Header() {
   return (
@@ -27,6 +39,7 @@ interface Props {
 
 export function OpenRna2drawer(props: Props): React.ReactElement {
   let [attemptedFileUpload, setAttemptedFileUpload] = useState(false);
+  let [fileName, setFileName] = useState('');
   let [fileExtension, setFileExtension] = useState('');
   let [fileContents, setFileContents] = useState('');
   let [fileUploaded, setFileUploaded] = useState(false);
@@ -44,6 +57,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
                   setErrorMessage([]);
                 }}
                 onLoad={f => {
+                  setFileName(f.name);
                   setFileExtension(f.extension.toLowerCase());
                   setFileContents(f.contents);
                   setFileUploaded(true);
@@ -86,6 +100,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
                     setErrorMessage(['Invalid RNA2Drawer file.']);
                     return;
                   }
+                  updateDrawingTitle(props.app, fileName);
                   props.close();
                   props.app.drawingChangedNotByInteraction();
                 }}

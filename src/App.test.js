@@ -229,16 +229,58 @@ it('binds redo', () => {
   */
 });
 
+describe('drawingTitle property and unspecifyDrawingTitle method', () => {
+  it('when drawing is empty', () => {
+    let app = new App(() => NodeSVG());
+    expect(app.strictDrawing.isEmpty()).toBeTruthy();
+    expect(app.drawingTitle).toBeFalsy(); // has not been set
+    app.drawingTitle = 'A Truthy Title';
+    expect(app.drawingTitle).toBe('A Truthy Title'); // can be set
+    app.unspecifyDrawingTitle();
+    expect(app.drawingTitle).toBeFalsy(); // can be unspecified
+  });
+
+  it('when drawing is not empty', () => {
+    let app = new App(() => NodeSVG());
+    app.strictDrawing.appendSequence('asdf', 'asdfasdf');
+    app.strictDrawing.appendSequence('qwer', 'qwerqwer');
+    app.strictDrawing.appendSequence('zxcv', 'zxcvzxcv');
+    expect(app.drawingTitle).toBe('asdf, qwer, zxcv'); // has not been set
+    app.drawingTitle = 'Not the sequence IDs';
+    expect(app.drawingTitle).toBe('Not the sequence IDs'); // can be set
+    app.unspecifyDrawingTitle();
+    expect(app.drawingTitle).toBe('asdf, qwer, zxcv'); // can be unspecified
+  });
+
+  it('updates peripherals', () => {
+    let app = new App(() => NodeSVG());
+    app.renderForm(() => <p>{app.drawingTitle}</p>);
+    app.drawingTitle = 'asdf QWER';
+    expect(document.title).toBe('asdf QWER');
+    expect(app._formContainer.textContent).toMatch(/asdf QWER/);
+    app.unspecifyDrawingTitle();
+    expect(app.drawingTitle).toBe(''); // drawing has no title
+    expect(document.title).toBe('RNA2Drawer');
+    expect(app._formContainer.textContent).toBe('');
+    app.strictDrawing.appendSequence('qwer', 'qwerqwer');
+    app.strictDrawing.appendSequence('asdf', 'asdfasdf');
+    app.drawingTitle = 'zz GB NM';
+    expect(document.title).toBe('zz GB NM');
+    expect(app._formContainer.textContent).toMatch(/zz GB NM/);
+    app.unspecifyDrawingTitle();
+    expect(document.title).toBe('qwer, asdf');
+    expect(app._formContainer.textContent).toMatch(/qwer, asdf/);
+  });
+});
+
 it('updateDocumentTitle method', () => {
   let app = new App(() => NodeSVG());
+  // make sure title is not already RNA2Drawer
   document.title = 'asdf';
-  app.updateDocumentTitle(); // drawing is empty
+  expect(app.drawingTitle).toBeFalsy(); // drawing has no title
+  app.updateDocumentTitle();
   expect(document.title).toBe('RNA2Drawer');
-  app.strictDrawing.appendSequence('qwer', 'qwer');
-  app.updateDocumentTitle(); // drawing has one sequence
-  expect(document.title).toBe('qwer');
-  app.strictDrawing.appendSequence('zxcv', 'zxcv');
-  app.strictDrawing.appendSequence('asdf', 'asdf');
-  app.updateDocumentTitle(); // drawing has multiple sequences
-  expect(document.title).toBe('qwer, zxcv, asdf');
+  app.drawingTitle = 'Title of Drawing'; // drawing has a title
+  app.updateDocumentTitle();
+  expect(document.title).toBe('Title of Drawing');
 });
