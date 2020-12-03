@@ -69,7 +69,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
                 <p className={'unselectable-text'} >
                   <b>Note:</b> Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
                 </p>
-                <div style={{ margin: '6px 0px 0px 12px' }} >
+                <div style={{ margin: '6px 0px 0px 18px' }} >
                   <p className={'unselectable-text'} >
                     (1) The sequence and its ID, (2) the secondary structure, (3) tertiary interactions and their colors,
                     (4) base numbering and the numbering offset, and (5) base colors and outlines.

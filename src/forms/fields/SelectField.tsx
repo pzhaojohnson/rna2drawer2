@@ -73,6 +73,7 @@ export function SelectField(props: Props): React.ReactElement {
           control: (provided, state) => ({
             ...provided,
             minHeight: props.style?.select?.control?.minHeight ?? '22px',
+            boxSizing: 'border-box',
             borderStyle: 'solid',
             borderWidth: '1px',
             borderColor: state.isFocused ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)',
@@ -85,6 +86,7 @@ export function SelectField(props: Props): React.ReactElement {
           valueContainer: (provided, state) => ({
             ...provided,
             padding: '0px',
+            overflow: 'visible',
           }),
           indicatorsContainer: (provided, state) => ({
             ...provided,
@@ -122,10 +124,11 @@ export function SelectField(props: Props): React.ReactElement {
           }),
           singleValue: (provided, state) => ({
             ...provided,
-            marginLeft: '6px',
-            marginRight: '6px',
+            marginLeft: '7px',
+            marginRight: '7px',
             fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Segoe UI',
             color: 'black',
+            overflow: 'visible',
           }),
         }}
       />
