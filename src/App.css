@@ -1,7 +1,4 @@
-@font-face {
-  font-family: 'Segoe UI';
-  src: url('./segoeui.ttf') format('truetype');
-}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 body {
   margin: 0px;
@@ -16,7 +13,7 @@ div {
 p {
   margin: 0px;
   padding: 0px;
-  font-family: 'Segoe UI', Verdana, Arial;
+  font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
@@ -33,7 +30,7 @@ input[type=text] {
   border: 1px solid rgba(0,0,0,0.3);
   margin: 0px;
   padding: 3px 6px 3px 6px;
-  font-family: 'Segoe UI', Verdana, Arial;
+  font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
@@ -62,7 +59,7 @@ textarea {
   border: 1px solid rgba(0,0,0,0.3);
   margin: 0px;
   padding: 3px 6px 3px 6px;
-  font-family: 'Segoe UI', Verdana, Arial;
+  font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
@@ -92,7 +89,7 @@ button {
   border: none;
   margin: 0px;
   padding: 4px 32px 4px 32px;
-  font-family: 'Segoe UI', Verdana, Arial;
+  font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
@@ -113,7 +110,7 @@ select {
   min-width: 160px;
   border: 1px solid rgba(0,0,0,0.3);
   margin: 0px;
-  font-family: 'Segoe UI', Verdana, Arial;
+  font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;

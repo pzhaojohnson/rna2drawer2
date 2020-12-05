@@ -67,7 +67,7 @@ export function SelectField(props: Props): React.ReactElement {
           container: (provided, state) => ({
             ...provided,
             minWidth: props.style?.select?.container?.minWidth ?? '200px',
-            fontFamily: 'Segoe UI',
+            fontFamily: 'Open Sans',
             fontSize: '12px',
           }),
           control: (provided, state) => ({
@@ -115,7 +115,7 @@ export function SelectField(props: Props): React.ReactElement {
           option: (provided, state) => ({
             ...provided,
             backgroundColor: state.isSelected ? 'gray' : 'white',
-            fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Segoe UI',
+            fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Open Sans',
             color: state.isSelected ? 'white' : 'black',
             '&:hover': {
               backgroundColor: state.isSelected ? 'gray' : 'gainsboro',
@@ -126,7 +126,7 @@ export function SelectField(props: Props): React.ReactElement {
             ...provided,
             marginLeft: '7px',
             marginRight: '7px',
-            fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Segoe UI',
+            fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Open Sans',
             color: 'black',
             overflow: 'visible',
           }),
