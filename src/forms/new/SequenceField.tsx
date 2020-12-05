@@ -20,7 +20,7 @@ export function SequenceField(props: Props): React.ReactElement {
           style={{
             marginRight: '4px',
             fontSize: '12px',
-            color: 'blue',
+            color: 'rgba(0,0,255,0.85)',
             cursor: 'pointer',
           }}
         >

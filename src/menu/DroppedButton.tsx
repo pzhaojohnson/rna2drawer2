@@ -20,7 +20,7 @@ export function DroppedButton(props: Props): React.ReactElement {
       onClick={props.disabled ? undefined : props.onClick}
       style={{
         textAlign: 'left',
-        color: props.disabled ? '#808080' : '#000000',
+        color: props.disabled ? '#808080' : 'rgba(0,0,0,0.85)',
         borderStyle: props.borderStyle,
         borderColor: props.borderColor,
         borderWidth: props.borderWidth,

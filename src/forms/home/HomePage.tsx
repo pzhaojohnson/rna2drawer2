@@ -36,7 +36,7 @@ function Description() {
 
 const newAndOpenLinkStyles = {
   fontSize: '24px',
-  color: 'blue',
+  color: 'rgba(0,0,255,0.85)',
   cursor: 'pointer',
 };
 

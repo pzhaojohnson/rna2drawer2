@@ -19,7 +19,7 @@ export function Dropright(props: Props): React.ReactElement {
       <button
         style={{
           backgroundColor: 'white',
-          color: 'black',
+          color: 'rgba(0,0,0,0.85)',
           textAlign: 'left',
         }}
       >
