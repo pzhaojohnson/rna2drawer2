@@ -4,7 +4,7 @@ import { RightCaret } from './RightCaret';
 
 export const trailingBorderStyles = {
   borderStyle: 'solid',
-  borderColor: 'rgba(0,0,0,0.3)',
+  borderColor: 'rgba(0,0,0,0.25)',
   borderWidth: '0px 0px 0px 1px',
 };
 
@@ -34,7 +34,7 @@ export function Dropright(props: Props): React.ReactElement {
         className={styles.dropped}
         style={{
           borderStyle: 'solid',
-          borderColor: 'rgba(0,0,0,0.3) rgba(0,0,0,0.3) rgba(0,0,0,0.3) white',
+          borderColor: 'rgba(0,0,0,0.25) rgba(0,0,0,0.25) rgba(0,0,0,0.25) white',
           borderWidth: '1px 1px 1px 0px',
         }}
       >

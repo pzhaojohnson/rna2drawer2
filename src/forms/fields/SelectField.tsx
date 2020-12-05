@@ -76,11 +76,11 @@ export function SelectField(props: Props): React.ReactElement {
             boxSizing: 'border-box',
             borderStyle: 'solid',
             borderWidth: '1px',
-            borderColor: state.isFocused ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)',
+            borderColor: state.isFocused ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.25)',
             borderRadius: '2px',
             boxShadow: 'none',
             '&:hover': {
-              borderColor: 'rgba(0,0,0,0.6)',
+              borderColor: 'rgba(0,0,0,0.5)',
             },
           }),
           valueContainer: (provided, state) => ({
@@ -96,17 +96,17 @@ export function SelectField(props: Props): React.ReactElement {
             ...provided,
             margin: '0px 2px',
             padding: '0px',
-            color: state.isFocused ? 'rgba(0,0,0,0.6)' : 'rgba(0,0,0,0.3)',
+            color: state.isFocused ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.25)',
             transform: 'scale(0.7)',
             '&:hover': {
-              color: 'rgba(0,0,0,0.6)',
+              color: 'rgba(0,0,0,0.5)',
             },
           }),
           indicatorSeparator: (provided, state) => ({
             ...provided,
             marginTop: '6px',
             marginBottom: '6px',
-            backgroundColor: 'rgba(0,0,0,0.3)',
+            backgroundColor: 'rgba(0,0,0,0.25)',
           }),
           menu: (provided, state) => ({
             ...provided,
