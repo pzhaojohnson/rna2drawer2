@@ -1,9 +1,11 @@
 .spinsOnHover {
-  transition: transform 0.3s ease-in-out;
-  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: none;
+  -webkit-transition: none;
 }
 
 .spinsOnHover:hover {
   transform: rotate(720deg);
   -webkit-transform: rotate(720deg);
+  transition: transform 0.3s ease-in-out;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
 }
