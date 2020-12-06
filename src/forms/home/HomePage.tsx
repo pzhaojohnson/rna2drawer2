@@ -13,7 +13,7 @@ interface Props {
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <div style={{ margin: '0px 36px', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ margin: '0px 48px', display: 'flex', flexDirection: 'row' }} >
         <p style={{ fontSize: '32px' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
@@ -134,23 +134,23 @@ export function HomePage(props: Props): React.ReactElement {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
         <div style={{ marginTop: '128px', width: '960px', display: 'flex', flexDirection: 'column' }} >
           <Header />
-          <div style={{ margin: '0px 72px', display: 'flex', flexDirection: 'column' }} >
+          <div style={{ margin: '0px 84px', display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '24px' }} >
               <Description />
             </div>
-            <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row' }} >
-              <div style={{ margin: '0px 72px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+            <div style={{ marginTop: '60px', display: 'flex', flexDirection: 'row' }} >
+              <div style={{ margin: '0px 60px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
                 <NewLink {...props} />
                 <div style={{ flexGrow: 1 }} ></div>
                 <OpenLink {...props} />
               </div>
             </div>
-            <div style={{ marginTop: '64px' }} >
+            <div style={{ marginTop: '60px' }} >
               <HelpLinks />
             </div>
           </div>
         </div>
-        <div style={{ height: '64px' }} ></div>
+        <div style={{ height: '48px' }} ></div>
         <Slideshow />
       </div>
       <div style={{ flexGrow: 1 }} ></div>
