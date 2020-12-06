@@ -1,0 +1,55 @@
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import styles from './DrawingSlideshow.css';
+const uuidv1 = require('uuid/v1');
+
+import drawing1 from './drawing1.svg';
+import drawing2 from './drawing2.svg';
+import drawing3 from './drawing3.svg';
+import drawing4 from './drawing4.svg';
+import drawing5 from './drawing5.svg';
+
+const drawings = [
+  drawing1,
+  drawing2,
+  drawing3,
+  drawing4,
+  drawing5,
+];
+
+function pickRandomIndex() {
+  return Math.floor(Math.random() * drawings.length);
+}
+
+interface Props {
+  style?: {
+    width?: string,
+  }
+}
+
+export function DrawingSlideshow(props: Props) {
+  let [index, setIndex] = useState(pickRandomIndex());
+  let interval = 8;
+  useEffect(() => {
+    let nextIndex = pickRandomIndex();
+    if (nextIndex == index) {
+      nextIndex++;
+    }
+    if (nextIndex >= drawings.length) {
+      nextIndex = 0;
+    }
+    setTimeout(() => setIndex(nextIndex), 1000 * interval);
+  });
+  return (
+    <img
+      key={uuidv1()}
+      src={drawings[index]}
+      alt='Drawing'
+      style={{
+        ...(props.style ?? {}),
+        opacity: 0,
+        animation: `${styles.enterAndLeave} ${interval}s ease-in-out`
+      }}
+    />
+  );
+}

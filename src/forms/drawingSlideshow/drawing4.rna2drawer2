@@ -1,0 +1,2286 @@
+{
+ "className": "StrictDrawing",
+ "drawing": {
+  "className": "Drawing",
+  "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:svgjs=\"http://svgjs.com/svgjs\" width=\"4170.012929367615\" height=\"2662.0181464168377\" viewBox=\"0 0 4170.012929367615 2662.0181464168377\"><circle r=\"6.5\" cx=\"1986.1540038627386\" cy=\"1395.407004589352\" id=\"SvgjsCircle1453\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2032.1241155093649\" cy=\"1550.3188976241536\" id=\"SvgjsCircle1452\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2084.9274043954433\" cy=\"1546.2662409339366\" id=\"SvgjsCircle1451\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2070.532653169117\" cy=\"1510.679839104689\" id=\"SvgjsCircle1450\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2069.4995653507476\" cy=\"1497.219425680149\" id=\"SvgjsCircle1449\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2067.4333897140086\" cy=\"1470.2985988310693\" id=\"SvgjsCircle1448\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2065.36721407727\" cy=\"1443.377771981989\" id=\"SvgjsCircle1447\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2075.9572374260783\" cy=\"1411.80673625236\" id=\"SvgjsCircle1446\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2121.123269144811\" cy=\"1335.2029386293275\" id=\"SvgjsCircle1445\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2134.179104156374\" cy=\"1331.76852861437\" id=\"SvgjsCircle1444\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2224.843836150953\" cy=\"1314.1743695197083\" id=\"SvgjsCircle1443\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2226.4151189008903\" cy=\"1279.0237223045365\" id=\"SvgjsCircle1442\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2191.902577181284\" cy=\"1285.8736415141436\" id=\"SvgjsCircle1441\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2152.735072146594\" cy=\"1296.176871559016\" id=\"SvgjsCircle1440\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2139.6792371350307\" cy=\"1299.6112815739734\" id=\"SvgjsCircle1439\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2106.7193578968054\" cy=\"1294.865204017567\" id=\"SvgjsCircle1438\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2023.2478594560919\" cy=\"1264.1956559356342\" id=\"SvgjsCircle1437\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2011.7998920012874\" cy=\"1239.7427616048246\" id=\"SvgjsCircle1436\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"2007.5792522686697\" cy=\"1189.2818463159035\" id=\"SvgjsCircle1435\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1998.586740494454\" cy=\"1179.325839850815\" id=\"SvgjsCircle1434\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1983.0648980763315\" cy=\"1160.4442485273692\" id=\"SvgjsCircle1433\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1972.7534058733804\" cy=\"1121.2789178310954\" id=\"SvgjsCircle1432\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1966.6903392236886\" cy=\"1095.3581893197454\" id=\"SvgjsCircle1431\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1955.5374105636934\" cy=\"1088.4277001318865\" id=\"SvgjsCircle1430\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1940.5949992951294\" cy=\"1115.785568547835\" id=\"SvgjsCircle1429\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1957.780819633381\" cy=\"1181.0611197082912\" id=\"SvgjsCircle1428\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1979.1777245099947\" cy=\"1240.1090786397046\" id=\"SvgjsCircle1427\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"6.5\" cx=\"1990.625691964799\" cy=\"1264.5619729705143\" id=\"SvgjsCircle1426\" fill=\"#c0c0c0\" fill-opacity=\"0.65\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"1970.9788622514345\" cy=\"1373.2350158974054\" id=\"SvgjsCircle1397\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"1977.613554039219\" cy=\"1384.973187828145\" id=\"SvgjsCircle1396\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2034.7212167249127\" cy=\"1432.1901517578617\" id=\"SvgjsCircle1395\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2036.7873923616514\" cy=\"1459.1109786069417\" id=\"SvgjsCircle1394\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2038.8535679983902\" cy=\"1486.0318054560216\" id=\"SvgjsCircle1393\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2041.9528314534982\" cy=\"1526.4130457296417\" id=\"SvgjsCircle1392\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2047.3240483483146\" cy=\"1571.2247688952632\" id=\"SvgjsCircle1391\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2060.4673740574926\" cy=\"1573.590446284951\" id=\"SvgjsCircle1390\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2073.0957577203503\" cy=\"1569.2467881177733\" id=\"SvgjsCircle1389\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2081.1266820119504\" cy=\"1533.4639774788584\" id=\"SvgjsCircle1388\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2063.3010384405316\" cy=\"1416.4569451329091\" id=\"SvgjsCircle1387\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2113.5675671119043\" cy=\"1374.5387063353432\" id=\"SvgjsCircle1386\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2173.3466091910636\" cy=\"1321.4652985694977\" id=\"SvgjsCircle1385\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2186.402444202627\" cy=\"1318.03088855454\" id=\"SvgjsCircle1384\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2232.8741161494922\" cy=\"1303.577459933599\" id=\"SvgjsCircle1383\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2097.989558721731\" cy=\"1284.5892893742193\" id=\"SvgjsCircle1382\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2050.036935729527\" cy=\"1262.1395922462011\" id=\"SvgjsCircle1381\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2036.5540347501128\" cy=\"1262.0163178619785\" id=\"SvgjsCircle1380\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"2012.149887388191\" cy=\"1201.895197470394\" id=\"SvgjsCircle1379\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"1979.627734008681\" cy=\"1147.389138295278\" id=\"SvgjsCircle1378\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"1947.46932743043\" cy=\"1141.8957890120175\" id=\"SvgjsCircle1377\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"1955.186978650166\" cy=\"1229.378491565095\" id=\"SvgjsCircle1376\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><circle r=\"8\" cx=\"1970.9788622514345\" cy=\"1307.7837920418262\" id=\"SvgjsCircle1375\" fill=\"#f8e71c\" fill-opacity=\"0.15\" stroke=\"#00ffff\" stroke-width=\"0\" stroke-opacity=\"0.5\"></circle><text id=\"SvgjsText1000\" font-family=\"Arial\" x=\"1967.7288622514345\" y=\"1310.9634795418262\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1001\" font-family=\"Arial\" x=\"1974.433866539219\" y=\"1299.2253076110865\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1002\" font-family=\"Arial\" x=\"1982.9743163627386\" y=\"1288.7914908498797\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1003\" font-family=\"Arial\" x=\"1992.7090506922013\" y=\"1279.968107635919\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1004\" font-family=\"Arial\" x=\"1986.985066964799\" y=\"1267.7416604705143\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1005\" font-family=\"Arial\" x=\"1981.2610832373969\" y=\"1255.5152133051095\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1006\" font-family=\"Arial\" x=\"1975.5370995099947\" y=\"1243.2887661397046\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1007\" font-family=\"Arial\" x=\"1962.9114914119261\" y=\"1240.3630451988347\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1008\" font-family=\"Arial\" x=\"1951.936978650166\" y=\"1232.558179065095\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1009\" font-family=\"Arial\" x=\"1945.01785199867\" y=\"1221.1141736884051\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1010\" font-family=\"Arial\" x=\"1942.5926906261516\" y=\"1207.8492069227927\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1011\" font-family=\"Arial\" x=\"1946.4266875741578\" y=\"1194.870763692791\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1012\" font-family=\"Arial\" x=\"1954.140194633381\" y=\"1184.2408072082912\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1013\" font-family=\"Arial\" x=\"1950.7030305657306\" y=\"1171.1856969762\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1014\" font-family=\"Arial\" x=\"1947.7268039980804\" y=\"1158.1305867441088\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1015\" font-family=\"Arial\" x=\"1944.21932743043\" y=\"1145.0754765120175\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1016\" font-family=\"Arial\" x=\"1940.3915383627798\" y=\"1132.0203662799263\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1017\" font-family=\"Arial\" x=\"1936.9543742951294\" y=\"1118.965256047835\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1018\" font-family=\"Arial\" x=\"1933.365375240156\" y=\"1106.4745590305079\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1019\" font-family=\"Arial\" x=\"1939.6595873917142\" y=\"1094.9505670368821\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1020\" font-family=\"Arial\" x=\"1951.8967855636934\" y=\"1091.6073876318865\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1021\" font-family=\"Arial\" x=\"1963.0497142236886\" y=\"1098.5378768197454\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1022\" font-family=\"Arial\" x=\"1965.67561680573\" y=\"1111.4034950990042\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1023\" font-family=\"Arial\" x=\"1969.1127808733804\" y=\"1124.4586053310954\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1024\" font-family=\"Arial\" x=\"1973.0108824410308\" y=\"1137.5137155631867\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1025\" font-family=\"Arial\" x=\"1976.377734008681\" y=\"1150.568825795278\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1026\" font-family=\"Arial\" x=\"1979.4242730763315\" y=\"1163.6239360273692\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1027\" font-family=\"Arial\" x=\"1982.8614371439817\" y=\"1176.6790462594604\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1028\" font-family=\"Arial\" x=\"1994.946115494454\" y=\"1182.505527350815\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1029\" font-family=\"Arial\" x=\"2003.9386272686697\" y=\"1192.4615338159035\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1030\" font-family=\"Arial\" x=\"2008.899887388191\" y=\"1205.074884970394\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1031\" font-family=\"Arial\" x=\"2008.4431049612301\" y=\"1218.4804623052296\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1032\" font-family=\"Arial\" x=\"2002.4352832738853\" y=\"1230.6960019394198\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1033\" font-family=\"Arial\" x=\"2008.1592670012874\" y=\"1242.9224491048246\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1034\" font-family=\"Arial\" x=\"2013.8832507286895\" y=\"1255.1488962702294\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1035\" font-family=\"Arial\" x=\"2019.6072344560919\" y=\"1267.3753434356342\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1036\" font-family=\"Arial\" x=\"2033.3040347501128\" y=\"1265.1960053619785\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1037\" font-family=\"Arial\" x=\"2046.7869357295272\" y=\"1265.3192797462011\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1038\" font-family=\"Arial\" x=\"2060.1213509405316\" y=\"1267.7415503063226\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1039\" font-family=\"Arial\" x=\"2072.3166124260783\" y=\"1272.3917591868717\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1040\" font-family=\"Arial\" x=\"2084.454572722584\" y=\"1279.1334914571703\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1041\" font-family=\"Arial\" x=\"2094.739558721731\" y=\"1287.7689768742193\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1042\" font-family=\"Arial\" x=\"2103.0787328968054\" y=\"1298.044891517567\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1043\" font-family=\"Arial\" x=\"2109.9269421119043\" y=\"1309.6597891038884\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1044\" font-family=\"Arial\" x=\"2122.9827771234677\" y=\"1306.225379088931\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1045\" font-family=\"Arial\" x=\"2136.0386121350307\" y=\"1302.7909690739734\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1046\" font-family=\"Arial\" x=\"2149.094447146594\" y=\"1299.356559059016\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1047\" font-family=\"Arial\" x=\"2162.611219658157\" y=\"1295.9221490440586\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1048\" font-family=\"Arial\" x=\"2175.6670546697205\" y=\"1292.4877390291012\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1049\" font-family=\"Arial\" x=\"2188.261952181284\" y=\"1289.0533290141436\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1050\" font-family=\"Arial\" x=\"2197.9887861666534\" y=\"1279.5179710264467\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1051\" font-family=\"Arial\" x=\"2210.569319492107\" y=\"1276.9295490477184\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1052\" font-family=\"Arial\" x=\"2222.7744939008903\" y=\"1282.2034098045365\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1053\" font-family=\"Arial\" x=\"2230.2881791274585\" y=\"1293.4745516782114\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1054\" font-family=\"Arial\" x=\"2229.6241161494922\" y=\"1306.757147433599\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1055\" font-family=\"Arial\" x=\"2221.203211150953\" y=\"1317.3540570197083\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1056\" font-family=\"Arial\" x=\"2208.5761590479697\" y=\"1321.5178827629\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1057\" font-family=\"Arial\" x=\"2195.81765421419\" y=\"1317.7761660395827\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1058\" font-family=\"Arial\" x=\"2183.152444202627\" y=\"1321.21057605454\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1059\" font-family=\"Arial\" x=\"2170.0966091910636\" y=\"1324.6449860694977\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1060\" font-family=\"Arial\" x=\"2156.6501491795007\" y=\"1328.079396084455\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1061\" font-family=\"Arial\" x=\"2143.5943141679372\" y=\"1331.5138060994125\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1062\" font-family=\"Arial\" x=\"2130.538479156374\" y=\"1334.94821611437\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1063\" font-family=\"Arial\" x=\"2117.482644144811\" y=\"1338.3826261293275\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1064\" font-family=\"Arial\" x=\"2117.697043220821\" y=\"1351.863836542343\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1065\" font-family=\"Arial\" x=\"2115.153605098738\" y=\"1365.1052389572549\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1066\" font-family=\"Arial\" x=\"2110.3175671119043\" y=\"1377.7183938353432\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1067\" font-family=\"Arial\" x=\"2103.5396703968054\" y=\"1389.3332914216646\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1068\" font-family=\"Arial\" x=\"2094.348933721731\" y=\"1399.6092060650124\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1069\" font-family=\"Arial\" x=\"2083.993635222584\" y=\"1408.2446914820612\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1070\" font-family=\"Arial\" x=\"2072.3166124260783\" y=\"1414.98642375236\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1071\" font-family=\"Arial\" x=\"2060.0510384405316\" y=\"1419.6366326329091\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1072\" font-family=\"Arial\" x=\"2060.6935012589006\" y=\"1433.097046057449\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1073\" font-family=\"Arial\" x=\"2061.72658907727\" y=\"1446.557459481989\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1074\" font-family=\"Arial\" x=\"2063.2206143956396\" y=\"1460.0178729065292\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1075\" font-family=\"Arial\" x=\"2063.7927647140086\" y=\"1473.4782863310693\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1076\" font-family=\"Arial\" x=\"2064.825852532378\" y=\"1486.9386997556092\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1077\" font-family=\"Arial\" x=\"2065.8589403507476\" y=\"1500.399113180149\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1078\" font-family=\"Arial\" x=\"2066.892028169117\" y=\"1513.859526604689\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1079\" font-family=\"Arial\" x=\"2068.386053487486\" y=\"1527.3199400292292\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1080\" font-family=\"Arial\" x=\"2077.8766820119504\" y=\"1536.6436649788584\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1081\" font-family=\"Arial\" x=\"2081.2867793954433\" y=\"1549.4459284339366\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1082\" font-family=\"Arial\" x=\"2078.8232396131966\" y=\"1562.4763111157783\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1083\" font-family=\"Arial\" x=\"2069.8457577203503\" y=\"1572.4264756177733\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1084\" font-family=\"Arial\" x=\"2057.2173740574926\" y=\"1576.770133784951\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1085\" font-family=\"Arial\" x=\"2044.0740483483146\" y=\"1574.4044563952632\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1086\" font-family=\"Arial\" x=\"2033.3621685687688\" y=\"1565.9300750027767\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1087\" font-family=\"Arial\" x=\"2028.4834905093649\" y=\"1553.4985851241536\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1088\" font-family=\"Arial\" x=\"2030.746994291218\" y=\"1540.2662688110831\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1089\" font-family=\"Arial\" x=\"2038.7028314534982\" y=\"1529.5927332296417\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1090\" font-family=\"Arial\" x=\"2037.279118635129\" y=\"1516.1323198051016\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1091\" font-family=\"Arial\" x=\"2036.2460308167595\" y=\"1502.6719063805617\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1092\" font-family=\"Arial\" x=\"2035.6035679983902\" y=\"1489.2114929560216\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1093\" font-family=\"Arial\" x=\"2034.1798551800207\" y=\"1475.7510795314815\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1094\" font-family=\"Arial\" x=\"2033.5373923616514\" y=\"1462.2906661069417\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1095\" font-family=\"Arial\" x=\"2032.113679543282\" y=\"1448.8302526824016\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1096\" font-family=\"Arial\" x=\"2031.4712167249127\" y=\"1435.3698392578617\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1097\" font-family=\"Arial\" x=\"2030.5084414065432\" y=\"1421.9094258333216\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1098\" font-family=\"Arial\" x=\"2017.290846129311\" y=\"1419.2450327538788\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1099\" font-family=\"Arial\" x=\"2004.7217896854004\" y=\"1414.364189025148\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#bd10e0\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">A</tspan></text><text id=\"SvgjsText1100\" font-family=\"Arial\" x=\"1992.7090506922011\" y=\"1407.4100753033126\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ff0000\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">G</tspan></text><text id=\"SvgjsText1101\" font-family=\"Arial\" x=\"1982.5133788627386\" y=\"1398.586692089352\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#ffffff\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">C</tspan></text><text id=\"SvgjsText1102\" font-family=\"Arial\" x=\"1974.363554039219\" y=\"1388.152875328145\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><text id=\"SvgjsText1103\" font-family=\"Arial\" x=\"1967.7288622514345\" y=\"1376.4147033974054\" font-size=\"9\" font-weight=\"bold\" font-style=\"normal\" fill=\"#417505\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">U</tspan></text><line x1=\"1937.9080693785347\" y1=\"1085.4714182752507\" x2=\"1932.9768638653552\" y2=\"1079.1719570136192\" id=\"SvgjsLine1125\" stroke=\"#808080\" stroke-width=\"1\"></line><text x=\"1932.9768638653552\" y=\"1075.1719570136192\" text-anchor=\"middle\" id=\"SvgjsText1124\" font-family=\"Arial\" font-size=\"8\" font-weight=\"normal\" fill=\"#808080\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">20</tspan></text><line x1=\"2079.3492278045605\" y1=\"1261.9667696729953\" x2=\"2082.7412181830427\" y2=\"1254.7214676591188\" id=\"SvgjsLine1127\" stroke=\"#808080\" stroke-width=\"1\"></line><text x=\"2082.7412181830427\" y=\"1250.7214676591188\" text-anchor=\"middle\" id=\"SvgjsText1126\" font-family=\"Arial\" font-size=\"8\" font-weight=\"normal\" fill=\"#808080\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">40</tspan></text><line x1=\"2175.3818151258533\" y1=\"1329.202089687461\" x2=\"2177.417021060643\" y2=\"1336.9388808054243\" id=\"SvgjsLine1129\" stroke=\"#808080\" stroke-width=\"1\"></line><text x=\"2177.417021060643\" y=\"1347.3388808054244\" text-anchor=\"middle\" id=\"SvgjsText1128\" font-family=\"Arial\" font-size=\"8\" font-weight=\"normal\" fill=\"#808080\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">60</tspan></text><line x1=\"2078.812998118472\" y1=\"1520.7524414250831\" x2=\"2086.060255249458\" y2=\"1517.364630320937\" id=\"SvgjsLine1131\" stroke=\"#808080\" stroke-width=\"1\"></line><text x=\"2090.060255249458\" y=\"1520.564630320937\" text-anchor=\"start\" id=\"SvgjsText1130\" font-family=\"Arial\" font-size=\"8\" font-weight=\"normal\" fill=\"#808080\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">80</tspan></text><line x1=\"2004.377577151991\" y1=\"1418.3665714603783\" x2=\"2000.8536771185818\" y2=\"1425.5486413956085\" id=\"SvgjsLine1133\" stroke=\"#808080\" stroke-width=\"1\"></line><text x=\"2000.8536771185818\" y=\"1435.9486413956085\" text-anchor=\"middle\" id=\"SvgjsText1132\" font-family=\"Arial\" font-size=\"8\" font-weight=\"normal\" fill=\"#808080\" svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\"><tspan svgjs:data=\"{&quot;leading&quot;:&quot;1.3&quot;}\">100</tspan></text><line x1=\"1974.915353071981\" y1=\"1300.81930785276\" x2=\"1973.6770632186726\" y2=\"1303.0101043001528\" id=\"SvgjsLine1134\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1982.6807679217873\" y1=\"1289.8550350443654\" x2=\"1981.0867899801704\" y2=\"1291.8023884166007\" id=\"SvgjsLine1135\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1992.2032929404738\" y1=\"1280.3767196204637\" x2=\"1990.300386614466\" y2=\"1282.023503865335\" id=\"SvgjsLine1136\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1992.957685335222\" y1=\"1269.5431181119754\" x2=\"1994.0176823217782\" y2=\"1271.8072749944579\" id=\"SvgjsLine1137\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1987.23370160782\" y1=\"1257.3166709465706\" x2=\"1988.2936985943759\" y2=\"1259.580827829053\" id=\"SvgjsLine1138\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1981.5097178804178\" y1=\"1245.0902237811658\" x2=\"1982.5697148669738\" y2=\"1247.3543806636483\" id=\"SvgjsLine1139\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1971.3704579157966\" y1=\"1238.3636307524507\" x2=\"1973.8984455061243\" y2=\"1238.9288055860886\" id=\"SvgjsLine1140\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1959.5858717778074\" y1=\"1232.527073870417\" x2=\"1961.6922857842849\" y2=\"1234.0347753935125\" id=\"SvgjsLine1141\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1951.0171681840864\" y1=\"1222.551143567741\" x2=\"1952.3673499647498\" y2=\"1224.761834185759\" id=\"SvgjsLine1142\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1947.0257085285702\" y1=\"1210.0207757958324\" x2=\"1947.4051465962514\" y2=\"1212.5832298153655\" id=\"SvgjsLine1143\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1948.2456399749508\" y1=\"1196.9267453259183\" x2=\"1947.5940507253586\" y2=\"1199.4338502896653\" id=\"SvgjsLine1144\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1954.4831446888045\" y1=\"1185.3493794067833\" x2=\"1952.9040500187343\" y2=\"1187.4028164942988\" id=\"SvgjsLine1145\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1955.743981667366\" y1=\"1173.3247580892742\" x2=\"1956.3804935317457\" y2=\"1175.742371095217\" id=\"SvgjsLine1146\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1952.3068175997157\" y1=\"1160.269647857183\" x2=\"1952.9433294640953\" y2=\"1162.6872608631259\" id=\"SvgjsLine1147\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1948.8696535320653\" y1=\"1147.2145376250917\" x2=\"1949.506165396445\" y2=\"1149.6321506310346\" id=\"SvgjsLine1148\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1945.432489464415\" y1=\"1134.1594273930004\" x2=\"1946.0690013287947\" y2=\"1136.5770403989434\" id=\"SvgjsLine1149\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1941.9953253967647\" y1=\"1121.1043171609092\" x2=\"1942.6318372611445\" y2=\"1123.5219301668521\" id=\"SvgjsLine1150\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1938.1275682853561\" y1=\"1108.1755892960887\" x2=\"1939.0124937499293\" y2=\"1110.9048507822542\" id=\"SvgjsLine1151\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1940.3798226268943\" y1=\"1096.27385902439\" x2=\"1939.004515004976\" y2=\"1098.791892043\" id=\"SvgjsLine1152\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1950.5756365107313\" y1=\"1089.734041570867\" x2=\"1947.8010489446763\" y2=\"1090.4645380979016\" id=\"SvgjsLine1153\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1962.3323520774484\" y1=\"1092.650112928458\" x2=\"1959.8953977099336\" y2=\"1091.135776523174\" id=\"SvgjsLine1154\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1968.2901750165768\" y1=\"1103.1965900134962\" x2=\"1967.7164060128418\" y2=\"1100.3854069052534\" id=\"SvgjsLine1155\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1971.3530797717451\" y1=\"1115.9601692180213\" x2=\"1970.7165679073653\" y2=\"1113.5425562120784\" id=\"SvgjsLine1156\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1974.7902438393955\" y1=\"1129.0152794501125\" x2=\"1974.1537319750157\" y2=\"1126.5976664441696\" id=\"SvgjsLine1157\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1978.2274079070457\" y1=\"1142.0703896822038\" x2=\"1977.5908960426661\" y2=\"1139.6527766762608\" id=\"SvgjsLine1158\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1981.6645719746962\" y1=\"1155.125499914295\" x2=\"1981.0280601103163\" y2=\"1152.707886908352\" id=\"SvgjsLine1159\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1985.1017360423464\" y1=\"1168.1806101463862\" x2=\"1984.4652241779668\" y2=\"1165.7629971404433\" id=\"SvgjsLine1160\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1993.7082256512383\" y1=\"1176.9737230907708\" x2=\"1991.3805769871974\" y2=\"1175.8514755195047\" id=\"SvgjsLine1161\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2003.9490272104588\" y1=\"1185.2626640165925\" x2=\"2002.216965552665\" y2=\"1183.3450221501262\" id=\"SvgjsLine1162\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2010.3047483926102\" y1=\"1196.8032604700627\" x2=\"2009.4243912642505\" y2=\"1194.3737833162347\" id=\"SvgjsLine1163\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2011.8355776384924\" y1=\"1209.8890206721694\" x2=\"2011.9371022109287\" y2=\"1207.306951603454\" id=\"SvgjsLine1164\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2008.315153378866\" y1=\"1222.5849716518844\" x2=\"2009.3835473562494\" y2=\"1220.232117592765\" id=\"SvgjsLine1165\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2009.4678986308643\" y1=\"1234.7616164633635\" x2=\"2008.4079016443084\" y2=\"1232.497459580881\" id=\"SvgjsLine1166\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2015.1918823582664\" y1=\"1246.9880636287683\" x2=\"2014.1318853717105\" y2=\"1244.7239067462858\" id=\"SvgjsLine1167\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2020.9158660856688\" y1=\"1259.214510794173\" x2=\"2019.8558690991126\" y2=\"1256.9503539116906\" id=\"SvgjsLine1168\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2031.1426703345617\" y1=\"1262.9026125515227\" x2=\"2028.659223871643\" y2=\"1263.30936124609\" id=\"SvgjsLine1169\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2044.553700392083\" y1=\"1262.0894589358102\" x2=\"2042.0372700875569\" y2=\"1262.0664511723694\" id=\"SvgjsLine1170\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2057.906784131647\" y1=\"1263.5767721680106\" x2=\"2055.431190038412\" y2=\"1263.124682884513\" id=\"SvgjsLine1171\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2070.810205817582\" y1=\"1267.3209215776146\" x2=\"2068.448070049028\" y2=\"1266.4530129155796\" id=\"SvgjsLine1172\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2082.8854406523965\" y1=\"1273.2120716937256\" x2=\"2080.706056996266\" y2=\"1271.9538039503163\" id=\"SvgjsLine1173\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2093.7782588874447\" y1=\"1281.0774042934759\" x2=\"2091.8455600568705\" y2=\"1279.4656890379138\" id=\"SvgjsLine1174\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2103.1691172328237\" y1=\"1290.6861880637312\" x2=\"2101.5397993857127\" y2=\"1288.7683053280552\" id=\"SvgjsLine1175\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2110.782532732154\" y1=\"1301.7565471564183\" x2=\"2109.504392276556\" y2=\"1299.5887584650372\" id=\"SvgjsLine1176\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2121.304358229868\" y1=\"1304.444895669099\" x2=\"2118.886611005504\" y2=\"1305.0808975237205\" id=\"SvgjsLine1177\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2134.3601932414313\" y1=\"1301.0104856541413\" x2=\"2131.942446017067\" y2=\"1301.6464875087631\" id=\"SvgjsLine1178\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2147.4160282529942\" y1=\"1297.576075639184\" x2=\"2144.9982810286306\" y2=\"1298.2120774938055\" id=\"SvgjsLine1179\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2160.4718632645577\" y1=\"1294.1416656242263\" x2=\"2158.0541160401935\" y2=\"1294.7776674788483\" id=\"SvgjsLine1180\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2173.5276982761206\" y1=\"1290.7072556092692\" x2=\"2171.109951051757\" y2=\"1291.3432574638907\" id=\"SvgjsLine1181\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2186.583533287684\" y1=\"1287.2728455943115\" x2=\"2184.1657860633204\" y2=\"1287.9088474489333\" id=\"SvgjsLine1182\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2197.477784247133\" y1=\"1280.136301871687\" x2=\"2195.5932666008043\" y2=\"1282.0756231689033\" id=\"SvgjsLine1183\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2209.015410054292\" y1=\"1274.7808531657697\" x2=\"2206.3630081044685\" y2=\"1275.3072919083954\" id=\"SvgjsLine1184\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2221.553688803433\" y1=\"1276.9230964097894\" x2=\"2219.071374589564\" y2=\"1275.8504874424655\" id=\"SvgjsLine1185\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2230.6586941470523\" y1=\"1285.805467590977\" x2=\"2229.2242913812966\" y2=\"1283.5131188917708\" id=\"SvgjsLine1186\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2233.1106122737824\" y1=\"1298.2868832802142\" x2=\"2233.2313705031684\" y2=\"1295.585440831596\" id=\"SvgjsLine1187\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2228.0423684757193\" y1=\"1309.9535256811419\" x2=\"2229.675583824726\" y2=\"1307.7983037721654\" id=\"SvgjsLine1188\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2217.2462518031725\" y1=\"1316.679706239265\" x2=\"2219.81436839575\" y2=\"1315.8328585433433\" id=\"SvgjsLine1189\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2204.5401057674308\" y1=\"1316.0868377663876\" x2=\"2207.134957494729\" y2=\"1316.847836036095\" id=\"SvgjsLine1190\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2191.7214880962265\" y1=\"1316.6316844743724\" x2=\"2194.1392353205906\" y2=\"1315.9956826197504\" id=\"SvgjsLine1191\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2178.6656530846635\" y1=\"1320.0660944893298\" x2=\"2181.083400309027\" y2=\"1319.430092634708\" id=\"SvgjsLine1192\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2165.6098180731\" y1=\"1323.5005045042874\" x2=\"2168.027565297464\" y2=\"1322.8645026496654\" id=\"SvgjsLine1193\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2152.553983061537\" y1=\"1326.9349145192446\" x2=\"2154.971730285901\" y2=\"1326.298912664623\" id=\"SvgjsLine1194\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2139.4981480499737\" y1=\"1330.3693245342022\" x2=\"2141.9158952743373\" y2=\"1329.7333226795804\" id=\"SvgjsLine1195\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2126.4423130384102\" y1=\"1333.8037345491598\" x2=\"2128.8600602627744\" y2=\"1333.1677326945378\" id=\"SvgjsLine1196\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2120.9769931347128\" y1=\"1343.2016012255913\" x2=\"2121.023006730919\" y2=\"1340.6854864460793\" id=\"SvgjsLine1197\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2119.367659743531\" y1=\"1356.5405289202195\" x2=\"2119.8423635760278\" y2=\"1354.0691715793785\" id=\"SvgjsLine1198\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2115.505695593146\" y1=\"1369.4091799337339\" x2=\"2116.3951641174963\" y2=\"1367.0550778588643\" id=\"SvgjsLine1199\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2109.504392276556\" y1=\"1381.4300494741944\" x2=\"2110.782532732154\" y2=\"1379.2622607828134\" id=\"SvgjsLine1200\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2101.5397993857127\" y1=\"1392.2505026111764\" x2=\"2103.1691172328237\" y2=\"1390.3326198755005\" id=\"SvgjsLine1201\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2091.8455600568705\" y1=\"1401.5531189013177\" x2=\"2093.7782588874447\" y2=\"1399.9414036457558\" id=\"SvgjsLine1202\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2080.706056996266\" y1=\"1409.0650039889154\" x2=\"2082.8854406523965\" y2=\"1407.8067362455058\" id=\"SvgjsLine1203\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2068.448070049028\" y1=\"1414.565795023652\" x2=\"2070.810205817582\" y2=\"1413.697886361617\" id=\"SvgjsLine1204\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2063.913238629195\" y1=\"1424.4334864215255\" x2=\"2063.7219260702373\" y2=\"1421.9408172688327\" id=\"SvgjsLine1205\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2064.946326447564\" y1=\"1437.8938998460653\" x2=\"2064.7550138886068\" y2=\"1435.4012306933728\" id=\"SvgjsLine1206\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2065.9794142659334\" y1=\"1451.3543132706054\" x2=\"2065.7881017069762\" y2=\"1448.8616441179129\" id=\"SvgjsLine1207\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2067.012502084303\" y1=\"1464.8147266951455\" x2=\"2066.8211895253453\" y2=\"1462.322057542453\" id=\"SvgjsLine1208\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2068.045589902672\" y1=\"1478.2751401196856\" x2=\"2067.854277343715\" y2=\"1475.7824709669928\" id=\"SvgjsLine1209\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2069.0786777210415\" y1=\"1491.7355535442255\" x2=\"2068.8873651620843\" y2=\"1489.2428843915327\" id=\"SvgjsLine1210\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2070.111765539411\" y1=\"1505.1959669687653\" x2=\"2069.920452980454\" y2=\"1502.7032978160728\" id=\"SvgjsLine1211\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2071.1448533577804\" y1=\"1518.6563803933054\" x2=\"2070.953540798823\" y2=\"1516.1637112406129\" id=\"SvgjsLine1212\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2077.293200876383\" y1=\"1529.725608670164\" x2=\"2075.3992221230537\" y2=\"1527.8786213379235\" id=\"SvgjsLine1213\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2083.403496077071\" y1=\"1541.1331441684583\" x2=\"2082.6505903303228\" y2=\"1538.5970742443367\" id=\"SvgjsLine1214\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2083.1755029573737\" y1=\"1554.0720619254332\" x2=\"2083.754828551266\" y2=\"1551.4908026242817\" id=\"SvgjsLine1215\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2076.667107627374\" y1=\"1565.2572469401225\" x2=\"2078.4315772061727\" y2=\"1563.2861647934292\" id=\"SvgjsLine1216\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2065.5307533232367\" y1=\"1571.8488466243505\" x2=\"2068.0323784546063\" y2=\"1570.9883877783739\" id=\"SvgjsLine1217\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2052.5938948033686\" y1=\"1572.1732926465343\" x2=\"2055.1975276024386\" y2=\"1572.64192253368\" id=\"SvgjsLine1218\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2041.141124240565\" y1=\"1566.148210072812\" x2=\"2043.1857176765184\" y2=\"1567.826946325228\" id=\"SvgjsLine1219\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2034.0802326174378\" y1=\"1555.303331877514\" x2=\"2035.0466764606958\" y2=\"1557.7659532494163\" id=\"SvgjsLine1220\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2033.203938724462\" y1=\"1542.3921087519723\" x2=\"2032.846858576121\" y2=\"1545.0133701832644\" id=\"SvgjsLine1221\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2038.7347284191983\" y1=\"1530.6926241933688\" x2=\"2037.144784825518\" y2=\"1532.807002847356\" id=\"SvgjsLine1222\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2041.3406312648349\" y1=\"1518.4365044410254\" x2=\"2041.5319438237923\" y2=\"1520.929173593718\" id=\"SvgjsLine1223\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2040.3075434464656\" y1=\"1504.9760910164853\" x2=\"2040.4988560054228\" y2=\"1507.468760169178\" id=\"SvgjsLine1224\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2039.2744556280961\" y1=\"1491.5156775919454\" x2=\"2039.4657681870535\" y2=\"1494.008346744638\" id=\"SvgjsLine1225\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2038.2413678097269\" y1=\"1478.0552641674053\" x2=\"2038.432680368684\" y2=\"1480.5479333200979\" id=\"SvgjsLine1226\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2037.2082799913574\" y1=\"1464.5948507428652\" x2=\"2037.3995925503148\" y2=\"1467.087519895558\" id=\"SvgjsLine1227\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2036.175192172988\" y1=\"1451.1344373183254\" x2=\"2036.3665047319453\" y2=\"1453.627106471018\" id=\"SvgjsLine1228\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2035.1421043546186\" y1=\"1437.6740238937853\" x2=\"2035.333416913576\" y2=\"1440.166693046478\" id=\"SvgjsLine1229\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2034.1090165362493\" y1=\"1424.2136104692454\" x2=\"2034.3003290952065\" y2=\"1426.706279621938\" id=\"SvgjsLine1230\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2025.845874263408\" y1=\"1417.1489024429695\" x2=\"2028.3127882724461\" y2=\"1417.646181144231\" id=\"SvgjsLine1231\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2013.0130696058154\" y1=\"1413.1694463712743\" x2=\"2015.3589412088959\" y2=\"1414.0804004077527\" id=\"SvgjsLine1232\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2001.0475701776209\" y1=\"1407.058491499868\" x2=\"2003.2035826999806\" y2=\"1408.3563978285927\" id=\"SvgjsLine1233\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1990.300386614466\" y1=\"1398.9953040738967\" x2=\"1992.2032929404736\" y2=\"1400.642088318768\" id=\"SvgjsLine1234\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1981.0867899801706\" y1=\"1389.216419522631\" x2=\"1982.680767921787\" y2=\"1391.163772894866\" id=\"SvgjsLine1235\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"1973.6770632186726\" y1=\"1378.0087036390787\" x2=\"1974.915353071981\" y2=\"1380.1995000864717\" id=\"SvgjsLine1236\" opacity=\"0\" stroke=\"#808080\" stroke-width=\"1\"></line><line x1=\"2001.783652210159\" y1=\"1274.2444273681847\" x2=\"2017.8138829381342\" y2=\"1266.7396487033686\" id=\"SvgjsLine1237\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1996.0596684827567\" y1=\"1262.0179802027799\" x2=\"2012.0898992107318\" y2=\"1254.5132015379638\" id=\"SvgjsLine1238\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1990.3356847553546\" y1=\"1249.791533037375\" x2=\"2006.3659154833297\" y2=\"1242.286754372559\" id=\"SvgjsLine1239\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1984.6117010279524\" y1=\"1237.5650858719703\" x2=\"2000.6419317559275\" y2=\"1230.0603072071542\" id=\"SvgjsLine1240\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1963.583090847644\" y1=\"1179.53349123378\" x2=\"1980.6997909297188\" y2=\"1175.0269872339716\" id=\"SvgjsLine1241\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1960.1459267799935\" y1=\"1166.4783810016888\" x2=\"1977.2626268620686\" y2=\"1161.9718770018803\" id=\"SvgjsLine1242\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1956.7087627123433\" y1=\"1153.4232707695976\" x2=\"1973.8254627944182\" y2=\"1148.916766769789\" id=\"SvgjsLine1243\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1953.2715986446929\" y1=\"1140.3681605375064\" x2=\"1970.388298726768\" y2=\"1135.8616565376979\" id=\"SvgjsLine1244\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1949.8344345770427\" y1=\"1127.3130503054151\" x2=\"1966.9511346591175\" y2=\"1122.8065463056066\" id=\"SvgjsLine1245\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"1946.3972705093922\" y1=\"1114.2579400733239\" x2=\"1963.5139705914671\" y2=\"1109.7514360735154\" id=\"SvgjsLine1246\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2115.0939715629966\" y1=\"1312.2826949423609\" x2=\"2119.5968646937185\" y2=\"1329.400345290855\" id=\"SvgjsLine1247\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2128.14980657456\" y1=\"1308.8482849274037\" x2=\"2132.6526997052815\" y2=\"1325.9659352758974\" id=\"SvgjsLine1248\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2141.205641586123\" y1=\"1305.4138749124459\" x2=\"2145.708534716845\" y2=\"1322.53152526094\" id=\"SvgjsLine1249\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2154.2614765976864\" y1=\"1301.9794648974885\" x2=\"2158.7643697284084\" y2=\"1319.0971152459826\" id=\"SvgjsLine1250\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2167.3173116092494\" y1=\"1298.545054882531\" x2=\"2171.8202047399714\" y2=\"1315.6627052310253\" id=\"SvgjsLine1251\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2180.373146620813\" y1=\"1295.1106448675737\" x2=\"2184.876039751535\" y2=\"1312.2282952160676\" id=\"SvgjsLine1252\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2193.4289816323762\" y1=\"1291.6762348526163\" x2=\"2197.9318747630978\" y2=\"1308.79388520111\" id=\"SvgjsLine1253\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2057.3186324740695\" y1=\"1416.9160952744066\" x2=\"2039.6705348730054\" y2=\"1418.2705881918241\" id=\"SvgjsLine1254\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2058.3517202924386\" y1=\"1430.3765086989465\" x2=\"2040.703622691375\" y2=\"1431.7310016163642\" id=\"SvgjsLine1255\" opacity=\"1\" stroke-width=\"2\" stroke=\"#9b9b9b\"></line><line x1=\"2059.384808110808\" y1=\"1443.8369221234866\" x2=\"2041.7367105097442\" y2=\"1445.191415040904\" id=\"SvgjsLine1256\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2060.4178959291776\" y1=\"1457.2973355480267\" x2=\"2042.7697983281137\" y2=\"1458.6518284654442\" id=\"SvgjsLine1257\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2061.4509837475466\" y1=\"1470.7577489725668\" x2=\"2043.802886146483\" y2=\"1472.112241889984\" id=\"SvgjsLine1258\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2062.484071565916\" y1=\"1484.2181623971067\" x2=\"2044.8359739648524\" y2=\"1485.5726553145241\" id=\"SvgjsLine1259\" opacity=\"1\" stroke-width=\"2\" stroke=\"#9b9b9b\"></line><line x1=\"2063.5171593842856\" y1=\"1497.6785758216465\" x2=\"2045.8690617832217\" y2=\"1499.0330687390642\" id=\"SvgjsLine1260\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2064.550247202655\" y1=\"1511.1389892461866\" x2=\"2046.9021496015912\" y2=\"1512.493482163604\" id=\"SvgjsLine1261\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line><line x1=\"2065.583335021024\" y1=\"1524.5994026707267\" x2=\"2047.9352374199605\" y2=\"1525.9538955881442\" id=\"SvgjsLine1262\" opacity=\"1\" stroke-width=\"2\" stroke=\"#000000\"></line></svg>",
+  "sequences": [
+   {
+    "className": "Sequence",
+    "id": "A Small Structure",
+    "bases": [
+     {
+      "className": "Base",
+      "textId": "SvgjsText1000",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1375"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1001"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1002"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1003"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1004",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1426"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1005"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1006",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1427"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1007"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1008",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1376"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1009"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1010"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1011"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1012",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1428"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1013"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1014"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1015",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1377"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1016"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1017",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1429"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1018"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1019",
+      "numbering": {
+       "className": "BaseNumbering",
+       "textId": "SvgjsText1124",
+       "lineId": "SvgjsLine1125"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1020",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1430"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1021",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1431"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1022"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1023",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1432"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1024"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1025",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1378"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1026",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1433"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1027"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1028",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1434"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1029",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1435"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1030",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1379"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1031"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1032"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1033",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1436"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1034"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1035",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1437"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1036",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1380"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1037",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1381"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1038"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1039",
+      "numbering": {
+       "className": "BaseNumbering",
+       "textId": "SvgjsText1126",
+       "lineId": "SvgjsLine1127"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1040"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1041",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1382"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1042",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1438"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1043"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1044"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1045",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1439"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1046",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1440"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1047"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1048"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1049",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1441"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1050"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1051"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1052",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1442"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1053"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1054",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1383"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1055",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1443"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1056"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1057"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1058",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1384"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1059",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1385"
+      },
+      "numbering": {
+       "className": "BaseNumbering",
+       "textId": "SvgjsText1128",
+       "lineId": "SvgjsLine1129"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1060"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1061"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1062",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1444"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1063",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1445"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1064"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1065"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1066",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1386"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1067"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1068"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1069"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1070",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1446"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1071",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1387"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1072"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1073",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1447"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1074"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1075",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1448"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1076"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1077",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1449"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1078",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1450"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1079",
+      "numbering": {
+       "className": "BaseNumbering",
+       "textId": "SvgjsText1130",
+       "lineId": "SvgjsLine1131"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1080",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1388"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1081",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1451"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1082"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1083",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1389"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1084",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1390"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1085",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1391"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1086"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1087",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1452"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1088"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1089",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1392"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1090"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1091"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1092",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1393"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1093"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1094",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1394"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1095"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1096",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1395"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1097"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1098"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1099",
+      "numbering": {
+       "className": "BaseNumbering",
+       "textId": "SvgjsText1132",
+       "lineId": "SvgjsLine1133"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1100"
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1101",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1453"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1102",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1396"
+      }
+     },
+     {
+      "className": "Base",
+      "textId": "SvgjsText1103",
+      "outline": {
+       "className": "CircleBaseAnnotation",
+       "circleId": "SvgjsCircle1397"
+      }
+     }
+    ],
+    "numberingOffset": 0,
+    "numberingAnchor": 0,
+    "numberingIncrement": 20
+   }
+  ],
+  "primaryBonds": [
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1134",
+    "baseId1": "SvgjsText1000",
+    "baseId2": "SvgjsText1001"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1135",
+    "baseId1": "SvgjsText1001",
+    "baseId2": "SvgjsText1002"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1136",
+    "baseId1": "SvgjsText1002",
+    "baseId2": "SvgjsText1003"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1137",
+    "baseId1": "SvgjsText1003",
+    "baseId2": "SvgjsText1004"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1138",
+    "baseId1": "SvgjsText1004",
+    "baseId2": "SvgjsText1005"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1139",
+    "baseId1": "SvgjsText1005",
+    "baseId2": "SvgjsText1006"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1140",
+    "baseId1": "SvgjsText1006",
+    "baseId2": "SvgjsText1007"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1141",
+    "baseId1": "SvgjsText1007",
+    "baseId2": "SvgjsText1008"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1142",
+    "baseId1": "SvgjsText1008",
+    "baseId2": "SvgjsText1009"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1143",
+    "baseId1": "SvgjsText1009",
+    "baseId2": "SvgjsText1010"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1144",
+    "baseId1": "SvgjsText1010",
+    "baseId2": "SvgjsText1011"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1145",
+    "baseId1": "SvgjsText1011",
+    "baseId2": "SvgjsText1012"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1146",
+    "baseId1": "SvgjsText1012",
+    "baseId2": "SvgjsText1013"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1147",
+    "baseId1": "SvgjsText1013",
+    "baseId2": "SvgjsText1014"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1148",
+    "baseId1": "SvgjsText1014",
+    "baseId2": "SvgjsText1015"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1149",
+    "baseId1": "SvgjsText1015",
+    "baseId2": "SvgjsText1016"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1150",
+    "baseId1": "SvgjsText1016",
+    "baseId2": "SvgjsText1017"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1151",
+    "baseId1": "SvgjsText1017",
+    "baseId2": "SvgjsText1018"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1152",
+    "baseId1": "SvgjsText1018",
+    "baseId2": "SvgjsText1019"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1153",
+    "baseId1": "SvgjsText1019",
+    "baseId2": "SvgjsText1020"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1154",
+    "baseId1": "SvgjsText1020",
+    "baseId2": "SvgjsText1021"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1155",
+    "baseId1": "SvgjsText1021",
+    "baseId2": "SvgjsText1022"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1156",
+    "baseId1": "SvgjsText1022",
+    "baseId2": "SvgjsText1023"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1157",
+    "baseId1": "SvgjsText1023",
+    "baseId2": "SvgjsText1024"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1158",
+    "baseId1": "SvgjsText1024",
+    "baseId2": "SvgjsText1025"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1159",
+    "baseId1": "SvgjsText1025",
+    "baseId2": "SvgjsText1026"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1160",
+    "baseId1": "SvgjsText1026",
+    "baseId2": "SvgjsText1027"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1161",
+    "baseId1": "SvgjsText1027",
+    "baseId2": "SvgjsText1028"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1162",
+    "baseId1": "SvgjsText1028",
+    "baseId2": "SvgjsText1029"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1163",
+    "baseId1": "SvgjsText1029",
+    "baseId2": "SvgjsText1030"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1164",
+    "baseId1": "SvgjsText1030",
+    "baseId2": "SvgjsText1031"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1165",
+    "baseId1": "SvgjsText1031",
+    "baseId2": "SvgjsText1032"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1166",
+    "baseId1": "SvgjsText1032",
+    "baseId2": "SvgjsText1033"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1167",
+    "baseId1": "SvgjsText1033",
+    "baseId2": "SvgjsText1034"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1168",
+    "baseId1": "SvgjsText1034",
+    "baseId2": "SvgjsText1035"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1169",
+    "baseId1": "SvgjsText1035",
+    "baseId2": "SvgjsText1036"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1170",
+    "baseId1": "SvgjsText1036",
+    "baseId2": "SvgjsText1037"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1171",
+    "baseId1": "SvgjsText1037",
+    "baseId2": "SvgjsText1038"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1172",
+    "baseId1": "SvgjsText1038",
+    "baseId2": "SvgjsText1039"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1173",
+    "baseId1": "SvgjsText1039",
+    "baseId2": "SvgjsText1040"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1174",
+    "baseId1": "SvgjsText1040",
+    "baseId2": "SvgjsText1041"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1175",
+    "baseId1": "SvgjsText1041",
+    "baseId2": "SvgjsText1042"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1176",
+    "baseId1": "SvgjsText1042",
+    "baseId2": "SvgjsText1043"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1177",
+    "baseId1": "SvgjsText1043",
+    "baseId2": "SvgjsText1044"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1178",
+    "baseId1": "SvgjsText1044",
+    "baseId2": "SvgjsText1045"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1179",
+    "baseId1": "SvgjsText1045",
+    "baseId2": "SvgjsText1046"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1180",
+    "baseId1": "SvgjsText1046",
+    "baseId2": "SvgjsText1047"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1181",
+    "baseId1": "SvgjsText1047",
+    "baseId2": "SvgjsText1048"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1182",
+    "baseId1": "SvgjsText1048",
+    "baseId2": "SvgjsText1049"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1183",
+    "baseId1": "SvgjsText1049",
+    "baseId2": "SvgjsText1050"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1184",
+    "baseId1": "SvgjsText1050",
+    "baseId2": "SvgjsText1051"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1185",
+    "baseId1": "SvgjsText1051",
+    "baseId2": "SvgjsText1052"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1186",
+    "baseId1": "SvgjsText1052",
+    "baseId2": "SvgjsText1053"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1187",
+    "baseId1": "SvgjsText1053",
+    "baseId2": "SvgjsText1054"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1188",
+    "baseId1": "SvgjsText1054",
+    "baseId2": "SvgjsText1055"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1189",
+    "baseId1": "SvgjsText1055",
+    "baseId2": "SvgjsText1056"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1190",
+    "baseId1": "SvgjsText1056",
+    "baseId2": "SvgjsText1057"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1191",
+    "baseId1": "SvgjsText1057",
+    "baseId2": "SvgjsText1058"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1192",
+    "baseId1": "SvgjsText1058",
+    "baseId2": "SvgjsText1059"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1193",
+    "baseId1": "SvgjsText1059",
+    "baseId2": "SvgjsText1060"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1194",
+    "baseId1": "SvgjsText1060",
+    "baseId2": "SvgjsText1061"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1195",
+    "baseId1": "SvgjsText1061",
+    "baseId2": "SvgjsText1062"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1196",
+    "baseId1": "SvgjsText1062",
+    "baseId2": "SvgjsText1063"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1197",
+    "baseId1": "SvgjsText1063",
+    "baseId2": "SvgjsText1064"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1198",
+    "baseId1": "SvgjsText1064",
+    "baseId2": "SvgjsText1065"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1199",
+    "baseId1": "SvgjsText1065",
+    "baseId2": "SvgjsText1066"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1200",
+    "baseId1": "SvgjsText1066",
+    "baseId2": "SvgjsText1067"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1201",
+    "baseId1": "SvgjsText1067",
+    "baseId2": "SvgjsText1068"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1202",
+    "baseId1": "SvgjsText1068",
+    "baseId2": "SvgjsText1069"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1203",
+    "baseId1": "SvgjsText1069",
+    "baseId2": "SvgjsText1070"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1204",
+    "baseId1": "SvgjsText1070",
+    "baseId2": "SvgjsText1071"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1205",
+    "baseId1": "SvgjsText1071",
+    "baseId2": "SvgjsText1072"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1206",
+    "baseId1": "SvgjsText1072",
+    "baseId2": "SvgjsText1073"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1207",
+    "baseId1": "SvgjsText1073",
+    "baseId2": "SvgjsText1074"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1208",
+    "baseId1": "SvgjsText1074",
+    "baseId2": "SvgjsText1075"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1209",
+    "baseId1": "SvgjsText1075",
+    "baseId2": "SvgjsText1076"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1210",
+    "baseId1": "SvgjsText1076",
+    "baseId2": "SvgjsText1077"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1211",
+    "baseId1": "SvgjsText1077",
+    "baseId2": "SvgjsText1078"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1212",
+    "baseId1": "SvgjsText1078",
+    "baseId2": "SvgjsText1079"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1213",
+    "baseId1": "SvgjsText1079",
+    "baseId2": "SvgjsText1080"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1214",
+    "baseId1": "SvgjsText1080",
+    "baseId2": "SvgjsText1081"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1215",
+    "baseId1": "SvgjsText1081",
+    "baseId2": "SvgjsText1082"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1216",
+    "baseId1": "SvgjsText1082",
+    "baseId2": "SvgjsText1083"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1217",
+    "baseId1": "SvgjsText1083",
+    "baseId2": "SvgjsText1084"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1218",
+    "baseId1": "SvgjsText1084",
+    "baseId2": "SvgjsText1085"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1219",
+    "baseId1": "SvgjsText1085",
+    "baseId2": "SvgjsText1086"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1220",
+    "baseId1": "SvgjsText1086",
+    "baseId2": "SvgjsText1087"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1221",
+    "baseId1": "SvgjsText1087",
+    "baseId2": "SvgjsText1088"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1222",
+    "baseId1": "SvgjsText1088",
+    "baseId2": "SvgjsText1089"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1223",
+    "baseId1": "SvgjsText1089",
+    "baseId2": "SvgjsText1090"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1224",
+    "baseId1": "SvgjsText1090",
+    "baseId2": "SvgjsText1091"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1225",
+    "baseId1": "SvgjsText1091",
+    "baseId2": "SvgjsText1092"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1226",
+    "baseId1": "SvgjsText1092",
+    "baseId2": "SvgjsText1093"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1227",
+    "baseId1": "SvgjsText1093",
+    "baseId2": "SvgjsText1094"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1228",
+    "baseId1": "SvgjsText1094",
+    "baseId2": "SvgjsText1095"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1229",
+    "baseId1": "SvgjsText1095",
+    "baseId2": "SvgjsText1096"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1230",
+    "baseId1": "SvgjsText1096",
+    "baseId2": "SvgjsText1097"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1231",
+    "baseId1": "SvgjsText1097",
+    "baseId2": "SvgjsText1098"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1232",
+    "baseId1": "SvgjsText1098",
+    "baseId2": "SvgjsText1099"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1233",
+    "baseId1": "SvgjsText1099",
+    "baseId2": "SvgjsText1100"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1234",
+    "baseId1": "SvgjsText1100",
+    "baseId2": "SvgjsText1101"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1235",
+    "baseId1": "SvgjsText1101",
+    "baseId2": "SvgjsText1102"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1236",
+    "baseId1": "SvgjsText1102",
+    "baseId2": "SvgjsText1103"
+   }
+  ],
+  "secondaryBonds": [
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1237",
+    "baseId1": "SvgjsText1003",
+    "baseId2": "SvgjsText1035"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1238",
+    "baseId1": "SvgjsText1004",
+    "baseId2": "SvgjsText1034"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1239",
+    "baseId1": "SvgjsText1005",
+    "baseId2": "SvgjsText1033"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1240",
+    "baseId1": "SvgjsText1006",
+    "baseId2": "SvgjsText1032"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1241",
+    "baseId1": "SvgjsText1012",
+    "baseId2": "SvgjsText1027"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1242",
+    "baseId1": "SvgjsText1013",
+    "baseId2": "SvgjsText1026"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1243",
+    "baseId1": "SvgjsText1014",
+    "baseId2": "SvgjsText1025"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1244",
+    "baseId1": "SvgjsText1015",
+    "baseId2": "SvgjsText1024"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1245",
+    "baseId1": "SvgjsText1016",
+    "baseId2": "SvgjsText1023"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1246",
+    "baseId1": "SvgjsText1017",
+    "baseId2": "SvgjsText1022"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1247",
+    "baseId1": "SvgjsText1043",
+    "baseId2": "SvgjsText1063"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1248",
+    "baseId1": "SvgjsText1044",
+    "baseId2": "SvgjsText1062"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1249",
+    "baseId1": "SvgjsText1045",
+    "baseId2": "SvgjsText1061"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1250",
+    "baseId1": "SvgjsText1046",
+    "baseId2": "SvgjsText1060"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1251",
+    "baseId1": "SvgjsText1047",
+    "baseId2": "SvgjsText1059"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1252",
+    "baseId1": "SvgjsText1048",
+    "baseId2": "SvgjsText1058"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1253",
+    "baseId1": "SvgjsText1049",
+    "baseId2": "SvgjsText1057"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1254",
+    "baseId1": "SvgjsText1071",
+    "baseId2": "SvgjsText1097"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1255",
+    "baseId1": "SvgjsText1072",
+    "baseId2": "SvgjsText1096"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1256",
+    "baseId1": "SvgjsText1073",
+    "baseId2": "SvgjsText1095"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1257",
+    "baseId1": "SvgjsText1074",
+    "baseId2": "SvgjsText1094"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1258",
+    "baseId1": "SvgjsText1075",
+    "baseId2": "SvgjsText1093"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1259",
+    "baseId1": "SvgjsText1076",
+    "baseId2": "SvgjsText1092"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1260",
+    "baseId1": "SvgjsText1077",
+    "baseId2": "SvgjsText1091"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1261",
+    "baseId1": "SvgjsText1078",
+    "baseId2": "SvgjsText1090"
+   },
+   {
+    "className": "StraightBond",
+    "lineId": "SvgjsLine1262",
+    "baseId1": "SvgjsText1079",
+    "baseId2": "SvgjsText1089"
+   }
+  ],
+  "tertiaryBonds": []
+ },
+ "generalLayoutProps": {
+  "className": "GeneralStrictLayoutProps",
+  "outermostLoopShape": "round",
+  "rotation": 0,
+  "basePairBondLength": 1.2,
+  "basePairPadding": 0,
+  "terminiGap": 4
+ },
+ "perBaseLayoutProps": [
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0.02015814334621008,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0.02015814334621008,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0.02015814334621008,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0.02015814334621008,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0.02015814334621008,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  },
+  {
+   "className": "PerBaseStrictLayoutProps",
+   "stretch3": 0,
+   "flatLoopAngle3": 0,
+   "flipStem": false,
+   "loopShape": "round",
+   "triangleLoopHeight": 4
+  }
+ ],
+ "baseWidth": 13.5,
+ "baseHeight": 13.5
+}

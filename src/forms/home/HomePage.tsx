@@ -1,10 +1,10 @@
 import { AppInterface as App } from '../../AppInterface';
 import * as React from 'react';
 import styles from './HomePage.css';
-import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
 import { Underline } from '../containers/Underline';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';
 import { OpenRna2drawer } from '../open/OpenRna2drawer';
+import { DrawingSlideshow } from '../drawingSlideshow/DrawingSlideshow';
 
 interface Props {
   app: App;
@@ -100,32 +100,60 @@ function HelpLinks() {
   );
 }
 
+function Slideshow() {
+  return (
+    <div
+      style={{
+        width: '960px',
+        height: '1440px',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <DrawingSlideshow style={{ width: '760px' }} />
+    </div>
+  );
+}
+
 export function HomePage(props: Props): React.ReactElement {
   return (
-    <FloatingDrawingsContainer
-      contained={
-        <div>
-          <div style={{ width: '960px', display: 'flex', flexDirection: 'column' }} >
-            <Header />
-            <div style={{ margin: '0px 72px', display: 'flex', flexDirection: 'column' }} >
-              <div style={{ marginTop: '24px' }} >
-                <Description />
-              </div>
-              <div style={{ marginTop: '72px', display: 'flex', flexDirection: 'row' }} >
-                <div style={{ margin: '0px 72px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
-                  <NewLink {...props} />
-                  <div style={{ flexGrow: 1 }} ></div>
-                  <OpenLink {...props} />
-                </div>
-              </div>
-              <div style={{ marginTop: '72px' }} >
-                <HelpLinks />
+    <div
+      className={styles.homePage}
+      style={{
+        width: '100vw',
+        height: '100%',
+        overflow: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <div style={{ flexGrow: 1 }} ></div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+        <div style={{ marginTop: '128px', width: '960px', display: 'flex', flexDirection: 'column' }} >
+          <Header />
+          <div style={{ margin: '0px 72px', display: 'flex', flexDirection: 'column' }} >
+            <div style={{ marginTop: '24px' }} >
+              <Description />
+            </div>
+            <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row' }} >
+              <div style={{ margin: '0px 72px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+                <NewLink {...props} />
+                <div style={{ flexGrow: 1 }} ></div>
+                <OpenLink {...props} />
               </div>
             </div>
+            <div style={{ marginTop: '64px' }} >
+              <HelpLinks />
+            </div>
           </div>
-          <div style={{ height: '176px' }} ></div>
         </div>
-      }
-    />
+        <div style={{ height: '64px' }} ></div>
+        <Slideshow />
+      </div>
+      <div style={{ flexGrow: 1 }} ></div>
+    </div>
   );
 }
