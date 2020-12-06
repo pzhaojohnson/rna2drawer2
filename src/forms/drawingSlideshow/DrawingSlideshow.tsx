@@ -38,7 +38,8 @@ export function DrawingSlideshow(props: Props) {
     if (nextIndex >= drawings.length) {
       nextIndex = 0;
     }
-    setTimeout(() => setIndex(nextIndex), 1000 * interval);
+    let timeoutId = setTimeout(() => setIndex(nextIndex), 1000 * interval);
+    return () => clearTimeout(timeoutId);
   });
   return (
     <img
