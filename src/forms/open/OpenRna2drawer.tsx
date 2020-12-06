@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import styles from './OpenRna2drawer.css';
-import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
+import { DrawingSlideshowContainer } from '../containers/DrawingSlideshowContainer';
 import { Underline } from '../containers/Underline';
 import { FileInput } from '../fields/FileInput';
 import { ErrorMessage } from '../ErrorMessage';
@@ -45,9 +45,9 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
   let [fileUploaded, setFileUploaded] = useState(false);
   let [errorMessage, setErrorMessage] = useState<string[]>([]);
   return (
-    <FloatingDrawingsContainer
+    <DrawingSlideshowContainer
       contained={
-        <div style={{ margin: '0px 20px', width: '920px', height: '548px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '920px', height: '548px', display: 'flex', flexDirection: 'column' }} >
           <Header />
           <div style={{ margin: '0px 102px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '32px' }} >

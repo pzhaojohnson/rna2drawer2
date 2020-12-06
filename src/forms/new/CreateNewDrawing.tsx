@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import errorMessageStyles from '../ErrorMessage.css';
 import { AppInterface as App } from '../../AppInterface';
-import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
+import { DrawingSlideshowContainer } from '../containers/DrawingSlideshowContainer';
 import { Underline } from '../containers/Underline';
 import { ExampleSelect } from './ExampleSelect';
 import { SequenceIdField } from './SequenceIdField';
@@ -74,9 +74,9 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
   let [errorMessageKey, setErrorMessageKey] = useState(0);
 
   return (
-    <FloatingDrawingsContainer
+    <DrawingSlideshowContainer
       contained={
-        <div style={{ margin: '0px 20px', width: '920px', height: '588px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '920px', height: '588px', display: 'flex', flexDirection: 'column' }} >
           <Header />
           <div style={{ margin: '0px 102px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '24px' }} >
