@@ -4,7 +4,7 @@ import styles from './HomePage.css';
 import { Underline } from '../containers/Underline';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';
 import { OpenRna2drawer } from '../open/OpenRna2drawer';
-import { DrawingSlideshow } from '../drawingSlideshow/DrawingSlideshow';
+import { DrawingSlideshow } from './drawingSlideshow/DrawingSlideshow';
 
 interface Props {
   app: App;
