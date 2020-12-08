@@ -137,7 +137,9 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                   className={errorMessageStyles.fadesIn}
                   style={{ fontSize: '14px', color: 'red' }}
                 >
-                  <b>{errorMessage}</b>
+                  <span style={{ fontWeight: 600 }} >
+                    {errorMessage}
+                  </span>
                 </p>
               </div>
             )}

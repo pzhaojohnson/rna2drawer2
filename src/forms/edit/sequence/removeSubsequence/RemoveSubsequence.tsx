@@ -58,7 +58,8 @@ export function RemoveSubsequence(props: Props): React.ReactElement {
             />
           </div>
           <p style={{ marginTop: '16px' }} >
-            <b>Note:</b> The numbering of bases must be updated manually after removing a subsequence.
+            <span style={{ fontWeight: 600 }} >Note:&nbsp;</span>
+            The numbering of bases must be updated manually after removing a subsequence.
           </p>
         </div>
       }

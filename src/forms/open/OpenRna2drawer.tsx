@@ -67,7 +67,8 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
             {fileExtension != 'rna2drawer' ? null : (
               <div className={styles.fadesIn} style={{ marginTop: '12px' }} >
                 <p className={'unselectable-text'} >
-                  <b>Note:</b> Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
+                  <span style={{ fontWeight: 600 }} >Note:&nbsp;</span>
+                  Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
                 </p>
                 <div style={{ margin: '6px 0px 0px 18px' }} >
                   <p className={'unselectable-text'} >

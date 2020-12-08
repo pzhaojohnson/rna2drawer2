@@ -232,7 +232,9 @@ class ExportSvg extends React.Component {
           color: 'red',
         }}
       >
-        <b>{this.state.errorMessage}</b>
+        <span style={{ fontWeight: 600 }} >
+          {this.state.errorMessage}
+        </span>
       </p>
     );
   }

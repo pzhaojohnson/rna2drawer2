@@ -37,7 +37,9 @@ export class ErrorMessage extends React.Component {
           color: 'red',
         }}
       >
-        <b>{this.props.message}</b>
+        <span style={{ fontWeight: 600 }} >
+          {this.props.message}
+        </span>
       </p>
     );
   }
