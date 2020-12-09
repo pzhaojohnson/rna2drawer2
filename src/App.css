@@ -28,7 +28,7 @@ p {
 }
 
 input[type=text] {
-  border: 1px solid rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,0,0,0.15);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
@@ -40,13 +40,13 @@ input[type=text] {
 }
 
 input[type=text]:hover {
-  border-color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.45);
   transition-duration: 0.25s;
 }
 
 input[type=text]:focus {
   outline: none;
-  border-color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.45);
 }
 
 input[type=text]::placeholder {
@@ -58,7 +58,7 @@ input[type=text]::-webkit-input-placeholder {
 }
 
 textarea {
-  border: 1px solid rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,0,0,0.15);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
@@ -71,13 +71,13 @@ textarea {
 }
 
 textarea:hover {
-  border-color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.45);
   transition-duration: 0.25s;
 }
 
 textarea:focus {
   outline: none;
-  border-color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.45);
 }
 
 textarea::placeholder {
@@ -112,7 +112,7 @@ button:focus {
 
 select {
   min-width: 160px;
-  border: 1px solid rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,0,0,0.15);
   margin: 0px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
@@ -123,13 +123,13 @@ select {
 }
 
 select:hover {
-  border-color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.45);
   transition-duration: 0.25s;
 }
 
 select:focus {
   outline: none;
-  border-color: rgba(0,0,0,0.5);
+  border-color: rgba(0,0,0,0.45);
 }
 
 img {
