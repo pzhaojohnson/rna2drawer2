@@ -73,7 +73,7 @@ export function FloatingDrawingsContainer(props: Props): React.ReactElement {
       }}
     >
       <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', alignItems: 'stretch' }} >
-        <div style={{ marginRight: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+        <div style={{ marginRight: '96px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1, flexBasis: '0px' }} ></div>
           <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
             <div
@@ -91,7 +91,7 @@ export function FloatingDrawingsContainer(props: Props): React.ReactElement {
         </div>
       </div>
       <div style={{ flexGrow: 1, flexBasis: '0px', display: 'flex', flexDirection: 'column' }} >
-        <div style={{ marginLeft: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+        <div style={{ marginLeft: '48px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1, flexBasis: '0px', overflow: 'hidden', position: 'relative' }} >
             <div
               className={browserIsFirefox ? undefined : styles.upperRightFloater}
