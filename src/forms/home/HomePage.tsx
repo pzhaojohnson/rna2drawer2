@@ -13,7 +13,7 @@ interface Props {
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <div style={{ margin: '0px 48px', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ margin: '0px 60px', display: 'flex', flexDirection: 'row' }} >
         <p style={{ fontSize: '32px' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
