@@ -47,7 +47,7 @@ class ExportPptx extends React.Component {
           backgroundColor: '#ffffff',
           borderWidth: '0px 0px 0px 1px',
           borderStyle: 'solid',
-          borderColor: 'rgba(0,0,0,0.2)',
+          borderColor: 'rgba(0,0,0,0.1)',
         }}
       >
         {this.closeButton()}
@@ -115,9 +115,9 @@ class ExportPptx extends React.Component {
       <div
         style={{
           height: '0px',
-          borderWidth: '0px 0px thin 0px',
+          borderWidth: '0px 0px 1px 0px',
           borderStyle: 'solid',
-          borderColor: '#bfbfbf',
+          borderColor: 'rgba(0,0,0,0.1)',
           margin: '8px 16px 0px 16px',
         }}
       ></div>
