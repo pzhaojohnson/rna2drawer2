@@ -1,11 +1,11 @@
-.homePage {
-  animation: enter 0.75s ease-in-out;
+.onTop {
+  animation: onTopEnter 0.75s ease-in-out;
 }
 
-@keyframes enter {
+@keyframes onTopEnter {
   0% {
     opacity: 0;
-    transform: scale(1.5);
+    transform: scale(0.75);
   }
   100% {
     opacity: 1;
@@ -25,4 +25,17 @@
 .helpLinks:hover {
   transition-duration: 0.4s;
   font-size: 18.4px;
+}
+
+.slideshow {
+  animation: slideshowEnter 1.5s ease-in-out;
+}
+
+@keyframes slideshowEnter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

@@ -103,9 +103,10 @@ function HelpLinks() {
 function Slideshow() {
   return (
     <div
+      className={styles.slideshow}
       style={{
         width: '960px',
-        height: '1440px',
+        height: '1600px',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
@@ -120,7 +121,6 @@ function Slideshow() {
 export function HomePage(props: Props): React.ReactElement {
   return (
     <div
-      className={styles.homePage}
       style={{
         width: '100vw',
         height: '100%',
@@ -132,7 +132,10 @@ export function HomePage(props: Props): React.ReactElement {
     >
       <div style={{ flexGrow: 1 }} ></div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
-        <div style={{ marginTop: '128px', width: '960px', display: 'flex', flexDirection: 'column' }} >
+        <div
+          className={styles.onTop}
+          style={{ marginTop: '120px', width: '960px', display: 'flex', flexDirection: 'column' }}
+        >
           <Header />
           <div style={{ margin: '0px 84px', display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '24px' }} >
@@ -150,7 +153,7 @@ export function HomePage(props: Props): React.ReactElement {
             </div>
           </div>
         </div>
-        <div style={{ height: '48px' }} ></div>
+        <div style={{ height: '60px' }} ></div>
         <Slideshow />
       </div>
       <div style={{ flexGrow: 1 }} ></div>
