@@ -21,7 +21,7 @@ export function Dropdown(props: Props): React.ReactElement {
           style={{
             borderWidth: '0px 1px 1px 1px',
             borderStyle: 'solid',
-            borderColor: 'rgba(0,0,0,0.15)',
+            borderColor: 'rgba(0,0,0,0.1)',
           }}
         >
           {props.dropped}
