@@ -17,7 +17,7 @@ p {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.85);
+  color: rgba(0,0,0,0.8);
 
   user-select: none;
   -webkit-user-select: none;
@@ -35,7 +35,7 @@ input[type=text] {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.85);
+  color: rgba(0,0,0,0.8);
   border-radius: 2px;
 }
 
@@ -65,7 +65,7 @@ textarea {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.85);
+  color: rgba(0,0,0,0.8);
   border-radius: 2px;
   resize: none;
 }
@@ -96,7 +96,7 @@ button {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.85);
+  color: rgba(0,0,0,0.8);
   border-radius: 2px;
   box-shadow: none;
 
@@ -118,7 +118,7 @@ select {
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.85);
+  color: rgba(0,0,0,0.8);
   border-radius: 2px;
 }
 

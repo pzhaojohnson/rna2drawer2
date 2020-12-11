@@ -37,8 +37,8 @@ class TopButton extends React.Component {
 TopButton.defaultProps = {
   backgroundColor: '#ffffff',
   disabled: false,
-  buttonColor: 'rgba(0,0,0,0.85)',
-  disabledButtonColor: '#808080',
+  buttonColor: 'rgba(0,0,0,0.8)',
+  disabledButtonColor: 'rgba(0,0,0,0.4)',
 };
 
 export default TopButton;

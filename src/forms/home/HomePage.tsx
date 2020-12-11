@@ -14,7 +14,7 @@ function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
       <div style={{ margin: '0px 60px', display: 'flex', flexDirection: 'row' }} >
-        <p style={{ fontSize: '32px' }} >RNA2Drawer</p>
+        <p style={{ fontSize: '32px', color: 'rgba(0,0,0,1)' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1 }} ></div>
@@ -36,7 +36,7 @@ function Description() {
 
 const newAndOpenLinkStyles = {
   fontSize: '24px',
-  color: 'rgba(0,0,255,0.85)',
+  color: 'rgba(0,0,255,0.8)',
   cursor: 'pointer',
 };
 

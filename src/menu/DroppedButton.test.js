@@ -104,6 +104,6 @@ describe('when disabled', () => {
       render(<DroppedButton disabled={true} />, container);
     });
     let b = getButton(container);
-    expect(b.style.color).toBe('rgb(128, 128, 128)');
+    expect(b.style.color).toBe('rgba(0, 0, 0, 0.4)');
   });
 });

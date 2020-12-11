@@ -99,6 +99,7 @@ class ExportSvg extends React.Component {
         style={{
           margin: '16px 32px 0px 32px',
           fontSize: '24px',
+          color: 'rgba(0,0,0,1)',
         }}
       >
         Export SVG

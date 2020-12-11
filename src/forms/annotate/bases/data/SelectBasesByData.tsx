@@ -100,7 +100,7 @@ export function SelectBasesByData(props: Props): React.ReactElement {
             />
           </div>
           <p style={{ marginTop: '16px' }} >
-            <span style={{ fontWeight: 600 }} >Note:&nbsp;</span>
+            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
             This form allows selecting bases in one range of data.
             Once selected, bases can be edited (e.g., colored and circled).
           </p>

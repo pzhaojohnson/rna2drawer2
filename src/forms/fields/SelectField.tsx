@@ -117,10 +117,10 @@ export function SelectField(props: Props): React.ReactElement {
             ...provided,
             backgroundColor: state.isSelected ? 'gray' : 'white',
             fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Open Sans',
-            color: state.isSelected ? 'white' : 'rgba(0,0,0,0.85)',
+            color: state.isSelected ? 'white' : 'rgba(0,0,0,0.8)',
             '&:hover': {
               backgroundColor: state.isSelected ? 'gray' : 'gainsboro',
-              color: state.isSelected ? 'white' : 'rgba(0,0,0,0.85)',
+              color: state.isSelected ? 'white' : 'rgba(0,0,0,0.8)',
             },
           }),
           singleValue: (provided, state) => ({
@@ -128,7 +128,7 @@ export function SelectField(props: Props): React.ReactElement {
             marginLeft: '7px',
             marginRight: '7px',
             fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Open Sans',
-            color: 'rgba(0,0,0,0.85)',
+            color: 'rgba(0,0,0,0.8)',
             overflow: 'visible',
           }),
         }}

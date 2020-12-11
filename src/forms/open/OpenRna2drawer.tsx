@@ -24,7 +24,7 @@ function updateDrawingTitle(app: App, fileName: string) {
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p style={{ margin: '0px 84px', fontSize: '24px' }} >
+      <p style={{ margin: '0px 84px', fontSize: '24px', color: 'rgba(0,0,0,1)' }} >
         Open an RNA2Drawer File
       </p>
       <Underline margin={'8px 0px 0px 0px'} />
@@ -67,7 +67,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
             {fileExtension != 'rna2drawer' ? null : (
               <div className={styles.fadesIn} style={{ marginTop: '12px' }} >
                 <p className={'unselectable-text'} >
-                  <span style={{ fontWeight: 600 }} >Note:&nbsp;</span>
+                  <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
                   Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
                 </p>
                 <div style={{ margin: '6px 0px 0px 18px' }} >

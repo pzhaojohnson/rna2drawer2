@@ -43,7 +43,7 @@ let examples = [
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p style={{ margin: '0px 84px', fontSize: '24px' }} >
+      <p style={{ margin: '0px 84px', fontSize: '24px', color: 'rgba(0,0,0,1)' }} >
         Create a New Drawing
       </p>
       <Underline margin={'8px 0px 0px 0px'} />

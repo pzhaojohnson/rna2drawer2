@@ -61,7 +61,7 @@ export function InsertSubsequence(props: Props): React.ReactElement {
             />
           </div>
           <p style={{ marginTop: '16px' }} >
-            <span style={{ fontWeight: 600 }} >Note:&nbsp;</span>
+            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
             The numbering of bases must be updated manually after inserting a subsequence.
           </p>
         </div>

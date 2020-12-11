@@ -58,7 +58,7 @@ export function SelectBasesByCharacter(props: Props): React.ReactElement {
             />
           </div>
           <p style={{ marginTop: '16px' }} >
-            <span style={{ fontWeight: 600}} >Note:&nbsp;</span>
+            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
             Once selected, bases can be edited (e.g., colored and circled).
           </p>
         </div>

@@ -30,7 +30,7 @@ export function ClosableContainer(props: Props): React.ReactElement {
         onClick={() => props.close()}
       />
       <div style={{ padding: '16px 32px 0px 32px'}} >
-        <p className={'unselectable-text'} style={{ fontSize: '24px' }} >
+        <p className={'unselectable-text'} style={{ fontSize: '24px', color: 'rgba(0,0,0,1)' }} >
           {props.title}
         </p>
       </div>

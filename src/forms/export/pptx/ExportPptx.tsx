@@ -103,6 +103,7 @@ class ExportPptx extends React.Component {
         style={{
           margin: '16px 32px 0px 32px',
           fontSize: '24px',
+          color: 'rgba(0,0,0,1)',
         }}
       >
         Export PPTX
@@ -260,7 +261,7 @@ class ExportPptx extends React.Component {
           fontSize: '12px',
         }}
       >
-        <span style={{ fontWeight: 600 }} >Note:&nbsp;</span>
+        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
         Exported PPTX files require PowerPoint 2016 or later to open.
       </p>
     );
@@ -275,7 +276,7 @@ class ExportPptx extends React.Component {
           fontSize: '12px',
         }}
       >
-        <span style={{ fontWeight: 600 }} >Note:&nbsp;</span>
+        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
         Tertiary bonds are included as SVG images in exported PPTX files
         and can be converted to PowerPoint objects via the "Convert to Shape" feature.
       </p>
@@ -291,7 +292,7 @@ class ExportPptx extends React.Component {
           fontSize: '12px',
         }}
       >
-        <span style={{ fontWeight: 600 }} >Note:&nbsp;</span>
+        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
         Large structures may take a while to export.
       </p>
     );
