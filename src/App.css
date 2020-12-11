@@ -28,7 +28,7 @@ p {
 }
 
 input[type=text] {
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.125);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
@@ -58,7 +58,7 @@ input[type=text]::-webkit-input-placeholder {
 }
 
 textarea {
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.125);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
@@ -112,7 +112,7 @@ button:focus {
 
 select {
   min-width: 160px;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.125);
   margin: 0px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
