@@ -1,4 +1,5 @@
 import * as React from 'react';
+import parsingDetailsStyles from './ParsingDetails.css';
 
 interface Props {
   initialValue: string;
@@ -15,7 +16,7 @@ export function SequenceField(props: Props): React.ReactElement {
           Sequence:
         </p>
         <p
-          className={'unselectable-text'}
+          className={parsingDetailsStyles.detailsToggle}
           onClick={() => props.toggleParsingDetails()}
           style={{
             marginRight: '4px',

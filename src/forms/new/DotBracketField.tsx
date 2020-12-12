@@ -1,4 +1,5 @@
 import * as React from 'react';
+import parsingDetailsStyles from './ParsingDetails.css';
 
 interface Props {
   initialValue: string;
@@ -21,7 +22,7 @@ export function DotBracketField(props: Props): React.ReactElement {
           (Optional)
         </p>
         <p
-          className={'unselectable-text'}
+          className={parsingDetailsStyles.detailsToggle}
           onClick={() => props.toggleParsingDetails()}
           style={{
             marginRight: '4px',

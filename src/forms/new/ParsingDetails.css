@@ -1,0 +1,4 @@
+.detailsToggle:hover {
+  transform: scale(1.15);
+  transition: transform 0.125s ease-in-out;
+}
