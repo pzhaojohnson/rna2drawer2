@@ -158,7 +158,7 @@ class ExportPptx extends React.Component {
       <p
         className={'unselectable-text'}
         style={{
-          margin: '6px 0px 0px 8px',
+          margin: '6px 0px 0px 12px',
           fontSize: '12px',
         }}
       >
