@@ -106,7 +106,7 @@ function Slideshow() {
       className={styles.slideshow}
       style={{
         width: '960px',
-        height: '1600px',
+        height: '1520px',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
