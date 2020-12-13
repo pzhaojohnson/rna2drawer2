@@ -14,7 +14,7 @@
 }
 
 .lowerLeftFloater {
-  animation: floatLowerLeft 36s linear infinite;
+  animation: floatLowerLeft 90s linear infinite;
 }
 
 @keyframes floatLowerLeft {
@@ -36,7 +36,7 @@
 }
 
 .upperRightFloater {
-  animation: floatUpperRight 54s linear infinite;
+  animation: floatUpperRight 90s linear infinite;
 }
 
 @keyframes floatUpperRight {

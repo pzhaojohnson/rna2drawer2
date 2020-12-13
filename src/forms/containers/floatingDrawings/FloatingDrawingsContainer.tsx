@@ -3,7 +3,7 @@ import styles from './FloatingDrawingsContainer.css';
 import lowerLeftDrawing from './lowerLeftDrawing.svg';
 import upperRightDrawing from './upperRightDrawing.svg';
 
-const drawingsOpacity = 0.25;
+const drawingsOpacity = 0.125;
 
 function LowerLeftDrawing() {
   return (
