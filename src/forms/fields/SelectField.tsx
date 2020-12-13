@@ -96,11 +96,11 @@ export function SelectField(props: Props): React.ReactElement {
             ...provided,
             margin: '0px 2px',
             padding: '0px',
-            color: state.isFocused ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.25)',
-            transform: state.isFocused ? 'scale(0.73125)' : 'scale(0.65)',
+            color: state.isFocused ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)',
+            transform: state.isFocused ? 'scale(0.765625)' : 'scale(0.625)',
             '&:hover': {
-              color: 'rgba(0,0,0,0.5)',
-              transform: 'scale(0.73125)',
+              color: 'rgba(0,0,0,0.8)',
+              transform: 'scale(0.765625)',
             },
           }),
           indicatorSeparator: (provided, state) => ({
