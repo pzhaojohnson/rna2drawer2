@@ -120,18 +120,8 @@ function Slideshow() {
 
 export function HomePage(props: Props): React.ReactElement {
   return (
-    <div
-      style={{
-        width: '100vw',
-        height: '100%',
-        overflow: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <div style={{ flexGrow: 1 }} ></div>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+    <div style={{ width: '100vw', height: '100%', overflow: 'auto' }} >
+      <div style={{ margin: '0px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
         <div
           className={styles.onTop}
           style={{ marginTop: '120px', width: '960px', display: 'flex', flexDirection: 'column' }}
@@ -156,7 +146,6 @@ export function HomePage(props: Props): React.ReactElement {
         <div style={{ height: '60px' }} ></div>
         <Slideshow />
       </div>
-      <div style={{ flexGrow: 1 }} ></div>
     </div>
   );
 }
