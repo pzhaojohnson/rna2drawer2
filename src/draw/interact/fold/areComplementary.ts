@@ -1,4 +1,5 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
+import { round } from '../../../math/round';
 
 const _COMPLEMENTS: { [key: string]: string[] } = {
   'A': ['U', 'T'],
@@ -52,7 +53,11 @@ export function areComplementary(mode: FoldingMode, chars1: string, chars2: stri
       numMismatches++;
     }
   }
-  return (numMismatches / chars1.length) <= mode.allowedMismatch;
+  let mismatch = round(
+    numMismatches / chars1.length,
+    mode.allowedMismatchPrecision,
+  );
+  return mismatch <= mode.allowedMismatch;
 }
 
 export default areComplementary;

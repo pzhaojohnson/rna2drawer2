@@ -15,6 +15,7 @@ export interface FoldingModeInterface {
 
   // allowed mismatch proportion in complements
   allowedMismatch: number;
+  readonly allowedMismatchPrecision: number;
 
   reset: () => void;
 

@@ -9,6 +9,7 @@ import {
   handleMouseup,
   reset,
 } from './handlers';
+import { round } from '../../../math/round';
 
 enum SubMode {
   pairingComplements,
@@ -30,6 +31,7 @@ class FoldingMode implements FoldingModeInterface {
 
   _includeGUT: boolean;
   _allowedMismatch: number;
+  readonly allowedMismatchPrecision: number;
   
   _disabled?: boolean;
   
@@ -42,6 +44,7 @@ class FoldingMode implements FoldingModeInterface {
 
     this._includeGUT = true;
     this._allowedMismatch = 0;
+    this.allowedMismatchPrecision = 6;
 
     this._setBindings();
   }
@@ -68,7 +71,7 @@ class FoldingMode implements FoldingModeInterface {
   }
 
   set allowedMismatch(am: number) {
-    this._allowedMismatch = am;
+    this._allowedMismatch = round(am, this.allowedMismatchPrecision);
     this.fireChange();
   }
 

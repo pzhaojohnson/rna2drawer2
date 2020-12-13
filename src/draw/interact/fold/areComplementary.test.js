@@ -43,7 +43,10 @@ it('can exclude GUT pairs', () => {
 });
 
 it('can allow some mismatch', () => {
+  mode.allowedMismatch = 0.6;
+  expect(areComplementary(mode, 'aaaggg', 'cggauu')).toBeTruthy();
   mode.allowedMismatch = 0.5;
+  // the mismatch is exactly the allowed mismatch
   expect(areComplementary(mode, 'aaaggg', 'cggauu')).toBeTruthy();
   mode.allowedMismatch = 0.4;
   expect(areComplementary(mode, 'aaaggg', 'cggauu')).toBeFalsy();

@@ -1,6 +1,7 @@
 import FoldingMode from './FoldingMode';
 import NodeSVG from '../../NodeSVG';
 import StrictDrawing from '../../StrictDrawing';
+import { round } from '../../../math/round';
 
 let sd = new StrictDrawing();
 sd.addTo(document.body, () => NodeSVG());
@@ -12,6 +13,14 @@ it('className getter', () => {
 
 it('strictDrawing getter', () => {
   expect(mode.strictDrawing).toBe(sd);
+});
+
+it('rounds allowed mismatch', () => {
+  let am = 5.19278391014;
+  mode.allowedMismatch = am;
+  let rounded = round(am, mode.allowedMismatchPrecision);
+  expect(am).not.toEqual(rounded);
+  expect(mode.allowedMismatch).toEqual(rounded);
 });
 
 it('switching between submodes', () => {
