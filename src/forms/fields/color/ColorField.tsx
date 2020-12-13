@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './ColorField.css';
 import { SketchPicker, ColorResult } from 'react-color';
 import ColorSet from './ColorSet';
 import RecentColorsList from './RecentColorsList';
@@ -90,20 +91,20 @@ export class ColorField extends React.Component {
   currentColorDisplay(): React.ReactElement {
     return (
       <div
+        className={styles.currentColorDisplay}
         onClick={() => this.togglePicker()}
         style={{
-          padding: '5px',
+          padding: '4px',
           background: '#ffffff',
-          borderRadius: '1px',
-          boxShadow: '0 0 0 1px rgba(0,0,0,0.2)',
+          borderRadius: '2px',
           display: 'inline-block',
           cursor: 'pointer',
         }}
       >
         <div
           style={{
-            width: '36px',
-            height: '14px',
+            width: '32px',
+            height: '12px',
             borderRadius: '2px',
             background: toRgbaString(this.state.value),
           }}
