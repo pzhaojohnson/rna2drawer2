@@ -18,7 +18,7 @@ function Header() {
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1 }} ></div>
-          <p style={{ fontSize: '12px' }} ><em>Last Updated on Nov. 29, 2020</em></p>
+          <p style={{ fontSize: '12px' }} ><em>Last Updated on Dec. 12, 2020</em></p>
         </div>
       </div>
       <Underline margin={'8px 0px 0px 0px'} />
