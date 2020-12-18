@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import CheckboxField from './CheckboxField';
+import { fireEvent } from '@testing-library/react';
+import { CheckboxField } from './CheckboxField';
 
 let container = null;
 
@@ -16,75 +17,80 @@ afterEach(() => {
   container = null;
 });
 
-function getComponent() {
-  return container.childNodes[0];
+function showsCheck() {
+  let check = container.getElementsByTagName('img')[0];
+  return check && check.alt == 'Check';
 }
 
-function getInput() {
-  return getComponent().childNodes[0];
+function hasCheckedStyles() {
+  return container.getElementsByClassName('checked').length == 1
+    && container.getElementsByClassName('unchecked').length == 0;
 }
 
-function getLabel() {
-  return getComponent().childNodes[1];
+function hasUncheckedStyles() {
+  return container.getElementsByClassName('checked').length == 0
+    && container.getElementsByClassName('unchecked').length == 1;
 }
 
-it('renders with given name', () => {
+function isChecked() {
+  return showsCheck() && hasCheckedStyles();
+}
+
+function isUnchecked() {
+  return !showsCheck() && hasUncheckedStyles();
+}
+
+function expectToBeChecked() {
+  expect(isChecked()).toBeTruthy();
+}
+
+function expectToBeUnchecked() {
+  expect(isUnchecked()).toBeTruthy();
+}
+
+it('renders with specified name', () => {
   act(() => {
-    render(<CheckboxField name={'blah blah'} />, container);
+    render(<CheckboxField name='Field Name' />, container);
   });
-  expect(getLabel().textContent).toBe('blah blah');
+  expect(container.textContent).toMatch(/Field Name/);
 });
 
-describe('renders with given value', () => {
-  it('can render with a true value', () => {
+it('can be checked', () => {
+  act(() => {
+    render(<CheckboxField initialValue={true} />, container);
+  });
+  expectToBeChecked();
+});
+
+it('can be unchecked', () => {
+  act(() => {
+    render(<CheckboxField initialValue={false} />, container);
+  });
+  expectToBeUnchecked();
+});
+
+it('changes value and calls set callback when clicked', () => {
+  let value = true;
+  let set = jest.fn();
+  act(() => {
+    render(
+      <CheckboxField name='asdf' initialValue={value} set={set} />,
+      container,
+    );
+  });
+  
+  // any part of the field can be clicked
+  let parts = container.childNodes[0].getElementsByTagName('*');
+
+  // click multiple times
+  expect(parts.length).toBeGreaterThan(1);
+
+  for (let i = 0; i < parts.length; i++) {
     act(() => {
-      render(<CheckboxField initialValue={true} />, container);
+      fireEvent.click(parts[i], { bubbles: true });
     });
-    expect(getInput().checked).toBeTruthy();
-  });
-
-  it('can render with a false value', () => {
-    act(() => {
-      render(<CheckboxField initialValue={false} />, container);
-    });
-    expect(getInput().checked).toBeFalsy();
-  });
-});
-
-it('can toggle from true to false', () => {
-  let set = jest.fn();
-  act(() => {
-    render(<CheckboxField initialValue={true} set={set} />, container);
-    getInput().dispatchEvent(new Event('click', { bubbles: true }));
-  });
-  // calls set callback
-  expect(set).toHaveBeenCalled();
-  expect(set.mock.calls[0][0]).toBe(false);
-});
-
-it('can toggle from false to true', () => {
-  let set = jest.fn();
-  act(() => {
-    render(<CheckboxField initialValue={false} set={set} />, container);
-    getInput().dispatchEvent(new Event('click', { bubbles: true }));
-  });
-  // calls set callback
-  expect(set).toHaveBeenCalled();
-  expect(set.mock.calls[0][0]).toBe(true);
-});
-
-it('can toggle multiple times', () => {
-  let set = jest.fn();
-  act(() => render(<CheckboxField initialValue={false} set={set} />, container));
-  expect(set).not.toHaveBeenCalled();
-  act(() => getInput().dispatchEvent(new Event('click', { bubbles: true })));
-  expect(set.mock.calls[0][0]).toBe(true);
-  act(() => getInput().dispatchEvent(new Event('click', { bubbles: true })));
-  expect(set.mock.calls[1][0]).toBe(false);
-  act(() => getInput().dispatchEvent(new Event('click', { bubbles: true })));
-  expect(set.mock.calls[2][0]).toBe(true);
-  act(() => getInput().dispatchEvent(new Event('click', { bubbles: true })));
-  expect(set.mock.calls[3][0]).toBe(false);
-  act(() => getInput().dispatchEvent(new Event('click', { bubbles: true })));
-  expect(set.mock.calls[4][0]).toBe(true);
+    value = !value;
+    value ? expectToBeChecked() : expectToBeUnchecked();
+    expect(set.mock.calls[i][0]).toBe(value);
+  }
 });

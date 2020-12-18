@@ -1,4 +1,17 @@
 import * as React from 'react';
+import { useState } from 'react';
+import check from './check.svg';
+import styles from './CheckboxField.css';
+
+function Check() {
+  return (
+    <img
+      src={check}
+      alt='Check'
+      style={{ width: '10px' }}
+    />
+  );
+}
 
 interface Props {
   name: string;
@@ -6,48 +19,35 @@ interface Props {
   set: (v: boolean) => void;
 }
 
-export class CheckboxField extends React.Component {
-  static defaultProps: Props;
+export function CheckboxField(props: Props): React.ReactElement {
+  let [value, setValue] = useState(props.initialValue);
 
-  props!: Props;
-  state: {
-    value: boolean;
+  function handleClick() {
+    let isNowChecked = !value;
+    setValue(isNowChecked);
+    props.set(isNowChecked);
   }
 
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      value: this.props.initialValue,
-    };
-  }
-
-  render(): React.ReactElement {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type={'checkbox'}
-          checked={this.props.initialValue}
-          onChange={() => this.onChange()}
-        />
-        <p className={'unselectable-text'} style={{ marginLeft: '6px', fontSize: '12px' }} >
-          {this.props.name}
+  return (
+    <div className={styles.container} >
+      {/* Wrap in another div so that it is not stretched
+      when the field is in a flex container. */}
+      <div className={styles.clickable} onClick={handleClick} >
+        {/* The static box prevents the label from moving when the
+        check box is scaled and unscaled. */}
+        <div className={styles.staticBox} >
+          <div className={styles.scalingBox} >
+            <div className={`${styles.checkBox} ${value ? styles.checked : styles.unchecked}`} >
+              {value ? <Check /> : null}
+            </div>
+          </div>
+        </div>
+        <p className={styles.label} >
+          {props.name}
         </p>
       </div>
-    );
-  }
-
-  onChange() {
-    let value = !this.state.value;
-    this.setState({ value: value });
-    this.props.set(value);
-  }
+    </div>
+  );
 }
-
-CheckboxField.defaultProps = {
-  name: '*** Missing Name ***',
-  initialValue: false,
-  set: () => console.error('Missing set callback.'),
-};
 
 export default CheckboxField;

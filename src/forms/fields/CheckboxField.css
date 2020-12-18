@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.clickable {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.staticBox {
+  width: 14px;
+  height: 14px;
+}
+
+.scalingBox {
+  width: 14px;
+  height: 14px;
+}
+
+.checkBox {
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checked {
+  width: 14px;
+  height: 14px;
+  border: none;
+  background-color: #333333;
+}
+
+.unchecked {
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(0,0,0,0.2);
+  background-color: white;
+}
+
+.label {
+  margin-left: 6px;
+  font-size: 12px;
+}
+
+.clickable:hover .scalingBox {
+  transform: scale(1.15);
+  transition: all 0.125s ease-in-out;
+}

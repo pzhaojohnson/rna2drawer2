@@ -10,6 +10,36 @@ interface Props {
   ignoreNonAlphanumerics: (b: boolean) => void;
 }
 
+export function IgnoreNumbersCheckbox(props: Props): React.ReactElement {
+  return (
+    <CheckboxField
+      name={'Ignore Numbers'}
+      initialValue={props.ignoringNumbers}
+      set={b => props.ignoreNumbers(b)}
+    />
+  );
+}
+
+export function IgnoreNonAugctLettersCheckbox(props: Props): React.ReactElement {
+  return (
+    <CheckboxField
+      name={'Ignore Non-AUGCT Letters'}
+      initialValue={props.ignoringNonAugctLetters}
+      set={b => props.ignoreNonAugctLetters(b)}
+    />
+  );
+}
+
+export function IgnoreNonAlphanumericsCheckbox(props: Props): React.ReactElement {
+  return (
+    <CheckboxField
+      name={'Ignore Non-Alphanumerics'}
+      initialValue={props.ignoringNonAlphanumerics}
+      set={b => props.ignoreNonAlphanumerics(b)}
+    />
+  );
+}
+
 export function SequenceParsingDetails(props: Props): React.ReactElement {
   return (
     <div style={{ width: '360px', margin: '16px 0px 0px 12px' }} >
@@ -21,25 +51,13 @@ export function SequenceParsingDetails(props: Props): React.ReactElement {
           All letters, numbers, and non-alphanumeric characters are read in as individual bases, unless specified to be ignored below:
         </p>
         <div style={{ marginTop: '8px' }} >
-          <CheckboxField
-            name={'Ignore Numbers'}
-            initialValue={props.ignoringNumbers}
-            set={b => props.ignoreNumbers(b)}
-          />
+          <IgnoreNumbersCheckbox {...props} />
         </div>
         <div style={{ marginTop: '4px' }} >
-          <CheckboxField
-            name={'Ignore Non-AUGCT Letters'}
-            initialValue={props.ignoringNonAugctLetters}
-            set={b => props.ignoreNonAugctLetters(b)}
-          />
+          <IgnoreNonAugctLettersCheckbox {...props} />
         </div>
         <div style={{ marginTop: '4px' }} >
-          <CheckboxField
-            name={'Ignore Non-Alphanumerics'}
-            initialValue={props.ignoringNonAlphanumerics}
-            set={b => props.ignoreNonAlphanumerics(b)}
-          />
+          <IgnoreNonAlphanumericsCheckbox {...props} />
         </div>
         <p className={'unselectable-text'} style={{ marginTop: '10px', fontSize: '12px' }}>
           All whitespace is ignored.
