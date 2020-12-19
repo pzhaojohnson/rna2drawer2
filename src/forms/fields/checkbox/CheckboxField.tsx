@@ -49,5 +49,3 @@ export function CheckboxField(props: Props): React.ReactElement {
     </div>
   );
 }
-
-export default CheckboxField;

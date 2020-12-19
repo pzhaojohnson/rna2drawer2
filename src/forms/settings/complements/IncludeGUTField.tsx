@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CheckboxField from '../../fields/CheckboxField';
+import { CheckboxField } from '../../fields/checkbox/CheckboxField';
 import { AppInterface as App } from '../../../AppInterface';
 
 export function IncludeGUTField(app: App): React.ReactElement {

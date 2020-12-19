@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
-import CheckboxField from '../../fields/CheckboxField';
+import { CheckboxField } from '../../fields/checkbox/CheckboxField';
 import baseOutlines from './baseOutlines';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 

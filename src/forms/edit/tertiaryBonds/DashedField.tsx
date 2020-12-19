@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CheckboxField } from '../../fields/CheckboxField';
+import { CheckboxField } from '../../fields/checkbox/CheckboxField';
 import { TertiaryBondInterface } from '../../../draw/QuadraticBezierBondInterface';
 import { TertiaryBond } from '../../../draw/QuadraticBezierBond';
 

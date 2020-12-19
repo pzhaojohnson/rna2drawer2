@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IntegerField } from '../../../fields/text/IntegerField';
 import { TextareaField } from '../../../fields/text/TextareaField';
-import { CheckboxField } from '../../../fields/CheckboxField';
+import { CheckboxField } from '../../../fields/checkbox/CheckboxField';
 
 interface Inputs {
   insertPosition: number;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../../AppInterface';
 import { isBold } from '../../../fields/font/isBold';
-import { CheckboxField } from '../../../fields/CheckboxField';
+import { CheckboxField } from '../../../fields/checkbox/CheckboxField';
 
 interface Props {
   app: App;

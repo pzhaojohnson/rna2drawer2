@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CheckboxField } from '../../fields/CheckboxField';
+import { CheckboxField } from '../../fields/checkbox/CheckboxField';
 import { FieldProps } from './FieldProps';
 import { getAtIndex } from '../../../array/getAtIndex';
 import { isBold } from '../../fields/font/isBold';
