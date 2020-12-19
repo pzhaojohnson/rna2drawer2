@@ -4,7 +4,7 @@ import { AppInterface as App } from '../../AppInterface';
 import styles from './OpenRna2drawer.css';
 import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
 import { Underline } from '../containers/Underline';
-import { FileInput } from '../fields//file/FileInput';
+import { FileField } from '../fields//file/FileField';
 import { ErrorMessage } from '../ErrorMessage';
 import { ActionButton } from '../buttons/ActionButton';
 import { open } from './open';
@@ -51,7 +51,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
           <Header />
           <div style={{ margin: '0px 108px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '32px' }} >
-              <FileInput
+              <FileField
                 onLoadStart={() => {
                   setAttemptedFileUpload(true);
                   setErrorMessage([]);

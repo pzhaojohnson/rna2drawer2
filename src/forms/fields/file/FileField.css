@@ -1,0 +1,20 @@
+.clickable {
+  cursor: pointer;
+}
+
+.folderIcon {
+  width: 36px;
+  cursor: pointer;
+}
+
+.label {
+  margin-left: 6px;
+  min-width: 160px;
+  cursor: pointer;
+}
+
+.clickable:hover {
+  transform: scale(1.25);
+  transform-origin: center left;
+  transition: transform 0.2s ease-in-out;
+}
