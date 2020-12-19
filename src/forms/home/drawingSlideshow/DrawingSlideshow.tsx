@@ -31,7 +31,7 @@ interface Props {
 
 export function DrawingSlideshow(props: Props) {
   let [index, setIndex] = useState(pickRandomIndex());
-  let interval = 8;
+  let interval = 6;
   useEffect(() => {
     let nextIndex = pickRandomIndex();
     if (nextIndex == index) {
