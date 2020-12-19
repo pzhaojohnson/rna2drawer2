@@ -1,5 +1,5 @@
 import * as React from 'react';
-import parseFileExtension from '../../parse/parseFileExtension';
+import parseFileExtension from '../../../parse/parseFileExtension';
 
 interface FileProps {
   name: string;

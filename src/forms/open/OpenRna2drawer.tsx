@@ -4,7 +4,7 @@ import { AppInterface as App } from '../../AppInterface';
 import styles from './OpenRna2drawer.css';
 import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
 import { Underline } from '../containers/Underline';
-import { FileInput } from '../fields/FileInput';
+import { FileInput } from '../fields//file/FileInput';
 import { ErrorMessage } from '../ErrorMessage';
 import { ActionButton } from '../buttons/ActionButton';
 import { open } from './open';
