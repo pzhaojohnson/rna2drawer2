@@ -88,6 +88,7 @@ export function FileField(props: Props): React.ReactElement {
         <p
           className={styles.label}
           style={{
+            marginLeft: fileName ? '6px' : '8px',
             fontSize: fileName ? '14px' : '16px',
             fontStyle: fileName ? 'normal' : 'italic',
             color: fileName ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.6)',
