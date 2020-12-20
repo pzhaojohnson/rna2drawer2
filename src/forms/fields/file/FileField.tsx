@@ -88,8 +88,9 @@ export function FileField(props: Props): React.ReactElement {
         <p
           className={styles.label}
           style={{
-            fontSize: fileName ? '12px' : '14px',
+            fontSize: fileName ? '14px' : '16px',
             fontStyle: fileName ? 'normal' : 'italic',
+            color: fileName ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.6)',
           }}
         >
           {fileName ? fileName : 'Upload a file...'}
