@@ -14,7 +14,7 @@
 }
 
 .clickable:hover .folderIcon {
-  transform: scale(1.25);
+  transform: scale(1.225);
   filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
   transition: all 0.25s ease-in-out;
 }
