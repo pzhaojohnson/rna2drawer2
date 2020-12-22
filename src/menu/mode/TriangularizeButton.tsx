@@ -9,7 +9,7 @@ interface Props {
 export function TriangularizeButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      text={'Triangularize Loops'}
+      text={'(Un)Flatten Loops'}
       onClick={() => {
         if (!props.app.strictDrawingInteraction.triangularizing()) {
           props.app.strictDrawingInteraction.startTriangularizing();
