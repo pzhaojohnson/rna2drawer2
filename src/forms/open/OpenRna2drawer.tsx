@@ -47,7 +47,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
   return (
     <FloatingDrawingsContainer
       contained={
-        <div style={{ width: '920px', height: '532px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '920px', height: '524px', display: 'flex', flexDirection: 'column' }} >
           <Header />
           <div style={{ margin: '0px 116px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '32px' }} >
