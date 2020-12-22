@@ -96,7 +96,7 @@ function HelpLinks() {
   return (
     <div style={{ minHeight: '28px' }} >
       <p style={{ fontSize: '16px' }} >
-        Questions? Email <EmailLink /> or visit the <GitHubPageLink />.
+        Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink />.
       </p>
     </div>
   );
