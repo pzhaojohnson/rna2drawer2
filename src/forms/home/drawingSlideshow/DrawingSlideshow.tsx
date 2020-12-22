@@ -9,6 +9,8 @@ import drawing3 from './drawing3.svg';
 import drawing4 from './drawing4.svg';
 import drawing5 from './drawing5.svg';
 import drawing6 from './drawing6.svg';
+import drawing7 from './drawing7.svg';
+import drawing8 from './drawing8.svg';
 
 const drawings = [
   drawing1,
@@ -17,6 +19,8 @@ const drawings = [
   drawing4,
   drawing5,
   drawing6,
+  drawing7,
+  drawing8,
 ];
 
 function pickRandomIndex() {
