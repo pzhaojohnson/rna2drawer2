@@ -100,16 +100,16 @@ export function Fields(props: Props): React.ReactElement {
         Unless specified to be ignored below,
         all letters, numbers and non-alphanumeric characters are read in as individual bases.
       </p>
-      <div style={{ margin: '8px 0px 0px 8px' }} >
+      <div style={{ margin: '6px 0px 0px 6px' }} >
         <IgnoreNumbersField {...props} />
-        <div style={{ marginTop: '4px' }} >
+        <div style={{ marginTop: '6px' }} >
           <IgnoreNonAugctLettersField {...props} />
         </div>
-        <div style={{ marginTop: '4px' }} >
+        <div style={{ marginTop: '6px' }} >
           <IgnoreNonAlphanumericsField {...props} />
         </div>
       </div>
-      <p style={{ marginTop: '8px' }} >
+      <p style={{ marginTop: '6px' }} >
         All whitespace is ignored.
       </p>
     </div>
