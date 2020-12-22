@@ -16,6 +16,12 @@ function Header() {
       <div style={{ margin: '0px 60px', display: 'flex', flexDirection: 'row' }} >
         <p style={{ fontSize: '32px', color: 'rgba(0,0,0,1)' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
+          <div style={{ flexGrow: 1 }} ></div>
+          <p style={{ fontStyle: 'italic', color: 'rgba(0,0,0,0.6)' }} >
+            Last Updated on Dec. 22, 2020
+          </p>
+        </div>
       </div>
       <Underline margin={'8px 0px 0px 0px'} />
     </div>
