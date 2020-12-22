@@ -33,7 +33,7 @@ export function SequenceField(props: Props): React.ReactElement {
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}
         placeholder={
-          ' ...an RNA or DNA sequence, e.g., "AUGCAUUACGUA"\n\n'
+          '...an RNA or DNA sequence, e.g., "AUGCAUUACGUA"'
           + ' ...parsing parameters are to the right'
         }
         style={{
