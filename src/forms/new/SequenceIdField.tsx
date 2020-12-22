@@ -20,7 +20,7 @@ export function SequenceIdField(props: Props): React.ReactElement {
         value={props.initialValue}
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}
-        placeholder={' ...the name of your sequence'}
+        placeholder={'...the name of your sequence'}
         style={{ flexGrow: 1 }}
       />
     </div>
