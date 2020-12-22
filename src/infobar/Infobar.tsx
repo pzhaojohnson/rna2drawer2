@@ -19,7 +19,7 @@ export function Infobar(props: Props): React.ReactElement | null {
           height: '26px',
           borderWidth: '1px 0px 0px 0px',
           borderStyle: 'solid',
-          borderColor: 'rgba(0,0,0,0.125)',
+          borderColor: 'rgba(0,0,0,0.2)',
           backgroundColor: '#ffffff',
           display: 'flex',
           flexDirection: 'row',

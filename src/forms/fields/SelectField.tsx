@@ -76,11 +76,12 @@ export function SelectField(props: Props): React.ReactElement {
             boxSizing: 'border-box',
             borderStyle: 'solid',
             borderWidth: '1px',
-            borderColor: state.isFocused ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.125)',
+            borderColor: state.isFocused ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.2)',
             borderRadius: '2px',
             boxShadow: 'none',
+            cursor: 'pointer',
             '&:hover': {
-              borderColor: 'rgba(0,0,0,0.5)',
+              borderColor: 'rgba(0,0,0,0.8)',
             },
           }),
           valueContainer: (provided, state) => ({
@@ -96,18 +97,19 @@ export function SelectField(props: Props): React.ReactElement {
             ...provided,
             margin: '0px 2px',
             padding: '0px',
-            color: state.isFocused ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.4)',
-            transform: state.isFocused ? 'scale(0.765625)' : 'scale(0.625)',
+            color: 'rgba(0,0,0,0.8)',
+            transform: state.isFocused ? 'scale(0.735)' : 'scale(0.6)',
             '&:hover': {
               color: 'rgba(0,0,0,0.8)',
-              transform: 'scale(0.765625)',
+              transform: 'scale(0.735)',
+              transition: 'all 0.25s ease-in-out',
             },
           }),
           indicatorSeparator: (provided, state) => ({
             ...provided,
             marginTop: '6px',
             marginBottom: '6px',
-            backgroundColor: 'rgba(0,0,0,0.125)',
+            backgroundColor: 'rgba(0,0,0,0.1)',
           }),
           menu: (provided, state) => ({
             ...provided,
@@ -118,6 +120,7 @@ export function SelectField(props: Props): React.ReactElement {
             backgroundColor: state.isSelected ? 'gray' : 'white',
             fontFamily: props.valuesAreFontFamilies ? state.data.value : 'Open Sans',
             color: state.isSelected ? 'white' : 'rgba(0,0,0,0.8)',
+            cursor: 'pointer',
             '&:hover': {
               backgroundColor: state.isSelected ? 'gray' : 'gainsboro',
               color: state.isSelected ? 'white' : 'rgba(0,0,0,0.8)',

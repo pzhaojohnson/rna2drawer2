@@ -12,7 +12,7 @@ export function Underline(props: Props): React.ReactElement {
         height: '0px',
         borderWidth: '0px 0px 1px 0px',
         borderStyle: 'solid',
-        borderColor: 'rgba(0,0,0,0.125)',
+        borderColor: 'rgba(0,0,0,0.2)',
       }}
     ></div>
   );
