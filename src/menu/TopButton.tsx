@@ -22,7 +22,7 @@ class TopButton extends React.Component {
         style={{
           border: 'none',
           margin: '0px',
-          padding: '6px 8px 6px 8px',
+          padding: '6px 10px 6px 10px',
           fontSize: '12px',
           backgroundColor: this.props.backgroundColor,
           color: this.props.disabled ? this.props.disabledButtonColor : this.props.buttonColor,

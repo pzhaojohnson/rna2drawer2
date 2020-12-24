@@ -6,13 +6,13 @@
   display: none;
   position: absolute;
   top: -1px;
-  left: 200px;
+  left: 220px;
   z-index: 1;
 }
 
 .dropped button {
   display: block;
-  min-width: 200px;
+  min-width: 220px;
   margin: 0px;
   padding: 6px 8px 6px 8px;
   font-size: 12px;
