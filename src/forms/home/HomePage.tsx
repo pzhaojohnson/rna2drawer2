@@ -19,10 +19,10 @@ function Header() {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1 }} ></div>
           <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.6)', textAlign: 'right' }} >
-            Last Updated on Dec. 22, 2020
+            Developed by Philip Johnson and Anne Simon
           </p>
           <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.6)', textAlign: 'right' }} >
-            Developed by Philip Johnson and Anne Simon
+            Last Updated on Dec. 22, 2020
           </p>
         </div>
       </div>
