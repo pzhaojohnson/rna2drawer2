@@ -6,8 +6,9 @@ import RecentColorsList from './RecentColorsList';
 import * as Svg from '@svgdotjs/svg.js';
 
 export const PRESET_COLORS = new ColorSet([
-  '#D0021B', '#F5A623', '#F8E71C', '#8B572A', '#7ED321', '#417505', '#BD10E0', '#9013FE',
-  '#4A90E2', '#50E3C2', '#B8E986', '#000000', '#4A4A4A', '#9B9B9B', '#FFFFFF',
+  '#800000', '#FF0000', '#F5A623', '#FFF000', '#C56200', '#8B572A', '#194D33', '#228B22',
+  '#7ED321', '#B8E986', '#FDA1FF', '#BD10E0', '#9013FE', '#4A148C', '#111DD6', '#009CE0',
+  '#73D8FF', '#50E3C2', '#000000', '#4A4A4A', '#9B9B9B', '#D3D3D3', '#FFFFFF',
 ]);
 
 export interface ColorAndOpacity {
@@ -169,7 +170,7 @@ export class ColorField extends React.Component {
 // this seems to be the default...
 let colorsPerRow = 8;
 
-let maxRecents = colorsPerRow + (colorsPerRow - (PRESET_COLORS.size % colorsPerRow));
+let maxRecents = (2 * colorsPerRow) + (colorsPerRow - (PRESET_COLORS.size % colorsPerRow));
 ColorField.recentColors = new RecentColorsList(maxRecents);
 
 export default ColorField;
