@@ -13,13 +13,16 @@ interface Props {
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <div style={{ margin: '0px 60px', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ margin: '0px 64px', display: 'flex', flexDirection: 'row' }} >
         <p style={{ fontSize: '32px', color: 'rgba(0,0,0,1)' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1 }} ></div>
-          <p style={{ fontStyle: 'italic', color: 'rgba(0,0,0,0.6)' }} >
+          <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.6)', textAlign: 'right' }} >
             Last Updated on Dec. 22, 2020
+          </p>
+          <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.6)', textAlign: 'right' }} >
+            Developed by Philip Johnson and Anne Simon
           </p>
         </div>
       </div>
@@ -31,7 +34,7 @@ function Header() {
 function Description() {
   return (
     <p style={{ fontSize: '16px' }} >
-      A tool for drawing and exploring nucleic acid structures...
+      A web app for drawing and exploring nucleic acid structures...
     </p>
   );
 }
@@ -96,7 +99,7 @@ function HelpLinks() {
   return (
     <div style={{ minHeight: '28px' }} >
       <p style={{ fontSize: '16px' }} >
-        Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink />.
+        Questions or comments? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
       </p>
     </div>
   );
@@ -126,26 +129,26 @@ export function HomePage(props: Props): React.ReactElement {
       <div style={{ margin: '0px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
         <div
           className={styles.onTop}
-          style={{ marginTop: '120px', width: '960px', display: 'flex', flexDirection: 'column' }}
+          style={{ marginTop: '128px', width: '960px', display: 'flex', flexDirection: 'column' }}
         >
           <Header />
-          <div style={{ margin: '0px 84px', display: 'flex', flexDirection: 'column' }} >
-            <div style={{ marginTop: '24px' }} >
+          <div style={{ margin: '0px 96px', display: 'flex', flexDirection: 'column' }} >
+            <div style={{ marginTop: '32px' }} >
               <Description />
             </div>
-            <div style={{ marginTop: '60px', display: 'flex', flexDirection: 'row' }} >
-              <div style={{ margin: '0px 60px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+            <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row' }} >
+              <div style={{ margin: '0px 64px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
                 <NewLink {...props} />
                 <div style={{ flexGrow: 1 }} ></div>
                 <OpenLink {...props} />
               </div>
             </div>
-            <div style={{ marginTop: '60px' }} >
+            <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
               <HelpLinks />
             </div>
           </div>
         </div>
-        <div style={{ height: '60px' }} ></div>
+        <div style={{ height: '48px' }} ></div>
         <Slideshow />
       </div>
     </div>
