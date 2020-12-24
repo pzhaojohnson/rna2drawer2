@@ -25,7 +25,7 @@ export function DroppedSeparator(props: Props): React.ReactElement {
           borderWidth: '0px 0px 1px 0px',
           borderStyle: 'solid',
           borderColor: 'rgba(0,0,0,0.2)',
-          margin: '0px 4px 0px 4px',
+          margin: '0px 6px 0px 6px',
         }}
       ></div>
     </div>
