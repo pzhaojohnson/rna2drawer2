@@ -15,7 +15,7 @@ interface Props {
 export function ExpandButton(props: Props): React.ReactElement {
   return (
     <DroppedButton
-      text={'Pivot Stems (Expand)'}
+      text={'Drag Stems (Expand)'}
       onClick={() => {
         if (!alreadyExpanding(props.app)) {
           let interaction = props.app.strictDrawingInteraction;
