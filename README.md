@@ -18,7 +18,7 @@ If you have questions or experience issues, open an issue thread here on GitHub 
 General comments and feature requests are also welcome!
 
 <p align="center" >
-  <img src="./demo/example1.svg" width="800px" />
+  <img src="./demo/example1.svg" width="760px" />
 </p>
 
 ## Creating a New Drawing
@@ -63,25 +63,25 @@ Modes control how you interact with the bases of a drawing.
 ### Drag Stems
 
 <p align="center" >
-  <img src="./demo/dragging.gif" width="880px" />
+  <img src="./demo/dragging.gif" width="760px" />
 </p>
 
 ### Pair
 
 <p align="center" >
-  <img src="./demo/pairing.gif" width="880px" />
+  <img src="./demo/pairing.gif" width="760px" />
 </p>
 
 ### Flatten Loops and Flip Stems
 
 <p align="center" >
-  <img src="./demo/flatteningAndFlipping.gif" width="880px" />
+  <img src="./demo/flatteningAndFlipping.gif" width="760px" />
 </p>
 
 ### Edit Bases
 
 <p align="center" >
-  <img src="./demo/editingBases.gif" width="880px" />
+  <img src="./demo/editingBases.gif" width="760px" />
 </p>
 
 ## Line Drawings
