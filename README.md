@@ -94,7 +94,10 @@ The below drawing is an example of a line drawing.
 
 The following attributes give it the appearance of a line drawing.
 
-
+&nbsp;&nbsp;&nbsp;&nbsp;Font size of `9` for bases.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Line width of `9` and padding of `0` for primary bonds.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;An outline with radius of `4` and line width of `1` for all bases.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;All bases and primary bonds and the strokes and fills of all outlines have a color of `#999999`.
 
 ## Exporting Your Drawing
 
@@ -125,6 +128,8 @@ in vector graphics editors and PowerPoint.
 though most operating systems have apps for taking screenshots
 of the whole screen or just a portion of the screen,
 such as the Snipping Tool on Windows.
+
+<em>How do I create a line drawing?</em> See section on [line drawings](#line-drawings)
 
 ## Funding
 
