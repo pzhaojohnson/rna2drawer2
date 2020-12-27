@@ -1,7 +1,8 @@
 # RNA2Drawer 2
 
-A [web app](https://rna2drawer2.app) for creating 2-D drawings of nucleic acid structures.
-The layout, bonds and styling (e.g., colors and fonts) of a drawing are all highly customizable.
+A [web app](https://rna2drawer.app) for creating 2-D drawings of nucleic acid structures.
+The layout, bonds and styling (e.g., colors and fonts) of a drawing
+can all be easily customized within the app.
 Drawings are exported in PPTX and SVG formats
 such that all elements of a drawing (e.g., bases and bonds)
 are exported as individual PPTX and SVG objects,
