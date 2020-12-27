@@ -89,7 +89,7 @@ Modes control how you interact with the bases of a drawing.
 The below drawing is an example of a line drawing.
 
 <p align="center" >
-  <img src="./demo/lineDrawing.svg" width="600px" />
+  <img src="./demo/lineDrawing.svg" width="560px" />
 </p>
 
 The following attributes give it the appearance of a line drawing.
