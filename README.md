@@ -4,7 +4,7 @@ A [web app](https://rna2drawer2.app) for creating 2-D drawings of nucleic acid s
 The layout, bonds and styling of a drawing can all be customized within the app.
 Drawings are exported in PPTX and SVG formats
 such that all elements of a drawing (e.g., bases and bonds)
-are their own PPTX and SVG objects,
+are individual PPTX and SVG objects,
 allowing for even further manipulation in PowerPoint and vector graphics editors such as Adobe Illustrator.
 
 This project is a successor to the [first version](https://github.com/pzhaojohnson/RNA2Drawer#rna2drawer) of RNA2Drawer,
@@ -84,6 +84,13 @@ Modes control how you interact with the bases of a drawing.
   <img src="./demo/editingBases.gif" width="880px" />
 </p>
 
+## Line Drawings
+
+<p align="center" >
+  <img src="./demo/lineDrawing.svg" width="480px" />
+</p>
+
+
 ## Exporting Your Drawing
 
 Drawings may be exported in SVG and PPTX formats.
@@ -104,6 +111,15 @@ For example, bases are exported as text boxes
 and primary and secondary bonds are exported as line objects.
 This allows for further manipulation of the drawing
 in vector graphics editors and PowerPoint.
+
+## Frequently Asked Questions
+
+<em>How do I delete a tertiary bond?</em> When selecting a tertiary bond, press the `Delete` key.
+
+<em>How do I take a screenshot?</em> The app itself cannot take a screenshot,
+though most operating systems have apps for taking screenshots
+of the whole screen or just a portion of the screen,
+such as the Snipping Tool on Windows.
 
 ## Funding
 
