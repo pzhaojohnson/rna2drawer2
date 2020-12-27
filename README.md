@@ -37,8 +37,8 @@ General comments and feature requests are also welcome!
 
 ## Creating a New Drawing
 
-The form to create a new drawing can be accessed via the link on the home page
-or via `File`: `New`.
+Open the form to create a new drawing via the link on the home page
+or via the `File`: `New` menu button.
 In the form,
 enter the sequence and the ID of the sequence
 for your new drawing.
@@ -55,14 +55,14 @@ for the sequence and structure.
 
 ## Saving a Drawing and Opening a Saved Drawing
 
-Clicking the `File`: `Save` button will download a file with `.rna2drawer2` extension,
+Clicking the `File`: `Save` menu button will download a file with `.rna2drawer2` extension,
 which contains a complete representation of your now saved drawing.
 By default your web browser will place the file in your downloads folder,
 though this can be changed in your browser settings.
 
 To open a saved drawing,
 navigate to the form to do so via the link on the home page
-or via `File`: `Open`
+or via `File`: `Open` menu button
 and upload the saved file with `.rna2drawer2` extension.
 
 <b><em>Opening a saved drawing from the first version of RNA2Drawer.</em></b>
@@ -73,10 +73,20 @@ a note will appear listing the aspects of the drawing that will be preserved.
 
 ## Modes
 
-The mode that you are in controls how you interact with the bases of a drawing.
-The different modes are described below.
+Modes control how you interact with the bases of a drawing.
+Modes can be toggled on and off via the `Mode` dropdown.
 
 ### Dragging Stems
+
+In the `Drag Stems` mode,
+stems can be dragged around circular loops and along flat loops.
+Additionally, stems in a flat loop can be dragged vertically
+to adjust the height of the loop.
+
+By default, the unpaired bases that a stem is being dragged towards
+are compressed.
+This behavior is turned off
+in the `Drag Stems (Expand)` mode.
 
 <p align="center" >
   <img src="./demo/dragging.gif" width="760px" />
@@ -84,16 +94,48 @@ The different modes are described below.
 
 ### Pairing Bases
 
+Bases can be paired and unpaired in the `Force Pair` mode.
+To select a subsequence of bases,
+click on a base and drag the mouse over the other bases
+that you would like to select.
+The selected bases will be highlighted in yellow.
+Clicking on another subsequence of bases
+will pair it with the selected bases.
+
+If a pairing can be added to the secondary structure without forming knots,
+secondary bonds will be created to form the pairing.
+Otherwise, tertiary bonds will be created to form the pairing.
+If you only want to create tertiary bonds,
+turn on the `Add Tertiary Bonds` mode.
+
+To remove secondary bonds,
+select bases that are in secondary bonds
+and click them again.
+Bases will be highlighted in red
+when clicking them will remove secondary bonds.
+Note that secondary bonds cannot be removed
+in the `Add Tertiary Bonds` mode.
+
+Additionally, in the `Pair Complements` mode,
+subsequences that are complementary to the selected subsequence
+will be highlighted in blue,
+making it easier to find pairing partners.
+Clicking on a highlighted complement
+will form the pairing.
+
+Parameters controlling the highlighting of complements
+can be customized in the `Complement Rules` form
+accessible via the `Settings` dropdown.
+
 <p align="center" >
   <img src="./demo/pairing.gif" width="760px" />
 </p>
 
 ### Flattening Loops and Flipping Stems
 
-The mode to flatten loops can be turned on
-via the `Mode`: `Flatten and Unflatten Loops` menu button.
-Clicking on a loop will flatten or unflatten it,
-though hairpin loops cannot be flattened.
+In the `Flatten and Unflatten Loops` mode,
+clicking on a loop will flatten or unflatten it.
+Note that hairpin loops cannot be flattened.
 
 As shown below,
 flattening a loop
@@ -102,13 +144,13 @@ Notably, stems in a flat loop can be dragged vertically
 to change the height of the loop.
 
 <em>Flattening a loop with only one inner stem
-will also keep the inner stem parallel to the outer stem of the loop,
-which makes it easy to "straighten" loops.</em>
+will also keep the inner stem parallel to the outer stem of the loop.
+This is an easy way to "straighten" loops
+with only one inner stem.</em>
 
-The mode to flip stems can be turned on
-via the `Mode`: `Flip Stems` menu button.
-In this mode, clicking on a stem will flip it
-around its bottommost base pair.
+In the `Flip Stems` mode,
+clicking on a stem will flip it
+over its bottommost base pair.
 
 <p align="center" >
   <img src="./demo/flatteningAndFlipping.gif" width="760px" />
@@ -116,8 +158,7 @@ around its bottommost base pair.
 
 ### Editing Bases
 
-This mode can be turned on via the `Mode`: `Edit Bases` menu button.
-In this mode, clicking on a base will select it
+In the `Edit Bases` mode, clicking on a base will select it
 and clicking on other bases will add them to your selection.
 Multiple bases can be selected at once by clicking on a base
 and dragging the mouse over other bases.
@@ -127,7 +168,7 @@ Clicking on a selected base will also unselect that individual base.
 
 Turning on this mode will open the form to edit bases.
 To reopen this form if it has been closed,
-select a base and the form will reopen.
+select a base and the form will be reopened.
 
 In the form,
 you can set the colors of bases
@@ -213,7 +254,7 @@ See section on [line drawings](#line-drawings)
 
 <em>Is there an easy way to "straighten" loops with only one inner stem?</em>
 Flattening loops with only one inner stem effectively "straightens" them.
-See section on [flattening loops mode](#flattening-loops-and-flipping-stems).
+See section on the [flattening loops mode](#flattening-loops-and-flipping-stems).
 
 ## Funding
 
