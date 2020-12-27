@@ -21,6 +21,19 @@ General comments and feature requests are also welcome!
   <img src="./demo/example1.svg" width="760px" />
 </p>
 
+&nbsp;&nbsp;&nbsp;&nbsp;[Creating a New Drawing](#creating-a-new-drawing)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Opening a Saved Drawing](#saving-a-drawing-and-opening-a-saved-drawing)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Saving a Drawing](#saving-a-drawing-and-opening-a-saved-drawing)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Modes](#modes)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Drag Stems](#drag-stems)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Pair](#pair)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Flatten Loops and Flip Stems](#flatten-loops-and-flip-stems)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Edit Bases](#edit-bases)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Line Drawings](#line-drawings)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Exporting Your Drawing](#exporting-your-drawing)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Frequently Asked Questions](#frequently-asked-questions)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Funding](#funding)
+
 ## Creating a New Drawing
 
 The form to create a new drawing can be accessed via the link on the home page
