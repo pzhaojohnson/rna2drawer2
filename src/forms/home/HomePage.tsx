@@ -88,7 +88,7 @@ function GitHubPageLink() {
   return (
     <a
       className={styles.helpLinks}
-      href='https://github.com/pzhaojohnson/rna2drawer2#rna2drawer-2'
+      href='https://github.com/pzhaojohnson/rna2drawer2/blob/master/README.md'
     >
       GitHub page
     </a>
