@@ -116,7 +116,7 @@ class Sequence implements SequenceInterface {
     this._id = id;
     this._bases = [];
     this._numberingOffset = 0;
-    this._numberingAnchor = 0;
+    this._numberingAnchor = 20;
     this._numberingIncrement = 20;
   }
 
@@ -421,7 +421,7 @@ class Sequence implements SequenceInterface {
 }
 
 Sequence._mostRecentProps = {
-  numberingAnchor: 0,
+  numberingAnchor: 20,
   numberingIncrement: 20,
 };
 
