@@ -22,7 +22,7 @@ function Header() {
             Developed by Philip Johnson and Anne Simon
           </p>
           <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.6)', textAlign: 'right' }} >
-            Last Updated on Dec. 22, 2020
+            Last Updated on Dec. 28, 2020
           </p>
         </div>
       </div>
