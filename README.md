@@ -19,7 +19,7 @@ If you have questions or experience issues, open an issue thread here on GitHub 
 General comments and feature requests are also welcome!
 
 <p align="center" >
-  <img src="./demo/example1.svg" width="760px" />
+  <img src="./demo/example1.svg" width="800px" />
 </p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;[Creating a New Drawing](#creating-a-new-drawing)<br>
@@ -90,7 +90,7 @@ This behavior is turned off
 in the `Drag Stems (Expand)` mode.
 
 <p align="center" >
-  <img src="./demo/dragging.gif" width="760px" />
+  <img src="./demo/dragging.gif" width="880px" />
 </p>
 
 ### Pairing Bases
@@ -129,7 +129,7 @@ can be customized in the `Complement Rules` form
 accessible via the `Settings` dropdown.
 
 <p align="center" >
-  <img src="./demo/pairing.gif" width="760px" />
+  <img src="./demo/pairing.gif" width="880px" />
 </p>
 
 ### Flattening Loops and Flipping Stems
@@ -154,7 +154,7 @@ clicking on a stem will flip it
 over its bottommost base pair.
 
 <p align="center" >
-  <img src="./demo/flatteningAndFlipping.gif" width="760px" />
+  <img src="./demo/flatteningAndFlipping.gif" width="880px" />
 </p>
 
 ### Editing Bases
@@ -180,7 +180,7 @@ Additionally, when only one base is selected,
 the character of the base can be set.
 
 <p align="center" >
-  <img src="./demo/editingBases.gif" width="760px" />
+  <img src="./demo/editingBases.gif" width="880px" />
 </p>
 
 ## Editing Tertiary Bonds
@@ -208,7 +208,7 @@ such as line width and base paddings.
 Below is an example of a line drawing.
 
 <p align="center" >
-  <img src="./demo/lineDrawing.svg" width="560px" />
+  <img src="./demo/lineDrawing.svg" width="600px" />
 </p>
 
 The following attributes give it the appearance of a line drawing.
