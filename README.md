@@ -30,6 +30,7 @@ General comments and feature requests are also welcome!
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Pairing Bases](#pairing-bases)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Flattening Loops and Flipping Stems](#flattening-loops-and-flipping-stems)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Editing Bases](#editing-bases)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Editing Tertiary Bonds](#editing-tertiary-bonds)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Line Drawings](#line-drawings)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Exporting Your Drawing](#exporting-your-drawing)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Frequently Asked Questions](#frequently-asked-questions)<br>
@@ -181,6 +182,26 @@ the character of the base can be set.
 <p align="center" >
   <img src="./demo/editingBases.gif" width="760px" />
 </p>
+
+## Editing Tertiary Bonds
+
+Clicking on a tertiary bond will select it.
+Multiple tertiary bonds can be selected
+by clicking on them in succession.
+To unselect tertiary bonds,
+click anywhere on the drawing that is not a tertiary bond.
+
+To adjust the curve of a tertiary bond,
+click on the tertiary bond and drag the mouse.
+
+Double-clicking a tertiary bond
+will open the form to edit tertiary bonds.
+This form can also be opened
+via the `Edit`: `Tertiary Bonds` menu button.
+In the form,
+the colors of tertiary bonds can be set
+along with other parameters
+such as line width and base paddings.
 
 ## Line Drawings
 
