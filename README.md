@@ -264,6 +264,9 @@ when only one base is selected,
 the character of the base can be set.
 See section on the [editing bases mode](#editing-bases).
 
+<em>How many undos and redos are possible?</em>
+Up to 60 undos and 60 redos are possible.
+
 <em>How do I take a screenshot?</em>
 The app itself cannot take screenshots,
 though most operating systems have apps for taking screenshots
