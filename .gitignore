@@ -5,3 +5,5 @@ dist/*
 !dist/logo.png
 
 coverage
+
+.DS_Store
