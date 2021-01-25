@@ -10,6 +10,7 @@ import {
   GutStrokeField,
   OtherStrokeField,
 } from './StrokeFields';
+import { BaseSpacingField } from './BaseSpacingField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { PaddingField } from './PaddingField';
 
@@ -43,6 +44,7 @@ export function EditSecondaryBonds(props: Props): React.ReactElement {
   let sbsByType = getSecondaryBondsByType(props.app.strictDrawing.drawing);
   let allSbs = [...sbsByType.aut, ...sbsByType.gc, ...sbsByType.gut, ...sbsByType.other];
   let fieldProps = {
+    app: props.app,
     getSecondaryBondsByType: () => ({ ...sbsByType }),
     getAllSecondaryBonds: () => [...allSbs],
     pushUndo: () => props.app.pushUndo(),
@@ -77,6 +79,9 @@ export function EditSecondaryBonds(props: Props): React.ReactElement {
                 <OtherStrokeField {...fieldProps} />
               </div>
             )}
+            <div style={{ marginBottom: '8px' }} >
+              <BaseSpacingField {...fieldProps} />
+            </div>
             <div style={{ marginBottom: '8px' }} >
               <StrokeWidthField {...fieldProps} />
             </div>
