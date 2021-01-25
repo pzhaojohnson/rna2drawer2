@@ -14,14 +14,14 @@ function getFirstPadding(sbs: SecondaryBond[]): number | undefined {
   }
 }
 
-export function PaddingField(props: FieldProps): React.ReactElement | null {
+export function BasePaddingField(props: FieldProps): React.ReactElement | null {
   let sbs = props.getAllSecondaryBonds();
   if (sbs.length == 0) {
     return null;
   } else {
     return (
       <NonnegativeNumberField
-        name='Padding'
+        name='Base Padding'
         initialValue={getFirstPadding(sbs)}
         set={p => {
           let sbs = props.getAllSecondaryBonds();
