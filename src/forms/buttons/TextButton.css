@@ -1,0 +1,9 @@
+.textButton {
+  font-size: 12px;
+  color: blue;
+}
+
+.textButton:hover {
+  transform: scale(1.15);
+  transition-duration: 0.25s;
+}
