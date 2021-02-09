@@ -59,6 +59,19 @@ module.exports = {
     ]
   },
   resolve: {
+    alias: {
+      Array: path.resolve(__dirname, 'src/array/'),
+      Draw: path.resolve(__dirname, 'src/draw/'),
+      Export: path.resolve(__dirname, 'src/export/'),
+      Forms: path.resolve(__dirname, 'src/forms/'),
+      Icons: path.resolve(__dirname, 'src/icons/'),
+      Infobar: path.resolve(__dirname, 'src/infobar/'),
+      Math: path.resolve(__dirname, 'src/math/'),
+      Menu: path.resolve(__dirname, 'src/menu/'),
+      Parse: path.resolve(__dirname, 'src/parse/'),
+      Undo: path.resolve(__dirname, 'src/undo/'),
+      Wait: path.resolve(__dirname, 'src/wait/')
+    },
     modules: ['node_modules'],
     extensions: [ '.tsx', '.ts', '.js' ]
   }
