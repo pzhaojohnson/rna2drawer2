@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './ActionButton.css';
+import styles from './SolidButton.css';
 
 interface Props {
   text: string;
@@ -7,10 +7,10 @@ interface Props {
   disabled?: boolean;
 }
 
-export function ActionButton(props: Props): React.ReactElement {
+export function SolidButton(props: Props): React.ReactElement {
   return (
     <button
-      className={`${styles.actionButton} ${props.disabled ? styles.disabled : styles.enabled}`}
+      className={`${styles.solidButton} ${props.disabled ? styles.disabled : styles.enabled}`}
       onClick={props.disabled ? undefined : () => props.onClick()}
     >
       {props.text}

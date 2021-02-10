@@ -10,7 +10,7 @@ import { SequenceField } from './SequenceField';
 import { SequenceParsingDetails } from './SequenceParsingDetails';
 import { DotBracketField } from './DotBracketField';
 import { DotBracketParsingDetails } from './DotBracketParsingDetails';
-import { ActionButton } from '../buttons/ActionButton';
+import { SolidButton } from '../buttons/SolidButton';
 import { parseInputs } from './parseInputs';
 
 let examples = [
@@ -144,7 +144,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
               </div>
             )}
             <div style={{ marginTop: errorMessage ? '6px' : '24px' }} >
-              <ActionButton
+              <SolidButton
                 text={'Submit'}
                 onClick={() => {
                   let parsed = parseInputs({

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import errorMessageStyles from '../../ErrorMessage.css';
 import { CloseButton } from '../../buttons/CloseButton';
-import { ActionButton } from '../../buttons/ActionButton';
+import { SolidButton } from '../../buttons/SolidButton';
 const uuidv1 = require('uuid/v1');
 import Base from '../../../draw/Base';
 import { formatSvgForExport } from '../../../export/formatSvgForExport';
@@ -243,7 +243,7 @@ class ExportSvg extends React.Component {
   exportSection() {
     return (
       <div style={{ margin: '6px 40px 0px 40px' }} >
-        <ActionButton text={'Export'} onClick={() => this.export()} />
+        <SolidButton text={'Export'} onClick={() => this.export()} />
       </div>
     );
   }

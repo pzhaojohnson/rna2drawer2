@@ -6,7 +6,7 @@ import { StartPositionField } from './StartPositionField';
 import { DataField } from './DataField';
 import { DataRangeField } from './DataRangeField';
 import { ErrorMessage } from '../../../ErrorMessage';
-import { ActionButton } from '../../../buttons/ActionButton';
+import { SolidButton } from '../../../buttons/SolidButton';
 import { positionsToSelect } from './positionsToSelect';
 
 interface Props {
@@ -75,7 +75,7 @@ export function SelectBasesByData(props: Props): React.ReactElement {
             {errorMessage.join('') ? <ErrorMessage message={errorMessage.join('')} /> : null}
           </div>
           <div style={{ marginTop: '6px' }} >
-            <ActionButton
+            <SolidButton
               text={'Select'}
               onClick={() => {
                 let ps = positionsToSelect(props.app.strictDrawing.drawing, {

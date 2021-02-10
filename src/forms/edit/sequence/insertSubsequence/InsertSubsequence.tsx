@@ -4,7 +4,7 @@ import { AppInterface as App } from '../../../../AppInterface';
 import { ClosableContainer } from '../../../containers/ClosableContainer';
 import { Fields } from './Fields';
 import { ErrorMessage } from '../../../ErrorMessage';
-import { ActionButton } from '../../../buttons/ActionButton';
+import { SolidButton } from '../../../buttons/SolidButton';
 import { cannotInsert, insert } from './insert';
 
 interface Props {
@@ -44,7 +44,7 @@ export function InsertSubsequence(props: Props): React.ReactElement {
             {errorMessage.join('') ? <ErrorMessage message={errorMessage.join('')} /> : null}
           </div>
           <div style={{ marginTop: '6px' }} >
-            <ActionButton
+            <SolidButton
               text={'Insert'}
               onClick={() => {
                 let message = cannotInsert(props.app.strictDrawing, inputs);

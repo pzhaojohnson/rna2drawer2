@@ -6,7 +6,7 @@ import { FloatingDrawingsContainer } from '../containers/floatingDrawings/Floati
 import { Underline } from '../containers/Underline';
 import { FileField } from '../fields//file/FileField';
 import { ErrorMessage } from '../ErrorMessage';
-import { ActionButton } from '../buttons/ActionButton';
+import { SolidButton } from '../buttons/SolidButton';
 import { open } from './open';
 import { removeFileExtension } from '../../parse/parseFileExtension';
 
@@ -84,7 +84,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
               </div>
             )}
             <div style={{ marginTop: errorMessage.join('') ? '6px' : fileExtension == 'rna2drawer' ? '24px' : '32px' }} >
-              <ActionButton
+              <SolidButton
                 text={'Submit'}
                 onClick={() => {
                   if (!fileUploaded) {

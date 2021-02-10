@@ -4,7 +4,7 @@ import { AppInterface as App } from '../../../../AppInterface';
 import { ClosableContainer } from '../../../containers/ClosableContainer';
 import { CharacterField } from './CharacterField';
 import { ErrorMessage } from '../../../ErrorMessage';
-import { ActionButton } from '../../../buttons/ActionButton';
+import { SolidButton } from '../../../buttons/SolidButton';
 import { positionsWithCharacter } from './positionsWithCharacter';
 
 interface Props {
@@ -38,7 +38,7 @@ export function SelectBasesByCharacter(props: Props): React.ReactElement {
             {errorMessage.join('') ? <ErrorMessage message={errorMessage.join('')} /> : null}
           </div>
           <div style={{ marginTop: '6px' }} >
-            <ActionButton
+            <SolidButton
               text={'Select'}
               onClick={() => {
                 let drawing = props.app.strictDrawing.drawing;

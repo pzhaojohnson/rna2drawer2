@@ -4,7 +4,7 @@ import { AppInterface as App } from '../../../../AppInterface';
 import { ClosableContainer } from '../../../containers/ClosableContainer';
 import { RangeField } from './RangeField';
 import { ErrorMessage } from '../../../ErrorMessage';
-import { ActionButton } from '../../../buttons/ActionButton';
+import { SolidButton } from '../../../buttons/SolidButton';
 import { cannotRemove, remove } from './remove';
 
 let lastEntered = {
@@ -41,7 +41,7 @@ export function RemoveSubsequence(props: Props): React.ReactElement {
             {errorMessage.join('') ? <ErrorMessage message={errorMessage.join('')} /> : null}
           </div>
           <div style={{ marginTop: '6px' }} >
-            <ActionButton
+            <SolidButton
               text={'Remove'}
               onClick={() => {
                 let message = cannotRemove(props.app.strictDrawing, range);
