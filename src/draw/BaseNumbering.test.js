@@ -318,6 +318,31 @@ describe('BaseNumbering class', () => {
     expect(n._line.position()).toBeGreaterThan(c.position());
   });
 
+  it('bringToFront and sendToBack methods', () => {
+    let r1 = svg.rect(5, 6);
+    let r2 = svg.rect(20, 20);
+    let n = BaseNumbering.create(svg, 50, 2, 3);
+    let c = svg.circle(20);
+    // not already at back
+    // and must be sent backwards more than one position
+    // (cannot just call backward method of SVG elements)
+    expect(n._text.position()).toBeGreaterThan(2);
+    expect(n._line.position()).toBeGreaterThan(1);
+    n.sendToBack();
+    // sent to back
+    // and text is kept above line
+    expect(n._text.position()).toBe(1);
+    expect(n._line.position()).toBe(0);
+    let frontMarker = svg.ellipse(20, 40);
+    n.bringToFront();
+    // brought to front
+    // and text is kept above line
+    expect(n._line.position()).toBeGreaterThan(frontMarker.position());
+    expect(n._text.position()).toBeGreaterThan(n._line.position());
+    // had to be brought all the way to front and not just forward one position
+    expect(n._line.position()).toBeGreaterThan(1);
+  });
+
   it('number getter and setter', () => {
     let n = BaseNumbering.create(svg, 312, 20, 80);
     expect(n.number).toBe(312);

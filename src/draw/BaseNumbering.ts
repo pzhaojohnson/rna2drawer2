@@ -300,6 +300,16 @@ class BaseNumbering implements BaseNumberingInterface {
     this._line.insertAfter(ele);
   }
 
+  bringToFront() {
+    this._line.front();
+    this._text.front();
+  }
+
+  sendToBack() {
+    this._text.back();
+    this._line.back();
+  }
+
   get number(): number {
     return Number(this._text.text());
   }

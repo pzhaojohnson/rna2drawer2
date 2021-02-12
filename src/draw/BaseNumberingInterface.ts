@@ -24,6 +24,8 @@ export interface BaseNumberingInterface {
   reposition(xBaseCenter: number, yBaseCenter: number): void;
   insertBefore(ele: Svg.Element): void;
   insertAfter(ele: Svg.Element): void;
+  bringToFront(): void;
+  sendToBack(): void;
   number: number;
   fontFamily: string;
   fontSize: number;
