@@ -24,7 +24,7 @@ export function highlightStem(mode: FlippingMode, st: Stem) {
         strokeOpacity: 0.425,
       }, { duration: 1000 });
       if (bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
-        h.back();
+        h.sendToBack();
       }
     }
   });

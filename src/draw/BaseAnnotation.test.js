@@ -146,13 +146,20 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba._circle.position()).toBeGreaterThan(r.position());
   });
 
-  it('back method', () => {
+  it('bringToFront and sendToBack methods', () => {
     let r = svg.rect(10, 20);
     let l = svg.line(1, 2, 3, 4);
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 10);
-    expect(cba._circle.position()).toBeGreaterThan(0);
-    cba.back();
-    expect(cba._circle.position()).toBe(0);
+    expect(cba._circle.position()).toBeGreaterThan(0); // not already at back
+    // must be sent all the way to back and not just backwards one position
+    expect(cba._circle.position()).toBeGreaterThan(1);
+    cba.sendToBack();
+    expect(cba._circle.position()).toBe(0); // sent to back
+    let frontMarker = svg.ellipse(20, 30);
+    cba.bringToFront();
+    expect(cba._circle.position()).toBeGreaterThan(frontMarker.position()); // brought to front
+    // had to be brought all the way to front and not just forward one position
+    expect(cba._circle.position()).toBeGreaterThan(1);
   });
 
   it('radius getter and setter', () => {

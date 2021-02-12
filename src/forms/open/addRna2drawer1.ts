@@ -47,7 +47,7 @@ function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
       let outline = rna2drawer1.baseOutlines[p - 1];
       if (outline) {
         let o = b.addCircleOutline();
-        o.back();
+        o.sendToBack();
         o.radius = outline.relativeRadius * pixelsToPoints(b.fontSize);
         o.stroke = outline.stroke.toHex();
         o.strokeWidth = outline.strokeWidth;

@@ -25,7 +25,7 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
       }
       // if close to hovered base
       if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
-        b.highlighting.back();
+        b.highlighting.sendToBack();
       }
     } else {
       b.removeHighlighting();

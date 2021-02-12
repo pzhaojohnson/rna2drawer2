@@ -22,7 +22,7 @@ function _addOutlines(bs: Base[]) {
       o.stroke = MostRecentOutlineProps.stroke;
       o.strokeWidth = MostRecentOutlineProps.strokeWidth;
       o.strokeOpacity = MostRecentOutlineProps.strokeOpacity;
-      o.back();
+      o.sendToBack();
     }
   });
 }

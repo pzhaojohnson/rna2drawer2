@@ -83,7 +83,7 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
       }
       if (bHovered && bHovered.distanceBetweenCenters(b) < 5 * radius) {
         if (b.highlighting) {
-          b.highlighting.back();
+          b.highlighting.sendToBack();
         }
       }
     } else {

@@ -36,7 +36,7 @@ export function highlightStem(mode: PivotingMode, st: Stem) {
         }, { duration: 1000 });
       }
       if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
-        b.highlighting.back();
+        b.highlighting.sendToBack();
       }
     }
   });

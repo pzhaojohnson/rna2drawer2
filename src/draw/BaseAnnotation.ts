@@ -121,7 +121,11 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this._circle.insertAfter(ele);
   }
 
-  back() {
+  bringToFront() {
+    this._circle.front();
+  }
+
+  sendToBack() {
     this._circle.back();
   }
 
