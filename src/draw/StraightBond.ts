@@ -208,6 +208,14 @@ export class StraightBond implements StraightBondInterface {
     this._line.attr({ 'opacity': o });
   }
 
+  bringToFront() {
+    this._line.front();
+  }
+
+  sendToBack() {
+    this._line.back();
+  }
+
   remove() {
     this._line.remove();
   }

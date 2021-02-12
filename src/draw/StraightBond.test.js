@@ -220,6 +220,27 @@ describe('StraightBond class', () => {
     expect(sb._line.attr('opacity')).toBe(0.55); // check actual value
   });
 
+  it('bringToFront and sendToBack methods', () => {
+    let c = svg.circle(50);
+    let r = svg.rect(10, 20);
+    let b1 = Base.create(svg, 'G', 1, 5);
+    let b2 = Base.create(svg, 'T', 100, 120);
+    let lcs = StraightBond._lineCoordinates(b1, b2, 8, 8);
+    let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
+    let sb = new StraightBond(l, b1, b2);
+    let e = svg.ellipse(5, 3);
+    expect(sb._line.position()).toBeGreaterThan(0); // not already at back
+    // must send all the way to back and not just back one position
+    expect(sb._line.position()).toBeGreaterThan(1);
+    sb.sendToBack();
+    expect(sb._line.position()).toBe(0); // sent to back
+    let frontMarker = svg.circle(10);
+    sb.bringToFront();
+    expect(sb._line.position()).toBeGreaterThan(frontMarker.position()); // brought to front
+    // must have been brought all the way to front and not just forward one position
+    expect(sb._line.position()).toBeGreaterThan(1);
+  });
+
   it('remove method', () => {
     let l = svg.line(1, 2, 4, 5);
     let b1 = Base.create(svg, 'n', 1, 4);

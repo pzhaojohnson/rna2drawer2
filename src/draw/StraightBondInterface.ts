@@ -29,6 +29,8 @@ export interface StraightBondInterface {
   getStrokeWidth(): number;
   setStrokeWidth(sw: number): void;
   readonly opacity: number;
+  bringToFront(): void;
+  sendToBack(): void;
   remove(): void;
   savableState(): StraightBondSavableState;
   refreshIds(): void;
