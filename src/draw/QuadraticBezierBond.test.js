@@ -216,6 +216,29 @@ describe('QuadraticBezierBond class', () => {
     expect(p.css('cursor')).toBe('pointer'); // check actual value
   });
 
+  it('bringToFront and sendToBack methods', () => {
+    let c1 = svg.circle(33);
+    let r1 = svg.rect(1, 8);
+    let r2 = svg.rect(30, 20);
+    let b1 = Base.create(svg, 'A', 10, 20);
+    let b2 = Base.create(svg, 'g', 800, 200);
+    let d = QuadraticBezierBond._dPath(b1, b2, 10, 50, 80, Math.PI / 5);
+    let p = svg.path(d);
+    let qbb = new QuadraticBezierBond(p, b1, b2);
+    let r3 = svg.rect(2, 2);
+    let c2 = svg.circle(50);
+    expect(qbb._path.position()).toBeGreaterThan(0); // not already at back
+    // must be sent all the way to back and not just back one position
+    expect(qbb._path.position()).toBeGreaterThan(1);
+    qbb.sendToBack();
+    expect(qbb._path.position()).toBe(0); // sent to back
+    let frontMarker = svg.ellipse(2, 6);
+    qbb.bringToFront();
+    expect(qbb._path.position()).toBeGreaterThan(frontMarker.position()); // brought to front
+    // must have been brought all the way to front and not just forward one position
+    expect(qbb._path.position()).toBeGreaterThan(1);
+  });
+
   describe('binding events', () => {
     let b1 = Base.create(svg, 'b', 1, 2);
     let b2 = Base.create(svg, 'r', 5, 9);

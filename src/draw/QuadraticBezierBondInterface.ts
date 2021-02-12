@@ -34,6 +34,8 @@ export interface QuadraticBezierBondInterface {
   setStrokeDasharray(sd: string): void;
   fill: string;
   fillOpacity: number;
+  bringToFront(): void;
+  sendToBack(): void;
   cursor: string;
   onMouseover(f: () => void): void;
   onMouseout(f: () => void): void;

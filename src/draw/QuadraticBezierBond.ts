@@ -281,6 +281,14 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this._path.attr({ 'fill-opacity': fo });
   }
 
+  bringToFront() {
+    this._path.front();
+  }
+
+  sendToBack() {
+    this._path.back();
+  }
+
   get cursor(): string {
     return this._path.css('cursor');
   }
