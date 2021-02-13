@@ -39,6 +39,9 @@ export interface BaseInterface {
   fill: string;
   fillOpacity: number;
   cursor: string;
+
+  bringToFront(): void;
+  sendToBack(): void;
   
   onMouseover(f: () => void): void;
   onMouseout(f: () => void): void;

@@ -238,6 +238,20 @@ class Base implements BaseInterface {
     this._text.css('cursor', c);
   }
 
+  bringToFront() {
+    if (this.outline) {
+      this.outline.bringToFront();
+    }
+    this._text.front();
+  }
+
+  sendToBack() {
+    this._text.back();
+    if (this.outline) {
+      this.outline.sendToBack();
+    }
+  }
+
   onMouseover(f: () => void) {
     this._text.mouseover(f);
   }

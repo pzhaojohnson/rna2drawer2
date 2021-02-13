@@ -348,6 +348,39 @@ describe('Base class', () => {
     expect(b._text.css('cursor')).toBe('crosshair'); // check actual value
   });
 
+  it('bringToFront and sendToBack methods', () => {
+    let r = svg.rect(50, 60);
+    let c1 = svg.circle(100);
+    let c2 = svg.circle(10);
+    let b = Base.create(svg, 'G', 5, 5);
+    b.addCircleOutline();
+    
+    expect(b._text.position()).toBeGreaterThan(0); // not already at back
+    // cannot just call the backward method of SVG elements
+    expect(b._text.position()).toBeGreaterThan(1);
+    b.outline.bringToFront(); // must send outline to back too
+    b.sendToBack();
+    expect(b._text.position()).toBeGreaterThan(0); // kept in front of outline
+    b.outline.bringToFront();
+    expect(b._text.position()).toBe(0); // only the outline was behind the text
+
+    let marker1 = svg.circle(80);
+    b.outline.sendToBack(); // must bring outline to front too
+    b.bringToFront();
+    let marker2 = svg.circle(120);
+    marker2.front();
+    // was brought to front and kept in front of outline
+    expect(b._text.position()).toBe(marker2.position() - 1);
+    // cannot have just called the forward method of SVG elements
+    expect(b._text.position()).toBeGreaterThan(2);
+    let p1 = marker1.position();
+    let p2 = marker2.position();
+    b.outline.sendToBack();
+    // outline was brought to front too
+    expect(marker1.position()).toBeGreaterThan(p1);
+    expect(marker2.position()).toBe(p2);
+  });
+
   describe('binding events', () => {
     let b = Base.create(svg, 'h', 50, 100);
 
