@@ -13,6 +13,7 @@ import {
 import { BaseSpacingField } from './BaseSpacingField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
+import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 
 function getSecondaryBondsByType(drawing: Drawing): SecondaryBondsByType {
   let sbs = {
@@ -85,7 +86,10 @@ export function EditSecondaryBonds(props: Props): React.ReactElement {
             <div style={{ marginBottom: '8px' }} >
               <BasePaddingField {...fieldProps} />
             </div>
-            <StrokeWidthField {...fieldProps} />
+            <div style={{ marginBottom: '12px' }} >
+              <StrokeWidthField {...fieldProps} />
+            </div>
+            <ForwardAndBackwardButtons {...fieldProps} />
           </div>
         )
       }
