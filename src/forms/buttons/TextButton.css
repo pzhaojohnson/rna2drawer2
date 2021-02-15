@@ -1,6 +1,7 @@
 .textButton {
   font-size: 12px;
   color: blue;
+  cursor: pointer;
 }
 
 .textButton:hover {
