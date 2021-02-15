@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
 import { BaseCharacterField } from './BaseCharacterField';
 import BaseColorField from './BaseColorField';
+import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 import { HasOutlineField, allBasesHaveOutlines } from './HasOutlineField';
 import OutlineRadiusField from './OutlineRadiusField';
 import OutlineStrokeField from './OutlineStrokeField';
@@ -13,6 +14,11 @@ export function BaseAnnotationFields(selectedBases: () => Base[], pushUndo: () =
   if (bs.length == 0) {
     return <p>No bases are selected.</p>;
   } else {
+    let fieldProps = {
+      selectedBases: selectedBases,
+      pushUndo: pushUndo,
+      changed: changed,
+    };
     return (
       <div>
         {bs.length != 1 ? null : (
@@ -21,6 +27,9 @@ export function BaseAnnotationFields(selectedBases: () => Base[], pushUndo: () =
           </div>
         )}
         {BaseColorField(selectedBases, pushUndo, changed)}
+        <div style={{ marginTop: '16px' }} >
+          <ForwardAndBackwardButtons {...fieldProps} />
+        </div>
         <div style={{ marginTop: '16px' }} >
           {HasOutlineField(selectedBases, pushUndo, changed)}
         </div>
