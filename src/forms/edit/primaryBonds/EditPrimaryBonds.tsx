@@ -5,6 +5,7 @@ import { PrimaryBondInterface as PrimaryBond } from '../../../draw/StraightBondI
 import { ClosableContainer } from '../../containers/ClosableContainer';
 import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
+import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 import { PaddingField } from './PaddingField';
 
 function getPrimaryBonds(drawing: Drawing): PrimaryBond[] {
@@ -42,6 +43,9 @@ export function EditPrimaryBonds(props: Props): React.ReactElement {
             </div>
             <div style={{ marginTop: '8px' }} >
               <PaddingField {...fieldProps} />
+            </div>
+            <div style={{ marginTop: '12px' }} >
+              <ForwardAndBackwardButtons {...fieldProps} />
             </div>
           </div>
         )
