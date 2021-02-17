@@ -5,6 +5,7 @@ import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { DashedField } from './DashedField';
 import { PaddingField1, PaddingField2 } from './PaddingFields';
+import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 
 interface Props {
   getTertiaryBonds: () => TertiaryBond[];
@@ -36,6 +37,9 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
               </div>
               <div style={{ marginTop: '16px' }} >
                 <PaddingField2 {...props} />
+              </div>
+              <div style={{ marginTop: '16px' }} >
+                <ForwardAndBackwardButtons {...props} />
               </div>
             </div>
           )}
