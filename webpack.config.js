@@ -70,7 +70,8 @@ module.exports = {
       Menu: path.resolve(__dirname, 'src/menu/'),
       Parse: path.resolve(__dirname, 'src/parse/'),
       Undo: path.resolve(__dirname, 'src/undo/'),
-      Wait: path.resolve(__dirname, 'src/wait/')
+      Wait: path.resolve(__dirname, 'src/wait/'),
+      AppInterface$: path.resolve(__dirname, 'src/AppInterface.ts')
     },
     modules: ['node_modules'],
     extensions: [ '.tsx', '.ts', '.js' ]

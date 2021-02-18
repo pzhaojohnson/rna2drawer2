@@ -23,7 +23,8 @@
       "Menu/*": ["src/menu/*"],
       "Parse/*": ["src/parse/*"],
       "Undo/*": ["src/undo/*"],
-      "Wait/*": ["src/wait/*"]
+      "Wait/*": ["src/wait/*"],
+      "AppInterface": ["src/AppInterface"]
     },
     "module": "es6",
     "target": "es5",
