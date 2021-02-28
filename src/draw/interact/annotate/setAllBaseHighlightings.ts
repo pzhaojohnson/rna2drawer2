@@ -10,7 +10,8 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
         radius = Math.max(radius, 1.25 * b.outline.radius);
       }
       let stroke = p == mode.hovered ? '#000000': '#808080';
-      if (!b.highlighting || b.highlighting.stroke != stroke) {
+      let justClickedOnAndSelected = p == mode.hovered && p == mode.selectingFrom;
+      if (!b.highlighting || b.highlighting.stroke != stroke || justClickedOnAndSelected) {
         let h = highlightBase(b, {
           radius: radius,
           fill: 'none',
