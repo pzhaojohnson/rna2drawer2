@@ -25,22 +25,22 @@ export function highlightHovered(mode: TriangularizingMode) {
     ps.forEach(p => {
       let b = drawing.getBaseAtOverallPosition(p);
       if (b) {
-        let radius = 0.85 * b.fontSize;
+        let radius = b.fontSize;
         if (b.outline) {
-          radius = Math.max(radius, 1.15 * (b.outline.radius + b.outline.strokeWidth));
+          radius = Math.max(radius, 1.25 * (b.outline.radius + b.outline.strokeWidth));
         }
         if (!b.highlighting) {
           let h = highlightBase(b, {
             radius: radius,
             fill: 'none',
-            stroke: '#00bfff',
-            strokeWidth: 1.5,
-            strokeOpacity: 0.85,
+            stroke: '#000000',
+            strokeWidth: 0.825,
+            strokeOpacity: 0.875,
+            strokeDasharray: '3,1.5',
           });
           h.pulsateBetween({
-            radius: 1.5 * radius,
-            strokeOpacity: 0.425,
-          }, { duration: 1000 });
+            radius: 1.25 * radius,
+          }, { duration: 675 });
         }
         if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
           b.highlighting.sendToBack();

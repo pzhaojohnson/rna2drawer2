@@ -6,6 +6,7 @@ export interface HighlightingProps {
   stroke?: string;
   strokeWidth?: number;
   strokeOpacity?: number;
+  strokeDasharray?: string;
   fill?: string;
   fillOpacity?: number;
 }
@@ -19,6 +20,7 @@ export function highlightBase(b: Base, props?: HighlightingProps): CircleBaseAnn
   h.stroke = props?.stroke ?? h.stroke;
   h.strokeWidth = props?.strokeWidth ?? h.strokeWidth;
   h.strokeOpacity = props?.strokeOpacity ?? h.strokeOpacity;
+  h.strokeDasharray = props?.strokeDasharray ?? h.strokeDasharray;
   h.fill = props?.fill ?? h.fill;
   h.fillOpacity = props?.fillOpacity ?? h.fillOpacity;
   return h;

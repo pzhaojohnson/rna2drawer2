@@ -23,6 +23,7 @@ it('highlights with given props', () => {
     stroke: 'cyan',
     strokeWidth: 8.12,
     strokeOpacity: 0.87,
+    strokeDasharray: '8,8,2',
     fill: 'crimson',
     fillOpacity: 0.08,
   };
