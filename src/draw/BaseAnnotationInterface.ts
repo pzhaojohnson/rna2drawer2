@@ -44,6 +44,7 @@ export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
   stroke: string;
   strokeWidth: number;
   strokeOpacity: number;
+  strokeDasharray: string | null | undefined;
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps): void;
   savableState(): CircleBaseAnnotationSavableState;
 }

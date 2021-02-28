@@ -41,7 +41,7 @@ describe('CircleBaseAnnotation class', () => {
       });
     });
   });
-  
+
   it('createNondisplaced static method', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 1.5, 3);
     expect(cba.xCenter).toBeCloseTo(1.5);
@@ -65,7 +65,7 @@ describe('CircleBaseAnnotation class', () => {
       expect(c.attr('id')).toBeTruthy();
     });
   });
-  
+
   it('type getter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
     expect(cba.type).toBe('circle');
@@ -202,6 +202,16 @@ describe('CircleBaseAnnotation class', () => {
     cba.strokeOpacity = 0.3;
     expect(cba.strokeOpacity).toBe(0.3); // check getter
     expect(cba._circle.attr('stroke-opacity')).toBe(0.3); // check actual value
+  });
+
+  it('strokeDasharray getter and setter', () => {
+    let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
+    expect(cba.strokeDasharray).toBeFalsy(); // is not dashed by default
+    cba.strokeDasharray = '5,3,6'; // can be set
+    expect(cba.strokeDasharray).toBe('5,3,6');
+    expect(cba._circle.attr('stroke-dasharray')).toBe('5,3,6'); // check underlying circle
+    cba.strokeDasharray = ''; // undash
+    expect(cba.strokeDasharray).toBeFalsy();
   });
 
   describe('pulsateBetween method', () => {
