@@ -34,12 +34,12 @@ export function highlightHovered(mode: TriangularizingMode) {
             radius: radius,
             fill: 'none',
             stroke: '#000000',
-            strokeWidth: 0.825,
-            strokeOpacity: 0.875,
+            strokeWidth: 0.8,
+            strokeOpacity: 0.85,
             strokeDasharray: '3,1.5',
           });
           h.pulsateBetween({
-            radius: 1.25 * radius,
+            radius: 1.1875 * radius,
           }, { duration: 675 });
         }
         if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {

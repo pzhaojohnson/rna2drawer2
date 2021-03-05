@@ -16,13 +16,13 @@ export function highlightStem(mode: FlippingMode, st: Stem) {
         radius: radius,
         fill: 'none',
         stroke: '#000000',
-        strokeWidth: 0.825,
-        strokeOpacity: 0.875,
+        strokeWidth: 0.8,
+        strokeOpacity: 0.85,
         strokeDasharray: '3,1.5',
       });
       h.pulsateBetween({
-        radius: 1.25 * radius,
-      }, { duration: 675 });
+        radius: 1.1875 * radius,
+      }, { duration: 625 });
       if (bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
         h.sendToBack();
       }
