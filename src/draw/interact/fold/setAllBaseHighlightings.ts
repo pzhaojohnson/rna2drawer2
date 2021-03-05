@@ -25,42 +25,42 @@ interface HighlightingProps {
 let unpulsedProps = {
   pairable: {
     stroke: '#0010f3',
-    strokeWidth: 1.275,
+    strokeWidth: 1.333,
     strokeOpacity: 1,
   },
   selected: {
     stroke: '#ffd91e',
-    strokeWidth: 1.275,
-    strokeOpacity: 0.975,
+    strokeWidth: 1.333,
+    strokeOpacity: 1,
   },
   pair: {
     stroke: '#ff00e0',
-    strokeWidth: 1.275,
-    strokeOpacity: 0.975,
+    strokeWidth: 1.333,
+    strokeOpacity: 1,
   },
   unpair: {
     stroke: '#ff1106',
-    strokeWidth: 1.275,
-    strokeOpacity: 0.975,
+    strokeWidth: 1.333,
+    strokeOpacity: 1,
   },
 };
 
 let pulseProps = {
   pairable: {
-    scaling: 1.25,
+    scaling: 1.2,
     duration: 875,
   },
   selected: {
-    scaling: 1.1075,
-    duration: 1750,
+    scaling: 1.1,
+    duration: 1000,
   },
   pair: {
-    scaling: 1.1075,
-    duration: 1500,
+    scaling: 1.1,
+    duration: 1000,
   },
   unpair: {
-    scaling: 1.1075,
-    duration: 875,
+    scaling: 1.1,
+    duration: 625,
   },
 };
 
@@ -71,7 +71,7 @@ let pulsedProps = {
   },
   selected: {
     strokeWidth: pulseProps.selected.scaling * unpulsedProps.selected.strokeWidth,
-    strokeOpacity: 0.825,
+    strokeOpacity: 0.9,
   },
   pair: {
     strokeWidth: pulseProps.pair.scaling * unpulsedProps.pair.strokeWidth,
