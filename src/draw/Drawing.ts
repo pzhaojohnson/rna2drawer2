@@ -77,6 +77,22 @@ class Drawing implements DrawingInterface {
     });
   }
 
+  get scrollLeft(): number {
+    return this._div.scrollLeft;
+  }
+
+  set scrollLeft(sl) {
+    this._div.scrollLeft = sl;
+  }
+
+  get scrollTop(): number {
+    return this._div.scrollTop;
+  }
+
+  set scrollTop(st) {
+    this._div.scrollTop = st;
+  }
+
   get width(): number {
     return this._svg.viewbox().width;
   }

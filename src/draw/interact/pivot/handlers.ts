@@ -4,6 +4,7 @@ import { stemOfPosition } from '../../../parse/stemOfPosition';
 import { highlightStem } from './highlight';
 import { removeAllBaseHighlightings } from '../highlight/removeAllBaseHighlightings';
 import { pivot } from './pivot';
+import { updateEntireLayout } from './updateEntireLayout';
 
 export function handleMouseoverOnBase(mode: PivotingMode, b: Base) {
   let p = mode.strictDrawing.drawing.overallPositionOfBase(b);
@@ -51,7 +52,7 @@ export function handleMouseup(mode: PivotingMode) {
     if (mode.selected) {
       mode.selected = undefined;
       removeAllBaseHighlightings(mode.strictDrawing.drawing);
-      mode.strictDrawing.updateLayout({ updatePadding: true });
+      updateEntireLayout(mode.strictDrawing);
     }
   }
 }

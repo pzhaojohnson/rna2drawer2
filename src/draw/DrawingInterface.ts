@@ -26,6 +26,8 @@ export interface DrawingSavableState {
 export interface DrawingInterface {
   addTo(container: Node, SVG: () => Svg.Svg): void;
   centerView: () => void;
+  scrollLeft: number;
+  scrollTop: number;
 
   width: number;
   height: number;
