@@ -8,14 +8,15 @@ export interface Options {
   // in the drawing are moved. Otherwise, all bases are moved.
   onlyMove?: Set<number>;
 
-  // Specifies whether to maintain the padding between the bases
-  // and the edges of the drawing. When the padding is not maintained,
-  // often times fewer bases have to be moved, which improves performance.
-  maintainPadding?: boolean;
+  // Specifies whether to update the padding between the bases
+  // and the edges of the drawing. When the padding is not
+  // updated, often times fewer bases have to be moved, which
+  // improves performance.
+  updatePadding?: boolean;
 }
 
 export const defaultOptions: Options = {
-  maintainPadding: true,
+  updatePadding: true,
 }
 
 function createLayout(strictDrawing: StrictDrawing): StrictLayout | undefined {
@@ -52,7 +53,7 @@ function moveBases(strictDrawing: StrictDrawing, layout: StrictLayout, options?:
   }; // cache to improve performance
   let xOffset = 0;
   let yOffset = 0;
-  if (options?.maintainPadding) {
+  if (options?.updatePadding) {
     xOffset = (strictDrawing.drawing.width - (strictDrawing.baseWidth * layout.width)) / 2;
     yOffset = (strictDrawing.drawing.height - (strictDrawing.baseHeight * layout.height)) / 2;
   } else {
@@ -80,7 +81,7 @@ function moveBases(strictDrawing: StrictDrawing, layout: StrictLayout, options?:
 export function updateLayout(strictDrawing: StrictDrawing, options=defaultOptions) {
   let layout = createLayout(strictDrawing);
   if (layout) {
-    if (options.maintainPadding) {
+    if (options.updatePadding) {
       updateDimensions(strictDrawing, layout);
     }
     moveBases(strictDrawing, layout, options);

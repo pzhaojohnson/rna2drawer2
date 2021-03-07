@@ -59,7 +59,7 @@ describe('default behavior', () => {
     expect(() => expectAllBasesToHaveMoved()).not.toThrow();
   });
 
-  it('maintains padding', () => {
+  it('updates padding', () => {
     let prevWidth = strictDrawing.drawing.width;
     let prevHeight = strictDrawing.drawing.height;
     strictDrawing.baseWidth = 20 * strictDrawing.baseWidth;
@@ -97,13 +97,13 @@ it('only moving some bases', () => {
   expect(() => expectUnspecifiedBasesNotToHaveMoved()).not.toThrow();
 });
 
-it('not maintaining padding', () => {
+it('not updating padding', () => {
   let prevWidth = strictDrawing.drawing.width;
   let prevHeight = strictDrawing.drawing.height;
-  // should guarantee changes in dimensions if padding were maintained
+  // should guarantee changes in dimensions if padding were updated
   strictDrawing.baseWidth = 25 * strictDrawing.baseWidth;
   strictDrawing.baseHeight = 23 * StrictLayout.baseHeight;
-  updateLayout(strictDrawing, { maintainPadding: false });
+  updateLayout(strictDrawing, { updatePadding: false });
   expect(strictDrawing.drawing.width).toBeCloseTo(prevWidth);
   expect(strictDrawing.drawing.height).toBeCloseTo(prevHeight);
 });
