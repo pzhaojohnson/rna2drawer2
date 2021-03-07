@@ -11,7 +11,7 @@ import {
   PerBaseStrictLayoutProps as PerBaseLayoutProps,
   PerBaseStrictLayoutPropsSavableState as PerBaseLayoutPropsSavableState
 } from './layout/singleseq/strict/PerBaseStrictLayoutProps';
-import StrictLayout from './layout/singleseq/strict/StrictLayout';
+import { Options as UpdateLayoutOptions } from './edit/updateLayout';
 import { Structure } from './edit/appendStructureToStrictDrawing';
 
 export interface StrictDrawingSavableState {
@@ -33,8 +33,7 @@ export interface StrictDrawingInterface {
   setPerBaseLayoutProps(props: PerBaseLayoutProps[]): void;
   baseWidth: number;
   baseHeight: number;
-  layout(): StrictLayout | null;
-  applyLayout(): void;
+  updateLayout(options?: UpdateLayoutOptions): void;
   hasFlatOutermostLoop(): boolean;
   flatOutermostLoop(): void;
   hasRoundOutermostLoop(): boolean;

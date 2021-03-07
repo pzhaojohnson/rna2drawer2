@@ -18,7 +18,7 @@ describe('create static method', () => {
     it('can set the rotation', () => {
       let app = new App(() => NodeSVG());
       let ele = RotationField.create(app);
-      let spy1 = jest.spyOn(app.strictDrawing, 'applyLayout');
+      let spy1 = jest.spyOn(app.strictDrawing, 'updateLayout');
       let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
       ele.props.setRotation(-30);
       // normalizes and converts to radians
@@ -61,7 +61,7 @@ describe('render method', () => {
     expect(ele.props.initialValue).toBe(38);
     expect(ele.props.minLabelWidth).toBe('112px');
   });
-  
+
   it('set callback calls setRotation callback', () => {
     let setRotation = jest.fn();
     let comp = new RotationField({ currRotation: 0, setRotation: setRotation });

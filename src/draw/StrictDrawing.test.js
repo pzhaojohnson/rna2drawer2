@@ -5,7 +5,6 @@ import validatePartners from '../parse/validatePartners';
 
 import { StrictLayout } from './layout/singleseq/strict/StrictLayout';
 
-import * as ApplyStrictLayout from './edit/applyStrictLayout';
 import * as AppendStructureToStrictDrawing from './edit/appendStructureToStrictDrawing';
 
 import isKnotless from '../parse/isKnotless';
@@ -142,47 +141,6 @@ it('baseWidth and baseHeight getters and setters', () => {
   sd.baseHeight = 23.09;
   expect(sd.baseWidth).toBe(2.59);
   expect(sd.baseHeight).toBe(23.09);
-});
-
-describe('layout method', () => {
-  it('creates layout with correct props', () => {
-    let received = sd.layout();
-    let expected = new StrictLayout(
-      sd.layoutPartners(),
-      sd.generalLayoutProps(),
-      sd.perBaseLayoutProps(),
-    );
-    expect(received.toString()).toBe(expected.toString());
-  });
-
-  it('handles failure to create layout', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => NodeSVG());
-    sd.appendSequence('asdf', 'asdf');
-    sd.layoutPartners = () => { throw new Error(); };
-    expect(sd.layout()).toBe(null);
-  });
-});
-
-describe('applyLayout method', () => {
-  it('handles failure to create layout', () => {
-    let spy = jest.spyOn(ApplyStrictLayout, 'applyStrictLayout');
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => NodeSVG());
-    sd.layout = () => null;
-    sd.applyLayout();
-    expect(spy).not.toHaveBeenCalled();
-  });
-
-  it('calls applyStrictLayout function', () => {
-    let spy = jest.spyOn(ApplyStrictLayout, 'applyStrictLayout');
-    sd.applyLayout();
-    let c = spy.mock.calls[0];
-    expect(c[0]).toBe(sd.drawing);
-    expect(c[1].toString()).toBe(sd.layout().toString());
-    expect(c[2]).toBe(sd.baseWidth);
-    expect(c[3]).toBe(sd.baseHeight);
-  });
 });
 
 describe('outermost loop shape methods', () => {

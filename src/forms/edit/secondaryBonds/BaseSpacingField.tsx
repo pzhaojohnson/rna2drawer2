@@ -19,7 +19,7 @@ export function BaseSpacingField(props: Props) {
           props.app.pushUndo();
           generalProps.basePairBondLength = bs;
           props.app.strictDrawing.setGeneralLayoutProps(generalProps);
-          props.app.strictDrawing.applyLayout();
+          props.app.strictDrawing.updateLayout();
           props.app.drawingChangedNotByInteraction();
         }
       }}

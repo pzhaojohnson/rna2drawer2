@@ -47,7 +47,7 @@ export function handleMousedownOnBase(mode: TriangularizingMode, b: Base) {
         generalProps.outermostLoopShape = generalProps.outermostLoopShape == 'flat' ? 'round' : 'flat';
         mode.strictDrawing.setGeneralLayoutProps(generalProps);
       }
-      mode.strictDrawing.applyLayout();
+      mode.strictDrawing.updateLayout();
       mode.fireChange();
     }
   }

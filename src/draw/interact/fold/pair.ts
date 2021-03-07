@@ -62,7 +62,7 @@ export function pair(mode: FoldingMode) {
     _tertiaryPair(mode, pairs);
   }
   adjustStretches(mode);
-  mode.strictDrawing.applyLayout();
+  mode.strictDrawing.updateLayout();
   mode.reset();
 }
 

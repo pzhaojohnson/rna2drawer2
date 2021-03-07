@@ -127,7 +127,7 @@ export function insert(strictDrawing: StrictDrawing, inputs: Inputs) {
       repairStrand(drawing, insertPosition, subsequence);
       insertPerBaseProps(strictDrawing, insertPosition, subsequence);
       evenOutStretches(strictDrawing, insertPosition, subsequence);
-      strictDrawing.applyLayout();
+      strictDrawing.updateLayout();
     }
   }
 }

@@ -111,7 +111,7 @@ export function remove(strictDrawing: StrictDrawing, inputs: Range) {
       seq.removeBasesInRange(r.start, r.end);
       repairStrandBreak(drawing, seq, r);
       evenOutStretches(strictDrawing, r);
-      strictDrawing.applyLayout();
+      strictDrawing.updateLayout();
     }
   }
 }

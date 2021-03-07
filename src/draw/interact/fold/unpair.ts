@@ -30,7 +30,7 @@ export function unpair(mode: FoldingMode) {
   let drawing = mode.strictDrawing.drawing;
   ids.forEach(id => drawing.removeSecondaryBondById(id));
   adjustStretches(mode);
-  mode.strictDrawing.applyLayout();
+  mode.strictDrawing.updateLayout();
   mode.reset();
 }
 

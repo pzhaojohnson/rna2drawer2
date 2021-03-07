@@ -30,7 +30,7 @@ export class RotationField extends React.Component {
             r = normalizeAngle(r);
             generalProps.rotation = r;
             app.strictDrawing.setGeneralLayoutProps(generalProps);
-            app.strictDrawing.applyLayout();
+            app.strictDrawing.updateLayout();
             app.drawingChangedNotByInteraction();
           }
         }}

@@ -32,7 +32,7 @@ export function handleMousedownOnBase(mode: FlippingMode, b: Base) {
       let props5 = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st.position5);
       props5.flipStem = !props5.flipStem;
       mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
-      mode.strictDrawing.applyLayout();
+      mode.strictDrawing.updateLayout();
       mode.fireChange();
     }
   }

@@ -66,7 +66,7 @@ export function appendStructureToStrictDrawing(sd: StrictDrawing, structure: Str
   }
   _appendPerBaseLayoutProps(sd, structure);
   _radiateStructure(sd, structure);
-  sd.applyLayout();
+  sd.updateLayout();
   if (tertiaryPartners) {
     addTertiaryBonds(sd.drawing, structure.id, tertiaryPartners);
   }

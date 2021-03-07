@@ -15,7 +15,7 @@ export function WidthField(props: Props): React.ReactElement {
         if (w != props.app.strictDrawing.baseWidth) {
           props.app.pushUndo();
           props.app.strictDrawing.baseWidth = w;
-          props.app.strictDrawing.applyLayout();
+          props.app.strictDrawing.updateLayout();
           props.app.drawingChangedNotByInteraction();
         }
       }}
@@ -32,7 +32,7 @@ export function HeightField(props: Props): React.ReactElement {
         if (h != props.app.strictDrawing.baseHeight) {
           props.app.pushUndo();
           props.app.strictDrawing.baseHeight = h;
-          props.app.strictDrawing.applyLayout();
+          props.app.strictDrawing.updateLayout();
           props.app.drawingChangedNotByInteraction();
         }
       }}

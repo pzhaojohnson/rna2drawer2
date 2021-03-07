@@ -22,7 +22,7 @@ export class TerminiGapField extends React.Component {
             app.pushUndo();
             generalProps.terminiGap = tg;
             app.strictDrawing.setGeneralLayoutProps(generalProps);
-            app.strictDrawing.applyLayout();
+            app.strictDrawing.updateLayout();
             app.drawingChangedNotByInteraction();
           }
         }}

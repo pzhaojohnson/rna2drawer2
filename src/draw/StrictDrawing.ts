@@ -15,8 +15,7 @@ import {
   PerBaseStrictLayoutPropsSavableState as PerBaseLayoutPropsSavableState,
 } from './layout/singleseq/strict/PerBaseStrictLayoutProps';
 
-import { StrictLayout } from './layout/singleseq/strict/StrictLayout';
-import { applyStrictLayout } from './edit/applyStrictLayout';
+import { updateLayout, Options as UpdateLayoutOptions } from './edit/updateLayout';
 
 import {
   appendStructureToStrictDrawing,
@@ -104,34 +103,11 @@ class StrictDrawing implements StrictDrawingInterface {
     this._baseHeight = bh;
   }
 
-  /**
-   * Returns null if a layout cannot be created given
-   * the current state of the strict drawing.
-   */
-  layout(): (StrictLayout | null) {
-    let layout = null;
-    try {
-      layout = new StrictLayout(
-        this.layoutPartners(),
-        this.generalLayoutProps(),
-        this.perBaseLayoutProps(),
-      );
-    } catch (err) {
-      console.error('Unable to create layout for strict drawing.');
-      return null;
-    }
-    return layout;
-  }
-
-  applyLayout() {
-    let layout = this.layout();
-    if (layout) {
-      applyStrictLayout(
-        this._drawing,
-        layout,
-        this.baseWidth,
-        this.baseHeight,
-      );
+  updateLayout(options?: UpdateLayoutOptions) {
+    if (options) {
+      updateLayout(this, options);
+    } else {
+      updateLayout(this);
     }
   }
 
@@ -150,7 +126,7 @@ class StrictDrawing implements StrictDrawingInterface {
       this._generalLayoutProps = new GeneralLayoutProps();
     }
     this._generalLayoutProps.outermostLoopShape = 'flat';
-    this.applyLayout();
+    this.updateLayout();
   }
 
   hasRoundOutermostLoop(): boolean {
@@ -165,9 +141,9 @@ class StrictDrawing implements StrictDrawingInterface {
       this._generalLayoutProps = new GeneralLayoutProps();
     }
     this._generalLayoutProps.outermostLoopShape = 'round';
-    this.applyLayout();
+    this.updateLayout();
   }
-  
+
   savableState(): StrictDrawingSavableState {
     if (!this._generalLayoutProps) {
       this._generalLayoutProps = new GeneralLayoutProps();
@@ -199,7 +175,7 @@ class StrictDrawing implements StrictDrawingInterface {
   /**
    * If the saved state cannot be successfully applied, the state of
    * the drawing will not be affected.
-   * 
+   *
    * Returns true if the saved state was successfully applied.
    */
   applySavedState(savedState: StrictDrawingSavableState): boolean {
@@ -265,7 +241,7 @@ class StrictDrawing implements StrictDrawingInterface {
   refreshIds() {
     this.drawing.refreshIds();
   }
-  
+
   get zoom(): number {
     return this._drawing.zoom;
   }
@@ -298,7 +274,7 @@ class StrictDrawing implements StrictDrawingInterface {
   appendStructure(structure: Structure): boolean {
     return appendStructureToStrictDrawing(this, structure);
   }
-  
+
   get svgString(): string {
     return this._drawing.svgString;
   }

@@ -120,10 +120,10 @@ describe('radiates structure', () => {
   });
 });
 
-it('applies layout', () => {
+it('updates layout', () => {
   let sd = new StrictDrawing();
   sd.addTo(document.body, () => NodeSVG());
-  let spy = jest.spyOn(sd, 'applyLayout');
+  let spy = jest.spyOn(sd, 'updateLayout');
   appendStructureToStrictDrawing(sd, { id: 'asdf', characters: 'asdf' });
   expect(spy).toHaveBeenCalled();
 });
