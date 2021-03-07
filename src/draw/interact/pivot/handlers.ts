@@ -51,6 +51,7 @@ export function handleMouseup(mode: PivotingMode) {
     if (mode.selected) {
       mode.selected = undefined;
       removeAllBaseHighlightings(mode.strictDrawing.drawing);
+      mode.strictDrawing.updateLayout({ updatePadding: true });
     }
   }
 }

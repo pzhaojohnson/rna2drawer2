@@ -79,7 +79,7 @@ function pivotOutward(mode: PivotingMode, move: Movement) {
       let props = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, outerStem.position5);
       props.triangleLoopHeight += mag;
       mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
-      mode.strictDrawing.updateLayout();
+      mode.strictDrawing.updateLayout({ updatePadding: false });
     }
   }
 }
@@ -97,7 +97,7 @@ function pivotInward(mode: PivotingMode, move: Movement) {
         1,
       );
       mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
-      mode.strictDrawing.updateLayout();
+      mode.strictDrawing.updateLayout({ updatePadding: false });
     }
   }
 }
@@ -116,7 +116,7 @@ function pivotUpstream(mode: PivotingMode, move: Movement) {
       stretchUnpairedRegion(perBaseProps, ur3, mag);
     }
     mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
-    mode.strictDrawing.updateLayout();
+    mode.strictDrawing.updateLayout({ updatePadding: false });
   }
 }
 
@@ -134,6 +134,6 @@ function pivotDownstream(mode: PivotingMode, move: Movement) {
       stretchUnpairedRegion(perBaseProps, ur5, mag);
     }
     mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
-    mode.strictDrawing.updateLayout();
+    mode.strictDrawing.updateLayout({ updatePadding: false });
   }
 }
