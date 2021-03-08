@@ -4,7 +4,7 @@ import {
   PulseProps,
   CircleBaseAnnotationSavableState,
 } from './BaseAnnotationInterface';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import * as Svg from '@svgdotjs/svg.js';
 
@@ -74,7 +74,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
    * Sets the _displacementLength and _displacementAngle properties.
    */
   _storeDisplacement(xBaseCenter: number, yBaseCenter: number) {
-    this._displacementLength = distanceBetween(
+    this._displacementLength = distance(
       xBaseCenter,
       yBaseCenter,
       this.xCenter,

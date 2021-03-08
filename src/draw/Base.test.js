@@ -4,7 +4,7 @@ import normalizeAngle from './normalizeAngle';
 import BaseNumbering from './BaseNumbering';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import angleBetween from './angleBetween';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 
 let svg = NodeSVG();
 
@@ -354,7 +354,7 @@ describe('Base class', () => {
     let c2 = svg.circle(10);
     let b = Base.create(svg, 'G', 5, 5);
     b.addCircleOutline();
-    
+
     expect(b._text.position()).toBeGreaterThan(0); // not already at back
     // cannot just call the backward method of SVG elements
     expect(b._text.position()).toBeGreaterThan(1);

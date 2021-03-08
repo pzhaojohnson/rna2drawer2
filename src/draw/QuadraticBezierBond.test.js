@@ -4,7 +4,7 @@ import {
 } from './QuadraticBezierBond';
 import NodeSVG from './NodeSVG';
 import Base from './Base';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
@@ -19,11 +19,11 @@ describe('QuadraticBezierBond class', () => {
     let pa = p.array();
     let m = pa[0];
     let q = pa[1];
-    expect(distanceBetween(b1.xCenter, b1.yCenter, m[1], m[2])).toBeCloseTo(10);
-    expect(distanceBetween(b2.xCenter, b2.yCenter, q[3], q[4])).toBeCloseTo(12);
+    expect(distance(b1.xCenter, b1.yCenter, m[1], m[2])).toBeCloseTo(10);
+    expect(distance(b2.xCenter, b2.yCenter, q[3], q[4])).toBeCloseTo(12);
     let xMiddle = (b1.xCenter + b2.xCenter) / 2;
     let yMiddle = (b1.yCenter + b2.yCenter) / 2;
-    expect(distanceBetween(xMiddle, yMiddle, q[1], q[2])).toBeCloseTo(98);
+    expect(distance(xMiddle, yMiddle, q[1], q[2])).toBeCloseTo(98);
     let ca = angleBetween(xMiddle, yMiddle, q[1], q[2]);
     let a12 = b1.angleBetweenCenters(b2);
     expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
@@ -113,7 +113,7 @@ describe('QuadraticBezierBond class', () => {
     qbb.setPadding1(30); // use setter
     expect(qbb.getPadding1()).toBeCloseTo(30); // check getter
     // check actual value
-    expect(distanceBetween(100, 200, qbb.x1, qbb.y1)).toBeCloseTo(30);
+    expect(distance(100, 200, qbb.x1, qbb.y1)).toBeCloseTo(30);
     // maintains other aspects of path positioning
     expect(qbb.getPadding2()).toBeCloseTo(20);
     expect(qbb._controlHeight).toBeCloseTo(100);
@@ -130,7 +130,7 @@ describe('QuadraticBezierBond class', () => {
     qbb.setPadding2(28); // use setter
     expect(qbb.getPadding2()).toBeCloseTo(28); // check getter
     // check actual value
-    expect(distanceBetween(200, 500, qbb.x2, qbb.y2)).toBeCloseTo(28);
+    expect(distance(200, 500, qbb.x2, qbb.y2)).toBeCloseTo(28);
     // maintains other aspects of path positioning
     expect(qbb.getPadding1()).toBeCloseTo(10);
     expect(qbb._controlHeight).toBeCloseTo(25);
@@ -165,14 +165,14 @@ describe('QuadraticBezierBond class', () => {
     qbb.reposition();
     // check padding1
     expect(qbb.getPadding1()).toBeCloseTo(20); // check getter
-    expect(distanceBetween(200, 259, qbb.x1, qbb.y1)).toBeCloseTo(20); // check actual value
+    expect(distance(200, 259, qbb.x1, qbb.y1)).toBeCloseTo(20); // check actual value
     // check padding2
     expect(qbb.getPadding2()).toBeCloseTo(15); // check getter
-    expect(distanceBetween(-2500, -800, qbb.x2, qbb.y2)).toBeCloseTo(15); // check actual value
+    expect(distance(-2500, -800, qbb.x2, qbb.y2)).toBeCloseTo(15); // check actual value
     // check control coordinates
     let xMiddle = (b1.xCenter + b2.xCenter) / 2;
     let yMiddle = (b1.yCenter + b2.yCenter) / 2;
-    expect(distanceBetween(xMiddle, yMiddle, qbb.xControl, qbb.yControl)).toBeCloseTo(1000);
+    expect(distance(xMiddle, yMiddle, qbb.xControl, qbb.yControl)).toBeCloseTo(1000);
     let ca = angleBetween(xMiddle, yMiddle, qbb.xControl, qbb.yControl);
     let a12 = b1.angleBetweenCenters(b2);
     expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);

@@ -1,7 +1,7 @@
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import NodeSVG from './NodeSVG';
 import normalizeAngle from './normalizeAngle';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 
 let svg = NodeSVG();
@@ -127,7 +127,7 @@ describe('CircleBaseAnnotation class', () => {
       let dl = cba.displacementLength;
       let da = normalizeAngle(cba.displacementAngle);
       cba.reposition(200.6, 129);
-      expect(distanceBetween(200.6, 129, c.attr('cx'), c.attr('cy'))).toBeCloseTo(dl);
+      expect(distance(200.6, 129, c.attr('cx'), c.attr('cy'))).toBeCloseTo(dl);
       let a = angleBetween(200.6, 129, c.attr('cx'), c.attr('cy'));
       expect(normalizeAngle(a)).toBeCloseTo(da);
       // check displacement getters as well

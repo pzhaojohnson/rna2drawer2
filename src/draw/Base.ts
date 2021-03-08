@@ -4,7 +4,7 @@ import {
   BaseSavableState,
 } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import BaseNumbering from './BaseNumbering';
@@ -157,7 +157,7 @@ class Base implements BaseInterface {
   }
 
   distanceBetweenCenters(other: Base): number {
-    return distanceBetween(
+    return distance(
       this.xCenter,
       this.yCenter,
       other.xCenter,

@@ -6,7 +6,7 @@ import {
 } from './QuadraticBezierBondInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from './BaseInterface';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
@@ -135,13 +135,13 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
    * Sets the _padding1 and _padding2 properties.
    */
   _storePaddings() {
-    this._padding1 = distanceBetween(
+    this._padding1 = distance(
       this.base1.xCenter,
       this.base1.yCenter,
       this.x1,
       this.y1,
     );
-    this._padding2 = distanceBetween(
+    this._padding2 = distance(
       this.base2.xCenter,
       this.base2.yCenter,
       this.x2,
@@ -181,7 +181,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   _storeControlHeightAndAngle() {
     let xMiddle = (this.base1.xCenter + this.base2.xCenter) / 2;
     let yMiddle = (this.base1.yCenter + this.base2.yCenter) / 2;
-    this._controlHeight = distanceBetween(
+    this._controlHeight = distance(
       xMiddle,
       yMiddle,
       this.xControl,
@@ -202,7 +202,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     let yMiddle = (this.base1.yCenter + this.base2.yCenter) / 2;
     let xControl = this.xControl + xShift;
     let yControl = this.yControl + yShift;
-    let controlHeight = distanceBetween(xMiddle, yMiddle, xControl, yControl);
+    let controlHeight = distance(xMiddle, yMiddle, xControl, yControl);
     let ca = angleBetween(xMiddle, yMiddle, xControl, yControl);
     let a12 = this.base1.angleBetweenCenters(this.base2);
     let controlAngle = normalizeAngle(ca, a12) - a12;

@@ -1,7 +1,7 @@
 import BaseNumbering from './BaseNumbering';
 import NodeSVG from './NodeSVG';
 import angleBetween from './angleBetween';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import normalizeAngle from './normalizeAngle';
 
 let svg = NodeSVG();
@@ -158,14 +158,14 @@ describe('BaseNumbering class', () => {
     let n = BaseNumbering.create(svg, 129, 120, 548);
     let t = n._text;
     let l = n._line;
-    
+
     it('creates with number', () => {
       expect(n.number).toBe(129);
     });
 
     it('creates close to center base coordinates', () => {
       expect(
-        distanceBetween(120, 548, l.attr('x1'), l.attr('y1'))
+        distance(120, 548, l.attr('x1'), l.attr('y1'))
       ).toBeLessThan(16);
     });
 
@@ -177,7 +177,7 @@ describe('BaseNumbering class', () => {
 
     it('text is close to line', () => {
       expect(
-        distanceBetween(l.attr('x2'), l.attr('y2'), t.attr('x'), t.attr('y'))
+        distance(l.attr('x2'), l.attr('y2'), t.attr('x'), t.attr('y'))
       ).toBeLessThan(16);
     });
 
@@ -241,7 +241,7 @@ describe('BaseNumbering class', () => {
     expect(n.basePadding).toBeCloseTo(22); // check getter
     let l = n._line;
     // check actual value
-    expect(distanceBetween(30, 80, l.attr('x1'), l.attr('y1'))).toBeCloseTo(22);
+    expect(distance(30, 80, l.attr('x1'), l.attr('y1'))).toBeCloseTo(22);
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
     expect(n.lineLength).toBeCloseTo(ll); // maintains line length
     // updates most recent prop
@@ -272,7 +272,7 @@ describe('BaseNumbering class', () => {
     expect(n.lineLength).toBeCloseTo(33.8); // check getter
     let l = n._line;
     // check actual value
-    expect(distanceBetween(l.attr('x1'), l.attr('y1'), l.attr('x2'), l.attr('y2'))).toBeCloseTo(33.8);
+    expect(distance(l.attr('x1'), l.attr('y1'), l.attr('x2'), l.attr('y2'))).toBeCloseTo(33.8);
     expect(n.basePadding).toBeCloseTo(bp); // maintains base padding
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
     // updates most recent prop

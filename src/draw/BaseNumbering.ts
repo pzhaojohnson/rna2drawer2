@@ -4,7 +4,7 @@ import {
   BaseNumberingSavableState,
 } from './BaseNumberingInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 
@@ -149,9 +149,9 @@ class BaseNumbering implements BaseNumberingInterface {
 
   /**
    * Throws if the text element is not actually a text element.
-   * 
+   *
    * Initializes the ID of the text if it is not already initialized.
-   * 
+   *
    * Throws if the text content is not an integer.
    */
   _validateText(): (void | never) {
@@ -167,7 +167,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   /**
    * Throws if the line element is not actually a line element.
-   * 
+   *
    * Initializes the ID of the line if it is not already initialized.
    */
   _validateLine() {
@@ -199,7 +199,7 @@ class BaseNumbering implements BaseNumberingInterface {
    * Sets the _basePadding property.
    */
   _storeBasePadding(xBaseCenter: number, yBaseCenter: number) {
-    this._basePadding = distanceBetween(
+    this._basePadding = distance(
       xBaseCenter,
       yBaseCenter,
       this._line.attr('x1'),
@@ -242,7 +242,7 @@ class BaseNumbering implements BaseNumberingInterface {
   }
 
   get lineLength(): number {
-    return distanceBetween(
+    return distance(
       this._line.attr('x1'),
       this._line.attr('y1'),
       this._line.attr('x2'),

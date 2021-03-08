@@ -6,7 +6,7 @@ import {
 } from './StraightBond';
 import NodeSVG from './NodeSVG';
 import Base from './Base';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 import pair from './interact/fold/pair';
@@ -33,10 +33,10 @@ describe('StraightBond class', () => {
     let b2 = Base.create(svg, 'r', 77, 980);
     let lcs = StraightBond._lineCoordinates(b1, b2, 4, 7);
     expect(
-      distanceBetween(5, 8, lcs.x1, lcs.y1)
+      distance(5, 8, lcs.x1, lcs.y1)
     ).toBeCloseTo(4);
     expect(
-      distanceBetween(77, 980, lcs.x2, lcs.y2)
+      distance(77, 980, lcs.x2, lcs.y2)
     ).toBeCloseTo(7);
     expect(
       normalizeAngle(angleBetween(lcs.x1, lcs.y1, lcs.x2, lcs.y2))
@@ -130,7 +130,7 @@ describe('StraightBond class', () => {
     sb.setPadding1(26); // use setter
     expect(sb.getPadding1()).toBeCloseTo(26); // check getter
     // check actual value
-    expect(distanceBetween(800, 900, sb.x1, sb.y1)).toBeCloseTo(26);
+    expect(distance(800, 900, sb.x1, sb.y1)).toBeCloseTo(26);
     expect(sb.getPadding2()).toBeCloseTo(16); // maintains padding2
   });
 
@@ -144,7 +144,7 @@ describe('StraightBond class', () => {
     sb.setPadding2(5); // use setter
     expect(sb.getPadding2()).toBeCloseTo(5); // check getter
     // check actual value
-    expect(distanceBetween(510, 850, sb.x2, sb.y2)).toBeCloseTo(5);
+    expect(distance(510, 850, sb.x2, sb.y2)).toBeCloseTo(5);
     expect(sb.getPadding1()).toBeCloseTo(10); // maintains padding1
   });
 
@@ -158,8 +158,8 @@ describe('StraightBond class', () => {
       b1.moveTo(185, 112);
       b2.moveTo(900, 872);
       sb.reposition();
-      expect(distanceBetween(185, 112, sb.x1, sb.y1)).toBeCloseTo(15);
-      expect(distanceBetween(900, 872, sb.x2, sb.y2)).toBeCloseTo(28);
+      expect(distance(185, 112, sb.x1, sb.y1)).toBeCloseTo(15);
+      expect(distance(900, 872, sb.x2, sb.y2)).toBeCloseTo(28);
       let baseAngle = b1.angleBetweenCenters(b2);
       let lineAngle = angleBetween(sb.x1, sb.y1, sb.x2, sb.y2);
       expect(normalizeAngle(lineAngle)).toBeCloseTo(normalizeAngle(baseAngle));

@@ -1,4 +1,4 @@
-import distanceBetween from '../distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from '../angleBetween';
 
 export class NormalizedBaseCoordinates {
@@ -35,7 +35,7 @@ export class NormalizedBaseCoordinates {
   }
 
   distanceBetweenCenters(other: NormalizedBaseCoordinates): number {
-    return distanceBetween(
+    return distance(
       this.xCenter,
       this.yCenter,
       other.xCenter,

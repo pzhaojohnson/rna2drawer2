@@ -8,7 +8,7 @@ import {
 } from './StraightBondInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import Base from './Base';
-import distanceBetween from './distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import { areClose } from './areClose';
 
 interface LineCoordinates {
@@ -122,13 +122,13 @@ export class StraightBond implements StraightBondInterface {
    * Sets the _padding1 and _padding2 properties.
    */
   _storePaddings() {
-    this._padding1 = distanceBetween(
+    this._padding1 = distance(
       this.base1.xCenter,
       this.base1.yCenter,
       this._line.attr('x1'),
       this._line.attr('y1'),
     );
-    this._padding2 = distanceBetween(
+    this._padding2 = distance(
       this.base2.xCenter,
       this.base2.yCenter,
       this._line.attr('x2'),

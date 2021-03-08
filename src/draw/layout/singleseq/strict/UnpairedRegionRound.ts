@@ -1,7 +1,7 @@
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
 import { circleCenter } from './circleCenter';
-import distanceBetween from '../../../distanceBetween';
+import { distance2D as distance } from 'Math/distance';
 import angleBetween from '../../../angleBetween';
 import { RoundLoop } from './StemLayout';
 import { UnpairedRegionInterface as UnpairedRegion } from './StemInterface';
@@ -95,7 +95,7 @@ function _radius(
   cb3: Coordinates,
 ): number {
   let center = _center(ur, generalProps, cb5, cb3);
-  return distanceBetween(center.x, center.y, cb5.x, cb5.y);
+  return distance(center.x, center.y, cb5.x, cb5.y);
 }
 
 /**
