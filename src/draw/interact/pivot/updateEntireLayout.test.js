@@ -57,3 +57,25 @@ it('handles a drawing with zero zoom', () => {
   updateEntireLayout(strictDrawing);
   expectScrollingToBeFinite(strictDrawing);
 });
+
+it('view reference is specified', () => {
+  strictDrawing.appendSequence('qwer', 'QQPPOzxcvnskdhfu');
+  strictDrawing.drawing.addSecondaryBond(
+    strictDrawing.drawing.getBaseAtOverallPosition(6),
+    strictDrawing.drawing.getBaseAtOverallPosition(12),
+  );
+  updateEntireLayout(strictDrawing, { viewReference: 8 });
+  expectScrollingToBeFinite(strictDrawing);
+});
+
+it('handles out of bounds view reference', () => {
+  strictDrawing.appendSequence('qwer', 'QQPPOzxcvnskdhfu');
+  strictDrawing.drawing.addSecondaryBond(
+    strictDrawing.drawing.getBaseAtOverallPosition(6),
+    strictDrawing.drawing.getBaseAtOverallPosition(12),
+  );
+  let vf = strictDrawing.drawing.numBases + 20;
+  expect(strictDrawing.drawing.getBaseAtOverallPosition(vf)).toBeFalsy();
+  updateEntireLayout(strictDrawing, { viewReference: vf });
+  expectScrollingToBeFinite(strictDrawing);
+});

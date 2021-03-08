@@ -1,12 +1,21 @@
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
 
-export function updateEntireLayout(strictDrawing: StrictDrawing) {
-  let b1 = strictDrawing.drawing.getBaseAtOverallPosition(1);
-  let prevCenter1 = b1 ? { x: b1.xCenter, y: b1.yCenter } : null;
+interface Options {
+
+  // Overall position of the base to use as a reference
+  // to maintain the view of the drawing after updating
+  // the layout. By default, the base at overall position 1
+  // is used.
+  viewReference?: number;
+}
+
+export function updateEntireLayout(strictDrawing: StrictDrawing, options?: Options) {
+  let vfBase = strictDrawing.drawing.getBaseAtOverallPosition(options?.viewReference ?? 1);
+  let vfPrevCenter = vfBase ? { x: vfBase.xCenter, y: vfBase.yCenter } : null;
   strictDrawing.updateLayout({ updatePadding: true });
-  if (b1 && prevCenter1) {
+  if (vfBase && vfPrevCenter) {
     let zoom = strictDrawing.drawing.zoom;
-    strictDrawing.drawing.scrollLeft += zoom * (b1.xCenter - prevCenter1.x);
-    strictDrawing.drawing.scrollTop += zoom * (b1.yCenter - prevCenter1.y);
+    strictDrawing.drawing.scrollLeft += zoom * (vfBase.xCenter - vfPrevCenter.x);
+    strictDrawing.drawing.scrollTop += zoom * (vfBase.yCenter - vfPrevCenter.y);
   }
 }
