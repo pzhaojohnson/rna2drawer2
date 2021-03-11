@@ -5,6 +5,8 @@ import { highlightStem } from './highlight';
 import { removeAllBaseHighlightings } from '../highlight/removeAllBaseHighlightings';
 import { pivot } from './pivot';
 import { updateEntireLayout } from './updateEntireLayout';
+import { closestBasesTo } from './closestBasesTo';
+import { overallPositionsOfBases } from './overallPositionsOfBases';
 
 export function handleMouseoverOnBase(mode: PivotingMode, b: Base) {
   let p = mode.strictDrawing.drawing.overallPositionOfBase(b);
@@ -30,6 +32,17 @@ export function handleMousedownOnBase(mode: PivotingMode, b: Base) {
   if (mode.hovered) {
     mode.selected = mode.hovered;
     mode.pivoted = false;
+    if (typeof mode.hoveredPosition == 'number') {
+      mode.viewReference = mode.hoveredPosition;
+      let b = mode.strictDrawing.drawing.getBaseAtOverallPosition(mode.hoveredPosition);
+      if (b) {
+        let pt = { x: b.xCenter, y: b.yCenter };
+        mode.onlyMoving = overallPositionsOfBases(
+          mode.strictDrawing.drawing,
+          closestBasesTo(mode.strictDrawing.drawing, pt, 450)
+        );
+      }
+    }
     mode.fireChange();
   }
 }
@@ -51,8 +64,10 @@ export function handleMouseup(mode: PivotingMode) {
   if (mode.enabled()) {
     if (mode.selected) {
       mode.selected = undefined;
+      mode.onlyMoving = undefined;
       removeAllBaseHighlightings(mode.strictDrawing.drawing);
-      updateEntireLayout(mode.strictDrawing);
+      updateEntireLayout(mode.strictDrawing, { viewReference: mode.viewReference });
+      mode.viewReference = undefined;
     }
   }
 }
@@ -61,6 +76,8 @@ export function reset(mode: PivotingMode) {
   mode.hovered = undefined;
   mode.hoveredPosition = undefined;
   mode.selected = undefined;
+  mode.onlyMoving = undefined;
+  mode.viewReference = undefined;
   removeAllBaseHighlightings(mode.strictDrawing.drawing);
   mode.fireChange();
 }

@@ -22,6 +22,9 @@ export interface PivotingModeInterface {
 
   pivoted?: boolean;
 
+  onlyMoving?: Set<number>;
+  viewReference?: number;
+
   handleMouseoverOnBase(b: Base): void;
   handleMouseoutOnBase(b: Base): void;
   handleMousedownOnBase(b: Base): void;
