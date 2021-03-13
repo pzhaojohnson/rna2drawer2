@@ -21,6 +21,8 @@ export class AnnotatingMode implements AnnotatingModeInterface {
   selected: Set<number>;
   selectingFrom?: number;
 
+  deselectingOnDblclick?: boolean;
+
   _disabled: boolean;
 
   _onShouldPushUndo: (() => void)[];

@@ -38,10 +38,14 @@ export function handleMousedownOnBase(mode: AnnotatingMode, b: Base) {
 }
 
 export function handleMousedownOnDrawing(mode: AnnotatingMode) {
-  if (!mode.hovered) {
-    mode.selected = new Set<number>();
-    setAllBaseHighlightings(mode);
-    mode.fireChange();
+  if (!mode.deselectingOnDblclick && !mode.hovered) {
+    clearSelection(mode);
+  }
+}
+
+export function handleDblclickOnDrawing(mode: AnnotatingMode) {
+  if (mode.deselectingOnDblclick && !mode.hovered) {
+    clearSelection(mode);
   }
 }
 

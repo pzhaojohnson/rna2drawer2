@@ -11,6 +11,8 @@ export interface AnnotatingModeInterface {
   selected: Set<number>;
   selectingFrom?: number;
 
+  deselectingOnDblclick?: boolean;
+
   readonly className: string;
 
   readonly drawing: Drawing;
