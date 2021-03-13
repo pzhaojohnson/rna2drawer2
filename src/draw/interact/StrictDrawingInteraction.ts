@@ -52,12 +52,21 @@ class StrictDrawingInteraction {
   _bindDrawing() {
     let drawing = this.strictDrawing.drawing;
     drawing.onMousedown(() => this._handleMousedownOnDrawing());
+    drawing.onDblclick(() => this._handleDblclickOnDrawing());
     drawing.forEachSequence(seq => this._bindSequence(seq));
     drawing.onAddSequence(seq => this._bindSequence(seq));
   }
 
   _handleMousedownOnDrawing() {
     this._currMode.handleMousedownOnDrawing();
+  }
+
+  _handleDblclickOnDrawing() {
+    if (this._currMode == this._foldingMode) {
+      this._foldingMode.handleDblclickOnDrawing();
+    } else if (this._currMode == this._annotatingMode) {
+      this._annotatingMode.handleDblclickOnDrawing();
+    }
   }
 
   _bindSequence(seq: Sequence) {

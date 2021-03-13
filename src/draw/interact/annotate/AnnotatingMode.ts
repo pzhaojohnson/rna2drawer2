@@ -6,6 +6,7 @@ import {
   handleMouseoutOnBase,
   handleMousedownOnBase,
   handleMousedownOnDrawing,
+  handleDblclickOnDrawing,
   handleMouseup,
   select,
   clearSelection,
@@ -71,6 +72,10 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
   handleMousedownOnDrawing() {
     handleMousedownOnDrawing(this);
+  }
+
+  handleDblclickOnDrawing() {
+    handleDblclickOnDrawing(this);
   }
 
   select(ps: number[]) {

@@ -21,6 +21,7 @@ export interface AnnotatingModeInterface {
   handleMouseoutOnBase(b: Base): void;
   handleMousedownOnBase(b: Base): void;
   handleMousedownOnDrawing(): void;
+  handleDblclickOnDrawing(): void;
   select(ps: number[]): void;
   clearSelection(): void;
   reset(): void;
