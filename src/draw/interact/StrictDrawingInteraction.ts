@@ -46,7 +46,6 @@ class StrictDrawingInteraction {
   }
 
   _setBindings() {
-    let drawing = this.strictDrawing.drawing;
     this._bindDrawing();
   }
 
