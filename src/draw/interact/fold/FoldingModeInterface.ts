@@ -10,6 +10,8 @@ export interface FoldingModeInterface {
   } | null;
   selecting?: boolean;
 
+  deselectingOnDblclick?: boolean;
+
   // whether to include GUT pairs in complments
   includeGUT: boolean;
 

@@ -46,7 +46,13 @@ export function handleMousedownOnBase(mode: FoldingMode, b: Base) {
 }
 
 export function handleMousedownOnDrawing(mode: FoldingMode) {
-  if (typeof mode.hovered != 'number') {
+  if (!mode.deselectingOnDblclick && typeof mode.hovered != 'number') {
+    mode.reset();
+  }
+}
+
+export function handleDblclickOnDrawing(mode: FoldingMode) {
+  if (mode.deselectingOnDblclick && typeof mode.hovered != 'number') {
     mode.reset();
   }
 }

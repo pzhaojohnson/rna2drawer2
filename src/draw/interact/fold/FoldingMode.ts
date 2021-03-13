@@ -6,6 +6,7 @@ import {
   handleMouseoutOnBase,
   handleMousedownOnBase,
   handleMousedownOnDrawing,
+  handleDblclickOnDrawing,
   handleMouseup,
   reset,
 } from './handlers';
@@ -29,12 +30,14 @@ class FoldingMode implements FoldingModeInterface {
   } | null;
   selecting?: boolean;
 
+  deselectingOnDblclick?: boolean;
+
   _includeGUT: boolean;
   _allowedMismatch: number;
   readonly allowedMismatchPrecision: number;
-  
+
   _disabled?: boolean;
-  
+
   _onShouldPushUndo?: () => void;
   _onChange?: () => void;
 
@@ -87,8 +90,12 @@ class FoldingMode implements FoldingModeInterface {
     handleMousedownOnBase(this, b);
   }
 
-  handleMousedownOnDrawing() {  
+  handleMousedownOnDrawing() {
     handleMousedownOnDrawing(this);
+  }
+
+  handleDblclickOnDrawing() {
+    handleDblclickOnDrawing(this);
   }
 
   _setBindings() {
