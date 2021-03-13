@@ -508,6 +508,14 @@ it('mousedown event', () => {
   expect(f.mock.calls.length).toBe(1);
 });
 
+it('dblclick event', () => {
+  let f = jest.fn();
+  drawing.onDblclick(f);
+  expect(f).not.toHaveBeenCalled();
+  drawing._svg.fire('dblclick');
+  expect(f).toHaveBeenCalled();
+});
+
 it('clear method removes elements and references', () => {
   let drawing = new Drawing();
   let container = document.createElement('div');

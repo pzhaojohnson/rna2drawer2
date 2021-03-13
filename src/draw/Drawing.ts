@@ -393,6 +393,10 @@ class Drawing implements DrawingInterface {
     this._svg.mousedown(f);
   }
 
+  onDblclick(f: () => void) {
+    this._svg.dblclick(f);
+  }
+
   clear() {
     this._sequences = [];
     this._primaryBonds = [];

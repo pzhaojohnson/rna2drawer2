@@ -80,6 +80,7 @@ export interface DrawingInterface {
   adjustNumberingLineAngles(): void;
   adjustBaseNumbering(): void;
   onMousedown(f: () => void): void;
+  onDblclick(f: () => void): void;
   clear(): void;
   svgString: string;
   savableState(): DrawingSavableState;
