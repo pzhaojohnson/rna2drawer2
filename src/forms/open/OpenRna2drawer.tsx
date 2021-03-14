@@ -9,6 +9,7 @@ import { ErrorMessage } from '../ErrorMessage';
 import { SolidButton } from '../buttons/SolidButton';
 import { open } from './open';
 import { removeFileExtension } from '../../parse/parseFileExtension';
+import { delayPivotingIfShould } from 'Draw/interact/pivot/delayPivoting';
 
 function updateDrawingTitle(app: App, fileName: string) {
   let titleFromFileName = removeFileExtension(fileName).trim();
@@ -102,6 +103,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
                     return;
                   }
                   updateDrawingTitle(props.app, fileName);
+                  delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                   props.close();
                   props.app.drawingChangedNotByInteraction();
                 }}

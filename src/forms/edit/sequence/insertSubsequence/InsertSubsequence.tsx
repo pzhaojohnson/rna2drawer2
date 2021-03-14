@@ -6,6 +6,7 @@ import { Fields } from './Fields';
 import { ErrorMessage } from '../../../ErrorMessage';
 import { SolidButton } from '../../../buttons/SolidButton';
 import { cannotInsert, insert } from './insert';
+import { delayPivotingIfShould } from 'Draw/interact/pivot/delayPivoting';
 
 interface Props {
   app: App;
@@ -54,6 +55,7 @@ export function InsertSubsequence(props: Props): React.ReactElement {
                   props.close();
                   props.app.pushUndo();
                   insert(props.app.strictDrawing, inputs);
+                  delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                   props.app.drawingChangedNotByInteraction();
                 }
               }}

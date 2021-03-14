@@ -12,6 +12,7 @@ import { DotBracketField } from './DotBracketField';
 import { DotBracketParsingDetails } from './DotBracketParsingDetails';
 import { SolidButton } from '../buttons/SolidButton';
 import { parseInputs } from './parseInputs';
+import { delayPivotingIfShould } from 'Draw/interact/pivot/delayPivoting';
 
 let examples = [
   {
@@ -165,6 +166,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                       props.app.strictDrawingInteraction.startFolding();
                       props.app.strictDrawingInteraction.foldingMode.forcePair();
                     }
+                    delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                     props.close();
                     props.app.drawingChangedNotByInteraction();
                   }
