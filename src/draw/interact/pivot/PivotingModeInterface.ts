@@ -22,6 +22,7 @@ export interface PivotingModeInterface {
 
   pivoted?: boolean;
 
+  delayingPivots?: boolean;
   onlyMoving?: Set<number>;
   viewReference?: number;
 

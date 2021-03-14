@@ -32,8 +32,8 @@ export function handleMousedownOnBase(mode: PivotingMode, b: Base) {
   if (mode.hovered) {
     mode.selected = mode.hovered;
     mode.pivoted = false;
-    if (typeof mode.hoveredPosition == 'number') {
-      mode.viewReference = mode.hoveredPosition;
+    mode.viewReference = mode.hoveredPosition;
+    if (mode.delayingPivots && typeof mode.hoveredPosition == 'number') {
       let b = mode.strictDrawing.drawing.getBaseAtOverallPosition(mode.hoveredPosition);
       if (b) {
         let pt = { x: b.xCenter, y: b.yCenter };

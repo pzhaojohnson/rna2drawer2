@@ -24,6 +24,10 @@ export class PivotingMode implements PivotingModeInterface {
 
   pivoted?: boolean;
 
+  delayingPivots?: boolean;
+  onlyMoving?: Set<number>;
+  viewReference?: number;
+
   _onlyAddStretch?: boolean;
   _disabled?: boolean;
 
