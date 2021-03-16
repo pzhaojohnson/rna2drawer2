@@ -27,6 +27,27 @@
   font-size: 18.4px;
 }
 
+.updatesLink {
+  text-decoration-line: none;
+}
+
+.updatesLink:hover {
+  text-decoration-line: underline;
+}
+
+.updatesNotice {
+  animation: updatesNoticeEnter 2s ease-in;
+}
+
+@keyframes updatesNoticeEnter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .slideshow {
   animation: slideshowEnter 1.5s ease-in-out;
 }

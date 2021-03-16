@@ -105,6 +105,37 @@ function HelpLinks() {
   );
 }
 
+function UpdatesLink() {
+  return (
+    <a
+      className={styles.updatesLink}
+      href='https://github.com/pzhaojohnson/rna2drawer2/releases'
+    >
+      Latest Updates
+    </a>
+  );
+}
+
+function UpdatesNotice() {
+  return (
+    <div
+      className={styles.updatesNotice}
+      style={{
+        border: '2px dotted rgba(0,0,0,0.125)',
+        borderRadius: '21px',
+        height: '42px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <p style={{ margin: '0px 21px', fontSize: '14px' }} >
+        See the <UpdatesLink />! <em>(Mar. 15, 2021)</em>
+      </p>
+    </div>
+  );
+}
+
 function Slideshow() {
   return (
     <div
@@ -145,6 +176,9 @@ export function HomePage(props: Props): React.ReactElement {
             </div>
             <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
               <HelpLinks />
+            </div>
+            <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+              <UpdatesNotice />
             </div>
           </div>
         </div>
