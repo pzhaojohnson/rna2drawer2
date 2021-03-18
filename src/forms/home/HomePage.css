@@ -36,11 +36,14 @@
 }
 
 .updatesNotice {
-  animation: updatesNoticeEnter 2s ease-in;
+  animation: updatesNoticeEnter 1.75s ease-in;
 }
 
 @keyframes updatesNoticeEnter {
   0% {
+    opacity: 0;
+  }
+  25% {
     opacity: 0;
   }
   100% {
