@@ -27,8 +27,8 @@ export function highlightStem(mode: PivotingMode, st: Stem) {
           radius: radius,
           fill: 'none',
           stroke: '#000000',
-          strokeWidth: 0.8,
-          strokeOpacity: 0.85,
+          strokeWidth: 0.9,
+          strokeOpacity: 0.9,
           strokeDasharray: '3,1.5',
         });
         h.pulsateBetween({
