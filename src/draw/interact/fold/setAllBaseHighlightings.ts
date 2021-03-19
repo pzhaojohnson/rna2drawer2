@@ -25,22 +25,22 @@ interface HighlightingProps {
 let unpulsedProps = {
   pairable: {
     stroke: '#0010f3',
-    strokeWidth: 1.333,
+    strokeWidth: 1.5,
     strokeOpacity: 1,
   },
   selected: {
     stroke: '#ffd91e',
-    strokeWidth: 1.333,
+    strokeWidth: 1.5,
     strokeOpacity: 1,
   },
   pair: {
     stroke: '#ff00e0',
-    strokeWidth: 1.333,
+    strokeWidth: 1.5,
     strokeOpacity: 1,
   },
   unpair: {
     stroke: '#ff1106',
-    strokeWidth: 1.333,
+    strokeWidth: 1.5,
     strokeOpacity: 1,
   },
 };
