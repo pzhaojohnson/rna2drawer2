@@ -29,7 +29,7 @@ let unpulsedProps = {
     strokeOpacity: 1,
   },
   selected: {
-    stroke: '#ffd91e',
+    stroke: '#ffcc00',
     strokeWidth: 1.5,
     strokeOpacity: 1,
   },
