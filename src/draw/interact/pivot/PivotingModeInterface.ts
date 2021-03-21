@@ -20,6 +20,7 @@ export interface PivotingModeInterface {
   hoveredPosition?: number;
   selected?: Stem;
 
+  pivoting(): boolean;
   pivoted?: boolean;
 
   delayingPivots?: boolean;

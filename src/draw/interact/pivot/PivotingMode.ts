@@ -49,6 +49,10 @@ export class PivotingMode implements PivotingModeInterface {
     this._bindMouseup();
   }
 
+  pivoting(): boolean {
+    return this.selected ? true : false;
+  }
+
   handleMouseoverOnBase(b: Base) {
     handleMouseoverOnBase(this, b);
   }
