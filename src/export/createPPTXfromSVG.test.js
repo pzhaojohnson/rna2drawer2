@@ -560,4 +560,14 @@ describe('createPptxFromSvg function', () => {
     });
     */
   });
+
+  it('does not throw for other elements', () => {
+    let svg = createNodeSVG();
+    svg.defs(); // add defs element
+    expect(svg.svg()).toMatch(/defs/); // has defs element
+    let pres = createPptxFromSvg(svg);
+    expect(() => {
+      pres.write('blob').then(data => {});
+    }).not.toThrow();
+  });
 });

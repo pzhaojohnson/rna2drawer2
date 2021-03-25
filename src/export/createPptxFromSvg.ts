@@ -222,8 +222,13 @@ function createPptxFromSvg(svg: Svg.Svg): PptxGenJS {
       _addCircle(pres, slide, c as Svg.Circle);
     } else if (c.type === 'rect') {
       _addRect(pres, slide, c as Svg.Rect);
-    } else {
+    } else if (c.type === 'path') {
       _addElementAsImage(slide, c);
+    } else {
+      // can't just add any element as an image
+      // since some elements (e.g., defs) cause an error
+      // when attempting to add them as an image
+      console.log('Unrecognized element type: ', c.type);
     }
   });
   return pres;
