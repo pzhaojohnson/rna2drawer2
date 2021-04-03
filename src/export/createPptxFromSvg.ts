@@ -4,6 +4,7 @@ import { pixelsToInches } from './pixelsToInches';
 import { pixelsToPoints } from './pixelsToPoints';
 import { pointsToInches } from './pointsToInches';
 import { trimNum } from './trimNum';
+import { parseColor } from 'Parse/parseColor';
 
 /**
  * Converts the given color to a hex code compatible with PptxGenJS.
@@ -60,6 +61,7 @@ function _textOptions(text: Svg.Text): object {
   } else if (typeof fw === 'number' && fw > 500) {
     bold = true;
   }
+  let color = parseColor(text.attr('fill'));
   return {
     x: trimNum(x, 4),
     y: trimNum(y, 4),
@@ -71,7 +73,7 @@ function _textOptions(text: Svg.Text): object {
     fontFace: text.attr('font-family'),
     fontSize: _trimNum(fs),
     bold: bold,
-    color: _pptxHex(new Svg.Color(text.attr('fill'))),
+    color: color ? _pptxHex(color) : undefined,
   };
 }
 

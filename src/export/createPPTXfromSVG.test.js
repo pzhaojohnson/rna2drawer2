@@ -18,6 +18,7 @@ import { pointsToPixels } from './pointsToPixels';
 import { pointsToInches } from './pointsToInches';
 import PptxGenJs from 'pptxgenjs';
 import * as Svg from '@svgdotjs/svg.js';
+import { parseColor } from 'Parse/parseColor';
 
 describe('_pptxHex function', () => {
   it('removes leading #', () => {
@@ -130,6 +131,18 @@ describe('_textOptions function', () => {
     t.attr({ 'fill': '#152637' });
     let tos = _textOptions(t);
     expect(tos.color).toBe('152637');
+  });
+
+  it('handles undefined fill', () => {
+    let svg = createNodeSVG();
+    let t = svg.text(add => add.tspan('R'));
+    t.attr({ 'fill': null });
+    // doesn't seem to actually be possible
+    // to make fill falsy
+    //expect(t.attr('fill')).toBeFalsy();
+    let tos;
+    expect(() => tos = _textOptions(t)).not.toThrow();
+    expect(tos.color).toBe('000000'); // seems to default to black
   });
 });
 
