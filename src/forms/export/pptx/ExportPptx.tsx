@@ -367,7 +367,7 @@ class ExportPptx extends React.Component {
     if (document.title) {
       name = document.title;
     }
-    pres.writeFile(name + '.pptx');
+    pres.writeFile({ fileName: name + '.pptx' });
   }
 
   close() {
