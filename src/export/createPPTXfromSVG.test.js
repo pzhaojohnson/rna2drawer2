@@ -213,6 +213,18 @@ describe('_lineOptions function', () => {
     expect(los.line.width).toBeCloseTo(2, 2);
   });
 
+  it('handles undefined stroke', () => {
+    let svg = createNodeSVG();
+    let l = svg.line(1, 2, 5, 6);
+    l.attr({ 'stroke': null });
+    // does not seem to actually be possible
+    // to make stroke falsy
+    //expect(l.attr('stroke')).toBeFalsy();
+    let los;
+    expect(() => los = _lineOptions(l)).not.toThrow();
+    expect(los.line.color).toBe('000000'); // seems to default to black
+  });
+
   it('trims line width', () => {
     let svg = createNodeSVG();
     let l = svg.line(2, 4, 6, 8);

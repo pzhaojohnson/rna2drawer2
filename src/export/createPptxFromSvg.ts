@@ -93,6 +93,7 @@ function _lineOptions(line: Svg.Line): object {
   let y = pixelsToInches(yMin);
   let w = pixelsToInches(xMax - xMin);
   let h = pixelsToInches(yMax - yMin);
+  let lineColor = parseColor(line.attr('stroke'));
   return {
     x: trimNum(x, 4),
     y: trimNum(y, 4),
@@ -101,7 +102,7 @@ function _lineOptions(line: Svg.Line): object {
     flipH: line.attr('x1') > xMin,
     flipV: line.attr('y1') > yMin,
     line: {
-      color: _pptxHex(new Svg.Color(line.attr('stroke'))),
+      color: lineColor ? _pptxHex(lineColor) : undefined,
       width: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
     }
   };
