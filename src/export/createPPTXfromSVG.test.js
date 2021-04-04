@@ -201,7 +201,7 @@ describe('_lineOptions function', () => {
     });
   });
 
-  it('line and lineSize (and uses _pptxHex function)', () => {
+  it('line color and width (and uses _pptxHex function)', () => {
     let svg = createNodeSVG();
     let l = svg.line(1, 3, 5, 7);
     l.attr({
@@ -209,18 +209,18 @@ describe('_lineOptions function', () => {
       'stroke-width': pointsToPixels(2),
     });
     let los = _lineOptions(l);
-    expect(los.line).toBe('AABBCC');
-    expect(los.lineSize).toBeCloseTo(2, 2);
+    expect(los.line.color).toBe('AABBCC');
+    expect(los.line.width).toBeCloseTo(2, 2);
   });
 
-  it('trims lineSize', () => {
+  it('trims line width', () => {
     let svg = createNodeSVG();
     let l = svg.line(2, 4, 6, 8);
     let sw = 2.23938471298;
     expect(_trimNum(sw)).not.toEqual(sw);
     l.attr({ 'stroke-width': sw });
     let los = _lineOptions(l);
-    expect(_trimNum(los.lineSize)).toEqual(los.lineSize);
+    expect(_trimNum(los.line.width)).toEqual(los.line.width);
   });
 });
 

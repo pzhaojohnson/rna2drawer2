@@ -100,8 +100,10 @@ function _lineOptions(line: Svg.Line): object {
     h: trimNum(h, 4),
     flipH: line.attr('x1') > xMin,
     flipV: line.attr('y1') > yMin,
-    line: _pptxHex(new Svg.Color(line.attr('stroke'))),
-    lineSize: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
+    line: {
+      color: _pptxHex(new Svg.Color(line.attr('stroke'))),
+      width: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
+    }
   };
 }
 
