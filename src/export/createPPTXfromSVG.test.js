@@ -267,66 +267,93 @@ describe('_circleOptions function', () => {
     });
   });
 
-  it('gives correct line (and uses _pptxHex function)', () => {
-    let svg = createNodeSVG();
-    let c = svg.circle(100);
-    c.attr({
-      'stroke': '#987654',
-      'stroke-width': 2,
-      'stroke-opacity': 0.4,
-    });
-    let cos = _circleOptions(c);
-    expect(cos.line.type).toBe('solid');
-    expect(cos.line.color).toBe('987654');
-    expect(cos.line.alpha).toBeCloseTo(60, 2);
-  });
-
-  it('sets line alpha to 100 when line size is 0', () => {
-    /* For some reason setting line size to 0 results in a line size
-    of 0.75 pt when the PPTX file is opened in PowerPoint. Setting alpha
-    to 100 keeps the line invisible. */
-    let svg = createNodeSVG();
-    let c = svg.circle(25);
-    c.attr({ 'stroke-width': 0, 'stroke-opacity': 0.5 });
-    let cos = _circleOptions(c);
-    expect(cos.line.alpha).toBe(100);
-  });
-
-  describe('lineSize', () => {
-    it('gives correct value', () => {
+  describe('line', () => {
+    it('gives correct color, width and transparency', () => {
       let svg = createNodeSVG();
       let c = svg.circle(20);
       c.attr({
-        'stroke-width': pointsToPixels(2),
-        'stroke-opacity': 0.5,
+        'stroke': '#11ab35',
+        'stroke-width': pointsToPixels(5),
+        'stroke-opacity': 0.25,
       });
       let cos = _circleOptions(c);
-      expect(cos.lineSize).toBeCloseTo(2, 2);
+      // converted to PPTX compatible hex code
+      expect(cos.line.color).toBe('11AB35');
+      expect(cos.line.width).toBeCloseTo(5);
+      expect(cos.line.transparency).toBeCloseTo(75);
     });
 
-    it('trims number', () => {
+    it('trims width', () => {
+      let svg = createNodeSVG();
+      let c = svg.circle(50);
+      c.attr({ 'stroke-width': 5.192847191941 }); // needs trimming
+      let cos = _circleOptions(c);
+      expect(cos.line.width).toBe(_trimNum(cos.line.width));
+    });
+
+    it('leaves undefined when line is invisible', () => {
+      // line must be left undefined since a width of zero
+      // or transparency of 100 may end up being changed in
+      // the resulting PPTX file so that the line is visible
+      // for some reason...
       let svg = createNodeSVG();
       let c = svg.circle(20);
-      let sw = 5.19284719194;
-      expect(_trimNum(sw)).not.toEqual(sw);
-      c.attr({ 'stroke-width': sw });
+      c.attr({ 'stroke': '#abcdef' });
+      c.attr({ 'stroke-width': 0, 'stroke-opacity': 0.5 });
       let cos = _circleOptions(c);
-      expect(cos.lineSize).toBeGreaterThan(0);
-      expect(_trimNum(cos.lineSize)).toEqual(cos.lineSize);
+      expect(cos.line).toBeFalsy();
+      c.attr({ 'stroke-width': 2, 'stroke-opacity': 0 });
+      cos = _circleOptions(c);
+      expect(cos.line).toBeFalsy();
+    });
+
+    it('handles undefined stroke', () => {
+      let svg = createNodeSVG();
+      let c = svg.circle(10);
+      c.attr({ 'stroke': null, 'stroke-width': 1 });
+      // does not seem to actually be possible
+      // to make stroke falsy
+      expect(c.attr('stroke')).toBe('#000000'); // defaults to black
+      let cos;
+      expect(() => cos = _circleOptions(c)).not.toThrow();
+      expect(cos.line.color).toBe('000000');
     });
   });
 
-  it('gives correct fill (and uses _pptxHex function)', () => {
-    let svg = createNodeSVG();
-    let c = svg.circle(20);
-    c.attr({
-      'fill': '#998877',
-      'fill-opacity': 0.3,
+  describe('fill', () => {
+    it('gives correct color and transparency', () => {
+      let svg = createNodeSVG();
+      let c = svg.circle(15);
+      c.attr({ fill: '#11ba3d', 'fill-opacity': 0.4 });
+      let cos = _circleOptions(c);
+      // converted to PPTX compatible hex code
+      expect(cos.fill.color).toBe('11BA3D');
+      expect(cos.fill.transparency).toBeCloseTo(60);
     });
-    let cos = _circleOptions(c);
-    expect(cos.fill.type).toBe('solid');
-    expect(cos.fill.color).toBe('998877');
-    expect(cos.fill.alpha).toBeCloseTo(70, 2);
+
+    it('leaves undefined when invisible', () => {
+      // fill must be left undefined since a transparency
+      // of 100 may end up being changed in the resulting
+      // PPTX file so that the fill is visible for some
+      // reason...
+      let svg = createNodeSVG();
+      let c = svg.circle(10);
+      c.attr({ 'fill': '#abcd11', 'fill-opacity': 0 });
+      let cos = _circleOptions(c);
+      expect(cos.fill).toBeFalsy();
+    });
+
+    it('handles undefined fill', () => {
+      let svg = createNodeSVG();
+      let c = svg.circle(50);
+      c.attr({ 'fill': null });
+      // does not seem to actually be possible
+      // to make fill falsy
+      expect(c.attr('fill')).toBe('#000000'); // defaults to black
+      let cos;
+      expect(() => cos = _circleOptions(c)).not.toThrow();
+      expect(cos.fill.color).toBe('000000');
+    });
   });
 });
 

@@ -120,26 +120,30 @@ function _circleOptions(circle: Svg.Circle): object {
   let y = circle.attr('cy') - circle.attr('r');
   let w = 2 * circle.attr('r');
   let h = 2 * circle.attr('r');
-  let lineAlpha = 100 * (1 - circle.attr('stroke-opacity'));
-  if (circle.attr('stroke-width') == 0) {
-    lineAlpha = 100;
+  let line;
+  if (circle.attr('stroke-opacity') > 0 && circle.attr('stroke-width') > 0) {
+    let color = parseColor(circle.attr('stroke'));
+    line = {
+      color: color ? _pptxHex(color) : undefined,
+      width: _trimNum(pixelsToPoints(circle.attr('stroke-width'))),
+      transparency: 100 * (1 - circle.attr('stroke-opacity')),
+    };
+  }
+  let fill;
+  if (circle.attr('fill-opacity') > 0) {
+    let color = parseColor(circle.attr('fill'));
+    fill = {
+      color: color ? _pptxHex(color) : undefined,
+      transparency: 100 * (1 - circle.attr('fill-opacity')),
+    };
   }
   return {
     x: trimNum(pixelsToInches(x), 4),
     y: trimNum(pixelsToInches(y), 4),
     w: trimNum(pixelsToInches(w), 4),
     h: trimNum(pixelsToInches(h), 4),
-    line: {
-      type: 'solid',
-      color: _pptxHex(new Svg.Color(circle.attr('stroke'))),
-      alpha: lineAlpha,
-    },
-    lineSize: _trimNum(pixelsToPoints(circle.attr('stroke-width'))),
-    fill: {
-      type: 'solid',
-      color: _pptxHex(new Svg.Color(circle.attr('fill'))),
-      alpha: 100 * (1 - circle.attr('fill-opacity')),
-    },
+    line: line,
+    fill: fill,
   };
 }
 
