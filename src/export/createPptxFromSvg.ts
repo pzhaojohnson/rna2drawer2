@@ -232,9 +232,15 @@ function createPptxFromSvg(svg: Svg.Svg): PptxGenJS {
     } else if (c.type === 'line') {
       _addLine(pres, slide, c as Svg.Line);
     } else if (c.type === 'circle') {
-      _addCircle(pres, slide, c as Svg.Circle);
+      // add as image since shape line transparency
+      // doesn't work correctly at the moment
+      //_addCircle(pres, slide, c as Svg.Circle);
+      _addElementAsImage(slide, c);
     } else if (c.type === 'rect') {
-      _addRect(pres, slide, c as Svg.Rect);
+      // add as image since shape line transparency
+      // doesn't work correctly at the moment
+      //_addRect(pres, slide, c as Svg.Rect);
+      _addElementAsImage(slide, c);
     } else if (c.type === 'path') {
       _addElementAsImage(slide, c);
     } else {
