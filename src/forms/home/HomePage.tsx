@@ -22,7 +22,7 @@ function Header() {
             Developed by Philip Johnson and Anne Simon
           </p>
           <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.6)', textAlign: 'right' }} >
-            Last Updated on Mar. 18, 2021
+            Last Updated on April 9, 2021
           </p>
         </div>
       </div>
@@ -130,7 +130,7 @@ function UpdatesNotice() {
       }}
     >
       <p style={{ margin: '0px 21px', fontSize: '14px' }} >
-        See the <UpdatesLink />! <em>(Mar. 18, 2021)</em>
+        See the <UpdatesLink />! <em>(April 9, 2021)</em>
       </p>
     </div>
   );
