@@ -22,6 +22,7 @@
       "Math/*": ["src/math/*"],
       "Menu/*": ["src/menu/*"],
       "Parse/*": ["src/parse/*"],
+      "Partners/*": ["src/partners/*"],
       "Undo/*": ["src/undo/*"],
       "Wait/*": ["src/wait/*"],
       "AppInterface": ["src/AppInterface"]

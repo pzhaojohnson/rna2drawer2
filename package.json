@@ -60,6 +60,7 @@
       "^Math(.*)$": "<rootDir>/src/math$1",
       "^Menu(.*)$": "<rootDir>/src/menu$1",
       "^Parse(.*)$": "<rootDir>/src/parse$1",
+      "^Partners(.*)$": "<rootDir>/src/partners$1",
       "^Undo(.*)$": "<rootDir>/src/undo$1",
       "^Wait(.*)$": "<rootDir>/src/wait$1",
       "^AppInterface$": "<rootDir>/src/AppInterface.ts",

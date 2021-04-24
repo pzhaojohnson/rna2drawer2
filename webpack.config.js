@@ -69,6 +69,7 @@ module.exports = {
       Math: path.resolve(__dirname, 'src/math/'),
       Menu: path.resolve(__dirname, 'src/menu/'),
       Parse: path.resolve(__dirname, 'src/parse/'),
+      Partners: path.resolve(__dirname, 'src/partners/'),
       Undo: path.resolve(__dirname, 'src/undo/'),
       Wait: path.resolve(__dirname, 'src/wait/'),
       AppInterface$: path.resolve(__dirname, 'src/AppInterface.ts')
