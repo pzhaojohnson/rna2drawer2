@@ -28,6 +28,32 @@ describe('pair function', () => {
       [null, 9, 7, null, null, null, 3, null, 2, null]
     );
   });
+
+  it('can add pair to empty partners notation', () => {
+    let partners = [];
+    pair(partners, 3, 8);
+    let expected = [];
+    expected[3 - 1] = 8;
+    expected[8 - 1] = 3;
+    expect(partners).toStrictEqual(expected);
+  });
+
+  it('can add pair above bounds', () => {
+    let partners = [null, undefined, null, undefined, null];
+    let expected = [null, undefined, null, undefined, null];
+    pair(partners, 3, 9); // second position is above bounds
+    expected[3 - 1] = 9;
+    expected[9 - 1] = 3;
+    expect(partners).toStrictEqual(expected);
+    pair(partners, 12, 2); // first position is above bounds
+    expected[12 - 1] = 2;
+    expected[2 - 1] = 12;
+    expect(partners).toStrictEqual(expected);
+    pair(partners, 15, 22); // both positions are above bounds
+    expected[15 - 1] = 22;
+    expected[22 - 1] = 15;
+    expect(partners).toStrictEqual(expected);
+  });
 });
 
 describe('unpair function', () => {
@@ -50,5 +76,21 @@ describe('unpair function', () => {
       // okay to change undefined to null at position 3
       [null, undefined, null, null, null]
     );
+  });
+
+  it('handles empty partners notation', () => {
+    let partners = [];
+    unpair(partners, 3);
+    let expected = [];
+    expected[3 - 1] = null; // will assign null at position 3
+    expect(partners).toStrictEqual(expected);
+  });
+
+  it('handles position above bounds', () => {
+    let partners = [null, 6, null, null, undefined, 2, undefined];
+    let expected = [null, 6, null, null, undefined, 2, undefined];
+    unpair(partners, 12);
+    expected[12 - 1] = null;
+    expect(partners).toStrictEqual(expected);
   });
 });
