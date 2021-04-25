@@ -2,7 +2,7 @@ import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import { selectedRange } from './selected';
 import hoveredPairable from './hoveredPairable';
 import secondaryBondsWith from './secondaryBondsWith';
-import { partnersAreValid } from '../../../parse/partnersAreValid';
+import { areValid as partnersAreValid } from 'Partners/areValid';
 import isKnotless from '../../../parse/isKnotless';
 
 export function canSecondaryPair(mode: FoldingMode): boolean {

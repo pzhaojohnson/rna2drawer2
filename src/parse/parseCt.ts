@@ -1,7 +1,7 @@
 import { splitLines } from './splitLines';
 import isAllWhitespace from './isAllWhitespace';
 import { nonemptySplitByWhitespace } from './nonemptySplitByWhitespace';
-import { partnersAreValid } from './partnersAreValid';
+import { areValid as partnersAreValid } from 'Partners/areValid';
 
 function _lineShouldBeIgnored(line: string): boolean {
   if (isAllWhitespace(line)) {
