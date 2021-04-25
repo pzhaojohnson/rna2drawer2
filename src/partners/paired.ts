@@ -11,3 +11,7 @@ export function isPaired(partners: Partners, p: number): boolean {
 export function isUnpaired(partners: Partners, p: number): boolean {
   return !isPaired(partners, p);
 }
+
+export function arePaired(partners: Partners, p: number, q: number): boolean {
+  return partnerOf(partners, p) == q;
+}

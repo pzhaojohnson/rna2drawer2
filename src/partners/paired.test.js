@@ -2,6 +2,7 @@ import {
   partnerOf,
   isPaired,
   isUnpaired,
+  arePaired,
 } from './paired';
 
 let partners = [null, undefined, 11, 10, 9, null, undefined, undefined, 5, 4, 3, null];
@@ -55,5 +56,36 @@ describe('isUnpaired function', () => {
     expect(isUnpaired(partners, 0)).toBeTruthy();
     expect(isUnpaired(partners, -1)).toBeTruthy();
     expect(isUnpaired(partners, partners.length + 3)).toBeTruthy();
+  });
+});
+
+describe('arePaired function', () => {
+  let partners = [null, undefined, 11, 10, 9, null, undefined, undefined, 5, 4, 3, null];
+
+  it('are paired', () => {
+    expect(arePaired(partners, 3, 11)).toBeTruthy();
+    expect(arePaired(partners, 4, 10)).toBeTruthy();
+    expect(arePaired(partners, 9, 5)).toBeTruthy(); // larger position is first
+  });
+
+  it('both are unpaired', () => {
+    expect(arePaired(partners, 1, 6)).toBeFalsy();
+    expect(arePaired(partners, 12, 6)).toBeFalsy();
+  });
+
+  it('are in other pairs', () => {
+    // first position is in other pair
+    expect(arePaired(partners, 3, 6)).toBeFalsy();
+    // second position is in other pair
+    expect(arePaired(partners, 6, 9)).toBeFalsy();
+    // both positions are in other pairs
+    expect(arePaired(partners, 3, 10)).toBeFalsy();
+  });
+
+  it('positions are out of range', () => {
+    // first is below range and second is above range
+    expect(arePaired(partners, -2, partners.length + 2)).toBeFalsy();
+    // first is above range and second is below range
+    expect(arePaired(partners, partners.length + 3, -5)).toBeFalsy();
   });
 });
