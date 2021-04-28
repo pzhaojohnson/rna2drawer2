@@ -1,16 +1,15 @@
-import { initializePartners } from './Partners';
+import { unstructuredPartners } from './Partners';
 
-describe('initializePartners function', () => {
+describe('unstructuredPartners function', () => {
   it('creates empty partners by default', () => {
-    expect(initializePartners()).toStrictEqual([]);
+    expect(unstructuredPartners()).toStrictEqual([]);
   });
 
   it('creates partners of specified length', () => {
-    expect(initializePartners(2)).toStrictEqual(
-      // initializes with nulls
+    expect(unstructuredPartners(2)).toStrictEqual(
       [null, null]
     );
-    expect(initializePartners(5)).toStrictEqual(
+    expect(unstructuredPartners(5)).toStrictEqual(
       [null, null, null, null, null]
     );
   });
