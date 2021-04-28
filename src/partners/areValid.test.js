@@ -24,6 +24,14 @@ describe('valid partners', () => {
     let partners = [6, 5, 4, 3, 2, 1];
     expect(areValid(partners)).toBeTruthy();
   });
+
+  it('has unassigned positions', () => {
+    let partners = [null, 6, null, null, undefined, 2];
+    partners.length = 50;
+    partners[21 - 1] = 32;
+    partners[32 - 1] = 21;
+    expect(areValid(partners)).toBeTruthy();
+  });
 });
 
 describe('invalid partners', () => {
@@ -48,6 +56,20 @@ describe('invalid partners', () => {
     let partners = [null, 12, undefined, undefined]; // above bounds
     expect(areValid(partners)).toBeFalsy();
     partners = [undefined, undefined, undefined, -2, null]; // below bounds
+    expect(areValid(partners)).toBeFalsy();
+  });
+
+  it('iterates over unassigned positions', () => {
+    let partners = [5, null, undefined, undefined, 1];
+    // must iterate over unassigned positions
+    // to find invalid partner
+    partners[24] = 3;
+    expect(areValid(partners)).toBeFalsy();
+  });
+
+  it('partner is an unassigned position', () => {
+    let partners = [null, 25, undefined, undefined];
+    partners.length = 40;
     expect(areValid(partners)).toBeFalsy();
   });
 });
