@@ -8,6 +8,7 @@ export function areValid(partners: Partners): boolean {
       let pairIsValid = (
         Number.isInteger(q)
         && partners[q - 1] == p
+        && p != q
       );
       if (!pairIsValid) {
         valid = false;

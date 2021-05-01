@@ -59,6 +59,11 @@ describe('invalid partners', () => {
     expect(areValid(partners)).toBeFalsy();
   });
 
+  it('position is paired with itself', () => {
+    let partners = [null, null, 3, undefined, undefined];
+    expect(areValid(partners)).toBeFalsy();
+  });
+
   it('iterates over unassigned positions', () => {
     let partners = [5, null, undefined, undefined, 1];
     // must iterate over unassigned positions
