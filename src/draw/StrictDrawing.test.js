@@ -7,7 +7,6 @@ import { StrictLayout } from './layout/singleseq/strict/StrictLayout';
 
 import * as AppendStructureToStrictDrawing from './edit/appendStructureToStrictDrawing';
 
-import isKnotless from '../parse/isKnotless';
 import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
 import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';

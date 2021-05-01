@@ -3,7 +3,7 @@ import { selectedRange } from './selected';
 import hoveredPairable from './hoveredPairable';
 import secondaryBondsWith from './secondaryBondsWith';
 import { areValid as partnersAreValid } from 'Partners/areValid';
-import isKnotless from '../../../parse/isKnotless';
+import { hasKnots } from 'Partners/hasKnots';
 
 export function canSecondaryPair(mode: FoldingMode): boolean {
   if (mode.onlyAddingTertiaryBonds()) {
@@ -22,7 +22,7 @@ export function canSecondaryPair(mode: FoldingMode): boolean {
     partners[rSelected.start + i - 1] = pairable.end - i;
     partners[pairable.end - i - 1] = rSelected.start + i;
   }
-  return partnersAreValid(partners) && isKnotless(partners);
+  return partnersAreValid(partners) && !hasKnots(partners);
 }
 
 export default canSecondaryPair;

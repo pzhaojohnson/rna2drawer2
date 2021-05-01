@@ -3,7 +3,7 @@ import StrictDrawing from '../StrictDrawing';
 import createNodeSVG from '../createNodeSVG';
 
 import validatePartners from '../../parse/validatePartners';
-import isKnotless from '../../parse/isKnotless';
+import { hasKnots } from 'Partners/hasKnots';
 
 it('handles no secondary bonds', () => {
   let sd = new StrictDrawing();
@@ -56,7 +56,7 @@ it('removes knots', () => {
   );
   let partners = layoutPartnersOfStrictDrawing(sd);
   expect(() => validatePartners(partners)).not.toThrow();
-  expect(isKnotless(partners)).toBeTruthy();
+  expect(hasKnots(partners)).toBeFalsy();
 });
 
 it('handles secondary bonds that share bases', () => {
