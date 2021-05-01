@@ -17,3 +17,9 @@ export function areValid(partners: Partners): boolean {
   });
   return valid;
 }
+
+export function assertAreValid(partners: Partners): void | never {
+  if (!areValid(partners)) {
+    throw new Error('Partners notation is invalid.');
+  }
+}
