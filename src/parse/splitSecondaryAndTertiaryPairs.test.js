@@ -1,5 +1,5 @@
 import splitSecondaryAndTertiaryPairs from './splitSecondaryAndTertiaryPairs';
-import validatePartners from './validatePartners';
+import { assertAreValid as assertPartnersAreValid } from 'Partners/areValid';
 
 /**
  * @param {number} length 
@@ -244,10 +244,10 @@ it('splitSecondaryAndTertiaryPairs', () => {
   cases.forEach(cs => {
 
     // validate manually generated partners notation
-    validatePartners(cs.allPartners);
-    validatePartners(cs.secondaryPartners);
+    assertPartnersAreValid(cs.allPartners);
+    assertPartnersAreValid(cs.secondaryPartners);
     expect(cs.secondaryPartners.length).toBe(cs.allPartners.length);
-    validatePartners(cs.tertiaryPartners);
+    assertPartnersAreValid(cs.tertiaryPartners);
     expect(cs.tertiaryPartners.length).toBe(cs.allPartners.length);
 
     let result = splitSecondaryAndTertiaryPairs(cs.allPartners);

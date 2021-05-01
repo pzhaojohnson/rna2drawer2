@@ -2,7 +2,7 @@ import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
 import StrictDrawing from '../StrictDrawing';
 import createNodeSVG from '../createNodeSVG';
 
-import validatePartners from '../../parse/validatePartners';
+import { assertAreValid as assertPartnersAreValid } from 'Partners/areValid';
 import { hasKnots } from 'Partners/hasKnots';
 
 it('handles no secondary bonds', () => {
@@ -55,7 +55,7 @@ it('removes knots', () => {
     seq.getBaseAtPosition(11),
   );
   let partners = layoutPartnersOfStrictDrawing(sd);
-  expect(() => validatePartners(partners)).not.toThrow();
+  expect(() => assertPartnersAreValid(partners)).not.toThrow();
   expect(hasKnots(partners)).toBeFalsy();
 });
 
@@ -74,5 +74,5 @@ it('handles secondary bonds that share bases', () => {
     seq.getBaseAtPosition(12),
   );
   let partners = layoutPartnersOfStrictDrawing(sd);
-  expect(() => validatePartners(partners)).not.toThrow();
+  expect(() => assertPartnersAreValid(partners)).not.toThrow();
 });

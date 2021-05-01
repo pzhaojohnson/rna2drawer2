@@ -1,5 +1,5 @@
 import parseStems from './parseStems';
-import validatePartners from './validatePartners';
+import { assertAreValid as assertPartnersAreValid } from 'Partners/areValid';
 
 let cases = [
 
@@ -69,7 +69,7 @@ it('parseStems', () => {
 
   // validate manually typed in partners notation
   cases.forEach(cs => {
-    validatePartners(cs.partners);
+    assertPartnersAreValid(cs.partners);
     
     let stems = parseStems(cs.partners);
     expect(stems.length).toBe(cs.stems.length);

@@ -1,7 +1,6 @@
 import StrictDrawing from './StrictDrawing';
 import NodeSVG from './NodeSVG';
 import parseDotBracket from '../parse/parseDotBracket';
-import validatePartners from '../parse/validatePartners';
 
 import { StrictLayout } from './layout/singleseq/strict/StrictLayout';
 
