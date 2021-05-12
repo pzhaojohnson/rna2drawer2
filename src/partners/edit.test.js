@@ -1,7 +1,7 @@
 import {
   pair,
   unpair,
-} from './pair';
+} from './edit';
 
 describe('pair function', () => {
   it('pairs the two positions', () => {
