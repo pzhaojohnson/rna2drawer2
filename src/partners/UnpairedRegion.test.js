@@ -1,4 +1,19 @@
-import { contains } from './UnpairedRegion';
+import {
+  positions,
+  contains,
+} from './UnpairedRegion';
+
+describe('positions function', () => {
+  it('unpaired region containing multiple positions', () => {
+    let ur = { boundingPosition5: 22, boundingPosition3: 27 };
+    expect(positions(ur)).toStrictEqual([23, 24, 25, 26]);
+  });
+
+  it('unpaired region containing zero positions', () => {
+    let ur = { boundingPosition5: 8, boundingPosition3: 9 };
+    expect(positions(ur)).toStrictEqual([]);
+  });
+});
 
 it('contains function', () => {
   let ur = { boundingPosition5: 5, boundingPosition3: 9 };

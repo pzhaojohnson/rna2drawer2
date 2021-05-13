@@ -6,6 +6,15 @@ export type UnpairedRegion = {
   boundingPosition3: number;
 };
 
+// returns the positions in the unpaired region
+export function positions(ur: UnpairedRegion): number[] {
+  let ps: number[] = [];
+  for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
+    ps.push(p);
+  }
+  return ps;
+}
+
 export function contains(ur: UnpairedRegion, p: number): boolean {
   return p > ur.boundingPosition5 && p < ur.boundingPosition3;
 }
