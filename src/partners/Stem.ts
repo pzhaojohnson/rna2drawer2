@@ -14,6 +14,15 @@ export type Stem = {
   size: number;
 };
 
+// returns the pairs in the stem
+export function pairs(st: Stem): Pair[] {
+  let prs: Pair[] = [];
+  for (let i = 0; i < st.size; i++) {
+    prs.push([st.position5 + i, st.position3 - i]);
+  }
+  return prs;
+}
+
 export function bottomPair(st: Stem): Pair {
   return [st.position5, st.position3];
 }

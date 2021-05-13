@@ -1,8 +1,25 @@
 import {
+  pairs,
   bottomPair,
   topPair,
   contains,
 } from './Stem';
+
+describe('pairs function', () => {
+  it('stem of size greater than one', () => {
+    let st = { position5: 21, position3: 47, size: 4 };
+    expect(pairs(st)).toStrictEqual(
+      [[21, 47], [22, 46], [23, 45], [24, 44]]
+    );
+  });
+
+  it('stem of size one', () => {
+    let st = { position5: 8, position3: 19, size: 1 };
+    expect(pairs(st)).toStrictEqual(
+      [[8, 19]]
+    );
+  });
+});
 
 it('bottomPair function', () => {
   let st = { position5: 24, position3: 76, size: 6 };
