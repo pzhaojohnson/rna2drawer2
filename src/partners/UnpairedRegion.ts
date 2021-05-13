@@ -6,6 +6,11 @@ export type UnpairedRegion = {
   boundingPosition3: number;
 };
 
+// returns the number of positions in the unpaired region
+export function size(ur: UnpairedRegion): number {
+  return ur.boundingPosition3 - ur.boundingPosition5 - 1;
+}
+
 // returns the positions in the unpaired region
 export function positions(ur: UnpairedRegion): number[] {
   let ps: number[] = [];
