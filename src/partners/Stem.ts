@@ -1,4 +1,8 @@
-import { Pair } from './Pair';
+import {
+  Pair,
+  partner5,
+  partner3,
+} from './Pair';
 
 // a consecutive stack of pairs
 export type Stem = {
@@ -19,4 +23,13 @@ export function topPair(st: Stem): Pair {
     st.position5 + st.size - 1,
     st.position3 - st.size + 1,
   ];
+}
+
+export function contains(st: Stem, p: number): boolean {
+  let bpr = bottomPair(st);
+  let tpr = topPair(st);
+  return (
+    (p >= partner5(bpr) && p <= partner5(tpr))
+    || (p <= partner3(bpr) && p >= partner3(tpr))
+  );
 }
