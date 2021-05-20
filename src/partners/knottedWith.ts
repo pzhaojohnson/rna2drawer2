@@ -1,5 +1,4 @@
-import { Partners } from './Partners';
-import { partnerOf } from './paired';
+import { Partners, partnerOf } from './Partners';
 import { areKnotted } from './areKnotted';
 
 export type Pair = [number, number];

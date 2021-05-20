@@ -1,5 +1,4 @@
-import { Partners } from './Partners';
-import { partnerOf } from './paired';
+import { Partners, partnerOf } from './Partners';
 
 export function pair(partners: Partners, p: number, q: number) {
   unpair(partners, p);
