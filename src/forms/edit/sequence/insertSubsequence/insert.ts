@@ -4,7 +4,7 @@ import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../../draw/layou
 import { willInsertAt } from '../../../../draw/layout/singleseq/strict/stemProps';
 import { DrawingInterface as Drawing } from '../../../../draw/DrawingInterface';
 import { PrimaryBondInterface as PrimaryBond } from '../../../../draw/StraightBondInterface';
-import { unpairedRegionOfPosition } from '../../../../parse/unpairedRegionOfPosition';
+import { containingUnpairedRegion } from 'Partners/containing';
 import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
 
 interface Inputs {
@@ -76,11 +76,11 @@ function insertPerBaseProps(strictDraiwng: StrictDrawing, insertPosition: number
 function evenOutStretches(strictDrawing: StrictDrawing, insertPosition: number, subsequence: string) {
   let partners = strictDrawing.layoutPartners();
   let perBaseProps = strictDrawing.perBaseLayoutProps();
-  let ur5 = unpairedRegionOfPosition(insertPosition, partners);
+  let ur5 = containingUnpairedRegion(partners, insertPosition);
   if (ur5) {
     evenOutStretch(perBaseProps, ur5);
   }
-  let ur3 = unpairedRegionOfPosition(insertPosition + subsequence.length - 1, partners);
+  let ur3 = containingUnpairedRegion(partners, insertPosition + subsequence.length - 1);
   if (ur3) {
     evenOutStretch(perBaseProps, ur3);
   }

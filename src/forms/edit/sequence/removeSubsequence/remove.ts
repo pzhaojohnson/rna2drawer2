@@ -2,7 +2,7 @@ import { StrictDrawingInterface as StrictDrawing } from '../../../../draw/Strict
 import { DrawingInterface as Drawing } from '../../../../draw/DrawingInterface';
 import { SequenceInterface as Sequence } from '../../../../draw/SequenceInterface';
 import { BaseInterface as Base } from '../../../../draw/BaseInterface';
-import { unpairedRegionOfPosition } from '../../../../parse/unpairedRegionOfPosition';
+import { containingUnpairedRegion } from 'Partners/containing';
 import { willRemove } from '../../../../draw/layout/singleseq/strict/stemProps';
 import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
 import {
@@ -91,7 +91,7 @@ function repairStrandBreak(drawing: Drawing, seq: Sequence, removedRange: Range)
 
 function evenOutStretches(strictDrawing: StrictDrawing, removedRange: Range) {
   let partners = strictDrawing.layoutPartners();
-  let ur = unpairedRegionOfPosition(removedRange.start, partners);
+  let ur = containingUnpairedRegion(partners, removedRange.start);
   if (ur) {
     let perBaseProps = strictDrawing.perBaseLayoutProps();
     evenOutStretch(perBaseProps, ur);

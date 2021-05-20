@@ -1,8 +1,6 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
-import {
-  unpairedRegionOfPosition,
-  UnpairedRegion,
-} from '../../../parse/unpairedRegionOfPosition';
+import { UnpairedRegion } from 'Partners/UnpairedRegion';
+import { containingUnpairedRegion } from 'Partners/containing';
 import {
   stemOfPosition,
   Stem,
@@ -60,7 +58,7 @@ export function adjustStretches(mode: FoldingMode) {
   let numBases = mode.strictDrawing.drawing.numBases;
   let p = 1;
   while (p <= numBases) {
-    let ur = unpairedRegionOfPosition(p, partners);
+    let ur = containingUnpairedRegion(partners, p);
     let st = stemOfPosition(p, partners);
     if (ur) {
       _evenOutStretch(ur, perBaseProps);

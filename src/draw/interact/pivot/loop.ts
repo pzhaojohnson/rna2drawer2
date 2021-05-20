@@ -2,7 +2,7 @@ import { Stem, UnpairedRegion } from './PivotingModeInterface';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
 } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
-import { unpairedRegionOfPosition } from '../../../parse/unpairedRegionOfPosition';
+import { containingUnpairedRegion } from 'Partners/containing';
 import { closestStemOuterTo } from '../../../parse/closest';
 import { stemOfPosition } from '../../../parse/stemOfPosition';
 
@@ -15,7 +15,7 @@ export function unpairedRegionBefore(partners: PartnersNotation, st: Stem): Unpa
   if (p < 1) {
     return { boundingPosition5: 0, boundingPosition3: 1 };
   } else {
-    let ur = unpairedRegionOfPosition(st.position5 - 1, partners);
+    let ur = containingUnpairedRegion(partners, st.position5 - 1);
     if (ur) {
       return ur;
     } else {
@@ -29,7 +29,7 @@ export function unpairedRegionAfter(partners: PartnersNotation, st: Stem): Unpai
   if (p > partners.length) {
     return { boundingPosition5: partners.length, boundingPosition3: partners.length + 1 };
   } else {
-    let ur = unpairedRegionOfPosition(st.position3 + 1, partners);
+    let ur = containingUnpairedRegion(partners, st.position3 + 1);
     if (ur) {
       return ur;
     } else {

@@ -1,6 +1,6 @@
 import { TriangularizingModeInterface as TriangularizingMode } from './TriangularizingModeInterface';
 import { stemOfPosition } from '../../../parse/stemOfPosition';
-import { unpairedRegionOfPosition } from '../../../parse/unpairedRegionOfPosition';
+import { containingUnpairedRegion } from 'Partners/containing';
 import { closestStemOuterTo } from '../../../parse/closest';
 import splitSecondaryAndTertiaryPairs from '../../../parse/splitSecondaryAndTertiaryPairs';
 import {
@@ -56,7 +56,7 @@ export function positionsOfOutermostLoop(partners: PartnersNotation): number[] {
 }
 
 export function hasHairpinLoop(partners: PartnersNotation, st: Stem): boolean {
-  let ur = unpairedRegionOfPosition(st.position5 + st.size, partners);
+  let ur = containingUnpairedRegion(partners, st.position5 + st.size);
   if (ur) {
     return ur.boundingPosition3 == st.position3 - st.size + 1;
   }
@@ -73,11 +73,11 @@ export function hoveringHairpin(mode: TriangularizingMode): boolean {
 
 export function unstretchEndsOfLoop(partners: PartnersNotation, perBaseProps: PerBasePropsArray, st: Stem) {
   let ps = [] as number[];
-  let ur5 = unpairedRegionOfPosition(st.position5 + st.size, partners);
+  let ur5 = containingUnpairedRegion(partners, st.position5 + st.size);
   if (ur5) {
     ps = ps.concat(positionsWithStretch3(ur5));
   }
-  let ur3 = unpairedRegionOfPosition(st.position3 - st.size, partners);
+  let ur3 = containingUnpairedRegion(partners, st.position3 - st.size);
   if (ur3) {
     ps = ps.concat(positionsWithStretch3(ur3));
   }
