@@ -1,6 +1,29 @@
-import { Partners } from './Partners';
+import { Partners, partnerOf } from './Partners';
+import { Stem } from './Stem';
 import { UnpairedRegion } from './UnpairedRegion';
-import { isUnpaired } from './paired';
+import { inBounds } from './bounds';
+import { arePaired, isUnpaired } from './paired';
+import { partner5, partner3 } from './Pair';
+
+// returns undefined if the position isn't in a stem
+export function containingStem(partners: Partners, p: number): Stem | undefined {
+  if (inBounds(partners, p)) {
+    let q = partnerOf(partners, p);
+    if (typeof q == 'number') {
+      let p5 = partner5([p, q]);
+      let p3 = partner3([p, q]);
+      while (p5 - 1 > 0 && p3 + 1 <= partners.length && arePaired(partners, p5 - 1, p3 + 1)) {
+        p5--;
+        p3++;
+      }
+      let s = 1;
+      while (p5 + s < p3 - s && arePaired(partners, p5 + s, p3 - s)) {
+        s++;
+      }
+      return { position5: p5, position3: p3, size: s };
+    }
+  }
+}
 
 // returns undefined if the position isn't in an unpaired region
 export function containingUnpairedRegion(partners: Partners, p: number): UnpairedRegion | undefined {
