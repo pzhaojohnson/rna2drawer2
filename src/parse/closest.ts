@@ -1,4 +1,4 @@
-import { stemOfPosition } from './stemOfPosition';
+import { containingStem } from 'Partners/containing';
 
 type PartnersNotation = (number | null)[];
 
@@ -22,7 +22,7 @@ export function closestPairOuterTo(partners: PartnersNotation, p: number): [numb
 export function closestStemOuterTo(partners: PartnersNotation, v: number): Stem | undefined {
   let pair = closestPairOuterTo(partners, v);
   if (pair) {
-    let st = stemOfPosition(pair[0], partners);
+    let st = containingStem(partners, pair[0]);
     if (st) {
       return st;
     }

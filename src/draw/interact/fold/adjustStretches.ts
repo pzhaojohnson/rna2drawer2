@@ -1,10 +1,8 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import { UnpairedRegion } from 'Partners/UnpairedRegion';
 import { containingUnpairedRegion } from 'Partners/containing';
-import {
-  stemOfPosition,
-  Stem,
-} from '../../../parse/stemOfPosition';
+import { Stem } from 'Partners/Stem';
+import { containingStem } from 'Partners/containing';
 import { PerBaseStrictLayoutProps as PerBaseProps } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
 
 function _positionsWithStrectch3(ur: UnpairedRegion): number[] {
@@ -59,7 +57,7 @@ export function adjustStretches(mode: FoldingMode) {
   let p = 1;
   while (p <= numBases) {
     let ur = containingUnpairedRegion(partners, p);
-    let st = stemOfPosition(p, partners);
+    let st = containingStem(partners, p);
     if (ur) {
       _evenOutStretch(ur, perBaseProps);
       // guarantees no infinite looping

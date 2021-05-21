@@ -1,5 +1,5 @@
 import { PerBaseStrictLayoutProps as PerBaseProps } from './PerBaseStrictLayoutProps';
-import { stemOfPosition } from '../../../../parse/stemOfPosition';
+import { containingStem } from 'Partners/containing';
 
 export function resetStemProps(props: PerBaseProps) {
   let defaults = new PerBaseProps();
@@ -29,8 +29,8 @@ export function willPair(partners: (number | null)[], perBaseProps: PerBaseProps
     paired[p - 1] = q;
     paired[q - 1] = p;
   }
-  let st1 = stemOfPosition(rBefore.end + 1, partners);
-  let st2 = stemOfPosition(rBefore.end + 1, paired);
+  let st1 = containingStem(partners, rBefore.end + 1);
+  let st2 = containingStem(paired, rBefore.end + 1);
   if (st1 && st2 && st1.position5 != st2.position5) {
     let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st1.position5);
     let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st2.position5);
@@ -51,15 +51,15 @@ export function willUnpair(partners: (number | null)[], perBaseProps: PerBasePro
     }
   }
   [r.start - 1, r.end + 1].forEach(p => {
-    let st1 = stemOfPosition(p, partners);
-    let st2 = stemOfPosition(p, unpaired);
+    let st1 = containingStem(partners, p);
+    let st2 = containingStem(unpaired, p);
     if (st1 && st2 && st1.position5 != st2.position5) {
       let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st1.position5);
       let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st2.position5);
       copyStemProps(fromProps, toProps);
       let wasFlipped = fromProps.flipStem;
       resetStemProps(fromProps);
-      let wasSplit = stemOfPosition(st1.position5, unpaired) ? true : false;
+      let wasSplit = containingStem(unpaired, st1.position5) ? true : false;
       if (wasFlipped && wasSplit) {
         fromProps.flipStem = true;
         toProps.flipStem = false;
@@ -73,7 +73,7 @@ export function willRemove(partners: (number | null)[], perBaseProps: PerBasePro
 }
 
 export function willInsertAt(partners: (number | null)[], perBaseProps: PerBaseProps[], p: number) {
-  let st = stemOfPosition(p, partners);
+  let st = containingStem(partners, p);
   if (st && st.position5 < p) {
     let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st.position5);
     let toProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, p);

@@ -1,6 +1,6 @@
 import { PivotingModeInterface as PivotingMode } from './PivotingModeInterface';
 import { BaseInterface as Base } from '../../BaseInterface';
-import { stemOfPosition } from '../../../parse/stemOfPosition';
+import { containingStem } from 'Partners/containing';
 import { highlightStem } from './highlight';
 import { removeAllBaseHighlightings } from '../highlight/removeAllBaseHighlightings';
 import { pivot } from './pivot';
@@ -11,7 +11,7 @@ import { overallPositionsOfBases } from './overallPositionsOfBases';
 export function handleMouseoverOnBase(mode: PivotingMode, b: Base) {
   let p = mode.strictDrawing.drawing.overallPositionOfBase(b);
   if (p > 0) {
-    let st = stemOfPosition(p, mode.strictDrawing.layoutPartners());
+    let st = containingStem(mode.strictDrawing.layoutPartners(), p);
     if (st && !mode.selected) {
       mode.hovered = st;
       mode.hoveredPosition = p;

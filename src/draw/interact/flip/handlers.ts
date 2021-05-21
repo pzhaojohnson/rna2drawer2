@@ -1,6 +1,6 @@
 import { FlippingModeInterface as FlippingMode } from './FlippingModeInterface';
 import { BaseInterface as Base } from '../../BaseInterface';
-import { stemOfPosition } from '../../../parse/stemOfPosition';
+import { containingStem } from 'Partners/containing';
 import { highlightStem } from './highlight';
 import { removeAllBaseHighlightings } from '../highlight/removeAllBaseHighlightings';
 import { PerBaseStrictLayoutProps as PerBaseProps } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
@@ -10,7 +10,7 @@ export function handleMouseoverOnBase(mode: FlippingMode, b: Base) {
   if (p > 0) {
     mode.hovered = p;
     let partners = mode.strictDrawing.layoutPartners();
-    let st = stemOfPosition(p, partners);
+    let st = containingStem(partners, p);
     if (st) {
       highlightStem(mode, st);
     }
@@ -25,7 +25,7 @@ export function handleMouseoutOnBase(mode: FlippingMode, b: Base) {
 export function handleMousedownOnBase(mode: FlippingMode, b: Base) {
   if (typeof mode.hovered == 'number') {
     let partners = mode.strictDrawing.layoutPartners();
-    let st = stemOfPosition(mode.hovered, partners);
+    let st = containingStem(partners, mode.hovered);
     if (st) {
       mode.fireShouldPushUndo();
       let perBaseProps = mode.strictDrawing.perBaseLayoutProps();

@@ -4,7 +4,7 @@ import {
 } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { closestStemOuterTo } from '../../../parse/closest';
-import { stemOfPosition } from '../../../parse/stemOfPosition';
+import { containingStem } from 'Partners/containing';
 
 export type PartnersNotation = (number | null)[];
 
@@ -55,7 +55,7 @@ export function isInTriangleLoop(partners: PartnersNotation, perBaseProps: PerBa
 }
 
 export function isFirstUnpairedRegionInLoop(partners: PartnersNotation, ur: UnpairedRegion): boolean {
-  let st = stemOfPosition(ur.boundingPosition5, partners);
+  let st = containingStem(partners, ur.boundingPosition5);
   if (st) {
     return ur.boundingPosition5 == st.position5 + st.size - 1;
   } else {
@@ -64,7 +64,7 @@ export function isFirstUnpairedRegionInLoop(partners: PartnersNotation, ur: Unpa
 }
 
 export function isLastUnpairedRegionInLoop(partners: PartnersNotation, ur: UnpairedRegion): boolean {
-  let st = stemOfPosition(ur.boundingPosition3, partners);
+  let st = containingStem(partners, ur.boundingPosition3);
   if (st) {
     return ur.boundingPosition3 == st.position3 - st.size + 1;
   } else {
@@ -78,7 +78,7 @@ export function isFirstUnpairedRegionInTriangleLoop(
   ur: UnpairedRegion,
 ): boolean {
   if (isFirstUnpairedRegionInLoop(partners, ur)) {
-    let st = stemOfPosition(ur.boundingPosition5, partners);
+    let st = containingStem(partners, ur.boundingPosition5);
     if (st) {
       return hasTriangleLoop(perBaseProps, st);
     }
@@ -92,7 +92,7 @@ export function isLastUnpairedRegionInTriangleLoop(
   ur: UnpairedRegion,
 ): boolean {
   if (isLastUnpairedRegionInLoop(partners, ur)) {
-    let st = stemOfPosition(ur.boundingPosition3, partners);
+    let st = containingStem(partners, ur.boundingPosition3);
     if (st) {
       return hasTriangleLoop(perBaseProps, st);
     }

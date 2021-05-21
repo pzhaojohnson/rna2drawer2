@@ -1,5 +1,5 @@
 import { TriangularizingModeInterface as TriangularizingMode } from './TriangularizingModeInterface';
-import { stemOfPosition } from '../../../parse/stemOfPosition';
+import { containingStem } from 'Partners/containing';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { closestStemOuterTo } from '../../../parse/closest';
 import splitSecondaryAndTertiaryPairs from '../../../parse/splitSecondaryAndTertiaryPairs';
@@ -21,7 +21,7 @@ export interface Stem {
 export function outerStemOfHoveredLoop(mode: TriangularizingMode): Stem | undefined {
   if (typeof mode.hovered == 'number') {
     let partners = mode.strictDrawing.layoutPartners();
-    let st = stemOfPosition(mode.hovered, partners);
+    let st = containingStem(partners, mode.hovered);
     if (st) {
       return st;
     } else {
