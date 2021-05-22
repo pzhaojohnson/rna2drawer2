@@ -5,7 +5,8 @@ import { inBounds } from './bounds';
 import { arePaired, isUnpaired } from './paired';
 import { partner5, partner3 } from './Pair';
 
-// returns undefined if the position isn't in a stem
+// returns the stem containing the given position
+// or undefined if the position isn't in a stem
 export function containingStem(partners: Partners, p: number): Stem | undefined {
   if (inBounds(partners, p)) {
     let q = partnerOf(partners, p);
@@ -25,7 +26,8 @@ export function containingStem(partners: Partners, p: number): Stem | undefined 
   }
 }
 
-// returns undefined if the position isn't in an unpaired region
+// returns the unpaired region containing the given position
+// or undefined if the position isn't in an unpaired region
 export function containingUnpairedRegion(partners: Partners, p: number): UnpairedRegion | undefined {
   let inBounds = (
     Number.isFinite(p)
