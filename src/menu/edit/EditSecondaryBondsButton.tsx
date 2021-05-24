@@ -15,7 +15,7 @@ export function EditSecondaryBondsButton(props: Props): React.ReactElement {
         props.app.renderForm(close => (
           <EditSecondaryBonds
             app={props.app}
-            close={close ? close : () => props.app.unmountCurrForm()}
+            close={close}
           />
         ))
       }}

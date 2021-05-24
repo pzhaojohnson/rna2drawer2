@@ -17,7 +17,7 @@ export function NewButton(props: Props): React.ReactElement {
           openNewTab();
         } else {
           props.app.renderForm(close => (
-            <CreateNewDrawing app={props.app} close={close ? close : () => props.app.unmountCurrForm()} />
+            <CreateNewDrawing app={props.app} close={close} />
           ));
         }
       }}

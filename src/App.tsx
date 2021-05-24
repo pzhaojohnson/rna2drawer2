@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { ReactElement } from 'react';
 import './App.css';
 import { AppInterface, FormFactory } from './AppInterface';
 
@@ -30,7 +29,7 @@ class App implements AppInterface {
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing: StrictDrawing;
   _strictDrawingInteraction: StrictDrawingInteraction;
-  _currFormFactory?: () => ReactElement;
+  _currFormFactory?: FormFactory;
   _drawingTitle?: string;
 
   constructor(SVG: () => Svg.Svg) {

@@ -15,7 +15,7 @@ export function EditBaseNumberingButton(props: Props): React.ReactElement {
         props.app.renderForm(close => (
           <EditBaseNumbering
             app={props.app}
-            close={close ? close : () => props.app.unmountCurrForm()}
+            close={close}
           />
         ));
       }}

@@ -18,7 +18,7 @@ export function ByDataButton(props: Props): React.ReactElement {
         props.app.renderForm(close => (
           <SelectBasesByData
             app={props.app}
-            close={close ? close : () => props.app.unmountCurrForm()}
+            close={close}
           />
         ))
       }}
