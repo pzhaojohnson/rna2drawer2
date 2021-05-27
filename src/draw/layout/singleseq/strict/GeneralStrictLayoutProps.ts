@@ -14,21 +14,21 @@ export class GeneralStrictLayoutProps {
   basePairPadding: number;
   terminiGap: number;
 
-  static fromSavedState(savedState: GeneralStrictLayoutPropsSavableState): GeneralStrictLayoutProps {
+  static fromSavedState(savedState: { [key: string]: unknown }): GeneralStrictLayoutProps {
     let gps = new GeneralStrictLayoutProps();
-    if (savedState.outermostLoopShape !== undefined) {
+    if (typeof savedState.outermostLoopShape == 'string') {
       gps.outermostLoopShape = savedState.outermostLoopShape;
     }
-    if (savedState.rotation !== undefined) {
+    if (typeof savedState.rotation == 'number') {
       gps.rotation = savedState.rotation;
     }
-    if (savedState.basePairBondLength !== undefined) {
+    if (typeof savedState.basePairBondLength == 'number') {
       gps.basePairBondLength = savedState.basePairBondLength;
     }
-    if (savedState.basePairPadding !== undefined) {
+    if (typeof savedState.basePairPadding == 'number') {
       gps.basePairPadding = savedState.basePairPadding;
     }
-    if (savedState.terminiGap !== undefined) {
+    if (typeof savedState.terminiGap == 'number') {
       gps.terminiGap = savedState.terminiGap;
     }
     return gps;
@@ -50,7 +50,7 @@ export class GeneralStrictLayoutProps {
 
   deepCopy(): GeneralStrictLayoutProps {
     let savableState = this.savableState();
-    return GeneralStrictLayoutProps.fromSavedState(savableState);
+    return GeneralStrictLayoutProps.fromSavedState({ ...savableState });
   }
 
   savableState(): GeneralStrictLayoutPropsSavableState {

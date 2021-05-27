@@ -210,7 +210,7 @@ class StrictDrawing implements StrictDrawingInterface {
       this._generalLayoutProps = new GeneralLayoutProps();
       return;
     }
-    let props = GeneralLayoutProps.fromSavedState(savedState.generalLayoutProps);
+    let props = GeneralLayoutProps.fromSavedState({ ...savedState.generalLayoutProps });
     this._generalLayoutProps = props;
   }
 
