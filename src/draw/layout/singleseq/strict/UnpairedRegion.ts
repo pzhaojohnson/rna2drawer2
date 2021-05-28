@@ -2,6 +2,7 @@ import {
   UnpairedRegionInterface,
   StemInterface as Stem,
 } from './StemInterface';
+import { Partners } from 'Partners/Partners';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
@@ -9,7 +10,7 @@ import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 
 class UnpairedRegion implements UnpairedRegionInterface {
-  _partners: (number | null)[];
+  _partners: Partners;
   _generalProps: GeneralStrictLayoutProps;
   _perBaseProps: PerBaseStrictLayoutProps[];
 
@@ -23,7 +24,7 @@ class UnpairedRegion implements UnpairedRegionInterface {
   constructor(
     bs5: Stem,
     bs3: Stem,
-    partners: (number | null)[],
+    partners: Partners,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
