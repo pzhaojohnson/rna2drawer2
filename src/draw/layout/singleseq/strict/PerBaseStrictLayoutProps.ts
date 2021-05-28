@@ -31,21 +31,21 @@ export class PerBaseStrictLayoutProps {
     return props;
   }
 
-  static fromSavedState(savedState: PerBaseStrictLayoutPropsSavableState): PerBaseStrictLayoutProps {
+  static fromSavedState(savedState: { [key: string]: unknown }): PerBaseStrictLayoutProps {
     let pbps = new PerBaseStrictLayoutProps();
-    if (savedState.stretch3 !== undefined) {
+    if (typeof savedState.stretch3 == 'number') {
       pbps.stretch3 = savedState.stretch3;
     }
-    if (savedState.flatLoopAngle3 !== undefined) {
+    if (typeof savedState.flatLoopAngle3 == 'number') {
       pbps.flatLoopAngle3 = savedState.flatLoopAngle3;
     }
-    if (savedState.flipStem !== undefined) {
+    if (typeof savedState.flipStem == 'boolean') {
       pbps.flipStem = savedState.flipStem;
     }
-    if (savedState.loopShape !== undefined) {
+    if (typeof savedState.loopShape == 'string') {
       pbps.loopShape = savedState.loopShape;
     }
-    if (savedState.triangleLoopHeight !== undefined) {
+    if (typeof savedState.triangleLoopHeight == 'number') {
       pbps.triangleLoopHeight = savedState.triangleLoopHeight;
     }
     return pbps;
@@ -61,7 +61,7 @@ export class PerBaseStrictLayoutProps {
 
   deepCopy(): PerBaseStrictLayoutProps {
     let savableState = this.savableState();
-    return PerBaseStrictLayoutProps.fromSavedState(savableState);
+    return PerBaseStrictLayoutProps.fromSavedState({ ...savableState });
   }
 
   savableState(): PerBaseStrictLayoutPropsSavableState {

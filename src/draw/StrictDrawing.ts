@@ -221,7 +221,7 @@ class StrictDrawing implements StrictDrawingInterface {
     }
     savedState.perBaseLayoutProps.forEach((savedProps, i) => {
       if (savedProps) {
-        let props = PerBaseLayoutProps.fromSavedState(savedProps);
+        let props = PerBaseLayoutProps.fromSavedState({ ...savedProps });
         this._perBaseLayoutProps[i] = props;
       }
     });
