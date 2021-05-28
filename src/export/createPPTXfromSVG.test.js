@@ -561,6 +561,24 @@ describe('_elementImageOptions function', () => {
     expect(trimNum(pios.w, 4)).toEqual(pios.w);
     expect(trimNum(pios.h, 4)).toEqual(pios.h);
   });
+
+  it('returns undefined for elements with zero area', () => {
+    // attempting to export a PPTX file with an image of zero area
+    // seems to cause an error
+    let svg = createNodeSVG();
+    let c = svg.circle(0);
+    // width and height of zero
+    c.attr({ 'r': 0, 'stroke-width': 0, 'cx': 100, 'cy': 200 });
+    let r1 = svg.rect(0, 20);
+    // width of zero
+    r1.attr({ 'width': 0, 'height': 20, 'stroke-width': 0, 'x': 35, 'y': 75 });
+    let r2 = svg.rect(11, 0);
+    // height of zero
+    r2.attr({ 'width': 11, 'height': 0, 'stroke-width': 0, 'x': 100, 'y': 200 });
+    expect(_elementImageOptions(c)).toBe(undefined);
+    expect(_elementImageOptions(r1)).toBe(undefined);
+    expect(_elementImageOptions(r2)).toBe(undefined);
+  });
 });
 
 describe('createPptxFromSvg function', () => {

@@ -189,7 +189,7 @@ function _addRect(pres: PptxGenJS, slide: PptxGenJS.Slide, rect: Svg.Rect) {
   );
 }
 
-function _elementImageOptions(ele: Svg.Element): object {
+function _elementImageOptions(ele: Svg.Element): object | undefined {
   let bb = ele.bbox();
   let sw = ele.attr('stroke-width');
   if (typeof sw !== 'number' || !Number.isFinite(sw)) {
@@ -206,19 +206,23 @@ function _elementImageOptions(ele: Svg.Element): object {
   nested.clear();
   nested.remove();
   let base64 = window.btoa(xml);
-  return {
+  let opts = {
     data: 'data:image/svg+xml;base64,' + base64,
     x: trimNum(pixelsToInches(bb.x - (sw / 2)), 4),
     y: trimNum(pixelsToInches(bb.y - (sw / 2)), 4),
     w: trimNum(pixelsToInches(bb.width + sw), 4),
     h: trimNum(pixelsToInches(bb.height + sw), 4),
   };
+  if (opts.w > 0 && opts.h > 0) {
+    return opts;
+  }
 }
 
 function _addElementAsImage(slide: PptxGenJS.Slide, ele: Svg.Element) {
-  slide.addImage(
-    _elementImageOptions(ele)
-  );
+  let opts = _elementImageOptions(ele);
+  if (opts) {
+    slide.addImage(opts);
+  }
 }
 
 function createPptxFromSvg(svg: Svg.Svg): PptxGenJS {
