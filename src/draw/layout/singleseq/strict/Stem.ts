@@ -1,4 +1,6 @@
 import StemInterface from './StemInterface';
+import { Partners, partnerOf } from 'Partners/Partners';
+import { isUnpaired } from 'Partners/paired';
 import UnpairedRegion from './UnpairedRegion';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
@@ -12,7 +14,7 @@ import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
  * of the outermost stem should have no influence on the rest of the layout.
  */
 class Stem implements StemInterface {
-  _partners: (number | null)[];
+  _partners: Partners;
   _generalProps: GeneralStrictLayoutProps;
   _perBaseProps: PerBaseStrictLayoutProps[];
 
@@ -35,14 +37,14 @@ class Stem implements StemInterface {
    */
   constructor(
     p5: number,
-    partners: (number | null)[],
+    partners: Partners,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
     this._partners = partners;
     this._generalProps = generalProps;
     this._perBaseProps = perBaseProps;
-    
+
     this._position5 = p5;
     this._initializePosition3();
     this._initializeSize();
@@ -58,7 +60,10 @@ class Stem implements StemInterface {
     if (this.isOutermostStem()) {
       this._position3 = this._partners.length + 1;
     } else {
-      this._position3 = this._partners[this._position5 - 1] as number;
+      let p3 = partnerOf(this._partners, this._position5);
+      if (typeof p3 == 'number') {
+        this._position3 = p3;
+      }
     }
   }
 
@@ -69,7 +74,7 @@ class Stem implements StemInterface {
       let partners = this._partners;
       let p = this.position5 + 1;
       let q = this.position3 - 1;
-      while (p < q && partners[p - 1] === q) {
+      while (p < q && partnerOf(partners, p) == q) {
         p++;
         q--;
       }
@@ -85,13 +90,14 @@ class Stem implements StemInterface {
     let partners = this._partners;
     let gps = this._generalProps;
     let pbps = this._perBaseProps;
-    let bst5 = this as Stem;
+    let bst5: Stem = this;
     let p = this.position5 + this.size;
-    while (partners[p - 1] == null && p < this.positionTop3) {
+    while (isUnpaired(partners, p) && p < this.positionTop3) {
       p++;
     }
     while (p < this.positionTop3) {
-      if ((partners[p - 1] as number) < p) {
+      let q = partnerOf(partners, p);
+      if (typeof q == 'number' && q < p) {
         throw new Error('Knot encountered in loop.');
       }
       let bst3 = new Stem(p, partners, gps, pbps);
@@ -99,7 +105,7 @@ class Stem implements StemInterface {
       this._loop.push(bst3);
       bst5 = bst3;
       p = bst5.position3 + 1;
-      while (partners[p - 1] == null && p < this.positionTop3) {
+      while (isUnpaired(partners, p) && p < this.positionTop3) {
         p++;
       }
     }
@@ -108,7 +114,7 @@ class Stem implements StemInterface {
 
   /**
    * The 5' most position of the stem.
-   * 
+   *
    * The 5' most position of the outermost stem is zero.
    */
   get position5(): number {
@@ -117,7 +123,7 @@ class Stem implements StemInterface {
 
   /**
    * The 3' most position of the stem.
-   * 
+   *
    * The 3' most position of the outermost stem is the sequence length plus one.
    */
   get position3(): number {
@@ -140,7 +146,7 @@ class Stem implements StemInterface {
 
   /**
    * The number of base pairs in this stem.
-   * 
+   *
    * The size of the outermost stem is one.
    */
   get size(): number {
@@ -463,7 +469,7 @@ class Stem implements StemInterface {
   /**
    * Base coordinates are flipped across the axis formed by the bottom base pair
    * of this stem.
-   * 
+   *
    * If this stem is the outermost stem, this method simply returns the unflipped
    * base coordinates.
    */
