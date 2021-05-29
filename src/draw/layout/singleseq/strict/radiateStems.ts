@@ -1,3 +1,4 @@
+import { Partners } from 'Partners/Partners';
 import normalizeAngle from '../../../normalizeAngle';
 import StemInterface from './StemInterface';
 import Stem from './Stem';
@@ -171,10 +172,10 @@ function _radiateLoop(st: Stem, stretches3: number[]) {
  * will return an array of numbers of the same length as the partners
  * notation containing the 3' stretches for each position to radiate
  * the stems of the structure
- * 
+ *
  * Will not radiate any stems if there are knots in the structure.
  */
-function radiateStems(partners: (number | null)[]): number[] {
+function radiateStems(partners: Partners): number[] {
   let stretches3 = [] as number[];
   partners.forEach(p => stretches3.push(0));
   if (!hasKnots(partners)) {
