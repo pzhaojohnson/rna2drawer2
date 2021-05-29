@@ -19,14 +19,14 @@ class Stem implements StemInterface {
   _perBaseProps: PerBaseStrictLayoutProps[];
 
   _position5: number;
-  _position3!: number;
-  _size!: number;
+  _position3: number;
+  _size: number;
 
   _xBottomCenter: number;
   _yBottomCenter: number;
   _angle: number;
 
-  _loop!: (UnpairedRegion | Stem)[];
+  _loop: (UnpairedRegion | Stem)[];
 
   static width(generalProps: GeneralStrictLayoutProps): number {
     return generalProps.stemWidth;
@@ -46,9 +46,14 @@ class Stem implements StemInterface {
     this._perBaseProps = perBaseProps;
 
     this._position5 = p5;
+
+    this._position3 = p5 + 1;
     this._initializePosition3();
+
+    this._size = 1;
     this._initializeSize();
 
+    this._loop = [];
     this._initializeLoop();
 
     this._xBottomCenter = 0;
