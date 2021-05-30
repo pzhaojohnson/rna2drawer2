@@ -1,14 +1,14 @@
 import { TriangularizingModeInterface as TriangularizingMode } from './TriangularizingModeInterface';
+import { Partners as PartnersNotation } from 'Partners/Partners';
 import { containingStem } from 'Partners/containing';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { closestStemOuterTo } from '../../../parse/closest';
-import splitSecondaryAndTertiaryPairs from '../../../parse/splitSecondaryAndTertiaryPairs';
+import { hasKnots } from 'Partners/hasKnots';
+import { removeKnots } from 'Partners/removeKnots';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
 } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { positionsWithStretch3 } from '../../layout/singleseq/strict/stretch';
-
-export type PartnersNotation = (number | null)[];
 
 export type PerBasePropsArray = (PerBaseProps | undefined)[];
 
@@ -33,7 +33,9 @@ export function outerStemOfHoveredLoop(mode: TriangularizingMode): Stem | undefi
 
 export function positionsOfLoop(partners: PartnersNotation, st: Stem): number[] {
   let ps = [] as number[];
-  partners = splitSecondaryAndTertiaryPairs(partners).secondaryPartners;
+  if (hasKnots(partners)) {
+    partners = removeKnots(partners);
+  }
   let p = st.position5 + st.size;
   while (p < st.position3 - st.size + 1) {
     ps.push(p);

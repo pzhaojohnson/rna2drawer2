@@ -1,12 +1,11 @@
 import { Stem, UnpairedRegion } from './PivotingModeInterface';
+import { Partners as PartnersNotation } from 'Partners/Partners';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
 } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { closestStemOuterTo } from '../../../parse/closest';
 import { containingStem } from 'Partners/containing';
-
-export type PartnersNotation = (number | null)[];
 
 export type PerBasePropsArray = (PerBaseProps | undefined)[];
 

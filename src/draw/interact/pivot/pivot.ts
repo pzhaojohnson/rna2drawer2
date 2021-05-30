@@ -2,6 +2,7 @@ import {
   PivotingModeInterface as PivotingMode,
   UnpairedRegion,
 } from './PivotingModeInterface';
+import { Partners as PartnersNotation } from 'Partners/Partners';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
 } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
@@ -26,8 +27,6 @@ import {
   addStretchEvenly,
 } from '../../layout/singleseq/strict/stretch';
 import { closestStemOuterTo } from '../../../parse/closest';
-
-export type PartnersNotation = (number | null)[];
 
 export function pivot(mode: PivotingMode, move: Movement) {
   if (mode.selected) {

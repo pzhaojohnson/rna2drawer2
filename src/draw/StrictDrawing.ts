@@ -5,6 +5,7 @@ import {
 import Drawing from './Drawing';
 import * as Svg from '@svgdotjs/svg.js';
 
+import { Partners } from 'Partners/Partners';
 import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
 
 import {
@@ -46,7 +47,7 @@ class StrictDrawing implements StrictDrawingInterface {
     this._drawing.addTo(container, SVG);
   }
 
-  layoutPartners(): (number | null)[] {
+  layoutPartners(): Partners {
     return layoutPartnersOfStrictDrawing(this);
   }
 

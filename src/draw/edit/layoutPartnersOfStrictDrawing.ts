@@ -1,6 +1,9 @@
 import { StrictDrawingInterface as StrictDrawing } from '../StrictDrawingInterface';
+import { Partners } from 'Partners/Partners';
 import { DrawingInterface as Drawing } from '../DrawingInterface';
-import splitSecondaryAndTertiaryPairs from '../../parse/splitSecondaryAndTertiaryPairs';
+import { pair } from 'Partners/edit';
+import { hasKnots } from 'Partners/hasKnots';
+import { removeKnots } from 'Partners/removeKnots';
 
 function _idsToPositions(drawing: Drawing): { [id: string]: number } {
   let dict = {} as { [id: string]: number };
@@ -12,21 +15,16 @@ function _idsToPositions(drawing: Drawing): { [id: string]: number } {
 
 function _overallSecondaryPartners(drawing: Drawing) {
   let idsToPositions = _idsToPositions(drawing);
-  let partners = [] as (number | null)[];
+  let partners: Partners = [];
   drawing.forEachBase(() => {
     partners.push(null);
   });
   drawing.forEachSecondaryBond(sb => {
     let p1 = idsToPositions[sb.base1.id];
     let p2 = idsToPositions[sb.base2.id];
-    partners[p1 - 1] = p2;
-    partners[p2 - 1] = p1;
+    pair(partners, p1, p2);
   });
   return partners;
-}
-
-function _removeKnots(partners: (number | null)[]) {
-  return splitSecondaryAndTertiaryPairs(partners).secondaryPartners;
 }
 
 /**
@@ -37,9 +35,12 @@ function _removeKnots(partners: (number | null)[]) {
  * though it is undefined which pair of two overlapping pairs will
  * be included in the returned partners notation.
  */
-function layoutPartnersOfStrictDrawing(sd: StrictDrawing): (number | null)[] {
+function layoutPartnersOfStrictDrawing(sd: StrictDrawing): Partners {
   let partners = _overallSecondaryPartners(sd.drawing);
-  return _removeKnots(partners);
+  if (hasKnots(partners)) {
+    partners = removeKnots(partners);
+  }
+  return partners;
 }
 
 export default layoutPartnersOfStrictDrawing;
