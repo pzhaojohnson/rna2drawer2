@@ -1,12 +1,14 @@
+import { Partners } from 'Partners/Partners';
+import { hasKnots } from 'Partners/hasKnots';
+import { removeKnots } from 'Partners/removeKnots';
 import Stem from './Stem';
 import { StemLayout } from './StemLayout';
-import splitSecondaryAndTertiaryPairs from '../../../../parse/splitSecondaryAndTertiaryPairs'
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 
 export class StrictLayout {
-  _partners: (number | null)[];
+  _partners: Partners;
   _generalProps: GeneralStrictLayoutProps;
   _perBaseProps: PerBaseStrictLayoutProps[];
 
@@ -17,13 +19,13 @@ export class StrictLayout {
    * The partners argument is the partners notation of the secondary structure.
    */
   constructor(
-    partners: (number | null)[],
+    partners: Partners,
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
     this._partners = partners;
     this._validatePartners();
-    
+
     this._generalProps = generalProps;
     this._validateGeneralProps();
 
@@ -43,14 +45,16 @@ export class StrictLayout {
     );
     this._baseCoordinates = this._outermostStem.baseCoordinates();
   }
-  
+
   _validatePartners() {
     for (let i = 0; i < this._partners.length; i++) {
-      if (!this._partners[i]) {
+      if (typeof this._partners[i] != 'number') {
         this._partners[i] = null;
       }
     }
-    this._partners = splitSecondaryAndTertiaryPairs(this._partners).secondaryPartners;
+    if (hasKnots(this._partners)) {
+      this._partners = removeKnots(this._partners);
+    }
   }
 
   _validateGeneralProps() {
@@ -83,7 +87,7 @@ export class StrictLayout {
   isEmpty(): boolean {
     return this.size === 0;
   }
-  
+
   baseCoordinatesAtPosition(p: number): (NormalizedBaseCoordinates | undefined) {
     return this._baseCoordinates[p - 1];
   }
