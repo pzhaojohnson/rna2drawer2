@@ -1,4 +1,5 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
+import { Partners } from 'Partners/Partners';
 import { BaseInterface as Base } from '../BaseInterface';
 
 export function addPrimaryBonds(drawing: Drawing, sequenceId: string) {
@@ -11,7 +12,7 @@ export function addPrimaryBonds(drawing: Drawing, sequenceId: string) {
   });
 }
 
-function _basePairs(drawing: Drawing, sequenceId: string, partners: (number | null)[]): [Base, Base][] {
+function _basePairs(drawing: Drawing, sequenceId: string, partners: Partners): [Base, Base][] {
   let pairs = [] as [Base, Base][];
   let seq = drawing.getSequenceById(sequenceId);
   partners.forEach((q, i) => {
@@ -27,14 +28,14 @@ function _basePairs(drawing: Drawing, sequenceId: string, partners: (number | nu
   return pairs;
 }
 
-export function addSecondaryBonds(drawing: Drawing, sequenceId: string, partners: (number | null)[]) {
+export function addSecondaryBonds(drawing: Drawing, sequenceId: string, partners: Partners) {
   let pairs = _basePairs(drawing, sequenceId, partners);
   pairs.forEach(p => {
     drawing.addSecondaryBond(p[0], p[1]);
   });
 }
 
-export function addTertiaryBonds(drawing: Drawing, sequenceId: string, partners: (number | null)[]) {
+export function addTertiaryBonds(drawing: Drawing, sequenceId: string, partners: Partners) {
   let pairs = _basePairs(drawing, sequenceId, partners);
   pairs.forEach(p => {
     drawing.addTertiaryBond(p[0], p[1]);
@@ -44,8 +45,8 @@ export function addTertiaryBonds(drawing: Drawing, sequenceId: string, partners:
 export interface Structure {
   id: string;
   characters: string;
-  secondaryPartners?: (number | null)[];
-  tertiaryPartners?: (number | null)[];
+  secondaryPartners?: Partners;
+  tertiaryPartners?: Partners;
 }
 
 export function appendStructure(drawing: Drawing, structure: Structure): boolean {

@@ -32,7 +32,7 @@ function _removeKnots(partners: (number | null)[]) {
 /**
  * The returned partners notation will be knotless, even if the
  * secondary bonds of the drawing form knots.
- * 
+ *
  * This function also handles secondary bonds that share bases,
  * though it is undefined which pair of two overlapping pairs will
  * be included in the returned partners notation.

@@ -7,7 +7,8 @@ import {
 import PerBaseStrictLayoutProps from '../layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { BaseInterface as Base } from '../BaseInterface';
 import { radiateStems } from '../layout/singleseq/strict/radiateStems';
-import splitSecondaryAndTertiaryPairs from '../../parse/splitSecondaryAndTertiaryPairs';
+import { hasKnots } from 'Partners/hasKnots';
+import { removeKnots } from 'Partners/removeKnots';
 import { SequenceInterface as Sequence } from '../SequenceInterface';
 
 function _appendPerBaseLayoutProps(sd: StrictDrawing, structure: Structure) {
@@ -36,8 +37,9 @@ function _radiateStructure(sd: StrictDrawing, structure: Structure) {
   if (!secondaryPartners) {
     return;
   }
-  let split = splitSecondaryAndTertiaryPairs(secondaryPartners);
-  secondaryPartners = split.secondaryPartners;
+  if (hasKnots(secondaryPartners)) {
+    secondaryPartners = removeKnots(secondaryPartners);
+  }
   let stretches3 = radiateStems(secondaryPartners);
   let seq = sd.drawing.getSequenceById(structure.id) as Sequence;
   if (seq.length == 0) {
