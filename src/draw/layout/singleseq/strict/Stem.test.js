@@ -417,7 +417,7 @@ it('baseCoordinates5 method', () => {
   let st = new Stem(1, partners, gps, pbps);
   st.xBottomCenter = 1.2;
   st.yBottomCenter = -1.6;
-  
+
   // pointed straight up
   st.angle = -Math.PI / 2;
   let bc5 = st.baseCoordinates5();

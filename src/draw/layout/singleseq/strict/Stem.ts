@@ -102,7 +102,7 @@ class Stem implements StemInterface {
     }
     while (p < this.positionTop3) {
       let q = partnerOf(partners, p);
-      if (typeof q == 'number' && q < p) {
+      if (typeof q == 'number' && (q < p || q >= this.positionTop3)) {
         throw new Error('Knot encountered in loop.');
       }
       let bst3 = new Stem(p, partners, gps, pbps);
