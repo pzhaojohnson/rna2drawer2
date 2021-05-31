@@ -255,8 +255,9 @@ class FlatOutermostLoop {
     for (let p = ur.boundingPosition5 + 1; p < ur.boundingPosition3; p++) {
       let d = 1;
       if (p > 1) {
-        d += Math.max(0, perBaseProps[p - 2].stretch3);
-        angle += perBaseProps[p - 2].flatLoopAngle3;
+        let pbps = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(perBaseProps, p - 1);
+        d += Math.max(0, pbps.stretch3);
+        angle += pbps.flatLoopAngle3;
       }
       x += d * Math.cos(angle);
       y += d * Math.sin(angle);
