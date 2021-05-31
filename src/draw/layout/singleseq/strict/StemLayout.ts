@@ -302,8 +302,8 @@ class FlatOutermostLoop {
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
-    let x;
-    let y;
+    let x: number;
+    let y: number;
     let angle = FlatOutermostLoop.unpairedRegionAngle53(ur, generalProps, perBaseProps);
     let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, perBaseProps);
     if (coordinates.length === 0) {
