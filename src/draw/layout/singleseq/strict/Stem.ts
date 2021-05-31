@@ -396,9 +396,10 @@ class Stem implements StemInterface {
 
   hasRoundLoop(): boolean {
     if (this.isOutermostStem()) {
-      return this._generalProps.outermostLoopShape !== 'flat';
+      return this._generalProps.outermostLoopShape != 'flat';
     } else {
-      return this._perBaseProps[this.position5 - 1].loopShape === 'round';
+      let pbps = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(this._perBaseProps, this.position5);
+      return pbps.loopShape == 'round';
     }
   }
 
@@ -409,7 +410,8 @@ class Stem implements StemInterface {
     if (this.isOutermostStem()) {
       return false;
     } else {
-      return this._perBaseProps[this.position5 - 1].loopShape === 'triangle';
+      let pbps = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(this._perBaseProps, this.position5);
+      return pbps.loopShape == 'triangle';
     }
   }
 
@@ -417,7 +419,8 @@ class Stem implements StemInterface {
     if (this.isOutermostStem()) {
       return 0;
     }
-    return this._perBaseProps[this.position5 - 1].triangleLoopHeight;
+    let pbps = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(this._perBaseProps, this.position5);
+    return pbps.triangleLoopHeight;
   }
 
   /**
@@ -427,7 +430,8 @@ class Stem implements StemInterface {
     if (this.isOutermostStem()) {
       return false;
     } else {
-      return this._perBaseProps[this.position5 - 1].flipStem;
+      let pbps = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(this._perBaseProps, this.position5);
+      return pbps.flipStem;
     }
   }
 
