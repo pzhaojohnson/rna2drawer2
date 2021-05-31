@@ -360,7 +360,7 @@ class StemLayout {
   ) {
     if (generalProps.outermostLoopShape === 'flat') {
       FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);
-    } else if (outermostStem.hasRoundLoop()) {
+    } else {
       RoundLoop.setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);
     }
   }
@@ -373,10 +373,10 @@ class StemLayout {
     generalProps: GeneralStrictLayoutProps,
     perBaseProps: PerBaseStrictLayoutProps[],
   ) {
-    if (st.hasRoundLoop()) {
-      RoundLoop.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
-    } else if (st.hasTriangleLoop()) {
+    if (st.hasTriangleLoop()) {
       TriangleLoop.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
+    } else {
+      RoundLoop.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
     }
   }
 }
