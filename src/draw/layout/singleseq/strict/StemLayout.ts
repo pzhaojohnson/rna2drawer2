@@ -142,7 +142,7 @@ class RoundLoop {
       let stemPolarWidth = RoundLoop.polarLengthPerStem(st, generalProps);
       let basePairAngleSpan = (2 * Math.PI) * ((stemPolarWidth - 1) / circumference);
       let bottomCenterRadius = (radius * Math.cos(basePairAngleSpan / 2)) - 0.5;
-      let angle;
+      let angle: number;
       if (st.isOutermostStem()) {
         angle = RoundLoop.terminusAngle5(st, generalProps);
         angle += stemAngleSpan / 2;
@@ -231,7 +231,7 @@ class FlatOutermostLoop {
   /**
    * Traverses the unpaired region 5' to 3', starting with the coordinates and angle
    * of its 5' bounding stem.
-   * 
+   *
    * Returns the base coordinates for the unpaired region.
    */
   static traverseUnpairedRegion53(
