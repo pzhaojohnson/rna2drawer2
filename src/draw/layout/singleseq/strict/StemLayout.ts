@@ -240,9 +240,9 @@ class FlatOutermostLoop {
     perBaseProps: PerBaseStrictLayoutProps[],
   ): NormalizedBaseCoordinates[] {
     let coordinates = [];
-    let x;
-    let y;
-    let angle;
+    let x: number;
+    let y: number;
+    let angle: number;
     if (ur.boundingStem5.isOutermostStem()) {
       x = 0;
       y = 0;
