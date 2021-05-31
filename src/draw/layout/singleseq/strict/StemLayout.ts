@@ -287,7 +287,8 @@ class FlatOutermostLoop {
       angle = coordinates[ur.size - 2].angleBetweenCenters(coordinates[ur.size - 1]);
     }
     if (ur.boundingPosition3 > 1) {
-      angle += perBaseProps[ur.boundingPosition3 - 2].flatLoopAngle3;
+      let pbps = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(perBaseProps, ur.boundingPosition3 - 1)
+      angle += pbps.flatLoopAngle3;
     }
     return angle;
   }
