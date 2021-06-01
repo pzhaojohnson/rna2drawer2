@@ -151,9 +151,9 @@ function _radiateMultipleBranches(st: Stem, stretches3: number[]) {
   let lastExceeded = normalizeAngle(outerAngle, lastAngle) - lastAngle > _MULTIPLE_BRANCHES_RADIATION;
   if (firstExceeded && lastExceeded) {
     _radiateMultipleBranchesOutward(st, stretches3);
-    return;
+  } else {
+    _spreadMultipleBranches(st, stretches3);
   }
-  _spreadMultipleBranches(st, stretches3);
 }
 
 function _radiateLoop(st: Stem, stretches3: number[]) {
