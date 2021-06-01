@@ -138,10 +138,12 @@ class UnpairedRegion implements UnpairedRegionInterface {
   get length(): number {
     let length = 0;
     if (this.boundingPosition5 > 0) {
-      length += this._perBaseProps[this.boundingPosition5 - 1].stretch3;
+      let pbps = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(this._perBaseProps, this.boundingPosition5);
+      length += pbps.stretch3;
     }
     for (let p = this.boundingPosition5 + 1; p < this.boundingPosition3; p++) {
-      length += 1 + this._perBaseProps[p - 1].stretch3;
+      let pbps = PerBaseStrictLayoutProps.getOrCreatePropsAtPosition(this._perBaseProps, p);
+      length += 1 + pbps.stretch3;
     }
     return Math.max(length, 0);
   }
