@@ -76,4 +76,6 @@ export class PerBaseStrictLayoutProps {
   }
 }
 
+export type PerBaseStrictLayoutPropsArray = (PerBaseStrictLayoutProps | undefined)[];
+
 export default PerBaseStrictLayoutProps;
