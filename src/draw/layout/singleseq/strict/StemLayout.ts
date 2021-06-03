@@ -3,7 +3,10 @@ import { circleCenter } from './circleCenter';
 import { circleCircumference } from './circleCircumference';
 import { StemInterface, UnpairedRegionInterface } from './StemInterface';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
+import {
+  PerBaseStrictLayoutProps,
+  PerBaseStrictLayoutPropsArray,
+} from './PerBaseStrictLayoutProps';
 
 class RoundLoop {
 
@@ -119,7 +122,7 @@ class RoundLoop {
   static setCoordinatesAndAngles(
     outermostStem: StemInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     RoundLoop.setInnerCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);
   }
@@ -130,7 +133,7 @@ class RoundLoop {
   static setInnerCoordinatesAndAngles(
     st: StemInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     if (st.numBranches === 0) {
       return;
@@ -193,7 +196,7 @@ class TriangleLoop {
   static setInnerCoordinatesAndAngles(
     st: StemInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     if (st.hasHairpinLoop()) {
       return;
@@ -237,7 +240,7 @@ class FlatOutermostLoop {
   static traverseUnpairedRegion53(
     ur: UnpairedRegionInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ): NormalizedBaseCoordinates[] {
     let coordinates = [];
     let x: number;
@@ -273,7 +276,7 @@ class FlatOutermostLoop {
   static unpairedRegionAngle53(
     ur: UnpairedRegionInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ): number {
     let coordinates = FlatOutermostLoop.traverseUnpairedRegion53(ur, generalProps, perBaseProps);
     let angle;
@@ -300,7 +303,7 @@ class FlatOutermostLoop {
   static setNextCoordinatesAndAngle53(
     ur: UnpairedRegionInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     let x: number;
     let y: number;
@@ -333,7 +336,7 @@ class FlatOutermostLoop {
   static setCoordinatesAndAngles(
     outermostStem: StemInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     let it = outermostStem.loopIterator();
     let ur = it.next().value;
@@ -356,7 +359,7 @@ class StemLayout {
   static setCoordinatesAndAngles(
     outermostStem: StemInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     if (generalProps.outermostLoopShape === 'flat') {
       FlatOutermostLoop.setCoordinatesAndAngles(outermostStem, generalProps, perBaseProps);
@@ -371,7 +374,7 @@ class StemLayout {
   static setInnerCoordinatesAndAngles(
     st: StemInterface,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     if (st.hasTriangleLoop()) {
       TriangleLoop.setInnerCoordinatesAndAngles(st, generalProps, perBaseProps);
