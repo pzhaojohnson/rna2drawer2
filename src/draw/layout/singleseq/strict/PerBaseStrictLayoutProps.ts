@@ -14,11 +14,14 @@ export class PerBaseStrictLayoutProps {
   loopShape: string;
   triangleLoopHeight: number;
 
-  static deepCopyArray(arr: PerBaseStrictLayoutProps[]): PerBaseStrictLayoutProps[] {
-    let copyArr = [] as PerBaseStrictLayoutProps[];
-    arr.forEach(props => {
-      copyArr.push(props.deepCopy());
+  static deepCopyArray(arr: PerBaseStrictLayoutPropsArray): PerBaseStrictLayoutProps[] {
+    let copyArr: PerBaseStrictLayoutProps[] = [];
+    arr.forEach((props, i) => {
+      if (props) {
+        copyArr[i] = props.deepCopy();
+      }
     });
+    copyArr.length = arr.length;
     return copyArr;
   }
 

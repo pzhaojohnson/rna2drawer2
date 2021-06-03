@@ -20,6 +20,18 @@ describe('deepCopyArray static method', () => {
       JSON.stringify(arr)
     ).toBe(JSON.stringify(copyArr));
   });
+
+  it('handles undefined props', () => {
+    let arr = [
+      new PerBaseStrictLayoutProps(),
+      undefined,
+      new PerBaseStrictLayoutProps(),
+      undefined, // a trailing undefined element
+    ];
+    let copyArr = PerBaseStrictLayoutProps.deepCopyArray(arr);
+    expect(JSON.stringify(copyArr)).toBe(JSON.stringify(arr));
+    expect(copyArr.length).toBe(arr.length);
+  });
 });
 
 describe('getOrCreatePropsAtPosition static method', () => {
