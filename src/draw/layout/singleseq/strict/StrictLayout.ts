@@ -4,13 +4,16 @@ import { removeKnots } from 'Partners/removeKnots';
 import Stem from './Stem';
 import { StemLayout } from './StemLayout';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
+import {
+  PerBaseStrictLayoutProps,
+  PerBaseStrictLayoutPropsArray,
+} from './PerBaseStrictLayoutProps';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 
 export class StrictLayout {
   _partners: Partners;
   _generalProps: GeneralStrictLayoutProps;
-  _perBaseProps: PerBaseStrictLayoutProps[];
+  _perBaseProps: PerBaseStrictLayoutPropsArray;
 
   _outermostStem: Stem;
   _baseCoordinates: NormalizedBaseCoordinates[];
@@ -21,7 +24,7 @@ export class StrictLayout {
   constructor(
     partners: Partners,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     this._partners = partners;
     this._validatePartners();
