@@ -7,12 +7,15 @@ import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
+import {
+  PerBaseStrictLayoutProps,
+  PerBaseStrictLayoutPropsArray,
+} from './PerBaseStrictLayoutProps';
 
 class UnpairedRegion implements UnpairedRegionInterface {
   _partners: Partners;
   _generalProps: GeneralStrictLayoutProps;
-  _perBaseProps: PerBaseStrictLayoutProps[];
+  _perBaseProps: PerBaseStrictLayoutPropsArray;
 
   _boundingStem5: Stem;
   _boundingStem3: Stem;
@@ -26,7 +29,7 @@ class UnpairedRegion implements UnpairedRegionInterface {
     bs3: Stem,
     partners: Partners,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     this._partners = partners;
     this._generalProps = generalProps;
