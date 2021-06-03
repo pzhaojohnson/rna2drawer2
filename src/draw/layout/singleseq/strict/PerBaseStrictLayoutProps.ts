@@ -22,7 +22,7 @@ export class PerBaseStrictLayoutProps {
     return copyArr;
   }
 
-  static getOrCreatePropsAtPosition(arr: (PerBaseStrictLayoutProps | undefined)[], p: number): PerBaseStrictLayoutProps {
+  static getOrCreatePropsAtPosition(arr: PerBaseStrictLayoutPropsArray, p: number): PerBaseStrictLayoutProps {
     let props = arr[p - 1];
     if (!props) {
       props = new PerBaseStrictLayoutProps();
