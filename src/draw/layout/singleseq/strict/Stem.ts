@@ -5,7 +5,10 @@ import UnpairedRegion from './UnpairedRegion';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
 import normalizeAngle from '../../../normalizeAngle';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
-import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
+import {
+  PerBaseStrictLayoutProps,
+  PerBaseStrictLayoutPropsArray,
+} from './PerBaseStrictLayoutProps';
 
 /**
  * The outermost stem of a layout is an imaginary base pair between positions
@@ -16,7 +19,7 @@ import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 class Stem implements StemInterface {
   _partners: Partners;
   _generalProps: GeneralStrictLayoutProps;
-  _perBaseProps: PerBaseStrictLayoutProps[];
+  _perBaseProps: PerBaseStrictLayoutPropsArray;
 
   _position5: number;
   _position3: number;
@@ -39,7 +42,7 @@ class Stem implements StemInterface {
     p5: number,
     partners: Partners,
     generalProps: GeneralStrictLayoutProps,
-    perBaseProps: PerBaseStrictLayoutProps[],
+    perBaseProps: PerBaseStrictLayoutPropsArray,
   ) {
     this._partners = partners;
     this._generalProps = generalProps;
