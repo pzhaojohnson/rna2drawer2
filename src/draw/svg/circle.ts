@@ -3,7 +3,7 @@ import * as SVG from '@svgdotjs/svg.js';
 export class SVGCircleWrapper {
 
   // the wrapped circle
-  circle: SVG.Circle;
+  readonly circle: SVG.Circle;
 
   constructor(circle: SVG.Circle) {
     this.circle = circle;
