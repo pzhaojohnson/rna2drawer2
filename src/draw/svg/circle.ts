@@ -65,6 +65,14 @@ export class SVGCircleWrapper {
     this.circle.attr('stroke-opacity', so);
   }
 
+  get strokeDasharray(): unknown {
+    return this.circle.attr('stroke-dasharray');
+  }
+
+  set strokeDasharray(sd) {
+    this.circle.attr('stroke-dasharray', sd);
+  }
+
   get fill(): unknown {
     return this.circle.attr('fill');
   }
