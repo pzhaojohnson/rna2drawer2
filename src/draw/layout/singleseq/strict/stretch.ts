@@ -1,6 +1,7 @@
-import { PerBaseStrictLayoutProps as PerBaseProps } from './PerBaseStrictLayoutProps';
-
-export type PerBasePropsArray = (PerBaseProps | undefined)[];
+import {
+  PerBaseStrictLayoutProps as PerBaseProps,
+  PerBaseStrictLayoutPropsArray as PerBasePropsArray,
+} from './PerBaseStrictLayoutProps';
 
 interface UnpairedRegion {
   boundingPosition5: number;

@@ -5,6 +5,7 @@ import {
 import { Partners as PartnersNotation } from 'Partners/Partners';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
+  PerBaseStrictLayoutPropsArray as PerBasePropsArray,
 } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
 import {
   Movement,
@@ -22,7 +23,6 @@ import {
   isLastUnpairedRegionInTriangleLoop,
 } from './loop';
 import {
-  PerBasePropsArray,
   stretchOfUnpairedRegion,
   addStretchEvenly,
 } from '../../layout/singleseq/strict/stretch';

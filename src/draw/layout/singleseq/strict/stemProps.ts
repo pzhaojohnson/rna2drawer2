@@ -1,4 +1,7 @@
-import { PerBaseStrictLayoutProps as PerBaseProps } from './PerBaseStrictLayoutProps';
+import {
+  PerBaseStrictLayoutProps as PerBaseProps,
+  PerBaseStrictLayoutPropsArray as PerBasePropsArray,
+} from './PerBaseStrictLayoutProps';
 import { Partners } from 'Partners/Partners';
 import { pair, unpair } from 'Partners/edit';
 import { containingStem } from 'Partners/containing';
@@ -21,7 +24,7 @@ interface IntegerRange {
   end: number;
 }
 
-export function willPair(partners: Partners, perBaseProps: PerBaseProps[], r1: IntegerRange, r2: IntegerRange) {
+export function willPair(partners: Partners, perBaseProps: PerBasePropsArray, r1: IntegerRange, r2: IntegerRange) {
   let [rBefore, rAfter] = r1.start < r2.start ? [r1, r2] : [r2, r1];
   let props5 = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, rBefore.start);
   resetStemProps(props5);
@@ -42,7 +45,7 @@ export function willPair(partners: Partners, perBaseProps: PerBaseProps[], r1: I
   }
 }
 
-export function willUnpair(partners: Partners, perBaseProps: PerBaseProps[], r: IntegerRange) {
+export function willUnpair(partners: Partners, perBaseProps: PerBasePropsArray, r: IntegerRange) {
   let unpaired = [...partners];
   for (let p = r.start; p <= r.end; p++) {
     unpair(unpaired, p);
@@ -65,11 +68,11 @@ export function willUnpair(partners: Partners, perBaseProps: PerBaseProps[], r: 
   });
 }
 
-export function willRemove(partners: Partners, perBaseProps: PerBaseProps[], r: IntegerRange) {
+export function willRemove(partners: Partners, perBaseProps: PerBasePropsArray, r: IntegerRange) {
   willUnpair(partners, perBaseProps, r);
 }
 
-export function willInsertAt(partners: Partners, perBaseProps: PerBaseProps[], p: number) {
+export function willInsertAt(partners: Partners, perBaseProps: PerBasePropsArray, p: number) {
   let st = containingStem(partners, p);
   if (st && st.position5 < p) {
     let fromProps = PerBaseProps.getOrCreatePropsAtPosition(perBaseProps, st.position5);
