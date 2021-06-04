@@ -180,7 +180,7 @@ function radiateStems(partners: Partners): number[] {
   partners.forEach(p => stretches3.push(0));
   if (!hasKnots(partners)) {
     let gps = new GeneralStrictLayoutProps();
-    let pbps = [] as PerBaseStrictLayoutProps[];
+    let pbps: PerBaseStrictLayoutProps[] = [];
     partners.forEach(p => pbps.push(new PerBaseStrictLayoutProps()));
     let st = new Stem(0, partners, gps, pbps);
     _radiateLoop(st, stretches3);
