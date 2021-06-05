@@ -1,6 +1,6 @@
 import createNodeSVG from './createNodeSVG';
 
-function NodeSVG() {
+export function NodeSVG() {
   return createNodeSVG();
 }
 

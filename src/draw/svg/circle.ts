@@ -9,14 +9,6 @@ export class SVGCircleWrapper {
     this.circle = circle;
   }
 
-  id(id?: string): unknown {
-    if (typeof id == 'string') {
-      this.circle.id(id);
-    } else {
-      return this.circle.id();
-    }
-  }
-
   get r(): unknown {
     return this.circle.attr('r');
   }
@@ -87,6 +79,14 @@ export class SVGCircleWrapper {
 
   set fillOpacity(fo) {
     this.circle.attr('fill-opacity', fo);
+  }
+
+  id(id?: string): unknown {
+    if (typeof id == 'string') {
+      this.circle.id(id);
+    } else {
+      return this.circle.id();
+    }
   }
 
   front() {
