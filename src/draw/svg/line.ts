@@ -9,11 +9,11 @@ export class SVGLineWrapper {
     this.line = line;
   }
 
-  id(id?: string) {
+  id(id?: string): unknown {
     if (typeof id == 'string') {
       this.line.id(id);
     } else {
-      this.line.id();
+      return this.line.id();
     }
   }
 
@@ -24,7 +24,7 @@ export class SVGLineWrapper {
   set x1(x1) {
     this.line.attr('x1', x1);
   }
-  
+
   get y1(): unknown {
     return this.line.attr('y1');
   }

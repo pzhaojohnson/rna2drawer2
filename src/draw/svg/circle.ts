@@ -11,7 +11,7 @@ export class SVGCircleWrapper {
 
   id(id?: string): unknown {
     if (typeof id == 'string') {
-      return this.circle.id(id);
+      this.circle.id(id);
     } else {
       return this.circle.id();
     }

@@ -11,7 +11,7 @@ export class SVGTextWrapper {
 
   id(id?: string): unknown {
     if (typeof id == 'string') {
-      return this.text.id(id);
+      this.text.id(id);
     } else {
       return this.text.id();
     }
