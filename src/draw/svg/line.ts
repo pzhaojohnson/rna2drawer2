@@ -9,14 +9,6 @@ export class SVGLineWrapper {
     this.line = line;
   }
 
-  id(id?: string): unknown {
-    if (typeof id == 'string') {
-      this.line.id(id);
-    } else {
-      return this.line.id();
-    }
-  }
-
   get x1(): unknown {
     return this.line.attr('x1');
   }
@@ -71,6 +63,14 @@ export class SVGLineWrapper {
 
   set strokeOpacity(so) {
     this.line.attr('stroke-opacity', so);
+  }
+
+  id(id?: string): unknown {
+    if (typeof id == 'string') {
+      this.line.id(id);
+    } else {
+      return this.line.id();
+    }
   }
 
   front() {
