@@ -45,6 +45,7 @@ describe('SVGLineWrapper', () => {
         { prop: 'strokeWidth', attr: 'stroke-width', value: 3.121 },
         { prop: 'strokeOpacity', attr: 'stroke-opacity', value: 0.506 },
       ].forEach(pav => {
+        expect(line.attr(pav.attr)).not.toEqual(pav.value);
         wrapper[pav.prop] = pav.value;
         expect(line.attr(pav.attr)).toBe(pav.value); // sets
         expect(wrapper[pav.prop]).toBe(pav.value); // gets
@@ -57,6 +58,7 @@ describe('SVGLineWrapper', () => {
       [
         { name: 'id', value: (new Date()).toString() }
       ].forEach(m => {
+        expect(line[m.name]()).not.toEqual(m.value);
         wrapper[m.name](m.value);
         expect(line[m.name]()).toBe(m.value); // sets
         expect(wrapper[m.name]()).toBe(m.value); // gets

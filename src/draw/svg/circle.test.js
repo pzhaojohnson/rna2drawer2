@@ -47,6 +47,7 @@ describe('SVGCircleWrapper', () => {
         { prop: 'fill', attr: 'fill', value: '#bbcc29' },
         { prop: 'fillOpacity', attr: 'fill-opacity', value: 0.9506 },
       ].forEach(pav => {
+        expect(circle.attr(pav.attr)).not.toEqual(pav.value);
         wrapper[pav.prop] = pav.value;
         expect(circle.attr(pav.attr)).toBe(pav.value); // sets
         expect(wrapper[pav.prop]).toBe(pav.value); // gets
@@ -59,6 +60,7 @@ describe('SVGCircleWrapper', () => {
       [
         { name: 'id', value: (new Date()).toString() },
       ].forEach(m => {
+        expect(circle[m.name]()).not.toEqual(m.value);
         wrapper[m.name](m.value);
         expect(circle[m.name]()).toBe(m.value); // sets
         expect(wrapper[m.name]()).toBe(m.value); // gets
