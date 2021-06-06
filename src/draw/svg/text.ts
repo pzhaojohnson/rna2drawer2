@@ -9,14 +9,6 @@ export class SVGTextWrapper {
     this.text = text;
   }
 
-  id(id?: string): unknown {
-    if (typeof id == 'string') {
-      this.text.id(id);
-    } else {
-      return this.text.id();
-    }
-  }
-
   get x(): unknown {
     return this.text.attr('x');
   }
@@ -31,22 +23,6 @@ export class SVGTextWrapper {
 
   set y(y) {
     this.text.attr('y', y);
-  }
-
-  cx(cx?: number): unknown {
-    if (typeof cx == 'number') {
-      this.text.cx(cx);
-    } else {
-      return this.text.cx();
-    }
-  }
-
-  cy(cy?: number): unknown {
-    if (typeof cy == 'number') {
-      this.text.cy(cy);
-    } else {
-      return this.text.cy();
-    }
   }
 
   get fontFamily(): unknown {
@@ -105,6 +81,42 @@ export class SVGTextWrapper {
     this.text.css('cursor', c);
   }
 
+  id(id?: string): unknown {
+    if (typeof id == 'string') {
+      this.text.id(id);
+    } else {
+      return this.text.id();
+    }
+  }
+
+  cx(cx?: number): unknown {
+    if (typeof cx == 'number') {
+      this.text.cx(cx);
+    } else {
+      return this.text.cx();
+    }
+  }
+
+  cy(cy?: number): unknown {
+    if (typeof cy == 'number') {
+      this.text.cy(cy);
+    } else {
+      return this.text.cy();
+    }
+  }
+
+  mouseover(f: () => void) {
+    this.text.mouseover(f);
+  }
+
+  mouseout(f: () => void) {
+    this.text.mouseout(f);
+  }
+
+  mousedown(f: () => void) {
+    this.text.mousedown(f);
+  }
+
   front() {
     this.text.front();
   }
@@ -115,17 +127,5 @@ export class SVGTextWrapper {
 
   remove() {
     this.text.remove();
-  }
-
-  mouseover(f: () => void): void {
-    this.text.mouseover(f);
-  }
-
-  mouseout(f: () => void): void {
-    this.text.mouseout(f);
-  }
-
-  mousedown(f: () => void): void {
-    this.text.mousedown(f);
   }
 }
