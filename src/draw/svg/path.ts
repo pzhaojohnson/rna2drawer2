@@ -9,14 +9,6 @@ export class SVGPathWrapper {
     this.path = path;
   }
 
-  id(id?: string): unknown {
-    if (typeof id == 'string') {
-      this.path.id(id);
-    } else {
-      return this.path.id();
-    }
-  }
-
   get d(): unknown {
     return this.path.attr('d');
   }
@@ -39,6 +31,14 @@ export class SVGPathWrapper {
 
   set strokeWidth(sw) {
     this.path.attr('stroke-width', sw);
+  }
+
+  get strokeOpacity(): unknown {
+    return this.path.attr('stroke-opacity');
+  }
+
+  set strokeOpacity(so) {
+    this.path.attr('stroke-opacity', so);
   }
 
   get strokeDasharray(): unknown {
@@ -73,16 +73,12 @@ export class SVGPathWrapper {
     this.path.css('cursor', c);
   }
 
-  front() {
-    this.path.front();
-  }
-
-  back() {
-    this.path.back();
-  }
-
-  remove() {
-    this.path.remove();
+  id(id?: string): unknown {
+    if (typeof id == 'string') {
+      this.path.id(id);
+    } else {
+      return this.path.id();
+    }
   }
 
   mouseover(f: () => void) {
@@ -99,5 +95,17 @@ export class SVGPathWrapper {
 
   dblclick(f: () => void) {
     this.path.dblclick(f);
+  }
+
+  front() {
+    this.path.front();
+  }
+
+  back() {
+    this.path.back();
+  }
+
+  remove() {
+    this.path.remove();
   }
 }
