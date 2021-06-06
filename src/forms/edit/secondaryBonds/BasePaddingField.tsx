@@ -2,13 +2,13 @@ import { SecondaryBondInterface as SecondaryBond } from '../../../draw/StraightB
 import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
-import { getAtIndex } from '../../../array/getAtIndex';
+import { atIndex } from 'Array/at';
 import { round } from '../../../math/round';
 
 const PRECISION = 2;
 
 function getFirstPadding(sbs: SecondaryBond[]): number | undefined {
-  let first = getAtIndex(sbs, 0);
+  let first = atIndex(sbs, 0);
   if (first) {
     return round(first.padding1, PRECISION);
   }

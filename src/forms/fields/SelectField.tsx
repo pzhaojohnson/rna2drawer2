@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Select from 'react-select';
-import { getAtIndex } from '../../array/getAtIndex';
+import { atIndex } from 'Array/at';
 
 interface ValueLabel {
   value: string;
@@ -49,7 +49,7 @@ export function SelectField(props: Props): React.ReactElement {
           // the types for the onChange handler are a bit awkward to work with...
           if (couldBeNullish) {
             let couldBeArray = couldBeNullish;
-            let notArray = Array.isArray(couldBeArray) ? getAtIndex(couldBeArray, 0) : couldBeArray;
+            let notArray = Array.isArray(couldBeArray) ? atIndex(couldBeArray, 0) : couldBeArray;
             if (typeof notArray == 'object') {
               let isObject = notArray;
               if (typeof isObject.value == 'string') {

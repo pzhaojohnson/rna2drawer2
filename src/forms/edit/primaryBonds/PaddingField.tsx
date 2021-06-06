@@ -2,13 +2,13 @@ import { PrimaryBondInterface as PrimaryBond } from '../../../draw/StraightBondI
 import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
-import { getAtIndex } from '../../../array/getAtIndex';
+import { atIndex } from 'Array/at';
 import { round } from '../../../math/round';
 
 const PRECISION = 2;
 
 function getFirstPadding(pbs: PrimaryBond[]): number | undefined {
-  let first = getAtIndex(pbs, 0);
+  let first = atIndex(pbs, 0);
   if (first) {
     return round(first.padding1, PRECISION);
   }

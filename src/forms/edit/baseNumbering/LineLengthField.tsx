@@ -2,13 +2,13 @@ import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumbe
 import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
-import { getAtIndex } from '../../../array/getAtIndex';
+import { atIndex } from 'Array/at';
 import { round } from '../../../math/round';
 
 const PRECISION = 2;
 
 function getFirstLineLength(bns: BaseNumbering[]): number | undefined {
-  let first = getAtIndex(bns, 0);
+  let first = atIndex(bns, 0);
   if (first) {
     return round(first.lineLength, PRECISION);
   }

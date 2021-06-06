@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { FontFamilyField as Field } from '../../fields/font/FontFamilyField';
 import { FieldProps } from './FieldProps';
-import { getAtIndex } from '../../../array/getAtIndex';
+import { atIndex } from 'Array/at';
 
 export function FontFamilyField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();
   if (bns.length == 0) {
     return null;
   } else {
-    let first = getAtIndex(bns, 0);
+    let first = atIndex(bns, 0);
     return (
       <Field
         name='Font'
@@ -16,7 +16,7 @@ export function FontFamilyField(props: FieldProps): React.ReactElement | null {
         set={ff => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
-            let first = getAtIndex(bns, 0);
+            let first = atIndex(bns, 0);
             if (ff != first?.fontFamily) {
               props.pushUndo();
               bns.forEach(bn => {

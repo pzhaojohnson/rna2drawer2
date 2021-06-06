@@ -4,10 +4,10 @@ import { ColorField as Field } from '../../fields/color/ColorField';
 import { FieldProps } from './FieldProps';
 import * as Svg from '@svgdotjs/svg.js';
 import { parseColor } from '../../../parse/parseColor';
-import { getAtIndex } from '../../../array/getAtIndex';
+import { atIndex } from 'Array/at';
 
 function getFirstColor(bns: BaseNumbering[]): Svg.Color | undefined {
-  let first = getAtIndex(bns, 0);
+  let first = atIndex(bns, 0);
   if (first) {
     return parseColor(first.color);
   }

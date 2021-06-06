@@ -2,12 +2,12 @@ import { PrimaryBondInterface as PrimaryBond } from '../../../draw/StraightBondI
 import * as React from 'react';
 import { ColorField } from '../../fields/color/ColorField';
 import { FieldProps } from './FieldProps';
-import { getAtIndex } from '../../../array/getAtIndex';
+import { atIndex } from 'Array/at';
 import * as Svg from '@svgdotjs/svg.js';
 import { parseColor } from '../../../parse/parseColor';
 
 function getFirstStroke(pbs: PrimaryBond[]): Svg.Color | undefined {
-  let first = getAtIndex(pbs, 0);
+  let first = atIndex(pbs, 0);
   if (first) {
     return parseColor(first.stroke);
   }
