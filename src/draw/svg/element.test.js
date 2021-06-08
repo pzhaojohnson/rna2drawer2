@@ -69,6 +69,41 @@ describe('SVGElementWrapper', () => {
     });
   });
 
+  describe('css method', () => {
+    it('gets properties', () => {
+      let cursor = 'pointer';
+      expect(element.css('cursor')).not.toEqual(cursor);
+      element.css({ 'cursor': cursor });
+      expect(wrapper.css('cursor')).toBe(cursor);
+    });
+
+    describe('setting properties', () => {
+      it('with an object', () => {
+        let cursor = 'pointer';
+        let borderWidth = '3px';
+        expect(element.css('cursor')).not.toEqual(cursor);
+        expect(element.css('border-width')).not.toEqual(borderWidth);
+        wrapper.css({
+          'cursor': cursor,
+          'border-width': borderWidth,
+        });
+        expect(element.css('cursor')).toBe(cursor);
+        expect(element.css('border-width')).toBe(borderWidth);
+      });
+    });
+
+    it('can get all properties', () => {
+      let props = {
+        'cursor': 'pointer',
+        'border-width': '8px',
+        'border-style': 'dashed',
+      };
+      element.css(props);
+      expect(wrapper.css()).toEqual(element.css());
+      expect(wrapper.css()).toMatchObject(props);
+    });
+  });
+
   it('getter-setter methods', () => {
     [
       { name: 'id', value: (new Date()).toString() },

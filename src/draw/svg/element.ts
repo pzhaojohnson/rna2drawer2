@@ -23,6 +23,20 @@ export class SVGElementWrapper {
     }
   }
 
+  css(arg?: string | CSSStyleDeclaration): unknown {
+    try {
+      if (typeof arg == 'string') {
+        return this.element.css(arg);
+      } else if (typeof arg == 'object') {
+        this.element.css(arg);
+      } else {
+        return this.element.css();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   id(id?: string): unknown {
     try {
       if (typeof id == 'string') {
