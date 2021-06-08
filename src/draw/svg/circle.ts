@@ -1,103 +1,14 @@
 import * as SVG from '@svgdotjs/svg.js';
+import { SVGElementWrapper } from './element';
 
-export class SVGCircleWrapper {
+export class SVGCircleWrapper extends SVGElementWrapper {
 
   // the wrapped circle
-  readonly circle: SVG.Circle;
+  readonly element: SVG.Circle;
 
   constructor(circle: SVG.Circle) {
-    this.circle = circle;
-  }
+    super(circle);
 
-  get r(): unknown {
-    return this.circle.attr('r');
-  }
-
-  set r(r) {
-    this.circle.attr('r', r);
-  }
-
-  get cx(): unknown {
-    return this.circle.attr('cx');
-  }
-
-  set cx(cx) {
-    this.circle.attr('cx', cx);
-  }
-
-  get cy(): unknown {
-    return this.circle.attr('cy');
-  }
-
-  set cy(cy) {
-    this.circle.attr('cy', cy);
-  }
-
-  get stroke(): unknown {
-    return this.circle.attr('stroke');
-  }
-
-  set stroke(s) {
-    this.circle.attr('stroke', s);
-  }
-
-  get strokeWidth(): unknown {
-    return this.circle.attr('stroke-width');
-  }
-
-  set strokeWidth(sw) {
-    this.circle.attr('stroke-width', sw);
-  }
-
-  get strokeOpacity(): unknown {
-    return this.circle.attr('stroke-opacity');
-  }
-
-  set strokeOpacity(so) {
-    this.circle.attr('stroke-opacity', so);
-  }
-
-  get strokeDasharray(): unknown {
-    return this.circle.attr('stroke-dasharray');
-  }
-
-  set strokeDasharray(sd) {
-    this.circle.attr('stroke-dasharray', sd);
-  }
-
-  get fill(): unknown {
-    return this.circle.attr('fill');
-  }
-
-  set fill(f) {
-    this.circle.attr('fill', f);
-  }
-
-  get fillOpacity(): unknown {
-    return this.circle.attr('fill-opacity');
-  }
-
-  set fillOpacity(fo) {
-    this.circle.attr('fill-opacity', fo);
-  }
-
-  id(id?: string): unknown {
-    if (typeof id == 'string') {
-      this.circle.id(id);
-    } else {
-      return this.circle.id();
-    }
-  }
-
-  front() {
-    this.circle.front();
-  }
-
-  back() {
-    this.circle.back();
-  }
-
-  remove() {
-    this.circle.remove();
+    this.element = circle;
   }
 }
