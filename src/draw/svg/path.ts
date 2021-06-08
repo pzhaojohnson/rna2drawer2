@@ -11,12 +11,4 @@ export class SVGPathWrapper extends SVGElementWrapper {
     
     this.element = path;
   }
-
-  get cursor(): unknown {
-    return this.element.css('cursor');
-  }
-
-  set cursor(c) {
-    this.element.css('cursor', c);
-  }
 }

@@ -11,12 +11,4 @@ export class SVGTextWrapper extends SVGElementWrapper {
 
     this.element = text;
   }
-
-  get cursor(): unknown {
-    return this.element.css('cursor');
-  }
-
-  set cursor(c) {
-    this.element.css('cursor', c);
-  }
 }

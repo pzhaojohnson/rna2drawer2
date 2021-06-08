@@ -33,17 +33,4 @@ describe('SVGTextWrapper', () => {
   it('provides reference to wrapped text', () => {
     expect(wrapper.element).toBe(text);
   });
-
-  describe('CSS properties', () => {
-    it('gets and sets', () => {
-      [
-        { prop: 'cursor', css: 'cursor', value: 'pointer' },
-      ].forEach(pcv => {
-        expect(text.css(pcv.css)).not.toEqual(pcv.value);
-        wrapper[pcv.prop] = pcv.value;
-        expect(text.css(pcv.css)).toBe(pcv.value); // sets
-        expect(wrapper[pcv.prop]).toBe(pcv.value); // gets
-      });
-    });
-  });
 });

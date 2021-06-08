@@ -33,17 +33,4 @@ describe('SVGPathWrapper', () => {
   it('provides reference to wrapped path', () => {
     expect(wrapper.element).toBe(path);
   });
-
-  describe('CSS properties', () => {
-    it('gets and sets', () => {
-      [
-        { prop: 'cursor', css: 'cursor', value: 'pointer' },
-      ].forEach(pcv => {
-        expect(path.css(pcv.css)).not.toEqual(pcv.value);
-        wrapper[pcv.prop] = pcv.value;
-        expect(path.css(pcv.css)).toBe(pcv.value); // sets
-        expect(wrapper[pcv.prop]).toBe(pcv.value); // gets
-      });
-    });
-  });
 });
