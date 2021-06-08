@@ -57,7 +57,7 @@ describe('SVGElementWrapper', () => {
       });
     });
 
-    it('can return all attributes', () => {
+    it('can get all attributes', () => {
       let attrs = {
         'fill': '#ee1211',
         'fill-opacity': 0.98,
