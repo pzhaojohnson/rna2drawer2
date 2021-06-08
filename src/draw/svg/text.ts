@@ -11,4 +11,16 @@ export class SVGTextWrapper extends SVGElementWrapper {
 
     this.element = text;
   }
+
+  text(text?: string): unknown {
+    try {
+      if (typeof text == 'string') {
+        this.element.text(text);
+      } else {
+        return this.element.text();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

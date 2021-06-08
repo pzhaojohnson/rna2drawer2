@@ -33,4 +33,15 @@ describe('SVGTextWrapper', () => {
   it('provides reference to wrapped text', () => {
     expect(wrapper.element).toBe(text);
   });
+
+  it('getter-setter methods', () => {
+    [
+      { name: 'text', value: 'a9e' },
+    ].forEach(nv => {
+      expect(text[nv.name]()).not.toEqual(nv.value);
+      wrapper[nv.name](nv.value);
+      expect(text[nv.name]()).toBe(nv.value); // sets
+      expect(wrapper[nv.name]()).toBe(nv.value); // gets
+    });
+  });
 });
