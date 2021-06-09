@@ -26,7 +26,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   _text: Svg.Text;
   _line: Svg.Line;
-  _basePadding!: number;
+  _basePadding: number;
 
   static _lineCoordinates(
     xBaseCenter: number,
@@ -144,6 +144,8 @@ class BaseNumbering implements BaseNumberingInterface {
 
     this._line = line;
     this._validateLine();
+
+    this._basePadding = 0;
     this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
