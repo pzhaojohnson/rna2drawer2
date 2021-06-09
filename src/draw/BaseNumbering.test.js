@@ -57,36 +57,15 @@ describe('BaseNumbering class', () => {
     });
   });
 
-  describe('mostRecentProps static method', () => {
-    it('returns a copy', () => {
-      BaseNumbering._mostRecentProps.basePadding = 5.798;
-      BaseNumbering._mostRecentProps.lineLength = 10.23;
-      BaseNumbering._mostRecentProps.fontFamily = 'Tahoe';
-      BaseNumbering._mostRecentProps.fontSize = 3.567;
-      BaseNumbering._mostRecentProps.fontWeight = 'lighter';
-      BaseNumbering._mostRecentProps.color = '#456123';
-      BaseNumbering._mostRecentProps.lineStrokeWidth = 3.5678;
-      let mrps = BaseNumbering.mostRecentProps();
-      expect(mrps).not.toBe(BaseNumbering._mostRecentProps); // is a new object
-      expect(mrps.basePadding).toBe(5.798);
-      expect(mrps.lineLength).toBe(10.23);
-      expect(mrps.fontFamily).toBe('Tahoe');
-      expect(mrps.fontSize).toBe(3.567);
-      expect(mrps.fontWeight).toBe('lighter');
-      expect(mrps.color).toBe('#456123');
-      expect(mrps.lineStrokeWidth).toBe(3.5678);
-    });
-  });
-
   it('_applyMostRecentProps static method', () => {
     let n = BaseNumbering.create(svg, 9, 1.1, 2.2);
-    BaseNumbering._mostRecentProps.basePadding = 5.798;
-    BaseNumbering._mostRecentProps.lineLength = 10.23;
-    BaseNumbering._mostRecentProps.fontFamily = 'Tahoe';
-    BaseNumbering._mostRecentProps.fontSize = 3.567;
-    BaseNumbering._mostRecentProps.fontWeight = 'lighter';
-    BaseNumbering._mostRecentProps.color = '#456123';
-    BaseNumbering._mostRecentProps.lineStrokeWidth = 3.5678;
+    BaseNumbering.mostRecentProps.basePadding = 5.798;
+    BaseNumbering.mostRecentProps.lineLength = 10.23;
+    BaseNumbering.mostRecentProps.fontFamily = 'Tahoe';
+    BaseNumbering.mostRecentProps.fontSize = 3.567;
+    BaseNumbering.mostRecentProps.fontWeight = 'lighter';
+    BaseNumbering.mostRecentProps.color = '#456123';
+    BaseNumbering.mostRecentProps.lineStrokeWidth = 3.5678;
     BaseNumbering._applyMostRecentProps(n);
     expect(n.basePadding).toBe(5.798);
     expect(n.lineLength).toBe(10.23);
@@ -107,7 +86,7 @@ describe('BaseNumbering class', () => {
     n.color = '#456123';
     n.lineStrokeWidth = 3.5678;
     BaseNumbering._copyPropsToMostRecent(n);
-    let mrps = BaseNumbering.mostRecentProps();
+    let mrps = BaseNumbering.mostRecentProps;
     expect(mrps.basePadding).toBe(5.798);
     expect(mrps.lineLength).toBe(10.23);
     expect(mrps.fontFamily).toBe('Tahoe');
@@ -245,7 +224,7 @@ describe('BaseNumbering class', () => {
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
     expect(n.lineLength).toBeCloseTo(ll); // maintains line length
     // updates most recent prop
-    expect(BaseNumbering.mostRecentProps().basePadding).toBeCloseTo(22);
+    expect(BaseNumbering.mostRecentProps.basePadding).toBeCloseTo(22);
   });
 
   it('lineAngle getter and setter', () => {
@@ -276,7 +255,7 @@ describe('BaseNumbering class', () => {
     expect(n.basePadding).toBeCloseTo(bp); // maintains base padding
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
     // updates most recent prop
-    expect(BaseNumbering.mostRecentProps().lineLength).toBeCloseTo(33.8);
+    expect(BaseNumbering.mostRecentProps.lineLength).toBeCloseTo(33.8);
   });
 
   describe('reposition method', () => {
@@ -360,7 +339,7 @@ describe('BaseNumbering class', () => {
     expect(n.fontFamily).toBe('Consolas'); // check getter
     expect(n._text.attr('font-family')).toBe('Consolas'); // check actual value
     // updates most recent prop
-    expect(BaseNumbering.mostRecentProps().fontFamily).toBe('Consolas');
+    expect(BaseNumbering.mostRecentProps.fontFamily).toBe('Consolas');
   });
 
   it('fontSize getter and setter', () => {
@@ -370,7 +349,7 @@ describe('BaseNumbering class', () => {
     expect(n.fontSize).toBe(19.87); // check getter
     expect(n._text.attr('font-size')).toBe(19.87); // check actual value
     // updates most recent prop
-    expect(BaseNumbering.mostRecentProps().fontSize).toBe(19.87);
+    expect(BaseNumbering.mostRecentProps.fontSize).toBe(19.87);
     // updates text positioning
     let c = spy.mock.calls[0];
     expect(c[0]).toBe(n._text);
@@ -383,7 +362,7 @@ describe('BaseNumbering class', () => {
     expect(n.fontWeight).toBe(600); // check getter
     expect(n._text.attr('font-weight')).toBe(600); // check actual value
     // updates most recent prop
-    expect(BaseNumbering.mostRecentProps().fontWeight).toBe(600);
+    expect(BaseNumbering.mostRecentProps.fontWeight).toBe(600);
   });
 
   it('color getter and setter', () => {
@@ -394,7 +373,7 @@ describe('BaseNumbering class', () => {
     expect(n._text.attr('fill')).toBe('#132435');
     expect(n._line.attr('stroke')).toBe('#132435');
     // updates most recent prop
-    expect(BaseNumbering.mostRecentProps().color).toBe('#132435');
+    expect(BaseNumbering.mostRecentProps.color).toBe('#132435');
   });
 
   it('lineStrokeWidth getter and setter', () => {
@@ -403,7 +382,7 @@ describe('BaseNumbering class', () => {
     expect(n.lineStrokeWidth).toBe(5.234); // check getter
     expect(n._line.attr('stroke-width')).toBe(5.234); // check actual value
     // updates most recent prop
-    expect(BaseNumbering.mostRecentProps().lineStrokeWidth).toBe(5.234);
+    expect(BaseNumbering.mostRecentProps.lineStrokeWidth).toBe(5.234);
   });
 
   it('remove method', () => {

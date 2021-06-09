@@ -22,7 +22,7 @@ interface TextPositioning {
 }
 
 class BaseNumbering implements BaseNumberingInterface {
-  static _mostRecentProps: BaseNumberingMostRecentProps;
+  static mostRecentProps: BaseNumberingMostRecentProps;
 
   _text: Svg.Text;
   _line: Svg.Line;
@@ -82,12 +82,8 @@ class BaseNumbering implements BaseNumberingInterface {
     });
   }
 
-  static mostRecentProps(): BaseNumberingMostRecentProps {
-    return { ...BaseNumbering._mostRecentProps };
-  }
-
   static _applyMostRecentProps(n: BaseNumbering) {
-    let props = BaseNumbering.mostRecentProps();
+    let props = BaseNumbering.mostRecentProps;
     n.basePadding = props.basePadding;
     n.lineLength = props.lineLength;
     n.fontFamily = props.fontFamily;
@@ -98,13 +94,13 @@ class BaseNumbering implements BaseNumberingInterface {
   }
 
   static _copyPropsToMostRecent(n: BaseNumbering) {
-    BaseNumbering._mostRecentProps.basePadding = n.basePadding;
-    BaseNumbering._mostRecentProps.lineLength = n.lineLength;
-    BaseNumbering._mostRecentProps.fontFamily = n.fontFamily;
-    BaseNumbering._mostRecentProps.fontSize = n.fontSize;
-    BaseNumbering._mostRecentProps.fontWeight = n.fontWeight;
-    BaseNumbering._mostRecentProps.color = n.color;
-    BaseNumbering._mostRecentProps.lineStrokeWidth = n.lineStrokeWidth;
+    BaseNumbering.mostRecentProps.basePadding = n.basePadding;
+    BaseNumbering.mostRecentProps.lineLength = n.lineLength;
+    BaseNumbering.mostRecentProps.fontFamily = n.fontFamily;
+    BaseNumbering.mostRecentProps.fontSize = n.fontSize;
+    BaseNumbering.mostRecentProps.fontWeight = n.fontWeight;
+    BaseNumbering.mostRecentProps.color = n.color;
+    BaseNumbering.mostRecentProps.lineStrokeWidth = n.lineStrokeWidth;
   }
 
   static fromSavedState(
@@ -221,7 +217,7 @@ class BaseNumbering implements BaseNumberingInterface {
       bp,
       this.lineLength,
     );
-    BaseNumbering._mostRecentProps.basePadding = bp;
+    BaseNumbering.mostRecentProps.basePadding = bp;
   }
 
   get lineAngle(): number {
@@ -260,7 +256,7 @@ class BaseNumbering implements BaseNumberingInterface {
       this.basePadding,
       ll,
     );
-    BaseNumbering._mostRecentProps.lineLength = ll;
+    BaseNumbering.mostRecentProps.lineLength = ll;
   }
 
   reposition(xBaseCenter: number, yBaseCenter: number) {
@@ -334,7 +330,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   set fontFamily(ff: string) {
     this._text.attr({ 'font-family': ff });
-    BaseNumbering._mostRecentProps.fontFamily = ff;
+    BaseNumbering.mostRecentProps.fontFamily = ff;
   }
 
   get fontSize(): number {
@@ -344,7 +340,7 @@ class BaseNumbering implements BaseNumberingInterface {
   set fontSize(fs: number) {
     this._text.attr({ 'font-size': fs });
     BaseNumbering._positionText(this._text, this._line);
-    BaseNumbering._mostRecentProps.fontSize = fs;
+    BaseNumbering.mostRecentProps.fontSize = fs;
   }
 
   get fontWeight(): (number | string) {
@@ -353,7 +349,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   set fontWeight(fw: (number | string)) {
     this._text.attr({ 'font-weight': fw });
-    BaseNumbering._mostRecentProps.fontWeight = fw;
+    BaseNumbering.mostRecentProps.fontWeight = fw;
   }
 
   get color(): string {
@@ -363,7 +359,7 @@ class BaseNumbering implements BaseNumberingInterface {
   set color(c: string) {
     this._text.attr({ 'fill': c });
     this._line.attr({ 'stroke': c });
-    BaseNumbering._mostRecentProps.color = c;
+    BaseNumbering.mostRecentProps.color = c;
   }
 
   get lineStrokeWidth(): number {
@@ -372,7 +368,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   set lineStrokeWidth(lsw: number) {
     this._line.attr({ 'stroke-width': lsw });
-    BaseNumbering._mostRecentProps.lineStrokeWidth = lsw;
+    BaseNumbering.mostRecentProps.lineStrokeWidth = lsw;
   }
 
   remove() {
@@ -396,7 +392,7 @@ class BaseNumbering implements BaseNumberingInterface {
   }
 }
 
-BaseNumbering._mostRecentProps = {
+BaseNumbering.mostRecentProps = {
   basePadding: 8,
   lineLength: 8,
   fontFamily: 'Arial',
