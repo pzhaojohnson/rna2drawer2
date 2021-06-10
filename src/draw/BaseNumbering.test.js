@@ -284,19 +284,6 @@ describe('BaseNumbering class', () => {
     });
   });
 
-  it('insertBefore and insertAfter methods', () => {
-    let c = svg.circle(20);
-    let n = BaseNumbering.create(svg, 12, 5, 6);
-    expect(n._text.position()).toBeGreaterThan(c.position());
-    expect(n._line.position()).toBeGreaterThan(c.position());
-    n.insertBefore(c);
-    expect(n._text.position()).toBeLessThan(c.position());
-    expect(n._line.position()).toBeLessThan(c.position());
-    n.insertAfter(c);
-    expect(n._text.position()).toBeGreaterThan(c.position());
-    expect(n._line.position()).toBeGreaterThan(c.position());
-  });
-
   it('bringToFront and sendToBack methods', () => {
     let r1 = svg.rect(5, 6);
     let r2 = svg.rect(20, 20);

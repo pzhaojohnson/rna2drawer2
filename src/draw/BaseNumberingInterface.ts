@@ -22,8 +22,6 @@ export interface BaseNumberingInterface {
   lineAngle: number;
   lineLength: number;
   reposition(xBaseCenter: number, yBaseCenter: number): void;
-  insertBefore(ele: Svg.Element): void;
-  insertAfter(ele: Svg.Element): void;
   bringToFront(): void;
   sendToBack(): void;
   number: number;

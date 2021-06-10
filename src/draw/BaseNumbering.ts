@@ -288,16 +288,6 @@ class BaseNumbering implements BaseNumberingInterface {
     this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
-  insertBefore(ele: Svg.Element) {
-    this._text.insertBefore(ele);
-    this._line.insertBefore(ele);
-  }
-
-  insertAfter(ele: Svg.Element) {
-    this._text.insertAfter(ele);
-    this._line.insertAfter(ele);
-  }
-
   bringToFront() {
     this._line.front();
     this._text.front();
