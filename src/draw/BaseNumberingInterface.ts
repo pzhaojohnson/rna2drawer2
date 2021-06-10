@@ -1,15 +1,5 @@
 import * as Svg from '@svgdotjs/svg.js';
 
-export interface BaseNumberingMostRecentProps {
-  basePadding: number;
-  lineLength: number;
-  fontFamily: string;
-  fontSize: number;
-  fontWeight: number | string;
-  color: string;
-  lineStrokeWidth: number;
-}
-
 export interface BaseNumberingSavableState {
   className: string;
   textId: string;
