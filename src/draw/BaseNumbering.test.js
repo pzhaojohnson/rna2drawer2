@@ -103,8 +103,8 @@ describe('BaseNumbering class', () => {
       let savableState = n1.savableState();
       let spy = jest.spyOn(BaseNumbering, '_copyPropsToMostRecent');
       let n2 = BaseNumbering.fromSavedState(savableState, svg, 5, 8);
-      expect(n2._text.id()).toBe(savableState.textId);
-      expect(n2._line.id()).toBe(savableState.lineId);
+      expect(n2.text.id()).toBe(savableState.textId);
+      expect(n2.line.id()).toBe(savableState.lineId);
       // requires that base coordinates are passed correctly to constructor
       expect(n2.basePadding).toBeCloseTo(27.83);
       expect(spy.mock.calls[0][0]).toBe(n2); // copies props to most recent
@@ -123,8 +123,8 @@ describe('BaseNumbering class', () => {
       it('constructor throws', () => {
         let n = BaseNumbering.create(svg, 8, 3, 5);
         let savableState = n.savableState();
-        n._text.clear();
-        n._text.tspan('9.9');
+        n.text.clear();
+        n.text.tspan('9.9');
         expect(
           () => BaseNumbering.fromSavedState(savableState, svg, 3, 5)
         ).toThrow();
@@ -135,8 +135,8 @@ describe('BaseNumbering class', () => {
   describe('create static method', () => {
     let spy = jest.spyOn(BaseNumbering, '_applyMostRecentProps');
     let n = BaseNumbering.create(svg, 129, 120, 548);
-    let t = n._text;
-    let l = n._line;
+    let t = n.text;
+    let l = n.line;
 
     it('creates with number', () => {
       expect(n.number).toBe(129);
@@ -218,7 +218,7 @@ describe('BaseNumbering class', () => {
     let ll = n.lineLength;
     n.basePadding = 22; // use setter
     expect(n.basePadding).toBeCloseTo(22); // check getter
-    let l = n._line;
+    let l = n.line;
     // check actual value
     expect(distance(30, 80, l.attr('x1'), l.attr('y1'))).toBeCloseTo(22);
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
@@ -233,7 +233,7 @@ describe('BaseNumbering class', () => {
     let ll = n.lineLength;
     n.lineAngle = 5 * Math.PI / 7; // use setter
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(5 * Math.PI / 7); // check getter
-    let l = n._line;
+    let l = n.line;
     // check actual values
     let fromBase = angleBetween(8, 98, l.attr('x1'), l.attr('y1'));
     let fromEnd1 = angleBetween(l.attr('x1'), l.attr('y1'), l.attr('x2'), l.attr('y2'));
@@ -249,7 +249,7 @@ describe('BaseNumbering class', () => {
     let la = normalizeAngle(n.lineAngle);
     n.lineLength = 33.8; // use setter
     expect(n.lineLength).toBeCloseTo(33.8); // check getter
-    let l = n._line;
+    let l = n.line;
     // check actual value
     expect(distance(l.attr('x1'), l.attr('y1'), l.attr('x2'), l.attr('y2'))).toBeCloseTo(33.8);
     expect(n.basePadding).toBeCloseTo(bp); // maintains base padding
@@ -261,7 +261,7 @@ describe('BaseNumbering class', () => {
   describe('reposition method', () => {
     it('shifts text', () => {
       let n = BaseNumbering.create(svg, 100, 500, 480);
-      let t = n._text;
+      let t = n.text;
       let xPrev = t.attr('x');
       let yPrev = t.attr('y');
       n.reposition(420, 520);
@@ -271,7 +271,7 @@ describe('BaseNumbering class', () => {
 
     it('shifts line', () => {
       let n = BaseNumbering.create(svg, 800, 20, 75);
-      let l = n._line;
+      let l = n.line;
       let xPrev1 = l.attr('x1');
       let yPrev1 = l.attr('y1');
       let xPrev2 = l.attr('x2');
@@ -292,21 +292,21 @@ describe('BaseNumbering class', () => {
     // not already at back
     // and must be sent backwards more than one position
     // (cannot just call backward method of SVG elements)
-    expect(n._text.position()).toBeGreaterThan(2);
-    expect(n._line.position()).toBeGreaterThan(1);
+    expect(n.text.position()).toBeGreaterThan(2);
+    expect(n.line.position()).toBeGreaterThan(1);
     n.sendToBack();
     // sent to back
     // and text is kept above line
-    expect(n._text.position()).toBe(1);
-    expect(n._line.position()).toBe(0);
+    expect(n.text.position()).toBe(1);
+    expect(n.line.position()).toBe(0);
     let frontMarker = svg.ellipse(20, 40);
     n.bringToFront();
     // brought to front
     // and text is kept above line
-    expect(n._line.position()).toBeGreaterThan(frontMarker.position());
-    expect(n._text.position()).toBeGreaterThan(n._line.position());
+    expect(n.line.position()).toBeGreaterThan(frontMarker.position());
+    expect(n.text.position()).toBeGreaterThan(n.line.position());
     // had to be brought all the way to front and not just forward one position
-    expect(n._line.position()).toBeGreaterThan(1);
+    expect(n.line.position()).toBeGreaterThan(1);
   });
 
   it('number getter and setter', () => {
@@ -324,7 +324,7 @@ describe('BaseNumbering class', () => {
     let n = BaseNumbering.create(svg, 9, 20, 32);
     n.fontFamily = 'Consolas'; // use setter
     expect(n.fontFamily).toBe('Consolas'); // check getter
-    expect(n._text.attr('font-family')).toBe('Consolas'); // check actual value
+    expect(n.text.attr('font-family')).toBe('Consolas'); // check actual value
     // updates most recent prop
     expect(BaseNumbering.mostRecentProps.fontFamily).toBe('Consolas');
   });
@@ -334,20 +334,20 @@ describe('BaseNumbering class', () => {
     let spy = jest.spyOn(BaseNumbering, '_positionText');
     n.fontSize = 19.87; // use setter
     expect(n.fontSize).toBe(19.87); // check getter
-    expect(n._text.attr('font-size')).toBe(19.87); // check actual value
+    expect(n.text.attr('font-size')).toBe(19.87); // check actual value
     // updates most recent prop
     expect(BaseNumbering.mostRecentProps.fontSize).toBe(19.87);
     // updates text positioning
     let c = spy.mock.calls[0];
-    expect(c[0]).toBe(n._text);
-    expect(c[1]).toBe(n._line);
+    expect(c[0]).toBe(n.text);
+    expect(c[1]).toBe(n.line);
   });
 
   it('fontWeight getter and setter', () => {
     let n = BaseNumbering.create(svg, 100, 8, 9);
     n.fontWeight = 600; // use setter
     expect(n.fontWeight).toBe(600); // check getter
-    expect(n._text.attr('font-weight')).toBe(600); // check actual value
+    expect(n.text.attr('font-weight')).toBe(600); // check actual value
     // updates most recent prop
     expect(BaseNumbering.mostRecentProps.fontWeight).toBe(600);
   });
@@ -357,8 +357,8 @@ describe('BaseNumbering class', () => {
     n.color = '#132435'; // use setter
     expect(n.color).toBe('#132435'); // check getter
     // check actual values
-    expect(n._text.attr('fill')).toBe('#132435');
-    expect(n._line.attr('stroke')).toBe('#132435');
+    expect(n.text.attr('fill')).toBe('#132435');
+    expect(n.line.attr('stroke')).toBe('#132435');
     // updates most recent prop
     expect(BaseNumbering.mostRecentProps.color).toBe('#132435');
   });
@@ -367,15 +367,15 @@ describe('BaseNumbering class', () => {
     let n = BaseNumbering.create(svg, 2, 1, 4);
     n.lineStrokeWidth = 5.234; // use setter
     expect(n.lineStrokeWidth).toBe(5.234); // check getter
-    expect(n._line.attr('stroke-width')).toBe(5.234); // check actual value
+    expect(n.line.attr('stroke-width')).toBe(5.234); // check actual value
     // updates most recent prop
     expect(BaseNumbering.mostRecentProps.lineStrokeWidth).toBe(5.234);
   });
 
   it('remove method', () => {
     let n = BaseNumbering.create(svg, 2, 1, 8);
-    let textId = '#' + n._text.id();
-    let lineId = '#' + n._line.id();
+    let textId = '#' + n.text.id();
+    let lineId = '#' + n.line.id();
     expect(svg.findOne(textId)).toBeTruthy();
     expect(svg.findOne(lineId)).toBeTruthy();
     n.remove();
@@ -387,16 +387,16 @@ describe('BaseNumbering class', () => {
     let n = BaseNumbering.create(svg, 8, 3, 9);
     let savableState = n.savableState();
     expect(savableState.className).toBe('BaseNumbering');
-    expect(savableState.textId).toBe(n._text.id());
-    expect(savableState.lineId).toBe(n._line.id());
+    expect(savableState.textId).toBe(n.text.id());
+    expect(savableState.lineId).toBe(n.line.id());
   });
 
   it('refreshIds method', () => {
     let n = BaseNumbering.create(svg, 12, 8, 20);
-    let oldTextId = n._text.id();
-    let oldLineId = n._line.id();
+    let oldTextId = n.text.id();
+    let oldLineId = n.line.id();
     n.refreshIds();
-    expect(n._text.id()).not.toBe(oldTextId);
-    expect(n._line.id()).not.toBe(oldLineId);
+    expect(n.text.id()).not.toBe(oldTextId);
+    expect(n.line.id()).not.toBe(oldLineId);
   });
 });

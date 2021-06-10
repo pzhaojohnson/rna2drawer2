@@ -24,8 +24,8 @@ interface TextPositioning {
 class BaseNumbering implements BaseNumberingInterface {
   static mostRecentProps: BaseNumberingMostRecentProps;
 
-  _text: Svg.Text;
-  _line: Svg.Line;
+  text: Svg.Text;
+  line: Svg.Line;
   _basePadding: number;
 
   static _lineCoordinates(
@@ -135,10 +135,10 @@ class BaseNumbering implements BaseNumberingInterface {
   }
 
   constructor(text: Svg.Text, line: Svg.Line, xBaseCenter: number, yBaseCenter: number) {
-    this._text = text;
+    this.text = text;
     this._validateText();
 
-    this._line = line;
+    this.line = line;
     this._validateLine();
 
     this._basePadding = 0;
@@ -153,11 +153,11 @@ class BaseNumbering implements BaseNumberingInterface {
    * Throws if the text content is not an integer.
    */
   _validateText(): (void | never) {
-    if (this._text.type !== 'text') {
+    if (this.text.type !== 'text') {
       throw new Error('Passed element is not a text element.');
     }
-    this._text.id();
-    let n = Number(this._text.text());
+    this.text.id();
+    let n = Number(this.text.text());
     if (!Number.isFinite(n) || Math.floor(n) !== n) {
       throw new Error('Text content is not an integer.');
     }
@@ -169,28 +169,28 @@ class BaseNumbering implements BaseNumberingInterface {
    * Initializes the ID of the line if it is not already initialized.
    */
   _validateLine() {
-    if (this._line.type !== 'line') {
+    if (this.line.type !== 'line') {
       throw new Error('Passed element is not a line element.');
     }
-    this._line.id();
+    this.line.id();
   }
 
   get id(): string {
-    return this._text.id();
+    return this.text.id();
   }
 
   /**
    * Derived from the current base padding and positions of the line.
    */
   get _xBaseCenter(): number {
-    return this._line.attr('x1') + (this.basePadding * Math.cos(this.lineAngle + Math.PI));
+    return this.line.attr('x1') + (this.basePadding * Math.cos(this.lineAngle + Math.PI));
   }
 
   /**
    * Derived from the current base padding and positions of the line.
    */
   get _yBaseCenter(): number {
-    return this._line.attr('y1') + (this.basePadding * Math.sin(this.lineAngle + Math.PI));
+    return this.line.attr('y1') + (this.basePadding * Math.sin(this.lineAngle + Math.PI));
   }
 
   /**
@@ -200,8 +200,8 @@ class BaseNumbering implements BaseNumberingInterface {
     this._basePadding = distance(
       xBaseCenter,
       yBaseCenter,
-      this._line.attr('x1'),
-      this._line.attr('y1'),
+      this.line.attr('x1'),
+      this.line.attr('y1'),
     );
   }
 
@@ -222,10 +222,10 @@ class BaseNumbering implements BaseNumberingInterface {
 
   get lineAngle(): number {
     return angleBetween(
-      this._line.attr('x1'),
-      this._line.attr('y1'),
-      this._line.attr('x2'),
-      this._line.attr('y2'),
+      this.line.attr('x1'),
+      this.line.attr('y1'),
+      this.line.attr('x2'),
+      this.line.attr('y2'),
     );
   }
 
@@ -241,10 +241,10 @@ class BaseNumbering implements BaseNumberingInterface {
 
   get lineLength(): number {
     return distance(
-      this._line.attr('x1'),
-      this._line.attr('y1'),
-      this._line.attr('x2'),
-      this._line.attr('y2'),
+      this.line.attr('x1'),
+      this.line.attr('y1'),
+      this.line.attr('x2'),
+      this.line.attr('y2'),
     );
   }
 
@@ -283,23 +283,23 @@ class BaseNumbering implements BaseNumberingInterface {
       basePadding,
       lineLength,
     );
-    this._line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
-    BaseNumbering._positionText(this._text, this._line);
+    this.line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
+    BaseNumbering._positionText(this.text, this.line);
     this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
   bringToFront() {
-    this._line.front();
-    this._text.front();
+    this.line.front();
+    this.text.front();
   }
 
   sendToBack() {
-    this._text.back();
-    this._line.back();
+    this.text.back();
+    this.line.back();
   }
 
   get number(): number {
-    return Number(this._text.text());
+    return Number(this.text.text());
   }
 
   /**
@@ -310,75 +310,75 @@ class BaseNumbering implements BaseNumberingInterface {
       console.error('Given number is not an integer.');
       return;
     }
-    this._text.clear();
-    this._text.tspan(n.toString());
+    this.text.clear();
+    this.text.tspan(n.toString());
   }
 
   get fontFamily(): string {
-    return this._text.attr('font-family');
+    return this.text.attr('font-family');
   }
 
   set fontFamily(ff: string) {
-    this._text.attr({ 'font-family': ff });
+    this.text.attr({ 'font-family': ff });
     BaseNumbering.mostRecentProps.fontFamily = ff;
   }
 
   get fontSize(): number {
-    return this._text.attr('font-size');
+    return this.text.attr('font-size');
   }
 
   set fontSize(fs: number) {
-    this._text.attr({ 'font-size': fs });
-    BaseNumbering._positionText(this._text, this._line);
+    this.text.attr({ 'font-size': fs });
+    BaseNumbering._positionText(this.text, this.line);
     BaseNumbering.mostRecentProps.fontSize = fs;
   }
 
   get fontWeight(): (number | string) {
-    return this._text.attr('font-weight');
+    return this.text.attr('font-weight');
   }
 
   set fontWeight(fw: (number | string)) {
-    this._text.attr({ 'font-weight': fw });
+    this.text.attr({ 'font-weight': fw });
     BaseNumbering.mostRecentProps.fontWeight = fw;
   }
 
   get color(): string {
-    return this._text.attr('fill');
+    return this.text.attr('fill');
   }
 
   set color(c: string) {
-    this._text.attr({ 'fill': c });
-    this._line.attr({ 'stroke': c });
+    this.text.attr({ 'fill': c });
+    this.line.attr({ 'stroke': c });
     BaseNumbering.mostRecentProps.color = c;
   }
 
   get lineStrokeWidth(): number {
-    return this._line.attr('stroke-width');
+    return this.line.attr('stroke-width');
   }
 
   set lineStrokeWidth(lsw: number) {
-    this._line.attr({ 'stroke-width': lsw });
+    this.line.attr({ 'stroke-width': lsw });
     BaseNumbering.mostRecentProps.lineStrokeWidth = lsw;
   }
 
   remove() {
-    this._text.remove();
-    this._line.remove();
+    this.text.remove();
+    this.line.remove();
   }
 
   savableState(): BaseNumberingSavableState {
     return {
       className: 'BaseNumbering',
-      textId: this._text.id(),
-      lineId: this._line.id(),
+      textId: this.text.id(),
+      lineId: this.line.id(),
     };
   }
 
   refreshIds() {
-    this._text.id('');
-    this._text.id();
-    this._line.id('');
-    this._line.id();
+    this.text.id('');
+    this.text.id();
+    this.line.id('');
+    this.line.id();
   }
 }
 
