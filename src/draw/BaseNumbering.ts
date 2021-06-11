@@ -2,7 +2,7 @@ import {
   BaseNumberingInterface,
   BaseNumberingSavableState,
 } from './BaseNumberingInterface';
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
@@ -38,8 +38,8 @@ class BaseNumbering implements BaseNumberingInterface {
     color: string;
   }
 
-  readonly text: Svg.Text;
-  readonly line: Svg.Line;
+  readonly text: SVG.Text;
+  readonly line: SVG.Line;
   _basePadding: number;
 
   static _lineCoordinates(
@@ -56,7 +56,7 @@ class BaseNumbering implements BaseNumberingInterface {
     return { x1: x1, y1: y1, x2: x2, y2: y2 };
   }
 
-  static _textPositioning(text: Svg.Text, line: Svg.Line): TextPositioning {
+  static _textPositioning(text: SVG.Text, line: SVG.Line): TextPositioning {
     let lineAngle = angleBetween(
       line.attr('x1'),
       line.attr('y1'),
@@ -87,7 +87,7 @@ class BaseNumbering implements BaseNumberingInterface {
     return tp;
   }
 
-  static _positionText(text: Svg.Text, line: Svg.Line) {
+  static _positionText(text: SVG.Text, line: SVG.Line) {
     let tp = BaseNumbering._textPositioning(text, line);
     text.attr({
       'x': tp.x,
@@ -120,7 +120,7 @@ class BaseNumbering implements BaseNumberingInterface {
 
   static fromSavedState(
     savedState: BaseNumberingSavableState,
-    svg: Svg.Svg,
+    svg: SVG.Svg,
     xBaseCenter: number,
     yBaseCenter: number,
   ): (BaseNumbering | never) {
@@ -129,13 +129,13 @@ class BaseNumbering implements BaseNumberingInterface {
     }
     let text = svg.findOne('#' + savedState.textId);
     let line = svg.findOne('#' + savedState.lineId);
-    let n = new BaseNumbering(text as Svg.Text, line as Svg.Line, xBaseCenter, yBaseCenter);
+    let n = new BaseNumbering(text as SVG.Text, line as SVG.Line, xBaseCenter, yBaseCenter);
     BaseNumbering.updateDefaults(n);
     return n;
   }
 
   static create(
-    svg: Svg.Svg,
+    svg: SVG.Svg,
     number: number,
     xBaseCenter: number,
     yBaseCenter: number,
@@ -149,7 +149,7 @@ class BaseNumbering implements BaseNumberingInterface {
     return n;
   }
 
-  constructor(text: Svg.Text, line: Svg.Line, xBaseCenter: number, yBaseCenter: number) {
+  constructor(text: SVG.Text, line: SVG.Line, xBaseCenter: number, yBaseCenter: number) {
     this.text = text;
     this._validateText();
 

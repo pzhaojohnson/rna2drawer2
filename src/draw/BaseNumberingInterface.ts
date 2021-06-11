@@ -1,4 +1,4 @@
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 
 export interface BaseNumberingSavableState {
   className: string;
@@ -7,8 +7,8 @@ export interface BaseNumberingSavableState {
 }
 
 export interface BaseNumberingInterface {
-  readonly text: Svg.Text;
-  readonly line: Svg.Line;
+  readonly text: SVG.Text;
+  readonly line: SVG.Line;
   readonly id: string;
   basePadding: number;
   lineAngle: number;
