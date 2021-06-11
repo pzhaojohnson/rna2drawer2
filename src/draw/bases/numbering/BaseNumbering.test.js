@@ -59,13 +59,13 @@ describe('BaseNumbering class', () => {
 
   it('applyDefaults static method', () => {
     let n = BaseNumbering.create(svg, 9, 1.1, 2.2);
-    BaseNumbering.defaultProps.basePadding = 5.798;
-    BaseNumbering.defaultProps.lineLength = 10.23;
-    BaseNumbering.defaultAttrs.text['font-family'] = 'Tahoe';
-    BaseNumbering.defaultAttrs.text['font-size'] = 3.567;
-    BaseNumbering.defaultAttrs.text['font-weight'] = 'lighter';
-    BaseNumbering.defaultProps.color = '#456123';
-    BaseNumbering.defaultAttrs.line['stroke-width'] = 3.5678;
+    BaseNumbering.defaults.basePadding = 5.798;
+    BaseNumbering.defaults.lineLength = 10.23;
+    BaseNumbering.defaults.text['font-family'] = 'Tahoe';
+    BaseNumbering.defaults.text['font-size'] = 3.567;
+    BaseNumbering.defaults.text['font-weight'] = 'lighter';
+    BaseNumbering.defaults.color = '#456123';
+    BaseNumbering.defaults.line['stroke-width'] = 3.5678;
     BaseNumbering.applyDefaults(n);
     expect(n.basePadding).toBe(5.798);
     expect(n.lineLength).toBe(10.23);
@@ -86,15 +86,14 @@ describe('BaseNumbering class', () => {
     n.color = '#456123';
     n.lineStrokeWidth = 3.5678;
     BaseNumbering.updateDefaults(n);
-    let attrs = BaseNumbering.defaultAttrs;
-    let props = BaseNumbering.defaultProps;
-    expect(props.basePadding).toBe(5.798);
-    expect(props.lineLength).toBe(10.23);
-    expect(attrs.text['font-family']).toBe('Tahoe');
-    expect(attrs.text['font-size']).toBe(3.567);
-    expect(attrs.text['font-weight']).toBe('lighter');
-    expect(props.color).toBe('#456123');
-    expect(attrs.line['stroke-width']).toBe(3.5678);
+    let defaults = BaseNumbering.defaults;
+    expect(defaults.basePadding).toBe(5.798);
+    expect(defaults.lineLength).toBe(10.23);
+    expect(defaults.text['font-family']).toBe('Tahoe');
+    expect(defaults.text['font-size']).toBe(3.567);
+    expect(defaults.text['font-weight']).toBe('lighter');
+    expect(defaults.color).toBe('#456123');
+    expect(defaults.line['stroke-width']).toBe(3.5678);
   });
 
   describe('fromSavedState static method', () => {
@@ -225,7 +224,7 @@ describe('BaseNumbering class', () => {
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
     expect(n.lineLength).toBeCloseTo(ll); // maintains line length
     // updates defaults
-    expect(BaseNumbering.defaultProps.basePadding).toBeCloseTo(22);
+    expect(BaseNumbering.defaults.basePadding).toBeCloseTo(22);
   });
 
   it('lineAngle getter and setter', () => {
@@ -256,7 +255,7 @@ describe('BaseNumbering class', () => {
     expect(n.basePadding).toBeCloseTo(bp); // maintains base padding
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
     // updates defaults
-    expect(BaseNumbering.defaultProps.lineLength).toBeCloseTo(33.8);
+    expect(BaseNumbering.defaults.lineLength).toBeCloseTo(33.8);
   });
 
   describe('reposition method', () => {
@@ -327,7 +326,7 @@ describe('BaseNumbering class', () => {
     expect(n.fontFamily).toBe('Consolas'); // check getter
     expect(n.text.attr('font-family')).toBe('Consolas'); // check actual value
     // updates defaults
-    expect(BaseNumbering.defaultAttrs.text['font-family']).toBe('Consolas');
+    expect(BaseNumbering.defaults.text['font-family']).toBe('Consolas');
   });
 
   it('fontSize getter and setter', () => {
@@ -337,7 +336,7 @@ describe('BaseNumbering class', () => {
     expect(n.fontSize).toBe(19.87); // check getter
     expect(n.text.attr('font-size')).toBe(19.87); // check actual value
     // updates defaults
-    expect(BaseNumbering.defaultAttrs.text['font-size']).toBe(19.87);
+    expect(BaseNumbering.defaults.text['font-size']).toBe(19.87);
     // updates text positioning
     let c = spy.mock.calls[0];
     expect(c[0]).toBe(n.text);
@@ -350,7 +349,7 @@ describe('BaseNumbering class', () => {
     expect(n.fontWeight).toBe(600); // check getter
     expect(n.text.attr('font-weight')).toBe(600); // check actual value
     // updates defaults
-    expect(BaseNumbering.defaultAttrs.text['font-weight']).toBe(600);
+    expect(BaseNumbering.defaults.text['font-weight']).toBe(600);
   });
 
   it('color getter and setter', () => {
@@ -361,7 +360,7 @@ describe('BaseNumbering class', () => {
     expect(n.text.attr('fill')).toBe('#132435');
     expect(n.line.attr('stroke')).toBe('#132435');
     // updates defaults
-    expect(BaseNumbering.defaultProps.color).toBe('#132435');
+    expect(BaseNumbering.defaults.color).toBe('#132435');
   });
 
   it('lineStrokeWidth getter and setter', () => {
@@ -370,7 +369,7 @@ describe('BaseNumbering class', () => {
     expect(n.lineStrokeWidth).toBe(5.234); // check getter
     expect(n.line.attr('stroke-width')).toBe(5.234); // check actual value
     // updates defaults
-    expect(BaseNumbering.defaultAttrs.line['stroke-width']).toBe(5.234);
+    expect(BaseNumbering.defaults.line['stroke-width']).toBe(5.234);
   });
 
   it('remove method', () => {

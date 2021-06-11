@@ -21,7 +21,7 @@ interface TextPositioning {
 }
 
 export class BaseNumbering implements BaseNumberingInterface {
-  static defaultAttrs: {
+  static defaults: {
     text: {
       'font-family': string;
       'font-size': number;
@@ -30,9 +30,6 @@ export class BaseNumbering implements BaseNumberingInterface {
     line: {
       'stroke-width': number;
     }
-  }
-
-  static defaultProps: {
     basePadding: number;
     lineLength: number;
     color: string;
@@ -40,6 +37,7 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   readonly text: SVG.Text;
   readonly line: SVG.Line;
+
   _basePadding: number;
 
   static _lineCoordinates(
@@ -97,25 +95,24 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   static applyDefaults(n: BaseNumbering) {
-    let attrs = BaseNumbering.defaultAttrs;
-    let props = BaseNumbering.defaultProps;
-    n.basePadding = props.basePadding;
-    n.lineLength = props.lineLength;
-    n.fontFamily = attrs.text['font-family'];
-    n.fontSize = attrs.text['font-size'];
-    n.fontWeight = attrs.text['font-weight'];
-    n.color = props.color;
-    n.lineStrokeWidth = attrs.line['stroke-width'];
+    let defaults = BaseNumbering.defaults;
+    n.basePadding = defaults.basePadding;
+    n.lineLength = defaults.lineLength;
+    n.fontFamily = defaults.text['font-family'];
+    n.fontSize = defaults.text['font-size'];
+    n.fontWeight = defaults.text['font-weight'];
+    n.color = defaults.color;
+    n.lineStrokeWidth = defaults.line['stroke-width'];
   }
 
   static updateDefaults(n: BaseNumbering) {
-    BaseNumbering.defaultProps.basePadding = n.basePadding;
-    BaseNumbering.defaultProps.lineLength = n.lineLength;
-    BaseNumbering.defaultAttrs.text['font-family'] = n.fontFamily;
-    BaseNumbering.defaultAttrs.text['font-size'] = n.fontSize;
-    BaseNumbering.defaultAttrs.text['font-weight'] = n.fontWeight;
-    BaseNumbering.defaultProps.color = n.color;
-    BaseNumbering.defaultAttrs.line['stroke-width'] = n.lineStrokeWidth;
+    BaseNumbering.defaults.basePadding = n.basePadding;
+    BaseNumbering.defaults.lineLength = n.lineLength;
+    BaseNumbering.defaults.text['font-family'] = n.fontFamily;
+    BaseNumbering.defaults.text['font-size'] = n.fontSize;
+    BaseNumbering.defaults.text['font-weight'] = n.fontWeight;
+    BaseNumbering.defaults.color = n.color;
+    BaseNumbering.defaults.line['stroke-width'] = n.lineStrokeWidth;
   }
 
   static fromSavedState(
@@ -232,7 +229,7 @@ export class BaseNumbering implements BaseNumberingInterface {
       bp,
       this.lineLength,
     );
-    BaseNumbering.defaultProps.basePadding = bp;
+    BaseNumbering.defaults.basePadding = bp;
   }
 
   get lineAngle(): number {
@@ -271,7 +268,7 @@ export class BaseNumbering implements BaseNumberingInterface {
       this.basePadding,
       ll,
     );
-    BaseNumbering.defaultProps.lineLength = ll;
+    BaseNumbering.defaults.lineLength = ll;
   }
 
   reposition(xBaseCenter: number, yBaseCenter: number) {
@@ -335,7 +332,7 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   set fontFamily(ff: string) {
     this.text.attr({ 'font-family': ff });
-    BaseNumbering.defaultAttrs.text['font-family'] = ff;
+    BaseNumbering.defaults.text['font-family'] = ff;
   }
 
   get fontSize(): number {
@@ -345,7 +342,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   set fontSize(fs: number) {
     this.text.attr({ 'font-size': fs });
     BaseNumbering._positionText(this.text, this.line);
-    BaseNumbering.defaultAttrs.text['font-size'] = fs;
+    BaseNumbering.defaults.text['font-size'] = fs;
   }
 
   get fontWeight(): (number | string) {
@@ -354,7 +351,7 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   set fontWeight(fw: (number | string)) {
     this.text.attr({ 'font-weight': fw });
-    BaseNumbering.defaultAttrs.text['font-weight'] = fw;
+    BaseNumbering.defaults.text['font-weight'] = fw;
   }
 
   get color(): string {
@@ -364,7 +361,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   set color(c: string) {
     this.text.attr({ 'fill': c });
     this.line.attr({ 'stroke': c });
-    BaseNumbering.defaultProps.color = c;
+    BaseNumbering.defaults.color = c;
   }
 
   get lineStrokeWidth(): number {
@@ -373,7 +370,7 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   set lineStrokeWidth(lsw: number) {
     this.line.attr({ 'stroke-width': lsw });
-    BaseNumbering.defaultAttrs.line['stroke-width'] = lsw;
+    BaseNumbering.defaults.line['stroke-width'] = lsw;
   }
 
   remove() {
@@ -397,7 +394,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 }
 
-BaseNumbering.defaultAttrs = {
+BaseNumbering.defaults = {
   text: {
     'font-family': 'Arial',
     'font-size': 8,
@@ -406,9 +403,6 @@ BaseNumbering.defaultAttrs = {
   line: {
     'stroke-width': 1,
   },
-};
-
-BaseNumbering.defaultProps = {
   basePadding: 8,
   lineLength: 8,
   color: '#808080',
