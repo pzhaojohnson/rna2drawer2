@@ -26,5 +26,3 @@ export interface BaseNumberingInterface {
   savableState(): BaseNumberingSavableState;
   refreshIds(): void;
 }
-
-export default BaseNumberingInterface;

@@ -1,4 +1,4 @@
-import BaseNumbering from './BaseNumbering';
+import { BaseNumbering } from './BaseNumbering';
 import NodeSVG from './NodeSVG';
 import angleBetween from './angleBetween';
 import { distance2D as distance } from 'Math/distance';

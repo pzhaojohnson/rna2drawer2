@@ -20,7 +20,7 @@ interface TextPositioning {
   textAnchor: string;
 }
 
-class BaseNumbering implements BaseNumberingInterface {
+export class BaseNumbering implements BaseNumberingInterface {
   static defaultAttrs: {
     text: {
       'font-family': string;
@@ -413,5 +413,3 @@ BaseNumbering.defaultProps = {
   lineLength: 8,
   color: '#808080',
 };
-
-export default BaseNumbering;
