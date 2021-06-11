@@ -7,6 +7,8 @@ export interface BaseNumberingSavableState {
 }
 
 export interface BaseNumberingInterface {
+  readonly text: Svg.Text;
+  readonly line: Svg.Line;
   readonly id: string;
   basePadding: number;
   lineAngle: number;

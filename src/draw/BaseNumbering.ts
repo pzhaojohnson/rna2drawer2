@@ -38,8 +38,8 @@ class BaseNumbering implements BaseNumberingInterface {
     color: string;
   }
 
-  text: Svg.Text;
-  line: Svg.Line;
+  readonly text: Svg.Text;
+  readonly line: Svg.Line;
   _basePadding: number;
 
   static _lineCoordinates(
