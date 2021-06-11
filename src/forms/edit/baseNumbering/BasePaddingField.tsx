@@ -1,4 +1,4 @@
-import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
+import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/numbering/BaseNumberingInterface';
 import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';

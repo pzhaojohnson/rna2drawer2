@@ -6,7 +6,7 @@ import {
 import {
   BaseNumberingInterface as BaseNumbering,
   BaseNumberingSavableState,
-} from "./BaseNumberingInterface";
+} from "Draw/bases/numbering/BaseNumberingInterface";
 
 export interface BaseMostRecentProps {
   fontFamily: string;

@@ -1,8 +1,8 @@
 import { BaseNumbering } from './BaseNumbering';
-import NodeSVG from './NodeSVG';
-import angleBetween from './angleBetween';
+import NodeSVG from 'Draw/NodeSVG';
+import angleBetween from 'Draw/angleBetween';
 import { distance2D as distance } from 'Math/distance';
-import normalizeAngle from './normalizeAngle';
+import normalizeAngle from 'Draw/normalizeAngle';
 
 let svg = NodeSVG();
 

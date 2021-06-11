@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
 import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
-import { BaseNumberingInterface as BaseNumbering } from '../../../draw/BaseNumberingInterface';
+import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/numbering/BaseNumberingInterface';
 import { ClosableContainer } from '../../containers/ClosableContainer';
 import { OffsetField } from './OffsetField';
 import { AnchorField } from './AnchorField';

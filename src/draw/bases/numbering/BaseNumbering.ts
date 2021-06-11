@@ -4,8 +4,8 @@ import {
 } from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from './angleBetween';
-import normalizeAngle from './normalizeAngle';
+import angleBetween from 'Draw/angleBetween';
+import normalizeAngle from 'Draw/normalizeAngle';
 
 interface LineCoordinates {
   x1: number;

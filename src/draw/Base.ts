@@ -7,9 +7,9 @@ import * as Svg from '@svgdotjs/svg.js';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
-import { BaseNumbering } from './BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
 import { CircleBaseAnnotationSavableState } from './BaseAnnotationInterface';
-import { BaseNumberingSavableState } from './BaseNumberingInterface';
+import { BaseNumberingSavableState } from 'Draw/bases/numbering/BaseNumberingInterface';
 import { areClose } from './areClose';
 
 class Base implements BaseInterface {
