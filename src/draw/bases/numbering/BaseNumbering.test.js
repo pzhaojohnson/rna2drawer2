@@ -281,15 +281,6 @@ describe('BaseNumbering class', () => {
     expect(n.number).toBe(524);
   });
 
-  it('fontWeight getter and setter', () => {
-    let n = BaseNumbering.create(svg, 100, 8, 9);
-    n.fontWeight = 600; // use setter
-    expect(n.fontWeight).toBe(600); // check getter
-    expect(n.text.attr('font-weight')).toBe(600); // check actual value
-    // updates defaults
-    expect(BaseNumbering.defaults.text['font-weight']).toBe(600);
-  });
-
   it('color getter and setter', () => {
     let n = BaseNumbering.create(svg, 12, 2, 5);
     n.color = '#132435'; // use setter
