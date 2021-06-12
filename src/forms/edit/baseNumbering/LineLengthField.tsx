@@ -1,4 +1,5 @@
-import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/numbering/BaseNumberingInterface';
+import { BaseNumberingInterface } from 'Draw/bases/numbering/BaseNumberingInterface';
+import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
 import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
@@ -7,7 +8,7 @@ import { round } from '../../../math/round';
 
 const PRECISION = 2;
 
-function getFirstLineLength(bns: BaseNumbering[]): number | undefined {
+function getFirstLineLength(bns: BaseNumberingInterface[]): number | undefined {
   let first = atIndex(bns, 0);
   if (first) {
     return round(first.lineLength, PRECISION);
@@ -29,6 +30,7 @@ export function LineLengthField(props: FieldProps): React.ReactElement | null {
             if (ll != getFirstLineLength(bns)) {
               props.pushUndo();
               bns.forEach(bn => bn.lineLength = ll);
+              BaseNumbering.defaults.lineLength = ll;
               props.changed();
             }
           }

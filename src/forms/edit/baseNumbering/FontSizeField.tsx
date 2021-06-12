@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FieldProps } from './FieldProps';
 import { FontSizeField as Field } from '../../fields/font/FontSizeField';
 import { atIndex } from 'Array/at';
+import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
 
 export function FontSizeField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();
@@ -25,6 +26,7 @@ export function FontSizeField(props: FieldProps): React.ReactElement | null {
                 bn.text.attr({ 'font-size': fs });
                 bn.repositionText();
               });
+              BaseNumbering.defaults.text['font-size'] = fs;
               props.changed();
             }
           }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
 import { atIndex } from 'Array/at';
+import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
 
 export function LineWidthField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();
@@ -22,6 +23,7 @@ export function LineWidthField(props: FieldProps): React.ReactElement | null {
             if (lw != strokeWidth) {
               props.pushUndo();
               bns.forEach(bn => bn.line.attr({ 'stroke-width': lw }));
+              BaseNumbering.defaults.line['stroke-width'] = lw;
               props.changed();
             }
           }

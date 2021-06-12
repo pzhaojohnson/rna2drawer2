@@ -233,7 +233,6 @@ export class BaseNumbering implements BaseNumberingInterface {
       bp,
       this.lineLength,
     );
-    BaseNumbering.defaults.basePadding = bp;
   }
 
   get lineAngle(): number {
@@ -272,7 +271,6 @@ export class BaseNumbering implements BaseNumberingInterface {
       this.basePadding,
       ll,
     );
-    BaseNumbering.defaults.lineLength = ll;
   }
 
   reposition(xBaseCenter: number, yBaseCenter: number) {

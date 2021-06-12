@@ -184,8 +184,6 @@ describe('BaseNumbering class', () => {
     expect(distance(30, 80, l.attr('x1'), l.attr('y1'))).toBeCloseTo(22);
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
     expect(n.lineLength).toBeCloseTo(ll); // maintains line length
-    // updates defaults
-    expect(BaseNumbering.defaults.basePadding).toBeCloseTo(22);
   });
 
   it('lineAngle getter and setter', () => {
@@ -215,8 +213,6 @@ describe('BaseNumbering class', () => {
     expect(distance(l.attr('x1'), l.attr('y1'), l.attr('x2'), l.attr('y2'))).toBeCloseTo(33.8);
     expect(n.basePadding).toBeCloseTo(bp); // maintains base padding
     expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
-    // updates defaults
-    expect(BaseNumbering.defaults.lineLength).toBeCloseTo(33.8);
   });
 
   describe('reposition method', () => {

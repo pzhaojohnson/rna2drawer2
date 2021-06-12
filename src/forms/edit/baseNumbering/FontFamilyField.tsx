@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FontFamilyField as Field } from '../../fields/font/FontFamilyField';
 import { FieldProps } from './FieldProps';
 import { atIndex } from 'Array/at';
+import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
 
 export function FontFamilyField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();
@@ -25,6 +26,7 @@ export function FontFamilyField(props: FieldProps): React.ReactElement | null {
                 bn.text.attr({ 'font-family': ff });
                 bn.repositionText();
               });
+              BaseNumbering.defaults.text['font-family'] = ff;
               props.changed();
             }
           }
