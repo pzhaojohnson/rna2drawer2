@@ -17,7 +17,6 @@ export interface BaseNumberingInterface {
   repositionText(): void;
   bringToFront(): void;
   sendToBack(): void;
-  color: string;
   remove(): void;
   savableState(): BaseNumberingSavableState;
   refreshIds(): void;

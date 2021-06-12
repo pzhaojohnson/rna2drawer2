@@ -270,17 +270,6 @@ describe('BaseNumbering class', () => {
     expect(n.line.position()).toBeGreaterThan(1);
   });
 
-  it('color getter and setter', () => {
-    let n = BaseNumbering.create(svg, 12, 2, 5);
-    n.color = '#132435'; // use setter
-    expect(n.color).toBe('#132435'); // check getter
-    // check actual values
-    expect(n.text.attr('fill')).toBe('#132435');
-    expect(n.line.attr('stroke')).toBe('#132435');
-    // updates defaults
-    expect(BaseNumbering.defaults.color).toBe('#132435');
-  });
-
   it('remove method', () => {
     let n = BaseNumbering.create(svg, 2, 1, 8);
     let textId = '#' + n.text.id();

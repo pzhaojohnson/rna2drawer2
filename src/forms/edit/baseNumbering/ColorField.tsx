@@ -9,7 +9,7 @@ import { atIndex } from 'Array/at';
 function getFirstColor(bns: BaseNumbering[]): Svg.Color | undefined {
   let first = atIndex(bns, 0);
   if (first) {
-    return parseColor(first.color);
+    return parseColor(first.text.attr('fill'));
   }
 }
 
@@ -32,7 +32,8 @@ export function ColorField(props: FieldProps): React.ReactElement | null {
               if (c.toHex() != getFirstColor(bns)?.toHex()) {
                 props.pushUndo();
                 bns.forEach(bn => {
-                  bn.color = c.toHex();
+                  bn.text.attr({ 'fill': c.toHex() });
+                  bn.line.attr({ 'stroke': c.toHex() });
                 });
                 props.changed();
               }

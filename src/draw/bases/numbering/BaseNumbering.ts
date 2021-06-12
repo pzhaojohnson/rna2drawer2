@@ -26,13 +26,14 @@ export class BaseNumbering implements BaseNumberingInterface {
       'font-family': string;
       'font-size': number;
       'font-weight': number | string;
+      'fill': string,
     }
     line: {
+      'stroke': string;
       'stroke-width': number;
     }
     basePadding: number;
     lineLength: number;
-    color: string;
   }
 
   readonly text: SVG.Text;
@@ -101,7 +102,8 @@ export class BaseNumbering implements BaseNumberingInterface {
     n.text.attr({ 'font-family': defaults.text['font-family'] });
     n.text.attr({ 'font-size': defaults.text['font-size'] });
     n.text.attr({ 'font-weight': defaults.text['font-weight'] });
-    n.color = defaults.color;
+    n.text.attr({ 'fill': defaults.text['fill'] });
+    n.line.attr({ 'stroke': defaults.line['stroke'] });
     n.line.attr({ 'stroke-width': defaults.line['stroke-width'] });
     BaseNumbering._positionText(n.text, n.line);
   }
@@ -112,7 +114,8 @@ export class BaseNumbering implements BaseNumberingInterface {
     BaseNumbering.defaults.text['font-family'] = n.text.attr('font-family');
     BaseNumbering.defaults.text['font-size'] = n.text.attr('font-size');
     BaseNumbering.defaults.text['font-weight'] = n.text.attr('font-weight');
-    BaseNumbering.defaults.color = n.color;
+    BaseNumbering.defaults.text['fill'] = n.text.attr('fill');
+    BaseNumbering.defaults.line['stroke'] = n.line.attr('stroke');
     BaseNumbering.defaults.line['stroke-width'] = n.line.attr('stroke-width');
   }
 
@@ -315,16 +318,6 @@ export class BaseNumbering implements BaseNumberingInterface {
     this.line.back();
   }
 
-  get color(): string {
-    return this.text.attr('fill');
-  }
-
-  set color(c: string) {
-    this.text.attr({ 'fill': c });
-    this.line.attr({ 'stroke': c });
-    BaseNumbering.defaults.color = c;
-  }
-
   remove() {
     this.text.remove();
     this.line.remove();
@@ -351,11 +344,12 @@ BaseNumbering.defaults = {
     'font-family': 'Arial',
     'font-size': 8,
     'font-weight': 'normal',
+    'fill': '#808080',
   },
   line: {
+    'stroke': '#808080',
     'stroke-width': 1,
   },
   basePadding: 8,
   lineLength: 8,
-  color: '#808080',
 };
