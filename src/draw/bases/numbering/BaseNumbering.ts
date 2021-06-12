@@ -301,6 +301,10 @@ export class BaseNumbering implements BaseNumberingInterface {
     this._storeBasePadding(xBaseCenter, yBaseCenter);
   }
 
+  repositionText() {
+    BaseNumbering._positionText(this.text, this.line);
+  }
+
   bringToFront() {
     this.line.front();
     this.text.front();

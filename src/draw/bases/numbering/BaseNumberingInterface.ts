@@ -14,6 +14,7 @@ export interface BaseNumberingInterface {
   lineAngle: number;
   lineLength: number;
   reposition(xBaseCenter: number, yBaseCenter: number): void;
+  repositionText(): void;
   bringToFront(): void;
   sendToBack(): void;
   number: number;
