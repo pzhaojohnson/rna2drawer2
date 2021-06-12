@@ -9,18 +9,20 @@ export function FontSizeField(props: FieldProps): React.ReactElement | null {
     return null;
   } else {
     let first = atIndex(bns, 0);
+    let fontSize = first?.text.attr('font-size');
     return (
       <Field
         name='Font Size'
-        initialValue={first?.fontSize}
+        initialValue={typeof fontSize == 'number' ? fontSize : undefined}
         set={fs => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
             let first = atIndex(bns, 0);
-            if (fs != first?.fontSize) {
+            let fontSize = first?.text.attr('font-size');
+            if (fs != fontSize) {
               props.pushUndo();
               bns.forEach(bn => {
-                bn.fontSize = fs;
+                bn.text.attr({ 'font-size': fs });
               });
               props.changed();
             }

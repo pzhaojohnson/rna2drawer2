@@ -70,7 +70,7 @@ describe('BaseNumbering class', () => {
     expect(n.basePadding).toBe(5.798);
     expect(n.lineLength).toBe(10.23);
     expect(n.text.attr('font-family')).toBe('Tahoe');
-    expect(n.fontSize).toBe(3.567);
+    expect(n.text.attr('font-size')).toBe(3.567);
     expect(n.fontWeight).toBe('lighter');
     expect(n.color).toBe('#456123');
     expect(n.lineStrokeWidth).toBe(3.5678);
@@ -318,20 +318,6 @@ describe('BaseNumbering class', () => {
     expect(n.number).toBe(524);
     n.number = 5.2; // not an integer
     expect(n.number).toBe(524);
-  });
-
-  it('fontSize getter and setter', () => {
-    let n = BaseNumbering.create(svg, 12, 0, 10);
-    let spy = jest.spyOn(BaseNumbering, '_positionText');
-    n.fontSize = 19.87; // use setter
-    expect(n.fontSize).toBe(19.87); // check getter
-    expect(n.text.attr('font-size')).toBe(19.87); // check actual value
-    // updates defaults
-    expect(BaseNumbering.defaults.text['font-size']).toBe(19.87);
-    // updates text positioning
-    let c = spy.mock.calls[0];
-    expect(c[0]).toBe(n.text);
-    expect(c[1]).toBe(n.line);
   });
 
   it('fontWeight getter and setter', () => {

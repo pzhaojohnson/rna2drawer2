@@ -99,17 +99,18 @@ export class BaseNumbering implements BaseNumberingInterface {
     n.basePadding = defaults.basePadding;
     n.lineLength = defaults.lineLength;
     n.text.attr({ 'font-family': defaults.text['font-family'] });
-    n.fontSize = defaults.text['font-size'];
+    n.text.attr({ 'font-size': defaults.text['font-size'] });
     n.fontWeight = defaults.text['font-weight'];
     n.color = defaults.color;
     n.lineStrokeWidth = defaults.line['stroke-width'];
+    BaseNumbering._positionText(n.text, n.line);
   }
 
   static updateDefaults(n: BaseNumbering) {
     BaseNumbering.defaults.basePadding = n.basePadding;
     BaseNumbering.defaults.lineLength = n.lineLength;
     BaseNumbering.defaults.text['font-family'] = n.text.attr('font-family');
-    BaseNumbering.defaults.text['font-size'] = n.fontSize;
+    BaseNumbering.defaults.text['font-size'] = n.text.attr('font-size');
     BaseNumbering.defaults.text['font-weight'] = n.fontWeight;
     BaseNumbering.defaults.color = n.color;
     BaseNumbering.defaults.line['stroke-width'] = n.lineStrokeWidth;
@@ -324,16 +325,6 @@ export class BaseNumbering implements BaseNumberingInterface {
     }
     this.text.clear();
     this.text.tspan(n.toString());
-  }
-
-  get fontSize(): number {
-    return this.text.attr('font-size');
-  }
-
-  set fontSize(fs: number) {
-    this.text.attr({ 'font-size': fs });
-    BaseNumbering._positionText(this.text, this.line);
-    BaseNumbering.defaults.text['font-size'] = fs;
   }
 
   get fontWeight(): (number | string) {
