@@ -100,7 +100,7 @@ describe('BaseNumbering class', () => {
     let l = n.line;
 
     it('creates with number', () => {
-      expect(n.number).toBe(129);
+      expect(n.text.text()).toBe('129');
     });
 
     it('creates close to center base coordinates', () => {
@@ -268,17 +268,6 @@ describe('BaseNumbering class', () => {
     expect(n.text.position()).toBeGreaterThan(n.line.position());
     // had to be brought all the way to front and not just forward one position
     expect(n.line.position()).toBeGreaterThan(1);
-  });
-
-  it('number getter and setter', () => {
-    let n = BaseNumbering.create(svg, 312, 20, 80);
-    expect(n.number).toBe(312);
-    n.number = 524;
-    expect(n.number).toBe(524);
-    n.number = Infinity; // not a finite number
-    expect(n.number).toBe(524);
-    n.number = 5.2; // not an integer
-    expect(n.number).toBe(524);
   });
 
   it('color getter and setter', () => {

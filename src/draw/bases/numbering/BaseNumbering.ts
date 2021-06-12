@@ -315,22 +315,6 @@ export class BaseNumbering implements BaseNumberingInterface {
     this.line.back();
   }
 
-  get number(): number {
-    return Number(this.text.text());
-  }
-
-  /**
-   * Has no effect if the given number is not an integer.
-   */
-  set number(n: number) {
-    if (!Number.isFinite(n) || Math.floor(n) !== n) {
-      console.error('Given number is not an integer.');
-      return;
-    }
-    this.text.clear();
-    this.text.tspan(n.toString());
-  }
-
   get color(): string {
     return this.text.attr('fill');
   }

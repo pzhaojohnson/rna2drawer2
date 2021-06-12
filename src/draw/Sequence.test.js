@@ -227,16 +227,16 @@ describe('Sequence class', () => {
     seq._updateBaseNumberings();
     expect(seq.getBaseAtPosition(1).hasNumbering()).toBeFalsy();
     expect(seq.getBaseAtPosition(2).hasNumbering()).toBeFalsy(); // was removed
-    expect(seq.getBaseAtPosition(3).numbering.number).toBe(18); // was added
+    expect(seq.getBaseAtPosition(3).numbering.text.text()).toBe('18'); // was added
     expect(seq.getBaseAtPosition(4).hasNumbering()).toBeFalsy();
     expect(seq.getBaseAtPosition(5).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(6).numbering.number).toBe(21); //was added
+    expect(seq.getBaseAtPosition(6).numbering.text.text()).toBe('21'); //was added
     expect(seq.getBaseAtPosition(7).hasNumbering()).toBeFalsy();
     expect(seq.getBaseAtPosition(8).hasNumbering()).toBeFalsy(); // was removed
-    expect(seq.getBaseAtPosition(9).numbering.number).toBe(24); // was replaced
+    expect(seq.getBaseAtPosition(9).numbering.text.text()).toBe('24'); // was replaced
     expect(seq.getBaseAtPosition(10).hasNumbering()).toBeFalsy();
     expect(seq.getBaseAtPosition(11).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(12).numbering.number).toBe(27); // was added
+    expect(seq.getBaseAtPosition(12).numbering.text.text()).toBe('27'); // was added
   });
 
   it('numberingOffset getter and setter', () => {
@@ -544,13 +544,13 @@ describe('Sequence class', () => {
       let seq = Sequence.createOutOfView(svg, 'qwer', 'asdf');
       seq.numberingIncrement = 1;
       let n = seq.getBaseAtPosition(4).numbering;
-      expect(n.number).toBe(4);
+      expect(n.text.text()).toBe('4');
       seq.insertBasesAtPosition([
         Base.create(svg, 't', 1, 2),
         Base.create(svg, 'g', 1, 1),
       ], 3);
       n = seq.getBaseAtPosition(6).numbering;
-      expect(n.number).toBe(6);
+      expect(n.text.text()).toBe('6');
     });
 
     it('fires add base event for each base inserted', () => {
@@ -630,9 +630,9 @@ describe('Sequence class', () => {
       let seq = Sequence.createOutOfView(svg, 'asdf', 'adsfasdf');
       seq.numberingIncrement = 1;
       let b7 = seq.getBaseAtPosition(7);
-      expect(b7.numbering.number).toBe(7);
+      expect(b7.numbering.text.text()).toBe('7');
       seq.removeBasesInRange(2, 4);
-      expect(b7.numbering.number).toBe(4);
+      expect(b7.numbering.text.text()).toBe('4');
     });
   });
 

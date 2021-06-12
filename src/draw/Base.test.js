@@ -564,7 +564,7 @@ describe('Base class', () => {
         let b = Base.create(svg, 'G', 20, 80);
         let spy = jest.spyOn(BaseNumbering, 'create');
         let n = b.addNumbering(2056);
-        expect(n.number).toBe(2056);
+        expect(n.text.text()).toBe('2056');
         let c = spy.mock.calls[0];
         expect(c[2]).toBe(b.xCenter);
         expect(c[3]).toBe(b.yCenter);
@@ -594,7 +594,7 @@ describe('Base class', () => {
         let n1 = BaseNumbering.create(svg, 852, b.xCenter, b.yCenter);
         let savableState1 = n1.savableState();
         let n2 = b.addNumberingFromSavedState(savableState1);
-        expect(n2.number).toBe(852);
+        expect(n2.text.text()).toBe('852');
         // requires that center base coordinates were passed
         expect(n2.basePadding).toBeCloseTo(n1.basePadding);
         expect(b.numbering).toBe(n2); // check reference
@@ -607,7 +607,7 @@ describe('Base class', () => {
         let n2 = b.addNumbering(2);
         let spy = jest.spyOn(n2, 'remove');
         b.addNumberingFromSavedState(savableState1);
-        expect(b.numbering.number).toBe(1);
+        expect(b.numbering.text.text()).toBe('1');
         expect(spy).toHaveBeenCalled();
       });
     });
@@ -618,7 +618,7 @@ describe('Base class', () => {
       expect(b.numbering).toBe(null);
       b.addNumbering(6);
       expect(b.hasNumbering()).toBeTruthy();
-      expect(b.numbering.number).toBe(6);
+      expect(b.numbering.text.text()).toBe('6');
       b.removeNumbering();
       expect(b.hasNumbering()).toBeFalsy();
       expect(b.numbering).toBe(null);
