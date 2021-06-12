@@ -57,45 +57,6 @@ describe('BaseNumbering class', () => {
     });
   });
 
-  it('applyDefaults static method', () => {
-    let n = BaseNumbering.create(svg, 9, 1.1, 2.2);
-    BaseNumbering.defaults.basePadding = 5.798;
-    BaseNumbering.defaults.lineLength = 10.23;
-    BaseNumbering.defaults.text['font-family'] = 'Tahoe';
-    BaseNumbering.defaults.text['font-size'] = 3.567;
-    BaseNumbering.defaults.text['font-weight'] = 'lighter';
-    BaseNumbering.defaults.color = '#456123';
-    BaseNumbering.defaults.line['stroke-width'] = 3.5678;
-    BaseNumbering.applyDefaults(n);
-    expect(n.basePadding).toBe(5.798);
-    expect(n.lineLength).toBe(10.23);
-    expect(n.text.attr('font-family')).toBe('Tahoe');
-    expect(n.text.attr('font-size')).toBe(3.567);
-    expect(n.fontWeight).toBe('lighter');
-    expect(n.color).toBe('#456123');
-    expect(n.lineStrokeWidth).toBe(3.5678);
-  });
-
-  it('updateDefaults static method', () => {
-    let n = BaseNumbering.create(svg, 9, 1.1, 2.2);
-    n.basePadding = 5.798;
-    n.lineLength = 10.23;
-    n.fontFamily = 'Tahoe';
-    n.fontSize = 3.567;
-    n.fontWeight = 'lighter';
-    n.color = '#456123';
-    n.lineStrokeWidth = 3.5678;
-    BaseNumbering.updateDefaults(n);
-    let defaults = BaseNumbering.defaults;
-    expect(defaults.basePadding).toBe(5.798);
-    expect(defaults.lineLength).toBe(10.23);
-    expect(defaults.text['font-family']).toBe('Tahoe');
-    expect(defaults.text['font-size']).toBe(3.567);
-    expect(defaults.text['font-weight']).toBe('lighter');
-    expect(defaults.color).toBe('#456123');
-    expect(defaults.line['stroke-width']).toBe(3.5678);
-  });
-
   describe('fromSavedState static method', () => {
     it('valid saved state', () => {
       let n1 = BaseNumbering.create(svg, 10, 5, 8);
