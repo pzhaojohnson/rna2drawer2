@@ -17,7 +17,6 @@ export interface BaseNumberingInterface {
   bringToFront(): void;
   sendToBack(): void;
   number: number;
-  fontFamily: string;
   fontSize: number;
   fontWeight: number | string;
   color: string;

@@ -69,7 +69,7 @@ describe('BaseNumbering class', () => {
     BaseNumbering.applyDefaults(n);
     expect(n.basePadding).toBe(5.798);
     expect(n.lineLength).toBe(10.23);
-    expect(n.fontFamily).toBe('Tahoe');
+    expect(n.text.attr('font-family')).toBe('Tahoe');
     expect(n.fontSize).toBe(3.567);
     expect(n.fontWeight).toBe('lighter');
     expect(n.color).toBe('#456123');
@@ -318,15 +318,6 @@ describe('BaseNumbering class', () => {
     expect(n.number).toBe(524);
     n.number = 5.2; // not an integer
     expect(n.number).toBe(524);
-  });
-
-  it('fontFamily getter and setter', () => {
-    let n = BaseNumbering.create(svg, 9, 20, 32);
-    n.fontFamily = 'Consolas'; // use setter
-    expect(n.fontFamily).toBe('Consolas'); // check getter
-    expect(n.text.attr('font-family')).toBe('Consolas'); // check actual value
-    // updates defaults
-    expect(BaseNumbering.defaults.text['font-family']).toBe('Consolas');
   });
 
   it('fontSize getter and setter', () => {

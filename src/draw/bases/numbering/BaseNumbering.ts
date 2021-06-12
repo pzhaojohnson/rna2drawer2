@@ -98,7 +98,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     let defaults = BaseNumbering.defaults;
     n.basePadding = defaults.basePadding;
     n.lineLength = defaults.lineLength;
-    n.fontFamily = defaults.text['font-family'];
+    n.text.attr({ 'font-family': defaults.text['font-family'] });
     n.fontSize = defaults.text['font-size'];
     n.fontWeight = defaults.text['font-weight'];
     n.color = defaults.color;
@@ -108,7 +108,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   static updateDefaults(n: BaseNumbering) {
     BaseNumbering.defaults.basePadding = n.basePadding;
     BaseNumbering.defaults.lineLength = n.lineLength;
-    BaseNumbering.defaults.text['font-family'] = n.fontFamily;
+    BaseNumbering.defaults.text['font-family'] = n.text.attr('font-family');
     BaseNumbering.defaults.text['font-size'] = n.fontSize;
     BaseNumbering.defaults.text['font-weight'] = n.fontWeight;
     BaseNumbering.defaults.color = n.color;
@@ -324,15 +324,6 @@ export class BaseNumbering implements BaseNumberingInterface {
     }
     this.text.clear();
     this.text.tspan(n.toString());
-  }
-
-  get fontFamily(): string {
-    return this.text.attr('font-family');
-  }
-
-  set fontFamily(ff: string) {
-    this.text.attr({ 'font-family': ff });
-    BaseNumbering.defaults.text['font-family'] = ff;
   }
 
   get fontSize(): number {

@@ -9,18 +9,20 @@ export function FontFamilyField(props: FieldProps): React.ReactElement | null {
     return null;
   } else {
     let first = atIndex(bns, 0);
+    let fontFamily = first?.text.attr('font-family');
     return (
       <Field
         name='Font'
-        initialValue={first?.fontFamily}
+        initialValue={typeof fontFamily == 'string' ? fontFamily : undefined}
         set={ff => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
             let first = atIndex(bns, 0);
-            if (ff != first?.fontFamily) {
+            let fontFamily = first?.text.attr('font-family');
+            if (ff != fontFamily) {
               props.pushUndo();
               bns.forEach(bn => {
-                bn.fontFamily = ff;
+                bn.text.attr({ 'font-family': ff });
               });
               props.changed();
             }
