@@ -9,17 +9,19 @@ export function LineWidthField(props: FieldProps): React.ReactElement | null {
     return null;
   } else {
     let first = atIndex(bns, 0);
+    let strokeWidth = first?.line.attr('stroke-width');
     return (
       <NonnegativeNumberField
         name='Line Width'
-        initialValue={first?.lineStrokeWidth}
+        initialValue={typeof strokeWidth == 'number' ? strokeWidth : undefined}
         set={lw => {
           let bns = props.getBaseNumberings();
           if (bns.length > 0) {
             let first = atIndex(bns, 0);
-            if (lw != first?.lineStrokeWidth) {
+            let strokeWidth = first?.line.attr('stroke-width');
+            if (lw != strokeWidth) {
               props.pushUndo();
-              bns.forEach(bn => bn.lineStrokeWidth = lw);
+              bns.forEach(bn => bn.line.attr({ 'stroke-width': lw }));
               props.changed();
             }
           }

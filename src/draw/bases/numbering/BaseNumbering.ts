@@ -102,7 +102,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     n.text.attr({ 'font-size': defaults.text['font-size'] });
     n.text.attr({ 'font-weight': defaults.text['font-weight'] });
     n.color = defaults.color;
-    n.lineStrokeWidth = defaults.line['stroke-width'];
+    n.line.attr({ 'stroke-width': defaults.line['stroke-width'] });
     BaseNumbering._positionText(n.text, n.line);
   }
 
@@ -113,7 +113,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     BaseNumbering.defaults.text['font-size'] = n.text.attr('font-size');
     BaseNumbering.defaults.text['font-weight'] = n.text.attr('font-weight');
     BaseNumbering.defaults.color = n.color;
-    BaseNumbering.defaults.line['stroke-width'] = n.lineStrokeWidth;
+    BaseNumbering.defaults.line['stroke-width'] = n.line.attr('stroke-width');
   }
 
   static fromSavedState(
@@ -339,15 +339,6 @@ export class BaseNumbering implements BaseNumberingInterface {
     this.text.attr({ 'fill': c });
     this.line.attr({ 'stroke': c });
     BaseNumbering.defaults.color = c;
-  }
-
-  get lineStrokeWidth(): number {
-    return this.line.attr('stroke-width');
-  }
-
-  set lineStrokeWidth(lsw: number) {
-    this.line.attr({ 'stroke-width': lsw });
-    BaseNumbering.defaults.line['stroke-width'] = lsw;
   }
 
   remove() {

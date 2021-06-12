@@ -19,7 +19,6 @@ export interface BaseNumberingInterface {
   sendToBack(): void;
   number: number;
   color: string;
-  lineStrokeWidth: number;
   remove(): void;
   savableState(): BaseNumberingSavableState;
   refreshIds(): void;

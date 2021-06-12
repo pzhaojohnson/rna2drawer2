@@ -292,15 +292,6 @@ describe('BaseNumbering class', () => {
     expect(BaseNumbering.defaults.color).toBe('#132435');
   });
 
-  it('lineStrokeWidth getter and setter', () => {
-    let n = BaseNumbering.create(svg, 2, 1, 4);
-    n.lineStrokeWidth = 5.234; // use setter
-    expect(n.lineStrokeWidth).toBe(5.234); // check getter
-    expect(n.line.attr('stroke-width')).toBe(5.234); // check actual value
-    // updates defaults
-    expect(BaseNumbering.defaults.line['stroke-width']).toBe(5.234);
-  });
-
   it('remove method', () => {
     let n = BaseNumbering.create(svg, 2, 1, 8);
     let textId = '#' + n.text.id();
