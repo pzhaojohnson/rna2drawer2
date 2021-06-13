@@ -8,7 +8,7 @@ export type Repositioning = {
   lineLength?: number;
 }
 
-export interface BaseNumberingSavableState {
+export interface SavableState {
   className: string;
   textId: string;
   lineId: string;
@@ -26,6 +26,6 @@ export interface BaseNumberingInterface {
   bringToFront(): void;
   sendToBack(): void;
   remove(): void;
-  savableState(): BaseNumberingSavableState;
+  savableState(): SavableState;
   refreshIds(): void;
 }

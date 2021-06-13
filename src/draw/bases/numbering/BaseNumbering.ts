@@ -1,7 +1,7 @@
 import {
   BaseNumberingInterface,
   Repositioning,
-  BaseNumberingSavableState,
+  SavableState,
 } from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { Point2D as Point } from 'Math/Point';
@@ -55,7 +55,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   static fromSavedState(
-    savedState: BaseNumberingSavableState,
+    savedState: SavableState,
     svg: SVG.Svg,
     baseCenter: Point,
   ): (BaseNumbering | never) {
@@ -176,7 +176,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     this.line.remove();
   }
 
-  savableState(): BaseNumberingSavableState {
+  savableState(): SavableState {
     return {
       className: 'BaseNumbering',
       textId: this.text.id(),

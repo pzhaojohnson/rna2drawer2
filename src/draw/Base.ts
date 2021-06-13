@@ -9,7 +9,7 @@ import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
 import { CircleBaseAnnotationSavableState } from './BaseAnnotationInterface';
-import { BaseNumberingSavableState } from 'Draw/bases/numbering/BaseNumberingInterface';
+import { SavableState as BaseNumberingSavableState } from 'Draw/bases/numbering/BaseNumberingInterface';
 import { areClose } from './areClose';
 
 class Base implements BaseInterface {

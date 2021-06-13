@@ -5,7 +5,7 @@ import {
 } from "./BaseAnnotationInterface";
 import {
   BaseNumberingInterface as BaseNumbering,
-  BaseNumberingSavableState,
+  SavableState as BaseNumberingSavableState,
 } from "Draw/bases/numbering/BaseNumberingInterface";
 
 export interface BaseMostRecentProps {
