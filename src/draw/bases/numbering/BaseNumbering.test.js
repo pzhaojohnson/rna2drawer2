@@ -230,26 +230,17 @@ describe('BaseNumbering class', () => {
   it('bringToFront and sendToBack methods', () => {
     let r1 = svg.rect(5, 6);
     let r2 = svg.rect(20, 20);
-    let n = BaseNumbering.create(svg, 50, { x: 2, y: 3 });
     let c = svg.circle(20);
-    // not already at back
-    // and must be sent backwards more than one position
-    // (cannot just call backward method of SVG elements)
-    expect(n.text.position()).toBeGreaterThan(2);
-    expect(n.line.position()).toBeGreaterThan(1);
+    // create above multiple elements
+    let n = BaseNumbering.create(svg, 50, { x: 2, y: 3 });
+    expect(n.text.position()).toBeGreaterThan(3);
+    expect(n.line.position()).toBeGreaterThan(3);
     n.sendToBack();
-    // sent to back
-    // and text is kept above line
-    expect(n.text.position()).toBe(1);
-    expect(n.line.position()).toBe(0);
-    let frontMarker = svg.ellipse(20, 40);
+    expect(n.text.position()).toBeLessThanOrEqual(1);
+    expect(n.line.position()).toBeLessThanOrEqual(1);
     n.bringToFront();
-    // brought to front
-    // and text is kept above line
-    expect(n.line.position()).toBeGreaterThan(frontMarker.position());
-    expect(n.text.position()).toBeGreaterThan(n.line.position());
-    // had to be brought all the way to front and not just forward one position
-    expect(n.line.position()).toBeGreaterThan(1);
+    expect(n.line.position()).toBeGreaterThan(3);
+    expect(n.text.position()).toBeGreaterThan(3);
   });
 
   it('remove method', () => {
