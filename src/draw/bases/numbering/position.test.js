@@ -1,0 +1,68 @@
+import { position } from './position';
+import { NodeSVG } from 'Draw/NodeSVG';
+import { BaseNumbering } from './BaseNumbering';
+
+let container = null;
+let svg = null;
+let numbering = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  svg = NodeSVG();
+  svg.addTo(container);
+
+  numbering = BaseNumbering.create(svg, 5, 10, 15);
+});
+
+afterEach(() => {
+  numbering = null;
+
+  svg.clear();
+  svg.remove();
+  svg = null;
+
+  container.remove();
+  container = null;
+});
+
+describe('position function', () => {
+  it('positions line and text', () => {
+    numbering.text.attr({ 'font-size': 18 });
+    position(numbering, {
+      baseCenter: { x: 112, y: 902 },
+      basePadding: 16,
+      lineAngle: 3,
+      lineLength: 7.5,
+      textPadding: 8,
+    });
+    expect(numbering.line.attr('x1')).toBeCloseTo(96.16012);
+    expect(numbering.line.attr('y1')).toBeCloseTo(904.25792);
+    expect(numbering.line.attr('x2')).toBeCloseTo(88.73517);
+    expect(numbering.line.attr('y2')).toBeCloseTo(905.31632);
+    expect(numbering.text.attr('x')).toBeCloseTo(80.81523);
+    expect(numbering.text.attr('y')).toBeCloseTo(913.64528);
+    expect(numbering.text.attr('text-anchor')).toBe('end');
+  });
+
+  it('smoke test', () => {
+    for (let i = 0; i < 200; i++) {
+      let fs = (30 * Math.random()) + 3;
+      let p = {
+        baseCenter: {
+          x: (1000 * Math.random()) - 300, // include negative coordinates
+          y: (1000 * Math.random()) - 300,
+        },
+        basePadding: 60 * Math.random(),
+        lineAngle: (1000 * Math.random()) - 500, // include negative angles
+        lineLength: 100 * Math.random(),
+        textPadding: 50 * Math.random(),
+      };
+      numbering.text.attr({ 'font-size': fs });
+      expect(
+        () => position(numbering, p)
+      ).not.toThrow();
+    }
+  });
+});
