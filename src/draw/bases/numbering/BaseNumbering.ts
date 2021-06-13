@@ -6,6 +6,7 @@ import * as SVG from '@svgdotjs/svg.js';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
+import { Point2D as Point } from 'Math/Point';
 
 interface LineCoordinates {
   x1: number;
@@ -39,8 +40,8 @@ export class BaseNumbering implements BaseNumberingInterface {
   readonly text: SVG.Text;
   readonly line: SVG.Line;
 
-  _basePadding: number;
-
+  _baseCenter: Point;
+  
   static _lineCoordinates(
     xBaseCenter: number,
     yBaseCenter: number,
@@ -157,8 +158,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     this.line = line;
     this._validateLine();
 
-    this._basePadding = 0;
-    this._storeBasePadding(xBaseCenter, yBaseCenter);
+    this._baseCenter = { x: xBaseCenter, y: yBaseCenter };
   }
 
   /**
@@ -195,40 +195,19 @@ export class BaseNumbering implements BaseNumberingInterface {
     return this.text.id();
   }
 
-  /**
-   * Derived from the current base padding and positions of the line.
-   */
-  get _xBaseCenter(): number {
-    return this.line.attr('x1') + (this.basePadding * Math.cos(this.lineAngle + Math.PI));
-  }
-
-  /**
-   * Derived from the current base padding and positions of the line.
-   */
-  get _yBaseCenter(): number {
-    return this.line.attr('y1') + (this.basePadding * Math.sin(this.lineAngle + Math.PI));
-  }
-
-  /**
-   * Sets the _basePadding property.
-   */
-  _storeBasePadding(xBaseCenter: number, yBaseCenter: number) {
-    this._basePadding = distance(
-      xBaseCenter,
-      yBaseCenter,
+  get basePadding(): number {
+    return distance(
+      this._baseCenter.x,
+      this._baseCenter.y,
       this.line.attr('x1'),
       this.line.attr('y1'),
     );
   }
 
-  get basePadding(): number {
-    return this._basePadding;
-  }
-
   set basePadding(bp: number) {
     this._reposition(
-      this._xBaseCenter,
-      this._yBaseCenter,
+      this._baseCenter.x,
+      this._baseCenter.y,
       this.lineAngle,
       bp,
       this.lineLength,
@@ -246,8 +225,8 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   set lineAngle(la: number) {
     this._reposition(
-      this._xBaseCenter,
-      this._yBaseCenter,
+      this._baseCenter.x,
+      this._baseCenter.y,
       la,
       this.basePadding,
       this.lineLength,
@@ -265,8 +244,8 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   set lineLength(ll: number) {
     this._reposition(
-      this._xBaseCenter,
-      this._yBaseCenter,
+      this._baseCenter.x,
+      this._baseCenter.y,
       this.lineAngle,
       this.basePadding,
       ll,
@@ -299,7 +278,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     );
     this.line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
     BaseNumbering._positionText(this.text, this.line);
-    this._storeBasePadding(xBaseCenter, yBaseCenter);
+    this._baseCenter = { x: xBaseCenter, y: yBaseCenter };
   }
 
   repositionText() {
