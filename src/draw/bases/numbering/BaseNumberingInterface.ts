@@ -18,9 +18,9 @@ export interface BaseNumberingInterface {
   readonly text: SVG.Text;
   readonly line: SVG.Line;
   readonly id: string;
-  basePadding: number;
-  lineAngle: number;
-  lineLength: number;
+  basePadding: number | undefined;
+  lineAngle: number | undefined;
+  lineLength: number | undefined;
   readonly textPadding: number;
   reposition(rp?: Repositioning): void;
   bringToFront(): void;

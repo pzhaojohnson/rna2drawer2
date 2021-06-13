@@ -43,8 +43,8 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   static updateDefaults(n: BaseNumbering) {
-    BaseNumbering.defaults.basePadding = n.basePadding;
-    BaseNumbering.defaults.lineLength = n.lineLength;
+    BaseNumbering.defaults.basePadding = n.basePadding ?? BaseNumbering.defaults.basePadding;
+    BaseNumbering.defaults.lineLength = n.lineLength ?? BaseNumbering.defaults.lineLength;
     BaseNumbering.defaults.text['font-family'] = n.text.attr('font-family');
     BaseNumbering.defaults.text['font-size'] = n.text.attr('font-size');
     BaseNumbering.defaults.text['font-weight'] = n.text.attr('font-weight');
@@ -104,41 +104,60 @@ export class BaseNumbering implements BaseNumberingInterface {
     return this.text.id();
   }
 
-  get basePadding(): number {
-    return distance(
-      this._baseCenter.x,
-      this._baseCenter.y,
-      this.line.attr('x1'),
-      this.line.attr('y1'),
-    );
+  get basePadding(): number | undefined {
+    let lx1 = this.line.attr('x1');
+    let ly1 = this.line.attr('y1');
+    if (typeof lx1 == 'number' && typeof ly1 == 'number') {
+      return distance(this._baseCenter.x, this._baseCenter.y, lx1, ly1);
+    }
   }
 
-  set basePadding(bp: number) {
-    this.reposition({ basePadding: bp });
+  set basePadding(bp) {
+    if (typeof bp == 'number') {
+      this.reposition({ basePadding: bp });
+    }
   }
 
-  get lineAngle(): number {
-    return Math.atan2(
-      this.line.attr('y2') - this.line.attr('y1'),
-      this.line.attr('x2') - this.line.attr('x1'),
-    );
+  get lineAngle(): number | undefined {
+    let lx1 = this.line.attr('x1');
+    let ly1 = this.line.attr('y1');
+    let lx2 = this.line.attr('x2');
+    let ly2 = this.line.attr('y2');
+    if (
+      typeof lx1 == 'number'
+      && typeof ly1 == 'number'
+      && typeof lx2 == 'number'
+      && typeof ly2 == 'number'
+    ) {
+      return Math.atan2(ly2 - ly1, lx2 - lx1);
+    }
   }
 
-  set lineAngle(la: number) {
-    this.reposition({ lineAngle: la });
+  set lineAngle(la) {
+    if (typeof la == 'number') {
+      this.reposition({ lineAngle: la });
+    }
   }
 
-  get lineLength(): number {
-    return distance(
-      this.line.attr('x1'),
-      this.line.attr('y1'),
-      this.line.attr('x2'),
-      this.line.attr('y2'),
-    );
+  get lineLength(): number | undefined {
+    let lx1 = this.line.attr('x1');
+    let ly1 = this.line.attr('y1');
+    let lx2 = this.line.attr('x2');
+    let ly2 = this.line.attr('y2');
+    if (
+      typeof lx1 == 'number'
+      && typeof ly1 == 'number'
+      && typeof lx2 == 'number'
+      && typeof ly2 == 'number'
+    ) {
+      return distance(lx1, ly1, lx2, ly2);
+    }
   }
 
-  set lineLength(ll: number) {
-    this.reposition({ lineLength: ll });
+  set lineLength(ll) {
+    if (typeof ll == 'number') {
+      this.reposition({ lineLength: ll });
+    }
   }
 
   get textPadding(): number {
@@ -148,9 +167,9 @@ export class BaseNumbering implements BaseNumberingInterface {
   reposition(rp?: Repositioning) {
     position(this, {
       baseCenter: rp?.baseCenter ?? this._baseCenter,
-      basePadding: rp?.basePadding ?? this.basePadding,
-      lineAngle: rp?.lineAngle ?? this.lineAngle,
-      lineLength: rp?.lineLength ?? this.lineLength,
+      basePadding: rp?.basePadding ?? this.basePadding ?? BaseNumbering.defaults.basePadding,
+      lineAngle: rp?.lineAngle ?? this.lineAngle ?? 0,
+      lineLength: rp?.lineLength ?? this.lineLength ?? BaseNumbering.defaults.lineLength,
       textPadding: this.textPadding,
     });
     if (rp && rp.baseCenter) {

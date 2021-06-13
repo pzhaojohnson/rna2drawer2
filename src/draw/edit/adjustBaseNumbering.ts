@@ -15,7 +15,8 @@ export function adjustBaseNumbering(drawing: Drawing) {
           let b3 = seq.getBaseAtPosition(p + 1) as Base;
           a3 = b.angleBetweenCenters(b3);
         }
-        if (!anglesAreClose(cna, a3 + (Math.PI / 2)) || !anglesAreClose(b.numbering.lineAngle, ina)) {
+        let la = b.numbering.lineAngle ?? ina + Math.PI;
+        if (!anglesAreClose(cna, a3 + (Math.PI / 2)) || !anglesAreClose(la, ina)) {
           b.numbering.lineAngle = ona;
         }
       }
@@ -27,15 +28,17 @@ export function adjustBaseNumbering(drawing: Drawing) {
     let ba12 = b1.angleBetweenCenters(b2);
     let ba21 = b2.angleBetweenCenters(b1);
     if (b1.numbering) {
-      let la = normalizeAngle(b1.numbering.lineAngle, ba12) - ba12;
-      if (la < Math.PI / 4 || la > 7 * Math.PI / 4) {
-        b1.numbering.lineAngle = b1.numbering.lineAngle + Math.PI;
+      let la = b1.numbering.lineAngle ?? ba12;
+      let diff = normalizeAngle(la, ba12) - ba12;
+      if (diff < Math.PI / 4 || diff > 7 * Math.PI / 4) {
+        b1.numbering.lineAngle = la + Math.PI;
       }
     }
     if (b2.numbering) {
-      let la = normalizeAngle(b2.numbering.lineAngle, ba21) - ba21;
-      if (la < Math.PI / 4 || la > 7 * Math.PI / 4) {
-        b2.numbering.lineAngle = b2.numbering.lineAngle + Math.PI;
+      let la = b2.numbering.lineAngle ?? ba21;
+      let diff = normalizeAngle(la, ba21) - ba21;
+      if (diff < Math.PI / 4 || diff > 7 * Math.PI / 4) {
+        b2.numbering.lineAngle = la + Math.PI;
       }
     }
   });
