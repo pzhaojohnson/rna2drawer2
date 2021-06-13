@@ -566,8 +566,7 @@ describe('Base class', () => {
         let n = b.addNumbering(2056);
         expect(n.text.text()).toBe('2056');
         let c = spy.mock.calls[0];
-        expect(c[2]).toBe(b.xCenter);
-        expect(c[3]).toBe(b.yCenter);
+        expect(c[2]).toEqual({ x: b.xCenter, y: b.yCenter });
         expect(b.numbering).toBe(n); // check reference
       });
 
@@ -591,7 +590,7 @@ describe('Base class', () => {
     describe('addNumberingFromSavedState method', () => {
       it('passes saved state and center base coordinates and stores reference', () => {
         let b = Base.create(svg, 'G', 15, 30);
-        let n1 = BaseNumbering.create(svg, 852, b.xCenter, b.yCenter);
+        let n1 = BaseNumbering.create(svg, 852, { x: b.xCenter, y: b.yCenter });
         let savableState1 = n1.savableState();
         let n2 = b.addNumberingFromSavedState(savableState1);
         expect(n2.text.text()).toBe('852');
@@ -602,7 +601,7 @@ describe('Base class', () => {
 
       it('removes previous numbering', () => {
         let b = Base.create(svg, 'G', 30, 6);
-        let n1 = BaseNumbering.create(svg, 1, b.xCenter, b.yCenter);
+        let n1 = BaseNumbering.create(svg, 1, { x: b.xCenter, y: b.yCenter });
         let savableState1 = n1.savableState();
         let n2 = b.addNumbering(2);
         let spy = jest.spyOn(n2, 'remove');

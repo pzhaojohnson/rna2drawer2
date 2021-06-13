@@ -151,7 +151,7 @@ class Base implements BaseInterface {
         this._outline.reposition(xCenter, yCenter);
       }
       if (this._numbering) {
-        this._numbering.reposition(xCenter, yCenter);
+        this._numbering.reposition({ x: xCenter, y: yCenter });
       }
     }
   }
@@ -359,8 +359,7 @@ class Base implements BaseInterface {
       this._numbering = BaseNumbering.create(
         this._text.root(),
         number,
-        this.xCenter,
-        this.yCenter,
+        { x: this.xCenter, y: this.yCenter },
       );
     } catch (err) {
       console.error(err.toString());
@@ -376,8 +375,7 @@ class Base implements BaseInterface {
     this._numbering = BaseNumbering.fromSavedState(
       savedState,
       this._text.root(),
-      this.xCenter,
-      this.yCenter,
+      { x: this.xCenter, y: this.yCenter },
     );
     return this._numbering;
   }

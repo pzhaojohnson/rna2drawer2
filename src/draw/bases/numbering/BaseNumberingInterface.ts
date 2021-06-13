@@ -1,4 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
+import { Point2D as Point } from 'Math/Point';
 
 export interface BaseNumberingSavableState {
   className: string;
@@ -13,7 +14,7 @@ export interface BaseNumberingInterface {
   basePadding: number;
   lineAngle: number;
   lineLength: number;
-  reposition(xBaseCenter: number, yBaseCenter: number): void;
+  reposition(baseCenter: Point): void;
   repositionText(): void;
   bringToFront(): void;
   sendToBack(): void;

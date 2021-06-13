@@ -8,7 +8,7 @@ let svg = NodeSVG();
 
 describe('BaseNumbering class', () => {
   it('_lineCoordinates static method', () => {
-    let lcs = BaseNumbering._lineCoordinates(1.1, -2, Math.PI / 3, 4.6, 8.05);
+    let lcs = BaseNumbering._lineCoordinates({ x: 1.1, y: -2 }, Math.PI / 3, 4.6, 8.05);
     expect(lcs.x1).toBeCloseTo(3.4000000000000004);
     expect(lcs.y1).toBeCloseTo(1.9837168574084174);
     expect(lcs.x2).toBeCloseTo(7.4250000000000025);
@@ -59,11 +59,11 @@ describe('BaseNumbering class', () => {
 
   describe('fromSavedState static method', () => {
     it('valid saved state', () => {
-      let n1 = BaseNumbering.create(svg, 10, 5, 8);
+      let n1 = BaseNumbering.create(svg, 10, { x: 5, y: 8 });
       n1.basePadding = 27.83;
       let savableState = n1.savableState();
       let spy = jest.spyOn(BaseNumbering, 'updateDefaults');
-      let n2 = BaseNumbering.fromSavedState(savableState, svg, 5, 8);
+      let n2 = BaseNumbering.fromSavedState(savableState, svg, { x: 5, y: 8 });
       expect(n2.text.id()).toBe(savableState.textId);
       expect(n2.line.id()).toBe(savableState.lineId);
       // requires that base coordinates are passed correctly to constructor
@@ -73,21 +73,21 @@ describe('BaseNumbering class', () => {
 
     describe('invalid saved state', () => {
       it('wrong className', () => {
-        let n = BaseNumbering.create(svg, 5, 1, 2);
+        let n = BaseNumbering.create(svg, 5, { x: 1, y: 2 });
         let savableState = n.savableState();
         savableState.className = 'BaseNmbering';
         expect(
-          () => BaseNumbering.fromSavedState(savableState, svg, 1, 2)
+          () => BaseNumbering.fromSavedState(savableState, svg, { x: 1, y: 2 })
         ).toThrow();
       });
 
       it('constructor throws', () => {
-        let n = BaseNumbering.create(svg, 8, 3, 5);
+        let n = BaseNumbering.create(svg, 8, { x: 3, y: 5 });
         let savableState = n.savableState();
         n.text.clear();
         n.text.tspan('9.9');
         expect(
-          () => BaseNumbering.fromSavedState(savableState, svg, 3, 5)
+          () => BaseNumbering.fromSavedState(savableState, svg, { x: 3, y: 5 })
         ).toThrow();
       });
     });
@@ -95,7 +95,7 @@ describe('BaseNumbering class', () => {
 
   describe('create static method', () => {
     let spy = jest.spyOn(BaseNumbering, 'applyDefaults');
-    let n = BaseNumbering.create(svg, 129, 120, 548);
+    let n = BaseNumbering.create(svg, 129, { x: 120, y: 548 });
     let t = n.text;
     let l = n.line;
 
@@ -126,7 +126,7 @@ describe('BaseNumbering class', () => {
     });
 
     it('throws with constructor', () => {
-      expect(() => BaseNumbering.create(svg, 1.1, 1, 2)).toThrow();
+      expect(() => BaseNumbering.create(svg, 1.1, { x: 1, y: 2 })).toThrow();
     });
   });
 
@@ -134,16 +134,16 @@ describe('BaseNumbering class', () => {
     it('throws on missing element arguments', () => {
       let t = svg.text(add => add.tspan('5'));
       let l = svg.line(1, 2, 3, 4);
-      expect(() => new BaseNumbering(undefined, l, 5, 4)).toThrow();
-      expect(() => new BaseNumbering(t, undefined, 5, 6)).toThrow();
+      expect(() => new BaseNumbering(undefined, l, { x: 5, y: 4 })).toThrow();
+      expect(() => new BaseNumbering(t, undefined, { x: 5, y: 6 })).toThrow();
     });
 
     it('throws on element arguments of wrong types', () => {
       let t = svg.text(add => add.tspan('1'));
       let l = svg.line(1, 5, 8, 12);
       let c = svg.circle(20);
-      expect(() => new BaseNumbering(c, l, 1, 2)).toThrow();
-      expect(() => new BaseNumbering(t, c, 10, 20)).toThrow();
+      expect(() => new BaseNumbering(c, l, { x: 1, y: 2 })).toThrow();
+      expect(() => new BaseNumbering(t, c, { x: 10, y: 20 })).toThrow();
     });
 
     it('initializes element IDs', () => {
@@ -151,7 +151,7 @@ describe('BaseNumbering class', () => {
       let l = svg.line(1, 5, 8, 12);
       expect(t.attr('id')).toBe(undefined);
       expect(l.attr('id')).toBe(undefined);
-      let n = new BaseNumbering(t, l, 1, 2);
+      let n = new BaseNumbering(t, l, { x: 1, y: 2 });
       expect(t.attr('id')).toBeTruthy();
       expect(l.attr('id')).toBeTruthy();
     });
@@ -159,9 +159,9 @@ describe('BaseNumbering class', () => {
     it('checks that text is an integer', () => {
       let l = svg.line(5, 10, 20, 10);
       let t1 = svg.text(add => add.tspan('a')); // not a number
-      expect(() => new BaseNumbering(t1, l, 10, 5)).toThrow();
+      expect(() => new BaseNumbering(t1, l, { x: 10, y: 5 })).toThrow();
       let t2 = svg.text(add => add.tspan('10.1')); // not an integer
-      expect(() => new BaseNumbering(t2, l, 5, 10)).toThrow();
+      expect(() => new BaseNumbering(t2, l, { x: 5, y: 10 })).toThrow();
     });
   });
 
@@ -169,12 +169,12 @@ describe('BaseNumbering class', () => {
     let t = svg.text(add => add.tspan('6'));
     t.id('asdfzxcv');
     let l = svg.line(10, 20, 30, 40);
-    let n = new BaseNumbering(t, l, 10, 20);
+    let n = new BaseNumbering(t, l, { x: 10, y: 20 });
     expect(n.id).toBe('asdfzxcv');
   });
 
   it('basePadding getter and setter', () => {
-    let n = BaseNumbering.create(svg, 10, 30, 80);
+    let n = BaseNumbering.create(svg, 10, { x: 30, y: 80 });
     let la = normalizeAngle(n.lineAngle);
     let ll = n.lineLength;
     n.basePadding = 22; // use setter
@@ -187,7 +187,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('lineAngle getter and setter', () => {
-    let n = BaseNumbering.create(svg, 120, 8, 98);
+    let n = BaseNumbering.create(svg, 120, { x: 8, y: 98 });
     let bp = n.basePadding;
     let ll = n.lineLength;
     n.lineAngle = 5 * Math.PI / 7; // use setter
@@ -203,7 +203,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('lineLength getter and setter', () => {
-    let n = BaseNumbering.create(svg, 80, 256, 120);
+    let n = BaseNumbering.create(svg, 80, { x: 256, y: 120 });
     let bp = n.basePadding;
     let la = normalizeAngle(n.lineAngle);
     n.lineLength = 33.8; // use setter
@@ -217,23 +217,23 @@ describe('BaseNumbering class', () => {
 
   describe('reposition method', () => {
     it('shifts text', () => {
-      let n = BaseNumbering.create(svg, 100, 500, 480);
+      let n = BaseNumbering.create(svg, 100, { x: 500, y: 480 });
       let t = n.text;
       let xPrev = t.attr('x');
       let yPrev = t.attr('y');
-      n.reposition(420, 520);
+      n.reposition({ x: 420, y: 520 });
       expect(t.attr('x') - xPrev).toBeCloseTo(-80);
       expect(t.attr('y') - yPrev).toBeCloseTo(40);
     });
 
     it('shifts line', () => {
-      let n = BaseNumbering.create(svg, 800, 20, 75);
+      let n = BaseNumbering.create(svg, 800, { x: 20, y: 75 });
       let l = n.line;
       let xPrev1 = l.attr('x1');
       let yPrev1 = l.attr('y1');
       let xPrev2 = l.attr('x2');
       let yPrev2 = l.attr('y2');
-      n.reposition(60, 50);
+      n.reposition({ x: 60, y: 50 });
       expect(l.attr('x1') - xPrev1).toBeCloseTo(40);
       expect(l.attr('y1') - yPrev1).toBeCloseTo(-25);
       expect(l.attr('x2') - xPrev2).toBeCloseTo(40);
@@ -244,7 +244,7 @@ describe('BaseNumbering class', () => {
   it('bringToFront and sendToBack methods', () => {
     let r1 = svg.rect(5, 6);
     let r2 = svg.rect(20, 20);
-    let n = BaseNumbering.create(svg, 50, 2, 3);
+    let n = BaseNumbering.create(svg, 50, { x: 2, y: 3 });
     let c = svg.circle(20);
     // not already at back
     // and must be sent backwards more than one position
@@ -267,7 +267,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('remove method', () => {
-    let n = BaseNumbering.create(svg, 2, 1, 8);
+    let n = BaseNumbering.create(svg, 2, { x: 1, y: 8 });
     let textId = '#' + n.text.id();
     let lineId = '#' + n.line.id();
     expect(svg.findOne(textId)).toBeTruthy();
@@ -278,7 +278,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('savableState method', () => {
-    let n = BaseNumbering.create(svg, 8, 3, 9);
+    let n = BaseNumbering.create(svg, 8, { x: 3, y: 9 });
     let savableState = n.savableState();
     expect(savableState.className).toBe('BaseNumbering');
     expect(savableState.textId).toBe(n.text.id());
@@ -286,7 +286,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('refreshIds method', () => {
-    let n = BaseNumbering.create(svg, 12, 8, 20);
+    let n = BaseNumbering.create(svg, 12, { x: 8, y: 20 });
     let oldTextId = n.text.id();
     let oldLineId = n.line.id();
     n.refreshIds();

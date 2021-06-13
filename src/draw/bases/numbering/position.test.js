@@ -13,7 +13,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  numbering = BaseNumbering.create(svg, 5, 10, 15);
+  numbering = BaseNumbering.create(svg, 5, { x: 10, y: 15 });
 });
 
 afterEach(() => {

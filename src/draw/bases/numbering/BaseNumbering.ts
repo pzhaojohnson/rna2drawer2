@@ -43,14 +43,13 @@ export class BaseNumbering implements BaseNumberingInterface {
   _baseCenter: Point;
   
   static _lineCoordinates(
-    xBaseCenter: number,
-    yBaseCenter: number,
+    baseCenter: Point,
     angle: number,
     basePadding: number,
     length: number,
   ): LineCoordinates {
-    let x1 = xBaseCenter + (basePadding * Math.cos(angle));
-    let y1 = yBaseCenter + (basePadding * Math.sin(angle));
+    let x1 = baseCenter.x + (basePadding * Math.cos(angle));
+    let y1 = baseCenter.y + (basePadding * Math.sin(angle));
     let x2 = x1 + (length * Math.cos(angle));
     let y2 = y1 + (length * Math.sin(angle));
     return { x1: x1, y1: y1, x2: x2, y2: y2 };
@@ -123,42 +122,36 @@ export class BaseNumbering implements BaseNumberingInterface {
   static fromSavedState(
     savedState: BaseNumberingSavableState,
     svg: SVG.Svg,
-    xBaseCenter: number,
-    yBaseCenter: number,
+    baseCenter: Point,
   ): (BaseNumbering | never) {
     if (savedState.className !== 'BaseNumbering') {
       throw new Error('Wrong class name.');
     }
     let text = svg.findOne('#' + savedState.textId);
     let line = svg.findOne('#' + savedState.lineId);
-    let n = new BaseNumbering(text as SVG.Text, line as SVG.Line, xBaseCenter, yBaseCenter);
+    let n = new BaseNumbering(text as SVG.Text, line as SVG.Line, baseCenter);
     BaseNumbering.updateDefaults(n);
     return n;
   }
 
-  static create(
-    svg: SVG.Svg,
-    number: number,
-    xBaseCenter: number,
-    yBaseCenter: number,
-  ): (BaseNumbering | never) {
-    let lc = BaseNumbering._lineCoordinates(xBaseCenter, yBaseCenter, 0, 10, 8);
+  static create(svg: SVG.Svg, number: number, baseCenter: Point): (BaseNumbering | never) {
+    let lc = BaseNumbering._lineCoordinates(baseCenter, 0, 10, 8);
     let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
     let text = svg.text((add) => add.tspan(number.toString()));
     BaseNumbering._positionText(text, line);
-    let n = new BaseNumbering(text, line, xBaseCenter, yBaseCenter);
+    let n = new BaseNumbering(text, line, baseCenter);
     BaseNumbering.applyDefaults(n);
     return n;
   }
 
-  constructor(text: SVG.Text, line: SVG.Line, xBaseCenter: number, yBaseCenter: number) {
+  constructor(text: SVG.Text, line: SVG.Line, baseCenter: Point) {
     this.text = text;
     this._validateText();
 
     this.line = line;
     this._validateLine();
 
-    this._baseCenter = { x: xBaseCenter, y: yBaseCenter };
+    this._baseCenter = { ...baseCenter };
   }
 
   /**
@@ -206,8 +199,7 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   set basePadding(bp: number) {
     this._reposition(
-      this._baseCenter.x,
-      this._baseCenter.y,
+      this._baseCenter,
       this.lineAngle,
       bp,
       this.lineLength,
@@ -225,8 +217,7 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   set lineAngle(la: number) {
     this._reposition(
-      this._baseCenter.x,
-      this._baseCenter.y,
+      this._baseCenter,
       la,
       this.basePadding,
       this.lineLength,
@@ -244,18 +235,16 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   set lineLength(ll: number) {
     this._reposition(
-      this._baseCenter.x,
-      this._baseCenter.y,
+      this._baseCenter,
       this.lineAngle,
       this.basePadding,
       ll,
     );
   }
 
-  reposition(xBaseCenter: number, yBaseCenter: number) {
+  reposition(baseCenter: Point) {
     this._reposition(
-      xBaseCenter,
-      yBaseCenter,
+      baseCenter,
       this.lineAngle,
       this.basePadding,
       this.lineLength,
@@ -263,22 +252,20 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   _reposition(
-    xBaseCenter: number,
-    yBaseCenter: number,
+    baseCenter: Point,
     lineAngle: number,
     basePadding: number,
     lineLength: number,
   ) {
     let lc = BaseNumbering._lineCoordinates(
-      xBaseCenter,
-      yBaseCenter,
+      baseCenter,
       lineAngle,
       basePadding,
       lineLength,
     );
     this.line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
     BaseNumbering._positionText(this.text, this.line);
-    this._baseCenter = { x: xBaseCenter, y: yBaseCenter };
+    this._baseCenter = { ...baseCenter };
   }
 
   repositionText() {
