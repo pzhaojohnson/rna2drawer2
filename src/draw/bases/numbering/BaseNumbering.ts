@@ -6,7 +6,6 @@ import {
 import * as SVG from '@svgdotjs/svg.js';
 import { Point2D as Point } from 'Math/Point';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from 'Draw/angleBetween';
 import { position } from './position';
 
 export class BaseNumbering implements BaseNumberingInterface {
@@ -119,11 +118,9 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   get lineAngle(): number {
-    return angleBetween(
-      this.line.attr('x1'),
-      this.line.attr('y1'),
-      this.line.attr('x2'),
-      this.line.attr('y2'),
+    return Math.atan2(
+      this.line.attr('y2') - this.line.attr('y1'),
+      this.line.attr('x2') - this.line.attr('x1'),
     );
   }
 
