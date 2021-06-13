@@ -129,46 +129,27 @@ describe('BaseNumbering class', () => {
     expect(n.id).toBe('asdfzxcv');
   });
 
-  it('basePadding getter and setter', () => {
-    let n = BaseNumbering.create(svg, 10, { x: 30, y: 80 });
-    let la = normalizeAngle(n.lineAngle);
-    let ll = n.lineLength;
-    n.basePadding = 22; // use setter
-    expect(n.basePadding).toBeCloseTo(22); // check getter
-    let l = n.line;
-    // check actual value
-    expect(distance(30, 80, l.attr('x1'), l.attr('y1'))).toBeCloseTo(22);
-    expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
-    expect(n.lineLength).toBeCloseTo(ll); // maintains line length
-  });
-
-  it('lineAngle getter and setter', () => {
-    let n = BaseNumbering.create(svg, 120, { x: 8, y: 98 });
-    let bp = n.basePadding;
-    let ll = n.lineLength;
-    n.lineAngle = 5 * Math.PI / 7; // use setter
-    expect(normalizeAngle(n.lineAngle)).toBeCloseTo(5 * Math.PI / 7); // check getter
-    let l = n.line;
-    // check actual values
-    let fromBase = angleBetween(8, 98, l.attr('x1'), l.attr('y1'));
-    let fromEnd1 = angleBetween(l.attr('x1'), l.attr('y1'), l.attr('x2'), l.attr('y2'));
-    expect(normalizeAngle(fromBase)).toBeCloseTo(5 * Math.PI / 7);
-    expect(normalizeAngle(fromEnd1)).toBeCloseTo(5 * Math.PI / 7);
-    expect(n.basePadding).toBeCloseTo(bp); // maintains base padding
-    expect(n.lineLength).toBeCloseTo(ll); // maintains line length
-  });
-
-  it('lineLength getter and setter', () => {
-    let n = BaseNumbering.create(svg, 80, { x: 256, y: 120 });
-    let bp = n.basePadding;
-    let la = normalizeAngle(n.lineAngle);
-    n.lineLength = 33.8; // use setter
-    expect(n.lineLength).toBeCloseTo(33.8); // check getter
-    let l = n.line;
-    // check actual value
-    expect(distance(l.attr('x1'), l.attr('y1'), l.attr('x2'), l.attr('y2'))).toBeCloseTo(33.8);
-    expect(n.basePadding).toBeCloseTo(bp); // maintains base padding
-    expect(normalizeAngle(n.lineAngle)).toBeCloseTo(la); // maintains line angle
+  it('basePadding, lineAngle and lineLength properties', () => {
+    let n = BaseNumbering.create(svg, 12, { x: 25.5, y: 256 });
+    // use setters
+    n.basePadding = 18.07;
+    n.lineAngle = 4.2;
+    n.lineLength = 26.6;
+    // check getters
+    expect(n.basePadding).toBeCloseTo(18.07);
+    expect(normalizeAngle(n.lineAngle, 0)).toBeCloseTo(4.2);
+    expect(n.lineLength).toBeCloseTo(26.6);
+    // check actual positioning
+    let rp1 = getRoundedPositioning(n);
+    position(n, {
+      baseCenter: { x: 25.5, y: 256 },
+      basePadding: 18.07,
+      lineAngle: 4.2,
+      lineLength: 26.6,
+      textPadding: n.textPadding,
+    });
+    let rp2 = getRoundedPositioning(n);
+    expect(rp1).toEqual(rp2);
   });
 
   describe('reposition method', () => {
