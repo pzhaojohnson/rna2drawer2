@@ -10,8 +10,9 @@ const PRECISION = 2;
 
 function getFirstBasePadding(bns: BaseNumberingInterface[]): number | undefined {
   let first = atIndex(bns, 0);
-  if (first) {
-    return round(first.basePadding, PRECISION);
+  let basePadding = first?.basePadding;
+  if (typeof basePadding == 'number') {
+    return round(basePadding, PRECISION);
   }
 }
 

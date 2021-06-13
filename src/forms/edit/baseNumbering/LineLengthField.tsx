@@ -10,8 +10,9 @@ const PRECISION = 2;
 
 function getFirstLineLength(bns: BaseNumberingInterface[]): number | undefined {
   let first = atIndex(bns, 0);
-  if (first) {
-    return round(first.lineLength, PRECISION);
+  let lineLength = first?.lineLength;
+  if (typeof lineLength == 'number') {
+    return round(lineLength, PRECISION);
   }
 }
 
