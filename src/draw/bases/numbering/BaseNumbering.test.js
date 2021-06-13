@@ -3,60 +3,28 @@ import NodeSVG from 'Draw/NodeSVG';
 import angleBetween from 'Draw/angleBetween';
 import { distance2D as distance } from 'Math/distance';
 import normalizeAngle from 'Draw/normalizeAngle';
+import { round } from 'Math/round';
+import { position } from './position';
 
 let svg = NodeSVG();
 
+function getRoundedPositioning(n) {
+  return {
+    line: {
+      'x1': round(n.line.attr('x1'), 3),
+      'y1': round(n.line.attr('y1'), 3),
+      'x2': round(n.line.attr('x2'), 3),
+      'y2': round(n.line.attr('y2'), 3),
+    },
+    text: {
+      'x': round(n.text.attr('x'), 3),
+      'y': round(n.text.attr('y'), 3),
+      'text-anchor': n.text.attr('text-anchor'),
+    }
+  };
+}
+
 describe('BaseNumbering class', () => {
-  it('_lineCoordinates static method', () => {
-    let lcs = BaseNumbering._lineCoordinates({ x: 1.1, y: -2 }, Math.PI / 3, 4.6, 8.05);
-    expect(lcs.x1).toBeCloseTo(3.4000000000000004);
-    expect(lcs.y1).toBeCloseTo(1.9837168574084174);
-    expect(lcs.x2).toBeCloseTo(7.4250000000000025);
-    expect(lcs.y2).toBeCloseTo(8.955221357873148);
-  });
-
-  describe('_positionText static method', () => {
-    it('in right quadrant', () => {
-      let text = svg.text(add => add.tspan('140'));
-      text.attr({ 'font-size': 12 });
-      let line = svg.line(1, 2, 3, 2);
-      BaseNumbering._positionText(text, line);
-      expect(text.attr('x')).toBeCloseTo(7);
-      expect(text.attr('y')).toBeCloseTo(6.8);
-      expect(text.attr('text-anchor')).toBe('start');
-    });
-
-    it('in bottom quadrant', () => {
-      let text = svg.text(add => add.tspan('1000'));
-      text.attr({ 'font-size': 16 });
-      let line = svg.line(-1, -4, -1, -3);
-      BaseNumbering._positionText(text, line);
-      expect(text.attr('x')).toBeCloseTo(-1);
-      expect(text.attr('y')).toBeCloseTo(13.8);
-      expect(text.attr('text-anchor')).toBe('middle');
-    });
-
-    it('in left quadrant', () => {
-      let text = svg.text(add => add.tspan('54'));
-      text.attr({ 'font-size': 9 });
-      let line = svg.line(1, -1, -1, -1);
-      BaseNumbering._positionText(text, line);
-      expect(text.attr('x')).toBeCloseTo(-5);
-      expect(text.attr('y')).toBeCloseTo(2.6);
-      expect(text.attr('text-anchor')).toBe('end');
-    });
-
-    it('in top quadrant', () => {
-      let text = svg.text(add => add.tspan('101'));
-      text.attr({ 'font-size': 24 });
-      let line = svg.line(2, 5, 2, 3);
-      BaseNumbering._positionText(text, line);
-      expect(text.attr('x')).toBeCloseTo(2);
-      expect(text.attr('y')).toBeCloseTo(-1);
-      expect(text.attr('text-anchor')).toBe('middle');
-    });
-  });
-
   describe('fromSavedState static method', () => {
     it('valid saved state', () => {
       let n1 = BaseNumbering.create(svg, 10, { x: 5, y: 8 });
@@ -216,28 +184,58 @@ describe('BaseNumbering class', () => {
   });
 
   describe('reposition method', () => {
-    it('shifts text', () => {
-      let n = BaseNumbering.create(svg, 100, { x: 500, y: 480 });
-      let t = n.text;
-      let xPrev = t.attr('x');
-      let yPrev = t.attr('y');
-      n.reposition({ x: 420, y: 520 });
-      expect(t.attr('x') - xPrev).toBeCloseTo(-80);
-      expect(t.attr('y') - yPrev).toBeCloseTo(40);
+    it('can be called with no arguments', () => {
+      let n = BaseNumbering.create(svg, 100, { x: 520, y: 465 });
+      n.basePadding = 16.6;
+      n.lineAngle = 2.8;
+      n.lineLength = 18.25;
+      n.reposition();
+      let rp1 = getRoundedPositioning(n);
+      position(n, {
+        baseCenter: { x: 520, y: 465 },
+        basePadding: 16.6,
+        lineAngle: 2.8,
+        lineLength: 18.25,
+        textPadding: n.textPadding,
+      });
+      let rp2 = getRoundedPositioning(n);
+      expect(rp1).toEqual(rp2);
     });
 
-    it('shifts line', () => {
-      let n = BaseNumbering.create(svg, 800, { x: 20, y: 75 });
-      let l = n.line;
-      let xPrev1 = l.attr('x1');
-      let yPrev1 = l.attr('y1');
-      let xPrev2 = l.attr('x2');
-      let yPrev2 = l.attr('y2');
-      n.reposition({ x: 60, y: 50 });
-      expect(l.attr('x1') - xPrev1).toBeCloseTo(40);
-      expect(l.attr('y1') - yPrev1).toBeCloseTo(-25);
-      expect(l.attr('x2') - xPrev2).toBeCloseTo(40);
-      expect(l.attr('y2') - yPrev2).toBeCloseTo(-25);
+    it('can be called with arguments', () => {
+      let n = BaseNumbering.create(svg, 10, { x: 12, y: 300 });
+      n.reposition({
+        baseCenter: { x: 15, y: 1012 },
+        basePadding: 25.2,
+        lineAngle: 15.5,
+        lineLength: 8.22,
+      });
+      let rp1 = getRoundedPositioning(n);
+      position(n, {
+        baseCenter: { x: 15, y: 1012 },
+        basePadding: 25.2,
+        lineAngle: 15.5,
+        lineLength: 8.22,
+        textPadding: n.textPadding,
+      });
+      let rp2 = getRoundedPositioning(n);
+      expect(rp1).toEqual(rp2);
+    });
+
+    it('stores base center when provided', () => {
+      let n = BaseNumbering.create(svg, 200, { x: 65, y: 19 });
+      n.reposition({ baseCenter: { x: 421, y: 328 } });
+      n.reposition({ basePadding: 82 });
+      let rp1 = getRoundedPositioning(n);
+      position(n, {
+        baseCenter: { x: 421, y: 328 },
+        basePadding: 82,
+        lineAngle: n.lineAngle,
+        lineLength: n.lineLength,
+        textPadding: n.textPadding,
+      });
+      let rp2 = getRoundedPositioning(n);
+      expect(rp1).toEqual(rp2);
     });
   });
 

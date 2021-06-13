@@ -1,25 +1,13 @@
 import {
   BaseNumberingInterface,
+  Repositioning,
   BaseNumberingSavableState,
 } from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
+import { Point2D as Point } from 'Math/Point';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
-import normalizeAngle from 'Draw/normalizeAngle';
-import { Point2D as Point } from 'Math/Point';
-
-interface LineCoordinates {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-}
-
-interface TextPositioning {
-  x: number;
-  y: number;
-  textAnchor: string;
-}
+import { position } from './position';
 
 export class BaseNumbering implements BaseNumberingInterface {
   static defaults: {
@@ -42,59 +30,6 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   _baseCenter: Point;
   
-  static _lineCoordinates(
-    baseCenter: Point,
-    angle: number,
-    basePadding: number,
-    length: number,
-  ): LineCoordinates {
-    let x1 = baseCenter.x + (basePadding * Math.cos(angle));
-    let y1 = baseCenter.y + (basePadding * Math.sin(angle));
-    let x2 = x1 + (length * Math.cos(angle));
-    let y2 = y1 + (length * Math.sin(angle));
-    return { x1: x1, y1: y1, x2: x2, y2: y2 };
-  }
-
-  static _textPositioning(text: SVG.Text, line: SVG.Line): TextPositioning {
-    let lineAngle = angleBetween(
-      line.attr('x1'),
-      line.attr('y1'),
-      line.attr('x2'),
-      line.attr('y2'),
-    );
-    lineAngle = normalizeAngle(lineAngle, 0);
-    let textPadding = 4;
-    let fs = 0.8 * text.attr('font-size');
-    let tp = {
-      x: line.attr('x2') + textPadding,
-      y: line.attr('y2') + (fs / 2),
-      textAnchor: 'start',
-    };
-    if (lineAngle >= Math.PI / 4 && lineAngle < 3 * Math.PI / 4) {
-      tp.x = line.attr('x2');
-      tp.y = line.attr('y2') + textPadding + fs;
-      tp.textAnchor = 'middle';
-    } else if (lineAngle >= 3 * Math.PI / 4 && lineAngle < 5 * Math.PI / 4) {
-      tp.x = line.attr('x2') - textPadding;
-      tp.y = line.attr('y2') + (fs / 2);
-      tp.textAnchor = 'end';
-    } else if (lineAngle >= 5 * Math.PI / 4 && lineAngle < 7 * Math.PI / 4) {
-      tp.x = line.attr('x2');
-      tp.y = line.attr('y2') - textPadding;
-      tp.textAnchor = 'middle';
-    }
-    return tp;
-  }
-
-  static _positionText(text: SVG.Text, line: SVG.Line) {
-    let tp = BaseNumbering._textPositioning(text, line);
-    text.attr({
-      'x': tp.x,
-      'y': tp.y,
-      'text-anchor': tp.textAnchor,
-    });
-  }
-
   static applyDefaults(n: BaseNumbering) {
     let defaults = BaseNumbering.defaults;
     n.basePadding = defaults.basePadding;
@@ -105,7 +40,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     n.text.attr({ 'fill': defaults.text['fill'] });
     n.line.attr({ 'stroke': defaults.line['stroke'] });
     n.line.attr({ 'stroke-width': defaults.line['stroke-width'] });
-    BaseNumbering._positionText(n.text, n.line);
+    n.reposition();
   }
 
   static updateDefaults(n: BaseNumbering) {
@@ -135,10 +70,8 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   static create(svg: SVG.Svg, number: number, baseCenter: Point): (BaseNumbering | never) {
-    let lc = BaseNumbering._lineCoordinates(baseCenter, 0, 10, 8);
-    let line = svg.line(lc.x1, lc.y1, lc.x2, lc.y2);
+    let line = svg.line(1, 2, 3, 4);
     let text = svg.text((add) => add.tspan(number.toString()));
-    BaseNumbering._positionText(text, line);
     let n = new BaseNumbering(text, line, baseCenter);
     BaseNumbering.applyDefaults(n);
     return n;
@@ -198,12 +131,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   set basePadding(bp: number) {
-    this._reposition(
-      this._baseCenter,
-      this.lineAngle,
-      bp,
-      this.lineLength,
-    );
+    this.reposition({ basePadding: bp });
   }
 
   get lineAngle(): number {
@@ -216,12 +144,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   set lineAngle(la: number) {
-    this._reposition(
-      this._baseCenter,
-      la,
-      this.basePadding,
-      this.lineLength,
-    );
+    this.reposition({ lineAngle: la });
   }
 
   get lineLength(): number {
@@ -234,42 +157,24 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   set lineLength(ll: number) {
-    this._reposition(
-      this._baseCenter,
-      this.lineAngle,
-      this.basePadding,
-      ll,
-    );
+    this.reposition({ lineLength: ll });
   }
 
-  reposition(baseCenter: Point) {
-    this._reposition(
-      baseCenter,
-      this.lineAngle,
-      this.basePadding,
-      this.lineLength,
-    );
+  get textPadding(): number {
+    return 4;
   }
 
-  _reposition(
-    baseCenter: Point,
-    lineAngle: number,
-    basePadding: number,
-    lineLength: number,
-  ) {
-    let lc = BaseNumbering._lineCoordinates(
-      baseCenter,
-      lineAngle,
-      basePadding,
-      lineLength,
-    );
-    this.line.attr({ 'x1': lc.x1, 'y1': lc.y1, 'x2': lc.x2, 'y2': lc.y2 });
-    BaseNumbering._positionText(this.text, this.line);
-    this._baseCenter = { ...baseCenter };
-  }
-
-  repositionText() {
-    BaseNumbering._positionText(this.text, this.line);
+  reposition(rp?: Repositioning) {
+    position(this, {
+      baseCenter: rp?.baseCenter ?? this._baseCenter,
+      basePadding: rp?.basePadding ?? this.basePadding,
+      lineAngle: rp?.lineAngle ?? this.lineAngle,
+      lineLength: rp?.lineLength ?? this.lineLength,
+      textPadding: this.textPadding,
+    });
+    if (rp && rp.baseCenter) {
+      this._baseCenter = { ...rp.baseCenter };
+    }
   }
 
   bringToFront() {

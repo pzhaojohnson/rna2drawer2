@@ -24,7 +24,7 @@ export function FontSizeField(props: FieldProps): React.ReactElement | null {
               props.pushUndo();
               bns.forEach(bn => {
                 bn.text.attr({ 'font-size': fs });
-                bn.repositionText();
+                bn.reposition();
               });
               BaseNumbering.defaults.text['font-size'] = fs;
               props.changed();

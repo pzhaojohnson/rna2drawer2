@@ -151,7 +151,7 @@ class Base implements BaseInterface {
         this._outline.reposition(xCenter, yCenter);
       }
       if (this._numbering) {
-        this._numbering.reposition({ x: xCenter, y: yCenter });
+        this._numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
       }
     }
   }
