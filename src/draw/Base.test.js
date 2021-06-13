@@ -581,7 +581,7 @@ describe('Base class', () => {
 
       it('handles throw by BaseNumbering class', () => {
         let b = Base.create(svg, 'G', 2, 8);
-        let n = b.addNumbering('asdf');
+        let n = b.addNumbering({ toString: () => { throw 'Error' } });
         expect(n).toBe(null);
         expect(b.numbering).toBe(null);
       });

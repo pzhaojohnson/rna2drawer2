@@ -87,32 +87,16 @@ export class BaseNumbering implements BaseNumberingInterface {
     this._baseCenter = { ...baseCenter };
   }
 
-  /**
-   * Throws if the text element is not actually a text element.
-   *
-   * Initializes the ID of the text if it is not already initialized.
-   *
-   * Throws if the text content is not an integer.
-   */
-  _validateText(): (void | never) {
-    if (this.text.type !== 'text') {
-      throw new Error('Passed element is not a text element.');
+  _validateText(): void | never {
+    if (this.text.type != 'text') {
+      throw new Error('Passed element is not a text.');
     }
     this.text.id();
-    let n = Number(this.text.text());
-    if (!Number.isFinite(n) || Math.floor(n) !== n) {
-      throw new Error('Text content is not an integer.');
-    }
   }
 
-  /**
-   * Throws if the line element is not actually a line element.
-   *
-   * Initializes the ID of the line if it is not already initialized.
-   */
-  _validateLine() {
-    if (this.line.type !== 'line') {
-      throw new Error('Passed element is not a line element.');
+  _validateLine(): void | never {
+    if (this.line.type != 'line') {
+      throw new Error('Passed element is not a line.');
     }
     this.line.id();
   }

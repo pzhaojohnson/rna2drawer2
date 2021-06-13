@@ -52,8 +52,7 @@ describe('BaseNumbering class', () => {
       it('constructor throws', () => {
         let n = BaseNumbering.create(svg, 8, { x: 3, y: 5 });
         let savableState = n.savableState();
-        n.text.clear();
-        n.text.tspan('9.9');
+        n.text.remove();
         expect(
           () => BaseNumbering.fromSavedState(savableState, svg, { x: 3, y: 5 })
         ).toThrow();
@@ -94,42 +93,31 @@ describe('BaseNumbering class', () => {
     });
 
     it('throws with constructor', () => {
-      expect(() => BaseNumbering.create(svg, 1.1, { x: 1, y: 2 })).toThrow();
+      expect(() => BaseNumbering.create(svg, { toString: () => { throw 'Error' } }, { x: 1, y: 2 })).toThrow();
     });
   });
 
   describe('constructor', () => {
-    it('throws on missing element arguments', () => {
-      let t = svg.text(add => add.tspan('5'));
-      let l = svg.line(1, 2, 3, 4);
-      expect(() => new BaseNumbering(undefined, l, { x: 5, y: 4 })).toThrow();
-      expect(() => new BaseNumbering(t, undefined, { x: 5, y: 6 })).toThrow();
-    });
-
-    it('throws on element arguments of wrong types', () => {
-      let t = svg.text(add => add.tspan('1'));
+    it('checks passed element types', () => {
+      let t = svg.text('a');
       let l = svg.line(1, 5, 8, 12);
       let c = svg.circle(20);
-      expect(() => new BaseNumbering(c, l, { x: 1, y: 2 })).toThrow();
-      expect(() => new BaseNumbering(t, c, { x: 10, y: 20 })).toThrow();
+      expect(
+        () => new BaseNumbering(c, l, { x: 1, y: 2 })
+      ).toThrow();
+      expect(
+        () => new BaseNumbering(t, c, { x: 10, y: 20 })
+      ).toThrow();
     });
 
     it('initializes element IDs', () => {
-      let t = svg.text(add => add.tspan('1'));
+      let t = svg.text('1');
       let l = svg.line(1, 5, 8, 12);
       expect(t.attr('id')).toBe(undefined);
       expect(l.attr('id')).toBe(undefined);
       let n = new BaseNumbering(t, l, { x: 1, y: 2 });
       expect(t.attr('id')).toBeTruthy();
       expect(l.attr('id')).toBeTruthy();
-    });
-
-    it('checks that text is an integer', () => {
-      let l = svg.line(5, 10, 20, 10);
-      let t1 = svg.text(add => add.tspan('a')); // not a number
-      expect(() => new BaseNumbering(t1, l, { x: 10, y: 5 })).toThrow();
-      let t2 = svg.text(add => add.tspan('10.1')); // not an integer
-      expect(() => new BaseNumbering(t2, l, { x: 5, y: 10 })).toThrow();
     });
   });
 
