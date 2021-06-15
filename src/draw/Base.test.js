@@ -582,8 +582,8 @@ describe('Base class', () => {
       it('handles throw by BaseNumbering class', () => {
         let b = Base.create(svg, 'G', 2, 8);
         let n = b.addNumbering({ toString: () => { throw 'Error' } });
-        expect(n).toBe(null);
-        expect(b.numbering).toBe(null);
+        expect(n).toBe(undefined);
+        expect(b.numbering).toBe(undefined);
       });
     });
 
@@ -614,13 +614,13 @@ describe('Base class', () => {
     it('hasNumbering method and numbering getter', () => {
       let b = Base.create(svg, 'Q', 5, 12);
       expect(b.hasNumbering()).toBeFalsy();
-      expect(b.numbering).toBe(null);
+      expect(b.numbering).toBe(undefined);
       b.addNumbering(6);
       expect(b.hasNumbering()).toBeTruthy();
       expect(b.numbering.text.text()).toBe('6');
       b.removeNumbering();
       expect(b.hasNumbering()).toBeFalsy();
-      expect(b.numbering).toBe(null);
+      expect(b.numbering).toBe(undefined);
     });
 
     describe('removeNumbering method', () => {
@@ -630,7 +630,7 @@ describe('Base class', () => {
         let spy = jest.spyOn(n, 'remove');
         b.removeNumbering();
         expect(spy).toHaveBeenCalled();
-        expect(b.numbering).toBe(null);
+        expect(b.numbering).toBe(undefined);
       });
 
       it('can be called without numbering', () => {

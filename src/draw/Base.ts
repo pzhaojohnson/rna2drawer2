@@ -18,7 +18,7 @@ class Base implements BaseInterface {
   readonly text: Svg.Text;
   _highlighting: CircleBaseAnnotation | null;
   _outline: CircleBaseAnnotation | null;
-  _numbering: BaseNumbering | null;
+  _numbering?: BaseNumbering;
 
   _xCenter!: number;
   _yCenter!: number;
@@ -84,7 +84,7 @@ class Base implements BaseInterface {
 
     this._highlighting = null;
     this._outline = null;
-    this._numbering = null;
+    this._numbering = undefined;
   }
 
   /**
@@ -353,7 +353,7 @@ class Base implements BaseInterface {
   /**
    * Returns null if the given number is not accepted by the BaseNumbering class.
    */
-  addNumbering(number: number): (BaseNumbering | null) {
+  addNumbering(number: number): (BaseNumbering | undefined) {
     this.removeNumbering();
     try {
       this._numbering = BaseNumbering.create(
@@ -363,7 +363,7 @@ class Base implements BaseInterface {
       );
     } catch (err) {
       console.error(err.toString());
-      this._numbering = null;
+      this._numbering = undefined;
     }
     return this._numbering;
   }
@@ -387,14 +387,14 @@ class Base implements BaseInterface {
     return false;
   }
 
-  get numbering(): (BaseNumbering | null) {
+  get numbering(): (BaseNumbering | undefined) {
     return this._numbering;
   }
 
   removeNumbering() {
     if (this._numbering) {
       this._numbering.remove();
-      this._numbering = null;
+      this._numbering = undefined;
     }
   }
 
