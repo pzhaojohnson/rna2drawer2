@@ -391,6 +391,10 @@ class Base implements BaseInterface {
     return this._numbering;
   }
 
+  set numbering(n) {
+    this._numbering = n;
+  }
+
   removeNumbering() {
     if (this._numbering) {
       this._numbering.remove();
