@@ -153,7 +153,7 @@ describe('Base class', () => {
     it('stores text', () => {
       let t = svg.text(add => add.tspan('w'));
       let b = new Base(t);
-      expect(b._text).toBe(t);
+      expect(b.text).toBe(t);
     });
 
     describe('validates text', () => {
@@ -208,13 +208,13 @@ describe('Base class', () => {
       let b = Base.create(svg, 'G', 22, 53);
       let cx = b.xCenter;
       let cy = b.yCenter;
-      let w = b._text.bbox().width;
+      let w = b.text.bbox().width;
       b.character = 'i';
       // dimensions did change
-      expect(b._text.bbox().width).not.toBeCloseTo(w);
+      expect(b.text.bbox().width).not.toBeCloseTo(w);
       // but center was still maintained
-      expect(b._text.cx()).toBeCloseTo(cx);
-      expect(b._text.cy()).toBeCloseTo(cy);
+      expect(b.text.cx()).toBeCloseTo(cx);
+      expect(b.text.cy()).toBeCloseTo(cy);
     });
   });
 
@@ -229,8 +229,8 @@ describe('Base class', () => {
       it('X coordinate is not close', () => {
         let b = Base.create(svg, 'W', 55.8, 103.9);
         b.moveTo(805.2, 103.9);
-        expect(b._text.cx()).toBeCloseTo(805.2);
-        expect(b._text.cy()).toBeCloseTo(103.9);
+        expect(b.text.cx()).toBeCloseTo(805.2);
+        expect(b.text.cy()).toBeCloseTo(103.9);
         expect(b.xCenter).toBeCloseTo(805.2);
         expect(b.yCenter).toBeCloseTo(103.9);
       });
@@ -238,8 +238,8 @@ describe('Base class', () => {
       it('Y coordinate is not close', () => {
         let b = Base.create(svg, 'W', 55.8, 103.9);
         b.moveTo(55.8, 651.8);
-        expect(b._text.cx()).toBeCloseTo(55.8);
-        expect(b._text.cy()).toBeCloseTo(651.8);
+        expect(b.text.cx()).toBeCloseTo(55.8);
+        expect(b.text.cy()).toBeCloseTo(651.8);
         expect(b.xCenter).toBeCloseTo(55.8);
         expect(b.yCenter).toBeCloseTo(651.8);
       });
@@ -295,57 +295,57 @@ describe('Base class', () => {
     let b = Base.create(svg, 'a', 1, 2);
     b.fontFamily = 'Cambria';
     expect(b.fontFamily).toBe('Cambria'); // check getter
-    expect(b._text.attr('font-family')).toBe('Cambria'); // check actual value
+    expect(b.text.attr('font-family')).toBe('Cambria'); // check actual value
     // maintains center coordinates
-    expect(b._text.cx()).toBeCloseTo(1);
-    expect(b._text.cy()).toBeCloseTo(2);
+    expect(b.text.cx()).toBeCloseTo(1);
+    expect(b.text.cy()).toBeCloseTo(2);
   });
 
   it('fontSize getter and setter', () => {
     let b = Base.create(svg, 'e', 5, 6);
     b.fontSize = 5.123;
     expect(b.fontSize).toBe(5.123); // check getter
-    expect(b._text.attr('font-size')).toBe(5.123); // check actual value
+    expect(b.text.attr('font-size')).toBe(5.123); // check actual value
     // maintains center coordinates
-    expect(b._text.cx()).toBeCloseTo(5);
-    expect(b._text.cy()).toBeCloseTo(6);
+    expect(b.text.cx()).toBeCloseTo(5);
+    expect(b.text.cy()).toBeCloseTo(6);
   });
 
   it('fontWeight getter and setter', () => {
     let b = Base.create(svg, 'a', 1, 4);
     b.fontWeight = 650;
     expect(b.fontWeight).toBe(650); // check getter
-    expect(b._text.attr('font-weight')).toBe(650); // check actual value
+    expect(b.text.attr('font-weight')).toBe(650); // check actual value
     // maintains center coordinates
-    expect(b._text.cx()).toBeCloseTo(1);
-    expect(b._text.cy()).toBeCloseTo(4);
+    expect(b.text.cx()).toBeCloseTo(1);
+    expect(b.text.cy()).toBeCloseTo(4);
   });
 
   it('fontStyle getter and setter', () => {
     let b = Base.create(svg, 'E', 5, 15);
     b.fontStyle = 'italic';
     expect(b.fontStyle).toBe('italic'); // check getter
-    expect(b._text.attr('font-style')).toBe('italic'); // check actual value
+    expect(b.text.attr('font-style')).toBe('italic'); // check actual value
     // maintains center coordinates
-    expect(b._text.cx()).toBeCloseTo(5);
-    expect(b._text.cy()).toBeCloseTo(15);
+    expect(b.text.cx()).toBeCloseTo(5);
+    expect(b.text.cy()).toBeCloseTo(15);
   });
 
   it('fill and fillOpacity getters and setters', () => {
     let b = Base.create(svg, 't', 4, 5);
     b.fill = '#4523ab';
     expect(b.fill).toBe('#4523ab'); // check getter
-    expect(b._text.attr('fill')).toBe('#4523ab'); // check actual value
+    expect(b.text.attr('fill')).toBe('#4523ab'); // check actual value
     b.fillOpacity = 0.34;
     expect(b.fillOpacity).toBe(0.34); // check getter
-    expect(b._text.attr('fill-opacity')).toBe(0.34); // check actual value
+    expect(b.text.attr('fill-opacity')).toBe(0.34); // check actual value
   });
 
   it('cursor getter and setter', () => {
     let b = Base.create(svg, 'e', 4, 5);
     b.cursor = 'crosshair';
     expect(b.cursor).toBe('crosshair'); // check getter
-    expect(b._text.css('cursor')).toBe('crosshair'); // check actual value
+    expect(b.text.css('cursor')).toBe('crosshair'); // check actual value
   });
 
   it('bringToFront and sendToBack methods', () => {
@@ -355,14 +355,14 @@ describe('Base class', () => {
     let b = Base.create(svg, 'G', 5, 5);
     b.addCircleOutline();
 
-    expect(b._text.position()).toBeGreaterThan(0); // not already at back
+    expect(b.text.position()).toBeGreaterThan(0); // not already at back
     // cannot just call the backward method of SVG elements
-    expect(b._text.position()).toBeGreaterThan(1);
+    expect(b.text.position()).toBeGreaterThan(1);
     b.outline.bringToFront(); // must send outline to back too
     b.sendToBack();
-    expect(b._text.position()).toBeGreaterThan(0); // kept in front of outline
+    expect(b.text.position()).toBeGreaterThan(0); // kept in front of outline
     b.outline.bringToFront();
-    expect(b._text.position()).toBe(0); // only the outline was behind the text
+    expect(b.text.position()).toBe(0); // only the outline was behind the text
 
     let marker1 = svg.circle(80);
     b.outline.sendToBack(); // must bring outline to front too
@@ -370,9 +370,9 @@ describe('Base class', () => {
     let marker2 = svg.circle(120);
     marker2.front();
     // was brought to front and kept in front of outline
-    expect(b._text.position()).toBe(marker2.position() - 1);
+    expect(b.text.position()).toBe(marker2.position() - 1);
     // cannot have just called the forward method of SVG elements
-    expect(b._text.position()).toBeGreaterThan(2);
+    expect(b.text.position()).toBeGreaterThan(2);
     let p1 = marker1.position();
     let p2 = marker2.position();
     b.outline.sendToBack();
@@ -387,28 +387,28 @@ describe('Base class', () => {
     it('onMouseover method', () => {
       let f = jest.fn();
       b.onMouseover(f);
-      b._text.fire('mouseover');
+      b.text.fire('mouseover');
       expect(f).toHaveBeenCalled();
     });
 
     it('onMouseout method', () => {
       let f = jest.fn();
       b.onMouseout(f);
-      b._text.fire('mouseout');
+      b.text.fire('mouseout');
       expect(f).toHaveBeenCalled();
     });
 
     it('onMousedown method', () => {
       let f = jest.fn();
       b.onMousedown(f);
-      b._text.fire('mousedown');
+      b.text.fire('mousedown');
       expect(f).toHaveBeenCalled();
     });
 
     it('onDblclick method', () => {
       let f = jest.fn();
       b.onDblclick(f);
-      b._text.fire('dblclick');
+      b.text.fire('dblclick');
       expect(f).toHaveBeenCalled();
     });
   });
@@ -643,7 +643,7 @@ describe('Base class', () => {
 
   it('remove method', () => {
     let b = Base.create(svg, 'a', 5, 5);
-    let textId = '#' + b._text.id();
+    let textId = '#' + b.text.id();
     expect(svg.findOne(textId)).toBeTruthy();
     let spies = [
       jest.spyOn(b, 'removeHighlighting'),
@@ -660,7 +660,7 @@ describe('Base class', () => {
       let b = Base.create(svg, 'a', 1, 2);
       let savableState = b.savableState();
       expect(savableState.className).toBe('Base');
-      expect(savableState.textId).toBe(b._text.id());
+      expect(savableState.textId).toBe(b.text.id());
     });
 
     /* By testing highlighting, outline and numbering separately,
@@ -710,9 +710,9 @@ describe('Base class', () => {
       expect(b.hasHighlighting()).toBeFalsy();
       expect(b.hasOutline()).toBeFalsy();
       expect(b.hasNumbering()).toBeFalsy();
-      let oldTextId = b._text.id();
+      let oldTextId = b.text.id();
       b.refreshIds();
-      expect(b._text.id()).not.toBe(oldTextId);
+      expect(b.text.id()).not.toBe(oldTextId);
     });
 
     it('can refresh highlighting, outline and numbering IDs', () => {

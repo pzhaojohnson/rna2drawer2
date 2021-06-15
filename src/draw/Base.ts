@@ -15,7 +15,7 @@ import { areClose } from './areClose';
 class Base implements BaseInterface {
   static _mostRecentProps: BaseMostRecentProps;
 
-  _text: Svg.Text;
+  readonly text: Svg.Text;
   _highlighting: CircleBaseAnnotation | null;
   _outline: CircleBaseAnnotation | null;
   _numbering: BaseNumbering | null;
@@ -78,7 +78,7 @@ class Base implements BaseInterface {
    * Throws if the content of the text element is not a single character.
    */
   constructor(text: Svg.Text) {
-    this._text = text;
+    this.text = text;
     this._validateText();
     this._storeCenterCoordinates();
 
@@ -93,26 +93,26 @@ class Base implements BaseInterface {
    * Initializes the ID of the text if it is not already initialized.
    */
   _validateText() {
-    if (this._text.type !== 'text') {
+    if (this.text.type !== 'text') {
       throw new Error('Passed SVG element is not text.');
     }
-    this._text.id();
-    if (this._text.text().length !== 1) {
+    this.text.id();
+    if (this.text.text().length !== 1) {
       throw new Error('Text content must be a single character.');
     }
   }
 
   _storeCenterCoordinates() {
-    this._xCenter = this._text.cx();
-    this._yCenter = this._text.cy();
+    this._xCenter = this.text.cx();
+    this._yCenter = this.text.cy();
   }
 
   get id(): string {
-    return this._text.id();
+    return this.text.id();
   }
 
   get character(): string {
-    return this._text.text();
+    return this.text.text();
   }
 
   /**
@@ -122,9 +122,9 @@ class Base implements BaseInterface {
     if (c.length !== 1) {
       return;
     }
-    this._text.clear();
-    this._text.tspan(c);
-    this._text.center(this._xCenter, this._yCenter);
+    this.text.clear();
+    this.text.tspan(c);
+    this.text.center(this._xCenter, this._yCenter);
   }
 
   get xCenter(): number {
@@ -139,9 +139,9 @@ class Base implements BaseInterface {
     if (!areClose(xCenter, this.xCenter) || !areClose(yCenter, this.yCenter)) {
       let xShift = xCenter - this._xCenter;
       let yShift = yCenter - this._yCenter;
-      let x = this._text.attr('x') + xShift;
-      let y = this._text.attr('y') + yShift;
-      this._text.attr({ 'x': x, 'y': y });
+      let x = this.text.attr('x') + xShift;
+      let y = this.text.attr('y') + yShift;
+      this.text.attr({ 'x': x, 'y': y });
       this._xCenter = xCenter;
       this._yCenter = yCenter;
       if (this._highlighting) {
@@ -175,103 +175,103 @@ class Base implements BaseInterface {
   }
 
   get fontFamily(): string {
-    return this._text.attr('font-family');
+    return this.text.attr('font-family');
   }
 
   set fontFamily(ff: string) {
-    this._text.attr({ 'font-family': ff });
-    this._text.center(this._xCenter, this._yCenter);
+    this.text.attr({ 'font-family': ff });
+    this.text.center(this._xCenter, this._yCenter);
     Base._mostRecentProps.fontFamily = ff;
   }
 
   get fontSize(): number {
-    return this._text.attr('font-size');
+    return this.text.attr('font-size');
   }
 
   set fontSize(fs: number) {
-    this._text.attr({ 'font-size': fs });
-    this._text.center(this._xCenter, this._yCenter);
+    this.text.attr({ 'font-size': fs });
+    this.text.center(this._xCenter, this._yCenter);
     Base._mostRecentProps.fontSize = fs;
   }
 
   get fontWeight(): (string | number) {
-    return this._text.attr('font-weight');
+    return this.text.attr('font-weight');
   }
 
   set fontWeight(fw: (string | number)) {
-    this._text.attr({ 'font-weight': fw });
-    this._text.center(this._xCenter, this._yCenter);
+    this.text.attr({ 'font-weight': fw });
+    this.text.center(this._xCenter, this._yCenter);
     Base._mostRecentProps.fontWeight = fw;
   }
 
   get fontStyle(): string {
-    return this._text.attr('font-style');
+    return this.text.attr('font-style');
   }
 
   set fontStyle(fs: string) {
-    this._text.attr({ 'font-style': fs });
-    this._text.center(this._xCenter, this._yCenter);
+    this.text.attr({ 'font-style': fs });
+    this.text.center(this._xCenter, this._yCenter);
     Base._mostRecentProps.fontStyle = fs;
   }
 
   get fill(): string {
-    return this._text.attr('fill');
+    return this.text.attr('fill');
   }
 
   set fill(f: string) {
-    this._text.attr({ 'fill': f });
+    this.text.attr({ 'fill': f });
   }
 
   get fillOpacity(): number {
-    return this._text.attr('fill-opacity');
+    return this.text.attr('fill-opacity');
   }
 
   set fillOpacity(fo: number) {
-    this._text.attr({ 'fill-opacity': fo });
+    this.text.attr({ 'fill-opacity': fo });
   }
 
   get cursor(): string {
-    return this._text.css('cursor');
+    return this.text.css('cursor');
   }
 
   set cursor(c: string) {
-    this._text.css('cursor', c);
+    this.text.css('cursor', c);
   }
 
   bringToFront() {
     if (this.outline) {
       this.outline.bringToFront();
     }
-    this._text.front();
+    this.text.front();
   }
 
   sendToBack() {
-    this._text.back();
+    this.text.back();
     if (this.outline) {
       this.outline.sendToBack();
     }
   }
 
   onMouseover(f: () => void) {
-    this._text.mouseover(f);
+    this.text.mouseover(f);
   }
 
   onMouseout(f: () => void) {
-    this._text.mouseout(f);
+    this.text.mouseout(f);
   }
 
   onMousedown(f: () => void) {
-    this._text.mousedown(f);
+    this.text.mousedown(f);
   }
 
   onDblclick(f: () => void) {
-    this._text.dblclick(f);
+    this.text.dblclick(f);
   }
 
   addCircleHighlighting(): CircleBaseAnnotation {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.createNondisplaced(
-      this._text.root(),
+      this.text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -284,7 +284,7 @@ class Base implements BaseInterface {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.fromSavedState(
       savedState,
-      this._text.root(),
+      this.text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -312,7 +312,7 @@ class Base implements BaseInterface {
   addCircleOutline(): CircleBaseAnnotation {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.createNondisplaced(
-      this._text.root(),
+      this.text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -325,7 +325,7 @@ class Base implements BaseInterface {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(
       savedState,
-      this._text.root(),
+      this.text.root(),
       this.xCenter,
       this.yCenter,
     );
@@ -357,7 +357,7 @@ class Base implements BaseInterface {
     this.removeNumbering();
     try {
       this._numbering = BaseNumbering.create(
-        this._text.root(),
+        this.text.root(),
         number,
         { x: this.xCenter, y: this.yCenter },
       );
@@ -374,7 +374,7 @@ class Base implements BaseInterface {
     this.removeNumbering();
     this._numbering = BaseNumbering.fromSavedState(
       savedState,
-      this._text.root(),
+      this.text.root(),
       { x: this.xCenter, y: this.yCenter },
     );
     return this._numbering;
@@ -402,13 +402,13 @@ class Base implements BaseInterface {
     this.removeHighlighting();
     this.removeOutline();
     this.removeNumbering();
-    this._text.remove();
+    this.text.remove();
   }
 
   savableState(): BaseSavableState {
     return {
       className: 'Base',
-      textId: this._text.id(),
+      textId: this.text.id(),
       highlighting: this.highlighting ? this.highlighting.savableState() : undefined,
       outline: this.outline ? this.outline.savableState() : undefined,
       numbering: this.numbering ? this.numbering.savableState() : undefined,
@@ -416,8 +416,8 @@ class Base implements BaseInterface {
   }
 
   refreshIds() {
-    this._text.id('');
-    this._text.id();
+    this.text.id('');
+    this.text.id();
     if (this.highlighting) {
       this.highlighting.refreshIds();
     }

@@ -1,3 +1,4 @@
+import * as Svg from '@svgdotjs/svg.js';
 import {
   BaseAnnotationInterface as BaseAnnotation,
   CircleBaseAnnotationInterface as CircleBaseAnnotation,
@@ -24,6 +25,7 @@ export interface BaseSavableState {
 }
 
 export interface BaseInterface {
+  readonly text: Svg.Text;
   readonly id: string;
   character: string;
   xCenter: number;
@@ -42,30 +44,30 @@ export interface BaseInterface {
 
   bringToFront(): void;
   sendToBack(): void;
-  
+
   onMouseover(f: () => void): void;
   onMouseout(f: () => void): void;
   onMousedown(f: () => void): void;
   onDblclick(f: () => void): void;
-  
+
   addCircleHighlighting(): CircleBaseAnnotation;
   addCircleHighlightingFromSavedState(s: CircleBaseAnnotationSavableState): CircleBaseAnnotation | never;
   hasHighlighting(): boolean;
   readonly highlighting: CircleBaseAnnotation | null;
   removeHighlighting(): void;
-  
+
   addCircleOutline(): CircleBaseAnnotation;
   addCircleOutlineFromSavedState(s: CircleBaseAnnotationSavableState): CircleBaseAnnotation | never;
   hasOutline(): boolean;
   readonly outline: CircleBaseAnnotation | null;
   removeOutline(): void;
-  
+
   addNumbering(n: number): BaseNumbering | null;
   addNumberingFromSavedState(s: BaseNumberingSavableState): BaseNumbering | never;
   hasNumbering(): boolean;
   readonly numbering: BaseNumbering | null;
   removeNumbering(): void;
-  
+
   remove(): void;
   savableState(): BaseSavableState;
   refreshIds(): void;
