@@ -8,7 +8,7 @@ export type Repositioning = {
   lineLength?: number;
 }
 
-export interface SavableState {
+export type SavableState = {
   className: string;
   textId: string;
   lineId: string;
