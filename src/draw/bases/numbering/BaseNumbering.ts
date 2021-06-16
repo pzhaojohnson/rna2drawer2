@@ -28,17 +28,17 @@ export class BaseNumbering implements BaseNumberingInterface {
   readonly line: SVG.Line;
 
   _baseCenter: Point;
-  
+
   static applyDefaults(n: BaseNumbering) {
     let defaults = BaseNumbering.defaults;
-    n.basePadding = defaults.basePadding;
-    n.lineLength = defaults.lineLength;
     n.text.attr({ 'font-family': defaults.text['font-family'] });
     n.text.attr({ 'font-size': defaults.text['font-size'] });
     n.text.attr({ 'font-weight': defaults.text['font-weight'] });
     n.text.attr({ 'fill': defaults.text['fill'] });
     n.line.attr({ 'stroke': defaults.line['stroke'] });
     n.line.attr({ 'stroke-width': defaults.line['stroke-width'] });
+    n.basePadding = defaults.basePadding;
+    n.lineLength = defaults.lineLength;
     n.reposition();
   }
 
