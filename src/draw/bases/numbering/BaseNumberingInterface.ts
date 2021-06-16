@@ -9,7 +9,7 @@ export type Repositioning = {
 }
 
 export type SavableState = {
-  className: string;
+  className: 'BaseNumbering';
   textId: string;
   lineId: string;
 }
