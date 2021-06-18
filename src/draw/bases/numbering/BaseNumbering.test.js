@@ -1,12 +1,36 @@
 import { BaseNumbering } from './BaseNumbering';
 import NodeSVG from 'Draw/NodeSVG';
-import angleBetween from 'Draw/angleBetween';
-import { distance2D as distance } from 'Math/distance';
+import Base from 'Draw/Base';
+import { addNumbering } from './add';
 import normalizeAngle from 'Draw/normalizeAngle';
 import { round } from 'Math/round';
 import { position } from './position';
 
-let svg = NodeSVG();
+let container = null;
+let svg = null;
+let base = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  svg = NodeSVG();
+  svg.addTo(container);
+
+  base = Base.create(svg, 'G', 12, 15);
+  addNumbering(base, 50);
+});
+
+afterEach(() => {
+  base = null;
+
+  svg.clear();
+  svg.remove();
+  svg = null;
+
+  container.remove();
+  container = null;
+});
 
 function getRoundedPositioning(n) {
   return {
@@ -25,73 +49,6 @@ function getRoundedPositioning(n) {
 }
 
 describe('BaseNumbering class', () => {
-  describe('fromSavedState static method', () => {
-    it('valid saved state', () => {
-      let n1 = BaseNumbering.create(svg, 10, { x: 5, y: 8 });
-      n1.basePadding = 27.83;
-      let savableState = n1.savableState();
-      let spy = jest.spyOn(BaseNumbering, 'updateDefaults');
-      let n2 = BaseNumbering.fromSavedState(savableState, svg, { x: 5, y: 8 });
-      expect(n2.text.id()).toBe(savableState.textId);
-      expect(n2.line.id()).toBe(savableState.lineId);
-      // requires that base coordinates are passed correctly to constructor
-      expect(n2.basePadding).toBeCloseTo(27.83);
-      expect(spy.mock.calls[0][0]).toBe(n2); // updates defaults
-    });
-
-    describe('invalid saved state', () => {
-      it('wrong className', () => {
-        let n = BaseNumbering.create(svg, 5, { x: 1, y: 2 });
-        let savableState = n.savableState();
-        savableState.className = 'BaseNmbering';
-        expect(
-          () => BaseNumbering.fromSavedState(savableState, svg, { x: 1, y: 2 })
-        ).toThrow();
-      });
-
-      it('constructor throws', () => {
-        let n = BaseNumbering.create(svg, 8, { x: 3, y: 5 });
-        let savableState = n.savableState();
-        n.text.remove();
-        expect(
-          () => BaseNumbering.fromSavedState(savableState, svg, { x: 3, y: 5 })
-        ).toThrow();
-      });
-    });
-  });
-
-  describe('create static method', () => {
-    let n = BaseNumbering.create(svg, 129, { x: 120, y: 548 });
-    let t = n.text;
-    let l = n.line;
-
-    it('creates with number', () => {
-      expect(n.text.text()).toBe('129');
-    });
-
-    it('creates close to center base coordinates', () => {
-      expect(
-        distance(120, 548, l.attr('x1'), l.attr('y1'))
-      ).toBeLessThan(16);
-    });
-
-    it('line is angled towards center base coordinates', () => {
-      let la = normalizeAngle(n.lineAngle);
-      let a = angleBetween(120, 548, l.attr('x1'), l.attr('y1'));
-      expect(normalizeAngle(a)).toBeCloseTo(la);
-    });
-
-    it('text is close to line', () => {
-      expect(
-        distance(l.attr('x2'), l.attr('y2'), t.attr('x'), t.attr('y'))
-      ).toBeLessThan(16);
-    });
-
-    it('throws with constructor', () => {
-      expect(() => BaseNumbering.create(svg, { toString: () => { throw 'Error' } }, { x: 1, y: 2 })).toThrow();
-    });
-  });
-
   describe('constructor', () => {
     it('checks passed element types', () => {
       let t = svg.text('a');
@@ -125,7 +82,8 @@ describe('BaseNumbering class', () => {
   });
 
   it('basePadding, lineAngle and lineLength properties', () => {
-    let n = BaseNumbering.create(svg, 12, { x: 25.5, y: 256 });
+    let n = base.numbering;
+    n.reposition({ baseCenter: { x: 25.5, y: 256 } })
     // use setters
     n.basePadding = 18.07;
     n.lineAngle = 4.2;
@@ -149,7 +107,8 @@ describe('BaseNumbering class', () => {
 
   describe('reposition method', () => {
     it('can be called with no arguments', () => {
-      let n = BaseNumbering.create(svg, 100, { x: 520, y: 465 });
+      let n = base.numbering;
+      n.reposition({ baseCenter: { x: 520, y: 465 } });
       n.basePadding = 16.6;
       n.lineAngle = 2.8;
       n.lineLength = 18.25;
@@ -167,7 +126,8 @@ describe('BaseNumbering class', () => {
     });
 
     it('can be called with arguments', () => {
-      let n = BaseNumbering.create(svg, 10, { x: 12, y: 300 });
+      let n = base.numbering;
+      n.reposition({ baseCenter: { x: 12, y: 300 } });
       n.reposition({
         baseCenter: { x: 15, y: 1012 },
         basePadding: 25.2,
@@ -187,7 +147,8 @@ describe('BaseNumbering class', () => {
     });
 
     it('stores base center when provided', () => {
-      let n = BaseNumbering.create(svg, 200, { x: 65, y: 19 });
+      let n = base.numbering;
+      n.reposition({ baseCenter: { x: 65, y: 19 } });
       n.reposition({ baseCenter: { x: 421, y: 328 } });
       n.reposition({ basePadding: 82 });
       let rp1 = getRoundedPositioning(n);
@@ -208,7 +169,8 @@ describe('BaseNumbering class', () => {
     let r2 = svg.rect(20, 20);
     let c = svg.circle(20);
     // create above multiple elements
-    let n = BaseNumbering.create(svg, 50, { x: 2, y: 3 });
+    let n = base.numbering;
+    n.bringToFront();
     expect(n.text.position()).toBeGreaterThan(3);
     expect(n.line.position()).toBeGreaterThan(3);
     n.sendToBack();
@@ -220,7 +182,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('remove method', () => {
-    let n = BaseNumbering.create(svg, 2, { x: 1, y: 8 });
+    let n = base.numbering;
     let textId = '#' + n.text.id();
     let lineId = '#' + n.line.id();
     expect(svg.findOne(textId)).toBeTruthy();
@@ -231,7 +193,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('savableState method', () => {
-    let n = BaseNumbering.create(svg, 8, { x: 3, y: 9 });
+    let n = base.numbering;
     let savableState = n.savableState();
     expect(savableState.className).toBe('BaseNumbering');
     expect(savableState.textId).toBe(n.text.id());
@@ -239,7 +201,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('refreshIds method', () => {
-    let n = BaseNumbering.create(svg, 12, { x: 8, y: 20 });
+    let n = base.numbering;
     let oldTextId = n.text.id();
     let oldLineId = n.line.id();
     n.refreshIds();

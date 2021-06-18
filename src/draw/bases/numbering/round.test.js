@@ -1,6 +1,7 @@
 import { roundNumbers } from './round';
 import { NodeSVG } from 'Draw/NodeSVG';
-import { BaseNumbering } from './BaseNumbering';
+import Base from 'Draw/Base';
+import { addNumbering } from './add';
 
 function getNumbers(bn) {
   let ns = {
@@ -18,7 +19,7 @@ function getNumbers(bn) {
 
 let container = null;
 let svg = null;
-let numbering = null;
+let base = null;
 
 beforeEach(() => {
   container = document.createElement('div');
@@ -27,12 +28,13 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  numbering = BaseNumbering.create(svg, 200, { x: 50, y: 60 });
+  base = Base.create(svg, 'A', 200, 300);
+  addNumbering(base, 500);
 });
 
 afterEach(() => {
-  numbering = null;
-
+  base = null;
+  
   svg.clear();
   svg.remove();
   svg = null;
@@ -44,25 +46,25 @@ afterEach(() => {
 describe('roundNumbers function', () => {
   it('has a default places argument', () => {
     expect(
-      () => roundNumbers(numbering)
+      () => roundNumbers(base.numbering)
     ).not.toThrow();
   });
 
   it('can receive a places argument', () => {
     expect(
-      () => roundNumbers(numbering, 6)
+      () => roundNumbers(base.numbering, 6)
     ).not.toThrow();
   });
 
   it("doesn't mix up numbers", () => {
     // all numbers are different
-    numbering.text.attr({
+    base.numbering.text.attr({
       'x': 50,
       'y': 60,
       'font-size': 24,
       'font-weight': 700,
     });
-    numbering.line.attr({
+    base.numbering.line.attr({
       'x1': 80,
       'y1': 90,
       'x2': 100,
@@ -70,8 +72,8 @@ describe('roundNumbers function', () => {
       'stroke-width': 16,
     });
     // places argument is also different from all other numbers
-    roundNumbers(numbering, 3);
-    let ns = getNumbers(numbering);
+    roundNumbers(base.numbering, 3);
+    let ns = getNumbers(base.numbering);
     // since no numbers needed rounding
     expect(ns).toEqual({
       text: {

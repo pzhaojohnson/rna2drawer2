@@ -4,7 +4,6 @@ import {
   SavableState,
 } from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { setValues } from './values';
 import { Point2D as Point } from 'Math/Point';
 import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
@@ -29,40 +28,6 @@ export class BaseNumbering implements BaseNumberingInterface {
   readonly line: SVG.Line;
 
   _baseCenter: Point;
-
-  static updateDefaults(n: BaseNumbering) {
-    BaseNumbering.recommendedDefaults.basePadding = n.basePadding ?? BaseNumbering.recommendedDefaults.basePadding;
-    BaseNumbering.recommendedDefaults.lineLength = n.lineLength ?? BaseNumbering.recommendedDefaults.lineLength;
-    BaseNumbering.recommendedDefaults.text['font-family'] = n.text.attr('font-family');
-    BaseNumbering.recommendedDefaults.text['font-size'] = n.text.attr('font-size');
-    BaseNumbering.recommendedDefaults.text['font-weight'] = n.text.attr('font-weight');
-    BaseNumbering.recommendedDefaults.text['fill'] = n.text.attr('fill');
-    BaseNumbering.recommendedDefaults.line['stroke'] = n.line.attr('stroke');
-    BaseNumbering.recommendedDefaults.line['stroke-width'] = n.line.attr('stroke-width');
-  }
-  
-  static fromSavedState(
-    savedState: SavableState,
-    svg: SVG.Svg,
-    baseCenter: Point,
-  ): (BaseNumbering | never) {
-    if (savedState.className !== 'BaseNumbering') {
-      throw new Error('Wrong class name.');
-    }
-    let text = svg.findOne('#' + savedState.textId);
-    let line = svg.findOne('#' + savedState.lineId);
-    let n = new BaseNumbering(text as SVG.Text, line as SVG.Line, baseCenter);
-    BaseNumbering.updateDefaults(n);
-    return n;
-  }
-
-  static create(svg: SVG.Svg, number: number, baseCenter: Point): (BaseNumbering | never) {
-    let line = svg.line(1, 2, 3, 4);
-    let text = svg.text((add) => add.tspan(number.toString()));
-    let n = new BaseNumbering(text, line, baseCenter);
-    setValues(n, BaseNumbering.recommendedDefaults);
-    return n;
-  }
 
   constructor(text: SVG.Text, line: SVG.Line, baseCenter: Point) {
     this.text = text;

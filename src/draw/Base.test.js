@@ -570,14 +570,15 @@ describe('Base class', () => {
 
     describe('addNumberingFromSavedState method', () => {
       it('passes saved state and center base coordinates and stores reference', () => {
-        let b = Base.create(svg, 'G', 15, 30);
-        let n1 = BaseNumbering.create(svg, 852, { x: b.xCenter, y: b.yCenter });
+        let b1 = Base.create(svg, 'G', 15, 30);
+        let b2 = Base.create(svg, 'G', 15, 30);
+        let n1 = b1.addNumbering(852);
         let savableState1 = n1.savableState();
-        let n2 = b.addNumberingFromSavedState(savableState1);
+        let n2 = b2.addNumberingFromSavedState(savableState1);
         expect(n2.text.text()).toBe('852');
         // requires that center base coordinates were passed
         expect(n2.basePadding).toBeCloseTo(n1.basePadding);
-        expect(b.numbering).toBe(n2); // check reference
+        expect(b2.numbering).toBe(n2); // check reference
       });
     });
 

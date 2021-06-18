@@ -1,9 +1,11 @@
 import { position } from './position';
 import { NodeSVG } from 'Draw/NodeSVG';
-import { BaseNumbering } from './BaseNumbering';
+import Base from 'Draw/Base';
+import { addNumbering } from './add';
 
 let container = null;
 let svg = null;
+let base = null;
 let numbering = null;
 
 beforeEach(() => {
@@ -13,12 +15,15 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  numbering = BaseNumbering.create(svg, 5, { x: 10, y: 15 });
+  base = Base.create(svg, 'G', 20, 200);
+  addNumbering(base, 1012);
+  numbering = base.numbering;
 });
 
 afterEach(() => {
   numbering = null;
-
+  base = null;
+  
   svg.clear();
   svg.remove();
   svg = null;
