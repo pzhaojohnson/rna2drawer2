@@ -4,25 +4,13 @@ import {
   SavableState,
 } from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
+import { Values } from './values';
 import { Point2D as Point } from 'Math/Point';
 import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
 
 export class BaseNumbering implements BaseNumberingInterface {
-  static recommendedDefaults: {
-    text: {
-      'font-family': string;
-      'font-size': number;
-      'font-weight': number | string;
-      'fill': string,
-    }
-    line: {
-      'stroke': string;
-      'stroke-width': number;
-    }
-    basePadding: number;
-    lineLength: number;
-  }
+  static recommendedDefaults: Values;
 
   readonly text: SVG.Text;
   readonly line: SVG.Line;
@@ -118,11 +106,12 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   reposition(rp?: Repositioning) {
+    let defaults = BaseNumbering.recommendedDefaults;
     position(this, {
       baseCenter: rp?.baseCenter ?? this._baseCenter,
-      basePadding: rp?.basePadding ?? this.basePadding ?? BaseNumbering.recommendedDefaults.basePadding,
+      basePadding: rp?.basePadding ?? this.basePadding ?? defaults.basePadding ?? 8,
       lineAngle: rp?.lineAngle ?? this.lineAngle ?? 0,
-      lineLength: rp?.lineLength ?? this.lineLength ?? BaseNumbering.recommendedDefaults.lineLength,
+      lineLength: rp?.lineLength ?? this.lineLength ?? defaults.lineLength ?? 8,
       textPadding: this.textPadding,
     });
     if (rp && rp.baseCenter) {
