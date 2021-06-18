@@ -31,7 +31,7 @@ export function LineLengthField(props: FieldProps): React.ReactElement | null {
             if (ll != getFirstLineLength(bns)) {
               props.pushUndo();
               bns.forEach(bn => bn.lineLength = ll);
-              BaseNumbering.defaults.lineLength = ll;
+              BaseNumbering.recommendedDefaults.lineLength = ll;
               props.changed();
             }
           }

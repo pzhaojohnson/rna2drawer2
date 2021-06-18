@@ -71,9 +71,9 @@ describe('addNumbering function', () => {
     let rp1 = getRoundedPositioning(base.numbering);
     position(base.numbering, {
       baseCenter: { x: base.xCenter, y: base.yCenter },
-      basePadding: BaseNumbering.defaults.basePadding,
+      basePadding: BaseNumbering.recommendedDefaults.basePadding,
       lineAngle: base.numbering.lineAngle,
-      lineLength: BaseNumbering.defaults.lineLength,
+      lineLength: BaseNumbering.recommendedDefaults.lineLength,
       textPadding: base.numbering.textPadding,
     });
     let rp2 = getRoundedPositioning(base.numbering);

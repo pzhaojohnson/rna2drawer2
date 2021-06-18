@@ -36,8 +36,8 @@ export function ColorField(props: FieldProps): React.ReactElement | null {
                   bn.text.attr({ 'fill': c.toHex() });
                   bn.line.attr({ 'stroke': c.toHex() });
                 });
-                BaseNumbering.defaults.text['fill'] = c.toHex();
-                BaseNumbering.defaults.line['stroke'] = c.toHex();
+                BaseNumbering.recommendedDefaults.text['fill'] = c.toHex();
+                BaseNumbering.recommendedDefaults.line['stroke'] = c.toHex();
                 props.changed();
               }
             }

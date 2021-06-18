@@ -37,7 +37,7 @@ export function BoldFontField(props: FieldProps): React.ReactElement | null {
                 bn.text.attr({ 'font-weight': fw });
                 bn.reposition();
               });
-              BaseNumbering.defaults.text['font-weight'] = fw;
+              BaseNumbering.recommendedDefaults.text['font-weight'] = fw;
               props.changed();
             }
           }

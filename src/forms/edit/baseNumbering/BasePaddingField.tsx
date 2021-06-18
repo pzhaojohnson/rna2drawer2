@@ -31,7 +31,7 @@ export function BasePaddingField(props: FieldProps): React.ReactElement | null {
             if (bp != getFirstBasePadding(bns)) {
               props.pushUndo();
               bns.forEach(bn => bn.basePadding = bp);
-              BaseNumbering.defaults.basePadding = bp;
+              BaseNumbering.recommendedDefaults.basePadding = bp;
               props.changed();
             }
           }

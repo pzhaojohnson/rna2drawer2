@@ -23,7 +23,7 @@ export function LineWidthField(props: FieldProps): React.ReactElement | null {
             if (lw != strokeWidth) {
               props.pushUndo();
               bns.forEach(bn => bn.line.attr({ 'stroke-width': lw }));
-              BaseNumbering.defaults.line['stroke-width'] = lw;
+              BaseNumbering.recommendedDefaults.line['stroke-width'] = lw;
               props.changed();
             }
           }

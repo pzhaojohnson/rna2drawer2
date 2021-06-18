@@ -26,7 +26,7 @@ export function FontFamilyField(props: FieldProps): React.ReactElement | null {
                 bn.text.attr({ 'font-family': ff });
                 bn.reposition();
               });
-              BaseNumbering.defaults.text['font-family'] = ff;
+              BaseNumbering.recommendedDefaults.text['font-family'] = ff;
               props.changed();
             }
           }

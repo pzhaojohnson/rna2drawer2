@@ -9,7 +9,7 @@ import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
 
 export class BaseNumbering implements BaseNumberingInterface {
-  static defaults: {
+  static recommendedDefaults: {
     text: {
       'font-family': string;
       'font-size': number;
@@ -30,7 +30,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   _baseCenter: Point;
 
   static applyDefaults(n: BaseNumbering) {
-    let defaults = BaseNumbering.defaults;
+    let defaults = BaseNumbering.recommendedDefaults;
     n.text.attr({ 'font-family': defaults.text['font-family'] });
     n.text.attr({ 'font-size': defaults.text['font-size'] });
     n.text.attr({ 'font-weight': defaults.text['font-weight'] });
@@ -43,14 +43,14 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   static updateDefaults(n: BaseNumbering) {
-    BaseNumbering.defaults.basePadding = n.basePadding ?? BaseNumbering.defaults.basePadding;
-    BaseNumbering.defaults.lineLength = n.lineLength ?? BaseNumbering.defaults.lineLength;
-    BaseNumbering.defaults.text['font-family'] = n.text.attr('font-family');
-    BaseNumbering.defaults.text['font-size'] = n.text.attr('font-size');
-    BaseNumbering.defaults.text['font-weight'] = n.text.attr('font-weight');
-    BaseNumbering.defaults.text['fill'] = n.text.attr('fill');
-    BaseNumbering.defaults.line['stroke'] = n.line.attr('stroke');
-    BaseNumbering.defaults.line['stroke-width'] = n.line.attr('stroke-width');
+    BaseNumbering.recommendedDefaults.basePadding = n.basePadding ?? BaseNumbering.recommendedDefaults.basePadding;
+    BaseNumbering.recommendedDefaults.lineLength = n.lineLength ?? BaseNumbering.recommendedDefaults.lineLength;
+    BaseNumbering.recommendedDefaults.text['font-family'] = n.text.attr('font-family');
+    BaseNumbering.recommendedDefaults.text['font-size'] = n.text.attr('font-size');
+    BaseNumbering.recommendedDefaults.text['font-weight'] = n.text.attr('font-weight');
+    BaseNumbering.recommendedDefaults.text['fill'] = n.text.attr('fill');
+    BaseNumbering.recommendedDefaults.line['stroke'] = n.line.attr('stroke');
+    BaseNumbering.recommendedDefaults.line['stroke-width'] = n.line.attr('stroke-width');
   }
 
   static fromSavedState(
@@ -167,9 +167,9 @@ export class BaseNumbering implements BaseNumberingInterface {
   reposition(rp?: Repositioning) {
     position(this, {
       baseCenter: rp?.baseCenter ?? this._baseCenter,
-      basePadding: rp?.basePadding ?? this.basePadding ?? BaseNumbering.defaults.basePadding,
+      basePadding: rp?.basePadding ?? this.basePadding ?? BaseNumbering.recommendedDefaults.basePadding,
       lineAngle: rp?.lineAngle ?? this.lineAngle ?? 0,
-      lineLength: rp?.lineLength ?? this.lineLength ?? BaseNumbering.defaults.lineLength,
+      lineLength: rp?.lineLength ?? this.lineLength ?? BaseNumbering.recommendedDefaults.lineLength,
       textPadding: this.textPadding,
     });
     if (rp && rp.baseCenter) {
@@ -208,7 +208,7 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 }
 
-BaseNumbering.defaults = {
+BaseNumbering.recommendedDefaults = {
   text: {
     'font-family': 'Arial',
     'font-size': 8,
