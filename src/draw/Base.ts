@@ -9,7 +9,7 @@ import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
 import { addNumbering, removeNumbering } from 'Draw/bases/numbering/add';
-import { addSavedNumbering, savableState } from 'Draw/bases/numbering/save';
+import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/numbering/save';
 import { CircleBaseAnnotationSavableState } from './BaseAnnotationInterface';
 import { SavableState as BaseNumberingSavableState } from 'Draw/bases/numbering/BaseNumberingInterface';
 import { areClose } from './areClose';
@@ -399,7 +399,7 @@ class Base implements BaseInterface {
       textId: this.text.id(),
       highlighting: this.highlighting ? this.highlighting.savableState() : undefined,
       outline: this.outline ? this.outline.savableState() : undefined,
-      numbering: this.numbering ? this.numbering.savableState() : undefined,
+      numbering: this.numbering ? savableNumberingState(this.numbering) : undefined,
     };
   }
 

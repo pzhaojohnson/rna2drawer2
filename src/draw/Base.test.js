@@ -2,6 +2,7 @@ import Base from './Base';
 import NodeSVG from './NodeSVG';
 import normalizeAngle from './normalizeAngle';
 import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
+import { savableState as savableNumberingState } from 'Draw/bases/numbering/save';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import angleBetween from './angleBetween';
 import { distance2D as distance } from 'Math/distance';
@@ -573,7 +574,7 @@ describe('Base class', () => {
         let b1 = Base.create(svg, 'G', 15, 30);
         let b2 = Base.create(svg, 'G', 15, 30);
         let n1 = b1.addNumbering(852);
-        let savableState1 = n1.savableState();
+        let savableState1 = savableNumberingState(n1);
         let n2 = b2.addNumberingFromSavedState(savableState1);
         expect(n2.text.text()).toBe('852');
         // requires that center base coordinates were passed
@@ -656,7 +657,7 @@ describe('Base class', () => {
       let b = Base.create(svg, 'R', 0, 1);
       let n = b.addNumbering(1000);
       let savableState = b.savableState();
-      expect(JSON.stringify(savableState.numbering)).toBe(JSON.stringify(n.savableState()));
+      expect(JSON.stringify(savableState.numbering)).toBe(JSON.stringify(savableNumberingState(n)));
     });
 
     describe('can be converted to and from a JSON string', () => {

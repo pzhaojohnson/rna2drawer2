@@ -25,7 +25,5 @@ export interface BaseNumberingInterface {
   reposition(rp?: Repositioning): void;
   bringToFront(): void;
   sendToBack(): void;
-  remove(): void;
-  savableState(): SavableState;
   refreshIds(): void;
 }

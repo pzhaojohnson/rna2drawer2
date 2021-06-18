@@ -1,7 +1,6 @@
 import {
   BaseNumberingInterface,
   Repositioning,
-  SavableState,
 } from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { Values } from './values';
@@ -127,19 +126,6 @@ export class BaseNumbering implements BaseNumberingInterface {
   sendToBack() {
     this.text.back();
     this.line.back();
-  }
-
-  remove() {
-    this.text.remove();
-    this.line.remove();
-  }
-
-  savableState(): SavableState {
-    return {
-      className: 'BaseNumbering',
-      textId: this.text.id(),
-      lineId: this.line.id(),
-    };
   }
 
   refreshIds() {

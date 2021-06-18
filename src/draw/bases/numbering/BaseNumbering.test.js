@@ -181,25 +181,6 @@ describe('BaseNumbering class', () => {
     expect(n.text.position()).toBeGreaterThan(3);
   });
 
-  it('remove method', () => {
-    let n = base.numbering;
-    let textId = '#' + n.text.id();
-    let lineId = '#' + n.line.id();
-    expect(svg.findOne(textId)).toBeTruthy();
-    expect(svg.findOne(lineId)).toBeTruthy();
-    n.remove();
-    expect(svg.findOne(textId)).toBe(null);
-    expect(svg.findOne(lineId)).toBe(null);
-  });
-
-  it('savableState method', () => {
-    let n = base.numbering;
-    let savableState = n.savableState();
-    expect(savableState.className).toBe('BaseNumbering');
-    expect(savableState.textId).toBe(n.text.id());
-    expect(savableState.lineId).toBe(n.line.id());
-  });
-
   it('refreshIds method', () => {
     let n = base.numbering;
     let oldTextId = n.text.id();
