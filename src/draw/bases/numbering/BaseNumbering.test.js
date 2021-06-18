@@ -61,7 +61,6 @@ describe('BaseNumbering class', () => {
   });
 
   describe('create static method', () => {
-    let spy = jest.spyOn(BaseNumbering, 'applyDefaults');
     let n = BaseNumbering.create(svg, 129, { x: 120, y: 548 });
     let t = n.text;
     let l = n.line;
@@ -86,10 +85,6 @@ describe('BaseNumbering class', () => {
       expect(
         distance(l.attr('x2'), l.attr('y2'), t.attr('x'), t.attr('y'))
       ).toBeLessThan(16);
-    });
-
-    it('applies defaults', () => {
-      expect(spy).toHaveBeenCalled();
     });
 
     it('throws with constructor', () => {

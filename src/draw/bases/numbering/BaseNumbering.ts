@@ -4,6 +4,7 @@ import {
   SavableState,
 } from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
+import { setValues } from './values';
 import { Point2D as Point } from 'Math/Point';
 import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
@@ -29,19 +30,6 @@ export class BaseNumbering implements BaseNumberingInterface {
 
   _baseCenter: Point;
 
-  static applyDefaults(n: BaseNumbering) {
-    let defaults = BaseNumbering.recommendedDefaults;
-    n.text.attr({ 'font-family': defaults.text['font-family'] });
-    n.text.attr({ 'font-size': defaults.text['font-size'] });
-    n.text.attr({ 'font-weight': defaults.text['font-weight'] });
-    n.text.attr({ 'fill': defaults.text['fill'] });
-    n.line.attr({ 'stroke': defaults.line['stroke'] });
-    n.line.attr({ 'stroke-width': defaults.line['stroke-width'] });
-    n.basePadding = defaults.basePadding;
-    n.lineLength = defaults.lineLength;
-    n.reposition();
-  }
-
   static updateDefaults(n: BaseNumbering) {
     BaseNumbering.recommendedDefaults.basePadding = n.basePadding ?? BaseNumbering.recommendedDefaults.basePadding;
     BaseNumbering.recommendedDefaults.lineLength = n.lineLength ?? BaseNumbering.recommendedDefaults.lineLength;
@@ -52,7 +40,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     BaseNumbering.recommendedDefaults.line['stroke'] = n.line.attr('stroke');
     BaseNumbering.recommendedDefaults.line['stroke-width'] = n.line.attr('stroke-width');
   }
-
+  
   static fromSavedState(
     savedState: SavableState,
     svg: SVG.Svg,
@@ -72,7 +60,7 @@ export class BaseNumbering implements BaseNumberingInterface {
     let line = svg.line(1, 2, 3, 4);
     let text = svg.text((add) => add.tspan(number.toString()));
     let n = new BaseNumbering(text, line, baseCenter);
-    BaseNumbering.applyDefaults(n);
+    setValues(n, BaseNumbering.recommendedDefaults);
     return n;
   }
 

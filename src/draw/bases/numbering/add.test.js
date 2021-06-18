@@ -66,7 +66,7 @@ describe('addNumbering function', () => {
     expect(base.numbering.text.text()).toBe('1017');
   });
 
-  it('positions numbering with default base padding and line length', () => {
+  it('positions the numbering', () => {
     addNumbering(base, 500);
     let rp1 = getRoundedPositioning(base.numbering);
     position(base.numbering, {
