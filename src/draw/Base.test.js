@@ -693,7 +693,7 @@ describe('Base class', () => {
       let spies = [
         jest.spyOn(h, 'refreshIds'),
         jest.spyOn(o, 'refreshIds'),
-        jest.spyOn(n, 'refreshIds'),
+        jest.spyOn(n, 'regenerateIds'),
       ];
       b.refreshIds();
       spies.forEach(s => expect(s).toHaveBeenCalled());

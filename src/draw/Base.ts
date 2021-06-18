@@ -413,7 +413,7 @@ class Base implements BaseInterface {
       this.outline.refreshIds();
     }
     if (this.numbering) {
-      this.numbering.refreshIds();
+      this.numbering.regenerateIds();
     }
   }
 }

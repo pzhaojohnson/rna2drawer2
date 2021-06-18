@@ -7,6 +7,8 @@ import { Values } from './values';
 import { Point2D as Point } from 'Math/Point';
 import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
+import { regenerateId } from 'Draw/svg/regenerateId';
+import { SVGElementWrapper as ElementWrapper } from 'Draw/svg/element';
 
 export class BaseNumbering implements BaseNumberingInterface {
   static recommendedDefaults: Values;
@@ -128,11 +130,9 @@ export class BaseNumbering implements BaseNumberingInterface {
     this.line.back();
   }
 
-  refreshIds() {
-    this.text.id('');
-    this.text.id();
-    this.line.id('');
-    this.line.id();
+  regenerateIds() {
+    regenerateId(new ElementWrapper(this.text));
+    regenerateId(new ElementWrapper(this.line));
   }
 }
 

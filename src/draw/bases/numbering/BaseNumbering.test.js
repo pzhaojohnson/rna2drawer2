@@ -181,11 +181,11 @@ describe('BaseNumbering class', () => {
     expect(n.text.position()).toBeGreaterThan(3);
   });
 
-  it('refreshIds method', () => {
+  it('regenerateIds method', () => {
     let n = base.numbering;
     let oldTextId = n.text.id();
     let oldLineId = n.line.id();
-    n.refreshIds();
+    n.regenerateIds();
     expect(n.text.id()).not.toBe(oldTextId);
     expect(n.line.id()).not.toBe(oldLineId);
   });
