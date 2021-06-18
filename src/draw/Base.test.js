@@ -560,30 +560,11 @@ describe('Base class', () => {
 
   describe('numbering', () => {
     describe('addNumbering method', () => {
-      it('creates with number and passes center base coordinates and stores reference', () => {
+      it('creates with number and stores reference', () => {
         let b = Base.create(svg, 'G', 20, 80);
-        let spy = jest.spyOn(BaseNumbering, 'create');
         let n = b.addNumbering(2056);
         expect(n.text.text()).toBe('2056');
-        let c = spy.mock.calls[0];
-        expect(c[2]).toEqual({ x: b.xCenter, y: b.yCenter });
         expect(b.numbering).toBe(n); // check reference
-      });
-
-      it('removes previous numbering', () => {
-        let b = Base.create(svg, 'G', 200, 800);
-        let n1 = b.addNumbering(1);
-        let spy = jest.spyOn(n1, 'remove');
-        let n2 = b.addNumbering(2);
-        expect(b.numbering).toBe(n2);
-        expect(spy).toHaveBeenCalled();
-      });
-
-      it('handles throw by BaseNumbering class', () => {
-        let b = Base.create(svg, 'G', 2, 8);
-        let n = b.addNumbering({ toString: () => { throw 'Error' } });
-        expect(n).toBe(undefined);
-        expect(b.numbering).toBe(undefined);
       });
     });
 
@@ -597,17 +578,6 @@ describe('Base class', () => {
         // requires that center base coordinates were passed
         expect(n2.basePadding).toBeCloseTo(n1.basePadding);
         expect(b.numbering).toBe(n2); // check reference
-      });
-
-      it('removes previous numbering', () => {
-        let b = Base.create(svg, 'G', 30, 6);
-        let n1 = BaseNumbering.create(svg, 1, { x: b.xCenter, y: b.yCenter });
-        let savableState1 = n1.savableState();
-        let n2 = b.addNumbering(2);
-        let spy = jest.spyOn(n2, 'remove');
-        b.addNumberingFromSavedState(savableState1);
-        expect(b.numbering.text.text()).toBe('1');
-        expect(spy).toHaveBeenCalled();
       });
     });
 
@@ -624,12 +594,10 @@ describe('Base class', () => {
     });
 
     describe('removeNumbering method', () => {
-      it('removes numbering and reference', () => {
+      it('removes numbering', () => {
         let b = Base.create(svg, 'G', 50, 25);
         let n = b.addNumbering(1);
-        let spy = jest.spyOn(n, 'remove');
         b.removeNumbering();
-        expect(spy).toHaveBeenCalled();
         expect(b.numbering).toBe(undefined);
       });
 

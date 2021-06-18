@@ -63,7 +63,7 @@ export interface BaseInterface {
   removeOutline(): void;
 
   addNumbering(n: number): BaseNumbering | undefined;
-  addNumberingFromSavedState(s: BaseNumberingSavableState): BaseNumbering | never;
+  addNumberingFromSavedState(s: BaseNumberingSavableState): BaseNumbering | undefined | never;
   hasNumbering(): boolean;
   numbering?: BaseNumbering;
   removeNumbering(): void;

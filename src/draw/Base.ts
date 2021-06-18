@@ -8,6 +8,8 @@ import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
+import { addNumbering, removeNumbering } from 'Draw/bases/numbering/add';
+import { addSavedNumbering, savableState } from 'Draw/bases/numbering/save';
 import { CircleBaseAnnotationSavableState } from './BaseAnnotationInterface';
 import { SavableState as BaseNumberingSavableState } from 'Draw/bases/numbering/BaseNumberingInterface';
 import { areClose } from './areClose';
@@ -354,30 +356,15 @@ class Base implements BaseInterface {
    * Returns null if the given number is not accepted by the BaseNumbering class.
    */
   addNumbering(number: number): (BaseNumbering | undefined) {
-    this.removeNumbering();
-    try {
-      this._numbering = BaseNumbering.create(
-        this.text.root(),
-        number,
-        { x: this.xCenter, y: this.yCenter },
-      );
-    } catch (err) {
-      console.error(err.toString());
-      this._numbering = undefined;
-    }
-    return this._numbering;
+    addNumbering(this, number);
+    return this.numbering;
   }
 
   addNumberingFromSavedState(
     savedState: BaseNumberingSavableState,
-  ): (BaseNumbering | never) {
-    this.removeNumbering();
-    this._numbering = BaseNumbering.fromSavedState(
-      savedState,
-      this.text.root(),
-      { x: this.xCenter, y: this.yCenter },
-    );
-    return this._numbering;
+  ): (BaseNumbering | undefined | never) {
+    addSavedNumbering(this, savedState);
+    return this.numbering;
   }
 
   hasNumbering(): boolean {
@@ -396,10 +383,7 @@ class Base implements BaseInterface {
   }
 
   removeNumbering() {
-    if (this._numbering) {
-      this._numbering.remove();
-      this._numbering = undefined;
-    }
+    removeNumbering(this);
   }
 
   remove() {
