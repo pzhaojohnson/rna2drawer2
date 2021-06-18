@@ -10,8 +10,8 @@ export function addNumbering(b: Base, n: number) {
     let text = svg.text(n.toString());
     let line = svg.line(0, 0, 1, 1);
     let bn = new BaseNumbering(text, line, { x: b.xCenter, y: b.yCenter });
-    // also used to position the numbering
     setValues(bn, BaseNumbering.recommendedDefaults);
+    bn.reposition();
     b.numbering = bn;
   } else {
     console.error('Unable to retrieve root SVG element of base.');
