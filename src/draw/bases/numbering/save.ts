@@ -1,11 +1,14 @@
-import {
-  BaseNumberingInterface,
-  SavableState,
-} from './BaseNumberingInterface';
+import { BaseNumberingInterface } from './BaseNumberingInterface';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { findTextByUniqueId, findLineByUniqueId } from 'Draw/saved';
 import { BaseNumbering } from './BaseNumbering';
+
+export type SavableState = {
+  className: 'BaseNumbering';
+  textId: string;
+  lineId: string;
+}
 
 export function savableState(bn: BaseNumberingInterface): SavableState {
   return {

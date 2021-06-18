@@ -8,12 +8,6 @@ export type Repositioning = {
   lineLength?: number;
 }
 
-export type SavableState = {
-  className: 'BaseNumbering';
-  textId: string;
-  lineId: string;
-}
-
 export interface BaseNumberingInterface {
   readonly text: SVG.Text;
   readonly line: SVG.Line;

@@ -11,7 +11,7 @@ import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
 import { addNumbering, removeNumbering } from 'Draw/bases/numbering/add';
 import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/numbering/save';
 import { CircleBaseAnnotationSavableState } from './BaseAnnotationInterface';
-import { SavableState as BaseNumberingSavableState } from 'Draw/bases/numbering/BaseNumberingInterface';
+import { SavableState as BaseNumberingSavableState } from 'Draw/bases/numbering/save';
 import { areClose } from './areClose';
 
 class Base implements BaseInterface {
