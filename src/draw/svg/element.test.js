@@ -104,6 +104,16 @@ describe('SVGElementWrapper', () => {
     });
   });
 
+  it('getter methods', () => {
+    [
+      { name: 'root' },
+      { name: 'position' },
+      { name: 'svg' },
+    ].forEach(n => {
+      expect(wrapper[n.name]()).toEqual(element[n.name]());
+    });
+  });
+
   it('getter-setter methods', () => {
     [
       { name: 'id', value: (new Date()).toString() },

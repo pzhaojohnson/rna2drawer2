@@ -9,6 +9,14 @@ export class SVGElementWrapper {
     this.element = element;
   }
 
+  root(): unknown {
+    try {
+      return this.element.root();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   attr(arg?: string | { [key: string]: unknown }): unknown {
     try {
       if (typeof arg == 'string') {
@@ -121,9 +129,25 @@ export class SVGElementWrapper {
     }
   }
 
+  position(): unknown {
+    try {
+      return this.element.position();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   remove() {
     try {
       this.element.remove();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  svg(): unknown {
+    try {
+      return this.element.svg();
     } catch (error) {
       console.error(error);
     }
