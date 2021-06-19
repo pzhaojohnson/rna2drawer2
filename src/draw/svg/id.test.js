@@ -66,7 +66,7 @@ describe('assignUuid function', () => {
       // assigned a new UUID
       expect(currId).not.toEqual(prevId);
       // prepended a letter
-      expect(currId.charAt(0)).toBe('u');
+      expect(currId.charAt(0)).toBe('i');
       prevId = currId;
     }
   });
