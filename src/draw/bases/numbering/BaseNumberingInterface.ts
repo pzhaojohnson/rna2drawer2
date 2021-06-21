@@ -1,5 +1,5 @@
-import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
+import { SVGTextWrapper as Text } from 'Draw/svg/text';
+import { SVGLineWrapper as Line } from 'Draw/svg/line';
 import { Point2D as Point } from 'Math/Point';
 
 export type Repositioning = {
@@ -10,8 +10,8 @@ export type Repositioning = {
 }
 
 export interface BaseNumberingInterface {
-  readonly text: TextWrapper;
-  readonly line: LineWrapper;
+  readonly text: Text;
+  readonly line: Line;
   readonly id: string | undefined;
   basePadding: number | undefined;
   lineAngle: number | undefined;

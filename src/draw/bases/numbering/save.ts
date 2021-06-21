@@ -1,6 +1,8 @@
 import { BaseNumberingInterface } from './BaseNumberingInterface';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import { findTextByUniqueId, findLineByUniqueId } from 'Draw/saved';
 import { BaseNumbering } from './BaseNumbering';
 import { values } from './values';
@@ -31,7 +33,11 @@ export function addSavedNumbering(b: Base, saved: SavedState): void | never {
   } else {
     let text = findTextByUniqueId(svg, saved.textId);
     let line = findLineByUniqueId(svg, saved.lineId);
-    let bn = new BaseNumbering(text, line, { x: b.xCenter, y: b.yCenter });
+    let bn = new BaseNumbering(
+      new TextWrapper(text),
+      new LineWrapper(line),
+      { x: b.xCenter, y: b.yCenter },
+    );
     if (b.numbering) {
       throw new Error('Base already has numbering.');
     }

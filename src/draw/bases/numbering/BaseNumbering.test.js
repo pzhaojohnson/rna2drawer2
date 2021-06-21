@@ -1,5 +1,7 @@
 import { BaseNumbering } from './BaseNumbering';
 import NodeSVG from 'Draw/NodeSVG';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import Base from 'Draw/Base';
 import { addNumbering } from './add';
 import normalizeAngle from 'Draw/normalizeAngle';
@@ -51,20 +53,21 @@ function getRoundedPositioning(n) {
 describe('BaseNumbering class', () => {
   describe('constructor', () => {
     it('checks passed element types', () => {
-      let t = svg.text('a');
-      let l = svg.line(1, 5, 8, 12);
+      let t = new TextWrapper(svg.text('a'));
+      let l = new LineWrapper(svg.line(1, 5, 8, 12));
       let c = svg.circle(20);
+      let bc = { x: 3, y: 8 };
       expect(
-        () => new BaseNumbering(c, l, { x: 1, y: 2 })
+        () => new BaseNumbering(new TextWrapper(c), l, bc)
       ).toThrow();
       expect(
-        () => new BaseNumbering(t, c, { x: 10, y: 20 })
+        () => new BaseNumbering(t, new LineWrapper(c), bc)
       ).toThrow();
     });
 
     it('initializes element IDs', () => {
-      let t = svg.text('1');
-      let l = svg.line(1, 5, 8, 12);
+      let t = new TextWrapper(svg.text('1'));
+      let l = new LineWrapper(svg.line(1, 5, 8, 12));
       expect(t.attr('id')).toBe(undefined);
       expect(l.attr('id')).toBe(undefined);
       let n = new BaseNumbering(t, l, { x: 1, y: 2 });
@@ -74,8 +77,8 @@ describe('BaseNumbering class', () => {
   });
 
   it('id getter', () => {
-    let t = svg.text(add => add.tspan('6'));
-    let l = svg.line(10, 20, 30, 40);
+    let t = new TextWrapper(svg.text('6'));
+    let l = new LineWrapper(svg.line(10, 20, 30, 40));
     let n = new BaseNumbering(t, l, { x: 10, y: 20 });
     expect(n.id).toBe(t.id());
   });
