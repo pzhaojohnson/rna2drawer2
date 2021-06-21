@@ -3,47 +3,49 @@ import {
   Repositioning,
 } from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import { Values } from './values';
 import { Point2D as Point } from 'Math/Point';
 import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
 import { regenerateId } from 'Draw/svg/regenerateId';
-import { SVGElementWrapper as ElementWrapper } from 'Draw/svg/element';
 
 export class BaseNumbering implements BaseNumberingInterface {
   static recommendedDefaults: Values;
 
-  readonly text: SVG.Text;
-  readonly line: SVG.Line;
+  readonly text: TextWrapper;
+  readonly line: LineWrapper;
 
   _baseCenter: Point;
 
   constructor(text: SVG.Text, line: SVG.Line, baseCenter: Point) {
-    this.text = text;
+    this.text = new TextWrapper(text);
     this._validateText();
 
-    this.line = line;
+    this.line = new LineWrapper(line);
     this._validateLine();
 
     this._baseCenter = { ...baseCenter };
   }
 
   _validateText(): void | never {
-    if (this.text.type != 'text') {
+    if (this.text.element.type != 'text') {
       throw new Error('Passed element is not a text.');
     }
     this.text.id();
   }
 
   _validateLine(): void | never {
-    if (this.line.type != 'line') {
+    if (this.line.element.type != 'line') {
       throw new Error('Passed element is not a line.');
     }
     this.line.id();
   }
 
-  get id(): string {
-    return this.text.id();
+  get id(): string | undefined {
+    let id = this.text.id();
+    return typeof id == 'string' ? id : undefined;
   }
 
   get basePadding(): number | undefined {
@@ -131,8 +133,8 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   regenerateIds() {
-    regenerateId(new ElementWrapper(this.text));
-    regenerateId(new ElementWrapper(this.line));
+    regenerateId(this.text);
+    regenerateId(this.line);
   }
 }
 

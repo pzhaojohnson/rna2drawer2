@@ -1,8 +1,9 @@
 import { BaseNumberingInterface as BaseNumbering } from './BaseNumberingInterface';
-import * as SVG from '@svgdotjs/svg.js';
+import { SVGTextWrapper as Text } from 'Draw/svg/text';
+import { SVGLineWrapper as Line } from 'Draw/svg/line';
 import { round } from 'Math/round';
 
-function roundTextNumbers(text: SVG.Text, places: number) {
+function roundTextNumbers(text: Text, places: number) {
   [
     'x',
     'y',
@@ -16,7 +17,7 @@ function roundTextNumbers(text: SVG.Text, places: number) {
   });
 }
 
-function roundLineNumbers(line: SVG.Line, places: number) {
+function roundLineNumbers(line: Line, places: number) {
   [
     'x1',
     'y1',
