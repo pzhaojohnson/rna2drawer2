@@ -9,7 +9,7 @@ import { Values } from './values';
 import { Point2D as Point } from 'Math/Point';
 import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
-import { regenerateId } from 'Draw/svg/regenerateId';
+import { assignUuid } from 'Draw/svg/id';
 
 export class BaseNumbering implements BaseNumberingInterface {
   static recommendedDefaults: Values;
@@ -33,14 +33,14 @@ export class BaseNumbering implements BaseNumberingInterface {
     if (this.text.element.type != 'text') {
       throw new Error('Passed element is not a text.');
     }
-    this.text.id();
+    assignUuid(this.text);
   }
 
   _validateLine(): void | never {
     if (this.line.element.type != 'line') {
       throw new Error('Passed element is not a line.');
     }
-    this.line.id();
+    assignUuid(this.line);
   }
 
   get id(): string | undefined {
@@ -133,8 +133,8 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   regenerateIds() {
-    regenerateId(this.text);
-    regenerateId(this.line);
+    assignUuid(this.text);
+    assignUuid(this.line);
   }
 }
 

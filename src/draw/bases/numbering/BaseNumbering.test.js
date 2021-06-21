@@ -75,10 +75,9 @@ describe('BaseNumbering class', () => {
 
   it('id getter', () => {
     let t = svg.text(add => add.tspan('6'));
-    t.id('asdfzxcv');
     let l = svg.line(10, 20, 30, 40);
     let n = new BaseNumbering(t, l, { x: 10, y: 20 });
-    expect(n.id).toBe('asdfzxcv');
+    expect(n.id).toBe(t.id());
   });
 
   it('basePadding, lineAngle and lineLength properties', () => {
