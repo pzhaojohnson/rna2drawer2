@@ -37,18 +37,18 @@ afterEach(() => {
   container = null;
 });
 
-function getRoundedPositioning(n) {
+function getRoundedPositioning(bn) {
   return {
     line: {
-      'x1': round(n.line.attr('x1'), 3),
-      'y1': round(n.line.attr('y1'), 3),
-      'x2': round(n.line.attr('x2'), 3),
-      'y2': round(n.line.attr('y2'), 3),
+      'x1': round(bn.line.attr('x1'), 3),
+      'y1': round(bn.line.attr('y1'), 3),
+      'x2': round(bn.line.attr('x2'), 3),
+      'y2': round(bn.line.attr('y2'), 3),
     },
     text: {
-      'x': round(n.text.attr('x'), 3),
-      'y': round(n.text.attr('y'), 3),
-      'text-anchor': n.text.attr('text-anchor'),
+      'x': round(bn.text.attr('x'), 3),
+      'y': round(bn.text.attr('y'), 3),
+      'text-anchor': bn.text.attr('text-anchor'),
     }
   };
 }
@@ -73,7 +73,7 @@ describe('BaseNumbering class', () => {
       let l = new LineWrapper(svg.line(1, 5, 8, 12));
       expect(t.attr('id')).toBe(undefined);
       expect(l.attr('id')).toBe(undefined);
-      let n = new BaseNumbering(t, l, { x: 1, y: 2 });
+      let bn = new BaseNumbering(t, l, { x: 1, y: 2 });
       expect(t.attr('id')).toBeTruthy();
       expect(l.attr('id')).toBeTruthy();
     });
@@ -82,8 +82,8 @@ describe('BaseNumbering class', () => {
   it('id getter', () => {
     let t = new TextWrapper(svg.text('6'));
     let l = new LineWrapper(svg.line(10, 20, 30, 40));
-    let n = new BaseNumbering(t, l, { x: 10, y: 20 });
-    expect(n.id).toBe(t.id());
+    let bn = new BaseNumbering(t, l, { x: 10, y: 20 });
+    expect(bn.id).toBe(t.id());
   });
 
   it('basePadding, lineAngle and lineLength properties', () => {
