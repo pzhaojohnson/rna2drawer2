@@ -21,7 +21,7 @@ function addText(svg: SVG.Svg, n: number): SVG.Text {
 export function addNumbering(b: Base, n: number) {
   removeNumbering(b);
   let svg = b.text.root();
-  if (typeof svg == 'object' && svg.constructor == SVG.Svg) {
+  if (svg instanceof SVG.Svg) {
     let text = addText(svg, n);
     let line = svg.line(0, 0, 1, 1);
     let bn = new BaseNumbering(
