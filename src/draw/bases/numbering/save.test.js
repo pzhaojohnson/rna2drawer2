@@ -86,6 +86,26 @@ describe('addSavedNumbering function', () => {
     expect(base2.numbering.basePadding).toBeCloseTo(16.8);
   });
 
+  it('throws if saved state has wrong class name', () => {
+    addNumbering(base1, 50);
+    let state = savableState(base1.numbering);
+    state.className = 'BaseNumbring';
+    expect(
+      () => addSavedNumbering(base2, state)
+    ).toThrow();
+  });
+
+  it('throws if unable to retrieve root SVG element', () => {
+    addNumbering(base1, 30);
+    let state = savableState(base1.numbering);
+    expect(base2.text.root()).toBeTruthy();
+    base2.text.remove();
+    expect(base2.text.root()).toBeFalsy();
+    expect(
+      () => addSavedNumbering(base2, state)
+    ).toThrow();
+  });
+
   it('throws if unable to find text element', () => {
     addNumbering(base1, 20);
     let state = savableState(base1.numbering);
@@ -112,15 +132,6 @@ describe('addSavedNumbering function', () => {
     addNumbering(base1, 30);
     let state = savableState(base1.numbering);
     addNumbering(base2, 40);
-    expect(
-      () => addSavedNumbering(base2, state)
-    ).toThrow();
-  });
-
-  it('throws if saved state has wrong class name', () => {
-    addNumbering(base1, 50);
-    let state = savableState(base1.numbering);
-    state.className = 'BaseNumbring';
     expect(
       () => addSavedNumbering(base2, state)
     ).toThrow();
