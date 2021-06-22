@@ -1,5 +1,5 @@
 import { BaseNumbering } from './BaseNumbering';
-import NodeSVG from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import Base from 'Draw/Base';
