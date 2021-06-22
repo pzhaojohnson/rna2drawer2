@@ -38,7 +38,7 @@ function textPositioning(bn: BaseNumbering, p: Positioning): TextPositioning | u
   if (typeof fs != 'number') {
     console.error('Font size must be a number to position text of base numbering.');
   } else {
-    fs *= 0.8;
+    fs *= 0.8; // helps vertical centering
     let la = normalizeAngle(p.lineAngle, 0);
     if (la < Math.PI / 4) {
       tp.y += fs / 2;
