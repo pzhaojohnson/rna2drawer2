@@ -12,13 +12,12 @@ export class SVGTextWrapper extends SVGElementWrapper {
     this.wrapped = text;
   }
 
-  text(s?: string): string | undefined {
+  text(text?: string): unknown {
     try {
-      if (typeof s == 'string') {
-        this.wrapped.text(s);
+      if (typeof text == 'string') {
+        this.wrapped.text(text);
       } else {
-        let text = this.wrapped.text();
-        return typeof text == 'string' ? text : undefined;
+        return this.wrapped.text();
       }
     } catch (error) {
       console.error(error);
