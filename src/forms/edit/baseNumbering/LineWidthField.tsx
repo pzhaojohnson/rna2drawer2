@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
 import { atIndex } from 'Array/at';
-import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 
 export function LineWidthField(props: FieldProps): React.ReactElement | null {
   let bns = props.getBaseNumberings();

@@ -1,4 +1,4 @@
-import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/numbering/BaseNumberingInterface';
+import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/number/BaseNumberingInterface';
 
 export interface FieldProps {
   getBaseNumberings: () => BaseNumbering[];

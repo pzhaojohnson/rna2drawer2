@@ -1,5 +1,5 @@
-import { BaseNumberingInterface } from 'Draw/bases/numbering/BaseNumberingInterface';
-import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
+import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
+import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import * as React from 'react';
 import { ColorField as Field } from '../../fields/color/ColorField';
 import { FieldProps } from './FieldProps';

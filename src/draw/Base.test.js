@@ -1,8 +1,8 @@
 import Base from './Base';
 import NodeSVG from './NodeSVG';
 import normalizeAngle from './normalizeAngle';
-import { BaseNumbering } from 'Draw/bases/numbering/BaseNumbering';
-import { savableState as savableNumberingState } from 'Draw/bases/numbering/save';
+import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { savableState as savableNumberingState } from 'Draw/bases/number/save';
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import angleBetween from './angleBetween';
 import { distance2D as distance } from 'Math/distance';

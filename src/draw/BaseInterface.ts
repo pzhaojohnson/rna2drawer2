@@ -4,8 +4,8 @@ import {
   CircleBaseAnnotationInterface as CircleBaseAnnotation,
   CircleBaseAnnotationSavableState,
 } from "./BaseAnnotationInterface";
-import { BaseNumberingInterface as BaseNumbering } from "Draw/bases/numbering/BaseNumberingInterface";
-import { SavableState as BaseNumberingSavableState } from 'Draw/bases/numbering/save';
+import { BaseNumberingInterface as BaseNumbering } from "Draw/bases/number/BaseNumberingInterface";
+import { SavableState as BaseNumberingSavableState } from 'Draw/bases/number/save';
 
 export interface BaseMostRecentProps {
   fontFamily: string;
