@@ -31,6 +31,6 @@ afterEach(() => {
 
 describe('SVGLineWrapper', () => {
   it('provides reference to wrapped line', () => {
-    expect(wrapper.element).toBe(line);
+    expect(wrapper.wrapped).toBe(line);
   });
 });

@@ -31,6 +31,6 @@ afterEach(() => {
 
 describe('SVGCircleWrapper', () => {
   it('provides reference to wrapped circle', () => {
-    expect(wrapper.element).toBe(circle);
+    expect(wrapper.wrapped).toBe(circle);
   });
 });

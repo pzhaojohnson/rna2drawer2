@@ -31,6 +31,6 @@ afterEach(() => {
 
 describe('SVGPathWrapper', () => {
   it('provides reference to wrapped path', () => {
-    expect(wrapper.element).toBe(path);
+    expect(wrapper.wrapped).toBe(path);
   });
 });

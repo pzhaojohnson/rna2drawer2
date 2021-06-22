@@ -4,11 +4,11 @@ import { SVGElementWrapper } from './element';
 export class SVGPathWrapper extends SVGElementWrapper {
 
   // the wrapped path
-  readonly element: SVG.Path;
+  readonly wrapped: SVG.Path;
 
   constructor(path: SVG.Path) {
     super(path);
     
-    this.element = path;
+    this.wrapped = path;
   }
 }

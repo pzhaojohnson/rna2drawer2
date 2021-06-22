@@ -31,7 +31,7 @@ afterEach(() => {
 
 describe('SVGTextWrapper', () => {
   it('provides reference to wrapped text', () => {
-    expect(wrapper.element).toBe(text);
+    expect(wrapper.wrapped).toBe(text);
   });
 
   it('getter-setter methods', () => {

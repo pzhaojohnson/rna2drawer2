@@ -3,15 +3,15 @@ import * as SVG from '@svgdotjs/svg.js';
 export class SVGElementWrapper {
 
   // the wrapped element
-  readonly element: SVG.Element;
+  readonly wrapped: SVG.Element;
 
   constructor(element: SVG.Element) {
-    this.element = element;
+    this.wrapped = element;
   }
 
   root(): unknown {
     try {
-      return this.element.root();
+      return this.wrapped.root();
     } catch (error) {
       console.error(error);
     }
@@ -20,11 +20,11 @@ export class SVGElementWrapper {
   attr(arg?: string | { [key: string]: unknown }): unknown {
     try {
       if (typeof arg == 'string') {
-        return this.element.attr(arg);
+        return this.wrapped.attr(arg);
       } else if (typeof arg == 'object') {
-        this.element.attr(arg);
+        this.wrapped.attr(arg);
       } else {
-        return this.element.attr();
+        return this.wrapped.attr();
       }
     } catch (error) {
       console.error(error);
@@ -34,11 +34,11 @@ export class SVGElementWrapper {
   css(arg?: string | CSSStyleDeclaration): unknown {
     try {
       if (typeof arg == 'string') {
-        return this.element.css(arg);
+        return this.wrapped.css(arg);
       } else if (typeof arg == 'object') {
-        this.element.css(arg);
+        this.wrapped.css(arg);
       } else {
-        return this.element.css();
+        return this.wrapped.css();
       }
     } catch (error) {
       console.error(error);
@@ -48,9 +48,9 @@ export class SVGElementWrapper {
   id(id?: string): unknown {
     try {
       if (typeof id == 'string') {
-        this.element.id(id);
+        this.wrapped.id(id);
       } else {
-        return this.element.id();
+        return this.wrapped.id();
       }
     } catch (error) {
       console.error(error);
@@ -60,9 +60,9 @@ export class SVGElementWrapper {
   cx(cx?: number): unknown {
     try {
       if (typeof cx == 'number') {
-        this.element.cx(cx);
+        this.wrapped.cx(cx);
       } else {
-        return this.element.cx();
+        return this.wrapped.cx();
       }
     } catch (error) {
       console.error(error);
@@ -72,9 +72,9 @@ export class SVGElementWrapper {
   cy(cy?: number): unknown {
     try {
       if (typeof cy == 'number') {
-        this.element.cy(cy);
+        this.wrapped.cy(cy);
       } else {
-        return this.element.cy();
+        return this.wrapped.cy();
       }
     } catch (error) {
       console.error(error);
@@ -83,7 +83,7 @@ export class SVGElementWrapper {
 
   mouseover(f: () => void) {
     try {
-      this.element.mouseover(f);
+      this.wrapped.mouseover(f);
     } catch (error) {
       console.error(error);
     }
@@ -91,7 +91,7 @@ export class SVGElementWrapper {
 
   mouseout(f: () => void) {
     try {
-      this.element.mouseout(f);
+      this.wrapped.mouseout(f);
     } catch (error) {
       console.error(error);
     }
@@ -99,7 +99,7 @@ export class SVGElementWrapper {
 
   mousedown(f: () => void) {
     try {
-      this.element.mousedown(f);
+      this.wrapped.mousedown(f);
     } catch (error) {
       console.error(error);
     }
@@ -107,7 +107,7 @@ export class SVGElementWrapper {
 
   dblclick(f: () => void) {
     try {
-      this.element.dblclick(f);
+      this.wrapped.dblclick(f);
     } catch (error) {
       console.error(error);
     }
@@ -115,7 +115,7 @@ export class SVGElementWrapper {
 
   front() {
     try {
-      this.element.front();
+      this.wrapped.front();
     } catch (error) {
       console.error(error);
     }
@@ -123,7 +123,7 @@ export class SVGElementWrapper {
 
   back() {
     try {
-      this.element.back();
+      this.wrapped.back();
     } catch (error) {
       console.error(error);
     }
@@ -131,7 +131,7 @@ export class SVGElementWrapper {
 
   position(): unknown {
     try {
-      return this.element.position();
+      return this.wrapped.position();
     } catch (error) {
       console.error(error);
     }
@@ -139,7 +139,7 @@ export class SVGElementWrapper {
 
   remove() {
     try {
-      this.element.remove();
+      this.wrapped.remove();
     } catch (error) {
       console.error(error);
     }
@@ -147,7 +147,7 @@ export class SVGElementWrapper {
 
   svg(): unknown {
     try {
-      return this.element.svg();
+      return this.wrapped.svg();
     } catch (error) {
       console.error(error);
     }

@@ -31,7 +31,7 @@ afterEach(() => {
 
 describe('SVGElementWrapper', () => {
   it('provides reference to wrapped element', () => {
-    expect(wrapper.element).toBe(element);
+    expect(wrapper.wrapped).toBe(element);
   });
 
   describe('attr method', () => {

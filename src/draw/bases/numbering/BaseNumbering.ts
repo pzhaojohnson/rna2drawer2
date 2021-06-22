@@ -29,14 +29,14 @@ export class BaseNumbering implements BaseNumberingInterface {
   }
 
   _validateText(): void | never {
-    if (this.text.element.type != 'text') {
+    if (this.text.wrapped.type != 'text') {
       throw new Error('Passed element is not a text.');
     }
     assignUuid(this.text);
   }
 
   _validateLine(): void | never {
-    if (this.line.element.type != 'line') {
+    if (this.line.wrapped.type != 'line') {
       throw new Error('Passed element is not a line.');
     }
     assignUuid(this.line);
