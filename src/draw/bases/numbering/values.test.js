@@ -12,6 +12,7 @@ function roundBasePaddingAndLineLength(vs, places=3) {
 let container = null;
 let svg = null;
 let base = null;
+let numbering = null;
 
 beforeEach(() => {
   container = document.createElement('div');
@@ -22,9 +23,11 @@ beforeEach(() => {
 
   base = Base.create(svg, 'A', 50, 100);
   addNumbering(base, 300);
+  numbering = base.numbering;
 });
 
 afterEach(() => {
+  numbering = null;
   base = null;
 
   svg.clear();
@@ -38,19 +41,19 @@ afterEach(() => {
 describe('values function', () => {
   it('returns values', () => {
     // make all values different to test if values are mixed up
-    base.numbering.text.attr({
+    numbering.text.attr({
       'font-family': 'Consolas',
       'font-size': 16.25,
       'font-weight': 489,
       'fill': '#1288bc',
     });
-    base.numbering.line.attr({
+    numbering.line.attr({
       'stroke': '#78acd2',
       'stroke-width': 8.19,
     });
-    base.numbering.basePadding = 23.95;
-    base.numbering.lineLength = 35.6;
-    let vs = values(base.numbering);
+    numbering.basePadding = 23.95;
+    numbering.lineLength = 35.6;
+    let vs = values(numbering);
     roundBasePaddingAndLineLength(vs);
     expect(vs).toEqual({
       text: {
@@ -69,11 +72,11 @@ describe('values function', () => {
   });
 
   it('handles number and string font weights', () => {
-    base.numbering.text.attr({ 'font-weight': 320 });
-    vs = values(base.numbering);
+    numbering.text.attr({ 'font-weight': 320 });
+    let vs = values(numbering);
     expect(vs.text['font-weight']).toBe(320);
-    base.numbering.text.attr({ 'font-weight': 'light' });
-    let vs = values(base.numbering);
+    numbering.text.attr({ 'font-weight': 'light' });
+    vs = values(numbering);
     expect(vs.text['font-weight']).toBe('light');
   });
 });
@@ -95,8 +98,8 @@ describe('setValues function', () => {
       basePadding: 90.1,
       lineLength: 15.4,
     };
-    setValues(base.numbering, vs1);
-    let vs2 = values(base.numbering);
+    setValues(numbering, vs1);
+    let vs2 = values(numbering);
     roundBasePaddingAndLineLength(vs2);
     expect(vs2).toEqual(vs1);
   });
@@ -116,12 +119,12 @@ describe('setValues function', () => {
       basePadding: 17.2,
       lineLength: 27.7,
     };
-    setValues(base.numbering, vs1);
+    setValues(numbering, vs1);
     // text and line values objects are defined
-    setValues(base.numbering, { text: {}, line: {} });
+    setValues(numbering, { text: {}, line: {} });
     // text and line values objects are undefined
-    setValues(base.numbering, {});
-    let vs2 = values(base.numbering);
+    setValues(numbering, {});
+    let vs2 = values(numbering);
     roundBasePaddingAndLineLength(vs2);
     // no values were changed
     expect(vs2).toEqual(vs1);
@@ -130,10 +133,10 @@ describe('setValues function', () => {
   it('handles number and string font weights', () => {
     let vs = { text: {}, line: {} };
     vs.text['font-weight'] = 620;
-    setValues(base.numbering, vs);
-    expect(base.numbering.text.attr('font-weight')).toBe(620);
+    setValues(numbering, vs);
+    expect(numbering.text.attr('font-weight')).toBe(620);
     vs.text['font-weight'] = 'bolder';
-    setValues(base.numbering, vs);
-    expect(base.numbering.text.attr('font-weight')).toBe('bolder');
+    setValues(numbering, vs);
+    expect(numbering.text.attr('font-weight')).toBe('bolder');
   });
 });
