@@ -28,7 +28,7 @@ export function addSavedNumbering(b: Base, saved: SavedState): void | never {
     throw new Error('Saved state is not for a base numbering.');
   }
   let svg = b.text.root();
-  if (!svg || !(svg instanceof SVG.Svg)) {
+  if (!(svg instanceof SVG.Svg)) {
     throw new Error('Unable to retrieve root SVG element of base.');
   } else {
     let text = findTextByUniqueId(svg, saved.textId);
