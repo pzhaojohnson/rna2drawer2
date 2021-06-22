@@ -11,6 +11,7 @@ import { position } from './position';
 let container = null;
 let svg = null;
 let base = null;
+let numbering = null;
 
 beforeEach(() => {
   container = document.createElement('div');
@@ -21,9 +22,11 @@ beforeEach(() => {
 
   base = Base.create(svg, 'G', 12, 15);
   addNumbering(base, 50);
+  numbering = base.numbering;
 });
 
 afterEach(() => {
+  numbering = null;
   base = null;
 
   svg.clear();
@@ -84,84 +87,80 @@ describe('BaseNumbering class', () => {
   });
 
   it('basePadding, lineAngle and lineLength properties', () => {
-    let n = base.numbering;
-    n.reposition({ baseCenter: { x: 25.5, y: 256 } })
+    numbering.reposition({ baseCenter: { x: 25.5, y: 256 } })
     // use setters
-    n.basePadding = 18.07;
-    n.lineAngle = 4.2;
-    n.lineLength = 26.6;
+    numbering.basePadding = 18.07;
+    numbering.lineAngle = 4.2;
+    numbering.lineLength = 26.6;
     // check getters
-    expect(n.basePadding).toBeCloseTo(18.07);
-    expect(normalizeAngle(n.lineAngle, 0)).toBeCloseTo(4.2);
-    expect(n.lineLength).toBeCloseTo(26.6);
+    expect(numbering.basePadding).toBeCloseTo(18.07);
+    expect(normalizeAngle(numbering.lineAngle, 0)).toBeCloseTo(4.2);
+    expect(numbering.lineLength).toBeCloseTo(26.6);
     // check actual positioning
-    let rp1 = getRoundedPositioning(n);
-    position(n, {
+    let rp1 = getRoundedPositioning(numbering);
+    position(numbering, {
       baseCenter: { x: 25.5, y: 256 },
       basePadding: 18.07,
       lineAngle: 4.2,
       lineLength: 26.6,
-      textPadding: n.textPadding,
+      textPadding: numbering.textPadding,
     });
-    let rp2 = getRoundedPositioning(n);
+    let rp2 = getRoundedPositioning(numbering);
     expect(rp1).toEqual(rp2);
   });
 
   describe('reposition method', () => {
     it('can be called with no arguments', () => {
-      let n = base.numbering;
-      n.reposition({ baseCenter: { x: 520, y: 465 } });
-      n.basePadding = 16.6;
-      n.lineAngle = 2.8;
-      n.lineLength = 18.25;
-      n.reposition();
-      let rp1 = getRoundedPositioning(n);
-      position(n, {
+      numbering.reposition({ baseCenter: { x: 520, y: 465 } });
+      numbering.basePadding = 16.6;
+      numbering.lineAngle = 2.8;
+      numbering.lineLength = 18.25;
+      numbering.reposition();
+      let rp1 = getRoundedPositioning(numbering);
+      position(numbering, {
         baseCenter: { x: 520, y: 465 },
         basePadding: 16.6,
         lineAngle: 2.8,
         lineLength: 18.25,
-        textPadding: n.textPadding,
+        textPadding: numbering.textPadding,
       });
-      let rp2 = getRoundedPositioning(n);
+      let rp2 = getRoundedPositioning(numbering);
       expect(rp1).toEqual(rp2);
     });
 
     it('can be called with arguments', () => {
-      let n = base.numbering;
-      n.reposition({ baseCenter: { x: 12, y: 300 } });
-      n.reposition({
+      numbering.reposition({ baseCenter: { x: 12, y: 300 } });
+      numbering.reposition({
         baseCenter: { x: 15, y: 1012 },
         basePadding: 25.2,
         lineAngle: 15.5,
         lineLength: 8.22,
       });
-      let rp1 = getRoundedPositioning(n);
-      position(n, {
+      let rp1 = getRoundedPositioning(numbering);
+      position(numbering, {
         baseCenter: { x: 15, y: 1012 },
         basePadding: 25.2,
         lineAngle: 15.5,
         lineLength: 8.22,
-        textPadding: n.textPadding,
+        textPadding: numbering.textPadding,
       });
-      let rp2 = getRoundedPositioning(n);
+      let rp2 = getRoundedPositioning(numbering);
       expect(rp1).toEqual(rp2);
     });
 
     it('stores base center when provided', () => {
-      let n = base.numbering;
-      n.reposition({ baseCenter: { x: 65, y: 19 } });
-      n.reposition({ baseCenter: { x: 421, y: 328 } });
-      n.reposition({ basePadding: 82 });
-      let rp1 = getRoundedPositioning(n);
-      position(n, {
+      numbering.reposition({ baseCenter: { x: 65, y: 19 } });
+      numbering.reposition({ baseCenter: { x: 421, y: 328 } });
+      numbering.reposition({ basePadding: 82 });
+      let rp1 = getRoundedPositioning(numbering);
+      position(numbering, {
         baseCenter: { x: 421, y: 328 },
         basePadding: 82,
-        lineAngle: n.lineAngle,
-        lineLength: n.lineLength,
-        textPadding: n.textPadding,
+        lineAngle: numbering.lineAngle,
+        lineLength: numbering.lineLength,
+        textPadding: numbering.textPadding,
       });
-      let rp2 = getRoundedPositioning(n);
+      let rp2 = getRoundedPositioning(numbering);
       expect(rp1).toEqual(rp2);
     });
   });
@@ -171,24 +170,22 @@ describe('BaseNumbering class', () => {
     let r2 = svg.rect(20, 20);
     let c = svg.circle(20);
     // create above multiple elements
-    let n = base.numbering;
-    n.bringToFront();
-    expect(n.text.position()).toBeGreaterThan(3);
-    expect(n.line.position()).toBeGreaterThan(3);
-    n.sendToBack();
-    expect(n.text.position()).toBeLessThanOrEqual(1);
-    expect(n.line.position()).toBeLessThanOrEqual(1);
-    n.bringToFront();
-    expect(n.line.position()).toBeGreaterThan(3);
-    expect(n.text.position()).toBeGreaterThan(3);
+    numbering.bringToFront();
+    expect(numbering.text.position()).toBeGreaterThan(3);
+    expect(numbering.line.position()).toBeGreaterThan(3);
+    numbering.sendToBack();
+    expect(numbering.text.position()).toBeLessThanOrEqual(1);
+    expect(numbering.line.position()).toBeLessThanOrEqual(1);
+    numbering.bringToFront();
+    expect(numbering.line.position()).toBeGreaterThan(3);
+    expect(numbering.text.position()).toBeGreaterThan(3);
   });
 
   it('regenerateIds method', () => {
-    let n = base.numbering;
-    let oldTextId = n.text.id();
-    let oldLineId = n.line.id();
-    n.regenerateIds();
-    expect(n.text.id()).not.toBe(oldTextId);
-    expect(n.line.id()).not.toBe(oldLineId);
+    let oldTextId = numbering.text.id();
+    let oldLineId = numbering.line.id();
+    numbering.regenerateIds();
+    expect(numbering.text.id()).not.toBe(oldTextId);
+    expect(numbering.line.id()).not.toBe(oldLineId);
   });
 });
