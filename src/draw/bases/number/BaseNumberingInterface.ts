@@ -12,7 +12,7 @@ export type Repositioning = {
 export interface BaseNumberingInterface {
   readonly text: Text;
   readonly line: Line;
-  readonly id: string | undefined;
+  readonly id: string;
   basePadding: number | undefined;
   lineAngle: number | undefined;
   lineLength: number | undefined;

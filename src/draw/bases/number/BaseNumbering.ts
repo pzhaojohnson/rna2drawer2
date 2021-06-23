@@ -42,9 +42,8 @@ export class BaseNumbering implements BaseNumberingInterface {
     assignUuid(this.line);
   }
 
-  get id(): string | undefined {
-    let id = this.text.id();
-    return typeof id == 'string' ? id : undefined;
+  get id(): string {
+    return String(this.text.id());
   }
 
   get basePadding(): number | undefined {
