@@ -136,16 +136,6 @@ describe('CircleBaseAnnotation class', () => {
     });
   });
 
-  it('insertBefore and insertAfter methods', () => {
-    let r = svg.rect(1, 5);
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
-    expect(cba._circle.position()).toBeGreaterThan(r.position());
-    cba.insertBefore(r);
-    expect(cba._circle.position()).toBeLessThan(r.position());
-    cba.insertAfter(r);
-    expect(cba._circle.position()).toBeGreaterThan(r.position());
-  });
-
   it('bringToFront and sendToBack methods', () => {
     let r = svg.rect(10, 20);
     let l = svg.line(1, 2, 3, 4);

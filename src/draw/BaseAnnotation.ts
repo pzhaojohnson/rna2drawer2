@@ -113,14 +113,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     });
   }
 
-  insertBefore(ele: Svg.Element) {
-    this._circle.insertBefore(ele);
-  }
-
-  insertAfter(ele: Svg.Element) {
-    this._circle.insertAfter(ele);
-  }
-
   bringToFront() {
     this._circle.front();
   }

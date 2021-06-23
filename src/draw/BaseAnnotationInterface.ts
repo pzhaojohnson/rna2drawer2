@@ -10,8 +10,6 @@ export interface BaseAnnotationInterface {
 
   shift(xShift: number, yShift: number): void;
   reposition(xBaseCenter: number, yBaseCenter: number): void;
-  insertBefore(ele: Svg.Element): void;
-  insertAfter(ele: Svg.Element): void;
   bringToFront(): void;
   sendToBack(): void;
   remove(): void;
