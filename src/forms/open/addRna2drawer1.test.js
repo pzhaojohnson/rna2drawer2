@@ -194,7 +194,7 @@ describe('adding base outlines', () => {
     let b = app.strictDrawing.drawing.getBaseAtOverallPosition(1);
     let o = b.outline;
     expect(o.circle.attr('r')).toBeCloseTo(1.15 * pixelsToPoints(b.fontSize));
-    expect(o.stroke).toBe('#ff00ab');
+    expect(o.circle.attr('stroke')).toBe('#ff00ab');
     expect(o.strokeWidth).toBe(2.31);
     expect(o.strokeOpacity).toBe(0.45);
     expect(o.circle.attr('fill')).toBe('#abcd21');

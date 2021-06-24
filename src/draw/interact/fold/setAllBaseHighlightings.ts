@@ -164,8 +164,8 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
           radius = Math.max(radius, 1.25 * (outlineRadius + b.outline.strokeWidth));
         }
       }
-      if (!b.highlighting || b.highlighting.stroke != props.unpulsed.stroke) {
-        if (b.highlighting && b.highlighting.stroke != props.unpulsed.stroke) {
+      if (!b.highlighting || b.highlighting.circle.attr('stroke') != props.unpulsed.stroke) {
+        if (b.highlighting && b.highlighting.circle.attr('stroke') != props.unpulsed.stroke) {
           // seems impossible to edit an animated SVG element
           b.removeHighlighting();
         }

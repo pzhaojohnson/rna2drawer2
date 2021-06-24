@@ -7,10 +7,16 @@ import baseOutlines from './baseOutlines';
 import { areAllSameColor } from '../../fields/color/areAllSameColor';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
+import { parseColor } from 'Parse/parseColor';
 
 function outlineStrokes(os: CircleBaseAnnotation[]): Svg.Color[] {
   let ss = [] as Svg.Color[];
-  os.forEach(o => ss.push(new Svg.Color(o.stroke)));
+  os.forEach(o => {
+    let s = parseColor(o.circle.attr('stroke'));
+    if (s) {
+      ss.push(s);
+    }
+  });
   return ss;
 }
 
@@ -29,7 +35,7 @@ export function OutlineStrokeField(selectedBases: () => Base[], pushUndo: () => 
   let o1 = os[0];
   let initialValue = undefined;
   if (o1 && outlinesAllHaveSameStrokeColor(os)) {
-    initialValue = { color: o1.stroke, opacity: o1.strokeOpacity };
+    initialValue = { color: o1.circle.attr('stroke'), opacity: o1.strokeOpacity };
   }
   return (
     <ColorField
@@ -39,10 +45,10 @@ export function OutlineStrokeField(selectedBases: () => Base[], pushUndo: () => 
         let os = baseOutlines(selectedBases());
         let o1 = os[0];
         if (o1) {
-          if (!outlinesAllHaveSameStrokeColor(os) || co.color != o1.stroke || co.opacity != o1.strokeOpacity) {
+          if (!outlinesAllHaveSameStrokeColor(os) || co.color != o1.circle.attr('stroke') || co.opacity != o1.strokeOpacity) {
             pushUndo();
             os.forEach(o => {
-              o.stroke = co.color;
+              o.circle.attr({ 'stroke': co.color });
               o.strokeOpacity = co.opacity;
             });
             MostRecentOutlineProps.stroke = co.color;

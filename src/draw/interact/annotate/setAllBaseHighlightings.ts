@@ -14,9 +14,9 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
       }
       let stroke = p == mode.hovered ? '#000000': '#808080';
       let justClickedOnAndSelected = p == mode.hovered && p == mode.selectingFrom;
-      if (!b.highlighting || b.highlighting.stroke != stroke || justClickedOnAndSelected) {
+      if (!b.highlighting || b.highlighting.circle.attr('stroke') != stroke || justClickedOnAndSelected) {
         if (b.highlighting) {
-          if (b.highlighting.stroke != stroke || justClickedOnAndSelected) {
+          if (b.highlighting.circle.attr('stroke') != stroke || justClickedOnAndSelected) {
             // seems impossible to edit an animated SVG element
             b.removeHighlighting();
           }

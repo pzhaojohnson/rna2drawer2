@@ -147,13 +147,6 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba.circle.position()).toBeGreaterThan(1);
   });
 
-  it('stroke getter and setter', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 11, 25);
-    cba.stroke = '#abcdef';
-    expect(cba.stroke).toBe('#abcdef'); // check getter
-    expect(cba.circle.attr('stroke')).toBe('#abcdef'); // check actual value
-  });
-
   it('strokeWidth getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, -1, 21);
     cba.strokeWidth = 5.5;

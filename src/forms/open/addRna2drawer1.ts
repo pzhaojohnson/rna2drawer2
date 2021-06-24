@@ -50,10 +50,10 @@ function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
         o.sendToBack();
         o.circle.attr({
           'r': outline.relativeRadius * pixelsToPoints(b.fontSize),
+          'stroke': outline.stroke.toHex(),
           'fill': outline.fill.toHex(),
           'fill-opacity': outline.fillOpacity,
         });
-        o.stroke = outline.stroke.toHex();
         o.strokeWidth = outline.strokeWidth;
         o.strokeOpacity = outline.strokeOpacity;
       }
