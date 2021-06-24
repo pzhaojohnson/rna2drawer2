@@ -161,16 +161,6 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba.circle.attr('stroke-opacity')).toBe(0.3); // check actual value
   });
 
-  it('strokeDasharray getter and setter', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
-    expect(cba.strokeDasharray).toBeFalsy(); // is not dashed by default
-    cba.strokeDasharray = '5,3,6'; // can be set
-    expect(cba.strokeDasharray).toBe('5,3,6');
-    expect(cba.circle.attr('stroke-dasharray')).toBe('5,3,6'); // check underlying circle
-    cba.strokeDasharray = ''; // undash
-    expect(cba.strokeDasharray).toBeFalsy();
-  });
-
   describe('pulsateBetween method', () => {
     // It seems that any use of the animate method on an SVG element
     // when running with Node.js throws with the error "Cannot read

@@ -135,14 +135,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this.circle.attr({ 'stroke-opacity': so });
   }
 
-  get strokeDasharray(): string | null | undefined {
-    return this.circle.attr('stroke-dasharray');
-  }
-
-  set strokeDasharray(da) {
-    this.circle.attr({ 'stroke-dasharray': da });
-  }
-
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
     this.stopPulsating();
     let withoutFill = {
