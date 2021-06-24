@@ -9,7 +9,7 @@ import angleBetween from './angleBetween';
 import * as Svg from '@svgdotjs/svg.js';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
-  _circle: Svg.Circle;
+  readonly circle: Svg.Circle;
 
   _displacementLength!: number;
   _displacementAngle!: number;
@@ -37,7 +37,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   constructor(circle: Svg.Circle, xBaseCenter: number, yBaseCenter: number) {
-    this._circle = circle;
+    this.circle = circle;
     this._validateCircle();
     this._storeDisplacement(xBaseCenter, yBaseCenter);
   }
@@ -48,10 +48,10 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
    * Initializes the ID of the circle if it is not already initialized.
    */
   _validateCircle(): (void | never) {
-    if (this._circle.type !== 'circle') {
+    if (this.circle.type !== 'circle') {
       throw new Error('Passed SVG element must be a circle.');
     }
-    this._circle.id();
+    this.circle.id();
   }
 
   get type(): string {
@@ -59,15 +59,15 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   get id(): string {
-    return this._circle.id();
+    return this.circle.id();
   }
 
   get xCenter(): number {
-    return this._circle.attr('cx');
+    return this.circle.attr('cx');
   }
 
   get yCenter(): number {
-    return this._circle.attr('cy');
+    return this.circle.attr('cy');
   }
 
   /**
@@ -99,7 +99,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   shift(xShift: number, yShift: number) {
     let xBaseCenter = this.xCenter + (this.displacementLength * Math.cos(this.displacementAngle + Math.PI));
     let yBaseCenter = this.yCenter + (this.displacementLength * Math.sin(this.displacementAngle + Math.PI));
-    this._circle.attr({
+    this.circle.attr({
       'cx': this.xCenter + xShift,
       'cy': this.yCenter + yShift,
     });
@@ -107,80 +107,80 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   reposition(xBaseCenter: number, yBaseCenter: number) {
-    this._circle.attr({
+    this.circle.attr({
       'cx': xBaseCenter + (this.displacementLength * Math.cos(this.displacementAngle)),
       'cy': yBaseCenter + (this.displacementLength * Math.sin(this.displacementAngle)),
     });
   }
 
   bringToFront() {
-    this._circle.front();
+    this.circle.front();
   }
 
   sendToBack() {
-    this._circle.back();
+    this.circle.back();
   }
 
   get radius(): number {
-    return this._circle.attr('r');
+    return this.circle.attr('r');
   }
 
   set radius(r: number) {
     this.stopPulsating();
-    this._circle.attr({ 'r': r });
+    this.circle.attr({ 'r': r });
   }
 
   get fill(): string {
-    return this._circle.attr('fill');
+    return this.circle.attr('fill');
   }
 
   set fill(f: string) {
     this.stopPulsating();
-    this._circle.attr({ 'fill': f });
+    this.circle.attr({ 'fill': f });
   }
 
   get fillOpacity(): number {
-    return this._circle.attr('fill-opacity');
+    return this.circle.attr('fill-opacity');
   }
 
   set fillOpacity(fo: number) {
     this.stopPulsating();
-    this._circle.attr({ 'fill-opacity': fo });
+    this.circle.attr({ 'fill-opacity': fo });
   }
 
   get stroke(): string {
-    return this._circle.attr('stroke');
+    return this.circle.attr('stroke');
   }
 
   set stroke(s: string) {
     this.stopPulsating();
-    this._circle.attr({ 'stroke': s });
+    this.circle.attr({ 'stroke': s });
   }
 
   get strokeWidth(): number {
-    return this._circle.attr('stroke-width');
+    return this.circle.attr('stroke-width');
   }
 
   set strokeWidth(sw: number) {
     this.stopPulsating();
-    this._circle.attr({ 'stroke-width': sw });
+    this.circle.attr({ 'stroke-width': sw });
   }
 
   get strokeOpacity(): number {
-    return this._circle.attr('stroke-opacity');
+    return this.circle.attr('stroke-opacity');
   }
 
   set strokeOpacity(so: number) {
     this.stopPulsating();
-    this._circle.attr({ 'stroke-opacity': so });
+    this.circle.attr({ 'stroke-opacity': so });
   }
 
   get strokeDasharray(): string | null | undefined {
-    return this._circle.attr('stroke-dasharray');
+    return this.circle.attr('stroke-dasharray');
   }
 
   set strokeDasharray(da) {
-    this._circle.attr({ 'stroke-dasharray': da });
+    this.circle.attr({ 'stroke-dasharray': da });
   }
 
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
@@ -196,29 +196,29 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     let withFill = fill == 'none' ? {} : { 'fill': fill };
     let attrs = { ...withoutFill, ...withFill };
     let duration = pulseProps?.duration ?? 2000;
-    this._currPulsation = this._circle.animate(duration).attr(attrs).loop(undefined, true);
+    this._currPulsation = this.circle.animate(duration).attr(attrs).loop(undefined, true);
   }
 
   stopPulsating() {
     if (this._currPulsation) {
-      this._circle.timeline().unschedule(this._currPulsation);
+      this.circle.timeline().unschedule(this._currPulsation);
       this._currPulsation = undefined;
     }
   }
 
   remove() {
-    this._circle.remove();
+    this.circle.remove();
   }
 
   savableState(): CircleBaseAnnotationSavableState {
     return {
       className: 'CircleBaseAnnotation',
-      circleId: this._circle.id(),
+      circleId: this.circle.id(),
     };
   }
 
   refreshIds() {
-    this._circle.id('');
-    this._circle.id();
+    this.circle.id('');
+    this.circle.id();
   }
 }

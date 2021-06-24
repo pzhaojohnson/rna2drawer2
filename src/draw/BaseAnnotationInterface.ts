@@ -36,6 +36,7 @@ export interface CircleBaseAnnotationSavableState {
 }
 
 export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
+  readonly circle: Svg.Circle;
   radius: number;
   fill: string;
   fillOpacity: number;

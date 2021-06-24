@@ -15,7 +15,7 @@ describe('CircleBaseAnnotation class', () => {
       let da = cba1.displacementAngle;
       let savableState = cba1.savableState();
       let cba2 = CircleBaseAnnotation.fromSavedState(savableState, svg, 19.6, 100.1);
-      expect(cba2._circle.id()).toBe(savableState.circleId);
+      expect(cba2.circle.id()).toBe(savableState.circleId);
       // requires that base center coordinates were passed correctly
       expect(cba2.displacementLength).toBeCloseTo(dl);
       expect(cba2.displacementAngle).toBeCloseTo(da);
@@ -140,58 +140,58 @@ describe('CircleBaseAnnotation class', () => {
     let r = svg.rect(10, 20);
     let l = svg.line(1, 2, 3, 4);
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 10);
-    expect(cba._circle.position()).toBeGreaterThan(0); // not already at back
+    expect(cba.circle.position()).toBeGreaterThan(0); // not already at back
     // must be sent all the way to back and not just backwards one position
-    expect(cba._circle.position()).toBeGreaterThan(1);
+    expect(cba.circle.position()).toBeGreaterThan(1);
     cba.sendToBack();
-    expect(cba._circle.position()).toBe(0); // sent to back
+    expect(cba.circle.position()).toBe(0); // sent to back
     let frontMarker = svg.ellipse(20, 30);
     cba.bringToFront();
-    expect(cba._circle.position()).toBeGreaterThan(frontMarker.position()); // brought to front
+    expect(cba.circle.position()).toBeGreaterThan(frontMarker.position()); // brought to front
     // had to be brought all the way to front and not just forward one position
-    expect(cba._circle.position()).toBeGreaterThan(1);
+    expect(cba.circle.position()).toBeGreaterThan(1);
   });
 
   it('radius getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 8);
     cba.radius = 8;
     expect(cba.radius).toBeCloseTo(8); // check getter
-    expect(cba._circle.attr('r')).toBeCloseTo(8); // check actual value
+    expect(cba.circle.attr('r')).toBeCloseTo(8); // check actual value
   });
 
   it('fill getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 8, 5);
     cba.fill = '#654321';
     expect(cba.fill).toBe('#654321'); // check getter
-    expect(cba._circle.attr('fill')).toBe('#654321'); // check actual value
+    expect(cba.circle.attr('fill')).toBe('#654321'); // check actual value
   });
 
   it('fillOpacity getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 9, 2);
     cba.fillOpacity = 0.6;
     expect(cba.fillOpacity).toBe(0.6); // check getter
-    expect(cba._circle.attr('fill-opacity')).toBe(0.6); // check actual value
+    expect(cba.circle.attr('fill-opacity')).toBe(0.6); // check actual value
   });
 
   it('stroke getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 11, 25);
     cba.stroke = '#abcdef';
     expect(cba.stroke).toBe('#abcdef'); // check getter
-    expect(cba._circle.attr('stroke')).toBe('#abcdef'); // check actual value
+    expect(cba.circle.attr('stroke')).toBe('#abcdef'); // check actual value
   });
 
   it('strokeWidth getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, -1, 21);
     cba.strokeWidth = 5.5;
     expect(cba.strokeWidth).toBe(5.5); // check getter
-    expect(cba._circle.attr('stroke-width')).toBe(5.5); // check actual value
+    expect(cba.circle.attr('stroke-width')).toBe(5.5); // check actual value
   });
 
   it('strokeOpacity getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 10, 92);
     cba.strokeOpacity = 0.3;
     expect(cba.strokeOpacity).toBe(0.3); // check getter
-    expect(cba._circle.attr('stroke-opacity')).toBe(0.3); // check actual value
+    expect(cba.circle.attr('stroke-opacity')).toBe(0.3); // check actual value
   });
 
   it('strokeDasharray getter and setter', () => {
@@ -199,7 +199,7 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba.strokeDasharray).toBeFalsy(); // is not dashed by default
     cba.strokeDasharray = '5,3,6'; // can be set
     expect(cba.strokeDasharray).toBe('5,3,6');
-    expect(cba._circle.attr('stroke-dasharray')).toBe('5,3,6'); // check underlying circle
+    expect(cba.circle.attr('stroke-dasharray')).toBe('5,3,6'); // check underlying circle
     cba.strokeDasharray = ''; // undash
     expect(cba.strokeDasharray).toBeFalsy();
   });
@@ -239,7 +239,7 @@ describe('CircleBaseAnnotation class', () => {
 
   it('remove method removes circle', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 0.1, 2.6);
-    let id = '#' + cba._circle.id();
+    let id = '#' + cba.circle.id();
     expect(svg.findOne(id)).toBeTruthy();
     cba.remove();
     expect(svg.findOne(id)).toBe(null);
@@ -250,7 +250,7 @@ describe('CircleBaseAnnotation class', () => {
       let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
       let savableState = cba.savableState();
       expect(savableState.className).toBe('CircleBaseAnnotation');
-      expect(savableState.circleId).toBe(cba._circle.id());
+      expect(savableState.circleId).toBe(cba.circle.id());
     });
 
     it('can be converted to and from a JSON string', () => {
@@ -264,8 +264,8 @@ describe('CircleBaseAnnotation class', () => {
 
   it('refreshIds method', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 10, 50);
-    let oldId = cba._circle.id();
+    let oldId = cba.circle.id();
     cba.refreshIds();
-    expect(cba._circle.id()).not.toBe(oldId);
+    expect(cba.circle.id()).not.toBe(oldId);
   });
 });
