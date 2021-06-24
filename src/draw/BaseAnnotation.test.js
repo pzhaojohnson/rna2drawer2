@@ -66,11 +66,6 @@ describe('CircleBaseAnnotation class', () => {
     });
   });
 
-  it('type getter', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
-    expect(cba.type).toBe('circle');
-  })
-
   it('id getter', () => {
     let c = svg.circle(8);
     c.id('asdfasdf');

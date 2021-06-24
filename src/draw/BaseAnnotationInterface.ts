@@ -1,7 +1,6 @@
 import * as Svg from '@svgdotjs/svg.js';
 
 export interface BaseAnnotationInterface {
-  readonly type: string;
   readonly id: string;
   xCenter: number;
   yCenter: number;

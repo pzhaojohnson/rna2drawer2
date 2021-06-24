@@ -54,10 +54,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this.circle.id();
   }
 
-  get type(): string {
-    return 'circle';
-  }
-
   get id(): string {
     return this.circle.id();
   }
