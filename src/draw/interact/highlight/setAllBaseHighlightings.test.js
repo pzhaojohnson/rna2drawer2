@@ -43,7 +43,7 @@ it('can add highlighting with default props', () => {
     [undefined, {}, undefined, undefined],
   );
   let h = b2.highlighting;
-  expect(h.radius).toBeDefined();
+  expect(h.circle.attr('r')).toBeDefined();
   expect(h.stroke).toBeDefined();
   expect(h.strokeWidth).toBeDefined();
   expect(h.fill).toBeDefined();
@@ -67,7 +67,7 @@ it('can add highlighting with specified props', () => {
     [undefined, undefined, props, undefined],
   );
   let h = b3.highlighting;
-  expect(h.radius).toBeCloseTo(10);
+  expect(h.circle.attr('r')).toBeCloseTo(10);
   expect(h.stroke).toBe('cyan');
   expect(h.strokeWidth).toBe(1.37);
   expect(h.fill).toBe('brown');

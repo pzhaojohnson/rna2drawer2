@@ -7,7 +7,10 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
     if (mode.selected.has(p) || p == mode.hovered) {
       let radius = 1.15 * b.fontSize;
       if (b.outline) {
-        radius = Math.max(radius, 1.25 * (b.outline.radius + b.outline.strokeWidth));
+        let outlineRadius = b.outline.circle.attr('r');
+        if (typeof outlineRadius == 'number') {
+          radius = Math.max(radius, 1.25 * (outlineRadius + b.outline.strokeWidth));
+        }
       }
       let stroke = p == mode.hovered ? '#000000': '#808080';
       let justClickedOnAndSelected = p == mode.hovered && p == mode.selectingFrom;

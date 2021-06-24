@@ -117,15 +117,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this.circle.back();
   }
 
-  get radius(): number {
-    return this.circle.attr('r');
-  }
-
-  set radius(r: number) {
-    this.stopPulsating();
-    this.circle.attr({ 'r': r });
-  }
-
   get fill(): string {
     return this.circle.attr('fill');
   }
@@ -182,7 +173,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
     this.stopPulsating();
     let withoutFill = {
-      'r': pulsedProps.radius ?? this.radius,
+      'r': pulsedProps.radius ?? this.circle.attr('r'),
       'fill-opacity': pulsedProps.fillOpacity ?? this.fillOpacity,
       'stroke': pulsedProps.stroke ?? this.stroke,
       'stroke-width': pulsedProps.strokeWidth ?? this.strokeWidth,

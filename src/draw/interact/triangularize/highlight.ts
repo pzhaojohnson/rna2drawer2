@@ -27,7 +27,10 @@ export function highlightHovered(mode: TriangularizingMode) {
       if (b) {
         let radius = b.fontSize;
         if (b.outline) {
-          radius = Math.max(radius, 1.25 * (b.outline.radius + b.outline.strokeWidth));
+          let outlineRadius = b.outline.circle.attr('r');
+          if (typeof outlineRadius == 'number') {
+            radius = Math.max(radius, 1.25 * (outlineRadius + b.outline.strokeWidth));
+          }
         }
         if (!b.highlighting) {
           let h = highlightBase(b, {

@@ -8,7 +8,12 @@ import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function outlineRadii(os: CircleBaseAnnotation[]): number[] {
   let rs = [] as number[];
-  os.forEach(o => rs.push(o.radius));
+  os.forEach(o => {
+    let r = o.circle.attr('r');
+    if (typeof r == 'number') {
+      rs.push(r);
+    }
+  });
   return rs;
 }
 
@@ -33,7 +38,7 @@ export function OutlineRadiusField(selectedBases: () => Base[], pushUndo: () => 
           let rs = outlineRadii(os);
           if (!outlinesAllHaveSameRadius(os) || r != rs[0]) {
             pushUndo();
-            os.forEach(o => o.radius = r);
+            os.forEach(o => o.circle.attr({ 'r': r }));
             MostRecentOutlineProps.radius = r;
             changed();
           }

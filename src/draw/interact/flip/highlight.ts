@@ -10,7 +10,10 @@ export function highlightStem(mode: FlippingMode, st: Stem) {
     if (b) {
       let radius = b.fontSize;
       if (b.outline) {
-        radius = Math.max(radius, 1.25 * (b.outline.radius + b.outline.strokeWidth));
+        let outlineRadius = b.outline.circle.attr('r');
+        if (typeof outlineRadius == 'number') {
+          radius = Math.max(radius, 1.25 * (outlineRadius + b.outline.strokeWidth));
+        }
       }
       let h = highlightBase(b, {
         radius: radius,

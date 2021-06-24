@@ -16,7 +16,7 @@ function _addOutlines(bs: Base[]) {
   bs.forEach(b => {
     if (!b.outline) {
       let o = b.addCircleOutline();
-      o.radius = MostRecentOutlineProps.radius;
+      o.circle.attr({ 'r': MostRecentOutlineProps.radius });
       o.fill = MostRecentOutlineProps.fill;
       o.fillOpacity = MostRecentOutlineProps.fillOpacity;
       o.stroke = MostRecentOutlineProps.stroke;

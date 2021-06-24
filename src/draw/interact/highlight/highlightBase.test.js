@@ -29,7 +29,13 @@ it('highlights with given props', () => {
   };
   let h = highlightBase(b, hps);
   Object.keys(hps).forEach(prop => {
-    expect(h[prop]).toBe(hps[prop]);
+    let v;
+    if (prop == 'radius') {
+      v = h.circle.attr('r');
+    } else {
+      v = h[prop];
+    }
+    expect(v).toBe(hps[prop]);
   });
 });
 
@@ -42,5 +48,5 @@ it('base already has highlighting', () => {
   expect(returned).toBe(h); // does not remove preexisting highlighting
   expect(h.strokeOpacity).toBe(0.34); // maintains
   expect(h.fill).toBe('#1199ba'); // overwrites
-  expect(h.radius).toBeCloseTo(5.02); // sets
+  expect(h.circle.attr('r')).toBeCloseTo(5.02); // sets
 });
