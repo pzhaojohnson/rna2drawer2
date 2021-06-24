@@ -48,11 +48,13 @@ function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
       if (outline) {
         let o = b.addCircleOutline();
         o.sendToBack();
-        o.circle.attr({ 'r': outline.relativeRadius * pixelsToPoints(b.fontSize) });
+        o.circle.attr({
+          'r': outline.relativeRadius * pixelsToPoints(b.fontSize),
+          'fill': outline.fill.toHex(),
+        });
         o.stroke = outline.stroke.toHex();
         o.strokeWidth = outline.strokeWidth;
         o.strokeOpacity = outline.strokeOpacity;
-        o.fill = outline.fill.toHex();
         o.fillOpacity = outline.fillOpacity;
       }
     });

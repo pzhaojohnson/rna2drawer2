@@ -28,15 +28,13 @@ it('highlights with given props', () => {
     fillOpacity: 0.08,
   };
   let h = highlightBase(b, hps);
-  Object.keys(hps).forEach(prop => {
-    let v;
-    if (prop == 'radius') {
-      v = h.circle.attr('r');
-    } else {
-      v = h[prop];
-    }
-    expect(v).toBe(hps[prop]);
-  });
+  expect(h.circle.attr('r')).toBeCloseTo(5.67);
+  expect(h.circle.attr('stroke')).toBe('cyan');
+  expect(h.circle.attr('stroke-width')).toBe(8.12);
+  expect(h.circle.attr('stroke-opacity')).toBe(0.87);
+  expect(h.circle.attr('stroke-dasharray')).toBe('8,8,2');
+  expect(h.circle.attr('fill')).toBe('crimson');
+  expect(h.circle.attr('fill-opacity')).toBe(0.08);
 });
 
 it('base already has highlighting', () => {
@@ -47,6 +45,6 @@ it('base already has highlighting', () => {
   let returned = highlightBase(b, { radius: 5.02, fill: '#1199ba' });
   expect(returned).toBe(h); // does not remove preexisting highlighting
   expect(h.strokeOpacity).toBe(0.34); // maintains
-  expect(h.fill).toBe('#1199ba'); // overwrites
+  expect(h.circle.attr('fill')).toBe('#1199ba'); // overwrites
   expect(h.circle.attr('r')).toBeCloseTo(5.02); // sets
 });

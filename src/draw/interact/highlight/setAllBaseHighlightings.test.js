@@ -46,7 +46,7 @@ it('can add highlighting with default props', () => {
   expect(h.circle.attr('r')).toBeDefined();
   expect(h.stroke).toBeDefined();
   expect(h.strokeWidth).toBeDefined();
-  expect(h.fill).toBeDefined();
+  expect(h.circle.attr('fill')).toBeDefined();
   expect(h.fillOpacity).toBeDefined();
 });
 
@@ -70,7 +70,7 @@ it('can add highlighting with specified props', () => {
   expect(h.circle.attr('r')).toBeCloseTo(10);
   expect(h.stroke).toBe('cyan');
   expect(h.strokeWidth).toBe(1.37);
-  expect(h.fill).toBe('brown');
+  expect(h.circle.attr('fill')).toBe('brown');
   expect(h.fillOpacity).toBe(0.815);
 });
 

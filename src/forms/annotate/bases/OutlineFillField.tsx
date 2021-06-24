@@ -10,7 +10,7 @@ import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function outlineFills(os: CircleBaseAnnotation[]): Svg.Color[] {
   let fs = [] as Svg.Color[];
-  os.forEach(o => fs.push(new Svg.Color(o.fill)));
+  os.forEach(o => fs.push(new Svg.Color(o.circle.attr('fill'))));
   return fs;
 }
 
@@ -29,7 +29,7 @@ export function OutlineFillField(selectedBases: () => Base[], pushUndo: () => vo
   let o1 = os[0];
   let initialValue = undefined;
   if (o1 && outlinesAllHaveSameFillColor(os)) {
-    initialValue = { color: o1.fill, opacity: o1.fillOpacity };
+    initialValue = { color: o1.circle.attr('fill'), opacity: o1.fillOpacity };
   }
   return (
     <ColorField
@@ -39,10 +39,10 @@ export function OutlineFillField(selectedBases: () => Base[], pushUndo: () => vo
         let os = baseOutlines(selectedBases());
         let o1 = os[0];
         if (o1) {
-          if (!outlinesAllHaveSameFillColor(os) || co.color != o1.fill || co.opacity != o1.fillOpacity) {
+          if (!outlinesAllHaveSameFillColor(os) || co.color != o1.circle.attr('fill') || co.opacity != o1.fillOpacity) {
             pushUndo();
             os.forEach(o => {
-              o.fill = co.color;
+              o.circle.attr({ 'fill': co.color });
               o.fillOpacity = co.opacity;
             });
             MostRecentOutlineProps.fill = co.color;

@@ -16,12 +16,14 @@ export function highlightBase(b: Base, props?: HighlightingProps): CircleBaseAnn
   if (!h) {
     h = b.addCircleHighlighting();
   }
-  h.circle.attr({ 'r': props?.radius ?? h.circle.attr('r') });
+  h.circle.attr({
+    'r': props?.radius ?? h.circle.attr('r'),
+    'fill': props?.fill ?? h.circle.attr('fill'),
+  });
   h.stroke = props?.stroke ?? h.stroke;
   h.strokeWidth = props?.strokeWidth ?? h.strokeWidth;
   h.strokeOpacity = props?.strokeOpacity ?? h.strokeOpacity;
   h.strokeDasharray = props?.strokeDasharray ?? h.strokeDasharray;
-  h.fill = props?.fill ?? h.fill;
   h.fillOpacity = props?.fillOpacity ?? h.fillOpacity;
   return h;
 }

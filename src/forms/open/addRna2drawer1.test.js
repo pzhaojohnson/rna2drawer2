@@ -197,7 +197,7 @@ describe('adding base outlines', () => {
     expect(o.stroke).toBe('#ff00ab');
     expect(o.strokeWidth).toBe(2.31);
     expect(o.strokeOpacity).toBe(0.45);
-    expect(o.fill).toBe('#abcd21');
+    expect(o.circle.attr('fill')).toBe('#abcd21');
     expect(o.fillOpacity).toBe(0.57);
   });
 });
