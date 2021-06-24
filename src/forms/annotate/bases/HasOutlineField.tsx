@@ -19,8 +19,8 @@ function _addOutlines(bs: Base[]) {
       o.circle.attr({
         'r': MostRecentOutlineProps.radius,
         'fill': MostRecentOutlineProps.fill,
+        'fill-opacity': MostRecentOutlineProps.fillOpacity,
       });
-      o.fillOpacity = MostRecentOutlineProps.fillOpacity;
       o.stroke = MostRecentOutlineProps.stroke;
       o.strokeWidth = MostRecentOutlineProps.strokeWidth;
       o.strokeOpacity = MostRecentOutlineProps.strokeOpacity;

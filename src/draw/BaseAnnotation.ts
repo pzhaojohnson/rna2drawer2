@@ -117,15 +117,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this.circle.back();
   }
 
-  get fillOpacity(): number {
-    return this.circle.attr('fill-opacity');
-  }
-
-  set fillOpacity(fo: number) {
-    this.stopPulsating();
-    this.circle.attr({ 'fill-opacity': fo });
-  }
-
   get stroke(): string {
     return this.circle.attr('stroke');
   }
@@ -165,7 +156,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this.stopPulsating();
     let withoutFill = {
       'r': pulsedProps.radius ?? this.circle.attr('r'),
-      'fill-opacity': pulsedProps.fillOpacity ?? this.fillOpacity,
+      'fill-opacity': pulsedProps.fillOpacity ?? this.circle.attr('fill-opacity'),
       'stroke': pulsedProps.stroke ?? this.stroke,
       'stroke-width': pulsedProps.strokeWidth ?? this.strokeWidth,
       'stroke-opacity': pulsedProps.strokeOpacity ?? this.strokeOpacity,

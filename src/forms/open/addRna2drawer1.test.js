@@ -198,6 +198,6 @@ describe('adding base outlines', () => {
     expect(o.strokeWidth).toBe(2.31);
     expect(o.strokeOpacity).toBe(0.45);
     expect(o.circle.attr('fill')).toBe('#abcd21');
-    expect(o.fillOpacity).toBe(0.57);
+    expect(o.circle.attr('fill-opacity')).toBe(0.57);
   });
 });

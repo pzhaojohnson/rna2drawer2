@@ -147,13 +147,6 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba.circle.position()).toBeGreaterThan(1);
   });
 
-  it('fillOpacity getter and setter', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 9, 2);
-    cba.fillOpacity = 0.6;
-    expect(cba.fillOpacity).toBe(0.6); // check getter
-    expect(cba.circle.attr('fill-opacity')).toBe(0.6); // check actual value
-  });
-
   it('stroke getter and setter', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 11, 25);
     cba.stroke = '#abcdef';

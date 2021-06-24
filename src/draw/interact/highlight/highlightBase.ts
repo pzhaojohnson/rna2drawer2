@@ -19,12 +19,12 @@ export function highlightBase(b: Base, props?: HighlightingProps): CircleBaseAnn
   h.circle.attr({
     'r': props?.radius ?? h.circle.attr('r'),
     'fill': props?.fill ?? h.circle.attr('fill'),
+    'fill-opacity': props?.fillOpacity ?? h.circle.attr('fill-opacity'),
   });
   h.stroke = props?.stroke ?? h.stroke;
   h.strokeWidth = props?.strokeWidth ?? h.strokeWidth;
   h.strokeOpacity = props?.strokeOpacity ?? h.strokeOpacity;
   h.strokeDasharray = props?.strokeDasharray ?? h.strokeDasharray;
-  h.fillOpacity = props?.fillOpacity ?? h.fillOpacity;
   return h;
 }
 
