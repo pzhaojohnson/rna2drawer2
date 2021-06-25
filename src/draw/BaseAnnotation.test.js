@@ -10,15 +10,11 @@ describe('CircleBaseAnnotation class', () => {
   describe('fromSavedState static method', () => {
     it('valid saved state', () => {
       let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 19.6, 100.1);
-      cba1.shift(17.4, -12.3);
-      let dl = cba1.displacementLength;
-      let da = cba1.displacementAngle;
       let savableState = cba1.savableState();
       let cba2 = CircleBaseAnnotation.fromSavedState(savableState, svg, 19.6, 100.1);
       expect(cba2.circle.id()).toBe(savableState.circleId);
-      // requires that base center coordinates were passed correctly
-      expect(cba2.displacementLength).toBeCloseTo(dl);
-      expect(cba2.displacementAngle).toBeCloseTo(da);
+      expect(cba2.circle.attr('cx')).toBeCloseTo(19.6);
+      expect(cba2.circle.attr('cy')).toBeCloseTo(100.1);
     });
 
     describe('invalid saved state', () => {
@@ -81,53 +77,13 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba.yCenter).toBeCloseTo(-205.1);
   });
 
-  it('displacementLength and displacementAngle getters', () => {
-    let c = svg.circle(20);
-    c.attr({ 'cx': 120, 'cy': 488 });
-    let cba = new CircleBaseAnnotation(c, 100, 467);
-    expect(cba.displacementLength).toBeCloseTo(29);
-    let da = normalizeAngle(cba.displacementAngle);
-    expect(da).toBeCloseTo(Math.asin(21 / 29));
-  });
-
-  describe('shift method', () => {
-    it('shifts the circle', () => {
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 9);
-      cba.shift(4, 3);
-      expect(cba.xCenter).toBeCloseTo(9);
-      expect(cba.yCenter).toBeCloseTo(12);
-      cba.shift(-5, 23);
-      expect(cba.xCenter).toBeCloseTo(4);
-      expect(cba.yCenter).toBeCloseTo(35);
-    });
-
-    it('updates displacement', () => {
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, -2, 19);
-      cba.shift(9, 40);
-      expect(cba.displacementLength).toBeCloseTo(41);
-      let da = normalizeAngle(cba.displacementAngle);
-      expect(da).toBeCloseTo(Math.asin(40 / 41));
-      cba.shift(-29, -61);
-      expect(cba.displacementLength).toBeCloseTo(29);
-      da = normalizeAngle(cba.displacementAngle);
-      expect(da).toBeCloseTo(Math.PI + Math.asin(21 / 29));
-    });
-  });
-
   describe('reposition method', () => {
-    it('repositions circle while maintaining displacement', () => {
+    it('repositions circle', () => {
       let c = svg.circle(20);
       c.attr({ 'cx': 5.68, 'cy': 205.2 });
       let cba = new CircleBaseAnnotation(c, 32, 156);
-      let dl = cba.displacementLength;
-      let da = normalizeAngle(cba.displacementAngle);
       cba.reposition(200.6, 129);
-      expect(distance(200.6, 129, c.attr('cx'), c.attr('cy'))).toBeCloseTo(dl);
-      let a = angleBetween(200.6, 129, c.attr('cx'), c.attr('cy'));
-      expect(normalizeAngle(a)).toBeCloseTo(da);
-      // check displacement getters as well
-      expect(cba.displacementLength).toBeCloseTo(dl);
-      expect(normalizeAngle(cba.displacementAngle)).toBeCloseTo(da);
+      expect(distance(200.6, 129, c.attr('cx'), c.attr('cy'))).toBeCloseTo(0);
     });
   });
 

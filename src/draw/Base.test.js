@@ -253,24 +253,18 @@ describe('Base class', () => {
       // with no outline or numbering
       let b = Base.create(svg, 't', 1, 2);
       let h = b.addCircleHighlighting();
-      h.shift(5, 4);
-      let da = normalizeAngle(h.displacementAngle);
       b.moveTo(8, 9);
-      let a = angleBetween(8, 9, h.xCenter, h.yCenter);
-      // requires that base center coordinates were passed
-      expect(normalizeAngle(a)).toBeCloseTo(da);
+      expect(h.circle.attr('cx')).toBeCloseTo(8);
+      expect(h.circle.attr('cy')).toBeCloseTo(9);
     });
 
     it('can reposition outline', () => {
       // with no highlighting or numbering
       let b = Base.create(svg, 'e', 3, 8);
       let o = b.addCircleOutline();
-      o.shift(-2, 55);
-      let da = normalizeAngle(o.displacementAngle);
       b.moveTo(55, 38);
-      let a = angleBetween(55, 38, o.xCenter, o.yCenter);
-      // requires that base center coordinates were passed
-      expect(normalizeAngle(a)).toBeCloseTo(da);
+      expect(o.circle.attr('cx')).toBeCloseTo(55);
+      expect(o.circle.attr('cy')).toBeCloseTo(38);
     });
 
     it('can reposition numbering', () => {
@@ -421,7 +415,6 @@ describe('Base class', () => {
         let h = b.addCircleHighlighting();
         expect(h.xCenter).toBeCloseTo(5);
         expect(h.yCenter).toBeCloseTo(10);
-        expect(h.displacementLength).toBeCloseTo(0);
         expect(b.highlighting).toBe(h); // check reference
       });
 
@@ -440,8 +433,8 @@ describe('Base class', () => {
         let h1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
         let savableState1 = h1.savableState();
         let h2 = b.addCircleHighlightingFromSavedState(savableState1);
-        // requires that center base coordinates were passed
-        expect(h2.displacementLength).toBeCloseTo(0);
+        expect(h2.circle.attr('cx')).toBeCloseTo(30);
+        expect(h2.circle.attr('cy')).toBeCloseTo(82);
         expect(b.highlighting).toBe(h2); // check reference
       });
 
@@ -493,7 +486,6 @@ describe('Base class', () => {
         let o = b.addCircleOutline();
         expect(o.xCenter).toBeCloseTo(10);
         expect(o.yCenter).toBeCloseTo(28);
-        expect(o.displacementLength).toBeCloseTo(0);
         expect(b.outline).toBe(o); // check reference
       });
 
@@ -513,8 +505,8 @@ describe('Base class', () => {
         let savableState1 = o1.savableState();
         let o2 = b.addCircleOutlineFromSavedState(savableState1);
         expect(o2.id).toBe(o1.id);
-        // requires that center base coordinates were passed
-        expect(o2.displacementLength).toBeCloseTo(0);
+        expect(o2.circle.attr('cx')).toBeCloseTo(30);
+        expect(o2.circle.attr('cy')).toBeCloseTo(60);
         expect(b.outline).toBe(o2); // check reference
       });
 

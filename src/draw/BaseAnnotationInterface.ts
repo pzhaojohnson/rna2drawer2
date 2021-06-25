@@ -4,10 +4,7 @@ export interface BaseAnnotationInterface {
   readonly id: string;
   xCenter: number;
   yCenter: number;
-  displacementLength: number;
-  displacementAngle: number;
-
-  shift(xShift: number, yShift: number): void;
+  
   reposition(xBaseCenter: number, yBaseCenter: number): void;
   bringToFront(): void;
   sendToBack(): void;

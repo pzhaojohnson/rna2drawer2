@@ -4,15 +4,10 @@ import {
   PulseProps,
   CircleBaseAnnotationSavableState,
 } from './BaseAnnotationInterface';
-import { distance2D as distance } from 'Math/distance';
-import angleBetween from './angleBetween';
 import * as Svg from '@svgdotjs/svg.js';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   readonly circle: Svg.Circle;
-
-  _displacementLength!: number;
-  _displacementAngle!: number;
 
   _currPulsation?: Svg.Runner;
 
@@ -39,7 +34,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   constructor(circle: Svg.Circle, xBaseCenter: number, yBaseCenter: number) {
     this.circle = circle;
     this._validateCircle();
-    this._storeDisplacement(xBaseCenter, yBaseCenter);
   }
 
   /**
@@ -66,46 +60,10 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     return this.circle.attr('cy');
   }
 
-  /**
-   * Sets the _displacementLength and _displacementAngle properties.
-   */
-  _storeDisplacement(xBaseCenter: number, yBaseCenter: number) {
-    this._displacementLength = distance(
-      xBaseCenter,
-      yBaseCenter,
-      this.xCenter,
-      this.yCenter,
-    );
-    this._displacementAngle = angleBetween(
-      xBaseCenter,
-      yBaseCenter,
-      this.xCenter,
-      this.yCenter,
-    );
-  }
-
-  get displacementLength(): number {
-    return this._displacementLength;
-  }
-
-  get displacementAngle(): number {
-    return this._displacementAngle;
-  }
-
-  shift(xShift: number, yShift: number) {
-    let xBaseCenter = this.xCenter + (this.displacementLength * Math.cos(this.displacementAngle + Math.PI));
-    let yBaseCenter = this.yCenter + (this.displacementLength * Math.sin(this.displacementAngle + Math.PI));
-    this.circle.attr({
-      'cx': this.xCenter + xShift,
-      'cy': this.yCenter + yShift,
-    });
-    this._storeDisplacement(xBaseCenter, yBaseCenter);
-  }
-
   reposition(xBaseCenter: number, yBaseCenter: number) {
     this.circle.attr({
-      'cx': xBaseCenter + (this.displacementLength * Math.cos(this.displacementAngle)),
-      'cy': yBaseCenter + (this.displacementLength * Math.sin(this.displacementAngle)),
+      'cx': xBaseCenter,
+      'cy': yBaseCenter,
     });
   }
 
