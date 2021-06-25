@@ -2,8 +2,6 @@ import * as Svg from '@svgdotjs/svg.js';
 
 export interface BaseAnnotationInterface {
   readonly id: string;
-  xCenter: number;
-  yCenter: number;
   
   reposition(xBaseCenter: number, yBaseCenter: number): void;
   bringToFront(): void;

@@ -52,14 +52,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     return this.circle.id();
   }
 
-  get xCenter(): number {
-    return this.circle.attr('cx');
-  }
-
-  get yCenter(): number {
-    return this.circle.attr('cy');
-  }
-
   reposition(xBaseCenter: number, yBaseCenter: number) {
     this.circle.attr({
       'cx': xBaseCenter,

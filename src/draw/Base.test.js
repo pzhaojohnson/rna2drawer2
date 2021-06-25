@@ -413,8 +413,8 @@ describe('Base class', () => {
       it('passes center base coordinates and stores reference', () => {
         let b = Base.create(svg, 'a', 5, 10);
         let h = b.addCircleHighlighting();
-        expect(h.xCenter).toBeCloseTo(5);
-        expect(h.yCenter).toBeCloseTo(10);
+        expect(h.circle.attr('cx')).toBeCloseTo(5);
+        expect(h.circle.attr('cy')).toBeCloseTo(10);
         expect(b.highlighting).toBe(h); // check reference
       });
 
@@ -484,8 +484,8 @@ describe('Base class', () => {
       it('passes center base coordinates and stores reference', () => {
         let b = Base.create(svg, 'g', 10, 28);
         let o = b.addCircleOutline();
-        expect(o.xCenter).toBeCloseTo(10);
-        expect(o.yCenter).toBeCloseTo(28);
+        expect(o.circle.attr('cx')).toBeCloseTo(10);
+        expect(o.circle.attr('cy')).toBeCloseTo(28);
         expect(b.outline).toBe(o); // check reference
       });
 

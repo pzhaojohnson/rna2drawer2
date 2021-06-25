@@ -40,8 +40,8 @@ describe('CircleBaseAnnotation class', () => {
 
   it('createNondisplaced static method', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 1.5, 3);
-    expect(cba.xCenter).toBeCloseTo(1.5);
-    expect(cba.yCenter).toBeCloseTo(3);
+    expect(cba.circle.attr('cx')).toBeCloseTo(1.5);
+    expect(cba.circle.attr('cy')).toBeCloseTo(3);
   });
 
   describe('constructor', () => {
@@ -67,14 +67,6 @@ describe('CircleBaseAnnotation class', () => {
     c.id('asdfasdf');
     let cba = new CircleBaseAnnotation(c, 0, 0);
     expect(cba.id).toBe('asdfasdf');
-  });
-
-  it('xCenter and yCenter getters', () => {
-    let c = svg.circle(50);
-    c.attr({ 'cx': 1000.12, 'cy': -205.1 });
-    let cba = new CircleBaseAnnotation(c, 20, 50);
-    expect(cba.xCenter).toBeCloseTo(1000.12);
-    expect(cba.yCenter).toBeCloseTo(-205.1);
   });
 
   describe('reposition method', () => {
