@@ -4,16 +4,16 @@ import {
   PulseProps,
   CircleBaseAnnotationSavableState,
 } from './BaseAnnotationInterface';
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
-  readonly circle: Svg.Circle;
+  readonly circle: SVG.Circle;
 
-  _currPulsation?: Svg.Runner;
+  _currPulsation?: SVG.Runner;
 
   static fromSavedState(
     savedState: CircleBaseAnnotationSavableState,
-    svg: Svg.Svg,
+    svg: SVG.Svg,
     xBaseCenter: number,
     yBaseCenter: number,
   ): (CircleBaseAnnotation | never) {
@@ -21,17 +21,17 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
       throw new Error('Wrong class name.');
     }
     let circle = svg.findOne('#' + savedState.circleId);
-    return new CircleBaseAnnotation(circle as Svg.Circle, xBaseCenter, yBaseCenter);
+    return new CircleBaseAnnotation(circle as SVG.Circle, xBaseCenter, yBaseCenter);
   }
 
-  static createNondisplaced(svg: Svg.Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
+  static createNondisplaced(svg: SVG.Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
     let circle = svg.circle(20);
     circle.id();
     circle.attr({ 'cx': xBaseCenter, 'cy': yBaseCenter });
     return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
   }
 
-  constructor(circle: Svg.Circle, xBaseCenter: number, yBaseCenter: number) {
+  constructor(circle: SVG.Circle, xBaseCenter: number, yBaseCenter: number) {
     this.circle = circle;
     this._validateCircle();
   }

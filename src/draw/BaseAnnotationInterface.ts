@@ -1,4 +1,4 @@
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 
 export interface BaseAnnotationInterface {
   readonly id: string;
@@ -30,7 +30,7 @@ export interface CircleBaseAnnotationSavableState {
 }
 
 export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
-  readonly circle: Svg.Circle;
+  readonly circle: SVG.Circle;
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps): void;
   savableState(): CircleBaseAnnotationSavableState;
 }
