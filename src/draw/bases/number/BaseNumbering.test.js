@@ -7,6 +7,7 @@ import { addNumbering } from './add';
 import normalizeAngle from 'Draw/normalizeAngle';
 import { round } from 'Math/round';
 import { position } from './position';
+import { uuidRegex } from 'Draw/svg/id';
 
 let container = null;
 let svg = null;
@@ -68,14 +69,34 @@ describe('BaseNumbering class', () => {
       ).toThrow();
     });
 
-    it('initializes element IDs', () => {
+    it('initializes falsy text and line IDs with UUIDs', () => {
+      [undefined, ''].forEach(v => {
+        let t = new TextWrapper(svg.text('5'));
+        let l = new LineWrapper(svg.line(5, 15, 22, 300));
+        t.attr({ 'id': v });
+        l.attr({ 'id': v });
+        // use the attr method to check the value of an ID
+        // since the id method itself will initialize an ID
+        expect(t.attr('id')).toBe(v);
+        expect(l.attr('id')).toBe(v);
+        let bn = new BaseNumbering(t, l, { x: 12, y: 24 });
+        expect(t.attr('id')).toMatch(uuidRegex);
+        expect(l.attr('id')).toMatch(uuidRegex);
+      });
+    });
+    
+    it("doesn't overwrite text and line IDs", () => {
+      // it is important that IDs aren't overwritten when
+      // opening a saved drawing since elements in the
+      // drawing may reference other elements using saved
+      // IDs (e.g., bonds referencing their bases)
       let t = new TextWrapper(svg.text('1'));
       let l = new LineWrapper(svg.line(1, 5, 8, 12));
-      expect(t.attr('id')).toBe(undefined);
-      expect(l.attr('id')).toBe(undefined);
+      t.attr({ 'id': 'textId1234' });
+      l.attr({ 'id': 'lineId5678' });
       let bn = new BaseNumbering(t, l, { x: 1, y: 2 });
-      expect(t.attr('id')).toBeTruthy();
-      expect(l.attr('id')).toBeTruthy();
+      expect(t.attr('id')).toBe('textId1234');
+      expect(l.attr('id')).toBe('lineId5678');
     });
   });
 

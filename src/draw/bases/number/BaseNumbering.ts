@@ -25,6 +25,16 @@ export class BaseNumbering implements BaseNumberingInterface {
     this.line = line;
     this._validateLine();
 
+    // use the attr method to check if an ID is initialized
+    // since the id method itself will initialize an ID (to
+    // a non-UUID)
+    if (!this.text.attr('id')) {
+      assignUuid(this.text);
+    }
+    if (!this.line.attr('id')) {
+      assignUuid(this.line);
+    }
+
     this._baseCenter = { ...baseCenter };
   }
 
@@ -32,14 +42,12 @@ export class BaseNumbering implements BaseNumberingInterface {
     if (this.text.wrapped.type != 'text') {
       throw new Error('Wrapped element is not a text.');
     }
-    assignUuid(this.text);
   }
 
   _validateLine(): void | never {
     if (this.line.wrapped.type != 'line') {
       throw new Error('Wrapped element is not a line.');
     }
-    assignUuid(this.line);
   }
 
   get id(): string {
