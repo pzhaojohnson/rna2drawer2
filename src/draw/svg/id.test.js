@@ -5,7 +5,7 @@ import { SVGTextWrapper as TextWrapper } from './text';
 import { SVGLineWrapper as LineWrapper } from './line';
 import { SVGCircleWrapper as CircleWrapper } from './circle';
 import { SVGPathWrapper as PathWrapper } from './path';
-import { v4 as uuid } from 'uuid';
+import { v4 as UUID } from 'uuid';
 
 let container = null;
 let svg = null;
@@ -98,7 +98,7 @@ describe('assignUuid function', () => {
 describe('uuidRegex', () => {
   it("matches UUIDs and isn't case-sensitive", () => {
     for (let i = 0; i < 100; i++) {
-      let id = uuid();
+      let id = UUID();
       expect(id).toMatch(uuidRegex);
       expect(id.toLowerCase()).toMatch(uuidRegex);
       expect(id.toUpperCase()).toMatch(uuidRegex);
