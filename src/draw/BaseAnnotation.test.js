@@ -1,8 +1,6 @@
 import { CircleBaseAnnotation } from './BaseAnnotation';
 import NodeSVG from './NodeSVG';
-import normalizeAngle from './normalizeAngle';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from './angleBetween';
 
 let svg = NodeSVG();
 
