@@ -36,8 +36,6 @@ export interface CircleBaseAnnotationSavableState {
 
 export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
   readonly circle: Svg.Circle;
-  strokeWidth: number;
-  strokeOpacity: number;
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps): void;
   savableState(): CircleBaseAnnotationSavableState;
 }

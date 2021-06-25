@@ -21,8 +21,9 @@ export function highlightStem(mode: PivotingMode, st: Stem) {
       let radius = b.fontSize;
       if (b.outline) {
         let outlineRadius = b.outline.circle.attr('r');
-        if (typeof outlineRadius == 'number') {
-          radius = Math.max(radius, 1.25 * (outlineRadius + b.outline.strokeWidth));
+        let outlineStrokeWidth = b.outline.circle.attr('stroke-width');
+        if (typeof outlineRadius == 'number' && typeof outlineStrokeWidth == 'number') {
+          radius = Math.max(radius, 1.25 * (outlineRadius + outlineStrokeWidth));
         }
       }
       if (!b.highlighting) {

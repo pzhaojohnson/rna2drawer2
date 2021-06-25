@@ -147,20 +147,6 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba.circle.position()).toBeGreaterThan(1);
   });
 
-  it('strokeWidth getter and setter', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, -1, 21);
-    cba.strokeWidth = 5.5;
-    expect(cba.strokeWidth).toBe(5.5); // check getter
-    expect(cba.circle.attr('stroke-width')).toBe(5.5); // check actual value
-  });
-
-  it('strokeOpacity getter and setter', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 10, 92);
-    cba.strokeOpacity = 0.3;
-    expect(cba.strokeOpacity).toBe(0.3); // check getter
-    expect(cba.circle.attr('stroke-opacity')).toBe(0.3); // check actual value
-  });
-
   describe('pulsateBetween method', () => {
     // It seems that any use of the animate method on an SVG element
     // when running with Node.js throws with the error "Cannot read

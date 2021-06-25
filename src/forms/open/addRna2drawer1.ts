@@ -51,11 +51,11 @@ function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
         o.circle.attr({
           'r': outline.relativeRadius * pixelsToPoints(b.fontSize),
           'stroke': outline.stroke.toHex(),
+          'stroke-width': outline.strokeWidth,
+          'stroke-opacity': outline.strokeOpacity,
           'fill': outline.fill.toHex(),
           'fill-opacity': outline.fillOpacity,
         });
-        o.strokeWidth = outline.strokeWidth;
-        o.strokeOpacity = outline.strokeOpacity;
       }
     });
   }

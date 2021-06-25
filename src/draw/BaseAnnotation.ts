@@ -117,32 +117,14 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this.circle.back();
   }
 
-  get strokeWidth(): number {
-    return this.circle.attr('stroke-width');
-  }
-
-  set strokeWidth(sw: number) {
-    this.stopPulsating();
-    this.circle.attr({ 'stroke-width': sw });
-  }
-
-  get strokeOpacity(): number {
-    return this.circle.attr('stroke-opacity');
-  }
-
-  set strokeOpacity(so: number) {
-    this.stopPulsating();
-    this.circle.attr({ 'stroke-opacity': so });
-  }
-
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
     this.stopPulsating();
     let withoutFill = {
       'r': pulsedProps.radius ?? this.circle.attr('r'),
       'fill-opacity': pulsedProps.fillOpacity ?? this.circle.attr('fill-opacity'),
       'stroke': pulsedProps.stroke ?? this.circle.attr('stroke'),
-      'stroke-width': pulsedProps.strokeWidth ?? this.strokeWidth,
-      'stroke-opacity': pulsedProps.strokeOpacity ?? this.strokeOpacity,
+      'stroke-width': pulsedProps.strokeWidth ?? this.circle.attr('stroke-width'),
+      'stroke-opacity': pulsedProps.strokeOpacity ?? this.circle.attr('stroke-opacity'),
     };
     let fill = pulsedProps.fill ?? this.circle.attr('fill');
     let withFill = fill == 'none' ? {} : { 'fill': fill };

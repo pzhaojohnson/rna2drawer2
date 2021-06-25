@@ -19,11 +19,11 @@ function _addOutlines(bs: Base[]) {
       o.circle.attr({
         'r': MostRecentOutlineProps.radius,
         'stroke': MostRecentOutlineProps.stroke,
+        'stroke-width': MostRecentOutlineProps.strokeWidth,
+        'stroke-opacity': MostRecentOutlineProps.strokeOpacity,
         'fill': MostRecentOutlineProps.fill,
         'fill-opacity': MostRecentOutlineProps.fillOpacity,
       });
-      o.strokeWidth = MostRecentOutlineProps.strokeWidth;
-      o.strokeOpacity = MostRecentOutlineProps.strokeOpacity;
       o.sendToBack();
     }
   });

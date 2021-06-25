@@ -8,7 +8,12 @@ import MostRecentOutlineProps from './MostRecentOutlineProps';
 
 function outlinesStrokeWidths(os: CircleBaseAnnotation[]): number[] {
   let sws = [] as number[];
-  os.forEach(o => sws.push(o.strokeWidth));
+  os.forEach(o => {
+    let sw = o.circle.attr('stroke-width');
+    if (typeof sw == 'number') {
+      sws.push(sw);
+    }
+  });
   return sws;
 }
 
@@ -33,7 +38,7 @@ export function OutlineStrokeWidthField(selectedBases: () => Base[], pushUndo: (
           let sws = outlinesStrokeWidths(os);
           if (!outlinesAllHaveSameStrokeWidth(os) || sw != sws[0]) {
             pushUndo();
-            os.forEach(o => o.strokeWidth = sw);
+            os.forEach(o => o.circle.attr({ 'stroke-width': sw }));
             MostRecentOutlineProps.strokeWidth = sw;
             changed();
           }
