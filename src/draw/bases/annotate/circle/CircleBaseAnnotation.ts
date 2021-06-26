@@ -32,6 +32,10 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   constructor(circle: SVG.Circle, xBaseCenter: number, yBaseCenter: number) {
+    if (circle.type != 'circle') {
+      throw new Error('Passed element is not a circle.');
+    }
+
     this.circle = circle;
     this._validateCircle();
   }
@@ -42,9 +46,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
    * Initializes the ID of the circle if it is not already initialized.
    */
   _validateCircle(): (void | never) {
-    if (this.circle.type !== 'circle') {
-      throw new Error('Passed SVG element must be a circle.');
-    }
     this.circle.id();
   }
 
