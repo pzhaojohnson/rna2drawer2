@@ -1,5 +1,5 @@
 import { BaseInterface as Base } from '../../BaseInterface';
-import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../BaseAnnotationInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 
 export interface HighlightingProps {
   radius?: number;

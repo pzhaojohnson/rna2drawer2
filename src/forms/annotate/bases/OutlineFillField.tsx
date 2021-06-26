@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
-import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../../draw/BaseAnnotationInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
 import baseOutlines from './baseOutlines';

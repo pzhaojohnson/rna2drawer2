@@ -3,7 +3,7 @@ import NodeSVG from './NodeSVG';
 import normalizeAngle from './normalizeAngle';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { savableState as savableNumberingState } from 'Draw/bases/number/save';
-import { CircleBaseAnnotation } from './BaseAnnotation';
+import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import angleBetween from './angleBetween';
 import { distance2D as distance } from 'Math/distance';
 

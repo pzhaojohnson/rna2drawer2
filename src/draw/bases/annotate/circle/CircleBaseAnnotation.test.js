@@ -1,5 +1,5 @@
-import { CircleBaseAnnotation } from './BaseAnnotation';
-import NodeSVG from './NodeSVG';
+import { CircleBaseAnnotation } from './CircleBaseAnnotation';
+import { NodeSVG } from 'Draw/NodeSVG';
 import { distance2D as distance } from 'Math/distance';
 
 let svg = NodeSVG();

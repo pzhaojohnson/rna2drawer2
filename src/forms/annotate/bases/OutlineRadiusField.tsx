@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { BaseInterface as Base } from '../../../draw/BaseInterface';
-import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from '../../../draw/BaseAnnotationInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 import baseOutlines from './baseOutlines';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';

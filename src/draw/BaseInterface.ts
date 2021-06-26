@@ -3,7 +3,7 @@ import {
   BaseAnnotationInterface as BaseAnnotation,
   CircleBaseAnnotationInterface as CircleBaseAnnotation,
   CircleBaseAnnotationSavableState,
-} from "./BaseAnnotationInterface";
+} from "Draw/bases/annotate/circle/CircleBaseAnnotationInterface";
 import { BaseNumberingInterface as BaseNumbering } from "Draw/bases/number/BaseNumberingInterface";
 import { SavableState as BaseNumberingSavableState } from 'Draw/bases/number/save';
 

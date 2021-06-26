@@ -3,7 +3,7 @@ import {
   CircleBaseAnnotationPulsableProps,
   PulseProps,
   CircleBaseAnnotationSavableState,
-} from './BaseAnnotationInterface';
+} from './CircleBaseAnnotationInterface';
 import * as SVG from '@svgdotjs/svg.js';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {

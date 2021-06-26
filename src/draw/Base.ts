@@ -6,11 +6,11 @@ import {
 import * as Svg from '@svgdotjs/svg.js';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from './angleBetween';
-import { CircleBaseAnnotation } from './BaseAnnotation';
+import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
 import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/number/save';
-import { CircleBaseAnnotationSavableState } from './BaseAnnotationInterface';
+import { CircleBaseAnnotationSavableState } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { SavableState as BaseNumberingSavableState } from 'Draw/bases/number/save';
 import { areClose } from './areClose';
 
