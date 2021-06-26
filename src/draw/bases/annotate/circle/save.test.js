@@ -35,4 +35,13 @@ describe('savableState function', () => {
     expect(c.id()).toBeTruthy();
     expect(c.id()).toMatch(uuidRegex);
   });
+
+  it('returned savable state can be converted to and from JSON', () => {
+    let c = svg.circle(100);
+    let cba = new CircleBaseAnnotation(c, 50, 100);
+    let saved1 = savableState(cba);
+    let string1 = JSON.stringify(saved1);
+    let saved2 = JSON.parse(string1);
+    expect(saved2).toEqual(saved1);
+  });
 });
