@@ -19,12 +19,16 @@ export class BaseNumbering implements BaseNumberingInterface {
   _baseCenter: Point;
 
   constructor(text: Text, line: Line, baseCenter: Point) {
+    if (text.wrapped.type != 'text') {
+      throw new Error('Wrapped element is not a text.');
+    }
+    if (line.wrapped.type != 'line') {
+      throw new Error('Wrapped element is not a line.');
+    }
+
     this.text = text;
-    this._validateText();
-
     this.line = line;
-    this._validateLine();
-
+    
     // use the attr method to check if an ID is initialized
     // since the id method itself will initialize an ID (to
     // a non-UUID)
@@ -36,18 +40,6 @@ export class BaseNumbering implements BaseNumberingInterface {
     }
 
     this._baseCenter = { ...baseCenter };
-  }
-
-  _validateText(): void | never {
-    if (this.text.wrapped.type != 'text') {
-      throw new Error('Wrapped element is not a text.');
-    }
-  }
-
-  _validateLine(): void | never {
-    if (this.line.wrapped.type != 'line') {
-      throw new Error('Wrapped element is not a line.');
-    }
   }
 
   get id(): string {
