@@ -1,6 +1,7 @@
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { distance2D as distance } from 'Math/distance';
+import { uuidRegex } from 'Draw/svg/id';
 
 let svg = NodeSVG();
 
@@ -52,11 +53,28 @@ describe('CircleBaseAnnotation class', () => {
       expect(() => new CircleBaseAnnotation(r, 5, 6)).toThrow();
     });
 
-    it('initializes circle ID', () => {
-      let c = svg.circle(15);
-      expect(c.attr('id')).toBe(undefined);
-      let cba = new CircleBaseAnnotation(c, 1, 1);
-      expect(c.attr('id')).toBeTruthy();
+    it('initializes falsy circle IDs with UUIDs', () => {
+      [undefined, ''].forEach(v => {
+        let c = svg.circle(30);
+        c.attr({ 'id': v });
+        // use the attr method to check the value of an ID
+        // since the id method itself will initialize IDs
+        expect(c.attr('id')).toBe(v);
+        let cba = new CircleBaseAnnotation(c, 5, 10);
+        expect(c.attr('id')).toMatch(uuidRegex);
+      });
+    });
+
+    it("doesn't overwrite circle IDs", () => {
+      // it is important that IDs aren't overwritten
+      // when opening a saved drawing since elements
+      // in the drawing may reference other elements
+      // using saved IDs (e.g., bonds referencing their
+      // bases)
+      let c = svg.circle(50);
+      c.attr({ 'id': 'circleId132435' });
+      let cba = new CircleBaseAnnotation(c, 50, 100);
+      expect(c.attr('id')).toBe('circleId132435');
     });
   });
 

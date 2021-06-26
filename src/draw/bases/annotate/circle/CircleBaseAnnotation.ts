@@ -5,6 +5,8 @@ import {
   CircleBaseAnnotationSavableState,
 } from './CircleBaseAnnotationInterface';
 import * as SVG from '@svgdotjs/svg.js';
+import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
+import { assignUuid } from 'Draw/svg/id';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   readonly circle: SVG.Circle;
@@ -37,16 +39,13 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     }
 
     this.circle = circle;
-    this._validateCircle();
-  }
 
-  /**
-   * Throws if the circle is not actually a circle.
-   *
-   * Initializes the ID of the circle if it is not already initialized.
-   */
-  _validateCircle(): (void | never) {
-    this.circle.id();
+    // use the attr method to check if an ID is initialized
+    // since the id method itself will initialize an ID (to
+    // a non-UUID)
+    if (!this.circle.attr('id')) {
+      assignUuid(new CircleWrapper(this.circle));
+    }
   }
 
   get id(): string {
@@ -103,7 +102,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   refreshIds() {
-    this.circle.id('');
-    this.circle.id();
+    assignUuid(new CircleWrapper(this.circle));
   }
 }
