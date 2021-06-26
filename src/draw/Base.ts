@@ -12,7 +12,7 @@ import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
 import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/number/save';
 import { SavableState as SavableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
-import { SavableState as BaseNumberingSavableState } from 'Draw/bases/number/save';
+import { SavableState as SavableBaseNumberingState } from 'Draw/bases/number/save';
 import { areClose } from './areClose';
 
 class Base implements BaseInterface {
@@ -362,7 +362,7 @@ class Base implements BaseInterface {
   }
 
   addNumberingFromSavedState(
-    savedState: BaseNumberingSavableState,
+    savedState: SavableBaseNumberingState,
   ): (BaseNumbering | undefined | never) {
     addSavedNumbering(this, savedState);
     return this.numbering;

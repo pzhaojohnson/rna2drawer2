@@ -5,7 +5,7 @@ import {
 } from "Draw/bases/annotate/circle/CircleBaseAnnotationInterface";
 import { SavableState as SavableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import { BaseNumberingInterface as BaseNumbering } from "Draw/bases/number/BaseNumberingInterface";
-import { SavableState as BaseNumberingSavableState } from 'Draw/bases/number/save';
+import { SavableState as SavableBaseNumberingState } from 'Draw/bases/number/save';
 
 export interface BaseMostRecentProps {
   fontFamily: string;
@@ -19,7 +19,7 @@ export interface BaseSavableState {
   textId: string;
   highlighting?: SavableCircleAnnotationState;
   outline?: SavableCircleAnnotationState;
-  numbering?: BaseNumberingSavableState;
+  numbering?: SavableBaseNumberingState;
 }
 
 export interface BaseInterface {
@@ -61,7 +61,7 @@ export interface BaseInterface {
   removeOutline(): void;
 
   addNumbering(n: number): BaseNumbering | undefined;
-  addNumberingFromSavedState(s: BaseNumberingSavableState): BaseNumbering | undefined | never;
+  addNumberingFromSavedState(s: SavableBaseNumberingState): BaseNumbering | undefined | never;
   hasNumbering(): boolean;
   numbering?: BaseNumbering;
   removeNumbering(): void;
