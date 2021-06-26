@@ -2,11 +2,11 @@ import {
   CircleBaseAnnotationInterface,
   CircleBaseAnnotationPulsableProps,
   PulseProps,
-  CircleBaseAnnotationSavableState,
 } from './CircleBaseAnnotationInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { assignUuid } from 'Draw/svg/id';
+import { SavableState } from './save';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   readonly circle: SVG.Circle;
@@ -14,7 +14,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   _currPulsation?: SVG.Runner;
 
   static fromSavedState(
-    savedState: CircleBaseAnnotationSavableState,
+    savedState: SavableState,
     svg: SVG.Svg,
     xBaseCenter: number,
     yBaseCenter: number,

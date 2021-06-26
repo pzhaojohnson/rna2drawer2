@@ -10,7 +10,7 @@ import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnot
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
 import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/number/save';
-import { CircleBaseAnnotationSavableState } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
+import { SavableState as SavableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import { SavableState as BaseNumberingSavableState } from 'Draw/bases/number/save';
 import { areClose } from './areClose';
@@ -282,7 +282,7 @@ class Base implements BaseInterface {
   }
 
   addCircleHighlightingFromSavedState(
-    savedState: CircleBaseAnnotationSavableState,
+    savedState: SavableCircleAnnotationState,
   ): (CircleBaseAnnotation | never) {
     this.removeHighlighting();
     this._highlighting = CircleBaseAnnotation.fromSavedState(
@@ -323,7 +323,7 @@ class Base implements BaseInterface {
   }
 
   addCircleOutlineFromSavedState(
-    savedState: CircleBaseAnnotationSavableState,
+    savedState: SavableCircleAnnotationState,
   ): (CircleBaseAnnotation | never) {
     this.removeOutline();
     this._outline = CircleBaseAnnotation.fromSavedState(

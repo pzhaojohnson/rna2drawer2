@@ -2,8 +2,8 @@ import * as Svg from '@svgdotjs/svg.js';
 import {
   BaseAnnotationInterface as BaseAnnotation,
   CircleBaseAnnotationInterface as CircleBaseAnnotation,
-  CircleBaseAnnotationSavableState,
 } from "Draw/bases/annotate/circle/CircleBaseAnnotationInterface";
+import { SavableState as SavableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import { BaseNumberingInterface as BaseNumbering } from "Draw/bases/number/BaseNumberingInterface";
 import { SavableState as BaseNumberingSavableState } from 'Draw/bases/number/save';
 
@@ -17,8 +17,8 @@ export interface BaseMostRecentProps {
 export interface BaseSavableState {
   className: string;
   textId: string;
-  highlighting?: CircleBaseAnnotationSavableState;
-  outline?: CircleBaseAnnotationSavableState;
+  highlighting?: SavableCircleAnnotationState;
+  outline?: SavableCircleAnnotationState;
   numbering?: BaseNumberingSavableState;
 }
 
@@ -49,13 +49,13 @@ export interface BaseInterface {
   onDblclick(f: () => void): void;
 
   addCircleHighlighting(): CircleBaseAnnotation;
-  addCircleHighlightingFromSavedState(s: CircleBaseAnnotationSavableState): CircleBaseAnnotation | never;
+  addCircleHighlightingFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | never;
   hasHighlighting(): boolean;
   readonly highlighting: CircleBaseAnnotation | null;
   removeHighlighting(): void;
 
   addCircleOutline(): CircleBaseAnnotation;
-  addCircleOutlineFromSavedState(s: CircleBaseAnnotationSavableState): CircleBaseAnnotation | never;
+  addCircleOutlineFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | never;
   hasOutline(): boolean;
   readonly outline: CircleBaseAnnotation | null;
   removeOutline(): void;

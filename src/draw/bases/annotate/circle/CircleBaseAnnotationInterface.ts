@@ -23,11 +23,6 @@ export interface PulseProps {
   duration?: number;
 }
 
-export interface CircleBaseAnnotationSavableState {
-  className: string;
-  circleId: string;
-}
-
 export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
   readonly circle: SVG.Circle;
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps): void;
