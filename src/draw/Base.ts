@@ -11,6 +11,7 @@ import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
 import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/number/save';
 import { CircleBaseAnnotationSavableState } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
+import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import { SavableState as BaseNumberingSavableState } from 'Draw/bases/number/save';
 import { areClose } from './areClose';
 
@@ -397,8 +398,8 @@ class Base implements BaseInterface {
     return {
       className: 'Base',
       textId: this.text.id(),
-      highlighting: this.highlighting ? this.highlighting.savableState() : undefined,
-      outline: this.outline ? this.outline.savableState() : undefined,
+      highlighting: this.highlighting ? savableCircleAnnotationState(this.highlighting) : undefined,
+      outline: this.outline ? savableCircleAnnotationState(this.outline) : undefined,
       numbering: this.numbering ? savableNumberingState(this.numbering) : undefined,
     };
   }

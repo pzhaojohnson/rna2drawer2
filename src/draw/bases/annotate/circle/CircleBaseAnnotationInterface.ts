@@ -7,7 +7,6 @@ export interface BaseAnnotationInterface {
   bringToFront(): void;
   sendToBack(): void;
   remove(): void;
-  savableState(): object;
   refreshIds(): void;
 }
 
@@ -32,7 +31,6 @@ export interface CircleBaseAnnotationSavableState {
 export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
   readonly circle: SVG.Circle;
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps): void;
-  savableState(): CircleBaseAnnotationSavableState;
 }
 
 export default BaseAnnotationInterface;

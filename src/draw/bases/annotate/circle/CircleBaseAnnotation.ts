@@ -94,13 +94,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     this.circle.remove();
   }
 
-  savableState(): CircleBaseAnnotationSavableState {
-    return {
-      className: 'CircleBaseAnnotation',
-      circleId: this.circle.id(),
-    };
-  }
-
   refreshIds() {
     assignUuid(new CircleWrapper(this.circle));
   }

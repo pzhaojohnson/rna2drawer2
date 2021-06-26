@@ -2,6 +2,7 @@ import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { distance2D as distance } from 'Math/distance';
 import { uuidRegex } from 'Draw/svg/id';
+import { savableState } from './save';
 
 let svg = NodeSVG();
 
@@ -9,9 +10,9 @@ describe('CircleBaseAnnotation class', () => {
   describe('fromSavedState static method', () => {
     it('valid saved state', () => {
       let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 19.6, 100.1);
-      let savableState = cba1.savableState();
-      let cba2 = CircleBaseAnnotation.fromSavedState(savableState, svg, 19.6, 100.1);
-      expect(cba2.circle.id()).toBe(savableState.circleId);
+      let saved = savableState(cba1);
+      let cba2 = CircleBaseAnnotation.fromSavedState(saved, svg, 19.6, 100.1);
+      expect(cba2.circle.id()).toBe(saved.circleId);
       expect(cba2.circle.attr('cx')).toBeCloseTo(19.6);
       expect(cba2.circle.attr('cy')).toBeCloseTo(100.1);
     });
@@ -19,19 +20,19 @@ describe('CircleBaseAnnotation class', () => {
     describe('invalid saved state', () => {
       it('wrong className', () => {
         let cba = CircleBaseAnnotation.createNondisplaced(svg, 0, 4);
-        let savableState = cba.savableState();
-        savableState.className = 'CircleBseAnnotation';
+        let saved = savableState(cba);
+        saved.className = 'CircleBseAnnotation';
         expect(
-          () => CircleBaseAnnotation.fromSavedState(savableState, svg, 0, 4)
+          () => CircleBaseAnnotation.fromSavedState(saved, svg, 0, 4)
         ).toThrow();
       });
 
       it('no circle has saved ID', () => {
         let cba = CircleBaseAnnotation.createNondisplaced(svg, -1, 5);
-        let savableState = cba.savableState();
-        savableState.circleId = 'asdf';
+        let saved = savableState(cba);
+        saved.circleId = 'asdf';
         expect(
-          () => CircleBaseAnnotation.fromSavedState(savableState, svg, -1, 5)
+          () => CircleBaseAnnotation.fromSavedState(saved, svg, -1, 5)
         ).toThrow();
       });
     });
@@ -150,23 +151,6 @@ describe('CircleBaseAnnotation class', () => {
     expect(svg.findOne(id)).toBeTruthy();
     cba.remove();
     expect(svg.findOne(id)).toBe(null);
-  });
-
-  describe('savableState method', () => {
-    it('includes className and circle ID', () => {
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
-      let savableState = cba.savableState();
-      expect(savableState.className).toBe('CircleBaseAnnotation');
-      expect(savableState.circleId).toBe(cba.circle.id());
-    });
-
-    it('can be converted to and from a JSON string', () => {
-      let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 5, 9);
-      let savableState = cba1.savableState();
-      let json = JSON.stringify(savableState);
-      let parsed = JSON.parse(json);
-      expect(JSON.stringify(parsed)).toBe(json);
-    });
   });
 
   it('refreshIds method', () => {

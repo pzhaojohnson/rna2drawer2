@@ -4,6 +4,7 @@ import normalizeAngle from './normalizeAngle';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { savableState as savableNumberingState } from 'Draw/bases/number/save';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
+import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import angleBetween from './angleBetween';
 import { distance2D as distance } from 'Math/distance';
 
@@ -431,7 +432,7 @@ describe('Base class', () => {
       it('passes center base coordinates and stores reference', () => {
         let b = Base.create(svg, 'g', 30, 82);
         let h1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
-        let savableState1 = h1.savableState();
+        let savableState1 = savableCircleAnnotationState(h1);
         let h2 = b.addCircleHighlightingFromSavedState(savableState1);
         expect(h2.circle.attr('cx')).toBeCloseTo(30);
         expect(h2.circle.attr('cy')).toBeCloseTo(82);
@@ -443,7 +444,7 @@ describe('Base class', () => {
         let h1 = b.addCircleHighlighting();
         let spy = jest.spyOn(h1, 'remove');
         let h2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
-        let savableState2 = h2.savableState();
+        let savableState2 = savableCircleAnnotationState(h2);
         let h3 = b.addCircleHighlightingFromSavedState(savableState2);
         expect(spy).toHaveBeenCalled();
       });
@@ -502,7 +503,7 @@ describe('Base class', () => {
       it('passes saved state and center base coordinates and stores reference', () => {
         let b = Base.create(svg, 'H', 30, 60);
         let o1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
-        let savableState1 = o1.savableState();
+        let savableState1 = savableCircleAnnotationState(o1);
         let o2 = b.addCircleOutlineFromSavedState(savableState1);
         expect(o2.id).toBe(o1.id);
         expect(o2.circle.attr('cx')).toBeCloseTo(30);
@@ -515,7 +516,7 @@ describe('Base class', () => {
         let o1 = b.addCircleOutline();
         let spy = jest.spyOn(o1, 'remove');
         let o2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
-        let savableState2 = o2.savableState();
+        let savableState2 = savableCircleAnnotationState(o2);
         let o3 = b.addCircleOutlineFromSavedState(savableState2);
         expect(spy).toHaveBeenCalled();
       });
@@ -633,7 +634,9 @@ describe('Base class', () => {
       let b = Base.create(svg, 'q', 10, 20);
       let h = b.addCircleHighlighting();
       let savableState = b.savableState();
-      expect(JSON.stringify(savableState.highlighting)).toBe(JSON.stringify(h.savableState()));
+      expect(
+        JSON.stringify(savableState.highlighting)
+      ).toBe(JSON.stringify(savableCircleAnnotationState(h)));
     });
 
     it('can include outline', () => {
@@ -641,7 +644,9 @@ describe('Base class', () => {
       let b = Base.create(svg, 'b', 100, 200);
       let o = b.addCircleOutline();
       let savableState = b.savableState();
-      expect(JSON.stringify(savableState.outline)).toBe(JSON.stringify(o.savableState()));
+      expect(
+        JSON.stringify(savableState.outline)
+      ).toBe(JSON.stringify(savableCircleAnnotationState(o)));
     });
 
     it('can include numbering', () => {
