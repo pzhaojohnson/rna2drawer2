@@ -145,14 +145,6 @@ describe('CircleBaseAnnotation class', () => {
     */
   });
 
-  it('remove method removes circle', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 0.1, 2.6);
-    let id = '#' + cba.circle.id();
-    expect(svg.findOne(id)).toBeTruthy();
-    cba.remove();
-    expect(svg.findOne(id)).toBe(null);
-  });
-
   it('refreshIds method', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 10, 50);
     let oldId = cba.circle.id();

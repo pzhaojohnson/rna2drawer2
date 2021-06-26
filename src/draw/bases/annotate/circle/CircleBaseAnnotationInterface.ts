@@ -20,6 +20,5 @@ export interface CircleBaseAnnotationInterface {
   bringToFront(): void;
   sendToBack(): void;
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps): void;
-  remove(): void;
   refreshIds(): void;
 }

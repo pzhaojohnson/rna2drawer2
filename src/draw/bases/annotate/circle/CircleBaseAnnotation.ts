@@ -90,10 +90,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     }
   }
 
-  remove() {
-    this.circle.remove();
-  }
-
   refreshIds() {
     assignUuid(new CircleWrapper(this.circle));
   }

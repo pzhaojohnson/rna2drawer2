@@ -422,9 +422,8 @@ describe('Base class', () => {
       it('removes previous highlighting', () => {
         let b = Base.create(svg, 't', 5, 12);
         let h1 = b.addCircleHighlighting();
-        let spy = jest.spyOn(h1, 'remove');
         let h2 = b.addCircleHighlighting();
-        expect(spy).toHaveBeenCalled();
+        expect(h1.circle.root()).toBeFalsy(); // was removed
       });
     });
 
@@ -442,11 +441,10 @@ describe('Base class', () => {
       it('removes previous highlighting', () => {
         let b = Base.create(svg, 'b', 5, 6);
         let h1 = b.addCircleHighlighting();
-        let spy = jest.spyOn(h1, 'remove');
         let h2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
         let savableState2 = savableCircleAnnotationState(h2);
         let h3 = b.addCircleHighlightingFromSavedState(savableState2);
-        expect(spy).toHaveBeenCalled();
+        expect(h1.circle.root()).toBeFalsy(); // was removed
       });
     });
 
@@ -466,9 +464,7 @@ describe('Base class', () => {
       it('removes highlighting and reference', () => {
         let b = Base.create(svg, 'b', 1, 5);
         let h = b.addCircleHighlighting();
-        let spy = jest.spyOn(h, 'remove');
         b.removeHighlighting();
-        expect(spy).toHaveBeenCalled();
         expect(b.highlighting).toBe(undefined); // check reference
       });
 
@@ -493,9 +489,8 @@ describe('Base class', () => {
       it('removes previous outline', () => {
         let b = Base.create(svg, 'Q', 5, 8);
         let o1 = b.addCircleOutline();
-        let spy = jest.spyOn(o1, 'remove');
         let o2 = b.addCircleOutline();
-        expect(spy).toHaveBeenCalled();
+        expect(o1.circle.root()).toBeFalsy(); // was removed
       });
     });
 
@@ -514,11 +509,10 @@ describe('Base class', () => {
       it('removes previous outline', () => {
         let b = Base.create(svg, 'q', 5, 10);
         let o1 = b.addCircleOutline();
-        let spy = jest.spyOn(o1, 'remove');
         let o2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
         let savableState2 = savableCircleAnnotationState(o2);
         let o3 = b.addCircleOutlineFromSavedState(savableState2);
-        expect(spy).toHaveBeenCalled();
+        expect(o1.circle.root()).toBeFalsy(); // was removed
       });
     });
 
@@ -538,9 +532,7 @@ describe('Base class', () => {
       it('removes outline and reference', () => {
         let b = Base.create(svg, 'b', 5, 2);
         let o = b.addCircleOutline();
-        let spy = jest.spyOn(o, 'remove');
         b.removeOutline();
-        expect(spy).toHaveBeenCalled();
         expect(b.outline).toBe(undefined);
       });
 
