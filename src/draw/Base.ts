@@ -19,8 +19,8 @@ class Base implements BaseInterface {
   static _mostRecentProps: BaseMostRecentProps;
 
   readonly text: Svg.Text;
-  _highlighting: CircleBaseAnnotation | null;
-  _outline: CircleBaseAnnotation | null;
+  _highlighting?: CircleBaseAnnotation;
+  _outline?: CircleBaseAnnotation;
   _numbering?: BaseNumbering;
 
   _xCenter!: number;
@@ -85,8 +85,8 @@ class Base implements BaseInterface {
     this._validateText();
     this._storeCenterCoordinates();
 
-    this._highlighting = null;
-    this._outline = null;
+    this._highlighting = undefined;
+    this._outline = undefined;
     this._numbering = undefined;
   }
 
@@ -301,14 +301,18 @@ class Base implements BaseInterface {
     return false;
   }
 
-  get highlighting(): (CircleBaseAnnotation | null) {
+  get highlighting(): (CircleBaseAnnotation | undefined) {
     return this._highlighting;
+  }
+
+  set highlighting(h) {
+    this._highlighting = h;
   }
 
   removeHighlighting() {
     if (this._highlighting) {
       this._highlighting.remove();
-      this._highlighting = null;
+      this._highlighting = undefined;
     }
   }
 
@@ -342,14 +346,18 @@ class Base implements BaseInterface {
     return false;
   }
 
-  get outline(): (CircleBaseAnnotation | null) {
+  get outline(): (CircleBaseAnnotation | undefined) {
     return this._outline;
+  }
+
+  set outline(o) {
+    this._outline = o;
   }
 
   removeOutline() {
     if (this._outline) {
       this._outline.remove();
-      this._outline = null;
+      this._outline = undefined;
     }
   }
 

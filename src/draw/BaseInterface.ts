@@ -51,13 +51,13 @@ export interface BaseInterface {
   addCircleHighlighting(): CircleBaseAnnotation;
   addCircleHighlightingFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | never;
   hasHighlighting(): boolean;
-  readonly highlighting: CircleBaseAnnotation | null;
+  highlighting?: CircleBaseAnnotation;
   removeHighlighting(): void;
 
   addCircleOutline(): CircleBaseAnnotation;
   addCircleOutlineFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | never;
   hasOutline(): boolean;
-  readonly outline: CircleBaseAnnotation | null;
+  outline?: CircleBaseAnnotation;
   removeOutline(): void;
 
   addNumbering(n: number): BaseNumbering | undefined;

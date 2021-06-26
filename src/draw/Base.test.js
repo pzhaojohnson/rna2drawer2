@@ -453,13 +453,13 @@ describe('Base class', () => {
     it('hasHighlighting method and highlighting getter', () => {
       let b = Base.create(svg, 'h', 10, 20);
       expect(b.hasHighlighting()).toBeFalsy();
-      expect(b.highlighting).toBe(null);
+      expect(b.highlighting).toBe(undefined);
       let h = b.addCircleHighlighting();
       expect(b.hasHighlighting()).toBeTruthy();
       expect(b.highlighting).toBe(h);
       b.removeHighlighting();
       expect(b.hasHighlighting()).toBeFalsy();
-      expect(b.highlighting).toBe(null);
+      expect(b.highlighting).toBe(undefined);
     });
 
     describe('removeHighlighting method', () => {
@@ -469,7 +469,7 @@ describe('Base class', () => {
         let spy = jest.spyOn(h, 'remove');
         b.removeHighlighting();
         expect(spy).toHaveBeenCalled();
-        expect(b.highlighting).toBe(null); // check reference
+        expect(b.highlighting).toBe(undefined); // check reference
       });
 
       it('can be called with no highlighting', () => {
@@ -525,13 +525,13 @@ describe('Base class', () => {
     it('hasOutline method and outline getter', () => {
       let b = Base.create(svg, 'h', 100, 112);
       expect(b.hasOutline()).toBeFalsy();
-      expect(b.outline).toBe(null);
+      expect(b.outline).toBe(undefined);
       let o = b.addCircleOutline();
       expect(b.hasOutline()).toBeTruthy();
       expect(b.outline).toBe(o);
       b.removeOutline();
       expect(b.hasOutline()).toBeFalsy();
-      expect(b.outline).toBe(null);
+      expect(b.outline).toBe(undefined);
     });
 
     describe('removeOutline method', () => {
@@ -541,7 +541,7 @@ describe('Base class', () => {
         let spy = jest.spyOn(o, 'remove');
         b.removeOutline();
         expect(spy).toHaveBeenCalled();
-        expect(b.outline).toBe(null);
+        expect(b.outline).toBe(undefined);
       });
 
       it('can be called without outline', () => {
