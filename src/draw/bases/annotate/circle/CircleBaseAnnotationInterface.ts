@@ -1,15 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
 
-export interface BaseAnnotationInterface {
-  readonly id: string;
-  
-  reposition(xBaseCenter: number, yBaseCenter: number): void;
-  bringToFront(): void;
-  sendToBack(): void;
-  remove(): void;
-  refreshIds(): void;
-}
-
 export interface CircleBaseAnnotationPulsableProps {
   radius?: number;
   fill?: string;
@@ -23,9 +13,13 @@ export interface PulseProps {
   duration?: number;
 }
 
-export interface CircleBaseAnnotationInterface extends BaseAnnotationInterface {
+export interface CircleBaseAnnotationInterface {
   readonly circle: SVG.Circle;
+  readonly id: string;
+  reposition(xBaseCenter: number, yBaseCenter: number): void;
+  bringToFront(): void;
+  sendToBack(): void;
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps): void;
+  remove(): void;
+  refreshIds(): void;
 }
-
-export default BaseAnnotationInterface;

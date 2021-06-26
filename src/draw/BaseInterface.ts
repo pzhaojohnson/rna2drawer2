@@ -1,6 +1,5 @@
 import * as Svg from '@svgdotjs/svg.js';
 import {
-  BaseAnnotationInterface as BaseAnnotation,
   CircleBaseAnnotationInterface as CircleBaseAnnotation,
 } from "Draw/bases/annotate/circle/CircleBaseAnnotationInterface";
 import { SavableState as SavableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
