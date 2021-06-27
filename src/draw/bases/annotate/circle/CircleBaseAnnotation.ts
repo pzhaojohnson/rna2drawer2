@@ -10,8 +10,6 @@ import { assignUuid } from 'Draw/svg/id';
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   readonly circle: SVG.Circle;
 
-  _currPulsation?: SVG.Runner;
-
   constructor(circle: SVG.Circle, xBaseCenter: number, yBaseCenter: number) {
     if (circle.type != 'circle') {
       throw new Error('Passed element is not a circle.');
@@ -47,7 +45,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
-    this.stopPulsating();
     let withoutFill = {
       'r': pulsedProps.radius ?? this.circle.attr('r'),
       'fill-opacity': pulsedProps.fillOpacity ?? this.circle.attr('fill-opacity'),
@@ -59,14 +56,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     let withFill = fill == 'none' ? {} : { 'fill': fill };
     let attrs = { ...withoutFill, ...withFill };
     let duration = pulseProps?.duration ?? 2000;
-    this._currPulsation = this.circle.animate(duration).attr(attrs).loop(undefined, true);
-  }
-
-  stopPulsating() {
-    if (this._currPulsation) {
-      this.circle.timeline().unschedule(this._currPulsation);
-      this._currPulsation = undefined;
-    }
+    this.circle.animate(duration).attr(attrs).loop(undefined, true);
   }
 
   refreshIds() {
