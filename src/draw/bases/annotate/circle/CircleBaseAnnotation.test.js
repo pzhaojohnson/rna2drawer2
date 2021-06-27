@@ -6,12 +6,6 @@ import { uuidRegex } from 'Draw/svg/id';
 let svg = NodeSVG();
 
 describe('CircleBaseAnnotation class', () => {
-  it('createNondisplaced static method', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 1.5, 3);
-    expect(cba.circle.attr('cx')).toBeCloseTo(1.5);
-    expect(cba.circle.attr('cy')).toBeCloseTo(3);
-  });
-
   describe('constructor', () => {
     it('throws on missing circle argument', () => {
       expect(() => new CircleBaseAnnotation(undefined, 1, 2)).toThrow();
@@ -65,19 +59,20 @@ describe('CircleBaseAnnotation class', () => {
   });
 
   it('bringToFront and sendToBack methods', () => {
+    let c = svg.circle(50);
+    let cba = new CircleBaseAnnotation(c, 25, 250);
     let r = svg.rect(10, 20);
     let l = svg.line(1, 2, 3, 4);
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 5, 10);
-    expect(cba.circle.position()).toBeGreaterThan(0); // not already at back
-    // must be sent all the way to back and not just backwards one position
-    expect(cba.circle.position()).toBeGreaterThan(1);
-    cba.sendToBack();
-    expect(cba.circle.position()).toBe(0); // sent to back
-    let frontMarker = svg.ellipse(20, 30);
+    let t = svg.text('asdf');
     cba.bringToFront();
-    expect(cba.circle.position()).toBeGreaterThan(frontMarker.position()); // brought to front
-    // had to be brought all the way to front and not just forward one position
-    expect(cba.circle.position()).toBeGreaterThan(1);
+    // must send all the way to the back and not just back
+    // one position
+    cba.sendToBack();
+    expect(c.position()).toBe(0);
+    // must bring all the way to the front and not just
+    // forward one position
+    cba.bringToFront();
+    expect(c.position()).toBeGreaterThanOrEqual(3);
   });
 
   describe('pulsateBetween method', () => {
@@ -114,9 +109,14 @@ describe('CircleBaseAnnotation class', () => {
   });
 
   it('refreshIds method', () => {
-    let cba = CircleBaseAnnotation.createNondisplaced(svg, 10, 50);
-    let oldId = cba.circle.id();
+    let c = svg.circle(10);
+    let cba = new CircleBaseAnnotation(c, 20, 30);
+    let prevId = c.id();
+    expect(prevId).toBeTruthy(); // ID was initialized
     cba.refreshIds();
-    expect(cba.circle.id()).not.toBe(oldId);
+    expect(c.id()).not.toEqual(prevId);
+    // check that ID was redefined (and not undefined)
+    expect(c.id()).toBeTruthy();
+    expect(c.id()).toMatch(uuidRegex);
   });
 });

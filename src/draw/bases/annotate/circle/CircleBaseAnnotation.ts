@@ -12,13 +12,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   _currPulsation?: SVG.Runner;
 
-  static createNondisplaced(svg: SVG.Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
-    let circle = svg.circle(20);
-    circle.id();
-    circle.attr({ 'cx': xBaseCenter, 'cy': yBaseCenter });
-    return new CircleBaseAnnotation(circle, xBaseCenter, yBaseCenter);
-  }
-
   constructor(circle: SVG.Circle, xBaseCenter: number, yBaseCenter: number) {
     if (circle.type != 'circle') {
       throw new Error('Passed element is not a circle.');

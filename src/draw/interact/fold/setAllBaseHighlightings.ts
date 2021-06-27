@@ -177,7 +177,7 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
           strokeOpacity: props.unpulsed.strokeOpacity,
           fill: 'none',
         });
-        h.pulsateBetween({
+        h?.pulsateBetween({
           radius: props.pulse.scaling * radius,
           strokeWidth: props.pulsed.strokeWidth,
           strokeOpacity: props.pulsed.strokeOpacity,

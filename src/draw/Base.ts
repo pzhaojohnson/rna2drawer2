@@ -11,7 +11,9 @@ import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
 import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/number/save';
 import {
+  addHighlighting,
   removeHighlighting,
+  addOutline,
   removeOutline,
 } from 'Draw/bases/annotate/circle/add';
 import {
@@ -279,13 +281,8 @@ class Base implements BaseInterface {
     this.text.dblclick(f);
   }
 
-  addCircleHighlighting(): CircleBaseAnnotation {
-    this.removeHighlighting();
-    this._highlighting = CircleBaseAnnotation.createNondisplaced(
-      this.text.root(),
-      this.xCenter,
-      this.yCenter,
-    );
+  addCircleHighlighting(): CircleBaseAnnotation | undefined {
+    addHighlighting(this);
     return this._highlighting;
   }
 
@@ -315,13 +312,8 @@ class Base implements BaseInterface {
     removeHighlighting(this);
   }
 
-  addCircleOutline(): CircleBaseAnnotation {
-    this.removeOutline();
-    this._outline = CircleBaseAnnotation.createNondisplaced(
-      this.text.root(),
-      this.xCenter,
-      this.yCenter,
-    );
+  addCircleOutline(): CircleBaseAnnotation | undefined {
+    addOutline(this);
     return this._outline;
   }
 

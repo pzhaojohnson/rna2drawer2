@@ -24,11 +24,11 @@ export function highlightStem(mode: FlippingMode, st: Stem) {
         strokeOpacity: 0.9,
         strokeDasharray: '3,1.5',
       });
-      h.pulsateBetween({
+      h?.pulsateBetween({
         radius: 1.1875 * radius,
       }, { duration: 625 });
       if (bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
-        h.sendToBack();
+        h?.sendToBack();
       }
     }
   });

@@ -29,7 +29,7 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
           strokeWidth: 0.75,
           strokeOpacity: p == mode.hovered ? 0.9 : 0.4,
         });
-        h.pulsateBetween({
+        h?.pulsateBetween({
           radius: 1.1 * radius,
           strokeOpacity: p == mode.hovered ? 0.9 : 0.3,
         }, { duration: p == mode.hovered ? 625 : 2000 });

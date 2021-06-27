@@ -3,7 +3,6 @@ import NodeSVG from './NodeSVG';
 import normalizeAngle from './normalizeAngle';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { savableState as savableNumberingState } from 'Draw/bases/number/save';
-import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import angleBetween from './angleBetween';
 import { distance2D as distance } from 'Math/distance';
@@ -429,13 +428,14 @@ describe('Base class', () => {
 
     describe('addCircleHighlightingFromSavedState method', () => {
       it('passes center base coordinates and stores reference', () => {
-        let b = Base.create(svg, 'g', 30, 82);
-        let h1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+        let b1 = Base.create(svg, 'g', 30, 82);
+        let h1 = b1.addCircleHighlighting();
         let savableState1 = savableCircleAnnotationState(h1);
-        let h2 = b.addCircleHighlightingFromSavedState(savableState1);
+        let b2 = Base.create(svg, 'g', 30, 82);
+        let h2 = b2.addCircleHighlightingFromSavedState(savableState1);
         expect(h2.circle.attr('cx')).toBeCloseTo(30);
         expect(h2.circle.attr('cy')).toBeCloseTo(82);
-        expect(b.highlighting).toBe(h2); // check reference
+        expect(b2.highlighting).toBe(h2); // check reference
       });
     });
 
@@ -487,14 +487,15 @@ describe('Base class', () => {
 
     describe('addCircleOutlineFromSavedState method', () => {
       it('passes saved state and center base coordinates and stores reference', () => {
-        let b = Base.create(svg, 'H', 30, 60);
-        let o1 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
+        let b1 = Base.create(svg, 'H', 30, 60);
+        let o1 = b1.addCircleOutline();
         let savableState1 = savableCircleAnnotationState(o1);
-        let o2 = b.addCircleOutlineFromSavedState(savableState1);
+        let b2 = Base.create(svg, 'H', 30, 60);
+        let o2 = b2.addCircleOutlineFromSavedState(savableState1);
         expect(o2.id).toBe(o1.id);
         expect(o2.circle.attr('cx')).toBeCloseTo(30);
         expect(o2.circle.attr('cy')).toBeCloseTo(60);
-        expect(b.outline).toBe(o2); // check reference
+        expect(b2.outline).toBe(o2); // check reference
       });
     });
 
