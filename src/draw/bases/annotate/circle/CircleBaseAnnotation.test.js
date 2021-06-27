@@ -68,14 +68,14 @@ describe('CircleBaseAnnotation class', () => {
       let c = new CircleWrapper(svg.circle(20));
       c.attr({ 'cx': 5.68, 'cy': 205.2 });
       let cba = new CircleBaseAnnotation(c, { x: 32, y: 156 });
-      cba.reposition({ x: 200.6, y: 129 });
+      cba.reposition({ baseCenter: { x: 200.6, y: 129 } });
       expect(distance(200.6, 129, c.attr('cx'), c.attr('cy'))).toBeCloseTo(0);
     });
 
     it('caches base center and can use cached base center', () => {
       let c = new CircleWrapper(svg.circle(60));
       let cba = new CircleBaseAnnotation(c, { x: 50, y: 150 });
-      cba.reposition({ x: 455.2, y: 812.3 });
+      cba.reposition({ baseCenter: { x: 455.2, y: 812.3 } });
       c.attr({ 'cx': 235, 'cy': 230 });
       expect(c.attr('cx')).toBeCloseTo(235);
       expect(c.attr('cy')).toBeCloseTo(230);

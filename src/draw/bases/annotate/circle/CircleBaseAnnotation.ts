@@ -1,4 +1,7 @@
-import { CircleBaseAnnotationInterface } from './CircleBaseAnnotationInterface';
+import {
+  CircleBaseAnnotationInterface,
+  Repositioning,
+} from './CircleBaseAnnotationInterface';
 import { SVGCircleWrapper as Circle } from 'Draw/svg/circle';
 import { Point2D as Point } from 'Math/Point';
 import { assignUuid } from 'Draw/svg/id';
@@ -29,13 +32,13 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     return String(this.circle.id());
   }
 
-  reposition(baseCenter?: Point) {
+  reposition(rp?: Repositioning) {
     this.circle.attr({
-      'cx': baseCenter?.x ?? this._baseCenter.x,
-      'cy': baseCenter?.y ?? this._baseCenter.y,
+      'cx': rp?.baseCenter?.x ?? this._baseCenter.x,
+      'cy': rp?.baseCenter?.y ?? this._baseCenter.y,
     });
-    if (baseCenter) {
-      this._baseCenter = { ...baseCenter };
+    if (rp?.baseCenter) {
+      this._baseCenter = { ...rp.baseCenter };
     }
   }
 

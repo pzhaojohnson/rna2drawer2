@@ -158,10 +158,10 @@ class Base implements BaseInterface {
       this._xCenter = xCenter;
       this._yCenter = yCenter;
       if (this._highlighting) {
-        this._highlighting.reposition({ x: xCenter, y: yCenter });
+        this._highlighting.reposition({ baseCenter: { x: xCenter, y: yCenter } });
       }
       if (this._outline) {
-        this._outline.reposition({ x: xCenter, y: yCenter });
+        this._outline.reposition({ baseCenter: { x: xCenter, y: yCenter } });
       }
       if (this._numbering) {
         this._numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
