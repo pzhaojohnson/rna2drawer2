@@ -1,5 +1,6 @@
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
 import highlightBase from '../highlight/highlightBase';
+import { pulsateBetween } from 'Draw/interact/highlight/pulse';
 
 export function setAllBaseHighlightings(mode: AnnotatingMode) {
   let bHovered = typeof mode.hovered == 'number' ? mode.drawing.getBaseAtOverallPosition(mode.hovered) : undefined;
@@ -29,10 +30,12 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
           strokeWidth: 0.75,
           strokeOpacity: p == mode.hovered ? 0.9 : 0.4,
         });
-        h?.pulsateBetween({
-          radius: 1.1 * radius,
-          strokeOpacity: p == mode.hovered ? 0.9 : 0.3,
-        }, { duration: p == mode.hovered ? 625 : 2000 });
+        if (h) {
+          pulsateBetween(h, {
+            radius: 1.1 * radius,
+            strokeOpacity: p == mode.hovered ? 0.9 : 0.3,
+          }, { duration: p == mode.hovered ? 625 : 2000 });
+        }
       }
       // if close to hovered base
       if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {

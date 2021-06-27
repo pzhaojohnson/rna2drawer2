@@ -1,5 +1,6 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import highlightBase from '../highlight/highlightBase';
+import { pulsateBetween } from 'Draw/interact/highlight/pulse';
 import allPairables from './allPairables';
 import { selectedRange } from './selected';
 import secondaryBondsWith from './secondaryBondsWith';
@@ -177,11 +178,13 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
           strokeOpacity: props.unpulsed.strokeOpacity,
           fill: 'none',
         });
-        h?.pulsateBetween({
-          radius: props.pulse.scaling * radius,
-          strokeWidth: props.pulsed.strokeWidth,
-          strokeOpacity: props.pulsed.strokeOpacity,
-        }, { duration: props.pulse.duration });
+        if (h) {
+          pulsateBetween(h, {
+            radius: props.pulse.scaling * radius,
+            strokeWidth: props.pulsed.strokeWidth,
+            strokeOpacity: props.pulsed.strokeOpacity,
+          }, { duration: props.pulse.duration });
+        }
       }
       if (bHovered && bHovered.distanceBetweenCenters(b) < 5 * radius) {
         if (b.highlighting) {

@@ -3,6 +3,7 @@ import { outerStemOfHoveredLoop } from './structure';
 import { positionsOfStem } from '../highlight/positionsOfStem';
 import { positionsOfLoop, positionsOfOutermostLoop } from './structure';
 import { highlightBase } from '../highlight/highlightBase';
+import { pulsateBetween } from 'Draw/interact/highlight/pulse';
 
 function positionsToHighlight(mode: TriangularizingMode): number[] | undefined {
   if (typeof mode.hovered == 'number') {
@@ -42,9 +43,11 @@ export function highlightHovered(mode: TriangularizingMode) {
             strokeOpacity: 0.9,
             strokeDasharray: '3,1.5',
           });
-          h?.pulsateBetween({
-            radius: 1.1875 * radius,
-          }, { duration: 675 });
+          if (h) {
+            pulsateBetween(h, {
+              radius: 1.1875 * radius,
+            }, { duration: 675 });
+          }
         }
         if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
           b.highlighting.sendToBack();

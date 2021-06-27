@@ -1,8 +1,4 @@
-import {
-  CircleBaseAnnotationInterface,
-  CircleBaseAnnotationPulsableProps,
-  PulseProps,
-} from './CircleBaseAnnotationInterface';
+import { CircleBaseAnnotationInterface } from './CircleBaseAnnotationInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { assignUuid } from 'Draw/svg/id';
@@ -42,21 +38,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   sendToBack() {
     this.circle.back();
-  }
-
-  pulsateBetween(pulsedProps: CircleBaseAnnotationPulsableProps, pulseProps?: PulseProps) {
-    let withoutFill = {
-      'r': pulsedProps.radius ?? this.circle.attr('r'),
-      'fill-opacity': pulsedProps.fillOpacity ?? this.circle.attr('fill-opacity'),
-      'stroke': pulsedProps.stroke ?? this.circle.attr('stroke'),
-      'stroke-width': pulsedProps.strokeWidth ?? this.circle.attr('stroke-width'),
-      'stroke-opacity': pulsedProps.strokeOpacity ?? this.circle.attr('stroke-opacity'),
-    };
-    let fill = pulsedProps.fill ?? this.circle.attr('fill');
-    let withFill = fill == 'none' ? {} : { 'fill': fill };
-    let attrs = { ...withoutFill, ...withFill };
-    let duration = pulseProps?.duration ?? 2000;
-    this.circle.animate(duration).attr(attrs).loop(undefined, true);
   }
 
   refreshIds() {
