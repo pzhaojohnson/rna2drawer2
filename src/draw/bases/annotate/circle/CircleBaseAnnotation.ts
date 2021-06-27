@@ -1,12 +1,13 @@
 import { CircleBaseAnnotationInterface } from './CircleBaseAnnotationInterface';
 import * as SVG from '@svgdotjs/svg.js';
+import { Point2D as Point } from 'Math/Point';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { assignUuid } from 'Draw/svg/id';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   readonly circle: SVG.Circle;
 
-  constructor(circle: SVG.Circle, xBaseCenter: number, yBaseCenter: number) {
+  constructor(circle: SVG.Circle, baseCenter: Point) {
     if (circle.type != 'circle') {
       throw new Error('Passed element is not a circle.');
     }
@@ -25,10 +26,10 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     return this.circle.id();
   }
 
-  reposition(xBaseCenter: number, yBaseCenter: number) {
+  reposition(baseCenter: Point) {
     this.circle.attr({
-      'cx': xBaseCenter,
-      'cy': yBaseCenter,
+      'cx': baseCenter.x,
+      'cy': baseCenter.y,
     });
   }
 

@@ -8,12 +8,12 @@ let svg = NodeSVG();
 describe('CircleBaseAnnotation class', () => {
   describe('constructor', () => {
     it('throws on missing circle argument', () => {
-      expect(() => new CircleBaseAnnotation(undefined, 1, 2)).toThrow();
+      expect(() => new CircleBaseAnnotation(undefined, { x: 1, y: 2 })).toThrow();
     });
 
     it('throws on wrong SVG element type', () => {
       let r = svg.rect(10, 20);
-      expect(() => new CircleBaseAnnotation(r, 5, 6)).toThrow();
+      expect(() => new CircleBaseAnnotation(r, { x: 5, y: 6 })).toThrow();
     });
 
     it('initializes falsy circle IDs with UUIDs', () => {
@@ -23,7 +23,7 @@ describe('CircleBaseAnnotation class', () => {
         // use the attr method to check the value of an ID
         // since the id method itself will initialize IDs
         expect(c.attr('id')).toBe(v);
-        let cba = new CircleBaseAnnotation(c, 5, 10);
+        let cba = new CircleBaseAnnotation(c, { x: 5, y: 10 });
         expect(c.attr('id')).toMatch(uuidRegex);
       });
     });
@@ -36,7 +36,7 @@ describe('CircleBaseAnnotation class', () => {
       // bases)
       let c = svg.circle(50);
       c.attr({ 'id': 'circleId132435' });
-      let cba = new CircleBaseAnnotation(c, 50, 100);
+      let cba = new CircleBaseAnnotation(c, { x: 50, y: 100 });
       expect(c.attr('id')).toBe('circleId132435');
     });
   });
@@ -44,7 +44,7 @@ describe('CircleBaseAnnotation class', () => {
   it('id getter', () => {
     let c = svg.circle(8);
     c.id('asdfasdf');
-    let cba = new CircleBaseAnnotation(c, 0, 0);
+    let cba = new CircleBaseAnnotation(c, { x: 0, y: 0 });
     expect(cba.id).toBe('asdfasdf');
   });
 
@@ -52,15 +52,15 @@ describe('CircleBaseAnnotation class', () => {
     it('repositions circle', () => {
       let c = svg.circle(20);
       c.attr({ 'cx': 5.68, 'cy': 205.2 });
-      let cba = new CircleBaseAnnotation(c, 32, 156);
-      cba.reposition(200.6, 129);
+      let cba = new CircleBaseAnnotation(c, { x: 32, y: 156 });
+      cba.reposition({ x: 200.6, y: 129 });
       expect(distance(200.6, 129, c.attr('cx'), c.attr('cy'))).toBeCloseTo(0);
     });
   });
 
   it('bringToFront and sendToBack methods', () => {
     let c = svg.circle(50);
-    let cba = new CircleBaseAnnotation(c, 25, 250);
+    let cba = new CircleBaseAnnotation(c, { x: 25, y: 250 });
     let r = svg.rect(10, 20);
     let l = svg.line(1, 2, 3, 4);
     let t = svg.text('asdf');
@@ -77,7 +77,7 @@ describe('CircleBaseAnnotation class', () => {
 
   it('refreshIds method', () => {
     let c = svg.circle(10);
-    let cba = new CircleBaseAnnotation(c, 20, 30);
+    let cba = new CircleBaseAnnotation(c, { x: 20, y: 30 });
     let prevId = c.id();
     expect(prevId).toBeTruthy(); // ID was initialized
     cba.refreshIds();
