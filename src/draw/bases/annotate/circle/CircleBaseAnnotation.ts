@@ -7,6 +7,8 @@ import { assignUuid } from 'Draw/svg/id';
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   readonly circle: SVG.Circle;
 
+  _baseCenter: Point;
+
   constructor(circle: SVG.Circle, baseCenter: Point) {
     if (circle.type != 'circle') {
       throw new Error('Passed element is not a circle.');
@@ -20,17 +22,22 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     if (!this.circle.attr('id')) {
       assignUuid(new CircleWrapper(this.circle));
     }
+
+    this._baseCenter = { ...baseCenter };
   }
 
   get id(): string {
     return this.circle.id();
   }
 
-  reposition(baseCenter: Point) {
+  reposition(baseCenter?: Point) {
     this.circle.attr({
-      'cx': baseCenter.x,
-      'cy': baseCenter.y,
+      'cx': baseCenter?.x ?? this._baseCenter.x,
+      'cy': baseCenter?.y ?? this._baseCenter.y,
     });
+    if (baseCenter) {
+      this._baseCenter = { ...baseCenter };
+    }
   }
 
   bringToFront() {

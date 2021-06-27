@@ -39,6 +39,18 @@ describe('CircleBaseAnnotation class', () => {
       let cba = new CircleBaseAnnotation(c, { x: 50, y: 100 });
       expect(c.attr('id')).toBe('circleId132435');
     });
+
+    it('caches base center', () => {
+      let c = svg.circle(20);
+      let cba = new CircleBaseAnnotation(c, { x: 601.1, y: 233 });
+      c.attr({ 'cx': 100, 'cy': 50 });
+      expect(c.attr('cx')).toBeCloseTo(100);
+      expect(c.attr('cy')).toBeCloseTo(50);
+      // must use base center cached by constructor
+      cba.reposition();
+      expect(c.attr('cx')).toBeCloseTo(601.1);
+      expect(c.attr('cy')).toBeCloseTo(233);
+    });
   });
 
   it('id getter', () => {
@@ -49,12 +61,25 @@ describe('CircleBaseAnnotation class', () => {
   });
 
   describe('reposition method', () => {
-    it('repositions circle', () => {
+    it('centers circle on given base center', () => {
       let c = svg.circle(20);
       c.attr({ 'cx': 5.68, 'cy': 205.2 });
       let cba = new CircleBaseAnnotation(c, { x: 32, y: 156 });
       cba.reposition({ x: 200.6, y: 129 });
       expect(distance(200.6, 129, c.attr('cx'), c.attr('cy'))).toBeCloseTo(0);
+    });
+
+    it('caches base center and can use cached base center', () => {
+      let c = svg.circle(60);
+      let cba = new CircleBaseAnnotation(c, { x: 50, y: 150 });
+      cba.reposition({ x: 455.2, y: 812.3 });
+      c.attr({ 'cx': 235, 'cy': 230 });
+      expect(c.attr('cx')).toBeCloseTo(235);
+      expect(c.attr('cy')).toBeCloseTo(230);
+      // must use base center cached in previous call
+      cba.reposition();
+      expect(c.attr('cx')).toBeCloseTo(455.2);
+      expect(c.attr('cy')).toBeCloseTo(812.3);
     });
   });
 
