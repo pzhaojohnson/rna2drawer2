@@ -1,10 +1,27 @@
-import { savableState } from './save';
+import {
+  savableState,
+  addSavedOutline,
+  addSavedHighlighting,
+} from './save';
 import { NodeSVG } from 'Draw/NodeSVG';
-import { CircleBaseAnnotation } from './CircleBaseAnnotation';
+import Base from 'Draw/Base';
+import { addOutline, addHighlighting } from './add';
 import { uuidRegex } from 'Draw/svg/id';
+
+function areSameElement(ele1, ele2) {
+  return (
+    ele1.id() // check that ID is truthy
+    && ele1.id() == ele2.id()
+    && ele1.svg() // check that SVG string is truthy
+    && ele1.svg() == ele2.svg()
+  );
+}
 
 let container = null;
 let svg = null;
+
+let base1 = null;
+let base2 = null;
 
 beforeEach(() => {
   container = document.createElement('div');
@@ -12,9 +29,16 @@ beforeEach(() => {
 
   svg = NodeSVG();
   svg.addTo(container);
+
+  // have same character and positioning
+  base1 = Base.create(svg, 'T', 22, 33);
+  base2 = Base.create(svg, 'T', 22, 33);
 });
 
 afterEach(() => {
+  base1 = null;
+  base2 = null;
+
   svg.clear();
   svg.remove();
   svg = null;
@@ -25,9 +49,9 @@ afterEach(() => {
 
 describe('savableState function', () => {
   it('returns savable state', () => {
-    let c = svg.circle(60);
-    let cba = new CircleBaseAnnotation(c, 200, 300);
-    let saved = savableState(cba);
+    addOutline(base1);
+    let c = base1.outline.circle;
+    let saved = savableState(base1.outline);
     expect(saved).toEqual({
       className: 'CircleBaseAnnotation',
       circleId: c.id(),
@@ -36,12 +60,123 @@ describe('savableState function', () => {
     expect(c.id()).toMatch(uuidRegex);
   });
 
-  it('returned savable state can be converted to and from JSON', () => {
-    let c = svg.circle(100);
-    let cba = new CircleBaseAnnotation(c, 50, 100);
-    let saved1 = savableState(cba);
+  it('returns savable states that can be converted to and from JSON', () => {
+    addHighlighting(base1);
+    let saved1 = savableState(base1.highlighting);
     let string1 = JSON.stringify(saved1);
     let saved2 = JSON.parse(string1);
     expect(saved2).toEqual(saved1);
+  });
+});
+
+describe('addSavedOutline function', () => {
+  it('adds outline and finds circle', () => {
+    addOutline(base1);
+    let c1 = base1.outline.circle;
+    let saved = savableState(base1.outline);
+    expect(base2.outline).toBe(undefined);
+    addSavedOutline(base2, saved);
+    expect(base2.outline).toBeTruthy(); // added outline
+    let c2 = base2.outline.circle;
+    expect(areSameElement(c1, c2)).toBeTruthy(); // found circle
+  });
+
+  it("throws if saved state isn't for a circle base annotation", () => {
+    addOutline(base1);
+    let saved = savableState(base1.outline);
+    saved.className = 'CrcleBaseAnnotation';
+    expect(
+      () => addSavedOutline(base2, saved)
+    ).toThrow();
+  });
+
+  it('throws if unable to retrieve root SVG element of base', () => {
+    addOutline(base1);
+    let saved = savableState(base1.outline);
+    expect(base2.text.root()).toBeTruthy();
+    base2.text.remove();
+    expect(base2.text.root()).toBeFalsy();
+    expect(
+      () => addSavedOutline(base2, saved)
+    ).toThrow();
+  });
+
+  it('throws if unable to find circle', () => {
+    addOutline(base1);
+    let saved = savableState(base1.outline);
+    base1.outline.circle.remove();
+    expect(
+      () => addSavedOutline(base2, saved)
+    ).toThrow();
+  });
+
+  it('throws if base already has an outline', () => {
+    // it is preferrable not to remove the previous outline
+    // since doing so could remove the circle of the saved
+    // outline (e.g., if this function were called twice for
+    // the same saved outline)
+    addOutline(base1);
+    let saved1 = savableState(base1.outline);
+    addOutline(base2);
+    expect(base2.outline).toBeTruthy();
+    expect(
+      () => addSavedOutline(base2, saved1)
+    ).toThrow();
+  });
+});
+
+describe('addSavedHighlighting function', () => {
+  it('adds highlighting and finds circle', () => {
+    addHighlighting(base1);
+    let c1 = base1.highlighting.circle;
+    let saved = savableState(base1.highlighting);
+    expect(base2.highlighting).toBe(undefined);
+    addSavedHighlighting(base2, saved);
+    expect(base2.highlighting).toBeTruthy(); // added highlighting
+    let c2 = base2.highlighting.circle;
+    expect(areSameElement(c1, c2)).toBeTruthy(); // found circle
+  });
+
+  it("throws if saved state isn't for a circle base annotation", () => {
+    addHighlighting(base1);
+    let saved = savableState(base1.highlighting);
+    saved.className = 'CircleBaseAnnotationn';
+    expect(
+      () => addSavedHighlighting(base2, saved)
+    ).toThrow();
+  });
+
+  it('throws if unable to retrieve root SVG element of base', () => {
+    addHighlighting(base1);
+    let saved = savableState(base1.highlighting);
+    expect(base2.text.root()).toBeTruthy();
+    base2.text.remove();
+    expect(base2.text.root()).toBeFalsy();
+    expect(
+      () => addSavedHighlighting(base2, saved)
+    ).toThrow();
+  });
+  
+  it('throws if unable to find circle', () => {
+    addHighlighting(base1);
+    let saved = savableState(base1.highlighting);
+    base1.highlighting.circle.remove();
+    expect(
+      () => addSavedHighlighting(base2, saved)
+    ).toThrow();
+  });
+  
+  it('throws if base already has highlighting', () => {
+    // it is preferrable not to remove the previous highlighting
+    // since doing so could remove the circle of the saved
+    // highlighting (e.g., if this function were called twice for
+    // the same saved highlighting)
+    addHighlighting(base1);
+    let saved1 = savableState(base1.highlighting);
+    addHighlighting(base2);
+    expect(base2.highlighting).toBeTruthy();
+    expect(
+      () => addSavedHighlighting(base2, saved1)
+    ).toThrow();
   });
 });
