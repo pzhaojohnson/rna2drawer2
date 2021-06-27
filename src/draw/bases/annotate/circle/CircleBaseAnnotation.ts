@@ -1,20 +1,19 @@
 import { CircleBaseAnnotationInterface } from './CircleBaseAnnotationInterface';
-import * as SVG from '@svgdotjs/svg.js';
+import { SVGCircleWrapper as Circle } from 'Draw/svg/circle';
 import { Point2D as Point } from 'Math/Point';
-import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { assignUuid } from 'Draw/svg/id';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
-  readonly circle: CircleWrapper;
+  readonly circle: Circle;
 
   _baseCenter: Point;
 
-  constructor(circle: SVG.Circle, baseCenter: Point) {
-    if (circle.type != 'circle') {
+  constructor(circle: Circle, baseCenter: Point) {
+    if (circle.wrapped.type != 'circle') {
       throw new Error('Passed element is not a circle.');
     }
 
-    this.circle = new CircleWrapper(circle);
+    this.circle = circle;
 
     // use the attr method to check if an ID is initialized
     // since the id method itself will initialize an ID (to

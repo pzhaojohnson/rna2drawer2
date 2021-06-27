@@ -3,6 +3,7 @@ import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { findCircleByUniqueId } from 'Draw/saved';
+import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 
 export type SavableState = {
   className: 'CircleBaseAnnotation';
@@ -26,7 +27,9 @@ function fromSaved(b: Base, saved: SavedState): CircleBaseAnnotation | never {
   if (!(svg instanceof SVG.Svg)) {
     throw new Error('Unable to retrieve root SVG element of base.');
   } else {
-    let c = findCircleByUniqueId(svg, saved.circleId);
+    let c = new CircleWrapper(
+      findCircleByUniqueId(svg, saved.circleId)
+    );
     let baseCenter = { x: b.xCenter, y: b.yCenter };
     return new CircleBaseAnnotation(c, baseCenter);
   }

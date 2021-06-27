@@ -1,5 +1,6 @@
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { NodeSVG } from 'Draw/NodeSVG';
+import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { distance2D as distance } from 'Math/distance';
 import { uuidRegex } from 'Draw/svg/id';
 
@@ -13,12 +14,14 @@ describe('CircleBaseAnnotation class', () => {
 
     it('throws on wrong SVG element type', () => {
       let r = svg.rect(10, 20);
-      expect(() => new CircleBaseAnnotation(r, { x: 5, y: 6 })).toThrow();
+      expect(
+        () => new CircleBaseAnnotation(new CircleWrapper(r), { x: 5, y: 6 })
+      ).toThrow();
     });
 
     it('initializes falsy circle IDs with UUIDs', () => {
       [undefined, ''].forEach(v => {
-        let c = svg.circle(30);
+        let c = new CircleWrapper(svg.circle(30));
         c.attr({ 'id': v });
         // use the attr method to check the value of an ID
         // since the id method itself will initialize IDs
@@ -34,14 +37,14 @@ describe('CircleBaseAnnotation class', () => {
       // in the drawing may reference other elements
       // using saved IDs (e.g., bonds referencing their
       // bases)
-      let c = svg.circle(50);
+      let c = new CircleWrapper(svg.circle(50));
       c.attr({ 'id': 'circleId132435' });
       let cba = new CircleBaseAnnotation(c, { x: 50, y: 100 });
       expect(c.attr('id')).toBe('circleId132435');
     });
 
     it('caches base center', () => {
-      let c = svg.circle(20);
+      let c = new CircleWrapper(svg.circle(20));
       let cba = new CircleBaseAnnotation(c, { x: 601.1, y: 233 });
       c.attr({ 'cx': 100, 'cy': 50 });
       expect(c.attr('cx')).toBeCloseTo(100);
@@ -54,7 +57,7 @@ describe('CircleBaseAnnotation class', () => {
   });
 
   it('id getter', () => {
-    let c = svg.circle(8);
+    let c = new CircleWrapper(svg.circle(8));
     c.id('asdfasdf');
     let cba = new CircleBaseAnnotation(c, { x: 0, y: 0 });
     expect(cba.id).toBe('asdfasdf');
@@ -62,7 +65,7 @@ describe('CircleBaseAnnotation class', () => {
 
   describe('reposition method', () => {
     it('centers circle on given base center', () => {
-      let c = svg.circle(20);
+      let c = new CircleWrapper(svg.circle(20));
       c.attr({ 'cx': 5.68, 'cy': 205.2 });
       let cba = new CircleBaseAnnotation(c, { x: 32, y: 156 });
       cba.reposition({ x: 200.6, y: 129 });
@@ -70,7 +73,7 @@ describe('CircleBaseAnnotation class', () => {
     });
 
     it('caches base center and can use cached base center', () => {
-      let c = svg.circle(60);
+      let c = new CircleWrapper(svg.circle(60));
       let cba = new CircleBaseAnnotation(c, { x: 50, y: 150 });
       cba.reposition({ x: 455.2, y: 812.3 });
       c.attr({ 'cx': 235, 'cy': 230 });
@@ -84,7 +87,7 @@ describe('CircleBaseAnnotation class', () => {
   });
 
   it('bringToFront and sendToBack methods', () => {
-    let c = svg.circle(50);
+    let c = new CircleWrapper(svg.circle(50));
     let cba = new CircleBaseAnnotation(c, { x: 25, y: 250 });
     let r = svg.rect(10, 20);
     let l = svg.line(1, 2, 3, 4);
@@ -101,7 +104,7 @@ describe('CircleBaseAnnotation class', () => {
   });
 
   it('refreshIds method', () => {
-    let c = svg.circle(10);
+    let c = new CircleWrapper(svg.circle(10));
     let cba = new CircleBaseAnnotation(c, { x: 20, y: 30 });
     let prevId = c.id();
     expect(prevId).toBeTruthy(); // ID was initialized
