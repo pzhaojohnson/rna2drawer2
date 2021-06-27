@@ -6,25 +6,11 @@ import {
 import * as SVG from '@svgdotjs/svg.js';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { assignUuid } from 'Draw/svg/id';
-import { SavableState } from './save';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   readonly circle: SVG.Circle;
 
   _currPulsation?: SVG.Runner;
-
-  static fromSavedState(
-    savedState: SavableState,
-    svg: SVG.Svg,
-    xBaseCenter: number,
-    yBaseCenter: number,
-  ): (CircleBaseAnnotation | never) {
-    if (savedState.className !== 'CircleBaseAnnotation') {
-      throw new Error('Wrong class name.');
-    }
-    let circle = svg.findOne('#' + savedState.circleId);
-    return new CircleBaseAnnotation(circle as SVG.Circle, xBaseCenter, yBaseCenter);
-  }
 
   static createNondisplaced(svg: SVG.Svg, xBaseCenter: number, yBaseCenter: number): CircleBaseAnnotation {
     let circle = svg.circle(20);

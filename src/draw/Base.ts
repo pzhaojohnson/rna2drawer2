@@ -14,8 +14,12 @@ import {
   removeHighlighting,
   removeOutline,
 } from 'Draw/bases/annotate/circle/add';
-import { SavableState as SavableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
-import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
+import {
+  SavableState as SavableCircleAnnotationState,
+  savableState as savableCircleAnnotationState,
+  addSavedHighlighting,
+  addSavedOutline,
+} from 'Draw/bases/annotate/circle/save';
 import { SavableState as SavableBaseNumberingState } from 'Draw/bases/number/save';
 import { areClose } from './areClose';
 
@@ -287,14 +291,8 @@ class Base implements BaseInterface {
 
   addCircleHighlightingFromSavedState(
     savedState: SavableCircleAnnotationState,
-  ): (CircleBaseAnnotation | never) {
-    this.removeHighlighting();
-    this._highlighting = CircleBaseAnnotation.fromSavedState(
-      savedState,
-      this.text.root(),
-      this.xCenter,
-      this.yCenter,
-    );
+  ): (CircleBaseAnnotation | undefined | never) {
+    addSavedHighlighting(this, savedState);
     return this._highlighting;
   }
 
@@ -329,14 +327,8 @@ class Base implements BaseInterface {
 
   addCircleOutlineFromSavedState(
     savedState: SavableCircleAnnotationState,
-  ): (CircleBaseAnnotation | never) {
-    this.removeOutline();
-    this._outline = CircleBaseAnnotation.fromSavedState(
-      savedState,
-      this.text.root(),
-      this.xCenter,
-      this.yCenter,
-    );
+  ): (CircleBaseAnnotation | undefined | never) {
+    addSavedOutline(this, savedState);
     return this._outline;
   }
 

@@ -2,42 +2,10 @@ import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { distance2D as distance } from 'Math/distance';
 import { uuidRegex } from 'Draw/svg/id';
-import { savableState } from './save';
 
 let svg = NodeSVG();
 
 describe('CircleBaseAnnotation class', () => {
-  describe('fromSavedState static method', () => {
-    it('valid saved state', () => {
-      let cba1 = CircleBaseAnnotation.createNondisplaced(svg, 19.6, 100.1);
-      let saved = savableState(cba1);
-      let cba2 = CircleBaseAnnotation.fromSavedState(saved, svg, 19.6, 100.1);
-      expect(cba2.circle.id()).toBe(saved.circleId);
-      expect(cba2.circle.attr('cx')).toBeCloseTo(19.6);
-      expect(cba2.circle.attr('cy')).toBeCloseTo(100.1);
-    });
-
-    describe('invalid saved state', () => {
-      it('wrong className', () => {
-        let cba = CircleBaseAnnotation.createNondisplaced(svg, 0, 4);
-        let saved = savableState(cba);
-        saved.className = 'CircleBseAnnotation';
-        expect(
-          () => CircleBaseAnnotation.fromSavedState(saved, svg, 0, 4)
-        ).toThrow();
-      });
-
-      it('no circle has saved ID', () => {
-        let cba = CircleBaseAnnotation.createNondisplaced(svg, -1, 5);
-        let saved = savableState(cba);
-        saved.circleId = 'asdf';
-        expect(
-          () => CircleBaseAnnotation.fromSavedState(saved, svg, -1, 5)
-        ).toThrow();
-      });
-    });
-  });
-
   it('createNondisplaced static method', () => {
     let cba = CircleBaseAnnotation.createNondisplaced(svg, 1.5, 3);
     expect(cba.circle.attr('cx')).toBeCloseTo(1.5);

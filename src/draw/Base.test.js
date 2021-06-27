@@ -437,15 +437,6 @@ describe('Base class', () => {
         expect(h2.circle.attr('cy')).toBeCloseTo(82);
         expect(b.highlighting).toBe(h2); // check reference
       });
-
-      it('removes previous highlighting', () => {
-        let b = Base.create(svg, 'b', 5, 6);
-        let h1 = b.addCircleHighlighting();
-        let h2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
-        let savableState2 = savableCircleAnnotationState(h2);
-        let h3 = b.addCircleHighlightingFromSavedState(savableState2);
-        expect(h1.circle.root()).toBeFalsy(); // was removed
-      });
     });
 
     it('hasHighlighting method and highlighting getter', () => {
@@ -504,15 +495,6 @@ describe('Base class', () => {
         expect(o2.circle.attr('cx')).toBeCloseTo(30);
         expect(o2.circle.attr('cy')).toBeCloseTo(60);
         expect(b.outline).toBe(o2); // check reference
-      });
-
-      it('removes previous outline', () => {
-        let b = Base.create(svg, 'q', 5, 10);
-        let o1 = b.addCircleOutline();
-        let o2 = CircleBaseAnnotation.createNondisplaced(svg, b.xCenter, b.yCenter);
-        let savableState2 = savableCircleAnnotationState(o2);
-        let o3 = b.addCircleOutlineFromSavedState(savableState2);
-        expect(o1.circle.root()).toBeFalsy(); // was removed
       });
     });
 

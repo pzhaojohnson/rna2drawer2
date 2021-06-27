@@ -48,13 +48,13 @@ export interface BaseInterface {
   onDblclick(f: () => void): void;
 
   addCircleHighlighting(): CircleBaseAnnotation;
-  addCircleHighlightingFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | never;
+  addCircleHighlightingFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | undefined | never;
   hasHighlighting(): boolean;
   highlighting?: CircleBaseAnnotation;
   removeHighlighting(): void;
 
   addCircleOutline(): CircleBaseAnnotation;
-  addCircleOutlineFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | never;
+  addCircleOutlineFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | undefined | never;
   hasOutline(): boolean;
   outline?: CircleBaseAnnotation;
   removeOutline(): void;
