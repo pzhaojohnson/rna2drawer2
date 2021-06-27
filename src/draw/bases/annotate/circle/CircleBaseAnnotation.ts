@@ -5,7 +5,7 @@ import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { assignUuid } from 'Draw/svg/id';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
-  readonly circle: SVG.Circle;
+  readonly circle: CircleWrapper;
 
   _baseCenter: Point;
 
@@ -14,20 +14,20 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
       throw new Error('Passed element is not a circle.');
     }
 
-    this.circle = circle;
+    this.circle = new CircleWrapper(circle);
 
     // use the attr method to check if an ID is initialized
     // since the id method itself will initialize an ID (to
     // a non-UUID)
     if (!this.circle.attr('id')) {
-      assignUuid(new CircleWrapper(this.circle));
+      assignUuid(this.circle);
     }
 
     this._baseCenter = { ...baseCenter };
   }
 
   get id(): string {
-    return this.circle.id();
+    return String(this.circle.id());
   }
 
   reposition(baseCenter?: Point) {
@@ -49,6 +49,6 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   refreshIds() {
-    assignUuid(new CircleWrapper(this.circle));
+    assignUuid(this.circle);
   }
 }

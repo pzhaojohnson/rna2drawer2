@@ -40,7 +40,7 @@ export function OutlineStrokeField(selectedBases: () => Base[], pushUndo: () => 
   let o1 = os[0];
   let initialValue = undefined;
   if (o1 && outlinesAllHaveSameStrokeColor(os)) {
-    initialValue = { color: o1.circle.attr('stroke'), opacity: o1.circle.attr('stroke-opacity') };
+    initialValue = { color: String(o1.circle.attr('stroke')), opacity: Number(o1.circle.attr('stroke-opacity')) };
   }
   return (
     <ColorField

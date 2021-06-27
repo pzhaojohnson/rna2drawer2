@@ -7,10 +7,16 @@ import baseOutlines from './baseOutlines';
 import { areAllSameColor } from '../../fields/color/areAllSameColor';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
+import { parseColor } from 'Parse/parseColor';
 
 function outlineFills(os: CircleBaseAnnotation[]): Svg.Color[] {
   let fs = [] as Svg.Color[];
-  os.forEach(o => fs.push(new Svg.Color(o.circle.attr('fill'))));
+  os.forEach(o => {
+    let f = parseColor(o.circle.attr('fill'));
+    if (f) {
+      fs.push(f);
+    }
+  });
   return fs;
 }
 
@@ -34,7 +40,7 @@ export function OutlineFillField(selectedBases: () => Base[], pushUndo: () => vo
   let o1 = os[0];
   let initialValue = undefined;
   if (o1 && outlinesAllHaveSameFillColor(os)) {
-    initialValue = { color: o1.circle.attr('fill'), opacity: o1.circle.attr('fill-opacity') };
+    initialValue = { color: String(o1.circle.attr('fill')), opacity: Number(o1.circle.attr('fill-opacity')) };
   }
   return (
     <ColorField
