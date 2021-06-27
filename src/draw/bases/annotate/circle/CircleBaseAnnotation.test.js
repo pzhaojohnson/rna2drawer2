@@ -75,39 +75,6 @@ describe('CircleBaseAnnotation class', () => {
     expect(c.position()).toBeGreaterThanOrEqual(3);
   });
 
-  describe('pulsateBetween method', () => {
-    // It seems that any use of the animate method on an SVG element
-    // when running with Node.js throws with the error "Cannot read
-    // property 'now' of undefined". The animate method does seem to
-    // work in web browsers, though.
-    // TODO: Open or a find a GitHub issue on this.
-    it('placeholder test', () => {});
-    /*
-    it('with all undefined props', () => {
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 1, 2);
-      expect(() => cba.pulsateBetween({})).not.toThrow();
-    });
-
-    it('with all defined props', () => {
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 100, 200);
-      expect(() => cba.pulsateBetween({
-        radius: 12,
-        fill: '#00ff00',
-        fillOpacity: 0.56,
-        stroke: '#ffaa22',
-        strokeWidth: 10,
-        strokeOpacity: 0.11,
-      })).not.toThrow();
-    });
-
-    it('chained calls', () => {
-      let cba = CircleBaseAnnotation.createNondisplaced(svg, 50, 60);
-      cba.pulsateBetween({ fill: '#ff55bb' });
-      expect(() => cba.pulsateBetween({ fill: '#aa1100' })).not.toThrow();
-    });
-    */
-  });
-
   it('refreshIds method', () => {
     let c = svg.circle(10);
     let cba = new CircleBaseAnnotation(c, 20, 30);
