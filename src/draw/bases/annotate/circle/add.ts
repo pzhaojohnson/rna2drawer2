@@ -17,18 +17,18 @@ function create(b: Base): CircleBaseAnnotation | undefined {
   }
 }
 
-export function addOutline(b: Base) {
+export function addCircleOutline(b: Base) {
   let cba = create(b);
   if (cba) {
-    removeOutline(b);
+    removeCircleOutline(b);
     b.outline = cba;
   }
 }
 
-export function addHighlighting(b: Base) {
+export function addCircleHighlighting(b: Base) {
   let cba = create(b);
   if (cba) {
-    removeHighlighting(b);
+    removeCircleHighlighting(b);
     b.highlighting = cba;
   }
 }
@@ -37,16 +37,24 @@ function remove(cba: CircleBaseAnnotationInterface) {
   cba.circle.remove();
 }
 
-export function removeOutline(b: Base) {
+export function removeCircleOutline(b: Base) {
   if (b.outline) {
-    remove(b.outline);
-    b.outline = undefined;
+    if (!(b.outline instanceof CircleBaseAnnotation)) {
+      console.error("Base outline isn't a circle base annotation.");
+    } else {
+      remove(b.outline);
+      b.outline = undefined;
+    }
   }
 }
 
-export function removeHighlighting(b: Base) {
+export function removeCircleHighlighting(b: Base) {
   if (b.highlighting) {
-    remove(b.highlighting);
-    b.highlighting = undefined;
+    if (!(b.highlighting instanceof CircleBaseAnnotation)) {
+      console.error("Base highlighting isn't a circle base annotation.");
+    } else {
+      remove(b.highlighting);
+      b.highlighting = undefined;
+    }
   }
 }

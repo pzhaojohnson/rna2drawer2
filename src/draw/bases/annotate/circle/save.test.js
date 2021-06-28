@@ -5,7 +5,7 @@ import {
 } from './save';
 import { NodeSVG } from 'Draw/NodeSVG';
 import Base from 'Draw/Base';
-import { addOutline, addHighlighting } from './add';
+import { addCircleOutline, addCircleHighlighting } from './add';
 import { uuidRegex } from 'Draw/svg/id';
 
 function areSameElement(ele1, ele2) {
@@ -49,7 +49,7 @@ afterEach(() => {
 
 describe('savableState function', () => {
   it('returns savable state', () => {
-    addOutline(base1);
+    addCircleOutline(base1);
     let c = base1.outline.circle;
     let saved = savableState(base1.outline);
     expect(saved).toEqual({
@@ -61,7 +61,7 @@ describe('savableState function', () => {
   });
 
   it('returns savable states that can be converted to and from JSON', () => {
-    addHighlighting(base1);
+    addCircleHighlighting(base1);
     let saved1 = savableState(base1.highlighting);
     let string1 = JSON.stringify(saved1);
     let saved2 = JSON.parse(string1);
@@ -71,7 +71,7 @@ describe('savableState function', () => {
 
 describe('addSavedOutline function', () => {
   it('adds outline and finds circle', () => {
-    addOutline(base1);
+    addCircleOutline(base1);
     let c1 = base1.outline.circle;
     let saved = savableState(base1.outline);
     expect(base2.outline).toBe(undefined);
@@ -82,7 +82,7 @@ describe('addSavedOutline function', () => {
   });
 
   it("throws if saved state isn't for a circle base annotation", () => {
-    addOutline(base1);
+    addCircleOutline(base1);
     let saved = savableState(base1.outline);
     saved.className = 'CrcleBaseAnnotation';
     expect(
@@ -91,7 +91,7 @@ describe('addSavedOutline function', () => {
   });
 
   it('throws if unable to retrieve root SVG element of base', () => {
-    addOutline(base1);
+    addCircleOutline(base1);
     let saved = savableState(base1.outline);
     expect(base2.text.root()).toBeTruthy();
     base2.text.remove();
@@ -102,7 +102,7 @@ describe('addSavedOutline function', () => {
   });
 
   it('throws if unable to find circle', () => {
-    addOutline(base1);
+    addCircleOutline(base1);
     let saved = savableState(base1.outline);
     base1.outline.circle.remove();
     expect(
@@ -115,9 +115,9 @@ describe('addSavedOutline function', () => {
     // since doing so could remove the circle of the saved
     // outline (e.g., if this function were called twice for
     // the same saved outline)
-    addOutline(base1);
+    addCircleOutline(base1);
     let saved1 = savableState(base1.outline);
-    addOutline(base2);
+    addCircleOutline(base2);
     expect(base2.outline).toBeTruthy();
     expect(
       () => addSavedOutline(base2, saved1)
@@ -127,7 +127,7 @@ describe('addSavedOutline function', () => {
 
 describe('addSavedHighlighting function', () => {
   it('adds highlighting and finds circle', () => {
-    addHighlighting(base1);
+    addCircleHighlighting(base1);
     let c1 = base1.highlighting.circle;
     let saved = savableState(base1.highlighting);
     expect(base2.highlighting).toBe(undefined);
@@ -138,7 +138,7 @@ describe('addSavedHighlighting function', () => {
   });
 
   it("throws if saved state isn't for a circle base annotation", () => {
-    addHighlighting(base1);
+    addCircleHighlighting(base1);
     let saved = savableState(base1.highlighting);
     saved.className = 'CircleBaseAnnotationn';
     expect(
@@ -147,7 +147,7 @@ describe('addSavedHighlighting function', () => {
   });
 
   it('throws if unable to retrieve root SVG element of base', () => {
-    addHighlighting(base1);
+    addCircleHighlighting(base1);
     let saved = savableState(base1.highlighting);
     expect(base2.text.root()).toBeTruthy();
     base2.text.remove();
@@ -158,7 +158,7 @@ describe('addSavedHighlighting function', () => {
   });
   
   it('throws if unable to find circle', () => {
-    addHighlighting(base1);
+    addCircleHighlighting(base1);
     let saved = savableState(base1.highlighting);
     base1.highlighting.circle.remove();
     expect(
@@ -171,9 +171,9 @@ describe('addSavedHighlighting function', () => {
     // since doing so could remove the circle of the saved
     // highlighting (e.g., if this function were called twice for
     // the same saved highlighting)
-    addHighlighting(base1);
+    addCircleHighlighting(base1);
     let saved1 = savableState(base1.highlighting);
-    addHighlighting(base2);
+    addCircleHighlighting(base2);
     expect(base2.highlighting).toBeTruthy();
     expect(
       () => addSavedHighlighting(base2, saved1)

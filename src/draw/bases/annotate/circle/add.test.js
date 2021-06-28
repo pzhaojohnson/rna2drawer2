@@ -1,8 +1,8 @@
 import {
-  addOutline,
-  addHighlighting,
-  removeOutline,
-  removeHighlighting,
+  addCircleOutline,
+  addCircleHighlighting,
+  removeCircleOutline,
+  removeCircleHighlighting,
 } from './add';
 import { NodeSVG } from 'Draw/NodeSVG';
 import Base from 'Draw/Base';
@@ -36,11 +36,11 @@ afterEach(() => {
   container = null;
 });
 
-describe('addOutline function', () => {
+describe('addCircleOutline function', () => {
   it('adds outline and positions circle', () => {
     base.moveTo(178.5, 359);
     expect(base.outline).toBe(undefined);
-    addOutline(base);
+    addCircleOutline(base);
     expect(base.outline).toBeTruthy(); // added outline
     let o = base.outline;
     // positioned circle
@@ -49,10 +49,10 @@ describe('addOutline function', () => {
   });
 
   it('removes previous outline if present', () => {
-    addOutline(base);
+    addCircleOutline(base);
     let o1 = base.outline;
     expect(wasRemoved(o1)).toBeFalsy();
-    addOutline(base);
+    addCircleOutline(base);
     expect(wasRemoved(o1)).toBeTruthy(); // removed previous outline
     expect(base.outline.id).not.toEqual(o1.id); // added new outline
     // double-check that IDs are defined
@@ -61,11 +61,11 @@ describe('addOutline function', () => {
   });
 });
 
-describe('addHighlighting function', () => {
+describe('addCircleHighlighting function', () => {
   it('adds highlighting and positions circle', () => {
     base.moveTo(802, 1012.12);
     expect(base.highlighting).toBe(undefined);
-    addHighlighting(base);
+    addCircleHighlighting(base);
     expect(base.highlighting).toBeTruthy(); // added highlighting
     let h = base.highlighting;
     // positioned circle
@@ -74,10 +74,10 @@ describe('addHighlighting function', () => {
   });
 
   it('removes previous highlighting if present', () => {
-    addHighlighting(base);
+    addCircleHighlighting(base);
     let h1 = base.highlighting;
     expect(wasRemoved(h1)).toBeFalsy();
-    addHighlighting(base);
+    addCircleHighlighting(base);
     expect(wasRemoved(h1)).toBeTruthy(); // removed previous highlighting
     expect(base.highlighting.id).not.toEqual(h1.id); // added new highlighting
     // double-check that IDs are defined
@@ -86,12 +86,12 @@ describe('addHighlighting function', () => {
   });
 });
 
-describe('removeOutline function', () => {
+describe('removeCircleOutline function', () => {
   it('removes outline itself and reference', () => {
-    addOutline(base);
+    addCircleOutline(base);
     let cba = base.outline;
     expect(wasRemoved(cba)).toBeFalsy();
-    removeOutline(base);
+    removeCircleOutline(base);
     expect(wasRemoved(cba)).toBeTruthy(); // removed outline itself
     expect(base.outline).toBe(undefined); // removed reference
   });
@@ -99,17 +99,17 @@ describe('removeOutline function', () => {
   it('handles a base with no outline', () => {
     expect(base.outline).toBe(undefined);
     expect(
-      () => removeOutline(base)
+      () => removeCircleOutline(base)
     ).not.toThrow();
   });
 });
 
-describe('removeHighlighting function', () => {
+describe('removeCircleHighlighting function', () => {
   it('removes highlighting itself and reference', () => {
-    addHighlighting(base);
+    addCircleHighlighting(base);
     let cba = base.highlighting;
     expect(wasRemoved(cba)).toBeFalsy();
-    removeHighlighting(base);
+    removeCircleHighlighting(base);
     expect(wasRemoved(cba)).toBeTruthy(); // removed highlighting itself
     expect(base.highlighting).toBe(undefined); // removed reference
   });
@@ -117,7 +117,7 @@ describe('removeHighlighting function', () => {
   it('handles a base with no highlighting', () => {
     expect(base.highlighting).toBe(undefined);
     expect(
-      () => removeHighlighting(base)
+      () => removeCircleHighlighting(base)
     ).not.toThrow();
   });
 });
