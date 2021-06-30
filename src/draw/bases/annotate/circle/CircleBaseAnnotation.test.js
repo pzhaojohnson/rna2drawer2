@@ -15,6 +15,12 @@ describe('CircleBaseAnnotation class', () => {
       ).toThrow();
     });
 
+    it('stores reference to circle', () => {
+      let c = new CircleWrapper(svg.circle(20));
+      let cba = new CircleBaseAnnotation(c, { x: 50, y: 60 });
+      expect(cba.circle).toBe(c);
+    });
+
     it('initializes falsy circle IDs with UUIDs', () => {
       [undefined, ''].forEach(v => {
         let c = new CircleWrapper(svg.circle(30));
