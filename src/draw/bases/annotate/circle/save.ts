@@ -35,7 +35,7 @@ function fromSaved(b: Base, saved: SavedState): CircleBaseAnnotation | never {
   }
 }
 
-export function addSavedOutline(b: Base, saved: SavedState): void | never {
+export function addSavedCircleOutline(b: Base, saved: SavedState): void | never {
   let cba = fromSaved(b, saved);
   if (b.outline) {
     throw new Error('Base already has an outline.');
@@ -43,7 +43,7 @@ export function addSavedOutline(b: Base, saved: SavedState): void | never {
   b.outline = cba;
 }
 
-export function addSavedHighlighting(b: Base, saved: SavedState): void | never {
+export function addSavedCircleHighlighting(b: Base, saved: SavedState): void | never {
   let cba = fromSaved(b, saved);
   if (b.highlighting) {
     throw new Error('Base already has highlighting.');

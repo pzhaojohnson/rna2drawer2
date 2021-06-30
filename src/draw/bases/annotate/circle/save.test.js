@@ -1,7 +1,7 @@
 import {
   savableState,
-  addSavedOutline,
-  addSavedHighlighting,
+  addSavedCircleOutline,
+  addSavedCircleHighlighting,
 } from './save';
 import { NodeSVG } from 'Draw/NodeSVG';
 import Base from 'Draw/Base';
@@ -69,13 +69,13 @@ describe('savableState function', () => {
   });
 });
 
-describe('addSavedOutline function', () => {
+describe('addSavedCircleOutline function', () => {
   it('adds outline and finds circle', () => {
     addCircleOutline(base1);
     let c1 = base1.outline.circle;
     let saved = savableState(base1.outline);
     expect(base2.outline).toBe(undefined);
-    addSavedOutline(base2, saved);
+    addSavedCircleOutline(base2, saved);
     expect(base2.outline).toBeTruthy(); // added outline
     let c2 = base2.outline.circle;
     expect(areSameElement(c1, c2)).toBeTruthy(); // found circle
@@ -86,7 +86,7 @@ describe('addSavedOutline function', () => {
     let saved = savableState(base1.outline);
     saved.className = 'CrcleBaseAnnotation';
     expect(
-      () => addSavedOutline(base2, saved)
+      () => addSavedCircleOutline(base2, saved)
     ).toThrow();
   });
 
@@ -97,7 +97,7 @@ describe('addSavedOutline function', () => {
     base2.text.remove();
     expect(base2.text.root()).toBeFalsy();
     expect(
-      () => addSavedOutline(base2, saved)
+      () => addSavedCircleOutline(base2, saved)
     ).toThrow();
   });
 
@@ -106,7 +106,7 @@ describe('addSavedOutline function', () => {
     let saved = savableState(base1.outline);
     base1.outline.circle.remove();
     expect(
-      () => addSavedOutline(base2, saved)
+      () => addSavedCircleOutline(base2, saved)
     ).toThrow();
   });
 
@@ -120,18 +120,18 @@ describe('addSavedOutline function', () => {
     addCircleOutline(base2);
     expect(base2.outline).toBeTruthy();
     expect(
-      () => addSavedOutline(base2, saved1)
+      () => addSavedCircleOutline(base2, saved1)
     ).toThrow();
   });
 });
 
-describe('addSavedHighlighting function', () => {
+describe('addSavedCircleHighlighting function', () => {
   it('adds highlighting and finds circle', () => {
     addCircleHighlighting(base1);
     let c1 = base1.highlighting.circle;
     let saved = savableState(base1.highlighting);
     expect(base2.highlighting).toBe(undefined);
-    addSavedHighlighting(base2, saved);
+    addSavedCircleHighlighting(base2, saved);
     expect(base2.highlighting).toBeTruthy(); // added highlighting
     let c2 = base2.highlighting.circle;
     expect(areSameElement(c1, c2)).toBeTruthy(); // found circle
@@ -142,7 +142,7 @@ describe('addSavedHighlighting function', () => {
     let saved = savableState(base1.highlighting);
     saved.className = 'CircleBaseAnnotationn';
     expect(
-      () => addSavedHighlighting(base2, saved)
+      () => addSavedCircleHighlighting(base2, saved)
     ).toThrow();
   });
 
@@ -153,7 +153,7 @@ describe('addSavedHighlighting function', () => {
     base2.text.remove();
     expect(base2.text.root()).toBeFalsy();
     expect(
-      () => addSavedHighlighting(base2, saved)
+      () => addSavedCircleHighlighting(base2, saved)
     ).toThrow();
   });
   
@@ -162,7 +162,7 @@ describe('addSavedHighlighting function', () => {
     let saved = savableState(base1.highlighting);
     base1.highlighting.circle.remove();
     expect(
-      () => addSavedHighlighting(base2, saved)
+      () => addSavedCircleHighlighting(base2, saved)
     ).toThrow();
   });
   
@@ -176,7 +176,7 @@ describe('addSavedHighlighting function', () => {
     addCircleHighlighting(base2);
     expect(base2.highlighting).toBeTruthy();
     expect(
-      () => addSavedHighlighting(base2, saved1)
+      () => addSavedCircleHighlighting(base2, saved1)
     ).toThrow();
   });
 });
