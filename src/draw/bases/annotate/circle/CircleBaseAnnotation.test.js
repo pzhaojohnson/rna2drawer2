@@ -1,7 +1,6 @@
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
-import { distance2D as distance } from 'Math/distance';
 import { uuidRegex } from 'Draw/svg/id';
 
 let svg = NodeSVG();
@@ -68,10 +67,11 @@ describe('CircleBaseAnnotation class', () => {
   describe('reposition method', () => {
     it('centers circle on given base center', () => {
       let c = new CircleWrapper(svg.circle(20));
-      c.attr({ 'cx': 5.68, 'cy': 205.2 });
       let cba = new CircleBaseAnnotation(c, { x: 32, y: 156 });
+      c.attr({ 'cx': 5.68, 'cy': 205.2 });
       cba.reposition({ baseCenter: { x: 200.6, y: 129 } });
-      expect(distance(200.6, 129, c.attr('cx'), c.attr('cy'))).toBeCloseTo(0);
+      expect(c.attr('cx')).toBeCloseTo(200.6);
+      expect(c.attr('cy')).toBeCloseTo(129);
     });
 
     it('caches base center and can use cached base center', () => {
