@@ -8,10 +8,6 @@ let svg = NodeSVG();
 
 describe('CircleBaseAnnotation class', () => {
   describe('constructor', () => {
-    it('throws on missing circle argument', () => {
-      expect(() => new CircleBaseAnnotation(undefined, { x: 1, y: 2 })).toThrow();
-    });
-
     it('throws on wrong SVG element type', () => {
       let r = svg.rect(10, 20);
       expect(
