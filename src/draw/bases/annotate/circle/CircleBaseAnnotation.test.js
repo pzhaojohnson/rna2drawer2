@@ -8,10 +8,10 @@ let svg = NodeSVG();
 
 describe('CircleBaseAnnotation class', () => {
   describe('constructor', () => {
-    it('throws on wrong SVG element type', () => {
-      let r = svg.rect(10, 20);
+    it('checks wrapped SVG element type', () => {
+      let r = new CircleWrapper(svg.rect(10, 20));
       expect(
-        () => new CircleBaseAnnotation(new CircleWrapper(r), { x: 5, y: 6 })
+        () => new CircleBaseAnnotation(r, { x: 5, y: 6 })
       ).toThrow();
     });
 
