@@ -77,12 +77,18 @@ describe('CircleBaseAnnotation class', () => {
     it('caches base center and can use cached base center', () => {
       let c = new CircleWrapper(svg.circle(60));
       let cba = new CircleBaseAnnotation(c, { x: 50, y: 150 });
+      // must cache the given base center
       cba.reposition({ baseCenter: { x: 455.2, y: 812.3 } });
       c.attr({ 'cx': 235, 'cy': 230 });
       expect(c.attr('cx')).toBeCloseTo(235);
       expect(c.attr('cy')).toBeCloseTo(230);
-      // must use base center cached in previous call
-      cba.reposition();
+      cba.reposition(); // with no arguments
+      expect(c.attr('cx')).toBeCloseTo(455.2);
+      expect(c.attr('cy')).toBeCloseTo(812.3);
+      c.attr({ 'cx': 655, 'cy': 243 });
+      expect(c.attr('cx')).toBeCloseTo(655);
+      expect(c.attr('cy')).toBeCloseTo(243);
+      cba.reposition({}); // with falsy base center
       expect(c.attr('cx')).toBeCloseTo(455.2);
       expect(c.attr('cy')).toBeCloseTo(812.3);
     });
