@@ -3,7 +3,25 @@ import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { uuidRegex } from 'Draw/svg/id';
 
-let svg = NodeSVG();
+let container = null;
+let svg = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  svg = NodeSVG();
+  svg.addTo(container);
+});
+
+afterEach(() => {
+  svg.clear();
+  svg.remove();
+  svg = null;
+
+  container.remove();
+  container = null;
+});
 
 describe('CircleBaseAnnotation class', () => {
   describe('constructor', () => {
