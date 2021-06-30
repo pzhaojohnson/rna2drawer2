@@ -13,7 +13,7 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   constructor(circle: Circle, baseCenter: Point) {
     if (circle.wrapped.type != 'circle') {
-      throw new Error('Passed element is not a circle.');
+      throw new Error("Wrapped element isn't a circle.");
     }
 
     this.circle = circle;
