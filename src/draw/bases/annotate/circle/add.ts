@@ -39,22 +39,14 @@ function remove(cba: CircleBaseAnnotationInterface) {
 
 export function removeCircleOutline(b: Base) {
   if (b.outline) {
-    if (!(b.outline instanceof CircleBaseAnnotation)) {
-      console.error("Base outline isn't a circle base annotation.");
-    } else {
-      remove(b.outline);
-      b.outline = undefined;
-    }
+    remove(b.outline);
+    b.outline = undefined;
   }
 }
 
 export function removeCircleHighlighting(b: Base) {
   if (b.highlighting) {
-    if (!(b.highlighting instanceof CircleBaseAnnotation)) {
-      console.error("Base highlighting isn't a circle base annotation.");
-    } else {
-      remove(b.highlighting);
-      b.highlighting = undefined;
-    }
+    remove(b.highlighting);
+    b.highlighting = undefined;
   }
 }
