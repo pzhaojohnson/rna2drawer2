@@ -26,7 +26,7 @@ export function lineCoordinatesAreClose(lcs1: LineCoordinates, lcs2: LineCoordin
 }
 
 export class StraightBond implements StraightBondInterface {
-  _line: SVG.Line;
+  readonly line: SVG.Line;
   _base1: Base;
   _base2: Base;
 
@@ -56,7 +56,7 @@ export class StraightBond implements StraightBondInterface {
     this._base1 = b1;
     this._base2 = b2;
 
-    this._line = line;
+    this.line = line;
     this._validateLine();
 
     this._storePaddings();
@@ -71,14 +71,14 @@ export class StraightBond implements StraightBondInterface {
    * Initializes the ID of the line if it is not already initialized.
    */
   _validateLine(): (void | never) {
-    if (this._line.type !== 'line') {
+    if (this.line.type !== 'line') {
       throw new Error('The given element is not a line element.');
     }
-    this._line.id();
+    this.line.id();
   }
 
   get id(): string {
-    return this._line.attr('id');
+    return this.line.attr('id');
   }
 
   get base1(): Base {
@@ -95,10 +95,10 @@ export class StraightBond implements StraightBondInterface {
 
   _storeCoordinates() {
     this._coordinates = {
-      x1: this._line.attr('x1'),
-      y1: this._line.attr('y1'),
-      x2: this._line.attr('x2'),
-      y2: this._line.attr('y2'),
+      x1: this.line.attr('x1'),
+      y1: this.line.attr('y1'),
+      x2: this.line.attr('x2'),
+      y2: this.line.attr('y2'),
     };
   }
 
@@ -125,14 +125,14 @@ export class StraightBond implements StraightBondInterface {
     this._padding1 = distance(
       this.base1.xCenter,
       this.base1.yCenter,
-      this._line.attr('x1'),
-      this._line.attr('y1'),
+      this.line.attr('x1'),
+      this.line.attr('y1'),
     );
     this._padding2 = distance(
       this.base2.xCenter,
       this.base2.yCenter,
-      this._line.attr('x2'),
-      this._line.attr('y2'),
+      this.line.attr('x2'),
+      this.line.attr('y2'),
     );
   }
 
@@ -162,7 +162,7 @@ export class StraightBond implements StraightBondInterface {
   _reposition(padding1: number, padding2: number) {
     let cs = StraightBond._lineCoordinates(this.base1, this.base2, padding1, padding2);
     if (!lineCoordinatesAreClose(cs, this._coordinates)) {
-      this._line.attr({
+      this.line.attr({
         'x1': cs.x1,
         'y1': cs.y1,
         'x2': cs.x2,
@@ -177,53 +177,53 @@ export class StraightBond implements StraightBondInterface {
   }
 
   getStroke(): string {
-    return this._line.attr('stroke');
+    return this.line.attr('stroke');
   }
 
   setStroke(s: string) {
-    this._line.attr({ 'stroke': s });
+    this.line.attr({ 'stroke': s });
   }
 
   getStrokeWidth(): number {
-    return this._line.attr('stroke-width');
+    return this.line.attr('stroke-width');
   }
 
   setStrokeWidth(sw: number) {
-    this._line.attr({ 'stroke-width': sw });
+    this.line.attr({ 'stroke-width': sw });
   }
 
   get opacity(): number {
-    return this._line.attr('opacity');
+    return this.line.attr('opacity');
   }
 
   _setOpacity(o: number) {
-    this._line.attr({ 'opacity': o });
+    this.line.attr({ 'opacity': o });
   }
 
   bringToFront() {
-    this._line.front();
+    this.line.front();
   }
 
   sendToBack() {
-    this._line.back();
+    this.line.back();
   }
 
   remove() {
-    this._line.remove();
+    this.line.remove();
   }
 
   savableState(): StraightBondSavableState {
     return {
       className: 'StraightBond',
-      lineId: this._line.id(),
+      lineId: this.line.id(),
       baseId1: this.base1.id,
       baseId2: this.base2.id,
     };
   }
 
   refreshIds() {
-    this._line.id('');
-    this._line.id();
+    this.line.id('');
+    this.line.id();
   }
 }
 

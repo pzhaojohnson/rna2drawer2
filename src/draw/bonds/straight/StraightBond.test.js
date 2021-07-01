@@ -191,10 +191,10 @@ describe('StraightBond class', () => {
     let sb = new StraightBond(l, b1, b2);
     sb.setStroke('#44bb99'); // use setter
     expect(sb.getStroke()).toBe('#44bb99'); // check getter
-    expect(sb._line.attr('stroke')).toBe('#44bb99'); // check actual value
+    expect(sb.line.attr('stroke')).toBe('#44bb99'); // check actual value
     sb.setStrokeWidth(5.43); // use setter
     expect(sb.getStrokeWidth()).toBe(5.43); // check getter
-    expect(sb._line.attr('stroke-width')).toBe(5.43); // check actual value
+    expect(sb.line.attr('stroke-width')).toBe(5.43); // check actual value
   });
 
   it('opacity getter and private setter', () => {
@@ -204,7 +204,7 @@ describe('StraightBond class', () => {
     let sb = new StraightBond(l, b1, b2);
     sb._setOpacity(0.55); // use setter
     expect(sb.opacity).toBe(0.55); // check getter
-    expect(sb._line.attr('opacity')).toBe(0.55); // check actual value
+    expect(sb.line.attr('opacity')).toBe(0.55); // check actual value
   });
 
   it('bringToFront and sendToBack methods', () => {
@@ -216,16 +216,16 @@ describe('StraightBond class', () => {
     let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
     let sb = new StraightBond(l, b1, b2);
     let e = svg.ellipse(5, 3);
-    expect(sb._line.position()).toBeGreaterThan(0); // not already at back
+    expect(sb.line.position()).toBeGreaterThan(0); // not already at back
     // must send all the way to back and not just back one position
-    expect(sb._line.position()).toBeGreaterThan(1);
+    expect(sb.line.position()).toBeGreaterThan(1);
     sb.sendToBack();
-    expect(sb._line.position()).toBe(0); // sent to back
+    expect(sb.line.position()).toBe(0); // sent to back
     let frontMarker = svg.circle(10);
     sb.bringToFront();
-    expect(sb._line.position()).toBeGreaterThan(frontMarker.position()); // brought to front
+    expect(sb.line.position()).toBeGreaterThan(frontMarker.position()); // brought to front
     // must have been brought all the way to front and not just forward one position
-    expect(sb._line.position()).toBeGreaterThan(1);
+    expect(sb.line.position()).toBeGreaterThan(1);
   });
 
   it('remove method', () => {
@@ -269,9 +269,9 @@ describe('StraightBond class', () => {
     let b1 = Base.create(svg, 'a', 1, 4);
     let b2 = Base.create(svg, 'h', 5, 5);
     let sb = new StraightBond(l, b1, b2);
-    let oldId = sb._line.id();
+    let oldId = sb.line.id();
     sb.refreshIds();
-    expect(sb._line.id()).not.toBe(oldId);
+    expect(sb.line.id()).not.toBe(oldId);
   });
 });
 
@@ -345,11 +345,11 @@ describe('PrimaryBond class', () => {
 
     it('valid saved state', () => {
       let pb1 = PrimaryBond.create(svg, b1, b2);
-      let lineId = pb1._line.id();
+      let lineId = pb1.line.id();
       let savableState = pb1.savableState();
       let spy = jest.spyOn(PrimaryBond, '_copyPropsToMostRecent');
       let pb2 = PrimaryBond.fromSavedState(savableState, svg, getBaseById);
-      expect(pb2._line.id()).toBe(lineId);
+      expect(pb2.line.id()).toBe(lineId);
       expect(pb2.base1).toBe(b1);
       expect(pb2.base2).toBe(b2);
       // copies props to most recent
@@ -543,11 +543,11 @@ describe('SecondaryBond class', () => {
       let b2 = Base.create(svg, 'q', 50, 800);
       let getBaseById = id => id === b1.id ? b1 : b2;
       let sb1 = SecondaryBond.create(svg, b1, b2);
-      let lineId = sb1._line.id();
+      let lineId = sb1.line.id();
       let spy = jest.spyOn(SecondaryBond, '_copyPropsToMostRecent');
       let savableState = sb1.savableState();
       let sb2 = SecondaryBond.fromSavedState(savableState, svg, getBaseById);
-      expect(sb2._line.id()).toBe(lineId);
+      expect(sb2.line.id()).toBe(lineId);
       expect(sb2.base1).toBe(b1);
       expect(sb2.base2).toBe(b2);
       // copies props to most recent
