@@ -1,5 +1,5 @@
 import { AppInterface as App } from '../../../AppInterface';
-import { SecondaryBondInterface as SecondaryBond } from '../../../draw/StraightBondInterface';
+import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/StraightBondInterface';
 
 export interface SecondaryBondsByType {
   aut: SecondaryBond[];

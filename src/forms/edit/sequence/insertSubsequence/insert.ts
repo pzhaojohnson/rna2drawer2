@@ -3,7 +3,7 @@ import { parseSequence } from '../../../../parse/parseSequence';
 import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../../draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { willInsertAt } from '../../../../draw/layout/singleseq/strict/stemProps';
 import { DrawingInterface as Drawing } from '../../../../draw/DrawingInterface';
-import { PrimaryBondInterface as PrimaryBond } from '../../../../draw/StraightBondInterface';
+import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/StraightBondInterface';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
 

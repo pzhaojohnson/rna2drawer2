@@ -8,7 +8,7 @@ import {
   PrimaryBondInterface as PrimaryBond,
   SecondaryBondInterface as SecondaryBond,
   StraightBondSavableState,
-} from './StraightBondInterface';
+} from 'Draw/bonds/straight/StraightBondInterface';
 import {
   TertiaryBondInterface as TertiaryBond,
   QuadraticBezierBondSavableState,

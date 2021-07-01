@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
 import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
-import { PrimaryBondInterface as PrimaryBond } from '../../../draw/StraightBondInterface';
+import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/StraightBondInterface';
 import { ClosableContainer } from '../../containers/ClosableContainer';
 import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';

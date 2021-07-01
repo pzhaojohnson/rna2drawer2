@@ -9,8 +9,8 @@ import Base from './Base';
 import {
   PrimaryBond,
   SecondaryBond,
-} from './StraightBond';
-import { StraightBondSavableState } from './StraightBondInterface';
+} from 'Draw/bonds/straight/StraightBond';
+import { StraightBondSavableState } from 'Draw/bonds/straight/StraightBondInterface';
 import { TertiaryBond } from './QuadraticBezierBond';
 import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
 import { adjustBaseNumbering } from './edit/adjustBaseNumbering';

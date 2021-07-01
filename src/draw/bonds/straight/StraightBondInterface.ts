@@ -1,5 +1,5 @@
 import * as Svg from '@svgdotjs/svg.js';
-import { BaseInterface as Base } from './BaseInterface'
+import { BaseInterface as Base } from 'Draw/BaseInterface'
 
 export interface StraightBondSavableState {
   className: string;

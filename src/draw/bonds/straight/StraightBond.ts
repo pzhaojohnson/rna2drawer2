@@ -7,9 +7,9 @@ import {
   SecondaryBondMostRecentProps,
 } from './StraightBondInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import Base from './Base';
+import Base from 'Draw/Base';
 import { distance2D as distance } from 'Math/distance';
-import { areClose } from './areClose';
+import { areClose } from 'Draw/areClose';
 
 interface LineCoordinates {
   x1: number;

@@ -1,4 +1,4 @@
-import { PrimaryBondInterface as PrimaryBond } from '../../../draw/StraightBondInterface';
+import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/StraightBondInterface';
 import * as React from 'react';
 import { ColorField } from '../../fields/color/ColorField';
 import { FieldProps } from './FieldProps';

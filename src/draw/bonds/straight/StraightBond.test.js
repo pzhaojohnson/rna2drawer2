@@ -4,12 +4,12 @@ import {
   SecondaryBond,
   lineCoordinatesAreClose,
 } from './StraightBond';
-import NodeSVG from './NodeSVG';
-import Base from './Base';
+import NodeSVG from 'Draw/NodeSVG';
+import Base from 'Draw/Base';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from './angleBetween';
-import normalizeAngle from './normalizeAngle';
-import pair from './interact/fold/pair';
+import angleBetween from 'Draw/angleBetween';
+import normalizeAngle from 'Draw/normalizeAngle';
+import pair from 'Draw/interact/fold/pair';
 
 it('lineCoordinatesAreClose function', () => {
   let lcs1 = { x1: 1, y1: 2, x2: 3, y2: 4 };

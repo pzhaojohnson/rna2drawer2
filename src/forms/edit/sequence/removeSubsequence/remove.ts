@@ -8,7 +8,7 @@ import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch
 import {
   PrimaryBondInterface as PrimaryBond,
   SecondaryBondInterface as SecondaryBond,
-} from '../../../../draw/StraightBondInterface';
+} from 'Draw/bonds/straight/StraightBondInterface';
 import { TertiaryBondInterface as TertiaryBond } from '../../../../draw/QuadraticBezierBondInterface';
 
 interface Range {

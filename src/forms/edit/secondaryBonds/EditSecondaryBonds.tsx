@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
 import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
-import { SecondaryBondInterface as SecondaryBond } from '../../../draw/StraightBondInterface';
+import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/StraightBondInterface';
 import { ClosableContainer } from '../../containers/ClosableContainer';
 import { SecondaryBondsByType } from './FieldProps';
 import {
