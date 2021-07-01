@@ -1,4 +1,4 @@
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from 'Draw/BaseInterface'
 
 export interface StraightBondSavableState {
@@ -22,8 +22,8 @@ export interface StraightBondInterface {
   getPadding2(): number;
   setPadding2(p: number): void;
   reposition(): void;
-  insertBefore(ele: Svg.Element): void;
-  insertAfter(ele: Svg.Element): void;
+  insertBefore(ele: SVG.Element): void;
+  insertAfter(ele: SVG.Element): void;
   getStroke(): string;
   setStroke(s: string): void;
   getStrokeWidth(): number;

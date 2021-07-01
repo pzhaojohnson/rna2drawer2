@@ -6,7 +6,7 @@ import {
   PrimaryBondMostRecentProps,
   SecondaryBondMostRecentProps,
 } from './StraightBondInterface';
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 import Base from 'Draw/Base';
 import { distance2D as distance } from 'Math/distance';
 import { areClose } from 'Draw/areClose';
@@ -26,7 +26,7 @@ export function lineCoordinatesAreClose(lcs1: LineCoordinates, lcs2: LineCoordin
 }
 
 export class StraightBond implements StraightBondInterface {
-  _line: Svg.Line;
+  _line: SVG.Line;
   _base1: Base;
   _base2: Base;
 
@@ -52,7 +52,7 @@ export class StraightBond implements StraightBondInterface {
     return 1;
   }
 
-  constructor(line: Svg.Line, b1: Base, b2: Base) {
+  constructor(line: SVG.Line, b1: Base, b2: Base) {
     this._base1 = b1;
     this._base2 = b2;
 
@@ -176,11 +176,11 @@ export class StraightBond implements StraightBondInterface {
     }
   }
 
-  insertBefore(ele: Svg.Element) {
+  insertBefore(ele: SVG.Element) {
     this._line.insertBefore(ele);
   }
 
-  insertAfter(ele: Svg.Element) {
+  insertAfter(ele: SVG.Element) {
     this._line.insertAfter(ele);
   }
 
@@ -259,7 +259,7 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
 
   static fromSavedState(
     savedState: StraightBondSavableState,
-    svg: Svg.Svg,
+    svg: SVG.Svg,
     getBaseById: (id: string) => (Base | undefined),
   ): (PrimaryBond | never) {
     if (savedState.className !== 'StraightBond') {
@@ -268,12 +268,12 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     let line = svg.findOne('#' + savedState.lineId);
     let b1 = getBaseById(savedState.baseId1) as Base;
     let b2 = getBaseById(savedState.baseId2) as Base;
-    let pb = new PrimaryBond(line as Svg.Line, b1, b2);
+    let pb = new PrimaryBond(line as SVG.Line, b1, b2);
     PrimaryBond._copyPropsToMostRecent(pb);
     return pb;
   }
 
-  static create(svg: Svg.Svg, b1: Base, b2: Base): PrimaryBond {
+  static create(svg: SVG.Svg, b1: Base, b2: Base): PrimaryBond {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id();
@@ -367,7 +367,7 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
 
   static fromSavedState(
     savedState: StraightBondSavableState,
-    svg: Svg.Svg,
+    svg: SVG.Svg,
     getBaseById: (id: string) => (Base | undefined),
   ): (SecondaryBond | never) {
     if (savedState.className !== 'StraightBond') {
@@ -376,12 +376,12 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     let line = svg.findOne('#' + savedState.lineId);
     let b1 = getBaseById(savedState.baseId1) as Base;
     let b2 = getBaseById(savedState.baseId2) as Base;
-    let sb = new SecondaryBond(line as Svg.Line, b1, b2);
+    let sb = new SecondaryBond(line as SVG.Line, b1, b2);
     SecondaryBond._copyPropsToMostRecent(sb);
     return sb;
   }
 
-  static create(svg: Svg.Svg, b1: Base, b2: Base): SecondaryBond {
+  static create(svg: SVG.Svg, b1: Base, b2: Base): SecondaryBond {
     let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
     let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
     line.id();
