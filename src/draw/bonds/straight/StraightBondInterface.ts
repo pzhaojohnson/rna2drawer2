@@ -22,8 +22,6 @@ export interface StraightBondInterface {
   getPadding2(): number;
   setPadding2(p: number): void;
   reposition(): void;
-  insertBefore(ele: SVG.Element): void;
-  insertAfter(ele: SVG.Element): void;
   getStroke(): string;
   setStroke(s: string): void;
   getStrokeWidth(): number;

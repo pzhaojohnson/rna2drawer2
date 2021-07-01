@@ -176,14 +176,6 @@ export class StraightBond implements StraightBondInterface {
     }
   }
 
-  insertBefore(ele: SVG.Element) {
-    this._line.insertBefore(ele);
-  }
-
-  insertAfter(ele: SVG.Element) {
-    this._line.insertAfter(ele);
-  }
-
   getStroke(): string {
     return this._line.attr('stroke');
   }

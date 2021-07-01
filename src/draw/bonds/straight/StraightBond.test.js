@@ -184,19 +184,6 @@ describe('StraightBond class', () => {
     });
   });
 
-  it('insertBefore and insertAfter methods', () => {
-    let c = svg.circle(50);
-    let l = svg.line(1, 2, 3, 4);
-    let b1 = Base.create(svg, 'b', 2, 3);
-    let b2 = Base.create(svg, 'h', 5, 5);
-    let sb = new StraightBond(l, b1, b2);
-    expect(l.position()).toBeGreaterThan(c.position());
-    sb.insertBefore(c);
-    expect(l.position()).toBeLessThan(c.position());
-    sb.insertAfter(c);
-    expect(l.position()).toBeGreaterThan(c.position());
-  });
-
   it('stroke and strokeWidth properties', () => {
     let l = svg.line(5, 5, 3, 3);
     let b1 = Base.create(svg, 'b', 1, 4);
