@@ -10,9 +10,9 @@ export interface StraightBondSavableState {
 
 export interface StraightBondInterface {
   readonly line: SVG.Line;
+  readonly base1: Base;
+  readonly base2: Base;
   id: string;
-  base1: Base;
-  base2: Base;
   contains(b: Base): boolean;
   x1: number;
   y1: number;

@@ -27,8 +27,8 @@ export function lineCoordinatesAreClose(lcs1: LineCoordinates, lcs2: LineCoordin
 
 export class StraightBond implements StraightBondInterface {
   readonly line: SVG.Line;
-  _base1: Base;
-  _base2: Base;
+  readonly base1: Base;
+  readonly base2: Base;
 
   _padding1!: number;
   _padding2!: number;
@@ -53,8 +53,8 @@ export class StraightBond implements StraightBondInterface {
   }
 
   constructor(line: SVG.Line, b1: Base, b2: Base) {
-    this._base1 = b1;
-    this._base2 = b2;
+    this.base1 = b1;
+    this.base2 = b2;
 
     this.line = line;
     this._validateLine();
@@ -79,14 +79,6 @@ export class StraightBond implements StraightBondInterface {
 
   get id(): string {
     return this.line.attr('id');
-  }
-
-  get base1(): Base {
-    return this._base1;
-  }
-
-  get base2(): Base {
-    return this._base2;
   }
 
   contains(b: Base): boolean {
