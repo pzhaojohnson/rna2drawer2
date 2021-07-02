@@ -2,6 +2,7 @@ import { StraightBond } from './StraightBond';
 import {
   SecondaryBondInterface,
   SecondaryBondMostRecentProps,
+  SecondaryBondType,
 } from './SecondaryBondInterface';
 import { StraightBondSavableState } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
@@ -69,6 +70,24 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     let sb = new SecondaryBond(line, b1, b2);
     SecondaryBond._applyMostRecentProps(sb);
     return sb;
+  }
+
+  get type(): SecondaryBondType {
+    let cs = [
+      this.base1.character.toUpperCase(),
+      this.base2.character.toUpperCase(),
+    ];
+    cs.sort();
+    let t = cs.join('');
+    if (t == 'AU' || t == 'AT') {
+      return 'AUT';
+    } else if (t == 'CG') {
+      return 'GC';
+    } else if (t == 'GU' || t == 'GT') {
+      return 'GUT';
+    } else {
+      return 'other';
+    }
   }
 
   isAUT(): boolean {

@@ -10,7 +10,10 @@ export interface SecondaryBondMostRecentProps {
   strokeWidth: number;
 }
 
+export type SecondaryBondType = 'AUT' | 'GC' | 'GUT' | 'other';
+
 export interface SecondaryBondInterface extends StraightBondInterface {
+  readonly type: SecondaryBondType;
   isAUT(): boolean;
   isGC(): boolean;
   isGUT(): boolean;
