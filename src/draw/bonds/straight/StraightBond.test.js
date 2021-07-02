@@ -276,57 +276,6 @@ describe('StraightBond class', () => {
 });
 
 describe('PrimaryBond class', () => {
-  describe('mostRecentProps static method', () => {
-    it('returns a copy', () => {
-      PrimaryBond._mostRecentProps.padding1 = 5.44;
-      PrimaryBond._mostRecentProps.padding2 = 12.43;
-      PrimaryBond._mostRecentProps.stroke = '#8ab1c3'
-      PrimaryBond._mostRecentProps.strokeWidth = 3.22;
-      let mrps = PrimaryBond.mostRecentProps();
-      expect(mrps).not.toBe(PrimaryBond._mostRecentProps); // a new object
-      expect(mrps.padding1).toBe(5.44);
-      expect(mrps.padding2).toBe(12.43);
-      expect(mrps.stroke).toBe('#8ab1c3');
-      expect(mrps.strokeWidth).toBe(3.22);
-    });
-  });
-
-  it('_applyMostRecentProps static method', () => {
-    let b1 = Base.create(svg, 'a', 1012, 22);
-    let b2 = Base.create(svg, 'b', 5, 4);
-    let pb = PrimaryBond.create(svg, b1, b2);
-    PrimaryBond._mostRecentProps.padding1 = 3.45;
-    PrimaryBond._mostRecentProps.padding2 = 12.89;
-    PrimaryBond._mostRecentProps.stroke = '#aa33dd';
-    PrimaryBond._mostRecentProps.strokeWidth = 4.97;
-    PrimaryBond._applyMostRecentProps(pb);
-    expect(pb.padding1).toBeCloseTo(3.45);
-    expect(pb.padding2).toBeCloseTo(12.89);
-    expect(pb.stroke).toBe('#aa33dd');
-    expect(pb.strokeWidth).toBe(4.97);
-  });
-
-  it('_copyPropsToMostRecent static method', () => {
-    let b1 = Base.create(svg, 'g', 1, 4);
-    let b2 = Base.create(svg, 'n', 50, 100);
-    let pb = PrimaryBond.create(svg, b1, b2);
-    pb.padding1 = 5.67;
-    pb.padding2 = 8.901;
-    pb.stroke = '#aa12cd';
-    pb.strokeWidth = 2.08;
-    // necessary since the above setters also update the most recent props
-    PrimaryBond._mostRecentProps.padding1 = 6.78;
-    PrimaryBond._mostRecentProps.padding2 = 12.33;
-    PrimaryBond._mostRecentProps.stroke = '#aaddcc';
-    PrimaryBond._mostRecentProps.strokeWidth = 2;
-    PrimaryBond._copyPropsToMostRecent(pb);
-    let mrps = PrimaryBond.mostRecentProps();
-    expect(mrps.padding1).toBeCloseTo(5.67);
-    expect(mrps.padding2).toBeCloseTo(8.901);
-    expect(mrps.stroke).toBe('#aa12cd');
-    expect(mrps.strokeWidth).toBe(2.08);
-  });
-
   describe('fromSavedState static method', () => {
     let b1 = Base.create(svg, 'q', 5, 8);
     let b2 = Base.create(svg, 't', 100, 200);
@@ -347,20 +296,16 @@ describe('PrimaryBond class', () => {
       let pb1 = PrimaryBond.create(svg, b1, b2);
       let lineId = pb1.line.id();
       let savableState = pb1.savableState();
-      let spy = jest.spyOn(PrimaryBond, '_copyPropsToMostRecent');
       let pb2 = PrimaryBond.fromSavedState(savableState, svg, getBaseById);
       expect(pb2.line.id()).toBe(lineId);
       expect(pb2.base1).toBe(b1);
       expect(pb2.base2).toBe(b2);
-      // copies props to most recent
-      expect(spy.mock.calls[0][0]).toBe(pb2);
     });
   });
 
   describe('create static method', () => {
     let b1 = Base.create(svg, 'b', 1, 5);
     let b2 = Base.create(svg, 'Y', 10, 20);
-    let spy = jest.spyOn(PrimaryBond, '_applyMostRecentProps');
     let pb = PrimaryBond.create(svg, b1, b2);
 
     it('creates with bases', () => {
@@ -372,10 +317,6 @@ describe('PrimaryBond class', () => {
       let baseAngle = b1.angleBetweenCenters(b2);
       let lineAngle = angleBetween(pb.x1, pb.y1, pb.x2, pb.y2);
       expect(normalizeAngle(lineAngle)).toBeCloseTo(normalizeAngle(baseAngle));
-    });
-
-    it('applies most recent props', () => {
-      expect(spy.mock.calls[0][0]).toBe(pb);
     });
 
     it('sets opacity', () => {
@@ -397,12 +338,12 @@ describe('PrimaryBond class', () => {
     let pb = PrimaryBond.create(svg, b1, b2);
     pb.padding1 = 12.3; // use setter
     expect(pb.padding1).toBeCloseTo(12.3); // check getter
-    // updates most recent prop
-    expect(PrimaryBond.mostRecentProps().padding1).toBeCloseTo(12.3);
+    // updates default value
+    expect(PrimaryBond.recommendedDefaults.basePadding1).toBeCloseTo(12.3);
     pb.padding2 = 14.03; // use setter
     expect(pb.padding2).toBeCloseTo(14.03); // check getter
-    // updates most recent prop
-    expect(PrimaryBond.mostRecentProps().padding2).toBeCloseTo(14.03);
+    // updates default value
+    expect(PrimaryBond.recommendedDefaults.basePadding2).toBeCloseTo(14.03);
   });
 
   it('stroke and strokeWidth getters and setters', () => {
@@ -411,12 +352,12 @@ describe('PrimaryBond class', () => {
     let pb = PrimaryBond.create(svg, b1, b2);
     pb.stroke = '#4455bc'; // use setter
     expect(pb.stroke).toBe('#4455bc'); // check getter
-    // updates most recent prop
-    expect(PrimaryBond.mostRecentProps().stroke).toBe('#4455bc');
+    // updates default value
+    expect(PrimaryBond.recommendedDefaults.line['stroke']).toBe('#4455bc');
     pb.strokeWidth = 4.011; // use setter
     expect(pb.strokeWidth).toBe(4.011); // check getter
-    // updates most recent prop
-    expect(PrimaryBond.mostRecentProps().strokeWidth).toBe(4.011);
+    // updates default value
+    expect(PrimaryBond.recommendedDefaults.line['stroke-width']).toBe(4.011);
   });
 });
 

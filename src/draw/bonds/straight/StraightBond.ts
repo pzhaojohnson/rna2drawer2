@@ -3,13 +3,13 @@ import {
   PrimaryBondInterface,
   SecondaryBondInterface,
   StraightBondSavableState,
-  PrimaryBondMostRecentProps,
   SecondaryBondMostRecentProps,
 } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import Base from 'Draw/Base';
 import { distance2D as distance } from 'Math/distance';
 import { areClose } from 'Draw/areClose';
+import { Values, values, setValues } from './values';
 
 interface LineCoordinates {
   x1: number;
@@ -220,26 +220,7 @@ export class StraightBond implements StraightBondInterface {
 }
 
 export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
-  static _mostRecentProps: PrimaryBondMostRecentProps;
-
-  static mostRecentProps(): PrimaryBondMostRecentProps {
-    return { ...PrimaryBond._mostRecentProps };
-  }
-
-  static _applyMostRecentProps(pb: PrimaryBond) {
-    let mrps = PrimaryBond.mostRecentProps();
-    pb.padding1 = mrps.padding1;
-    pb.padding2 = mrps.padding2;
-    pb.stroke = mrps.stroke;
-    pb.strokeWidth = mrps.strokeWidth;
-  }
-
-  static _copyPropsToMostRecent(pb: PrimaryBond) {
-    PrimaryBond._mostRecentProps.padding1 = pb.padding1;
-    PrimaryBond._mostRecentProps.padding2 = pb.padding2;
-    PrimaryBond._mostRecentProps.stroke = pb.stroke;
-    PrimaryBond._mostRecentProps.strokeWidth = pb.strokeWidth;
-  }
+  static recommendedDefaults: Values;
 
   static fromSavedState(
     savedState: StraightBondSavableState,
@@ -253,7 +234,7 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     let b1 = getBaseById(savedState.baseId1) as Base;
     let b2 = getBaseById(savedState.baseId2) as Base;
     let pb = new PrimaryBond(line as SVG.Line, b1, b2);
-    PrimaryBond._copyPropsToMostRecent(pb);
+    PrimaryBond.recommendedDefaults = values(pb);
     return pb;
   }
 
@@ -263,7 +244,7 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     line.id();
     line.attr({ 'opacity': StraightBond._opacity(b1, b2, 8, 8) });
     let pb = new PrimaryBond(line, b1, b2);
-    PrimaryBond._applyMostRecentProps(pb);
+    setValues(pb, PrimaryBond.recommendedDefaults);
     return pb;
   }
 
@@ -273,7 +254,7 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
 
   set padding1(p: number) {
     super.setPadding1(p);
-    PrimaryBond._mostRecentProps.padding1 = p;
+    PrimaryBond.recommendedDefaults.basePadding1 = p;
   }
 
   get padding2(): number {
@@ -282,7 +263,7 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
 
   set padding2(p: number) {
     super.setPadding2(p);
-    PrimaryBond._mostRecentProps.padding2 = p;
+    PrimaryBond.recommendedDefaults.basePadding2 = p;
   }
 
   get stroke(): string {
@@ -291,7 +272,7 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
 
   set stroke(s: string) {
     super.setStroke(s);
-    PrimaryBond._mostRecentProps.stroke = s;
+    PrimaryBond.recommendedDefaults.line['stroke'] = s;
   }
 
   get strokeWidth(): number {
@@ -300,15 +281,17 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
 
   set strokeWidth(sw: number) {
     super.setStrokeWidth(sw);
-    PrimaryBond._mostRecentProps.strokeWidth = sw;
+    PrimaryBond.recommendedDefaults.line['stroke-width'] = sw;
   }
 }
 
-PrimaryBond._mostRecentProps = {
-  padding1: 8,
-  padding2: 8,
-  stroke: '#808080',
-  strokeWidth: 1,
+PrimaryBond.recommendedDefaults = {
+  line: {
+    'stroke': '#808080',
+    'stroke-width': 1,
+  },
+  basePadding1: 8,
+  basePadding2: 8,
 };
 
 export class SecondaryBond extends StraightBond implements SecondaryBondInterface {

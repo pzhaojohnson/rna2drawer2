@@ -35,13 +35,6 @@ export interface StraightBondInterface {
   refreshIds(): void;
 }
 
-export interface PrimaryBondMostRecentProps {
-  padding1: number;
-  padding2: number;
-  stroke: string;
-  strokeWidth: number;
-}
-
 export interface PrimaryBondInterface extends StraightBondInterface {
   padding1: number;
   padding2: number;
