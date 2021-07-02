@@ -1,4 +1,4 @@
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/StraightBondInterface';
+import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';

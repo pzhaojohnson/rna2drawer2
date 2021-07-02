@@ -5,10 +5,8 @@ import { BaseInterface as Base } from '../../../../draw/BaseInterface';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { willRemove } from '../../../../draw/layout/singleseq/strict/stemProps';
 import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
-import {
-  PrimaryBondInterface as PrimaryBond,
-  SecondaryBondInterface as SecondaryBond,
-} from 'Draw/bonds/straight/StraightBondInterface';
+import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
+import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { TertiaryBondInterface as TertiaryBond } from '../../../../draw/QuadraticBezierBondInterface';
 
 interface Range {

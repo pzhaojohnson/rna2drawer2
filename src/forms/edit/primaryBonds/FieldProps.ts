@@ -1,4 +1,4 @@
-import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/StraightBondInterface';
+import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 
 export interface FieldProps {
   getPrimaryBonds: () => PrimaryBond[];

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/StraightBondInterface';
+import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { ColorField } from '../../fields/color/ColorField';
 import { FieldProps as SpecificFieldProps } from './FieldProps';
 import { atIndex } from 'Array/at';

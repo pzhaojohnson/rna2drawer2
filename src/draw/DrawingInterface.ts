@@ -4,9 +4,9 @@ import {
   SequenceSavableState,
 } from './SequenceInterface';
 import { BaseInterface as Base } from './BaseInterface';
+import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
+import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import {
-  PrimaryBondInterface as PrimaryBond,
-  SecondaryBondInterface as SecondaryBond,
   StraightBondSavableState,
 } from 'Draw/bonds/straight/StraightBondInterface';
 import {
