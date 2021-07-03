@@ -29,8 +29,6 @@ export class StraightBond implements StraightBondInterface {
   _padding1!: number;
   _padding2!: number;
 
-  _coordinates: LineCoordinates;
-
   static _lineCoordinates(b1: Base, b2: Base, padding1: number, padding2: number): LineCoordinates {
     let angle = b1.angleBetweenCenters(b2);
     return {
@@ -56,9 +54,6 @@ export class StraightBond implements StraightBondInterface {
     this._validateLine();
 
     this._storePaddings();
-
-    this._coordinates = { x1: 0, y1: 0, x2: 0, y2: 0 };
-    this._storeCoordinates();
   }
 
   /**
@@ -79,15 +74,6 @@ export class StraightBond implements StraightBondInterface {
 
   contains(b: Base): boolean {
     return this.base1.id == b.id || this.base2.id == b.id;
-  }
-
-  _storeCoordinates() {
-    this._coordinates = {
-      x1: this.line.attr('x1'),
-      y1: this.line.attr('y1'),
-      x2: this.line.attr('x2'),
-      y2: this.line.attr('y2'),
-    };
   }
 
   /**
@@ -133,19 +119,16 @@ export class StraightBond implements StraightBondInterface {
 
   _reposition(padding1: number, padding2: number) {
     let cs = StraightBond._lineCoordinates(this.base1, this.base2, padding1, padding2);
-    if (!lineCoordinatesAreClose(cs, this._coordinates)) {
-      this.line.attr({
-        'x1': cs.x1,
-        'y1': cs.y1,
-        'x2': cs.x2,
-        'y2': cs.y2,
-      });
-      this._coordinates = { ...cs };
-      this._padding1 = padding1;
-      this._padding2 = padding2;
-      let opacity = StraightBond._opacity(this.base1, this.base2, padding1, padding2);
-      this._setOpacity(opacity);
-    }
+    this.line.attr({
+      'x1': cs.x1,
+      'y1': cs.y1,
+      'x2': cs.x2,
+      'y2': cs.y2,
+    });
+    this._padding1 = padding1;
+    this._padding2 = padding2;
+    let opacity = StraightBond._opacity(this.base1, this.base2, padding1, padding2);
+    this._setOpacity(opacity);
   }
 
   get opacity(): number {
