@@ -76,39 +76,6 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     }
   }
 
-  isAUT(): boolean {
-    let l1 = this.base1.character.toUpperCase();
-    let l2 = this.base2.character.toUpperCase();
-    if (l1 === 'A') {
-      return l2 === 'U' || l2 === 'T';
-    } else if (l1 === 'U' || l1 === 'T') {
-      return l2 === 'A';
-    }
-    return false;
-  }
-
-  isGC(): boolean {
-    let l1 = this.base1.character.toUpperCase();
-    let l2 = this.base2.character.toUpperCase();
-    if (l1 === 'G') {
-      return l2 === 'C';
-    } else if (l1 === 'C') {
-      return l2 === 'G';
-    }
-    return false;
-  }
-
-  isGUT(): boolean {
-    let l1 = this.base1.character.toUpperCase();
-    let l2 = this.base2.character.toUpperCase();
-    if (l1 === 'G') {
-      return l2 === 'U' || l2 === 'T';
-    } else if (l1 === 'U' || l1 === 'T') {
-      return l2 === 'G';
-    }
-    return false;
-  }
-
   get padding1(): number {
     return super.getPadding1();
   }

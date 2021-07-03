@@ -23,11 +23,12 @@ function getSecondaryBondsByType(drawing: Drawing): SecondaryBondsByType {
     other: [] as SecondaryBond[],
   };
   drawing.forEachSecondaryBond(sb => {
-    if (sb.isAUT()) {
+    let t = sb.type;
+    if (t == 'AUT') {
       sbs.aut.push(sb);
-    } else if (sb.isGC()) {
+    } else if (t == 'GC') {
       sbs.gc.push(sb);
-    } else if (sb.isGUT()) {
+    } else if (t == 'GUT') {
       sbs.gut.push(sb);
     } else {
       sbs.other.push(sb);
