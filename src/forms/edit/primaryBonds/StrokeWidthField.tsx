@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
 import { atIndex } from 'Array/at';
+import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 
 export function StrokeWidthField(props: FieldProps): React.ReactElement | null {
   let pbs = props.getPrimaryBonds();
@@ -24,6 +25,7 @@ export function StrokeWidthField(props: FieldProps): React.ReactElement | null {
                 pb.line.attr({ 'stroke-width': sw });
               });
               props.changed();
+              PrimaryBond.recommendedDefaults.line['stroke-width'] = sw;
             }
           }
         }}
