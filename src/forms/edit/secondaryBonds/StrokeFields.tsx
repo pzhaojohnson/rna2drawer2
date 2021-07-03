@@ -1,21 +1,22 @@
 import * as React from 'react';
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
+import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { ColorField } from '../../fields/color/ColorField';
 import { FieldProps as SpecificFieldProps } from './FieldProps';
 import { atIndex } from 'Array/at';
 import * as Svg from '@svgdotjs/svg.js';
 import { parseColor } from '../../../parse/parseColor';
+import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 
-function getFirstStroke(sbs: SecondaryBond[]): Svg.Color | undefined {
+function getFirstStroke(sbs: SecondaryBondInterface[]): Svg.Color | undefined {
   let first = atIndex(sbs, 0);
   if (first) {
-    return parseColor(first.stroke);
+    return parseColor(first.line.attr('stroke'));
   }
 }
 
 interface GeneralFieldProps {
   name: string;
-  getSecondaryBonds: () => SecondaryBond[];
+  getSecondaryBonds: () => SecondaryBondInterface[];
   pushUndo: () => void;
   changed: () => void;
 }
@@ -39,9 +40,13 @@ function StrokeField(props: GeneralFieldProps): React.ReactElement | null {
               if (s.toHex() != getFirstStroke(sbs)?.toHex()) {
                 props.pushUndo();
                 sbs.forEach(sb => {
-                  sb.stroke = s.toHex();
+                  sb.line.attr({ 'stroke': s.toHex() });
                 });
                 props.changed();
+                let first = atIndex(sbs, 0);
+                if (first) {
+                  SecondaryBond.recommendedDefaults[first.type].line['stroke'] = s.toHex();
+                }
               }
             }
           }

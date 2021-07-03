@@ -10,5 +10,4 @@ export interface SecondaryBondInterface extends StraightBondInterface {
   isGUT(): boolean;
   padding1: number;
   padding2: number;
-  stroke: string;
 }

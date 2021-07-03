@@ -126,15 +126,6 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     super.setPadding2(p);
     Object.values(SecondaryBond.recommendedDefaults).forEach(vs => vs.basePadding2 = p);
   }
-
-  get stroke(): string {
-    return super.getStroke();
-  }
-
-  set stroke(s: string) {
-    super.setStroke(s);
-    SecondaryBond.recommendedDefaults[this.type].line['stroke'] = s;
-  }
 }
 
 SecondaryBond.recommendedDefaults = {

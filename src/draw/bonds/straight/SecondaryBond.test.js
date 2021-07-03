@@ -198,14 +198,4 @@ describe('SecondaryBond class', () => {
     sb.padding2 = 32.9; // use setter
     expect(sb.padding2).toBeCloseTo(32.9); // check getter
   });
-
-  describe('stroke getter and setter', () => {
-    it('retrieves and sets value', () => {
-      let b1 = Base.create(svg, 'q', 3, 5);
-      let b2 = Base.create(svg, 'b', 2, 3);
-      let sb = SecondaryBond.create(svg, b1, b2);
-      sb.stroke = '#132435';
-      expect(sb.stroke).toBe('#132435');
-    });
-  });
 });

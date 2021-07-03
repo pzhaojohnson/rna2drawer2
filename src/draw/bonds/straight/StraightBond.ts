@@ -164,14 +164,6 @@ export class StraightBond implements StraightBondInterface {
     }
   }
 
-  getStroke(): string {
-    return this.line.attr('stroke');
-  }
-
-  setStroke(s: string) {
-    this.line.attr({ 'stroke': s });
-  }
-
   get opacity(): number {
     return this.line.attr('opacity');
   }

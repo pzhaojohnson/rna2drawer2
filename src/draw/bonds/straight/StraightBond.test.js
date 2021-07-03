@@ -182,16 +182,6 @@ describe('StraightBond class', () => {
     });
   });
 
-  it('stroke and strokeWidth properties', () => {
-    let l = svg.line(5, 5, 3, 3);
-    let b1 = Base.create(svg, 'b', 1, 4);
-    let b2 = Base.create(svg, 'n', 10, 12);
-    let sb = new StraightBond(l, b1, b2);
-    sb.setStroke('#44bb99'); // use setter
-    expect(sb.getStroke()).toBe('#44bb99'); // check getter
-    expect(sb.line.attr('stroke')).toBe('#44bb99'); // check actual value
-  });
-
   it('opacity getter and private setter', () => {
     let l = svg.line(5, 2, 1, 6);
     let b1 = Base.create(svg, 'b', 5, 4);

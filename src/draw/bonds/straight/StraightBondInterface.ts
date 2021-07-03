@@ -23,8 +23,6 @@ export interface StraightBondInterface {
   getPadding2(): number;
   setPadding2(p: number): void;
   reposition(): void;
-  getStroke(): string;
-  setStroke(s: string): void;
   readonly opacity: number;
   bringToFront(): void;
   sendToBack(): void;

@@ -51,15 +51,6 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     super.setPadding2(p);
     PrimaryBond.recommendedDefaults.basePadding2 = p;
   }
-
-  get stroke(): string {
-    return super.getStroke();
-  }
-
-  set stroke(s: string) {
-    super.setStroke(s);
-    PrimaryBond.recommendedDefaults.line['stroke'] = s;
-  }
 }
 
 PrimaryBond.recommendedDefaults = {

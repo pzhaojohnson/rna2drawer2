@@ -77,14 +77,4 @@ describe('PrimaryBond class', () => {
     // updates default value
     expect(PrimaryBond.recommendedDefaults.basePadding2).toBeCloseTo(14.03);
   });
-
-  it('stroke and strokeWidth getters and setters', () => {
-    let b1 = Base.create(svg, 'Q', 1, 1);
-    let b2 = Base.create(svg, 'o', 200, 300);
-    let pb = PrimaryBond.create(svg, b1, b2);
-    pb.stroke = '#4455bc'; // use setter
-    expect(pb.stroke).toBe('#4455bc'); // check getter
-    // updates default value
-    expect(PrimaryBond.recommendedDefaults.line['stroke']).toBe('#4455bc');
-  });
 });
