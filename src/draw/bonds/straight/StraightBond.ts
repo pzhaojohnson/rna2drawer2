@@ -14,13 +14,6 @@ interface LineCoordinates {
   y2: number;
 }
 
-export function lineCoordinatesAreClose(lcs1: LineCoordinates, lcs2: LineCoordinates): boolean {
-  return areClose(lcs1.x1, lcs2.x1)
-    && areClose(lcs1.y1, lcs2.y1)
-    && areClose(lcs1.x2, lcs2.x2)
-    && areClose(lcs1.y2, lcs2.y2);
-}
-
 export class StraightBond implements StraightBondInterface {
   readonly line: SVG.Line;
   readonly base1: Base;
