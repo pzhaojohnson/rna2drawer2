@@ -52,6 +52,7 @@ export interface DrawingInterface {
   getBaseAtOverallPosition(p: number): Base | undefined;
   overallPositionOfBase(b: Base): number;
   forEachBase(f: (b: Base, position: number) => void): void;
+  bases(): Base[];
   baseIds(): string[];
   sequenceOfBase(b: Base): Sequence | undefined;
   createBases(characters: string): Base[];

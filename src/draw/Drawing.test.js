@@ -207,6 +207,20 @@ describe('sequence and base attributes', () => {
     expect(i).toBe(drawing.numBases);
   });
 
+  it('bases method', () => {
+    // test with multiple sequences
+    expect(drawing.numSequences).toBeGreaterThan(1);
+    let bs = drawing.bases();
+    let n = 0;
+    drawing.forEachSequence(seq => {
+      seq.forEachBase(b => {
+        expect(bs.includes(b)).toBeTruthy();
+        n++;
+      });
+    });
+    expect(bs.length).toBe(n);
+  });
+
   it('baseIds method handles multiple sequences', () => {
     let ids = drawing.baseIds();
     ids.forEach((id, i) => {

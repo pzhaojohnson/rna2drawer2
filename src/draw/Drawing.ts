@@ -248,6 +248,12 @@ class Drawing implements DrawingInterface {
     });
   }
 
+  bases(): Base[] {
+    let bs: Base[] = [];
+    this.forEachBase(b => bs.push(b));
+    return bs;
+  }
+
   baseIds(): string[] {
     let ids = [] as string[];
     this.forEachBase((b: Base) => ids.push(b.id));
