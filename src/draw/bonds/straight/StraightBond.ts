@@ -6,6 +6,7 @@ import * as SVG from '@svgdotjs/svg.js';
 import Base from 'Draw/Base';
 import { distance2D as distance } from 'Math/distance';
 import { areClose } from 'Draw/areClose';
+import { position } from './position';
 
 interface LineCoordinates {
   x1: number;
@@ -91,7 +92,11 @@ export class StraightBond implements StraightBondInterface {
   }
 
   set basePadding1(bp1) {
-    this._reposition(bp1, this.basePadding2);
+    position(this, {
+      basePadding1: bp1,
+      basePadding2: this.basePadding2,
+    });
+    this._basePadding1 = bp1;
   }
 
   get basePadding2(): number {
@@ -99,28 +104,21 @@ export class StraightBond implements StraightBondInterface {
   }
 
   set basePadding2(bp2) {
-    this._reposition(this.basePadding1, bp2);
+    position(this, {
+      basePadding1: this.basePadding1,
+      basePadding2: bp2,
+    });
+    this._basePadding2 = bp2;
   }
 
   /**
    * Repositions this straight bond based on the current positions of its bases.
    */
   reposition() {
-    this._reposition(this.basePadding1, this.basePadding2);
-  }
-
-  _reposition(padding1: number, padding2: number) {
-    let cs = StraightBond._lineCoordinates(this.base1, this.base2, padding1, padding2);
-    this.line.attr({
-      'x1': cs.x1,
-      'y1': cs.y1,
-      'x2': cs.x2,
-      'y2': cs.y2,
+    position(this, {
+      basePadding1: this.basePadding1,
+      basePadding2: this.basePadding2,
     });
-    this._basePadding1 = padding1;
-    this._basePadding2 = padding2;
-    let opacity = StraightBond._opacity(this.base1, this.base2, padding1, padding2);
-    this._setOpacity(opacity);
   }
 
   get opacity(): number {
