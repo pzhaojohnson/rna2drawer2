@@ -107,17 +107,6 @@ describe('StraightBond class', () => {
     expect(sb.contains(b3)).toBeFalsy();
   });
 
-  it('x1, y1, x2 and y2 getters', () => {
-    let l = svg.line(101, 138, 259, 809);
-    let b1 = Base.create(svg, 'e', 1, 5);
-    let b2 = Base.create(svg, 'k', 600, 700);
-    let sb = new StraightBond(l, b1, b2);
-    expect(sb.x1).toBeCloseTo(101);
-    expect(sb.y1).toBeCloseTo(138);
-    expect(sb.x2).toBeCloseTo(259);
-    expect(sb.y2).toBeCloseTo(809);
-  });
-
   it('padding1 property', () => {
     let b1 = Base.create(svg, 'e', 800, 900);
     let b2 = Base.create(svg, 'Q', 250, 300);
@@ -128,7 +117,7 @@ describe('StraightBond class', () => {
     sb.setPadding1(26); // use setter
     expect(sb.getPadding1()).toBeCloseTo(26); // check getter
     // check actual value
-    expect(distance(800, 900, sb.x1, sb.y1)).toBeCloseTo(26);
+    expect(distance(800, 900, sb.line.attr('x1'), sb.line.attr('y1'))).toBeCloseTo(26);
     expect(sb.getPadding2()).toBeCloseTo(16); // maintains padding2
   });
 
@@ -142,7 +131,7 @@ describe('StraightBond class', () => {
     sb.setPadding2(5); // use setter
     expect(sb.getPadding2()).toBeCloseTo(5); // check getter
     // check actual value
-    expect(distance(510, 850, sb.x2, sb.y2)).toBeCloseTo(5);
+    expect(distance(510, 850, sb.line.attr('x2'), sb.line.attr('y2'))).toBeCloseTo(5);
     expect(sb.getPadding1()).toBeCloseTo(10); // maintains padding1
   });
 
@@ -156,10 +145,13 @@ describe('StraightBond class', () => {
       b1.moveTo(185, 112);
       b2.moveTo(900, 872);
       sb.reposition();
-      expect(distance(185, 112, sb.x1, sb.y1)).toBeCloseTo(15);
-      expect(distance(900, 872, sb.x2, sb.y2)).toBeCloseTo(28);
+      expect(distance(185, 112, sb.line.attr('x1'), sb.line.attr('y1'))).toBeCloseTo(15);
+      expect(distance(900, 872, sb.line.attr('x2'), sb.line.attr('y2'))).toBeCloseTo(28);
       let baseAngle = b1.angleBetweenCenters(b2);
-      let lineAngle = angleBetween(sb.x1, sb.y1, sb.x2, sb.y2);
+      let lineAngle = angleBetween(
+        sb.line.attr('x1'), sb.line.attr('y1'),
+        sb.line.attr('x2'), sb.line.attr('y2'),
+      );
       expect(normalizeAngle(lineAngle)).toBeCloseTo(normalizeAngle(baseAngle));
       // maintans paddings
       expect(sb.getPadding1()).toBeCloseTo(15);

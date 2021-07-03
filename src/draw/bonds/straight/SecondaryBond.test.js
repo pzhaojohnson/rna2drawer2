@@ -48,7 +48,10 @@ describe('SecondaryBond class', () => {
 
     it('creates with valid line coordinates', () => {
       let baseAngle = b1.angleBetweenCenters(b2);
-      let lineAngle = angleBetween(sb.x1, sb.y1, sb.x2, sb.y2);
+      let lineAngle = angleBetween(
+        sb.line.attr('x1'), sb.line.attr('y1'),
+        sb.line.attr('x2'), sb.line.attr('y2'),
+      );
       expect(normalizeAngle(lineAngle)).toBeCloseTo(normalizeAngle(baseAngle));
     });
 

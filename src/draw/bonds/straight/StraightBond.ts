@@ -90,22 +90,6 @@ export class StraightBond implements StraightBondInterface {
     };
   }
 
-  get x1(): number {
-    return this._coordinates.x1;
-  }
-
-  get y1(): number {
-    return this._coordinates.y1;
-  }
-
-  get x2(): number {
-    return this._coordinates.x2;
-  }
-
-  get y2(): number {
-    return this._coordinates.y2;
-  }
-
   /**
    * Sets the _padding1 and _padding2 properties.
    */
