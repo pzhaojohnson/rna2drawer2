@@ -3,7 +3,7 @@ import {
   StraightBondSavableState,
 } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import Base from 'Draw/Base';
+import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
 import { areClose } from 'Draw/areClose';
 import { position } from './position';
