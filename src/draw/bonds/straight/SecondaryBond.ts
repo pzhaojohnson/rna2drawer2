@@ -1,51 +1,22 @@
 import { StraightBond } from './StraightBond';
 import {
   SecondaryBondInterface,
-  SecondaryBondMostRecentProps,
   SecondaryBondType,
+  secondaryBondTypes,
 } from './SecondaryBondInterface';
 import { StraightBondSavableState } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import Base from 'Draw/Base';
+import { Values, values, setValues } from './values';
 
 export class SecondaryBond extends StraightBond implements SecondaryBondInterface {
-  static _mostRecentProps: SecondaryBondMostRecentProps;
-
-  static mostRecentProps(): SecondaryBondMostRecentProps {
-    return { ...SecondaryBond._mostRecentProps };
+  static recommendedDefaults: {
+    'AUT': Values,
+    'GC': Values,
+    'GUT': Values,
+    'other': Values,
   }
-
-  static _applyMostRecentProps(sb: SecondaryBond) {
-    let mrps = SecondaryBond.mostRecentProps();
-    sb.padding1 = mrps.padding1;
-    sb.padding2 = mrps.padding2;
-    sb.strokeWidth = mrps.strokeWidth;
-    if (sb.isAUT()) {
-      sb.stroke = mrps.autStroke;
-    } else if (sb.isGC()) {
-      sb.stroke = mrps.gcStroke;
-    } else if (sb.isGUT()) {
-      sb.stroke = mrps.gutStroke;
-    } else {
-      sb.stroke = mrps.otherStroke;
-    }
-  }
-
-  static _copyPropsToMostRecent(sb: SecondaryBond) {
-    SecondaryBond._mostRecentProps.padding1 = sb.padding1;
-    SecondaryBond._mostRecentProps.padding2 = sb.padding2;
-    SecondaryBond._mostRecentProps.strokeWidth = sb.strokeWidth;
-    if (sb.isAUT()) {
-      SecondaryBond._mostRecentProps.autStroke = sb.stroke;
-    } else if (sb.isGC()) {
-      SecondaryBond._mostRecentProps.gcStroke = sb.stroke;
-    } else if (sb.isGUT()) {
-      SecondaryBond._mostRecentProps.gutStroke = sb.stroke;
-    } else {
-      SecondaryBond._mostRecentProps.otherStroke = sb.stroke;
-    }
-  }
-
+  
   static fromSavedState(
     savedState: StraightBondSavableState,
     svg: SVG.Svg,
@@ -58,7 +29,22 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     let b1 = getBaseById(savedState.baseId1) as Base;
     let b2 = getBaseById(savedState.baseId2) as Base;
     let sb = new SecondaryBond(line as SVG.Line, b1, b2);
-    SecondaryBond._copyPropsToMostRecent(sb);
+    let sbt = sb.type;
+    let sbvs = values(sb);
+    secondaryBondTypes.forEach(t => {
+      if (t == sbt) {
+        SecondaryBond.recommendedDefaults[t] = sbvs;
+      } else {
+        let vs = SecondaryBond.recommendedDefaults[t];
+        SecondaryBond.recommendedDefaults[t] = {
+          ...sbvs,
+          line: {
+            ...sbvs.line,
+            stroke: vs.line.stroke,
+          },
+        };
+      }
+    });
     return sb;
   }
 
@@ -68,7 +54,7 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     line.id();
     line.attr({ 'opacity': StraightBond._opacity(b1, b2, 8, 8) });
     let sb = new SecondaryBond(line, b1, b2);
-    SecondaryBond._applyMostRecentProps(sb);
+    setValues(sb, SecondaryBond.recommendedDefaults[sb.type]);
     return sb;
   }
 
@@ -129,7 +115,7 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
 
   set padding1(p: number) {
     super.setPadding1(p);
-    SecondaryBond._mostRecentProps.padding1 = p;
+    Object.values(SecondaryBond.recommendedDefaults).forEach(vs => vs.basePadding1 = p);
   }
 
   get padding2(): number {
@@ -138,7 +124,7 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
 
   set padding2(p: number) {
     super.setPadding2(p);
-    SecondaryBond._mostRecentProps.padding2 = p;
+    Object.values(SecondaryBond.recommendedDefaults).forEach(vs => vs.basePadding2 = p);
   }
 
   get stroke(): string {
@@ -147,15 +133,7 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
 
   set stroke(s: string) {
     super.setStroke(s);
-    if (this.isAUT()) {
-      SecondaryBond._mostRecentProps.autStroke = s;
-    } else if (this.isGC()) {
-      SecondaryBond._mostRecentProps.gcStroke = s;
-    } else if (this.isGUT()) {
-      SecondaryBond._mostRecentProps.gutStroke = s;
-    } else {
-      SecondaryBond._mostRecentProps.otherStroke = s;
-    }
+    SecondaryBond.recommendedDefaults[this.type].line['stroke'] = s;
   }
 
   get strokeWidth(): number {
@@ -164,16 +142,41 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
 
   set strokeWidth(sw: number) {
     super.setStrokeWidth(sw);
-    SecondaryBond._mostRecentProps.strokeWidth = sw;
+    Object.values(SecondaryBond.recommendedDefaults).forEach(vs => vs.line['stroke-width'] = sw);
   }
 }
 
-SecondaryBond._mostRecentProps = {
-  padding1: 6,
-  padding2: 6,
-  autStroke: '#000000',
-  gcStroke: '#000000',
-  gutStroke: '#000000',
-  otherStroke: '#000000',
-  strokeWidth: 2,
+SecondaryBond.recommendedDefaults = {
+  'AUT': {
+    line: {
+      'stroke': '#000000',
+      'stroke-width': 2,
+    },
+    basePadding1: 6,
+    basePadding2: 6,
+  },
+  'GC': {
+    line: {
+      'stroke': '#000000',
+      'stroke-width': 2,
+    },
+    basePadding1: 6,
+    basePadding2: 6,
+  },
+  'GUT': {
+    line: {
+      'stroke': '#000000',
+      'stroke-width': 2,
+    },
+    basePadding1: 6,
+    basePadding2: 6,
+  },
+  'other': {
+    line: {
+      'stroke': '#000000',
+      'stroke-width': 2,
+    },
+    basePadding1: 6,
+    basePadding2: 6,
+  },
 };
