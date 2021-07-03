@@ -3,7 +3,7 @@ import { BaseInterface as Base } from 'Draw/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
-import { findTextByUniqueId, findLineByUniqueId } from 'Draw/saved';
+import { findTextByUniqueId, findLineByUniqueId } from 'Draw/saved/svg';
 import { BaseNumbering } from './BaseNumbering';
 import { values } from './values';
 

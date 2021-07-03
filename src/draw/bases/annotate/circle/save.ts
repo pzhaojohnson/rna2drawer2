@@ -2,7 +2,7 @@ import { CircleBaseAnnotationInterface } from './CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { findCircleByUniqueId } from 'Draw/saved';
+import { findCircleByUniqueId } from 'Draw/saved/svg';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 
 export type SavableState = {

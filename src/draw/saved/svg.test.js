@@ -5,7 +5,7 @@ import {
   findCircleByUniqueId,
   findRectByUniqueId,
   findPathByUniqueId,
-} from './saved';
+} from './svg';
 import { NodeSVG } from 'Draw/NodeSVG';
 
 function areSameElement(ele1, ele2) {
