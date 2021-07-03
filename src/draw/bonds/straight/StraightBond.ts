@@ -19,8 +19,8 @@ export class StraightBond implements StraightBondInterface {
   readonly base1: Base;
   readonly base2: Base;
 
-  _padding1!: number;
-  _padding2!: number;
+  _basePadding1: number;
+  _basePadding2: number;
 
   static _lineCoordinates(b1: Base, b2: Base, padding1: number, padding2: number): LineCoordinates {
     let angle = b1.angleBetweenCenters(b2);
@@ -46,7 +46,9 @@ export class StraightBond implements StraightBondInterface {
     this.line = line;
     this._validateLine();
 
-    this._storePaddings();
+    this._basePadding1 = 0;
+    this._basePadding2 = 0;
+    this._storeBasePaddings();
   }
 
   /**
@@ -69,17 +71,14 @@ export class StraightBond implements StraightBondInterface {
     return this.base1.id == b.id || this.base2.id == b.id;
   }
 
-  /**
-   * Sets the _padding1 and _padding2 properties.
-   */
-  _storePaddings() {
-    this._padding1 = distance(
+  _storeBasePaddings() {
+    this._basePadding1 = distance(
       this.base1.xCenter,
       this.base1.yCenter,
       this.line.attr('x1'),
       this.line.attr('y1'),
     );
-    this._padding2 = distance(
+    this._basePadding2 = distance(
       this.base2.xCenter,
       this.base2.yCenter,
       this.line.attr('x2'),
@@ -88,7 +87,7 @@ export class StraightBond implements StraightBondInterface {
   }
 
   get basePadding1(): number {
-    return this._padding1;
+    return this._basePadding1;
   }
 
   set basePadding1(bp1) {
@@ -96,7 +95,7 @@ export class StraightBond implements StraightBondInterface {
   }
 
   get basePadding2(): number {
-    return this._padding2;
+    return this._basePadding2;
   }
 
   set basePadding2(bp2) {
@@ -118,8 +117,8 @@ export class StraightBond implements StraightBondInterface {
       'x2': cs.x2,
       'y2': cs.y2,
     });
-    this._padding1 = padding1;
-    this._padding2 = padding2;
+    this._basePadding1 = padding1;
+    this._basePadding2 = padding2;
     let opacity = StraightBond._opacity(this.base1, this.base2, padding1, padding2);
     this._setOpacity(opacity);
   }
