@@ -60,15 +60,6 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     super.setStroke(s);
     PrimaryBond.recommendedDefaults.line['stroke'] = s;
   }
-
-  get strokeWidth(): number {
-    return super.getStrokeWidth();
-  }
-
-  set strokeWidth(sw: number) {
-    super.setStrokeWidth(sw);
-    PrimaryBond.recommendedDefaults.line['stroke-width'] = sw;
-  }
 }
 
 PrimaryBond.recommendedDefaults = {

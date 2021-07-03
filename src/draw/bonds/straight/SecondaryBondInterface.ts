@@ -11,5 +11,4 @@ export interface SecondaryBondInterface extends StraightBondInterface {
   padding1: number;
   padding2: number;
   stroke: string;
-  strokeWidth: number;
 }

@@ -208,12 +208,4 @@ describe('SecondaryBond class', () => {
       expect(sb.stroke).toBe('#132435');
     });
   });
-
-  it('strokeWidth getter and setter', () => {
-    let b1 = Base.create(svg, 'b', 1, 5);
-    let b2 = Base.create(svg, 'q', -100, 200);
-    let sb = SecondaryBond.create(svg, b1, b2);
-    sb.strokeWidth = 1.245; // use setter
-    expect(sb.strokeWidth).toBe(1.245); // check getter
-  });
 });

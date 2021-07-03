@@ -135,15 +135,6 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     super.setStroke(s);
     SecondaryBond.recommendedDefaults[this.type].line['stroke'] = s;
   }
-
-  get strokeWidth(): number {
-    return super.getStrokeWidth();
-  }
-
-  set strokeWidth(sw: number) {
-    super.setStrokeWidth(sw);
-    Object.values(SecondaryBond.recommendedDefaults).forEach(vs => vs.line['stroke-width'] = sw);
-  }
 }
 
 SecondaryBond.recommendedDefaults = {

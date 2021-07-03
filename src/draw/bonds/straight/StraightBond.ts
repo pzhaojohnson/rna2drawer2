@@ -172,14 +172,6 @@ export class StraightBond implements StraightBondInterface {
     this.line.attr({ 'stroke': s });
   }
 
-  getStrokeWidth(): number {
-    return this.line.attr('stroke-width');
-  }
-
-  setStrokeWidth(sw: number) {
-    this.line.attr({ 'stroke-width': sw });
-  }
-
   get opacity(): number {
     return this.line.attr('opacity');
   }

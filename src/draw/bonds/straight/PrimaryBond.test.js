@@ -86,9 +86,5 @@ describe('PrimaryBond class', () => {
     expect(pb.stroke).toBe('#4455bc'); // check getter
     // updates default value
     expect(PrimaryBond.recommendedDefaults.line['stroke']).toBe('#4455bc');
-    pb.strokeWidth = 4.011; // use setter
-    expect(pb.strokeWidth).toBe(4.011); // check getter
-    // updates default value
-    expect(PrimaryBond.recommendedDefaults.line['stroke-width']).toBe(4.011);
   });
 });

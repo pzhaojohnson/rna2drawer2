@@ -190,9 +190,6 @@ describe('StraightBond class', () => {
     sb.setStroke('#44bb99'); // use setter
     expect(sb.getStroke()).toBe('#44bb99'); // check getter
     expect(sb.line.attr('stroke')).toBe('#44bb99'); // check actual value
-    sb.setStrokeWidth(5.43); // use setter
-    expect(sb.getStrokeWidth()).toBe(5.43); // check getter
-    expect(sb.line.attr('stroke-width')).toBe(5.43); // check actual value
   });
 
   it('opacity getter and private setter', () => {
