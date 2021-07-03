@@ -61,10 +61,10 @@ describe('SecondaryBond class', () => {
       let b3 = Base.create(svg, 'B', 500, 1500);
       // zero distance between bases
       let sb1 = SecondaryBond.create(svg, b1, b2);
-      expect(sb1.opacity).toBe(0);
+      expect(sb1.line.attr('opacity')).toBe(0);
       // far away bases
       let sb2 = SecondaryBond.create(svg, b1, b3);
-      expect(sb2.opacity).toBe(1);
+      expect(sb2.line.attr('opacity')).toBe(1);
     });
   });
 

@@ -17,7 +17,6 @@ export interface StraightBondInterface {
   basePadding1: number;
   basePadding2: number;
   reposition(): void;
-  readonly opacity: number;
   bringToFront(): void;
   sendToBack(): void;
   remove(): void;

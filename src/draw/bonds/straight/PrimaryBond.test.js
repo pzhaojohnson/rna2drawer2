@@ -60,10 +60,10 @@ describe('PrimaryBond class', () => {
       let b3 = Base.create(svg, 'f', 1000, 2000);
       // zero distance between bases
       let pb1 = PrimaryBond.create(svg, b1, b2);
-      expect(pb1.opacity).toBe(0);
+      expect(pb1.line.attr('opacity')).toBe(0);
       // far away bases
       let pb2 = PrimaryBond.create(svg, b1, b3);
-      expect(pb2.opacity).toBe(1);
+      expect(pb2.line.attr('opacity')).toBe(1);
     });
   });
 });

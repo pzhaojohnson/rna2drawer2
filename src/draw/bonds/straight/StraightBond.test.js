@@ -147,24 +147,14 @@ describe('StraightBond class', () => {
       let lcs = StraightBond._lineCoordinates(b1, b2, 6, 8);
       let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
       let sb = new StraightBond(l, b1, b2);
-      expect(sb.opacity).toBe(1);
+      expect(sb.line.attr('opacity')).toBe(1);
       b2.moveTo(4, 6);
       sb.reposition();
-      expect(sb.opacity).toBe(0);
+      expect(sb.line.attr('opacity')).toBe(0);
       b1.moveTo(98, 76);
       sb.reposition();
-      expect(sb.opacity).toBe(1);
+      expect(sb.line.attr('opacity')).toBe(1);
     });
-  });
-
-  it('opacity getter and private setter', () => {
-    let l = svg.line(5, 2, 1, 6);
-    let b1 = Base.create(svg, 'b', 5, 4);
-    let b2 = Base.create(svg, 'n', 3, 5);
-    let sb = new StraightBond(l, b1, b2);
-    sb._setOpacity(0.55); // use setter
-    expect(sb.opacity).toBe(0.55); // check getter
-    expect(sb.line.attr('opacity')).toBe(0.55); // check actual value
   });
 
   it('bringToFront and sendToBack methods', () => {

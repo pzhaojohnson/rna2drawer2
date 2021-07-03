@@ -121,14 +121,6 @@ export class StraightBond implements StraightBondInterface {
     });
   }
 
-  get opacity(): number {
-    return this.line.attr('opacity');
-  }
-
-  _setOpacity(o: number) {
-    this.line.attr({ 'opacity': o });
-  }
-
   bringToFront() {
     this.line.front();
   }
