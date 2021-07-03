@@ -63,14 +63,14 @@ describe('width, height and zoom properties', () => {
     drawing.zoom = 1.78;
     drawing.setWidthAndHeight(872, 1656); // use setter
     expect(drawing.width).toBe(872); // check getter
-    expect(drawing._svg.viewbox().width).toBe(872); // check actual value
+    expect(drawing.svg.viewbox().width).toBe(872); // check actual value
     expect(drawing.height).toBe(1656); // check getter
-    expect(drawing._svg.viewbox().height).toBe(1656); // check actual value
+    expect(drawing.svg.viewbox().height).toBe(1656); // check actual value
     // maintains zoom
     expect(drawing.zoom).toBeCloseTo(1.78); // check getter
     // check actual values
-    expect(drawing._svg.attr('width')).toBeCloseTo(1.78 * 872);
-    expect(drawing._svg.attr('height')).toBeCloseTo(1.78 * 1656);
+    expect(drawing.svg.attr('width')).toBeCloseTo(1.78 * 872);
+    expect(drawing.svg.attr('height')).toBeCloseTo(1.78 * 1656);
   });
 
   it('width and height setter ignores negative values', () => {
@@ -88,8 +88,8 @@ describe('width, height and zoom properties', () => {
     drawing.zoom = 2.5; // use setter
     expect(drawing.zoom).toBeCloseTo(2.5); // check getter
     // check actual width and height
-    expect(drawing._svg.attr('width')).toBeCloseTo(625);
-    expect(drawing._svg.attr('height')).toBeCloseTo(750);
+    expect(drawing.svg.attr('width')).toBeCloseTo(625);
+    expect(drawing.svg.attr('height')).toBeCloseTo(750);
     // maintains width and height of drawing
     expect(drawing.width).toBe(250);
     expect(drawing.height).toBe(300);
@@ -194,7 +194,7 @@ describe('sequence and base attributes', () => {
     let b2 = seq2.getBaseAtPosition(5);
     expect(drawing.overallPositionOfBase(b1)).toBe(7);
     expect(drawing.overallPositionOfBase(b2)).toBe(seq1.length + 5);
-    let b3 = Base.create(drawing._svg, 'a', 1, 2); // not in drawing
+    let b3 = Base.create(drawing.svg, 'a', 1, 2); // not in drawing
     expect(drawing.overallPositionOfBase(b3)).toBe(0);
   });
 
@@ -227,7 +227,7 @@ describe('sequence and base attributes', () => {
   it('sequenceOfBase method', () => {
     let b2 = seq2.getBaseAtPosition(3);
     expect(drawing.sequenceOfBase(b2)).toBe(seq2);
-    let b3 = Base.create(drawing._svg, 'q', 4, 5); // not in drawing
+    let b3 = Base.create(drawing.svg, 'q', 4, 5); // not in drawing
     expect(drawing.sequenceOfBase(b3)).toBeFalsy();
   });
 
@@ -357,7 +357,7 @@ describe('secondary bonds attributes', () => {
   it('forEachSecondaryBond method', () => {
     let i = 0;
     drawing.forEachSecondaryBond(sb => {
-      expect(sb).toBe(drawing._secondaryBonds[i]);
+      expect(sb).toBe(drawing.secondaryBonds[i]);
       i++;
     });
     expect(i).toBe(drawing.numSecondaryBonds);
@@ -504,7 +504,7 @@ it('adjusting base numbering', () => {
 it('mousedown event', () => {
   let f = jest.fn();
   drawing.onMousedown(f);
-  drawing._svg.fire('mousedown');
+  drawing.svg.fire('mousedown');
   expect(f.mock.calls.length).toBe(1);
 });
 
@@ -512,7 +512,7 @@ it('dblclick event', () => {
   let f = jest.fn();
   drawing.onDblclick(f);
   expect(f).not.toHaveBeenCalled();
-  drawing._svg.fire('dblclick');
+  drawing.svg.fire('dblclick');
   expect(f).toHaveBeenCalled();
 });
 
@@ -529,7 +529,7 @@ it('clear method removes elements and references', () => {
   let sb2 = drawing.addSecondaryBond(seq1.getBaseAtPosition(1), seq2.getBaseAtPosition(2));
   let tb1 = drawing.addTertiaryBond(seq2.getBaseAtPosition(3), seq1.getBaseAtPosition(5));
   let tb2 = drawing.addTertiaryBond(seq1.getBaseAtPosition(8), seq2.getBaseAtPosition(5));
-  let spy = jest.spyOn(drawing._svg, 'clear');
+  let spy = jest.spyOn(drawing.svg, 'clear');
   drawing.clear();
   expect(spy).toHaveBeenCalled(); // removed elements
   // removed references
@@ -540,7 +540,7 @@ it('clear method removes elements and references', () => {
 });
 
 it('svgString getter', () => {
-  expect(drawing.svgString).toBe(drawing._svg.svg());
+  expect(drawing.svgString).toBe(drawing.svg.svg());
 });
 
 describe('savableState method', () => {
@@ -560,7 +560,7 @@ describe('savableState method', () => {
   let tb1 = drawing.addTertiaryBond(b6, b1);
   let tb2 = drawing.addTertiaryBond(b2, b6);
   let savableState = drawing.savableState();
-  let svgString = drawing._svg.svg();
+  let svgString = drawing.svg.svg();
 
   it('includes class name and svg', () => {
     expect(savableState.className).toBe('Drawing');

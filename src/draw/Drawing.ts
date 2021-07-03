@@ -24,11 +24,11 @@ export interface BasesByIds {
 
 class Drawing implements DrawingInterface {
   _div!: HTMLElement;
-  _svg!: Svg.Svg;
+  svg!: Svg.Svg;
 
   _sequences: Sequence[];
-  _primaryBonds: PrimaryBond[];
-  _secondaryBonds: SecondaryBond[];
+  primaryBonds: PrimaryBond[];
+  secondaryBonds: SecondaryBond[];
   _tertiaryBonds: TertiaryBond[];
 
   _onAddSequence?: (seq: Sequence) => void;
@@ -36,8 +36,8 @@ class Drawing implements DrawingInterface {
 
   constructor() {
     this._sequences = [];
-    this._primaryBonds = [];
-    this._secondaryBonds = [];
+    this.primaryBonds = [];
+    this.secondaryBonds = [];
     this._tertiaryBonds = [];
   }
 
@@ -45,8 +45,8 @@ class Drawing implements DrawingInterface {
     this._div = document.createElement('div');
     this._div.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
     container.appendChild(this._div);
-    this._svg = SVG().addTo(this._div);
-    this._svg.attr({
+    this.svg = SVG().addTo(this._div);
+    this.svg.attr({
       'width': 2 * window.screen.width,
       'height': 2 * window.screen.height,
     });
@@ -92,11 +92,11 @@ class Drawing implements DrawingInterface {
   }
 
   get width(): number {
-    return this._svg.viewbox().width;
+    return this.svg.viewbox().width;
   }
 
   get height(): number {
-    return this._svg.viewbox().height;
+    return this.svg.viewbox().height;
   }
 
   setWidthAndHeight(width: number, height: number) {
@@ -104,32 +104,32 @@ class Drawing implements DrawingInterface {
       return;
     }
     let z = this.zoom;
-    this._svg.viewbox(0, 0, width, height);
-    this._svg.attr({
+    this.svg.viewbox(0, 0, width, height);
+    this.svg.attr({
       'width': z * width,
       'height': z * height,
     });
   }
 
   get zoom(): number {
-    let vb = this._svg.viewbox();
+    let vb = this.svg.viewbox();
     if (vb.width == 0) {
       return 1;
     }
-    return this._svg.attr('width') / vb.width;
+    return this.svg.attr('width') / vb.width;
   }
 
   set zoom(z: number) {
     if (z <= 0) {
       return;
     }
-    let vb = this._svg.viewbox();
+    let vb = this.svg.viewbox();
     let w = z * vb.width;
     let h = z * vb.height;
     let cv = this.centerOfView();
     cv.x *= z / this.zoom;
     cv.y *= z / this.zoom;
-    this._svg.attr({ 'width': w, 'height': h });
+    this.svg.attr({ 'width': w, 'height': h });
     this.centerViewOn(cv);
   }
 
@@ -178,7 +178,7 @@ class Drawing implements DrawingInterface {
     if (this.sequenceIdIsTaken(id)) {
       return null;
     }
-    let seq = Sequence.createOutOfView(this._svg, id, characters);
+    let seq = Sequence.createOutOfView(this.svg, id, characters);
     this._sequences.push(seq);
     this.fireAddSequence(seq);
     return seq;
@@ -268,27 +268,27 @@ class Drawing implements DrawingInterface {
     let bs = [] as Base[];
     let x = 0;
     characters.split('').forEach(c => {
-      bs.push(Base.create(this._svg, c, x, 0));
+      bs.push(Base.create(this.svg, c, x, 0));
       x += 10;
     });
     return bs;
   }
 
   get numPrimaryBonds(): number {
-    return this._primaryBonds.length;
+    return this.primaryBonds.length;
   }
 
   getPrimaryBondById(id: string): PrimaryBond | undefined {
-    return this._primaryBonds.find(pb => pb.id === id);
+    return this.primaryBonds.find(pb => pb.id === id);
   }
 
   forEachPrimaryBond(f: (pb: PrimaryBond) => void) {
-    this._primaryBonds.forEach(pb => f(pb));
+    this.primaryBonds.forEach(pb => f(pb));
   }
 
   addPrimaryBond(b1: Base, b2: Base): PrimaryBond {
-    let sb = PrimaryBond.create(this._svg, b1, b2);
-    this._primaryBonds.push(sb);
+    let sb = PrimaryBond.create(this.svg, b1, b2);
+    this.primaryBonds.push(sb);
     return sb;
   }
 
@@ -296,25 +296,25 @@ class Drawing implements DrawingInterface {
     let pb = this.getPrimaryBondById(id);
     if (pb) {
       pb.remove();
-      this._primaryBonds = this._primaryBonds.filter(pb => pb.id != id);
+      this.primaryBonds = this.primaryBonds.filter(pb => pb.id != id);
     }
   }
 
   get numSecondaryBonds(): number {
-    return this._secondaryBonds.length;
+    return this.secondaryBonds.length;
   }
 
   getSecondaryBondById(id: string): (SecondaryBond | undefined) {
-    return this._secondaryBonds.find(sb => sb.id === id);
+    return this.secondaryBonds.find(sb => sb.id === id);
   }
 
   forEachSecondaryBond(f: (sb: SecondaryBond) => void) {
-    this._secondaryBonds.forEach(sb => f(sb));
+    this.secondaryBonds.forEach(sb => f(sb));
   }
 
   addSecondaryBond(b1: Base, b2: Base): SecondaryBond {
-    let sb = SecondaryBond.create(this._svg, b1, b2);
-    this._secondaryBonds.push(sb);
+    let sb = SecondaryBond.create(this.svg, b1, b2);
+    this.secondaryBonds.push(sb);
     return sb;
   }
 
@@ -322,7 +322,7 @@ class Drawing implements DrawingInterface {
     let sb = this.getSecondaryBondById(id);
     if (sb) {
       sb.remove();
-      this._secondaryBonds = this._secondaryBonds.filter(sb => sb.id !== id);
+      this.secondaryBonds = this.secondaryBonds.filter(sb => sb.id !== id);
     }
   }
 
@@ -349,7 +349,7 @@ class Drawing implements DrawingInterface {
   }
 
   addTertiaryBond(b1: Base, b2: Base): TertiaryBond {
-    let tb = TertiaryBond.create(this._svg, b1, b2);
+    let tb = TertiaryBond.create(this.svg, b1, b2);
     this._tertiaryBonds.push(tb);
     this.fireAddTertiaryBond(tb);
     return tb;
@@ -388,23 +388,23 @@ class Drawing implements DrawingInterface {
   }
 
   onMousedown(f: () => void) {
-    this._svg.mousedown(f);
+    this.svg.mousedown(f);
   }
 
   onDblclick(f: () => void) {
-    this._svg.dblclick(f);
+    this.svg.dblclick(f);
   }
 
   clear() {
     this._sequences = [];
-    this._primaryBonds = [];
-    this._secondaryBonds = [];
+    this.primaryBonds = [];
+    this.secondaryBonds = [];
     this._tertiaryBonds = [];
-    this._svg.clear();
+    this.svg.clear();
   }
 
   get svgString(): string {
-    return this._svg.svg();
+    return this.svg.svg();
   }
 
   savableState(): DrawingSavableState {
@@ -418,7 +418,7 @@ class Drawing implements DrawingInterface {
     this.forEachTertiaryBond(tb => tertiaryBonds.push(tb.savableState()));
     return {
       className: 'Drawing',
-      svg: this._svg.svg(),
+      svg: this.svg.svg(),
       sequences: sequences,
       primaryBonds: primaryBonds,
       secondaryBonds: secondaryBonds,
@@ -466,21 +466,21 @@ class Drawing implements DrawingInterface {
   }
 
   _applySavedSvg(savedState: DrawingSavableState): (void | never) {
-    this._svg.clear();
-    this._svg.svg(savedState.svg);
-    let nested = this._svg.first() as Svg.Svg;
+    this.svg.clear();
+    this.svg.svg(savedState.svg);
+    let nested = this.svg.first() as Svg.Svg;
     let vb = nested.viewbox();
     let w = vb.width;
     let h = vb.height;
     let content = nested.svg(false);
-    this._svg.clear();
-    this._svg.svg(content);
+    this.svg.clear();
+    this.svg.svg(content);
     this.setWidthAndHeight(w, h);
   }
 
   _appendSavedSequences(savedState: DrawingSavableState): (void | never) {
     savedState.sequences.forEach(saved => {
-      let seq = Sequence.fromSavedState(saved, this._svg);
+      let seq = Sequence.fromSavedState(saved, this.svg);
       this._sequences.push(seq);
       this.fireAddSequence(seq);
     });
@@ -490,10 +490,10 @@ class Drawing implements DrawingInterface {
     savedState.primaryBonds.forEach(saved => {
       let pb = PrimaryBond.fromSavedState(
         saved,
-        this._svg,
+        this.svg,
         (id: string) => basesByIds[id],
       );
-      this._primaryBonds.push(pb);
+      this.primaryBonds.push(pb);
     });
   }
 
@@ -501,10 +501,10 @@ class Drawing implements DrawingInterface {
     savedState.secondaryBonds.forEach(saved => {
       let sb = SecondaryBond.fromSavedState(
         saved,
-        this._svg,
+        this.svg,
         (id: string) => basesByIds[id],
       );
-      this._secondaryBonds.push(sb);
+      this.secondaryBonds.push(sb);
     });
   }
 
@@ -512,7 +512,7 @@ class Drawing implements DrawingInterface {
     savedState.tertiaryBonds.forEach(saved => {
       let tb = TertiaryBond.fromSavedState(
         saved,
-        this._svg,
+        this.svg,
         (id: string) => basesByIds[id],
       );
       this._tertiaryBonds.push(tb);

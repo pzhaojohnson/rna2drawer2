@@ -24,6 +24,7 @@ export interface DrawingSavableState {
 }
 
 export interface DrawingInterface {
+  readonly svg: Svg.Svg;
   addTo(container: Node, SVG: () => Svg.Svg): void;
   centerView: () => void;
   scrollLeft: number;
@@ -55,12 +56,14 @@ export interface DrawingInterface {
   sequenceOfBase(b: Base): Sequence | undefined;
   createBases(characters: string): Base[];
 
+  readonly primaryBonds: PrimaryBond[];
   numPrimaryBonds: number;
   getPrimaryBondById(id: string): PrimaryBond | undefined;
   forEachPrimaryBond(f: (pb: PrimaryBond) => void): void;
   addPrimaryBond(b1: Base, b2: Base): PrimaryBond;
   removePrimaryBondById(id: string): void;
 
+  readonly secondaryBonds: SecondaryBond[];
   numSecondaryBonds: number;
   getSecondaryBondById(id: string): SecondaryBond | undefined;
   forEachSecondaryBond(f: (sb: SecondaryBond) => void): void;
