@@ -33,24 +33,6 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     setValues(pb, PrimaryBond.recommendedDefaults);
     return pb;
   }
-
-  get padding1(): number {
-    return super.getPadding1();
-  }
-
-  set padding1(p: number) {
-    super.setPadding1(p);
-    PrimaryBond.recommendedDefaults.basePadding1 = p;
-  }
-
-  get padding2(): number {
-    return super.getPadding2();
-  }
-
-  set padding2(p: number) {
-    super.setPadding2(p);
-    PrimaryBond.recommendedDefaults.basePadding2 = p;
-  }
 }
 
 PrimaryBond.recommendedDefaults = {

@@ -75,24 +75,6 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
       return 'other';
     }
   }
-
-  get padding1(): number {
-    return super.getPadding1();
-  }
-
-  set padding1(p: number) {
-    super.setPadding1(p);
-    Object.values(SecondaryBond.recommendedDefaults).forEach(vs => vs.basePadding1 = p);
-  }
-
-  get padding2(): number {
-    return super.getPadding2();
-  }
-
-  set padding2(p: number) {
-    super.setPadding2(p);
-    Object.values(SecondaryBond.recommendedDefaults).forEach(vs => vs.basePadding2 = p);
-  }
 }
 
 SecondaryBond.recommendedDefaults = {

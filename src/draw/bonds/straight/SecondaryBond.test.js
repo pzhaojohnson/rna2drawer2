@@ -106,14 +106,4 @@ describe('SecondaryBond class', () => {
       });
     });
   });
-
-  it('padding1 and padding2 getters and setters', () => {
-    let b1 = Base.create(svg, 'e', 1, 5);
-    let b2 = Base.create(svg, 'w', 200, 300);
-    let sb = SecondaryBond.create(svg, b1, b2);
-    sb.padding1 = 12.55; // use setter
-    expect(sb.padding1).toBeCloseTo(12.55); // check getter
-    sb.padding2 = 32.9; // use setter
-    expect(sb.padding2).toBeCloseTo(32.9); // check getter
-  });
 });

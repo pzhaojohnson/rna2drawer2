@@ -44,8 +44,8 @@ describe('values function', () => {
       'stroke': '#665a1f',
       'stroke-width': 8.57,
     });
-    bond.setPadding1(18.3);
-    bond.setPadding2(9.7);
+    bond.basePadding1 = 18.3;
+    bond.basePadding2 = 9.7;
     let vs = values(bond);
     roundBasePaddings(vs);
     expect(vs).toEqual({

@@ -1,4 +1,5 @@
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
+import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
+import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import * as React from 'react';
 import { NonnegativeNumberField } from '../../fields/text/NonnegativeNumberField';
 import { FieldProps } from './FieldProps';
@@ -7,10 +8,10 @@ import { round } from '../../../math/round';
 
 const PRECISION = 2;
 
-function getFirstPadding(sbs: SecondaryBond[]): number | undefined {
+function getFirstPadding(sbs: SecondaryBondInterface[]): number | undefined {
   let first = atIndex(sbs, 0);
   if (first) {
-    return round(first.padding1, PRECISION);
+    return round(first.basePadding1, PRECISION);
   }
 }
 
@@ -29,10 +30,14 @@ export function BasePaddingField(props: FieldProps): React.ReactElement | null {
             if (p != getFirstPadding(sbs)) {
               props.pushUndo();
               sbs.forEach(sb => {
-                sb.padding1 = p;
-                sb.padding2 = p;
+                sb.basePadding1 = p;
+                sb.basePadding2 = p;
               });
               props.changed();
+              Object.values(SecondaryBond.recommendedDefaults).forEach(vs => {
+                vs.basePadding1 = p;
+                vs.basePadding2 = p;
+              });
             }
           }
         }}

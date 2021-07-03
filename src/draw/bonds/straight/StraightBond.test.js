@@ -90,32 +90,32 @@ describe('StraightBond class', () => {
     expect(sb.contains(b3)).toBeFalsy();
   });
 
-  it('padding1 property', () => {
+  it('basePadding1 property', () => {
     let b1 = Base.create(svg, 'e', 800, 900);
     let b2 = Base.create(svg, 'Q', 250, 300);
     let lcs = StraightBond._lineCoordinates(b1, b2, 12, 16);
     let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
     let sb = new StraightBond(l, b1, b2);
-    expect(sb.getPadding1()).toBeCloseTo(12); // check getter
-    sb.setPadding1(26); // use setter
-    expect(sb.getPadding1()).toBeCloseTo(26); // check getter
+    expect(sb.basePadding1).toBeCloseTo(12); // check getter
+    sb.basePadding1 = 26; // use setter
+    expect(sb.basePadding1).toBeCloseTo(26); // check getter
     // check actual value
     expect(distance(800, 900, sb.line.attr('x1'), sb.line.attr('y1'))).toBeCloseTo(26);
-    expect(sb.getPadding2()).toBeCloseTo(16); // maintains padding2
+    expect(sb.basePadding2).toBeCloseTo(16); // maintains base padding 2
   });
 
-  it('padding2 property', () => {
+  it('basePadding2 property', () => {
     let b1 = Base.create(svg, 'W', 1012, 112);
     let b2 = Base.create(svg, 'g', 510, 850);
     let lcs = StraightBond._lineCoordinates(b1, b2, 10, 20);
     let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
     let sb = new StraightBond(l, b1, b2);
-    expect(sb.getPadding2()).toBeCloseTo(20); // check getter
-    sb.setPadding2(5); // use setter
-    expect(sb.getPadding2()).toBeCloseTo(5); // check getter
+    expect(sb.basePadding2).toBeCloseTo(20); // check getter
+    sb.basePadding2 = 5; // use setter
+    expect(sb.basePadding2).toBeCloseTo(5); // check getter
     // check actual value
     expect(distance(510, 850, sb.line.attr('x2'), sb.line.attr('y2'))).toBeCloseTo(5);
-    expect(sb.getPadding1()).toBeCloseTo(10); // maintains padding1
+    expect(sb.basePadding1).toBeCloseTo(10); // maintains base padding 1
   });
 
   describe('reposition method', () => {
@@ -137,8 +137,8 @@ describe('StraightBond class', () => {
       );
       expect(normalizeAngle(lineAngle)).toBeCloseTo(normalizeAngle(baseAngle));
       // maintans paddings
-      expect(sb.getPadding1()).toBeCloseTo(15);
-      expect(sb.getPadding2()).toBeCloseTo(28);
+      expect(sb.basePadding1).toBeCloseTo(15);
+      expect(sb.basePadding2).toBeCloseTo(28);
     });
 
     it('updates opacity', () => {

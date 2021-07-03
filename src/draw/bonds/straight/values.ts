@@ -23,8 +23,8 @@ export function values(sb: StraightBond): Values {
   if (typeof lineAttrs['stroke-width'] == 'number') {
     vs.line['stroke-width'] = lineAttrs['stroke-width'];
   }
-  let basePadding1 = sb.getPadding1();
-  let basePadding2 = sb.getPadding2();
+  let basePadding1 = sb.basePadding1;
+  let basePadding2 = sb.basePadding2;
   if (typeof basePadding1 == 'number') {
     vs.basePadding1 = basePadding1;
   }
@@ -44,9 +44,9 @@ export function setValues(sb: StraightBond, vs: Values) {
     }
   }
   if (typeof vs.basePadding1 == 'number') {
-    sb.setPadding1(vs.basePadding1);
+    sb.basePadding1 = vs.basePadding1;
   }
   if (typeof vs.basePadding2 == 'number') {
-    sb.setPadding2(vs.basePadding2);
+    sb.basePadding2 = vs.basePadding2;
   }
 }

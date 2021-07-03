@@ -66,18 +66,4 @@ describe('PrimaryBond class', () => {
       expect(pb2.opacity).toBe(1);
     });
   });
-
-  it('padding1 and padding2 getters and setters', () => {
-    let b1 = Base.create(svg, 'E', 1, 5);
-    let b2 = Base.create(svg, 'h', 55, 44);
-    let pb = PrimaryBond.create(svg, b1, b2);
-    pb.padding1 = 12.3; // use setter
-    expect(pb.padding1).toBeCloseTo(12.3); // check getter
-    // updates default value
-    expect(PrimaryBond.recommendedDefaults.basePadding1).toBeCloseTo(12.3);
-    pb.padding2 = 14.03; // use setter
-    expect(pb.padding2).toBeCloseTo(14.03); // check getter
-    // updates default value
-    expect(PrimaryBond.recommendedDefaults.basePadding2).toBeCloseTo(14.03);
-  });
 });

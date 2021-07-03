@@ -87,27 +87,27 @@ export class StraightBond implements StraightBondInterface {
     );
   }
 
-  getPadding1(): number {
+  get basePadding1(): number {
     return this._padding1;
   }
 
-  setPadding1(p: number) {
-    this._reposition(p, this.getPadding2());
+  set basePadding1(bp1) {
+    this._reposition(bp1, this.basePadding2);
   }
 
-  getPadding2(): number {
+  get basePadding2(): number {
     return this._padding2;
   }
 
-  setPadding2(p: number) {
-    this._reposition(this.getPadding1(), p);
+  set basePadding2(bp2) {
+    this._reposition(this.basePadding1, bp2);
   }
 
   /**
    * Repositions this straight bond based on the current positions of its bases.
    */
   reposition() {
-    this._reposition(this.getPadding1(), this.getPadding2());
+    this._reposition(this.basePadding1, this.basePadding2);
   }
 
   _reposition(padding1: number, padding2: number) {

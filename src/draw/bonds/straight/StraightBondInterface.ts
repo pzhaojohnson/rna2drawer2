@@ -14,10 +14,8 @@ export interface StraightBondInterface {
   readonly base2: Base;
   id: string;
   contains(b: Base): boolean;
-  getPadding1(): number;
-  setPadding1(p: number): void;
-  getPadding2(): number;
-  setPadding2(p: number): void;
+  basePadding1: number;
+  basePadding2: number;
   reposition(): void;
   readonly opacity: number;
   bringToFront(): void;
