@@ -3,6 +3,8 @@ import * as SVG from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
 import { areClose } from 'Draw/areClose';
+import { assignUuid } from 'Draw/svg/id';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import { position } from './position';
 
 interface LineCoordinates {
@@ -38,27 +40,24 @@ export class StraightBond implements StraightBondInterface {
   }
 
   constructor(line: SVG.Line, b1: Base, b2: Base) {
+    if (line.type != 'line') {
+      throw new Error('The passed element is not a line.');
+    }
+
+    this.line = line;
     this.base1 = b1;
     this.base2 = b2;
 
-    this.line = line;
-    this._validateLine();
+    // use the attr method to check if the ID
+    // is initialized since the id method itself
+    // will initialize the ID (to a non-UUID)
+    if (!this.line.attr('id')) {
+      assignUuid(new LineWrapper(this.line));
+    }
 
     this._basePadding1 = 0;
     this._basePadding2 = 0;
     this._storeBasePaddings();
-  }
-
-  /**
-   * Throws if the line element is not actually a line element.
-   *
-   * Initializes the ID of the line if it is not already initialized.
-   */
-  _validateLine(): (void | never) {
-    if (this.line.type !== 'line') {
-      throw new Error('The given element is not a line element.');
-    }
-    this.line.id();
   }
 
   get id(): string {
@@ -127,8 +126,7 @@ export class StraightBond implements StraightBondInterface {
   }
 
   refreshIds() {
-    this.line.id('');
-    this.line.id();
+    assignUuid(new LineWrapper(this.line));
   }
 }
 
