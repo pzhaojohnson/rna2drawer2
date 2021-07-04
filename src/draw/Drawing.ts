@@ -11,6 +11,7 @@ import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
 import { removePrimaryBondById, removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { StraightBondSavableState } from 'Draw/bonds/straight/StraightBondInterface';
+import { savableState as savableStraightBondState } from 'Draw/bonds/straight/save';
 import { addSavedPrimaryBonds, addSavedSecondaryBonds } from 'Draw/bonds/straight/saved';
 import { TertiaryBond } from './QuadraticBezierBond';
 import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
@@ -408,9 +409,9 @@ class Drawing implements DrawingInterface {
     let sequences = [] as SequenceSavableState[];
     this.forEachSequence(seq => sequences.push(seq.savableState()));
     let primaryBonds = [] as StraightBondSavableState[];
-    this.forEachPrimaryBond(pb => primaryBonds.push(pb.savableState()));
+    this.forEachPrimaryBond(pb => primaryBonds.push(savableStraightBondState(pb)));
     let secondaryBonds = [] as StraightBondSavableState[];
-    this.forEachSecondaryBond(sb => secondaryBonds.push(sb.savableState()));
+    this.forEachSecondaryBond(sb => secondaryBonds.push(savableStraightBondState(sb)));
     let tertiaryBonds = [] as QuadraticBezierBondSavableState[];
     this.forEachTertiaryBond(tb => tertiaryBonds.push(tb.savableState()));
     return {

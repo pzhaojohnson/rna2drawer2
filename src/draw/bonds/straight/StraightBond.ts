@@ -129,15 +129,6 @@ export class StraightBond implements StraightBondInterface {
     this.line.back();
   }
 
-  savableState(): StraightBondSavableState {
-    return {
-      className: 'StraightBond',
-      lineId: this.line.id(),
-      baseId1: this.base1.id,
-      baseId2: this.base2.id,
-    };
-  }
-
   refreshIds() {
     this.line.id('');
     this.line.id();

@@ -3,6 +3,7 @@ import NodeSVG from './NodeSVG';
 import Sequence from './Sequence';
 import Base from './Base';
 import * as AdjustBaseNumbering from './edit/adjustBaseNumbering';
+import { savableState as savableStraightBondState } from 'Draw/bonds/straight/save';
 
 let drawing = new Drawing();
 let container = document.createElement('div');
@@ -587,15 +588,15 @@ describe('savableState method', () => {
   it('includes primary bonds', () => {
     let primaryBonds = savableState.primaryBonds;
     expect(primaryBonds.length).toBe(2);
-    expect(JSON.stringify(primaryBonds[0])).toBe(JSON.stringify(pb1.savableState()));
-    expect(JSON.stringify(primaryBonds[1])).toBe(JSON.stringify(pb2.savableState()));
+    expect(JSON.stringify(primaryBonds[0])).toBe(JSON.stringify(savableStraightBondState(pb1)));
+    expect(JSON.stringify(primaryBonds[1])).toBe(JSON.stringify(savableStraightBondState(pb2)));
   });
 
   it('includes secondary bonds', () => {
     let secondaryBonds = savableState.secondaryBonds;
     expect(secondaryBonds.length).toBe(2);
-    expect(JSON.stringify(secondaryBonds[0])).toBe(JSON.stringify(sb1.savableState()));
-    expect(JSON.stringify(secondaryBonds[1])).toBe(JSON.stringify(sb2.savableState()));
+    expect(JSON.stringify(secondaryBonds[0])).toBe(JSON.stringify(savableStraightBondState(sb1)));
+    expect(JSON.stringify(secondaryBonds[1])).toBe(JSON.stringify(savableStraightBondState(sb2)));
   });
 
   it('includes tertiary bonds', () => {

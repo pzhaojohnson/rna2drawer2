@@ -178,31 +178,6 @@ describe('StraightBond class', () => {
     expect(sb.line.position()).toBeGreaterThan(1);
   });
 
-  describe('savableState method', () => {
-    it('includes className and line and base IDs', () => {
-      let l = svg.line(5, 5, 4, 3);
-      let b1 = Base.create(svg, 'n', 4, 3);
-      let b2 = Base.create(svg, 'j', 5, 10);
-      let sb = new StraightBond(l, b1, b2);
-      let savableState = sb.savableState();
-      expect(savableState.className).toBe('StraightBond');
-      expect(savableState.lineId).toBe(l.id());
-      expect(savableState.baseId1).toBe(b1.id);
-      expect(savableState.baseId2).toBe(b2.id);
-    });
-
-    it('can be converted to and from a JSON string', () => {
-      let l = svg.line(5, 5, 4, 3);
-      let b1 = Base.create(svg, 'n', 4, 3);
-      let b2 = Base.create(svg, 'j', 5, 10);
-      let sb = new StraightBond(l, b1, b2);
-      let savableState = sb.savableState();
-      let json = JSON.stringify(savableState);
-      let parsed = JSON.parse(json);
-      expect(JSON.stringify(parsed)).toBe(json);
-    });
-  });
-
   it('refreshIds method', () => {
     let l = svg.line(1, 2, 3, 4);
     let b1 = Base.create(svg, 'a', 1, 4);
