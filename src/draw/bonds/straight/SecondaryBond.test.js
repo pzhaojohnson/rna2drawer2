@@ -1,8 +1,6 @@
 import { SecondaryBond } from './SecondaryBond';
 import { NodeSVG } from 'Draw/NodeSVG';
 import Base from 'Draw/Base';
-import angleBetween from 'Draw/angleBetween';
-import normalizeAngle from 'Draw/normalizeAngle';
 
 let svg = NodeSVG();
 
@@ -10,10 +8,11 @@ describe('SecondaryBond class', () => {
   describe('fromSavedState static method', () => {
     describe('invalid saved state', () => {
       it('wrong class name', () => {
+        let line = svg.line(2, 3, 28, 38);
         let b1 = Base.create(svg, 'a', 1, 2);
         let b2 = Base.create(svg, 'w', 30, 40);
         let getBaseById = id => id === b1.id ? b1 : b2;
-        let sb = SecondaryBond.create(svg, b1, b2);
+        let sb = new SecondaryBond(line, b1, b2);
         let savableState = sb.savableState();
         savableState.className = 'StraghtBond';
         expect(
@@ -23,48 +22,17 @@ describe('SecondaryBond class', () => {
     });
 
     it('valid saved state', () => {
+      let line = svg.line(95, 210, 55, 790);
       let b1 = Base.create(svg, 'M', 100, 200);
       let b2 = Base.create(svg, 'q', 50, 800);
       let getBaseById = id => id === b1.id ? b1 : b2;
-      let sb1 = SecondaryBond.create(svg, b1, b2);
+      let sb1 = new SecondaryBond(line, b1, b2);
       let lineId = sb1.line.id();
       let savableState = sb1.savableState();
       let sb2 = SecondaryBond.fromSavedState(savableState, svg, getBaseById);
       expect(sb2.line.id()).toBe(lineId);
       expect(sb2.base1).toBe(b1);
       expect(sb2.base2).toBe(b2);
-    });
-  });
-
-  describe('create static method', () => {
-    let b1 = Base.create(svg, 'a', 100, 200);
-    let b2 = Base.create(svg, 'P', 500, 600);
-    let sb = SecondaryBond.create(svg, b1, b2);
-
-    it('creates with bases', () => {
-      expect(sb.base1).toBe(b1);
-      expect(sb.base2).toBe(b2);
-    });
-
-    it('creates with valid line coordinates', () => {
-      let baseAngle = b1.angleBetweenCenters(b2);
-      let lineAngle = angleBetween(
-        sb.line.attr('x1'), sb.line.attr('y1'),
-        sb.line.attr('x2'), sb.line.attr('y2'),
-      );
-      expect(normalizeAngle(lineAngle)).toBeCloseTo(normalizeAngle(baseAngle));
-    });
-
-    it('sets opacity', () => {
-      let b1 = Base.create(svg, 'g', 100, 200);
-      let b2 = Base.create(svg, 't', 100, 200);
-      let b3 = Base.create(svg, 'B', 500, 1500);
-      // zero distance between bases
-      let sb1 = SecondaryBond.create(svg, b1, b2);
-      expect(sb1.line.attr('opacity')).toBe(0);
-      // far away bases
-      let sb2 = SecondaryBond.create(svg, b1, b3);
-      expect(sb2.line.attr('opacity')).toBe(1);
     });
   });
 

@@ -8,6 +8,8 @@ import { SequenceSavableState } from './SequenceInterface';
 import Base from './Base';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
+import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
+import { removePrimaryBondById, removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { StraightBondSavableState } from 'Draw/bonds/straight/StraightBondInterface';
 import { TertiaryBond } from './QuadraticBezierBond';
 import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
@@ -293,17 +295,11 @@ class Drawing implements DrawingInterface {
   }
 
   addPrimaryBond(b1: Base, b2: Base): PrimaryBond {
-    let sb = PrimaryBond.create(this.svg, b1, b2);
-    this.primaryBonds.push(sb);
-    return sb;
+    return addPrimaryBond(this, b1, b2);
   }
 
   removePrimaryBondById(id: string) {
-    let pb = this.getPrimaryBondById(id);
-    if (pb) {
-      pb.remove();
-      this.primaryBonds = this.primaryBonds.filter(pb => pb.id != id);
-    }
+    removePrimaryBondById(this, id);
   }
 
   get numSecondaryBonds(): number {
@@ -319,17 +315,11 @@ class Drawing implements DrawingInterface {
   }
 
   addSecondaryBond(b1: Base, b2: Base): SecondaryBond {
-    let sb = SecondaryBond.create(this.svg, b1, b2);
-    this.secondaryBonds.push(sb);
-    return sb;
+    return addSecondaryBond(this, b1, b2);
   }
 
   removeSecondaryBondById(id: string) {
-    let sb = this.getSecondaryBondById(id);
-    if (sb) {
-      sb.remove();
-      this.secondaryBonds = this.secondaryBonds.filter(sb => sb.id !== id);
-    }
+    removeSecondaryBondById(this, id);
   }
 
   get numTertiaryBonds(): number {

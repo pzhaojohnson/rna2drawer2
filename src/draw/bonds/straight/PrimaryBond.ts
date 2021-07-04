@@ -23,16 +23,6 @@ export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
     PrimaryBond.recommendedDefaults = values(pb);
     return pb;
   }
-
-  static create(svg: SVG.Svg, b1: Base, b2: Base): PrimaryBond {
-    let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
-    let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
-    line.id();
-    line.attr({ 'opacity': StraightBond._opacity(b1, b2, 8, 8) });
-    let pb = new PrimaryBond(line, b1, b2);
-    setValues(pb, PrimaryBond.recommendedDefaults);
-    return pb;
-  }
 }
 
 PrimaryBond.recommendedDefaults = {

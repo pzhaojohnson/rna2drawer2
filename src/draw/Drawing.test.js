@@ -337,9 +337,7 @@ describe('primary bonds attributes', () => {
   it('removePrimaryBondById method', () => {
     let pb = drawing.addPrimaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(5));
     let id = pb.id;
-    let spy = jest.spyOn(pb, 'remove');
     drawing.removePrimaryBondById(id);
-    expect(spy).toHaveBeenCalled(); // removes bond
     expect(drawing.getPrimaryBondById(id)).toBeFalsy(); // removes from list
 
     let n = drawing.numPrimaryBonds;
@@ -394,10 +392,8 @@ describe('secondary bonds attributes', () => {
         seq2.getBaseAtPosition(6),
       );
       expect(drawing.getSecondaryBondById(sb.id)).toBeTruthy();
-      let spy = jest.spyOn(sb, 'remove');
       drawing.removeSecondaryBondById(sb.id);
       expect(drawing.getSecondaryBondById(sb.id)).toBeFalsy();
-      expect(spy).toHaveBeenCalled();
     });
 
     it('handles no secondary bond having the given ID', () => {

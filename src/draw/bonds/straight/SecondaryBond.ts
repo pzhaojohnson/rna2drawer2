@@ -48,16 +48,6 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     return sb;
   }
 
-  static create(svg: SVG.Svg, b1: Base, b2: Base): SecondaryBond {
-    let cs = StraightBond._lineCoordinates(b1, b2, 8, 8);
-    let line = svg.line(cs.x1, cs.y1, cs.x2, cs.y2);
-    line.id();
-    line.attr({ 'opacity': StraightBond._opacity(b1, b2, 8, 8) });
-    let sb = new SecondaryBond(line, b1, b2);
-    setValues(sb, SecondaryBond.recommendedDefaults[sb.type]);
-    return sb;
-  }
-
   get type(): SecondaryBondType {
     let cs = [
       this.base1.character.toUpperCase(),
