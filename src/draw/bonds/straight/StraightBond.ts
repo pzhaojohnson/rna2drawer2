@@ -129,10 +129,6 @@ export class StraightBond implements StraightBondInterface {
     this.line.back();
   }
 
-  remove() {
-    this.line.remove();
-  }
-
   savableState(): StraightBondSavableState {
     return {
       className: 'StraightBond',

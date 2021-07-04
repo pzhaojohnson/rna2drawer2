@@ -178,17 +178,6 @@ describe('StraightBond class', () => {
     expect(sb.line.position()).toBeGreaterThan(1);
   });
 
-  it('remove method', () => {
-    let l = svg.line(1, 2, 4, 5);
-    let b1 = Base.create(svg, 'n', 1, 4);
-    let b2 = Base.create(svg, 'n', 4, 4);
-    let sb = new StraightBond(l, b1, b2);
-    let id = '#' + l.id();
-    expect(svg.findOne(id)).toBeTruthy();
-    sb.remove();
-    expect(svg.findOne(id)).toBeFalsy();
-  });
-
   describe('savableState method', () => {
     it('includes className and line and base IDs', () => {
       let l = svg.line(5, 5, 4, 3);
