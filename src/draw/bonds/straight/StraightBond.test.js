@@ -4,7 +4,6 @@ import Base from 'Draw/Base';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
-import pair from 'Draw/interact/fold/pair';
 
 let svg = NodeSVG();
 

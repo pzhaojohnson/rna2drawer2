@@ -2,7 +2,6 @@ import { StraightBondInterface } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
-import { areClose } from 'Draw/areClose';
 import { assignUuid } from 'Draw/svg/id';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import { position } from './position';
