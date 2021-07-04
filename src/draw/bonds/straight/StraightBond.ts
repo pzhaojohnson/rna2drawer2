@@ -129,5 +129,3 @@ export class StraightBond implements StraightBondInterface {
     assignUuid(new LineWrapper(this.line));
   }
 }
-
-export default StraightBond;

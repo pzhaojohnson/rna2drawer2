@@ -14,5 +14,3 @@ export interface StraightBondInterface {
   sendToBack(): void;
   refreshIds(): void;
 }
-
-export default StraightBondInterface;
