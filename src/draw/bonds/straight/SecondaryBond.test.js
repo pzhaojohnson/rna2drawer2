@@ -5,37 +5,6 @@ import Base from 'Draw/Base';
 let svg = NodeSVG();
 
 describe('SecondaryBond class', () => {
-  describe('fromSavedState static method', () => {
-    describe('invalid saved state', () => {
-      it('wrong class name', () => {
-        let line = svg.line(2, 3, 28, 38);
-        let b1 = Base.create(svg, 'a', 1, 2);
-        let b2 = Base.create(svg, 'w', 30, 40);
-        let getBaseById = id => id === b1.id ? b1 : b2;
-        let sb = new SecondaryBond(line, b1, b2);
-        let savableState = sb.savableState();
-        savableState.className = 'StraghtBond';
-        expect(
-          () => SecondaryBond.fromSavedState(savableState, svg, getBaseById)
-        ).toThrow();
-      });
-    });
-
-    it('valid saved state', () => {
-      let line = svg.line(95, 210, 55, 790);
-      let b1 = Base.create(svg, 'M', 100, 200);
-      let b2 = Base.create(svg, 'q', 50, 800);
-      let getBaseById = id => id === b1.id ? b1 : b2;
-      let sb1 = new SecondaryBond(line, b1, b2);
-      let lineId = sb1.line.id();
-      let savableState = sb1.savableState();
-      let sb2 = SecondaryBond.fromSavedState(savableState, svg, getBaseById);
-      expect(sb2.line.id()).toBe(lineId);
-      expect(sb2.base1).toBe(b1);
-      expect(sb2.base2).toBe(b2);
-    });
-  });
-
   it('type getter', () => {
     [
       { type: 'AUT',
