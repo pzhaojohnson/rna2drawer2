@@ -1,13 +1,6 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from 'Draw/BaseInterface'
 
-export interface StraightBondSavableState {
-  className: string;
-  lineId: string;
-  baseId1: string;
-  baseId2: string;
-}
-
 export interface StraightBondInterface {
   readonly line: SVG.Line;
   readonly base1: Base;

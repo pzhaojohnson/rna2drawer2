@@ -1,7 +1,4 @@
-import {
-  StraightBondInterface,
-  StraightBondSavableState,
-} from './StraightBondInterface';
+import { StraightBondInterface } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';

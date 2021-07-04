@@ -7,8 +7,8 @@ import { BaseInterface as Base } from './BaseInterface';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import {
-  StraightBondSavableState,
-} from 'Draw/bonds/straight/StraightBondInterface';
+  SavableState as SavableStraightBondState,
+} from 'Draw/bonds/straight/save';
 import {
   TertiaryBondInterface as TertiaryBond,
   QuadraticBezierBondSavableState,
@@ -18,8 +18,8 @@ export interface DrawingSavableState {
   className: string;
   svg: string;
   sequences: SequenceSavableState[];
-  primaryBonds: StraightBondSavableState[];
-  secondaryBonds: StraightBondSavableState[];
+  primaryBonds: SavableStraightBondState[];
+  secondaryBonds: SavableStraightBondState[];
   tertiaryBonds: QuadraticBezierBondSavableState[];
 }
 

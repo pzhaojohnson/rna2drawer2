@@ -1,7 +1,11 @@
-import {
-  StraightBondInterface,
-  StraightBondSavableState as SavableState,
-} from './StraightBondInterface';
+import { StraightBondInterface } from './StraightBondInterface';
+
+export type SavableState = {
+  className: 'StraightBond';
+  lineId: string;
+  baseId1: string;
+  baseId2: string;
+}
 
 export function savableState(sb: StraightBondInterface): SavableState {
   return {
