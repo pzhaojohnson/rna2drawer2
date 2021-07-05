@@ -14,7 +14,7 @@ import {
   SavableState as SavableStraightBondState,
   savableState as savableStraightBondState,
 } from 'Draw/bonds/straight/save';
-import { addSavedPrimaryBonds, addSavedSecondaryBonds } from 'Draw/bonds/straight/saved';
+import { addSavedPrimaryBond, addSavedSecondaryBond } from 'Draw/bonds/straight/saved';
 import { TertiaryBond } from './QuadraticBezierBond';
 import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
 import { adjustBaseNumbering } from './edit/adjustBaseNumbering';
@@ -487,11 +487,11 @@ class Drawing implements DrawingInterface {
   }
 
   _addSavedPrimaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
-    addSavedPrimaryBonds(this, savedState.primaryBonds as any);
+    savedState.primaryBonds.forEach(pb => addSavedPrimaryBond(this, pb));
   }
 
   _addSavedSecondaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
-    addSavedSecondaryBonds(this, savedState.secondaryBonds as any);
+    savedState.secondaryBonds.forEach(sb => addSavedSecondaryBond(this, sb));
   }
 
   _addSavedTertiaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
