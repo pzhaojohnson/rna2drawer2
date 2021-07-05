@@ -1,5 +1,6 @@
 import { StraightBond } from './StraightBond';
 import { NodeSVG } from 'Draw/NodeSVG';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import Base from 'Draw/Base';
 import { uuidRegex } from 'Draw/svg/id';
 import { round } from 'Math/round';
@@ -31,7 +32,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  line = svg.line(35, 55, 250, 55);
+  line = new LineWrapper(svg.line(35, 55, 250, 55));
   base1 = Base.create(svg, 'G', 20, 55);
   base2 = Base.create(svg, 'U', 270, 55);
   bond = new StraightBond(line, base1, base2);
@@ -53,10 +54,10 @@ afterEach(() => {
 
 describe('StraightBond class', () => {
   describe('constructor', () => {
-    it('checks passed SVG element type', () => {
-      let rect = svg.rect(50, 60);
+    it('checks wrapped element type', () => {
+      let line = new LineWrapper(svg.rect(50, 60)); // doesn't wrap a line
       expect(
-        () => new StraightBond(rect, base1, base2)
+        () => new StraightBond(line, base1, base2)
       ).toThrow();
     });
 
@@ -69,7 +70,7 @@ describe('StraightBond class', () => {
 
     it('initializes line ID with a UUID', () => {
       [undefined, ''].forEach(v => {
-        let line = svg.line(10, 20, 30, 40);
+        let line = new LineWrapper(svg.line(10, 20, 30, 40));
         line.attr({ 'id': v });
         // use the attr method to check the value of the ID
         // since the id method itself will initialize an ID

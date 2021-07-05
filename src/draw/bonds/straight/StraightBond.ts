@@ -1,22 +1,21 @@
 import { StraightBondInterface } from './StraightBondInterface';
-import * as SVG from '@svgdotjs/svg.js';
+import { SVGLineWrapper as Line } from 'Draw/svg/line';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
 import { assignUuid } from 'Draw/svg/id';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import { position } from './position';
 
 export class StraightBond implements StraightBondInterface {
-  readonly line: SVG.Line;
+  readonly line: Line;
   readonly base1: Base;
   readonly base2: Base;
 
   _basePadding1: number;
   _basePadding2: number;
 
-  constructor(line: SVG.Line, base1: Base, base2: Base) {
-    if (line.type != 'line') {
-      throw new Error('The passed SVG element is not a line.');
+  constructor(line: Line, base1: Base, base2: Base) {
+    if (line.wrapped.type != 'line') {
+      throw new Error('Wrapped element is not a line.');
     }
 
     this.line = line;
@@ -27,7 +26,7 @@ export class StraightBond implements StraightBondInterface {
     // is initialized since the id method itself
     // will initialize the ID (to a non-UUID)
     if (!this.line.attr('id')) {
-      assignUuid(new LineWrapper(this.line));
+      assignUuid(this.line);
     }
 
     this._basePadding1 = 0;
@@ -44,18 +43,18 @@ export class StraightBond implements StraightBondInterface {
   }
 
   _storeBasePaddings() {
-    this._basePadding1 = distance(
-      this.base1.xCenter,
-      this.base1.yCenter,
-      this.line.attr('x1'),
-      this.line.attr('y1'),
-    );
-    this._basePadding2 = distance(
-      this.base2.xCenter,
-      this.base2.yCenter,
-      this.line.attr('x2'),
-      this.line.attr('y2'),
-    );
+    let baseCenter1 = { x: this.base1.xCenter, y: this.base1.yCenter };
+    let x1 = this.line.attr('x1');
+    let y1 = this.line.attr('y1');
+    if (typeof x1 == 'number' && typeof y1 == 'number') {
+      this._basePadding1 = distance(baseCenter1.x, baseCenter1.y, x1, y1);
+    }
+    let baseCenter2 = { x: this.base2.xCenter, y: this.base2.yCenter };
+    let x2 = this.line.attr('x2');
+    let y2 = this.line.attr('y2');
+    if (typeof x2 == 'number' && typeof y2 == 'number') {
+      this._basePadding2 = distance(baseCenter2.x, baseCenter2.y, x2, y2);
+    }
   }
 
   get basePadding1(): number {
@@ -92,6 +91,6 @@ export class StraightBond implements StraightBondInterface {
   }
 
   refreshIds() {
-    assignUuid(new LineWrapper(this.line));
+    assignUuid(this.line);
   }
 }

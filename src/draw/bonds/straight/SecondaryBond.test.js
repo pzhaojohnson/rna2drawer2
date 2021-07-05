@@ -1,5 +1,6 @@
 import { SecondaryBond } from './SecondaryBond';
 import { NodeSVG } from 'Draw/NodeSVG';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import Base from 'Draw/Base';
 
 let svg = NodeSVG();
@@ -34,7 +35,7 @@ describe('SecondaryBond class', () => {
     ].forEach(t12 => {
       t12.characters1.forEach(c1 => {
         t12.characters2.forEach(c2 => {
-          let line = svg.line(100, 200, 300, 200);
+          let line = new LineWrapper(svg.line(100, 200, 300, 200));
           let base1 = Base.create(svg, c1, 50, 200);
           let base2 = Base.create(svg, c2, 350, 200);
           let bond = new SecondaryBond(line, base1, base2);
