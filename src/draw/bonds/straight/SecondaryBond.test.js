@@ -3,7 +3,25 @@ import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import Base from 'Draw/Base';
 
-let svg = NodeSVG();
+let container = null;
+let svg = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  svg = NodeSVG();
+  svg.addTo(container);
+});
+
+afterEach(() => {
+  svg.clear();
+  svg.remove();
+  svg = null;
+
+  container.remove();
+  container = null;
+});
 
 describe('SecondaryBond class', () => {
   it('type getter', () => {
