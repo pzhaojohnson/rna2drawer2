@@ -1,10 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { StraightBondInterface as StraightBond } from './StraightBondInterface';
 import { atIndex } from 'Array/at';
-
-function remove(sb: StraightBond) {
-  sb.line.remove();
-}
 
 export function removePrimaryBondById(drawing: Drawing, id: string) {
   let i = drawing.primaryBonds.findIndex(pb => pb.id == id);
@@ -13,7 +8,7 @@ export function removePrimaryBondById(drawing: Drawing, id: string) {
   } else {
     let pb = atIndex(drawing.primaryBonds, i);
     if (pb) {
-      remove(pb);
+      pb.line.remove();
       drawing.primaryBonds.splice(i, 1);
     }
   }
@@ -26,7 +21,7 @@ export function removeSecondaryBondById(drawing: Drawing, id: string) {
   } else {
     let sb = atIndex(drawing.secondaryBonds, i);
     if (sb) {
-      remove(sb);
+      sb.line.remove();
       drawing.secondaryBonds.splice(i, 1);
     }
   }
