@@ -6,13 +6,6 @@ import { assignUuid } from 'Draw/svg/id';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import { position } from './position';
 
-interface LineCoordinates {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-}
-
 export class StraightBond implements StraightBondInterface {
   readonly line: SVG.Line;
   readonly base1: Base;
@@ -21,31 +14,14 @@ export class StraightBond implements StraightBondInterface {
   _basePadding1: number;
   _basePadding2: number;
 
-  static _lineCoordinates(b1: Base, b2: Base, padding1: number, padding2: number): LineCoordinates {
-    let angle = b1.angleBetweenCenters(b2);
-    return {
-      x1: b1.xCenter + (padding1 * Math.cos(angle)),
-      y1: b1.yCenter + (padding1 * Math.sin(angle)),
-      x2: b2.xCenter - (padding2 * Math.cos(angle)),
-      y2: b2.yCenter - (padding2 * Math.sin(angle)),
-    };
-  }
-
-  static _opacity(b1: Base, b2: Base, padding1: number, padding2: number): number {
-    if (padding1 + padding2 > b1.distanceBetweenCenters(b2)) {
-      return 0;
-    }
-    return 1;
-  }
-
-  constructor(line: SVG.Line, b1: Base, b2: Base) {
+  constructor(line: SVG.Line, base1: Base, base2: Base) {
     if (line.type != 'line') {
-      throw new Error('The passed element is not a line.');
+      throw new Error('The passed SVG element is not a line.');
     }
 
     this.line = line;
-    this.base1 = b1;
-    this.base2 = b2;
+    this.base1 = base1;
+    this.base2 = base2;
 
     // use the attr method to check if the ID
     // is initialized since the id method itself
@@ -60,11 +36,11 @@ export class StraightBond implements StraightBondInterface {
   }
 
   get id(): string {
-    return this.line.attr('id');
+    return String(this.line.id());
   }
 
   contains(b: Base): boolean {
-    return this.base1.id == b.id || this.base2.id == b.id;
+    return b == this.base1 || b == this.base2;
   }
 
   _storeBasePaddings() {
@@ -87,11 +63,8 @@ export class StraightBond implements StraightBondInterface {
   }
 
   set basePadding1(bp1) {
-    position(this, {
-      basePadding1: bp1,
-      basePadding2: this.basePadding2,
-    });
     this._basePadding1 = bp1;
+    this.reposition();
   }
 
   get basePadding2(): number {
@@ -99,16 +72,10 @@ export class StraightBond implements StraightBondInterface {
   }
 
   set basePadding2(bp2) {
-    position(this, {
-      basePadding1: this.basePadding1,
-      basePadding2: bp2,
-    });
     this._basePadding2 = bp2;
+    this.reposition();
   }
 
-  /**
-   * Repositions this straight bond based on the current positions of its bases.
-   */
   reposition() {
     position(this, {
       basePadding1: this.basePadding1,

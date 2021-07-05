@@ -1,189 +1,208 @@
 import { StraightBond } from './StraightBond';
-import NodeSVG from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/NodeSVG';
 import Base from 'Draw/Base';
-import { distance2D as distance } from 'Math/distance';
-import angleBetween from 'Draw/angleBetween';
-import normalizeAngle from 'Draw/normalizeAngle';
+import { uuidRegex } from 'Draw/svg/id';
+import { round } from 'Math/round';
+import { position } from './position';
 
-let svg = NodeSVG();
+function getRoundedPositioning(bond, places=3) {
+  return {
+    line: {
+      'x1': round(bond.line.attr('x1'), places),
+      'y1': round(bond.line.attr('y1'), places),
+      'x2': round(bond.line.attr('x2'), places),
+      'y2': round(bond.line.attr('y2'), places),
+    },
+  };
+}
+
+let container = null;
+let svg = null;
+
+let line = null;
+let base1 = null;
+let base2 = null;
+let bond = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  svg = NodeSVG();
+  svg.addTo(container);
+
+  line = svg.line(35, 55, 250, 55);
+  base1 = Base.create(svg, 'G', 20, 55);
+  base2 = Base.create(svg, 'U', 270, 55);
+  bond = new StraightBond(line, base1, base2);
+});
+
+afterEach(() => {
+  line = null;
+  base1 = null;
+  base2 = null;
+  bond = null;
+
+  svg.clear();
+  svg.remove();
+  svg = null;
+
+  container.remove();
+  container = null;
+});
 
 describe('StraightBond class', () => {
-  it('_lineCoordinates static method', () => {
-    let b1 = Base.create(svg, 'A', 5, 8);
-    let b2 = Base.create(svg, 'r', 77, 980);
-    let lcs = StraightBond._lineCoordinates(b1, b2, 4, 7);
-    expect(
-      distance(5, 8, lcs.x1, lcs.y1)
-    ).toBeCloseTo(4);
-    expect(
-      distance(77, 980, lcs.x2, lcs.y2)
-    ).toBeCloseTo(7);
-    expect(
-      normalizeAngle(angleBetween(lcs.x1, lcs.y1, lcs.x2, lcs.y2))
-    ).toBeCloseTo(normalizeAngle(b1.angleBetweenCenters(b2)));
-  });
-
-  describe('_opacity static method', () => {
-    it('paddings sum is too big', () => {
-      let b1 = Base.create(svg, 'A', 5, 9);
-      let b2 = Base.create(svg, 'T', 8, 13);
-      expect(b1.distanceBetweenCenters(b2)).toBeCloseTo(5);
-      // note that each padding individually is not too big
-      expect(StraightBond._opacity(b1, b2, 2.5, 3.5)).toBe(0);
-    });
-
-    it('paddings fit', () => {
-      let b1 = Base.create(svg, 't', 1, 5);
-      let b2 = Base.create(svg, 'b', 80, 75);
-      expect(StraightBond._opacity(b1, b2, 3, 6)).toBe(1);
-    });
-  });
-
   describe('constructor', () => {
-    let b1 = Base.create(svg, 'a', 1, 2);
-    let b2 = Base.create(svg, 'b', 10, 20);
-
-    it('throws on missing line element', () => {
-      expect(() => new StraightBond(undefined, b1, b2)).toThrow();
+    it('checks passed SVG element type', () => {
+      let rect = svg.rect(50, 60);
+      expect(
+        () => new StraightBond(rect, base1, base2)
+      ).toThrow();
     });
 
-    it('throws on wrong element type', () => {
-      let c = svg.circle(20);
-      expect(() => new StraightBond(c, b1, b2)).toThrow();
+    it('stores references to line and bases 1 and 2', () => {
+      let bond = new StraightBond(line, base1, base2);
+      expect(bond.line).toBe(line);
+      expect(bond.base1).toBe(base1);
+      expect(bond.base2).toBe(base2);
     });
 
-    it('initializes line ID', () => {
-      let l = svg.line(1, 2, 6, 8);
-      expect(l.attr('id')).toBe(undefined);
-      let sb = new StraightBond(l, b1, b2);
-      expect(l.attr('id')).toBeTruthy();
+    it('initializes line ID with a UUID', () => {
+      [undefined, ''].forEach(v => {
+        let line = svg.line(10, 20, 30, 40);
+        line.attr({ 'id': v });
+        // use the attr method to check the value of the ID
+        // since the id method itself will initialize an ID
+        expect(line.attr('id')).toBe(v);
+        let bond = new StraightBond(line, base1, base2);
+        // assigned a UUID
+        expect(line.attr('id')).toMatch(uuidRegex);
+      });
+    });
+
+    it('does not overwrite line ID', () => {
+      // it is important not to overwrite IDs when opening
+      // a saved drawing since elements in the drawing may
+      // reference other elements using saved IDs (e.g.,
+      // bonds referencing their bases)
+      line.id('a-predefined-id');
+      let bond = new StraightBond(line, base1, base2);
+      expect(line.id()).toBe('a-predefined-id');
+    });
+
+    it('caches base paddings 1 and 2', () => {
+      line.attr({ 'x1': 10, 'y1': 20, 'x2': 100, 'y2': 20 });
+      base1.moveTo(2, 20); // base padding 1 will be 8
+      base2.moveTo(112, 20); // base padding 2 will be 12
+      let bond = new StraightBond(line, base1, base2);
+      base1.moveTo(23, 400);
+      base2.moveTo(1012, 323);
+      bond.reposition(); // must use cached base paddings 1 and 2
+      let rp1 = getRoundedPositioning(bond);
+      position(bond, { basePadding1: 8, basePadding2: 12 });
+      let rp2 = getRoundedPositioning(bond);
+      expect(rp1).toEqual(rp2); // used cached base paddings 1 and 2
     });
   });
 
   it('id getter', () => {
-    let l = svg.line(1, 2, 3, 4);
-    l.id('zzxxcc');
-    let b1 = Base.create(svg, 'e', 1, 4);
-    let b2 = Base.create(svg, 'h', 3, 2);
-    let sb = new StraightBond(l, b1, b2);
-    expect(sb.id).toBe('zzxxcc');
+    // returns line ID
+    expect(bond.id).toBe(bond.line.id());
+    // double-check that ID is defined
+    expect(bond.id).toBeTruthy();
   });
 
-  it('base1 and base2 getters', () => {
-    let l = svg.line(1, 2, 3, 4);
-    let b1 = Base.create(svg, 'y', 5, 4);
-    let b2 = Base.create(svg, 'n', 4, 5);
-    let sb = new StraightBond(l, b1, b2);
-    expect(sb.base1).toBe(b1);
-    expect(sb.base2).toBe(b2);
+  it('contains method', () => {
+    expect(bond.contains(bond.base1)).toBeTruthy();
+    expect(bond.contains(bond.base2)).toBeTruthy();
+    let base3 = Base.create(svg, 'T', 20, 80);
+    expect(bond.contains(base3)).toBeFalsy();
   });
 
-  it('contais method', () => {
-    let l = svg.line(5, 10, 12, 18);
-    let b1 = Base.create(svg, 'g', 1, 1);
-    let b2 = Base.create(svg, 'A', 20, 20);
-    let sb = new StraightBond(l, b1, b2);
-    expect(sb.contains(b1)).toBeTruthy();
-    expect(sb.contains(b2)).toBeTruthy();
-    let b3 = Base.create(svg, 'a', 5, 10);
-    expect(sb.contains(b3)).toBeFalsy();
-  });
-
-  it('basePadding1 property', () => {
-    let b1 = Base.create(svg, 'e', 800, 900);
-    let b2 = Base.create(svg, 'Q', 250, 300);
-    let lcs = StraightBond._lineCoordinates(b1, b2, 12, 16);
-    let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
-    let sb = new StraightBond(l, b1, b2);
-    expect(sb.basePadding1).toBeCloseTo(12); // check getter
-    sb.basePadding1 = 26; // use setter
-    expect(sb.basePadding1).toBeCloseTo(26); // check getter
-    // check actual value
-    expect(distance(800, 900, sb.line.attr('x1'), sb.line.attr('y1'))).toBeCloseTo(26);
-    expect(sb.basePadding2).toBeCloseTo(16); // maintains base padding 2
-  });
-
-  it('basePadding2 property', () => {
-    let b1 = Base.create(svg, 'W', 1012, 112);
-    let b2 = Base.create(svg, 'g', 510, 850);
-    let lcs = StraightBond._lineCoordinates(b1, b2, 10, 20);
-    let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
-    let sb = new StraightBond(l, b1, b2);
-    expect(sb.basePadding2).toBeCloseTo(20); // check getter
-    sb.basePadding2 = 5; // use setter
-    expect(sb.basePadding2).toBeCloseTo(5); // check getter
-    // check actual value
-    expect(distance(510, 850, sb.line.attr('x2'), sb.line.attr('y2'))).toBeCloseTo(5);
-    expect(sb.basePadding1).toBeCloseTo(10); // maintains base padding 1
-  });
-
-  describe('reposition method', () => {
-    it('moves line', () => {
-      let b1 = Base.create(svg, 'T', 101, 92);
-      let b2 = Base.create(svg, 'b', 312, 256);
-      let lcs = StraightBond._lineCoordinates(b1, b2, 15, 28);
-      let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
-      let sb = new StraightBond(l, b1, b2);
-      b1.moveTo(185, 112);
-      b2.moveTo(900, 872);
-      sb.reposition();
-      expect(distance(185, 112, sb.line.attr('x1'), sb.line.attr('y1'))).toBeCloseTo(15);
-      expect(distance(900, 872, sb.line.attr('x2'), sb.line.attr('y2'))).toBeCloseTo(28);
-      let baseAngle = b1.angleBetweenCenters(b2);
-      let lineAngle = angleBetween(
-        sb.line.attr('x1'), sb.line.attr('y1'),
-        sb.line.attr('x2'), sb.line.attr('y2'),
-      );
-      expect(normalizeAngle(lineAngle)).toBeCloseTo(normalizeAngle(baseAngle));
-      // maintans paddings
-      expect(sb.basePadding1).toBeCloseTo(15);
-      expect(sb.basePadding2).toBeCloseTo(28);
+  describe('basePadding1 property', () => {
+    it('positions bond', () => {
+      let bp1 = bond.basePadding1 + 12;
+      bond.basePadding1 = bp1;
+      let rp1 = getRoundedPositioning(bond);
+      position(bond, { basePadding1: bp1, basePadding2: bond.basePadding2 });
+      let rp2 = getRoundedPositioning(bond);
+      expect(rp1).toEqual(rp2); // positioned line
     });
 
-    it('updates opacity', () => {
-      let b1 = Base.create(svg, 'm', 3, 5);
-      let b2 = Base.create(svg, 'y', 500, 400);
-      let lcs = StraightBond._lineCoordinates(b1, b2, 6, 8);
-      let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
-      let sb = new StraightBond(l, b1, b2);
-      expect(sb.line.attr('opacity')).toBe(1);
-      b2.moveTo(4, 6);
-      sb.reposition();
-      expect(sb.line.attr('opacity')).toBe(0);
-      b1.moveTo(98, 76);
-      sb.reposition();
-      expect(sb.line.attr('opacity')).toBe(1);
+    it('caches value', () => {
+      let bp1 = bond.basePadding1 + 20;
+      bond.basePadding1 = bp1;
+      bond.base1.moveTo(bond.base1.xCenter + 70, bond.base1.yCenter + 80);
+      expect(bond.basePadding1).toBeCloseTo(bp1); // gives cached value
+      bond.reposition(); // must use cached value
+      let rp1 = getRoundedPositioning(bond);
+      position(bond, { basePadding1: bp1, basePadding2: bond.basePadding2 });
+      let rp2 = getRoundedPositioning(bond);
+      expect(rp1).toEqual(rp2); // used cached value
+    });
+  });
+
+  describe('basePadding2 property', () => {
+    it('positions bond', () => {
+      let bp2 = bond.basePadding2 + 8.5;
+      bond.basePadding2 = bp2;
+      let rp1 = getRoundedPositioning(bond);
+      position(bond, { basePadding1: bond.basePadding1, basePadding2: bp2 });
+      let rp2 = getRoundedPositioning(bond);
+      expect(rp1).toEqual(rp2); // positioned bond
+    });
+
+    it('caches value', () => {
+      let bp2 = bond.basePadding2 + 6;
+      bond.basePadding2 = bp2;
+      bond.base2.moveTo(bond.base2.xCenter - 300, bond.base2.yCenter + 500);
+      expect(bond.basePadding2).toBeCloseTo(bp2); // gives cached value
+      bond.reposition(); // must use cached value
+      let rp1 = getRoundedPositioning(bond);
+      position(bond, { basePadding1: bond.basePadding1, basePadding2: bp2 });
+      let rp2 = getRoundedPositioning(bond);
+      expect(rp1).toEqual(rp2); // used cached value
+    });
+  });
+  
+  describe('reposition method', () => {
+    it('positions bond using cached base paddings 1 and 2', () => {
+      bond.basePadding1 = 16.6;
+      bond.basePadding2 = 29.4;
+      bond.base1.moveTo(bond.base1.xCenter + 356, bond.base1.yCenter + 700);
+      bond.base2.moveTo(bond.base2.xCenter + 1000, bond.base2.yCenter + 812);
+      bond.reposition(); // must use cached base paddings 1 and 2
+      let rp1 = getRoundedPositioning(bond);
+      position(bond, { basePadding1: 16.6, basePadding2: 29.4 });
+      let rp2 = getRoundedPositioning(bond);
+      expect(rp1).toEqual(rp2); // used cached base paddings 1 and 2
     });
   });
 
   it('bringToFront and sendToBack methods', () => {
-    let c = svg.circle(50);
-    let r = svg.rect(10, 20);
-    let b1 = Base.create(svg, 'G', 1, 5);
-    let b2 = Base.create(svg, 'T', 100, 120);
-    let lcs = StraightBond._lineCoordinates(b1, b2, 8, 8);
-    let l = svg.line(lcs.x1, lcs.y1, lcs.x2, lcs.y2);
-    let sb = new StraightBond(l, b1, b2);
-    let e = svg.ellipse(5, 3);
-    expect(sb.line.position()).toBeGreaterThan(0); // not already at back
-    // must send all the way to back and not just back one position
-    expect(sb.line.position()).toBeGreaterThan(1);
-    sb.sendToBack();
-    expect(sb.line.position()).toBe(0); // sent to back
-    let frontMarker = svg.circle(10);
-    sb.bringToFront();
-    expect(sb.line.position()).toBeGreaterThan(frontMarker.position()); // brought to front
-    // must have been brought all the way to front and not just forward one position
-    expect(sb.line.position()).toBeGreaterThan(1);
+    let c = svg.circle(20);
+    let r = svg.rect(20, 40);
+    let t = svg.text('asdf');
+    bond.sendToBack();
+    expect(bond.line.position()).toBe(0); // starts at back
+    // must bring all the way to the front and not just
+    // forward one position
+    bond.bringToFront();
+    expect(bond.line.position()).toBeGreaterThan(2);
+    // must send all the way to the back and not just back
+    // one position
+    bond.sendToBack();
+    expect(bond.line.position()).toBe(0);
   });
 
   it('refreshIds method', () => {
-    let l = svg.line(1, 2, 3, 4);
-    let b1 = Base.create(svg, 'a', 1, 4);
-    let b2 = Base.create(svg, 'h', 5, 5);
-    let sb = new StraightBond(l, b1, b2);
-    let oldId = sb.line.id();
-    sb.refreshIds();
-    expect(sb.line.id()).not.toBe(oldId);
+    let prevId = bond.line.id();
+    expect(prevId).toBeTruthy();
+    bond.refreshIds();
+    let currId = bond.line.id();
+    // changed ID
+    expect(currId).not.toEqual(prevId);
+    // redefined ID (and didn't undefine ID)
+    expect(currId).toMatch(uuidRegex);
   });
 });
