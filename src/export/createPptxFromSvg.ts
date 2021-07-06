@@ -216,9 +216,12 @@ function _elementImageOptions(ele: Svg.Element): object {
 }
 
 function _addElementAsImage(slide: PptxGenJS.Slide, ele: Svg.Element) {
-  slide.addImage(
-    _elementImageOptions(ele)
-  );
+  let options: any = _elementImageOptions(ele);
+  // adding an image of zero area seems to cause an error
+  // when finally writing the PPTX file
+  if (options.w > 0 && options.h > 0) {
+    slide.addImage(options);
+  }
 }
 
 function createPptxFromSvg(svg: Svg.Svg): PptxGenJS {
