@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
-import { TertiaryBondInterface as TertiaryBond, TertiaryBondInterface } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
+import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { parseColor } from '../../../parse/parseColor';
 
 export function getColorsAndOpacities(tbs: TertiaryBond[]): ColorAndOpacity[] {

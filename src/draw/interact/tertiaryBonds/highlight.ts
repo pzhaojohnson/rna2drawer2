@@ -1,4 +1,4 @@
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
+import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 
 export function highlightTertiaryBond(tb: TertiaryBond) {
   tb.fill = tb.stroke;

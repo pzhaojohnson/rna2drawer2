@@ -15,7 +15,7 @@ import {
   savableState as savableStraightBondState,
 } from 'Draw/bonds/straight/save';
 import { addSavedPrimaryBond, addSavedSecondaryBond } from 'Draw/bonds/straight/saved';
-import { TertiaryBond } from 'Draw/bonds/curved/QuadraticBezierBond';
+import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { QuadraticBezierBondSavableState } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
 import { adjustBaseNumbering } from './edit/adjustBaseNumbering';
 

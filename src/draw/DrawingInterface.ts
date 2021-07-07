@@ -9,10 +9,8 @@ import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/Sec
 import {
   SavableState as SavableStraightBondState,
 } from 'Draw/bonds/straight/save';
-import {
-  TertiaryBondInterface as TertiaryBond,
-  QuadraticBezierBondSavableState,
-} from 'Draw/bonds/curved/QuadraticBezierBondInterface';
+import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { QuadraticBezierBondSavableState } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
 
 export interface DrawingSavableState {
   className: string;
