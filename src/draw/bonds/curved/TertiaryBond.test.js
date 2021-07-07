@@ -96,7 +96,7 @@ describe('TeritaryBond class', () => {
       let savableState = tb1.savableState();
       let spy = jest.spyOn(TertiaryBond, '_copyPropsToMostRecent');
       let tb2 = TertiaryBond.fromSavedState(savableState, svg, getBasebyId);
-      expect(tb2._path.id()).toBe(tb2._path.id()); // finds path
+      expect(tb2.path.id()).toBe(tb2.path.id()); // finds path
       // gets bases
       expect(tb2.base1).toBe(b1);
       expect(tb2.base2).toBe(b2);

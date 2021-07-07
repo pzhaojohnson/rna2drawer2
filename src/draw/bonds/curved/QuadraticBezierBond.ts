@@ -9,7 +9,7 @@ import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
 
 class QuadraticBezierBond implements QuadraticBezierBondInterface {
-  _path: Svg.Path;
+  readonly path: Svg.Path;
   _base1: Base;
   _base2: Base;
 
@@ -53,7 +53,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this._base1 = b1;
     this._base2 = b2;
 
-    this._path = path;
+    this.path = path;
     this._validatePath();
 
     this._storePaddings();
@@ -61,12 +61,12 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   _validatePath(): (void | never) {
-    if (this._path.type !== 'path') {
+    if (this.path.type !== 'path') {
       throw new Error('The given element is not a path element.');
     }
-    this._path.id();
-    this._path.attr({ 'fill-opacity': 0 });
-    let pa = this._path.array();
+    this.path.id();
+    this.path.attr({ 'fill-opacity': 0 });
+    let pa = this.path.array();
     if (pa.length !== 2) {
       throw new Error('Invalid path.');
     }
@@ -78,7 +78,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   get id(): string {
-    return this._path.id();
+    return this.path.id();
   }
 
   get base1(): Base {
@@ -94,37 +94,37 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   get x1(): number {
-    let pa = this._path.array();
+    let pa = this.path.array();
     let m = pa[0];
     return m[1] as number;
   }
 
   get y1(): number {
-    let pa = this._path.array();
+    let pa = this.path.array();
     let m = pa[0];
     return m[2] as number;
   }
 
   get x2(): number {
-    let pa = this._path.array();
+    let pa = this.path.array();
     let q = pa[1];
     return q[3] as number;
   }
 
   get y2(): number {
-    let pa = this._path.array();
+    let pa = this.path.array();
     let q = pa[1];
     return q[4] as number;
   }
 
   get xControl(): number {
-    let pa = this._path.array();
+    let pa = this.path.array();
     let q = pa[1];
     return q[1] as number;
   }
 
   get yControl(): number {
-    let pa = this._path.array();
+    let pa = this.path.array();
     let q = pa[1];
     return q[2] as number;
   }
@@ -217,7 +217,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   _reposition(padding1: number, padding2: number, controlHeight: number, controlAngle: number) {
-    this._path.plot(
+    this.path.plot(
       QuadraticBezierBond._dPath(
         this.base1,
         this.base2,
@@ -232,105 +232,105 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   getStroke(): string {
-    return this._path.attr('stroke');
+    return this.path.attr('stroke');
   }
 
   setStroke(s: string) {
-    this._path.attr({ 'stroke': s });
+    this.path.attr({ 'stroke': s });
   }
 
   getStrokeWidth(): number {
-    return this._path.attr('stroke-width');
+    return this.path.attr('stroke-width');
   }
 
   setStrokeWidth(sw: number) {
-    this._path.attr({ 'stroke-width': sw });
+    this.path.attr({ 'stroke-width': sw });
   }
 
   getStrokeOpacity(): number {
-    return this._path.attr('stroke-opacity');
+    return this.path.attr('stroke-opacity');
   }
 
   setStrokeOpacity(so: number) {
-    this._path.attr({ 'stroke-opacity': so });
+    this.path.attr({ 'stroke-opacity': so });
   }
 
   getStrokeDasharray(): string {
-    return this._path.attr('stroke-dasharray');
+    return this.path.attr('stroke-dasharray');
   }
 
   setStrokeDasharray(sd: string) {
-    this._path.attr({ 'stroke-dasharray': sd });
+    this.path.attr({ 'stroke-dasharray': sd });
   }
 
   get fill(): string {
-    return this._path.attr('fill');
+    return this.path.attr('fill');
   }
 
   set fill(f: string) {
-    this._path.attr({ 'fill': f });
+    this.path.attr({ 'fill': f });
   }
 
   get fillOpacity(): number {
-    return this._path.attr('fill-opacity');
+    return this.path.attr('fill-opacity');
   }
 
   set fillOpacity(fo: number) {
-    this._path.attr({ 'fill-opacity': fo });
+    this.path.attr({ 'fill-opacity': fo });
   }
 
   bringToFront() {
-    this._path.front();
+    this.path.front();
   }
 
   sendToBack() {
-    this._path.back();
+    this.path.back();
   }
 
   get cursor(): string {
-    return this._path.css('cursor');
+    return this.path.css('cursor');
   }
 
   set cursor(c: string) {
-    this._path.css('cursor', c);
+    this.path.css('cursor', c);
   }
 
   onMouseover(f: () => void) {
-    this._path.mouseover(f);
+    this.path.mouseover(f);
   }
 
   onMouseout(f: () => void) {
-    this._path.mouseout(f);
+    this.path.mouseout(f);
   }
 
   onMousedown(f: () => void) {
-    this._path.mousedown(f);
+    this.path.mousedown(f);
   }
 
   onDblclick(f: () => void) {
-    this._path.dblclick(f);
+    this.path.dblclick(f);
   }
 
   remove() {
-    this._path.remove();
+    this.path.remove();
   }
 
   hasBeenRemoved() {
-    return !this._path.root();
+    return !this.path.root();
   }
 
   savableState(): QuadraticBezierBondSavableState {
     return {
       className: 'QuadraticBezierBond',
-      pathId: this._path.id(),
+      pathId: this.path.id(),
       baseId1: this.base1.id,
       baseId2: this.base2.id,
     };
   }
 
   refreshIds() {
-    this._path.id('');
-    this._path.id();
+    this.path.id('');
+    this.path.id();
   }
 }
 

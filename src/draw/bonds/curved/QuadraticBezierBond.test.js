@@ -189,7 +189,7 @@ describe('QuadraticBezierBond class', () => {
     expect(p.attr('stroke-width')).toBe(3.44); // check actual value
     qbb.setStrokeOpacity(0.41); // use setter
     expect(qbb.getStrokeOpacity()).toBe(0.41); // check getter
-    expect(qbb._path.attr('stroke-opacity')).toBe(0.41); // check actual value
+    expect(qbb.path.attr('stroke-opacity')).toBe(0.41); // check actual value
     qbb.setStrokeDasharray('3 1 6 7'); // use setter
     expect(qbb.getStrokeDasharray()).toBe('3 1 6 7'); // check getter
     expect(p.attr('stroke-dasharray')).toBe('3 1 6 7'); // check actual value
@@ -203,10 +203,10 @@ describe('QuadraticBezierBond class', () => {
     let qbb = new QuadraticBezierBond(p, b1, b2);
     qbb.fill = '#1324ab'; // use setter
     expect(qbb.fill).toBe('#1324ab'); // check getter
-    expect(qbb._path.attr('fill')).toBe('#1324ab'); // check actual value
+    expect(qbb.path.attr('fill')).toBe('#1324ab'); // check actual value
     qbb.fillOpacity = 0.29; // use setter
     expect(qbb.fillOpacity).toBe(0.29); // check getter
-    expect(qbb._path.attr('fill-opacity')).toBe(0.29); // check actual value
+    expect(qbb.path.attr('fill-opacity')).toBe(0.29); // check actual value
     expect(qbb.cursor).not.toBe('pointer'); // below test of setter will be valid
     qbb.cursor = 'pointer'; // use setter
     expect(qbb.cursor).toBe('pointer'); // check getter
@@ -224,16 +224,16 @@ describe('QuadraticBezierBond class', () => {
     let qbb = new QuadraticBezierBond(p, b1, b2);
     let r3 = svg.rect(2, 2);
     let c2 = svg.circle(50);
-    expect(qbb._path.position()).toBeGreaterThan(0); // not already at back
+    expect(qbb.path.position()).toBeGreaterThan(0); // not already at back
     // must be sent all the way to back and not just back one position
-    expect(qbb._path.position()).toBeGreaterThan(1);
+    expect(qbb.path.position()).toBeGreaterThan(1);
     qbb.sendToBack();
-    expect(qbb._path.position()).toBe(0); // sent to back
+    expect(qbb.path.position()).toBe(0); // sent to back
     let frontMarker = svg.ellipse(2, 6);
     qbb.bringToFront();
-    expect(qbb._path.position()).toBeGreaterThan(frontMarker.position()); // brought to front
+    expect(qbb.path.position()).toBeGreaterThan(frontMarker.position()); // brought to front
     // must have been brought all the way to front and not just forward one position
-    expect(qbb._path.position()).toBeGreaterThan(1);
+    expect(qbb.path.position()).toBeGreaterThan(1);
   });
 
   describe('binding events', () => {
@@ -315,9 +315,9 @@ describe('QuadraticBezierBond class', () => {
     let b1 = Base.create(svg, 'b', 1, 5);
     let b2 = Base.create(svg, 'N', 5, 3);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    let oldId = qbb._path.id();
+    let oldId = qbb.path.id();
     qbb.refreshIds();
-    expect(qbb._path.id()).not.toBe(oldId);
+    expect(qbb.path.id()).not.toBe(oldId);
   });
 });
 

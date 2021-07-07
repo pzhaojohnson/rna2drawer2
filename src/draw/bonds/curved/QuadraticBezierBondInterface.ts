@@ -1,4 +1,5 @@
 import { BaseInterface as Base } from 'Draw/BaseInterface';
+import * as SVG from '@svgdotjs/svg.js';
 
 export interface QuadraticBezierBondSavableState {
   className: string;
@@ -9,6 +10,7 @@ export interface QuadraticBezierBondSavableState {
 
 export interface QuadraticBezierBondInterface {
   readonly id: string;
+  readonly path: SVG.Path;
   base1: Base;
   base2: Base;
   contains(b: Base): boolean;
