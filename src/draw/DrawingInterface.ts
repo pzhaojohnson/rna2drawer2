@@ -12,7 +12,7 @@ import {
 import {
   TertiaryBondInterface as TertiaryBond,
   QuadraticBezierBondSavableState,
-} from './QuadraticBezierBondInterface';
+} from 'Draw/bonds/curved/QuadraticBezierBondInterface';
 
 export interface DrawingSavableState {
   className: string;

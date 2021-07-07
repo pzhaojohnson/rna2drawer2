@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CheckboxField } from '../../fields/checkbox/CheckboxField';
-import { TertiaryBondInterface } from '../../../draw/QuadraticBezierBondInterface';
-import { TertiaryBond } from '../../../draw/QuadraticBezierBond';
+import { TertiaryBondInterface } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
+import { TertiaryBond } from 'Draw/bonds/curved/QuadraticBezierBond';
 
 export function isDashed(tb: TertiaryBondInterface): boolean {
   let sda = tb.strokeDasharray.trim().toLowerCase();

@@ -7,7 +7,7 @@ import { willRemove } from '../../../../draw/layout/singleseq/strict/stemProps';
 import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
-import { TertiaryBondInterface as TertiaryBond } from '../../../../draw/QuadraticBezierBondInterface';
+import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
 
 interface Range {
   start: number;

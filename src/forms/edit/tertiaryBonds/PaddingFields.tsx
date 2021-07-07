@@ -1,6 +1,6 @@
 import * as React from 'react';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
-import { TertiaryBondInterface as TertiaryBond } from '../../../draw/QuadraticBezierBondInterface';
+import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 
 function trimPadding(p: number): number {

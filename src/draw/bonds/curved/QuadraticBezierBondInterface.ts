@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from './BaseInterface';
+import { BaseInterface as Base } from 'Draw/BaseInterface';
 
 export interface QuadraticBezierBondSavableState {
   className: string;

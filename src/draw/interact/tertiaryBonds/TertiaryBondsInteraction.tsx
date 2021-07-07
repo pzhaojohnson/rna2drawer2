@@ -3,7 +3,7 @@ import {
   FormFactory,
 } from './TertiaryBondsInteractionInterface';
 import { DrawingInterface as Drawing } from '../../DrawingInterface';
-import { TertiaryBondInterface as TertiaryBond } from '../../QuadraticBezierBondInterface';
+import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
 import {
   handleMouseoverOnTertiaryBond,
   handleMouseoutOnTertiaryBond,

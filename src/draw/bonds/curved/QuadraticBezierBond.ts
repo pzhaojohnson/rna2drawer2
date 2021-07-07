@@ -5,10 +5,10 @@ import {
   TertiaryBondMostRecentProps,
 } from './QuadraticBezierBondInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import { BaseInterface as Base } from './BaseInterface';
+import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from './angleBetween';
-import normalizeAngle from './normalizeAngle';
+import angleBetween from 'Draw/angleBetween';
+import normalizeAngle from 'Draw/normalizeAngle';
 
 class QuadraticBezierBond implements QuadraticBezierBondInterface {
   _path: Svg.Path;

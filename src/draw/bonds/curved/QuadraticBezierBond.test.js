@@ -2,11 +2,11 @@ import {
   QuadraticBezierBond,
   TertiaryBond,
 } from './QuadraticBezierBond';
-import NodeSVG from './NodeSVG';
-import Base from './Base';
+import NodeSVG from 'Draw/NodeSVG';
+import Base from 'Draw/Base';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from './angleBetween';
-import normalizeAngle from './normalizeAngle';
+import angleBetween from 'Draw/angleBetween';
+import normalizeAngle from 'Draw/normalizeAngle';
 
 let svg = NodeSVG();
 

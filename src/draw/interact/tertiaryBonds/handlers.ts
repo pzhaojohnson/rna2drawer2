@@ -1,5 +1,5 @@
 import { TertiaryBondsInteractionInterface as TertiaryBondsInteraction } from './TertiaryBondsInteractionInterface';
-import { TertiaryBondInterface as TertiaryBond } from '../../QuadraticBezierBondInterface';
+import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
 import {
   highlightTertiaryBond,
   dehighlightTertiaryBond,

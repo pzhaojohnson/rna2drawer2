@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/QuadraticBezierBondInterface';
+import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
 import { TextButton } from 'Forms/buttons/TextButton';
 
 interface Props {
