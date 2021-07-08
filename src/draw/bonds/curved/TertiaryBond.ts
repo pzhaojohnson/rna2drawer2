@@ -2,37 +2,15 @@ import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { QuadraticBezierBondSavableState } from './QuadraticBezierBondInterface';
 import {
   TertiaryBondInterface,
-  TertiaryBondMostRecentProps,
 } from './TertiaryBondInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
+import { Values, values, setValues } from './values';
 
 export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface {
-  static _mostRecentProps: TertiaryBondMostRecentProps;
+  static recommendedDefaults: Values;
+
   static dashedStrokeDasharray: string;
-
-  static mostRecentProps(): TertiaryBondMostRecentProps {
-    return { ...TertiaryBond._mostRecentProps };
-  }
-
-  static _applyMostRecentProps(tb: TertiaryBond) {
-    let mrps = TertiaryBond.mostRecentProps();
-    tb.padding1 = mrps.padding1;
-    tb.padding2 = mrps.padding2;
-    tb.stroke = mrps.stroke;
-    tb.strokeWidth = mrps.strokeWidth;
-    tb.strokeOpacity = mrps.strokeOpacity;
-    tb.strokeDasharray = mrps.strokeDasharray;
-  }
-
-  static _copyPropsToMostRecent(tb: TertiaryBond) {
-    TertiaryBond._mostRecentProps.padding1 = tb.padding1;
-    TertiaryBond._mostRecentProps.padding2 = tb.padding2;
-    TertiaryBond._mostRecentProps.stroke = tb.stroke;
-    TertiaryBond._mostRecentProps.strokeWidth = tb.strokeWidth;
-    TertiaryBond._mostRecentProps.strokeOpacity = tb.strokeOpacity;
-    TertiaryBond._mostRecentProps.strokeDasharray = tb.strokeDasharray;
-  }
 
   static fromSavedState(
     savedState: QuadraticBezierBondSavableState,
@@ -46,7 +24,7 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
     let b1 = getBaseById(savedState.baseId1) as Base;
     let b2 = getBaseById(savedState.baseId2) as Base;
     let tb = new TertiaryBond(p, b1, b2);
-    TertiaryBond._copyPropsToMostRecent(tb);
+    TertiaryBond.recommendedDefaults = values(tb);
     return tb;
   }
 
@@ -55,7 +33,7 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
     let d = QuadraticBezierBond._dPath(b1, b2, 6, 6, ch, -Math.PI / 2);
     let p = svg.path(d);
     let tb = new TertiaryBond(p, b1, b2);
-    TertiaryBond._applyMostRecentProps(tb);
+    setValues(tb, TertiaryBond.recommendedDefaults);
     return tb;
   }
 
@@ -65,7 +43,7 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
 
   set padding1(p: number) {
     super.setPadding1(p);
-    TertiaryBond._mostRecentProps.padding1 = p;
+    TertiaryBond.recommendedDefaults.basePadding1 = p;
   }
 
   get padding2(): number {
@@ -74,7 +52,7 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
 
   set padding2(p: number) {
     super.setPadding2(p);
-    TertiaryBond._mostRecentProps.padding2 = p;
+    TertiaryBond.recommendedDefaults.basePadding2 = p;
   }
 
   get stroke(): string {
@@ -83,7 +61,7 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
 
   set stroke(s: string) {
     super.setStroke(s);
-    TertiaryBond._mostRecentProps.stroke = s;
+    TertiaryBond.recommendedDefaults.path['stroke'] = s;
   }
 
   get strokeWidth(): number {
@@ -92,7 +70,7 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
 
   set strokeWidth(sw: number) {
     super.setStrokeWidth(sw);
-    TertiaryBond._mostRecentProps.strokeWidth = sw;
+    TertiaryBond.recommendedDefaults.path['stroke-width'] = sw;
   }
 
   get strokeOpacity(): number {
@@ -101,7 +79,7 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
 
   set strokeOpacity(so: number) {
     super.setStrokeOpacity(so);
-    TertiaryBond._mostRecentProps.strokeOpacity = so;
+    TertiaryBond.recommendedDefaults.path['stroke-opacity'] = so;
   }
 
   get strokeDasharray(): string {
@@ -110,17 +88,19 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
 
   set strokeDasharray(sd: string) {
     super.setStrokeDasharray(sd);
-    TertiaryBond._mostRecentProps.strokeDasharray = sd;
+    TertiaryBond.recommendedDefaults.path['stroke-dasharray'] = sd;
   }
 }
 
 TertiaryBond.dashedStrokeDasharray = '8 2';
 
-TertiaryBond._mostRecentProps = {
-  padding1: 8,
-  padding2: 8,
-  stroke: '#63c5da',
-  strokeWidth: 1.5,
-  strokeOpacity: 0.5,
-  strokeDasharray: '',
+TertiaryBond.recommendedDefaults = {
+  path: {
+    'stroke': '#63c5da',
+    'stroke-width': 1.5,
+    'stroke-opacity': 0.5,
+    'stroke-dasharray': '',
+  },
+  basePadding1: 8,
+  basePadding2: 8,
 };
