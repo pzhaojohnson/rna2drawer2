@@ -1,9 +1,10 @@
 import * as React from 'react';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 
-export function getStrokeWidths(tbs: TertiaryBond[]): number[] {
+export function getStrokeWidths(tbs: TertiaryBondInterface[]): number[] {
   let sws = [] as number[];
   tbs.forEach(tb => {
     let sw = tb.path.attr('stroke-width');
@@ -15,7 +16,7 @@ export function getStrokeWidths(tbs: TertiaryBond[]): number[] {
 }
 
 interface Props {
-  getTertiaryBonds: () => TertiaryBond[];
+  getTertiaryBonds: () => TertiaryBondInterface[];
   pushUndo: () => void;
   changed: () => void;
 }
@@ -38,6 +39,7 @@ export function StrokeWidthField(props: Props): React.ReactElement | null {
               props.pushUndo();
               tbs.forEach(tb => tb.path.attr({ 'stroke-width': sw }));
               props.changed();
+              TertiaryBond.recommendedDefaults.path['stroke-width'] = sw;
             }
           }
         }}
