@@ -28,7 +28,6 @@ export interface QuadraticBezierBondInterface {
   reposition(): void;
   bringToFront(): void;
   sendToBack(): void;
-  cursor: string;
   onMouseover(f: () => void): void;
   onMouseout(f: () => void): void;
   onMousedown(f: () => void): void;

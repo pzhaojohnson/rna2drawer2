@@ -70,7 +70,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   }
 
   _bindTertiaryBond(tb: TertiaryBond) {
-    tb.cursor = 'pointer';
+    tb.path.css('cursor', 'pointer');
     tb.onMouseover(() => handleMouseoverOnTertiaryBond(this, tb));
     tb.onMouseout(() => handleMouseoutOnTertiaryBond(this, tb));
     tb.onMousedown(() => handleMousedownOnTertiaryBond(this, tb));

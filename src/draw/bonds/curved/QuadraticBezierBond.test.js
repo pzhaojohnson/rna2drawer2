@@ -173,18 +173,6 @@ describe('QuadraticBezierBond class', () => {
     expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
   });
 
-  it('cursor getter and setter', () => {
-    let b1 = Base.create(svg, 'A', 10, 20);
-    let b2 = Base.create(svg, 'g', 800, 200);
-    let d = QuadraticBezierBond._dPath(b1, b2, 10, 50, 80, Math.PI / 5);
-    let p = svg.path(d);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.cursor).not.toBe('pointer'); // below test of setter will be valid
-    qbb.cursor = 'pointer'; // use setter
-    expect(qbb.cursor).toBe('pointer'); // check getter
-    expect(p.css('cursor')).toBe('pointer'); // check actual value
-  });
-
   it('bringToFront and sendToBack methods', () => {
     let c1 = svg.circle(33);
     let r1 = svg.rect(1, 8);
