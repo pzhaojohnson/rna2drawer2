@@ -231,22 +231,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this.path.back();
   }
 
-  onMouseover(f: () => void) {
-    this.path.mouseover(f);
-  }
-
-  onMouseout(f: () => void) {
-    this.path.mouseout(f);
-  }
-
-  onMousedown(f: () => void) {
-    this.path.mousedown(f);
-  }
-
-  onDblclick(f: () => void) {
-    this.path.dblclick(f);
-  }
-
   remove() {
     this.path.remove();
   }

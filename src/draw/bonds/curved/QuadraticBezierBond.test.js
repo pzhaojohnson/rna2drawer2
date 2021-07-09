@@ -196,42 +196,6 @@ describe('QuadraticBezierBond class', () => {
     expect(qbb.path.position()).toBeGreaterThan(1);
   });
 
-  describe('binding events', () => {
-    let b1 = Base.create(svg, 'b', 1, 2);
-    let b2 = Base.create(svg, 'r', 5, 9);
-    let d = QuadraticBezierBond._dPath(b1, b2, 7, 8, 25, Math.PI / 3);
-    let p = svg.path(d);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-
-    it('onMouseover method', () => {
-      let f = jest.fn();
-      qbb.onMouseover(f);
-      p.fire('mouseover');
-      expect(f).toHaveBeenCalled();
-    });
-
-    it('onMouseout method', () => {
-      let f = jest.fn();
-      qbb.onMouseout(f);
-      p.fire('mouseout');
-      expect(f).toHaveBeenCalled();
-    });
-
-    it('onMousedown method', () => {
-      let f = jest.fn();
-      qbb.onMousedown(f);
-      p.fire('mousedown');
-      expect(f).toHaveBeenCalled();
-    });
-
-    it('onDblclick method', () => {
-      let f = jest.fn();
-      qbb.onDblclick(f);
-      p.fire('dblclick');
-      expect(f).toHaveBeenCalled();
-    });
-  });
-
   it('remove and hasBeenRemoved methods', () => {
     let p = svg.path('M 1 2 Q 3 4 5 6');
     let b1 = Base.create(svg, 'v', 1, 2);
