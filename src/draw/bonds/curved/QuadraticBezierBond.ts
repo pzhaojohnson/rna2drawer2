@@ -223,22 +223,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this._storeControlHeightAndAngle();
   }
 
-  get fill(): string {
-    return this.path.attr('fill');
-  }
-
-  set fill(f: string) {
-    this.path.attr({ 'fill': f });
-  }
-
-  get fillOpacity(): number {
-    return this.path.attr('fill-opacity');
-  }
-
-  set fillOpacity(fo: number) {
-    this.path.attr({ 'fill-opacity': fo });
-  }
-
   bringToFront() {
     this.path.front();
   }

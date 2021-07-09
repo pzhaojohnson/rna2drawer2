@@ -121,11 +121,11 @@ describe('areAllSameColorAndOpacity function', () => {
 });
 
 it('hasFill function', () => {
-  tb1.fill = '#abcdef'; // has fill
+  tb1.path.attr({ 'fill': '#abcdef' }); // has fill
   expect(hasFill(tb1)).toBeTruthy();
-  tb1.fill = ''; // falsy fill
+  tb1.path.attr({ 'fill': '' }); // falsy fill
   expect(hasFill(tb1)).toBeFalsy();
-  tb1.fill = 'none'; // fill is none
+  tb1.path.attr({ 'fill': 'none' }); // fill is none
   expect(hasFill(tb1)).toBeFalsy();
 });
 

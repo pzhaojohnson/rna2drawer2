@@ -36,7 +36,10 @@ export function areAllSameColorAndOpacity(cos: ColorAndOpacity[]): boolean {
 }
 
 export function hasFill(tb: TertiaryBondInterface): boolean {
-  let f = tb.fill.trim().toLowerCase();
+  let f = tb.path.attr('fill');
+  if (typeof f == 'string') {
+    f = f.trim().toLowerCase();
+  }
   return f != '' && f != 'none';
 }
 
@@ -68,8 +71,10 @@ export function StrokeField(props: Props): React.ReactElement | null {
                   'stroke-opacity': co.opacity,
                 });
                 if (hasFill(tb)) {
-                  tb.fill = co.color;
-                  tb.fillOpacity = Math.max(0.1 * co.opacity, 0.05);
+                  tb.path.attr({
+                    'fill': co.color,
+                    'fill-opacity': Math.max(0.1 * co.opacity, 0.05),
+                  });
                 }
               });
               props.changed();

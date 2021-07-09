@@ -173,18 +173,12 @@ describe('QuadraticBezierBond class', () => {
     expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
   });
 
-  it('fill, fillOpacity and cursor getters and setters', () => {
+  it('cursor getter and setter', () => {
     let b1 = Base.create(svg, 'A', 10, 20);
     let b2 = Base.create(svg, 'g', 800, 200);
     let d = QuadraticBezierBond._dPath(b1, b2, 10, 50, 80, Math.PI / 5);
     let p = svg.path(d);
     let qbb = new QuadraticBezierBond(p, b1, b2);
-    qbb.fill = '#1324ab'; // use setter
-    expect(qbb.fill).toBe('#1324ab'); // check getter
-    expect(qbb.path.attr('fill')).toBe('#1324ab'); // check actual value
-    qbb.fillOpacity = 0.29; // use setter
-    expect(qbb.fillOpacity).toBe(0.29); // check getter
-    expect(qbb.path.attr('fill-opacity')).toBe(0.29); // check actual value
     expect(qbb.cursor).not.toBe('pointer'); // below test of setter will be valid
     qbb.cursor = 'pointer'; // use setter
     expect(qbb.cursor).toBe('pointer'); // check getter
