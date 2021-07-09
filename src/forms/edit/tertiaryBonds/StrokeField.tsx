@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { parseColor } from '../../../parse/parseColor';
 
-export function getColorsAndOpacities(tbs: TertiaryBond[]): ColorAndOpacity[] {
+export function getColorsAndOpacities(tbs: TertiaryBondInterface[]): ColorAndOpacity[] {
   let cos = [] as ColorAndOpacity[];
   tbs.forEach(tb => {
-    let c = parseColor(tb.stroke);
-    if (c) {
-      cos.push({ color: c.toHex(), opacity: tb.strokeOpacity });
+    let c = parseColor(tb.path.attr('stroke'));
+    let o = tb.path.attr('stroke-opacity');
+    if (c && typeof o == 'number') {
+      cos.push({ color: c.toHex(), opacity: o });
     }
   });
   return cos;
@@ -33,13 +35,13 @@ export function areAllSameColorAndOpacity(cos: ColorAndOpacity[]): boolean {
   return allSame;
 }
 
-export function hasFill(tb: TertiaryBond): boolean {
+export function hasFill(tb: TertiaryBondInterface): boolean {
   let f = tb.fill.trim().toLowerCase();
   return f != '' && f != 'none';
 }
 
 interface Props {
-  getTertiaryBonds: () => TertiaryBond[];
+  getTertiaryBonds: () => TertiaryBondInterface[];
   pushUndo: () => void;
   changed: () => void;
 }
@@ -61,14 +63,18 @@ export function StrokeField(props: Props): React.ReactElement | null {
             if (!areAllSameColorAndOpacity(cos) || !areSameColorAndOpacity(co, cos[0])) {
               props.pushUndo();
               tbs.forEach(tb => {
-                tb.stroke = co.color;
-                tb.strokeOpacity = co.opacity;
+                tb.path.attr({
+                  'stroke': co.color,
+                  'stroke-opacity': co.opacity,
+                });
                 if (hasFill(tb)) {
                   tb.fill = co.color;
-                  tb.fillOpacity = Math.max(0.1 * tb.strokeOpacity, 0.05);
+                  tb.fillOpacity = Math.max(0.1 * co.opacity, 0.05);
                 }
               });
               props.changed();
+              TertiaryBond.recommendedDefaults.path['stroke'] = co.color;
+              TertiaryBond.recommendedDefaults.path['stroke-opacity'] = co.opacity;
             }
           }
         }}

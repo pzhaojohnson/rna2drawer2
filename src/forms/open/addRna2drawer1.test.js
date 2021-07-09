@@ -117,7 +117,7 @@ describe('adding tertiary interactions', () => {
     let drawing = app.strictDrawing.drawing;
     expect(drawing.numTertiaryBonds).toBe(1);
     drawing.forEachTertiaryBond(tb => {
-      expect(tb.stroke).toBe('#aabc43');
+      expect(tb.path.attr('stroke')).toBe('#aabc43');
     });
   });
 });

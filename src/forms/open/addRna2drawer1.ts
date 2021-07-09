@@ -19,9 +19,11 @@ function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
         let b3 = seq?.getBaseAtPosition(Math.max(p1, p2));
         if (b5 && b3) {
           let tb = sd.drawing.addTertiaryBond(b5, b3);
-          tb.setStroke(ti.color.toHex());
+          tb.path.attr({
+            'stroke': ti.color.toHex(),
+            'stroke-opacity': 0.25,
+          });
           tb.setStrokeWidth(1.5);
-          tb.setStrokeOpacity(0.25);
         }
       }
     });

@@ -55,15 +55,6 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
     TertiaryBond.recommendedDefaults.basePadding2 = p;
   }
 
-  get stroke(): string {
-    return super.getStroke();
-  }
-
-  set stroke(s: string) {
-    super.setStroke(s);
-    TertiaryBond.recommendedDefaults.path['stroke'] = s;
-  }
-
   get strokeWidth(): number {
     return super.getStrokeWidth();
   }
@@ -71,15 +62,6 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
   set strokeWidth(sw: number) {
     super.setStrokeWidth(sw);
     TertiaryBond.recommendedDefaults.path['stroke-width'] = sw;
-  }
-
-  get strokeOpacity(): number {
-    return super.getStrokeOpacity();
-  }
-
-  set strokeOpacity(so: number) {
-    super.setStrokeOpacity(so);
-    TertiaryBond.recommendedDefaults.path['stroke-opacity'] = so;
   }
 }
 

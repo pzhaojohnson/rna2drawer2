@@ -71,21 +71,13 @@ describe('TeritaryBond class', () => {
     expect(TertiaryBond.recommendedDefaults.basePadding2).toBeCloseTo(12.8);
   });
 
-  it('stroke, strokeWidth, strokeOpacity getters and setters', () => {
+  it('strokeWidth getter and setter', () => {
     let b1 = Base.create(svg, 't', 50, 40);
     let b2 = Base.create(svg, 'q', -1000, -300);
     let tb = TertiaryBond.create(svg, b1, b2);
-    tb.stroke = '#44bbcc'; // use setter
-    expect(tb.stroke).toBe('#44bbcc'); // check getter
-    // updates recommended default
-    expect(TertiaryBond.recommendedDefaults.path['stroke']).toBe('#44bbcc');
     tb.strokeWidth = 3.96; // use setter
     expect(tb.strokeWidth).toBe(3.96); // check getter
     // updates recommended default
     expect(TertiaryBond.recommendedDefaults.path['stroke-width']).toBe(3.96);
-    tb.strokeOpacity = 0.76; // use setter
-    expect(tb.strokeOpacity).toBe(0.76); // check getter
-    // updates recommended default
-    expect(TertiaryBond.recommendedDefaults.path['stroke-opacity']).toBe(0.76);
   });
 });

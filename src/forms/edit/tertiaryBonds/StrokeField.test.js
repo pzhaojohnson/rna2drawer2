@@ -47,8 +47,8 @@ it('getColorsAndOpacities function', () => {
     { color: '#563a22', opacity: 0.72 },
   ];
   tbs.forEach((tb, i) => {
-    tb.stroke = cos[i].color;
-    tb.strokeOpacity = cos[i].opacity;
+    tb.path.attr({ 'stroke': cos[i].color });
+    tb.path.attr({ 'stroke-opacity': cos[i].opacity });
   });
   expect(getColorsAndOpacities(tbs)).toStrictEqual(cos);
 });
