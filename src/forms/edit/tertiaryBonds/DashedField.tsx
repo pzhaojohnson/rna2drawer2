@@ -4,7 +4,10 @@ import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 export function isDashed(tb: TertiaryBondInterface): boolean {
-  let sda = tb.strokeDasharray.trim().toLowerCase();
+  let sda = tb.path.attr('stroke-dasharray');
+  if (typeof sda == 'string') {
+    sda = sda.trim().toLowerCase();
+  }
   return sda != '' && sda != 'none';
 }
 
@@ -49,10 +52,12 @@ export function DashedField(props: Props): React.ReactElement | null {
             let shouldUndash = !b && !areAllNotDashed(tbs);
             if (shouldDash || shouldUndash) {
               props.pushUndo();
+              let sda = b ? TertiaryBond.dashedStrokeDasharray : '';
               tbs.forEach(tb => {
-                tb.strokeDasharray = b ? TertiaryBond.dashedStrokeDasharray : '';
+                tb.path.attr({ 'stroke-dasharray': sda });
               });
               props.changed();
+              TertiaryBond.recommendedDefaults.path['stroke-dasharray'] = sda;
             }
           }
         }}

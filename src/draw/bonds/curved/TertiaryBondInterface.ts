@@ -6,5 +6,4 @@ export interface TertiaryBondInterface extends QuadraticBezierBondInterface {
   stroke: string;
   strokeWidth: number;
   strokeOpacity: number;
-  strokeDasharray: string;
 }

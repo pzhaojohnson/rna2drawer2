@@ -37,42 +37,42 @@ let tb2 = drawing.addTertiaryBond(b3, b4);
 let tb3 = drawing.addTertiaryBond(b4, b2);
 
 it('isDashed function', () => {
-  tb1.strokeDasharray = '';
+  tb1.path.attr({ 'stroke-dasharray': '' });
   expect(isDashed(tb1)).toBeFalsy();
-  tb1.strokeDasharray = 'none';
+  tb1.path.attr({ 'stroke-dasharray': 'none' });
   expect(isDashed(tb1)).toBeFalsy();
-  tb1.strokeDasharray = '2 1';
+  tb1.path.attr({ 'stroke-dasharray': '2 1' });
   expect(isDashed(tb1)).toBeTruthy();
 });
 
 describe('areAllDashed function', () => {
   it('are all dashed', () => {
-    tb1.strokeDasharray = '2 1';
-    tb2.strokeDasharray = '3 3';
-    tb3.strokeDasharray = '5 1';
+    tb1.path.attr({ 'stroke-dasharray': '2 1' });
+    tb2.path.attr({ 'stroke-dasharray': '3 3' });
+    tb3.path.attr({ 'stroke-dasharray': '5 1' });
     expect(areAllDashed([tb1, tb2, tb3])).toBeTruthy();
   });
 
   it('one is not dashed', () => {
-    tb1.strokeDasharray = '5 6';
-    tb2.strokeDasharray = '';
-    tb3.strokeDasharray = '1 2';
+    tb1.path.attr({ 'stroke-dasharray': '5 6' });
+    tb2.path.attr({ 'stroke-dasharray': '' });
+    tb3.path.attr({ 'stroke-dasharray': '1 2' });
     expect(areAllDashed([tb1, tb2, tb3])).toBeFalsy();
   });
 });
 
 describe('areAllNotDashed function', () => {
   it('are all not dashed', () => {
-    tb1.strokeDasharray = '';
-    tb2.strokeDasharray = 'none';
-    tb3.strokeDasharray = '';
+    tb1.path.attr({ 'stroke-dasharray': '' });
+    tb2.path.attr({ 'stroke-dasharray': 'none' });
+    tb3.path.attr({ 'stroke-dasharray': '' });
     expect(areAllNotDashed([tb1, tb2, tb3])).toBeTruthy();
   });
 
   it('one is dashed', () => {
-    tb1.strokeDasharray = '';
-    tb2.strokeDasharray = 'none';
-    tb3.strokeDasharray = '1 5';
+    tb1.path.attr({ 'stroke-dasharray': '' });
+    tb2.path.attr({ 'stroke-dasharray': 'none' });
+    tb3.path.attr({ 'stroke-dasharray': '1 5' });
     expect(areAllNotDashed([tb1, tb2, tb3])).toBeFalsy();
   });
 });

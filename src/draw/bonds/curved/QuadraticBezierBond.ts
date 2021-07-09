@@ -255,14 +255,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this.path.attr({ 'stroke-opacity': so });
   }
 
-  getStrokeDasharray(): string {
-    return this.path.attr('stroke-dasharray');
-  }
-
-  setStrokeDasharray(sd: string) {
-    this.path.attr({ 'stroke-dasharray': sd });
-  }
-
   get fill(): string {
     return this.path.attr('fill');
   }

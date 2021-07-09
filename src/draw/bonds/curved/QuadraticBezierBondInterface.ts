@@ -32,8 +32,6 @@ export interface QuadraticBezierBondInterface {
   setStrokeWidth(sw: number): void;
   getStrokeOpacity(): number;
   setStrokeOpacity(so: number): void;
-  getStrokeDasharray(): string;
-  setStrokeDasharray(sd: string): void;
   fill: string;
   fillOpacity: number;
   bringToFront(): void;

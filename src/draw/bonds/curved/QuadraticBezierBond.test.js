@@ -175,7 +175,7 @@ describe('QuadraticBezierBond class', () => {
     expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
   });
 
-  it('stroke, strokeWidth, strokeOpacity and strokeDasharray getters and setters', () => {
+  it('stroke, strokeWidth, strokeOpacity getters and setters', () => {
     let b1 = Base.create(svg, 'a', 50, 40);
     let b2 = Base.create(svg, 'n', 100, 300);
     let d = QuadraticBezierBond._dPath(b1, b2, 6, 8, 200, Math.PI / 6);
@@ -190,9 +190,6 @@ describe('QuadraticBezierBond class', () => {
     qbb.setStrokeOpacity(0.41); // use setter
     expect(qbb.getStrokeOpacity()).toBe(0.41); // check getter
     expect(qbb.path.attr('stroke-opacity')).toBe(0.41); // check actual value
-    qbb.setStrokeDasharray('3 1 6 7'); // use setter
-    expect(qbb.getStrokeDasharray()).toBe('3 1 6 7'); // check getter
-    expect(p.attr('stroke-dasharray')).toBe('3 1 6 7'); // check actual value
   });
 
   it('fill, fillOpacity and cursor getters and setters', () => {

@@ -81,15 +81,6 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
     super.setStrokeOpacity(so);
     TertiaryBond.recommendedDefaults.path['stroke-opacity'] = so;
   }
-
-  get strokeDasharray(): string {
-    return super.getStrokeDasharray();
-  }
-
-  set strokeDasharray(sd: string) {
-    super.setStrokeDasharray(sd);
-    TertiaryBond.recommendedDefaults.path['stroke-dasharray'] = sd;
-  }
 }
 
 TertiaryBond.dashedStrokeDasharray = '8 2';
