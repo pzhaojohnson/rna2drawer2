@@ -65,15 +65,13 @@ describe('QuadraticBezierBond class', () => {
     });
   });
 
-  it('id and base getters', () => {
+  it('id getter', () => {
     let p = svg.path('M 1 2 Q 4 5 6 7');
     p.id('asdfzxcv');
     let b1 = Base.create(svg, 'h', 1, 5);
     let b2 = Base.create(svg, 'y', 1, 1);
     let qbb = new QuadraticBezierBond(p, b1, b2);
     expect(qbb.id).toBe('asdfzxcv');
-    expect(qbb.base1).toBe(b1);
-    expect(qbb.base2).toBe(b2);
   });
 
   it('contains method', () => {

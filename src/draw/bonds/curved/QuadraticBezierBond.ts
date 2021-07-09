@@ -10,8 +10,8 @@ import normalizeAngle from 'Draw/normalizeAngle';
 
 class QuadraticBezierBond implements QuadraticBezierBondInterface {
   readonly path: Svg.Path;
-  _base1: Base;
-  _base2: Base;
+  readonly base1: Base;
+  readonly base2: Base;
 
   _padding1!: number;
   _padding2!: number;
@@ -50,8 +50,8 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
    * Throws if the path is not composed of an M and Q segment.
    */
   constructor(path: Svg.Path, b1: Base, b2: Base) {
-    this._base1 = b1;
-    this._base2 = b2;
+    this.base1 = b1;
+    this.base2 = b2;
 
     this.path = path;
     this._validatePath();
@@ -79,14 +79,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
   get id(): string {
     return this.path.id();
-  }
-
-  get base1(): Base {
-    return this._base1;
-  }
-
-  get base2(): Base {
-    return this._base2;
   }
 
   contains(b: Base): boolean {
