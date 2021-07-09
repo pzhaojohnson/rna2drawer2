@@ -21,9 +21,9 @@ function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
           let tb = sd.drawing.addTertiaryBond(b5, b3);
           tb.path.attr({
             'stroke': ti.color.toHex(),
+            'stroke-width': 1.5,
             'stroke-opacity': 0.25,
           });
-          tb.setStrokeWidth(1.5);
         }
       }
     });

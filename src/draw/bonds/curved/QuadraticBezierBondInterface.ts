@@ -26,8 +26,6 @@ export interface QuadraticBezierBondInterface {
   setPadding2(p: number): void;
   shiftControl(xShift: number, yShift: number): void;
   reposition(): void;
-  getStrokeWidth(): number;
-  setStrokeWidth(sw: number): void;
   fill: string;
   fillOpacity: number;
   bringToFront(): void;

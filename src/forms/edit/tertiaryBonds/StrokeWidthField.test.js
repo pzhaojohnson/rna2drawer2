@@ -38,7 +38,7 @@ let tb4 = drawing.addTertiaryBond(b4, b1);
 it('getStrokeWidths function', () => {
   let tbs = [tb1, tb2, tb3, tb4];
   let sws = [5.678, 1.22, 3, 1.09];
-  tbs.forEach((tb, i) => tb.strokeWidth = sws[i]);
+  tbs.forEach((tb, i) => tb.path.attr({ 'stroke-width': sws[i] }));
   expect(getStrokeWidths(tbs)).toStrictEqual(sws);
 });
 

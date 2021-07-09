@@ -54,15 +54,6 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
     super.setPadding2(p);
     TertiaryBond.recommendedDefaults.basePadding2 = p;
   }
-
-  get strokeWidth(): number {
-    return super.getStrokeWidth();
-  }
-
-  set strokeWidth(sw: number) {
-    super.setStrokeWidth(sw);
-    TertiaryBond.recommendedDefaults.path['stroke-width'] = sw;
-  }
 }
 
 TertiaryBond.dashedStrokeDasharray = '8 2';

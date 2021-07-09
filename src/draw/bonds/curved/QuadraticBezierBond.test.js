@@ -175,17 +175,6 @@ describe('QuadraticBezierBond class', () => {
     expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
   });
 
-  it('strokeWidth getter and setter', () => {
-    let b1 = Base.create(svg, 'a', 50, 40);
-    let b2 = Base.create(svg, 'n', 100, 300);
-    let d = QuadraticBezierBond._dPath(b1, b2, 6, 8, 200, Math.PI / 6);
-    let p = svg.path(d);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    qbb.setStrokeWidth(3.44); // use setter
-    expect(qbb.getStrokeWidth()).toBe(3.44); // check getter
-    expect(p.attr('stroke-width')).toBe(3.44); // check actual value
-  });
-
   it('fill, fillOpacity and cursor getters and setters', () => {
     let b1 = Base.create(svg, 'A', 10, 20);
     let b2 = Base.create(svg, 'g', 800, 200);

@@ -231,14 +231,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this._storeControlHeightAndAngle();
   }
 
-  getStrokeWidth(): number {
-    return this.path.attr('stroke-width');
-  }
-
-  setStrokeWidth(sw: number) {
-    this.path.attr({ 'stroke-width': sw });
-  }
-
   get fill(): string {
     return this.path.attr('fill');
   }

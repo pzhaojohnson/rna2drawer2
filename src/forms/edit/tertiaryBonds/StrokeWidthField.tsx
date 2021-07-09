@@ -5,7 +5,12 @@ import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 
 export function getStrokeWidths(tbs: TertiaryBond[]): number[] {
   let sws = [] as number[];
-  tbs.forEach(tb => sws.push(tb.strokeWidth));
+  tbs.forEach(tb => {
+    let sw = tb.path.attr('stroke-width');
+    if (typeof sw == 'number') {
+      sws.push(sw);
+    }
+  });
   return sws;
 }
 
@@ -31,7 +36,7 @@ export function StrokeWidthField(props: Props): React.ReactElement | null {
             let sws = getStrokeWidths(tbs);
             if (!areAllSameNumber(sws) || sw != sws[0]) {
               props.pushUndo();
-              tbs.forEach(tb => tb.strokeWidth = sw);
+              tbs.forEach(tb => tb.path.attr({ 'stroke-width': sw }));
               props.changed();
             }
           }
