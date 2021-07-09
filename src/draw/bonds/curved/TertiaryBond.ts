@@ -36,24 +36,6 @@ export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInt
     setValues(tb, TertiaryBond.recommendedDefaults);
     return tb;
   }
-
-  get padding1(): number {
-    return super.getPadding1();
-  }
-
-  set padding1(p: number) {
-    super.setPadding1(p);
-    TertiaryBond.recommendedDefaults.basePadding1 = p;
-  }
-
-  get padding2(): number {
-    return super.getPadding2();
-  }
-
-  set padding2(p: number) {
-    super.setPadding2(p);
-    TertiaryBond.recommendedDefaults.basePadding2 = p;
-  }
 }
 
 TertiaryBond.dashedStrokeDasharray = '8 2';

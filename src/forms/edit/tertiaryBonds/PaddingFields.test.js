@@ -39,12 +39,12 @@ let tb4 = drawing.addTertiaryBond(b4, b1);
 
 describe('getPaddings1 and getPaddings2 functions', () => {
   it('return trimmed paddings', () => {
-    tb1.padding1 = 1.87991;
-    tb1.padding2 = 9.01225872;
-    tb2.padding1 = 5;
-    tb2.padding2 = 8;
-    tb3.padding1 = 5.288;
-    tb3.padding2 = 12.882;
+    tb1.setPadding1(1.87991);
+    tb1.setPadding2(9.01225872);
+    tb2.setPadding1(5);
+    tb2.setPadding2(8);
+    tb3.setPadding1(5.288);
+    tb3.setPadding2(12.882);
     expect(getPadding1s([tb1, tb2, tb3])).toStrictEqual([1.88, 5, 5.29]);
     expect(getPadding2s([tb1, tb2, tb3])).toStrictEqual([9.01, 8, 12.88]);
   });

@@ -1,26 +1,27 @@
 import * as React from 'react';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 
 function trimPadding(p: number): number {
   return Number(p.toFixed(2));
 }
 
-export function getPadding1s(tbs: TertiaryBond[]): number[] {
+export function getPadding1s(tbs: TertiaryBondInterface[]): number[] {
   let p1s = [] as number[];
-  tbs.forEach(tb => p1s.push(trimPadding(tb.padding1)));
+  tbs.forEach(tb => p1s.push(trimPadding(tb.getPadding1())));
   return p1s;
 }
 
-export function getPadding2s(tbs: TertiaryBond[]): number[] {
+export function getPadding2s(tbs: TertiaryBondInterface[]): number[] {
   let p2s = [] as number[];
-  tbs.forEach(tb => p2s.push(trimPadding(tb.padding2)));
+  tbs.forEach(tb => p2s.push(trimPadding(tb.getPadding2())));
   return p2s;
 }
 
 interface Props {
-  getTertiaryBonds: () => TertiaryBond[];
+  getTertiaryBonds: () => TertiaryBondInterface[];
   pushUndo: () => void;
   changed: () => void;
 }
@@ -42,8 +43,9 @@ export function PaddingField1(props: Props): React.ReactElement | null {
             let p1s = getPadding1s(tbs);
             if (!areAllSameNumber(p1s) || p1 != p1s[0]) {
               props.pushUndo();
-              tbs.forEach(tb => tb.padding1 = p1);
+              tbs.forEach(tb => tb.setPadding1(p1));
               props.changed();
+              TertiaryBond.recommendedDefaults.basePadding1 = p1;
             }
           }
         }}
@@ -69,8 +71,9 @@ export function PaddingField2(props: Props): React.ReactElement | null {
             let p2s = getPadding2s(tbs);
             if (!areAllSameNumber(p2s) || p2 != p2s[0]) {
               props.pushUndo();
-              tbs.forEach(tb => tb.padding2 = p2);
+              tbs.forEach(tb => tb.setPadding2(p2));
               props.changed();
+              TertiaryBond.recommendedDefaults.basePadding2 = p2;
             }
           }
         }}

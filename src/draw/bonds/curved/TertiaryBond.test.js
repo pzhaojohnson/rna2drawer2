@@ -56,18 +56,4 @@ describe('TeritaryBond class', () => {
       expect(normalizeAngle(toEnd2)).toBeCloseTo(normalizeAngle(toControl2));
     });
   });
-
-  it('padding1 and padding2 getters and setters', () => {
-    let b1 = Base.create(svg, 'q', 1, 4);
-    let b2 = Base.create(svg, 't', 400, 3000);
-    let tb = TertiaryBond.create(svg, b1, b2);
-    tb.padding1 = 6.6; // use setter
-    expect(tb.padding1).toBeCloseTo(6.6); // check getter
-    // updates recommended default
-    expect(TertiaryBond.recommendedDefaults.basePadding1).toBeCloseTo(6.6);
-    tb.padding2 = 12.8; // use setter
-    expect(tb.padding2).toBeCloseTo(12.8); // check getter
-    // updates recommended default
-    expect(TertiaryBond.recommendedDefaults.basePadding2).toBeCloseTo(12.8);
-  });
 });
