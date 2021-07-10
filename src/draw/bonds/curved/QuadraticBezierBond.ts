@@ -13,16 +13,16 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   readonly base1: Base;
   readonly base2: Base;
 
-  _padding1!: number;
-  _padding2!: number;
+  _basePadding1: number;
+  _basePadding2: number;
   _controlHeight!: number;
   _controlAngle!: number;
 
   static _dPath(
     b1: Base,
     b2: Base,
-    padding1: number,
-    padding2: number,
+    basePadding1: number,
+    basePadding2: number,
     controlHeight: number,
     controlAngle: number,
   ): string {
@@ -32,11 +32,11 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     let xControl = xMiddle + (controlHeight * Math.cos(ca));
     let yControl = yMiddle + (controlHeight * Math.sin(ca));
     let a1 = angleBetween(b1.xCenter, b1.yCenter, xControl, yControl);
-    let x1 = b1.xCenter + (padding1 * Math.cos(a1));
-    let y1 = b1.yCenter + (padding1 * Math.sin(a1));
+    let x1 = b1.xCenter + (basePadding1 * Math.cos(a1));
+    let y1 = b1.yCenter + (basePadding1 * Math.sin(a1));
     let a2 = angleBetween(b2.xCenter, b2.yCenter, xControl, yControl);
-    let x2 = b2.xCenter + (padding2 * Math.cos(a2));
-    let y2 = b2.yCenter + (padding2 * Math.sin(a2));
+    let x2 = b2.xCenter + (basePadding2 * Math.cos(a2));
+    let y2 = b2.yCenter + (basePadding2 * Math.sin(a2));
     return ['M', x1, y1, 'Q', xControl, yControl, x2, y2].join(' ');
   }
 
@@ -56,7 +56,10 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this.path = path;
     this._validatePath();
 
-    this._storePaddings();
+    this._basePadding1 = 0;
+    this._basePadding2 = 0;
+    this._storeBasePaddings();
+
     this._storeControlHeightAndAngle();
   }
 
@@ -121,17 +124,14 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     return q[2] as number;
   }
 
-  /**
-   * Sets the _padding1 and _padding2 properties.
-   */
-  _storePaddings() {
-    this._padding1 = distance(
+  _storeBasePaddings() {
+    this._basePadding1 = distance(
       this.base1.xCenter,
       this.base1.yCenter,
       this.x1,
       this.y1,
     );
-    this._padding2 = distance(
+    this._basePadding2 = distance(
       this.base2.xCenter,
       this.base2.yCenter,
       this.x2,
@@ -139,30 +139,22 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     );
   }
 
-  getPadding1(): number {
-    return this._padding1;
+  get basePadding1() {
+    return this._basePadding1;
   }
 
-  setPadding1(p: number) {
-    this._reposition(
-      p,
-      this.getPadding2(),
-      this._controlHeight,
-      this._controlAngle,
-    );
+  set basePadding1(bp1) {
+    this._basePadding1 = bp1;
+    this.reposition();
   }
 
-  getPadding2(): number {
-    return this._padding2;
+  get basePadding2() {
+    return this._basePadding2;
   }
 
-  setPadding2(p: number) {
-    this._reposition(
-      this.getPadding1(),
-      p,
-      this._controlHeight,
-      this._controlAngle,
-    );
+  set basePadding2(bp2) {
+    this._basePadding2 = bp2;
+    this.reposition();
   }
 
   /**
@@ -196,30 +188,30 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     let ca = angleBetween(xMiddle, yMiddle, xControl, yControl);
     let a12 = this.base1.angleBetweenCenters(this.base2);
     let controlAngle = normalizeAngle(ca, a12) - a12;
-    this._reposition(this.getPadding1(), this.getPadding2(), controlHeight, controlAngle);
+    this._reposition(this.basePadding1, this.basePadding2, controlHeight, controlAngle);
   }
 
   reposition() {
     this._reposition(
-      this.getPadding1(),
-      this.getPadding2(),
+      this.basePadding1,
+      this.basePadding2,
       this._controlHeight,
       this._controlAngle
     );
   }
 
-  _reposition(padding1: number, padding2: number, controlHeight: number, controlAngle: number) {
+  _reposition(basePadding1: number, basePadding2: number, controlHeight: number, controlAngle: number) {
     this.path.plot(
       QuadraticBezierBond._dPath(
         this.base1,
         this.base2,
-        padding1,
-        padding2,
+        basePadding1,
+        basePadding2,
         controlHeight,
         controlAngle,
       ),
     );
-    this._storePaddings();
+    this._storeBasePaddings();
     this._storeControlHeightAndAngle();
   }
 

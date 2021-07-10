@@ -20,10 +20,8 @@ export interface QuadraticBezierBondInterface {
   y2: number;
   xControl: number;
   yControl: number;
-  getPadding1(): number;
-  setPadding1(p: number): void;
-  getPadding2(): number;
-  setPadding2(p: number): void;
+  basePadding1: number;
+  basePadding2: number;
   shiftControl(xShift: number, yShift: number): void;
   reposition(): void;
   bringToFront(): void;

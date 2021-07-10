@@ -33,8 +33,8 @@ export function values(bond: QuadraticBezierBond): Values {
   if (typeof pathAttrs['stroke-dasharray'] == 'string') {
     vs.path['stroke-dasharray'] = pathAttrs['stroke-dasharray'];
   }
-  vs.basePadding1 = bond.getPadding1();
-  vs.basePadding2 = bond.getPadding2();
+  vs.basePadding1 = bond.basePadding1;
+  vs.basePadding2 = bond.basePadding2;
   return vs;
 }
 
@@ -54,9 +54,9 @@ export function setValues(bond: QuadraticBezierBond, vs: Values) {
     }
   }
   if (typeof vs.basePadding1 == 'number') {
-    bond.setPadding1(vs.basePadding1);
+    bond.basePadding1 = vs.basePadding1;
   }
   if (typeof vs.basePadding2 == 'number') {
-    bond.setPadding2(vs.basePadding2);
+    bond.basePadding2 = vs.basePadding2;
   }
 }
