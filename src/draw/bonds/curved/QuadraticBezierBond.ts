@@ -7,16 +7,19 @@ import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
+import {
+  Positioning,
+  positioning,
+  ControlPointDisplacement,
+} from './positioning';
+import { position } from './position';
 
 class QuadraticBezierBond implements QuadraticBezierBondInterface {
   readonly path: Svg.Path;
   readonly base1: Base;
   readonly base2: Base;
 
-  _basePadding1: number;
-  _basePadding2: number;
-  _controlHeight!: number;
-  _controlAngle!: number;
+  _positioning: Positioning;
 
   static _dPath(
     b1: Base,
@@ -56,11 +59,14 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this.path = path;
     this._validatePath();
 
-    this._basePadding1 = 0;
-    this._basePadding2 = 0;
-    this._storeBasePaddings();
-
-    this._storeControlHeightAndAngle();
+    this._positioning = positioning(this) ?? {
+      basePadding1: 8,
+      basePadding2: 8,
+      controlPointDisplacement: {
+        magnitude: 0,
+        angle: 0,
+      },
+    };
   }
 
   _validatePath(): (void | never) {
@@ -124,59 +130,30 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     return q[2] as number;
   }
 
-  _storeBasePaddings() {
-    this._basePadding1 = distance(
-      this.base1.xCenter,
-      this.base1.yCenter,
-      this.x1,
-      this.y1,
-    );
-    this._basePadding2 = distance(
-      this.base2.xCenter,
-      this.base2.yCenter,
-      this.x2,
-      this.y2,
-    );
-  }
-
   get basePadding1() {
-    return this._basePadding1;
+    return this._positioning.basePadding1;
   }
 
   set basePadding1(bp1) {
-    this._basePadding1 = bp1;
+    this._positioning.basePadding1 = bp1;
     this.reposition();
   }
 
   get basePadding2() {
-    return this._basePadding2;
+    return this._positioning.basePadding2;
   }
 
   set basePadding2(bp2) {
-    this._basePadding2 = bp2;
+    this._positioning.basePadding2 = bp2;
     this.reposition();
   }
 
-  /**
-   * Sets the _controlHeight and _controlAngle properties.
-   */
-  _storeControlHeightAndAngle() {
-    let xMiddle = (this.base1.xCenter + this.base2.xCenter) / 2;
-    let yMiddle = (this.base1.yCenter + this.base2.yCenter) / 2;
-    this._controlHeight = distance(
-      xMiddle,
-      yMiddle,
-      this.xControl,
-      this.yControl,
-    );
-    let a12 = this.base1.angleBetweenCenters(this.base2);
-    let ca = angleBetween(
-      xMiddle,
-      yMiddle,
-      this.xControl,
-      this.yControl,
-    );
-    this._controlAngle = normalizeAngle(ca, a12) - a12;
+  get controlPointDisplacement(): ControlPointDisplacement {
+    return { ...this._positioning.controlPointDisplacement };
+  }
+
+  set controlPointDisplacement(cpd) {
+    this._positioning.controlPointDisplacement = { ...cpd };
   }
 
   shiftControl(xShift: number, yShift: number) {
@@ -188,31 +165,15 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     let ca = angleBetween(xMiddle, yMiddle, xControl, yControl);
     let a12 = this.base1.angleBetweenCenters(this.base2);
     let controlAngle = normalizeAngle(ca, a12) - a12;
-    this._reposition(this.basePadding1, this.basePadding2, controlHeight, controlAngle);
+    this._positioning.controlPointDisplacement = {
+      magnitude: controlHeight,
+      angle: controlAngle,
+    };
+    this.reposition();
   }
 
   reposition() {
-    this._reposition(
-      this.basePadding1,
-      this.basePadding2,
-      this._controlHeight,
-      this._controlAngle
-    );
-  }
-
-  _reposition(basePadding1: number, basePadding2: number, controlHeight: number, controlAngle: number) {
-    this.path.plot(
-      QuadraticBezierBond._dPath(
-        this.base1,
-        this.base2,
-        basePadding1,
-        basePadding2,
-        controlHeight,
-        controlAngle,
-      ),
-    );
-    this._storeBasePaddings();
-    this._storeControlHeightAndAngle();
+    position(this, this._positioning);
   }
 
   bringToFront() {

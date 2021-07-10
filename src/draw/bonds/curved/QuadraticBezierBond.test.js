@@ -109,10 +109,6 @@ describe('QuadraticBezierBond class', () => {
     expect(qbb.basePadding1).toBeCloseTo(30); // check getter
     // check actual value
     expect(distance(100, 200, qbb.x1, qbb.y1)).toBeCloseTo(30);
-    // maintains other aspects of path positioning
-    expect(qbb.basePadding2).toBeCloseTo(20);
-    expect(qbb._controlHeight).toBeCloseTo(100);
-    expect(normalizeAngle(qbb._controlAngle)).toBeCloseTo(Math.PI / 3);
   });
 
   it('basePadding2 getter and setter', () => {
@@ -126,10 +122,6 @@ describe('QuadraticBezierBond class', () => {
     expect(qbb.basePadding2).toBeCloseTo(28); // check getter
     // check actual value
     expect(distance(200, 500, qbb.x2, qbb.y2)).toBeCloseTo(28);
-    // maintains other aspects of path positioning
-    expect(qbb.basePadding1).toBeCloseTo(10);
-    expect(qbb._controlHeight).toBeCloseTo(25);
-    expect(normalizeAngle(qbb._controlAngle)).toBeCloseTo(2 * Math.PI / 3);
   });
 
   it('shiftControl method', () => {
