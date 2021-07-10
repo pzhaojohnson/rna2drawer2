@@ -3,19 +3,20 @@ import { midpoint2D as midpoint } from 'Math/midpoint';
 import { distance2D as distance } from 'Math/distance';
 import { normalizeAngle } from 'Draw/normalizeAngle';
 
+// relative to the midpoint between the centers
+// of bases 1 and 2 of a bond
+export type ControlPointDisplacement = {
+  magnitude: number;
+
+  // relative to the angle from the center of base 1
+  // to the center of base 2
+  angle: number;
+}
+
 export type Positioning = {
   basePadding1: number;
   basePadding2: number;
-
-  // relative to the midpoint between the centers
-  // of bases 1 and 2 of the bond
-  controlPointDisplacement: {
-    magnitude: number;
-
-    // relative to the angle from the center of base 1
-    // to the center of base 2
-    angle: number;
-  }
+  controlPointDisplacement: ControlPointDisplacement;
 }
 
 function isPositioning(p: any): p is Positioning {
