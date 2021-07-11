@@ -1,7 +1,4 @@
-import {
-  QuadraticBezierBondInterface,
-  QuadraticBezierBondSavableState,
-} from './QuadraticBezierBondInterface';
+import { QuadraticBezierBondInterface } from './QuadraticBezierBondInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
@@ -191,15 +188,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
   hasBeenRemoved() {
     return !this.path.root();
-  }
-
-  savableState(): QuadraticBezierBondSavableState {
-    return {
-      className: 'QuadraticBezierBond',
-      pathId: this.path.id(),
-      baseId1: this.base1.id,
-      baseId2: this.base2.id,
-    };
   }
 
   refreshIds() {

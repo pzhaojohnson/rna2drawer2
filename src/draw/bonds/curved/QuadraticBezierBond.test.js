@@ -201,31 +201,6 @@ describe('QuadraticBezierBond class', () => {
     expect(qbb.hasBeenRemoved()).toBeTruthy();
   });
 
-  describe('savableState method', () => {
-    it('includes className, path and bases', () => {
-      let p = svg.path('M 1 2 Q 5 5 6 7');
-      let b1 = Base.create(svg, 'b', 1, 5);
-      let b2 = Base.create(svg, 'N', 5, 3);
-      let qbb = new QuadraticBezierBond(p, b1, b2);
-      let savableState = qbb.savableState();
-      expect(savableState.className).toBe('QuadraticBezierBond');
-      expect(savableState.pathId).toBe(p.id());
-      expect(savableState.baseId1).toBe(b1.id);
-      expect(savableState.baseId2).toBe(b2.id);
-    });
-
-    it('can be converted to and from a JSON string', () => {
-      let p = svg.path('M 1 2 Q 5 5 6 7');
-      let b1 = Base.create(svg, 'b', 1, 5);
-      let b2 = Base.create(svg, 'N', 5, 3);
-      let qbb = new QuadraticBezierBond(p, b1, b2);
-      let savableState = qbb.savableState();
-      let json = JSON.stringify(savableState);
-      let parsed = JSON.parse(json);
-      expect(JSON.stringify(parsed)).toBe(json);
-    });
-  });
-
   it('refreshIds method', () => {
     let p = svg.path('M 1 2 Q 5 5 6 7');
     let b1 = Base.create(svg, 'b', 1, 5);

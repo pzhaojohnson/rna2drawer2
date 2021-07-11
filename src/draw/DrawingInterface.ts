@@ -10,7 +10,9 @@ import {
   SavableState as SavableStraightBondState,
 } from 'Draw/bonds/straight/save';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
-import { QuadraticBezierBondSavableState } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
+import {
+  SavableState as SavableTertiaryBondState,
+} from 'Draw/bonds/curved/save';
 
 export interface DrawingSavableState {
   className: string;
@@ -18,7 +20,7 @@ export interface DrawingSavableState {
   sequences: SequenceSavableState[];
   primaryBonds: SavableStraightBondState[];
   secondaryBonds: SavableStraightBondState[];
-  tertiaryBonds: QuadraticBezierBondSavableState[];
+  tertiaryBonds: SavableTertiaryBondState[];
 }
 
 export interface DrawingInterface {

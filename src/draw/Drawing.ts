@@ -17,7 +17,10 @@ import {
 import { addSavedPrimaryBond, addSavedSecondaryBond } from 'Draw/bonds/straight/saved';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
-import { QuadraticBezierBondSavableState } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
+import {
+  SavableState as SavableTertiaryBondState,
+  savableState as savableTertiaryBondState,
+} from 'Draw/bonds/curved/save';
 import { addSavedTertiaryBond } from 'Draw/bonds/curved/saved';
 import { adjustBaseNumbering } from './edit/adjustBaseNumbering';
 
@@ -415,8 +418,8 @@ class Drawing implements DrawingInterface {
     this.forEachPrimaryBond(pb => primaryBonds.push(savableStraightBondState(pb)));
     let secondaryBonds = [] as SavableStraightBondState[];
     this.forEachSecondaryBond(sb => secondaryBonds.push(savableStraightBondState(sb)));
-    let tertiaryBonds = [] as QuadraticBezierBondSavableState[];
-    this.forEachTertiaryBond(tb => tertiaryBonds.push(tb.savableState()));
+    let tertiaryBonds = [] as SavableTertiaryBondState[];
+    this.forEachTertiaryBond(tb => tertiaryBonds.push(savableTertiaryBondState(tb)));
     return {
       className: 'Drawing',
       svg: this.svg.svg(),

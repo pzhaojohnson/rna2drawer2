@@ -4,6 +4,7 @@ import Sequence from './Sequence';
 import Base from './Base';
 import * as AdjustBaseNumbering from './edit/adjustBaseNumbering';
 import { savableState as savableStraightBondState } from 'Draw/bonds/straight/save';
+import { savableState as savableTertiaryBondState } from 'Draw/bonds/curved/save';
 
 let drawing = new Drawing();
 let container = document.createElement('div');
@@ -602,8 +603,8 @@ describe('savableState method', () => {
   it('includes tertiary bonds', () => {
     let tertiaryBonds = savableState.tertiaryBonds;
     expect(tertiaryBonds.length).toBe(2);
-    expect(JSON.stringify(tertiaryBonds[0])).toBe(JSON.stringify(tb1.savableState()));
-    expect(JSON.stringify(tertiaryBonds[1])).toBe(JSON.stringify(tb2.savableState()));
+    expect(JSON.stringify(tertiaryBonds[0])).toBe(JSON.stringify(savableTertiaryBondState(tb1)));
+    expect(JSON.stringify(tertiaryBonds[1])).toBe(JSON.stringify(savableTertiaryBondState(tb2)));
   });
 
   it('can be converted to and from a JSON string', () => {
