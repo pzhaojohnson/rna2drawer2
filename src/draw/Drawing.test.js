@@ -440,7 +440,7 @@ describe('tertiary bonds attributes', () => {
   it('forEachTertiaryBond method', () => {
     let i = 0;
     drawing.forEachTertiaryBond(tb => {
-      expect(tb).toBe(drawing._tertiaryBonds[i]);
+      expect(tb).toBe(drawing.tertiaryBonds[i]);
       i++;
     });
     expect(i).toBe(drawing.numTertiaryBonds);

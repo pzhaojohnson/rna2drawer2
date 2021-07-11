@@ -35,7 +35,7 @@ class Drawing implements DrawingInterface {
   _sequences: Sequence[];
   primaryBonds: PrimaryBond[];
   secondaryBonds: SecondaryBond[];
-  _tertiaryBonds: TertiaryBond[];
+  tertiaryBonds: TertiaryBond[];
 
   _onAddSequence?: (seq: Sequence) => void;
   _onAddTertiaryBond?: (tb: TertiaryBond) => void;
@@ -44,7 +44,7 @@ class Drawing implements DrawingInterface {
     this._sequences = [];
     this.primaryBonds = [];
     this.secondaryBonds = [];
-    this._tertiaryBonds = [];
+    this.tertiaryBonds = [];
   }
 
   addTo(container: Node, SVG: () => Svg.Svg) {
@@ -327,11 +327,11 @@ class Drawing implements DrawingInterface {
   }
 
   get numTertiaryBonds(): number {
-    return this._tertiaryBonds.length;
+    return this.tertiaryBonds.length;
   }
 
   getTertiaryBondById(id: string): (TertiaryBond | undefined) {
-    return this._tertiaryBonds.find(tb => tb.id === id);
+    return this.tertiaryBonds.find(tb => tb.id === id);
   }
 
   getTertiaryBondsByIds(ids: Set<string>): TertiaryBond[] {
@@ -345,12 +345,12 @@ class Drawing implements DrawingInterface {
   }
 
   forEachTertiaryBond(f: (tb: TertiaryBond) => void) {
-    this._tertiaryBonds.forEach(tb => f(tb));
+    this.tertiaryBonds.forEach(tb => f(tb));
   }
 
   addTertiaryBond(b1: Base, b2: Base): TertiaryBond {
     let tb = TertiaryBond.create(this.svg, b1, b2);
-    this._tertiaryBonds.push(tb);
+    this.tertiaryBonds.push(tb);
     this.fireAddTertiaryBond(tb);
     return tb;
   }
@@ -369,7 +369,7 @@ class Drawing implements DrawingInterface {
     let tb = this.getTertiaryBondById(id);
     if (tb) {
       tb.remove();
-      this._tertiaryBonds = this._tertiaryBonds.filter(tb => tb.id !== id);
+      this.tertiaryBonds = this.tertiaryBonds.filter(tb => tb.id !== id);
     }
   }
 
@@ -399,7 +399,7 @@ class Drawing implements DrawingInterface {
     this._sequences = [];
     this.primaryBonds = [];
     this.secondaryBonds = [];
-    this._tertiaryBonds = [];
+    this.tertiaryBonds = [];
     this.svg.clear();
   }
 
@@ -501,7 +501,7 @@ class Drawing implements DrawingInterface {
         this.svg,
         (id: string) => basesByIds[id],
       );
-      this._tertiaryBonds.push(tb);
+      this.tertiaryBonds.push(tb);
       this.fireAddTertiaryBond(tb);
     });
   }

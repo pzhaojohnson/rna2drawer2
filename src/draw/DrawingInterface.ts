@@ -69,6 +69,7 @@ export interface DrawingInterface {
   addSecondaryBond(b1: Base, b2: Base): SecondaryBond;
   removeSecondaryBondById(id: string): void;
 
+  readonly tertiaryBonds: TertiaryBond[];
   numTertiaryBonds: number;
   getTertiaryBondById(id: string): TertiaryBond | undefined;
   getTertiaryBondsByIds(ids: Set<string>): TertiaryBond[];
