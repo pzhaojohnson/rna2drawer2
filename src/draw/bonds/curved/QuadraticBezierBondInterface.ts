@@ -23,7 +23,6 @@ export interface QuadraticBezierBondInterface {
   bringToFront(): void;
   sendToBack(): void;
   remove(): void;
-  hasBeenRemoved(): boolean;
   refreshIds(): void;
 }
 

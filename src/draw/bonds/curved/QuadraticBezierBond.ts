@@ -186,10 +186,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this.path.remove();
   }
 
-  hasBeenRemoved() {
-    return !this.path.root();
-  }
-
   refreshIds() {
     this.path.id('');
     this.path.id();

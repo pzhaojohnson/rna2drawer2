@@ -195,10 +195,8 @@ describe('QuadraticBezierBond class', () => {
     let qbb = new QuadraticBezierBond(p, b1, b2);
     let id = '#' + p.id();
     expect(svg.findOne(id)).toBeTruthy();
-    expect(qbb.hasBeenRemoved()).toBeFalsy();
     qbb.remove();
     expect(svg.findOne(id)).toBeFalsy();
-    expect(qbb.hasBeenRemoved()).toBeTruthy();
   });
 
   it('refreshIds method', () => {
