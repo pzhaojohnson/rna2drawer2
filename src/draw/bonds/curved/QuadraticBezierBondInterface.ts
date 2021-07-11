@@ -1,5 +1,6 @@
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
+import { ControlPointDisplacement } from './positioning';
 
 export interface QuadraticBezierBondSavableState {
   className: string;
@@ -22,6 +23,8 @@ export interface QuadraticBezierBondInterface {
   yControl: number;
   basePadding1: number;
   basePadding2: number;
+  controlPointDisplacement(): ControlPointDisplacement;
+  setControlPointDisplacement(cbd: ControlPointDisplacement): void;
   shiftControl(xShift: number, yShift: number): void;
   reposition(): void;
   bringToFront(): void;

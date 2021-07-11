@@ -148,11 +148,11 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this.reposition();
   }
 
-  get controlPointDisplacement(): ControlPointDisplacement {
+  controlPointDisplacement(): ControlPointDisplacement {
     return { ...this._positioning.controlPointDisplacement };
   }
 
-  set controlPointDisplacement(cpd) {
+  setControlPointDisplacement(cpd: ControlPointDisplacement) {
     this._positioning.controlPointDisplacement = { ...cpd };
   }
 
