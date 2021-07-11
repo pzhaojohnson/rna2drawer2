@@ -4,6 +4,8 @@ import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
+import { assignUuid } from 'Draw/svg/id';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import {
   Positioning,
   positioning,
@@ -45,6 +47,14 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this.base2 = b2;
 
     this.path = path;
+
+    // use the attr method to check if the ID is already
+    // initialized since the id method itself will initialize
+    // the ID (to a non-UUID)
+    if (!this.path.attr('id')) {
+      assignUuid(new PathWrapper(this.path));
+    }
+
     this._validatePath();
 
     this._positioning = positioning(this) ?? {
@@ -61,7 +71,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     if (this.path.type !== 'path') {
       throw new Error('The given element is not a path element.');
     }
-    this.path.id();
     let pa = this.path.array();
     if (pa.length !== 2) {
       throw new Error('Invalid path.');
@@ -157,8 +166,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   refreshIds() {
-    this.path.id('');
-    this.path.id();
+    assignUuid(new PathWrapper(this.path));
   }
 }
 
