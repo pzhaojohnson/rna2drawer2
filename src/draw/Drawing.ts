@@ -16,7 +16,9 @@ import {
 } from 'Draw/bonds/straight/save';
 import { addSavedPrimaryBond, addSavedSecondaryBond } from 'Draw/bonds/straight/saved';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
+import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import { QuadraticBezierBondSavableState } from 'Draw/bonds/curved/QuadraticBezierBondInterface';
+import { addSavedTertiaryBond } from 'Draw/bonds/curved/saved';
 import { adjustBaseNumbering } from './edit/adjustBaseNumbering';
 
 interface Coordinates {
@@ -349,8 +351,7 @@ class Drawing implements DrawingInterface {
   }
 
   addTertiaryBond(b1: Base, b2: Base): TertiaryBond {
-    let tb = TertiaryBond.create(this.svg, b1, b2);
-    this.tertiaryBonds.push(tb);
+    let tb = addTertiaryBond(this, b1, b2);
     this.fireAddTertiaryBond(tb);
     return tb;
   }
@@ -495,13 +496,8 @@ class Drawing implements DrawingInterface {
   }
 
   _addSavedTertiaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
-    savedState.tertiaryBonds.forEach(saved => {
-      let tb = TertiaryBond.fromSavedState(
-        saved,
-        this.svg,
-        (id: string) => basesByIds[id],
-      );
-      this.tertiaryBonds.push(tb);
+    savedState.tertiaryBonds.forEach(stb => {
+      let tb = addSavedTertiaryBond(this, stb as any);
       this.fireAddTertiaryBond(tb);
     });
   }
