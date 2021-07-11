@@ -45,8 +45,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
    *
    * Initializes the ID of the path if it is not already initialized.
    *
-   * Sets fill-opacity to zero.
-   *
    * Throws if the path is not composed of an M and Q segment.
    */
   constructor(path: Svg.Path, b1: Base, b2: Base) {
@@ -71,7 +69,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
       throw new Error('The given element is not a path element.');
     }
     this.path.id();
-    this.path.attr({ 'fill-opacity': 0 });
     let pa = this.path.array();
     if (pa.length !== 2) {
       throw new Error('Invalid path.');

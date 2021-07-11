@@ -47,14 +47,6 @@ describe('QuadraticBezierBond class', () => {
       expect(p.attr('id')).toBeTruthy();
     });
 
-    it('sets path fill opacity to zero', () => {
-      let d = QuadraticBezierBond._dPath(b1, b2, 10, 15, 10, Math.PI / 3);
-      let p = svg.path(d);
-      p.attr({ 'fill-opacity': 1 });
-      let qbb = new QuadraticBezierBond(p, b1, b2);
-      expect(p.attr('fill-opacity')).toBe(0);
-    });
-
     it('throws on wrong path segments', () => {
       let p = svg.path('M 1 2 Q 1 5 8 9 Q 2 10 11 20'); // too many segments
       expect(() => new QuadraticBezierBond(p, b1, b2)).toThrow();
