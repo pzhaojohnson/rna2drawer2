@@ -4,6 +4,7 @@ import {
   highlightTertiaryBond,
   dehighlightTertiaryBond,
 } from './highlight';
+import { shiftControlPoint } from 'Draw/bonds/curved/drag';
 
 export function handleMouseoverOnTertiaryBond(interaction: TertiaryBondsInteraction, tb: TertiaryBond) {
   interaction.hovered = tb.id;
@@ -57,7 +58,7 @@ export function handleMousemove(interaction: TertiaryBondsInteraction, event: Mo
         interaction.fireShouldPushUndo();
       }
       let tbs = interaction.drawing.getTertiaryBondsByIds(interaction.selected);
-      tbs.forEach(tb => tb.shiftControl(shift.x, shift.y));
+      tbs.forEach(tb => shiftControlPoint(tb, shift));
       interaction.dragged = true;
       interaction.fireChange();
     }

@@ -154,22 +154,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     this.reposition();
   }
 
-  shiftControl(xShift: number, yShift: number) {
-    let xMiddle = (this.base1.xCenter + this.base2.xCenter) / 2;
-    let yMiddle = (this.base1.yCenter + this.base2.yCenter) / 2;
-    let xControl = this.xControl + xShift;
-    let yControl = this.yControl + yShift;
-    let controlHeight = distance(xMiddle, yMiddle, xControl, yControl);
-    let ca = angleBetween(xMiddle, yMiddle, xControl, yControl);
-    let a12 = this.base1.angleBetweenCenters(this.base2);
-    let controlAngle = normalizeAngle(ca, a12) - a12;
-    this._positioning.controlPointDisplacement = {
-      magnitude: controlHeight,
-      angle: controlAngle,
-    };
-    this.reposition();
-  }
-
   reposition() {
     position(this, this._positioning);
   }

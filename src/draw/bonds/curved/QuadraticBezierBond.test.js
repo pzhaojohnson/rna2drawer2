@@ -124,23 +124,6 @@ describe('QuadraticBezierBond class', () => {
     expect(distance(200, 500, qbb.x2, qbb.y2)).toBeCloseTo(28);
   });
 
-  it('shiftControl method', () => {
-    let b1 = Base.create(svg, 'T', 20, 30);
-    let b2 = Base.create(svg, 'b', 2000, 300);
-    let d = QuadraticBezierBond._dPath(b1, b2, 8, 12, 300, Math.PI / 3);
-    let p = svg.path(d);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    let unshifted = p.array();
-    qbb.shiftControl(-50, 120);
-    let shifted = p.array();
-    // check control coordinates
-    expect(shifted[1][1]).toBeCloseTo(unshifted[1][1] - 50);
-    expect(shifted[1][2]).toBeCloseTo(unshifted[1][2] + 120);
-    // maintains base paddings
-    expect(qbb.basePadding1).toBeCloseTo(8);
-    expect(qbb.basePadding2).toBeCloseTo(12);
-  });
-
   it('reposition method', () => {
     let b1 = Base.create(svg, 'H', 4, 9);
     let b2 = Base.create(svg, 'j', -2000, -500);

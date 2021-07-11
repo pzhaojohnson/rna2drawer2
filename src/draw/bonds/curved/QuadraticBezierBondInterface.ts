@@ -18,7 +18,6 @@ export interface QuadraticBezierBondInterface {
   basePadding2: number;
   controlPointDisplacement(): ControlPointDisplacement;
   setControlPointDisplacement(cpd: ControlPointDisplacement): void;
-  shiftControl(xShift: number, yShift: number): void;
   reposition(): void;
   bringToFront(): void;
   sendToBack(): void;
