@@ -188,17 +188,6 @@ describe('QuadraticBezierBond class', () => {
     expect(qbb.path.position()).toBeGreaterThan(1);
   });
 
-  it('remove and hasBeenRemoved methods', () => {
-    let p = svg.path('M 1 2 Q 3 4 5 6');
-    let b1 = Base.create(svg, 'v', 1, 2);
-    let b2 = Base.create(svg, 'n', 5, 10);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    let id = '#' + p.id();
-    expect(svg.findOne(id)).toBeTruthy();
-    qbb.remove();
-    expect(svg.findOne(id)).toBeFalsy();
-  });
-
   it('refreshIds method', () => {
     let p = svg.path('M 1 2 Q 5 5 6 7');
     let b1 = Base.create(svg, 'b', 1, 5);

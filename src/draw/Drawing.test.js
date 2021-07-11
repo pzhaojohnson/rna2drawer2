@@ -479,10 +479,8 @@ describe('tertiary bonds attributes', () => {
       );
       let id = tb.id;
       expect(drawing.getTertiaryBondById(id)).toBeTruthy();
-      let spy = jest.spyOn(tb, 'remove');
       drawing.removeTertiaryBondById(id);
       expect(drawing.getTertiaryBondById(id)).toBeFalsy();
-      expect(spy).toHaveBeenCalled();
     });
 
     it('no tertiary bond has the ID', () => {

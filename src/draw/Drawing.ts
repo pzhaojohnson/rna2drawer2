@@ -17,6 +17,7 @@ import {
 import { addSavedPrimaryBond, addSavedSecondaryBond } from 'Draw/bonds/straight/saved';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
+import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import {
   SavableState as SavableTertiaryBondState,
   savableState as savableTertiaryBondState,
@@ -370,11 +371,7 @@ class Drawing implements DrawingInterface {
   }
 
   removeTertiaryBondById(id: string) {
-    let tb = this.getTertiaryBondById(id);
-    if (tb) {
-      tb.remove();
-      this.tertiaryBonds = this.tertiaryBonds.filter(tb => tb.id !== id);
-    }
+    removeTertiaryBondById(this, id);
   }
 
   repositionBonds() {
