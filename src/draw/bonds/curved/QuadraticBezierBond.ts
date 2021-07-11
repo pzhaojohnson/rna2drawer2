@@ -4,6 +4,7 @@ import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
+import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
 import { assignUuid } from 'Draw/svg/id';
 import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import {
@@ -43,6 +44,13 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   constructor(path: Svg.Path, b1: Base, b2: Base) {
+    if (path.type != 'path') {
+      throw new Error('Passed element is not a path.');
+    }
+    if (!isQuadraticBezierCurve(path.array())) {
+      throw new Error('Path is not a quadratic bezier curve.');
+    }
+
     this.base1 = b1;
     this.base2 = b2;
 
@@ -55,8 +63,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
       assignUuid(new PathWrapper(this.path));
     }
 
-    this._validatePath();
-
     this._positioning = positioning(this) ?? {
       basePadding1: 8,
       basePadding2: 8,
@@ -65,21 +71,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
         angle: 0,
       },
     };
-  }
-
-  _validatePath(): (void | never) {
-    if (this.path.type !== 'path') {
-      throw new Error('The given element is not a path element.');
-    }
-    let pa = this.path.array();
-    if (pa.length !== 2) {
-      throw new Error('Invalid path.');
-    }
-    let m = pa[0];
-    let q = pa[1];
-    if (m[0] !== 'M' || q[0] !== 'Q') {
-      throw new Error('Invalid path.');
-    }
   }
 
   get id(): string {

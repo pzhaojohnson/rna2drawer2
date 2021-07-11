@@ -19,12 +19,15 @@ export function isQuadraticBezierCurve(pa: SVG.PathArray): boolean {
       && m[0] == 'M'
       && isFiniteNumber(m[1])
       && isFiniteNumber(m[2])
+      && m.length == 3
       && q
       && q[0] == 'Q'
       && isFiniteNumber(q[1])
       && isFiniteNumber(q[2])
       && isFiniteNumber(q[3])
       && isFiniteNumber(q[4])
+      && q.length == 5
+      && pa.length == 2
     );
   } catch (error) {
     console.error(error);
