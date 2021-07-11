@@ -154,6 +154,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
   setControlPointDisplacement(cpd: ControlPointDisplacement) {
     this._positioning.controlPointDisplacement = { ...cpd };
+    this.reposition();
   }
 
   shiftControl(xShift: number, yShift: number) {
