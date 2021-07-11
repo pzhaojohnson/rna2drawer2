@@ -40,13 +40,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     return ['M', x1, y1, 'Q', xControl, yControl, x2, y2].join(' ');
   }
 
-  /**
-   * Throws if the path element is not actually a path element.
-   *
-   * Initializes the ID of the path if it is not already initialized.
-   *
-   * Throws if the path is not composed of an M and Q segment.
-   */
   constructor(path: Svg.Path, b1: Base, b2: Base) {
     this.base1 = b1;
     this.base2 = b2;
