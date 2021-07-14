@@ -21,28 +21,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
   _positioning: Positioning;
 
-  static _dPath(
-    b1: Base,
-    b2: Base,
-    basePadding1: number,
-    basePadding2: number,
-    controlHeight: number,
-    controlAngle: number,
-  ): string {
-    let xMiddle = (b1.xCenter + b2.xCenter) / 2;
-    let yMiddle = (b1.yCenter + b2.yCenter) / 2;
-    let ca = b1.angleBetweenCenters(b2) + controlAngle;
-    let xControl = xMiddle + (controlHeight * Math.cos(ca));
-    let yControl = yMiddle + (controlHeight * Math.sin(ca));
-    let a1 = angleBetween(b1.xCenter, b1.yCenter, xControl, yControl);
-    let x1 = b1.xCenter + (basePadding1 * Math.cos(a1));
-    let y1 = b1.yCenter + (basePadding1 * Math.sin(a1));
-    let a2 = angleBetween(b2.xCenter, b2.yCenter, xControl, yControl);
-    let x2 = b2.xCenter + (basePadding2 * Math.cos(a2));
-    let y2 = b2.yCenter + (basePadding2 * Math.sin(a2));
-    return ['M', x1, y1, 'Q', xControl, yControl, x2, y2].join(' ');
-  }
-
   constructor(path: Svg.Path, b1: Base, b2: Base) {
     if (path.type != 'path') {
       throw new Error('Passed element is not a path.');
@@ -79,42 +57,6 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
   contains(b: Base): boolean {
     return this.base1.id == b.id || this.base2.id == b.id;
-  }
-
-  get x1(): number {
-    let pa = this.path.array();
-    let m = pa[0];
-    return m[1] as number;
-  }
-
-  get y1(): number {
-    let pa = this.path.array();
-    let m = pa[0];
-    return m[2] as number;
-  }
-
-  get x2(): number {
-    let pa = this.path.array();
-    let q = pa[1];
-    return q[3] as number;
-  }
-
-  get y2(): number {
-    let pa = this.path.array();
-    let q = pa[1];
-    return q[4] as number;
-  }
-
-  get xControl(): number {
-    let pa = this.path.array();
-    let q = pa[1];
-    return q[1] as number;
-  }
-
-  get yControl(): number {
-    let pa = this.path.array();
-    let q = pa[1];
-    return q[2] as number;
   }
 
   get basePadding1() {
