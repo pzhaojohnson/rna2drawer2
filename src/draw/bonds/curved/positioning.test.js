@@ -1,5 +1,6 @@
 import { positioning } from './positioning';
 import { NodeSVG } from 'Draw/NodeSVG';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import Base from 'Draw/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { normalizeAngle } from 'Draw/normalizeAngle';
@@ -25,7 +26,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let path = svg.path('M 20 30 Q 40 50 60 70');
+  let path = new PathWrapper(svg.path('M 20 30 Q 40 50 60 70'));
   let base1 = Base.create(svg, 'Q', 10, 20);
   let base2 = Base.create(svg, 'W', 100, 200);
   bond = new QuadraticBezierBond(path, base1, base2);
@@ -46,7 +47,7 @@ describe('positioning function', () => {
   it('retrieves positioning', () => {
     bond.base1.moveTo(52, 156);
     bond.base2.moveTo(78, 212);
-    bond.path.plot('M 60.469585 155.281582 Q 120.513767 150.188438 86.047063 200.300223');
+    bond.path.wrapped.plot('M 60.469585 155.281582 Q 120.513767 150.188438 86.047063 200.300223');
     let p = positioning(bond);
     p.controlPointDisplacement.angle = normalizeAngle(p.controlPointDisplacement.angle);
     roundPositioning(p);

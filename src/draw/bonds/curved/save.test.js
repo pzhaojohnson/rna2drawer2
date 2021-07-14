@@ -1,5 +1,6 @@
 import { savableState } from './save';
 import { NodeSVG } from 'Draw/NodeSVG';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import Base from 'Draw/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 
@@ -14,7 +15,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let path = svg.path('M 10 20 Q 30 40 50 60');
+  let path = new PathWrapper(svg.path('M 10 20 Q 30 40 50 60'));
   let base1 = Base.create(svg, 'G', 10, 30);
   let base2 = Base.create(svg, 'C', 30, 300);
   bond = new QuadraticBezierBond(path, base1, base2);

@@ -1,5 +1,6 @@
 import { shiftControlPoint } from './drag';
 import { NodeSVG } from 'Draw/NodeSVG';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import Base from 'Draw/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { TertiaryBond } from './TertiaryBond';
@@ -16,7 +17,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let path = svg.path('M 10 20 Q 44 55 66 77');
+  let path = new PathWrapper(svg.path('M 10 20 Q 44 55 66 77'));
   let base1 = Base.create(svg, 'A', 20, 30);
   let base2 = Base.create(svg, 'B', 200, 100);
   bond = new QuadraticBezierBond(path, base1, base2);
@@ -48,7 +49,7 @@ describe('shiftControlPoint function', () => {
     shiftControlPoint(bond, { x: 44.5, y: -62 });
     
     // updated path
-    let pa = bond.path.array();
+    let pa = bond.path.wrapped.array();
     expect(pa.length).toBe(2);
     let m = pa[0];
     expect(m[0]).toBe('M');

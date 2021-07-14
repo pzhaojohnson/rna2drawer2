@@ -1,9 +1,8 @@
 import { QuadraticBezierBondInterface } from './QuadraticBezierBondInterface';
-import * as Svg from '@svgdotjs/svg.js';
+import { SVGPathWrapper as Path } from 'Draw/svg/path';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
 import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
 import { assignUuid } from 'Draw/svg/id';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import {
   Positioning,
   positioning,
@@ -12,17 +11,17 @@ import {
 import { position } from './position';
 
 class QuadraticBezierBond implements QuadraticBezierBondInterface {
-  readonly path: Svg.Path;
+  readonly path: Path;
   readonly base1: Base;
   readonly base2: Base;
 
   _positioning: Positioning;
 
-  constructor(path: Svg.Path, b1: Base, b2: Base) {
-    if (path.type != 'path') {
+  constructor(path: Path, b1: Base, b2: Base) {
+    if (path.wrapped.type != 'path') {
       throw new Error('Passed element is not a path.');
     }
-    if (!isQuadraticBezierCurve(path.array())) {
+    if (!isQuadraticBezierCurve(path.wrapped.array())) {
       throw new Error('Path is not a quadratic bezier curve.');
     }
 
@@ -35,7 +34,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     // initialized since the id method itself will initialize
     // the ID (to a non-UUID)
     if (!this.path.attr('id')) {
-      assignUuid(new PathWrapper(this.path));
+      assignUuid(this.path);
     }
 
     this._positioning = positioning(this) ?? {
@@ -49,7 +48,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   get id(): string {
-    return this.path.id();
+    return String(this.path.id());
   }
 
   contains(b: Base): boolean {
@@ -96,7 +95,7 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   refreshIds() {
-    assignUuid(new PathWrapper(this.path));
+    assignUuid(this.path);
   }
 }
 

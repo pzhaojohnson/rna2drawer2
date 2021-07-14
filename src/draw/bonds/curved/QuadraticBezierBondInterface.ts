@@ -1,10 +1,10 @@
+import { SVGPathWrapper as Path } from 'Draw/svg/path';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
-import * as SVG from '@svgdotjs/svg.js';
 import { ControlPointDisplacement } from './positioning';
 
 export interface QuadraticBezierBondInterface {
   readonly id: string;
-  readonly path: SVG.Path;
+  readonly path: Path;
   readonly base1: Base;
   readonly base2: Base;
   contains(b: Base): boolean;

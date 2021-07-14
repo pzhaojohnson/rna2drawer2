@@ -31,7 +31,7 @@ export function position(bond: QuadraticBezierBond, p: Positioning) {
       'M', startingPoint.x, startingPoint.y,
       'Q', controlPoint.x, controlPoint.y, endPoint.x, endPoint.y,
     ].join(' ');
-    bond.path.plot(d);
+    bond.path.wrapped.plot(d);
 
   } catch (error) {
     console.error(error);

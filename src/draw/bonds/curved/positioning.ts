@@ -43,7 +43,7 @@ function positioningIsFinite(p: Positioning): boolean {
 export function positioning(bond: QuadraticBezierBond): Positioning | undefined {
   try {
     // forgo type checking until end of try block
-    let pa: any = bond.path.array();
+    let pa: any = bond.path.wrapped.array();
     let m = pa[0];
     let q = pa[1];
     let startingPoint = { x: m[1], y: m[2] };

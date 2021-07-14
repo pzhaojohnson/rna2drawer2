@@ -1,5 +1,6 @@
 import { values, setValues } from './values';
 import { NodeSVG } from 'Draw/NodeSVG';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import Base from 'Draw/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { round } from 'Math/round';
@@ -20,7 +21,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let path = svg.path('M 20 30 Q 90 80 50 40');
+  let path = new PathWrapper(svg.path('M 20 30 Q 90 80 50 40'));
   let base1 = Base.create(svg, 'T', 15, 10);
   let base2 = Base.create(svg, 'A', 100, 110);
   bond = new QuadraticBezierBond(path, base1, base2);
