@@ -128,4 +128,18 @@ describe('uuidRegex', () => {
     expect('2ee6f840-52c1-4adfb830-ebad0ce4b35f').not.toMatch(uuidRegex);
     expect('2ee6f840-52c1-4adf-b830ebad0ce4b35f').not.toMatch(uuidRegex);
   });
+
+  it('does not match falsy IDs', () => {
+    // double-check that the UUID regex doesn't match
+    // falsy IDs since the UUID regex will often be used
+    // to check if an ID was initialized
+    [
+      undefined,
+      '',
+    ].forEach(v => {
+      // must convert to string to check if matches
+      let s = String(v);
+      expect(s).not.toMatch(uuidRegex);
+    });
+  });
 });
