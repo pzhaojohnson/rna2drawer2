@@ -2,6 +2,7 @@ import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import Base from 'Draw/Base';
+import { uuidRegex } from 'Draw/svg/id';
 import { positioning } from './positioning';
 import { position } from './position';
 import { round } from 'Math/round';
@@ -68,7 +69,7 @@ describe('QuadraticBezierBond class', () => {
       let bond = new QuadraticBezierBond(path, base1, base2);
       // use the attr method to check if the ID was initialized
       // since the id method itself will initialize the ID
-      expect(path.attr('id')).toBeTruthy();
+      expect(path.attr('id')).toMatch(uuidRegex);
     });
 
     it('does not overwrite path ID', () => {
@@ -94,7 +95,7 @@ describe('QuadraticBezierBond class', () => {
 
   it('id getter', () => {
     expect(bond.id).toBe(bond.path.id());
-    expect(bond.id).toBeTruthy();
+    expect(bond.id).toMatch(uuidRegex);
   });
 
   it('contains method', () => {
@@ -192,10 +193,10 @@ describe('QuadraticBezierBond class', () => {
 
   it('refreshIds method', () => {
     let prevId = bond.path.id();
-    expect(prevId).toBeTruthy();
+    expect(prevId).toMatch(uuidRegex);
     bond.refreshIds();
     let currId = bond.path.id();
     expect(currId).not.toEqual(prevId); // changed ID
-    expect(currId).toBeTruthy(); // didn't undefine ID
+    expect(currId).toMatch(uuidRegex); // didn't undefine ID
   });
 });
