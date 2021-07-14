@@ -1,9 +1,6 @@
 import { QuadraticBezierBondInterface } from './QuadraticBezierBondInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { BaseInterface as Base } from 'Draw/BaseInterface';
-import { distance2D as distance } from 'Math/distance';
-import angleBetween from 'Draw/angleBetween';
-import normalizeAngle from 'Draw/normalizeAngle';
 import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
 import { assignUuid } from 'Draw/svg/id';
 import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
