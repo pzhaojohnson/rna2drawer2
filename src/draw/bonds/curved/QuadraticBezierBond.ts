@@ -10,7 +10,7 @@ import {
 } from './positioning';
 import { position } from './position';
 
-class QuadraticBezierBond implements QuadraticBezierBondInterface {
+export class QuadraticBezierBond implements QuadraticBezierBondInterface {
   readonly path: Path;
   readonly base1: Base;
   readonly base2: Base;
@@ -98,5 +98,3 @@ class QuadraticBezierBond implements QuadraticBezierBondInterface {
     assignUuid(this.path);
   }
 }
-
-export { QuadraticBezierBond };

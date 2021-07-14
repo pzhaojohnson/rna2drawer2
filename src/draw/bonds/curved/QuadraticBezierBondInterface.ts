@@ -17,5 +17,3 @@ export interface QuadraticBezierBondInterface {
   sendToBack(): void;
   refreshIds(): void;
 }
-
-export default QuadraticBezierBondInterface;
