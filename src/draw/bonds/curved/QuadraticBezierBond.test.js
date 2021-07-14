@@ -1,185 +1,200 @@
 import { QuadraticBezierBond } from './QuadraticBezierBond';
-import NodeSVG from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/NodeSVG';
 import Base from 'Draw/Base';
-import { distance2D as distance } from 'Math/distance';
-import angleBetween from 'Draw/angleBetween';
-import normalizeAngle from 'Draw/normalizeAngle';
+import { positioning } from './positioning';
+import { position } from './position';
+import { round } from 'Math/round';
 
-let svg = NodeSVG();
+function roundPositioning(p, places=3) {
+  p.basePadding1 = round(p.basePadding1, places);
+  p.basePadding2 = round(p.basePadding2, places);
+  let cpd = p.controlPointDisplacement;
+  cpd.magnitude = round(cpd.magnitude, places);
+  cpd.angle = round(cpd.angle, places);
+}
+
+let container = null;
+let svg = null;
+
+let path = null;
+let base1 = null;
+let base2 = null;
+let bond = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  svg = NodeSVG();
+  svg.addTo(container);
+
+  path = svg.path('M 10 20 Q 100 200 300 400');
+  base1 = Base.create(svg, 'G', 200, 100);
+  base2 = Base.create(svg, 'C', 20, 1000);
+  bond = new QuadraticBezierBond(path, base1, base2);
+});
+
+afterEach(() => {
+  path = null;
+  base1 = null;
+  base2 = null;
+  bond = null;
+
+  svg.clear();
+  svg.remove();
+  svg = null;
+
+  container.remove();
+  container = null;
+});
 
 describe('QuadraticBezierBond class', () => {
-  it('_dPath static method', () => {
-    let b1 = Base.create(svg, 'Q', 2, 8);
-    let b2 = Base.create(svg, 'B', 45, 200);
-    let d = QuadraticBezierBond._dPath(b1, b2, 10, 12, 98, 2 * Math.PI / 3);
-    let p = svg.path(d);
-    let pa = p.array();
-    let m = pa[0];
-    let q = pa[1];
-    expect(distance(b1.xCenter, b1.yCenter, m[1], m[2])).toBeCloseTo(10);
-    expect(distance(b2.xCenter, b2.yCenter, q[3], q[4])).toBeCloseTo(12);
-    let xMiddle = (b1.xCenter + b2.xCenter) / 2;
-    let yMiddle = (b1.yCenter + b2.yCenter) / 2;
-    expect(distance(xMiddle, yMiddle, q[1], q[2])).toBeCloseTo(98);
-    let ca = angleBetween(xMiddle, yMiddle, q[1], q[2]);
-    let a12 = b1.angleBetweenCenters(b2);
-    expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
-  });
-
   describe('constructor', () => {
-    let b1 = Base.create(svg, 'a', 5, 10);
-    let b2 = Base.create(svg, 'Q', 100, 200);
-
-    it('throws on missing path element', () => {
-      expect(() => new QuadraticBezierBond(undefined, b1, b2)).toThrow();
+    it('stores references to path and bases 1 and 2', () => {
+      let bond = new QuadraticBezierBond(path, base1, base2);
+      expect(bond.path).toBe(path);
+      expect(bond.base1).toBe(base1);
+      expect(bond.base2).toBe(base2);
     });
 
-    it('throws on wrong element type', () => {
-      let c = svg.circle(20);
-      expect(() => new QuadraticBezierBond(c, b1, b2)).toThrow();
+    it.each([
+      undefined,
+      '',
+    ])('initializes path ID if uninitialized', (v) => {
+      let path = svg.path('M 20 30 Q 40 40 60 60');
+      path.attr({ 'id': v });
+      expect(path.attr('id')).toBe(v);
+      let bond = new QuadraticBezierBond(path, base1, base2);
+      // use the attr method to check if the ID was initialized
+      // since the id method itself will initialize the ID
+      expect(path.attr('id')).toBeTruthy();
     });
 
-    it('initializes path ID', () => {
-      let d = QuadraticBezierBond._dPath(b1, b2, 5, 5, 20, Math.PI / 2);
-      let p = svg.path(d);
-      expect(p.attr('id')).toBe(undefined);
-      let qbb = new QuadraticBezierBond(p, b1, b2);
-      expect(p.attr('id')).toBeTruthy();
+    it('does not overwrite path ID', () => {
+      // it is important that IDs not be overwritten when opening
+      // a saved drawing since elements in the drawing may
+      // reference other elements using saved IDs (e.g., bonds
+      // referencing their bases)
+      path.id('previous-id');
+      let bond = new QuadraticBezierBond(path, base1, base2);
+      expect(path.id()).toBe('previous-id'); // didn't change
     });
 
-    it('throws on wrong path segments', () => {
-      let p = svg.path('M 1 2 Q 1 5 8 9 Q 2 10 11 20'); // too many segments
-      expect(() => new QuadraticBezierBond(p, b1, b2)).toThrow();
-      p = svg.path('L 1 2 Q 1 5 10 15'); // first segment is not M
-      expect(() => new QuadraticBezierBond(p, b1, b2)).toThrow();
-      p = svg.path('M 5 8 L 5 9'); // second segment is not Q
-      expect(() => new QuadraticBezierBond(p, b1, b2)).toThrow();
+    it('caches positioning', () => {
+      let bond = new QuadraticBezierBond(path, base1, base2);
+      let p1 = roundPositioning(positioning(bond), 3);
+      bond.base1.moveTo(50 * Math.random(), 1000 * Math.random());
+      bond.base2.moveTo(500 * Math.random(), 200 * Math.random());
+      bond.reposition();
+      let p2 = roundPositioning(positioning(bond), 3);
+      expect(p2).toEqual(p1);
     });
   });
 
   it('id getter', () => {
-    let p = svg.path('M 1 2 Q 4 5 6 7');
-    p.id('asdfzxcv');
-    let b1 = Base.create(svg, 'h', 1, 5);
-    let b2 = Base.create(svg, 'y', 1, 1);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.id).toBe('asdfzxcv');
+    expect(bond.id).toBe(bond.path.id());
+    expect(bond.id).toBeTruthy();
   });
 
   it('contains method', () => {
-    let p = svg.path('M 1 2 Q 4 5 6 7');
-    let b1 = Base.create(svg, 'h', 1, 5);
-    let b2 = Base.create(svg, 'y', 1, 1);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.contains(b1)).toBeTruthy();
-    expect(qbb.contains(b2)).toBeTruthy();
-    let b3 = Base.create(svg, 'b', 2, 2);
-    expect(qbb.contains(b3)).toBeFalsy();
+    expect(bond.contains(bond.base1)).toBeTruthy();
+    expect(bond.contains(bond.base2)).toBeTruthy();
+    let base3 = Base.create(svg, 'T', 10, 100);
+    expect(bond.contains(base3)).toBeFalsy();
   });
 
-  it('x1, y1, x2, y2, xControl and yControl getters', () => {
-    let p = svg.path('M 1.2 4.3 Q 100 200.3 30 45.5');
-    let b1 = Base.create(svg, 'b', 1, 2);
-    let b2 = Base.create(svg, 'n', 4, 4);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.x1).toBeCloseTo(1.2);
-    expect(qbb.y1).toBeCloseTo(4.3);
-    expect(qbb.x2).toBeCloseTo(30);
-    expect(qbb.y2).toBeCloseTo(45.5);
-    expect(qbb.xControl).toBeCloseTo(100);
-    expect(qbb.yControl).toBeCloseTo(200.3);
+  describe.each([
+    { name: 'basePadding1' },
+    { name: 'basePadding2' },
+  ])('$name property', ({ name }) => {
+    it('repositions bond', () => {
+      bond[name] = 60 * Math.random();
+      let d1 = bond.path.attr('d');
+      bond.reposition();
+      let d2 = bond.path.attr('d');
+      expect(d1).toBe(d2); // setter already repositioned the bond
+    });
+
+    it('caches value', () => {
+      let v = 60 * Math.random();
+      bond[name] = v;
+      bond.base1.moveTo(200 * Math.random(), 600 * Math.random());
+      bond.base2.moveTo(400 * Math.random(), 250 * Math.random());
+      expect(bond[name]).toBeCloseTo(v); // gives cached value
+    });
   });
 
-  it('basePadding1 getter and setter', () => {
-    let b1 = Base.create(svg, 'a', 100, 200);
-    let b2 = Base.create(svg, 'q', 500, 800);
-    let d = QuadraticBezierBond._dPath(b1, b2, 12, 20, 100, Math.PI / 3);
-    let p = svg.path(d);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.basePadding1).toBeCloseTo(12); // check getter
-    qbb.basePadding1 = 30; // use setter
-    expect(qbb.basePadding1).toBeCloseTo(30); // check getter
-    // check actual value
-    expect(distance(100, 200, qbb.x1, qbb.y1)).toBeCloseTo(30);
+  describe('control point displacement getter and setter methods', () => {
+    test('repositioning the bond', () => {
+      bond.setControlPointDisplacement({
+        magnitude: 80 * Math.random(),
+        angle: 10 * Math.random(),
+      });
+      let d1 = bond.path.attr('d');
+      bond.reposition();
+      let d2 = bond.path.attr('d');
+      expect(d1).toBe(d2); // setter already repositioned the bond
+    });
+
+    test('caching the value', () => {
+      let cpd = {
+        magnitude: 100 * Math.random(),
+        angle : 8 * Math.random(),
+      };
+      bond.setControlPointDisplacement(cpd);
+      bond.base1.moveTo(100 * Math.random(), 200 * Math.random());
+      bond.base2.moveTo(500 * Math.random(), 400 * Math.random());
+      // gives cached value
+      expect(bond.controlPointDisplacement()).toEqual(cpd);
+    });
   });
 
-  it('basePadding2 getter and setter', () => {
-    let b1 = Base.create(svg, 'q', 800, 1000);
-    let b2 = Base.create(svg, 'a', 200, 500);
-    let d = QuadraticBezierBond._dPath(b1, b2, 10, 18, 25, 2 * Math.PI / 3);
-    let p = svg.path(d);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    expect(qbb.basePadding2).toBeCloseTo(18); // check getter
-    qbb.basePadding2 = 28; // use setter
-    expect(qbb.basePadding2).toBeCloseTo(28); // check getter
-    // check actual value
-    expect(distance(200, 500, qbb.x2, qbb.y2)).toBeCloseTo(28);
-  });
-
-  it('reposition method', () => {
-    let b1 = Base.create(svg, 'H', 4, 9);
-    let b2 = Base.create(svg, 'j', -2000, -500);
-    let d = QuadraticBezierBond._dPath(b1, b2, 20, 15, 1000, 2 * Math.PI / 3);
-    let p = svg.path(d);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    b1.moveTo(200, 259);
-    b2.moveTo(-2500, -800);
-    qbb.reposition();
-    // check base padding 1
-    expect(qbb.basePadding1).toBeCloseTo(20); // check getter
-    expect(distance(200, 259, qbb.x1, qbb.y1)).toBeCloseTo(20); // check actual value
-    // check base padding 2
-    expect(qbb.basePadding2).toBeCloseTo(15); // check getter
-    expect(distance(-2500, -800, qbb.x2, qbb.y2)).toBeCloseTo(15); // check actual value
-    // check control coordinates
-    let xMiddle = (b1.xCenter + b2.xCenter) / 2;
-    let yMiddle = (b1.yCenter + b2.yCenter) / 2;
-    expect(distance(xMiddle, yMiddle, qbb.xControl, qbb.yControl)).toBeCloseTo(1000);
-    let ca = angleBetween(xMiddle, yMiddle, qbb.xControl, qbb.yControl);
-    let a12 = b1.angleBetweenCenters(b2);
-    expect(normalizeAngle(ca, a12) - a12).toBeCloseTo(2 * Math.PI / 3);
+  describe('reposition method', () => {
+    it('repositions bond using cached positioning', () => {
+      let bp1 = 40 * Math.random();
+      let bp2 = 30 * Math.random();
+      let cpd = {
+        magnitude: 60 * Math.random(),
+        angle: 16 * Math.random(),
+      };
+      bond.basePadding1 = bp1;
+      bond.basePadding2 = bp2;
+      bond.setControlPointDisplacement(cpd);
+      bond.base1.moveTo(500 * Math.random(), 500 * Math.random());
+      bond.base2.moveTo(500 * Math.random(), 500 * Math.random());
+      // must use cached positioning since bases were moved
+      bond.reposition();
+      let d1 = bond.path.attr('d');
+      position(bond, {
+        basePadding1: bp1,
+        basePadding2: bp2,
+        controlPointDisplacement: cpd,
+      });
+      let d2 = bond.path.attr('d');
+      expect(d1).toBe(d2);
+    });
   });
 
   it('bringToFront and sendToBack methods', () => {
-    let c1 = svg.circle(33);
+    let c = svg.circle(33);
     let r1 = svg.rect(1, 8);
     let r2 = svg.rect(30, 20);
-    let b1 = Base.create(svg, 'A', 10, 20);
-    let b2 = Base.create(svg, 'g', 800, 200);
-    let d = QuadraticBezierBond._dPath(b1, b2, 10, 50, 80, Math.PI / 5);
-    let p = svg.path(d);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    let r3 = svg.rect(2, 2);
-    let c2 = svg.circle(50);
-    expect(qbb.path.position()).toBeGreaterThan(0); // not already at back
-    // must be sent all the way to back and not just back one position
-    expect(qbb.path.position()).toBeGreaterThan(1);
-    qbb.sendToBack();
-    expect(qbb.path.position()).toBe(0); // sent to back
-    let frontMarker = svg.ellipse(2, 6);
-    qbb.bringToFront();
-    expect(qbb.path.position()).toBeGreaterThan(frontMarker.position()); // brought to front
-    // must have been brought all the way to front and not just forward one position
-    expect(qbb.path.position()).toBeGreaterThan(1);
+    bond.sendToBack();
+    expect(bond.path.position()).toBe(0); // starts at back
+    // must bring all the way to the front
+    bond.bringToFront();
+    expect(bond.path.position()).toBeGreaterThanOrEqual(3);
+    // must send all the way to the back
+    bond.sendToBack();
+    expect(bond.path.position()).toBe(0);
   });
 
   it('refreshIds method', () => {
-    let p = svg.path('M 1 2 Q 5 5 6 7');
-    let b1 = Base.create(svg, 'b', 1, 5);
-    let b2 = Base.create(svg, 'N', 5, 3);
-    let qbb = new QuadraticBezierBond(p, b1, b2);
-    let oldId = qbb.path.id();
-    qbb.refreshIds();
-    expect(qbb.path.id()).not.toBe(oldId);
+    let prevId = bond.path.id();
+    expect(prevId).toBeTruthy();
+    bond.refreshIds();
+    let currId = bond.path.id();
+    expect(currId).not.toEqual(prevId); // changed ID
+    expect(currId).toBeTruthy(); // didn't undefine ID
   });
 });
-
-function getBasebyId(id, bases) {
-  let i = null;
-  bases.forEach((b, j) => {
-    if (b.id === id) {
-      i = j;
-    }
-  });
-  return bases[i];
-}
