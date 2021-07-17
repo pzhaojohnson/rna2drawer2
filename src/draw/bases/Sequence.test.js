@@ -1,8 +1,8 @@
-import Sequence from './Sequence';
-import NodeSVG from './NodeSVG';
+import { Sequence } from './Sequence';
+import NodeSVG from 'Draw/NodeSVG';
 import { Base } from 'Draw/bases/Base';
-import normalizeAngle from './normalizeAngle';
-import angleBetween from './angleBetween';
+import normalizeAngle from 'Draw/normalizeAngle';
+import angleBetween from 'Draw/angleBetween';
 
 let svg = NodeSVG();
 

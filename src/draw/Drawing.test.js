@@ -1,6 +1,6 @@
 import Drawing from './Drawing';
 import NodeSVG from './NodeSVG';
-import Sequence from './Sequence';
+import { Sequence } from 'Draw/bases/Sequence';
 import { Base } from 'Draw/bases/Base';
 import * as AdjustBaseNumbering from './edit/adjustBaseNumbering';
 import { savableState as savableStraightBondState } from 'Draw/bonds/straight/save';
