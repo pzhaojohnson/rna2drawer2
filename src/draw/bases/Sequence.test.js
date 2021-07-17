@@ -1,6 +1,7 @@
 import { Sequence } from './Sequence';
 import NodeSVG from 'Draw/NodeSVG';
 import { Base } from 'Draw/bases/Base';
+import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
 import normalizeAngle from 'Draw/normalizeAngle';
 import angleBetween from 'Draw/angleBetween';
 
@@ -220,22 +221,22 @@ describe('Sequence class', () => {
     seq.numberingOffset = 15; // must offset numbering
     seq.numberingAnchor = 6;
     seq.numberingIncrement = 3;
-    seq.forEachBase(b => b.removeNumbering());
-    seq.getBaseAtPosition(2).addNumbering(100); // to remove
-    seq.getBaseAtPosition(8).addNumbering(8); // to remove
-    seq.getBaseAtPosition(9).addNumbering(90); // to replace
+    seq.forEachBase(b => removeNumbering(b));
+    addNumbering(seq.getBaseAtPosition(2), 100); // to remove
+    addNumbering(seq.getBaseAtPosition(8), 8); // to remove
+    addNumbering(seq.getBaseAtPosition(9), 90); // to replace
     seq._updateBaseNumberings();
-    expect(seq.getBaseAtPosition(1).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(2).hasNumbering()).toBeFalsy(); // was removed
+    expect(seq.getBaseAtPosition(1).numbering).toBeFalsy();
+    expect(seq.getBaseAtPosition(2).numbering).toBeFalsy(); // was removed
     expect(seq.getBaseAtPosition(3).numbering.text.text()).toBe('18'); // was added
-    expect(seq.getBaseAtPosition(4).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(5).hasNumbering()).toBeFalsy();
+    expect(seq.getBaseAtPosition(4).numbering).toBeFalsy();
+    expect(seq.getBaseAtPosition(5).numbering).toBeFalsy();
     expect(seq.getBaseAtPosition(6).numbering.text.text()).toBe('21'); //was added
-    expect(seq.getBaseAtPosition(7).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(8).hasNumbering()).toBeFalsy(); // was removed
+    expect(seq.getBaseAtPosition(7).numbering).toBeFalsy();
+    expect(seq.getBaseAtPosition(8).numbering).toBeFalsy(); // was removed
     expect(seq.getBaseAtPosition(9).numbering.text.text()).toBe('24'); // was replaced
-    expect(seq.getBaseAtPosition(10).hasNumbering()).toBeFalsy();
-    expect(seq.getBaseAtPosition(11).hasNumbering()).toBeFalsy();
+    expect(seq.getBaseAtPosition(10).numbering).toBeFalsy();
+    expect(seq.getBaseAtPosition(11).numbering).toBeFalsy();
     expect(seq.getBaseAtPosition(12).numbering.text.text()).toBe('27'); // was added
   });
 

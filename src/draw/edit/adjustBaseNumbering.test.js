@@ -1,6 +1,7 @@
 import adjustBaseNumbering from './adjustBaseNumbering';
 import Drawing from '../Drawing';
 import NodeSVG from '../NodeSVG';
+import { addNumbering } from 'Draw/bases/number/add';
 import normalizeAngle from '../normalizeAngle';
 
 it('sets line angles to outer normal', () => {
@@ -13,7 +14,8 @@ it('sets line angles to outer normal', () => {
   b1.moveTo(0, 0);
   b2.moveTo(-1, -1);
   b3.moveTo(0, -2);
-  let n = b2.addNumbering(2);
+  addNumbering(b2, 2);
+  let n = b2.numbering;
   n.lineAngle = 0;
   adjustBaseNumbering(drawing);
   expect(normalizeAngle(n.lineAngle)).toBeCloseTo(Math.PI);
@@ -36,9 +38,11 @@ describe('prevents overlaps with secondary bonds for bases 1 and 2', () => {
     sb.padding1 = 8;
     sb.padding2 = 8;
     expect(sb.padding1 + sb.padding2).toBeGreaterThan(b2.distanceBetweenCenters(b5));
-    let n2 = b2.addNumbering(2);
+    addNumbering(b2, 2);
+    let n2 = b2.numbering;
     n2.lineAngle = 0;
-    let n5 = b5.addNumbering(5);
+    addNumbering(b5, 5);
+    let n5 = b5.numbering;
     n5.lineAngle = Math.PI;
     expect(
       normalizeAngle(seq.outerNormalAngleAtPosition(2))

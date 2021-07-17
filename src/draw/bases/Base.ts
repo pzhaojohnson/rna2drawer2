@@ -8,7 +8,7 @@ import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
+import { removeNumbering } from 'Draw/bases/number/add';
 import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/number/save';
 import {
   addCircleHighlighting,
@@ -22,7 +22,6 @@ import {
   addSavedCircleHighlighting,
   addSavedCircleOutline,
 } from 'Draw/bases/annotate/circle/save';
-import { SavableState as SavableBaseNumberingState } from 'Draw/bases/number/save';
 import { areClose } from 'Draw/areClose';
 
 export class Base implements BaseInterface {
@@ -31,7 +30,7 @@ export class Base implements BaseInterface {
   readonly text: Svg.Text;
   _highlighting?: CircleBaseAnnotation;
   _outline?: CircleBaseAnnotation;
-  _numbering?: BaseNumbering;
+  numbering?: BaseNumbering;
 
   _xCenter!: number;
   _yCenter!: number;
@@ -68,7 +67,7 @@ export class Base implements BaseInterface {
       b.addCircleOutlineFromSavedState(savedState.outline);
     }
     if (savedState.numbering) {
-      b.addNumberingFromSavedState(savedState.numbering);
+      addSavedNumbering(b, savedState.numbering);
     }
     Base._copyPropsToMostRecent(b);
     return b;
@@ -97,7 +96,6 @@ export class Base implements BaseInterface {
 
     this._highlighting = undefined;
     this._outline = undefined;
-    this._numbering = undefined;
   }
 
   /**
@@ -163,8 +161,8 @@ export class Base implements BaseInterface {
       if (this._outline) {
         this._outline.reposition({ baseCenter: { x: xCenter, y: yCenter } });
       }
-      if (this._numbering) {
-        this._numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
+      if (this.numbering) {
+        this.numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
       }
     }
   }
@@ -343,44 +341,10 @@ export class Base implements BaseInterface {
     removeCircleOutline(this);
   }
 
-  /**
-   * Returns null if the given number is not accepted by the BaseNumbering class.
-   */
-  addNumbering(number: number): (BaseNumbering | undefined) {
-    addNumbering(this, number);
-    return this.numbering;
-  }
-
-  addNumberingFromSavedState(
-    savedState: SavableBaseNumberingState,
-  ): (BaseNumbering | undefined | never) {
-    addSavedNumbering(this, savedState);
-    return this.numbering;
-  }
-
-  hasNumbering(): boolean {
-    if (this._numbering) {
-      return true;
-    }
-    return false;
-  }
-
-  get numbering(): (BaseNumbering | undefined) {
-    return this._numbering;
-  }
-
-  set numbering(n) {
-    this._numbering = n;
-  }
-
-  removeNumbering() {
-    removeNumbering(this);
-  }
-
   remove() {
     this.removeHighlighting();
     this.removeOutline();
-    this.removeNumbering();
+    removeNumbering(this);
     this.text.remove();
   }
 

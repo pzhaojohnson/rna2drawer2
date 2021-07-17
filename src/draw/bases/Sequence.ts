@@ -6,6 +6,8 @@ import {
 import * as Svg from '@svgdotjs/svg.js';
 import { Base } from 'Draw/bases/Base';
 import { BaseSavableState } from 'Draw/bases/BaseInterface';
+import { addNumbering } from 'Draw/bases/number/add';
+import { removeNumbering } from 'Draw/bases/number/add';
 import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
 
@@ -139,12 +141,12 @@ export class Sequence implements SequenceInterface {
   _updateBaseNumberings() {
     this.forEachBase((b: Base, p: number) => {
       if ((p - this.numberingAnchor) % this.numberingIncrement == 0) {
-        let n = b.addNumbering(p + this.numberingOffset);
-        if (n) {
-          n.lineAngle = this.outerNormalAngleAtPosition(p);
+        addNumbering(b, p + this.numberingOffset);
+        if (b.numbering) {
+          b.numbering.lineAngle = this.outerNormalAngleAtPosition(p);
         }
       } else {
-        b.removeNumbering();
+        removeNumbering(b);
       }
     });
   }

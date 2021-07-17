@@ -59,12 +59,8 @@ export interface BaseInterface {
   outline?: CircleBaseAnnotation;
   removeOutline(): void;
 
-  addNumbering(n: number): BaseNumbering | undefined;
-  addNumberingFromSavedState(s: SavableBaseNumberingState): BaseNumbering | undefined | never;
-  hasNumbering(): boolean;
   numbering?: BaseNumbering;
-  removeNumbering(): void;
-
+  
   remove(): void;
   savableState(): BaseSavableState;
   refreshIds(): void;

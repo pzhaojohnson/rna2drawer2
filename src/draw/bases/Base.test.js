@@ -1,7 +1,7 @@
 import { Base } from './Base';
 import NodeSVG from 'Draw/NodeSVG';
 import normalizeAngle from 'Draw/normalizeAngle';
-import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { addNumbering } from 'Draw/bases/number/add';
 import { savableState as savableNumberingState } from 'Draw/bases/number/save';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import angleBetween from 'Draw/angleBetween';
@@ -89,7 +89,8 @@ describe('Base class', () => {
       it('can include numbering', () => {
         // and handles missing highlighting and outline
         let b1 = Base.create(svg, 't', 10, 11);
-        let n1 = b1.addNumbering(10);
+        addNumbering(b1, 10);
+        let n1 = b1.numbering;
         let savableState = b1.savableState();
         let b2 = Base.fromSavedState(savableState, svg);
         expect(b2.numbering.id).toBe(n1.id);
@@ -270,7 +271,8 @@ describe('Base class', () => {
     it('can reposition numbering', () => {
       // with no highlighting or outline
       let b = Base.create(svg, 'e', 1, 5);
-      let n = b.addNumbering(112);
+      addNumbering(b, 112);
+      let n = b.numbering;
       let bp = n.basePadding;
       b.moveTo(20, 40);
       // requires that base center coordinates were passed
@@ -527,58 +529,6 @@ describe('Base class', () => {
     });
   });
 
-  describe('numbering', () => {
-    describe('addNumbering method', () => {
-      it('creates with number and stores reference', () => {
-        let b = Base.create(svg, 'G', 20, 80);
-        let n = b.addNumbering(2056);
-        expect(n.text.text()).toBe('2056');
-        expect(b.numbering).toBe(n); // check reference
-      });
-    });
-
-    describe('addNumberingFromSavedState method', () => {
-      it('passes saved state and center base coordinates and stores reference', () => {
-        let b1 = Base.create(svg, 'G', 15, 30);
-        let b2 = Base.create(svg, 'G', 15, 30);
-        let n1 = b1.addNumbering(852);
-        let savableState1 = savableNumberingState(n1);
-        let n2 = b2.addNumberingFromSavedState(savableState1);
-        expect(n2.text.text()).toBe('852');
-        // requires that center base coordinates were passed
-        expect(n2.basePadding).toBeCloseTo(n1.basePadding);
-        expect(b2.numbering).toBe(n2); // check reference
-      });
-    });
-
-    it('hasNumbering method and numbering getter', () => {
-      let b = Base.create(svg, 'Q', 5, 12);
-      expect(b.hasNumbering()).toBeFalsy();
-      expect(b.numbering).toBe(undefined);
-      b.addNumbering(6);
-      expect(b.hasNumbering()).toBeTruthy();
-      expect(b.numbering.text.text()).toBe('6');
-      b.removeNumbering();
-      expect(b.hasNumbering()).toBeFalsy();
-      expect(b.numbering).toBe(undefined);
-    });
-
-    describe('removeNumbering method', () => {
-      it('removes numbering', () => {
-        let b = Base.create(svg, 'G', 50, 25);
-        let n = b.addNumbering(1);
-        b.removeNumbering();
-        expect(b.numbering).toBe(undefined);
-      });
-
-      it('can be called without numbering', () => {
-        let b = Base.create(svg, 'G', 100, 200);
-        expect(b.hasNumbering()).toBeFalsy();
-        expect(() => b.removeNumbering()).not.toThrow();
-      });
-    });
-  });
-
   it('remove method', () => {
     let b = Base.create(svg, 'a', 5, 5);
     let textId = '#' + b.text.id();
@@ -586,7 +536,6 @@ describe('Base class', () => {
     let spies = [
       jest.spyOn(b, 'removeHighlighting'),
       jest.spyOn(b, 'removeOutline'),
-      jest.spyOn(b, 'removeNumbering'),
     ];
     b.remove();
     expect(svg.findOne(textId)).toBeFalsy();
@@ -627,7 +576,8 @@ describe('Base class', () => {
     it('can include numbering', () => {
       // with no highlighting or outline
       let b = Base.create(svg, 'R', 0, 1);
-      let n = b.addNumbering(1000);
+      addNumbering(b, 1000);
+      let n = b.numbering;
       let savableState = b.savableState();
       expect(JSON.stringify(savableState.numbering)).toBe(JSON.stringify(savableNumberingState(n)));
     });
@@ -637,7 +587,7 @@ describe('Base class', () => {
         let b = Base.create(svg, 'n', 20, 50);
         b.addCircleHighlighting();
         b.addCircleOutline();
-        b.addNumbering(100);
+        addNumbering(b, 100);
         let savableState = b.savableState();
         let json = JSON.stringify(savableState);
         let parsed = JSON.parse(json);
@@ -651,7 +601,7 @@ describe('Base class', () => {
       let b = Base.create(svg, 'A', 1, 5);
       expect(b.hasHighlighting()).toBeFalsy();
       expect(b.hasOutline()).toBeFalsy();
-      expect(b.hasNumbering()).toBeFalsy();
+      expect(b.numbering).toBeFalsy();
       let oldTextId = b.text.id();
       b.refreshIds();
       expect(b.text.id()).not.toBe(oldTextId);
@@ -661,7 +611,8 @@ describe('Base class', () => {
       let b = Base.create(svg, 'A', 1, 5);
       let h = b.addCircleHighlighting();
       let o = b.addCircleOutline();
-      let n = b.addNumbering(5);
+      addNumbering(b, 5);
+      let n = b.numbering;
       let spies = [
         jest.spyOn(h, 'refreshIds'),
         jest.spyOn(o, 'refreshIds'),
