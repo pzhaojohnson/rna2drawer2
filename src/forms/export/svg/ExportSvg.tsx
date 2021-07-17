@@ -3,7 +3,7 @@ import errorMessageStyles from '../../ErrorMessage.css';
 import { CloseButton } from '../../buttons/CloseButton';
 import { SolidButton } from '../../buttons/SolidButton';
 const uuidv1 = require('uuid/v1');
-import Base from '../../../draw/Base';
+import { Base } from 'Draw/bases/Base';
 import { formatSvgForExport } from '../../../export/formatSvgForExport';
 import offerFileForDownload from '../../../export/offerFileForDownload';
 import * as Svg from '@svgdotjs/svg.js';

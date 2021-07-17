@@ -1,10 +1,10 @@
-import Base from './Base';
-import NodeSVG from './NodeSVG';
-import normalizeAngle from './normalizeAngle';
+import { Base } from './Base';
+import NodeSVG from 'Draw/NodeSVG';
+import normalizeAngle from 'Draw/normalizeAngle';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { savableState as savableNumberingState } from 'Draw/bases/number/save';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
-import angleBetween from './angleBetween';
+import angleBetween from 'Draw/angleBetween';
 import { distance2D as distance } from 'Math/distance';
 
 let svg = NodeSVG();

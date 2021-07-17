@@ -1,6 +1,6 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import setAllBaseHighlightings from './setAllBaseHighlightings';
-import Base from '../../Base';
+import { Base } from 'Draw/bases/Base';
 import { selectedRange } from './selected';
 import hoveredPairable from './hoveredPairable';
 import secondaryBondsWith from './secondaryBondsWith';

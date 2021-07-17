@@ -2,7 +2,7 @@ import { BaseNumbering } from './BaseNumbering';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
-import Base from 'Draw/Base';
+import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
 import normalizeAngle from 'Draw/normalizeAngle';
 import { round } from 'Math/round';

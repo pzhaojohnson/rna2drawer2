@@ -1,7 +1,7 @@
 import { shiftControlPoint } from './drag';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
-import Base from 'Draw/Base';
+import { Base } from 'Draw/bases/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { TertiaryBond } from './TertiaryBond';
 import { setValues } from './values';

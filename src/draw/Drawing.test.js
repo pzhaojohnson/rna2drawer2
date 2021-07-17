@@ -1,7 +1,7 @@
 import Drawing from './Drawing';
 import NodeSVG from './NodeSVG';
 import Sequence from './Sequence';
-import Base from './Base';
+import { Base } from 'Draw/bases/Base';
 import * as AdjustBaseNumbering from './edit/adjustBaseNumbering';
 import { savableState as savableStraightBondState } from 'Draw/bonds/straight/save';
 import { savableState as savableTertiaryBondState } from 'Draw/bonds/curved/save';

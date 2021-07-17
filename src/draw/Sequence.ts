@@ -4,8 +4,8 @@ import {
   SequenceSavableState,
 } from './SequenceInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import Base from './Base';
-import { BaseSavableState } from './BaseInterface';
+import { Base } from 'Draw/bases/Base';
+import { BaseSavableState } from 'Draw/bases/BaseInterface';
 import angleBetween from './angleBetween';
 import normalizeAngle from './normalizeAngle';
 

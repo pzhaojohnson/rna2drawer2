@@ -1,6 +1,6 @@
 import Sequence from './Sequence';
 import NodeSVG from './NodeSVG';
-import Base from './Base';
+import { Base } from 'Draw/bases/Base';
 import normalizeAngle from './normalizeAngle';
 import angleBetween from './angleBetween';
 

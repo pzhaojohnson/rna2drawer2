@@ -4,7 +4,7 @@ import {
   addSavedCircleHighlighting,
 } from './save';
 import { NodeSVG } from 'Draw/NodeSVG';
-import Base from 'Draw/Base';
+import { Base } from 'Draw/bases/Base';
 import { addCircleOutline, addCircleHighlighting } from './add';
 import { uuidRegex } from 'Draw/svg/id';
 

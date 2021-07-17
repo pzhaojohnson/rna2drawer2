@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BaseInterface as Base } from '../../../draw/BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { TextField } from '../../fields/text/TextField';
 
 export function BaseCharacterField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement | null {

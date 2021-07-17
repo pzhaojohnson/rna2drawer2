@@ -5,7 +5,7 @@ import {
 import * as Svg from '@svgdotjs/svg.js';
 import Sequence from './Sequence';
 import { SequenceSavableState } from './SequenceInterface';
-import Base from './Base';
+import { Base } from 'Draw/bases/Base';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';

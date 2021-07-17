@@ -1,7 +1,7 @@
 import { savableState } from './save';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
-import Base from 'Draw/Base';
+import { Base } from 'Draw/bases/Base';
 import { StraightBond } from './StraightBond';
 
 let container = null;

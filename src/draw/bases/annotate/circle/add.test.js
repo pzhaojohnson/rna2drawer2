@@ -5,7 +5,7 @@ import {
   removeCircleHighlighting,
 } from './add';
 import { NodeSVG } from 'Draw/NodeSVG';
-import Base from 'Draw/Base';
+import { Base } from 'Draw/bases/Base';
 
 function wasRemoved(cba) {
   return cba.circle.root() ? false : true;

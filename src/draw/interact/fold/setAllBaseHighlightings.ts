@@ -5,7 +5,7 @@ import allPairables from './allPairables';
 import { selectedRange } from './selected';
 import secondaryBondsWith from './secondaryBondsWith';
 import hoveredPairable from './hoveredPairable';
-import { BaseInterface as Base } from '../../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 
 interface HighlightingProps {
   unpulsed: {

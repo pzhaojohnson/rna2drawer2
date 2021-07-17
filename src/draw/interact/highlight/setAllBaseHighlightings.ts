@@ -1,5 +1,5 @@
 import Drawing from '../../Drawing';
-import Base from '../../Base';
+import { Base } from 'Draw/bases/Base';
 import {
   highlightBase,
   HighlightingProps,

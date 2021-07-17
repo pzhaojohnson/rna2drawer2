@@ -2,7 +2,7 @@ import { PivotingModeInterface as PivotingMode } from './PivotingModeInterface';
 import { positionsOfStem } from '../highlight/positionsOfStem';
 import { highlightBase } from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
-import { BaseInterface as Base } from '../../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 
 export interface Stem {
   position5: number;

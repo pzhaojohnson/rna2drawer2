@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BaseInterface as Base } from '../../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
 import ClosableContainer from '../../../forms/containers/ClosableContainer';
 import BaseAnnotationFields from '../../../forms/annotate/bases/BaseAnnotationFields';

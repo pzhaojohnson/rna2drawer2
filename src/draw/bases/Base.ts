@@ -5,7 +5,7 @@ import {
 } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from './angleBetween';
+import angleBetween from 'Draw/angleBetween';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
@@ -23,9 +23,9 @@ import {
   addSavedCircleOutline,
 } from 'Draw/bases/annotate/circle/save';
 import { SavableState as SavableBaseNumberingState } from 'Draw/bases/number/save';
-import { areClose } from './areClose';
+import { areClose } from 'Draw/areClose';
 
-class Base implements BaseInterface {
+export class Base implements BaseInterface {
   static _mostRecentProps: BaseMostRecentProps;
 
   readonly text: Svg.Text;

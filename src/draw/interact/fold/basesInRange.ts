@@ -1,6 +1,6 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import IntegerRange from './IntegerRange';
-import Base from '../../Base';
+import { Base } from 'Draw/bases/Base';
 
 export function basesInRange(mode: FoldingMode, r: IntegerRange): Base[] {
   let bases = [] as Base[];

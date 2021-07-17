@@ -1,6 +1,6 @@
 import FoldingModeInterface from './FoldingModeInterface';
 import StrictDrawing from '../../StrictDrawing';
-import Base from '../../Base';
+import { Base } from 'Draw/bases/Base';
 import {
   handleMouseoverOnBase,
   handleMouseoutOnBase,

@@ -3,7 +3,7 @@ import {
   SequenceInterface as Sequence,
   SequenceSavableState,
 } from './SequenceInterface';
-import { BaseInterface as Base } from './BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import {

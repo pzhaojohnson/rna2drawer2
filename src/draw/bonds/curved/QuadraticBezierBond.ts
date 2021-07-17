@@ -1,6 +1,6 @@
 import { QuadraticBezierBondInterface } from './QuadraticBezierBondInterface';
 import { SVGPathWrapper as Path } from 'Draw/svg/path';
-import { BaseInterface as Base } from 'Draw/BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
 import { assignUuid } from 'Draw/svg/id';
 import {

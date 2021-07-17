@@ -1,6 +1,6 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
-import { BaseInterface as Base } from 'Draw/BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { PrimaryBond } from './PrimaryBond';
 import { SecondaryBond } from './SecondaryBond';
 import { setValues } from './values';

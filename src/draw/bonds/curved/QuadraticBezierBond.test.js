@@ -1,7 +1,7 @@
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
-import Base from 'Draw/Base';
+import { Base } from 'Draw/bases/Base';
 import { uuidRegex } from 'Draw/svg/id';
 import { positioning } from './positioning';
 import { position } from './position';

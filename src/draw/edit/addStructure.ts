@@ -1,6 +1,6 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
 import { Partners } from 'Partners/Partners';
-import { BaseInterface as Base } from '../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 
 export function addPrimaryBonds(drawing: Drawing, sequenceId: string) {
   let seq = drawing.getSequenceById(sequenceId);

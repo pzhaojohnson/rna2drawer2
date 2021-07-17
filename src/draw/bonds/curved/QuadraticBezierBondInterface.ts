@@ -1,5 +1,5 @@
 import { SVGPathWrapper as Path } from 'Draw/svg/path';
-import { BaseInterface as Base } from 'Draw/BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { ControlPointDisplacement } from './positioning';
 
 export interface QuadraticBezierBondInterface {

@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from '../../../draw/BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 
 export function baseOutlines(bs: Base[]): CircleBaseAnnotation[] {

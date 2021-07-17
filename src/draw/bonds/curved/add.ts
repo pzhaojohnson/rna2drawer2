@@ -1,6 +1,6 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
-import { BaseInterface as Base } from 'Draw/BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { TertiaryBond } from './TertiaryBond';
 import { setValues } from './values';
 

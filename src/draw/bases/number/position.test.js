@@ -1,6 +1,6 @@
 import { position } from './position';
 import { NodeSVG } from 'Draw/NodeSVG';
-import Base from 'Draw/Base';
+import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
 
 let container = null;

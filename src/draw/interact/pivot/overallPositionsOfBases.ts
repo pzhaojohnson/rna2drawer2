@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { BaseInterface as Base } from 'Draw/BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 
 export function overallPositionsOfBases(drawing: Drawing, bases: Base[]): Set<number> {
   let baseIds = new Set<string>();

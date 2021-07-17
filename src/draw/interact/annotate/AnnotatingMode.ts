@@ -1,6 +1,6 @@
 import { AnnotatingModeInterface, FormFactory } from './AnnotatingModeInterface';
 import { DrawingInterface as Drawing } from '../../DrawingInterface';
-import { BaseInterface as Base } from '../../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import {
   handleMouseoverOnBase,
   handleMouseoutOnBase,

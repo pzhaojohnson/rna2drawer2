@@ -1,5 +1,5 @@
 import { TriangularizingModeInterface as TriangularizingMode } from './TriangularizingModeInterface';
-import { BaseInterface as Base } from '../../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import {
   outerStemOfHoveredLoop,
   hoveringHairpin,

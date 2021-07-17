@@ -1,5 +1,5 @@
 import { FlippingModeInterface as FlippingMode } from './FlippingModeInterface';
-import { BaseInterface as Base } from '../../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { containingStem } from 'Partners/containing';
 import { highlightStem } from './highlight';
 import { removeAllBaseHighlightings } from '../highlight/removeAllBaseHighlightings';

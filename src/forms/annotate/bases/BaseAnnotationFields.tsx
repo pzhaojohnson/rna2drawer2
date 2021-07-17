@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BaseInterface as Base } from '../../../draw/BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { BaseCharacterField } from './BaseCharacterField';
 import BaseColorField from './BaseColorField';
 import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';

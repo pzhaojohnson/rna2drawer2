@@ -1,5 +1,5 @@
 import { SVGLineWrapper as Line } from 'Draw/svg/line';
-import { BaseInterface as Base } from 'Draw/BaseInterface'
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface'
 
 export interface StraightBondInterface {
   readonly line: Line;

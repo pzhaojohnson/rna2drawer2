@@ -1,7 +1,7 @@
 import { StraightBond } from './StraightBond';
 import { NodeSVG } from 'Draw/NodeSVG';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
-import Base from 'Draw/Base';
+import { Base } from 'Draw/bases/Base';
 import { uuidRegex } from 'Draw/svg/id';
 import { round } from 'Math/round';
 import { position } from './position';

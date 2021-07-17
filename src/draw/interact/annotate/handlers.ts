@@ -1,5 +1,5 @@
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
-import { BaseInterface as Base } from '../../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import setAllBaseHighlightings from './setAllBaseHighlightings';
 import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings';
 import positionsBetween from './positionsBetween';

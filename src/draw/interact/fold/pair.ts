@@ -1,7 +1,7 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import canSecondaryPair from './canSecondaryPair';
 import IntegerRange from './IntegerRange';
-import Base from '../../Base';
+import { Base } from 'Draw/bases/Base';
 import { selectedRange } from './selected';
 import hoveredPairable from './hoveredPairable';
 import { willPair } from '../../layout/singleseq/strict/stemProps';

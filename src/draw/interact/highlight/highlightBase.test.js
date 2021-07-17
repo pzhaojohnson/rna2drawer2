@@ -1,6 +1,6 @@
 import highlightBase from './highlightBase';
 import NodeSVG from '../../NodeSVG';
-import Base from '../../Base';
+import { Base } from 'Draw/bases/Base';
 
 let svg = NodeSVG();
 

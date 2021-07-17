@@ -1,6 +1,6 @@
 import { FlippingModeInterface } from './FlippingModeInterface';
 import { StrictDrawingInterface as StrictDrawing } from '../../StrictDrawingInterface';
-import { BaseInterface as Base } from '../../BaseInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import {
   handleMouseoverOnBase,
   handleMouseoutOnBase,

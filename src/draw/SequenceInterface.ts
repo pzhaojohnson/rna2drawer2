@@ -1,7 +1,7 @@
 import {
   BaseInterface as Base,
   BaseSavableState,
-} from './BaseInterface';
+} from 'Draw/bases/BaseInterface';
 
 export interface SequenceMostRecentProps {
   numberingAnchor: number;
