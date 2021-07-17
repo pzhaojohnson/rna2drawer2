@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { CheckboxField } from '../../fields/checkbox/CheckboxField';
+import { addCircleOutline, removeCircleOutline } from 'Draw/bases/annotate/circle/add';
 import baseOutlines from './baseOutlines';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
@@ -15,22 +16,22 @@ export function allBasesLackOutlines(bs: Base[]): boolean {
 function _addOutlines(bs: Base[]) {
   bs.forEach(b => {
     if (!b.outline) {
-      let o = b.addCircleOutline();
-      o?.circle.attr({
-        'r': MostRecentOutlineProps.radius,
-        'stroke': MostRecentOutlineProps.stroke,
-        'stroke-width': MostRecentOutlineProps.strokeWidth,
-        'stroke-opacity': MostRecentOutlineProps.strokeOpacity,
-        'fill': MostRecentOutlineProps.fill,
-        'fill-opacity': MostRecentOutlineProps.fillOpacity,
-      });
-      o?.sendToBack();
+      addCircleOutline(b);
     }
+    b.outline?.circle.attr({
+      'r': MostRecentOutlineProps.radius,
+      'stroke': MostRecentOutlineProps.stroke,
+      'stroke-width': MostRecentOutlineProps.strokeWidth,
+      'stroke-opacity': MostRecentOutlineProps.strokeOpacity,
+      'fill': MostRecentOutlineProps.fill,
+      'fill-opacity': MostRecentOutlineProps.fillOpacity,
+    });
+    b.outline?.sendToBack();
   });
 }
 
 function _removeOutlines(bs: Base[]) {
-  bs.forEach(b => b.removeOutline());
+  bs.forEach(b => removeCircleOutline(b));
 }
 
 export function HasOutlineField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {

@@ -53,12 +53,7 @@ export interface BaseInterface {
   highlighting?: CircleBaseAnnotation;
   removeHighlighting(): void;
 
-  addCircleOutline(): CircleBaseAnnotation | undefined;
-  addCircleOutlineFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | undefined | never;
-  hasOutline(): boolean;
   outline?: CircleBaseAnnotation;
-  removeOutline(): void;
-
   numbering?: BaseNumbering;
   
   remove(): void;

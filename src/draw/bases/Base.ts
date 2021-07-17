@@ -29,7 +29,7 @@ export class Base implements BaseInterface {
 
   readonly text: Svg.Text;
   _highlighting?: CircleBaseAnnotation;
-  _outline?: CircleBaseAnnotation;
+  outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;
 
   _xCenter!: number;
@@ -64,7 +64,7 @@ export class Base implements BaseInterface {
       b.addCircleHighlightingFromSavedState(savedState.highlighting);
     }
     if (savedState.outline) {
-      b.addCircleOutlineFromSavedState(savedState.outline);
+      addSavedCircleOutline(b, savedState.outline);
     }
     if (savedState.numbering) {
       addSavedNumbering(b, savedState.numbering);
@@ -95,7 +95,6 @@ export class Base implements BaseInterface {
     this._storeCenterCoordinates();
 
     this._highlighting = undefined;
-    this._outline = undefined;
   }
 
   /**
@@ -158,8 +157,8 @@ export class Base implements BaseInterface {
       if (this._highlighting) {
         this._highlighting.reposition({ baseCenter: { x: xCenter, y: yCenter } });
       }
-      if (this._outline) {
-        this._outline.reposition({ baseCenter: { x: xCenter, y: yCenter } });
+      if (this.outline) {
+        this.outline.reposition({ baseCenter: { x: xCenter, y: yCenter } });
       }
       if (this.numbering) {
         this.numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
@@ -310,40 +309,9 @@ export class Base implements BaseInterface {
     removeCircleHighlighting(this);
   }
 
-  addCircleOutline(): CircleBaseAnnotation | undefined {
-    addCircleOutline(this);
-    return this._outline;
-  }
-
-  addCircleOutlineFromSavedState(
-    savedState: SavableCircleAnnotationState,
-  ): (CircleBaseAnnotation | undefined | never) {
-    addSavedCircleOutline(this, savedState);
-    return this._outline;
-  }
-
-  hasOutline(): boolean {
-    if (this._outline) {
-      return true;
-    }
-    return false;
-  }
-
-  get outline(): (CircleBaseAnnotation | undefined) {
-    return this._outline;
-  }
-
-  set outline(o) {
-    this._outline = o;
-  }
-
-  removeOutline() {
-    removeCircleOutline(this);
-  }
-
   remove() {
     this.removeHighlighting();
-    this.removeOutline();
+    removeCircleOutline(this);
     removeNumbering(this);
     this.text.remove();
   }

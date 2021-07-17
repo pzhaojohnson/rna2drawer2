@@ -1,6 +1,7 @@
 import { Base } from './Base';
 import NodeSVG from 'Draw/NodeSVG';
 import normalizeAngle from 'Draw/normalizeAngle';
+import { addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import { addNumbering } from 'Draw/bases/number/add';
 import { savableState as savableNumberingState } from 'Draw/bases/number/save';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
@@ -80,7 +81,8 @@ describe('Base class', () => {
       it('can include outline', () => {
         // and handles missing highlighting and numbering
         let b1 = Base.create(svg, 'b', 5, 6);
-        let o1 = b1.addCircleOutline();
+        addCircleOutline(b1);
+        let o1 = b1.outline;
         let savableState = b1.savableState();
         let b2 = Base.fromSavedState(savableState, svg);
         expect(b2.outline.id).toBe(o1.id);
@@ -262,7 +264,8 @@ describe('Base class', () => {
     it('can reposition outline', () => {
       // with no highlighting or numbering
       let b = Base.create(svg, 'e', 3, 8);
-      let o = b.addCircleOutline();
+      addCircleOutline(b);
+      let o = b.outline;
       b.moveTo(55, 38);
       expect(o.circle.attr('cx')).toBeCloseTo(55);
       expect(o.circle.attr('cy')).toBeCloseTo(38);
@@ -350,7 +353,7 @@ describe('Base class', () => {
     let c1 = svg.circle(100);
     let c2 = svg.circle(10);
     let b = Base.create(svg, 'G', 5, 5);
-    b.addCircleOutline();
+    addCircleOutline(b);
 
     expect(b.text.position()).toBeGreaterThan(0); // not already at back
     // cannot just call the backward method of SVG elements
@@ -469,77 +472,15 @@ describe('Base class', () => {
     });
   });
 
-  describe('outline', () => {
-    describe('addCircleOutline method', () => {
-      it('passes center base coordinates and stores reference', () => {
-        let b = Base.create(svg, 'g', 10, 28);
-        let o = b.addCircleOutline();
-        expect(o.circle.attr('cx')).toBeCloseTo(10);
-        expect(o.circle.attr('cy')).toBeCloseTo(28);
-        expect(b.outline).toBe(o); // check reference
-      });
-
-      it('removes previous outline', () => {
-        let b = Base.create(svg, 'Q', 5, 8);
-        let o1 = b.addCircleOutline();
-        let o2 = b.addCircleOutline();
-        expect(o1.circle.root()).toBeFalsy(); // was removed
-      });
-    });
-
-    describe('addCircleOutlineFromSavedState method', () => {
-      it('passes saved state and center base coordinates and stores reference', () => {
-        let b1 = Base.create(svg, 'H', 30, 60);
-        let o1 = b1.addCircleOutline();
-        let savableState1 = savableCircleAnnotationState(o1);
-        let b2 = Base.create(svg, 'H', 30, 60);
-        let o2 = b2.addCircleOutlineFromSavedState(savableState1);
-        expect(o2.id).toBe(o1.id);
-        expect(o2.circle.attr('cx')).toBeCloseTo(30);
-        expect(o2.circle.attr('cy')).toBeCloseTo(60);
-        expect(b2.outline).toBe(o2); // check reference
-      });
-    });
-
-    it('hasOutline method and outline getter', () => {
-      let b = Base.create(svg, 'h', 100, 112);
-      expect(b.hasOutline()).toBeFalsy();
-      expect(b.outline).toBe(undefined);
-      let o = b.addCircleOutline();
-      expect(b.hasOutline()).toBeTruthy();
-      expect(b.outline).toBe(o);
-      b.removeOutline();
-      expect(b.hasOutline()).toBeFalsy();
-      expect(b.outline).toBe(undefined);
-    });
-
-    describe('removeOutline method', () => {
-      it('removes outline and reference', () => {
-        let b = Base.create(svg, 'b', 5, 2);
-        let o = b.addCircleOutline();
-        b.removeOutline();
-        expect(b.outline).toBe(undefined);
-      });
-
-      it('can be called without outline', () => {
-        let b = Base.create(svg, 'a', 1, 2);
-        expect(b.hasOutline()).toBeFalsy();
-        expect(() => b.removeOutline()).not.toThrow();
-      });
-    });
-  });
-
   it('remove method', () => {
     let b = Base.create(svg, 'a', 5, 5);
     let textId = '#' + b.text.id();
     expect(svg.findOne(textId)).toBeTruthy();
-    let spies = [
-      jest.spyOn(b, 'removeHighlighting'),
-      jest.spyOn(b, 'removeOutline'),
-    ];
     b.remove();
     expect(svg.findOne(textId)).toBeFalsy();
-    spies.forEach(s => expect(s).toHaveBeenCalled());
+    expect(b.highlighting).toBeFalsy();
+    expect(b.outline).toBeFalsy();
+    expect(b.numbering).toBeFalsy();
   });
 
   describe('savableState method', () => {
@@ -566,7 +507,8 @@ describe('Base class', () => {
     it('can include outline', () => {
       // with no highlighting or numbering
       let b = Base.create(svg, 'b', 100, 200);
-      let o = b.addCircleOutline();
+      addCircleOutline(b);
+      let o = b.outline;
       let savableState = b.savableState();
       expect(
         JSON.stringify(savableState.outline)
@@ -586,7 +528,7 @@ describe('Base class', () => {
       it('with highlighting, outline and numbering', () => {
         let b = Base.create(svg, 'n', 20, 50);
         b.addCircleHighlighting();
-        b.addCircleOutline();
+        addCircleOutline(b);
         addNumbering(b, 100);
         let savableState = b.savableState();
         let json = JSON.stringify(savableState);
@@ -600,7 +542,7 @@ describe('Base class', () => {
     it('refreshes text ID and handles no highlighting, outline or numbering', () => {
       let b = Base.create(svg, 'A', 1, 5);
       expect(b.hasHighlighting()).toBeFalsy();
-      expect(b.hasOutline()).toBeFalsy();
+      expect(b.outline).toBeFalsy();
       expect(b.numbering).toBeFalsy();
       let oldTextId = b.text.id();
       b.refreshIds();
@@ -610,7 +552,8 @@ describe('Base class', () => {
     it('can refresh highlighting, outline and numbering IDs', () => {
       let b = Base.create(svg, 'A', 1, 5);
       let h = b.addCircleHighlighting();
-      let o = b.addCircleOutline();
+      addCircleOutline(b);
+      let o = b.outline;
       addNumbering(b, 5);
       let n = b.numbering;
       let spies = [

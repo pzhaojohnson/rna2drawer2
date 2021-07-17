@@ -1,6 +1,7 @@
 import { Rna2drawer1 } from './parseRna2drawer1';
 import { StrictDrawingInterface as StrictDrawing } from '../../draw/StrictDrawingInterface';
 import { pixelsToPoints } from '../../export/pixelsToPoints';
+import { addCircleOutline } from 'Draw/bases/annotate/circle/add';
 
 function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);
@@ -48,9 +49,9 @@ function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
     seq.forEachBase((b, p) => {
       let outline = rna2drawer1.baseOutlines[p - 1];
       if (outline) {
-        let o = b.addCircleOutline();
-        o?.sendToBack();
-        o?.circle.attr({
+        addCircleOutline(b);
+        b.outline?.sendToBack();
+        b.outline?.circle.attr({
           'r': outline.relativeRadius * pixelsToPoints(b.fontSize),
           'stroke': outline.stroke.toHex(),
           'stroke-width': outline.strokeWidth,
