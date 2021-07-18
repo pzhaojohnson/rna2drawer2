@@ -383,38 +383,6 @@ describe('Base class', () => {
     expect(marker2.position()).toBe(p2);
   });
 
-  describe('binding events', () => {
-    let b = Base.create(svg, 'h', 50, 100);
-
-    it('onMouseover method', () => {
-      let f = jest.fn();
-      b.onMouseover(f);
-      b.text.fire('mouseover');
-      expect(f).toHaveBeenCalled();
-    });
-
-    it('onMouseout method', () => {
-      let f = jest.fn();
-      b.onMouseout(f);
-      b.text.fire('mouseout');
-      expect(f).toHaveBeenCalled();
-    });
-
-    it('onMousedown method', () => {
-      let f = jest.fn();
-      b.onMousedown(f);
-      b.text.fire('mousedown');
-      expect(f).toHaveBeenCalled();
-    });
-
-    it('onDblclick method', () => {
-      let f = jest.fn();
-      b.onDblclick(f);
-      b.text.fire('dblclick');
-      expect(f).toHaveBeenCalled();
-    });
-  });
-
   it('remove method', () => {
     let b = Base.create(svg, 'a', 5, 5);
     let textId = '#' + b.text.id();

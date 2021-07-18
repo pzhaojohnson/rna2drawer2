@@ -75,9 +75,9 @@ class StrictDrawingInteraction {
   }
 
   _bindBase(b: Base) {
-    b.onMouseover(() => this._handleMouseoverOnBase(b));
-    b.onMouseout(() => this._handleMouseoutOnBase(b));
-    b.onMousedown(() => this._handleMousedownOnBase(b));
+    b.text.mouseover(() => this._handleMouseoverOnBase(b));
+    b.text.mouseout(() => this._handleMouseoutOnBase(b));
+    b.text.mousedown(() => this._handleMousedownOnBase(b));
   }
 
   _handleMouseoverOnBase(b: Base) {

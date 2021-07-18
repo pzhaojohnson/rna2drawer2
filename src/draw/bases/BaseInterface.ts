@@ -42,11 +42,6 @@ export interface BaseInterface {
   bringToFront(): void;
   sendToBack(): void;
 
-  onMouseover(f: () => void): void;
-  onMouseout(f: () => void): void;
-  onMousedown(f: () => void): void;
-  onDblclick(f: () => void): void;
-
   highlighting?: CircleBaseAnnotation;
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;

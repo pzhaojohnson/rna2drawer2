@@ -260,22 +260,6 @@ export class Base implements BaseInterface {
     }
   }
 
-  onMouseover(f: () => void) {
-    this.text.mouseover(f);
-  }
-
-  onMouseout(f: () => void) {
-    this.text.mouseout(f);
-  }
-
-  onMousedown(f: () => void) {
-    this.text.mousedown(f);
-  }
-
-  onDblclick(f: () => void) {
-    this.text.dblclick(f);
-  }
-
   remove() {
     removeCircleHighlighting(this);
     removeCircleOutline(this);
