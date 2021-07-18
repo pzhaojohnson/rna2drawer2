@@ -2,6 +2,7 @@ import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInter
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import setAllBaseHighlightings from './setAllBaseHighlightings';
 import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings';
+import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 import positionsBetween from './positionsBetween';
 
 export function handleMouseoverOnBase(mode: AnnotatingMode, b: Base) {
@@ -26,7 +27,7 @@ export function handleMousedownOnBase(mode: AnnotatingMode, b: Base) {
     if (mode.selected.has(mode.hovered)) {
       mode.selected.delete(mode.hovered);
       setAllBaseHighlightings(mode);
-      b.removeHighlighting(); // remove highlighting from hovering
+      removeCircleHighlighting(b); // remove highlighting from hovering
     } else {
       mode.selected.add(mode.hovered);
       mode.selectingFrom = mode.hovered;

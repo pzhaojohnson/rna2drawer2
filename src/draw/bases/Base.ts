@@ -28,7 +28,7 @@ export class Base implements BaseInterface {
   static _mostRecentProps: BaseMostRecentProps;
 
   readonly text: Svg.Text;
-  _highlighting?: CircleBaseAnnotation;
+  highlighting?: CircleBaseAnnotation;
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;
 
@@ -61,7 +61,7 @@ export class Base implements BaseInterface {
     let text = svg.findOne('#' + savedState.textId) as Svg.Text;
     let b = new Base(text);
     if (savedState.highlighting) {
-      b.addCircleHighlightingFromSavedState(savedState.highlighting);
+      addSavedCircleHighlighting(b, savedState.highlighting);
     }
     if (savedState.outline) {
       addSavedCircleOutline(b, savedState.outline);
@@ -93,8 +93,6 @@ export class Base implements BaseInterface {
     this.text = text;
     this._validateText();
     this._storeCenterCoordinates();
-
-    this._highlighting = undefined;
   }
 
   /**
@@ -154,8 +152,8 @@ export class Base implements BaseInterface {
       this.text.attr({ 'x': x, 'y': y });
       this._xCenter = xCenter;
       this._yCenter = yCenter;
-      if (this._highlighting) {
-        this._highlighting.reposition({ baseCenter: { x: xCenter, y: yCenter } });
+      if (this.highlighting) {
+        this.highlighting.reposition({ baseCenter: { x: xCenter, y: yCenter } });
       }
       if (this.outline) {
         this.outline.reposition({ baseCenter: { x: xCenter, y: yCenter } });
@@ -278,39 +276,8 @@ export class Base implements BaseInterface {
     this.text.dblclick(f);
   }
 
-  addCircleHighlighting(): CircleBaseAnnotation | undefined {
-    addCircleHighlighting(this);
-    return this._highlighting;
-  }
-
-  addCircleHighlightingFromSavedState(
-    savedState: SavableCircleAnnotationState,
-  ): (CircleBaseAnnotation | undefined | never) {
-    addSavedCircleHighlighting(this, savedState);
-    return this._highlighting;
-  }
-
-  hasHighlighting(): boolean {
-    if (this._highlighting) {
-      return true;
-    }
-    return false;
-  }
-
-  get highlighting(): (CircleBaseAnnotation | undefined) {
-    return this._highlighting;
-  }
-
-  set highlighting(h) {
-    this._highlighting = h;
-  }
-
-  removeHighlighting() {
-    removeCircleHighlighting(this);
-  }
-
   remove() {
-    this.removeHighlighting();
+    removeCircleHighlighting(this);
     removeCircleOutline(this);
     removeNumbering(this);
     this.text.remove();

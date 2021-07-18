@@ -1,6 +1,7 @@
 import highlightBase from './highlightBase';
 import NodeSVG from '../../NodeSVG';
 import { Base } from 'Draw/bases/Base';
+import { addCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 
 let svg = NodeSVG();
 
@@ -39,7 +40,8 @@ it('highlights with given props', () => {
 
 it('base already has highlighting', () => {
   let b = Base.create(svg, 'g', 10, 10);
-  let h = b.addCircleHighlighting();
+  addCircleHighlighting(b);
+  let h = b.highlighting;
   h.fill = '#aabb11';
   h.strokeOpacity = 0.34;
   let returned = highlightBase(b, { radius: 5.02, fill: '#1199ba' });

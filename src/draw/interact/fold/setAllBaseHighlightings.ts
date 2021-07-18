@@ -1,6 +1,7 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import highlightBase from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
+import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 import allPairables from './allPairables';
 import { selectedRange } from './selected';
 import secondaryBondsWith from './secondaryBondsWith';
@@ -169,7 +170,7 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
       if (!b.highlighting || b.highlighting.circle.attr('stroke') != props.unpulsed.stroke) {
         if (b.highlighting && b.highlighting.circle.attr('stroke') != props.unpulsed.stroke) {
           // seems impossible to edit an animated SVG element
-          b.removeHighlighting();
+          removeCircleHighlighting(b);
         }
         let h = highlightBase(b, {
           radius: radius,
@@ -192,7 +193,7 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
         }
       }
     } else {
-      b.removeHighlighting();
+      removeCircleHighlighting(b);
     }
   });
 }

@@ -47,12 +47,7 @@ export interface BaseInterface {
   onMousedown(f: () => void): void;
   onDblclick(f: () => void): void;
 
-  addCircleHighlighting(): CircleBaseAnnotation | undefined;
-  addCircleHighlightingFromSavedState(s: SavableCircleAnnotationState): CircleBaseAnnotation | undefined | never;
-  hasHighlighting(): boolean;
   highlighting?: CircleBaseAnnotation;
-  removeHighlighting(): void;
-
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;
   

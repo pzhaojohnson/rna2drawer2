@@ -1,6 +1,7 @@
 import setAllBaseHighlightings from './setAllBaseHighlightings';
 import NodeSVG from '../../NodeSVG';
 import Drawing from '../../Drawing';
+import { addCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 
 it('handles missing arguments', () => {
   expect(
@@ -23,14 +24,14 @@ it('can remove highlighting', () => {
   let seq = drawing.appendSequenceOutOfView('asdf', 'asdf');
   let b2 = seq.getBaseAtPosition(2);
   let b4 = seq.getBaseAtPosition(4);
-  b2.addCircleHighlighting();
-  b4.addCircleHighlighting();
+  addCircleHighlighting(b2);
+  addCircleHighlighting(b4);
   setAllBaseHighlightings(
     drawing,
     [undefined, undefined, undefined, undefined],
   );
-  expect(b2.hasHighlighting()).toBeFalsy();
-  expect(b4.hasHighlighting()).toBeFalsy();
+  expect(b2.highlighting).toBeFalsy();
+  expect(b4.highlighting).toBeFalsy();
 });
 
 it('can add highlighting with default props', () => {
@@ -85,16 +86,16 @@ it('handles highlightings lists of wrong lengths', () => {
     drawing,
     [undefined, {}, undefined, undefined, {}], // too long
   );
-  expect(b1.hasHighlighting()).toBeFalsy();
-  expect(b2.hasHighlighting()).toBeTruthy();
-  expect(b3.hasHighlighting()).toBeFalsy();
+  expect(b1.highlighting).toBeFalsy();
+  expect(b2.highlighting).toBeTruthy();
+  expect(b3.highlighting).toBeFalsy();
   setAllBaseHighlightings(
     drawing,
     [{}, undefined], // too short
   );
-  expect(b1.hasHighlighting()).toBeTruthy();
-  expect(b2.hasHighlighting()).toBeFalsy();
-  expect(b3.hasHighlighting()).toBeFalsy();
+  expect(b1.highlighting).toBeTruthy();
+  expect(b2.highlighting).toBeFalsy();
+  expect(b3.highlighting).toBeFalsy();
 });
 
 it('handles multiple sequences', () => {
@@ -108,6 +109,6 @@ it('handles multiple sequences', () => {
     drawing,
     [undefined, {}, undefined, undefined, undefined, {}],
   );
-  expect(b2.hasHighlighting()).toBeTruthy();
-  expect(b6.hasHighlighting()).toBeTruthy();
+  expect(b2.highlighting).toBeTruthy();
+  expect(b6.highlighting).toBeTruthy();
 });

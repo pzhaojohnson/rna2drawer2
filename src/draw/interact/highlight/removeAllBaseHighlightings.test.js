@@ -1,6 +1,7 @@
 import removeAllBaseHighlightings from './removeAllBaseHighlightings';
 import NodeSVG from '../../NodeSVG';
 import Drawing from '../../Drawing';
+import { addCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 
 it('handles missing drawing argument', () => {
   expect(
@@ -17,11 +18,11 @@ it('handles multiple sequences', () => {
   let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdf');
   let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwer');
   let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcv');
-  seq1.getBaseAtPosition(2).addCircleHighlighting();
-  seq2.getBaseAtPosition(3).addCircleHighlighting();
-  seq3.getBaseAtPosition(1).addCircleHighlighting();
+  addCircleHighlighting(seq1.getBaseAtPosition(2));
+  addCircleHighlighting(seq2.getBaseAtPosition(3));
+  addCircleHighlighting(seq3.getBaseAtPosition(1));
   removeAllBaseHighlightings(drawing);
   drawing.forEachBase(b => {
-    expect(b.hasHighlighting()).toBeFalsy();
+    expect(b.highlighting).toBeFalsy();
   });
 });

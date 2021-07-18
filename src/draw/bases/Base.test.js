@@ -1,7 +1,7 @@
 import { Base } from './Base';
 import NodeSVG from 'Draw/NodeSVG';
 import normalizeAngle from 'Draw/normalizeAngle';
-import { addCircleOutline } from 'Draw/bases/annotate/circle/add';
+import { addCircleHighlighting, addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import { addNumbering } from 'Draw/bases/number/add';
 import { savableState as savableNumberingState } from 'Draw/bases/number/save';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
@@ -71,7 +71,8 @@ describe('Base class', () => {
       it('can include highlighting', () => {
         // and handles missing outline and numbering
         let b1 = Base.create(svg, 'a', 4, 5);
-        let h1 = b1.addCircleHighlighting();
+        addCircleHighlighting(b1);
+        let h1 = b1.highlighting;
         let savableState = b1.savableState();
         let b2 = Base.fromSavedState(savableState, svg);
         let h2 = b2.highlighting;
@@ -255,7 +256,8 @@ describe('Base class', () => {
     it('can reposition highlighting', () => {
       // with no outline or numbering
       let b = Base.create(svg, 't', 1, 2);
-      let h = b.addCircleHighlighting();
+      addCircleHighlighting(b);
+      let h = b.highlighting;
       b.moveTo(8, 9);
       expect(h.circle.attr('cx')).toBeCloseTo(8);
       expect(h.circle.attr('cy')).toBeCloseTo(9);
@@ -413,65 +415,6 @@ describe('Base class', () => {
     });
   });
 
-  describe('highlighting', () => {
-    describe('addCircleHighlighting method', () => {
-      it('passes center base coordinates and stores reference', () => {
-        let b = Base.create(svg, 'a', 5, 10);
-        let h = b.addCircleHighlighting();
-        expect(h.circle.attr('cx')).toBeCloseTo(5);
-        expect(h.circle.attr('cy')).toBeCloseTo(10);
-        expect(b.highlighting).toBe(h); // check reference
-      });
-
-      it('removes previous highlighting', () => {
-        let b = Base.create(svg, 't', 5, 12);
-        let h1 = b.addCircleHighlighting();
-        let h2 = b.addCircleHighlighting();
-        expect(h1.circle.root()).toBeFalsy(); // was removed
-      });
-    });
-
-    describe('addCircleHighlightingFromSavedState method', () => {
-      it('passes center base coordinates and stores reference', () => {
-        let b1 = Base.create(svg, 'g', 30, 82);
-        let h1 = b1.addCircleHighlighting();
-        let savableState1 = savableCircleAnnotationState(h1);
-        let b2 = Base.create(svg, 'g', 30, 82);
-        let h2 = b2.addCircleHighlightingFromSavedState(savableState1);
-        expect(h2.circle.attr('cx')).toBeCloseTo(30);
-        expect(h2.circle.attr('cy')).toBeCloseTo(82);
-        expect(b2.highlighting).toBe(h2); // check reference
-      });
-    });
-
-    it('hasHighlighting method and highlighting getter', () => {
-      let b = Base.create(svg, 'h', 10, 20);
-      expect(b.hasHighlighting()).toBeFalsy();
-      expect(b.highlighting).toBe(undefined);
-      let h = b.addCircleHighlighting();
-      expect(b.hasHighlighting()).toBeTruthy();
-      expect(b.highlighting).toBe(h);
-      b.removeHighlighting();
-      expect(b.hasHighlighting()).toBeFalsy();
-      expect(b.highlighting).toBe(undefined);
-    });
-
-    describe('removeHighlighting method', () => {
-      it('removes highlighting and reference', () => {
-        let b = Base.create(svg, 'b', 1, 5);
-        let h = b.addCircleHighlighting();
-        b.removeHighlighting();
-        expect(b.highlighting).toBe(undefined); // check reference
-      });
-
-      it('can be called with no highlighting', () => {
-        let b = Base.create(svg, 'a', 1, 2);
-        expect(b.hasHighlighting()).toBeFalsy();
-        expect(() => b.removeHighlighting()).not.toThrow();
-      });
-    });
-  });
-
   it('remove method', () => {
     let b = Base.create(svg, 'a', 5, 5);
     let textId = '#' + b.text.id();
@@ -497,7 +440,8 @@ describe('Base class', () => {
     it('can include highlighting', () => {
       // with no outline or numbering
       let b = Base.create(svg, 'q', 10, 20);
-      let h = b.addCircleHighlighting();
+      addCircleHighlighting(b);
+      let h = b.highlighting;
       let savableState = b.savableState();
       expect(
         JSON.stringify(savableState.highlighting)
@@ -527,7 +471,7 @@ describe('Base class', () => {
     describe('can be converted to and from a JSON string', () => {
       it('with highlighting, outline and numbering', () => {
         let b = Base.create(svg, 'n', 20, 50);
-        b.addCircleHighlighting();
+        addCircleHighlighting(b);
         addCircleOutline(b);
         addNumbering(b, 100);
         let savableState = b.savableState();
@@ -541,7 +485,7 @@ describe('Base class', () => {
   describe('refreshIds method', () => {
     it('refreshes text ID and handles no highlighting, outline or numbering', () => {
       let b = Base.create(svg, 'A', 1, 5);
-      expect(b.hasHighlighting()).toBeFalsy();
+      expect(b.highlighting).toBeFalsy();
       expect(b.outline).toBeFalsy();
       expect(b.numbering).toBeFalsy();
       let oldTextId = b.text.id();
@@ -551,7 +495,8 @@ describe('Base class', () => {
 
     it('can refresh highlighting, outline and numbering IDs', () => {
       let b = Base.create(svg, 'A', 1, 5);
-      let h = b.addCircleHighlighting();
+      addCircleHighlighting(b);
+      let h = b.highlighting;
       addCircleOutline(b);
       let o = b.outline;
       addNumbering(b, 5);

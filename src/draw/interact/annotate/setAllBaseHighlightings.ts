@@ -1,6 +1,7 @@
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
 import highlightBase from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
+import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 
 export function setAllBaseHighlightings(mode: AnnotatingMode) {
   let bHovered = typeof mode.hovered == 'number' ? mode.drawing.getBaseAtOverallPosition(mode.hovered) : undefined;
@@ -20,7 +21,7 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
         if (b.highlighting) {
           if (b.highlighting.circle.attr('stroke') != stroke || justClickedOnAndSelected) {
             // seems impossible to edit an animated SVG element
-            b.removeHighlighting();
+            removeCircleHighlighting(b);
           }
         }
         let h = highlightBase(b, {
@@ -42,7 +43,7 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
         b.highlighting.sendToBack();
       }
     } else {
-      b.removeHighlighting();
+      removeCircleHighlighting(b);
     }
   });
 }

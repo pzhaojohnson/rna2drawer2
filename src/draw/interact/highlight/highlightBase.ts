@@ -1,5 +1,6 @@
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
+import { addCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 
 export interface HighlightingProps {
   radius?: number;
@@ -14,7 +15,8 @@ export interface HighlightingProps {
 export function highlightBase(b: Base, props?: HighlightingProps): CircleBaseAnnotation | undefined {
   let h = b.highlighting;
   if (!h) {
-    h = b.addCircleHighlighting();
+    addCircleHighlighting(b);
+    h = b.highlighting;
   }
   if (h) {
     h.circle.attr({
