@@ -11,50 +11,6 @@ import { distance2D as distance } from 'Math/distance';
 let svg = NodeSVG();
 
 describe('Base class', () => {
-  it('mostRecentProps static method returns a copy', () => {
-    Base._mostRecentProps.fontFamily = 'Tahoe';
-    Base._mostRecentProps.fontSize = 4.567;
-    Base._mostRecentProps.fontWeight = 'bolder';
-    Base._mostRecentProps.fontStyle = 'oblique';
-    let mrps = Base.mostRecentProps();
-    expect(mrps.fontFamily).toBe('Tahoe');
-    expect(mrps.fontSize).toBeCloseTo(4.567, 6);
-    expect(mrps.fontWeight).toBe('bolder');
-    expect(mrps.fontStyle).toBe('oblique');
-    expect(mrps).not.toBe(Base._mostRecentProps); // is a new object
-  });
-
-  it('_applyMostRecentProps static method', () => {
-    let b = Base.create(svg, 'G', 3, 4);
-    Base._mostRecentProps.fontFamily = 'Cambria';
-    Base._mostRecentProps.fontSize = 4.88;
-    Base._mostRecentProps.fontWeight = 600;
-    Base._mostRecentProps.fontStyle = 'italic';
-    Base._applyMostRecentProps(b);
-    expect(b.fontFamily).toBe('Cambria');
-    expect(b.fontSize).toBe(4.88);
-    expect(b.fontWeight).toBe(600);
-    expect(b.fontStyle).toBe('italic');
-  });
-
-  it('_copyPropsToMostRecent static method', () => {
-    let t = svg.text(add => add.tspan('A'));
-    t.attr({
-      'font-family': 'Impact',
-      'font-size': 4.447,
-      'font-weight': 'lighter',
-      'font-style': 'oblique',
-    });
-    let b = new Base(t);
-    let mrps = Base.mostRecentProps();
-    Base._copyPropsToMostRecent(b);
-    mrps = Base.mostRecentProps();
-    expect(mrps.fontFamily).toBe('Impact');
-    expect(mrps.fontSize).toBe(4.447);
-    expect(mrps.fontWeight).toBe('lighter');
-    expect(mrps.fontStyle).toBe('oblique');
-  });
-
   describe('fromSavedState static method', () => {
     describe('from valid saved state', () => {
       /* By only including one of highlighting, outline and numbering
@@ -98,14 +54,6 @@ describe('Base class', () => {
         let b2 = Base.fromSavedState(savableState, svg);
         expect(b2.numbering.id).toBe(n1.id);
       });
-
-      it('copies props to most recent', () => {
-        let b1 = Base.create(svg, 'T', 1, 1);
-        let savableState = b1.savableState();
-        let spy = jest.spyOn(Base, '_copyPropsToMostRecent');
-        let b2 = Base.fromSavedState(savableState, svg);
-        expect(spy.mock.calls[0][0]).toBe(b2);
-      });
     });
 
     describe('from invalid saved state', () => {
@@ -137,12 +85,6 @@ describe('Base class', () => {
       expect(b.character).toBe('r');
       expect(b.xCenter).toBe(8);
       expect(b.yCenter).toBe(77);
-    });
-
-    it('applies most recent props', () => {
-      let spy = jest.spyOn(Base, '_applyMostRecentProps');
-      let b = Base.create(svg, 'A', 4, 5);
-      expect(spy.mock.calls[0][0]).toBe(b);
     });
   });
 

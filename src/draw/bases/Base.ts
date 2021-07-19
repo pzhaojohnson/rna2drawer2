@@ -1,6 +1,5 @@
 import {
   BaseInterface,
-  BaseMostRecentProps,
   BaseSavableState,
 } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
@@ -23,10 +22,11 @@ import {
   addSavedCircleOutline,
 } from 'Draw/bases/annotate/circle/save';
 import { areClose } from 'Draw/areClose';
+import { Values, values, setValues } from './values';
 
 export class Base implements BaseInterface {
-  static _mostRecentProps: BaseMostRecentProps;
-
+  static recommendedDefaults: Values;
+  
   readonly text: Svg.Text;
   highlighting?: CircleBaseAnnotation;
   outline?: CircleBaseAnnotation;
@@ -34,25 +34,6 @@ export class Base implements BaseInterface {
 
   _xCenter!: number;
   _yCenter!: number;
-
-  static mostRecentProps(): BaseMostRecentProps {
-    return { ...Base._mostRecentProps };
-  }
-
-  static _applyMostRecentProps(b: Base) {
-    let props = Base.mostRecentProps();
-    b.fontFamily = props.fontFamily;
-    b.fontSize = props.fontSize;
-    b.fontWeight = props.fontWeight;
-    b.fontStyle = props.fontStyle;
-  }
-
-  static _copyPropsToMostRecent(b: Base) {
-    Base._mostRecentProps.fontFamily = b.fontFamily;
-    Base._mostRecentProps.fontSize = b.fontSize;
-    Base._mostRecentProps.fontWeight = b.fontWeight;
-    Base._mostRecentProps.fontStyle = b.fontStyle;
-  }
 
   static fromSavedState(savedState: BaseSavableState, svg: Svg.Svg): (Base | never) {
     if (savedState.className !== 'Base') {
@@ -69,7 +50,7 @@ export class Base implements BaseInterface {
     if (savedState.numbering) {
       addSavedNumbering(b, savedState.numbering);
     }
-    Base._copyPropsToMostRecent(b);
+    Base.recommendedDefaults = values(b);
     return b;
   }
 
@@ -77,7 +58,7 @@ export class Base implements BaseInterface {
     let text = svg.text((add) => add.tspan(character));
     text.id();
     let b = new Base(text);
-    Base._applyMostRecentProps(b);
+    setValues(b, Base.recommendedDefaults);
     b.moveTo(xCenter, yCenter);
     return b;
   }
@@ -144,23 +125,17 @@ export class Base implements BaseInterface {
   }
 
   moveTo(xCenter: number, yCenter: number) {
-    if (!areClose(xCenter, this.xCenter) || !areClose(yCenter, this.yCenter)) {
-      let xShift = xCenter - this._xCenter;
-      let yShift = yCenter - this._yCenter;
-      let x = this.text.attr('x') + xShift;
-      let y = this.text.attr('y') + yShift;
-      this.text.attr({ 'x': x, 'y': y });
-      this._xCenter = xCenter;
-      this._yCenter = yCenter;
-      if (this.highlighting) {
-        this.highlighting.reposition({ baseCenter: { x: xCenter, y: yCenter } });
-      }
-      if (this.outline) {
-        this.outline.reposition({ baseCenter: { x: xCenter, y: yCenter } });
-      }
-      if (this.numbering) {
-        this.numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
-      }
+    this.text.center(xCenter, yCenter);
+    this._xCenter = xCenter;
+    this._yCenter = yCenter;
+    if (this.highlighting) {
+      this.highlighting.reposition({ baseCenter: { x: xCenter, y: yCenter } });
+    }
+    if (this.outline) {
+      this.outline.reposition({ baseCenter: { x: xCenter, y: yCenter } });
+    }
+    if (this.numbering) {
+      this.numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
     }
   }
 
@@ -189,7 +164,7 @@ export class Base implements BaseInterface {
   set fontFamily(ff: string) {
     this.text.attr({ 'font-family': ff });
     this.text.center(this._xCenter, this._yCenter);
-    Base._mostRecentProps.fontFamily = ff;
+    Base.recommendedDefaults.text['font-family'] = ff;
   }
 
   get fontSize(): number {
@@ -199,7 +174,7 @@ export class Base implements BaseInterface {
   set fontSize(fs: number) {
     this.text.attr({ 'font-size': fs });
     this.text.center(this._xCenter, this._yCenter);
-    Base._mostRecentProps.fontSize = fs;
+    Base.recommendedDefaults.text['font-size'] = fs;
   }
 
   get fontWeight(): (string | number) {
@@ -209,7 +184,7 @@ export class Base implements BaseInterface {
   set fontWeight(fw: (string | number)) {
     this.text.attr({ 'font-weight': fw });
     this.text.center(this._xCenter, this._yCenter);
-    Base._mostRecentProps.fontWeight = fw;
+    Base.recommendedDefaults.text['font-weight'] = fw;
   }
 
   get fontStyle(): string {
@@ -219,7 +194,7 @@ export class Base implements BaseInterface {
   set fontStyle(fs: string) {
     this.text.attr({ 'font-style': fs });
     this.text.center(this._xCenter, this._yCenter);
-    Base._mostRecentProps.fontStyle = fs;
+    Base.recommendedDefaults.text['font-style'] = fs;
   }
 
   get fill(): string {
@@ -292,11 +267,13 @@ export class Base implements BaseInterface {
   }
 }
 
-Base._mostRecentProps = {
-  fontFamily: 'Arial',
-  fontSize: 9,
-  fontWeight: 'bold',
-  fontStyle: 'normal',
+Base.recommendedDefaults = {
+  text: {
+    'font-family': 'Arial',
+    'font-size': 9,
+    'font-weight': 'bold',
+    'font-style': 'normal',
+  },
 };
 
 export default Base;

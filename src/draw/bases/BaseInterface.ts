@@ -6,13 +6,6 @@ import { SavableState as SavableCircleAnnotationState } from 'Draw/bases/annotat
 import { BaseNumberingInterface as BaseNumbering } from "Draw/bases/number/BaseNumberingInterface";
 import { SavableState as SavableBaseNumberingState } from 'Draw/bases/number/save';
 
-export interface BaseMostRecentProps {
-  fontFamily: string;
-  fontSize: number;
-  fontWeight: number | string;
-  fontStyle: string;
-}
-
 export interface BaseSavableState {
   className: string;
   textId: string;

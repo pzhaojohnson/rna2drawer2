@@ -258,7 +258,7 @@ class ExportSvg extends React.Component {
       errorMessage: '',
       errorMessageKey: uuidv1(),
     });
-    let scaling = bfs / Base.mostRecentProps().fontSize;
+    let scaling = bfs / (Base.recommendedDefaults.text['font-size'] ?? bfs);
     let svgString = this.getSvgStringForExport(scaling);
     this.offerSvgFileForDownload(svgString);
   }

@@ -308,7 +308,7 @@ class ExportPptx extends React.Component {
       errorMessage: '',
       errorMessageKey: uuidv1(),
     });
-    let scaling = bfs / Base.mostRecentProps().fontSize;
+    let scaling = bfs / (Base.recommendedDefaults.text['font-size'] ?? bfs);
     let pres = this.createPptx(scaling);
     if (pres) {
       this.savePptx(pres);
