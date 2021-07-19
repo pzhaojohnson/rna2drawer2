@@ -37,7 +37,7 @@ function addBaseColors(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
     seq.forEachBase((b, p) => {
       let color = rna2drawer1.baseColors[p - 1];
       if (color) {
-        b.fill = color.toHex();
+        b.text.attr({ 'fill': color.toHex() });
       }
     });
   }

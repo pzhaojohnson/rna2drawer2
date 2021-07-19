@@ -197,22 +197,6 @@ export class Base implements BaseInterface {
     Base.recommendedDefaults.text['font-style'] = fs;
   }
 
-  get fill(): string {
-    return this.text.attr('fill');
-  }
-
-  set fill(f: string) {
-    this.text.attr({ 'fill': f });
-  }
-
-  get fillOpacity(): number {
-    return this.text.attr('fill-opacity');
-  }
-
-  set fillOpacity(fo: number) {
-    this.text.attr({ 'fill-opacity': fo });
-  }
-
   bringToFront() {
     if (this.outline) {
       this.outline.bringToFront();

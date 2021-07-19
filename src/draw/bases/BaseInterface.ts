@@ -28,8 +28,6 @@ export interface BaseInterface {
   fontSize: number;
   fontWeight: number | string;
   fontStyle: string;
-  fill: string;
-  fillOpacity: number;
   
   bringToFront(): void;
   sendToBack(): void;

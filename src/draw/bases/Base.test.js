@@ -275,16 +275,6 @@ describe('Base class', () => {
     expect(b.text.cy()).toBeCloseTo(15);
   });
 
-  it('fill and fillOpacity getters and setters', () => {
-    let b = Base.create(svg, 't', 4, 5);
-    b.fill = '#4523ab';
-    expect(b.fill).toBe('#4523ab'); // check getter
-    expect(b.text.attr('fill')).toBe('#4523ab'); // check actual value
-    b.fillOpacity = 0.34;
-    expect(b.fillOpacity).toBe(0.34); // check getter
-    expect(b.text.attr('fill-opacity')).toBe(0.34); // check actual value
-  });
-
   it('bringToFront and sendToBack methods', () => {
     let r = svg.rect(50, 60);
     let c1 = svg.circle(100);

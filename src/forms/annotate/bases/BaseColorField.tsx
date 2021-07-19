@@ -2,17 +2,28 @@ import * as React from 'react';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
+import { parseColor } from 'Parse/parseColor';
 import { areAllSameColor } from '../../fields/color/areAllSameColor';
 
 function baseFills(bs: Base[]): Svg.Color[] {
   let fs = [] as Svg.Color[];
-  bs.forEach(b => fs.push(new Svg.Color(b.fill)));
+  bs.forEach(b => {
+    let f = parseColor(b.text.attr('fill'));
+    if (f) {
+      fs.push(f);
+    }
+  });
   return fs;
 }
 
 function baseFillOpacities(bs: Base[]): number[] {
   let fos = [] as number[];
-  bs.forEach(b => fos.push(b.fillOpacity));
+  bs.forEach(b => {
+    let fo = b.text.attr('fill-opacity');
+    if (typeof fo == 'number') {
+      fos.push(fo);
+    }
+  });
   return fos;
 }
 
@@ -23,9 +34,10 @@ function basesAllHaveSameColor(bs: Base[]): boolean {
 export function BaseColorField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
   let bs = selectedBases();
   let b1 = bs[0];
+  let f1 = parseColor(b1.text.attr('fill'));
   let initialValue = undefined;
-  if (b1 && basesAllHaveSameColor(bs)) {
-    initialValue = { color: b1.fill, opacity: 1 };
+  if (basesAllHaveSameColor(bs) && f1) {
+    initialValue = { color: f1.toHex(), opacity: 1 };
   }
   return (
     <ColorField
@@ -36,10 +48,10 @@ export function BaseColorField(selectedBases: () => Base[], pushUndo: () => void
         let bs = selectedBases();
         let b1 = bs[0];
         if (b1) {
-          if (!basesAllHaveSameColor(bs) || co.color != b1.fill) {
+          if (!basesAllHaveSameColor(bs) || co.color != b1.text.attr('fill')) {
             pushUndo();
             bs.forEach(b => {
-              b.fill = co.color;
+              b.text.attr({ 'fill': co.color });
             });
             changed();
           }

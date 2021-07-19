@@ -141,7 +141,7 @@ describe('adding base colors', () => {
     rna2drawer1.baseColors = baseColors;
     addRna2drawer1(app.strictDrawing, rna2drawer1);
     app.strictDrawing.drawing.forEachBase((b, p) => {
-      expect(b.fill).toBe(baseColors[p - 1].toHex());
+      expect(b.text.attr('fill')).toBe(baseColors[p - 1].toHex());
     });
   });
 
@@ -150,11 +150,11 @@ describe('adding base colors', () => {
     rna2drawer1.baseColors = [new Svg.Color('#000000'), undefined, new Svg.Color('#ff0000')];
     addRna2drawer1(app.strictDrawing, rna2drawer1);
     let drawing = app.strictDrawing.drawing;
-    expect(drawing.getBaseAtOverallPosition(1).fill).toBe('#000000');
-    expect(drawing.getBaseAtOverallPosition(2).fill).toBe('#000000');
-    expect(drawing.getBaseAtOverallPosition(3).fill).toBe('#ff0000');
+    expect(drawing.getBaseAtOverallPosition(1).text.attr('fill')).toBe('#000000');
+    expect(drawing.getBaseAtOverallPosition(2).text.attr('fill')).toBe('#000000');
+    expect(drawing.getBaseAtOverallPosition(3).text.attr('fill')).toBe('#ff0000');
     for (let p = 4; p <= drawing.numBases; p++) {
-      expect(drawing.getBaseAtOverallPosition(p).fill).toBe('#000000');
+      expect(drawing.getBaseAtOverallPosition(p).text.attr('fill')).toBe('#000000');
     }
   });
 });
