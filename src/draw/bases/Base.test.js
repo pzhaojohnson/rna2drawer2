@@ -235,16 +235,6 @@ describe('Base class', () => {
     expect(normalizeAngle(a)).toBeCloseTo(Math.asin(4 / 5));
   });
 
-  it('fontSize getter and setter', () => {
-    let b = Base.create(svg, 'e', 5, 6);
-    b.fontSize = 5.123;
-    expect(b.fontSize).toBe(5.123); // check getter
-    expect(b.text.attr('font-size')).toBe(5.123); // check actual value
-    // maintains center coordinates
-    expect(b.text.cx()).toBeCloseTo(5);
-    expect(b.text.cy()).toBeCloseTo(6);
-  });
-
   it('bringToFront and sendToBack methods', () => {
     let r = svg.rect(50, 60);
     let c1 = svg.circle(100);

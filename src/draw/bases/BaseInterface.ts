@@ -24,8 +24,6 @@ export interface BaseInterface {
   distanceBetweenCenters(b: BaseInterface): number;
   angleBetweenCenters(b: BaseInterface): number;
 
-  fontSize: number;
-  
   bringToFront(): void;
   sendToBack(): void;
 

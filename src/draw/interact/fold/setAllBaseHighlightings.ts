@@ -159,7 +159,8 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
   mode.strictDrawing.drawing.forEachBase((b, p) => {
     let props = highlightings[p - 1];
     if (props) {
-      let radius = b.fontSize;
+      let fs = b.text.attr('font-size');
+      let radius = typeof fs == 'number' ? fs : 9;
       if (b.outline) {
         let outlineRadius = b.outline.circle.attr('r');
         let outlineStrokeWidth = b.outline.circle.attr('stroke-width');

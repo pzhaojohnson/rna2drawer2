@@ -7,7 +7,8 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
   let bHovered = typeof mode.hovered == 'number' ? mode.drawing.getBaseAtOverallPosition(mode.hovered) : undefined;
   mode.drawing.forEachBase((b, p) => {
     if (mode.selected.has(p) || p == mode.hovered) {
-      let radius = 1.15 * b.fontSize;
+      let fs = b.text.attr('font-size');
+      let radius = 1.15 * (typeof fs == 'number' ? fs : 9);
       if (b.outline) {
         let outlineRadius = b.outline.circle.attr('r');
         let outlineStrokeWidth = b.outline.circle.attr('stroke-width');

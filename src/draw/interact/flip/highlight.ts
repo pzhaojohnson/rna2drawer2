@@ -9,7 +9,8 @@ export function highlightStem(mode: FlippingMode, st: Stem) {
   positionsOfStem(st).forEach(p => {
     let b = drawing.getBaseAtOverallPosition(p);
     if (b) {
-      let radius = b.fontSize;
+      let fs = b.text.attr('font-size');
+      let radius = typeof fs == 'number' ? fs : 9;
       if (b.outline) {
         let outlineRadius = b.outline.circle.attr('r');
         let outlineStrokeWidth = b.outline.circle.attr('stroke-width');

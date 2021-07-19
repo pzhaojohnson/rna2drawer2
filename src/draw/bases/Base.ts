@@ -157,16 +157,6 @@ export class Base implements BaseInterface {
     );
   }
 
-  get fontSize(): number {
-    return this.text.attr('font-size');
-  }
-
-  set fontSize(fs: number) {
-    this.text.attr({ 'font-size': fs });
-    this.text.center(this._xCenter, this._yCenter);
-    Base.recommendedDefaults.text['font-size'] = fs;
-  }
-
   bringToFront() {
     if (this.outline) {
       this.outline.bringToFront();

@@ -192,8 +192,11 @@ describe('adding base outlines', () => {
     }];
     addRna2drawer1(app.strictDrawing, rna2drawer1);
     let b = app.strictDrawing.drawing.getBaseAtOverallPosition(1);
+    let fs = b.text.attr('font-size');
+    expect(typeof fs).toBe('number');
+    expect(Number.isFinite(fs)).toBeTruthy();
     let o = b.outline;
-    expect(o.circle.attr('r')).toBeCloseTo(1.15 * pixelsToPoints(b.fontSize));
+    expect(o.circle.attr('r')).toBeCloseTo(1.15 * pixelsToPoints(fs));
     expect(o.circle.attr('stroke')).toBe('#ff00ab');
     expect(o.circle.attr('stroke-width')).toBe(2.31);
     expect(o.circle.attr('stroke-opacity')).toBe(0.45);

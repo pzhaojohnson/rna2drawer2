@@ -51,8 +51,9 @@ function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
       if (outline) {
         addCircleOutline(b);
         b.outline?.sendToBack();
+        let fs = b.text.attr('font-size');
         b.outline?.circle.attr({
-          'r': outline.relativeRadius * pixelsToPoints(b.fontSize),
+          'r': outline.relativeRadius * pixelsToPoints(typeof fs == 'number' ? fs : 9),
           'stroke': outline.stroke.toHex(),
           'stroke-width': outline.strokeWidth,
           'stroke-opacity': outline.strokeOpacity,
