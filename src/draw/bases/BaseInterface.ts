@@ -27,7 +27,6 @@ export interface BaseInterface {
   fontFamily: string;
   fontSize: number;
   fontWeight: number | string;
-  fontStyle: string;
   
   bringToFront(): void;
   sendToBack(): void;

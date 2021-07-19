@@ -187,16 +187,6 @@ export class Base implements BaseInterface {
     Base.recommendedDefaults.text['font-weight'] = fw;
   }
 
-  get fontStyle(): string {
-    return this.text.attr('font-style');
-  }
-
-  set fontStyle(fs: string) {
-    this.text.attr({ 'font-style': fs });
-    this.text.center(this._xCenter, this._yCenter);
-    Base.recommendedDefaults.text['font-style'] = fs;
-  }
-
   bringToFront() {
     if (this.outline) {
       this.outline.bringToFront();

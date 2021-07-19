@@ -265,16 +265,6 @@ describe('Base class', () => {
     expect(b.text.cy()).toBeCloseTo(4);
   });
 
-  it('fontStyle getter and setter', () => {
-    let b = Base.create(svg, 'E', 5, 15);
-    b.fontStyle = 'italic';
-    expect(b.fontStyle).toBe('italic'); // check getter
-    expect(b.text.attr('font-style')).toBe('italic'); // check actual value
-    // maintains center coordinates
-    expect(b.text.cx()).toBeCloseTo(5);
-    expect(b.text.cy()).toBeCloseTo(15);
-  });
-
   it('bringToFront and sendToBack methods', () => {
     let r = svg.rect(50, 60);
     let c1 = svg.circle(100);
