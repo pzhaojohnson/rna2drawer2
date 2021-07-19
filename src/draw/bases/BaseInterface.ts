@@ -30,8 +30,7 @@ export interface BaseInterface {
   fontStyle: string;
   fill: string;
   fillOpacity: number;
-  cursor: string;
-
+  
   bringToFront(): void;
   sendToBack(): void;
 

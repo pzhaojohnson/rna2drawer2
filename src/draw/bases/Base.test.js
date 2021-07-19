@@ -285,13 +285,6 @@ describe('Base class', () => {
     expect(b.text.attr('fill-opacity')).toBe(0.34); // check actual value
   });
 
-  it('cursor getter and setter', () => {
-    let b = Base.create(svg, 'e', 4, 5);
-    b.cursor = 'crosshair';
-    expect(b.cursor).toBe('crosshair'); // check getter
-    expect(b.text.css('cursor')).toBe('crosshair'); // check actual value
-  });
-
   it('bringToFront and sendToBack methods', () => {
     let r = svg.rect(50, 60);
     let c1 = svg.circle(100);

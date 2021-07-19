@@ -213,14 +213,6 @@ export class Base implements BaseInterface {
     this.text.attr({ 'fill-opacity': fo });
   }
 
-  get cursor(): string {
-    return this.text.css('cursor');
-  }
-
-  set cursor(c: string) {
-    this.text.css('cursor', c);
-  }
-
   bringToFront() {
     if (this.outline) {
       this.outline.bringToFront();
