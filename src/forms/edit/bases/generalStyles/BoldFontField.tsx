@@ -34,7 +34,10 @@ export function BoldFontField(props: Props): React.ReactElement | null {
             if (shouldBeBold != firstIsBold || !first) {
               props.app.pushUndo();
               drawing.forEachBase(b => {
+                let bbox = b.text.bbox();
+                let center = { x: bbox.cx, y: bbox.cy };
                 b.text.attr({ 'font-weight': shouldBeBold ? 'bold' : 'normal' });
+                b.text.center(center.x, center.y);
               });
               props.app.drawingChangedNotByInteraction();
             }

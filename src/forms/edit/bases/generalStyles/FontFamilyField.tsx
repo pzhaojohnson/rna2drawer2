@@ -23,7 +23,10 @@ export function FontFamilyField(props: Props): React.ReactElement | null {
             if (ff != first?.text.attr('font-family')) {
               props.app.pushUndo();
               drawing.forEachBase(b => {
+                let bbox = b.text.bbox();
+                let center = { x: bbox.cx, y: bbox.cy };
                 b.text.attr({ 'font-family': ff });
+                b.text.center(center.x, center.y);
               });
               props.app.drawingChangedNotByInteraction();
             }
