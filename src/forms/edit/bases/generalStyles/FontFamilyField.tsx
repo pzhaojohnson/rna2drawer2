@@ -12,17 +12,18 @@ export function FontFamilyField(props: Props): React.ReactElement | null {
     return null;
   } else {
     let first = drawing.getBaseAtOverallPosition(1);
+    let firstFontFamily = first?.text.attr('font-family');
     return (
       <Field
         name='Font'
-        initialValue={first?.fontFamily}
+        initialValue={typeof firstFontFamily == 'string' ? firstFontFamily : undefined}
         set={ff => {
           if (drawing.numBases > 0) {
             let first = drawing.getBaseAtOverallPosition(1);
-            if (ff != first?.fontFamily) {
+            if (ff != first?.text.attr('font-family')) {
               props.app.pushUndo();
               drawing.forEachBase(b => {
-                b.fontFamily = ff;
+                b.text.attr({ 'font-family': ff });
               });
               props.app.drawingChangedNotByInteraction();
             }

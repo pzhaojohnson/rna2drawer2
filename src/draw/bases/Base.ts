@@ -157,16 +157,6 @@ export class Base implements BaseInterface {
     );
   }
 
-  get fontFamily(): string {
-    return this.text.attr('font-family');
-  }
-
-  set fontFamily(ff: string) {
-    this.text.attr({ 'font-family': ff });
-    this.text.center(this._xCenter, this._yCenter);
-    Base.recommendedDefaults.text['font-family'] = ff;
-  }
-
   get fontSize(): number {
     return this.text.attr('font-size');
   }

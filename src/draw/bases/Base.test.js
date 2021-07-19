@@ -235,16 +235,6 @@ describe('Base class', () => {
     expect(normalizeAngle(a)).toBeCloseTo(Math.asin(4 / 5));
   });
 
-  it('fontFamily getter and setter', () => {
-    let b = Base.create(svg, 'a', 1, 2);
-    b.fontFamily = 'Cambria';
-    expect(b.fontFamily).toBe('Cambria'); // check getter
-    expect(b.text.attr('font-family')).toBe('Cambria'); // check actual value
-    // maintains center coordinates
-    expect(b.text.cx()).toBeCloseTo(1);
-    expect(b.text.cy()).toBeCloseTo(2);
-  });
-
   it('fontSize getter and setter', () => {
     let b = Base.create(svg, 'e', 5, 6);
     b.fontSize = 5.123;

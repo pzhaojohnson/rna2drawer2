@@ -24,7 +24,6 @@ export interface BaseInterface {
   distanceBetweenCenters(b: BaseInterface): number;
   angleBetweenCenters(b: BaseInterface): number;
 
-  fontFamily: string;
   fontSize: number;
   fontWeight: number | string;
   
