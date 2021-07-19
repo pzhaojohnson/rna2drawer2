@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../../AppInterface';
 import { FontFamilyField as Field } from '../../../fields/font/FontFamilyField';
+import { Base } from 'Draw/bases/Base';
 
 interface Props {
   app: App;
@@ -29,6 +30,7 @@ export function FontFamilyField(props: Props): React.ReactElement | null {
                 b.text.center(center.x, center.y);
               });
               props.app.drawingChangedNotByInteraction();
+              Base.recommendedDefaults.text['font-family'] = ff;
             }
           }
         }}
