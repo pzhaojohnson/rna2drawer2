@@ -245,16 +245,6 @@ describe('Base class', () => {
     expect(b.text.cy()).toBeCloseTo(6);
   });
 
-  it('fontWeight getter and setter', () => {
-    let b = Base.create(svg, 'a', 1, 4);
-    b.fontWeight = 650;
-    expect(b.fontWeight).toBe(650); // check getter
-    expect(b.text.attr('font-weight')).toBe(650); // check actual value
-    // maintains center coordinates
-    expect(b.text.cx()).toBeCloseTo(1);
-    expect(b.text.cy()).toBeCloseTo(4);
-  });
-
   it('bringToFront and sendToBack methods', () => {
     let r = svg.rect(50, 60);
     let c1 = svg.circle(100);

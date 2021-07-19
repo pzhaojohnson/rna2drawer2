@@ -1,7 +1,17 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../../AppInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { isBold } from '../../../fields/font/isBold';
 import { CheckboxField } from '../../../fields/checkbox/CheckboxField';
+
+function baseIsBold(b: Base): boolean {
+  let fw = b.text.attr('font-weight');
+  if (typeof fw == 'string' || typeof fw == 'number') {
+    return isBold(fw);
+  } else {
+    return false;
+  }
+}
 
 interface Props {
   app: App;
@@ -16,15 +26,15 @@ export function BoldFontField(props: Props): React.ReactElement | null {
     return (
       <CheckboxField
         name='Bold'
-        initialValue={first ? isBold(first.fontWeight) : false}
+        initialValue={first ? baseIsBold(first) : false}
         set={shouldBeBold => {
           if (drawing.numBases > 0) {
             let first = drawing.getBaseAtOverallPosition(1);
-            let firstIsBold = first ? isBold(first.fontWeight) : false;
+            let firstIsBold = first ? baseIsBold(first) : false;
             if (shouldBeBold != firstIsBold || !first) {
               props.app.pushUndo();
               drawing.forEachBase(b => {
-                b.fontWeight = shouldBeBold ? 'bold' : 'normal';
+                b.text.attr({ 'font-weight': shouldBeBold ? 'bold' : 'normal' });
               });
               props.app.drawingChangedNotByInteraction();
             }

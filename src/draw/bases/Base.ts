@@ -167,16 +167,6 @@ export class Base implements BaseInterface {
     Base.recommendedDefaults.text['font-size'] = fs;
   }
 
-  get fontWeight(): (string | number) {
-    return this.text.attr('font-weight');
-  }
-
-  set fontWeight(fw: (string | number)) {
-    this.text.attr({ 'font-weight': fw });
-    this.text.center(this._xCenter, this._yCenter);
-    Base.recommendedDefaults.text['font-weight'] = fw;
-  }
-
   bringToFront() {
     if (this.outline) {
       this.outline.bringToFront();
