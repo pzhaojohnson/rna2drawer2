@@ -24,9 +24,6 @@ export interface BaseInterface {
   distanceBetweenCenters(b: BaseInterface): number;
   angleBetweenCenters(b: BaseInterface): number;
 
-  bringToFront(): void;
-  sendToBack(): void;
-
   highlighting?: CircleBaseAnnotation;
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { bringToFront, sendToBack } from 'Draw/bases/z';
 import { TextButton } from 'Forms/buttons/TextButton';
 
 interface Props {
@@ -14,7 +15,7 @@ export function BringToFrontButton(props: Props) {
       text='Bring to Front'
       onClick={() => {
         props.pushUndo();
-        props.selectedBases().forEach(b => b.bringToFront());
+        props.selectedBases().forEach(b => bringToFront(b));
         props.changed();
       }}
     />
@@ -27,7 +28,7 @@ export function SendToBackButton(props: Props) {
       text='Send to Back'
       onClick={() => {
         props.pushUndo();
-        props.selectedBases().forEach(b => b.sendToBack());
+        props.selectedBases().forEach(b => sendToBack(b));
         props.changed();
       }}
     />

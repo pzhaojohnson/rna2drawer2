@@ -157,20 +157,6 @@ export class Base implements BaseInterface {
     );
   }
 
-  bringToFront() {
-    if (this.outline) {
-      this.outline.bringToFront();
-    }
-    this.text.front();
-  }
-
-  sendToBack() {
-    this.text.back();
-    if (this.outline) {
-      this.outline.sendToBack();
-    }
-  }
-
   remove() {
     removeCircleHighlighting(this);
     removeCircleOutline(this);
