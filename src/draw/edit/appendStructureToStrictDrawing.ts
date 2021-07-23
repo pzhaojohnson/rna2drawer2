@@ -9,7 +9,7 @@ import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { radiateStems } from '../layout/singleseq/strict/radiateStems';
 import { hasKnots } from 'Partners/hasKnots';
 import { removeKnots } from 'Partners/removeKnots';
-import { SequenceInterface as Sequence } from 'Draw/bases/SequenceInterface';
+import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 
 function _appendPerBaseLayoutProps(sd: StrictDrawing, structure: Structure) {
   let seq = sd.drawing.getSequenceById(structure.id) as Sequence;

@@ -3,8 +3,8 @@ import {
   DrawingSavableState,
 } from './DrawingInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import { Sequence } from 'Draw/bases/Sequence';
-import { SequenceSavableState } from 'Draw/bases/SequenceInterface';
+import { Sequence } from 'Draw/sequences/Sequence';
+import { SequenceSavableState } from 'Draw/sequences/SequenceInterface';
 import { Base } from 'Draw/bases/Base';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';

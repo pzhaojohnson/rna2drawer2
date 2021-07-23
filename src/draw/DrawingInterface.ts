@@ -2,7 +2,7 @@ import * as Svg from '@svgdotjs/svg.js';
 import {
   SequenceInterface as Sequence,
   SequenceSavableState,
-} from 'Draw/bases/SequenceInterface';
+} from 'Draw/sequences/SequenceInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';

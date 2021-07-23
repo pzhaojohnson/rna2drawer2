@@ -1,6 +1,6 @@
 import { StrictDrawingInterface as StrictDrawing } from '../../../../draw/StrictDrawingInterface';
 import { DrawingInterface as Drawing } from '../../../../draw/DrawingInterface';
-import { SequenceInterface as Sequence } from 'Draw/bases/SequenceInterface';
+import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { willRemove } from '../../../../draw/layout/singleseq/strict/stemProps';
