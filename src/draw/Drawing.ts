@@ -38,7 +38,7 @@ class Drawing implements DrawingInterface {
   _div!: HTMLElement;
   svg!: Svg.Svg;
 
-  _sequences: Sequence[];
+  sequences: Sequence[];
   primaryBonds: PrimaryBond[];
   secondaryBonds: SecondaryBond[];
   tertiaryBonds: TertiaryBond[];
@@ -47,7 +47,7 @@ class Drawing implements DrawingInterface {
   _onAddTertiaryBond?: (tb: TertiaryBond) => void;
 
   constructor() {
-    this._sequences = [];
+    this.sequences = [];
     this.primaryBonds = [];
     this.secondaryBonds = [];
     this.tertiaryBonds = [];
@@ -150,24 +150,24 @@ class Drawing implements DrawingInterface {
   }
 
   get numSequences(): number {
-    return this._sequences.length;
+    return this.sequences.length;
   }
 
   getSequenceById(id: string): (Sequence | undefined) {
-    return this._sequences.find(seq => seq.id === id);
+    return this.sequences.find(seq => seq.id === id);
   }
 
   getSequenceAtIndex(i: number): (Sequence | undefined) {
-    return this._sequences[i];
+    return this.sequences[i];
   }
 
   forEachSequence(f: (seq: Sequence) => void) {
-    this._sequences.forEach(seq => f(seq));
+    this.sequences.forEach(seq => f(seq));
   }
 
   sequenceIds(): string[] {
     let ids = [] as string[];
-    this._sequences.forEach(seq => ids.push(seq.id));
+    this.sequences.forEach(seq => ids.push(seq.id));
     return ids;
   }
 
@@ -191,7 +191,7 @@ class Drawing implements DrawingInterface {
       return null;
     }
     let seq = Sequence.createOutOfView(this.svg, id, characters);
-    this._sequences.push(seq);
+    this.sequences.push(seq);
     this.fireAddSequence(seq);
     return seq;
   }
@@ -227,7 +227,7 @@ class Drawing implements DrawingInterface {
   getBaseAtOverallPosition(p: number): (Base | undefined) {
     let seqStart = 1;
     for (let s = 0; s < this.numSequences; s++) {
-      let seq = this._sequences[s];
+      let seq = this.sequences[s];
       let seqEnd = seqStart + seq.length - 1;
       if (p >= seqStart && p <= seqEnd) {
         return seq.getBaseAtPosition(p - seqStart + 1);
@@ -279,7 +279,7 @@ class Drawing implements DrawingInterface {
   }
 
   sequenceOfBase(b: Base): (Sequence | undefined) {
-    return this._sequences.find(seq => seq.contains(b));
+    return this.sequences.find(seq => seq.contains(b));
   }
 
   createBases(characters: string): Base[] {
@@ -397,7 +397,7 @@ class Drawing implements DrawingInterface {
   }
 
   clear() {
-    this._sequences = [];
+    this.sequences = [];
     this.primaryBonds = [];
     this.secondaryBonds = [];
     this.tertiaryBonds = [];
@@ -482,7 +482,7 @@ class Drawing implements DrawingInterface {
   _appendSavedSequences(savedState: DrawingSavableState): (void | never) {
     savedState.sequences.forEach(saved => {
       let seq = Sequence.fromSavedState(saved, this.svg);
-      this._sequences.push(seq);
+      this.sequences.push(seq);
       this.fireAddSequence(seq);
     });
   }

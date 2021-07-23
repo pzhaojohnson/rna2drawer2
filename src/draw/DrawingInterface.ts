@@ -35,6 +35,7 @@ export interface DrawingInterface {
   setWidthAndHeight(w: number, h: number): void;
   zoom: number;
 
+  readonly sequences: Sequence[];
   numSequences: number;
   isEmpty(): boolean;
   getSequenceById(id: string): Sequence | undefined;
