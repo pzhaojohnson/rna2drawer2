@@ -18,6 +18,4 @@ export interface BaseNumberingInterface {
   lineLength: number | undefined;
   readonly textPadding: number;
   reposition(rp?: Repositioning): void;
-  bringToFront(): void;
-  sendToBack(): void;
 }

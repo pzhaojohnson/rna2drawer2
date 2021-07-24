@@ -185,20 +185,4 @@ describe('BaseNumbering class', () => {
       expect(rp1).toEqual(rp2);
     });
   });
-
-  it('bringToFront and sendToBack methods', () => {
-    let r1 = svg.rect(5, 6);
-    let r2 = svg.rect(20, 20);
-    let c = svg.circle(20);
-    // create above multiple elements
-    numbering.bringToFront();
-    expect(numbering.text.position()).toBeGreaterThan(3);
-    expect(numbering.line.position()).toBeGreaterThan(3);
-    numbering.sendToBack();
-    expect(numbering.text.position()).toBeLessThanOrEqual(1);
-    expect(numbering.line.position()).toBeLessThanOrEqual(1);
-    numbering.bringToFront();
-    expect(numbering.line.position()).toBeGreaterThan(3);
-    expect(numbering.text.position()).toBeGreaterThan(3);
-  });
 });

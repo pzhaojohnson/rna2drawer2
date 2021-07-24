@@ -119,16 +119,6 @@ export class BaseNumbering implements BaseNumberingInterface {
       this._baseCenter = { ...rp.baseCenter };
     }
   }
-
-  bringToFront() {
-    this.line.front();
-    this.text.front();
-  }
-
-  sendToBack() {
-    this.text.back();
-    this.line.back();
-  }
 }
 
 BaseNumbering.recommendedDefaults = {
