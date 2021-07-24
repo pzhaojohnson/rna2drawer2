@@ -292,26 +292,6 @@ class Drawing implements DrawingInterface {
     return bs;
   }
 
-  get numPrimaryBonds(): number {
-    return this.primaryBonds.length;
-  }
-
-  getPrimaryBondById(id: string): PrimaryBond | undefined {
-    return this.primaryBonds.find(pb => pb.id === id);
-  }
-
-  forEachPrimaryBond(f: (pb: PrimaryBond) => void) {
-    this.primaryBonds.forEach(pb => f(pb));
-  }
-
-  addPrimaryBond(b1: Base, b2: Base): PrimaryBond {
-    return addPrimaryBond(this, b1, b2);
-  }
-
-  removePrimaryBondById(id: string) {
-    removePrimaryBondById(this, id);
-  }
-
   get numSecondaryBonds(): number {
     return this.secondaryBonds.length;
   }
@@ -375,7 +355,7 @@ class Drawing implements DrawingInterface {
   }
 
   repositionBonds() {
-    this.forEachPrimaryBond(pb => pb.reposition());
+    this.primaryBonds.forEach(pb => pb.reposition());
     this.forEachSecondaryBond(sb => sb.reposition());
     this.forEachTertiaryBond(tb => tb.reposition());
   }
@@ -412,7 +392,7 @@ class Drawing implements DrawingInterface {
     let sequences = [] as SequenceSavableState[];
     this.forEachSequence(seq => sequences.push(seq.savableState()));
     let primaryBonds = [] as SavableStraightBondState[];
-    this.forEachPrimaryBond(pb => primaryBonds.push(savableStraightBondState(pb)));
+    this.primaryBonds.forEach(pb => primaryBonds.push(savableStraightBondState(pb)));
     let secondaryBonds = [] as SavableStraightBondState[];
     this.forEachSecondaryBond(sb => secondaryBonds.push(savableStraightBondState(sb)));
     let tertiaryBonds = [] as SavableTertiaryBondState[];
@@ -504,7 +484,7 @@ class Drawing implements DrawingInterface {
 
   refreshIds() {
     this.forEachSequence(seq => seq.refreshIds());
-    this.forEachPrimaryBond(pb => pb.refreshIds());
+    this.primaryBonds.forEach(pb => pb.refreshIds());
     this.forEachSecondaryBond(sb => sb.refreshIds());
     this.forEachTertiaryBond(tb => tb.refreshIds());
   }

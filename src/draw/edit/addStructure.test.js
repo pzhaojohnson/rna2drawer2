@@ -14,7 +14,7 @@ describe('addPrimaryBonds function', () => {
     let seq = drawing.appendSequenceOutOfView('asdf', 'qwer');
     addPrimaryBonds(drawing, 'asdf');
     let bonds = [];
-    drawing.forEachPrimaryBond(pb => bonds.push(pb));
+    drawing.primaryBonds.forEach(pb => bonds.push(pb));
     expect(bonds.length).toBe(3);
     expect(bonds.find(pb => pb.base1.character == 'q' && pb.base2.character == 'w')).toBeTruthy();
     expect(bonds.find(pb => pb.base1.character == 'w' && pb.base2.character == 'e')).toBeTruthy();
@@ -75,7 +75,7 @@ describe('appendStructure function', () => {
       secondaryPartners: [null, 11, null, 7, 9, null, 4, null, 5, null, 2, null],
       tertiaryPartners: [11, null, 7, null, null, null, 3, null, null, null, 1, null],
     });
-    expect(drawing.numPrimaryBonds).toBe(11);
+    expect(drawing.primaryBonds.length).toBe(11);
     expect(drawing.numSecondaryBonds).toBe(3);
     expect(drawing.numTertiaryBonds).toBe(2);
   });

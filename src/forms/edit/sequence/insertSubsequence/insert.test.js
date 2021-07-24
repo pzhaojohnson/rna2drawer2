@@ -156,7 +156,7 @@ describe('insert function', () => {
 
     it('breaks and repairs strand', () => {
       let pbs = [];
-      drawing.forEachPrimaryBond(pb => pbs.push(pb));
+      drawing.primaryBonds.forEach(pb => pbs.push(pb));
       expect(pbs.length).toBe(seq.length - 1);
       // there is a primary bond between each consecutive pair of bases
       for (let p5 = 1; p5 < seq.length; p5++) {

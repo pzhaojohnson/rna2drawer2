@@ -10,7 +10,7 @@ import { PaddingField } from './PaddingField';
 
 function getPrimaryBonds(drawing: Drawing): PrimaryBond[] {
   let pbs = [] as PrimaryBond[];
-  drawing.forEachPrimaryBond(pb => pbs.push(pb));
+  drawing.primaryBonds.forEach(pb => pbs.push(pb));
   return pbs;
 }
 

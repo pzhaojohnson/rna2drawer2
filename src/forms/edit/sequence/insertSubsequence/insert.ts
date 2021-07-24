@@ -4,6 +4,8 @@ import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../../draw/layou
 import { willInsertAt } from '../../../../draw/layout/singleseq/strict/stemProps';
 import { DrawingInterface as Drawing } from '../../../../draw/DrawingInterface';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
+import { addPrimaryBond } from 'Draw/bonds/straight/add';
+import { removePrimaryBondById } from 'Draw/bonds/straight/remove';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
 
@@ -39,7 +41,7 @@ function breakStrand(drawing: Drawing, insertPosition: number) {
     let b5 = seq.getBaseAtPosition(insertPosition - 1);
     let b3 = seq.getBaseAtPosition(insertPosition);
     let toRemove = null as PrimaryBond | null;
-    drawing.forEachPrimaryBond(pb => {
+    drawing.primaryBonds.forEach(pb => {
       if (b5 && b3) {
         if (pb.contains(b5) && pb.contains(b3)) {
           toRemove = pb;
@@ -47,7 +49,7 @@ function breakStrand(drawing: Drawing, insertPosition: number) {
       }
     });
     if (toRemove) {
-      drawing.removePrimaryBondById(toRemove.id);
+      removePrimaryBondById(drawing, toRemove.id);
     }
   }
 }
@@ -59,7 +61,7 @@ function repairStrand(drawing: Drawing, insertPosition: number, subsequence: str
       let b5 = seq.getBaseAtPosition(p5);
       let b3 = seq.getBaseAtPosition(p5 + 1);
       if (b5 && b3) {
-        drawing.addPrimaryBond(b5, b3);
+        addPrimaryBond(drawing, b5, b3);
       }
     }
   }

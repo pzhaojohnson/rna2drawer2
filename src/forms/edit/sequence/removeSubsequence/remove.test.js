@@ -119,8 +119,8 @@ describe('remove function', () => {
 
     it('removes primary bonds with removed bases and repairs strand break', () => {
       let pbs = [];
-      drawing.forEachPrimaryBond(pb => pbs.push(pb));
-      expect(drawing.numPrimaryBonds).toBe(seq.length - 1);
+      drawing.primaryBonds.forEach(pb => pbs.push(pb));
+      expect(drawing.primaryBonds.length).toBe(seq.length - 1);
       // each consecutive pair of bases has a primary bond
       for (let p5 = 1; p5 < seq.length; p5++) {
         let b5 = seq.getBaseAtPosition(p5);

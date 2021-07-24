@@ -1,13 +1,14 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
 import { Partners } from 'Partners/Partners';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { addPrimaryBond } from 'Draw/bonds/straight/add';
 
 export function addPrimaryBonds(drawing: Drawing, sequenceId: string) {
   let seq = drawing.getSequenceById(sequenceId);
   seq?.forEachBase((b5, p) => {
     let b3 = seq?.getBaseAtPosition(p + 1);
     if (b5 && b3) {
-      drawing.addPrimaryBond(b5, b3);
+      addPrimaryBond(drawing, b5, b3);
     }
   });
 }

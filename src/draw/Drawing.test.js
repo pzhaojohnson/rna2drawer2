@@ -3,6 +3,7 @@ import NodeSVG from './NodeSVG';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { Base } from 'Draw/bases/Base';
 import * as AdjustBaseNumbering from './edit/adjustBaseNumbering';
+import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { savableState as savableStraightBondState } from 'Draw/bonds/straight/save';
 import { savableState as savableTertiaryBondState } from 'Draw/bonds/curved/save';
 
@@ -12,11 +13,13 @@ document.body.appendChild(container);
 drawing.addTo(container, () => NodeSVG());
 let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
 let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerqwerqwer');
-let pb1 = drawing.addPrimaryBond(
+let pb1 = addPrimaryBond(
+  drawing,
   seq1.getBaseAtPosition(1),
   seq1.getBaseAtPosition(2),
 );
-let pb2 = drawing.addPrimaryBond(
+let pb2 = addPrimaryBond(
+  drawing,
   seq2.getBaseAtPosition(4),
   seq2.getBaseAtPosition(5),
 );
@@ -297,57 +300,6 @@ it('add sequence event', () => {
   expect(f.mock.calls[0][0]).toBe(seq);
 });
 
-describe('primary bonds attributes', () => {
-  let drawing = new Drawing();
-  let container = document.createElement('div');
-  document.body.appendChild(container);
-  drawing.addTo(container, () => NodeSVG());
-  let seq = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
-  let pb1 = drawing.addPrimaryBond(seq.getBaseAtPosition(1), seq.getBaseAtPosition(2));
-  let pb2 = drawing.addPrimaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(5));
-  let pb3 = drawing.addPrimaryBond(seq.getBaseAtPosition(6), seq.getBaseAtPosition(3));
-
-  it('numPrimaryBonds getter', () => {
-    expect(drawing.numPrimaryBonds).toBe(3);
-  });
-
-  it('getPrimaryBondById method', () => {
-    expect(drawing.getPrimaryBondById(pb2.id)).toBe(pb2);
-    expect(drawing.getPrimaryBondById('random ID')).toBeFalsy();
-  });
-
-  it('forEachPrimaryBond method', () => {
-    let pbs = [pb1, pb2, pb3];
-    let i = 0;
-    drawing.forEachPrimaryBond(pb => {
-      expect(pb).toBe(pbs[i]);
-      i++;
-    });
-    expect(i).toBe(3);
-  });
-
-  it('addPrimaryBond method', () => {
-    let b1 = drawing.getBaseAtOverallPosition(8);
-    let b2 = drawing.getBaseAtOverallPosition(5);
-    let n = drawing.numPrimaryBonds;
-    let pb = drawing.addPrimaryBond(b1, b2);
-    expect(drawing.numPrimaryBonds).toBe(n + 1);
-    expect(pb.base1.id).toBe(b1.id);
-    expect(pb.base2.id).toBe(b2.id);
-  });
-
-  it('removePrimaryBondById method', () => {
-    let pb = drawing.addPrimaryBond(seq.getBaseAtPosition(2), seq.getBaseAtPosition(5));
-    let id = pb.id;
-    drawing.removePrimaryBondById(id);
-    expect(drawing.getPrimaryBondById(id)).toBeFalsy(); // removes from list
-
-    let n = drawing.numPrimaryBonds;
-    drawing.removePrimaryBondById('random ID');
-    expect(drawing.numPrimaryBonds).toBe(n); // no change in number of primary bonds
-  });
-});
-
 describe('secondary bonds attributes', () => {
   let drawing = new Drawing();
   let container = document.createElement('div');
@@ -492,11 +444,11 @@ describe('tertiary bonds attributes', () => {
 });
 
 it('repositionBonds method', () => {
-  expect(drawing.numPrimaryBonds).toBeGreaterThan(1);
+  expect(drawing.primaryBonds.length).toBeGreaterThan(1);
   expect(drawing.numSecondaryBonds).toBeGreaterThan(1);
   expect(drawing.numTertiaryBonds).toBeGreaterThan(1);
   let spies = [];
-  drawing.forEachPrimaryBond(pb => spies.push(jest.spyOn(pb, 'reposition')));
+  drawing.primaryBonds.forEach(pb => spies.push(jest.spyOn(pb, 'reposition')));
   drawing.forEachSecondaryBond(sb => spies.push(jest.spyOn(sb, 'reposition')));
   drawing.forEachTertiaryBond(tb => spies.push(jest.spyOn(tb, 'reposition')));
   drawing.repositionBonds();
@@ -533,8 +485,8 @@ it('clear method removes elements and references', () => {
   drawing.addTo(container, () => NodeSVG());
   let seq1 = drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
   let seq2 = drawing.appendSequenceOutOfView('asdf', 'asdfas');
-  let pb1 = drawing.addPrimaryBond(seq1.getBaseAtPosition(1), seq1.getBaseAtPosition(3));
-  let pb2 = drawing.addPrimaryBond(seq2.getBaseAtPosition(2), seq2.getBaseAtPosition(3));
+  let pb1 = addPrimaryBond(drawing, seq1.getBaseAtPosition(1), seq1.getBaseAtPosition(3));
+  let pb2 = addPrimaryBond(drawing, seq2.getBaseAtPosition(2), seq2.getBaseAtPosition(3));
   let sb1 = drawing.addSecondaryBond(seq1.getBaseAtPosition(2), seq2.getBaseAtPosition(6));
   let sb2 = drawing.addSecondaryBond(seq1.getBaseAtPosition(1), seq2.getBaseAtPosition(2));
   let tb1 = drawing.addTertiaryBond(seq2.getBaseAtPosition(3), seq1.getBaseAtPosition(5));
@@ -544,7 +496,7 @@ it('clear method removes elements and references', () => {
   expect(spy).toHaveBeenCalled(); // removed elements
   // removed references
   expect(drawing.numSequences).toBe(0);
-  expect(drawing.numPrimaryBonds).toBe(0);
+  expect(drawing.primaryBonds.length).toBe(0);
   expect(drawing.numSecondaryBonds).toBe(0);
   expect(drawing.numTertiaryBonds).toBe(0);
 });
@@ -563,8 +515,8 @@ describe('savableState method', () => {
   let b3 = seq1.getBaseAtPosition(3);
   let b6 = seq2.getBaseAtPosition(2);
   let b8 = seq2.getBaseAtPosition(4);
-  let pb1 = drawing.addPrimaryBond(b1, b3);
-  let pb2 = drawing.addPrimaryBond(b3, b6);
+  let pb1 = addPrimaryBond(drawing, b1, b3);
+  let pb2 = addPrimaryBond(drawing, b3, b6);
   let sb1 = drawing.addSecondaryBond(b2, b8);
   let sb2 = drawing.addSecondaryBond(b6, b3);
   let tb1 = drawing.addTertiaryBond(b6, b1);
@@ -622,15 +574,15 @@ describe('applySavedState method', () => {
     let b5 = seq1.getBaseAtPosition(5);
     let b12 = seq2.getBaseAtPosition(4);
     let b17 = seq2.getBaseAtPosition(9);
-    let pb1 = drawing.addPrimaryBond(b2, b5);
-    let pb2 = drawing.addPrimaryBond(b5, b12);
+    let pb1 = addPrimaryBond(drawing, b2, b5);
+    let pb2 = addPrimaryBond(drawing, b5, b12);
     let sb1 = drawing.addSecondaryBond(b2, b17);
     let sb2 = drawing.addSecondaryBond(b5, b12);
     let tb1 = drawing.addTertiaryBond(b12, b2);
     let tb2 = drawing.addTertiaryBond(b5, b17);
     let savableState = drawing.savableState();
     let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcvzxcv');
-    let pb3 = drawing.addPrimaryBond(b12, b17);
+    let pb3 = addPrimaryBond(drawing, b12, b17);
     drawing.removeSecondaryBondById(sb1.id);
     drawing.removeTertiaryBondById(tb2.id);
     expect(JSON.stringify(drawing.savableState())).not.toBe(JSON.stringify(savableState));
@@ -660,12 +612,12 @@ describe('applySavedState method', () => {
 
 it('refreshIds method', () => {
   expect(drawing.numSequences).toBeGreaterThan(1);
-  expect(drawing.numPrimaryBonds).toBeGreaterThan(1);
+  expect(drawing.primaryBonds.length).toBeGreaterThan(1);
   expect(drawing.numSecondaryBonds).toBeGreaterThan(1);
   expect(drawing.numTertiaryBonds).toBeGreaterThan(1);
   let spies = [];
   drawing.forEachSequence(seq => spies.push(jest.spyOn(seq, 'refreshIds')));
-  drawing.forEachPrimaryBond(pb => spies.push(jest.spyOn(pb, 'refreshIds')));
+  drawing.primaryBonds.forEach(pb => spies.push(jest.spyOn(pb, 'refreshIds')));
   drawing.forEachSecondaryBond(sb => spies.push(jest.spyOn(sb, 'refreshIds')));
   drawing.forEachTertiaryBond(tb => spies.push(jest.spyOn(tb, 'refreshIds')));
   drawing.refreshIds();
