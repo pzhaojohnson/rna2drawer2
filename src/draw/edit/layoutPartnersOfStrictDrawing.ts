@@ -19,7 +19,7 @@ function _overallSecondaryPartners(drawing: Drawing) {
   drawing.forEachBase(() => {
     partners.push(null);
   });
-  drawing.forEachSecondaryBond(sb => {
+  drawing.secondaryBonds.forEach(sb => {
     let p1 = idsToPositions[sb.base1.id];
     let p2 = idsToPositions[sb.base2.id];
     pair(partners, p1, p2);

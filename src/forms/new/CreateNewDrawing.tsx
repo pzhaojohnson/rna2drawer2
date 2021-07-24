@@ -161,7 +161,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                     setErrorMessageKey(errorMessageKey + 1);
                   } else {
                     props.app.strictDrawing.appendStructure({ ...parsed, characters: parsed.sequence });
-                    if (props.app.strictDrawing.drawing.numSecondaryBonds == 0) {
+                    if (props.app.strictDrawing.drawing.secondaryBonds.length == 0) {
                       props.app.strictDrawing.flatOutermostLoop();
                       props.app.strictDrawingInteraction.startFolding();
                       props.app.strictDrawingInteraction.foldingMode.forcePair();

@@ -134,12 +134,12 @@ describe('remove function', () => {
     it('removes secondary bonds with removed bases', () => {
       // all secondary bonds are between bases that still exist
       let baseIds = drawing.baseIds();
-      drawing.forEachSecondaryBond(sb => {
+      drawing.secondaryBonds.forEach(sb => {
         expect(baseIds.includes(sb.base1.id)).toBeTruthy();
         expect(baseIds.includes(sb.base2.id)).toBeTruthy();
       });
       // only secondary bonds with removed bases were removed
-      expect(drawing.numSecondaryBonds).toBe(4);
+      expect(drawing.secondaryBonds.length).toBe(4);
     });
 
     it('removes tertiary bond with removed bases', () => {

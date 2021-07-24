@@ -59,14 +59,8 @@ export interface DrawingInterface {
   createBases(characters: string): Base[];
 
   readonly primaryBonds: PrimaryBond[];
-  
   readonly secondaryBonds: SecondaryBond[];
-  numSecondaryBonds: number;
-  getSecondaryBondById(id: string): SecondaryBond | undefined;
-  forEachSecondaryBond(f: (sb: SecondaryBond) => void): void;
-  addSecondaryBond(b1: Base, b2: Base): SecondaryBond;
-  removeSecondaryBondById(id: string): void;
-
+  
   readonly tertiaryBonds: TertiaryBond[];
   numTertiaryBonds: number;
   getTertiaryBondById(id: string): TertiaryBond | undefined;

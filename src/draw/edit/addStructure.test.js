@@ -29,7 +29,7 @@ describe('addSecondaryBonds function', () => {
     let seq = drawing.appendSequenceOutOfView('qwer', 'asdfzxcv');
     addSecondaryBonds(drawing, 'qwer', [7, null, 6, 8, null, 3, 1, 4]);
     let bonds = [];
-    drawing.forEachSecondaryBond(sb => bonds.push(sb));
+    drawing.secondaryBonds.forEach(sb => bonds.push(sb));
     expect(bonds.length).toBe(3);
     expect(bonds.find(sb => sb.base1.character == 'a' && sb.base2.character == 'c')).toBeTruthy();
     expect(bonds.find(sb => sb.base1.character == 'd' && sb.base2.character == 'x')).toBeTruthy();
@@ -76,7 +76,7 @@ describe('appendStructure function', () => {
       tertiaryPartners: [11, null, 7, null, null, null, 3, null, null, null, 1, null],
     });
     expect(drawing.primaryBonds.length).toBe(11);
-    expect(drawing.numSecondaryBonds).toBe(3);
+    expect(drawing.secondaryBonds.length).toBe(3);
     expect(drawing.numTertiaryBonds).toBe(2);
   });
 });

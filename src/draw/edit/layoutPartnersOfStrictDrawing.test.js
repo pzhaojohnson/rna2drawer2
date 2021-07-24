@@ -1,6 +1,7 @@
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
 import StrictDrawing from '../StrictDrawing';
 import createNodeSVG from '../createNodeSVG';
+import { addSecondaryBond } from 'Draw/bonds/straight/add';
 
 import { assertAreValid as assertPartnersAreValid } from 'Partners/areValid';
 import { hasKnots } from 'Partners/hasKnots';
@@ -24,11 +25,13 @@ it('handles multiple sequences', () => {
   let drawing = sd.drawing;
   let seq1 = drawing.getSequenceById('asdf');
   let seq2 = drawing.getSequenceById('qwer');
-  drawing.addSecondaryBond(
+  addSecondaryBond(
+    drawing,
     seq1.getBaseAtPosition(1),
     seq2.getBaseAtPosition(7),
   );
-  drawing.addSecondaryBond(
+  addSecondaryBond(
+    drawing,
     seq1.getBaseAtPosition(4),
     seq2.getBaseAtPosition(5),
   );
@@ -46,11 +49,13 @@ it('removes knots', () => {
   sd.appendSequence('asdf', 'asdfasdfasdf');
   let drawing = sd.drawing;
   let seq = drawing.getSequenceById('asdf');
-  drawing.addSecondaryBond(
+  addSecondaryBond(
+    drawing,
     seq.getBaseAtPosition(1),
     seq.getBaseAtPosition(7),
   );
-  drawing.addSecondaryBond(
+  addSecondaryBond(
+    drawing,
     seq.getBaseAtPosition(3),
     seq.getBaseAtPosition(11),
   );
@@ -65,11 +70,13 @@ it('handles secondary bonds that share bases', () => {
   sd.appendSequence('asdf', 'asdfasdfasdf');
   let drawing = sd.drawing;
   let seq = drawing.getSequenceById('asdf');
-  drawing.addSecondaryBond(
+  addSecondaryBond(
+    drawing,
     seq.getBaseAtPosition(2),
     seq.getBaseAtPosition(6),
   );
-  drawing.addSecondaryBond(
+  addSecondaryBond(
+    drawing,
     seq.getBaseAtPosition(6),
     seq.getBaseAtPosition(12),
   );

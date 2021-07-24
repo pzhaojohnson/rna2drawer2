@@ -22,7 +22,7 @@ export function adjustBaseNumbering(drawing: Drawing) {
       }
     });
   });
-  drawing.forEachSecondaryBond(sb => {
+  drawing.secondaryBonds.forEach(sb => {
     let b1 = sb.base1;
     let b2 = sb.base2;
     let ba12 = b1.angleBetweenCenters(b2);

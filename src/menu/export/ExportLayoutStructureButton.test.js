@@ -1,5 +1,6 @@
 import App from '../../App';
 import NodeSVG from '../../draw/NodeSVG';
+import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { ExportLayoutStructureButton } from './ExportLayoutStructureButton';
 
 import React from 'react';
@@ -39,10 +40,10 @@ it('exports name, ids, sequence and layout structure', () => {
   strictDrawing.appendSequence('qwer', 'wer');
   strictDrawing.appendSequence('zxG', 'zxcvGG');
   let drawing = app.strictDrawing.drawing;
-  drawing.addSecondaryBond(drawing.getBaseAtOverallPosition(2), drawing.getBaseAtOverallPosition(12));
-  drawing.addSecondaryBond(drawing.getBaseAtOverallPosition(3), drawing.getBaseAtOverallPosition(11));
-  drawing.addSecondaryBond(drawing.getBaseAtOverallPosition(4), drawing.getBaseAtOverallPosition(9));
-  drawing.addSecondaryBond(drawing.getBaseAtOverallPosition(6), drawing.getBaseAtOverallPosition(8));
+  addSecondaryBond(drawing, drawing.getBaseAtOverallPosition(2), drawing.getBaseAtOverallPosition(12));
+  addSecondaryBond(drawing, drawing.getBaseAtOverallPosition(3), drawing.getBaseAtOverallPosition(11));
+  addSecondaryBond(drawing, drawing.getBaseAtOverallPosition(4), drawing.getBaseAtOverallPosition(9));
+  addSecondaryBond(drawing, drawing.getBaseAtOverallPosition(6), drawing.getBaseAtOverallPosition(8));
   // ignores tertiary bonds
   drawing.addTertiaryBond(drawing.getBaseAtOverallPosition(5), drawing.getBaseAtOverallPosition(7));
   drawing.addTertiaryBond(drawing.getBaseAtOverallPosition(1), drawing.getBaseAtOverallPosition(14));

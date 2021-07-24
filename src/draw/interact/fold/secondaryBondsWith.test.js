@@ -22,7 +22,7 @@ it('there are secondary bonds with range', () => {
   let r = new IntegerRange(4, 6);
   let bonds = secondaryBondsWith(mode, r);
   expect(bonds.length).toBe(3);
-  sd.drawing.forEachSecondaryBond(sb1 => {
+  sd.drawing.secondaryBonds.forEach(sb1 => {
     expect(bonds.find(sb2 => sb2.id == sb1.id)).toBeTruthy();
   });
 });
@@ -31,7 +31,7 @@ it('bases in range share secondary bonds', () => {
   let r = new IntegerRange(1, 12);
   let bonds = secondaryBondsWith(mode, r);
   expect(bonds.length).toBe(3);
-  sd.drawing.forEachSecondaryBond(sb1 => {
+  sd.drawing.secondaryBonds.forEach(sb1 => {
     expect(bonds.find(sb2 => sb2.id == sb1.id)).toBeTruthy();
   });
 });

@@ -6,7 +6,7 @@ import basesInRange from './basesInRange';
 export function secondaryBondsWith(mode: FoldingMode, r: IntegerRange): SecondaryBond[] {
   let bonds = [] as SecondaryBond[];
   let bases = basesInRange(mode, r);
-  mode.strictDrawing.drawing.forEachSecondaryBond(sb => {
+  mode.strictDrawing.drawing.secondaryBonds.forEach(sb => {
     if (bases.find(b => b.id == sb.base1.id || b.id == sb.base2.id)) {
       bonds.push(sb);
     }

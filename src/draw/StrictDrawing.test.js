@@ -59,7 +59,7 @@ it('addTo method', () => {
 
 it('layoutPartners method', () => {
   expect(sd.drawing.numSequences).toBeGreaterThan(1); // handles multiple sequences
-  expect(sd.drawing.numSecondaryBonds).toBeGreaterThan(1); // has a secondary structure
+  expect(sd.drawing.secondaryBonds.length).toBeGreaterThan(1); // has a secondary structure
   let received = sd.layoutPartners();
   let expected = layoutPartnersOfStrictDrawing(sd);
   expect(JSON.stringify(received)).toBe(JSON.stringify(expected));

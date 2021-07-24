@@ -2,6 +2,7 @@ import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import { selectedRange } from './selected';
 import secondaryBondsWith from './secondaryBondsWith';
 import { willUnpair } from '../../layout/singleseq/strict/stemProps';
+import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import adjustStretches from './adjustStretches';
 
 function _transferStemProps(mode: FoldingMode) {
@@ -28,7 +29,7 @@ export function unpair(mode: FoldingMode) {
   mode.fireShouldPushUndo();
   _transferStemProps(mode);
   let drawing = mode.strictDrawing.drawing;
-  ids.forEach(id => drawing.removeSecondaryBondById(id));
+  ids.forEach(id => removeSecondaryBondById(drawing, id));
   adjustStretches(mode);
   mode.strictDrawing.updateLayout();
   mode.reset();

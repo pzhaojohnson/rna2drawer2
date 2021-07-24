@@ -2,6 +2,7 @@ import adjustBaseNumbering from './adjustBaseNumbering';
 import Drawing from '../Drawing';
 import NodeSVG from '../NodeSVG';
 import { addNumbering } from 'Draw/bases/number/add';
+import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import normalizeAngle from '../normalizeAngle';
 
 it('sets line angles to outer normal', () => {
@@ -34,7 +35,7 @@ describe('prevents overlaps with secondary bonds for bases 1 and 2', () => {
     seq.getBaseAtPosition(6).moveTo(3, -2);
     let b2 = seq.getBaseAtPosition(2);
     let b5 = seq.getBaseAtPosition(5);
-    let sb = drawing.addSecondaryBond(b2, b5);
+    let sb = addSecondaryBond(drawing, b2, b5);
     sb.padding1 = 8;
     sb.padding2 = 8;
     expect(sb.padding1 + sb.padding2).toBeGreaterThan(b2.distanceBetweenCenters(b5));

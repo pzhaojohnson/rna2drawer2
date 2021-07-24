@@ -7,7 +7,7 @@ import { willRemove } from '../../../../draw/layout/singleseq/strict/stemProps';
 import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';
-import { removePrimaryBondById } from 'Draw/bonds/straight/remove';
+import { removePrimaryBondById, removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 
@@ -66,7 +66,7 @@ function removeBondsWithBases(drawing: Drawing, bs: Base[]) {
   bs.forEach(b => baseIds.add(b.id));
   let bonds = [] as (PrimaryBond | SecondaryBond | TertiaryBond)[];
   drawing.primaryBonds.forEach(pb => bonds.push(pb));
-  drawing.forEachSecondaryBond(sb => bonds.push(sb));
+  drawing.secondaryBonds.forEach(sb => bonds.push(sb));
   drawing.forEachTertiaryBond(tb => bonds.push(tb));
   let toRemove = [] as string[];
   bonds.forEach(bd => {
@@ -76,7 +76,7 @@ function removeBondsWithBases(drawing: Drawing, bs: Base[]) {
   });
   toRemove.forEach(id => {
     removePrimaryBondById(drawing, id);
-    drawing.removeSecondaryBondById(id);
+    removeSecondaryBondById(drawing, id);
     drawing.removeTertiaryBondById(id);
   });
 }

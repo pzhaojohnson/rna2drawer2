@@ -1,5 +1,6 @@
 import NodeSVG from 'Draw/NodeSVG';
 import StrictDrawing from 'Draw/StrictDrawing';
+import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { updateEntireLayout } from './updateEntireLayout';
 
 function expectToBeFinite(n) {
@@ -38,7 +39,8 @@ it('handles an empty drawing', () => {
 
 it('handles a drawing with zero area', () => {
   strictDrawing.appendSequence('asdf', 'asdfQWERasdfQQQQ');
-  strictDrawing.drawing.addSecondaryBond(
+  addSecondaryBond(
+    strictDrawing.drawing,
     strictDrawing.drawing.getBaseAtOverallPosition(5),
     strictDrawing.drawing.getBaseAtOverallPosition(12),
   );
@@ -49,7 +51,8 @@ it('handles a drawing with zero area', () => {
 
 it('handles a drawing with zero zoom', () => {
   strictDrawing.appendSequence('asdf', 'asdfQWERasdf');
-  strictDrawing.drawing.addSecondaryBond(
+  addSecondaryBond(
+    strictDrawing.drawing,
     strictDrawing.drawing.getBaseAtOverallPosition(1),
     strictDrawing.drawing.getBaseAtOverallPosition(6),
   );
@@ -60,7 +63,8 @@ it('handles a drawing with zero zoom', () => {
 
 it('view reference is specified', () => {
   strictDrawing.appendSequence('qwer', 'QQPPOzxcvnskdhfu');
-  strictDrawing.drawing.addSecondaryBond(
+  addSecondaryBond(
+    strictDrawing.drawing,
     strictDrawing.drawing.getBaseAtOverallPosition(6),
     strictDrawing.drawing.getBaseAtOverallPosition(12),
   );
@@ -70,7 +74,8 @@ it('view reference is specified', () => {
 
 it('handles out of bounds view reference', () => {
   strictDrawing.appendSequence('qwer', 'QQPPOzxcvnskdhfu');
-  strictDrawing.drawing.addSecondaryBond(
+  addSecondaryBond(
+    strictDrawing.drawing,
     strictDrawing.drawing.getBaseAtOverallPosition(6),
     strictDrawing.drawing.getBaseAtOverallPosition(12),
   );

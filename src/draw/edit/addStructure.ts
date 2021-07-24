@@ -1,7 +1,7 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
 import { Partners } from 'Partners/Partners';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import { addPrimaryBond } from 'Draw/bonds/straight/add';
+import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
 
 export function addPrimaryBonds(drawing: Drawing, sequenceId: string) {
   let seq = drawing.getSequenceById(sequenceId);
@@ -32,7 +32,7 @@ function _basePairs(drawing: Drawing, sequenceId: string, partners: Partners): [
 export function addSecondaryBonds(drawing: Drawing, sequenceId: string, partners: Partners) {
   let pairs = _basePairs(drawing, sequenceId, partners);
   pairs.forEach(p => {
-    drawing.addSecondaryBond(p[0], p[1]);
+    addSecondaryBond(drawing, p[0], p[1]);
   });
 }
 

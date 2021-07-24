@@ -1,5 +1,6 @@
 import NodeSVG from 'Draw/NodeSVG';
 import StrictDrawing from 'Draw/StrictDrawing';
+import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { updateLayout } from './updateLayout';
 
 import { StrictLayout } from 'Draw/layout/singleseq/strict/StrictLayout';
@@ -15,11 +16,13 @@ beforeEach(() => {
   strictDrawing = new StrictDrawing();
   strictDrawing.addTo(container, () => NodeSVG());
   strictDrawing.appendSequence('qwer', 'asdfQWERQWERQWER');
-  strictDrawing.drawing.addSecondaryBond(
+  addSecondaryBond(
+    strictDrawing.drawing,
     strictDrawing.drawing.getBaseAtOverallPosition(3),
     strictDrawing.drawing.getBaseAtOverallPosition(7),
   );
-  strictDrawing.drawing.addSecondaryBond(
+  addSecondaryBond(
+    strictDrawing.drawing,
     strictDrawing.drawing.getBaseAtOverallPosition(8),
     strictDrawing.drawing.getBaseAtOverallPosition(14),
   );
