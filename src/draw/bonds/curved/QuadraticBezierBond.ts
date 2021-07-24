@@ -51,7 +51,7 @@ export class QuadraticBezierBond implements QuadraticBezierBondInterface {
     return String(this.path.id());
   }
 
-  contains(b: Base): boolean {
+  binds(b: Base): boolean {
     return this.base1.id == b.id || this.base2.id == b.id;
   }
 

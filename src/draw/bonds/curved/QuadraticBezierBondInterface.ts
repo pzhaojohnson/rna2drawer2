@@ -7,7 +7,7 @@ export interface QuadraticBezierBondInterface {
   readonly path: Path;
   readonly base1: Base;
   readonly base2: Base;
-  contains(b: Base): boolean;
+  binds(b: Base): boolean;
   basePadding1: number;
   basePadding2: number;
   controlPointDisplacement(): ControlPointDisplacement;

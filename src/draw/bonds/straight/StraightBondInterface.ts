@@ -6,7 +6,7 @@ export interface StraightBondInterface {
   readonly base1: Base;
   readonly base2: Base;
   id: string;
-  contains(b: Base): boolean;
+  binds(b: Base): boolean;
   basePadding1: number;
   basePadding2: number;
   reposition(): void;

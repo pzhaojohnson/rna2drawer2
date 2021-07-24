@@ -38,7 +38,7 @@ export class StraightBond implements StraightBondInterface {
     return String(this.line.id());
   }
 
-  contains(b: Base): boolean {
+  binds(b: Base): boolean {
     return b == this.base1 || b == this.base2;
   }
 

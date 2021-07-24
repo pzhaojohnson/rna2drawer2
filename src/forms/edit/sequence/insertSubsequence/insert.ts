@@ -43,7 +43,7 @@ function breakStrand(drawing: Drawing, insertPosition: number) {
     let toRemove = null as PrimaryBond | null;
     drawing.primaryBonds.forEach(pb => {
       if (b5 && b3) {
-        if (pb.contains(b5) && pb.contains(b3)) {
+        if (pb.binds(b5) && pb.binds(b3)) {
           toRemove = pb;
         }
       }
