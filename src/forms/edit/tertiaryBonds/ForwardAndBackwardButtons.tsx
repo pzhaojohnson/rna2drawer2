@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { bringToFront, sendToBack } from 'Draw/bonds/curved/z';
 import { TextButton } from 'Forms/buttons/TextButton';
 
 interface Props {
@@ -14,7 +15,7 @@ export function BringToFrontButton(props: Props) {
       text='Bring to Front'
       onClick={() => {
         props.pushUndo();
-        props.getTertiaryBonds().forEach(tb => tb.bringToFront());
+        props.getTertiaryBonds().forEach(tb => bringToFront(tb));
         props.changed();
       }}
     />
@@ -27,7 +28,7 @@ export function SendToBackButton(props: Props) {
       text='Send to Back'
       onClick={() => {
         props.pushUndo();
-        props.getTertiaryBonds().forEach(tb => tb.sendToBack());
+        props.getTertiaryBonds().forEach(tb => sendToBack(tb));
         props.changed();
       }}
     />

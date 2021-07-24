@@ -85,12 +85,4 @@ export class QuadraticBezierBond implements QuadraticBezierBondInterface {
   reposition() {
     position(this, this._positioning);
   }
-
-  bringToFront() {
-    this.path.front();
-  }
-
-  sendToBack() {
-    this.path.back();
-  }
 }

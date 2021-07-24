@@ -176,18 +176,4 @@ describe('QuadraticBezierBond class', () => {
       expect(d1).toBe(d2);
     });
   });
-
-  it('bringToFront and sendToBack methods', () => {
-    let c = svg.circle(33);
-    let r1 = svg.rect(1, 8);
-    let r2 = svg.rect(30, 20);
-    bond.sendToBack();
-    expect(bond.path.position()).toBe(0); // starts at back
-    // must bring all the way to the front
-    bond.bringToFront();
-    expect(bond.path.position()).toBeGreaterThanOrEqual(3);
-    // must send all the way to the back
-    bond.sendToBack();
-    expect(bond.path.position()).toBe(0);
-  });
 });
