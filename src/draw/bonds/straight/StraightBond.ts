@@ -81,12 +81,4 @@ export class StraightBond implements StraightBondInterface {
       basePadding2: this.basePadding2,
     });
   }
-
-  bringToFront() {
-    this.line.front();
-  }
-
-  sendToBack() {
-    this.line.back();
-  }
 }

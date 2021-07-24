@@ -10,6 +10,4 @@ export interface StraightBondInterface {
   basePadding1: number;
   basePadding2: number;
   reposition(): void;
-  bringToFront(): void;
-  sendToBack(): void;
 }

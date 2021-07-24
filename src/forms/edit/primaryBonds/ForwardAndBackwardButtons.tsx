@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FieldProps } from './FieldProps';
 import { TextButton } from 'Forms/buttons/TextButton';
+import { bringToFront, sendToBack } from 'Draw/bonds/straight/z';
 
 export function BringToFrontButton(props: FieldProps) {
   return (
@@ -8,7 +9,7 @@ export function BringToFrontButton(props: FieldProps) {
       text='Bring to Front'
       onClick={() => {
         props.pushUndo();
-        props.getPrimaryBonds().forEach(pb => pb.bringToFront());
+        props.getPrimaryBonds().forEach(pb => bringToFront(pb));
         props.changed();
       }}
     />
@@ -21,7 +22,7 @@ export function SendToBackButton(props: FieldProps) {
       text='Send to Back'
       onClick={() => {
         props.pushUndo();
-        props.getPrimaryBonds().forEach(pb => pb.sendToBack());
+        props.getPrimaryBonds().forEach(pb => sendToBack(pb));
         props.changed();
       }}
     />

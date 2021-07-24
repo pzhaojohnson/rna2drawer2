@@ -179,20 +179,4 @@ describe('StraightBond class', () => {
       expect(rp1).toEqual(rp2); // used cached base paddings 1 and 2
     });
   });
-
-  it('bringToFront and sendToBack methods', () => {
-    let c = svg.circle(20);
-    let r = svg.rect(20, 40);
-    let t = svg.text('asdf');
-    bond.sendToBack();
-    expect(bond.line.position()).toBe(0); // starts at back
-    // must bring all the way to the front and not just
-    // forward one position
-    bond.bringToFront();
-    expect(bond.line.position()).toBeGreaterThan(2);
-    // must send all the way to the back and not just back
-    // one position
-    bond.sendToBack();
-    expect(bond.line.position()).toBe(0);
-  });
 });
