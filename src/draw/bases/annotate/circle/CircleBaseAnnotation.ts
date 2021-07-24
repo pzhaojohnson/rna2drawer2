@@ -41,12 +41,4 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
       this._baseCenter = { ...rp.baseCenter };
     }
   }
-
-  bringToFront() {
-    this.circle.front();
-  }
-
-  sendToBack() {
-    this.circle.back();
-  }
 }

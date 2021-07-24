@@ -4,6 +4,9 @@ import { positionsOfStem } from '../highlight/positionsOfStem';
 import { positionsOfLoop, positionsOfOutermostLoop } from './structure';
 import { highlightBase } from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
+import {
+  sendToBack as sendHighlightingToBack,
+} from 'Draw/bases/annotate/circle/z';
 
 function positionsToHighlight(mode: TriangularizingMode): number[] | undefined {
   if (typeof mode.hovered == 'number') {
@@ -51,7 +54,7 @@ export function highlightHovered(mode: TriangularizingMode) {
           }
         }
         if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
-          b.highlighting.sendToBack();
+          sendHighlightingToBack(b.highlighting);
         }
       }
     });

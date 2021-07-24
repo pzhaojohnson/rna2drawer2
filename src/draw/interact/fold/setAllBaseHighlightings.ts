@@ -7,6 +7,9 @@ import { selectedRange } from './selected';
 import secondaryBondsWith from './secondaryBondsWith';
 import hoveredPairable from './hoveredPairable';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import {
+  sendToBack as sendHighlightingToBack,
+} from 'Draw/bases/annotate/circle/z';
 
 interface HighlightingProps {
   unpulsed: {
@@ -190,7 +193,7 @@ export function setAllBaseHighlightings(mode: FoldingMode) {
       }
       if (bHovered && bHovered.distanceBetweenCenters(b) < 5 * radius) {
         if (b.highlighting) {
-          b.highlighting.sendToBack();
+          sendHighlightingToBack(b.highlighting);
         }
       }
     } else {

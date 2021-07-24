@@ -111,21 +111,4 @@ describe('CircleBaseAnnotation class', () => {
       expect(c.attr('cy')).toBeCloseTo(812.3);
     });
   });
-
-  it('bringToFront and sendToBack methods', () => {
-    let c = new CircleWrapper(svg.circle(50));
-    let cba = new CircleBaseAnnotation(c, { x: 25, y: 250 });
-    let r = svg.rect(10, 20);
-    let l = svg.line(1, 2, 3, 4);
-    let t = svg.text('asdf');
-    cba.bringToFront();
-    // must send all the way to the back and not just back
-    // one position
-    cba.sendToBack();
-    expect(c.position()).toBe(0);
-    // must bring all the way to the front and not just
-    // forward one position
-    cba.bringToFront();
-    expect(c.position()).toBeGreaterThanOrEqual(3);
-  });
 });

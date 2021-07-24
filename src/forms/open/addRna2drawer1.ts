@@ -2,6 +2,9 @@ import { Rna2drawer1 } from './parseRna2drawer1';
 import { StrictDrawingInterface as StrictDrawing } from '../../draw/StrictDrawingInterface';
 import { pixelsToPoints } from '../../export/pixelsToPoints';
 import { addCircleOutline } from 'Draw/bases/annotate/circle/add';
+import {
+  sendToBack as sendOutlineToBack,
+} from 'Draw/bases/annotate/circle/z';
 
 function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);
@@ -50,16 +53,18 @@ function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
       let outline = rna2drawer1.baseOutlines[p - 1];
       if (outline) {
         addCircleOutline(b);
-        b.outline?.sendToBack();
-        let fs = b.text.attr('font-size');
-        b.outline?.circle.attr({
-          'r': outline.relativeRadius * pixelsToPoints(typeof fs == 'number' ? fs : 9),
-          'stroke': outline.stroke.toHex(),
-          'stroke-width': outline.strokeWidth,
-          'stroke-opacity': outline.strokeOpacity,
-          'fill': outline.fill.toHex(),
-          'fill-opacity': outline.fillOpacity,
-        });
+        if (b.outline) {
+          sendOutlineToBack(b.outline);
+          let fs = b.text.attr('font-size');
+          b.outline.circle.attr({
+            'r': outline.relativeRadius * pixelsToPoints(typeof fs == 'number' ? fs : 9),
+            'stroke': outline.stroke.toHex(),
+            'stroke-width': outline.strokeWidth,
+            'stroke-opacity': outline.strokeOpacity,
+            'fill': outline.fill.toHex(),
+            'fill-opacity': outline.fillOpacity,
+          });
+        }
       }
     });
   }

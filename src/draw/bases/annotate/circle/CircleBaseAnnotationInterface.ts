@@ -9,6 +9,4 @@ export interface CircleBaseAnnotationInterface {
   readonly circle: Circle;
   readonly id: string;
   reposition(rp?: Repositioning): void;
-  bringToFront(): void;
-  sendToBack(): void;
 }

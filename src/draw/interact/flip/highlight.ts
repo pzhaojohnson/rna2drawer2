@@ -2,6 +2,9 @@ import { FlippingModeInterface as FlippingMode } from './FlippingModeInterface';
 import { positionsOfStem, Stem } from '../highlight/positionsOfStem';
 import { highlightBase } from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
+import {
+  sendToBack as sendHighlightingToBack,
+} from 'Draw/bases/annotate/circle/z';
 
 export function highlightStem(mode: FlippingMode, st: Stem) {
   let drawing = mode.strictDrawing.drawing;
@@ -31,8 +34,8 @@ export function highlightStem(mode: FlippingMode, st: Stem) {
           radius: 1.1875 * radius,
         }, { duration: 625 });
       }
-      if (bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
-        h?.sendToBack();
+      if (h && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
+        sendHighlightingToBack(h);
       }
     }
   });

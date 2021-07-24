@@ -3,6 +3,9 @@ import { positionsOfStem } from '../highlight/positionsOfStem';
 import { highlightBase } from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import {
+  sendToBack as sendHighlightingToBack,
+} from 'Draw/bases/annotate/circle/z';
 
 export interface Stem {
   position5: number;
@@ -44,7 +47,7 @@ export function highlightStem(mode: PivotingMode, st: Stem) {
         }
       }
       if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
-        b.highlighting.sendToBack();
+        sendHighlightingToBack(b.highlighting);
       }
     }
   });

@@ -2,6 +2,9 @@ import * as React from 'react';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { CheckboxField } from '../../fields/checkbox/CheckboxField';
 import { addCircleOutline, removeCircleOutline } from 'Draw/bases/annotate/circle/add';
+import {
+  sendToBack as sendOutlineToBack,
+} from 'Draw/bases/annotate/circle/z';
 import baseOutlines from './baseOutlines';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
 
@@ -18,15 +21,17 @@ function _addOutlines(bs: Base[]) {
     if (!b.outline) {
       addCircleOutline(b);
     }
-    b.outline?.circle.attr({
-      'r': MostRecentOutlineProps.radius,
-      'stroke': MostRecentOutlineProps.stroke,
-      'stroke-width': MostRecentOutlineProps.strokeWidth,
-      'stroke-opacity': MostRecentOutlineProps.strokeOpacity,
-      'fill': MostRecentOutlineProps.fill,
-      'fill-opacity': MostRecentOutlineProps.fillOpacity,
-    });
-    b.outline?.sendToBack();
+    if (b.outline) {
+      b.outline.circle.attr({
+        'r': MostRecentOutlineProps.radius,
+        'stroke': MostRecentOutlineProps.stroke,
+        'stroke-width': MostRecentOutlineProps.strokeWidth,
+        'stroke-opacity': MostRecentOutlineProps.strokeOpacity,
+        'fill': MostRecentOutlineProps.fill,
+        'fill-opacity': MostRecentOutlineProps.fillOpacity,
+      });
+      sendOutlineToBack(b.outline);
+    }
   });
 }
 

@@ -1,8 +1,12 @@
 import { BaseInterface as Base } from './BaseInterface';
+import {
+  bringToFront as bringOutlineToFront,
+  sendToBack as sendOutlineToBack,
+} from 'Draw/bases/annotate/circle/z';
 
 export function bringToFront(b: Base) {
   if (b.outline) {
-    b.outline.bringToFront();
+    bringOutlineToFront(b.outline);
   }
 
   // keep text in front of outline
@@ -14,6 +18,6 @@ export function sendToBack(b: Base) {
 
   // keep outline behind text
   if (b.outline) {
-    b.outline.sendToBack();
+    sendOutlineToBack(b.outline);
   }
 }

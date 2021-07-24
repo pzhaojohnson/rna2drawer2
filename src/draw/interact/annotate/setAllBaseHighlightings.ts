@@ -2,6 +2,9 @@ import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInter
 import highlightBase from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
 import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
+import {
+  sendToBack as sendHighlightingToBack,
+} from 'Draw/bases/annotate/circle/z';
 
 export function setAllBaseHighlightings(mode: AnnotatingMode) {
   let bHovered = typeof mode.hovered == 'number' ? mode.drawing.getBaseAtOverallPosition(mode.hovered) : undefined;
@@ -41,7 +44,7 @@ export function setAllBaseHighlightings(mode: AnnotatingMode) {
       }
       // if close to hovered base
       if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
-        b.highlighting.sendToBack();
+        sendHighlightingToBack(b.highlighting);
       }
     } else {
       removeCircleHighlighting(b);
