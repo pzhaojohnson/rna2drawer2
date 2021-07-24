@@ -195,15 +195,4 @@ describe('StraightBond class', () => {
     bond.sendToBack();
     expect(bond.line.position()).toBe(0);
   });
-
-  it('refreshIds method', () => {
-    let prevId = bond.line.id();
-    expect(prevId).toBeTruthy();
-    bond.refreshIds();
-    let currId = bond.line.id();
-    // changed ID
-    expect(currId).not.toEqual(prevId);
-    // redefined ID (and didn't undefine ID)
-    expect(currId).toMatch(uuidRegex);
-  });
 });

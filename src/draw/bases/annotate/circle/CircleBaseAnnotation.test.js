@@ -128,16 +128,4 @@ describe('CircleBaseAnnotation class', () => {
     cba.bringToFront();
     expect(c.position()).toBeGreaterThanOrEqual(3);
   });
-
-  it('refreshIds method', () => {
-    let c = new CircleWrapper(svg.circle(10));
-    let cba = new CircleBaseAnnotation(c, { x: 20, y: 30 });
-    let prevId = c.id();
-    expect(prevId).toBeTruthy(); // ID was initialized
-    cba.refreshIds();
-    expect(c.id()).not.toEqual(prevId);
-    // check that ID was redefined (and not undefined)
-    expect(c.id()).toBeTruthy();
-    expect(c.id()).toMatch(uuidRegex);
-  });
 });

@@ -12,5 +12,4 @@ export interface StraightBondInterface {
   reposition(): void;
   bringToFront(): void;
   sendToBack(): void;
-  refreshIds(): void;
 }

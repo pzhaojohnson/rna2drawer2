@@ -11,5 +11,4 @@ export interface CircleBaseAnnotationInterface {
   reposition(rp?: Repositioning): void;
   bringToFront(): void;
   sendToBack(): void;
-  refreshIds(): void;
 }

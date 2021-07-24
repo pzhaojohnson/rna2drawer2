@@ -190,13 +190,4 @@ describe('QuadraticBezierBond class', () => {
     bond.sendToBack();
     expect(bond.path.position()).toBe(0);
   });
-
-  it('refreshIds method', () => {
-    let prevId = bond.path.id();
-    expect(prevId).toMatch(uuidRegex);
-    bond.refreshIds();
-    let currId = bond.path.id();
-    expect(currId).not.toEqual(prevId); // changed ID
-    expect(currId).toMatch(uuidRegex); // didn't undefine ID
-  });
 });

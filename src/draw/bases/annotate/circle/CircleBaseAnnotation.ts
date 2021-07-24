@@ -49,8 +49,4 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   sendToBack() {
     this.circle.back();
   }
-
-  refreshIds() {
-    assignUuid(this.circle);
-  }
 }

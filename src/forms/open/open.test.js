@@ -47,11 +47,9 @@ describe('opening a .rna2drawer file', () => {
 describe('opening a .rna2drawer2 file', () => {
   it('valid file', () => {
     let contents = readRna2drawer2('hairpins');
-    let spy = jest.spyOn(app.strictDrawing, 'refreshIds');
     let opened = open(app, { extension: 'rna2drawer2', contents: contents });
     expect(opened).toBeTruthy();
     expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was applied
-    expect(spy).toHaveBeenCalled(); // required for SVG ID generator to work correctly
   });
 
   it('invalid JSON string', () => {

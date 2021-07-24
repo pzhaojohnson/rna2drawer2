@@ -302,12 +302,6 @@ describe('applySavedState method', () => {
   });
 });
 
-it('refreshIds method', () => {
-  let spy = jest.spyOn(sd.drawing, 'refreshIds');
-  sd.refreshIds();
-  expect(spy).toHaveBeenCalled();
-});
-
 it('zoom getter and setter', () => {
   let getSpy = jest.spyOn(sd.drawing, 'zoom', 'get');
   let setSpy = jest.spyOn(sd.drawing, 'zoom', 'set');

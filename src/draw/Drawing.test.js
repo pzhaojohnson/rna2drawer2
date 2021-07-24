@@ -554,17 +554,3 @@ describe('applySavedState method', () => {
     expect(JSON.stringify(drawing.savableState())).toBe(JSON.stringify(savableState2));
   });
 });
-
-it('refreshIds method', () => {
-  expect(drawing.numSequences).toBeGreaterThan(1);
-  expect(drawing.primaryBonds.length).toBeGreaterThan(1);
-  expect(drawing.secondaryBonds.length).toBeGreaterThan(1);
-  expect(drawing.numTertiaryBonds).toBeGreaterThan(1);
-  let spies = [];
-  drawing.forEachSequence(seq => spies.push(jest.spyOn(seq, 'refreshIds')));
-  drawing.primaryBonds.forEach(pb => spies.push(jest.spyOn(pb, 'refreshIds')));
-  drawing.secondaryBonds.forEach(sb => spies.push(jest.spyOn(sb, 'refreshIds')));
-  drawing.forEachTertiaryBond(tb => spies.push(jest.spyOn(tb, 'refreshIds')));
-  drawing.refreshIds();
-  spies.forEach(s => expect(s).toHaveBeenCalled());
-});

@@ -461,13 +461,6 @@ class Drawing implements DrawingInterface {
       this.fireAddTertiaryBond(tb);
     });
   }
-
-  refreshIds() {
-    this.forEachSequence(seq => seq.refreshIds());
-    this.primaryBonds.forEach(pb => pb.refreshIds());
-    this.secondaryBonds.forEach(sb => sb.refreshIds());
-    this.forEachTertiaryBond(tb => tb.refreshIds());
-  }
 }
 
 export default Drawing;

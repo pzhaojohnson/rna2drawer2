@@ -181,19 +181,6 @@ export class Base implements BaseInterface {
       numbering: this.numbering ? savableNumberingState(this.numbering) : undefined,
     };
   }
-
-  refreshIds() {
-    assignUuid(new TextWrapper(this.text));
-    if (this.highlighting) {
-      this.highlighting.refreshIds();
-    }
-    if (this.outline) {
-      this.outline.refreshIds();
-    }
-    if (this.numbering) {
-      this.numbering.regenerateIds();
-    }
-  }
 }
 
 Base.recommendedDefaults = {

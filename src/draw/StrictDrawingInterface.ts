@@ -42,7 +42,6 @@ export interface StrictDrawingInterface {
   savableState(): StrictDrawingSavableState;
   savableString: string;
   applySavedState(savedState: StrictDrawingSavableState): boolean;
-  refreshIds(): void;
   zoom: number;
   isEmpty(): boolean;
   sequenceIds(): string[];

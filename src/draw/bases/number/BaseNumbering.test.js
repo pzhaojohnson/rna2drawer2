@@ -201,12 +201,4 @@ describe('BaseNumbering class', () => {
     expect(numbering.line.position()).toBeGreaterThan(3);
     expect(numbering.text.position()).toBeGreaterThan(3);
   });
-
-  it('regenerateIds method', () => {
-    let oldTextId = numbering.text.id();
-    let oldLineId = numbering.line.id();
-    numbering.regenerateIds();
-    expect(numbering.text.id()).not.toBe(oldTextId);
-    expect(numbering.line.id()).not.toBe(oldLineId);
-  });
 });

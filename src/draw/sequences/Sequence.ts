@@ -416,10 +416,6 @@ export class Sequence implements SequenceInterface {
     );
     return savableState;
   }
-
-  refreshIds() {
-    this.forEachBase(b => b.refreshIds());
-  }
 }
 
 Sequence._mostRecentProps = {

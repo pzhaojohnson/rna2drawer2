@@ -30,7 +30,6 @@ export interface BaseInterface {
   
   remove(): void;
   savableState(): BaseSavableState;
-  refreshIds(): void;
 }
 
 export default BaseInterface;

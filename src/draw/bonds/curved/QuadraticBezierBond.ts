@@ -93,8 +93,4 @@ export class QuadraticBezierBond implements QuadraticBezierBondInterface {
   sendToBack() {
     this.path.back();
   }
-
-  refreshIds() {
-    assignUuid(this.path);
-  }
 }

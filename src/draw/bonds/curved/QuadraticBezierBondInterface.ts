@@ -15,5 +15,4 @@ export interface QuadraticBezierBondInterface {
   reposition(): void;
   bringToFront(): void;
   sendToBack(): void;
-  refreshIds(): void;
 }

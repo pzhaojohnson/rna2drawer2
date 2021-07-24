@@ -20,5 +20,4 @@ export interface BaseNumberingInterface {
   reposition(rp?: Repositioning): void;
   bringToFront(): void;
   sendToBack(): void;
-  regenerateIds(): void;
 }

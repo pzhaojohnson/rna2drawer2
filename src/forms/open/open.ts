@@ -23,7 +23,6 @@ function openRna2drawer2(app: App, saved: Saved): boolean {
     let savedState = JSON.parse(saved.contents);
     let applied = app.strictDrawing.applySavedState(savedState as StrictDrawingSavableState);
     if (applied) {
-      app.strictDrawing.refreshIds(); // required for SVG ID generator to work corrently
       app.strictDrawing.updateLayout(); // adjust padding of drawing for current screen
       return true;
     }

@@ -301,33 +301,4 @@ describe('Base class', () => {
       });
     });
   });
-
-  describe('refreshIds method', () => {
-    it('refreshes text ID and handles no highlighting, outline or numbering', () => {
-      let b = Base.create(svg, 'A', 1, 5);
-      expect(b.highlighting).toBeFalsy();
-      expect(b.outline).toBeFalsy();
-      expect(b.numbering).toBeFalsy();
-      let oldTextId = b.text.id();
-      b.refreshIds();
-      expect(b.text.id()).not.toBe(oldTextId);
-    });
-
-    it('can refresh highlighting, outline and numbering IDs', () => {
-      let b = Base.create(svg, 'A', 1, 5);
-      addCircleHighlighting(b);
-      let h = b.highlighting;
-      addCircleOutline(b);
-      let o = b.outline;
-      addNumbering(b, 5);
-      let n = b.numbering;
-      let spies = [
-        jest.spyOn(h, 'refreshIds'),
-        jest.spyOn(o, 'refreshIds'),
-        jest.spyOn(n, 'regenerateIds'),
-      ];
-      b.refreshIds();
-      spies.forEach(s => expect(s).toHaveBeenCalled());
-    });
-  });
 });

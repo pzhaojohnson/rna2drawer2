@@ -680,12 +680,4 @@ describe('Sequence class', () => {
       expect(JSON.stringify(parsed)).toBe(json);
     });
   });
-
-  it('refreshIds method', () => {
-    let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
-    let spies = [];
-    seq.forEachBase(b => spies.push(jest.spyOn(b, 'refreshIds')));
-    seq.refreshIds();
-    spies.forEach(s => expect(s).toHaveBeenCalled());
-  });
 });

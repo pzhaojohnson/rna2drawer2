@@ -52,7 +52,6 @@ export interface SequenceInterface {
   removeBasesInRange(p5: number, p3: number): void;
   remove(): void;
   savableState(): SequenceSavableState;
-  refreshIds(): void;
 }
 
 export default SequenceInterface;

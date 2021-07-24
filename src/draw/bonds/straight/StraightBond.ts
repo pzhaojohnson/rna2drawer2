@@ -89,8 +89,4 @@ export class StraightBond implements StraightBondInterface {
   sendToBack() {
     this.line.back();
   }
-
-  refreshIds() {
-    assignUuid(this.line);
-  }
 }

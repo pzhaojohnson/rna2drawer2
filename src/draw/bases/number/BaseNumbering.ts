@@ -129,11 +129,6 @@ export class BaseNumbering implements BaseNumberingInterface {
     this.text.back();
     this.line.back();
   }
-
-  regenerateIds() {
-    assignUuid(this.text);
-    assignUuid(this.line);
-  }
 }
 
 BaseNumbering.recommendedDefaults = {

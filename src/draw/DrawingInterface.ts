@@ -80,7 +80,6 @@ export interface DrawingInterface {
   svgString: string;
   savableState(): DrawingSavableState;
   applySavedState(savedState: DrawingSavableState): boolean;
-  refreshIds(): void;
 }
 
 export default DrawingInterface;
