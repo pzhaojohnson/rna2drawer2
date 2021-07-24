@@ -3,6 +3,8 @@ import {
   BaseSavableState,
 } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
+import { assignUuid } from 'Draw/svg/id';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
@@ -85,7 +87,13 @@ export class Base implements BaseInterface {
     if (this.text.type !== 'text') {
       throw new Error('Passed SVG element is not text.');
     }
-    this.text.id();
+
+    // use the attr method to check if the ID is already initialized
+    // since the id method itself will initialize the ID (to a non-UUID)
+    if (!this.text.attr('id')) {
+      assignUuid(new TextWrapper(this.text));
+    }
+    
     if (this.text.text().length !== 1) {
       throw new Error('Text content must be a single character.');
     }
@@ -175,8 +183,7 @@ export class Base implements BaseInterface {
   }
 
   refreshIds() {
-    this.text.id('');
-    this.text.id();
+    assignUuid(new TextWrapper(this.text));
     if (this.highlighting) {
       this.highlighting.refreshIds();
     }
