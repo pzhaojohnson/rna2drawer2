@@ -41,9 +41,6 @@ class Drawing implements DrawingInterface {
   secondaryBonds: SecondaryBond[];
   tertiaryBonds: TertiaryBond[];
 
-  _onAddSequence?: (seq: Sequence) => void;
-  _onAddTertiaryBond?: (tb: TertiaryBond) => void;
-
   constructor() {
     this.sequences = [];
     this.primaryBonds = [];
@@ -190,18 +187,7 @@ class Drawing implements DrawingInterface {
     }
     let seq = Sequence.createOutOfView(this.svg, id, characters);
     this.sequences.push(seq);
-    this.fireAddSequence(seq);
     return seq;
-  }
-
-  onAddSequence(f: (seq: Sequence) => void) {
-    this._onAddSequence = f;
-  }
-
-  fireAddSequence(seq: Sequence) {
-    if (this._onAddSequence) {
-      this._onAddSequence(seq);
-    }
   }
 
   get numBases(): number {
@@ -304,14 +290,6 @@ class Drawing implements DrawingInterface {
     adjustBaseNumbering(this);
   }
 
-  onMousedown(f: () => void) {
-    this.svg.mousedown(f);
-  }
-
-  onDblclick(f: () => void) {
-    this.svg.dblclick(f);
-  }
-
   clear() {
     this.sequences = [];
     this.primaryBonds = [];
@@ -399,7 +377,6 @@ class Drawing implements DrawingInterface {
     savedState.sequences.forEach(saved => {
       let seq = Sequence.fromSavedState(saved, this.svg);
       this.sequences.push(seq);
-      this.fireAddSequence(seq);
     });
   }
 

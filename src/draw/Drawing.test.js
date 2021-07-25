@@ -277,34 +277,20 @@ describe('appendSequenceOutOfView method', () => {
   it('sequence ID is already taken', () => {
     let n = drawing.numSequences;
     let spy1 = jest.spyOn(Sequence, 'createOutOfView');
-    let spy2 = jest.spyOn(drawing, 'fireAddSequence');
     let seq = drawing.appendSequenceOutOfView('qwer', 'qwer');
     expect(seq).toBeFalsy();
     expect(drawing.numSequences).toBe(n);
     expect(spy1).not.toHaveBeenCalled();
-    expect(spy2).not.toHaveBeenCalled();
   });
 
   it('sequence ID is not already taken', () => {
     let n = drawing.numSequences;
-    let spy = jest.spyOn(drawing, 'fireAddSequence');
     let seq = drawing.appendSequenceOutOfView('zxcvbnm', 'zxcvbnmqq');
     expect(seq.id).toBe('zxcvbnm');
     expect(seq.characters).toBe('zxcvbnmqq');
     expect(drawing.numSequences).toBe(n + 1);
     expect(drawing.getSequenceAtIndex(n).id).toBe(seq.id);
-    expect(spy.mock.calls[0][0]).toBe(seq);
   });
-});
-
-it('add sequence event', () => {
-  drawing._onAddSequence = null; // removing any binding
-  expect(() => drawing.fireAddSequence()).not.toThrow(); // firing with no binding
-  let f = jest.fn();
-  let seq = jest.fn();
-  drawing.onAddSequence(f);
-  drawing.fireAddSequence(seq);
-  expect(f.mock.calls[0][0]).toBe(seq);
 });
 
 it('repositionBonds method', () => {
@@ -325,21 +311,6 @@ it('adjusting base numbering', () => {
   expect(spy.mock.calls[0][0]).toBe(drawing);
   drawing.adjustBaseNumbering();
   expect(spy.mock.calls[1][0]).toBe(drawing);
-});
-
-it('mousedown event', () => {
-  let f = jest.fn();
-  drawing.onMousedown(f);
-  drawing.svg.fire('mousedown');
-  expect(f.mock.calls.length).toBe(1);
-});
-
-it('dblclick event', () => {
-  let f = jest.fn();
-  drawing.onDblclick(f);
-  expect(f).not.toHaveBeenCalled();
-  drawing.svg.fire('dblclick');
-  expect(f).toHaveBeenCalled();
 });
 
 it('clear method removes elements and references', () => {

@@ -45,9 +45,7 @@ export interface DrawingInterface {
   sequenceIdIsTaken(id: string): boolean;
   overallCharacters: string;
   appendSequenceOutOfView(id: string, characters: string): Sequence | null;
-  onAddSequence(f: (seq: Sequence) => void): void;
-  fireAddSequence(seq: Sequence): void;
-
+  
   numBases: number;
   getBaseById(id: string): Base | null;
   getBaseAtOverallPosition(p: number): Base | undefined;
@@ -65,8 +63,6 @@ export interface DrawingInterface {
   repositionBonds(): void;
   adjustNumberingLineAngles(): void;
   adjustBaseNumbering(): void;
-  onMousedown(f: () => void): void;
-  onDblclick(f: () => void): void;
   clear(): void;
   svgString: string;
   savableState(): DrawingSavableState;
