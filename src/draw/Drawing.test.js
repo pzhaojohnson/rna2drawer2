@@ -6,6 +6,8 @@ import * as AdjustBaseNumbering from './edit/adjustBaseNumbering';
 import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
 import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { savableState as savableStraightBondState } from 'Draw/bonds/straight/save';
+import { addTertiaryBond } from 'Draw/bonds/curved/add';
+import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import { savableState as savableTertiaryBondState } from 'Draw/bonds/curved/save';
 
 let drawing = new Drawing();
@@ -34,11 +36,13 @@ let sb2 = addSecondaryBond(
   seq2.getBaseAtPosition(1),
   seq2.getBaseAtPosition(6),
 );
-let tb1 = drawing.addTertiaryBond(
+let tb1 = addTertiaryBond(
+  drawing,
   seq2.getBaseAtPosition(2),
   seq1.getBaseAtPosition(2),
 );
-let tb2 = drawing.addTertiaryBond(
+let tb2 = addTertiaryBond(
+  drawing,
   seq1.getBaseAtPosition(8),
   seq2.getBaseAtPosition(7),
 );
@@ -303,99 +307,14 @@ it('add sequence event', () => {
   expect(f.mock.calls[0][0]).toBe(seq);
 });
 
-describe('tertiary bonds attributes', () => {
-  let drawing = new Drawing();
-  let container = document.createElement('div');
-  document.body.appendChild(container);
-  drawing.addTo(container, () => NodeSVG());
-  let seq1 = drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
-  let seq2 = drawing.appendSequenceOutOfView('zxcv', 'zxcvzxcvzxcv');
-  let tb1 = drawing.addTertiaryBond(seq1.getBaseAtPosition(6), seq1.getBaseAtPosition(2));
-  let tb2 = drawing.addTertiaryBond(seq2.getBaseAtPosition(1), seq2.getBaseAtPosition(4));
-  let tb3 = drawing.addTertiaryBond(seq2.getBaseAtPosition(2), seq1.getBaseAtPosition(5));
-  let tb4 = drawing.addTertiaryBond(seq2.getBaseAtPosition(8), seq2.getBaseAtPosition(1));
-  let tb5 = drawing.addTertiaryBond(seq1.getBaseAtPosition(1), seq2.getBaseAtPosition(1));
-
-  it('numTertiaryBonds getter', () => {
-    expect(drawing.numTertiaryBonds).toBe(5);
-  });
-
-  it('getTertiaryBondById method', () => {
-    expect(drawing.getTertiaryBondById(tb2.id)).toBe(tb2);
-    expect(drawing.getTertiaryBondById('nonexistent ID')).toBeFalsy();
-  });
-
-  it('getTertiaryBondsByIds method', () => {
-    let tbs = drawing.getTertiaryBondsByIds(
-      new Set([tb2.id, tb4.id, 'random ID', tb5.id])
-    );
-    expect(tbs.length).toBe(3);
-    [tb2, tb4, tb5].forEach(tb => {
-      expect(tbs.includes(tb)).toBeTruthy();
-    });
-  });
-
-  it('forEachTertiaryBond method', () => {
-    let i = 0;
-    drawing.forEachTertiaryBond(tb => {
-      expect(tb).toBe(drawing.tertiaryBonds[i]);
-      i++;
-    });
-    expect(i).toBe(drawing.numTertiaryBonds);
-  });
-
-  it('addTertiaryBond method', () => {
-    let b1 = seq2.getBaseAtPosition(5);
-    let b2 = seq1.getBaseAtPosition(6);
-    let n = drawing.numTertiaryBonds;
-    let spy = jest.spyOn(drawing, 'fireAddTertiaryBond');
-    let tb = drawing.addTertiaryBond(b1, b2);
-    expect(drawing.numTertiaryBonds).toBe(n + 1);
-    // creates with correct bases
-    expect(tb.base1).toBe(b1);
-    expect(tb.base2).toBe(b2);
-    // fires add tertiary bond event
-    expect(spy.mock.calls[0][0]).toBe(tb);
-  });
-
-  it('add tertiary bond event', () => {
-    drawing._onAddTertiaryBond = null; // removes any binding
-    expect(() => drawing.fireAddTertiaryBond()).not.toThrow(); // firing with no binding
-    let f = jest.fn();
-    let tb = jest.fn();
-    drawing.onAddTertiaryBond(f);
-    drawing.fireAddTertiaryBond(tb);
-    expect(f.mock.calls[0][0]).toBe(tb);
-  });
-
-  describe('removeTertiaryBondById method', () => {
-    it('a tertiary bond has the ID', () => {
-      let tb = drawing.addTertiaryBond(
-        seq2.getBaseAtPosition(1),
-        seq1.getBaseAtPosition(6),
-      );
-      let id = tb.id;
-      expect(drawing.getTertiaryBondById(id)).toBeTruthy();
-      drawing.removeTertiaryBondById(id);
-      expect(drawing.getTertiaryBondById(id)).toBeFalsy();
-    });
-
-    it('no tertiary bond has the ID', () => {
-      let n = drawing.numTertiaryBonds;
-      drawing.removeTertiaryBondById('nonexistent ID');
-      expect(drawing.numTertiaryBonds).toBe(n);
-    });
-  });
-});
-
 it('repositionBonds method', () => {
   expect(drawing.primaryBonds.length).toBeGreaterThan(1);
   expect(drawing.secondaryBonds.length).toBeGreaterThan(1);
-  expect(drawing.numTertiaryBonds).toBeGreaterThan(1);
+  expect(drawing.tertiaryBonds.length).toBeGreaterThan(1);
   let spies = [];
   drawing.primaryBonds.forEach(pb => spies.push(jest.spyOn(pb, 'reposition')));
   drawing.secondaryBonds.forEach(sb => spies.push(jest.spyOn(sb, 'reposition')));
-  drawing.forEachTertiaryBond(tb => spies.push(jest.spyOn(tb, 'reposition')));
+  drawing.tertiaryBonds.forEach(tb => spies.push(jest.spyOn(tb, 'reposition')));
   drawing.repositionBonds();
   spies.forEach(s => expect(s).toHaveBeenCalled());
 });
@@ -434,8 +353,8 @@ it('clear method removes elements and references', () => {
   let pb2 = addPrimaryBond(drawing, seq2.getBaseAtPosition(2), seq2.getBaseAtPosition(3));
   let sb1 = addSecondaryBond(drawing, seq1.getBaseAtPosition(2), seq2.getBaseAtPosition(6));
   let sb2 = addSecondaryBond(drawing, seq1.getBaseAtPosition(1), seq2.getBaseAtPosition(2));
-  let tb1 = drawing.addTertiaryBond(seq2.getBaseAtPosition(3), seq1.getBaseAtPosition(5));
-  let tb2 = drawing.addTertiaryBond(seq1.getBaseAtPosition(8), seq2.getBaseAtPosition(5));
+  let tb1 = addTertiaryBond(drawing, seq2.getBaseAtPosition(3), seq1.getBaseAtPosition(5));
+  let tb2 = addTertiaryBond(drawing, seq1.getBaseAtPosition(8), seq2.getBaseAtPosition(5));
   let spy = jest.spyOn(drawing.svg, 'clear');
   drawing.clear();
   expect(spy).toHaveBeenCalled(); // removed elements
@@ -443,7 +362,7 @@ it('clear method removes elements and references', () => {
   expect(drawing.numSequences).toBe(0);
   expect(drawing.primaryBonds.length).toBe(0);
   expect(drawing.secondaryBonds.length).toBe(0);
-  expect(drawing.numTertiaryBonds).toBe(0);
+  expect(drawing.tertiaryBonds.length).toBe(0);
 });
 
 it('svgString getter', () => {
@@ -464,8 +383,8 @@ describe('savableState method', () => {
   let pb2 = addPrimaryBond(drawing, b3, b6);
   let sb1 = addSecondaryBond(drawing, b2, b8);
   let sb2 = addSecondaryBond(drawing, b6, b3);
-  let tb1 = drawing.addTertiaryBond(b6, b1);
-  let tb2 = drawing.addTertiaryBond(b2, b6);
+  let tb1 = addTertiaryBond(drawing, b6, b1);
+  let tb2 = addTertiaryBond(drawing, b2, b6);
   let savableState = drawing.savableState();
   let svgString = drawing.svg.svg();
 
@@ -523,13 +442,13 @@ describe('applySavedState method', () => {
     let pb2 = addPrimaryBond(drawing, b5, b12);
     let sb1 = addSecondaryBond(drawing, b2, b17);
     let sb2 = addSecondaryBond(drawing, b5, b12);
-    let tb1 = drawing.addTertiaryBond(b12, b2);
-    let tb2 = drawing.addTertiaryBond(b5, b17);
+    let tb1 = addTertiaryBond(drawing, b12, b2);
+    let tb2 = addTertiaryBond(drawing, b5, b17);
     let savableState = drawing.savableState();
     let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcvzxcv');
     let pb3 = addPrimaryBond(drawing, b12, b17);
     removeSecondaryBondById(drawing, sb1.id);
-    drawing.removeTertiaryBondById(tb2.id);
+    removeTertiaryBondById(drawing, tb2.id);
     expect(JSON.stringify(drawing.savableState())).not.toBe(JSON.stringify(savableState));
     let applied = drawing.applySavedState(savableState);
     expect(applied).toBeTruthy();

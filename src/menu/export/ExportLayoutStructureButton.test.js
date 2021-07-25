@@ -1,6 +1,7 @@
 import App from '../../App';
 import NodeSVG from '../../draw/NodeSVG';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
+import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import { ExportLayoutStructureButton } from './ExportLayoutStructureButton';
 
 import React from 'react';
@@ -45,8 +46,8 @@ it('exports name, ids, sequence and layout structure', () => {
   addSecondaryBond(drawing, drawing.getBaseAtOverallPosition(4), drawing.getBaseAtOverallPosition(9));
   addSecondaryBond(drawing, drawing.getBaseAtOverallPosition(6), drawing.getBaseAtOverallPosition(8));
   // ignores tertiary bonds
-  drawing.addTertiaryBond(drawing.getBaseAtOverallPosition(5), drawing.getBaseAtOverallPosition(7));
-  drawing.addTertiaryBond(drawing.getBaseAtOverallPosition(1), drawing.getBaseAtOverallPosition(14));
+  addTertiaryBond(drawing, drawing.getBaseAtOverallPosition(5), drawing.getBaseAtOverallPosition(7));
+  addTertiaryBond(drawing, drawing.getBaseAtOverallPosition(1), drawing.getBaseAtOverallPosition(14));
   app.drawingChangedNotByInteraction();
   OfferFileForDownload.offerFileForDownload = jest.fn();
   let b = ExportLayoutStructureButton({ app: app });

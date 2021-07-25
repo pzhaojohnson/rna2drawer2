@@ -16,8 +16,6 @@ import {
 } from 'Draw/bonds/straight/save';
 import { addSavedPrimaryBond, addSavedSecondaryBond } from 'Draw/bonds/straight/saved';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-import { addTertiaryBond } from 'Draw/bonds/curved/add';
-import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import {
   SavableState as SavableTertiaryBondState,
   savableState as savableTertiaryBondState,
@@ -292,52 +290,10 @@ class Drawing implements DrawingInterface {
     return bs;
   }
 
-  get numTertiaryBonds(): number {
-    return this.tertiaryBonds.length;
-  }
-
-  getTertiaryBondById(id: string): (TertiaryBond | undefined) {
-    return this.tertiaryBonds.find(tb => tb.id === id);
-  }
-
-  getTertiaryBondsByIds(ids: Set<string>): TertiaryBond[] {
-    let tbs = [] as TertiaryBond[];
-    this.forEachTertiaryBond(tb => {
-      if (ids.has(tb.id)) {
-        tbs.push(tb);
-      }
-    });
-    return tbs;
-  }
-
-  forEachTertiaryBond(f: (tb: TertiaryBond) => void) {
-    this.tertiaryBonds.forEach(tb => f(tb));
-  }
-
-  addTertiaryBond(b1: Base, b2: Base): TertiaryBond {
-    let tb = addTertiaryBond(this, b1, b2);
-    this.fireAddTertiaryBond(tb);
-    return tb;
-  }
-
-  onAddTertiaryBond(f: (tb: TertiaryBond) => void) {
-    this._onAddTertiaryBond = f;
-  }
-
-  fireAddTertiaryBond(tb: TertiaryBond) {
-    if (this._onAddTertiaryBond) {
-      this._onAddTertiaryBond(tb);
-    }
-  }
-
-  removeTertiaryBondById(id: string) {
-    removeTertiaryBondById(this, id);
-  }
-
   repositionBonds() {
     this.primaryBonds.forEach(pb => pb.reposition());
     this.secondaryBonds.forEach(sb => sb.reposition());
-    this.forEachTertiaryBond(tb => tb.reposition());
+    this.tertiaryBonds.forEach(tb => tb.reposition());
   }
 
   adjustNumberingLineAngles() {
@@ -376,7 +332,7 @@ class Drawing implements DrawingInterface {
     let secondaryBonds = [] as SavableStraightBondState[];
     this.secondaryBonds.forEach(sb => secondaryBonds.push(savableStraightBondState(sb)));
     let tertiaryBonds = [] as SavableTertiaryBondState[];
-    this.forEachTertiaryBond(tb => tertiaryBonds.push(savableTertiaryBondState(tb)));
+    this.tertiaryBonds.forEach(tb => tertiaryBonds.push(savableTertiaryBondState(tb)));
     return {
       className: 'Drawing',
       svg: this.svg.svg(),
@@ -456,10 +412,7 @@ class Drawing implements DrawingInterface {
   }
 
   _addSavedTertiaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
-    savedState.tertiaryBonds.forEach(stb => {
-      let tb = addSavedTertiaryBond(this, stb as any);
-      this.fireAddTertiaryBond(tb);
-    });
+    savedState.tertiaryBonds.forEach(stb => addSavedTertiaryBond(this, stb));
   }
 }
 

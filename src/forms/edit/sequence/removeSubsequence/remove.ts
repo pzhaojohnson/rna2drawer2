@@ -10,6 +10,7 @@ import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { removePrimaryBondById, removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 
 interface Range {
   start: number;
@@ -67,7 +68,7 @@ function removeBondsWithBases(drawing: Drawing, bs: Base[]) {
   let bonds = [] as (PrimaryBond | SecondaryBond | TertiaryBond)[];
   drawing.primaryBonds.forEach(pb => bonds.push(pb));
   drawing.secondaryBonds.forEach(sb => bonds.push(sb));
-  drawing.forEachTertiaryBond(tb => bonds.push(tb));
+  drawing.tertiaryBonds.forEach(tb => bonds.push(tb));
   let toRemove = [] as string[];
   bonds.forEach(bd => {
     if (baseIds.has(bd.base1.id) || baseIds.has(bd.base2.id)) {
@@ -77,7 +78,7 @@ function removeBondsWithBases(drawing: Drawing, bs: Base[]) {
   toRemove.forEach(id => {
     removePrimaryBondById(drawing, id);
     removeSecondaryBondById(drawing, id);
-    drawing.removeTertiaryBondById(id);
+    removeTertiaryBondById(drawing, id);
   });
 }
 

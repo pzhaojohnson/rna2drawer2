@@ -1,5 +1,6 @@
 import App from '../../../App';
 import NodeSVG from '../../../draw/NodeSVG';
+import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import {
   getColorsAndOpacities,
   areSameColorAndOpacity,
@@ -33,10 +34,10 @@ let b1 = seq.getBaseAtPosition(1);
 let b2 = seq.getBaseAtPosition(2);
 let b3 = seq.getBaseAtPosition(3);
 let b4 = seq.getBaseAtPosition(4);
-let tb1 = drawing.addTertiaryBond(b1, b2);
-let tb2 = drawing.addTertiaryBond(b3, b4);
-let tb3 = drawing.addTertiaryBond(b4, b2);
-let tb4 = drawing.addTertiaryBond(b4, b1);
+let tb1 = addTertiaryBond(drawing, b1, b2);
+let tb2 = addTertiaryBond(drawing, b3, b4);
+let tb3 = addTertiaryBond(drawing, b4, b2);
+let tb4 = addTertiaryBond(drawing, b4, b1);
 
 it('getColorsAndOpacities function', () => {
   let tbs = [tb1, tb2, tb3, tb4];

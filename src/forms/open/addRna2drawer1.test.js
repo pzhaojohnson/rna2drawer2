@@ -61,7 +61,7 @@ describe('adding tertiary interactions', () => {
       { side1: [9, 9], side2: [3, 3], color: new Svg.Color('#ffab00') },
     ];
     addRna2drawer1(app.strictDrawing, rna2drawer1);
-    expect(app.strictDrawing.drawing.numTertiaryBonds).toBe(3);
+    expect(app.strictDrawing.drawing.tertiaryBonds.length).toBe(3);
   });
 
   describe('adding bonds between sides', () => {
@@ -70,9 +70,9 @@ describe('adding tertiary interactions', () => {
       rna2drawer1.tertiaryInteractions = [{ side1: [5, 7], side2: [10, 12], color: new Svg.Color('#000000') }];
       addRna2drawer1(app.strictDrawing, rna2drawer1);
       let drawing = app.strictDrawing.drawing;
-      expect(drawing.numTertiaryBonds).toBe(3);
+      expect(drawing.tertiaryBonds.length).toBe(3);
       let i = 0;
-      drawing.forEachTertiaryBond(tb => {
+      drawing.tertiaryBonds.forEach(tb => {
         expect(tb.base1.id).toBe(drawing.getBaseAtOverallPosition(5 + i).id);
         expect(tb.base2.id).toBe(drawing.getBaseAtOverallPosition(12 - i).id);
         i++;
@@ -84,9 +84,9 @@ describe('adding tertiary interactions', () => {
       rna2drawer1.tertiaryInteractions = [{ side1: [10, 11], side2: [3, 6], color: new Svg.Color('#abcdef') }];
       addRna2drawer1(app.strictDrawing, rna2drawer1);
       let drawing = app.strictDrawing.drawing;
-      expect(drawing.numTertiaryBonds).toBe(4);
+      expect(drawing.tertiaryBonds.length).toBe(4);
       let i = 0;
-      drawing.forEachTertiaryBond(tb => {
+      drawing.tertiaryBonds.forEach(tb => {
         expect(tb.base1.id).toBe(drawing.getBaseAtOverallPosition(6 - i).id);
         let p3 = i == 0 ? 10 : 11;
         expect(tb.base2.id).toBe(drawing.getBaseAtOverallPosition(p3).id);
@@ -99,9 +99,9 @@ describe('adding tertiary interactions', () => {
       rna2drawer1.tertiaryInteractions = [{ side1: [5, 8], side2: [11, 12], color: new Svg.Color('#ffaa11') }];
       addRna2drawer1(app.strictDrawing, rna2drawer1);
       let drawing = app.strictDrawing.drawing;
-      expect(drawing.numTertiaryBonds).toBe(4);
+      expect(drawing.tertiaryBonds.length).toBe(4);
       let i = 0;
-      drawing.forEachTertiaryBond(tb => {
+      drawing.tertiaryBonds.forEach(tb => {
         expect(tb.base1.id).toBe(drawing.getBaseAtOverallPosition(5 + i).id);
         let p3 = i == 0 ? 12 : 11;
         expect(tb.base2.id).toBe(drawing.getBaseAtOverallPosition(p3).id);
@@ -115,8 +115,8 @@ describe('adding tertiary interactions', () => {
     rna2drawer1.tertiaryInteractions = [{ side1: [2, 2], side2: [6, 6], color: new Svg.Color('#aabc43') }];
     addRna2drawer1(app.strictDrawing, rna2drawer1);
     let drawing = app.strictDrawing.drawing;
-    expect(drawing.numTertiaryBonds).toBe(1);
-    drawing.forEachTertiaryBond(tb => {
+    expect(drawing.tertiaryBonds.length).toBe(1);
+    drawing.tertiaryBonds.forEach(tb => {
       expect(tb.path.attr('stroke')).toBe('#aabc43');
     });
   });

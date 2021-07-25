@@ -1,3 +1,4 @@
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { TertiaryBondsInteractionInterface as TertiaryBondsInteraction } from './TertiaryBondsInteractionInterface';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import {
@@ -5,6 +6,15 @@ import {
   dehighlightTertiaryBond,
 } from './highlight';
 import { shiftControlPoint } from 'Draw/bonds/curved/drag';
+import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
+
+function getTertiaryBondById(drawing: Drawing, id: string): TertiaryBond | undefined {
+  return drawing.tertiaryBonds.find(tb => tb.id == id);
+}
+
+function getTertiaryBondsByIds(drawing: Drawing, ids: Set<string>): TertiaryBond[] {
+  return drawing.tertiaryBonds.filter(tb => ids.has(tb.id));
+}
 
 export function handleMouseoverOnTertiaryBond(interaction: TertiaryBondsInteraction, tb: TertiaryBond) {
   interaction.hovered = tb.id;
@@ -32,7 +42,7 @@ export function handleMousedownOnTertiaryBond(interaction: TertiaryBondsInteract
 
 export function handleMousedownOnDrawing(interaction: TertiaryBondsInteraction) {
   if (!interaction.hovered && interaction.selected.size > 0) {
-    let tbs = interaction.drawing.getTertiaryBondsByIds(interaction.selected);
+    let tbs = getTertiaryBondsByIds(interaction.drawing, interaction.selected);
     tbs.forEach(tb => dehighlightTertiaryBond(tb));
     interaction.selected.clear();
     interaction.dragging = false;
@@ -57,7 +67,7 @@ export function handleMousemove(interaction: TertiaryBondsInteraction, event: Mo
       if (!interaction.dragged) {
         interaction.fireShouldPushUndo();
       }
-      let tbs = interaction.drawing.getTertiaryBondsByIds(interaction.selected);
+      let tbs = getTertiaryBondsByIds(interaction.drawing, interaction.selected);
       tbs.forEach(tb => shiftControlPoint(tb, shift));
       interaction.dragged = true;
       interaction.fireChange();
@@ -73,7 +83,7 @@ export function removeSelected(interaction: TertiaryBondsInteraction) {
   if (interaction.selected.size > 0) {
     interaction.fireShouldPushUndo();
     interaction.selected.forEach(id => {
-      interaction.drawing.removeTertiaryBondById(id);
+      removeTertiaryBondById(interaction.drawing, id);
     });
     interaction.selected.clear();
     interaction.fireChange();
@@ -82,7 +92,7 @@ export function removeSelected(interaction: TertiaryBondsInteraction) {
 
 export function refresh(interaction: TertiaryBondsInteraction) {
   let drawing = interaction.drawing;
-  drawing.forEachTertiaryBond(tb => {
+  drawing.tertiaryBonds.forEach(tb => {
     if (tb.id == interaction.hovered || interaction.selected.has(tb.id)) {
       highlightTertiaryBond(tb);
     } else {
@@ -90,14 +100,14 @@ export function refresh(interaction: TertiaryBondsInteraction) {
     }
   });
   if (interaction.hovered) {
-    let tb = drawing.getTertiaryBondById(interaction.hovered);
+    let tb = getTertiaryBondById(drawing, interaction.hovered);
     if (!tb) {
       interaction.hovered = undefined;
     }
   }
   let toDeselect = [] as string[];
   interaction.selected.forEach(id => {
-    let tb = drawing.getTertiaryBondById(id);
+    let tb = getTertiaryBondById(drawing, id);
     if (!tb) {
       toDeselect.push(id);
     }
@@ -109,13 +119,13 @@ export function refresh(interaction: TertiaryBondsInteraction) {
 export function reset(interaction: TertiaryBondsInteraction) {
   let drawing = interaction.drawing;
   if (interaction.hovered) {
-    let tb = drawing.getTertiaryBondById(interaction.hovered);
+    let tb = getTertiaryBondById(drawing, interaction.hovered);
     if (tb) {
       dehighlightTertiaryBond(tb);
     }
     interaction.hovered = undefined;
   }
-  let tbs = drawing.getTertiaryBondsByIds(interaction.selected);
+  let tbs = getTertiaryBondsByIds(drawing, interaction.selected);
   tbs.forEach(tb => dehighlightTertiaryBond(tb));
   interaction.selected.clear();
   interaction.dragging = false;

@@ -159,7 +159,9 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
     if (this._onRequestToRenderForm) {
       this._onRequestToRenderForm(close => (
         <EditTertiaryBonds
-          getTertiaryBonds={() => this.drawing.getTertiaryBondsByIds(this.selected)}
+          getTertiaryBonds={
+            () => this.drawing.tertiaryBonds.filter(tb => this.selected.has(tb.id))
+          }
           pushUndo={() => this.fireShouldPushUndo()}
           changed={() => this.fireChange()}
           close={close ? close : () => {}}

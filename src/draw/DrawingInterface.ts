@@ -60,17 +60,8 @@ export interface DrawingInterface {
 
   readonly primaryBonds: PrimaryBond[];
   readonly secondaryBonds: SecondaryBond[];
-  
   readonly tertiaryBonds: TertiaryBond[];
-  numTertiaryBonds: number;
-  getTertiaryBondById(id: string): TertiaryBond | undefined;
-  getTertiaryBondsByIds(ids: Set<string>): TertiaryBond[];
-  forEachTertiaryBond(f: (tb: TertiaryBond) => void): void;
-  addTertiaryBond(b1: Base, b2: Base): TertiaryBond;
-  onAddTertiaryBond(f: (tb: TertiaryBond) => void): void;
-  fireAddTertiaryBond(tb: TertiaryBond): void;
-  removeTertiaryBondById(id: string): void;
-
+  
   repositionBonds(): void;
   adjustNumberingLineAngles(): void;
   adjustBaseNumbering(): void;

@@ -6,6 +6,7 @@ import { selectedRange } from './selected';
 import hoveredPairable from './hoveredPairable';
 import { willPair } from '../../layout/singleseq/strict/stemProps';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
+import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import adjustStretches from './adjustStretches';
 
 function _basePairs(mode: FoldingMode, r1: IntegerRange, r2: IntegerRange): [Base, Base][] {
@@ -45,7 +46,7 @@ function _secondaryPair(mode: FoldingMode, pairs: [Base, Base][]) {
 function _tertiaryPair(mode: FoldingMode, pairs: [Base, Base][]) {
   let drawing = mode.strictDrawing.drawing;
   pairs.forEach(p => {
-    drawing.addTertiaryBond(p[0], p[1]);
+    addTertiaryBond(drawing, p[0], p[1]);
   });
 }
 

@@ -44,7 +44,7 @@ describe('addTertiaryBonds function', () => {
     let seq = drawing.appendSequenceOutOfView('asdf', 'qwertyui');
     addTertiaryBonds(drawing, 'asdf', [5, 6, null, 8, 1, 2, null, 4]);
     let bonds = [];
-    drawing.forEachTertiaryBond(tb => bonds.push(tb));
+    drawing.tertiaryBonds.forEach(tb => bonds.push(tb));
     expect(bonds.length).toBe(3);
     expect(bonds.find(tb => tb.base1.character == 'q' && tb.base2.character == 't')).toBeTruthy();
     expect(bonds.find(tb => tb.base1.character == 'w' && tb.base2.character == 'y')).toBeTruthy();
@@ -77,6 +77,6 @@ describe('appendStructure function', () => {
     });
     expect(drawing.primaryBonds.length).toBe(11);
     expect(drawing.secondaryBonds.length).toBe(3);
-    expect(drawing.numTertiaryBonds).toBe(2);
+    expect(drawing.tertiaryBonds.length).toBe(2);
   });
 });

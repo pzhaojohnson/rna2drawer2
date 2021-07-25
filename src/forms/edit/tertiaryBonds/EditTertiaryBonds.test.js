@@ -5,6 +5,7 @@ import { render } from '@testing-library/react';
 import { EditTertiaryBonds } from './EditTertiaryBonds';
 import App from '../../../App';
 import NodeSVG from '../../../draw/NodeSVG';
+import { addTertiaryBond } from 'Draw/bonds/curved/add';
 
 let container = null;
 
@@ -38,8 +39,8 @@ it('renders when some tertiary bonds are selected', () => {
   app.strictDrawing.appendSequence('asdf', 'asdfasdf');
   let drawing = app.strictDrawing.drawing;
   let seq = drawing.getSequenceAtIndex(0);
-  let tb1 = drawing.addTertiaryBond(seq.getBaseAtOffsetPosition(1), seq.getBaseAtOffsetPosition(5));
-  let tb2 = drawing.addTertiaryBond(seq.getBaseAtOffsetPosition(6), seq.getBaseAtOffsetPosition(3));
+  let tb1 = addTertiaryBond(drawing, seq.getBaseAtOffsetPosition(1), seq.getBaseAtOffsetPosition(5));
+  let tb2 = addTertiaryBond(drawing, seq.getBaseAtOffsetPosition(6), seq.getBaseAtOffsetPosition(3));
   act(() => {
     render(
       <EditTertiaryBonds

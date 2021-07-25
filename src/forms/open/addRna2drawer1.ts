@@ -1,6 +1,7 @@
 import { Rna2drawer1 } from './parseRna2drawer1';
 import { StrictDrawingInterface as StrictDrawing } from '../../draw/StrictDrawingInterface';
 import { pixelsToPoints } from '../../export/pixelsToPoints';
+import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import { addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import {
   sendToBack as sendOutlineToBack,
@@ -22,7 +23,7 @@ function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
         let b5 = seq?.getBaseAtPosition(Math.min(p1, p2));
         let b3 = seq?.getBaseAtPosition(Math.max(p1, p2));
         if (b5 && b3) {
-          let tb = sd.drawing.addTertiaryBond(b5, b3);
+          let tb = addTertiaryBond(sd.drawing, b5, b3);
           tb.path.attr({
             'stroke': ti.color.toHex(),
             'stroke-width': 1.5,
