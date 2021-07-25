@@ -27,6 +27,8 @@ class StrictDrawingInteraction {
   _onChange?: () => void;
   _onRequestToRenderForm?: (ff: FormFactory) => void;
 
+  _mouseoveredBase?: Base;
+
   constructor(strictDrawing: StrictDrawing) {
     this._strictDrawing = strictDrawing;
 
@@ -46,15 +48,52 @@ class StrictDrawingInteraction {
   }
 
   _setBindings() {
-    this._bindDrawing();
+    this._bindMouseover();
+    this._bindMouseout();
+    this._bindMousedown();
+    this._bindDblclick();
   }
 
-  _bindDrawing() {
-    let drawing = this.strictDrawing.drawing;
-    drawing.onMousedown(() => this._handleMousedownOnDrawing());
-    drawing.onDblclick(() => this._handleDblclickOnDrawing());
-    drawing.forEachSequence(seq => this._bindSequence(seq));
-    drawing.onAddSequence(seq => this._bindSequence(seq));
+  _bindMouseover() {
+    window.addEventListener('mouseover', event => {
+      let mouseoveredBase: Base | undefined = undefined;
+      this.strictDrawing.drawing.bases().forEach(b => {
+        if (event.target instanceof Node && b.text.node.contains(event.target)) {
+          mouseoveredBase = b;
+        }
+      });
+      if (mouseoveredBase) {
+        this._mouseoveredBase = mouseoveredBase;
+        this._handleMouseoverOnBase(mouseoveredBase);
+      }
+    });
+  }
+
+  _bindMouseout() {
+    window.addEventListener('mouseout', () => {
+      if (this._mouseoveredBase) {
+        this._handleMouseoutOnBase(this._mouseoveredBase);
+        this._mouseoveredBase = undefined;
+      }
+    });
+  }
+
+  _bindMousedown() {
+    window.addEventListener('mousedown', event => {
+      if (this._mouseoveredBase) {
+        this._handleMousedownOnBase(this._mouseoveredBase);
+      } else if (event.target == this.strictDrawing.drawing.svg.node) {
+        this._handleMousedownOnDrawing();
+      }
+    });
+  }
+
+  _bindDblclick() {
+    window.addEventListener('dblclick', event => {
+      if (!this._mouseoveredBase && event.target == this.strictDrawing.drawing.svg.node) {
+        this._handleDblclickOnDrawing();
+      }
+    });
   }
 
   _handleMousedownOnDrawing() {
@@ -67,17 +106,6 @@ class StrictDrawingInteraction {
     } else if (this._currMode == this._annotatingMode) {
       this._annotatingMode.handleDblclickOnDrawing();
     }
-  }
-
-  _bindSequence(seq: Sequence) {
-    seq.forEachBase(b => this._bindBase(b));
-    seq.onAddBase(b => this._bindBase(b));
-  }
-
-  _bindBase(b: Base) {
-    b.text.mouseover(() => this._handleMouseoverOnBase(b));
-    b.text.mouseout(() => this._handleMouseoutOnBase(b));
-    b.text.mousedown(() => this._handleMousedownOnBase(b));
   }
 
   _handleMouseoverOnBase(b: Base) {
