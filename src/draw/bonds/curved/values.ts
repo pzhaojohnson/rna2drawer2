@@ -6,6 +6,8 @@ export type Values = {
     'stroke-width'?: number;
     'stroke-opacity'?: number;
     'stroke-dasharray'?: string;
+    'fill'?: string;
+    'cursor'?: string;
   }
   basePadding1?: number;
   basePadding2?: number;
@@ -20,6 +22,7 @@ export function values(bond: QuadraticBezierBond): Values {
     'stroke-width': bond.path.attr('stroke-width'),
     'stroke-opacity': bond.path.attr('stroke-opacity'),
     'stroke-dasharray': bond.path.attr('stroke-dasharray'),
+    'fill': bond.path.attr('fill'),
   };
   if (typeof pathAttrs['stroke'] == 'string') {
     vs.path['stroke'] = pathAttrs['stroke'];
@@ -32,6 +35,15 @@ export function values(bond: QuadraticBezierBond): Values {
   }
   if (typeof pathAttrs['stroke-dasharray'] == 'string') {
     vs.path['stroke-dasharray'] = pathAttrs['stroke-dasharray'];
+  }
+  if (typeof pathAttrs['fill'] == 'string') {
+    vs.path['fill'] = pathAttrs['fill'];
+  }
+  let pathStyles = {
+    'cursor': bond.path.css('cursor'),
+  };
+  if (typeof pathStyles['cursor'] == 'string') {
+    vs.path['cursor'] = pathStyles['cursor'];
   }
   vs.basePadding1 = bond.basePadding1;
   vs.basePadding2 = bond.basePadding2;
@@ -51,6 +63,13 @@ export function setValues(bond: QuadraticBezierBond, vs: Values) {
     }
     if (typeof vs.path['stroke-dasharray'] == 'string') {
       bond.path.attr({ 'stroke-dasharray': vs.path['stroke-dasharray'] });
+    }
+    if (typeof vs.path['fill'] == 'string') {
+      bond.path.attr({ 'fill': vs.path['fill'] });
+    }
+    if (typeof vs.path['cursor'] == 'string') {
+      // work with wrapped element in try block
+      try { bond.path.wrapped.css('cursor', vs.path['cursor']) } catch {}
     }
   }
   if (typeof vs.basePadding1 == 'number') {
