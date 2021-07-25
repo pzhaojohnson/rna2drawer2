@@ -49,36 +49,59 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   }
 
   _setBindings() {
-    this._bindAllTertiaryBonds();
-    this._bindAddTertiaryBond();
+    this._bindMouseover();
+    this._bindMouseout();
     this._bindMousedown();
+    this._bindDblclick();
     this._bindMousemove();
     this._bindMouseup();
     this._bindKeys();
   }
 
-  _bindAllTertiaryBonds() {
-    this.drawing.forEachTertiaryBond(tb => {
-      this._bindTertiaryBond(tb);
+  _bindMouseover() {
+    window.addEventListener('mouseover', event => {
+      let mouseovered: TertiaryBond | undefined = undefined;
+      this.drawing.tertiaryBonds.forEach(tb => {
+        if (event.target instanceof Node && tb.path.wrapped.node.contains(event.target)) {
+          mouseovered = tb;
+        }
+      });
+      if (mouseovered) {
+        handleMouseoverOnTertiaryBond(this, mouseovered);
+      }
     });
   }
 
-  _bindAddTertiaryBond() {
-    this.drawing.onAddTertiaryBond(tb => {
-      this._bindTertiaryBond(tb);
+  _bindMouseout() {
+    window.addEventListener('mouseout', () => {
+      if (typeof this.hovered == 'string') {
+        let mouseouted = this.drawing.tertiaryBonds.find(tb => tb.id == this.hovered);
+        if (mouseouted) {
+          handleMouseoutOnTertiaryBond(this, mouseouted);
+        }
+      }
     });
-  }
-
-  _bindTertiaryBond(tb: TertiaryBond) {
-    tb.path.wrapped.css('cursor', 'pointer');
-    tb.path.mouseover(() => handleMouseoverOnTertiaryBond(this, tb));
-    tb.path.mouseout(() => handleMouseoutOnTertiaryBond(this, tb));
-    tb.path.mousedown(() => handleMousedownOnTertiaryBond(this, tb));
-    tb.path.dblclick(() => this.requestToRenderForm());
   }
 
   _bindMousedown() {
-    this.drawing.onMousedown(() => handleMousedownOnDrawing(this));
+    window.addEventListener('mousedown', event => {
+      if (typeof this.hovered == 'string') {
+        let mousedowned = this.drawing.tertiaryBonds.find(tb => tb.id == this.hovered);
+        if (mousedowned) {
+          handleMousedownOnTertiaryBond(this, mousedowned);
+        }
+      } else if (event.target == this.drawing.svg.node) {
+        handleMousedownOnDrawing(this);
+      }
+    });
+  }
+
+  _bindDblclick() {
+    window.addEventListener('dblclick', () => {
+      if (typeof this.hovered == 'string') {
+        this.requestToRenderForm();
+      }
+    });
   }
 
   _bindMousemove() {
