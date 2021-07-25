@@ -16,7 +16,7 @@ TertiaryBond.recommendedDefaults = {
     'stroke-width': 1.5,
     'stroke-opacity': 0.5,
     'stroke-dasharray': '',
-    'fill': '',
+    'fill': 'none',
     'cursor': 'pointer',
   },
   basePadding1: 8,
