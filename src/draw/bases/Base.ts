@@ -124,6 +124,11 @@ export class Base implements BaseInterface {
     this.text.center(this._xCenter, this._yCenter);
   }
 
+  center(): { x: unknown, y: unknown } {
+    let bbox = this.text.bbox();
+    return { x: bbox.cx, y: bbox.cy };
+  }
+
   get xCenter(): number {
     return this._xCenter;
   }

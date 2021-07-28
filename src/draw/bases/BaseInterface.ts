@@ -18,6 +18,7 @@ export interface BaseInterface {
   readonly text: Svg.Text;
   readonly id: string;
   character: string;
+  center(): { x: unknown, y: unknown };
   xCenter: number;
   yCenter: number;
   moveTo(xCenter: number, yCenter: number): void;
