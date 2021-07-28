@@ -19,6 +19,7 @@ export interface SequenceSavableState {
 
 export interface SequenceInterface {
   id: string;
+  bases: Base[];
   characters: string;
   numberingOffset: number;
   numberingAnchor: number;

@@ -23,7 +23,7 @@ export class Sequence implements SequenceInterface {
   };
 
   _id: string;
-  _bases: Base[];
+  bases: Base[];
   _numberingOffset: number;
   _numberingAnchor: number;
   _numberingIncrement: number;
@@ -116,7 +116,7 @@ export class Sequence implements SequenceInterface {
 
   constructor(id: string) {
     this._id = id;
-    this._bases = [];
+    this.bases = [];
     this._numberingOffset = 0;
     this._numberingAnchor = 20;
     this._numberingIncrement = 20;
@@ -192,7 +192,7 @@ export class Sequence implements SequenceInterface {
   }
 
   get length(): number {
-    return this._bases.length;
+    return this.bases.length;
   }
 
   offsetPosition(p: number): number {
@@ -222,7 +222,7 @@ export class Sequence implements SequenceInterface {
   }
 
   getBaseAtPosition(p: number): (Base | undefined) {
-    return this._bases[p - 1];
+    return this.bases[p - 1];
   }
 
   getBaseAtOffsetPosition(op: number): (Base | undefined) {
@@ -231,7 +231,7 @@ export class Sequence implements SequenceInterface {
   }
 
   getBaseById(id: string): (Base | undefined) {
-    return this._bases.find(b => b.id === id);
+    return this.bases.find(b => b.id === id);
   }
 
   /**
@@ -244,11 +244,11 @@ export class Sequence implements SequenceInterface {
    * positions are out of range.
    */
   getBasesInRange(p5: number, p3: number): Base[] {
-    return this._bases.slice(p5 - 1, p3);
+    return this.bases.slice(p5 - 1, p3);
   }
 
   forEachBase(f: (b: Base, position: number) => void) {
-    this._bases.forEach((b, i) => f(b, i + 1));
+    this.bases.forEach((b, i) => f(b, i + 1));
   }
 
   baseIds(): string[] {
@@ -261,7 +261,7 @@ export class Sequence implements SequenceInterface {
    * Returns zero if the given base is not in this sequence.
    */
   positionOfBase(b: Base): number {
-    return this._bases.findIndex(base => base.id === b.id) + 1;
+    return this.bases.findIndex(base => base.id === b.id) + 1;
   }
 
   /**
@@ -336,14 +336,14 @@ export class Sequence implements SequenceInterface {
   }
 
   appendBase(b: Base) {
-    this._bases.push(b);
+    this.bases.push(b);
     this.fireAddBase(b);
     this._updateBaseNumberings();
   }
 
   appendBases(bs: Base[]) {
     bs.forEach(b => {
-      this._bases.push(b);
+      this.bases.push(b);
       this.fireAddBase(b);
     });
     this._updateBaseNumberings();
@@ -355,7 +355,7 @@ export class Sequence implements SequenceInterface {
     } else if (p < 1) {
       p = 1;
     }
-    this._bases.splice(p - 1, 0, ...bs);
+    this.bases.splice(p - 1, 0, ...bs);
     bs.forEach(b => this.fireAddBase(b));
     this._updateBaseNumberings();
   }
@@ -377,7 +377,7 @@ export class Sequence implements SequenceInterface {
     let b = this.getBaseAtPosition(p);
     if (b) {
       b.remove();
-      this._bases.splice(p - 1, 1);
+      this.bases.splice(p - 1, 1);
       this._updateBaseNumberings();
     }
   }
@@ -393,13 +393,13 @@ export class Sequence implements SequenceInterface {
         b.remove();
       }
     }
-    this._bases.splice(p5 - 1, p3 - p5 + 1);
+    this.bases.splice(p5 - 1, p3 - p5 + 1);
     this._updateBaseNumberings();
   }
 
   remove() {
     this.forEachBase(b => b.remove());
-    this._bases = [];
+    this.bases = [];
   }
 
   savableState(): SequenceSavableState {
