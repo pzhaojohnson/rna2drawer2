@@ -47,8 +47,6 @@ export interface SequenceInterface {
   appendBase(b: Base): void;
   appendBases(bs: Base[]): void;
   insertBasesAtPosition(bs: Base[], p: number): void;
-  onAddBase(f: (b: Base) => void): void;
-  fireAddBase(b: Base): void;
   removeBaseAtPosition(p: number): void;
   removeBasesInRange(p5: number, p3: number): void;
   remove(): void;

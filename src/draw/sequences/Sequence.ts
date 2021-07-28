@@ -337,14 +337,12 @@ export class Sequence implements SequenceInterface {
 
   appendBase(b: Base) {
     this.bases.push(b);
-    this.fireAddBase(b);
     this._updateBaseNumberings();
   }
 
   appendBases(bs: Base[]) {
     bs.forEach(b => {
       this.bases.push(b);
-      this.fireAddBase(b);
     });
     this._updateBaseNumberings();
   }
@@ -356,18 +354,7 @@ export class Sequence implements SequenceInterface {
       p = 1;
     }
     this.bases.splice(p - 1, 0, ...bs);
-    bs.forEach(b => this.fireAddBase(b));
     this._updateBaseNumberings();
-  }
-
-  onAddBase(f: (b: Base) => void) {
-    this._onAddBase = f;
-  }
-
-  fireAddBase(b: Base) {
-    if (this._onAddBase) {
-      this._onAddBase(b);
-    }
   }
 
   /**

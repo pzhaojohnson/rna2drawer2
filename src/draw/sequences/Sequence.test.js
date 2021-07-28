@@ -477,25 +477,20 @@ describe('Sequence class', () => {
   describe('appendBase method', () => {
     it('appends base', () => {
       let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
-      let spy1 = jest.spyOn(seq, 'fireAddBase');
-      let spy2 = jest.spyOn(seq, '_updateBaseNumberings');
+      let spy = jest.spyOn(seq, '_updateBaseNumberings');
       expect(seq.length).toBe(4);
       let b = Base.create(svg, 'q', 4, 5);
       seq.appendBase(b);
       expect(seq.length).toBe(5);
       expect(seq.getBaseAtPosition(5)).toBe(b);
-      // fires add base event
-      expect(spy1.mock.calls.length).toBe(1);
-      expect(spy1.mock.calls[0][0]).toBe(b);
-      expect(spy2).toHaveBeenCalled(); // updates base numberings
+      expect(spy).toHaveBeenCalled(); // updates base numberings
     });
   });
 
   describe('appendBases method', () => {
     it('appends bases', () => {
       let seq = Sequence.createOutOfView(svg, 'QQE', 'qqe');
-      let spy1 = jest.spyOn(seq, 'fireAddBase');
-      let spy2 = jest.spyOn(seq, '_updateBaseNumberings');
+      let spy = jest.spyOn(seq, '_updateBaseNumberings');
       let b1 = Base.create(svg, 'T', 3, 1);
       let b2 = Base.create(svg, 'B', 3, 3);
       let b3 = Base.create(svg, 't', 10, 20);
@@ -505,12 +500,7 @@ describe('Sequence class', () => {
       expect(seq.getBaseAtPosition(4).id).toBe(b1.id);
       expect(seq.getBaseAtPosition(5).id).toBe(b2.id);
       expect(seq.getBaseAtPosition(6).id).toBe(b3.id);
-      // fires add base events for each added base
-      expect(spy1.mock.calls.length).toBe(3);
-      expect(spy1.mock.calls[0][0]).toBe(b1);
-      expect(spy1.mock.calls[1][0]).toBe(b2);
-      expect(spy1.mock.calls[2][0]).toBe(b3);
-      expect(spy2).toHaveBeenCalled(); // updates base numberings
+      expect(spy).toHaveBeenCalled(); // updates base numberings
     });
   });
 
@@ -553,34 +543,6 @@ describe('Sequence class', () => {
       n = seq.getBaseAtPosition(6).numbering;
       expect(n.text.text()).toBe('6');
     });
-
-    it('fires add base event for each base inserted', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
-      let bs = [
-        Base.create(svg, 'a', 1, 2),
-        Base.create(svg, 'g', 5, 5),
-        Base.create(svg, 'b', 1, 1),
-      ];
-      let f = jest.fn();
-      seq.onAddBase(f);
-      seq.insertBasesAtPosition(bs, 2);
-      expect(f).toHaveBeenCalledTimes(3);
-      for (let i = 0; i < 3; i++) {
-        expect(f.mock.calls[i][0]).toBe(bs[i]);
-      }
-    });
-  });
-
-  it('add base event', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
-    seq._onAddBase = null; // removing any binding
-    expect(() => seq.fireAddBase()).not.toThrow(); // firing with no binding
-    let f = jest.fn();
-    let b = jest.fn();
-    seq.onAddBase(f); // binding
-    seq.fireAddBase(b); // firing
-    expect(f.mock.calls.length).toBe(1);
-    expect(f.mock.calls[0][0]).toBe(b);
   });
 
   describe('removeBaseAtPosition method', () => {
