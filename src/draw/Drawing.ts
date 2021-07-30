@@ -32,7 +32,7 @@ export interface BasesByIds {
   [id: string]: Base | undefined;
 }
 
-class Drawing implements DrawingInterface {
+export class Drawing implements DrawingInterface {
   _div!: HTMLElement;
   svg!: Svg.Svg;
 
