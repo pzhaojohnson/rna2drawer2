@@ -11,16 +11,18 @@ import { removeNumbering } from 'Draw/bases/number/add';
 import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
 
+export type Defaults = {
+  numberingAnchor: number;
+  numberingIncrement: number;
+}
+
 interface BaseCoordinates {
   xCenter: number;
   yCenter: number;
 }
 
 export class Sequence implements SequenceInterface {
-  static _mostRecentProps: {
-    numberingAnchor: number;
-    numberingIncrement: number;
-  };
+  static recommendedDefaults: Defaults;
 
   _id: string;
   bases: Base[];
@@ -29,21 +31,6 @@ export class Sequence implements SequenceInterface {
   _numberingIncrement: number;
 
   _onAddBase?: (b: Base) => void;
-
-  static mostRecentProps(): SequenceMostRecentProps {
-    return { ...Sequence._mostRecentProps };
-  }
-
-  static _applyMostRecentProps(seq: Sequence) {
-    let props = Sequence.mostRecentProps();
-    seq.numberingAnchor = props.numberingAnchor;
-    seq.numberingIncrement = props.numberingIncrement;
-  }
-
-  static _copyPropsToMostRecent(seq: Sequence) {
-    Sequence._mostRecentProps.numberingAnchor = seq.numberingAnchor;
-    Sequence._mostRecentProps.numberingIncrement = seq.numberingIncrement;
-  }
 
   static _angleBetweenBaseCenters(cs1: BaseCoordinates, cs2: BaseCoordinates): number {
     return angleBetween(cs1.xCenter, cs1.yCenter, cs2.xCenter, cs2.yCenter);
@@ -99,7 +86,8 @@ export class Sequence implements SequenceInterface {
       bases.push(b);
     });
     seq.appendBases(bases);
-    Sequence._copyPropsToMostRecent(seq);
+    Sequence.recommendedDefaults.numberingAnchor = seq.numberingAnchor;
+    Sequence.recommendedDefaults.numberingIncrement = seq.numberingIncrement;
     return seq;
   }
 
@@ -110,7 +98,8 @@ export class Sequence implements SequenceInterface {
       bases.push(Base.createOutOfView(svg, c));
     }
     seq.appendBases(bases);
-    Sequence._applyMostRecentProps(seq);
+    seq.numberingAnchor = Sequence.recommendedDefaults.numberingAnchor;
+    seq.numberingIncrement = Sequence.recommendedDefaults.numberingIncrement;
     return seq;
   }
 
@@ -173,7 +162,7 @@ export class Sequence implements SequenceInterface {
     }
     this._numberingAnchor = na;
     this._updateBaseNumberings();
-    Sequence._mostRecentProps.numberingAnchor = na;
+    Sequence.recommendedDefaults.numberingAnchor = na;
   }
 
   get numberingIncrement(): number {
@@ -188,7 +177,7 @@ export class Sequence implements SequenceInterface {
     }
     this._numberingIncrement = ni;
     this._updateBaseNumberings();
-    Sequence._mostRecentProps.numberingIncrement = ni;
+    Sequence.recommendedDefaults.numberingIncrement = ni;
   }
 
   get length(): number {
@@ -405,7 +394,7 @@ export class Sequence implements SequenceInterface {
   }
 }
 
-Sequence._mostRecentProps = {
+Sequence.recommendedDefaults = {
   numberingAnchor: 20,
   numberingIncrement: 20,
 };

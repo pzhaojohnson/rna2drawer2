@@ -8,39 +8,6 @@ import angleBetween from 'Draw/angleBetween';
 let svg = NodeSVG();
 
 describe('Sequence class', () => {
-  describe('mostRecentProps static method', () => {
-    it('returns a copy', () => {
-      Sequence._mostRecentProps.numberingAnchor = 804;
-      Sequence._mostRecentProps.numberingIncrement = 99;
-      let mrps = Sequence.mostRecentProps();
-      expect(mrps).not.toBe(Sequence._mostRecentProps); // a new object
-      expect(mrps.numberingAnchor).toBe(804);
-      expect(mrps.numberingIncrement).toBe(99);
-    });
-  });
-
-  it('_applyMostRecentProps static method', () => {
-    let seq = new Sequence('asdf');
-    Sequence._mostRecentProps.numberingAnchor = 980;
-    Sequence._mostRecentProps.numberingIncrement = 88;
-    Sequence._applyMostRecentProps(seq);
-    expect(seq.numberingAnchor).toBe(980);
-    expect(seq.numberingIncrement).toBe(88);
-  });
-
-  it('_copyPropsToMostRecent static method', () => {
-    let seq = new Sequence('asdf');
-    seq.numberingAnchor = -5;
-    seq.numberingIncrement = 4;
-    // necessary since the above setters update most recent props
-    Sequence._mostRecentProps.numberingAnchor = 10;
-    Sequence._mostRecentProps.numberingIncrement = 20;
-    Sequence._copyPropsToMostRecent(seq);
-    let mrps = Sequence.mostRecentProps();
-    expect(mrps.numberingAnchor).toBe(-5);
-    expect(mrps.numberingIncrement).toBe(4);
-  });
-
   describe('_clockwiseNormalAngleOfBase static method', () => {
     let cs = { xCenter: 15, yCenter: 33 };
     let cs5 = { xCenter: 52, yCenter: 80 };
@@ -162,14 +129,6 @@ describe('Sequence class', () => {
       let b23 = seq2.getBaseAtPosition(3);
       expect(b23.character).toBe('p');
     });
-
-    it('copies props to most recent', () => {
-      let seq1 = new Sequence('asdf');
-      let savableState = seq1.savableState();
-      let spy = jest.spyOn(Sequence, '_copyPropsToMostRecent');
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(spy.mock.calls[0][0]).toBe(seq2);
-    });
   });
 
   describe('createOutOfView static method', () => {
@@ -190,12 +149,6 @@ describe('Sequence class', () => {
       seq.forEachBase(b => {
         expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
       });
-    });
-
-    it('applies most recent properties', () => {
-      let spy = jest.spyOn(Sequence, '_applyMostRecentProps');
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
-      expect(spy.mock.calls[0][0]).toBe(seq);
     });
   });
 
@@ -259,7 +212,7 @@ describe('Sequence class', () => {
     expect(seq.numberingAnchor).toBe(1012); // check getter
     expect(spy).toHaveBeenCalled(); // updates base numberings
     // updates most recent prop
-    expect(Sequence.mostRecentProps().numberingAnchor).toBe(1012);
+    expect(Sequence.recommendedDefaults.numberingAnchor).toBe(1012);
     seq.numberingAnchor = NaN; // ignores nonfinite numbers
     expect(seq.numberingAnchor).toBe(1012);
     seq.numberingAnchor = 10.1; // ignores non-integers
@@ -273,7 +226,7 @@ describe('Sequence class', () => {
     expect(seq.numberingIncrement).toBe(82); // check getter
     expect(spy).toHaveBeenCalled(); // updates base numberings
     // updates most recent prop
-    expect(Sequence.mostRecentProps().numberingIncrement).toBe(82);
+    expect(Sequence.recommendedDefaults.numberingIncrement).toBe(82);
     seq.numberingIncrement = Infinity; // ignores nonfinite numbers
     expect(seq.numberingIncrement).toBe(82);
     seq.numberingIncrement = 9.8; // ignores non-integers
