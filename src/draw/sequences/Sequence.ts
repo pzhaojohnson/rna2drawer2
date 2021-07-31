@@ -192,23 +192,6 @@ export class Sequence implements SequenceInterface {
     return this.bases[p - 1];
   }
 
-  getBaseById(id: string): (Base | undefined) {
-    return this.bases.find(b => b.id === id);
-  }
-
-  /**
-   * The returned bases will include the bases at the given
-   * 5' and 3' most positions.
-   *
-   * The bases are returned in ascending order.
-   *
-   * It is undefined what bases are returned when the given
-   * positions are out of range.
-   */
-  getBasesInRange(p5: number, p3: number): Base[] {
-    return this.bases.slice(p5 - 1, p3);
-  }
-
   forEachBase(f: (b: Base, position: number) => void) {
     this.bases.forEach((b, i) => f(b, i + 1));
   }

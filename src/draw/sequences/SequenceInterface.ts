@@ -29,8 +29,6 @@ export interface SequenceInterface {
   positionOutOfRange(p: number): boolean;
   positionInRange(p: number): boolean;
   getBaseAtPosition(p: number): Base | undefined;
-  getBaseById(id: string): Base | undefined;
-  getBasesInRange(p5: number, p3: number): Base[];
   forEachBase(f: (b: Base, p: number) => void): void;
   baseIds(): string[];
   positionOfBase(b: Base): number;

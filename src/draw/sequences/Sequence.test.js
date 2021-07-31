@@ -285,30 +285,6 @@ describe('Sequence class', () => {
     expect(seq.getBaseAtPosition(10)).toBeFalsy(); // out of range
   });
 
-  describe('getBaseById method', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
-    let b3 = seq.getBaseAtPosition(3);
-    expect(seq.getBaseById(b3.id)).toBe(b3);
-    expect(seq.getBaseById('nonexistent ID')).toBeFalsy();
-  });
-
-  describe('getBasesInRange method', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcvqw');
-
-    it('normal case', () => {
-      let bases = seq.getBasesInRange(3, 5);
-      expect(bases.length).toBe(3);
-      expect(bases[0].character).toBe('c');
-      expect(bases[1].character).toBe('v');
-      expect(bases[2].character).toBe('q');
-    });
-
-    it('p5 is greater than p3', () => {
-      let bases = seq.getBasesInRange(5, 3);
-      expect(bases.length).toBe(0);
-    });
-  });
-
   it('forEachBase method', () => {
     let characters = 'cvbn';
     let seq = Sequence.createOutOfView(svg, 'adf', characters);
