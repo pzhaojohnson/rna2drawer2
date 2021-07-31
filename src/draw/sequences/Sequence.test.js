@@ -152,11 +152,6 @@ describe('Sequence class', () => {
     });
   });
 
-  it('id getter', () => {
-    let seq = new Sequence('ooyyuu');
-    expect(seq.id).toBe('ooyyuu');
-  });
-
   it('characters getter', () => {
     let seq = new Sequence('asdf');
     seq.appendBases([

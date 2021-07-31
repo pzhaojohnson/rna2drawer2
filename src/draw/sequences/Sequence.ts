@@ -24,7 +24,7 @@ interface BaseCoordinates {
 export class Sequence implements SequenceInterface {
   static recommendedDefaults: Defaults;
 
-  _id: string;
+  id: string;
   bases: Base[];
   _numberingOffset: number;
   _numberingAnchor: number;
@@ -104,19 +104,11 @@ export class Sequence implements SequenceInterface {
   }
 
   constructor(id: string) {
-    this._id = id;
+    this.id = id;
     this.bases = [];
     this._numberingOffset = 0;
     this._numberingAnchor = 20;
     this._numberingIncrement = 20;
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  set id(i: string) {
-    this._id = i;
   }
 
   get characters(): string {
