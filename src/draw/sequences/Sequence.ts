@@ -1,6 +1,5 @@
 import {
   SequenceInterface,
-  SequenceMostRecentProps,
   SequenceSavableState,
 } from './SequenceInterface';
 import * as Svg from '@svgdotjs/svg.js';

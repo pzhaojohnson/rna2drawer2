@@ -3,11 +3,6 @@ import {
   BaseSavableState,
 } from 'Draw/bases/BaseInterface';
 
-export interface SequenceMostRecentProps {
-  numberingAnchor: number;
-  numberingIncrement: number;
-}
-
 export interface SequenceSavableState {
   className: string;
   id: string;
