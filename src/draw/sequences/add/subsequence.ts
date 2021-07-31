@@ -4,6 +4,8 @@ import { Base } from 'Draw/bases/Base';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { removePrimaryBondById } from 'Draw/bonds/straight/remove';
 import { atPosition } from 'Array/at';
+import { updateBaseNumberings } from 'Draw/sequences/number';
+import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 export type SubsequenceProps = {
 
@@ -64,4 +66,6 @@ export function insertSubsequence(drawing: Drawing, props: SubsequenceProps) {
   breakStrand(drawing, props);
   insertBases(drawing, props);
   repairStrand(drawing, props);
+  updateBaseNumberings(props.parent);
+  orientBaseNumberings(drawing);
 }
