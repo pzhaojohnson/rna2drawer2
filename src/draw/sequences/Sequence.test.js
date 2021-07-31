@@ -160,7 +160,7 @@ describe('Sequence class', () => {
       Base.create(svg, 'Q', 10, 200),
       Base.create(svg, '2', 4, 3),
     ]);
-    seq.removeBaseAtPosition(3);
+    seq.bases.splice(2, 1);
     expect(seq.characters).toBe('bT2');
   });
 
@@ -242,7 +242,7 @@ describe('Sequence class', () => {
       Base.create(svg, 'Q', 10, 20),
     ]);
     expect(seq.length).toBe(4);
-    seq.removeBaseAtPosition(2);
+    seq.bases.splice(1, 1);
     expect(seq.length).toBe(3);
   });
 
@@ -455,60 +455,6 @@ describe('Sequence class', () => {
       ], 3);
       n = seq.getBaseAtPosition(6).numbering;
       expect(n.text.text()).toBe('6');
-    });
-  });
-
-  describe('removeBaseAtPosition method', () => {
-    it('position is out of range', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
-      expect(seq.length).toBe(4);
-      seq.removeBaseAtPosition(5);
-      expect(seq.length).toBe(4);
-    });
-
-    it('position is in range', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
-      let b3 = seq.getBaseAtPosition(3);
-      let spy1 = jest.spyOn(b3, 'remove');
-      let spy2 = jest.spyOn(seq, '_updateBaseNumberings');
-      expect(seq.length).toBe(4);
-      seq.removeBaseAtPosition(3);
-      // removes from sequence
-      expect(seq.length).toBe(3);
-      expect(seq.characters).toBe('zxv');
-      expect(spy1).toHaveBeenCalled(); // removes base itself
-      expect(spy2).toHaveBeenCalled(); // updates base numberings
-    });
-  });
-
-  describe('removeBasesInRange method', () => {
-    it('removes the bases in the range', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfqwerzxcv');
-      let bs = [];
-      seq.forEachBase(b => bs.push(b));
-      let spies = [];
-      bs.forEach(b => spies.push(jest.spyOn(b, 'remove')));
-      seq.removeBasesInRange(3, 6);
-      expect(seq.characters).toBe('aserzxcv'); // removes bases from list
-      // removes bases themselves
-      for (let i = 0; i < spies.length; i++) {
-        let spy = spies[i];
-        let p = i + 1;
-        if (p >= 3 && p <= 6) {
-          expect(spy).toHaveBeenCalled();
-        } else {
-          expect(spy).not.toHaveBeenCalled();
-        }
-      }
-    });
-
-    it('updates base numberings', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'adsfasdf');
-      seq.numberingIncrement = 1;
-      let b7 = seq.getBaseAtPosition(7);
-      expect(b7.numbering.text.text()).toBe('7');
-      seq.removeBasesInRange(2, 4);
-      expect(b7.numbering.text.text()).toBe('4');
     });
   });
 

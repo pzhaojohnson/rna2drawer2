@@ -306,33 +306,6 @@ export class Sequence implements SequenceInterface {
     this._updateBaseNumberings();
   }
 
-  /**
-   * Has no effect if the given position is out of range.
-   */
-  removeBaseAtPosition(p: number) {
-    let b = this.getBaseAtPosition(p);
-    if (b) {
-      b.remove();
-      this.bases.splice(p - 1, 1);
-      this._updateBaseNumberings();
-    }
-  }
-
-  /**
-   * The bases at the boundary positions p5 and p3 of the range will be removed
-   * along with the bases in the middle of the range.
-   */
-  removeBasesInRange(p5: number, p3: number) {
-    for (let p = p5; p <= p3; p++) {
-      let b = this.getBaseAtPosition(p);
-      if (b) {
-        b.remove();
-      }
-    }
-    this.bases.splice(p5 - 1, p3 - p5 + 1);
-    this._updateBaseNumberings();
-  }
-
   savableState(): SequenceSavableState {
     let savableState = {
       className: 'Sequence',

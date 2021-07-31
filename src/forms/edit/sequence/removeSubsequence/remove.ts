@@ -1,16 +1,9 @@
 import { StrictDrawingInterface as StrictDrawing } from '../../../../draw/StrictDrawingInterface';
-import { DrawingInterface as Drawing } from '../../../../draw/DrawingInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { removeSubsequence } from 'Draw/sequences/remove/subsequence';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { willRemove } from '../../../../draw/layout/singleseq/strict/stemProps';
 import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
-import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
-import { addPrimaryBond } from 'Draw/bonds/straight/add';
-import { removePrimaryBondById, removeSecondaryBondById } from 'Draw/bonds/straight/remove';
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
-import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 
 interface Range {
   start: number;
@@ -62,34 +55,6 @@ function removePerBaseProps(strictDrawing: StrictDrawing, r: Range) {
   strictDrawing.setPerBaseLayoutProps(perBaseProps);
 }
 
-function removeBondsWithBases(drawing: Drawing, bs: Base[]) {
-  let baseIds = new Set<string>();
-  bs.forEach(b => baseIds.add(b.id));
-  let bonds = [] as (PrimaryBond | SecondaryBond | TertiaryBond)[];
-  drawing.primaryBonds.forEach(pb => bonds.push(pb));
-  drawing.secondaryBonds.forEach(sb => bonds.push(sb));
-  drawing.tertiaryBonds.forEach(tb => bonds.push(tb));
-  let toRemove = [] as string[];
-  bonds.forEach(bd => {
-    if (baseIds.has(bd.base1.id) || baseIds.has(bd.base2.id)) {
-      toRemove.push(bd.id);
-    }
-  });
-  toRemove.forEach(id => {
-    removePrimaryBondById(drawing, id);
-    removeSecondaryBondById(drawing, id);
-    removeTertiaryBondById(drawing, id);
-  });
-}
-
-function repairStrandBreak(drawing: Drawing, seq: Sequence, removedRange: Range) {
-  let b1 = seq.getBaseAtPosition(removedRange.start - 1);
-  let b2 = seq.getBaseAtPosition(removedRange.start);
-  if (b1 && b2) {
-    addPrimaryBond(drawing, b1, b2);
-  }
-}
-
 function evenOutStretches(strictDrawing: StrictDrawing, removedRange: Range) {
   let partners = strictDrawing.layoutPartners();
   let ur = containingUnpairedRegion(partners, removedRange.start);
@@ -108,9 +73,11 @@ export function remove(strictDrawing: StrictDrawing, inputs: Range) {
       let r = reversePositionOffsets(seq, inputs);
       transferStemProps(strictDrawing, r);
       removePerBaseProps(strictDrawing, r);
-      removeBondsWithBases(drawing, seq.getBasesInRange(r.start, r.end));
-      seq.removeBasesInRange(r.start, r.end);
-      repairStrandBreak(drawing, seq, r);
+      removeSubsequence(strictDrawing.drawing, {
+        parent: seq,
+        start: r.start,
+        end: r.end,
+      });
       evenOutStretches(strictDrawing, r);
       strictDrawing.updateLayout();
     }
