@@ -47,7 +47,7 @@ function insertBases(drawing: Drawing, props: SubsequenceProps) {
 
     bs.push(new Base(t));
   }
-  props.parent.bases.splice(props.start, 0, ...bs);
+  props.parent.bases.splice(props.start - 1, 0, ...bs);
 }
 
 // adds the necessary primary bonds to make the strand of the parent sequence

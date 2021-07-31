@@ -85,7 +85,7 @@ export class Sequence implements SequenceInterface {
       let b = Base.fromSavedState(sb, svg);
       bases.push(b);
     });
-    seq.appendBases(bases);
+    seq.bases.splice(0, 0, ...bases);
     Sequence.recommendedDefaults.numberingAnchor = seq.numberingAnchor;
     Sequence.recommendedDefaults.numberingIncrement = seq.numberingIncrement;
     return seq;
@@ -97,7 +97,7 @@ export class Sequence implements SequenceInterface {
     for (let c of characters) {
       bases.push(Base.createOutOfView(svg, c));
     }
-    seq.appendBases(bases);
+    seq.bases.splice(0, 0, ...bases);
     seq.numberingAnchor = Sequence.recommendedDefaults.numberingAnchor;
     seq.numberingIncrement = Sequence.recommendedDefaults.numberingIncrement;
     return seq;
@@ -282,28 +282,6 @@ export class Sequence implements SequenceInterface {
    */
   outerNormalAngleAtPosition(p: number): number {
     return Math.PI + this.innerNormalAngleAtPosition(p);
-  }
-
-  appendBase(b: Base) {
-    this.bases.push(b);
-    this._updateBaseNumberings();
-  }
-
-  appendBases(bs: Base[]) {
-    bs.forEach(b => {
-      this.bases.push(b);
-    });
-    this._updateBaseNumberings();
-  }
-
-  insertBasesAtPosition(bs: Base[], p: number) {
-    if (p > this.length) {
-      p = this.length + 1;
-    } else if (p < 1) {
-      p = 1;
-    }
-    this.bases.splice(p - 1, 0, ...bs);
-    this._updateBaseNumberings();
   }
 
   savableState(): SequenceSavableState {

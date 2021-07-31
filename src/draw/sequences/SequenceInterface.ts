@@ -38,9 +38,6 @@ export interface SequenceInterface {
   counterClockwiseNormalAngleAtPosition(p: number): number;
   innerNormalAngleAtPosition(p: number): number;
   outerNormalAngleAtPosition(p: number): number;
-  appendBase(b: Base): void;
-  appendBases(bs: Base[]): void;
-  insertBasesAtPosition(bs: Base[], p: number): void;
   savableState(): SequenceSavableState;
 }
 

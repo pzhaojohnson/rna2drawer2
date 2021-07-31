@@ -114,7 +114,7 @@ describe('Sequence class', () => {
 
     it('creates with bases', () => {
       let seq1 = new Sequence('asdf');
-      seq1.appendBases([
+      seq1.bases.splice(0, 0, ...[
         Base.create(svg, 'y', 2, 4),
         Base.create(svg, 'M', 5, 10),
         Base.create(svg, 'p', 10, 200),
@@ -154,7 +154,7 @@ describe('Sequence class', () => {
 
   it('characters getter', () => {
     let seq = new Sequence('asdf');
-    seq.appendBases([
+    seq.bases.splice(0, 0, ...[
       Base.create(svg, 'b', 1, 2),
       Base.create(svg, 'T', 5, 4),
       Base.create(svg, 'Q', 10, 200),
@@ -235,7 +235,7 @@ describe('Sequence class', () => {
   it('length getter', () => {
     let seq = new Sequence('asdf');
     expect(seq.length).toBe(0);
-    seq.appendBases([
+    seq.bases.splice(0, 0, ...[
       Base.create(svg, 'T', 3, 4),
       Base.create(svg, 'H', 2, 2),
       Base.create(svg, 't', 5, 10),
@@ -341,7 +341,7 @@ describe('Sequence class', () => {
 
   describe('angle at position methods', () => {
     let seq = new Sequence('asdf');
-    seq.appendBases([
+    seq.bases.splice(0, 0, ...[
       Base.create(svg, 'a', 100, 200),
       Base.create(svg, 'b', 1000, 800),
       Base.create(svg, 'c', 50, 80),
@@ -384,77 +384,6 @@ describe('Sequence class', () => {
       expect(seq.counterClockwiseNormalAngleAtPosition(3)).toBe(cna + Math.PI);
       expect(seq.innerNormalAngleAtPosition(3)).toBe(ina);
       expect(seq.outerNormalAngleAtPosition(3)).toBe(ina + Math.PI);
-    });
-  });
-
-  describe('appendBase method', () => {
-    it('appends base', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'zxcv');
-      let spy = jest.spyOn(seq, '_updateBaseNumberings');
-      expect(seq.length).toBe(4);
-      let b = Base.create(svg, 'q', 4, 5);
-      seq.appendBase(b);
-      expect(seq.length).toBe(5);
-      expect(seq.getBaseAtPosition(5)).toBe(b);
-      expect(spy).toHaveBeenCalled(); // updates base numberings
-    });
-  });
-
-  describe('appendBases method', () => {
-    it('appends bases', () => {
-      let seq = Sequence.createOutOfView(svg, 'QQE', 'qqe');
-      let spy = jest.spyOn(seq, '_updateBaseNumberings');
-      let b1 = Base.create(svg, 'T', 3, 1);
-      let b2 = Base.create(svg, 'B', 3, 3);
-      let b3 = Base.create(svg, 't', 10, 20);
-      expect(seq.length).toBe(3);
-      seq.appendBases([b1, b2, b3]);
-      expect(seq.length).toBe(6);
-      expect(seq.getBaseAtPosition(4).id).toBe(b1.id);
-      expect(seq.getBaseAtPosition(5).id).toBe(b2.id);
-      expect(seq.getBaseAtPosition(6).id).toBe(b3.id);
-      expect(spy).toHaveBeenCalled(); // updates base numberings
-    });
-  });
-
-  describe('insertBasesAtPosition method', () => {
-    it('positions in and around sequence', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'asdf');
-      seq.insertBasesAtPosition([Base.create(svg, 'q', 1, 2)], -2); // less than one
-      expect(seq.characters).toBe('qasdf');
-      seq.insertBasesAtPosition([Base.create(svg, 'g', 5, 5)], 1); // one
-      expect(seq.characters).toBe('gqasdf');
-      seq.insertBasesAtPosition([Base.create(svg, 'e', 0, 0)], 3); // in middle
-      expect(seq.characters).toBe('gqeasdf');
-      seq.insertBasesAtPosition([Base.create(svg, 'v', 1, 1)], 7); // last position
-      expect(seq.characters).toBe('gqeasdvf');
-      seq.insertBasesAtPosition([Base.create(svg, 'c', 1, 1)], 9); // just after end
-      expect(seq.characters).toBe('gqeasdvfc');
-      seq.insertBasesAtPosition([Base.create(svg, 't', 2, 2)], 20); // far past end
-      expect(seq.characters).toBe('gqeasdvfct');
-    });
-
-    it('can insert multiple bases', () => {
-      let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
-      seq.insertBasesAtPosition([
-        Base.create(svg, 'z', 1, 2),
-        Base.create(svg, 'x', 3, 3),
-        Base.create(svg, 'v', 1, 1),
-      ], 5);
-      expect(seq.characters).toBe('qwerzxvasdf');
-    });
-
-    it('updates base numberings', () => {
-      let seq = Sequence.createOutOfView(svg, 'qwer', 'asdf');
-      seq.numberingIncrement = 1;
-      let n = seq.getBaseAtPosition(4).numbering;
-      expect(n.text.text()).toBe('4');
-      seq.insertBasesAtPosition([
-        Base.create(svg, 't', 1, 2),
-        Base.create(svg, 'g', 1, 1),
-      ], 3);
-      n = seq.getBaseAtPosition(6).numbering;
-      expect(n.text.text()).toBe('6');
     });
   });
 
