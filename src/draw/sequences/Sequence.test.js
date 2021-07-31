@@ -246,10 +246,9 @@ describe('Sequence class', () => {
     expect(seq.length).toBe(3);
   });
 
-  it('offsetPosition and reversePositionOffset methods', () => {
+  it('reversePositionOffset method', () => {
     let seq = new Sequence('asdf');
     seq.numberingOffset = -12;
-    expect(seq.offsetPosition(19)).toBe(7);
     expect(seq.reversePositionOffset(20)).toBe(32);
   });
 
@@ -279,35 +278,11 @@ describe('Sequence class', () => {
     expect(seq.positionInRange(5)).toBeFalsy();
   });
 
-  describe('offsetPositionOutOfRange method', () => {
-    let seq = Sequence.createOutOfView(svg, 'hh', 'plot');
-    seq.numberingOffset = 12;
-    expect(seq.offsetPositionOutOfRange(12)).toBeTruthy();
-    expect(seq.offsetPositionOutOfRange(13)).toBeFalsy();
-    expect(seq.offsetPositionOutOfRange(14)).toBeFalsy();
-    expect(seq.offsetPositionOutOfRange(15)).toBeFalsy();
-    expect(seq.offsetPositionOutOfRange(16)).toBeFalsy();
-    expect(seq.offsetPositionOutOfRange(17)).toBeTruthy();
-  });
-
-  describe('offsetPositionInRange method', () => {
-    let seq = Sequence.createOutOfView(svg, 'qwer', 'QYQq');
-    seq.numberingOffset = -45;
-    expect(seq.offsetPositionInRange(-45)).toBeFalsy();
-    expect(seq.offsetPositionInRange(-44)).toBeTruthy();
-    expect(seq.offsetPositionInRange(-43)).toBeTruthy();
-    expect(seq.offsetPositionInRange(-42)).toBeTruthy();
-    expect(seq.offsetPositionInRange(-41)).toBeTruthy();
-    expect(seq.offsetPositionInRange(-40)).toBeFalsy();
-  });
-
-  it('getBaseAtPosition and getBaseAtOffsetPosition methods', () => {
+  it('getBaseAtPosition method', () => {
     let seq = Sequence.createOutOfView(svg, 'asdf', 'qwerzxcv');
     seq.numberingOffset = 12;
     expect(seq.getBaseAtPosition(6).character).toBe('x');
-    expect(seq.getBaseAtOffsetPosition(14).character).toBe('w');
     expect(seq.getBaseAtPosition(10)).toBeFalsy(); // out of range
-    expect(seq.getBaseAtOffsetPosition(8)).toBeFalsy(); // out of range
   });
 
   describe('getBaseById method', () => {
@@ -355,15 +330,13 @@ describe('Sequence class', () => {
     expect(ids[2]).toBe(seq.getBaseAtPosition(3).id);
   });
 
-  describe('positionOfBase and offsetPositionOfBase methods', () => {
+  describe('positionOfBase method', () => {
     let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
     seq.numberingOffset = 33;
     let b3 = seq.getBaseAtPosition(3);
     expect(seq.positionOfBase(b3)).toBe(3);
-    expect(seq.offsetPositionOfBase(b3)).toBe(36);
     let b = Base.create(svg, 'a', 1, 2); // not in sequence
     expect(seq.positionOfBase(b)).toBe(0);
-    expect(seq.offsetPositionOfBase(b)).toBe(33);
   });
 
   describe('contains method', () => {

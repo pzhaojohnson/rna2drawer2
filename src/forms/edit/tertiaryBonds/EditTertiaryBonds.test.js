@@ -39,8 +39,8 @@ it('renders when some tertiary bonds are selected', () => {
   app.strictDrawing.appendSequence('asdf', 'asdfasdf');
   let drawing = app.strictDrawing.drawing;
   let seq = drawing.getSequenceAtIndex(0);
-  let tb1 = addTertiaryBond(drawing, seq.getBaseAtOffsetPosition(1), seq.getBaseAtOffsetPosition(5));
-  let tb2 = addTertiaryBond(drawing, seq.getBaseAtOffsetPosition(6), seq.getBaseAtOffsetPosition(3));
+  let tb1 = addTertiaryBond(drawing, seq.getBaseAtPosition(1), seq.getBaseAtPosition(5));
+  let tb2 = addTertiaryBond(drawing, seq.getBaseAtPosition(6), seq.getBaseAtPosition(3));
   act(() => {
     render(
       <EditTertiaryBonds

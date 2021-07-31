@@ -176,10 +176,6 @@ export class Sequence implements SequenceInterface {
     return this.bases.length;
   }
 
-  offsetPosition(p: number): number {
-    return p + this.numberingOffset;
-  }
-
   reversePositionOffset(op: number): number {
     return op - this.numberingOffset;
   }
@@ -192,23 +188,8 @@ export class Sequence implements SequenceInterface {
     return !this.positionOutOfRange(p);
   }
 
-  offsetPositionOutOfRange(op: number): boolean {
-    let p = this.reversePositionOffset(op);
-    return this.positionOutOfRange(p);
-  }
-
-  offsetPositionInRange(op: number): boolean {
-    let p = this.reversePositionOffset(op);
-    return this.positionInRange(p);
-  }
-
   getBaseAtPosition(p: number): (Base | undefined) {
     return this.bases[p - 1];
-  }
-
-  getBaseAtOffsetPosition(op: number): (Base | undefined) {
-    let p = this.reversePositionOffset(op);
-    return this.getBaseAtPosition(p);
   }
 
   getBaseById(id: string): (Base | undefined) {
@@ -243,15 +224,6 @@ export class Sequence implements SequenceInterface {
    */
   positionOfBase(b: Base): number {
     return this.bases.findIndex(base => base.id === b.id) + 1;
-  }
-
-  /**
-   * Returns the minimum offset position of this sequence minus one if
-   * the given base is not in this sequence.
-   */
-  offsetPositionOfBase(b: Base) {
-    let p = this.positionOfBase(b);
-    return this.offsetPosition(p);
   }
 
   contains(b: Base): boolean {
