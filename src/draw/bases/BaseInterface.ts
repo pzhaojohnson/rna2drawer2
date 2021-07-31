@@ -21,6 +21,7 @@ export interface BaseInterface {
   center(): { x: unknown, y: unknown };
   xCenter: number;
   yCenter: number;
+  recenter(p: { x: number, y: number }): void;
   moveTo(xCenter: number, yCenter: number): void;
   distanceBetweenCenters(b: BaseInterface): number;
   angleBetweenCenters(b: BaseInterface): number;

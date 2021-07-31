@@ -137,6 +137,10 @@ export class Base implements BaseInterface {
     return this._yCenter;
   }
 
+  recenter(p: { x: number, y: number }) {
+    this.moveTo(p.x, p.y);
+  }
+
   moveTo(xCenter: number, yCenter: number) {
     this.text.center(xCenter, yCenter);
     this._xCenter = xCenter;
