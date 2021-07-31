@@ -263,7 +263,7 @@ export class Drawing implements DrawingInterface {
   }
 
   sequenceOfBase(b: Base): (Sequence | undefined) {
-    return this.sequences.find(seq => seq.contains(b));
+    return this.sequences.find(seq => seq.bases.includes(b));
   }
 
   createBases(characters: string): Base[] {

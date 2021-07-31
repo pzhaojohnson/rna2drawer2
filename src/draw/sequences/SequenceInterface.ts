@@ -34,7 +34,6 @@ export interface SequenceInterface {
   forEachBase(f: (b: Base, p: number) => void): void;
   baseIds(): string[];
   positionOfBase(b: Base): number;
-  contains(b: Base): boolean;
   clockwiseNormalAngleAtPosition(p: number): number;
   counterClockwiseNormalAngleAtPosition(p: number): number;
   innerNormalAngleAtPosition(p: number): number;

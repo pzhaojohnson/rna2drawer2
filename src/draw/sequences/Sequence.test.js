@@ -339,14 +339,6 @@ describe('Sequence class', () => {
     expect(seq.positionOfBase(b)).toBe(0);
   });
 
-  describe('contains method', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'qwerqwer');
-    let b6 = seq.getBaseAtPosition(6);
-    expect(seq.contains(b6)).toBeTruthy();
-    let b = Base.create(svg, 'a', 1, 2); // not in sequence
-    expect(seq.contains(b)).toBeFalsy();
-  });
-
   describe('angle at position methods', () => {
     let seq = new Sequence('asdf');
     seq.appendBases([

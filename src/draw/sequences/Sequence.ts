@@ -226,10 +226,6 @@ export class Sequence implements SequenceInterface {
     return this.bases.findIndex(base => base.id === b.id) + 1;
   }
 
-  contains(b: Base): boolean {
-    return this.positionOfBase(b) > 0;
-  }
-
   /**
    * Returns zero if the given position is out of range.
    */
