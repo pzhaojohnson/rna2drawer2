@@ -49,7 +49,6 @@ export interface SequenceInterface {
   insertBasesAtPosition(bs: Base[], p: number): void;
   removeBaseAtPosition(p: number): void;
   removeBasesInRange(p5: number, p3: number): void;
-  remove(): void;
   savableState(): SequenceSavableState;
 }
 

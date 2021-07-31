@@ -547,18 +547,6 @@ describe('Sequence class', () => {
     });
   });
 
-  describe('remove method', () => {
-    it('removes bases and references to bases', () => {
-      let seq = Sequence.createOutOfView(svg, 'qwer', 'qwerasdf');
-      let spies = [];
-      seq.forEachBase(b => spies.push(jest.spyOn(b, 'remove')));
-      seq.remove();
-      // removed bases themselves
-      spies.forEach(s => expect(s).toHaveBeenCalled());
-      expect(seq.length).toBe(0); // removed references
-    });
-  });
-
   describe('savableState method', () => {
     let seq = Sequence.createOutOfView(svg, 'qwerasdf', 'qwer');
     seq.numberingOffset = 23;

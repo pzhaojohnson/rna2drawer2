@@ -365,11 +365,6 @@ export class Sequence implements SequenceInterface {
     this._updateBaseNumberings();
   }
 
-  remove() {
-    this.forEachBase(b => b.remove());
-    this.bases = [];
-  }
-
   savableState(): SequenceSavableState {
     let savableState = {
       className: 'Sequence',
