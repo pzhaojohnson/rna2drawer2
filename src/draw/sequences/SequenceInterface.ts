@@ -30,8 +30,6 @@ export interface SequenceInterface {
   positionInRange(p: number): boolean;
   getBaseAtPosition(p: number): Base | undefined;
   forEachBase(f: (b: Base, p: number) => void): void;
-  baseIds(): string[];
-  positionOfBase(b: Base): number;
   clockwiseNormalAngleAtPosition(p: number): number;
   counterClockwiseNormalAngleAtPosition(p: number): number;
   innerNormalAngleAtPosition(p: number): number;

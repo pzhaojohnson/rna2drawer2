@@ -196,19 +196,6 @@ export class Sequence implements SequenceInterface {
     this.bases.forEach((b, i) => f(b, i + 1));
   }
 
-  baseIds(): string[] {
-    let ids = [] as string[];
-    this.forEachBase(b => ids.push(b.id));
-    return ids;
-  }
-
-  /**
-   * Returns zero if the given base is not in this sequence.
-   */
-  positionOfBase(b: Base): number {
-    return this.bases.findIndex(base => base.id === b.id) + 1;
-  }
-
   /**
    * Returns zero if the given position is out of range.
    */

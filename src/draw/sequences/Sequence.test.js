@@ -297,24 +297,6 @@ describe('Sequence class', () => {
     expect(i).toBe(4);
   });
 
-  it('baseIds method', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'bhq');
-    let ids = seq.baseIds();
-    expect(ids.length).toBe(3);
-    expect(ids[0]).toBe(seq.getBaseAtPosition(1).id);
-    expect(ids[1]).toBe(seq.getBaseAtPosition(2).id);
-    expect(ids[2]).toBe(seq.getBaseAtPosition(3).id);
-  });
-
-  describe('positionOfBase method', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
-    seq.numberingOffset = 33;
-    let b3 = seq.getBaseAtPosition(3);
-    expect(seq.positionOfBase(b3)).toBe(3);
-    let b = Base.create(svg, 'a', 1, 2); // not in sequence
-    expect(seq.positionOfBase(b)).toBe(0);
-  });
-
   describe('angle at position methods', () => {
     let seq = new Sequence('asdf');
     seq.bases.splice(0, 0, ...[
