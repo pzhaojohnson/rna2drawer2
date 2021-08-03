@@ -246,12 +246,6 @@ describe('Sequence class', () => {
     expect(seq.length).toBe(3);
   });
 
-  it('reversePositionOffset method', () => {
-    let seq = new Sequence('asdf');
-    seq.numberingOffset = -12;
-    expect(seq.reversePositionOffset(20)).toBe(32);
-  });
-
   it('positionOutOfRange method', () => {
     let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
     expect(seq.positionOutOfRange(0)).toBeTruthy();

@@ -37,8 +37,8 @@ export function cannotRemove(strictDrawing: StrictDrawing, inputs: Range): strin
 
 function reversePositionOffsets(seq: Sequence, r: Range): Range {
   return {
-    start: seq.reversePositionOffset(r.start),
-    end: seq.reversePositionOffset(r.end),
+    start: r.start - seq.numberingOffset,
+    end: r.end - seq.numberingOffset,
   };
 }
 

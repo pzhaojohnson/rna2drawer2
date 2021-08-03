@@ -175,10 +175,6 @@ export class Sequence implements SequenceInterface {
     return this.bases.length;
   }
 
-  reversePositionOffset(op: number): number {
-    return op - this.numberingOffset;
-  }
-
   positionOutOfRange(p: number): boolean {
     return p < 1 || p > this.length;
   }

@@ -20,7 +20,6 @@ export interface SequenceInterface {
   numberingAnchor: number;
   numberingIncrement: number;
   length: number;
-  reversePositionOffset(op: number): number;
   positionOutOfRange(p: number): boolean;
   positionInRange(p: number): boolean;
   getBaseAtPosition(p: number): Base | undefined;

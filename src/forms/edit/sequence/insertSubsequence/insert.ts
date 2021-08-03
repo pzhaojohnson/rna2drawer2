@@ -63,7 +63,7 @@ export function cannotInsert(strictDrawing: StrictDrawing, inputs: Inputs): stri
   }
   let seq = drawing.getSequenceAtIndex(0);
   if (seq) {
-    let insertPosition = seq.reversePositionOffset(inputs.insertPosition);
+    let insertPosition = inputs.insertPosition - seq.numberingOffset;
     if (insertPosition < 1 || insertPosition > seq.length + 1) {
       return 'Position to insert at is out of range.';
     }
@@ -83,7 +83,7 @@ export function insert(strictDrawing: StrictDrawing, inputs: Inputs) {
     let drawing = strictDrawing.drawing;
     let seq = drawing.getSequenceAtIndex(0);
     if (seq) {
-      let insertPosition = seq.reversePositionOffset(inputs.insertPosition);
+      let insertPosition = inputs.insertPosition - seq.numberingOffset;
       let subsequence = parseSubsequence(inputs);
       transferStemProps(strictDrawing, insertPosition);
       insertSubsequence(strictDrawing.drawing, {
