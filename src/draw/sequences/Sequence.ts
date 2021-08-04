@@ -5,10 +5,10 @@ import {
 import * as Svg from '@svgdotjs/svg.js';
 import { Base } from 'Draw/bases/Base';
 import { BaseSavableState } from 'Draw/bases/BaseInterface';
-import { addNumbering } from 'Draw/bases/number/add';
-import { removeNumbering } from 'Draw/bases/number/add';
+import { updateBaseNumberings } from './number';
 import angleBetween from 'Draw/angleBetween';
 import normalizeAngle from 'Draw/normalizeAngle';
+
 
 export type Defaults = {
   numberingAnchor: number;
@@ -118,19 +118,6 @@ export class Sequence implements SequenceInterface {
     return cs;
   }
 
-  _updateBaseNumberings() {
-    this.forEachBase((b: Base, p: number) => {
-      if ((p - this.numberingAnchor) % this.numberingIncrement == 0) {
-        addNumbering(b, p + this.numberingOffset);
-        if (b.numbering) {
-          b.numbering.lineAngle = this.outerNormalAngleAtPosition(p);
-        }
-      } else {
-        removeNumbering(b);
-      }
-    });
-  }
-
   get numberingOffset(): number {
     return this._numberingOffset;
   }
@@ -140,7 +127,7 @@ export class Sequence implements SequenceInterface {
       return;
     }
     this._numberingOffset = no;
-    this._updateBaseNumberings();
+    updateBaseNumberings(this);
   }
 
   get numberingAnchor(): number {
@@ -152,7 +139,7 @@ export class Sequence implements SequenceInterface {
       return;
     }
     this._numberingAnchor = na;
-    this._updateBaseNumberings();
+    updateBaseNumberings(this);
     Sequence.recommendedDefaults.numberingAnchor = na;
   }
 
@@ -167,7 +154,7 @@ export class Sequence implements SequenceInterface {
       return;
     }
     this._numberingIncrement = ni;
-    this._updateBaseNumberings();
+    updateBaseNumberings(this);
     Sequence.recommendedDefaults.numberingIncrement = ni;
   }
 

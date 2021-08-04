@@ -164,36 +164,10 @@ describe('Sequence class', () => {
     expect(seq.characters).toBe('bT2');
   });
 
-  it('_updateBaseNumberings method', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'asdfasdfasdf');
-    seq.numberingOffset = 15; // must offset numbering
-    seq.numberingAnchor = 6;
-    seq.numberingIncrement = 3;
-    seq.forEachBase(b => removeNumbering(b));
-    addNumbering(seq.getBaseAtPosition(2), 100); // to remove
-    addNumbering(seq.getBaseAtPosition(8), 8); // to remove
-    addNumbering(seq.getBaseAtPosition(9), 90); // to replace
-    seq._updateBaseNumberings();
-    expect(seq.getBaseAtPosition(1).numbering).toBeFalsy();
-    expect(seq.getBaseAtPosition(2).numbering).toBeFalsy(); // was removed
-    expect(seq.getBaseAtPosition(3).numbering.text.text()).toBe('18'); // was added
-    expect(seq.getBaseAtPosition(4).numbering).toBeFalsy();
-    expect(seq.getBaseAtPosition(5).numbering).toBeFalsy();
-    expect(seq.getBaseAtPosition(6).numbering.text.text()).toBe('21'); //was added
-    expect(seq.getBaseAtPosition(7).numbering).toBeFalsy();
-    expect(seq.getBaseAtPosition(8).numbering).toBeFalsy(); // was removed
-    expect(seq.getBaseAtPosition(9).numbering.text.text()).toBe('24'); // was replaced
-    expect(seq.getBaseAtPosition(10).numbering).toBeFalsy();
-    expect(seq.getBaseAtPosition(11).numbering).toBeFalsy();
-    expect(seq.getBaseAtPosition(12).numbering.text.text()).toBe('27'); // was added
-  });
-
   it('numberingOffset getter and setter', () => {
     let seq = new Sequence('asdf');
-    let spy = jest.spyOn(seq, '_updateBaseNumberings');
     seq.numberingOffset = 25; // use setter
     expect(seq.numberingOffset).toBe(25); // check getter
-    expect(spy).toHaveBeenCalled(); // updates base numberings
     seq.numberingOffset = -Infinity; // ignores nonfinite numbers
     expect(seq.numberingOffset).toBe(25);
     seq.numberingOffset = 5.5; // ignores non-integers
@@ -202,10 +176,8 @@ describe('Sequence class', () => {
 
   it('numberingAnchor getter and setter', () => {
     let seq = new Sequence('qwer');
-    let spy = jest.spyOn(seq, '_updateBaseNumberings');
     seq.numberingAnchor = 1012; // use setter
     expect(seq.numberingAnchor).toBe(1012); // check getter
-    expect(spy).toHaveBeenCalled(); // updates base numberings
     // updates most recent prop
     expect(Sequence.recommendedDefaults.numberingAnchor).toBe(1012);
     seq.numberingAnchor = NaN; // ignores nonfinite numbers
@@ -216,10 +188,8 @@ describe('Sequence class', () => {
 
   it('numberingIncrement getter and setter', () => {
     let seq = new Sequence('asdf');
-    let spy = jest.spyOn(seq, '_updateBaseNumberings');
     seq.numberingIncrement = 82; // use setter
     expect(seq.numberingIncrement).toBe(82); // check getter
-    expect(spy).toHaveBeenCalled(); // updates base numberings
     // updates most recent prop
     expect(Sequence.recommendedDefaults.numberingIncrement).toBe(82);
     seq.numberingIncrement = Infinity; // ignores nonfinite numbers
