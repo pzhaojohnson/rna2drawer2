@@ -3,7 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent } from '@testing-library/react';
 import App from '../../App';
-import NodeSVG from '../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { ZoomOutButton } from './ZoomOutButton';
 
 let app = new App(() => NodeSVG());

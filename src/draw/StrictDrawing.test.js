@@ -1,5 +1,5 @@
 import StrictDrawing from './StrictDrawing';
-import NodeSVG from './NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import parseDotBracket from '../parse/parseDotBracket';
 
 import { StrictLayout } from './layout/singleseq/strict/StrictLayout';

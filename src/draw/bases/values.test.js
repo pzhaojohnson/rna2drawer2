@@ -1,5 +1,5 @@
 import { values, setValues } from './values';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from './Base';
 
 let container = null;

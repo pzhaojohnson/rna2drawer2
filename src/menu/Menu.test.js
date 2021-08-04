@@ -1,6 +1,6 @@
 import React from 'react';
 import App from '../App';
-import NodeSVG from '../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Menu } from './Menu';
 
 it('renders', () => {

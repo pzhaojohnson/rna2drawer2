@@ -1,5 +1,5 @@
 import { savableState, addSavedNumbering } from './save';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
 

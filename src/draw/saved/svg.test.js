@@ -6,7 +6,7 @@ import {
   findRectByUniqueId,
   findPathByUniqueId,
 } from './svg';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 function areSameElement(ele1, ele2) {
   return (

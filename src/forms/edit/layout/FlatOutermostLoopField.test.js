@@ -1,6 +1,6 @@
 import FlatOutermostLoopField from './FlatOutermostLoopField';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 describe('create static method', () => {
   it('passes whether has a flat outermost loop', () => {

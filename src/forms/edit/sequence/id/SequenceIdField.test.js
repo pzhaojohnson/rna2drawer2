@@ -1,6 +1,6 @@
 import SequenceIdField from './SequenceIdField';
 import App from '../../../../App';
-import NodeSVG from '../../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 describe('create static method', () => {
   describe('passing the current sequence ID', () => {

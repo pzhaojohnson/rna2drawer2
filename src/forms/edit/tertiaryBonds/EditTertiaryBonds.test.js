@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 import { render } from '@testing-library/react';
 import { EditTertiaryBonds } from './EditTertiaryBonds';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
 
 let container = null;

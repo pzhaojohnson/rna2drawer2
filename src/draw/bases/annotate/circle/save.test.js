@@ -3,7 +3,7 @@ import {
   addSavedCircleOutline,
   addSavedCircleHighlighting,
 } from './save';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addCircleOutline, addCircleHighlighting } from './add';
 import { uuidRegex } from 'Draw/svg/id';

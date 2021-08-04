@@ -1,5 +1,5 @@
 import TertiaryBondsInteraction from './TertiaryBondsInteraction';
-import NodeSVG from '../../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import Drawing from '../../Drawing';
 
 let drawing = new Drawing();

@@ -1,5 +1,5 @@
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { ByDataButton } from './ByDataButton';
 import { SelectBasesByData } from '../../../forms/annotate/bases/data/SelectBasesByData';
 

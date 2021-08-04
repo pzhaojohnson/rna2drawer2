@@ -1,5 +1,5 @@
 import highlightBase from './highlightBase';
-import NodeSVG from '../../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 

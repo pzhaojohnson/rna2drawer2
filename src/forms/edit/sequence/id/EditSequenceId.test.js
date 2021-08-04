@@ -3,7 +3,7 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import EditSequenceId from './EditSequenceId';
 import App from '../../../../App';
-import NodeSVG from '../../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import SequenceIdField from './SequenceIdField';
 const uuidv1 = require('uuid/v1');
 

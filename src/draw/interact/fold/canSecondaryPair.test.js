@@ -1,6 +1,6 @@
 import canSecondaryPair from './canSecondaryPair';
 import StrictDrawing from '../../StrictDrawing';
-import NodeSVG from '../../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import FoldingMode from './FoldingMode';
 import parseDotBracket from '../../../parse/parseDotBracket';
 

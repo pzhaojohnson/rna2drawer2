@@ -1,6 +1,6 @@
 import { savableState } from './save';
 import { Drawing } from 'Draw/Drawing';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { savableState as savableBaseState } from 'Draw/bases/save';
 

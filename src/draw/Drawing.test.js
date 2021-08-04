@@ -1,5 +1,5 @@
 import Drawing from './Drawing';
-import NodeSVG from './NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { Base } from 'Draw/bases/Base';
 import * as AdjustBaseNumbering from './edit/adjustBaseNumbering';

@@ -1,5 +1,5 @@
 import App from '../../App';
-import NodeSVG from '../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { ExportPptxButton } from './ExportPptxButton';
 import ExportPptx from '../../forms/export/pptx/ExportPptx';
 

@@ -1,5 +1,5 @@
 import FoldingMode from './FoldingMode';
-import NodeSVG from '../../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import StrictDrawing from '../../StrictDrawing';
 import { round } from '../../../math/round';
 

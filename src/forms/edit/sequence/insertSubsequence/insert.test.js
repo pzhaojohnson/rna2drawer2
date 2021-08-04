@@ -1,5 +1,5 @@
 import App from '../../../../App';
-import NodeSVG from '../../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { parseSubsequence, cannotInsert, insert } from './insert';
 import { parseDotBracket } from '../../../../parse/parseDotBracket';
 import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../../draw/layout/singleseq/strict/PerBaseStrictLayoutProps';

@@ -1,6 +1,6 @@
 import { removeTertiaryBondById } from './remove';
 import Drawing from 'Draw/Drawing';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addTertiaryBond } from './add';
 
 function pathWasRemoved(tb) {

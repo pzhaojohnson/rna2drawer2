@@ -1,6 +1,6 @@
 import AllowedMismatchField from './AllowedMismatchField';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 let app = new App(() => NodeSVG());
 let mode = app.strictDrawingInteraction.foldingMode;

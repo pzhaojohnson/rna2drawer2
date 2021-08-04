@@ -1,5 +1,5 @@
 import { assignUuid, uuidRegex } from './id';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { SVGElementWrapper as ElementWrapper } from './element';
 import { SVGTextWrapper as TextWrapper } from './text';
 import { SVGLineWrapper as LineWrapper } from './line';

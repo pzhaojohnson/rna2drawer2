@@ -1,6 +1,6 @@
 import adjustBaseNumbering from './adjustBaseNumbering';
 import Drawing from '../Drawing';
-import NodeSVG from '../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addNumbering } from 'Draw/bases/number/add';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import normalizeAngle from '../normalizeAngle';

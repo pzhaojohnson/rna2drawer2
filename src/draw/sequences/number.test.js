@@ -1,6 +1,6 @@
 import { updateBaseNumberings } from './number';
 import Drawing from 'Draw/Drawing';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addNumbering } from 'Draw/bases/number/add';
 
 function baseNumbers(seq) {

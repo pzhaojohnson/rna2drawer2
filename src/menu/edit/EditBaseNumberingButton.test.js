@@ -1,5 +1,5 @@
 import App from '../../App';
-import NodeSVG from '../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { EditBaseNumberingButton } from './EditBaseNumberingButton';
 import { EditBaseNumbering } from '../../forms/edit/baseNumbering/EditBaseNumbering';
 

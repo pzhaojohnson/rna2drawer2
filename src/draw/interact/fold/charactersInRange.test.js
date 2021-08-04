@@ -1,5 +1,5 @@
 import charactersInRange from './charactersInRange';
-import NodeSVG from '../../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import StrictDrawing from '../../StrictDrawing';
 import FoldingMode from './FoldingMode';
 import IntegerRange from './IntegerRange';

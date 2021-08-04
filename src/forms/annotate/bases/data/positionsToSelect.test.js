@@ -1,5 +1,5 @@
 import Drawing from '../../../../draw/Drawing';
-import NodeSVG from '../../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { positionsToSelect } from './positionsToSelect';
 
 let container = null;

@@ -1,6 +1,6 @@
 import { addTertiaryBond } from './add';
 import Drawing from 'Draw/Drawing';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { position } from './position';
 import { TertiaryBond } from './TertiaryBond';
 

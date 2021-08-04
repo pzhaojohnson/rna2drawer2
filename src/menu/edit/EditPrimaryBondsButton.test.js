@@ -1,5 +1,5 @@
 import App from '../../App';
-import NodeSVG from '../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { EditPrimaryBondsButton } from './EditPrimaryBondsButton';
 import { EditPrimaryBonds } from '../../forms/edit/primaryBonds/EditPrimaryBonds';
 

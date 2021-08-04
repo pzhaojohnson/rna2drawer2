@@ -4,7 +4,7 @@ import {
   removeCircleOutline,
   removeCircleHighlighting,
 } from './add';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 
 function wasRemoved(cba) {

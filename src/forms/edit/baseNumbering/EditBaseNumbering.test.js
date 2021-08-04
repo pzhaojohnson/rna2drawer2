@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, unmountComponentAtNode } from 'react-dom';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { EditBaseNumbering, getBaseNumberings } from './EditBaseNumbering';
 
 let container = null;

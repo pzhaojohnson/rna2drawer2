@@ -1,6 +1,6 @@
 import RotationField from './RotationField';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import NumberField from '../../fields/text/NumberField';
 
 describe('create static method', () => {

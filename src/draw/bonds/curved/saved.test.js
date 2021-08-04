@@ -1,6 +1,6 @@
 import { addSavedTertiaryBond } from './saved';
 import Drawing from 'Draw/Drawing';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addTertiaryBond } from './add';
 import { savableState } from './save';
 

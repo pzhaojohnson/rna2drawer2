@@ -5,7 +5,7 @@ import {
   appendStructure,
 } from './addStructure';
 import Drawing from '../Drawing';
-import NodeSVG from '../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 describe('addPrimaryBonds function', () => {
   it('adds primary bonds', () => {

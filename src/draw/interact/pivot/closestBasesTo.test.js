@@ -1,4 +1,4 @@
-import NodeSVG from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import Drawing from 'Draw/Drawing';
 import { closestBasesTo } from './closestBasesTo';
 

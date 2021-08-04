@@ -1,6 +1,6 @@
 import OffsetField from './OffsetField';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import IntegerField from '../../fields/text/IntegerField';
 
 describe('create static method', () => {

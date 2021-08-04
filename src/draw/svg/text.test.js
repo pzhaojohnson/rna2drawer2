@@ -1,5 +1,5 @@
 import { SVGTextWrapper } from './text';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 let container = null;
 let svg = null;

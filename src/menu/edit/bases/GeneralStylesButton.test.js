@@ -1,5 +1,5 @@
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { GeneralStylesButton } from './GeneralStylesButton';
 import { GeneralBaseStyles } from '../../../forms/edit/bases/generalStyles/GeneralBaseStyles';
 

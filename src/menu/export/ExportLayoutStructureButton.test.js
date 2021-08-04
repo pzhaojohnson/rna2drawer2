@@ -1,5 +1,5 @@
 import App from '../../App';
-import NodeSVG from '../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import { ExportLayoutStructureButton } from './ExportLayoutStructureButton';

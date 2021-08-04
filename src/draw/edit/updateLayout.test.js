@@ -1,4 +1,4 @@
-import NodeSVG from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import StrictDrawing from 'Draw/StrictDrawing';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { updateLayout } from './updateLayout';

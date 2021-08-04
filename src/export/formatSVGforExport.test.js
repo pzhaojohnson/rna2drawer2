@@ -25,13 +25,13 @@ import {
   _trimNumbers,
   _setDimensions,
 } from './formatSvgForExport';
-import createNodeSVG from '../draw/createNodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { nonemptySplitByWhitespace } from '../parse/nonemptySplitByWhitespace';
 import { trimNum } from './trimNum';
 
 describe('_xTextMin, _xTextMax, _yTextMin and _yTextMax functions', () => {
   it('no text elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     svg.circle(100);
     expect(_xTextMin(svg)).toBe(0);
     expect(_xTextMax(svg)).toBe(0);
@@ -40,7 +40,7 @@ describe('_xTextMin, _xTextMax, _yTextMin and _yTextMax functions', () => {
   });
 
   it('ignore non-text elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let r1 = svg.rect(50, 25);
     r1.attr({ 'x': 25, 'y': 25 });
     let t = svg.text(add => add.tspan('a'));
@@ -54,7 +54,7 @@ describe('_xTextMin, _xTextMax, _yTextMin and _yTextMax functions', () => {
   });
 
   it('multiple text elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t1 = svg.text(add => add.tspan('a'));
     t1.attr({ 'x': 50, 'y': 66 });
     let t2 = svg.text(add => add.tspan('b'));
@@ -72,7 +72,7 @@ describe('_shiftElements function', () => {
   it('with no text elements', () => {
     // worth testing since how much to shift elements is calculated
     // from the text elements present (if there are any)
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let c = svg.circle(80);
     c.center(1200, 300);
     let r = svg.rect(20, 80);
@@ -85,7 +85,7 @@ describe('_shiftElements function', () => {
   });
 
   it('with text elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let c = svg.circle(120);
     c.center(800, 900);
     let t1 = svg.text(add => add.tspan('A'));
@@ -108,7 +108,7 @@ describe('_shiftElements function', () => {
   });
 
   it('should shift all types of elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t1 = svg.text(add => add.tspan('G')); // text
     t1.attr({ 'x': 1012, 'y': 2500 });
     let t2 = svg.text(add => add.tspan('j')); // text
@@ -150,7 +150,7 @@ it('_scaleCoordinate function', () => {
 
 describe('_scaleText function', () => {
   it('handles undefine and string font-size', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t = svg.text(add => add.tspan('a'));
     expect(t.attr('font-size')).toBe(undefined);
     expect(
@@ -165,7 +165,7 @@ describe('_scaleText function', () => {
   });
 
   it('scales properties', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t = svg.text(add => add.tspan('b'));
     t.attr({
       'x': 3,
@@ -180,7 +180,7 @@ describe('_scaleText function', () => {
 });
 
 it('_scaleLine function', () => {
-  let svg = createNodeSVG();
+  let svg = NodeSVG();
   let l = svg.line(2, 4, 8, 6);
   l.attr({ 'stroke-width': 1.5 });
   _scaleLine(l, 2, -2, 4);
@@ -194,7 +194,7 @@ it('_scaleLine function', () => {
 describe('_scalePath function', () => {
   describe('scales path segments', () => {
     it('handles undefined path', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path();
       expect(
         () => _scalePath(p, 3, 5, 8)
@@ -202,7 +202,7 @@ describe('_scalePath function', () => {
     });
 
     it('scales M, L and Q segments', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 5 8 L 2 4 Q 8 9 6 7');
       _scalePath(p, 0.5, -1, 2);
       let pa = p.array();
@@ -227,7 +227,7 @@ describe('_scalePath function', () => {
     });
 
     it('includes unrecognized segments', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 1 2 L 4 5 H 20');
       _scalePath(p, 2, 4, 6);
       let pa = p.array();
@@ -251,7 +251,7 @@ describe('_scalePath function', () => {
 
   describe('scales stroke-dasharray', () => {
     it('handles undefined stroke-dasharray', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 1 2 L 3 4');
       expect(p.attr('stroke-dasharray')).toBe(undefined);
       expect(
@@ -261,7 +261,7 @@ describe('_scalePath function', () => {
     });
 
     it('scales values', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 1 5 L 4 3');
       p.attr({ 'stroke-dasharray': '5 8 2' });
       _scalePath(p, 3, 7, 9);
@@ -275,7 +275,7 @@ describe('_scalePath function', () => {
   });
 
   it('scales stroke-width', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let p = svg.path('M 1 2 L 3 4');
     p.attr({ 'stroke-width': 2.5 });
     _scalePath(p, 2, 3, 4);
@@ -284,7 +284,7 @@ describe('_scalePath function', () => {
 });
 
 it('_scaleCircle function', () => {
-  let svg = createNodeSVG();
+  let svg = NodeSVG();
   let c = svg.circle(20);
   c.attr({
     'cx': 3,
@@ -299,7 +299,7 @@ it('_scaleCircle function', () => {
 });
 
 it('_scaleRect function', () => {
-  let svg = createNodeSVG();
+  let svg = NodeSVG();
   let r = svg.rect(20, 40);
   r.attr({
     'x': 4,
@@ -316,7 +316,7 @@ it('_scaleRect function', () => {
 
 describe('_scaleElements function', () => {
   it('uses correct origin (and scales multiple elements)', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let c = svg.circle(20);
     c.attr({ 'cx': 5, 'cy': 9 });
     let t1 = svg.text(add => add.tspan('a'));
@@ -333,7 +333,7 @@ describe('_scaleElements function', () => {
   });
 
   it('scales text elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t1 = svg.text(add => add.tspan('a'));
     t1.attr({ 'x': 50, 'y': 60 });
     let t2 = svg.text(add => add.tspan('b'));
@@ -344,7 +344,7 @@ describe('_scaleElements function', () => {
   });
 
   it('scales line elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let l = svg.line(5, 9, 3, 8);
     let t = svg.text(add => add.tspan('a'));
     t.attr({ 'x': 7, 'y': 6 });
@@ -354,7 +354,7 @@ describe('_scaleElements function', () => {
   });
 
   it('scales path elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let p = svg.path('M 3 5 L 2 9');
     let t = svg.text(add => add.tspan('a'));
     t.attr({ 'x': 19, 'y': 12 });
@@ -366,7 +366,7 @@ describe('_scaleElements function', () => {
   });
 
   it('scales circle elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let c = svg.circle(20);
     c.attr({ 'cx': 9, 'cy': 20 });
     let t = svg.text(add => add.tspan('g'));
@@ -377,7 +377,7 @@ describe('_scaleElements function', () => {
   });
 
   it('scales rect elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let r = svg.rect(10, 15);
     r.attr({ 'x': 30, 'y': 40 });
     let t = svg.text(add => add.tspan('q'));
@@ -388,7 +388,7 @@ describe('_scaleElements function', () => {
   });
 
   it('scales the center of unrecognized elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let e = svg.ellipse(200, 500);
     e.center(800, 1200);
     let t = svg.text(add => add.tspan('A'));
@@ -405,14 +405,14 @@ describe('_scaleElements function', () => {
 
 describe('_resetTextDominantBaselines function', () => {
   it('ignores non-text elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let c = svg.circle(20);
     _resetTextDominantBaselines(svg);
     expect(c.attr('dominant-baseline')).toBe(undefined);
   });
 
   it('sets dominant-baseline to auto and updates x and y', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t = svg.text(add => add.tspan('A'));
     t.attr({
       'y': 7.2,
@@ -430,7 +430,7 @@ describe('_resetTextDominantBaselines function', () => {
   });
 
   it('dominant-baseline is undefined or already auto', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t1 = svg.text(add => add.tspan('h'));
     let t2 = svg.text(add => add.tspan('T'));
     t1.attr({ 'y': 52.08, 'font-size': 16 });
@@ -448,7 +448,7 @@ describe('_resetTextDominantBaselines function', () => {
   });
 
   it('resets multiple text elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t1 = svg.text(add => add.tspan('a'));
     t1.attr({
       'y': 5,
@@ -476,7 +476,7 @@ it('_trimNum function', () => {
 
 describe('_trimTextNumbers function', () => {
   it('handles undefined and string font-size', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t = svg.text(add => add.tspan('a'));
     expect(t.attr('font-size')).toBe(undefined);
     expect(
@@ -491,7 +491,7 @@ describe('_trimTextNumbers function', () => {
   });
 
   it('trims the numbers', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let x = 1.3857191924124;
     let y = 6.18719285719;
     let fs = 12.223985719114;
@@ -508,7 +508,7 @@ describe('_trimTextNumbers function', () => {
 });
 
 it('_trimLineNumbers function', () => {
-  let svg = createNodeSVG();
+  let svg = NodeSVG();
   let x1 = 23.1192847192591;
   let y1 = 1.2395817941124;
   let x2 = -2198.1358179119149;
@@ -532,7 +532,7 @@ it('_trimLineNumbers function', () => {
 describe('_trimPathNumbers function', () => {
   describe('trims segment numbers', () => {
     it('handles undefined segments', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path();
       expect(
         () => _trimPathNumbers(p)
@@ -540,7 +540,7 @@ describe('_trimPathNumbers function', () => {
     });
 
     it('trims the numbers', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let mx = 5.1248172984712341;
       let my = 424.12395873985174;
       let lx = -2.4837859817249;
@@ -569,7 +569,7 @@ describe('_trimPathNumbers function', () => {
 
   describe('trims stroke-dasharray', () => {
     it('handles undefined stroke-dasharray', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 1 2 L 3 4');
       expect(p.attr('stroke-dasharray')).toBe(undefined);
       expect(
@@ -578,7 +578,7 @@ describe('_trimPathNumbers function', () => {
     });
 
     it('trims the numbers', () => {
-      let svg = createNodeSVG();
+      let svg = NodeSVG();
       let p = svg.path('M 5 6 L 3 4');
       let da = [5.198471284, 7.129847192];
       da.forEach(n => {
@@ -599,7 +599,7 @@ describe('_trimPathNumbers function', () => {
   });
 
   it('trims stroke-width', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let sw = 6.19847192847192;
     expect(_trimNum(sw)).not.toEqual(sw);
     let p = svg.path('M 1 2 L 3 4');
@@ -610,7 +610,7 @@ describe('_trimPathNumbers function', () => {
 });
 
 it('_trimCircleNumbers function', () => {
-  let svg = createNodeSVG();
+  let svg = NodeSVG();
   let cx = 6.158712985715;
   let cy = 15.19481729481724;
   let r = 10.22985719851751;
@@ -629,7 +629,7 @@ it('_trimCircleNumbers function', () => {
 });
 
 it('_trimRectNumbers function', () => {
-  let svg = createNodeSVG();
+  let svg = NodeSVG();
   let x = 23.93857913817;
   let y = 12.2938571398517;
   let w = 48.13958719857;
@@ -652,7 +652,7 @@ it('_trimRectNumbers function', () => {
 
 describe('_trimNumbers function', () => {
   it('trims text element numbers', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let x = 1.38937591871;
     expect(_trimNum(x)).not.toEqual(x);
     let t = svg.text(add => add.tspan('t'));
@@ -662,7 +662,7 @@ describe('_trimNumbers function', () => {
   });
 
   it('trims line element numbers', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let x1 = 5.12841294811;
     expect(_trimNum(x1)).not.toEqual(x1);
     let l = svg.line(x1, 5, 7, 8);
@@ -671,7 +671,7 @@ describe('_trimNumbers function', () => {
   });
 
   it('trims path element numbers', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let mx = 5.129481724827;
     expect(_trimNum(mx)).not.toEqual(mx);
     let d = ['M', mx, 5, 'L', 6, 2].join(' ');
@@ -683,7 +683,7 @@ describe('_trimNumbers function', () => {
   });
 
   it('trims circle element numbers', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let cx = 5.1948712984719;
     expect(_trimNum(cx)).not.toEqual(cx);
     let c = svg.circle(34);
@@ -693,7 +693,7 @@ describe('_trimNumbers function', () => {
   });
 
   it('trims rect element numbers', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let x = 6.1298417298471;
     expect(_trimNum(x)).not.toEqual(x);
     let r = svg.rect(3, 9);
@@ -703,7 +703,7 @@ describe('_trimNumbers function', () => {
   });
 
   it('trims numbers for multiple elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let x = 6.12948172944;
     let cx = 0.397162947182;
     expect(_trimNum(x)).not.toEqual(x);
@@ -719,7 +719,7 @@ describe('_trimNumbers function', () => {
 });
 
 it('_setDimensions function', () => {
-  let svg = createNodeSVG();
+  let svg = NodeSVG();
   let t1 = svg.text(add => add.tspan('a'));
   t1.attr({ 'x': 5, 'y': 7 });
   let t2 = svg.text(add => add.tspan('b'));
@@ -737,7 +737,7 @@ it('_setDimensions function', () => {
 
 describe('formatSvgForExport function', () => {
   it('removes invisible lines', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let l1 = svg.line(2, 4, 6, 8);
     let l2 = svg.line(5, 5, 9, 8);
     let l3 = svg.line(1, 3, 5, 7);
@@ -757,7 +757,7 @@ describe('formatSvgForExport function', () => {
   });
 
   it('shifts elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let x = 9142;
     let y = 1245;
     expect(x).not.toEqual(_X_PADDING);
@@ -770,7 +770,7 @@ describe('formatSvgForExport function', () => {
   });
 
   it('scales elements', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t = svg.text(add => add.tspan('t'));
     t.attr({ 'font-size': 9 });
     formatSvgForExport(svg, 2);
@@ -778,7 +778,7 @@ describe('formatSvgForExport function', () => {
   });
 
   it('trims numbers', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let fs = 10.235273798172;
     expect(_trimNum(fs)).not.toEqual(fs);
     let t = svg.text(add => add.tspan('b'));
@@ -788,7 +788,7 @@ describe('formatSvgForExport function', () => {
   });
 
   it('resets text dominant-baseline attributes', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t = svg.text(add => add.tspan('a'));
     t.attr({
       'y': 8,
@@ -800,7 +800,7 @@ describe('formatSvgForExport function', () => {
   });
 
   it('sets SVG dimensions', () => {
-    let svg = createNodeSVG();
+    let svg = NodeSVG();
     let t1 = svg.text(add => add.tspan('a'));
     t1.attr({ 'x': 50, 'y': 25 });
     let t2 = svg.text(add => add.tspan('b'));

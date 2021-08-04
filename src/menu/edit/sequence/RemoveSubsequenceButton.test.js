@@ -1,5 +1,5 @@
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { RemoveSubsequenceButton } from './RemoveSubsequenceButton';
 import { RemoveSubsequence } from '../../../forms/edit/sequence/removeSubsequence/RemoveSubsequence';
 

@@ -1,6 +1,6 @@
 import TerminiGapField from './TerminiGapField';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 
 describe('create static method', () => {

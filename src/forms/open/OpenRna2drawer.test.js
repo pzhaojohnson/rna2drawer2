@@ -1,5 +1,5 @@
 import App from '../../App';
-import NodeSVG from '../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import React from 'react';
 import { mount } from 'enzyme';
 import { OpenRna2drawer } from './OpenRna2drawer';

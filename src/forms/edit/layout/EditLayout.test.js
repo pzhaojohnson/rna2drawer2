@@ -1,6 +1,6 @@
 import EditLayout from './EditLayout';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 describe('create static method', () => {
   it('only creates termini gap field if has round outermost loop', () => {

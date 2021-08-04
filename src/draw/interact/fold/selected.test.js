@@ -5,7 +5,7 @@ import {
   selectedCharacters,
 } from './selected';
 import StrictDrawing from '../../StrictDrawing';
-import NodeSVG from '../../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import FoldingMode from './FoldingMode';
 
 let sd = new StrictDrawing();

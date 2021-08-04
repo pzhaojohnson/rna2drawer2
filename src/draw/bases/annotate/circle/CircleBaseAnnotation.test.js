@@ -1,5 +1,5 @@
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
 import { uuidRegex } from 'Draw/svg/id';
 

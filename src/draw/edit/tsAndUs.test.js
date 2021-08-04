@@ -5,7 +5,7 @@ import {
   usToTs,
 } from './tsAndUs';
 import Drawing from '../Drawing';
-import NodeSVG from '../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 it('hasTs function', () => {
   let drawing = new Drawing();

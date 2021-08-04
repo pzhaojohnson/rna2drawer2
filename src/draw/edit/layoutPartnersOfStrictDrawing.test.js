@@ -1,6 +1,6 @@
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
 import StrictDrawing from '../StrictDrawing';
-import createNodeSVG from '../createNodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 
 import { assertAreValid as assertPartnersAreValid } from 'Partners/areValid';
@@ -8,7 +8,7 @@ import { hasKnots } from 'Partners/hasKnots';
 
 it('handles no secondary bonds', () => {
   let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
+  sd.addTo(document.body, () => NodeSVG());
   sd.appendSequence('asdf', 'asdf');
   let partners = layoutPartnersOfStrictDrawing(sd);
   expect(partners.length).toBe(4);
@@ -19,7 +19,7 @@ it('handles no secondary bonds', () => {
 
 it('handles multiple sequences', () => {
   let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
+  sd.addTo(document.body, () => NodeSVG());
   sd.appendSequence('asdf', 'asdf');
   sd.appendSequence('qwer', 'qwerqwer');
   let drawing = sd.drawing;
@@ -45,7 +45,7 @@ it('handles multiple sequences', () => {
 
 it('removes knots', () => {
   let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
+  sd.addTo(document.body, () => NodeSVG());
   sd.appendSequence('asdf', 'asdfasdfasdf');
   let drawing = sd.drawing;
   let seq = drawing.getSequenceById('asdf');
@@ -66,7 +66,7 @@ it('removes knots', () => {
 
 it('handles secondary bonds that share bases', () => {
   let sd = new StrictDrawing();
-  sd.addTo(document.body, () => createNodeSVG());
+  sd.addTo(document.body, () => NodeSVG());
   sd.appendSequence('asdf', 'asdfasdfasdf');
   let drawing = sd.drawing;
   let seq = drawing.getSequenceById('asdf');

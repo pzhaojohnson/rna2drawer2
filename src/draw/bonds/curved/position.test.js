@@ -1,5 +1,5 @@
 import { position } from './position';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
 import { Base } from 'Draw/bases/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';

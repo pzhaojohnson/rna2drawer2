@@ -1,6 +1,6 @@
 import { normalizedMagnitudeOfMovement } from './movement';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 let app = new App(() => NodeSVG());
 app.strictDrawing.appendSequence('asdf', 'asdfasdf');

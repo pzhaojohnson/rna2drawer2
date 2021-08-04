@@ -5,7 +5,7 @@ import {
   decapitalizeBaseLetters,
 } from './capitalize';
 import Drawing from '../Drawing';
-import NodeSVG from '../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 it('hasCapitalBaseLetters function', () => {
   let drawing = new Drawing();

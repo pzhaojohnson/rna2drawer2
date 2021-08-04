@@ -1,5 +1,5 @@
 import App from '../../App';
-import NodeSVG from '../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import * as fs from 'fs';
 import { open } from './open';
 import { parseRna2drawer1 } from './parseRna2drawer1';

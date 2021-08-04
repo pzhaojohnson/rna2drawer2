@@ -1,5 +1,5 @@
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { CapitalizeButton } from './CapitalizeButton';
 
 describe('onClick callback', () => {

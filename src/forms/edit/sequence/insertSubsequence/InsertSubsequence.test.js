@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { unmountComponentAtNode } from 'react-dom';
 import { InsertSubsequence } from './InsertSubsequence';
 import App from '../../../../App';
-import NodeSVG from '../../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 let container = null;
 

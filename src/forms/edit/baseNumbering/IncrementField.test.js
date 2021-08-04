@@ -1,6 +1,6 @@
 import IncrementField from './IncrementField';
 import App from '../../../App';
-import NodeSVG from '../../../draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import PositiveIntegerField from '../../fields/text/PositiveIntegerField';
 
 describe('create static method', () => {

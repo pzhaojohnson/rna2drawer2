@@ -1,6 +1,6 @@
 import isPairable from './isPairable';
 import StrictDrawing from '../../StrictDrawing';
-import NodeSVG from '../../NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import FoldingMode from './FoldingMode';
 import IntegerRange from './IntegerRange';
 

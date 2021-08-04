@@ -1,6 +1,6 @@
 import { addPrimaryBond, addSecondaryBond } from './add';
 import Drawing from 'Draw/Drawing';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { round } from 'Math/round';
 
 function getRoundedPositioning(bond, places=3) {

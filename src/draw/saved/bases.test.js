@@ -1,5 +1,5 @@
 import { getBaseByUniqueId } from './bases';
-import { NodeSVG } from 'Draw/NodeSVG';
+import { NodeSVG } from 'Draw/svg/NodeSVG';
 import Drawing from 'Draw/Drawing';
 
 let container = null;
