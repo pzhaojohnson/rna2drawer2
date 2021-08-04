@@ -2,83 +2,10 @@ import { Sequence } from './Sequence';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
-import normalizeAngle from 'Draw/normalizeAngle';
-import angleBetween from 'Draw/angleBetween';
 
 let svg = NodeSVG();
 
 describe('Sequence class', () => {
-  describe('_clockwiseNormalAngleOfBase static method', () => {
-    let cs = { xCenter: 15, yCenter: 33 };
-    let cs5 = { xCenter: 52, yCenter: 80 };
-    let cs3 = { xCenter: 2, yCenter: 45 };
-
-    it('no neighboring bases', () => {
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs, null, null);
-      expect(cna).toBe(Math.PI / 2);
-    });
-
-    it("only a 5' neighboring base", () => {
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, null);
-      expect(normalizeAngle(cna)).toBeCloseTo(5.616277102940276);
-    });
-
-    it("only a 3' neighboring base", () => {
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs, null, cs3);
-      expect(normalizeAngle(cna)).toBeCloseTo(3.9669695041105317);
-    });
-
-    it("both 5' and 3' neighboring bases", () => {
-      // requires that the 5' angle is normalized to the 3' angle
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
-      expect(normalizeAngle(cna)).toBeCloseTo(4.791623303525403);
-    });
-  });
-
-  describe('_innerNormalAngleOfBase static method', () => {
-    let cs = { xCenter: 15, yCenter: 33 };
-    let cs5 = { xCenter: 52, yCenter: 80 };
-    let cs3 = { xCenter: 2, yCenter: 45 };
-
-    it("no 5' or 3' neighboring bases", () => {
-      let ina = Sequence._innerNormalAngleOfBase(cs, null, null);
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs, null, null);
-      expect(ina).toBe(cna);
-    });
-
-    it("no 5' neighboring base", () => {
-      let ina = Sequence._innerNormalAngleOfBase(cs, null, cs3);
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs, null, cs3);
-      expect(ina).toBe(cna);
-    });
-
-    it("no 3' neighboring base", () => {
-      let ina = Sequence._innerNormalAngleOfBase(cs, cs5, null);
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, null);
-      expect(ina).toBe(cna);
-    });
-
-    describe("has 5' and 3' neighboring bases", () => {
-      it('should return the clockwise normal angle', () => {
-        let cs = { xCenter: 100, yCenter: 200 };
-        let cs5 = { xCenter: 80, yCenter: 300 };
-        let cs3 = { xCenter: 150, yCenter: 150 };
-        let ina = Sequence._innerNormalAngleOfBase(cs, cs5, cs3);
-        let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
-        expect(ina).toBe(cna);
-      });
-
-      it('should return the counter-clockwise normal angle', () => {
-        let cs = { xCenter: -250, yCenter: 100 };
-        let cs5 = { xCenter: -400, yCenter: 120 };
-        let cs3 = { xCenter: -200, yCenter: -50 };
-        let ina = Sequence._innerNormalAngleOfBase(cs, cs5, cs3);
-        let cna = Sequence._clockwiseNormalAngleOfBase(cs, cs5, cs3);
-        expect(normalizeAngle(ina)).toBeCloseTo(normalizeAngle(cna + Math.PI));
-      });
-    });
-  });
-
   describe('fromSavedState static method', () => {
     it('wrong class name', () => {
       let seq = new Sequence('qwer');
@@ -259,54 +186,6 @@ describe('Sequence class', () => {
       i++;
     });
     expect(i).toBe(4);
-  });
-
-  describe('angle at position methods', () => {
-    let seq = new Sequence('asdf');
-    seq.bases.splice(0, 0, ...[
-      Base.create(svg, 'a', 100, 200),
-      Base.create(svg, 'b', 1000, 800),
-      Base.create(svg, 'c', 50, 80),
-      Base.create(svg, 'r', 250, 333),
-    ]);
-    let cs1 = { xCenter: 100, yCenter: 200 };
-    let cs2 = { xCenter: 1000, yCenter: 800 };
-    let cs3 = { xCenter: 50, yCenter: 80 };
-    let cs4 = { xCenter: 250, yCenter: 333 };
-
-    it('position out of range', () => {
-      expect(seq.clockwiseNormalAngleAtPosition(5)).toBe(0);
-      expect(seq.counterClockwiseNormalAngleAtPosition(5)).toBe(Math.PI);
-      expect(seq.innerNormalAngleAtPosition(5)).toBe(0);
-      expect(seq.outerNormalAngleAtPosition(5)).toBe(Math.PI);
-    });
-
-    it("no 5' base", () => {
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs1, null, cs2);
-      let ina = Sequence._innerNormalAngleOfBase(cs1, null, cs2);
-      expect(seq.clockwiseNormalAngleAtPosition(1)).toBe(cna);
-      expect(seq.counterClockwiseNormalAngleAtPosition(1)).toBe(cna + Math.PI);
-      expect(seq.innerNormalAngleAtPosition(1)).toBe(ina);
-      expect(seq.outerNormalAngleAtPosition(1)).toBe(ina + Math.PI);
-    });
-
-    it("no 3' base", () => {
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs4, cs3, null);
-      let ina = Sequence._innerNormalAngleOfBase(cs4, cs3, null);
-      expect(seq.clockwiseNormalAngleAtPosition(4)).toBe(cna);
-      expect(seq.counterClockwiseNormalAngleAtPosition(4)).toBe(cna + Math.PI);
-      expect(seq.innerNormalAngleAtPosition(4)).toBe(ina);
-      expect(seq.outerNormalAngleAtPosition(4)).toBe(ina + Math.PI);
-    });
-
-    it("has 5' and 3' base", () => {
-      let cna = Sequence._clockwiseNormalAngleOfBase(cs3, cs2, cs4);
-      let ina = Sequence._innerNormalAngleOfBase(cs3, cs2, cs4);
-      expect(seq.clockwiseNormalAngleAtPosition(3)).toBe(cna);
-      expect(seq.counterClockwiseNormalAngleAtPosition(3)).toBe(cna + Math.PI);
-      expect(seq.innerNormalAngleAtPosition(3)).toBe(ina);
-      expect(seq.outerNormalAngleAtPosition(3)).toBe(ina + Math.PI);
-    });
   });
 
   describe('savableState method', () => {
