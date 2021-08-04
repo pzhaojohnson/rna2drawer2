@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PositiveIntegerField from '../../fields/text/PositiveIntegerField';
 import { AppInterface as App } from '../../../AppInterface';
+import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 interface Props {
   currIncrement: number;
@@ -26,7 +27,7 @@ export class IncrementField extends React.Component {
           if (seq && i != seq.numberingIncrement) {
             app.pushUndo();
             seq.numberingIncrement = i;
-            app.strictDrawing.drawing.adjustBaseNumbering();
+            orientBaseNumberings(app.strictDrawing.drawing);
             app.drawingChangedNotByInteraction();
           }
         }}

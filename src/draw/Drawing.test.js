@@ -2,7 +2,6 @@ import Drawing from './Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { Base } from 'Draw/bases/Base';
-import * as AdjustBaseNumbering from './edit/adjustBaseNumbering';
 import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
 import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { savableState as savableStraightBondState } from 'Draw/bonds/straight/save';
@@ -303,14 +302,6 @@ it('repositionBonds method', () => {
   drawing.tertiaryBonds.forEach(tb => spies.push(jest.spyOn(tb, 'reposition')));
   drawing.repositionBonds();
   spies.forEach(s => expect(s).toHaveBeenCalled());
-});
-
-it('adjusting base numbering', () => {
-  let spy = jest.spyOn(AdjustBaseNumbering, 'adjustBaseNumbering');
-  drawing.adjustNumberingLineAngles();
-  expect(spy.mock.calls[0][0]).toBe(drawing);
-  drawing.adjustBaseNumbering();
-  expect(spy.mock.calls[1][0]).toBe(drawing);
 });
 
 it('clear method removes elements and references', () => {

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import IntegerField from '../../fields/text/IntegerField';
 import { AppInterface as App } from '../../../AppInterface';
+import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 interface Props {
   currAnchor: number;
@@ -28,7 +29,7 @@ export class AnchorField extends React.Component {
             if (a != seq.numberingAnchor) {
               app.pushUndo();
               seq.numberingAnchor = a;
-              app.strictDrawing.drawing.adjustBaseNumbering();
+              orientBaseNumberings(app.strictDrawing.drawing);
               app.drawingChangedNotByInteraction();
             }
           }

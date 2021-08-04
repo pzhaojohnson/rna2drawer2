@@ -1,6 +1,7 @@
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
 import { StrictLayout } from 'Draw/layout/singleseq/strict/StrictLayout';
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
+import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 export interface Options {
 
@@ -86,6 +87,6 @@ export function updateLayout(strictDrawing: StrictDrawing, options=defaultOption
     }
     moveBases(strictDrawing, layout, options);
     strictDrawing.drawing.repositionBonds();
-    strictDrawing.drawing.adjustNumberingLineAngles();
+    orientBaseNumberings(strictDrawing.drawing);
   }
 }

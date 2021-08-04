@@ -61,8 +61,6 @@ export interface DrawingInterface {
   readonly tertiaryBonds: TertiaryBond[];
   
   repositionBonds(): void;
-  adjustNumberingLineAngles(): void;
-  adjustBaseNumbering(): void;
   clear(): void;
   svgString: string;
   savableState(): DrawingSavableState;

@@ -6,6 +6,7 @@ import * as Svg from '@svgdotjs/svg.js';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { SequenceSavableState } from 'Draw/sequences/SequenceInterface';
 import { Base } from 'Draw/bases/Base';
+import { orientBaseNumberings } from 'Draw/bases/number/orient';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
@@ -21,7 +22,6 @@ import {
   savableState as savableTertiaryBondState,
 } from 'Draw/bonds/curved/save';
 import { addSavedTertiaryBond } from 'Draw/bonds/curved/saved';
-import { adjustBaseNumbering } from './edit/adjustBaseNumbering';
 
 interface Coordinates {
   x: number;
@@ -282,14 +282,6 @@ export class Drawing implements DrawingInterface {
     this.tertiaryBonds.forEach(tb => tb.reposition());
   }
 
-  adjustNumberingLineAngles() {
-    adjustBaseNumbering(this);
-  }
-
-  adjustBaseNumbering() {
-    adjustBaseNumbering(this);
-  }
-
   clear() {
     this.sequences = [];
     this.primaryBonds = [];
@@ -354,7 +346,7 @@ export class Drawing implements DrawingInterface {
     this._addSavedPrimaryBonds(savedState, basesByIds);
     this._addSavedSecondaryBonds(savedState, basesByIds);
     this._addSavedTertiaryBonds(savedState, basesByIds);
-    this.adjustBaseNumbering();
+    orientBaseNumberings(this);
     if (wasEmpty) {
       this.centerView();
     }

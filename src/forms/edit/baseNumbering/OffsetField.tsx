@@ -1,6 +1,7 @@
 import * as React from 'react';
 import IntegerField from '../../fields/text/IntegerField';
 import { AppInterface as App } from '../../../AppInterface';
+import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 interface Props {
   currOffset: number;
@@ -26,7 +27,7 @@ export class OffsetField extends React.Component {
           if (seq && o != seq.numberingOffset) {
             app.pushUndo();
             seq.numberingOffset = o;
-            app.strictDrawing.drawing.adjustBaseNumbering();
+            orientBaseNumberings(app.strictDrawing.drawing);
             app.drawingChangedNotByInteraction();
           }
         }}
