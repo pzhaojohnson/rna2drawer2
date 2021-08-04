@@ -35,6 +35,15 @@ function recreateBase(drawing: Drawing, saved: SavedState): Base | never {
   return b;
 }
 
+function updateRecommendedDefaults(saved: SavedState) {
+  if (typeof saved.numberingAnchor == 'number') {
+    Sequence.recommendedDefaults.numberingAnchor = saved.numberingAnchor;
+  }
+  if (typeof saved.numberingIncrement == 'number') {
+    Sequence.recommendedDefaults.numberingIncrement = saved.numberingIncrement;
+  }
+}
+
 export function appendSavedSequence(drawing: Drawing, saved: SavedState): Sequence | never {
   assertIsSavedSequence(saved);
   
@@ -63,5 +72,6 @@ export function appendSavedSequence(drawing: Drawing, saved: SavedState): Sequen
   });
   
   drawing.sequences.push(seq);
+  updateRecommendedDefaults(saved);
   return seq;
 }
