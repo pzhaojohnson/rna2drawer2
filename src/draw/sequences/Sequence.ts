@@ -18,8 +18,6 @@ export class Sequence implements SequenceInterface {
   _numberingAnchor: number;
   _numberingIncrement: number;
 
-  _onAddBase?: (b: Base) => void;
-
   static fromSavedState(savedState: SequenceSavableState, svg: Svg.Svg): (Sequence | never) {
     if (savedState.className !== 'Sequence') {
       throw new Error('Wrong class name.');
