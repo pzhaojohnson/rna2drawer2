@@ -4,7 +4,10 @@ import {
 } from './DrawingInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { Sequence } from 'Draw/sequences/Sequence';
-import { SequenceSavableState } from 'Draw/sequences/SequenceInterface';
+import {
+  SavableState as SavableSequenceState,
+  savableState as savableSequenceState,
+} from 'Draw/sequences/save';
 import { Base } from 'Draw/bases/Base';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
@@ -295,8 +298,8 @@ export class Drawing implements DrawingInterface {
   }
 
   savableState(): DrawingSavableState {
-    let sequences = [] as SequenceSavableState[];
-    this.forEachSequence(seq => sequences.push(seq.savableState()));
+    let sequences = [] as SavableSequenceState[];
+    this.forEachSequence(seq => sequences.push(savableSequenceState(seq)));
     let primaryBonds = [] as SavableStraightBondState[];
     this.primaryBonds.forEach(pb => primaryBonds.push(savableStraightBondState(pb)));
     let secondaryBonds = [] as SavableStraightBondState[];

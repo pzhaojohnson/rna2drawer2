@@ -1,16 +1,4 @@
-import {
-  BaseInterface as Base,
-  BaseSavableState,
-} from 'Draw/bases/BaseInterface';
-
-export interface SequenceSavableState {
-  className: string;
-  id: string;
-  bases: BaseSavableState[];
-  numberingOffset: number;
-  numberingAnchor: number;
-  numberingIncrement: number;
-}
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 
 export interface SequenceInterface {
   id: string;
@@ -23,5 +11,4 @@ export interface SequenceInterface {
   positionOutOfRange(p: number): boolean;
   positionInRange(p: number): boolean;
   getBaseAtPosition(p: number): Base | undefined;
-  savableState(): SequenceSavableState;
 }

@@ -2,6 +2,7 @@ import { Sequence } from './Sequence';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
+import { savableState as savableSequenceState } from './save';
 
 let svg = NodeSVG();
 
@@ -9,7 +10,7 @@ describe('Sequence class', () => {
   describe('fromSavedState static method', () => {
     it('wrong class name', () => {
       let seq = new Sequence('qwer');
-      let savableState = seq.savableState();
+      let savableState = savableSequenceState(seq);
       savableState.className = 'Squence';
       expect(() => Sequence.fromSavedState(savableState, svg)).toThrow();
     });
@@ -19,7 +20,7 @@ describe('Sequence class', () => {
       seq1.numberingOffset = -200;
       seq1.numberingAnchor = 249;
       seq1.numberingIncrement = 134;
-      let savableState = seq1.savableState();
+      let savableState = savableSequenceState(seq1);
       let seq2 = Sequence.fromSavedState(savableState, svg);
       expect(seq2.id).toBe('zxcvasdfqwer');
       expect(seq2.numberingOffset).toBe(-200);
@@ -29,7 +30,7 @@ describe('Sequence class', () => {
 
     it('handles nullish numbering props', () => {
       let seq1 = new Sequence('asdf');
-      let savableState = seq1.savableState();
+      let savableState = savableSequenceState(seq1);
       savableState.numberingOffset = undefined;
       savableState.numberingAnchor = undefined;
       savableState.numberingIncrement = undefined;
@@ -46,7 +47,7 @@ describe('Sequence class', () => {
         Base.create(svg, 'M', 5, 10),
         Base.create(svg, 'p', 10, 200),
       ]);
-      let savableState = seq1.savableState();
+      let savableState = savableSequenceState(seq1);
       let seq2 = Sequence.fromSavedState(savableState, svg);
       expect(seq2.length).toBe(3);
       let b21 = seq2.getBaseAtPosition(1);
@@ -174,37 +175,5 @@ describe('Sequence class', () => {
     seq.numberingOffset = 12;
     expect(seq.getBaseAtPosition(6).character).toBe('x');
     expect(seq.getBaseAtPosition(10)).toBeFalsy(); // out of range
-  });
-
-  describe('savableState method', () => {
-    let seq = Sequence.createOutOfView(svg, 'qwerasdf', 'qwer');
-    seq.numberingOffset = 23;
-    seq.numberingAnchor = -223;
-    seq.numberingIncrement = 83;
-    let savableState = seq.savableState();
-
-    it('includes className, ID and numbering properties', () => {
-      expect(savableState.className).toBe('Sequence');
-      expect(savableState.id).toBe('qwerasdf');
-      expect(savableState.numberingOffset).toBe(23);
-      expect(savableState.numberingAnchor).toBe(-223);
-      expect(savableState.numberingIncrement).toBe(83);
-    });
-
-    it('includes bases', () => {
-      expect(savableState.bases.length).toBe(4);
-      expect(JSON.stringify(savableState.bases)).toBe(JSON.stringify([
-        seq.getBaseAtPosition(1).savableState(),
-        seq.getBaseAtPosition(2).savableState(),
-        seq.getBaseAtPosition(3).savableState(),
-        seq.getBaseAtPosition(4).savableState(),
-      ]));
-    });
-
-    it('can be converted to and from a JSON string', () => {
-      let json = JSON.stringify(savableState);
-      let parsed = JSON.parse(json);
-      expect(JSON.stringify(parsed)).toBe(json);
-    });
   });
 });

@@ -1,11 +1,8 @@
-import {
-  SequenceInterface,
-  SequenceSavableState,
-} from './SequenceInterface';
+import { SequenceInterface } from './SequenceInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { Base } from 'Draw/bases/Base';
-import { BaseSavableState } from 'Draw/bases/BaseInterface';
 import { updateBaseNumberings } from './number';
+import { SavableState as SequenceSavableState } from './save';
 
 export type Defaults = {
   numberingAnchor: number;
@@ -124,21 +121,6 @@ export class Sequence implements SequenceInterface {
 
   getBaseAtPosition(p: number): (Base | undefined) {
     return this.bases[p - 1];
-  }
-
-  savableState(): SequenceSavableState {
-    let savableState = {
-      className: 'Sequence',
-      id: this.id,
-      bases: [] as BaseSavableState[],
-      numberingOffset: this.numberingOffset,
-      numberingAnchor: this.numberingAnchor,
-      numberingIncrement: this.numberingIncrement,
-    };
-    this.bases.forEach(
-      b => savableState.bases.push(b.savableState())
-    );
-    return savableState;
   }
 }
 

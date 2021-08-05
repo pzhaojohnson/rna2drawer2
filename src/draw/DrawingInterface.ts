@@ -1,8 +1,6 @@
 import * as Svg from '@svgdotjs/svg.js';
-import {
-  SequenceInterface as Sequence,
-  SequenceSavableState,
-} from 'Draw/sequences/SequenceInterface';
+import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import { SavableState as SavableSequenceState } from 'Draw/sequences/save';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
@@ -17,7 +15,7 @@ import {
 export interface DrawingSavableState {
   className: string;
   svg: string;
-  sequences: SequenceSavableState[];
+  sequences: SavableSequenceState[];
   primaryBonds: SavableStraightBondState[];
   secondaryBonds: SavableStraightBondState[];
   tertiaryBonds: SavableTertiaryBondState[];

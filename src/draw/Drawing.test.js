@@ -1,6 +1,7 @@
 import Drawing from './Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Sequence } from 'Draw/sequences/Sequence';
+import { savableState as savableSequenceState } from 'Draw/sequences/save';
 import { Base } from 'Draw/bases/Base';
 import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
 import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
@@ -358,8 +359,8 @@ describe('savableState method', () => {
   it('includes sequences', () => {
     let sequences = savableState.sequences;
     expect(sequences.length).toBe(2);
-    expect(JSON.stringify(sequences[0])).toBe(JSON.stringify(seq1.savableState()));
-    expect(JSON.stringify(sequences[1])).toBe(JSON.stringify(seq2.savableState()));
+    expect(JSON.stringify(sequences[0])).toBe(JSON.stringify(savableSequenceState(seq1)));
+    expect(JSON.stringify(sequences[1])).toBe(JSON.stringify(savableSequenceState(seq2)));
   });
 
   it('includes primary bonds', () => {
