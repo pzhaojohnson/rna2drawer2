@@ -146,5 +146,3 @@ Sequence.recommendedDefaults = {
   numberingAnchor: 20,
   numberingIncrement: 20,
 };
-
-export default Sequence;

@@ -25,5 +25,3 @@ export interface SequenceInterface {
   getBaseAtPosition(p: number): Base | undefined;
   savableState(): SequenceSavableState;
 }
-
-export default SequenceInterface;
