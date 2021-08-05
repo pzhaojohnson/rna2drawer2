@@ -8,6 +8,7 @@ import {
   SavableState as SavableSequenceState,
   savableState as savableSequenceState,
 } from 'Draw/sequences/save';
+import { appendSavedSequence } from 'Draw/sequences/saved';
 import { Base } from 'Draw/bases/Base';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
@@ -370,8 +371,7 @@ export class Drawing implements DrawingInterface {
 
   _appendSavedSequences(savedState: DrawingSavableState): (void | never) {
     savedState.sequences.forEach(saved => {
-      let seq = Sequence.fromSavedState(saved, this.svg);
-      this.sequences.push(seq);
+      appendSavedSequence(this, saved);
     });
   }
 

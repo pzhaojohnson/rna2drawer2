@@ -2,63 +2,10 @@ import { Sequence } from './Sequence';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
-import { savableState as savableSequenceState } from './save';
 
 let svg = NodeSVG();
 
 describe('Sequence class', () => {
-  describe('fromSavedState static method', () => {
-    it('wrong class name', () => {
-      let seq = new Sequence('qwer');
-      let savableState = savableSequenceState(seq);
-      savableState.className = 'Squence';
-      expect(() => Sequence.fromSavedState(savableState, svg)).toThrow();
-    });
-
-    it('creates with id and numbering properties', () => {
-      let seq1 = new Sequence('zxcvasdfqwer');
-      seq1.numberingOffset = -200;
-      seq1.numberingAnchor = 249;
-      seq1.numberingIncrement = 134;
-      let savableState = savableSequenceState(seq1);
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(seq2.id).toBe('zxcvasdfqwer');
-      expect(seq2.numberingOffset).toBe(-200);
-      expect(seq2.numberingAnchor).toBe(249);
-      expect(seq2.numberingIncrement).toBe(134);
-    });
-
-    it('handles nullish numbering props', () => {
-      let seq1 = new Sequence('asdf');
-      let savableState = savableSequenceState(seq1);
-      savableState.numberingOffset = undefined;
-      savableState.numberingAnchor = undefined;
-      savableState.numberingIncrement = undefined;
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(seq2.numberingOffset).toBe(0);
-      expect(seq2.numberingAnchor).toBe(0);
-      expect(seq2.numberingIncrement).toBeGreaterThan(0);
-    });
-
-    it('creates with bases', () => {
-      let seq1 = new Sequence('asdf');
-      seq1.bases.splice(0, 0, ...[
-        Base.create(svg, 'y', 2, 4),
-        Base.create(svg, 'M', 5, 10),
-        Base.create(svg, 'p', 10, 200),
-      ]);
-      let savableState = savableSequenceState(seq1);
-      let seq2 = Sequence.fromSavedState(savableState, svg);
-      expect(seq2.length).toBe(3);
-      let b21 = seq2.getBaseAtPosition(1);
-      expect(b21.character).toBe('y');
-      let b22 = seq2.getBaseAtPosition(2);
-      expect(b22.character).toBe('M');
-      let b23 = seq2.getBaseAtPosition(3);
-      expect(b23.character).toBe('p');
-    });
-  });
-
   describe('createOutOfView static method', () => {
     it('creates with ID', () => {
       let seq = Sequence.createOutOfView(svg, 'ppooiiuu', 'asdf');

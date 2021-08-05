@@ -2,7 +2,6 @@ import { SequenceInterface } from './SequenceInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { Base } from 'Draw/bases/Base';
 import { updateBaseNumberings } from './number';
-import { SavableState as SequenceSavableState } from './save';
 
 export type Defaults = {
   numberingAnchor: number;
@@ -17,25 +16,6 @@ export class Sequence implements SequenceInterface {
   _numberingOffset: number;
   _numberingAnchor: number;
   _numberingIncrement: number;
-
-  static fromSavedState(savedState: SequenceSavableState, svg: Svg.Svg): (Sequence | never) {
-    if (savedState.className !== 'Sequence') {
-      throw new Error('Wrong class name.');
-    }
-    let seq = new Sequence(savedState.id);
-    seq.numberingOffset = savedState.numberingOffset ?? 0;
-    seq.numberingAnchor = savedState.numberingAnchor ?? 0;
-    seq.numberingIncrement = savedState.numberingIncrement ?? 20;
-    let bases = [] as Base[];
-    savedState.bases.forEach(sb => {
-      let b = Base.fromSavedState(sb, svg);
-      bases.push(b);
-    });
-    seq.bases.splice(0, 0, ...bases);
-    Sequence.recommendedDefaults.numberingAnchor = seq.numberingAnchor;
-    Sequence.recommendedDefaults.numberingIncrement = seq.numberingIncrement;
-    return seq;
-  }
 
   static createOutOfView(svg: Svg.Svg, id: string, characters: string): Sequence {
     let seq = new Sequence(id);
