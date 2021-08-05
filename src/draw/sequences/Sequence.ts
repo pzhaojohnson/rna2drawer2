@@ -13,6 +13,7 @@ export class Sequence implements SequenceInterface {
 
   id: string;
   bases: Base[];
+
   _numberingOffset: number;
   _numberingAnchor: number;
   _numberingIncrement: number;
@@ -32,9 +33,10 @@ export class Sequence implements SequenceInterface {
   constructor(id: string) {
     this.id = id;
     this.bases = [];
+
     this._numberingOffset = 0;
-    this._numberingAnchor = 20;
-    this._numberingIncrement = 20;
+    this._numberingAnchor = Sequence.recommendedDefaults.numberingAnchor;
+    this._numberingIncrement = Sequence.recommendedDefaults.numberingIncrement;
   }
 
   get characters(): string {
@@ -50,11 +52,10 @@ export class Sequence implements SequenceInterface {
   }
 
   set numberingOffset(no: number) {
-    if (!Number.isFinite(no) || Math.floor(no) !== no) {
-      return;
+    if (Number.isFinite(no)) {
+      this._numberingOffset = Math.floor(no);
+      updateBaseNumberings(this);
     }
-    this._numberingOffset = no;
-    updateBaseNumberings(this);
   }
 
   get numberingAnchor(): number {
@@ -62,12 +63,11 @@ export class Sequence implements SequenceInterface {
   }
 
   set numberingAnchor(na: number) {
-    if (!Number.isFinite(na) || Math.floor(na) !== na) {
-      return;
+    if (Number.isFinite(na)) {
+      this._numberingAnchor = Math.floor(na);
+      updateBaseNumberings(this);
+      Sequence.recommendedDefaults.numberingAnchor = na;
     }
-    this._numberingAnchor = na;
-    updateBaseNumberings(this);
-    Sequence.recommendedDefaults.numberingAnchor = na;
   }
 
   get numberingIncrement(): number {
@@ -75,14 +75,11 @@ export class Sequence implements SequenceInterface {
   }
 
   set numberingIncrement(ni: number) {
-    if (!Number.isFinite(ni) || Math.floor(ni) !== ni) {
-      return;
-    } else if (ni < 1) {
-      return;
+    if (Number.isFinite(ni) && ni >= 1) {
+      this._numberingIncrement = Math.floor(ni);
+      updateBaseNumberings(this);
+      Sequence.recommendedDefaults.numberingIncrement = ni;
     }
-    this._numberingIncrement = ni;
-    updateBaseNumberings(this);
-    Sequence.recommendedDefaults.numberingIncrement = ni;
   }
 
   get length(): number {

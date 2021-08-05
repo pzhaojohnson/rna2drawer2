@@ -1,126 +1,105 @@
 import { Sequence } from './Sequence';
+import { Drawing } from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { Base } from 'Draw/bases/Base';
-import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
+import { appendSequence } from 'Draw/sequences/add/sequence';
 
-let svg = NodeSVG();
+let container = null;
+let drawing = null;
+let seq = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  drawing = new Drawing();
+  drawing.addTo(container, () => NodeSVG());
+
+  seq = appendSequence(drawing, { id: 'asdf', characters: 'asdfASDFqwer' });
+});
+
+afterEach(() => {
+  drawing.clear();
+  drawing = null;
+
+  container.remove();
+  container = null;
+});
 
 describe('Sequence class', () => {
-  describe('createOutOfView static method', () => {
-    it('creates with ID', () => {
-      let seq = Sequence.createOutOfView(svg, 'ppooiiuu', 'asdf');
-      expect(seq.id).toBe('ppooiiuu');
+  describe('constructor', () => {
+    it('stores ID', () => {
+      let id = 'id' + Math.random();
+      let seq = new Sequence(id);
+      expect(seq.id).toBe(id);
+    });
+  });
+
+  test('characters getter', () => {
+    expect(seq.length).toBeGreaterThanOrEqual(5);
+    let cs = seq.characters;
+    for (let i = 0; i < seq.length; i++) {
+      expect(cs.charAt(i)).toBe(seq.bases[i].character);
+    }
+  });
+
+  describe.each`
+    name
+    ${'numberingOffset'}
+    ${'numberingAnchor'}
+    ${'numberingIncrement'}
+  `('$name property', ({ name }) => {
+    it('floors numbers', () => {
+      let v = Math.floor(60 * Math.random()); // an integer
+      seq[name] = v + 0.6; // set to non-integer
+      expect(seq[name]).toBe(v); // floored
     });
 
-    it('adds bases out of view', () => {
-      let seq = Sequence.createOutOfView(svg, 'asdf', 'wOu');
-      expect(seq.length).toBe(3);
-      let b1 = seq.getBaseAtPosition(1);
-      expect(b1.character).toBe('w');
-      let b2 = seq.getBaseAtPosition(2);
-      expect(b2.character).toBe('O');
-      let b3 = seq.getBaseAtPosition(3);
-      expect(b3.character).toBe('u');
-      seq.bases.forEach(b => {
-        expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
+    it('rejects nonfinite numbers', () => {
+      seq[name] = 28;
+      [NaN, Infinity, -Infinity].forEach(v => {
+        seq[name] = v;
+        expect(seq[name]).toBe(28); // didn't change
       });
     });
-  });
 
-  it('characters getter', () => {
-    let seq = new Sequence('asdf');
-    seq.bases.splice(0, 0, ...[
-      Base.create(svg, 'b', 1, 2),
-      Base.create(svg, 'T', 5, 4),
-      Base.create(svg, 'Q', 10, 200),
-      Base.create(svg, '2', 4, 3),
-    ]);
-    seq.bases.splice(2, 1);
-    expect(seq.characters).toBe('bT2');
-  });
-
-  it('numberingOffset getter and setter', () => {
-    let seq = new Sequence('asdf');
-    seq.numberingOffset = 25; // use setter
-    expect(seq.numberingOffset).toBe(25); // check getter
-    seq.numberingOffset = -Infinity; // ignores nonfinite numbers
-    expect(seq.numberingOffset).toBe(25);
-    seq.numberingOffset = 5.5; // ignores non-integers
-    expect(seq.numberingOffset).toBe(25);
-  });
-
-  it('numberingAnchor getter and setter', () => {
-    let seq = new Sequence('qwer');
-    seq.numberingAnchor = 1012; // use setter
-    expect(seq.numberingAnchor).toBe(1012); // check getter
-    // updates most recent prop
-    expect(Sequence.recommendedDefaults.numberingAnchor).toBe(1012);
-    seq.numberingAnchor = NaN; // ignores nonfinite numbers
-    expect(seq.numberingAnchor).toBe(1012);
-    seq.numberingAnchor = 10.1; // ignores non-integers
-    expect(seq.numberingAnchor).toBe(1012);
-  });
-
-  it('numberingIncrement getter and setter', () => {
-    let seq = new Sequence('asdf');
-    seq.numberingIncrement = 82; // use setter
-    expect(seq.numberingIncrement).toBe(82); // check getter
-    // updates most recent prop
-    expect(Sequence.recommendedDefaults.numberingIncrement).toBe(82);
-    seq.numberingIncrement = Infinity; // ignores nonfinite numbers
-    expect(seq.numberingIncrement).toBe(82);
-    seq.numberingIncrement = 9.8; // ignores non-integers
-    expect(seq.numberingIncrement).toBe(82);
-    seq.numberingIncrement = -10; // ignores negative numbers
-    expect(seq.numberingIncrement).toBe(82);
-    seq.numberingIncrement = 0; // ignores zero
-    expect(seq.numberingIncrement).toBe(82);
+    if (name == 'numberingIncrement') {
+      it('rejects nonpositive numbers', () => {
+        seq.numberingIncrement = 60;
+        [0, -1, -5, -10].forEach(v => {
+          seq.numberingIncrement = v;
+        });
+        seq.numberingIncrement = 0.68; // floors to zero
+        expect(seq.numberingIncrement).toBe(60); // didn't change
+      });
+    }
   });
 
   it('length getter', () => {
-    let seq = new Sequence('asdf');
-    expect(seq.length).toBe(0);
-    seq.bases.splice(0, 0, ...[
-      Base.create(svg, 'T', 3, 4),
-      Base.create(svg, 'H', 2, 2),
-      Base.create(svg, 't', 5, 10),
-      Base.create(svg, 'Q', 10, 20),
-    ]);
-    expect(seq.length).toBe(4);
-    seq.bases.splice(1, 1);
-    expect(seq.length).toBe(3);
+    expect(seq.bases.length).toBeGreaterThanOrEqual(5);
+    expect(seq.length).toBe(seq.bases.length);
   });
 
-  it('positionOutOfRange method', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'qwer');
-    expect(seq.positionOutOfRange(0)).toBeTruthy();
-    expect(seq.positionOutOfRange)
-  });
-
-  describe('positionOutOfRange method', () => {
-    let seq = Sequence.createOutOfView(svg, 'ki', 'ggha');
-    expect(seq.positionOutOfRange(0)).toBeTruthy();
-    expect(seq.positionOutOfRange(1)).toBeFalsy();
-    expect(seq.positionOutOfRange(2)).toBeFalsy();
-    expect(seq.positionOutOfRange(3)).toBeFalsy();
-    expect(seq.positionOutOfRange(4)).toBeFalsy();
-    expect(seq.positionOutOfRange(5)).toBeTruthy();
-  });
-
-  describe('positionInRange method', () => {
-    let seq = Sequence.createOutOfView(svg, 'uuj', 'lkjq');
-    expect(seq.positionInRange(0)).toBeFalsy();
-    expect(seq.positionInRange(1)).toBeTruthy();
-    expect(seq.positionInRange(2)).toBeTruthy();
-    expect(seq.positionInRange(3)).toBeTruthy();
-    expect(seq.positionInRange(4)).toBeTruthy();
-    expect(seq.positionInRange(5)).toBeFalsy();
+  test('positionInRange and positionOutOfRange methods', () => {
+    let seq = appendSequence(drawing, { id: 'asdf', characters: 'qweras' });
+    [1, 2, 3, 4, 5, 6].forEach(p => {
+      expect(seq.positionInRange(p)).toBeTruthy();
+      expect(seq.positionOutOfRange(p)).toBeFalsy();
+    });
+    [0, -1, -10, 7, 8, 12].forEach(p => {
+      expect(seq.positionInRange(p)).toBeFalsy();
+      expect(seq.positionOutOfRange(p)).toBeTruthy();
+    });
   });
 
   it('getBaseAtPosition method', () => {
-    let seq = Sequence.createOutOfView(svg, 'asdf', 'qwerzxcv');
-    seq.numberingOffset = 12;
-    expect(seq.getBaseAtPosition(6).character).toBe('x');
-    expect(seq.getBaseAtPosition(10)).toBeFalsy(); // out of range
+    let cs = 'zxcvZX';
+    let seq = appendSequence(drawing, { id: 'qwer', characters: cs });
+    [1, 2, 3, 4, 5, 6].forEach(p => {
+      let b = seq.getBaseAtPosition(p);
+      expect(b.character).toBe(cs.charAt(p - 1));
+    });
+    [0, -1, -5, 7, 9, 12].forEach(p => {
+      expect(seq.getBaseAtPosition(p)).toBe(undefined);
+    });
   });
 });
