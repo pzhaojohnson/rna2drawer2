@@ -6,7 +6,8 @@ import { addTertiaryBond } from 'Draw/bonds/curved/add';
 
 export function addPrimaryBonds(drawing: Drawing, sequenceId: string) {
   let seq = drawing.getSequenceById(sequenceId);
-  seq?.forEachBase((b5, p) => {
+  seq?.bases.forEach((b5, i) => {
+    let p = i + 1;
     let b3 = seq?.getBaseAtPosition(p + 1);
     if (b5 && b3) {
       addPrimaryBond(drawing, b5, b3);

@@ -73,7 +73,7 @@ describe('Sequence class', () => {
       expect(b2.character).toBe('O');
       let b3 = seq.getBaseAtPosition(3);
       expect(b3.character).toBe('u');
-      seq.forEachBase(b => {
+      seq.bases.forEach(b => {
         expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
       });
     });
@@ -174,18 +174,6 @@ describe('Sequence class', () => {
     seq.numberingOffset = 12;
     expect(seq.getBaseAtPosition(6).character).toBe('x');
     expect(seq.getBaseAtPosition(10)).toBeFalsy(); // out of range
-  });
-
-  it('forEachBase method', () => {
-    let characters = 'cvbn';
-    let seq = Sequence.createOutOfView(svg, 'adf', characters);
-    let i = 0;
-    seq.forEachBase((b, p) => {
-      expect(b.character).toBe(characters.charAt(i));
-      expect(p).toBe(i + 1);
-      i++;
-    });
-    expect(i).toBe(4);
   });
 
   describe('savableState method', () => {

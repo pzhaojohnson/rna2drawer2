@@ -39,7 +39,8 @@ function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
 function addBaseColors(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);
   if (seq) {
-    seq.forEachBase((b, p) => {
+    seq.bases.forEach((b, i) => {
+      let p = i + 1;
       let color = rna2drawer1.baseColors[p - 1];
       if (color) {
         b.text.attr({ 'fill': color.toHex() });
@@ -51,7 +52,8 @@ function addBaseColors(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
 function addBaseOutlines(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);
   if (seq) {
-    seq.forEachBase((b, p) => {
+    seq.bases.forEach((b, i) => {
+      let p = i + 1;
       let outline = rna2drawer1.baseOutlines[p - 1];
       if (outline) {
         addCircleOutline(b);

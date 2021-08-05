@@ -237,7 +237,7 @@ export class Drawing implements DrawingInterface {
   forEachBase(f: (b: Base, p: number) => void) {
     let p = 1;
     this.forEachSequence(seq => {
-      seq.forEachBase((b: Base) => {
+      seq.bases.forEach(b => {
         f(b, p);
         p++;
       });

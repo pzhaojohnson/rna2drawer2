@@ -224,7 +224,7 @@ describe('sequence and base attributes', () => {
     let bs = drawing.bases();
     let n = 0;
     drawing.forEachSequence(seq => {
-      seq.forEachBase(b => {
+      seq.bases.forEach(b => {
         expect(bs.includes(b)).toBeTruthy();
         n++;
       });

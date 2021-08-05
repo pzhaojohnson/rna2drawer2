@@ -25,7 +25,8 @@ function _appendPerBaseLayoutProps(sd: StrictDrawing, structure: Structure) {
   while (perBaseProps.length < start - 1) {
     perBaseProps.push(new PerBaseStrictLayoutProps());
   }
-  seq.forEachBase((b: Base, p: number) => {
+  seq.bases.forEach((b, i) => {
+    let p = i + 1;
     let op = start + p - 1;
     perBaseProps[op - 1] = new PerBaseStrictLayoutProps();
   });
@@ -48,7 +49,8 @@ function _radiateStructure(sd: StrictDrawing, structure: Structure) {
   let b1 = seq.getBaseAtPosition(1) as Base;
   let start = sd.drawing.overallPositionOfBase(b1);
   let perBaseProps = sd.perBaseLayoutProps();
-  seq.forEachBase((b: Base, p: number) => {
+  seq.bases.forEach((b, i) => {
+    let p = i + 1;
     let op = start + p - 1;
     perBaseProps[op - 1].stretch3 = stretches3[p - 1];
   });

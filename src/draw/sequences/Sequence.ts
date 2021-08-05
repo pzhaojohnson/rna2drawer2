@@ -64,7 +64,7 @@ export class Sequence implements SequenceInterface {
 
   get characters(): string {
     let cs = '';
-    this.forEachBase((b: Base) => {
+    this.bases.forEach(b => {
       cs += b.character;
     });
     return cs;
@@ -126,10 +126,6 @@ export class Sequence implements SequenceInterface {
     return this.bases[p - 1];
   }
 
-  forEachBase(f: (b: Base, position: number) => void) {
-    this.bases.forEach((b, i) => f(b, i + 1));
-  }
-
   savableState(): SequenceSavableState {
     let savableState = {
       className: 'Sequence',
@@ -139,7 +135,7 @@ export class Sequence implements SequenceInterface {
       numberingAnchor: this.numberingAnchor,
       numberingIncrement: this.numberingIncrement,
     };
-    this.forEachBase(
+    this.bases.forEach(
       b => savableState.bases.push(b.savableState())
     );
     return savableState;
