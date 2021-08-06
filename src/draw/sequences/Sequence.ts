@@ -11,7 +11,7 @@ export class Sequence implements SequenceInterface {
   static recommendedDefaults: Defaults;
 
   id: string;
-  bases: Base[];
+  readonly bases: Base[];
 
   _numberingOffset: number;
   _numberingAnchor: number;

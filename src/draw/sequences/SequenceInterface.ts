@@ -2,7 +2,7 @@ import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 
 export interface SequenceInterface {
   id: string;
-  bases: Base[];
+  readonly bases: Base[];
   characters: string;
   numberingOffset: number;
   numberingAnchor: number;
