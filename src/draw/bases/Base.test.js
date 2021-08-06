@@ -3,8 +3,6 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import normalizeAngle from 'Draw/normalizeAngle';
 import { addCircleHighlighting, addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import { addNumbering } from 'Draw/bases/number/add';
-import { savableState as savableNumberingState } from 'Draw/bases/number/save';
-import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import angleBetween from 'Draw/angleBetween';
 import { distance2D as distance } from 'Math/distance';
 
@@ -165,61 +163,5 @@ describe('Base class', () => {
     expect(b1.distanceBetweenCenters(b2)).toBeCloseTo(5, 3);
     let a = angleBetween(1, 2, 4, 6);
     expect(normalizeAngle(a)).toBeCloseTo(Math.asin(4 / 5));
-  });
-
-  describe('savableState method', () => {
-    it('includes className and text', () => {
-      let b = Base.create(svg, 'a', 1, 2);
-      let savableState = b.savableState();
-      expect(savableState.className).toBe('Base');
-      expect(savableState.textId).toBe(b.text.id());
-    });
-
-    /* By testing highlighting, outline and numbering separately,
-    we test that the conditional clauses work correctly. */
-
-    it('can include highlighting', () => {
-      // with no outline or numbering
-      let b = Base.create(svg, 'q', 10, 20);
-      addCircleHighlighting(b);
-      let h = b.highlighting;
-      let savableState = b.savableState();
-      expect(
-        JSON.stringify(savableState.highlighting)
-      ).toBe(JSON.stringify(savableCircleAnnotationState(h)));
-    });
-
-    it('can include outline', () => {
-      // with no highlighting or numbering
-      let b = Base.create(svg, 'b', 100, 200);
-      addCircleOutline(b);
-      let o = b.outline;
-      let savableState = b.savableState();
-      expect(
-        JSON.stringify(savableState.outline)
-      ).toBe(JSON.stringify(savableCircleAnnotationState(o)));
-    });
-
-    it('can include numbering', () => {
-      // with no highlighting or outline
-      let b = Base.create(svg, 'R', 0, 1);
-      addNumbering(b, 1000);
-      let n = b.numbering;
-      let savableState = b.savableState();
-      expect(JSON.stringify(savableState.numbering)).toBe(JSON.stringify(savableNumberingState(n)));
-    });
-
-    describe('can be converted to and from a JSON string', () => {
-      it('with highlighting, outline and numbering', () => {
-        let b = Base.create(svg, 'n', 20, 50);
-        addCircleHighlighting(b);
-        addCircleOutline(b);
-        addNumbering(b, 100);
-        let savableState = b.savableState();
-        let json = JSON.stringify(savableState);
-        let parsed = JSON.parse(json);
-        expect(JSON.stringify(parsed)).toBe(json);
-      });
-    });
   });
 });

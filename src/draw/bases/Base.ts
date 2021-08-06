@@ -1,7 +1,4 @@
-import {
-  BaseInterface,
-  BaseSavableState,
-} from './BaseInterface';
+import { BaseInterface } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
 import { assignUuid } from 'Draw/svg/id';
@@ -153,16 +150,6 @@ export class Base implements BaseInterface {
       other.xCenter,
       other.yCenter
     );
-  }
-
-  savableState(): BaseSavableState {
-    return {
-      className: 'Base',
-      textId: this.text.id(),
-      highlighting: this.highlighting ? savableCircleAnnotationState(this.highlighting) : undefined,
-      outline: this.outline ? savableCircleAnnotationState(this.outline) : undefined,
-      numbering: this.numbering ? savableNumberingState(this.numbering) : undefined,
-    };
   }
 }
 

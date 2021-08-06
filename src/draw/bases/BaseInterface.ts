@@ -2,17 +2,7 @@ import * as Svg from '@svgdotjs/svg.js';
 import {
   CircleBaseAnnotationInterface as CircleBaseAnnotation,
 } from "Draw/bases/annotate/circle/CircleBaseAnnotationInterface";
-import { SavableState as SavableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import { BaseNumberingInterface as BaseNumbering } from "Draw/bases/number/BaseNumberingInterface";
-import { SavableState as SavableBaseNumberingState } from 'Draw/bases/number/save';
-
-export interface BaseSavableState {
-  className: string;
-  textId: string;
-  highlighting?: SavableCircleAnnotationState;
-  outline?: SavableCircleAnnotationState;
-  numbering?: SavableBaseNumberingState;
-}
 
 export interface BaseInterface {
   readonly text: Svg.Text;
@@ -29,8 +19,6 @@ export interface BaseInterface {
   highlighting?: CircleBaseAnnotation;
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;
-  
-  savableState(): BaseSavableState;
 }
 
 export default BaseInterface;
