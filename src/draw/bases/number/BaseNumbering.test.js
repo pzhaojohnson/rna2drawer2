@@ -4,7 +4,7 @@ import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
-import normalizeAngle from 'Draw/normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 import { round } from 'Math/round';
 import { position } from './position';
 import { uuidRegex } from 'Draw/svg/id';

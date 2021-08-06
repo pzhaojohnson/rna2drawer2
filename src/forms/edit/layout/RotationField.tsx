@@ -1,7 +1,7 @@
 import * as React from 'react';
 import NumberField from '../../fields/text/NumberField';
 import { AppInterface as App } from '../../../AppInterface';
-import normalizeAngle from '../../../draw/normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 import degreesAreClose from './degreesAreClose';
 
 interface Props {

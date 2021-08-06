@@ -1,6 +1,6 @@
 import { Base } from './Base';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import normalizeAngle from 'Draw/normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 import { addCircleHighlighting, addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import { addNumbering } from 'Draw/bases/number/add';
 import angleBetween from 'Draw/angleBetween';

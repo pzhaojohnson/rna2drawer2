@@ -2,7 +2,7 @@ import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { atPosition } from 'Array/at';
 import { isPoint2D as isPoint } from 'Math/Point';
-import { normalizeAngle } from 'Draw/normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 
 type BisectingAngles = {
   clockwise: number;

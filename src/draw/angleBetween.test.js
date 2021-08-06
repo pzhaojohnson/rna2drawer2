@@ -1,5 +1,5 @@
 import angleBetween from './angleBetween';
-import normalizeAngle from './normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 
 it('angleBetween', () => {
   let a = angleBetween(0, 0, 1, 0);

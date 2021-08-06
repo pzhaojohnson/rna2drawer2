@@ -1,7 +1,7 @@
 import { QuadraticBezierBondInterface as QuadraticBezierBond } from './QuadraticBezierBondInterface';
 import { midpoint2D as midpoint } from 'Math/midpoint';
 import { distance2D as distance } from 'Math/distance';
-import { normalizeAngle } from 'Draw/normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 import { ControlPointDisplacement } from './positioning';
 
 function isControlPointDisplacement(v: any): v is ControlPointDisplacement {

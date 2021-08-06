@@ -2,7 +2,7 @@ import { RoundLoop, TriangleLoop, FlatOutermostLoop, StemLayout } from './StemLa
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
-import normalizeAngle from '../../../normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 import parseDotBracket from '../../../../parse/parseDotBracket';
 import { circleCircumference } from './circleCircumference';
 import { circleCenter } from './circleCenter';

@@ -3,7 +3,7 @@ import { Partners, partnerOf } from 'Partners/Partners';
 import { isUnpaired } from 'Partners/paired';
 import UnpairedRegion from './UnpairedRegion';
 import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
-import normalizeAngle from '../../../normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import {
   PerBaseStrictLayoutProps,

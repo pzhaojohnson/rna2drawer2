@@ -1,5 +1,5 @@
 import { Partners } from 'Partners/Partners';
-import normalizeAngle from '../../../normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 import StemInterface from './StemInterface';
 import Stem from './Stem';
 import UnpairedRegion from './UnpairedRegion';

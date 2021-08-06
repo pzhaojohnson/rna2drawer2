@@ -3,7 +3,7 @@ import {
   Stem,
 } from './PivotingModeInterface';
 import { angleBetween } from '../../angleBetween';
-import { normalizeAngle } from '../../normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 
 export interface Movement {
   x: number;

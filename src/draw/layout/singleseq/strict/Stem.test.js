@@ -1,7 +1,7 @@
 import Stem from './Stem';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
-import normalizeAngle from '../../../normalizeAngle';
+import { normalizeAngle } from 'Math/angles/normalize';
 import { StemLayout } from './StemLayout';
 import parseDotBracket from '../../../../parse/parseDotBracket';
 
