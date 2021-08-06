@@ -142,5 +142,3 @@ Base.recommendedDefaults = {
     'font-style': 'normal',
   },
 };
-
-export default Base;
