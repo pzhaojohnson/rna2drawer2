@@ -1,26 +1,10 @@
 import {
-  addPrimaryBonds,
   addSecondaryBonds,
   addTertiaryBonds,
   appendStructure,
 } from './addStructure';
 import Drawing from '../Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-
-describe('addPrimaryBonds function', () => {
-  it('adds primary bonds', () => {
-    let drawing = new Drawing();
-    drawing.addTo(document.body, () => NodeSVG());
-    let seq = drawing.appendSequence('asdf', 'qwer');
-    addPrimaryBonds(drawing, 'asdf');
-    let bonds = [];
-    drawing.primaryBonds.forEach(pb => bonds.push(pb));
-    expect(bonds.length).toBe(3);
-    expect(bonds.find(pb => pb.base1.character == 'q' && pb.base2.character == 'w')).toBeTruthy();
-    expect(bonds.find(pb => pb.base1.character == 'w' && pb.base2.character == 'e')).toBeTruthy();
-    expect(bonds.find(pb => pb.base1.character == 'e' && pb.base2.character == 'r')).toBeTruthy();
-  });
-});
 
 describe('addSecondaryBonds function', () => {
   it('adds secondary bonds', () => {

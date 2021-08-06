@@ -276,11 +276,9 @@ describe('appendSequence method', () => {
 
   it('sequence ID is already taken', () => {
     let n = drawing.numSequences;
-    let spy1 = jest.spyOn(Sequence, 'createOutOfView');
     let seq = drawing.appendSequence('qwer', 'qwer');
     expect(seq).toBeFalsy();
     expect(drawing.numSequences).toBe(n);
-    expect(spy1).not.toHaveBeenCalled();
   });
 
   it('sequence ID is not already taken', () => {
@@ -342,8 +340,6 @@ describe('savableState method', () => {
   let b3 = seq1.getBaseAtPosition(3);
   let b6 = seq2.getBaseAtPosition(2);
   let b8 = seq2.getBaseAtPosition(4);
-  let pb1 = addPrimaryBond(drawing, b1, b3);
-  let pb2 = addPrimaryBond(drawing, b3, b6);
   let sb1 = addSecondaryBond(drawing, b2, b8);
   let sb2 = addSecondaryBond(drawing, b6, b3);
   let tb1 = addTertiaryBond(drawing, b6, b1);
@@ -364,10 +360,13 @@ describe('savableState method', () => {
   });
 
   it('includes primary bonds', () => {
-    let primaryBonds = savableState.primaryBonds;
-    expect(primaryBonds.length).toBe(2);
-    expect(JSON.stringify(primaryBonds[0])).toBe(JSON.stringify(savableStraightBondState(pb1)));
-    expect(JSON.stringify(primaryBonds[1])).toBe(JSON.stringify(savableStraightBondState(pb2)));
+    expect(drawing.primaryBonds.length).toBe(8);
+    expect(savableState.primaryBonds.length).toBe(drawing.primaryBonds.length);
+    for (let i = 0; i < drawing.primaryBonds.length; i++) {
+      expect(savableState.primaryBonds[i]).toEqual(
+        savableStraightBondState(drawing.primaryBonds[i])
+      );
+    }
   });
 
   it('includes secondary bonds', () => {

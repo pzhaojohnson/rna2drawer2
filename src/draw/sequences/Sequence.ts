@@ -1,5 +1,4 @@
 import { SequenceInterface } from './SequenceInterface';
-import * as Svg from '@svgdotjs/svg.js';
 import { Base } from 'Draw/bases/Base';
 import { updateBaseNumberings } from './number';
 
@@ -17,18 +16,6 @@ export class Sequence implements SequenceInterface {
   _numberingOffset: number;
   _numberingAnchor: number;
   _numberingIncrement: number;
-
-  static createOutOfView(svg: Svg.Svg, id: string, characters: string): Sequence {
-    let seq = new Sequence(id);
-    let bases = [];
-    for (let c of characters) {
-      bases.push(Base.createOutOfView(svg, c));
-    }
-    seq.bases.splice(0, 0, ...bases);
-    seq.numberingAnchor = Sequence.recommendedDefaults.numberingAnchor;
-    seq.numberingIncrement = Sequence.recommendedDefaults.numberingIncrement;
-    return seq;
-  }
 
   constructor(id: string) {
     this.id = id;

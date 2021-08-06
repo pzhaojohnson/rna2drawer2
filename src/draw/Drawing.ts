@@ -4,6 +4,7 @@ import {
 } from './DrawingInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { Sequence } from 'Draw/sequences/Sequence';
+import { appendSequence } from 'Draw/sequences/add/sequence';
 import {
   SavableState as SavableSequenceState,
   savableState as savableSequenceState,
@@ -189,9 +190,7 @@ export class Drawing implements DrawingInterface {
     if (this.sequenceIdIsTaken(id)) {
       return null;
     }
-    let seq = Sequence.createOutOfView(this.svg, id, characters);
-    this.sequences.push(seq);
-    return seq;
+    return appendSequence(this, { id: id, characters: characters });
   }
 
   get numBases(): number {

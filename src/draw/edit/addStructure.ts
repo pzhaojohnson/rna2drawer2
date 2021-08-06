@@ -1,19 +1,8 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
 import { Partners } from 'Partners/Partners';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
+import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
-
-export function addPrimaryBonds(drawing: Drawing, sequenceId: string) {
-  let seq = drawing.getSequenceById(sequenceId);
-  seq?.bases.forEach((b5, i) => {
-    let p = i + 1;
-    let b3 = seq?.getBaseAtPosition(p + 1);
-    if (b5 && b3) {
-      addPrimaryBond(drawing, b5, b3);
-    }
-  });
-}
 
 function _basePairs(drawing: Drawing, sequenceId: string, partners: Partners): [Base, Base][] {
   let pairs = [] as [Base, Base][];
@@ -57,7 +46,6 @@ export function appendStructure(drawing: Drawing, structure: Structure): boolean
   if (!appended) {
     return false;
   }
-  addPrimaryBonds(drawing, structure.id);
   if (structure.secondaryPartners) {
     addSecondaryBonds(drawing, structure.id, structure.secondaryPartners);
   }
