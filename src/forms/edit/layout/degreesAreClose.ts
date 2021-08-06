@@ -1,4 +1,4 @@
-import areClose from "../../../draw/areClose";
+import { areClose } from 'Math/close';
 
 export function degreesAreClose(d1: number, d2: number, places=3): boolean {
   while (d2 > d1) {
