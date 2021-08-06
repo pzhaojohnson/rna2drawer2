@@ -4,6 +4,7 @@ import { Base } from 'Draw/bases/Base';
 import { findTextByUniqueId } from 'Draw/saved/svg';
 import { addSavedCircleHighlighting, addSavedCircleOutline } from 'Draw/bases/annotate/circle/save';
 import { addSavedNumbering } from 'Draw/bases/number/save';
+import { values as baseValues } from 'Draw/bases/values';
 
 export type SavedState = { [key: string]: unknown }
 
@@ -67,8 +68,10 @@ export function appendSavedSequence(drawing: Drawing, saved: SavedState): Sequen
   if (!(saved.bases instanceof Array)) {
     throw new Error('Saved state is missing the bases of the sequence.');
   }
-  saved.bases.forEach((b: SavedState) => {
-    seq.bases.push(recreateBase(drawing, b));
+  saved.bases.forEach((s: SavedState) => {
+    let b = recreateBase(drawing, s);
+    seq.bases.push(b);
+    Base.recommendedDefaults = baseValues(b);
   });
   
   drawing.sequences.push(seq);
