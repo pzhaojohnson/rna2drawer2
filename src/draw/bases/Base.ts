@@ -37,25 +37,6 @@ export class Base implements BaseInterface {
   _xCenter!: number;
   _yCenter!: number;
 
-  static fromSavedState(savedState: BaseSavableState, svg: Svg.Svg): (Base | never) {
-    if (savedState.className !== 'Base') {
-      throw new Error('Wrong class name.');
-    }
-    let text = svg.findOne('#' + savedState.textId) as Svg.Text;
-    let b = new Base(text);
-    if (savedState.highlighting) {
-      addSavedCircleHighlighting(b, savedState.highlighting);
-    }
-    if (savedState.outline) {
-      addSavedCircleOutline(b, savedState.outline);
-    }
-    if (savedState.numbering) {
-      addSavedNumbering(b, savedState.numbering);
-    }
-    Base.recommendedDefaults = values(b);
-    return b;
-  }
-
   static create(svg: Svg.Svg, character: string, xCenter: number, yCenter: number): (Base | never) {
     let text = svg.text((add) => add.tspan(character));
     text.id();
