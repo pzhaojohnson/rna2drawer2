@@ -4,7 +4,6 @@ import normalizeAngle from 'Draw/normalizeAngle';
 import { addCircleHighlighting, addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import { addNumbering } from 'Draw/bases/number/add';
 import angleBetween from 'Draw/angleBetween';
-import { distance2D as distance } from 'Math/distance';
 
 let svg = NodeSVG();
 

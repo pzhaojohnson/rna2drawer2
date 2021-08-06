@@ -6,22 +6,7 @@ import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-import { removeNumbering } from 'Draw/bases/number/add';
-import { addSavedNumbering, savableState as savableNumberingState } from 'Draw/bases/number/save';
-import {
-  addCircleHighlighting,
-  removeCircleHighlighting,
-  addCircleOutline,
-  removeCircleOutline,
-} from 'Draw/bases/annotate/circle/add';
-import {
-  SavableState as SavableCircleAnnotationState,
-  savableState as savableCircleAnnotationState,
-  addSavedCircleHighlighting,
-  addSavedCircleOutline,
-} from 'Draw/bases/annotate/circle/save';
-import { areClose } from 'Draw/areClose';
-import { Values, values, setValues } from './values';
+import { Values, setValues } from './values';
 
 export class Base implements BaseInterface {
   static recommendedDefaults: Values;
