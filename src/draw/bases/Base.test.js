@@ -18,14 +18,6 @@ describe('Base class', () => {
     });
   });
 
-  describe('createOutOfView static method', () => {
-    it('creates with character and out of view', () => {
-      let b = Base.createOutOfView(svg, 'I');
-      expect(b.character).toBe('I');
-      expect(b.xCenter < -50 || b.yCenter < -50).toBeTruthy();
-    });
-  });
-
   describe('constructor', () => {
     it('stores text', () => {
       let t = svg.text(add => add.tspan('w'));

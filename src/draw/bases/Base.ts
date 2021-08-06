@@ -43,10 +43,6 @@ export class Base implements BaseInterface {
     return b;
   }
 
-  static createOutOfView(svg: Svg.Svg, character: string): (Base | never) {
-    return Base.create(svg, character, 0, -200);
-  }
-
   /**
    * Throws if the content of the text element is not a single character.
    */
