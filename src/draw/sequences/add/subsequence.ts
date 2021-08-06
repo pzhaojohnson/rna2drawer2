@@ -1,6 +1,7 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { Base } from 'Draw/bases/Base';
+import { setValues as setBaseValues } from 'Draw/bases/values';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { removePrimaryBondById } from 'Draw/bonds/straight/remove';
 import { atPosition } from 'Array/at';
@@ -45,7 +46,9 @@ function insertBases(drawing: Drawing, props: SubsequenceProps) {
     let t = drawing.svg.text(() => {});
     t.plain(c);
 
-    bs.push(new Base(t));
+    let b = new Base(t);
+    setBaseValues(b, Base.recommendedDefaults);
+    bs.push(b);
   }
   props.parent.bases.splice(props.start - 1, 0, ...bs);
 }
