@@ -174,13 +174,6 @@ export class Base implements BaseInterface {
     );
   }
 
-  remove() {
-    removeCircleHighlighting(this);
-    removeCircleOutline(this);
-    removeNumbering(this);
-    this.text.remove();
-  }
-
   savableState(): BaseSavableState {
     return {
       className: 'Base',

@@ -235,17 +235,6 @@ describe('Base class', () => {
     expect(normalizeAngle(a)).toBeCloseTo(Math.asin(4 / 5));
   });
 
-  it('remove method', () => {
-    let b = Base.create(svg, 'a', 5, 5);
-    let textId = '#' + b.text.id();
-    expect(svg.findOne(textId)).toBeTruthy();
-    b.remove();
-    expect(svg.findOne(textId)).toBeFalsy();
-    expect(b.highlighting).toBeFalsy();
-    expect(b.outline).toBeFalsy();
-    expect(b.numbering).toBeFalsy();
-  });
-
   describe('savableState method', () => {
     it('includes className and text', () => {
       let b = Base.create(svg, 'a', 1, 2);

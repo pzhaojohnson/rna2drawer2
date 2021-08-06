@@ -30,7 +30,6 @@ export interface BaseInterface {
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;
   
-  remove(): void;
   savableState(): BaseSavableState;
 }
 
