@@ -53,7 +53,7 @@ export interface Structure {
 }
 
 export function appendStructure(drawing: Drawing, structure: Structure): boolean {
-  let appended = drawing.appendSequenceOutOfView(structure.id, structure.characters);
+  let appended = drawing.appendSequence(structure.id, structure.characters);
   if (!appended) {
     return false;
   }

@@ -42,7 +42,7 @@ export interface DrawingInterface {
   sequenceIds(): string[];
   sequenceIdIsTaken(id: string): boolean;
   overallCharacters: string;
-  appendSequenceOutOfView(id: string, characters: string): Sequence | null;
+  appendSequence(id: string, characters: string): Sequence | null;
   
   numBases: number;
   getBaseById(id: string): Base | null;

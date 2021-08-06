@@ -15,7 +15,7 @@ beforeEach(() => {
 
   drawing = new Drawing();
   drawing.addTo(container, () => NodeSVG());
-  seq = drawing.appendSequenceOutOfView('asdf', 'asdfqwerzxcvasdfqwerzxcvasdfqwerzxcv');
+  seq = drawing.appendSequence('asdf', 'asdfqwerzxcvasdfqwerzxcvasdfqwerzxcv');
 
   inputs = {
     startPosition: 1,
@@ -41,7 +41,7 @@ it('drawing has no sequences', () => {
 });
 
 it('drawing has more than one sequence', () => {
-  drawing.appendSequenceOutOfView('qwer', 'qwer');
+  drawing.appendSequence('qwer', 'qwer');
   expect(drawing.numSequences).toBe(2);
   expect(typeof positionsToSelect(drawing, inputs)).toBe('string');
 });

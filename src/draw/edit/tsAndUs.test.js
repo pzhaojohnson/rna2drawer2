@@ -11,9 +11,9 @@ it('hasTs function', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
   // test handling of multiple sequences
-  let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfu');
-  let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwUerqwer');
-  let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zzx');
+  let seq1 = drawing.appendSequence('asdf', 'asdfu');
+  let seq2 = drawing.appendSequence('qwer', 'qwUerqwer');
+  let seq3 = drawing.appendSequence('zxcv', 'zzx');
   // has lowercase and uppercase Us but no Ts
   expect(hasTs(drawing)).toBeFalsy();
   // add a lowercase T
@@ -31,9 +31,9 @@ it('hasUs function', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
   // test handling of multiple sequences
-  let seq1 = drawing.appendSequenceOutOfView('qwer', 'qwttnm');
-  let seq2 = drawing.appendSequenceOutOfView('zxcv', 'zTqw');
-  let seq3 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
+  let seq1 = drawing.appendSequence('qwer', 'qwttnm');
+  let seq2 = drawing.appendSequence('zxcv', 'zTqw');
+  let seq3 = drawing.appendSequence('asdf', 'asdfasdf');
   // has lowercase and uppercase Ts but no Us
   expect(hasUs(drawing)).toBeFalsy();
   // add a lowercase U
@@ -51,9 +51,9 @@ it('tsToUs and usToTs functions', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
   // test handling of multiple sequences
-  let seq1 = drawing.appendSequenceOutOfView('qwer', 'qwuUqet');
-  let seq2 = drawing.appendSequenceOutOfView('zxcv', 'tUzx');
-  let seq3 = drawing.appendSequenceOutOfView('asdf', 'asTq');
+  let seq1 = drawing.appendSequence('qwer', 'qwuUqet');
+  let seq2 = drawing.appendSequence('zxcv', 'tUzx');
+  let seq3 = drawing.appendSequence('asdf', 'asTq');
   // converting lowercase and uppercase Ts to Us
   tsToUs(drawing);
   expect(drawing.overallCharacters).toBe('qwuUqeuuUzxasUq');

@@ -6,8 +6,8 @@ describe('onClick callback', () => {
   it('all base letters are already capitalized', () => {
     let app = new App(() => NodeSVG());
     let drawing = app.strictDrawing.drawing;
-    drawing.appendSequenceOutOfView('qwer', 'QWER');
-    drawing.appendSequenceOutOfView('asdf', 'ASDFASDFASDF');
+    drawing.appendSequence('qwer', 'QWER');
+    drawing.appendSequence('asdf', 'ASDFASDFASDF');
     let spy1 = jest.spyOn(app, 'pushUndo');
     let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
     let b = CapitalizeButton({ app: app });
@@ -20,8 +20,8 @@ describe('onClick callback', () => {
   it('drawing has lowercase base letters', () => {
     let app = new App(() => NodeSVG());
     let drawing = app.strictDrawing.drawing;
-    drawing.appendSequenceOutOfView('zxcv', 'ZxcC');
-    drawing.appendSequenceOutOfView('qwer', 'qqWWebN');
+    drawing.appendSequence('zxcv', 'ZxcC');
+    drawing.appendSequence('qwer', 'qqWWebN');
     let spy1 = jest.spyOn(app, 'pushUndo');
     let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
     let b = CapitalizeButton({ app: app });

@@ -6,8 +6,8 @@ describe('onClick callback', () => {
   it('drawing has no capital base letters', () => {
     let app = new App(() => NodeSVG());
     let drawing = app.strictDrawing.drawing;
-    drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
-    drawing.appendSequenceOutOfView('zxcv', 'zxc');
+    drawing.appendSequence('qwer', 'qwerqwer');
+    drawing.appendSequence('zxcv', 'zxc');
     let spy1 = jest.spyOn(app, 'pushUndo');
     let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
     let b = DecapitalizeButton({ app: app });
@@ -20,8 +20,8 @@ describe('onClick callback', () => {
   it('drawing has capital base letters', () => {
     let app = new App(() => NodeSVG());
     let drawing = app.strictDrawing.drawing;
-    drawing.appendSequenceOutOfView('qwer', 'qQweRR');
-    drawing.appendSequenceOutOfView('asdf', 'aASDff');
+    drawing.appendSequence('qwer', 'qQweRR');
+    drawing.appendSequence('asdf', 'aASDff');
     let spy1 = jest.spyOn(app, 'pushUndo');
     let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
     let b = DecapitalizeButton({ app: app });

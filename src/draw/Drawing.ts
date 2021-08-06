@@ -185,7 +185,7 @@ export class Drawing implements DrawingInterface {
   /**
    * Returns null if the given sequence ID is taken.
    */
-  appendSequenceOutOfView(id: string, characters: string): (Sequence | null) {
+  appendSequence(id: string, characters: string): (Sequence | null) {
     if (this.sequenceIdIsTaken(id)) {
       return null;
     }

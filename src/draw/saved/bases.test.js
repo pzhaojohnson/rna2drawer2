@@ -13,9 +13,9 @@ beforeEach(() => {
   drawing.addTo(container, () => NodeSVG());
 
   // test with multiple sequences
-  drawing.appendSequenceOutOfView('Seq1', 'asdfQWERzxcvZXCV');
-  drawing.appendSequenceOutOfView('Seq2', 'QQWWeerr');
-  drawing.appendSequenceOutOfView('Seq3', '1234cc5678');
+  drawing.appendSequence('Seq1', 'asdfQWERzxcvZXCV');
+  drawing.appendSequence('Seq2', 'QQWWeerr');
+  drawing.appendSequence('Seq3', '1234cc5678');
 });
 
 afterEach(() => {

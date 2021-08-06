@@ -21,7 +21,7 @@ it('handles missing arguments', () => {
 it('can remove highlighting', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
-  let seq = drawing.appendSequenceOutOfView('asdf', 'asdf');
+  let seq = drawing.appendSequence('asdf', 'asdf');
   let b2 = seq.getBaseAtPosition(2);
   let b4 = seq.getBaseAtPosition(4);
   addCircleHighlighting(b2);
@@ -37,7 +37,7 @@ it('can remove highlighting', () => {
 it('can add highlighting with default props', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
-  let seq = drawing.appendSequenceOutOfView('asdf', 'asdf');
+  let seq = drawing.appendSequence('asdf', 'asdf');
   let b2 = seq.getBaseAtPosition(2);
   setAllBaseHighlightings(
     drawing,
@@ -54,7 +54,7 @@ it('can add highlighting with default props', () => {
 it('can add highlighting with specified props', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
-  let seq = drawing.appendSequenceOutOfView('asdf', 'asdf');
+  let seq = drawing.appendSequence('asdf', 'asdf');
   let b3 = seq.getBaseAtPosition(3);
   let props = {
     radius: 10,
@@ -78,7 +78,7 @@ it('can add highlighting with specified props', () => {
 it('handles highlightings lists of wrong lengths', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
-  let seq = drawing.appendSequenceOutOfView('asd', 'asd');
+  let seq = drawing.appendSequence('asd', 'asd');
   let b1 = seq.getBaseAtPosition(1);
   let b2 = seq.getBaseAtPosition(2);
   let b3 = seq.getBaseAtPosition(3);
@@ -101,8 +101,8 @@ it('handles highlightings lists of wrong lengths', () => {
 it('handles multiple sequences', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
-  let seq1 = drawing.appendSequenceOutOfView('asd', 'asd');
-  let seq2 = drawing.appendSequenceOutOfView('qwe', 'qwe');
+  let seq1 = drawing.appendSequence('asd', 'asd');
+  let seq2 = drawing.appendSequence('qwe', 'qwe');
   let b2 = seq1.getBaseAtPosition(2);
   let b6 = seq2.getBaseAtPosition(3);
   setAllBaseHighlightings(

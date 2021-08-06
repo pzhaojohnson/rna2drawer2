@@ -31,9 +31,9 @@ beforeEach(() => {
   drawing.addTo(container, () => NodeSVG());
 
   // test with multiple sequences
-  drawing.appendSequenceOutOfView('QWER', 'QWERQWER');
-  drawing.appendSequenceOutOfView('1234', '123456');
-  drawing.appendSequenceOutOfView('zzzz', 'zzzzzzzzzzzzzz');
+  drawing.appendSequence('QWER', 'QWERQWER');
+  drawing.appendSequence('1234', '123456');
+  drawing.appendSequence('zzzz', 'zzzzzzzzzzzzzz');
 
   [
     [1, 2],

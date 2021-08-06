@@ -36,7 +36,7 @@ afterEach(() => {
 
 describe('updateBaseNumberings function', () => {
   it('updates base numberings', () => {
-    drawing.appendSequenceOutOfView('asdf', 'ASDFasdfQWERzxcvZ');
+    drawing.appendSequence('asdf', 'ASDFasdfQWERzxcvZ');
     let seq = drawing.sequences[0];
     seq.numberingOffset = 28;
     seq.numberingAnchor = -3;
@@ -52,7 +52,7 @@ describe('updateBaseNumberings function', () => {
   it('handles negative numbering increments', () => {
     // a negative numbering increment could cause an infinite loop
     // depending on how the bases of the sequence are iterated over
-    drawing.appendSequenceOutOfView('qwer', 'qwerQWERasdfASDF');
+    drawing.appendSequence('qwer', 'qwerQWERasdfASDF');
     let seq = drawing.sequences[0];
     seq.numberingOffset = 0;
     seq.numberingAnchor = 0;

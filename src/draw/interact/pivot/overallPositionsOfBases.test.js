@@ -34,12 +34,12 @@ it('empty drawing and empty list of bases', () => {
 });
 
 it('empty list of bases', () => {
-  drawing.appendSequenceOutOfView('asdf', 'asdfqwerzxcv');
+  drawing.appendSequence('asdf', 'asdfqwerzxcv');
   expect(overallPositionsOfBases(drawing, []).size).toBe(0);
 });
 
 it('one sequence', () => {
-  drawing.appendSequenceOutOfView('qwer', 'qwerQWERqwer');
+  drawing.appendSequence('qwer', 'qwerQWERqwer');
   let ps = new Set([3, 6, 8, 9, 11]);
   let bs = [];
   ps.forEach(p => bs.push(drawing.getBaseAtOverallPosition(p)));
@@ -50,9 +50,9 @@ it('one sequence', () => {
 });
 
 it('multiple sequences', () => {
-  drawing.appendSequenceOutOfView('asdf', 'asdf');
-  drawing.appendSequenceOutOfView('qwer', 'qwerQWER');
-  drawing.appendSequenceOutOfView('zxcv', 'zxcvZX');
+  drawing.appendSequence('asdf', 'asdf');
+  drawing.appendSequence('qwer', 'qwerQWER');
+  drawing.appendSequence('zxcv', 'zxcvZX');
   let ps = new Set([2, 8, 9, 15, 18]);
   let bs = [];
   ps.forEach(p => bs.push(drawing.getBaseAtOverallPosition(p)));

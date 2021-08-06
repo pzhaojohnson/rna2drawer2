@@ -6,8 +6,8 @@ describe('onClick callback', () => {
   it('drawing has lowercase and uppercase Ts but no Us', () => {
     let app = new App(() => NodeSVG());
     let drawing = app.strictDrawing.drawing;
-    drawing.appendSequenceOutOfView('qwer', 'qtasas');
-    drawing.appendSequenceOutOfView('asdf', 'asTTzx');
+    drawing.appendSequence('qwer', 'qtasas');
+    drawing.appendSequence('asdf', 'asTTzx');
     let spy1 = jest.spyOn(app, 'pushUndo');
     let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
     let b = UsToTsButton({ app: app });
@@ -20,8 +20,8 @@ describe('onClick callback', () => {
   it('drawing has lowercase and uppercase Us', () => {
     let app = new App(() => NodeSVG());
     let drawing = app.strictDrawing.drawing;
-    drawing.appendSequenceOutOfView('zxas', 'zxUiUsss');
-    drawing.appendSequenceOutOfView('qwer', 'quweurb');
+    drawing.appendSequence('zxas', 'zxUiUsss');
+    drawing.appendSequence('qwer', 'quweurb');
     let spy1 = jest.spyOn(app, 'pushUndo');
     let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
     let b = UsToTsButton({ app: app });

@@ -14,8 +14,8 @@ let drawing = new Drawing();
 let container = document.createElement('div');
 document.body.appendChild(container);
 drawing.addTo(container, () => NodeSVG());
-let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
-let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerqwerqwer');
+let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
+let seq2 = drawing.appendSequence('qwer', 'qwerqwerqwer');
 let pb1 = addPrimaryBond(
   drawing,
   seq1.getBaseAtPosition(1),
@@ -128,7 +128,7 @@ it('isEmpty method', () => {
   document.body.appendChild(container);
   drawing.addTo(container, () => NodeSVG());
   expect(drawing.isEmpty()).toBeTruthy();
-  drawing.appendSequenceOutOfView('asdf', 'asdf');
+  drawing.appendSequence('asdf', 'asdf');
   expect(drawing.isEmpty()).toBeFalsy();
 });
 
@@ -137,9 +137,9 @@ describe('sequence and base attributes', () => {
   let container = document.createElement('div');
   document.body.appendChild(container);
   drawing.addTo(container, () => NodeSVG());
-  let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
-  let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerqwerqwer');
-  let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+  let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
+  let seq2 = drawing.appendSequence('qwer', 'qwerqwerqwer');
+  let seq3 = drawing.appendSequence('zxcv', 'zxcv');
 
   it('numSequences getter', () => {
     expect(drawing.numSequences).toBe(3);
@@ -267,17 +267,17 @@ describe('sequence and base attributes', () => {
   });
 });
 
-describe('appendSequenceOutOfView method', () => {
+describe('appendSequence method', () => {
   let drawing = new Drawing();
   let container = document.createElement('div');
   document.body.appendChild(container);
   drawing.addTo(container, () => NodeSVG());
-  let seq1 = drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
+  let seq1 = drawing.appendSequence('qwer', 'qwerqwer');
 
   it('sequence ID is already taken', () => {
     let n = drawing.numSequences;
     let spy1 = jest.spyOn(Sequence, 'createOutOfView');
-    let seq = drawing.appendSequenceOutOfView('qwer', 'qwer');
+    let seq = drawing.appendSequence('qwer', 'qwer');
     expect(seq).toBeFalsy();
     expect(drawing.numSequences).toBe(n);
     expect(spy1).not.toHaveBeenCalled();
@@ -285,7 +285,7 @@ describe('appendSequenceOutOfView method', () => {
 
   it('sequence ID is not already taken', () => {
     let n = drawing.numSequences;
-    let seq = drawing.appendSequenceOutOfView('zxcvbnm', 'zxcvbnmqq');
+    let seq = drawing.appendSequence('zxcvbnm', 'zxcvbnmqq');
     expect(seq.id).toBe('zxcvbnm');
     expect(seq.characters).toBe('zxcvbnmqq');
     expect(drawing.numSequences).toBe(n + 1);
@@ -310,8 +310,8 @@ it('clear method removes elements and references', () => {
   let container = document.createElement('div');
   document.body.appendChild(container);
   drawing.addTo(container, () => NodeSVG());
-  let seq1 = drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
-  let seq2 = drawing.appendSequenceOutOfView('asdf', 'asdfas');
+  let seq1 = drawing.appendSequence('qwer', 'qwerqwer');
+  let seq2 = drawing.appendSequence('asdf', 'asdfas');
   let pb1 = addPrimaryBond(drawing, seq1.getBaseAtPosition(1), seq1.getBaseAtPosition(3));
   let pb2 = addPrimaryBond(drawing, seq2.getBaseAtPosition(2), seq2.getBaseAtPosition(3));
   let sb1 = addSecondaryBond(drawing, seq1.getBaseAtPosition(2), seq2.getBaseAtPosition(6));
@@ -335,8 +335,8 @@ it('svgString getter', () => {
 describe('savableState method', () => {
   let drawing = new Drawing();
   drawing.addTo(container, () => NodeSVG());
-  let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdf');
-  let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerzx');
+  let seq1 = drawing.appendSequence('asdf', 'asdf');
+  let seq2 = drawing.appendSequence('qwer', 'qwerzx');
   let b1 = seq1.getBaseAtPosition(1);
   let b2 = seq1.getBaseAtPosition(2);
   let b3 = seq1.getBaseAtPosition(3);
@@ -395,8 +395,8 @@ describe('applySavedState method', () => {
   it('can successfully apply saved state', () => {
     let drawing = new Drawing();
     drawing.addTo(container, () => NodeSVG());
-    let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
-    let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerzxcvzxcv');
+    let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
+    let seq2 = drawing.appendSequence('qwer', 'qwerzxcvzxcv');
     let b2 = seq1.getBaseAtPosition(2);
     let b5 = seq1.getBaseAtPosition(5);
     let b12 = seq2.getBaseAtPosition(4);
@@ -408,7 +408,7 @@ describe('applySavedState method', () => {
     let tb1 = addTertiaryBond(drawing, b12, b2);
     let tb2 = addTertiaryBond(drawing, b5, b17);
     let savableState = drawing.savableState();
-    let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcvzxcv');
+    let seq3 = drawing.appendSequence('zxcv', 'zxcvzxcv');
     let pb3 = addPrimaryBond(drawing, b12, b17);
     removeSecondaryBondById(drawing, sb1.id);
     removeTertiaryBondById(drawing, tb2.id);
@@ -423,11 +423,11 @@ describe('applySavedState method', () => {
   it('handles failure to apply saved state', () => {
     let drawing = new Drawing();
     drawing.addTo(container, () => NodeSVG());
-    let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdfasdf');
-    let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwerqwer');
+    let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
+    let seq2 = drawing.appendSequence('qwer', 'qwerqwer');
     let savableState1 = drawing.savableState();
     savableState1.className = 'Drwing';
-    let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcvzxcv');
+    let seq3 = drawing.appendSequence('zxcv', 'zxcvzxcv');
     let savableState2 = drawing.savableState();
     expect(JSON.stringify(savableState2)).not.toBe(JSON.stringify(savableState1));
     let applied = drawing.applySavedState(savableState1);

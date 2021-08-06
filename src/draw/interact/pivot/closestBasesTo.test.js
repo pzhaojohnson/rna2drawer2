@@ -22,8 +22,8 @@ afterEach(() => {
 });
 
 it('returns closest bases to given point', () => {
-  drawing.appendSequenceOutOfView('asdf', 'asdfasdfQWER');
-  drawing.appendSequenceOutOfView('qwer', 'qwerQWER');
+  drawing.appendSequence('asdf', 'asdfasdfQWER');
+  drawing.appendSequence('qwer', 'qwerQWER');
   drawing.forEachBase(b => {
     b.moveTo(
       100 * Math.random(),
@@ -49,7 +49,7 @@ it('returns closest bases to given point', () => {
 });
 
 it('returns a positive number of bases by default', () => {
-  drawing.appendSequenceOutOfView('asdf', 'asdfasdfqwer');
+  drawing.appendSequence('asdf', 'asdfasdfqwer');
   drawing.forEachBase(b => {
     b.moveTo(
       250 * Math.random(),
@@ -62,7 +62,7 @@ it('returns a positive number of bases by default', () => {
 });
 
 it('n is greater than number of bases', () => {
-  drawing.appendSequenceOutOfView('asdf', 'asdfasdfqwer');
+  drawing.appendSequence('asdf', 'asdfasdfqwer');
   drawing.forEachBase(b => {
     b.moveTo(
       250 * Math.random(),
@@ -76,7 +76,7 @@ it('n is greater than number of bases', () => {
 });
 
 it('n is less than or eqaul to zero', () => {
-  drawing.appendSequenceOutOfView('asdf', 'asdfasdfqwer');
+  drawing.appendSequence('asdf', 'asdfasdfqwer');
   drawing.forEachBase(b => {
     b.moveTo(
       250 * Math.random(),

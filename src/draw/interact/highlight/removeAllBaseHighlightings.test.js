@@ -15,9 +15,9 @@ it('handles missing drawing argument', () => {
 it('handles multiple sequences', () => {
   let drawing = new Drawing();
   drawing.addTo(document.body, () => NodeSVG());
-  let seq1 = drawing.appendSequenceOutOfView('asdf', 'asdf');
-  let seq2 = drawing.appendSequenceOutOfView('qwer', 'qwer');
-  let seq3 = drawing.appendSequenceOutOfView('zxcv', 'zxcv');
+  let seq1 = drawing.appendSequence('asdf', 'asdf');
+  let seq2 = drawing.appendSequence('qwer', 'qwer');
+  let seq3 = drawing.appendSequence('zxcv', 'zxcv');
   addCircleHighlighting(seq1.getBaseAtPosition(2));
   addCircleHighlighting(seq2.getBaseAtPosition(3));
   addCircleHighlighting(seq3.getBaseAtPosition(1));

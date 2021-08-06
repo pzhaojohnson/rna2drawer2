@@ -11,7 +11,7 @@ describe('addPrimaryBonds function', () => {
   it('adds primary bonds', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => NodeSVG());
-    let seq = drawing.appendSequenceOutOfView('asdf', 'qwer');
+    let seq = drawing.appendSequence('asdf', 'qwer');
     addPrimaryBonds(drawing, 'asdf');
     let bonds = [];
     drawing.primaryBonds.forEach(pb => bonds.push(pb));
@@ -26,7 +26,7 @@ describe('addSecondaryBonds function', () => {
   it('adds secondary bonds', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => NodeSVG());
-    let seq = drawing.appendSequenceOutOfView('qwer', 'asdfzxcv');
+    let seq = drawing.appendSequence('qwer', 'asdfzxcv');
     addSecondaryBonds(drawing, 'qwer', [7, null, 6, 8, null, 3, 1, 4]);
     let bonds = [];
     drawing.secondaryBonds.forEach(sb => bonds.push(sb));
@@ -41,7 +41,7 @@ describe('addTertiaryBonds function', () => {
   it('adds tertiary bonds', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => NodeSVG());
-    let seq = drawing.appendSequenceOutOfView('asdf', 'qwertyui');
+    let seq = drawing.appendSequence('asdf', 'qwertyui');
     addTertiaryBonds(drawing, 'asdf', [5, 6, null, 8, 1, 2, null, 4]);
     let bonds = [];
     drawing.tertiaryBonds.forEach(tb => bonds.push(tb));
@@ -56,7 +56,7 @@ describe('appendStructure function', () => {
   it('returns false if structure cannot be appended', () => {
     let drawing = new Drawing();
     drawing.addTo(document.body, () => NodeSVG());
-    drawing.appendSequenceOutOfView('asdf', 'asdf');
+    drawing.appendSequence('asdf', 'asdf');
     expect(appendStructure(drawing, { id: 'asdf', characters: 'qwer' })).toBeFalsy();
   });
 
