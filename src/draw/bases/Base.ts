@@ -5,6 +5,7 @@ import { assignUuid } from 'Draw/svg/id';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { Values, setValues } from './values';
+import { Point2D as Point } from 'Math/Point';
 
 export class Base implements BaseInterface {
   static recommendedDefaults: Values;
@@ -14,8 +15,7 @@ export class Base implements BaseInterface {
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;
 
-  _xCenter!: number;
-  _yCenter!: number;
+  _center: Point;
 
   static create(svg: Svg.Svg, character: string, xCenter: number, yCenter: number): (Base | never) {
     let text = svg.text((add) => add.tspan(character));
@@ -32,7 +32,9 @@ export class Base implements BaseInterface {
   constructor(text: Svg.Text) {
     this.text = text;
     this._validateText();
-    this._storeCenterCoordinates();
+    
+    let bbox = text.bbox();
+    this._center = { x: bbox.cx, y: bbox.cy };
   }
 
   /**
@@ -56,11 +58,6 @@ export class Base implements BaseInterface {
     }
   }
 
-  _storeCenterCoordinates() {
-    this._xCenter = this.text.cx();
-    this._yCenter = this.text.cy();
-  }
-
   get id(): string {
     return this.text.id();
   }
@@ -76,9 +73,11 @@ export class Base implements BaseInterface {
     if (c.length !== 1) {
       return;
     }
+    let bbox = this.text.bbox();
+    let center = { x: bbox.cx, y: bbox.cy };
     this.text.clear();
     this.text.tspan(c);
-    this.text.center(this._xCenter, this._yCenter);
+    this.text.center(center.x, center.y);
   }
 
   center(): { x: unknown, y: unknown } {
@@ -87,17 +86,16 @@ export class Base implements BaseInterface {
   }
 
   get xCenter(): number {
-    return this._xCenter;
+    return this._center.x;
   }
 
   get yCenter(): number {
-    return this._yCenter;
+    return this._center.y;
   }
 
   recenter(p: { x: number, y: number }) {
     this.text.center(p.x, p.y);
-    this._xCenter = p.x;
-    this._yCenter = p.y;
+    this._center = p;
     if (this.highlighting) {
       this.highlighting.reposition({ baseCenter: p });
     }
