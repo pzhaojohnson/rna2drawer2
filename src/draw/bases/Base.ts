@@ -2,7 +2,6 @@ import { BaseInterface } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
 import { assignUuid } from 'Draw/svg/id';
-import { distance2D as distance } from 'Math/distance';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { Values, setValues } from './values';
@@ -112,15 +111,6 @@ export class Base implements BaseInterface {
     if (this.numbering) {
       this.numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
     }
-  }
-
-  distanceBetweenCenters(other: Base): number {
-    return distance(
-      this.xCenter,
-      this.yCenter,
-      other.xCenter,
-      other.yCenter
-    );
   }
 }
 

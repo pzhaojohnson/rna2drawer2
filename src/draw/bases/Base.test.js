@@ -147,10 +147,4 @@ describe('Base class', () => {
       expect(n.basePadding).toBeCloseTo(bp);
     });
   });
-
-  it('distanceBetweenCenters methods', () => {
-    let b1 = Base.create(svg, 'A', 1, 2);
-    let b2 = Base.create(svg, 'U', 4, 6);
-    expect(b1.distanceBetweenCenters(b2)).toBeCloseTo(5, 3);
-  });
 });

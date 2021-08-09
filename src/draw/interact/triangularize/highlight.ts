@@ -4,9 +4,22 @@ import { positionsOfStem } from '../highlight/positionsOfStem';
 import { positionsOfLoop, positionsOfOutermostLoop } from './structure';
 import { highlightBase } from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { isPoint2D as isPoint } from 'Math/Point';
+import { distance2D as distance } from 'Math/distance';
 import {
   sendToBack as sendHighlightingToBack,
 } from 'Draw/bases/annotate/circle/z';
+
+function areWithin(b1: Base, b2: Base, radius: number): boolean {
+  // faster to use x and y coordinates than to retrieve center coordinates
+  let p1 = { x: b1.text.attr('x'), y: b1.text.attr('y') };
+  let p2 = { x: b2.text.attr('x'), y: b2.text.attr('y') };
+  if (isPoint(p1) && isPoint(p2)) {
+    return distance(p1.x, p1.y, p2.x, p2.y) <= radius;
+  }
+  return false;
+}
 
 function positionsToHighlight(mode: TriangularizingMode): number[] | undefined {
   if (typeof mode.hovered == 'number') {
@@ -53,7 +66,7 @@ export function highlightHovered(mode: TriangularizingMode) {
             }, { duration: 675 });
           }
         }
-        if (b.highlighting && bHovered && b.distanceBetweenCenters(bHovered) < 5 * radius) {
+        if (b.highlighting && bHovered && areWithin(b, bHovered, 5 * radius)) {
           sendHighlightingToBack(b.highlighting);
         }
       }
