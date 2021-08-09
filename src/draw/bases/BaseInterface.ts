@@ -14,8 +14,7 @@ export interface BaseInterface {
   recenter(p: { x: number, y: number }): void;
   moveTo(xCenter: number, yCenter: number): void;
   distanceBetweenCenters(b: BaseInterface): number;
-  angleBetweenCenters(b: BaseInterface): number;
-
+  
   highlighting?: CircleBaseAnnotation;
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;

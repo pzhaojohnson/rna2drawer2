@@ -4,6 +4,7 @@ import {
 } from './PivotingModeInterface';
 import { angleBetween } from '../../angleBetween';
 import { normalizeAngle } from 'Math/angles/normalize';
+import { isPoint2D as isPoint } from 'Math/Point';
 
 export interface Movement {
   x: number;
@@ -25,10 +26,10 @@ export function angleOfMovement(move: Movement): number {
 
 export function angleOfStem53(mode: PivotingMode, st: Stem): number | undefined {
   let drawing = mode.strictDrawing.drawing;
-  let b5 = drawing.getBaseAtOverallPosition(st.position5);
-  let b3 = drawing.getBaseAtOverallPosition(st.position3);
-  if (b5 && b3) {
-    return b5.angleBetweenCenters(b3);
+  let c5 = drawing.getBaseAtOverallPosition(st.position5)?.center();
+  let c3 = drawing.getBaseAtOverallPosition(st.position3)?.center();
+  if (c5 && isPoint(c5) && c3 && isPoint(c3)) {
+    return Math.atan2(c3.y - c5.y, c3.x - c5.x);
   }
   return undefined;
 }
@@ -44,10 +45,10 @@ export function outwardAngleOfOuterStem(mode: PivotingMode, outerStem: Stem, ste
   let a53 = angleOfStem53(mode, outerStem);
   if (typeof a53 == 'number') {
     let drawing = mode.strictDrawing.drawing;
-    let ob5 = drawing.getBaseAtOverallPosition(outerStem.position5);
-    let ib5 = drawing.getBaseAtOverallPosition(stemInLoop.position5);
-    if (ob5 && ib5) {
-      let a55 = ob5.angleBetweenCenters(ib5);
+    let oc5 = drawing.getBaseAtOverallPosition(outerStem.position5)?.center();
+    let ic5 = drawing.getBaseAtOverallPosition(stemInLoop.position5)?.center();
+    if (oc5 && isPoint(oc5) && ic5 && isPoint(ic5)) {
+      let a55 = Math.atan2(ic5.y - oc5.y, ic5.x - oc5.x);
       a55 = normalizeAngle(a55, a53);
       return a55 - a53 < Math.PI ? a53 + (Math.PI / 2) : a53 - (Math.PI / 2);
     }

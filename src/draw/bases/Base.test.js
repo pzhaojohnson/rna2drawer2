@@ -148,11 +148,9 @@ describe('Base class', () => {
     });
   });
 
-  it('distanceBetweenCenters and angleBetweenCenters methods', () => {
+  it('distanceBetweenCenters methods', () => {
     let b1 = Base.create(svg, 'A', 1, 2);
     let b2 = Base.create(svg, 'U', 4, 6);
     expect(b1.distanceBetweenCenters(b2)).toBeCloseTo(5, 3);
-    let a = angleBetween(1, 2, 4, 6);
-    expect(normalizeAngle(a)).toBeCloseTo(Math.asin(4 / 5));
   });
 });

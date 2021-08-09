@@ -123,15 +123,6 @@ export class Base implements BaseInterface {
       other.yCenter
     );
   }
-
-  angleBetweenCenters(other: Base): number {
-    return angleBetween(
-      this.xCenter,
-      this.yCenter,
-      other.xCenter,
-      other.yCenter
-    );
-  }
 }
 
 Base.recommendedDefaults = {
