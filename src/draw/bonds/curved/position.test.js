@@ -34,8 +34,8 @@ afterEach(() => {
 
 describe('position function', () => {
   it('positions bond', () => {
-    bond.base1.moveTo(101, 203.5);
-    bond.base2.moveTo(802.9, 935);
+    bond.base1.recenter({ x: 101, y: 203.5 });
+    bond.base2.recenter({ x: 802.9, y: 935 });
     position(bond, {
       basePadding1: 12.8,
       basePadding2: 19.7,
@@ -62,14 +62,14 @@ describe('position function', () => {
 
   it('smoke test', () => {
     for (let i = 0; i < 50; i++) {
-      bond.base1.moveTo(
-        (1000 * Math.random()) - 500, // include negatives
-        (1000 * Math.random()) - 500,
-      );
-      bond.base2.moveTo(
-        (1000 * Math.random()) - 500,
-        (1000 * Math.random()) - 500,
-      );
+      bond.base1.recenter({
+        x: (1000 * Math.random()) - 500, // include negatives
+        y: (1000 * Math.random()) - 500,
+      });
+      bond.base2.recenter({
+        x: (1000 * Math.random()) - 500,
+        y: (1000 * Math.random()) - 500,
+      });
       expect(() => {
         position(bond, {
           basePadding1: 200 * Math.random(),

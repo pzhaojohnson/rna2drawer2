@@ -38,7 +38,7 @@ afterEach(() => {
 
 describe('addCircleOutline function', () => {
   it('adds outline and positions circle', () => {
-    base.moveTo(178.5, 359);
+    base.recenter({ x: 178.5, y: 359 });
     expect(base.outline).toBe(undefined);
     addCircleOutline(base);
     expect(base.outline).toBeTruthy(); // added outline
@@ -63,7 +63,7 @@ describe('addCircleOutline function', () => {
 
 describe('addCircleHighlighting function', () => {
   it('adds highlighting and positions circle', () => {
-    base.moveTo(802, 1012.12);
+    base.recenter({ x: 802, y: 1012.12 });
     expect(base.highlighting).toBe(undefined);
     addCircleHighlighting(base);
     expect(base.highlighting).toBeTruthy(); // added highlighting

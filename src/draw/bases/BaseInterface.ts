@@ -12,7 +12,6 @@ export interface BaseInterface {
   xCenter: number;
   yCenter: number;
   recenter(p: { x: number, y: number }): void;
-  moveTo(xCenter: number, yCenter: number): void;
   
   highlighting?: CircleBaseAnnotation;
   outline?: CircleBaseAnnotation;

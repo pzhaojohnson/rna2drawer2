@@ -34,8 +34,8 @@ afterEach(() => {
 
 describe('position function', () => {
   it('positions line', () => {
-    bond.base1.moveTo(783, 1238);
-    bond.base2.moveTo(15.5, 209);
+    bond.base1.recenter({ x: 783, y: 1238 });
+    bond.base2.recenter({ x: 15.5, y: 209 });
     position(bond, {
       basePadding1: 32.8,
       basePadding2: 18.2,
@@ -47,22 +47,22 @@ describe('position function', () => {
   });
 
   it('updates opacity', () => {
-    bond.base1.moveTo(50, 250);
-    bond.base2.moveTo(300, 600);
+    bond.base1.recenter({ x: 50, y: 250 });
+    bond.base2.recenter({ x: 300, y: 600 });
     position(bond, {
       basePadding1: 20,
       basePadding2: 10,
     });
     expect(bond.line.attr('opacity')).toBe(1); // starts at 1
-    bond.base1.moveTo(75, 85);
-    bond.base2.moveTo(80, 100);
+    bond.base1.recenter({ x: 75, y: 85 });
+    bond.base2.recenter({ x: 80, y: 100 });
     position(bond, {
       basePadding1: 15,
       basePadding2: 20,
     });
     // since the base padding exceeds the distance between the bases
     expect(bond.line.attr('opacity')).toBe(0);
-    bond.base2.moveTo(800, 1000);
+    bond.base2.recenter({ x: 800, y: 1000 });
     position(bond, {
       basePadding1: 3,
       basePadding2: 8,
@@ -84,8 +84,8 @@ describe('position function', () => {
       };
       let basePadding1 = 200 * Math.random();
       let basePadding2 = 200 * Math.random();
-      bond.base1.moveTo(baseCenter1.x, baseCenter1.y);
-      bond.base2.moveTo(baseCenter2.x, baseCenter2.y);
+      bond.base1.recenter(baseCenter1);
+      bond.base2.recenter(baseCenter2);
       expect(() => {
         position(bond, {
           basePadding1: basePadding1,

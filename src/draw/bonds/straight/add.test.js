@@ -58,8 +58,8 @@ describe('addPrimaryBond function', () => {
   it('positions the added bond', () => {
     let base1 = drawing.bases()[3];
     let base2 = drawing.bases()[4];
-    base1.moveTo(200, 10);
-    base2.moveTo(50, 300);
+    base1.recenter({ x: 200, y: 10 });
+    base2.recenter({ x: 50, y: 300 });
     let pb = addPrimaryBond(drawing, base1, base2);
     let rp1 = getRoundedPositioning(pb);
     pb.reposition();
@@ -88,8 +88,8 @@ describe('addSecondaryBond function', () => {
   it('positions the added bond', () => {
     let base1 = drawing.bases()[2];
     let base2 = drawing.bases()[7];
-    base1.moveTo(30, 80);
-    base2.moveTo(1000, 2000);
+    base1.recenter({ x: 30, y: 80 });
+    base2.recenter({ x: 1000, y: 2000 });
     let sb = addSecondaryBond(drawing, base1, base2);
     let rp1 = getRoundedPositioning(sb);
     sb.reposition();

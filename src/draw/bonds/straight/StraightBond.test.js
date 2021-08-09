@@ -93,11 +93,11 @@ describe('StraightBond class', () => {
 
     it('caches base paddings 1 and 2', () => {
       line.attr({ 'x1': 10, 'y1': 20, 'x2': 100, 'y2': 20 });
-      base1.moveTo(2, 20); // base padding 1 will be 8
-      base2.moveTo(112, 20); // base padding 2 will be 12
+      base1.recenter({ x: 2, y: 20 }); // base padding 1 will be 8
+      base2.recenter({ x: 112, y: 20 }); // base padding 2 will be 12
       let bond = new StraightBond(line, base1, base2);
-      base1.moveTo(23, 400);
-      base2.moveTo(1012, 323);
+      base1.recenter({ x: 23, y: 400 });
+      base2.recenter({ x: 1012, y: 323 });
       bond.reposition(); // must use cached base paddings 1 and 2
       let rp1 = getRoundedPositioning(bond);
       position(bond, { basePadding1: 8, basePadding2: 12 });
@@ -133,7 +133,7 @@ describe('StraightBond class', () => {
     it('caches value', () => {
       let bp1 = bond.basePadding1 + 20;
       bond.basePadding1 = bp1;
-      bond.base1.moveTo(bond.base1.xCenter + 70, bond.base1.yCenter + 80);
+      bond.base1.recenter({ x: bond.base1.xCenter + 70, y: bond.base1.yCenter + 80 });
       expect(bond.basePadding1).toBeCloseTo(bp1); // gives cached value
       bond.reposition(); // must use cached value
       let rp1 = getRoundedPositioning(bond);
@@ -156,7 +156,7 @@ describe('StraightBond class', () => {
     it('caches value', () => {
       let bp2 = bond.basePadding2 + 6;
       bond.basePadding2 = bp2;
-      bond.base2.moveTo(bond.base2.xCenter - 300, bond.base2.yCenter + 500);
+      bond.base2.recenter({ x: bond.base2.xCenter - 300, y: bond.base2.yCenter + 500 });
       expect(bond.basePadding2).toBeCloseTo(bp2); // gives cached value
       bond.reposition(); // must use cached value
       let rp1 = getRoundedPositioning(bond);
@@ -170,8 +170,8 @@ describe('StraightBond class', () => {
     it('positions bond using cached base paddings 1 and 2', () => {
       bond.basePadding1 = 16.6;
       bond.basePadding2 = 29.4;
-      bond.base1.moveTo(bond.base1.xCenter + 356, bond.base1.yCenter + 700);
-      bond.base2.moveTo(bond.base2.xCenter + 1000, bond.base2.yCenter + 812);
+      bond.base1.recenter({ x: bond.base1.xCenter + 356, y: bond.base1.yCenter + 700 });
+      bond.base2.recenter({ x: bond.base2.xCenter + 1000, y: bond.base2.yCenter + 812 });
       bond.reposition(); // must use cached base paddings 1 and 2
       let rp1 = getRoundedPositioning(bond);
       position(bond, { basePadding1: 16.6, basePadding2: 29.4 });

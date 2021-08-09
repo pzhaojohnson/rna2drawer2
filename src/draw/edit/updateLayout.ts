@@ -70,10 +70,10 @@ function moveBases(strictDrawing: StrictDrawing, layout: StrictLayout, options?:
     if (shouldBeMoved) {
       let bcs = layout.baseCoordinatesAtPosition(p);
       if (bcs) {
-        b.moveTo(
-          xOffset + (strictDrawing.baseWidth * (bcs.xCenter - layoutMins.x)),
-          yOffset + (strictDrawing.baseHeight * (bcs.yCenter - layoutMins.y)),
-        );
+        b.recenter({
+          x: xOffset + (strictDrawing.baseWidth * (bcs.xCenter - layoutMins.x)),
+          y: yOffset + (strictDrawing.baseHeight * (bcs.yCenter - layoutMins.y)),
+        });
       }
     }
   });

@@ -92,27 +92,14 @@ describe('Base class', () => {
     expect(b.yCenter).toBeCloseTo(245);
   });
 
-  describe('moveTo method', () => {
-    describe('moving text when either X or Y coordinate is not close', () => {
-      it('X coordinate is not close', () => {
-        let b = Base.create(svg, 'W', 55.8, 103.9);
-        b.moveTo(805.2, 103.9);
-        expect(b.text.cx()).toBeCloseTo(805.2);
-        expect(b.text.cy()).toBeCloseTo(103.9);
-        expect(b.xCenter).toBeCloseTo(805.2);
-        expect(b.yCenter).toBeCloseTo(103.9);
-      });
-
-      it('Y coordinate is not close', () => {
-        let b = Base.create(svg, 'W', 55.8, 103.9);
-        b.moveTo(55.8, 651.8);
-        expect(b.text.cx()).toBeCloseTo(55.8);
-        expect(b.text.cy()).toBeCloseTo(651.8);
-        expect(b.xCenter).toBeCloseTo(55.8);
-        expect(b.yCenter).toBeCloseTo(651.8);
-      });
+  describe('recenter method', () => {
+    it('moves text', () => {
+      let b = Base.create(svg, 'W', 55.2, 88.5);
+      b.recenter({ x: 103.7, y: 222.6 });
+      expect(b.text.cx()).toBeCloseTo(103.7);
+      expect(b.text.cy()).toBeCloseTo(222.6);
     });
-
+    
     /* By testing highlighting, outline and numbering separately,
     we test that the if clauses of the moveTo method work correctly. */
 
@@ -121,7 +108,7 @@ describe('Base class', () => {
       let b = Base.create(svg, 't', 1, 2);
       addCircleHighlighting(b);
       let h = b.highlighting;
-      b.moveTo(8, 9);
+      b.recenter({ x: 8, y: 9 });
       expect(h.circle.attr('cx')).toBeCloseTo(8);
       expect(h.circle.attr('cy')).toBeCloseTo(9);
     });
@@ -131,7 +118,7 @@ describe('Base class', () => {
       let b = Base.create(svg, 'e', 3, 8);
       addCircleOutline(b);
       let o = b.outline;
-      b.moveTo(55, 38);
+      b.recenter({ x: 55, y: 38 });
       expect(o.circle.attr('cx')).toBeCloseTo(55);
       expect(o.circle.attr('cy')).toBeCloseTo(38);
     });
@@ -142,7 +129,7 @@ describe('Base class', () => {
       addNumbering(b, 112);
       let n = b.numbering;
       let bp = n.basePadding;
-      b.moveTo(20, 40);
+      b.recenter({ x: 20, y: 40 });
       // requires that base center coordinates were passed
       expect(n.basePadding).toBeCloseTo(bp);
     });

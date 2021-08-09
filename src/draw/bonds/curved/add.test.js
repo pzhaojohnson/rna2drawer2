@@ -58,8 +58,8 @@ describe('addTertiaryBond function', () => {
     expect(drawing.bases().length).toBeGreaterThanOrEqual(24);
     let base1 = drawing.bases()[7];
     let base2 = drawing.bases()[10];
-    base1.moveTo(200 * Math.random(), 500 * Math.random());
-    base2.moveTo(300 * Math.random(), 100 * Math.random());
+    base1.recenter({ x: 200 * Math.random(), y: 500 * Math.random() });
+    base2.recenter({ x: 300 * Math.random(), y: 100 * Math.random() });
     let tb = addTertiaryBond(drawing, base1, base2);
     let d1 = tb.path.attr('d');
     position(tb, {

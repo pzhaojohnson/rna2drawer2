@@ -22,7 +22,7 @@ export class Base implements BaseInterface {
     text.id();
     let b = new Base(text);
     setValues(b, Base.recommendedDefaults);
-    b.moveTo(xCenter, yCenter);
+    b.recenter({ x: xCenter, y: yCenter });
     return b;
   }
 
@@ -95,21 +95,17 @@ export class Base implements BaseInterface {
   }
 
   recenter(p: { x: number, y: number }) {
-    this.moveTo(p.x, p.y);
-  }
-
-  moveTo(xCenter: number, yCenter: number) {
-    this.text.center(xCenter, yCenter);
-    this._xCenter = xCenter;
-    this._yCenter = yCenter;
+    this.text.center(p.x, p.y);
+    this._xCenter = p.x;
+    this._yCenter = p.y;
     if (this.highlighting) {
-      this.highlighting.reposition({ baseCenter: { x: xCenter, y: yCenter } });
+      this.highlighting.reposition({ baseCenter: p });
     }
     if (this.outline) {
-      this.outline.reposition({ baseCenter: { x: xCenter, y: yCenter } });
+      this.outline.reposition({ baseCenter: p });
     }
     if (this.numbering) {
-      this.numbering.reposition({ baseCenter: { x: xCenter, y: yCenter } });
+      this.numbering.reposition({ baseCenter: p });
     }
   }
 }

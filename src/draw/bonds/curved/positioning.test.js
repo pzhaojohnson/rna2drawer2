@@ -45,8 +45,8 @@ afterEach(() => {
 
 describe('positioning function', () => {
   it('retrieves positioning', () => {
-    bond.base1.moveTo(52, 156);
-    bond.base2.moveTo(78, 212);
+    bond.base1.recenter({ x: 52, y: 156 });
+    bond.base2.recenter({ x: 78, y: 212 });
     bond.path.wrapped.plot('M 60.469585 155.281582 Q 120.513767 150.188438 86.047063 200.300223');
     let p = positioning(bond);
     p.controlPointDisplacement.angle = normalizeAngle(p.controlPointDisplacement.angle);

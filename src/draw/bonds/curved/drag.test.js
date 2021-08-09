@@ -37,8 +37,8 @@ afterEach(() => {
 
 describe('shiftControlPoint function', () => {
   it('updates path and displacement', () => {
-    bond.base1.moveTo(33, 67);
-    bond.base2.moveTo(1120, 821);
+    bond.base1.recenter({ x: 33, y: 67 });
+    bond.base2.recenter({ x: 1120, y: 821 });
     bond.basePadding1 = 23.6;
     bond.basePadding2 = 9.4;
     bond.setControlPointDisplacement({
@@ -69,8 +69,8 @@ describe('shiftControlPoint function', () => {
 
     // should be able to reposition the bond
     // and maintain the new displacement
-    bond.base1.moveTo(6000, 3000);
-    bond.base2.moveTo(-200, 12);
+    bond.base1.recenter({ x: 6000, y: 3000 });
+    bond.base2.recenter({ x: -200, y: 12 });
     bond.reposition();
     expect(bond.controlPointDisplacement().magnitude).toBeCloseTo(54.847054);
     expect(bond.controlPointDisplacement().angle).toBeCloseTo(5.122431);

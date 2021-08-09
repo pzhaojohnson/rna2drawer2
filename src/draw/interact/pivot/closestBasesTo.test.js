@@ -25,10 +25,10 @@ it('returns closest bases to given point', () => {
   drawing.appendSequence('asdf', 'asdfasdfQWER');
   drawing.appendSequence('qwer', 'qwerQWER');
   drawing.forEachBase(b => {
-    b.moveTo(
-      100 * Math.random(),
-      100 * Math.random(),
-    );
+    b.recenter({
+      x: 100 * Math.random(),
+      y: 100 * Math.random(),
+    });
   });
   let bs = [
     drawing.getBaseAtOverallPosition(2),
@@ -39,7 +39,7 @@ it('returns closest bases to given point', () => {
   ];
   let pt = { x: 1000, y: 1000 };
   bs.forEach(b => {
-    b.moveTo(b.xCenter + pt.x, b.yCenter + pt.y);
+    b.recenter({ x: b.xCenter + pt.x, y: b.yCenter + pt.y });
   });
   let received = closestBasesTo(drawing, pt, bs.length);
   expect(received.length).toBe(bs.length);
@@ -51,10 +51,10 @@ it('returns closest bases to given point', () => {
 it('returns a positive number of bases by default', () => {
   drawing.appendSequence('asdf', 'asdfasdfqwer');
   drawing.forEachBase(b => {
-    b.moveTo(
-      250 * Math.random(),
-      500 * Math.random(),
-    );
+    b.recenter({
+      x: 250 * Math.random(),
+      y: 500 * Math.random(),
+    });
   });
   let pt = { x: 250, y: 500 };
   let received = closestBasesTo(drawing, pt);
@@ -64,10 +64,10 @@ it('returns a positive number of bases by default', () => {
 it('n is greater than number of bases', () => {
   drawing.appendSequence('asdf', 'asdfasdfqwer');
   drawing.forEachBase(b => {
-    b.moveTo(
-      250 * Math.random(),
-      500 * Math.random(),
-    );
+    b.recenter({
+      x: 250 * Math.random(),
+      y: 500 * Math.random(),
+    });
   });
   let pt = { x: 250, y: 500 };
   let n = drawing.numBases + 20;
@@ -78,10 +78,10 @@ it('n is greater than number of bases', () => {
 it('n is less than or eqaul to zero', () => {
   drawing.appendSequence('asdf', 'asdfasdfqwer');
   drawing.forEachBase(b => {
-    b.moveTo(
-      250 * Math.random(),
-      500 * Math.random(),
-    );
+    b.recenter({
+      x: 250 * Math.random(),
+      y: 500 * Math.random(),
+    });
   });
   let pt = { x: 250, y: 500 };
   expect(closestBasesTo(drawing, pt, 0)).toStrictEqual([]);

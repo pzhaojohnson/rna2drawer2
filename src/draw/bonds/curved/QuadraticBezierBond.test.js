@@ -85,8 +85,8 @@ describe('QuadraticBezierBond class', () => {
     it('caches positioning', () => {
       let bond = new QuadraticBezierBond(path, base1, base2);
       let p1 = roundPositioning(positioning(bond), 3);
-      bond.base1.moveTo(50 * Math.random(), 1000 * Math.random());
-      bond.base2.moveTo(500 * Math.random(), 200 * Math.random());
+      bond.base1.recenter({ x: 50 * Math.random(), y: 1000 * Math.random() });
+      bond.base2.recenter({ x: 500 * Math.random(), y: 200 * Math.random() });
       bond.reposition();
       let p2 = roundPositioning(positioning(bond), 3);
       expect(p2).toEqual(p1);
@@ -120,8 +120,8 @@ describe('QuadraticBezierBond class', () => {
     it('caches value', () => {
       let v = 60 * Math.random();
       bond[name] = v;
-      bond.base1.moveTo(200 * Math.random(), 600 * Math.random());
-      bond.base2.moveTo(400 * Math.random(), 250 * Math.random());
+      bond.base1.recenter({ x: 200 * Math.random(), y: 600 * Math.random() });
+      bond.base2.recenter({ x: 400 * Math.random(), y: 250 * Math.random() });
       expect(bond[name]).toBeCloseTo(v); // gives cached value
     });
   });
@@ -144,8 +144,8 @@ describe('QuadraticBezierBond class', () => {
         angle : 8 * Math.random(),
       };
       bond.setControlPointDisplacement(cpd);
-      bond.base1.moveTo(100 * Math.random(), 200 * Math.random());
-      bond.base2.moveTo(500 * Math.random(), 400 * Math.random());
+      bond.base1.recenter({ x: 100 * Math.random(), y: 200 * Math.random() });
+      bond.base2.recenter({ x: 500 * Math.random(), y: 400 * Math.random() });
       // gives cached value
       expect(bond.controlPointDisplacement()).toEqual(cpd);
     });
@@ -162,8 +162,8 @@ describe('QuadraticBezierBond class', () => {
       bond.basePadding1 = bp1;
       bond.basePadding2 = bp2;
       bond.setControlPointDisplacement(cpd);
-      bond.base1.moveTo(500 * Math.random(), 500 * Math.random());
-      bond.base2.moveTo(500 * Math.random(), 500 * Math.random());
+      bond.base1.recenter({ x: 500 * Math.random(), y: 500 * Math.random() });
+      bond.base2.recenter({ x: 500 * Math.random(), y: 500 * Math.random() });
       // must use cached positioning since bases were moved
       bond.reposition();
       let d1 = bond.path.attr('d');
