@@ -18,5 +18,3 @@ export interface BaseInterface {
   outline?: CircleBaseAnnotation;
   numbering?: BaseNumbering;
 }
-
-export default BaseInterface;
