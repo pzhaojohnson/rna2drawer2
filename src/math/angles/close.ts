@@ -10,5 +10,3 @@ export function anglesAreClose(a1: number, a2: number, places=3): boolean {
   let pi2 = Number.parseFloat((2 * Math.PI).toFixed(places));
   return diff == 0 || diff == pi2;
 }
-
-export default anglesAreClose;

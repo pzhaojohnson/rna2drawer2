@@ -11,5 +11,3 @@ export function normalizeAngle(angle: number, minAngle=0): number {
   }
   return angle;
 }
-
-export default normalizeAngle;
