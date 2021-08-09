@@ -81,8 +81,7 @@ export class Base implements BaseInterface {
   }
 
   center(): { x: unknown, y: unknown } {
-    let bbox = this.text.bbox();
-    return { x: bbox.cx, y: bbox.cy };
+    return { ...this._center };
   }
 
   get xCenter(): number {
@@ -95,7 +94,7 @@ export class Base implements BaseInterface {
 
   recenter(p: { x: number, y: number }) {
     this.text.center(p.x, p.y);
-    this._center = p;
+    this._center = { ...p };
     if (this.highlighting) {
       this.highlighting.reposition({ baseCenter: p });
     }
