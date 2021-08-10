@@ -5,7 +5,7 @@ import { assignUuid } from 'Draw/svg/id';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { Values, setValues } from './values';
-import { Point2D as Point } from 'Math/Point';
+import { Point2D as Point } from 'Math/points/Point';
 
 export class Base implements BaseInterface {
   static recommendedDefaults: Values;

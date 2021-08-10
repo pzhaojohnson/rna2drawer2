@@ -1,7 +1,7 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { atPosition } from 'Array/at';
-import { isPoint2D as isPoint } from 'Math/Point';
+import { isPoint2D as isPoint } from 'Math/points/Point';
 import { normalizeAngle } from 'Math/angles/normalize';
 
 type BisectingAngles = {

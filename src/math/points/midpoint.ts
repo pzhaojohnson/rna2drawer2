@@ -1,4 +1,4 @@
-import { Point2D } from './Point';
+import { Point2D } from 'Math/points/Point';
 
 export function midpoint2D(p1: Point2D, p2: Point2D): Point2D {
   return {

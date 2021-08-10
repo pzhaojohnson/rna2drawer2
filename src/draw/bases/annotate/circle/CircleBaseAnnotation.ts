@@ -3,7 +3,7 @@ import {
   Repositioning,
 } from './CircleBaseAnnotationInterface';
 import { SVGCircleWrapper as Circle } from 'Draw/svg/circle';
-import { Point2D as Point } from 'Math/Point';
+import { Point2D as Point } from 'Math/points/Point';
 import { assignUuid } from 'Draw/svg/id';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {

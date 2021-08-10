@@ -1,5 +1,5 @@
 import { QuadraticBezierBondInterface as QuadraticBezierBond } from './QuadraticBezierBondInterface';
-import { midpoint2D as midpoint } from 'Math/midpoint';
+import { midpoint2D as midpoint } from 'Math/points/midpoint';
 import { distance2D as distance } from 'Math/distance';
 import { normalizeAngle } from 'Math/angles/normalize';
 

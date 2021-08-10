@@ -3,7 +3,7 @@ import highlightBase from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
 import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import { isPoint2D as isPoint } from 'Math/Point';
+import { isPoint2D as isPoint } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';
 import {
   sendToBack as sendHighlightingToBack,

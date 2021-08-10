@@ -1,6 +1,6 @@
 import { SVGTextWrapper as Text } from 'Draw/svg/text';
 import { SVGLineWrapper as Line } from 'Draw/svg/line';
-import { Point2D as Point } from 'Math/Point';
+import { Point2D as Point } from 'Math/points/Point';
 
 export type Repositioning = {
   baseCenter?: Point;

@@ -1,6 +1,6 @@
 import { QuadraticBezierBondInterface as QuadraticBezierBond } from './QuadraticBezierBondInterface';
 import { Positioning } from './positioning';
-import { midpoint2D as midpoint } from 'Math/midpoint';
+import { midpoint2D as midpoint } from 'Math/points/midpoint';
 
 export function position(bond: QuadraticBezierBond, p: Positioning) {
   try {

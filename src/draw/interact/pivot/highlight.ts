@@ -3,7 +3,7 @@ import { positionsOfStem } from '../highlight/positionsOfStem';
 import { highlightBase } from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import { isPoint2D as isPoint } from 'Math/Point';
+import { isPoint2D as isPoint } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';
 import {
   sendToBack as sendHighlightingToBack,

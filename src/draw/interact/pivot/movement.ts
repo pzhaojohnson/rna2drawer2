@@ -4,7 +4,7 @@ import {
 } from './PivotingModeInterface';
 import { angleBetween } from '../../angleBetween';
 import { normalizeAngle } from 'Math/angles/normalize';
-import { isPoint2D as isPoint } from 'Math/Point';
+import { isPoint2D as isPoint } from 'Math/points/Point';
 
 export interface Movement {
   x: number;

@@ -1,5 +1,5 @@
 import { SVGCircleWrapper as Circle } from 'Draw/svg/circle';
-import { Point2D as Point } from 'Math/Point';
+import { Point2D as Point } from 'Math/points/Point';
 
 export type Repositioning = {
   baseCenter?: Point;
