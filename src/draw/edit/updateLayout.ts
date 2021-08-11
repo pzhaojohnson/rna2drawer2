@@ -1,6 +1,8 @@
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
 import { StrictLayout } from 'Draw/layout/singleseq/strict/StrictLayout';
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 export interface Options {
@@ -79,6 +81,27 @@ function moveBases(strictDrawing: StrictDrawing, layout: StrictLayout, options?:
   });
 }
 
+function repositionBonds(drawing: Drawing, options?: Options) {
+  let basePositions = new Map<Base, number>();
+  drawing.bases().forEach((b, i) => basePositions.set(b, i + 1));
+  [
+    ...drawing.primaryBonds,
+    ...drawing.secondaryBonds,
+    ...drawing.tertiaryBonds,
+  ].forEach(bond => {
+    if (!options?.onlyMove) {
+      // reposition all bonds by default if all bases may have been moved
+      bond.reposition();
+    } else {
+      let p1 = basePositions.get(bond.base1) ?? 0;
+      let p2 = basePositions.get(bond.base2) ?? 0;
+      if (options.onlyMove.has(p1) || options.onlyMove.has(p2)) {
+        bond.reposition();
+      }
+    }
+  });
+}
+
 export function updateLayout(strictDrawing: StrictDrawing, options=defaultOptions) {
   let layout = createLayout(strictDrawing);
   if (layout) {
@@ -86,7 +109,7 @@ export function updateLayout(strictDrawing: StrictDrawing, options=defaultOption
       updateDimensions(strictDrawing, layout);
     }
     moveBases(strictDrawing, layout, options);
-    strictDrawing.drawing.repositionBonds();
+    repositionBonds(strictDrawing.drawing, options);
     orientBaseNumberings(strictDrawing.drawing);
   }
 }
