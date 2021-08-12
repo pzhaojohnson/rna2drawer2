@@ -1,6 +1,7 @@
-import { addSavedPrimaryBond, addSavedSecondaryBond } from './saved';
-import Drawing from 'Draw/Drawing';
+import { addSavedPrimaryBonds, addSavedSecondaryBonds } from './saved';
+import { Drawing } from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
+import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addPrimaryBond, addSecondaryBond } from './add';
 import { savableState } from './save';
 
@@ -31,9 +32,9 @@ beforeEach(() => {
   drawing.addTo(container, () => NodeSVG());
 
   // test with multiple sequences
-  drawing.appendSequence('ASDF', 'ASDF');
-  drawing.appendSequence('qwer', 'qwerqwer');
-  drawing.appendSequence('zxcv', 'ZXCVzx');
+  appendSequence(drawing, { id: 'ASDF', characters: 'ASDF' });
+  appendSequence(drawing, { id: 'qwer', characters: 'qwerqwer' });
+  appendSequence(drawing, { id: 'zxcv', characters: 'ZXCVzx' });
 
   let bases = drawing.bases();
   for (let i = 0; i < bases.length - 1; i++) {
@@ -52,110 +53,67 @@ afterEach(() => {
   container = null;
 });
 
-describe('addSavedPrimaryBond function', () => {
-  it('finds line and bases 1 and 2', () => {
-    let [pb1] = drawing.primaryBonds.splice(2, 1);
-    let saved = savableState(pb1);
-    let pb2 = addSavedPrimaryBond(drawing, saved);
-    expect(areSameLine(pb1.line, pb2.line)).toBeTruthy();
-    expect(areSameBase(pb1.base1, pb2.base1)).toBeTruthy();
-    expect(areSameBase(pb1.base2, pb2.base2)).toBeTruthy();
+describe.each`
+  f                         | arrayName
+  ${addSavedPrimaryBonds}   | ${'primaryBonds'}
+  ${addSavedSecondaryBonds} | ${'secondaryBonds'}
+`('$f', ({ f, arrayName }) => {
+  it('finds lines and bases 1 and 2', () => {
+    let bonds1 = drawing[arrayName].splice(2, 3);
+    let saveds = bonds1.map(bond1 => savableState(bond1));
+    let bonds2 = f(drawing, saveds);
+    expect(bonds2.length).toBe(bonds1.length);
+    bonds1.forEach((bond1, i) => {
+      let bond2 = bonds2[i];
+      expect(areSameLine(bond1.line, bond2.line)).toBeTruthy();
+      expect(areSameBase(bond1.base1, bond2.base1)).toBeTruthy();
+      expect(areSameBase(bond1.base2, bond2.base2)).toBeTruthy();
+    });
   });
 
-  it('adds to primary bonds array', () => {
-    let [pb1] = drawing.primaryBonds.splice(4, 1);
-    let saved = savableState(pb1);
-    let pb2 = addSavedPrimaryBond(drawing, saved);
-    expect(drawing.primaryBonds.includes(pb2)).toBeTruthy();
+  it('adds recreated bonds to bonds array', () => {
+    let bonds1 = drawing[arrayName].splice(1, 3);
+    let saveds = bonds1.map(bond1 => savableState(bond1));
+    let bonds2 = f(drawing, saveds);
+    expect(bonds2.length).toBe(bonds1.length);
+    bonds2.forEach(bond2 => {
+      expect(drawing[arrayName].includes(bond2)).toBeTruthy();
+    });
   });
 
-  it('checks that saved state is for a primary bond', () => {
-    let [pb] = drawing.primaryBonds.splice(0, 1);
-    let saved = savableState(pb);
+  it('checks that saved states are for straight bonds', () => {
+    let [bond1] = drawing[arrayName].splice(0, 1);
+    let saved = savableState(bond1);
     saved.className = 'StraightBnd';
     expect(
-      () => addSavedPrimaryBond(drawing, saved)
+      () => f(drawing, [saved])
     ).toThrow();
   });
 
   it('throws if unable to find line', () => {
-    let [pb] = drawing.primaryBonds.splice(1, 1);
-    let saved = savableState(pb);
+    let [bond1] = drawing[arrayName].splice(1, 1);
+    let saved = savableState(bond1);
     saved.lineId = 'asdf';
     expect(
-      () => addSavedPrimaryBond(drawing, saved)
+      () => f(drawing, [saved])
     ).toThrow();
   });
 
   it('throws if unable to find base 1', () => {
-    let [pb] = drawing.primaryBonds.splice(0, 1);
-    let saved = savableState(pb);
+    let [bond1] = drawing[arrayName].splice(0, 1);
+    let saved = savableState(bond1);
     saved.baseId1 = 'asdf';
     expect(
-      () => addSavedPrimaryBond(drawing, saved)
+      () => f(drawing, [saved])
     ).toThrow();
   });
 
   it('throws if unable to find base 2', () => {
-    let [pb] = drawing.primaryBonds.splice(0, 1);
-    let saved = savableState(pb);
+    let [bond1] = drawing[arrayName].splice(0, 1);
+    let saved = savableState(bond1);
     saved.baseId2 = 'asdf';
     expect(
-      () => addSavedPrimaryBond(drawing, saved)
-    ).toThrow();
-  });
-});
-
-describe('addSavedSecondaryBond function', () => {
-  it('finds line and bases 1 and 2', () => {
-    let [sb1] = drawing.secondaryBonds.splice(3, 1);
-    let saved = savableState(sb1);
-    let sb2 = addSavedSecondaryBond(drawing, saved);
-    expect(areSameLine(sb1.line, sb2.line)).toBeTruthy();
-    expect(areSameBase(sb1.base1, sb2.base1)).toBeTruthy();
-    expect(areSameBase(sb1.base2, sb2.base2)).toBeTruthy();
-  });
-
-  it('adds to secondary bonds array', () => {
-    let [sb1] = drawing.secondaryBonds.splice(2, 1);
-    let saved = savableState(sb1);
-    let sb2 = addSavedSecondaryBond(drawing, saved);
-    expect(drawing.secondaryBonds.includes(sb2)).toBeTruthy();
-  });
-
-  it('checks that saved state is for a straight bond', () => {
-    let [sb] = drawing.secondaryBonds.splice(1, 1);
-    let saved = savableState(sb);
-    saved.className = 'StraiightBond';
-    expect(
-      () => addSavedSecondaryBond(drawing, saved)
-    ).toThrow();
-  });
-
-  it('throws if unable to find line', () => {
-    let [sb] = drawing.secondaryBonds.splice(0, 1);
-    let saved = savableState(sb);
-    saved.lineId = 'asdf';
-    expect(
-      () => addSavedSecondaryBond(drawing, saved)
-    ).toThrow();
-  });
-
-  it('throws if unable to find base 1', () => {
-    let [sb] = drawing.secondaryBonds.splice(0, 1);
-    let saved = savableState(sb);
-    saved.baseId1 = 'asdf';
-    expect(
-      () => addSavedSecondaryBond(drawing, saved)
-    ).toThrow();
-  });
-
-  it('throws if unable to find base 2', () => {
-    let [sb] = drawing.secondaryBonds.splice(0, 1);
-    let saved = savableState(sb);
-    saved.baseId2 = 'asdf';
-    expect(
-      () => addSavedSecondaryBond(drawing, saved)
+      () => f(drawing, [saved])
     ).toThrow();
   });
 });

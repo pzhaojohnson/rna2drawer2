@@ -20,7 +20,7 @@ import {
   SavableState as SavableStraightBondState,
   savableState as savableStraightBondState,
 } from 'Draw/bonds/straight/save';
-import { addSavedPrimaryBond, addSavedSecondaryBond } from 'Draw/bonds/straight/saved';
+import { addSavedPrimaryBonds, addSavedSecondaryBonds } from 'Draw/bonds/straight/saved';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import {
   SavableState as SavableTertiaryBondState,
@@ -346,8 +346,8 @@ export class Drawing implements DrawingInterface {
     this._applySavedSvg(savedState);
     this._appendSavedSequences(savedState);
     let basesByIds = this.basesByIds();
-    this._addSavedPrimaryBonds(savedState, basesByIds);
-    this._addSavedSecondaryBonds(savedState, basesByIds);
+    this._addSavedPrimaryBonds(savedState);
+    this._addSavedSecondaryBonds(savedState);
     this._addSavedTertiaryBonds(savedState, basesByIds);
     orientBaseNumberings(this);
     if (wasEmpty) {
@@ -374,12 +374,12 @@ export class Drawing implements DrawingInterface {
     });
   }
 
-  _addSavedPrimaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
-    savedState.primaryBonds.forEach(pb => addSavedPrimaryBond(this, pb));
+  _addSavedPrimaryBonds(savedState: DrawingSavableState): (void | never) {
+    addSavedPrimaryBonds(this, savedState.primaryBonds);
   }
 
-  _addSavedSecondaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
-    savedState.secondaryBonds.forEach(sb => addSavedSecondaryBond(this, sb));
+  _addSavedSecondaryBonds(savedState: DrawingSavableState): (void | never) {
+    addSavedSecondaryBonds(this, savedState.secondaryBonds);
   }
 
   _addSavedTertiaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
