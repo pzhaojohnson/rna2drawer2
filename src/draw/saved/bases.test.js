@@ -1,4 +1,7 @@
-import { getBaseByUniqueId } from './bases';
+import {
+  getBaseByUniqueId,
+  basesByUniqueId,
+} from './bases';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import Drawing from 'Draw/Drawing';
 
@@ -59,6 +62,29 @@ describe('getBaseByUniqueId function', () => {
     expect(b21.id).toBe(b15.id);
     expect(
       () => getBaseByUniqueId(drawing, b15.id)
+    ).toThrow();
+  });
+});
+
+describe('basesByUniqueId function', () => {
+  it('maps bases by ID', () => {
+    // test for multiple sequences
+    expect(drawing.sequences.length).toBeGreaterThanOrEqual(3);
+    let byId = basesByUniqueId(drawing);
+    let bs = drawing.bases();
+    expect(byId.size).toBe(bs.length);
+    bs.forEach(b => {
+      expect(byId.get(b.id)).toBe(b);
+    });
+  });
+
+  it('throws if there are nonunique IDs', () => {
+    let bs = drawing.bases();
+    expect(bs.length).toBeGreaterThanOrEqual(4);
+    bs[1].text.id(bs[3].id); // make IDs the same
+    expect(bs[1].id).toBe(bs[3].id);
+    expect(
+      () => basesByUniqueId(drawing)
     ).toThrow();
   });
 });

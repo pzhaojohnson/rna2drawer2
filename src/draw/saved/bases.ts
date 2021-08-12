@@ -19,3 +19,16 @@ export function getBaseByUniqueId(drawing: Drawing, id: unknown): Base | never {
     }
   }
 }
+
+// throws if there are nonunique base IDs
+export function basesByUniqueId(drawing: Drawing): Map<string, Base> | never {
+  let byId = new Map<string, Base>();
+  drawing.bases().forEach(b => {
+    if (byId.has(b.id)) {
+      throw new Error(`Base ID is not unique: ${b.id}.`);
+    } else {
+      byId.set(b.id, b);
+    }
+  });
+  return byId;
+}
