@@ -1,6 +1,7 @@
-import { addSavedTertiaryBond } from './saved';
-import Drawing from 'Draw/Drawing';
+import { addSavedTertiaryBonds } from './saved';
+import { Drawing } from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
+import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addTertiaryBond } from './add';
 import { savableState } from './save';
 
@@ -31,9 +32,9 @@ beforeEach(() => {
   drawing.addTo(container, () => NodeSVG());
 
   // test with multiple sequences
-  drawing.appendSequence('QWER', 'QWERQWER');
-  drawing.appendSequence('1234', '123456');
-  drawing.appendSequence('zzzz', 'zzzzzzzzzzzzzz');
+  appendSequence(drawing, { id: 'QWER', characters: 'QWERQWER' });
+  appendSequence(drawing, { id: '1234', characters: '123456' });
+  appendSequence(drawing, { id: 'zzzz', characters: 'zzzzzzzzzzzzzz' });
 
   [
     [1, 2],
@@ -59,62 +60,63 @@ afterEach(() => {
   container = null;
 });
 
-describe('addSavedTertiaryBond function', () => {
-  it('finds path and bases 1 and 2', () => {
-    let [tb1] = drawing.tertiaryBonds.splice(3, 1);
-    expect(tb1).toBeTruthy();
-    let saved = savableState(tb1);
-    let tb2 = addSavedTertiaryBond(drawing, saved);
-    expect(areSamePath(tb1.path, tb2.path)).toBeTruthy();
-    expect(areSameBase(tb1.base1, tb2.base1)).toBeTruthy();
-    expect(areSameBase(tb1.base2, tb2.base2)).toBeTruthy();
+describe('addSavedTertiaryBonds function', () => {
+  it('finds paths and bases 1 and 2', () => {
+    let tbs1 = drawing.tertiaryBonds.splice(2, 3);
+    let saveds = tbs1.map(tb1 => savableState(tb1));
+    let tbs2 = addSavedTertiaryBonds(drawing, saveds);
+    expect(tbs2.length).toBe(tbs1.length);
+    tbs1.forEach((tb1, i) => {
+      let tb2 = tbs2[i];
+      expect(areSamePath(tb1.path, tb2.path)).toBeTruthy();
+      expect(areSameBase(tb1.base1, tb2.base1)).toBeTruthy();
+      expect(areSameBase(tb1.base2, tb2.base2)).toBeTruthy();
+    });
   });
 
-  it('adds bond to tertiary bonds array', () => {
-    let [tb1] = drawing.tertiaryBonds.splice(2, 1);
-    expect(tb1).toBeTruthy();
-    let saved = savableState(tb1);
-    let tb2 = addSavedTertiaryBond(drawing, saved);
-    expect(drawing.tertiaryBonds.includes(tb2)).toBeTruthy();
+  it('adds recreated bonds to tertiary bonds array', () => {
+    let tbs1 = drawing.tertiaryBonds.splice(1, 3);
+    let saveds = tbs1.map(tb1 => savableState(tb1));
+    let tbs2 = addSavedTertiaryBonds(drawing, saveds);
+    expect(tbs2.length).toBe(tbs1.length);
+    tbs2.forEach(tb2 => {
+      expect(drawing.tertiaryBonds.includes(tb2)).toBeTruthy();
+    });
   });
 
-  it('checks that saved state is for a quadratic bezier bond', () => {
+  it('checks that saved states are for quadratic bezier bonds', () => {
     let [tb] = drawing.tertiaryBonds.splice(3, 1);
-    expect(tb).toBeTruthy();
     let saved = savableState(tb);
     saved.className = 'QuadraticBezierBonde';
     expect(
-      () => addSavedTertiaryBond(drawing, saved)
+      () => addSavedTertiaryBonds(drawing, [saved])
     ).toThrow();
   });
 
   it('throws if unable to find path', () => {
     let [tb] = drawing.tertiaryBonds.splice(1, 1);
-    expect(tb).toBeTruthy();
     let saved = savableState(tb);
     saved.pathId = 'asdf';
     expect(
-      () => addSavedTertiaryBond(drawing, saved)
+      () => addSavedTertiaryBonds(drawing, [saved])
     ).toThrow();
   });
 
   it('throws if unable to find base 1', () => {
     let [tb] = drawing.tertiaryBonds.splice(0, 1);
-    expect(tb).toBeTruthy();
     let saved = savableState(tb);
     saved.baseId1 = 'qwer';
     expect(
-      () => addSavedTertiaryBond(drawing, saved)
+      () => addSavedTertiaryBonds(drawing, [saved])
     ).toThrow();
   });
 
   it('throws if unable to find base 2', () => {
     let [tb] = drawing.tertiaryBonds.splice(2, 1);
-    expect(tb).toBeTruthy();
     let saved = savableState(tb);
     saved.baseId2 = 'zxcv';
     expect(
-      () => addSavedTertiaryBond(drawing, saved)
+      () => addSavedTertiaryBonds(drawing, [saved])
     ).toThrow();
   });
 });

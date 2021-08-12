@@ -26,7 +26,7 @@ import {
   SavableState as SavableTertiaryBondState,
   savableState as savableTertiaryBondState,
 } from 'Draw/bonds/curved/save';
-import { addSavedTertiaryBond } from 'Draw/bonds/curved/saved';
+import { addSavedTertiaryBonds } from 'Draw/bonds/curved/saved';
 
 interface Coordinates {
   x: number;
@@ -345,10 +345,9 @@ export class Drawing implements DrawingInterface {
     this.clear();
     this._applySavedSvg(savedState);
     this._appendSavedSequences(savedState);
-    let basesByIds = this.basesByIds();
     this._addSavedPrimaryBonds(savedState);
     this._addSavedSecondaryBonds(savedState);
-    this._addSavedTertiaryBonds(savedState, basesByIds);
+    this._addSavedTertiaryBonds(savedState);
     orientBaseNumberings(this);
     if (wasEmpty) {
       this.centerView();
@@ -382,8 +381,8 @@ export class Drawing implements DrawingInterface {
     addSavedSecondaryBonds(this, savedState.secondaryBonds);
   }
 
-  _addSavedTertiaryBonds(savedState: DrawingSavableState, basesByIds: BasesByIds): (void | never) {
-    savedState.tertiaryBonds.forEach(stb => addSavedTertiaryBond(this, stb));
+  _addSavedTertiaryBonds(savedState: DrawingSavableState): (void | never) {
+    addSavedTertiaryBonds(this, savedState.tertiaryBonds);
   }
 }
 
