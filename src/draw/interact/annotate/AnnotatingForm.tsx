@@ -25,7 +25,9 @@ export function AnnotatingForm(mode: AnnotatingMode, close?: () => void): React.
           style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
         >
           {BaseAnnotationFields({
+            strictDrawing: mode.strictDrawing,
             selectedBases: () => selectedBases(mode),
+            clearSelection: () => mode.clearSelection(),
             pushUndo: () => mode.fireShouldPushUndo(),
             changed: () => mode.fireChange(),
           })}
