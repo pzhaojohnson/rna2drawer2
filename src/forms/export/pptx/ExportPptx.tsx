@@ -4,7 +4,7 @@ import { CloseButton } from '../../buttons/CloseButton';
 import { SolidButton } from '../../buttons/SolidButton';
 const uuidv1 = require('uuid/v1');
 import { Base } from 'Draw/bases/Base';
-import { pointsToPixels } from '../../../export/pointsToPixels';
+import { pointsToPixels } from 'Export/units';
 import { formatSvgForExport } from '../../../export/formatSvgForExport';
 import { createPptxFromSvg } from '../../../export/createPptxFromSvg';
 import * as Svg from '@svgdotjs/svg.js';

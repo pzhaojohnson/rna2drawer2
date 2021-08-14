@@ -10,10 +10,7 @@ import {
 import { trimNum } from './trimNum';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 const fs = require('fs');
-import { pixelsToPoints } from './pixelsToPoints';
-import { pixelsToInches } from './pixelsToInches';
-import { pointsToPixels } from './pointsToPixels';
-import { pointsToInches } from './pointsToInches';
+import { pixelsToInches, pointsToPixels } from './units';
 import PptxGenJs from 'pptxgenjs';
 import * as Svg from '@svgdotjs/svg.js';
 import { parseColor } from 'Parse/parseColor';

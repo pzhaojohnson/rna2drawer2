@@ -1,8 +1,6 @@
 import PptxGenJS from 'pptxgenjs';
 import * as Svg from '@svgdotjs/svg.js';
-import { pixelsToInches } from './pixelsToInches';
-import { pixelsToPoints } from './pixelsToPoints';
-import { pointsToInches } from './pointsToInches';
+import { pixelsToInches, pixelsToPoints } from './units';
 import { trimNum } from './trimNum';
 import { parseColor } from 'Parse/parseColor';
 

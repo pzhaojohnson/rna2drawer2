@@ -1,6 +1,6 @@
 import { Rna2drawer1 } from './parseRna2drawer1';
 import { StrictDrawingInterface as StrictDrawing } from '../../draw/StrictDrawingInterface';
-import { pixelsToPoints } from '../../export/pixelsToPoints';
+import { pixelsToPoints } from 'Export/units';
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import { addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import {
