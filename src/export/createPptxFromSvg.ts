@@ -115,80 +115,6 @@ function _addLine(pres: PptxGenJS, slide: PptxGenJS.Slide, line: Svg.Line) {
   );
 }
 
-function _circleOptions(circle: Svg.Circle): object {
-  let x = circle.attr('cx') - circle.attr('r');
-  let y = circle.attr('cy') - circle.attr('r');
-  let w = 2 * circle.attr('r');
-  let h = 2 * circle.attr('r');
-  let line;
-  if (circle.attr('stroke-opacity') > 0 && circle.attr('stroke-width') > 0) {
-    let color = parseColor(circle.attr('stroke'));
-    line = {
-      color: color ? _pptxHex(color) : undefined,
-      width: _trimNum(pixelsToPoints(circle.attr('stroke-width'))),
-      transparency: 100 * (1 - circle.attr('stroke-opacity')),
-    };
-  }
-  let fill;
-  if (circle.attr('fill-opacity') > 0) {
-    let color = parseColor(circle.attr('fill'));
-    fill = {
-      color: color ? _pptxHex(color) : undefined,
-      transparency: 100 * (1 - circle.attr('fill-opacity')),
-    };
-  }
-  return {
-    x: trimNum(pixelsToInches(x), 4),
-    y: trimNum(pixelsToInches(y), 4),
-    w: trimNum(pixelsToInches(w), 4),
-    h: trimNum(pixelsToInches(h), 4),
-    line: line,
-    fill: fill,
-  };
-}
-
-function _addCircle(pres: PptxGenJS, slide: PptxGenJS.Slide, circle: Svg.Circle) {
-  slide.addShape(
-    pres.ShapeType.ellipse,
-    _circleOptions(circle),
-  );
-}
-
-function _rectOptions(rect: Svg.Rect): object {
-  let line;
-  if (rect.attr('stroke-opacity') > 0 && rect.attr('stroke-width') > 0) {
-    let color = parseColor(rect.attr('stroke'));
-    line = {
-      color: color ? _pptxHex(color) : undefined,
-      width: _trimNum(pixelsToPoints(rect.attr('stroke-width'))),
-      transparency: 100 * (1 - rect.attr('stroke-opacity')),
-    };
-  }
-  let fill;
-  if (rect.attr('fill-opacity') > 0) {
-    let color = parseColor(rect.attr('fill'));
-    fill = {
-      color: color ? _pptxHex(color) : undefined,
-      transparency: 100 * (1 - rect.attr('fill-opacity')),
-    };
-  }
-  return {
-    x: trimNum(pixelsToInches(rect.attr('x')), 4),
-    y: trimNum(pixelsToInches(rect.attr('y')), 4),
-    w: trimNum(pixelsToInches(rect.attr('width')), 4),
-    h: trimNum(pixelsToInches(rect.attr('height')), 4),
-    line: line,
-    fill: fill,
-  };
-}
-
-function _addRect(pres: PptxGenJS, slide: PptxGenJS.Slide, rect: Svg.Rect) {
-  slide.addShape(
-    pres.ShapeType.rect,
-    _rectOptions(rect),
-  );
-}
-
 function _elementImageOptions(ele: Svg.Element): object | undefined {
   let bb = ele.bbox();
   let sw = ele.attr('stroke-width');
@@ -266,7 +192,5 @@ export {
   _trimNum,
   _textOptions,
   _lineOptions,
-  _circleOptions,
-  _rectOptions,
   _elementImageOptions,
 };
