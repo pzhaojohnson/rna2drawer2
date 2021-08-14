@@ -6,7 +6,7 @@ import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 import positionsBetween from './positionsBetween';
 
 export function handleMouseoverOnBase(mode: AnnotatingMode, b: Base) {
-  let p = mode.drawing.overallPositionOfBase(b);
+  let p = mode.strictDrawing.drawing.overallPositionOfBase(b);
   if (p != 0) {
     mode.hovered = p;
     if (mode.selectingFrom) {
@@ -71,20 +71,20 @@ export function clearSelection(mode: AnnotatingMode) {
 }
 
 export function refresh(mode: AnnotatingMode) {
-  if (typeof mode.hovered == 'number' && mode.hovered > mode.drawing.numBases) {
+  if (typeof mode.hovered == 'number' && mode.hovered > mode.strictDrawing.drawing.numBases) {
     mode.hovered = undefined;
   }
   let toDeselect = [] as number[];
   mode.selected.forEach(p => {
-    if (p > mode.drawing.numBases) {
+    if (p > mode.strictDrawing.drawing.numBases) {
       toDeselect.push(p);
     }
   });
   toDeselect.forEach(p => mode.selected.delete(p));
-  if (typeof mode.selectingFrom == 'number' && mode.selectingFrom > mode.drawing.numBases) {
+  if (typeof mode.selectingFrom == 'number' && mode.selectingFrom > mode.strictDrawing.drawing.numBases) {
     mode.selectingFrom = undefined;
   }
-  removeAllBaseHighlightings(mode.drawing); // required to restart animations
+  removeAllBaseHighlightings(mode.strictDrawing.drawing); // required to restart animations
   setAllBaseHighlightings(mode);
 }
 

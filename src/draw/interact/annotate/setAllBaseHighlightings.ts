@@ -20,8 +20,8 @@ function areWithin(b1: Base, b2: Base, radius: number): boolean {
 }
 
 export function setAllBaseHighlightings(mode: AnnotatingMode) {
-  let bHovered = typeof mode.hovered == 'number' ? mode.drawing.getBaseAtOverallPosition(mode.hovered) : undefined;
-  mode.drawing.forEachBase((b, p) => {
+  let bHovered = mode.strictDrawing.drawing.getBaseAtOverallPosition(mode.hovered ?? 0);
+  mode.strictDrawing.drawing.forEachBase((b, p) => {
     if (mode.selected.has(p) || p == mode.hovered) {
       let fs = b.text.attr('font-size');
       let radius = 1.15 * (typeof fs == 'number' ? fs : 9);

@@ -149,7 +149,7 @@ class StrictDrawingInteraction {
   }
 
   _initializeAnnotatingMode() {
-    this._annotatingMode = new AnnotatingMode(this.strictDrawing.drawing);
+    this._annotatingMode = new AnnotatingMode(this.strictDrawing);
     this._annotatingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
     this._annotatingMode.onChange(() => this.fireChange());
     this._annotatingMode.onRequestToRenderForm(ff => this.requestToRenderForm(ff));

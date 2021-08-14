@@ -1,5 +1,5 @@
 import { AnnotatingModeInterface, FormFactory } from './AnnotatingModeInterface';
-import { DrawingInterface as Drawing } from '../../DrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import {
   handleMouseoverOnBase,
@@ -16,7 +16,7 @@ import {
 import { AnnotatingForm } from './AnnotatingForm';
 
 export class AnnotatingMode implements AnnotatingModeInterface {
-  _drawing: Drawing;
+  readonly strictDrawing: StrictDrawing;
 
   hovered?: number;
   selected: Set<number>;
@@ -31,8 +31,8 @@ export class AnnotatingMode implements AnnotatingModeInterface {
   _onRequestToRenderForm?: (ff: FormFactory) => void;
   _closeForm?: () => void;
 
-  constructor(drawing: Drawing) {
-    this._drawing = drawing;
+  constructor(strictDrawing: StrictDrawing) {
+    this.strictDrawing = strictDrawing;
 
     this.selected = new Set<number>();
 
@@ -52,10 +52,6 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
   get className(): string {
     return 'AnnotatingMode';
-  }
-
-  get drawing(): Drawing {
-    return this._drawing;
   }
 
   handleMouseoverOnBase(b: Base) {

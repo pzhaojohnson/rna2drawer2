@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from "../../DrawingInterface";
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import * as React from 'react';
 
@@ -15,7 +15,7 @@ export interface AnnotatingModeInterface {
 
   readonly className: string;
 
-  readonly drawing: Drawing;
+  readonly strictDrawing: StrictDrawing;
 
   handleMouseoverOnBase(b: Base): void;
   handleMouseoutOnBase(b: Base): void;

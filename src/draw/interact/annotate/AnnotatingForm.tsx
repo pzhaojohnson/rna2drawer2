@@ -7,7 +7,7 @@ import BaseAnnotationFields from '../../../forms/annotate/bases/BaseAnnotationFi
 function selectedBases(mode: AnnotatingMode): Base[] {
   let bs = [] as Base[];
   mode.selected.forEach(p => {
-    let b = mode.drawing.getBaseAtOverallPosition(p);
+    let b = mode.strictDrawing.drawing.getBaseAtOverallPosition(p);
     if (b) {
       bs.push(b);
     }
