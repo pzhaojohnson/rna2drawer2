@@ -22,7 +22,7 @@ export function offerFileForDownload(fileProps: FileProps) {
   offerBlobForDownload(blob, fileProps.name);
 }
 
-export function offerBlobForDownload(blob: Blob, downloadName: string) {
+function offerBlobForDownload(blob: Blob, downloadName: string) {
   let url = URL.createObjectURL(blob);
   let div = document.createElement('div');
   div.style.cssText = 'max-width: 0px; max-height: 0px';
