@@ -1,4 +1,4 @@
-import offerFileForDownload from './offerFileForDownload';
+import offerFileForDownload from './download';
 
 describe('offerFileForDownload function', () => {
   it('returns early when file props are missing', () => {

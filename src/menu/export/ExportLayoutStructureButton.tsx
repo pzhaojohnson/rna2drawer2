@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import { DroppedButton } from '../DroppedButton';
-import { offerFileForDownload } from '../../export/offerFileForDownload';
+import { offerFileForDownload } from 'Utilities/download';
 
 function getLayoutDotBracket(app: App): string {
   let partners = app.strictDrawing.layoutPartners();

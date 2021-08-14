@@ -1,5 +1,5 @@
 import { AppInterface as App } from '../AppInterface';
-import { offerFileForDownload } from './offerFileForDownload';
+import { offerFileForDownload } from 'Utilities/download';
 
 export function save(app: App) {
   let name = 'Drawing';

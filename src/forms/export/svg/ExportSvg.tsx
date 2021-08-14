@@ -5,7 +5,7 @@ import { SolidButton } from '../../buttons/SolidButton';
 const uuidv1 = require('uuid/v1');
 import { Base } from 'Draw/bases/Base';
 import { formatSvgForExport } from '../../../export/formatSvgForExport';
-import offerFileForDownload from '../../../export/offerFileForDownload';
+import offerFileForDownload from 'Utilities/download';
 import * as Svg from '@svgdotjs/svg.js';
 import LastExported from '../LastExported';
 

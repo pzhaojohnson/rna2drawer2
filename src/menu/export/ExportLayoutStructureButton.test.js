@@ -9,8 +9,8 @@ import { act } from 'react-dom/test-utils';
 import { render } from '@testing-library/react';
 import { unmountComponentAtNode } from 'react-dom';
 
-jest.mock('../../export/offerFileForDownload');
-import * as OfferFileForDownload from '../../export/offerFileForDownload';
+jest.mock('Utilities/download');
+import * as OfferFileForDownload from 'Utilities/download';
 
 let container = null;
 

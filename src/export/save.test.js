@@ -1,5 +1,5 @@
 import { save } from './save';
-import * as OfferFileForDownload from './offerFileForDownload';
+import * as OfferFileForDownload from 'Utilities/download';
 
 it('calls offerFileForDownload function', () => {
   document.title = 'Name of Drawing';
