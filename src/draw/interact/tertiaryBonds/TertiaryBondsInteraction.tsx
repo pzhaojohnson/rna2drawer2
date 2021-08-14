@@ -159,6 +159,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
     if (this._onRequestToRenderForm) {
       this._onRequestToRenderForm(close => (
         <EditTertiaryBonds
+          drawing={this.drawing}
           getTertiaryBonds={
             () => this.drawing.tertiaryBonds.filter(tb => this.selected.has(tb.id))
           }
