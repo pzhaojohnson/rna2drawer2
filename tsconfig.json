@@ -25,7 +25,6 @@
       "Partners/*": ["src/partners/*"],
       "Undo/*": ["src/undo/*"],
       "Utilities/*": ["src/utilities/*"],
-      "Wait/*": ["src/wait/*"],
       "AppInterface": ["src/AppInterface"]
     },
     "module": "es6",

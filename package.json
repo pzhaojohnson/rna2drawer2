@@ -65,7 +65,6 @@
       "^Partners(.*)$": "<rootDir>/src/partners$1",
       "^Undo(.*)$": "<rootDir>/src/undo$1",
       "^Utilities(.*)$": "<rootDir>/src/utilities$1",
-      "^Wait(.*)$": "<rootDir>/src/wait$1",
       "^AppInterface$": "<rootDir>/src/AppInterface.ts",
       "\\.(png|svg|ttf)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css)$": "identity-obj-proxy"
