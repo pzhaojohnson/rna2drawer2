@@ -1,10 +1,15 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import DroppedButton from '../../DroppedButton';
-import {
-  hasCapitalBaseLetters,
-  decapitalizeBaseLetters,
-} from '../../../draw/edit/capitalize';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+
+function isLowerCase(s: string): boolean {
+  return s == s.toLowerCase();
+}
+
+function onlyHasLowerCases(drawing: Drawing): boolean {
+  return drawing.bases().every(b => isLowerCase(b.text.text()));
+}
 
 interface Props {
   app: App;
@@ -13,15 +18,29 @@ interface Props {
   borderColor?: string;
 }
 
-export function DecapitalizeButton(props: Props): React.ReactElement {
+export function DecapitalizeButton(props: Props) {
   return (
     <DroppedButton
-      text={'lowercase'}
+      text='lowercase'
       onClick={() => {
-        let drawing = props.app.strictDrawing.drawing;
-        if (hasCapitalBaseLetters(drawing)) {
+        if (!onlyHasLowerCases(props.app.strictDrawing.drawing)) {
           props.app.pushUndo();
-          decapitalizeBaseLetters(drawing);
+          props.app.strictDrawing.drawing.bases().forEach(b => {
+            let s = b.text.text();
+            if (!isLowerCase(s)) {
+              
+              // remember center coordinates of text
+              let bbox = b.text.bbox();
+              let center = { x: bbox.cx, y: bbox.cy };
+
+              // decapitalize
+              b.text.clear();
+              b.text.plain(s.toLowerCase());
+
+              // recenter text
+              b.text.center(center.x, center.y);
+            }
+          });
           props.app.drawingChangedNotByInteraction();
         }
       }}

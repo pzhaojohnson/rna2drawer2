@@ -1,10 +1,15 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import DroppedButton from '../../DroppedButton';
-import {
-  onlyHasCapitalBaseLetters,
-  capitalizeBaseLetters,
-} from '../../../draw/edit/capitalize';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+
+function isUpperCase(s: string): boolean {
+  return s == s.toUpperCase();
+}
+
+function onlyHasUpperCases(drawing: Drawing): boolean {
+  return drawing.bases().every(b => isUpperCase(b.text.text()));
+}
 
 interface Props {
   app: App;
@@ -13,15 +18,29 @@ interface Props {
   borderColor?: string;
 }
 
-export function CapitalizeButton(props: Props): React.ReactElement {
+export function CapitalizeButton(props: Props) {
   return (
     <DroppedButton
-      text={'UPPERCASE'}
+      text='UPPERCASE'
       onClick={() => {
-        let drawing = props.app.strictDrawing.drawing;
-        if (!onlyHasCapitalBaseLetters(drawing)) {
+        if (!onlyHasUpperCases(props.app.strictDrawing.drawing)) {
           props.app.pushUndo();
-          capitalizeBaseLetters(drawing);
+          props.app.strictDrawing.drawing.bases().forEach(b => {
+            let s = b.text.text();
+            if (!isUpperCase(s)) {
+              
+              // remember center coordinates of text
+              let bbox = b.text.bbox();
+              let center = { x: bbox.cx, y: bbox.cy };
+
+              // capitalize
+              b.text.clear();
+              b.text.plain(s.toUpperCase());
+
+              // recenter text
+              b.text.center(center.x, center.y);
+            }
+          });
           props.app.drawingChangedNotByInteraction();
         }
       }}
