@@ -1,10 +1,15 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import DroppedButton from '../../DroppedButton';
-import {
-  hasTs,
-  tsToUs,
-} from '../../../draw/edit/tsAndUs';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+
+function isT(s: string): boolean {
+  return s.toLowerCase() == 't';
+}
+
+function hasTs(drawing: Drawing): boolean {
+  return drawing.bases().some(b => isT(b.text.text()));
+}
 
 interface Props {
   app: App;
@@ -13,18 +18,32 @@ interface Props {
   borderColor?: string;
 }
 
-export function TsToUsButton(props: Props): React.ReactElement {
+export function TsToUsButton(props: Props) {
   return (
     <DroppedButton
-      text={'Ts to Us'}
+      text='Ts to Us'
       onClick={() => {
-        let drawing = props.app.strictDrawing.drawing;
-        if (!hasTs(drawing)) {
-          return;
+        if (hasTs(props.app.strictDrawing.drawing)) {
+          props.app.pushUndo();
+          props.app.strictDrawing.drawing.bases().forEach(b => {
+            let s1 = b.text.text();
+            if (isT(s1)) {
+              let s2 = s1 == 'T' ? 'U' : 'u';
+
+              // remember center coordinates of text
+              let bbox = b.text.bbox();
+              let center = { x: bbox.cx, y: bbox.cy };
+
+              // change letter
+              b.text.clear();
+              b.text.plain(s2);
+
+              // recenter text
+              b.text.center(center.x, center.y);
+            }
+          });
+          props.app.drawingChangedNotByInteraction();
         }
-        props.app.pushUndo();
-        tsToUs(drawing);
-        props.app.drawingChangedNotByInteraction();
       }}
       borderStyle={props.borderStyle}
       borderWidth={props.borderWidth}
