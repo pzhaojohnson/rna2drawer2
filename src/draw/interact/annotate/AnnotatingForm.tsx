@@ -24,11 +24,11 @@ export function AnnotatingForm(mode: AnnotatingMode, close?: () => void): React.
         <div
           style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
         >
-          {BaseAnnotationFields(
-            () => selectedBases(mode),
-            () => mode.fireShouldPushUndo(),
-            () => mode.fireChange(),
-          )}
+          {BaseAnnotationFields({
+            selectedBases: () => selectedBases(mode),
+            pushUndo: () => mode.fireShouldPushUndo(),
+            changed: () => mode.fireChange(),
+          })}
         </div>
       }
       width={'400px'}

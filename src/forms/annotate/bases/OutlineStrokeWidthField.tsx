@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { FieldProps as Props } from './FieldProps';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 import baseOutlines from './baseOutlines';
@@ -21,8 +21,8 @@ function outlinesAllHaveSameStrokeWidth(os: CircleBaseAnnotation[]): boolean {
   return areAllSameNumber(outlinesStrokeWidths(os));
 }
 
-export function OutlineStrokeWidthField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
-  let os = baseOutlines(selectedBases());
+export function OutlineStrokeWidthField(props: Props): React.ReactElement {
+  let os = baseOutlines(props.selectedBases());
   let sws = outlinesStrokeWidths(os);
   let initialValue = undefined;
   if (os.length > 0 && outlinesAllHaveSameStrokeWidth(os)) {
@@ -33,14 +33,14 @@ export function OutlineStrokeWidthField(selectedBases: () => Base[], pushUndo: (
       name={'Line Width'}
       initialValue={initialValue}
       set={sw => {
-        let os = baseOutlines(selectedBases());
+        let os = baseOutlines(props.selectedBases());
         if (os.length > 0) {
           let sws = outlinesStrokeWidths(os);
           if (!outlinesAllHaveSameStrokeWidth(os) || sw != sws[0]) {
-            pushUndo();
+            props.pushUndo();
             os.forEach(o => o.circle.attr({ 'stroke-width': sw }));
             MostRecentOutlineProps.strokeWidth = sw;
-            changed();
+            props.changed();
           }
         }
       }}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { FieldProps as Props } from './FieldProps';
 import { BaseCharacterField } from './BaseCharacterField';
 import BaseColorField from './BaseColorField';
 import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
@@ -9,43 +9,38 @@ import OutlineStrokeField from './OutlineStrokeField';
 import OutlineStrokeWidthField from './OutlineStrokeWidthField';
 import OutlineFillField from './OutlineFillField';
 
-export function BaseAnnotationFields(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
-  let bs = selectedBases();
+export function BaseAnnotationFields(props: Props): React.ReactElement {
+  let bs = props.selectedBases();
   if (bs.length == 0) {
     return <p>No bases are selected.</p>;
   } else {
-    let fieldProps = {
-      selectedBases: selectedBases,
-      pushUndo: pushUndo,
-      changed: changed,
-    };
     return (
       <div>
         {bs.length != 1 ? null : (
           <div style={{ marginBottom: '12px' }} >
-            {BaseCharacterField(selectedBases, pushUndo, changed)}
+            {BaseCharacterField(props)}
           </div>
         )}
-        {BaseColorField(selectedBases, pushUndo, changed)}
+        {BaseColorField(props)}
         <div style={{ marginTop: '16px' }} >
-          <ForwardAndBackwardButtons {...fieldProps} />
+          <ForwardAndBackwardButtons {...props} />
         </div>
         <div style={{ marginTop: '16px' }} >
-          {HasOutlineField(selectedBases, pushUndo, changed)}
+          {HasOutlineField(props)}
         </div>
-        {!allBasesHaveOutlines(selectedBases()) ? null : (
+        {!allBasesHaveOutlines(props.selectedBases()) ? null : (
           <div style={{ marginLeft: '16px' }} >
             <div style={{ marginTop: '12px' }} >
-              {OutlineRadiusField(selectedBases, pushUndo, changed)}
+              {OutlineRadiusField(props)}
             </div>
             <div style={{ marginTop: '12px' }} >
-              {OutlineStrokeField(selectedBases, pushUndo, changed)}
+              {OutlineStrokeField(props)}
             </div>
             <div style={{ marginTop: '12px' }} >
-              {OutlineStrokeWidthField(selectedBases, pushUndo, changed)}
+              {OutlineStrokeWidthField(props)}
             </div>
             <div style={{ marginTop: '12px' }} >
-              {OutlineFillField(selectedBases, pushUndo, changed)}
+              {OutlineFillField(props)}
             </div>
           </div>
         )}

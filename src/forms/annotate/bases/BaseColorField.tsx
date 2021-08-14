@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FieldProps as Props } from './FieldProps';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
@@ -31,8 +32,8 @@ function basesAllHaveSameColor(bs: Base[]): boolean {
   return areAllSameColor(baseFills(bs));
 }
 
-export function BaseColorField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
-  let bs = selectedBases();
+export function BaseColorField(props: Props): React.ReactElement {
+  let bs = props.selectedBases();
   let b1 = bs[0];
   let f1 = parseColor(b1.text.attr('fill'));
   let initialValue = undefined;
@@ -45,15 +46,15 @@ export function BaseColorField(selectedBases: () => Base[], pushUndo: () => void
       disableAlpha={true} // since text transparency cannot be set when exporting PPTX files
       initialValue={initialValue}
       set={co => {
-        let bs = selectedBases();
+        let bs = props.selectedBases();
         let b1 = bs[0];
         if (b1) {
           if (!basesAllHaveSameColor(bs) || co.color != b1.text.attr('fill')) {
-            pushUndo();
+            props.pushUndo();
             bs.forEach(b => {
               b.text.attr({ 'fill': co.color });
             });
-            changed();
+            props.changed();
           }
         }
       }}

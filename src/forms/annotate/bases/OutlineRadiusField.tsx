@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { FieldProps as Props } from './FieldProps';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import NonnegativeNumberField from '../../fields/text/NonnegativeNumberField';
 import baseOutlines from './baseOutlines';
@@ -21,8 +21,8 @@ function outlinesAllHaveSameRadius(os: CircleBaseAnnotation[]): boolean {
   return areAllSameNumber(outlineRadii(os));
 }
 
-export function OutlineRadiusField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
-  let os = baseOutlines(selectedBases());
+export function OutlineRadiusField(props: Props): React.ReactElement {
+  let os = baseOutlines(props.selectedBases());
   let rs = outlineRadii(os);
   let initialValue = undefined;
   if (os.length > 0 && outlinesAllHaveSameRadius(os)) {
@@ -33,14 +33,14 @@ export function OutlineRadiusField(selectedBases: () => Base[], pushUndo: () => 
       name={'Radius'}
       initialValue={initialValue}
       set={r => {
-        let os = baseOutlines(selectedBases());
+        let os = baseOutlines(props.selectedBases());
         if (os.length > 0) {
           let rs = outlineRadii(os);
           if (!outlinesAllHaveSameRadius(os) || r != rs[0]) {
-            pushUndo();
+            props.pushUndo();
             os.forEach(o => o.circle.attr({ 'r': r }));
             MostRecentOutlineProps.radius = r;
-            changed();
+            props.changed();
           }
         }
       }}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { FieldProps as Props } from './FieldProps';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
@@ -35,8 +35,8 @@ function outlinesAllHaveSameStrokeColor(os: CircleBaseAnnotation[]): boolean {
   return areAllSameColor(outlineStrokes(os)) && areAllSameNumber(outlineStrokeOpacities(os));
 }
 
-export function OutlineStrokeField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
-  let os = baseOutlines(selectedBases());
+export function OutlineStrokeField(props: Props): React.ReactElement {
+  let os = baseOutlines(props.selectedBases());
   let o1 = os[0];
   let initialValue = undefined;
   if (o1 && outlinesAllHaveSameStrokeColor(os)) {
@@ -47,11 +47,11 @@ export function OutlineStrokeField(selectedBases: () => Base[], pushUndo: () => 
       name={'Line Color'}
       initialValue={initialValue}
       set={co => {
-        let os = baseOutlines(selectedBases());
+        let os = baseOutlines(props.selectedBases());
         let o1 = os[0];
         if (o1) {
           if (!outlinesAllHaveSameStrokeColor(os) || co.color != o1.circle.attr('stroke') || co.opacity != o1.circle.attr('stroke-opacity')) {
-            pushUndo();
+            props.pushUndo();
             os.forEach(o => {
               o.circle.attr({
                 'stroke': co.color,
@@ -60,7 +60,7 @@ export function OutlineStrokeField(selectedBases: () => Base[], pushUndo: () => 
             });
             MostRecentOutlineProps.stroke = co.color;
             MostRecentOutlineProps.strokeOpacity = co.opacity;
-            changed();
+            props.changed();
           }
         }
       }}

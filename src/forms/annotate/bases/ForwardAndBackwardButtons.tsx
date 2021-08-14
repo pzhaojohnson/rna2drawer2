@@ -1,13 +1,8 @@
 import * as React from 'react';
+import { FieldProps as Props } from './FieldProps';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { bringToFront, sendToBack } from 'Draw/bases/z';
 import { TextButton } from 'Forms/buttons/TextButton';
-
-interface Props {
-  selectedBases: () => Base[];
-  pushUndo: () => void;
-  changed: () => void;
-}
 
 export function BringToFrontButton(props: Props) {
   return (

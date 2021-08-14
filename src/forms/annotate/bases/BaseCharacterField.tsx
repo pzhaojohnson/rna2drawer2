@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { FieldProps as Props } from './FieldProps';
 import { TextField } from '../../fields/text/TextField';
 
-export function BaseCharacterField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement | null {
-  let bs = selectedBases();
+export function BaseCharacterField(props: Props): React.ReactElement | null {
+  let bs = props.selectedBases();
   let b = bs[0];
   if (bs.length != 1 || !b) {
     return null;
@@ -20,12 +20,12 @@ export function BaseCharacterField(selectedBases: () => Base[], pushUndo: () => 
         }}
         set={c => {
           c = c.trim();
-          let bs = selectedBases();
+          let bs = props.selectedBases();
           let b = bs[0];
           if (bs.length == 1 && b && b.character != c) {
-            pushUndo();
+            props.pushUndo();
             b.character = c;
-            changed();
+            props.changed();
           }
         }}
       />

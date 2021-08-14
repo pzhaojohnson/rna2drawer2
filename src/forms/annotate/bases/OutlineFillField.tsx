@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { FieldProps as Props } from './FieldProps';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
@@ -35,8 +35,8 @@ function outlinesAllHaveSameFillColor(os: CircleBaseAnnotation[]): boolean {
   return areAllSameColor(outlineFills(os)) && areAllSameNumber(outlineFillOpacities(os));
 }
 
-export function OutlineFillField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
-  let os = baseOutlines(selectedBases());
+export function OutlineFillField(props: Props): React.ReactElement {
+  let os = baseOutlines(props.selectedBases());
   let o1 = os[0];
   let initialValue = undefined;
   if (o1 && outlinesAllHaveSameFillColor(os)) {
@@ -47,11 +47,11 @@ export function OutlineFillField(selectedBases: () => Base[], pushUndo: () => vo
       name={'Fill'}
       initialValue={initialValue}
       set={co => {
-        let os = baseOutlines(selectedBases());
+        let os = baseOutlines(props.selectedBases());
         let o1 = os[0];
         if (o1) {
           if (!outlinesAllHaveSameFillColor(os) || co.color != o1.circle.attr('fill') || co.opacity != o1.circle.attr('fill-opacity')) {
-            pushUndo();
+            props.pushUndo();
             os.forEach(o => {
               o.circle.attr({
                 'fill': co.color,
@@ -60,7 +60,7 @@ export function OutlineFillField(selectedBases: () => Base[], pushUndo: () => vo
             });
             MostRecentOutlineProps.fill = co.color;
             MostRecentOutlineProps.fillOpacity = co.opacity;
-            changed();
+            props.changed();
           }
         }
       }}

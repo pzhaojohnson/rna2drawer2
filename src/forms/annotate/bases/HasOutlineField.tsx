@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FieldProps as Props } from './FieldProps';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { CheckboxField } from '../../fields/checkbox/CheckboxField';
 import { addCircleOutline, removeCircleOutline } from 'Draw/bases/annotate/circle/add';
@@ -39,24 +40,24 @@ function _removeOutlines(bs: Base[]) {
   bs.forEach(b => removeCircleOutline(b));
 }
 
-export function HasOutlineField(selectedBases: () => Base[], pushUndo: () => void, changed: () => void): React.ReactElement {
-  let bs = selectedBases();
+export function HasOutlineField(props: Props): React.ReactElement {
+  let bs = props.selectedBases();
   let initialValue = bs.length == 0 ? false : allBasesHaveOutlines(bs);
   return (
     <CheckboxField
       name={'Outline'}
       initialValue={initialValue}
       set={v => {
-        let bs = selectedBases();
+        let bs = props.selectedBases();
         if (bs.length > 0) {
           if (v && !allBasesHaveOutlines(bs)) {
-            pushUndo();
+            props.pushUndo();
             _addOutlines(bs);
-            changed();
+            props.changed();
           } else if (!v && !allBasesLackOutlines(bs)) {
-            pushUndo();
+            props.pushUndo();
             _removeOutlines(bs);
-            changed();
+            props.changed();
           }
         }
       }}
