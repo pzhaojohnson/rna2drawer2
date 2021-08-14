@@ -71,6 +71,7 @@ module.exports = {
       Parse: path.resolve(__dirname, 'src/parse/'),
       Partners: path.resolve(__dirname, 'src/partners/'),
       Undo: path.resolve(__dirname, 'src/undo/'),
+      Utilities: path.resolve(__dirname, 'src/utilities/'),
       Wait: path.resolve(__dirname, 'src/wait/'),
       AppInterface$: path.resolve(__dirname, 'src/AppInterface.ts')
     },
