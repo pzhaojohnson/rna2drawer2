@@ -1,5 +1,5 @@
 import { save } from './save';
-import * as OfferFileForDownload from 'Utilities/download';
+import * as Download from 'Utilities/download';
 
 it('calls offerFileForDownload function', () => {
   document.title = 'Name of Drawing';
@@ -8,9 +8,9 @@ it('calls offerFileForDownload function', () => {
       savableString: 'Savable Drawing State',
     },
   };
-  OfferFileForDownload.offerFileForDownload = jest.fn();
+  Download.download = jest.fn();
   save(app);
-  let c = OfferFileForDownload.offerFileForDownload.mock.calls[0];
+  let c = Download.download.mock.calls[0];
   let fileProps = c[0];
   expect(fileProps.name).toBe('Name of Drawing.rna2drawer2');
   expect(fileProps.type).toBe('text/plain');

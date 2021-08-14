@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import { DroppedButton } from '../DroppedButton';
-import { offerFileForDownload } from 'Utilities/download';
+import { download } from 'Utilities/download';
 
 function getLayoutDotBracket(app: App): string {
   let partners = app.strictDrawing.layoutPartners();
@@ -30,7 +30,7 @@ export function ExportLayoutStructureButton(props: Props): React.ReactElement {
         let ids = props.app.strictDrawing.drawing.sequenceIds().join(', ');
         let seq = props.app.strictDrawing.drawing.overallCharacters;
         let dtbr = getLayoutDotBracket(props.app);
-        offerFileForDownload({
+        download({
           name: name + '.txt',
           type: 'text/plain',
           contents: '>' + ids + '\n' + seq + '\n' + dtbr,

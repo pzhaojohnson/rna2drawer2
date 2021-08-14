@@ -4,7 +4,7 @@ export interface FileProps {
   contents: string;
 }
 
-export function offerFileForDownload(fileProps: FileProps) {
+export function download(fileProps: FileProps) {
   if (!fileProps.name) {
     console.error('Missing file name.');
     return;
@@ -36,5 +36,3 @@ function offerBlobForDownload(blob: Blob, downloadName: string) {
   a.dispatchEvent(me);
   document.body.removeChild(div);
 }
-
-export default offerFileForDownload;
