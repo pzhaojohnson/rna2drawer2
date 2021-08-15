@@ -66,6 +66,7 @@
       "^Undo(.*)$": "<rootDir>/src/undo$1",
       "^Utilities(.*)$": "<rootDir>/src/utilities$1",
       "^AppInterface$": "<rootDir>/src/AppInterface.ts",
+      "^App$": "<rootDir>/src/App.ts",
       "\\.(png|svg|ttf)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css)$": "identity-obj-proxy"
     },

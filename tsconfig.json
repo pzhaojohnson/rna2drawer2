@@ -25,7 +25,8 @@
       "Partners/*": ["src/partners/*"],
       "Undo/*": ["src/undo/*"],
       "Utilities/*": ["src/utilities/*"],
-      "AppInterface": ["src/AppInterface"]
+      "AppInterface": ["src/AppInterface"],
+      "App": ["src/App"]
     },
     "module": "es6",
     "target": "es5",

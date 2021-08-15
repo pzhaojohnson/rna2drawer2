@@ -72,7 +72,8 @@ module.exports = {
       Partners: path.resolve(__dirname, 'src/partners/'),
       Undo: path.resolve(__dirname, 'src/undo/'),
       Utilities: path.resolve(__dirname, 'src/utilities/'),
-      AppInterface$: path.resolve(__dirname, 'src/AppInterface.ts')
+      AppInterface$: path.resolve(__dirname, 'src/AppInterface.ts'),
+      App$: path.resolve(__dirname, 'src/App.ts')
     },
     modules: ['node_modules'],
     extensions: [ '.tsx', '.ts', '.js' ]
