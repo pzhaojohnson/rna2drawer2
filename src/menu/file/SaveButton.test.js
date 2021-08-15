@@ -8,14 +8,6 @@ beforeEach(() => {
   app = new App(() => NodeSVG());
 });
 
-it('onClick callback', () => {
-  app.save = jest.fn();
-  let b = SaveButton({ app: app });
-  expect(app.save).not.toHaveBeenCalled();
-  b.props.onClick();
-  expect(app.save).toHaveBeenCalled();
-});
-
 it('when drawing is empty', () => {
   expect(app.strictDrawing.isEmpty()).toBeTruthy();
   let b = SaveButton({ app: app });

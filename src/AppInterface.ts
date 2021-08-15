@@ -30,6 +30,4 @@ export interface AppInterface {
   undo(): void;
   canRedo(): boolean;
   redo(): void;
-
-  save(): void;
 }

@@ -16,8 +16,6 @@ import { Infobar } from './infobar/Infobar';
 
 import { HomePage } from './forms/home/HomePage';
 
-import { save } from './export/save';
-
 class App implements AppInterface {
   _SVG: () => Svg.Svg;
 
@@ -220,10 +218,6 @@ class App implements AppInterface {
 
   redo() {
     redo(this);
-  }
-
-  save() {
-    save(this);
   }
 }
 

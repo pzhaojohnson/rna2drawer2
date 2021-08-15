@@ -1,16 +1,24 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import DroppedButton from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { download } from 'Utilities/download';
 
 interface Props {
   app: App;
 }
 
-export function SaveButton(props: Props): React.ReactElement {
+export function SaveButton(props: Props) {
   return (
     <DroppedButton
-      text={'Save'}
-      onClick={() => props.app.save()}
+      text='Save'
+      onClick={() => {
+        let name = document.title ? document.title : 'Drawing';
+        download({
+          name: name + '.rna2drawer2',
+          type: 'text/plain',
+          contents: props.app.strictDrawing.savableString,
+        });
+      }}
       disabled={props.app.strictDrawing.isEmpty()}
     />
   );

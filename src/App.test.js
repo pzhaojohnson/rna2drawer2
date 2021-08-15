@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom';
 import { Menu } from './menu/Menu';
 import { Infobar } from './infobar/Infobar';
 
-import * as Save from './export/save';
-
 it('renders', () => {
   new App(() => NodeSVG());
 });
