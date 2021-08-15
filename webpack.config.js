@@ -73,7 +73,7 @@ module.exports = {
       Undo: path.resolve(__dirname, 'src/undo/'),
       Utilities: path.resolve(__dirname, 'src/utilities/'),
       AppInterface$: path.resolve(__dirname, 'src/AppInterface.ts'),
-      App$: path.resolve(__dirname, 'src/App.ts')
+      App$: path.resolve(__dirname, 'src/App.tsx')
     },
     modules: ['node_modules'],
     extensions: [ '.tsx', '.ts', '.js' ]
