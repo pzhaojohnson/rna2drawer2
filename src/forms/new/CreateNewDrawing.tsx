@@ -77,7 +77,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
   return (
     <FloatingDrawingsContainer
       contained={
-        <div style={{ width: '920px', height: '612px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '920px', height: '618px', display: 'flex', flexDirection: 'column' }} >
           <Header />
           <div style={{ margin: '0px 116px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '24px' }} >
@@ -173,7 +173,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                 }}
               />
             </div>
-            <div style={{ marginTop: '8px' }} >
+            <div style={{ marginTop: '8px', marginBottom: '6px' }} >
               <p>
                 <b>Note:</b> Creating a new drawing has become significantly slower since the release of version 92 of the Chrome web browser recently.
                 Firefox and Safari may still be used to create new drawings more quickly.
