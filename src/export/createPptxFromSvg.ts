@@ -82,37 +82,6 @@ function _addText(slide: PptxGenJS.Slide, text: Svg.Text) {
   );
 }
 
-function _lineOptions(line: Svg.Line): object {
-  let xMin = Math.min(line.attr('x1'), line.attr('x2'));
-  let xMax = Math.max(line.attr('x1'), line.attr('x2'));
-  let yMin = Math.min(line.attr('y1'), line.attr('y2'));
-  let yMax = Math.max(line.attr('y1'), line.attr('y2'));
-  let x = pixelsToInches(xMin);
-  let y = pixelsToInches(yMin);
-  let w = pixelsToInches(xMax - xMin);
-  let h = pixelsToInches(yMax - yMin);
-  let lineColor = parseColor(line.attr('stroke'));
-  return {
-    x: trimNum(x, 4),
-    y: trimNum(y, 4),
-    w: trimNum(w, 4),
-    h: trimNum(h, 4),
-    flipH: line.attr('x1') > xMin,
-    flipV: line.attr('y1') > yMin,
-    line: {
-      color: lineColor ? _pptxHex(lineColor) : undefined,
-      width: _trimNum(pixelsToPoints(line.attr('stroke-width'))),
-    }
-  };
-}
-
-function _addLine(pres: PptxGenJS, slide: PptxGenJS.Slide, line: Svg.Line) {
-  slide.addShape(
-    pres.ShapeType.line,
-    _lineOptions(line),
-  );
-}
-
 function _elementImageOptions(ele: Svg.Element): object | undefined {
   let bb = ele.bbox();
   let sw = ele.attr('stroke-width');
@@ -158,7 +127,7 @@ function createPptxFromSvg(svg: Svg.Svg): PptxGenJS {
     if (c.type === 'text') {
       _addText(slide, c as Svg.Text);
     } else if (c.type === 'line') {
-      _addLine(pres, slide, c as Svg.Line);
+      _addElementAsImage(slide, c);
     } else if (c.type === 'circle') {
       // add as image since shape line transparency
       // doesn't work correctly at the moment
@@ -189,6 +158,5 @@ export {
   _NUMBER_TRIM,
   _trimNum,
   _textOptions,
-  _lineOptions,
   _elementImageOptions,
 };

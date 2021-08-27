@@ -3,7 +3,6 @@ import PptxGenJS from 'pptxgenjs';
 import { pixelsToInches } from 'Export/units';
 import { round } from 'Math/round';
 import { addText } from './text';
-import { addLine } from './line';
 import { addAsSvgImage } from './element';
 
 export function toPptx(svg: SVG.Svg): PptxGenJS {
@@ -26,7 +25,7 @@ export function toPptx(svg: SVG.Svg): PptxGenJS {
     if (child instanceof SVG.Text) {
       addText(slide, child);
     } else if (child instanceof SVG.Line) {
-      addLine(slide, child);
+      addAsSvgImage(slide, child);
     } else if (child instanceof SVG.Circle) {
       addAsSvgImage(slide, child);
     } else if (child instanceof SVG.Rect) {
