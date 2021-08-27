@@ -1,4 +1,4 @@
-import { parseColor } from './parseColor';
+import { parseColor } from 'Parse/svg/color';
 
 it('hex strings', () => {
   let c = parseColor('#af55e2');

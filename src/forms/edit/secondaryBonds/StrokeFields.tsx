@@ -4,7 +4,7 @@ import { ColorField } from '../../fields/color/ColorField';
 import { FieldProps as SpecificFieldProps } from './FieldProps';
 import { atIndex } from 'Array/at';
 import * as Svg from '@svgdotjs/svg.js';
-import { parseColor } from '../../../parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 
 function getFirstStroke(sbs: SecondaryBondInterface[]): Svg.Color | undefined {

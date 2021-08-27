@@ -3,7 +3,7 @@ import { FieldProps as Props } from './FieldProps';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import * as Svg from '@svgdotjs/svg.js';
-import { parseColor } from 'Parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 import { areAllSameColor } from '../../fields/color/areAllSameColor';
 
 function baseFills(bs: Base[]): Svg.Color[] {

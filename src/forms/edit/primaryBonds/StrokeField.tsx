@@ -5,7 +5,7 @@ import { ColorField } from '../../fields/color/ColorField';
 import { FieldProps } from './FieldProps';
 import { atIndex } from 'Array/at';
 import * as Svg from '@svgdotjs/svg.js';
-import { parseColor } from '../../../parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 
 function getFirstStroke(pbs: PrimaryBondInterface[]): Svg.Color | undefined {
   let first = atIndex(pbs, 0);

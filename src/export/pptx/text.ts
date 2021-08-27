@@ -1,6 +1,6 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { pixelsToInches, pixelsToPoints } from 'Export/units';
-import { parseColor } from 'Parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 import { toPptxHex } from 'Export/pptx/color';
 import { round } from 'Math/round';
 import PptxGenJS from 'pptxgenjs';

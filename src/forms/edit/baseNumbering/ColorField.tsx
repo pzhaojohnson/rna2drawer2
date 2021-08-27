@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ColorField as Field } from '../../fields/color/ColorField';
 import { FieldProps } from './FieldProps';
 import * as Svg from '@svgdotjs/svg.js';
-import { parseColor } from '../../../parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 import { atIndex } from 'Array/at';
 
 function getFirstColor(bns: BaseNumberingInterface[]): Svg.Color | undefined {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ColorField, ColorAndOpacity } from '../../fields/color/ColorField';
 import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-import { parseColor } from '../../../parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 
 export function getColorsAndOpacities(tbs: TertiaryBondInterface[]): ColorAndOpacity[] {
   let cos = [] as ColorAndOpacity[];

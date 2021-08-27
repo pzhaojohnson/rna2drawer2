@@ -7,7 +7,7 @@ import baseOutlines from './baseOutlines';
 import { areAllSameColor } from '../../fields/color/areAllSameColor';
 import { areAllSameNumber } from '../../fields/text/areAllSameNumber';
 import MostRecentOutlineProps from './MostRecentOutlineProps';
-import { parseColor } from 'Parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 
 function outlineFills(os: CircleBaseAnnotation[]): Svg.Color[] {
   let fs = [] as Svg.Color[];

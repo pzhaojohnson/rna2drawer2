@@ -12,7 +12,7 @@ const fs = require('fs');
 import { pixelsToInches, pointsToPixels } from './units';
 import PptxGenJs from 'pptxgenjs';
 import * as Svg from '@svgdotjs/svg.js';
-import { parseColor } from 'Parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 
 describe('_pptxHex function', () => {
   it('removes leading #', () => {

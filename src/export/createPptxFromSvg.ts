@@ -2,7 +2,7 @@ import PptxGenJS from 'pptxgenjs';
 import * as Svg from '@svgdotjs/svg.js';
 import { pixelsToInches, pixelsToPoints } from './units';
 import { trimNum } from './trimNum';
-import { parseColor } from 'Parse/parseColor';
+import { parseColor } from 'Parse/svg/color';
 
 /**
  * Converts the given color to a hex code compatible with PptxGenJS.
