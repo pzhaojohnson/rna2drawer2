@@ -1,9 +1,7 @@
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 
-export function parseColor(c: any): Svg.Color | undefined {
+export function parseColor(v: any): SVG.Color | undefined {
   try {
-    return new Svg.Color(c);
-  } catch (err) {
-    return undefined;
-  }
+    return new SVG.Color(v);
+  } catch {}
 }
