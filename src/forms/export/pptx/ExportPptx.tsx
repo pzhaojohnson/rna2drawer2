@@ -6,7 +6,7 @@ const uuidv1 = require('uuid/v1');
 import { Base } from 'Draw/bases/Base';
 import { pointsToPixels } from 'Export/units';
 import { formatSvgForExport } from '../../../export/formatSvgForExport';
-import { createPptxFromSvg } from '../../../export/createPptxFromSvg';
+import { toPptx } from 'Export/pptx/toPptx';
 import * as Svg from '@svgdotjs/svg.js';
 import PptxGenJS from 'pptxgenjs';
 import LastExported from '../LastExported';
@@ -357,7 +357,7 @@ class ExportPptx extends React.Component {
     svg.clear();
     svg.svg(content);
     formatSvgForExport(svg, scaling);
-    let pres = createPptxFromSvg(svg);
+    let pres = toPptx(svg);
     document.body.removeChild(div);
     return pres;
   }
