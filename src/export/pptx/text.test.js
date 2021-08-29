@@ -39,8 +39,8 @@ describe('textOptions function', () => {
     let options = textOptions(text);
     
     // positions text box
-    expect(options.x).toBeCloseTo(6.3646);
-    expect(options.y).toBeCloseTo(1.9573);
+    expect(options.x).toBeCloseTo(6.3039);
+    expect(options.y).toBeCloseTo(1.8438);
 
     // centers text content
     expect(options.align).toBe('center');
@@ -48,8 +48,8 @@ describe('textOptions function', () => {
     expect(options.margin).toBe(0);
 
     // sizes text box
-    expect(options.w).toBeCloseTo(0.1213);
-    expect(options.h).toBeCloseTo(0.227);
+    expect(options.w).toBeCloseTo(0.2426);
+    expect(options.h).toBeCloseTo(0.454);
   });
 
   it('specifies font face', () => {

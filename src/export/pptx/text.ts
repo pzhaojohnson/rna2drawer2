@@ -22,10 +22,14 @@ export type TextOptions = {
 
 function coordinatesAndDimensions(text: SVG.Text) {
   let bbox = text.bbox();
-  let w = pixelsToInches(bbox.width);
-  let h = pixelsToInches(bbox.height);
+
+  // multiply by two for some extra space around the text content
+  let w = 2 * pixelsToInches(bbox.width);
+  let h = 2 * pixelsToInches(bbox.height);
+  
   let x = pixelsToInches(bbox.cx) - (w / 2);
   let y = pixelsToInches(bbox.cy) - (h / 2);
+  
   return {
     x: round(x, 4),
     y: round(y, 4),
