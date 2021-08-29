@@ -1,7 +1,19 @@
 import * as SVG from '@svgdotjs/svg.js';
+import { parseNumber } from 'Parse/svg/number';
 import { pixelsToInches } from 'Export/units';
 import { round } from 'Math/round';
 import PptxGenJS from 'pptxgenjs';
+
+function strokeWidth(ele: SVG.Element): number {
+  let sw = ele.attr('stroke-width');
+  let n = parseNumber(sw);
+  if (n) {
+    return n.convert('px').valueOf();
+  } else {
+    console.log(`Ignoring non-numeric stroke width: ${sw}.`);
+    return 0;
+  }
+}
 
 export type ImageOptions = {
   data: string;
@@ -13,12 +25,8 @@ export type ImageOptions = {
 
 export function svgImageOptions(ele: SVG.Element): ImageOptions {
   let bbox = ele.bbox();
-  let sw = ele.attr('stroke-width');
-  if (typeof sw != 'number' || !Number.isFinite(sw)) {
-    console.log(`Ignoring non-numeric stroke width: ${sw}.`);
-    sw = 0;
-  }
-
+  let sw = strokeWidth(ele);
+  
   // create a nested SVG document containing a copy of the element
   let svg = ele.root();
   let nested = svg.nested(); // the nested SVG document
