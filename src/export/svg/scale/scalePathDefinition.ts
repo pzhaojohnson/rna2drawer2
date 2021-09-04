@@ -41,11 +41,18 @@ function scalePathCommand(c: SVG.PathCommand, factor: number): string | never {
   }
 }
 
-// throws if unable to scale path definition
-export function scalePathDefinition(d: string, factor: number): string | never {
-  let scaled = '';
-  (new SVG.PathArray(d)).forEach(c => {
-    scaled += scalePathCommand(c, factor) + ' ';
-  });
-  return scaled;
+export function scalePathDefinition(path: SVG.Path, factor: number) {
+  try {
+    let d = path.attr('d');
+    if (d && d != 'none') {
+      let scaled = '';
+      (new SVG.PathArray(d)).forEach(c => {
+        scaled += scalePathCommand(c, factor) + ' ';
+      });
+      path.plot(scaled);
+    }
+  } catch (error) {
+    console.error(error);
+    console.error(`Unable to scale definition of path ${path}.`);
+  }
 }
