@@ -4,7 +4,7 @@ import { CloseButton } from '../../buttons/CloseButton';
 import { SolidButton } from '../../buttons/SolidButton';
 const uuidv1 = require('uuid/v1');
 import { Base } from 'Draw/bases/Base';
-import { formatSvgForExport } from '../../../export/formatSvgForExport';
+import { prepareForExport } from 'Export/svg/prepareForExport';
 import { download } from 'Utilities/download';
 import * as Svg from '@svgdotjs/svg.js';
 import LastExported from '../LastExported';
@@ -304,7 +304,7 @@ class ExportSvg extends React.Component {
     let content = nested.svg(false);
     svg.clear();
     svg.svg(content);
-    formatSvgForExport(svg, scaling);
+    prepareForExport(svg, { scale: scaling });
     let svgString = svg.svg();
     document.body.removeChild(div);
     return svgString;

@@ -5,7 +5,7 @@ import { SolidButton } from '../../buttons/SolidButton';
 const uuidv1 = require('uuid/v1');
 import { Base } from 'Draw/bases/Base';
 import { pointsToPixels } from 'Export/units';
-import { formatSvgForExport } from '../../../export/formatSvgForExport';
+import { prepareForExport } from 'Export/svg/prepareForExport';
 import { toPptx } from 'Export/pptx/toPptx';
 import * as Svg from '@svgdotjs/svg.js';
 import PptxGenJS from 'pptxgenjs';
@@ -356,7 +356,7 @@ class ExportPptx extends React.Component {
     let content = nested.svg(false);
     svg.clear();
     svg.svg(content);
-    formatSvgForExport(svg, scaling);
+    prepareForExport(svg, { scale: scaling });
     let pres = toPptx(svg);
     document.body.removeChild(div);
     return pres;
