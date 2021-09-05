@@ -10,7 +10,7 @@ function isFiniteNumber(v: unknown): v is number {
 export function zoom(drawing: Drawing): number | undefined {
   let width = parseNumber(drawing.svg.attr('width'));
   if (!width) {
-    console.error(`Unable to parse the width of the drawing: ${drawing.svg.attr('width')}.`);
+    console.error(`Unable to parse width attribute: ${drawing.svg.attr('width')}.`);
   } else {
     let viewbox = drawing.svg.viewbox();
     let z = width.convert('px').valueOf() / viewbox.width;
