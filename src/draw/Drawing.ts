@@ -14,8 +14,6 @@ import { Base } from 'Draw/bases/Base';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
-import { addPrimaryBond, addSecondaryBond } from 'Draw/bonds/straight/add';
-import { removePrimaryBondById, removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import {
   SavableState as SavableStraightBondState,
   savableState as savableStraightBondState,
