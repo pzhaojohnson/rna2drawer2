@@ -1,14 +1,6 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { zoom } from 'Draw/zoom';
 
-export function width(drawing: Drawing): number {
-  return drawing.svg.viewbox().width;
-}
-
-export function height(drawing: Drawing): number {
-  return drawing.svg.viewbox().height;
-}
-
 export type Dimensions = {
   width: number;
   height: number;
