@@ -3,6 +3,7 @@ import {
   DrawingSavableState,
 } from './DrawingInterface';
 import * as Svg from '@svgdotjs/svg.js';
+import { centerOfView, centerViewOn, centerView } from 'Draw/view';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import {
@@ -25,11 +26,6 @@ import {
   savableState as savableTertiaryBondState,
 } from 'Draw/bonds/curved/save';
 import { addSavedTertiaryBonds } from 'Draw/bonds/curved/saved';
-
-interface Coordinates {
-  x: number;
-  y: number;
-}
 
 export interface BasesByIds {
   [id: string]: Base | undefined;
@@ -59,29 +55,6 @@ export class Drawing implements DrawingInterface {
     this.svg.attr({
       'width': 2 * window.screen.width,
       'height': 2 * window.screen.height,
-    });
-  }
-
-  centerOfView(): Coordinates {
-    return {
-      x: this._div.scrollLeft + (window.innerWidth / 2),
-      y: this._div.scrollTop + (window.innerHeight / 2),
-    };
-  }
-
-  centerViewOn(cs: Coordinates) {
-    let sl = cs.x - (window.innerWidth / 2);
-    sl = Number.isFinite(sl) ? sl : 0;
-    let st = cs.y - (window.innerHeight / 2);
-    st = Number.isFinite(st) ? st : 0;
-    this._div.scrollLeft = sl;
-    this._div.scrollTop = st;
-  }
-
-  centerView() {
-    this.centerViewOn({
-      x: this._div.scrollWidth / 2,
-      y: this._div.scrollHeight / 2,
     });
   }
 
@@ -144,11 +117,11 @@ export class Drawing implements DrawingInterface {
     let vb = this.svg.viewbox();
     let w = z * vb.width;
     let h = z * vb.height;
-    let cv = this.centerOfView();
+    let cv = centerOfView(this);
     cv.x *= z / this.zoom;
     cv.y *= z / this.zoom;
     this.svg.attr({ 'width': w, 'height': h });
-    this.centerViewOn(cv);
+    centerViewOn(this, cv);
   }
 
   isEmpty(): boolean {
@@ -356,7 +329,7 @@ export class Drawing implements DrawingInterface {
     this._addSavedTertiaryBonds(savedState);
     orientBaseNumberings(this);
     if (wasEmpty) {
-      this.centerView();
+      centerView(this);
     }
   }
 

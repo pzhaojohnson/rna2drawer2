@@ -127,13 +127,3 @@ it('updates layout', () => {
   appendStructureToStrictDrawing(sd, { id: 'asdf', characters: 'asdf' });
   expect(spy).toHaveBeenCalled();
 });
-
-it('centers view if drawing was empty', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
-  let spy = jest.spyOn(sd.drawing, 'centerView');
-  appendStructureToStrictDrawing(sd, { id: 'asdf', characters: 'asdf' });
-  expect(spy.mock.calls.length).toBe(1); // was empty
-  appendStructureToStrictDrawing(sd, { id: 'qwer', characters: 'qwer' });
-  expect(spy.mock.calls.length).toBe(1); // was not empty
-});

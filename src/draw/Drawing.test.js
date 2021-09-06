@@ -47,7 +47,7 @@ let tb2 = addTertiaryBond(
   seq2.getBaseAtPosition(7),
 );
 
-describe('addTo and centerView methods', () => {
+describe('addTo method', () => {
   let drawing = new Drawing();
   let container = document.createElement('div');
   document.body.appendChild(container);
@@ -55,11 +55,6 @@ describe('addTo and centerView methods', () => {
 
   it('addTo method added the drawing', () => {
     expect(container.childNodes.length).toBe(1); // added the drawing
-  });
-
-  it('centerView method does not throw', () => {
-    drawing.setWidthAndHeight(3000, 2000);
-    expect(() => drawing.centerView()).not.toThrow();
   });
 });
 

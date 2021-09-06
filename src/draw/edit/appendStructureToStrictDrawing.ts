@@ -10,6 +10,7 @@ import { radiateStems } from '../layout/singleseq/strict/radiateStems';
 import { hasKnots } from 'Partners/hasKnots';
 import { removeKnots } from 'Partners/removeKnots';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import { centerView } from 'Draw/view';
 
 function _appendPerBaseLayoutProps(sd: StrictDrawing, structure: Structure) {
   let seq = sd.drawing.getSequenceById(structure.id) as Sequence;
@@ -75,7 +76,7 @@ export function appendStructureToStrictDrawing(sd: StrictDrawing, structure: Str
     addTertiaryBonds(sd.drawing, structure.id, tertiaryPartners);
   }
   if (wasEmpty) {
-    sd.drawing.centerView();
+    centerView(sd.drawing);
   }
   return true;
 }
