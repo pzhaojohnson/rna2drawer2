@@ -1,5 +1,6 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { parseNumber } from 'Parse/svg/number';
+import { centerOfView, centerViewOn } from 'Draw/view';
 
 function isFiniteNumber(v: unknown): v is number {
   return typeof v == 'number' && Number.isFinite(v);
@@ -38,6 +39,12 @@ export function setZoom(drawing: Drawing, z: number) {
     return;
   }
 
+  // remember previous zoom and center of view
+  let prev = {
+    z: zoom(drawing),
+    centerOfView: centerOfView(drawing),
+  };
+
   let viewbox = drawing.svg.viewbox();
   if (!isFiniteNumber(viewbox.width)) {
     console.error(`Viewbox width is not a finite number: ${viewbox.width}.`);
@@ -48,8 +55,20 @@ export function setZoom(drawing: Drawing, z: number) {
     return;
   }
 
+  // update zoom
   drawing.svg.attr({
     'width': z * viewbox.width,
     'height': z * viewbox.height,
   });
+
+  // maintain center of view
+  if (typeof prev.z == 'number' && prev.z != 0) {
+    let factor = z / prev.z;
+    if (Number.isFinite(factor)) { // check just to be safe
+      centerViewOn(drawing, {
+        x: factor * prev.centerOfView.x,
+        y: factor * prev.centerOfView.y,
+      });
+    }
+  }
 }
