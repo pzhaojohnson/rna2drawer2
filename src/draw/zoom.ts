@@ -11,31 +11,45 @@ export function zoom(drawing: Drawing): number | undefined {
   let width = parseNumber(drawing.svg.attr('width'));
   if (!width) {
     console.error(`Unable to parse width attribute: ${drawing.svg.attr('width')}.`);
+    return undefined;
+  }
+
+  let viewbox = drawing.svg.viewbox();
+  if (viewbox.width == 0 || viewbox.height == 0) {
+    console.error(`Zoom is undefined for a drawing of zero area.`);
+    return undefined;
+  }
+
+  // assume that zoom is the same when calculated using width or height
+  let z = width.convert('px').valueOf() / viewbox.width;
+
+  // check just to be safe
+  if (isFiniteNumber(z)) {
+    return z;
   } else {
-    let viewbox = drawing.svg.viewbox();
-    let z = width.convert('px').valueOf() / viewbox.width;
-    if (isFiniteNumber(z)) {
-      return z;
-    } else {
-      console.error(`Calculated value is not a finite number: ${z}.`);
-    }
+    console.error(`Calculated value is not a finite number: ${z}.`);
+    return undefined;
   }
 }
 
 export function setZoom(drawing: Drawing, z: number) {
   if (!Number.isFinite(z) || z <= 0) {
     console.error(`Cannot set zoom to ${z}. Zoom must be a finite positive number.`);
-  } else {
-    let viewbox = drawing.svg.viewbox();
-    if (!isFiniteNumber(viewbox.width)) {
-      console.error(`Viewbox width is not a finite number: ${viewbox.width}.`);
-    } else if (!isFiniteNumber(viewbox.height)) {
-      console.error(`Viewbox height is not a finite number: ${viewbox.height}.`);
-    } else {
-      drawing.svg.attr({
-        'width': z * viewbox.width,
-        'height': z * viewbox.height,
-      });
-    }
+    return;
   }
+
+  let viewbox = drawing.svg.viewbox();
+  if (!isFiniteNumber(viewbox.width)) {
+    console.error(`Viewbox width is not a finite number: ${viewbox.width}.`);
+    return;
+  }
+  if (!isFiniteNumber(viewbox.height)) {
+    console.error(`Viewbox height is not a finite number: ${viewbox.height}.`);
+    return;
+  }
+
+  drawing.svg.attr({
+    'width': z * viewbox.width,
+    'height': z * viewbox.height,
+  });
 }
