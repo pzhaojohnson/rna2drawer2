@@ -26,7 +26,9 @@ export interface DrawingInterface {
   addTo(container: Node, SVG: () => Svg.Svg): void;
   centerView: () => void;
   scrollLeft: number;
+  readonly scrollWidth: number;
   scrollTop: number;
+  readonly scrollHeight: number;
 
   width: number;
   height: number;
@@ -43,7 +45,7 @@ export interface DrawingInterface {
   sequenceIdIsTaken(id: string): boolean;
   overallCharacters: string;
   appendSequence(id: string, characters: string): Sequence | null;
-  
+
   numBases: number;
   getBaseById(id: string): Base | null;
   getBaseAtOverallPosition(p: number): Base | undefined;
@@ -57,7 +59,7 @@ export interface DrawingInterface {
   readonly primaryBonds: PrimaryBond[];
   readonly secondaryBonds: SecondaryBond[];
   readonly tertiaryBonds: TertiaryBond[];
-  
+
   repositionBonds(): void;
   clear(): void;
   svgString: string;

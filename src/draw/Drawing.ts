@@ -93,12 +93,20 @@ export class Drawing implements DrawingInterface {
     this._div.scrollLeft = sl;
   }
 
+  get scrollWidth(): number {
+    return this._div.scrollWidth;
+  }
+
   get scrollTop(): number {
     return this._div.scrollTop;
   }
 
   set scrollTop(st) {
     this._div.scrollTop = st;
+  }
+
+  get scrollHeight(): number {
+    return this._div.scrollHeight;
   }
 
   get width(): number {
