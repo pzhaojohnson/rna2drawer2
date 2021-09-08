@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { AppInterface as App } from 'AppInterface';
-import minus from '../../icons/minus.svg';
+import minus from './minus.svg';
 import { zoomOut } from './control';
 
 export interface Props {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { AppInterface as App } from 'AppInterface';
-import plus from '../../icons/plus.svg';
+import plus from './plus.svg';
 import { zoomIn } from './control';
 
 export interface Props {
