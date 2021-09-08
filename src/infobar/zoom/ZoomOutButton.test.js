@@ -1,15 +1,14 @@
+import { ZoomOutButton } from './ZoomOutButton';
 import React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent } from '@testing-library/react';
-import App from '../../App';
+import App from 'App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { ZoomOutButton } from './ZoomOutButton';
+import { resize } from 'Draw/dimensions';
+import { zoom, setZoom } from 'Draw/zoom';
 
 let app = new App(() => NodeSVG());
-
-// drawing dimensions must be nonzero for zoom to be set
-app.strictDrawing.drawing.setWidthAndHeight(250, 250);
 
 let container = null;
 
@@ -24,22 +23,21 @@ afterEach(() => {
   container = null;
 });
 
-it('darkens on hover and lightens on dehover', () => {
-  act(() => render(<ZoomOutButton app={app} />, container));
-  let b = container.childNodes[0];
-  expect(b.style.backgroundColor).toBe('transparent');
-  fireEvent(b, new MouseEvent('mouseover', { bubbles: true }));
-  expect(b.style.backgroundColor).toBe('gainsboro');
-  fireEvent(b, new MouseEvent('mouseout', { bubbles: true }));
-  expect(b.style.backgroundColor).toBe('transparent');
-});
-
-it('increases zoom on click', () => {
-  act(() => render(<ZoomOutButton app={app} />, container));
-  let b = container.childNodes[0];
-  app.strictDrawing.zoom = 1.8;
-  expect(app.strictDrawing.zoom).toBeCloseTo(1.8);
-  fireEvent(b, new MouseEvent('click', { bubbles: true }));
-  expect(app.strictDrawing.zoom).toBeLessThan(1.8);
-  expect(app.strictDrawing.zoom).not.toBeCloseTo(1.8);
+describe('ZoomOutButton component', () => {
+  it('zooms out on click', () => {
+    resize(app.strictDrawing.drawing, { width: 200, height: 300 });
+    let curr = 4.5;
+    setZoom(app.strictDrawing.drawing, curr);
+    act(() => {
+      render(<ZoomOutButton app={app} />, container);
+    });
+    // repeated clicks
+    for (let i = 0; i < 5; i++) {
+      let prev = curr;
+      fireEvent(container.firstChild, new MouseEvent('click', { bubbles: true }));
+      curr = zoom(app.strictDrawing.drawing);
+      expect(curr).toBeLessThan(prev);
+      prev = curr;
+    }
+  });
 });

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../AppInterface';
-import { ZoomAdjust } from './zoom/ZoomAdjust';
+import { ZoomControl } from './zoom/ZoomControl';
 
 interface Props {
   app: App;
@@ -27,7 +27,7 @@ export function Infobar(props: Props): React.ReactElement | null {
         }}
       >
         <div style={{ flexGrow: 1 }} ></div>
-        <ZoomAdjust app={props.app} />
+        <ZoomControl app={props.app} />
       </div>
     );
   }

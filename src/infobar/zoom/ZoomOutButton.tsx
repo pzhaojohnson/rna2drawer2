@@ -1,23 +1,22 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { AppInterface as App } from '../../AppInterface';
+import { AppInterface as App } from 'AppInterface';
 import minus from '../../icons/minus.svg';
-import { nextLowestPresetZoom } from './zoomPresets';
+import { zoomOut } from './control';
 
-interface Props {
+export interface Props {
   app: App;
 }
 
-export function ZoomOutButton(props: Props): React.ReactElement {
+export function ZoomOutButton(props: Props) {
   let [hovered, setHovered] = useState(false);
   return (
     <div
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
       onClick={() => {
-        let nextLowest = nextLowestPresetZoom(props.app.strictDrawing.zoom);
-        props.app.strictDrawing.zoom = nextLowest;
-        props.app.renderPeripherals();
+        zoomOut(props.app.strictDrawing.drawing);
+        props.app.drawingChangedNotByInteraction();
       }}
       style={{
         width: '20px',
@@ -33,7 +32,7 @@ export function ZoomOutButton(props: Props): React.ReactElement {
       <img
         className={'unselectable'}
         src={minus}
-        alt={'Minus'}
+        alt='Minus'
         style={{
           width: '8px',
         }}

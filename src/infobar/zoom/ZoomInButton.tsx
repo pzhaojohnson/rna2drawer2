@@ -1,23 +1,22 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { AppInterface as App } from '../../AppInterface';
+import { AppInterface as App } from 'AppInterface';
 import plus from '../../icons/plus.svg';
-import { nextHighestPresetZoom } from './zoomPresets';
+import { zoomIn } from './control';
 
-interface Props {
+export interface Props {
   app: App;
 }
 
-export function ZoomInButton(props: Props): React.ReactElement {
+export function ZoomInButton(props: Props) {
   let [hovered, setHovered] = useState(false);
   return (
     <div
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}
       onClick={() => {
-        let nextHighest = nextHighestPresetZoom(props.app.strictDrawing.zoom);
-        props.app.strictDrawing.zoom = nextHighest;
-        props.app.renderPeripherals();
+        zoomIn(props.app.strictDrawing.drawing);
+        props.app.drawingChangedNotByInteraction();
       }}
       style={{
         width: '20px',
@@ -33,7 +32,7 @@ export function ZoomInButton(props: Props): React.ReactElement {
       <img
         className={'unselectable'}
         src={plus}
-        alt={'Plus'}
+        alt='Plus'
         style={{
           width: '10px',
         }}
