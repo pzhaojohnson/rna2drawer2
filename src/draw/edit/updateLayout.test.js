@@ -66,8 +66,8 @@ describe('default behavior', () => {
     let prevWidth = strictDrawing.drawing.width;
     let prevHeight = strictDrawing.drawing.height;
     strictDrawing.baseWidth = 20 * strictDrawing.baseWidth;
-    strictDrawing.baseHeight = 22 * StrictLayout.baseHeight;
-    updateLayout(strictDrawing);
+    strictDrawing.baseHeight = 22 * strictDrawing.baseHeight;
+    updateLayout(strictDrawing, { updatePadding: true });
     expect(strictDrawing.drawing.width).not.toBeCloseTo(prevWidth);
     expect(strictDrawing.drawing.height).not.toBeCloseTo(prevHeight);
   });

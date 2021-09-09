@@ -239,14 +239,6 @@ class StrictDrawing implements StrictDrawingInterface {
     this._baseHeight = savedState.baseHeight;
   }
 
-  get zoom(): number {
-    return this._drawing.zoom;
-  }
-
-  set zoom(z: number) {
-    this._drawing.zoom = z;
-  }
-
   isEmpty(): boolean {
     return this._drawing.isEmpty();
   }

@@ -2,6 +2,7 @@ import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInter
 import { StrictLayout } from 'Draw/layout/singleseq/strict/StrictLayout';
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { resize } from 'Draw/dimensions';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
@@ -46,7 +47,7 @@ function updateDimensions(strictDrawing: StrictDrawing, layout: StrictLayout) {
     (2 * window.screen.height) + (strictDrawing.baseHeight * layout.height),
     prevHeight,
   );
-  strictDrawing.drawing.setWidthAndHeight(width, height);
+  resize(strictDrawing.drawing, { width, height });
 }
 
 function moveBases(strictDrawing: StrictDrawing, layout: StrictLayout, options?: Options) {

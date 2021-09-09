@@ -2,6 +2,7 @@ import {
   PivotingModeInterface as PivotingMode,
   Stem,
 } from './PivotingModeInterface';
+import { zoom } from 'Draw/zoom';
 import { angleBetween } from '../../angleBetween';
 import { normalizeAngle } from 'Math/angles/normalize';
 import { isPoint2D as isPoint } from 'Math/points/Point';
@@ -15,7 +16,7 @@ export function normalizedMagnitudeOfMovement(mode: PivotingMode, move: Movement
   let m = ((move.x ** 2) + (move.y ** 2)) ** 0.5;
   let sd = mode.strictDrawing;
   m /= (sd.baseWidth + sd.baseHeight) / 2;
-  m /= sd.drawing.zoom;
+  m /= zoom(sd.drawing) ?? 1;
   m *= 0.5; // pivoting feels a bit too fast otherwise
   return Number.isFinite(m) ? m : 0;
 }

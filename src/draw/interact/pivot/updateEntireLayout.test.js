@@ -2,6 +2,8 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import StrictDrawing from 'Draw/StrictDrawing';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { updateEntireLayout } from './updateEntireLayout';
+import { resize } from 'Draw/dimensions';
+import { setZoom } from 'Draw/zoom';
 
 function expectToBeFinite(n) {
   expect(Number.isFinite(n)).toBeTruthy();
@@ -44,7 +46,7 @@ it('handles a drawing with zero area', () => {
     strictDrawing.drawing.getBaseAtOverallPosition(5),
     strictDrawing.drawing.getBaseAtOverallPosition(12),
   );
-  strictDrawing.drawing.setWidthAndHeight(0, 0);
+  resize(strictDrawing.drawing, { width: 0, height: 0 });
   updateEntireLayout(strictDrawing);
   expectScrollingToBeFinite(strictDrawing);
 });
@@ -56,7 +58,7 @@ it('handles a drawing with zero zoom', () => {
     strictDrawing.drawing.getBaseAtOverallPosition(1),
     strictDrawing.drawing.getBaseAtOverallPosition(6),
   );
-  strictDrawing.drawing.zoom = 0;
+  setZoom(strictDrawing.drawing, 0);
   updateEntireLayout(strictDrawing);
   expectScrollingToBeFinite(strictDrawing);
 });

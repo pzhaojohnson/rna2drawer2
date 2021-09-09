@@ -9,6 +9,7 @@ import { savableState as savableStraightBondState } from 'Draw/bonds/straight/sa
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import { savableState as savableTertiaryBondState } from 'Draw/bonds/curved/save';
+import { resize } from 'Draw/dimensions';
 
 let drawing = new Drawing();
 let container = document.createElement('div');
@@ -55,65 +56,6 @@ describe('addTo method', () => {
 
   it('addTo method added the drawing', () => {
     expect(container.childNodes.length).toBe(1); // added the drawing
-  });
-});
-
-describe('width, height and zoom properties', () => {
-  let drawing = new Drawing();
-  let container = document.createElement('div');
-  document.body.appendChild(container);
-  drawing.addTo(container, () => NodeSVG());
-
-  it('normal use of width and height setter', () => {
-    // initialize width and height to nonzero values
-    drawing.setWidthAndHeight(100, 100);
-    drawing.zoom = 1.78;
-    drawing.setWidthAndHeight(872, 1656); // use setter
-    expect(drawing.width).toBe(872); // check getter
-    expect(drawing.svg.viewbox().width).toBe(872); // check actual value
-    expect(drawing.height).toBe(1656); // check getter
-    expect(drawing.svg.viewbox().height).toBe(1656); // check actual value
-    // maintains zoom
-    expect(drawing.zoom).toBeCloseTo(1.78); // check getter
-    // check actual values
-    expect(drawing.svg.attr('width')).toBeCloseTo(1.78 * 872);
-    expect(drawing.svg.attr('height')).toBeCloseTo(1.78 * 1656);
-  });
-
-  it('width and height setter ignores negative values', () => {
-    drawing.setWidthAndHeight(200, 300);
-    drawing.setWidthAndHeight(-50, 200); // negative width
-    expect(drawing.width).toBe(200);
-    expect(drawing.height).toBe(300);
-    drawing.setWidthAndHeight(500, -100); // negative height
-    expect(drawing.width).toBe(200);
-    expect(drawing.height).toBe(300);
-  });
-
-  it('normal use of zoom setter', () => {
-    drawing.setWidthAndHeight(250, 300);
-    drawing.zoom = 2.5; // use setter
-    expect(drawing.zoom).toBeCloseTo(2.5); // check getter
-    // check actual width and height
-    expect(drawing.svg.attr('width')).toBeCloseTo(625);
-    expect(drawing.svg.attr('height')).toBeCloseTo(750);
-    // maintains width and height of drawing
-    expect(drawing.width).toBe(250);
-    expect(drawing.height).toBe(300);
-  });
-
-  it('zoom getter handles drawing with zero width and height', () => {
-    drawing.setWidthAndHeight(0, 0);
-    expect(drawing.zoom).toBe(1);
-  });
-
-  it('zoom setter ignores nonpositive values', () => {
-    drawing.setWidthAndHeight(100, 100);
-    drawing.zoom = 2.33;
-    drawing.zoom = -5; // a negative value
-    expect(drawing.zoom).toBeCloseTo(2.33);
-    drawing.zoom = 0; // zero
-    expect(drawing.zoom).toBeCloseTo(2.33);
   });
 });
 
@@ -389,6 +331,7 @@ describe('applySavedState method', () => {
   it('can successfully apply saved state', () => {
     let drawing = new Drawing();
     drawing.addTo(container, () => NodeSVG());
+    resize(drawing, { width: 150, height: 330 });
     let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
     let seq2 = drawing.appendSequence('qwer', 'qwerzxcvzxcv');
     let b2 = seq1.getBaseAtPosition(2);

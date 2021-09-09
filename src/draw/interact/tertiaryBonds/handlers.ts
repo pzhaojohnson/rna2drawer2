@@ -5,6 +5,7 @@ import {
   highlightTertiaryBond,
   dehighlightTertiaryBond,
 } from './highlight';
+import { zoom } from 'Draw/zoom';
 import { shiftControlPoint } from 'Draw/bonds/curved/drag';
 import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 
@@ -58,7 +59,7 @@ interface Movement {
 
 export function handleMousemove(interaction: TertiaryBondsInteraction, event: MouseEvent, m: Movement) {
   if (interaction.selected.size > 0 && interaction.dragging) {
-    let z = interaction.drawing.zoom;
+    let z = zoom(interaction.drawing) ?? 1;
     let shift = {
       x: 2 * m.x / z,
       y: 2 * m.y / z,

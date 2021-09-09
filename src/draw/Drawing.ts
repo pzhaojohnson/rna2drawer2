@@ -3,7 +3,8 @@ import {
   DrawingSavableState,
 } from './DrawingInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import { centerOfView, centerViewOn, centerView } from 'Draw/view';
+import { centerView } from 'Draw/view';
+import { resize } from 'Draw/dimensions';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import {
@@ -52,10 +53,12 @@ export class Drawing implements DrawingInterface {
     this._div.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
     container.appendChild(this._div);
     this.svg = SVG().addTo(this._div);
-    this.svg.attr({
-      'width': 2 * window.screen.width,
-      'height': 2 * window.screen.height,
-    });
+
+    // initialize viewbox, width and height
+    let width = 2 * window.screen.width;
+    let height = 2 * window.screen.height;
+    this.svg.viewbox(0, 0, width, height);
+    this.svg.attr({ 'width': width, 'height': height });
   }
 
   get scrollLeft(): number {
@@ -88,40 +91,6 @@ export class Drawing implements DrawingInterface {
 
   get height(): number {
     return this.svg.viewbox().height;
-  }
-
-  setWidthAndHeight(width: number, height: number) {
-    if (width < 0 || height < 0) {
-      return;
-    }
-    let z = this.zoom;
-    this.svg.viewbox(0, 0, width, height);
-    this.svg.attr({
-      'width': z * width,
-      'height': z * height,
-    });
-  }
-
-  get zoom(): number {
-    let vb = this.svg.viewbox();
-    if (vb.width == 0) {
-      return 1;
-    }
-    return this.svg.attr('width') / vb.width;
-  }
-
-  set zoom(z: number) {
-    if (z <= 0) {
-      return;
-    }
-    let vb = this.svg.viewbox();
-    let w = z * vb.width;
-    let h = z * vb.height;
-    let cv = centerOfView(this);
-    cv.x *= z / this.zoom;
-    cv.y *= z / this.zoom;
-    this.svg.attr({ 'width': w, 'height': h });
-    centerViewOn(this, cv);
   }
 
   isEmpty(): boolean {
@@ -343,7 +312,7 @@ export class Drawing implements DrawingInterface {
     let content = nested.svg(false);
     this.svg.clear();
     this.svg.svg(content);
-    this.setWidthAndHeight(w, h);
+    resize(this, { width: w, height: h });
   }
 
   _appendSavedSequences(savedState: DrawingSavableState): (void | never) {

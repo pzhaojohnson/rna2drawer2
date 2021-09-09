@@ -302,16 +302,6 @@ describe('applySavedState method', () => {
   });
 });
 
-it('zoom getter and setter', () => {
-  let getSpy = jest.spyOn(sd.drawing, 'zoom', 'get');
-  let setSpy = jest.spyOn(sd.drawing, 'zoom', 'set');
-  sd.zoom = 0.78; // use setter
-  expect(sd.zoom).toBeCloseTo(0.78); // check getter
-  // uses drawing getter and setter
-  expect(getSpy).toHaveBeenCalled();
-  expect(setSpy).toHaveBeenCalled();
-});
-
 it('isEmpty method', () => {
   let sd = new StrictDrawing();
   sd.addTo(document.body, () => NodeSVG());
