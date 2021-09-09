@@ -20,8 +20,9 @@ export function resize(drawing: Drawing, dims: Dimensions) {
   // remember zoom
   let z = zoom(drawing);
 
-  // change dimensions
-  drawing.svg.viewbox(0, 0, dims.width, dims.height);
+  // update dimensions while maintaining top left coordinates
+  let viewbox = drawing.svg.viewbox();
+  drawing.svg.viewbox(viewbox.x, viewbox.y, dims.width, dims.height);
 
   // maintain zoom if able to
   if (typeof z == 'number') {
