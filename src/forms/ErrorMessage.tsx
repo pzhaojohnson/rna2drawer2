@@ -32,7 +32,6 @@ export class ErrorMessage extends React.Component {
       <p
         className={'unselectable-text'}
         style={{
-          margin: this.props.margin,
           fontSize: this.props.fontSize,
         }}
       >
