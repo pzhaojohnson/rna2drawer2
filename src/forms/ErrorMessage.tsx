@@ -34,10 +34,9 @@ export class ErrorMessage extends React.Component {
         style={{
           margin: this.props.margin,
           fontSize: this.props.fontSize,
-          color: 'red',
         }}
       >
-        <span style={{ fontWeight: 600 }} >
+        <span className={styles.errorMessage} >
           {this.props.message}
         </span>
       </p>

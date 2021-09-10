@@ -1,3 +1,8 @@
+.errorMessage {
+  font-weight: 600;
+  color: red;
+}
+
 .fadesIn {
   animation: fadeIn 1.25s;
 }
