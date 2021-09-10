@@ -30,12 +30,12 @@ export class ErrorMessage extends React.Component {
   p() {
     return (
       <p
-        className={'unselectable-text'}
+        className={`${styles.errorMessage} unselectable-text`}
         style={{
           fontSize: this.props.fontSize,
         }}
       >
-        <span className={styles.errorMessage} >
+        <span>
           {this.props.message}
         </span>
       </p>
@@ -46,7 +46,6 @@ export class ErrorMessage extends React.Component {
 ErrorMessage.defaultProps = {
   message: '',
   margin: '0px',
-  fontSize: '14px',
 };
 
 export default ErrorMessage;
