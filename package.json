@@ -53,6 +53,8 @@
   },
   "jest": {
     "moduleNameMapper": {
+      "\\.(png|svg|ttf)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css)$": "identity-obj-proxy",
       "^Array(.*)$": "<rootDir>/src/array$1",
       "^Draw(.*)$": "<rootDir>/src/draw$1",
       "^Export(.*)$": "<rootDir>/src/export$1",
@@ -66,9 +68,7 @@
       "^Undo(.*)$": "<rootDir>/src/undo$1",
       "^Utilities(.*)$": "<rootDir>/src/utilities$1",
       "^AppInterface$": "<rootDir>/src/AppInterface.ts",
-      "^App$": "<rootDir>/src/App.tsx",
-      "\\.(png|svg|ttf)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css)$": "identity-obj-proxy"
+      "^App$": "<rootDir>/src/App.tsx"
     },
     "setupFilesAfterEnv": [
       "<rootDir>src/setupTests.js"
