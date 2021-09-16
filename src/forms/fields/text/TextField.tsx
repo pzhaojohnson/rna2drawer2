@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './TextField.css';
 import ErrorMessage from '../../ErrorMessage';
 
 interface Props {
@@ -50,11 +51,10 @@ export class TextField extends React.Component {
   label(): React.ReactElement {
     return (
       <p
-        className={'unselectable-text'}
+        className={`${styles.label} unselectable-text`}
         style={{
           marginRight: '12px',
           minWidth: this.props.minLabelWidth,
-          fontSize: '12px',
           display: 'inline-block',
         }}
       >
@@ -67,6 +67,7 @@ export class TextField extends React.Component {
     return (
       <input
         type={'text'}
+        className={styles.input}
         value={this.state.value}
         onChange={event => this.onInputChange(event)}
         onFocus={this.props.onFocus}
@@ -74,7 +75,7 @@ export class TextField extends React.Component {
         onKeyUp={event => this.onKeyUp(event)}
         autoFocus={TextField.nameOfLastEntered == this.props.name}
         spellCheck={'false'}
-        style={{ flexGrow: 1, fontSize: '12px', textAlign: 'right' }}
+        style={{ flexGrow: 1, textAlign: 'right' }}
       />
     );
   }
