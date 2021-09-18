@@ -36,12 +36,20 @@ export function svgImageOptions(ele: SVG.Element): ImageOptions {
   nested.svg(ele.svg());
   let first = nested.first(); // a copy of the element
 
-  // make the nested SVG document just large enough to hold the element copy
-  nested.viewbox(0, 0, bbox.width + sw, bbox.height + sw);
-  nested.attr({ 'width': bbox.width + sw, 'height': bbox.height + sw });
+  // a width or height of less than 1 seems to cause errors
+  // (so make at least 2 to be safe)
+  let w = Math.max(2, bbox.width + sw);
+  let h = Math.max(2, bbox.height + sw);
+
+  let x = bbox.cx - (w / 2);
+  let y = bbox.cy - (h / 2);
+
+  // make the nested SVG document large enough to hold the element copy
+  nested.viewbox(0, 0, w, h);
+  nested.attr({ 'width': w, 'height': h });
 
   // center the element copy in the nested SVG document
-  first.dmove(-bbox.x + (sw / 2), -bbox.y + (sw / 2));
+  first.center(w / 2, h / 2);
 
   let svgString = nested.svg();
 
@@ -51,19 +59,14 @@ export function svgImageOptions(ele: SVG.Element): ImageOptions {
 
   return {
     data: 'data:image/svg+xml;base64,' + Buffer.from(svgString).toString('base64'),
-    x: round(pixelsToInches(bbox.x - (sw / 2)), 6),
-    y: round(pixelsToInches(bbox.y - (sw / 2)), 6),
-    w: round(pixelsToInches(bbox.width + sw), 6),
-    h: round(pixelsToInches(bbox.height + sw), 6),
+    x: round(pixelsToInches(x), 6),
+    y: round(pixelsToInches(y), 6),
+    w: round(pixelsToInches(w), 6),
+    h: round(pixelsToInches(h), 6),
   };
 }
 
-// doesn't add element if its resulting SVG image has zero area
-// (SVG images of zero area seem to cause errors when exporting)
 export function addAsSvgImage(slide: PptxGenJS.Slide, ele: SVG.Element) {
   let options = svgImageOptions(ele);
-
-  if (options.w > 0 && options.h > 0) {
-    slide.addImage(options);
-  }
+  slide.addImage(options);
 }
