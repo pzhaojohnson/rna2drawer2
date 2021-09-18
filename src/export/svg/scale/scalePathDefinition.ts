@@ -47,9 +47,9 @@ export function scalePathDefinition(path: SVG.Path, factor: number) {
     if (d && d != 'none') {
       let scaled = '';
       (new SVG.PathArray(d)).forEach(c => {
-        scaled += scalePathCommand(c, factor) + ' ';
+        scaled += scalePathCommand(c, factor);
       });
-      path.plot(scaled);
+      path.plot(scaled.trim());
     }
   } catch (error) {
     console.error(error);

@@ -64,14 +64,14 @@ describe('scalePathDefinition function', () => {
     let path = svg.path();
     scalePathDefinition(path, 2);
     // the SVG.js library seems to default to this
-    expect(path.attr('d')).toBe('M 0 0  ');
+    expect(path.attr('d')).toBe('M 0 0');
   });
 
   it('handles null path definitions', () => {
     let path = svg.path(null);
     scalePathDefinition(path, 2);
     // the SVG.js library seems to default to this
-    expect(path.attr('d')).toBe('M 0 0  ');
+    expect(path.attr('d')).toBe('M 0 0');
   });
 
   it('handles a path definition of none', () => {
@@ -103,7 +103,7 @@ describe('scalePathDefinition function', () => {
       + 'Z'
       + 'z'
     );
-    
+
     // the SVG.js library seems to convert all relative path commands
     // to absolute path commands
     let factor = 2;
@@ -134,10 +134,31 @@ describe('scalePathDefinition function', () => {
     expect(
       pathDefinitionsAreClose(scaled, path.attr('d'))
     ).toBeFalsy();
-    
+
     scalePathDefinition(path, factor);
     expect(
       pathDefinitionsAreClose(scaled, path.attr('d'))
     ).toBeTruthy();
+  });
+
+  it('does not add extra whitespace', () => {
+    // extra whitespace can cause parsing errors
+    [
+      svg.path('M 5 10 Q 60 200 10 15'),
+      svg.path('M 20 30'),
+      svg.path('M 50 55 Q 12 30 2 1 L 10 3'),
+      svg.path('M 50 25 q 200 300 412 5 z'),
+    ].forEach(path => {
+      scalePathDefinition(path, 3);
+      let scaled = path.attr('d');
+      expect(scaled).toBe(scaled.trim()); // no leading or trailing whitespace
+      // no consecutive spaces
+      for (let i = 0; i < scaled.length - 1; i++) {
+        let j = i + 1;
+        let ci = scaled.charAt(i);
+        let cj = scaled.charAt(j);
+        expect(ci != ' ' || cj != ' ').toBeTruthy();
+      }
+    });
   });
 });
