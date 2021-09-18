@@ -51,10 +51,10 @@ export function svgImageOptions(ele: SVG.Element): ImageOptions {
 
   return {
     data: 'data:image/svg+xml;base64,' + window.btoa(svgString),
-    x: round(pixelsToInches(bbox.x - (sw / 2)), 4),
-    y: round(pixelsToInches(bbox.y - (sw / 2)), 4),
-    w: round(pixelsToInches(bbox.width + sw), 4),
-    h: round(pixelsToInches(bbox.height + sw), 4),
+    x: round(pixelsToInches(bbox.x - (sw / 2)), 6),
+    y: round(pixelsToInches(bbox.y - (sw / 2)), 6),
+    w: round(pixelsToInches(bbox.width + sw), 6),
+    h: round(pixelsToInches(bbox.height + sw), 6),
   };
 }
 
