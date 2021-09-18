@@ -50,7 +50,7 @@ export function svgImageOptions(ele: SVG.Element): ImageOptions {
   nested.remove();
 
   return {
-    data: 'data:image/svg+xml;base64,' + window.btoa(svgString),
+    data: 'data:image/svg+xml;base64,' + Buffer.from(svgString).toString('base64'),
     x: round(pixelsToInches(bbox.x - (sw / 2)), 6),
     y: round(pixelsToInches(bbox.y - (sw / 2)), 6),
     w: round(pixelsToInches(bbox.width + sw), 6),
