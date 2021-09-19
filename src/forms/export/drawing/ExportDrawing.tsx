@@ -5,6 +5,7 @@ import { CloseButton } from 'Forms/buttons/CloseButton';
 import { Title, TitleUnderline } from './Title';
 import { ExportedBaseFontSizeField } from './ExportedBaseFontSizeField';
 import { SolidButton } from 'Forms/buttons/SolidButton';
+import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { PptxNotes } from './PptxNotes';
 
 import { AppInterface as App } from 'AppInterface';
@@ -50,6 +51,7 @@ export type Props = {
 
 export function ExportDrawing(props: Props) {
   let [inputs, setInputs] = useState<Inputs>({ ...lastExportedInputs });
+  let [errorExporting, setErrorExporting] = useState<Error | undefined>(undefined);
   return (
     <div
       className={styles.form}
@@ -81,17 +83,32 @@ export function ExportDrawing(props: Props) {
         <SolidButton
           text='Export'
           onClick={() => {
-            let exportedBaseFontSize = Number(inputs.exportedBaseFontSize);
-            let drawing = props.app.strictDrawing.drawing;
-            exportDrawing(drawing, {
-              name: document.title ? document.title : 'Drawing',
-              format: props.format,
-              scale: exportedBaseFontSize / (firstBaseFontSize(drawing) ?? exportedBaseFontSize),
-            });
-            lastExportedInputs = { ...inputs };
+            try {
+              let exportedBaseFontSize = Number(inputs.exportedBaseFontSize);
+              let drawing = props.app.strictDrawing.drawing;
+              exportDrawing(drawing, {
+                name: document.title ? document.title : 'Drawing',
+                format: props.format,
+                scale: exportedBaseFontSize / (firstBaseFontSize(drawing) ?? exportedBaseFontSize),
+              });
+              lastExportedInputs = { ...inputs };
+              setErrorExporting(undefined);
+            } catch (error) {
+              console.error(error);
+              setErrorExporting(error);
+            }
           }}
           disabled={!inputsAreValid(inputs)}
         />
+        {!errorExporting ? null : (
+          <p
+            key={Math.random()}
+            className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
+            style={{ marginTop: '3px' }}
+          >
+            There was an error exporting the drawing.
+          </p>
+        )}
       </div>
       {props.format != 'pptx' ? null : (
         <div style={{ margin: '16px 40px 0 40px' }} >
