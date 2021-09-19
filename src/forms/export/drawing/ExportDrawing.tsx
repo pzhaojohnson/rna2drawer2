@@ -51,7 +51,7 @@ export type Props = {
 
 export function ExportDrawing(props: Props) {
   let [inputs, setInputs] = useState<Inputs>({ ...lastExportedInputs });
-  let [errorExporting, setErrorExporting] = useState<Error | undefined>(undefined);
+  let [errorExporting, setErrorExporting] = useState<Error | null>(null);
   return (
     <div
       className={styles.form}
@@ -92,7 +92,7 @@ export function ExportDrawing(props: Props) {
                 scale: exportedBaseFontSize / (firstBaseFontSize(drawing) ?? exportedBaseFontSize),
               });
               lastExportedInputs = { ...inputs };
-              setErrorExporting(undefined);
+              setErrorExporting(null);
             } catch (error) {
               console.error(error);
               setErrorExporting(error);
