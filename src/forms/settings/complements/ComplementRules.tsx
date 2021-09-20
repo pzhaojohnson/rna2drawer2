@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
 import IncludeGUTField from './IncludeGUTField';
-import AllowedMismatchField from './AllowedMismatchField';
+import { AllowedMismatchField } from './AllowedMismatchField';
 import { AppInterface as App } from '../../../AppInterface';
 
 export function ComplementRules(app: App): React.ReactElement {
@@ -15,7 +15,7 @@ export function ComplementRules(app: App): React.ReactElement {
         >
           {IncludeGUTField(app)}
           <div style={{ marginTop: '16px' }} >
-            {AllowedMismatchField(app)}
+            <AllowedMismatchField app={app} />
           </div>
         </div>
       }
