@@ -1,0 +1,25 @@
+.checkbox {
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox:hover {
+  transform: scale(1.15);
+  transition: all 0.125s ease-in-out;
+}
+
+.checked {
+  width: 14px;
+  height: 14px;
+  border: none;
+  background-color: #000033;
+}
+
+.unchecked {
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(0,0,0,0.2);
+  background-color: white;
+}
