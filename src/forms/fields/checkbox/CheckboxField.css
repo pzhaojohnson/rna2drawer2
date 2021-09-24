@@ -42,7 +42,18 @@
 }
 
 .label {
+  font-family: 'Open Sans', sans-serif;
   font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  color: rgba(0,0,0,0.8);
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  cursor: default;
 }
 
 .clickable:hover .scalingBox {
