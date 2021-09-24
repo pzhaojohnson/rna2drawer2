@@ -42,7 +42,7 @@ export function CheckboxField(props: Props): React.ReactElement {
             </div>
           </div>
         </div>
-        <p className={styles.label} >
+        <p className={styles.label} style={{ marginLeft: '6px' }} >
           {props.name}
         </p>
       </div>
