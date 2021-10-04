@@ -1,0 +1,12 @@
+.swatch {
+  padding: 4px;
+  background: #ffffff;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.swatchColoring {
+  width: 32px;
+  height: 12px;
+  border-radius: 2px;
+}
