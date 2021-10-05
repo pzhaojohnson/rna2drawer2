@@ -59,7 +59,7 @@ export function AllowedMismatchField(props: Props) {
           className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
           style={{ marginTop: '3px' }}
         >
-          Must be between 0 and 100.
+          Must be between 0% and 100%.
         </p>
       )}
     </div>
