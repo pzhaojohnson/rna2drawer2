@@ -32,12 +32,6 @@ export function AllowedMismatchField(props: Props) {
   return (
     <div>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <p
-          className={`${textFieldStyles.label} unselectable`}
-          style={{ display: 'inline-block', marginRight: '8px' }}
-        >
-          Allowed % of Mismatches:
-        </p>
         <input
           type='text'
           className={textFieldStyles.input}
@@ -50,19 +44,23 @@ export function AllowedMismatchField(props: Props) {
             }
           }}
           spellCheck='false'
-          style={{ textAlign: 'right' }}
+          style={{ width: '28px', textAlign: 'left', display: 'inline-block' }}
         />
+        <p
+          className={`${textFieldStyles.label} unselectable`}
+          style={{ marginLeft: '6px' }}
+        >
+          % Mismatch Allowed
+        </p>
       </div>
       {valueIsValid(value) ? null : (
-        <div style={{ marginTop: '3px', display: 'flex', flexDirection: 'row' }} >
-          <div style={{ flexGrow: 1 }} />
-          <p
-            key={Math.random()}
-            className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          >
-            Must be between 0 and 100.
-          </p>
-        </div>
+        <p
+          key={Math.random()}
+          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
+          style={{ marginTop: '3px' }}
+        >
+          Must be between 0 and 100.
+        </p>
       )}
     </div>
   );
