@@ -1,17 +1,27 @@
 import * as React from 'react';
-import { CheckboxField } from '../../fields/checkbox/CheckboxField';
-import { AppInterface as App } from '../../../AppInterface';
+import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
+import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
+import { AppInterface as App } from 'AppInterface';
 
-export function IncludeGUTField(app: App): React.ReactElement {
-  return (
-    <CheckboxField
-      name={'Include GU and GT Pairs'}
-      initialValue={app.strictDrawingInteraction.foldingMode.includeGUT}
-      set={v => {
-        app.strictDrawingInteraction.foldingMode.includeGUT = v;
-      }}
-    />
-  );
+export type Props = {
+  app: App;
 }
 
-export default IncludeGUTField;
+export function IncludeGUTField(props: Props) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <Checkbox
+        checked={props.app.strictDrawingInteraction.foldingMode.includeGUT}
+        onChange={event => {
+          props.app.strictDrawingInteraction.foldingMode.includeGUT = event.target.checked;
+        }}
+      />
+      <p
+        className={`${checkboxFieldStyles.label} unselectable`}
+        style={{ marginLeft: '8px' }}
+      >
+        Include GU and GT Pairs
+      </p>
+    </div>
+  );
+}
