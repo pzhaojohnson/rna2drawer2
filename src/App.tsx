@@ -27,7 +27,7 @@ class App implements AppInterface {
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing: StrictDrawing;
   _strictDrawingInteraction: StrictDrawingInteraction;
-  _currFormFactory?: FormFactory;
+  _form?: React.ReactElement | FormFactory;
   _drawingTitle?: string;
 
   constructor(SVG: () => Svg.Svg) {
@@ -137,8 +137,8 @@ class App implements AppInterface {
   renderPeripherals() {
     this.renderMenu();
     this.renderInfobar();
-    if (this._currFormFactory) {
-      this.renderForm(this._currFormFactory);
+    if (this._form) {
+      this.renderForm(this._form);
     }
     this.updateDocumentTitle();
   }
@@ -151,23 +151,23 @@ class App implements AppInterface {
     ReactDOM.render(<Infobar app={this} />, this._infobarContainer);
   }
 
-  renderForm(formFactory: FormFactory) {
-
-    /* Seems to be necessary for user entered values (e.g. in input elements)
-    to be updated in a currently rendered form. */
-    this.unmountCurrForm();
-
+  renderForm(f: React.ReactElement | FormFactory) {
     let close = () => {
-      if (this._currFormFactory == formFactory) {
+      if (this._form == f) {
         this.unmountCurrForm();
       }
     }
-    ReactDOM.render(formFactory(close), this._formContainer);
-    this._currFormFactory = formFactory;
+
+    ReactDOM.render(
+      f instanceof Function ? f(close) : f,
+      this._formContainer,
+    );
+
+    this._form = f;
   }
 
   unmountCurrForm() {
-    this._currFormFactory = undefined;
+    this._form = undefined;
     ReactDOM.unmountComponentAtNode(this._formContainer);
   }
 

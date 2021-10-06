@@ -72,25 +72,23 @@ describe('renderPeripherals method', () => {
 
 it('renderForm method', () => {
   let textContent = 'Form was rendered.';
-  let formFactory = jest.fn(() => <div>{textContent}</div>);
+  let formFactory = () => <div>{textContent}</div>;
   let app = new App(() => NodeSVG());
-  app.unmountCurrForm = jest.fn();
   app.renderForm(formFactory);
-  expect(app.unmountCurrForm.mock.calls.length).toBe(1);
   expect(app._formContainer.textContent).toBe(textContent);
-  expect(app._currFormFactory).toBe(formFactory);
+  expect(app._form).toBe(formFactory);
 });
 
 it('unmountCurrForm method', () => {
   let textContent = 'Form is still rendered.';
-  let formFactory = jest.fn(() => <div>{textContent}</div>);
+  let formFactory = () => <div>{textContent}</div>;
   let app = new App(() => NodeSVG());
   app.renderForm(formFactory);
   expect(app._formContainer.textContent).toBe(textContent);
-  expect(app._currFormFactory).toBe(formFactory);
+  expect(app._form).toBe(formFactory);
   app.unmountCurrForm();
   expect(app._formContainer.textContent).toBeFalsy();
-  expect(app._currFormFactory).toBeFalsy();
+  expect(app._form).toBeFalsy();
 });
 
 it('pushUndo method', () => {
