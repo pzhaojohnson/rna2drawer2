@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import styles from './ComplementRules.css';
 import { AppInterface as App } from 'AppInterface';
 import { CloseButton } from 'Forms/buttons/CloseButton';
 import { IncludeGUTField } from './IncludeGUTField';
@@ -36,7 +37,17 @@ export type Props = {
 export function ComplementRules(props: Props) {
   let [isOpen, setIsOpen] = useState(true);
   return !isOpen ? null : (
-    <div style={{ position: 'relative', width: '400px', display: 'flex', flexDirection: 'column' }} >
+    <div
+      className={styles.form}
+      style={{
+        position: 'relative',
+        width: '400px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'auto',
+      }}
+    >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
           onClick={() => setIsOpen(false)}
