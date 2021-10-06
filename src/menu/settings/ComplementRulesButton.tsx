@@ -12,7 +12,7 @@ export function ComplementRulesButton(props: Props): React.ReactElement {
     <DroppedButton
       text={'Complement Rules'}
       onClick={() => {
-        props.app.renderForm(() => ComplementRules(props.app));
+        props.app.renderForm(<ComplementRules app={props.app} />);
       }}
     />
   );
