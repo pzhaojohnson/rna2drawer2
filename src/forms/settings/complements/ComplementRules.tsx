@@ -60,9 +60,9 @@ export function ComplementRules(props: Props) {
         <TitleUnderline />
       </div>
       <div style={{ margin: '24px 40px 0px 40px' }} >
-        <IncludeGUTField app={props.app} />
+        <AllowedMismatchField app={props.app} />
         <div style={{ marginTop: '16px' }} >
-          <AllowedMismatchField app={props.app} />
+          <IncludeGUTField app={props.app} />
         </div>
       </div>
     </div>
