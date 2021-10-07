@@ -12,31 +12,29 @@ export function ExportedBaseFontSizeField(props: Props) {
   return (
     <div>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <p
-          className={textFieldStyles.label}
-          style={{ display: 'inline-block', marginRight: '12px' }}
-        >
-          Font Size of Bases:
-        </p>
         <input
           className={textFieldStyles.input}
           type='text'
           value={props.value}
           onChange={event => props.onChange(event.target.value)}
           spellCheck='false'
-          style={{ flexGrow: 1, textAlign: 'right' }}
+          style={{ width: '28px', textAlign: 'left' }}
         />
+        <p
+          className={textFieldStyles.label}
+          style={{ marginLeft: '6px' }}
+        >
+          Font Size of Bases
+        </p>
       </div>
       {!props.errorMessage ? null : (
-        <div style={{ marginTop: '3px', width: '100%', display: 'flex', flexDirection: 'row' }} >
-          <div style={{ flexGrow: 1 }} />
-          <p
-            key={Math.random()}
-            className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          >
-            {props.errorMessage}
-          </p>
-        </div>
+        <p
+          key={Math.random()}
+          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
+          style={{ marginTop: '3px' }}
+        >
+          {props.errorMessage}
+        </p>
       )}
       <p
         className='unselectable'
