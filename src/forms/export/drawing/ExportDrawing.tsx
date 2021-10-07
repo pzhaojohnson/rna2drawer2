@@ -75,7 +75,7 @@ export function ExportDrawing(props: Props) {
           value={inputs.exportedBaseFontSize}
           onChange={value => setInputs({ ...inputs, exportedBaseFontSize: value })}
           errorMessage={exportedBaseFontSizeIsValid(inputs.exportedBaseFontSize) ? undefined : (
-            'Font size of bases must be a positive number.'
+            'Must be a positive number.'
           )}
         />
       </div>

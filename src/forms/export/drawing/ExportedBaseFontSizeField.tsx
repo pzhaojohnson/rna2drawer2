@@ -24,7 +24,7 @@ export function ExportedBaseFontSizeField(props: Props) {
           className={textFieldStyles.label}
           style={{ marginLeft: '6px' }}
         >
-          Font Size of Bases
+          Exported Font Size of Bases
         </p>
       </div>
       {!props.errorMessage ? null : (
@@ -40,7 +40,7 @@ export function ExportedBaseFontSizeField(props: Props) {
         className='unselectable'
         style={{ margin: '6px 0px 0px 12px', fontSize: '12px' }}
       >
-        Scale the exported drawing by specifying the font size of bases.
+        Scale the exported drawing according to the font size of bases.
       </p>
     </div>
   );
