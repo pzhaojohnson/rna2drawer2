@@ -11,13 +11,15 @@ export function ExportPptxButton(props: Props) {
   return (
     <DroppedButton
       text='PowerPoint (PPTX)'
-      onClick={() => props.app.renderForm(() => (
-        <ExportDrawing
-          app={props.app}
-          format='pptx'
-          close={() => props.app.unmountCurrForm()}
-        />
-      ))}
+      onClick={() => {
+
+        // allows form to be reopened
+        props.app.unmountCurrForm();
+        
+        props.app.renderForm(
+          <ExportDrawing app={props.app} format='pptx' />
+        );
+      }}
     />
   );
 }
