@@ -24,13 +24,15 @@ export function Checkbox(props: Props) {
         setChecked(!checked);
       }}
     >
-      {!checked ? null : (
-        <img
-          src={check}
-          alt='Check'
-          style={{ width: '10px' }}
-        />
-      )}
+      <div className={styles.checkContainer} >
+        {!checked ? null : (
+          <img
+            src={check}
+            alt='Check'
+            className={styles.check}
+          />
+        )}
+      </div>
     </div>
   );
 }
