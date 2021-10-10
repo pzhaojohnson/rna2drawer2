@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ClosableContainer from '../../containers/ClosableContainer';
-import RotationField from './RotationField';
+import { RotationField } from './RotationField';
 import FlatOutermostLoopField from './FlatOutermostLoopField';
 import { TerminiGapField } from './TerminiGapField';
 import { AppInterface as App } from '../../../AppInterface';
@@ -19,7 +19,7 @@ class EditLayout extends React.Component {
     let hasRoundOutermostLoop = app.strictDrawing.hasRoundOutermostLoop();
     return (
       <EditLayout
-        rotationField={RotationField.create(app)}
+        rotationField={<RotationField app={app} />}
         flatOutermostLoopField={FlatOutermostLoopField.create(app)}
         terminiGapField={hasRoundOutermostLoop ? <TerminiGapField app={app} /> : undefined}
         close={() => app.unmountCurrForm()}
