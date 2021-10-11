@@ -40,7 +40,7 @@ export function ComplementRules(props: Props) {
       className={styles.form}
       style={{
         position: 'relative',
-        width: '400px',
+        width: '360px',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
