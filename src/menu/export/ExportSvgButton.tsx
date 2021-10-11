@@ -12,13 +12,13 @@ export function ExportSvgButton(props: Props) {
     <DroppedButton
       text='SVG'
       onClick={() => {
-
-        // allows form to be reopened
-        props.app.unmountCurrForm();
-        
-        props.app.renderForm(
-          <ExportDrawing app={props.app} format='svg' />
-        );
+        props.app.renderForm(close => (
+          <ExportDrawing
+            app={props.app}
+            format='svg'
+            unmount={close}
+          />
+        ));
       }}
     />
   );

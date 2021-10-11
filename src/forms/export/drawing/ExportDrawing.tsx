@@ -46,20 +46,20 @@ function inputsAreValid(inputs: Inputs): boolean {
 export type Props = {
   app: App;
   format: 'svg' | 'pptx'; // the format to export the drawing in
+  unmount: () => void;
 }
 
 export function ExportDrawing(props: Props) {
-  let [isOpen, setIsOpen] = useState(true);
   let [inputs, setInputs] = useState<Inputs>({ ...lastExportedInputs });
   let [errorExporting, setErrorExporting] = useState(false);
-  return !isOpen ? null : (
+  return (
     <div
       className={styles.form}
       style={{ position: 'relative', width: '400px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
-          onClick={() => setIsOpen(false)}
+          onClick={() => props.unmount()}
         />
       </div>
       <div style={{ margin: '16px 32px 0 32px' }} >
