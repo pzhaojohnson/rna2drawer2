@@ -27,7 +27,7 @@ class App implements AppInterface {
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing: StrictDrawing;
   _strictDrawingInteraction: StrictDrawingInteraction;
-  _form?: React.ReactElement | FormFactory;
+  _formFactory?: FormFactory;
   _drawingTitle?: string;
 
   constructor(SVG: () => Svg.Svg) {
@@ -137,8 +137,8 @@ class App implements AppInterface {
   renderPeripherals() {
     this.renderMenu();
     this.renderInfobar();
-    if (this._form) {
-      this.renderForm(this._form);
+    if (this._formFactory) {
+      this.renderForm(this._formFactory);
     }
     this.updateDocumentTitle();
   }
@@ -151,27 +151,25 @@ class App implements AppInterface {
     ReactDOM.render(<Infobar app={this} />, this._infobarContainer);
   }
 
-  renderForm(f: React.ReactElement | FormFactory) {
+  renderForm(formFactory: FormFactory) {
 
     // allows a form to be refreshed
     ReactDOM.unmountComponentAtNode(this._formContainer);
 
-    let close = () => {
-      if (this._form == f) {
-        this.unmountCurrForm();
-      }
-    }
-
     ReactDOM.render(
-      f instanceof Function ? f(close) : f,
+      formFactory(() => {
+        if (formFactory == this._formFactory) {
+          this.unmountCurrForm();
+        }
+      }),
       this._formContainer,
     );
 
-    this._form = f;
+    this._formFactory = formFactory;
   }
 
   unmountCurrForm() {
-    this._form = undefined;
+    this._formFactory = undefined;
     ReactDOM.unmountComponentAtNode(this._formContainer);
   }
 

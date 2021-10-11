@@ -18,7 +18,7 @@ export interface AppInterface {
   readonly strictDrawingInteraction: StrictDrawingInteraction;
 
   renderPeripherals(): void;
-  renderForm(f: React.ReactElement | FormFactory): void;
+  renderForm(formFactory: FormFactory): void;
   unmountCurrForm(): void;
   drawingTitle: string;
   unspecifyDrawingTitle(): void;
