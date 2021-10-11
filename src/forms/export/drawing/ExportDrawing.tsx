@@ -55,7 +55,7 @@ export function ExportDrawing(props: Props) {
   return (
     <div
       className={styles.form}
-      style={{ position: 'relative', width: '400px', height: '100%', overflow: 'auto' }}
+      style={{ position: 'relative', width: '372px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
