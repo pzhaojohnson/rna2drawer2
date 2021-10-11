@@ -152,6 +152,10 @@ class App implements AppInterface {
   }
 
   renderForm(f: React.ReactElement | FormFactory) {
+
+    // allows a form to be refreshed
+    ReactDOM.unmountComponentAtNode(this._formContainer);
+
     let close = () => {
       if (this._form == f) {
         this.unmountCurrForm();
