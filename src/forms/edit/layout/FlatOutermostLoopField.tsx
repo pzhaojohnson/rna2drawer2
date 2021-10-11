@@ -2,11 +2,7 @@ import * as React from 'react';
 import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
 import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import { AppInterface as App } from 'AppInterface';
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
-
-function hasFlatOutermostLoop(strictDrawing: StrictDrawing): boolean {
-  return strictDrawing.generalLayoutProps().outermostLoopShape == 'flat';
-}
+import { hasFlatOutermostLoop } from './hasFlatOutermostLoop';
 
 export type Props = {
   app: App;

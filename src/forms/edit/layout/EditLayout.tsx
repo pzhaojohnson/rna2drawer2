@@ -1,53 +1,76 @@
 import * as React from 'react';
-import ClosableContainer from '../../containers/ClosableContainer';
+import { useState } from 'react';
+import { CloseButton } from 'Forms/buttons/CloseButton';
+import styles from './EditLayout.css';
+import { AppInterface as App } from 'AppInterface';
 import { RotationField } from './RotationField';
 import { FlatOutermostLoopField } from './FlatOutermostLoopField';
+import { hasFlatOutermostLoop } from './hasFlatOutermostLoop';
 import { TerminiGapField } from './TerminiGapField';
-import { AppInterface as App } from '../../../AppInterface';
 
-interface Props {
-  rotationField: React.ReactElement;
-  flatOutermostLoopField: React.ReactElement;
-  terminiGapField?: React.ReactElement;
-  close: () => void;
+function Title() {
+  return (
+    <p
+      className='unselectable'
+      style={{ fontSize: '24px', color: 'rgba(0,0,0,1)' }}
+    >
+      Edit Layout
+    </p>
+  );
 }
 
-class EditLayout extends React.Component {
-  props!: Props;
+function TitleUnderline() {
+  return (
+    <div
+      style={{
+        height: '0px',
+        borderWidth: '0px 0px 1px 0px',
+        borderStyle: 'solid',
+        borderColor: 'rgba(0,0,0,0.2)',
+      }}
+    />
+  );
+}
 
-  static create(app: App): React.ReactElement {
-    let hasRoundOutermostLoop = app.strictDrawing.hasRoundOutermostLoop();
-    return (
-      <EditLayout
-        rotationField={<RotationField app={app} />}
-        flatOutermostLoopField={<FlatOutermostLoopField app={app} />}
-        terminiGapField={hasRoundOutermostLoop ? <TerminiGapField app={app} /> : undefined}
-        close={() => app.unmountCurrForm()}
-      />
-    );
-  }
+export type Props = {
+  app: App;
+}
 
-  render() {
-    return (
-      <ClosableContainer
-        close={() => this.props.close()}
-        title={'Edit Layout'}
-        contained={
-          <div
-            style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
-          >
-            {this.props.rotationField}
-            <div style={{ marginTop: '16px' }} >
-              {this.props.flatOutermostLoopField}
-            </div>
-            <div style={{ marginTop: '16px' }} >
-              {this.props.terminiGapField}
-            </div>
+export function EditLayout(props: Props) {
+  let [isOpen, setIsOpen] = useState(true);
+  return !isOpen ? null : (
+    <div
+      className={styles.form}
+      style={{
+        position: 'relative',
+        width: '360px',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
+        <CloseButton
+          onClick={() => setIsOpen(false)}
+        />
+      </div>
+      <div style={{ margin: '16px 32px 0px 32px' }} >
+        <Title />
+      </div>
+      <div style={{ margin: '8px 16px 0px 16px' }} >
+        <TitleUnderline />
+      </div>
+      <div style={{ margin: '24px 40px 0px 40px' }} >
+        <RotationField app={props.app} />
+        <div style={{ marginTop: '18px' }} >
+          <FlatOutermostLoopField app={props.app} />
+        </div>
+        {hasFlatOutermostLoop(props.app.strictDrawing) ? null : (
+          <div style={{ marginTop: '18px' }} >
+            <TerminiGapField app={props.app} />
           </div>
-        }
-      />
-    );
-  }
+        )}
+      </div>
+    </div>
+  );
 }
-
-export default EditLayout;
