@@ -20,8 +20,14 @@ export function Checkbox(props: Props) {
     <div
       className={`${styles.checkbox} ${checked ? styles.checked : styles.unchecked}`}
       onClick={() => {
-        props.onChange({ target: { checked: !checked } });
         setChecked(!checked);
+
+        // give time to rerender in case the change event callback unmounts the checkbox
+        // (otherwise, React might complain about a memory leak)
+        setTimeout(
+          () => props.onChange({ target: { checked: !checked } }),
+          75,
+        );
       }}
     >
       <div className={styles.checkContainer} >
