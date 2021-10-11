@@ -29,7 +29,7 @@ describe('create static method', () => {
 
   it('passed close callback removes the form', () => {
     let app = new App(() => NodeSVG());
-    let spy = jest.spyOn(app, 'unmountCurrForm');
+    let spy = jest.spyOn(app, 'unmountForm');
     let ele = EditSequenceId.create(app);
     expect(spy).not.toHaveBeenCalled();
     ele.props.close();

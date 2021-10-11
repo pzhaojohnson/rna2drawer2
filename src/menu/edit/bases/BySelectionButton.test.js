@@ -14,7 +14,7 @@ it('when not annotating', () => {
 it('when already annotating', () => {
   app.strictDrawingInteraction.startAnnotating();
   let b = BySelectionButton({ app: app });
-  app.unmountCurrForm();
+  app.unmountForm();
   // form to annotate bases is closed
   expect(document.body.textContent.includes('Edit Bases')).toBeFalsy();
   b.props.onClick();

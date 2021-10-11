@@ -13,7 +13,7 @@ export function EditDrawingTitleButton(props: Props): React.ReactElement {
       text='Drawing Title'
       onClick={() => {
         props.app.renderForm(close => (
-          <EditDrawingTitle app={props.app} close={close ?? (() => props.app.unmountCurrForm())} />
+          <EditDrawingTitle app={props.app} close={close} />
         ));
       }}
     />

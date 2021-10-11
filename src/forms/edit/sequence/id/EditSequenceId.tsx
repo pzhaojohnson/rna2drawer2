@@ -15,7 +15,7 @@ export class EditSequenceId extends React.Component {
     return (
       <EditSequenceId
         sequenceIdField={SequenceIdField.create(app)}
-        close={() => app.unmountCurrForm()}
+        close={() => app.unmountForm()}
       />
     );
   }

@@ -19,7 +19,7 @@ export interface AppInterface {
 
   renderPeripherals(): void;
   renderForm(formFactory: FormFactory): void;
-  unmountCurrForm(): void;
+  unmountForm(): void;
   drawingTitle: string;
   unspecifyDrawingTitle(): void;
   updateDocumentTitle(): void;

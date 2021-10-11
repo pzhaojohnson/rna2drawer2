@@ -51,7 +51,7 @@ function NewLink(props: Props) {
       className={styles.newAndOpenLinks}
       style={{ ...newAndOpenLinkStyles }}
       onClick={() => props.app.renderForm(close => (
-        <CreateNewDrawing app={props.app} close={close ?? (() => props.app.unmountCurrForm())} />
+        <CreateNewDrawing app={props.app} close={close} />
       ))}
     >
       Create a New Drawing
@@ -65,7 +65,7 @@ function OpenLink(props: Props) {
       className={styles.newAndOpenLinks}
       style={{ ...newAndOpenLinkStyles }}
       onClick={() => props.app.renderForm(close => (
-        <OpenRna2drawer app={props.app} close={close ?? (() => props.app.unmountCurrForm())} />
+        <OpenRna2drawer app={props.app} close={close} />
       ))}
     >
       Open a Saved Drawing

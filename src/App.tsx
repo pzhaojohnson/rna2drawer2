@@ -159,7 +159,7 @@ class App implements AppInterface {
     ReactDOM.render(
       formFactory(() => {
         if (formFactory == this._formFactory) {
-          this.unmountCurrForm();
+          this.unmountForm();
         }
       }),
       this._formContainer,
@@ -168,7 +168,7 @@ class App implements AppInterface {
     this._formFactory = formFactory;
   }
 
-  unmountCurrForm() {
+  unmountForm() {
     this._formFactory = undefined;
     ReactDOM.unmountComponentAtNode(this._formContainer);
   }

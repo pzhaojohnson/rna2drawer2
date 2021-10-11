@@ -19,7 +19,7 @@ export function OpenButton(props: Props): React.ReactElement {
           props.app.renderForm(close => (
             <OpenRna2drawer
               app={props.app}
-              close={() => close ? close() : props.app.unmountCurrForm()}
+              close={close}
             />
           ));
         }

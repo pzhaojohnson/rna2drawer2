@@ -57,7 +57,7 @@ describe('renderPeripherals method', () => {
 
   it('when there is no form', () => {
     let app = new App(() => NodeSVG());
-    app.unmountCurrForm();
+    app.unmountForm();
     app.renderMenu = jest.fn();
     app.renderInfobar = jest.fn();
     app.renderForm = jest.fn();
@@ -76,19 +76,19 @@ it('renderForm method', () => {
   let app = new App(() => NodeSVG());
   app.renderForm(formFactory);
   expect(app._formContainer.textContent).toBe(textContent);
-  expect(app._form).toBe(formFactory);
+  expect(app._formFactory).toBe(formFactory);
 });
 
-it('unmountCurrForm method', () => {
+it('unmountForm method', () => {
   let textContent = 'Form is still rendered.';
   let formFactory = () => <div>{textContent}</div>;
   let app = new App(() => NodeSVG());
   app.renderForm(formFactory);
   expect(app._formContainer.textContent).toBe(textContent);
-  expect(app._form).toBe(formFactory);
-  app.unmountCurrForm();
+  expect(app._formFactory).toBe(formFactory);
+  app.unmountForm();
   expect(app._formContainer.textContent).toBeFalsy();
-  expect(app._form).toBeFalsy();
+  expect(app._formFactory).toBeFalsy();
 });
 
 it('pushUndo method', () => {
