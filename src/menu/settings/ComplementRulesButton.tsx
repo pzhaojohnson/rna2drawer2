@@ -12,11 +12,9 @@ export function ComplementRulesButton(props: Props): React.ReactElement {
     <DroppedButton
       text={'Complement Rules'}
       onClick={() => {
-
-        // allows form to be reopened
-        props.app.unmountCurrForm();
-
-        props.app.renderForm(<ComplementRules app={props.app} />);
+        props.app.renderForm(close => (
+          <ComplementRules app={props.app} unmount={close} />
+        ));
       }}
     />
   );

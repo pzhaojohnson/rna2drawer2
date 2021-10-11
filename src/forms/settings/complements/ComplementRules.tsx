@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import styles from './ComplementRules.css';
 import { AppInterface as App } from 'AppInterface';
 import { CloseButton } from 'Forms/buttons/CloseButton';
@@ -32,11 +31,11 @@ function TitleUnderline() {
 
 export type Props = {
   app: App;
+  unmount: () => void;
 }
 
 export function ComplementRules(props: Props) {
-  let [isOpen, setIsOpen] = useState(true);
-  return !isOpen ? null : (
+  return (
     <div
       className={styles.form}
       style={{
@@ -50,7 +49,7 @@ export function ComplementRules(props: Props) {
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
-          onClick={() => setIsOpen(false)}
+          onClick={() => props.unmount()}
         />
       </div>
       <div style={{ margin: '16px 32px 0px 32px' }} >
