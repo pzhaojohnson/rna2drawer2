@@ -18,7 +18,7 @@ export function IncludeGUTField(props: Props) {
       />
       <p
         className={`${checkboxFieldStyles.label} unselectable`}
-        style={{ marginLeft: '8px' }}
+        style={{ marginLeft: '6px' }}
       >
         Include GU and GT Pairs
       </p>

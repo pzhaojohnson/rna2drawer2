@@ -48,7 +48,7 @@ export function AllowedMismatchField(props: Props) {
         />
         <p
           className={`${textFieldStyles.label} unselectable`}
-          style={{ marginLeft: '6px' }}
+          style={{ marginLeft: '4px' }}
         >
           % Mismatch Allowed
         </p>
