@@ -12,11 +12,9 @@ export function EditLayoutButton(props: Props): React.ReactElement {
     <DroppedButton
       text={'Layout'}
       onClick={() => {
-
-        // allows form to be reopened
-        props.app.unmountCurrForm();
-
-        props.app.renderForm(<EditLayout app={props.app} />);
+        props.app.renderForm(close => (
+          <EditLayout app={props.app} unmount={close} />
+        ));
       }}
     />
   );
