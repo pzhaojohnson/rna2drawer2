@@ -1,43 +1,39 @@
 import * as React from 'react';
-import { CheckboxField } from '../../fields/checkbox/CheckboxField';
-import { AppInterface as App } from '../../../AppInterface';
+import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
+import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
+import { AppInterface as App } from 'AppInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
 
-interface Props {
-  hasFlatOutermostLoop: boolean;
-  set: (v: boolean) => void;
+function hasFlatOutermostLoop(strictDrawing: StrictDrawing): boolean {
+  return strictDrawing.generalLayoutProps().outermostLoopShape == 'flat';
 }
 
-export class FlatOutermostLoopField extends React.Component {
-  props!: Props;
+export type Props = {
+  app: App;
+}
 
-  static create(app: App): React.ReactElement {
-    return (
-      <FlatOutermostLoopField
-        hasFlatOutermostLoop={app.strictDrawing.hasFlatOutermostLoop()}
-        set={(v: boolean) => {
-          if (v != app.strictDrawing.hasFlatOutermostLoop()) {
-            app.pushUndo();
-            if (v) {
-              app.strictDrawing.flatOutermostLoop();
-            } else {
-              app.strictDrawing.roundOutermostLoop();
-            }
-            app.drawingChangedNotByInteraction();
+export function FlatOutermostLoopField(props: Props) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <Checkbox
+        checked={hasFlatOutermostLoop(props.app.strictDrawing)}
+        onChange={event => {
+          if (event.target.checked != hasFlatOutermostLoop(props.app.strictDrawing)) {
+            props.app.pushUndo();
+            let generalLayoutProps = props.app.strictDrawing.generalLayoutProps();
+            generalLayoutProps.outermostLoopShape = event.target.checked ? 'flat' : 'round';
+            props.app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
+            props.app.strictDrawing.updateLayout();
+            props.app.drawingChangedNotByInteraction();
           }
         }}
       />
-    );
-  }
-
-  render(): React.ReactElement {
-    return (
-      <CheckboxField
-        name={'Flat Outermost Loop'}
-        initialValue={this.props.hasFlatOutermostLoop}
-        set={(v: boolean) => this.props.set(v)}
-      />
-    );
-  }
+      <p
+        className={`${checkboxFieldStyles.label} unselectable`}
+        style={{ marginLeft: '6px' }}
+      >
+        Flat Outermost Loop
+      </p>
+    </div>
+  );
 }
-
-export default FlatOutermostLoopField;
