@@ -30,16 +30,25 @@ test('Checkbox component', () => {
   expect(isChecked(container.firstChild)).toBeTruthy();
   
   // click 10 times
-  for (let i = 0; i < 10; i++) {
-    act(() => {
-      fireEvent.click(container.firstChild, { bubbles: true });
-    });
+  let i = 0;
+  let intervalId;
+  intervalId = setInterval(() => {
+    if (i >= 10) {
+      clearInterval(intervalId);
+    } else {
+      act(() => {
+        fireEvent.click(container.firstChild, { bubbles: true });
+      });
+      i++;
 
-    // checks and unchecks
-    expect(isChecked(container.firstChild)).toBe(i % 2 == 1);
-    
-    // calls change callback
-    expect(onChange.mock.calls.length).toBe(i + 1);
-    expect(onChange.mock.calls[i][0]).toEqual({ target: { checked: i % 2 == 1 } });
-  }
+      setTimeout(() => {
+        // checks and unchecks
+        expect(isChecked(container.firstChild)).toBe(i % 2 == 1);
+        
+        // calls change callback
+        expect(onChange.mock.calls.length).toBe(i + 1);
+        expect(onChange.mock.calls[i][0]).toEqual({ target: { checked: i % 2 == 1 } });
+      }, 250);
+    }
+  }, 1000);
 });
