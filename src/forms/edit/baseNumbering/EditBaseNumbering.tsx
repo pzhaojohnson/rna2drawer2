@@ -72,7 +72,7 @@ export function EditBaseNumbering(props: Props): React.ReactElement {
                 <LineLengthField {...fieldProps} />
               </div>
               <div style={{ marginTop: '8px' }} >
-                <BasePaddingField {...fieldProps} />
+                <BasePaddingField app={props.app} />
               </div>
             </div>
           )}
