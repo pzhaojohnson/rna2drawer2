@@ -66,7 +66,7 @@ export function EditBaseNumbering(props: Props): React.ReactElement {
                 <BoldFontField {...fieldProps} />
               </div>
               <div style={{ marginTop: '20px' }} >
-                <LineWidthField {...fieldProps} />
+                <LineWidthField app={props.app} />
               </div>
               <div style={{ marginTop: '8px' }} >
                 <LineLengthField app={props.app} />
