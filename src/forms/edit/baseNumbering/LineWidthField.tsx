@@ -5,14 +5,18 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { parseNumber } from 'Parse/svg/number';
 import { round } from 'Math/round';
 
 // returns undefined if there are no base numberings in the drawing
 // and assumes all line widths are the same
 function currLineWidth(drawing: Drawing): number | undefined {
-  let lw = drawing.bases().find(b => b.numbering)?.numbering?.line.attr('stroke-width');
-  if (typeof lw == 'number') {
-    return round(lw, 2);
+  let b = drawing.bases().find(b => b.numbering);
+  if (b && b.numbering) {
+    let n = parseNumber(b.numbering.line.attr('stroke-width'));
+    if (n) {
+      return round(n.convert('px').valueOf(), 2);
+    }
   }
 }
 
