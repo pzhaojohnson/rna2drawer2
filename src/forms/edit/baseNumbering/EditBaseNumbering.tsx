@@ -60,7 +60,7 @@ export function EditBaseNumbering(props: Props): React.ReactElement {
                 <FontFamilyField {...fieldProps} />
               </div>
               <div style={{ marginTop: '20px' }} >
-                <FontSizeField {...fieldProps} />
+                <FontSizeField app={props.app} />
               </div>
               <div style={{ marginTop: '8px' }} >
                 <BoldFontField {...fieldProps} />

@@ -1,37 +1,88 @@
 import * as React from 'react';
-import { FieldProps } from './FieldProps';
-import { FontSizeField as Field } from '../../fields/font/FontSizeField';
-import { atIndex } from 'Array/at';
+import { useState } from 'react';
+import textFieldStyles from 'Forms/fields/text/TextField.css';
+import errorMessageStyles from 'Forms/ErrorMessage.css';
+import { AppInterface as App } from 'AppInterface';
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { parseNumber } from 'Parse/svg/number';
+import { round } from 'Math/round';
 
-export function FontSizeField(props: FieldProps): React.ReactElement | null {
-  let bns = props.getBaseNumberings();
-  if (bns.length == 0) {
-    return null;
-  } else {
-    let first = atIndex(bns, 0);
-    let fontSize = first?.text.attr('font-size');
-    return (
-      <Field
-        name='Font Size'
-        initialValue={typeof fontSize == 'number' ? fontSize : undefined}
-        set={fs => {
-          let bns = props.getBaseNumberings();
-          if (bns.length > 0) {
-            let first = atIndex(bns, 0);
-            let fontSize = first?.text.attr('font-size');
-            if (fs != fontSize) {
-              props.pushUndo();
-              bns.forEach(bn => {
-                bn.text.attr({ 'font-size': fs });
-                bn.reposition();
-              });
-              BaseNumbering.recommendedDefaults.text['font-size'] = fs;
-              props.changed();
-            }
-          }
-        }}
-      />
-    );
+// returns undefined if there are no base numberings in the drawing
+// and assumes all font sizes are the same
+function currFontSize(drawing: Drawing): number | undefined {
+  let b = drawing.bases().find(b => b.numbering);
+  if (b && b.numbering) {
+    let n = parseNumber(b.numbering.text.attr('font-size'));
+    if (n) {
+      return round(n.convert('px').valueOf(), 2);
+    }
   }
+}
+
+function valueIsValid(value: string): boolean {
+  let n = Number.parseFloat(value);
+  return Number.isFinite(n) && n >= 0;
+}
+
+function setFontSizeIfShould(app: App, value: string) {
+  if (valueIsValid(value)) {
+    let n = Number.parseFloat(value);
+    if (n != currFontSize(app.strictDrawing.drawing)) {
+      app.pushUndo();
+      app.strictDrawing.drawing.bases().forEach(b => {
+        if (b.numbering) {
+          b.numbering.text.attr({ 'font-size': n });
+
+          // recenter text
+          b.numbering.reposition();
+        }
+      });
+      BaseNumbering.recommendedDefaults.text['font-size'] = n;
+      app.drawingChangedNotByInteraction();
+    }
+  }
+}
+
+export type Props = {
+  app: App;
+}
+
+export function FontSizeField(props: Props) {
+  let fs = currFontSize(props.app.strictDrawing.drawing);
+  let [value, setValue] = useState(typeof fs == 'number' ? fs.toString() : '');
+  return (
+    <div>
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+        <input
+          type='text'
+          className={textFieldStyles.input}
+          value={value}
+          onChange={event => setValue(event.target.value)}
+          onBlur={() => setFontSizeIfShould(props.app, value)}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              setFontSizeIfShould(props.app, value);
+            }
+          }}
+          style={{ width: '36px' }}
+        />
+        <p
+          className={`${textFieldStyles.label} unselectable`}
+          style={{ marginLeft: '8px' }}
+        >
+          Font Size
+        </p>
+      </div>
+      {valueIsValid(value) ? null : (
+        <p
+          key={Math.random()}
+          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
+          style={{ marginTop: '3px' }}
+        >
+          Must be a nonnegative number.
+        </p>
+      )}
+    </div>
+  );
 }
