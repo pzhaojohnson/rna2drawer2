@@ -1,57 +1,79 @@
 import * as React from 'react';
-import IntegerField from '../../fields/text/IntegerField';
-import { AppInterface as App } from '../../../AppInterface';
+import { useState } from 'react';
+import textFieldStyles from 'Forms/fields/text/TextField.css';
+import errorMessageStyles from 'Forms/ErrorMessage.css';
+import { AppInterface as App } from 'AppInterface';
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { atIndex } from 'Array/at';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
-interface Props {
-  currAnchor: number;
-  setAnchor: (a: number) => void;
+// returns undefined if there are no sequences in the drawing
+// and assumes numbering anchors and offsets are the same for all sequences
+function currAnchorWithOffset(drawing: Drawing): number | undefined {
+  let seq = atIndex(drawing.sequences, 0);
+  if (seq) {
+    return seq.numberingAnchor + seq.numberingOffset;
+  }
 }
 
-export class AnchorField extends React.Component {
-  static defaultProps: Props;
+function valueIsValid(value: string): boolean {
+  let n = Number.parseFloat(value);
+  return Number.isFinite(n) && Number.isInteger(n);
+}
 
-  props!: Props;
-
-  static create(app: App): React.ReactElement {
-    let currAnchor = 0;
-    let seq = app.strictDrawing.drawing.getSequenceAtIndex(0);
-    if (seq) {
-      currAnchor = seq.numberingAnchor + seq.numberingOffset;
+function setAnchorIfShould(app: App, value: string) {
+  if (valueIsValid(value)) {
+    let n = Number.parseFloat(value);
+    if (n != currAnchorWithOffset(app.strictDrawing.drawing)) {
+      app.pushUndo();
+      app.strictDrawing.drawing.sequences.forEach(seq => {
+        seq.numberingAnchor = n - seq.numberingOffset;
+      });
+      orientBaseNumberings(app.strictDrawing.drawing);
+      app.drawingChangedNotByInteraction();
     }
-    return (
-      <AnchorField
-        currAnchor={currAnchor}
-        setAnchor={(a: number) => {
-          let seq = app.strictDrawing.drawing.getSequenceAtIndex(0);
-          if (seq) {
-            a -= seq.numberingOffset;
-            if (a != seq.numberingAnchor) {
-              app.pushUndo();
-              seq.numberingAnchor = a;
-              orientBaseNumberings(app.strictDrawing.drawing);
-              app.drawingChangedNotByInteraction();
-            }
-          }
-        }}
-      />
-    );
-  }
-
-  render(): React.ReactElement {
-    return (
-      <IntegerField
-        name={'Anchor'}
-        initialValue={this.props.currAnchor}
-        set={(n: number) => this.props.setAnchor(n)}
-      />
-    );
   }
 }
 
-AnchorField.defaultProps = {
-  currAnchor: 0,
-  setAnchor: () => console.error('Missing callback to set anchor.'),
-};
+export type Props = {
+  app: App;
+}
 
-export default AnchorField;
+export function AnchorField(props: Props) {
+  let a = currAnchorWithOffset(props.app.strictDrawing.drawing);
+  let [value, setValue] = useState(typeof a == 'number' ? a.toString() : '');
+  return (
+    <div>
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+        <input
+          type='text'
+          className={textFieldStyles.input}
+          value={value}
+          onChange={event => setValue(event.target.value)}
+          onBlur={() => setAnchorIfShould(props.app, value)}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              setAnchorIfShould(props.app, value);
+            }
+          }}
+          style={{ width: '36px' }}
+        />
+        <p
+          className={`${textFieldStyles.label} unselectable`}
+          style={{ marginLeft: '8px' }}
+        >
+          Anchor
+        </p>
+      </div>
+      {valueIsValid(value) ? null : (
+        <p
+          key={Math.random()}
+          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
+          style={{ marginTop: '3px' }}
+        >
+          Must be an integer.
+        </p>
+      )}
+    </div>
+  );
+}

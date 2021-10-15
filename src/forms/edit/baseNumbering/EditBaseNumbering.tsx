@@ -46,7 +46,7 @@ export function EditBaseNumbering(props: Props): React.ReactElement {
         >
           {OffsetField.create(props.app)}
           <div style={{ marginTop: '8px' }} >
-            {AnchorField.create(props.app)}
+            <AnchorField app={props.app} />
           </div>
           <div style={{ marginTop: '8px' }} >
             <IncrementField app={props.app} />
