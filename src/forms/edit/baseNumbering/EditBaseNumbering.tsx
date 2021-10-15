@@ -49,7 +49,7 @@ export function EditBaseNumbering(props: Props): React.ReactElement {
             {AnchorField.create(props.app)}
           </div>
           <div style={{ marginTop: '8px' }} >
-            {IncrementField.create(props.app)}
+            <IncrementField app={props.app} />
           </div>
           {bns.length == 0 ? null : (
             <div>
