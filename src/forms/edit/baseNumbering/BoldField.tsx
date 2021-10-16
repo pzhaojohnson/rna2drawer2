@@ -2,12 +2,9 @@ import * as React from 'react';
 import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
 import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import { AppInterface as App } from 'AppInterface';
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-
-export type Props = {
-  app: App;
-}
 
 function isBold(bn: BaseNumberingInterface): boolean {
   let fw = bn.text.attr('font-weight');
@@ -20,9 +17,9 @@ function isBold(bn: BaseNumberingInterface): boolean {
   }
 }
 
-function allBaseNumberingsAreBold(props: Props): boolean {
+function allBaseNumberingsAreBold(drawing: Drawing): boolean {
   let allAreBold = true;
-  props.app.strictDrawing.drawing.bases().forEach(b => {
+  drawing.bases().forEach(b => {
     if (b.numbering && !isBold(b.numbering)) {
       allAreBold = false;
     }
@@ -30,53 +27,26 @@ function allBaseNumberingsAreBold(props: Props): boolean {
   return allAreBold;
 }
 
-function allBaseNumberingsAreNotBold(props: Props): boolean {
-  let allAreNotBold = true;
-  props.app.strictDrawing.drawing.bases().forEach(b => {
-    if (b.numbering && isBold(b.numbering)) {
-      allAreNotBold = false;
-    }
-  });
-  return allAreNotBold;
-}
-
-function makeAllBaseNumberingsBoldIfShould(props: Props) {
-  if (!allBaseNumberingsAreBold(props)) {
-    props.app.pushUndo();
-    props.app.strictDrawing.drawing.bases().forEach(b => {
-      if (b.numbering) {
-        b.numbering.text.attr({ 'font-weight': 700 });
-      }
-    });
-    BaseNumbering.recommendedDefaults.text['font-weight'] = 700;
-    props.app.drawingChangedNotByInteraction();
-  }
-}
-
-function makeAllBaseNumberingsNotBoldIfShould(props: Props) {
-  if (!allBaseNumberingsAreNotBold(props)) {
-    props.app.pushUndo();
-    props.app.strictDrawing.drawing.bases().forEach(b => {
-      if (b.numbering) {
-        b.numbering.text.attr({ 'font-weight': 400 });
-      }
-    });
-    BaseNumbering.recommendedDefaults.text['font-weight'] = 400;
-    props.app.drawingChangedNotByInteraction();
-  }
+export type Props = {
+  app: App;
 }
 
 export function BoldField(props: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
       <Checkbox
-        checked={allBaseNumberingsAreBold(props)}
+        checked={allBaseNumberingsAreBold(props.app.strictDrawing.drawing)}
         onChange={event => {
-          if (event.target.checked) {
-            makeAllBaseNumberingsBoldIfShould(props);
-          } else {
-            makeAllBaseNumberingsNotBoldIfShould(props);
-          }
+          props.app.pushUndo();
+          let fw = event.target.checked ? 700 : 400;
+          props.app.strictDrawing.drawing.bases().forEach(b => {
+            if (b.numbering) {
+              b.numbering.text.attr({ 'font-weight': fw });
+              b.numbering.reposition();
+            }
+          });
+          BaseNumbering.recommendedDefaults.text['font-weight'] = fw;
+          props.app.drawingChangedNotByInteraction();
         }}
       />
       <p
