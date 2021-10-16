@@ -31,11 +31,6 @@ interface Props {
 
 export function EditBaseNumbering(props: Props): React.ReactElement {
   let bns = getBaseNumberings(props.app.strictDrawing.drawing);
-  let fieldProps = {
-    getBaseNumberings: () => [...bns],
-    pushUndo: () => props.app.pushUndo(),
-    changed: () => props.app.drawingChangedNotByInteraction(),
-  };
   return (
     <ClosableContainer
       close={props.close}
@@ -54,7 +49,7 @@ export function EditBaseNumbering(props: Props): React.ReactElement {
           {bns.length == 0 ? null : (
             <div>
               <div style={{ marginTop: '20px' }} >
-                <ColorField {...fieldProps} />
+                <ColorField app={props.app} />
               </div>
               <div style={{ marginTop: '20px' }} >
                 <FontFamilyField app={props.app} />
