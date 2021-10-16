@@ -29,6 +29,11 @@ export type ChangeEvent = {
 export type Props = {
   value?: string;
   onChange: (event: ChangeEvent) => void;
+  styles?: {
+    container?: {
+      minWidth?: string;
+    }
+  }
 }
 
 export function FontFamilySelect(props: Props) {
@@ -54,13 +59,13 @@ export function FontFamilySelect(props: Props) {
       styles={{
         container: provided => ({
           ...provided,
-          minWidth: '215px',
+          minWidth: props.styles?.container?.minWidth ?? '232px',
           fontFamily: 'Open Sans',
           fontSize: '12px',
         }),
         control: (provided, state) => ({
           ...provided,
-          minHeight: '26px',
+          minHeight: '28px',
           boxSizing: 'border-box',
           borderStyle: 'solid',
           borderWidth: '1px',
