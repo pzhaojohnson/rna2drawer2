@@ -49,7 +49,7 @@ function toValue(result: ColorResult): Value | undefined {
 }
 
 type SwatchProps = {
-  value: Value;
+  value?: Value;
   onClick: () => void;
 }
 
@@ -61,14 +61,16 @@ function Swatch(props: SwatchProps) {
     >
       <div
         className={styles.swatchColoring}
-        style={{ background: toRgba(props.value) }}
+        style={{
+          background: props.value ? toRgba(props.value) : 'rgba(255,255,255,0)',
+        }}
       />
     </div>
   );
 }
 
 export type Props = {
-  value: Value;
+  value?: Value;
   onChange?: (v: Value) => void;
   onChangeComplete?: (v: Value) => void;
   disableAlpha?: boolean;
@@ -92,7 +94,7 @@ export function ColorPicker(props: Props) {
           />
           <SketchPicker
             presetColors={fixedColors.concat(recentColors.values()).map(c => c.toHex())}
-            color={toRgba(props.value)}
+            color={props.value ? toRgba(props.value) : undefined}
             onChange={result => {
               if (props.onChange) {
                 let v = toValue(result);
