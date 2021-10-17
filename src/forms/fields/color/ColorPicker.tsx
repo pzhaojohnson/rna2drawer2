@@ -23,13 +23,6 @@ export type Value = {
   alpha?: number;
 }
 
-function valuesAreEqual(v1: Value, v2: Value): boolean {
-  return (
-    v1.color.toHex() == v2.color.toHex()
-    && v1.alpha == v2.alpha
-  );
-}
-
 function toRgba(v: Value): string {
   return `rgba(${v.color.r}, ${v.color.g}, ${v.color.b}, ${v.alpha ?? 1})`;
 }
