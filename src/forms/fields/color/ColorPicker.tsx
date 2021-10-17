@@ -16,7 +16,7 @@ let presetColorsPerRow = 8;
 
 let presetColors = new PresetColorsList({
   fixedColors: fixedColors,
-  maxRecentColors: (3 * presetColorsPerRow) + (presetColorsPerRow - (fixedColors.length % presetColorsPerRow)),
+  maxRecentColors: (2 * presetColorsPerRow) + (presetColorsPerRow - (fixedColors.length % presetColorsPerRow)),
 });
 
 export type Value = {
