@@ -43,19 +43,22 @@ export function ColorField(props: Props) {
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
       <ColorPicker
         value={currColor ? { color: currColor } : undefined}
-        onChangeComplete={value => {
-          let currColor = currColorOfBaseNumberings(props.app.strictDrawing.drawing);
-          if (!currColor || !colorsAreEqual(currColor, value.color)) {
-            props.app.pushUndo();
-            props.app.strictDrawing.drawing.bases().forEach(b => {
-              if (b.numbering) {
-                b.numbering.text.attr({ 'fill': value.color.toHex() });
-                b.numbering.line.attr({ 'stroke': value.color.toHex() });
-              }
-            });
-            BaseNumbering.recommendedDefaults.text['fill'] = value.color.toHex();
-            BaseNumbering.recommendedDefaults.line['stroke'] = value.color.toHex();
-            props.app.drawingChangedNotByInteraction();
+        onClose={event => {
+          if (event.target.value) {
+            let value = event.target.value;
+            let currColor = currColorOfBaseNumberings(props.app.strictDrawing.drawing);
+            if (!currColor || !colorsAreEqual(currColor, value.color)) {
+              props.app.pushUndo();
+              props.app.strictDrawing.drawing.bases().forEach(b => {
+                if (b.numbering) {
+                  b.numbering.text.attr({ 'fill': value.color.toHex() });
+                  b.numbering.line.attr({ 'stroke': value.color.toHex() });
+                }
+              });
+              BaseNumbering.recommendedDefaults.text['fill'] = value.color.toHex();
+              BaseNumbering.recommendedDefaults.line['stroke'] = value.color.toHex();
+              props.app.drawingChangedNotByInteraction();
+            }
           }
         }}
         disableAlpha={true}

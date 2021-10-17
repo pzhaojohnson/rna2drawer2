@@ -69,49 +69,53 @@ function Swatch(props: SwatchProps) {
   );
 }
 
+export type CloseEvent = {
+  target: {
+    value: Value | undefined;
+  }
+}
+
 export type Props = {
   value?: Value;
-  onChange?: (v: Value) => void;
-  onChangeComplete?: (v: Value) => void;
+  onClose?: (event: CloseEvent) => void;
   disableAlpha?: boolean;
 }
 
 export function ColorPicker(props: Props) {
+  let [value, setValue] = useState<Value | undefined>(props.value);
   let [isOpen, setIsOpen] = useState(false);
   return (
     <div>
       <div style={{ display: 'inline-block' }} >
         <Swatch
-          value={props.value}
+          value={value}
           onClick={() => setIsOpen(!isOpen)}
         />
       </div>
       {!isOpen ? null : (
         <div style={{ position: 'absolute', zIndex: 2 }} >
           <div
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+
+              if (props.onClose) {
+                props.onClose({ target: { value: value } });
+              }
+
+              // only on close to avoid remembering too many colors
+              if (value) {
+                recentColors.push(value.color);
+              }
+            }}
             style={{ position: 'fixed', top: '0px', right: '0px', bottom: '0px', left: '0px' }}
           />
           <SketchPicker
             presetColors={fixedColors.concat(recentColors.values()).map(c => c.toHex())}
-            color={props.value ? toRgba(props.value) : undefined}
+            color={value ? toRgba(value) : undefined}
             onChange={result => {
-              if (props.onChange) {
-                let v = toValue(result);
-                if (v) {
-                  props.onChange(v);
-                }
-              }
-            }}
-            onChangeComplete={result => {
-              if (props.onChangeComplete) {
-                let v = toValue(result);
-                if (v) {
-                  props.onChangeComplete(v);
-
-                  // only on change complete to avoid remembering too many recent colors
-                  recentColors.push(v.color);
-                }
+              let v = toValue(result);
+              if (v) {
+                setValue(v);
               }
             }}
             disableAlpha={props.disableAlpha}
