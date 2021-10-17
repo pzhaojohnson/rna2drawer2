@@ -3,10 +3,8 @@ import { useState } from 'react';
 import { SketchPicker, ColorResult } from 'react-color';
 import styles from './ColorPicker.css';
 import * as SVG from '@svgdotjs/svg.js';
+import { PresetColorsList } from './PresetColorsList';
 import { parseColors } from './parseColors';
-import { FiniteList } from './FiniteList';
-
-const colorsPerRow = 8;
 
 let fixedColors = parseColors([
   '#800000', '#ff0000', '#f5a623', '#fff000', '#c56200', '#8b572a', '#194d33', '#228b22',
@@ -14,9 +12,12 @@ let fixedColors = parseColors([
   '#73d8ff', '#50e3c2', '#000000', '#4a4a4a', '#9b9b9b', '#d3d3d3', '#ffffff',
 ]);
 
-let recentColors = new FiniteList<SVG.Color>(
-  (2 * colorsPerRow) + (colorsPerRow - (fixedColors.length % colorsPerRow))
-);
+let presetColorsPerRow = 8;
+
+let presetColors = new PresetColorsList({
+  fixedColors: fixedColors,
+  maxRecentColors: (3 * presetColorsPerRow) + (presetColorsPerRow - (fixedColors.length % presetColorsPerRow)),
+});
 
 export type Value = {
   color: SVG.Color;
@@ -97,13 +98,13 @@ export function ColorPicker(props: Props) {
 
               // only on close to avoid remembering too many colors
               if (value) {
-                recentColors.push(value.color);
+                presetColors.remember(value.color);
               }
             }}
             style={{ position: 'fixed', top: '0px', right: '0px', bottom: '0px', left: '0px' }}
           />
           <SketchPicker
-            presetColors={fixedColors.concat(recentColors.values()).map(c => c.toHex())}
+            presetColors={presetColors.values().map(c => c.toHex())}
             color={value ? toRgba(value) : undefined}
             onChange={result => {
               let v = toValue(result);
