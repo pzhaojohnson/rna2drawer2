@@ -79,13 +79,11 @@ export function ColorPicker(props: Props) {
   let [value, setValue] = useState<Value | undefined>(props.value);
   let [isOpen, setIsOpen] = useState(false);
   return (
-    <div>
-      <div style={{ display: 'inline-block' }} >
-        <Swatch
-          value={value}
-          onClick={() => setIsOpen(!isOpen)}
-        />
-      </div>
+    <div className={isOpen ? styles.isOpen : undefined} >
+      <Swatch
+        value={value}
+        onClick={() => setIsOpen(!isOpen)}
+      />
       {!isOpen ? null : (
         <div style={{ position: 'absolute', zIndex: 2 }} >
           <div
@@ -103,17 +101,19 @@ export function ColorPicker(props: Props) {
             }}
             style={{ position: 'fixed', top: '0px', right: '0px', bottom: '0px', left: '0px' }}
           />
-          <SketchPicker
-            presetColors={presetColors.values().map(c => c.toHex())}
-            color={value ? toRgba(value) : undefined}
-            onChange={result => {
-              let v = toValue(result);
-              if (v) {
-                setValue(v);
-              }
-            }}
-            disableAlpha={props.disableAlpha}
-          />
+          <div style={{ marginTop: '3px' }} >
+            <SketchPicker
+              presetColors={presetColors.values().map(c => c.toHex())}
+              color={value ? toRgba(value) : undefined}
+              onChange={result => {
+                let v = toValue(result);
+                if (v) {
+                  setValue(v);
+                }
+              }}
+              disableAlpha={props.disableAlpha}
+            />
+          </div>
         </div>
       )}
     </div>
