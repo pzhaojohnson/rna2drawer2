@@ -9,9 +9,9 @@ import { FiniteList } from './FiniteList';
 const colorsPerRow = 8;
 
 let fixedColors = parseColors([
-  '#800000', '#FF0000', '#F5A623', '#FFF000', '#C56200', '#8B572A', '#194D33', '#228B22',
-  '#7ED321', '#B8E986', '#FDA1FF', '#BD10E0', '#9013FE', '#4A148C', '#111DD6', '#009CE0',
-  '#73D8FF', '#50E3C2', '#000000', '#4A4A4A', '#9B9B9B', '#D3D3D3', '#FFFFFF',
+  '#800000', '#ff0000', '#f5a623', '#fff000', '#c56200', '#8b572a', '#194d33', '#228b22',
+  '#7ed321', '#b8e986', '#fda1ff', '#bd10e0', '#9013fe', '#4a148c', '#111dd6', '#009ce0',
+  '#73d8ff', '#50e3c2', '#000000', '#4a4a4a', '#9b9b9b', '#d3d3d3', '#ffffff',
 ]);
 
 let recentColors = new FiniteList<SVG.Color>(
