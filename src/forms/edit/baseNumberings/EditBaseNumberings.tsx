@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
-import styles from './EditBaseNumbering.css';
+import styles from './EditBaseNumberings.css';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { FontFamilyField } from './FontFamilyField';
@@ -53,7 +53,7 @@ export interface Props {
   unmount: () => void;
 }
 
-export function EditBaseNumbering(props: Props) {
+export function EditBaseNumberings(props: Props) {
   return (
     <div
       className={styles.form}

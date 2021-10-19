@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import DroppedButton from '../DroppedButton';
-import { EditBaseNumbering } from '../../forms/edit/baseNumbering/EditBaseNumbering';
+import { EditBaseNumberings } from 'Forms/edit/baseNumberings/EditBaseNumberings';
 
 interface Props {
   app: App;
@@ -13,7 +13,7 @@ export function EditBaseNumberingButton(props: Props): React.ReactElement {
       text={'Numbering'}
       onClick={() => {
         props.app.renderForm(close => (
-          <EditBaseNumbering
+          <EditBaseNumberings
             app={props.app}
             unmount={close}
           />
