@@ -45,7 +45,7 @@ export function EditPrimaryBonds(props: Props): React.ReactElement {
               <PaddingField {...fieldProps} />
             </div>
             <div style={{ marginTop: '12px' }} >
-              <ForwardAndBackwardButtons {...fieldProps} />
+              <ForwardAndBackwardButtons app={props.app} primaryBonds={pbs} />
             </div>
           </div>
         )
