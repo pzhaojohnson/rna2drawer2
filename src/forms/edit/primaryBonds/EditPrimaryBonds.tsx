@@ -39,7 +39,7 @@ export function EditPrimaryBonds(props: Props): React.ReactElement {
               <StrokeField {...fieldProps} />
             </div>
             <div style={{ marginTop: '16px' }} >
-              <StrokeWidthField {...fieldProps} />
+              <StrokeWidthField app={props.app} primaryBonds={pbs} />
             </div>
             <div style={{ marginTop: '8px' }} >
               <PaddingField {...fieldProps} />
