@@ -36,7 +36,7 @@ export function EditPrimaryBonds(props: Props): React.ReactElement {
         ) : (
           <div>
             <div>
-              <StrokeField {...fieldProps} />
+              <StrokeField app={props.app} primaryBonds={pbs} />
             </div>
             <div style={{ marginTop: '16px' }} >
               <StrokeWidthField app={props.app} primaryBonds={pbs} />
