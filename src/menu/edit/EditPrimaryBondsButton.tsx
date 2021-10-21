@@ -15,7 +15,8 @@ export function EditPrimaryBondsButton(props: Props): React.ReactElement {
         props.app.renderForm(close => (
           <EditPrimaryBonds
             app={props.app}
-            close={close}
+            primaryBonds={[...props.app.strictDrawing.drawing.primaryBonds]}
+            unmount={close}
           />
         ))
       }}
