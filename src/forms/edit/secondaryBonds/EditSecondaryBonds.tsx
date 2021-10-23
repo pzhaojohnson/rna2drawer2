@@ -5,11 +5,11 @@ import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/Sec
 import { ClosableContainer } from '../../containers/ClosableContainer';
 import { SecondaryBondsByType } from './FieldProps';
 import {
-  AutStrokeField,
-  GcStrokeField,
-  GutStrokeField,
+  AUTStrokeField,
+  GCStrokeField,
+  GUTStrokeField,
   OtherStrokeField,
-} from './StrokeFields';
+} from './StrokeField';
 import { BaseSpacingField } from './BaseSpacingField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
@@ -63,22 +63,22 @@ export function EditSecondaryBonds(props: Props): React.ReactElement {
           <div>
             {sbsByType.aut.length == 0 ? null : (
               <div style={{ marginBottom: '16px' }} >
-                <AutStrokeField {...fieldProps} />
+                <AUTStrokeField app={props.app} secondaryBonds={allSbs} />
               </div>
             )}
             {sbsByType.gc.length == 0 ? null : (
               <div style={{ marginBottom: '16px' }} >
-                <GcStrokeField {...fieldProps} />
+                <GCStrokeField app={props.app} secondaryBonds={allSbs} />
               </div>
             )}
             {sbsByType.gut.length == 0 ? null : (
               <div style={{ marginBottom: '16px' }} >
-                <GutStrokeField {...fieldProps} />
+                <GUTStrokeField app={props.app} secondaryBonds={allSbs} />
               </div>
             )}
             {sbsByType.other.length == 0 ? null : (
               <div style={{ marginBottom: '16px' }} >
-                <OtherStrokeField {...fieldProps} />
+                <OtherStrokeField app={props.app} secondaryBonds={allSbs} />
               </div>
             )}
             <div style={{ marginBottom: '8px' }} >
