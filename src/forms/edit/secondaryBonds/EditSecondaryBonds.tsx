@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import { DrawingInterface as Drawing } from '../../../draw/DrawingInterface';
+import { CloseButton } from 'Forms/buttons/CloseButton';
+import styles from './EditSecondaryBonds.css';
+import { AppInterface as App } from 'AppInterface';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
-import { ClosableContainer } from '../../containers/ClosableContainer';
-import { SecondaryBondsByType } from './FieldProps';
 import {
   AUTStrokeField,
   GCStrokeField,
@@ -15,85 +14,114 @@ import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 
-function getSecondaryBondsByType(drawing: Drawing): SecondaryBondsByType {
-  let sbs = {
-    aut: [] as SecondaryBond[],
-    gc: [] as SecondaryBond[],
-    gut: [] as SecondaryBond[],
-    other: [] as SecondaryBond[],
-  };
-  drawing.secondaryBonds.forEach(sb => {
-    let t = sb.type;
-    if (t == 'AUT') {
-      sbs.aut.push(sb);
-    } else if (t == 'GC') {
-      sbs.gc.push(sb);
-    } else if (t == 'GUT') {
-      sbs.gut.push(sb);
-    } else {
-      sbs.other.push(sb);
-    }
-  });
-  return sbs;
-}
-
-interface Props {
+export type Props = {
   app: App;
-  close: () => void;
+
+  // the secondary bonds to edit
+  secondaryBonds: SecondaryBond[];
+
+  unmount: () => void;
 }
 
-export function EditSecondaryBonds(props: Props): React.ReactElement {
-  let sbsByType = getSecondaryBondsByType(props.app.strictDrawing.drawing);
-  let allSbs = [...sbsByType.aut, ...sbsByType.gc, ...sbsByType.gut, ...sbsByType.other];
-  let fieldProps = {
-    app: props.app,
-    getSecondaryBondsByType: () => ({ ...sbsByType }),
-    getAllSecondaryBonds: () => [...allSbs],
-    pushUndo: () => props.app.pushUndo(),
-    changed: () => props.app.drawingChangedNotByInteraction(),
-  };
+function numAUTBonds(secondaryBonds: SecondaryBond[]): number {
+  return secondaryBonds.filter(sb => sb.type == 'AUT').length;
+}
+
+function numGCBonds(secondaryBonds: SecondaryBond[]): number {
+  return secondaryBonds.filter(sb => sb.type == 'GC').length;
+}
+
+function numGUTBonds(secondaryBonds: SecondaryBond[]): number {
+  return secondaryBonds.filter(sb => sb.type == 'GUT').length;
+}
+
+function numOtherBonds(secondaryBonds: SecondaryBond[]): number {
+  return secondaryBonds.filter(sb => sb.type == 'other').length;
+}
+
+function Title() {
   return (
-    <ClosableContainer
-      close={props.close}
-      title='Edit Secondary Bonds'
-      contained={
-        allSbs.length == 0 ? (
-          <p>Drawing has no secondary bonds.</p>
+    <p
+      className='unselectable'
+      style={{ fontSize: '24px', color: 'rgba(0,0,0,1)' }}
+    >
+      Edit Secondary Bonds
+    </p>
+  );
+}
+
+function TitleUnderline() {
+  return (
+    <div
+      style={{
+        height: '0px',
+        borderWidth: '0px 0px 1px 0px',
+        borderStyle: 'solid',
+        borderColor: 'rgba(0,0,0,0.2)',
+      }}
+    />
+  );
+}
+
+export function EditSecondaryBonds(props: Props) {
+  return (
+    <div
+      className={styles.form}
+      style={{ position: 'relative', width: '332px', height: '100%', overflow: 'auto' }}
+    >
+      <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
+        <CloseButton
+          onClick={() => props.unmount()}
+        />
+      </div>
+      <div style={{ margin: '16px 32px 0px 32px' }} >
+        <Title />
+      </div>
+      <div style={{ margin: '8px 16px 0px 16px' }} >
+        <TitleUnderline />
+      </div>
+      <div style={{ margin: '24px 40px 0px 40px' }} >
+        {props.secondaryBonds.length == 0 ? (
+          <p className={'unselectable'} style={{ fontSize: '12px' }} >
+            No secondary bonds to edit.
+          </p>
         ) : (
           <div>
-            {sbsByType.aut.length == 0 ? null : (
-              <div style={{ marginBottom: '16px' }} >
-                <AUTStrokeField app={props.app} secondaryBonds={allSbs} />
+            {numAUTBonds(props.secondaryBonds) == 0 ? null : (
+              <div style={{ paddingBottom: '8px' }} >
+                <AUTStrokeField app={props.app} secondaryBonds={props.secondaryBonds} />
               </div>
             )}
-            {sbsByType.gc.length == 0 ? null : (
-              <div style={{ marginBottom: '16px' }} >
-                <GCStrokeField app={props.app} secondaryBonds={allSbs} />
+            {numGCBonds(props.secondaryBonds) == 0 ? null : (
+              <div style={{ paddingBottom: '8px' }} >
+                <GCStrokeField app={props.app} secondaryBonds={props.secondaryBonds} />
               </div>
             )}
-            {sbsByType.gut.length == 0 ? null : (
-              <div style={{ marginBottom: '16px' }} >
-                <GUTStrokeField app={props.app} secondaryBonds={allSbs} />
+            {numGUTBonds(props.secondaryBonds) == 0 ? null : (
+              <div style={{ paddingBottom: '8px' }} >
+                <GUTStrokeField app={props.app} secondaryBonds={props.secondaryBonds} />
               </div>
             )}
-            {sbsByType.other.length == 0 ? null : (
-              <div style={{ marginBottom: '16px' }} >
-                <OtherStrokeField app={props.app} secondaryBonds={allSbs} />
+            {numOtherBonds(props.secondaryBonds) == 0 ? null : (
+              <div style={{ paddingBottom: '8px' }} >
+                <OtherStrokeField app={props.app} secondaryBonds={props.secondaryBonds} />
               </div>
             )}
-            <div style={{ marginBottom: '8px' }} >
+            <div style={{ marginTop: '8px' }} >
               <BaseSpacingField app={props.app} />
             </div>
-            <div style={{ marginBottom: '8px' }} >
-              <BasePaddingField app={props.app} secondaryBonds={allSbs} />
+            <div style={{ marginTop: '8px' }} >
+              <BasePaddingField app={props.app} secondaryBonds={props.secondaryBonds} />
             </div>
-            <div style={{ marginBottom: '12px' }} >
-              <StrokeWidthField app={props.app} secondaryBonds={allSbs} />
+            <div style={{ marginTop: '8px' }} >
+              <StrokeWidthField app={props.app} secondaryBonds={props.secondaryBonds} />
             </div>
-            <ForwardAndBackwardButtons app={props.app} secondaryBonds={allSbs} />
+            <div style={{ marginTop: '16px' }} >
+              <ForwardAndBackwardButtons app={props.app} secondaryBonds={props.secondaryBonds} />
+            </div>
           </div>
-        )
-      }
-    />
+        )}
+      </div>
+    </div>
   );
 }
