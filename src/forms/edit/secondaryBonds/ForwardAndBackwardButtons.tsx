@@ -1,35 +1,43 @@
 import * as React from 'react';
-import { FieldProps } from './FieldProps';
 import { TextButton } from 'Forms/buttons/TextButton';
+import { AppInterface as App } from 'AppInterface';
+import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { bringToFront, sendToBack } from 'Draw/bonds/straight/z';
 
-export function BringToFrontButton(props: FieldProps) {
+export type Props = {
+  app: App;
+
+  // the secondary bonds to bring forward and send backward
+  secondaryBonds: SecondaryBond[];
+}
+
+export function BringToFrontButton(props: Props) {
   return (
     <TextButton
       text='Bring to Front'
       onClick={() => {
-        props.pushUndo();
-        props.getAllSecondaryBonds().forEach(sb => bringToFront(sb));
-        props.changed();
+        props.app.pushUndo();
+        props.secondaryBonds.forEach(sb => bringToFront(sb));
+        props.app.drawingChangedNotByInteraction();
       }}
     />
   );
 }
 
-export function SendToBackButton(props: FieldProps) {
+export function SendToBackButton(props: Props) {
   return (
     <TextButton
       text='Send to Back'
       onClick={() => {
-        props.pushUndo();
-        props.getAllSecondaryBonds().forEach(sb => sendToBack(sb));
-        props.changed();
+        props.app.pushUndo();
+        props.secondaryBonds.forEach(sb => sendToBack(sb));
+        props.app.drawingChangedNotByInteraction();
       }}
     />
   );
 }
 
-export function ForwardAndBackwardButtons(props: FieldProps) {
+export function ForwardAndBackwardButtons(props: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }} >
       <BringToFrontButton {...props} />

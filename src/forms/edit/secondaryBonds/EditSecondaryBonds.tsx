@@ -90,7 +90,7 @@ export function EditSecondaryBonds(props: Props): React.ReactElement {
             <div style={{ marginBottom: '12px' }} >
               <StrokeWidthField {...fieldProps} />
             </div>
-            <ForwardAndBackwardButtons {...fieldProps} />
+            <ForwardAndBackwardButtons app={props.app} secondaryBonds={allSbs} />
           </div>
         )
       }
