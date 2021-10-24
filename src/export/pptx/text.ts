@@ -6,18 +6,8 @@ import { parseNumber } from 'Parse/svg/number';
 import { round } from 'Math/round';
 import PptxGenJS from 'pptxgenjs';
 
-export type TextOptions = {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  align: 'center';
-  valign: 'middle';
-  margin: number;
-  fontFace?: string;
-  fontSize?: number;
-  bold?: boolean;
-  color?: any; // type definition seems to be missing in PptxGenJS library
+function isBlankString(v: unknown): boolean {
+  return typeof v == 'string' && v.trim().length == 0;
 }
 
 function coordinatesAndDimensions(text: SVG.Text) {
@@ -77,10 +67,6 @@ function isBold(text: SVG.Text): boolean {
   }
 }
 
-function isBlankString(v: unknown): boolean {
-  return typeof v == 'string' && v.trim().length == 0;
-}
-
 // converts values less than 0 to 0 and greater than 1 to 1
 function clampOpacity(o: number): number {
   if (o < 0) {
@@ -135,6 +121,20 @@ function color(text: SVG.Text) {
     color: pptxHex,
     transparency: transparency(text),
   };
+}
+
+export type TextOptions = {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  align: 'center';
+  valign: 'middle';
+  margin: number;
+  fontFace?: string;
+  fontSize?: number;
+  bold?: boolean;
+  color?: any; // type definition seems to be missing in PptxGenJS library
 }
 
 export function textOptions(text: SVG.Text): TextOptions {
