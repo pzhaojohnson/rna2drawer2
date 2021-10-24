@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
-import styles from './EditPrimaryBonds.css';
+import formStyles from './EditPrimaryBonds.css';
+import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import { AppInterface as App } from 'AppInterface';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
-import { StrokeField } from './StrokeField';
+import { StrokePicker } from './StrokePicker';
+import { StrokeOpacityInput } from './StrokeOpacityInput';
 import { StrokeWidthField } from './StrokeWidthField';
 import { BasePaddingField } from './BasePaddingField';
 import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
@@ -44,7 +46,7 @@ function TitleUnderline() {
 export function EditPrimaryBonds(props: Props) {
   return (
     <div
-      className={styles.form}
+      className={formStyles.form}
       style={{ position: 'relative', width: '332px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
@@ -65,8 +67,18 @@ export function EditPrimaryBonds(props: Props) {
           </p>
         ) : (
           <div>
-            <StrokeField app={props.app} primaryBonds={props.primaryBonds} />
-            <div style={{ marginTop: '16px' }} >
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+              <StrokePicker app={props.app} primaryBonds={props.primaryBonds} />
+              <div style={{ marginLeft: '12px' }} >
+                <StrokeOpacityInput app={props.app} primaryBonds={props.primaryBonds} />
+              </div>
+              <div style={{ marginLeft: '8px' }} >
+                <p className={`${colorFieldStyles.label} unselectable`} >
+                  Color
+                </p>
+              </div>
+            </div>
+            <div style={{ marginTop: '18px' }} >
               <StrokeWidthField app={props.app} primaryBonds={props.primaryBonds} />
             </div>
             <div style={{ marginTop: '8px' }} >

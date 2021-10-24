@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
-import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import { AppInterface as App } from 'AppInterface';
 import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
@@ -42,32 +41,24 @@ function valuesAreEqual(v1?: Value, v2?: Value): boolean {
   }
 }
 
-export function StrokeField(props: Props) {
+export function StrokePicker(props: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <ColorPicker
-        value={currStroke(props.primaryBonds)}
-        onClose={event => {
-          if (event.target.value) {
-            let value = event.target.value;
-            if (!valuesAreEqual(value, currStroke(props.primaryBonds))) {
-              props.app.pushUndo();
-              props.primaryBonds.forEach(pb => {
-                pb.line.attr({ 'stroke': value.color.toHex() });
-              });
-              PrimaryBond.recommendedDefaults.line['stroke'] = value.color.toHex();
-              props.app.drawingChangedNotByInteraction();
-            }
+    <ColorPicker
+      value={currStroke(props.primaryBonds)}
+      onClose={event => {
+        if (event.target.value) {
+          let value = event.target.value;
+          if (!valuesAreEqual(value, currStroke(props.primaryBonds))) {
+            props.app.pushUndo();
+            props.primaryBonds.forEach(pb => {
+              pb.line.attr({ 'stroke': value.color.toHex() });
+            });
+            PrimaryBond.recommendedDefaults.line['stroke'] = value.color.toHex();
+            props.app.drawingChangedNotByInteraction();
           }
-        }}
-        disableAlpha={true}
-      />
-      <p
-        className={`${colorFieldStyles.label} unselectable`}
-        style={{ marginLeft: '8px' }}
-      >
-        Color
-      </p>
-    </div>
+        }
+      }}
+      disableAlpha={true}
+    />
   );
 }
