@@ -62,10 +62,19 @@ function fontSize(text: SVG.Text): number {
 
 function isBold(text: SVG.Text): boolean {
   let fw = text.attr('font-weight');
-  return (
-    fw == 'bold'
-    || (typeof fw == 'number' && fw > 500)
-  );
+  if (fw == undefined || isBlankString(fw)) {
+    return false;
+  } else if (fw == 'bold') {
+    return true;
+  } else {
+    let n = parseNumber(fw);
+    if (n) {
+      return n.valueOf() > 500;
+    } else {
+      console.error(`Unable to parse text font weight: ${fw}.`);
+      return false;
+    }
+  }
 }
 
 function isBlankString(v: unknown): boolean {

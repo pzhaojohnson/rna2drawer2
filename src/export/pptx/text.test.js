@@ -70,15 +70,23 @@ describe('textOptions function', () => {
     });
   });
 
-  it('specifies if bold', () => {
-    [
-      { 'font-weight': 400, isBold: false },
-      { 'font-weight': 700, isBold: true },
-      { 'font-weight': 'normal', isBold: false },
-      { 'font-weight': 'bold', isBold: true },
-    ].forEach(fw => {
-      text.attr({ 'font-weight': fw['font-weight'] });
-      expect(textOptions(text).bold).toBe(fw.isBold);
+  describe('specifying if bold', () => {
+    test('when font-weight is explicitly defined', () => {
+      [
+        { 'font-weight': 400, isBold: false },
+        { 'font-weight': 700, isBold: true },
+        { 'font-weight': '400', isBold: false },
+        { 'font-weight': '700', isBold: true },
+        { 'font-weight': 'normal', isBold: false },
+        { 'font-weight': 'bold', isBold: true },
+      ].forEach(fw => {
+        text.attr({ 'font-weight': fw['font-weight'] });
+        expect(textOptions(text).bold).toBe(fw.isBold);
+      });
+    });
+
+    test('when font-weight is not explicitly defined', () => {
+      expect(textOptions(text).bold).toBe(false);
     });
   });
 
