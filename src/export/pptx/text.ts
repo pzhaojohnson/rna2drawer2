@@ -110,15 +110,22 @@ function transparency(text: SVG.Text): number {
 
 function color(text: SVG.Text) {
   let f = text.attr('fill');
-  let c = parseColor(f);
-  if (c) {
-    return {
-      color: toPptxHex(c),
-      transparency: transparency(text),
-    };
+  let pptxHex: string;
+  if (f == undefined || isBlankString(f)) {
+    pptxHex = '000000';
   } else {
-    console.error(`Unable to parse text fill: ${f}.`);
+    let c = parseColor(f);
+    if (c) {
+      pptxHex = toPptxHex(c);
+    } else {
+      console.error(`Unable to parse text fill: ${f}. Defaulting to black.`);
+      pptxHex = '000000';
+    }
   }
+  return {
+    color: pptxHex,
+    transparency: transparency(text),
+  };
 }
 
 export function textOptions(text: SVG.Text): TextOptions {

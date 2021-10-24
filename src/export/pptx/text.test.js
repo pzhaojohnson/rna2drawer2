@@ -82,13 +82,19 @@ describe('textOptions function', () => {
     });
   });
 
-  it('specifies color', () => {
-    [
-      { 'fill': '#ab22Fe', color: 'AB22FE' },
-      { 'fill': '#4Ba', color: '44BBAA' },
-    ].forEach(f => {
-      text.attr({ 'fill': f['fill'] });
-      expect(textOptions(text).color.color).toBe(f.color);
+  describe('specifying color', () => {
+    test('when fill is explicitly defined', () => {
+      [
+        { 'fill': '#ab22Fe', color: 'AB22FE' },
+        { 'fill': '#4Ba', color: '44BBAA' },
+      ].forEach(f => {
+        text.attr({ 'fill': f['fill'] });
+        expect(textOptions(text).color.color).toBe(f.color);
+      });
+    });
+
+    test('when fill is not explicitly defined', () => {
+      expect(textOptions(text).color.color).toBe('000000');
     });
   });
 
