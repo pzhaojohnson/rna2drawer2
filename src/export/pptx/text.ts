@@ -69,7 +69,7 @@ function isBold(text: SVG.Text): boolean {
   } else {
     let n = parseNumber(fw);
     if (n) {
-      return n.valueOf() > 500;
+      return n.valueOf() > 550;
     } else {
       console.error(`Unable to parse text font weight: ${fw}.`);
       return false;
