@@ -17,9 +17,9 @@ export function toPptx(svg: SVG.Svg): PptxGenJS {
     height: round(height, 1),
   });
   pres.layout = 'CUSTOM_LAYOUT';
-  
+
   let slide = pres.addSlide();
-  
+
   // add elements
   svg.children().forEach(child => {
     if (child instanceof SVG.Text) {
@@ -42,6 +42,6 @@ export function toPptx(svg: SVG.Svg): PptxGenJS {
       }
     }
   });
-  
+
   return pres;
 }

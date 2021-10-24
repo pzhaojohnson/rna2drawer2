@@ -37,7 +37,7 @@ describe('textOptions function', () => {
       'font-weight': 550,
     });
     let options = textOptions(text);
-    
+
     // positions text box
     expect(options.x).toBeCloseTo(6.3039);
     expect(options.y).toBeCloseTo(1.8438);
@@ -88,7 +88,29 @@ describe('textOptions function', () => {
       { 'fill': '#4Ba', color: '44BBAA' },
     ].forEach(f => {
       text.attr({ 'fill': f['fill'] });
-      expect(textOptions(text).color).toBe(f.color);
+      expect(textOptions(text).color.color).toBe(f.color);
+    });
+  });
+
+  describe('specifying transparency', () => {
+    test('when fill-opacity and opacity are explicitly defined', () => {
+      [
+        { 'fill-opacity': 0.5, 'opacity': 0.5, transparency: 75 },
+        { 'fill-opacity': 1, 'opacity': 1, transparency: 0 },
+        { 'fill-opacity': 0, 'opacity': 0, transparency: 100 },
+        { 'fill-opacity': 1.26, 'opacity': 1.1, transparency: 0 },
+        { 'fill-opacity': -0.4, 'opacity': -0.2, transparency: 100 },
+        { 'fill-opacity': '0.8', 'opacity': '0.4', transparency: 68 },
+        { 'fill-opacity': '60%', 'opacity': '30%', transparency: 82 },
+        { 'fill-opacity': '', 'opacity': '  ', transparency: 0 },
+      ].forEach(t => {
+        text.attr({ 'fill-opacity': t['fill-opacity'], 'opacity': t['opacity'] });
+        expect(textOptions(text).color.transparency).toBe(t.transparency);
+      });
+    });
+
+    test('when fill-opacity and opacity are not explicitly defined', () => {
+      expect(textOptions(text).color.transparency).toBe(0);
     });
   });
 });

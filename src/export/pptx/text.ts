@@ -17,7 +17,7 @@ export type TextOptions = {
   fontFace?: string;
   fontSize?: number;
   bold?: boolean;
-  color?: string;
+  color?: any; // type definition seems to be missing in PptxGenJS library
 }
 
 function coordinatesAndDimensions(text: SVG.Text) {
@@ -26,10 +26,10 @@ function coordinatesAndDimensions(text: SVG.Text) {
   // multiply by two for some extra space around the text content
   let w = 2 * pixelsToInches(bbox.width);
   let h = 2 * pixelsToInches(bbox.height);
-  
+
   let x = pixelsToInches(bbox.cx) - (w / 2);
   let y = pixelsToInches(bbox.cy) - (h / 2);
-  
+
   return {
     x: round(x, 4),
     y: round(y, 4),
@@ -68,11 +68,54 @@ function isBold(text: SVG.Text): boolean {
   );
 }
 
-function color(text: SVG.Text): string | undefined {
+function isBlankString(v: unknown): boolean {
+  return typeof v == 'string' && v.trim().length == 0;
+}
+
+// converts values less than 0 to 0 and greater than 1 to 1
+function clampOpacity(o: number): number {
+  if (o < 0) {
+    return 0;
+  } else if (o > 1) {
+    return 1;
+  } else {
+    return o;
+  }
+}
+
+// converts an opacity value to its numeric value between 0 and 1
+function interpretOpacity(o: unknown): number {
+  if (o == undefined || isBlankString(o)) {
+    return 1;
+  } else {
+    let n = parseNumber(o);
+    if (n) {
+      let v = n.valueOf();
+      return clampOpacity(v);
+    } else {
+      console.error(`Unable to parse opacity: ${o}. Defaulting to 1.`);
+      return 1;
+    }
+  }
+}
+
+function transparency(text: SVG.Text): number {
+  let fo = interpretOpacity(text.attr('fill-opacity'));
+  let o = interpretOpacity(text.attr('opacity'));
+  return round(
+    100 * (1 - (fo * o)),
+    0,
+  );
+}
+
+function color(text: SVG.Text) {
   let f = text.attr('fill');
   let c = parseColor(f);
   if (c) {
-    return toPptxHex(c);
+    return {
+      color: toPptxHex(c),
+      transparency: transparency(text),
+    };
   } else {
     console.error(`Unable to parse text fill: ${f}.`);
   }
