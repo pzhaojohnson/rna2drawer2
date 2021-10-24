@@ -44,6 +44,7 @@ describe('values function', () => {
     bond.line.attr({
       'stroke': '#665a1f',
       'stroke-width': 8.57,
+      'stroke-opacity': 0.62,
     });
     bond.basePadding1 = 18.3;
     bond.basePadding2 = 9.7;
@@ -53,6 +54,7 @@ describe('values function', () => {
       line: {
         'stroke': '#665a1f',
         'stroke-width': 8.57,
+        'stroke-opacity': 0.62,
       },
       basePadding1: 18.3,
       basePadding2: 9.7,
@@ -67,6 +69,7 @@ describe('setValues function', () => {
       line: {
         'stroke': '#ab90f0',
         'stroke-width': 12.02,
+        'stroke-opacity': 0.24,
       },
       basePadding1: 9.8,
       basePadding2: 12.1,
@@ -82,6 +85,7 @@ describe('setValues function', () => {
       line: {
         'stroke': '#66a210',
         'stroke-width': 9.3,
+        'stroke-opacity': 0.28,
       },
       basePadding1: 12.6,
       basePadding2: 3.2,

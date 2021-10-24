@@ -12,7 +12,7 @@ export class SecondaryBond extends StraightBond implements SecondaryBondInterfac
     'GUT': Values,
     'other': Values,
   }
-  
+
   get type(): SecondaryBondType {
     let cs = [
       this.base1.character.toUpperCase(),
@@ -37,6 +37,7 @@ SecondaryBond.recommendedDefaults = {
     line: {
       'stroke': '#000000',
       'stroke-width': 2,
+      'stroke-opacity': 1,
     },
     basePadding1: 6,
     basePadding2: 6,
@@ -45,6 +46,7 @@ SecondaryBond.recommendedDefaults = {
     line: {
       'stroke': '#000000',
       'stroke-width': 2,
+      'stroke-opacity': 1,
     },
     basePadding1: 6,
     basePadding2: 6,
@@ -53,6 +55,7 @@ SecondaryBond.recommendedDefaults = {
     line: {
       'stroke': '#000000',
       'stroke-width': 2,
+      'stroke-opacity': 1,
     },
     basePadding1: 6,
     basePadding2: 6,
@@ -61,6 +64,7 @@ SecondaryBond.recommendedDefaults = {
     line: {
       'stroke': '#000000',
       'stroke-width': 2,
+      'stroke-opacity': 1,
     },
     basePadding1: 6,
     basePadding2: 6,

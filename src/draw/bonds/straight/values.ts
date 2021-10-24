@@ -4,6 +4,7 @@ export type Values = {
   line: {
     'stroke'?: string;
     'stroke-width'?: number;
+    'stroke-opacity'?: number;
   },
   basePadding1?: number;
   basePadding2?: number;
@@ -16,12 +17,16 @@ export function values(sb: StraightBond): Values {
   let lineAttrs = {
     'stroke': sb.line.attr('stroke'),
     'stroke-width': sb.line.attr('stroke-width'),
+    'stroke-opacity': sb.line.attr('stroke-opacity'),
   };
   if (typeof lineAttrs['stroke'] == 'string') {
     vs.line['stroke'] = lineAttrs['stroke'];
   }
   if (typeof lineAttrs['stroke-width'] == 'number') {
     vs.line['stroke-width'] = lineAttrs['stroke-width'];
+  }
+  if (typeof lineAttrs['stroke-opacity'] == 'number') {
+    vs.line['stroke-opacity'] = lineAttrs['stroke-opacity'];
   }
   let basePadding1 = sb.basePadding1;
   let basePadding2 = sb.basePadding2;
@@ -41,6 +46,9 @@ export function setValues(sb: StraightBond, vs: Values) {
     }
     if (typeof vs.line['stroke-width'] == 'number') {
       sb.line.attr({ 'stroke-width': vs.line['stroke-width'] });
+    }
+    if (typeof vs.line['stroke-opacity'] == 'number') {
+      sb.line.attr({ 'stroke-opacity': vs.line['stroke-opacity'] });
     }
   }
   if (typeof vs.basePadding1 == 'number') {

@@ -1,7 +1,8 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { PrimaryBondInterface } from './PrimaryBondInterface';
 import { PrimaryBond } from './PrimaryBond';
+import { SecondaryBondInterface, secondaryBondTypes } from './SecondaryBondInterface';
 import { SecondaryBond } from './SecondaryBond';
-import { secondaryBondTypes } from './SecondaryBondInterface';
 import { findLineByUniqueId } from 'Draw/saved/svg';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
@@ -28,6 +29,13 @@ function getBaseById(bases: Map<string, Base>, id: unknown): Base | never {
   return b;
 }
 
+function updateRecommendedDefaultsForPrimaryBonds(addedPrimaryBonds: PrimaryBondInterface[]) {
+  let last = atIndex(addedPrimaryBonds, addedPrimaryBonds.length - 1);
+  if (last) {
+    PrimaryBond.recommendedDefaults = values(last);
+  }
+}
+
 export function addSavedPrimaryBonds(drawing: Drawing, saveds: SavedState[]): PrimaryBond[] | never {
   let pbs: PrimaryBond[] = [];
   let bases = basesByUniqueId(drawing);
@@ -41,14 +49,38 @@ export function addSavedPrimaryBonds(drawing: Drawing, saveds: SavedState[]): Pr
     pbs.push(new PrimaryBond(line, base1, base2));
   });
   drawing.primaryBonds.push(...pbs);
-  
-  // update recommended defaults
-  let last = atIndex(pbs, pbs.length - 1);
-  if (last) {
-    PrimaryBond.recommendedDefaults = values(last);
-  }
-  
+  updateRecommendedDefaultsForPrimaryBonds(pbs);
   return pbs;
+}
+
+function updateRecommendedDefaultsForSecondaryBonds(addedSecondaryBonds: SecondaryBondInterface[]) {
+  addedSecondaryBonds.forEach(sb => {
+    let stroke = sb.line.attr('stroke');
+    if (typeof stroke == 'string') {
+      SecondaryBond.recommendedDefaults[sb.type].line['stroke'] = stroke;
+    }
+    let strokeOpacity = sb.line.attr('stroke-opacity');
+    if (typeof strokeOpacity == 'number') {
+      SecondaryBond.recommendedDefaults[sb.type].line['stroke-opacity'] = strokeOpacity;
+    }
+  });
+
+  let last = atIndex(addedSecondaryBonds, addedSecondaryBonds.length - 1);
+  if (last) {
+    let vs = values(last);
+    secondaryBondTypes.forEach(t => {
+      SecondaryBond.recommendedDefaults[t] = {
+        ...vs,
+        line: {
+          ...vs.line,
+
+          // stroke and stroke-opacity differ by secondary bond type
+          'stroke': SecondaryBond.recommendedDefaults[t].line['stroke'],
+          'stroke-opacity': SecondaryBond.recommendedDefaults[t].line['stroke-opacity'],
+        }
+      };
+    });
+  }
 }
 
 export function addSavedSecondaryBonds(drawing: Drawing, saveds: SavedState[]): SecondaryBond[] | never {
@@ -63,30 +95,8 @@ export function addSavedSecondaryBonds(drawing: Drawing, saveds: SavedState[]): 
     let base2 = getBaseById(bases, saved.baseId2);
     let sb = new SecondaryBond(line, base1, base2);
     sbs.push(sb);
-
-    // update recommended default for line stroke
-    let stroke = sb.line.attr('stroke');
-    if (typeof stroke == 'string') {
-      SecondaryBond.recommendedDefaults[sb.type].line['stroke'] = stroke;
-    }
   });
   drawing.secondaryBonds.push(...sbs);
-  
-  // update remaining recommended defaults
-  let last = atIndex(sbs, sbs.length - 1);
-  if (last) {
-    let vs = values(last);
-    secondaryBondTypes.forEach(t => {
-      SecondaryBond.recommendedDefaults[t] = {
-        ...vs,
-        line: {
-          ...vs.line,
-          // only line stroke differs by secondary bond type
-          'stroke': SecondaryBond.recommendedDefaults[t].line['stroke'],
-        }
-      };
-    });
-  }
-  
+  updateRecommendedDefaultsForSecondaryBonds(sbs);
   return sbs;
 }
