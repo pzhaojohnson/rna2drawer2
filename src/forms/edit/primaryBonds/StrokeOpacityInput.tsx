@@ -3,6 +3,7 @@ import { useState } from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
+import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { parseNumber } from 'Parse/svg/number';
 import { round } from 'Math/round';
 
@@ -63,6 +64,7 @@ function setStrokeOpacitiesIfShould(props: Props, value: string) {
       props.primaryBonds.forEach(pb => {
         pb.line.attr({ 'stroke-opacity': so });
       });
+      PrimaryBond.recommendedDefaults.line['stroke-opacity'] = so;
       props.app.drawingChangedNotByInteraction();
     }
   }
