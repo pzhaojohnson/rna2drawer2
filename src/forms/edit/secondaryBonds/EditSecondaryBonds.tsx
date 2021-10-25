@@ -1,14 +1,21 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
-import styles from './EditSecondaryBonds.css';
+import formStyles from './EditSecondaryBonds.css';
+import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import { AppInterface as App } from 'AppInterface';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import {
-  AUTStrokeField,
-  GCStrokeField,
-  GUTStrokeField,
-  OtherStrokeField,
-} from './StrokeField';
+  AUTStrokePicker,
+  GCStrokePicker,
+  GUTStrokePicker,
+  OtherStrokePicker,
+} from './StrokePicker';
+import {
+  AUTStrokeOpacityInput,
+  GCStrokeOpacityInput,
+  GUTStrokeOpacityInput,
+  OtherStrokeOpacityInput,
+} from './StrokeOpacityInput';
 import { BaseSpacingField } from './BaseSpacingField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
@@ -66,7 +73,7 @@ function TitleUnderline() {
 export function EditSecondaryBonds(props: Props) {
   return (
     <div
-      className={styles.form}
+      className={formStyles.form}
       style={{ position: 'relative', width: '332px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
@@ -82,32 +89,72 @@ export function EditSecondaryBonds(props: Props) {
       </div>
       <div style={{ margin: '24px 40px 0px 40px' }} >
         {props.secondaryBonds.length == 0 ? (
-          <p className={'unselectable'} style={{ fontSize: '12px' }} >
+          <p className='unselectable' style={{ fontSize: '12px' }} >
             No secondary bonds to edit.
           </p>
         ) : (
           <div>
             {numAUTBonds(props.secondaryBonds) == 0 ? null : (
               <div style={{ paddingBottom: '8px' }} >
-                <AUTStrokeField app={props.app} secondaryBonds={props.secondaryBonds} />
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <AUTStrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
+                  <div style={{ marginLeft: '12px' }} >
+                    <AUTStrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
+                  </div>
+                  <div style={{ marginLeft: '8px' }} >
+                    <p className={`${colorFieldStyles.label} unselectable`} >
+                      AU and AT Color
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
             {numGCBonds(props.secondaryBonds) == 0 ? null : (
               <div style={{ paddingBottom: '8px' }} >
-                <GCStrokeField app={props.app} secondaryBonds={props.secondaryBonds} />
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <GCStrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
+                  <div style={{ marginLeft: '12px' }} >
+                    <GCStrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
+                  </div>
+                  <div style={{ marginLeft: '8px' }} >
+                    <p className={`${colorFieldStyles.label} unselectable`} >
+                      GC Color
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
             {numGUTBonds(props.secondaryBonds) == 0 ? null : (
               <div style={{ paddingBottom: '8px' }} >
-                <GUTStrokeField app={props.app} secondaryBonds={props.secondaryBonds} />
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <GUTStrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
+                  <div style={{ marginLeft: '12px' }} >
+                    <GUTStrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
+                  </div>
+                  <div style={{ marginLeft: '8px' }} >
+                    <p className={`${colorFieldStyles.label} unselectable`} >
+                      GU and GT Color
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
             {numOtherBonds(props.secondaryBonds) == 0 ? null : (
               <div style={{ paddingBottom: '8px' }} >
-                <OtherStrokeField app={props.app} secondaryBonds={props.secondaryBonds} />
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <OtherStrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
+                  <div style={{ marginLeft: '12px' }} >
+                    <OtherStrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
+                  </div>
+                  <div style={{ marginLeft: '8px' }} >
+                    <p className={`${colorFieldStyles.label} unselectable`} >
+                      Noncanonical Color
+                    </p>
+                  </div>
+                </div>
               </div>
             )}
-            <div style={{ marginTop: '8px' }} >
+            <div style={{ marginTop: '10px' }} >
               <BaseSpacingField app={props.app} />
             </div>
             <div style={{ marginTop: '8px' }} >

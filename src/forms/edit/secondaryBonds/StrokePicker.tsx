@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
-import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import { AppInterface as App } from 'AppInterface';
 import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
@@ -35,46 +34,6 @@ function valuesAreEqual(v1?: Value, v2?: Value): boolean {
   }
 }
 
-type StrokeFieldProps = {
-  app: App;
-
-  // the secondary bonds to edit
-  secondaryBonds: SecondaryBondInterface[];
-
-  name: string;
-}
-
-function StrokeField(props: StrokeFieldProps) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <ColorPicker
-        value={currStroke(props.secondaryBonds)}
-        onClose={event => {
-          if (event.target.value) {
-            let value = event.target.value;
-            if (!valuesAreEqual(value, currStroke(props.secondaryBonds))) {
-              props.app.pushUndo();
-              let hex = value.color.toHex();
-              props.secondaryBonds.forEach(sb => {
-                sb.line.attr({ 'stroke': hex });
-                SecondaryBond.recommendedDefaults[sb.type].line['stroke'] = hex;
-              });
-              props.app.drawingChangedNotByInteraction();
-            }
-          }
-        }}
-        disableAlpha={true}
-      />
-      <p
-        className={`${colorFieldStyles.label} unselectable`}
-        style={{ marginLeft: '8px' }}
-      >
-        {props.name}
-      </p>
-    </div>
-  );
-}
-
 export type Props = {
   app: App;
 
@@ -82,42 +41,61 @@ export type Props = {
   secondaryBonds: SecondaryBondInterface[];
 }
 
-export function AUTStrokeField(props: Props) {
+export function StrokePicker(props: Props) {
   return (
-    <StrokeField
+    <ColorPicker
+      value={currStroke(props.secondaryBonds)}
+      onClose={event => {
+        if (event.target.value) {
+          let value = event.target.value;
+          if (!valuesAreEqual(value, currStroke(props.secondaryBonds))) {
+            props.app.pushUndo();
+            let hex = value.color.toHex();
+            props.secondaryBonds.forEach(sb => {
+              sb.line.attr({ 'stroke': hex });
+              SecondaryBond.recommendedDefaults[sb.type].line['stroke'] = hex;
+            });
+            props.app.drawingChangedNotByInteraction();
+          }
+        }
+      }}
+      disableAlpha={true}
+    />
+  );
+}
+
+export function AUTStrokePicker(props: Props) {
+  return (
+    <StrokePicker
       app={props.app}
       secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'AUT')}
-      name='AU and AT Color'
     />
   );
 }
 
-export function GCStrokeField(props: Props) {
+export function GCStrokePicker(props: Props) {
   return (
-    <StrokeField
+    <StrokePicker
       app={props.app}
       secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'GC')}
-      name='GC Color'
     />
   );
 }
 
-export function GUTStrokeField(props: Props) {
+export function GUTStrokePicker(props: Props) {
   return (
-    <StrokeField
+    <StrokePicker
       app={props.app}
       secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'GUT')}
-      name='GU and GT Color'
     />
   );
 }
 
-export function OtherStrokeField(props: Props) {
+export function OtherStrokePicker(props: Props) {
   return (
-    <StrokeField
+    <StrokePicker
       app={props.app}
       secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'other')}
-      name='Noncanonical Color'
     />
   );
 }
