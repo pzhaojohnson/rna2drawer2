@@ -6,7 +6,8 @@ import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/Tertiar
 import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { DashedField } from './DashedField';
-import { PaddingField1, PaddingField2 } from './PaddingFields';
+import { BasePadding1Field } from './BasePadding1Field';
+import { BasePadding2Field } from './BasePadding2Field';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 import { RemoveButton } from './RemoveButton';
@@ -39,10 +40,10 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
                 <DashedField {...props} />
               </div>
               <div style={{ marginTop: '16px' }} >
-                <PaddingField1 {...props} />
+                <BasePadding1Field app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
-              <div style={{ marginTop: '16px' }} >
-                <PaddingField2 {...props} />
+              <div style={{ marginTop: '8px' }} >
+                <BasePadding2Field app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
               <div style={{ marginTop: '16px' }} >
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
