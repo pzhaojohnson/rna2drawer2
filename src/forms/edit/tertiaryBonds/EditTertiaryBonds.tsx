@@ -44,7 +44,7 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
                 <PaddingField2 {...props} />
               </div>
               <div style={{ marginTop: '16px' }} >
-                <ForwardAndBackwardButtons {...props} />
+                <ForwardAndBackwardButtons app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
               <div style={{ marginTop: '32px' }} >
                 <RemoveButton {...props} />
