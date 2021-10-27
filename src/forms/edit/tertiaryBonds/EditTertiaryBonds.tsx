@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ClosableContainer } from '../../containers/ClosableContainer';
+import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { StrokeField } from './StrokeField';
@@ -10,6 +11,7 @@ import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 import { RemoveButton } from './RemoveButton';
 
 interface Props {
+  app: App;
   drawing: Drawing;
   getTertiaryBonds: () => TertiaryBond[];
   pushUndo: () => void;

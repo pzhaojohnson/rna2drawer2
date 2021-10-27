@@ -4,16 +4,16 @@ import { FlippingMode } from './flip/FlippingMode';
 import { TriangularizingMode } from './triangularize/TriangularizingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from './annotate/AnnotatingModeInterface';
+import { App } from 'App';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
 import StrictDrawing from '../StrictDrawing';
-import { Sequence } from 'Draw/sequences/Sequence';
 import { Base } from 'Draw/bases/Base';
 
 type Mode = PivotingMode | FoldingMode | FlippingMode | TriangularizingMode | AnnotatingMode;
 
 class StrictDrawingInteraction {
-  _strictDrawing: StrictDrawing;
-
+  _app: App;
+  
   _tertiaryBondsInteraction!: TertiaryBondsInteraction;
 
   _pivotingMode!: PivotingMode;
@@ -29,9 +29,9 @@ class StrictDrawingInteraction {
 
   _mouseoveredBase?: Base;
 
-  constructor(strictDrawing: StrictDrawing) {
-    this._strictDrawing = strictDrawing;
-
+  constructor(app: App) {
+    this._app = app;
+    
     this._setBindings();
     this._initializePivotingMode();
     this._initializeFoldingMode();
@@ -44,7 +44,7 @@ class StrictDrawingInteraction {
   }
 
   get strictDrawing(): StrictDrawing {
-    return this._strictDrawing;
+    return this._app.strictDrawing;
   }
 
   _setBindings() {
@@ -158,7 +158,7 @@ class StrictDrawingInteraction {
 
   _initializeTertiaryBondsInteraction() {
     this._tertiaryBondsInteraction = new TertiaryBondsInteraction(
-      this.strictDrawing.drawing
+      this._app
     );
     this._tertiaryBondsInteraction.onShouldPushUndo(() => {
       this.fireShouldPushUndo();

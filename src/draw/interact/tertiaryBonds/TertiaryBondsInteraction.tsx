@@ -2,7 +2,7 @@ import {
   TertiaryBondsInteractionInterface,
   FormFactory,
 } from './TertiaryBondsInteractionInterface';
-import { DrawingInterface as Drawing } from '../../DrawingInterface';
+import { App } from 'App';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import {
   handleMouseoverOnTertiaryBond,
@@ -20,8 +20,8 @@ import * as React from 'react';
 import { EditTertiaryBonds } from '../../../forms/edit/tertiaryBonds/EditTertiaryBonds';
 
 class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
-  _drawing: Drawing;
-
+  _app: App;
+  
   hovered?: string;
   selected: Set<string>;
 
@@ -33,9 +33,9 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
 
   _onRequestToRenderForm?: (ff: FormFactory) => void;
 
-  constructor(drawing: Drawing) {
-    this._drawing = drawing;
-
+  constructor(app: App) {
+    this._app = app;
+    
     this.selected = new Set<string>();
 
     this.dragging = false;
@@ -45,7 +45,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   }
 
   get drawing() {
-    return this._drawing;
+    return this._app.strictDrawing.drawing;
   }
 
   _setBindings() {
@@ -159,6 +159,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
     if (this._onRequestToRenderForm) {
       this._onRequestToRenderForm(close => (
         <EditTertiaryBonds
+          app={this._app}
           drawing={this.drawing}
           getTertiaryBonds={
             () => this.drawing.tertiaryBonds.filter(tb => this.selected.has(tb.id))

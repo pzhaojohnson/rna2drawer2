@@ -16,7 +16,7 @@ import { Infobar } from './infobar/Infobar';
 
 import { HomePage } from './forms/home/HomePage';
 
-class App implements AppInterface {
+export class App implements AppInterface {
   _SVG: () => Svg.Svg;
 
   _menuContainer: HTMLDivElement;
@@ -44,7 +44,7 @@ class App implements AppInterface {
     this._strictDrawing = new StrictDrawing();
     this._initializeDrawing();
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
-    this._strictDrawingInteraction = new StrictDrawingInteraction(this.strictDrawing);
+    this._strictDrawingInteraction = new StrictDrawingInteraction(this);
     this._initializeDrawingInteraction();
     this.renderPeripherals();
 
