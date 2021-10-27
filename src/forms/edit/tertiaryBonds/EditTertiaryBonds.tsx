@@ -7,7 +7,8 @@ import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { DashedField } from './DashedField';
 import { PaddingField1, PaddingField2 } from './PaddingFields';
-import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
+import { BringToFrontButton } from './BringToFrontButton';
+import { SendToBackButton } from './SendToBackButton';
 import { RemoveButton } from './RemoveButton';
 
 interface Props {
@@ -44,7 +45,11 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
                 <PaddingField2 {...props} />
               </div>
               <div style={{ marginTop: '16px' }} >
-                <ForwardAndBackwardButtons app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <BringToFrontButton app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
+                  <div style={{ width: '16px' }} />
+                  <SendToBackButton app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
+                </div>
               </div>
               <div style={{ marginTop: '32px' }} >
                 <RemoveButton {...props} />
