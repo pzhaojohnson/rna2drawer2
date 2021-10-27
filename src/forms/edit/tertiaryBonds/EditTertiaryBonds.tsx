@@ -34,7 +34,7 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
             <div>
               <StrokeField {...props} />
               <div style={{ marginTop: '16px' }} >
-                <StrokeWidthField {...props} />
+                <StrokeWidthField app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
               <div style={{ marginTop: '16px' }} >
                 <DashedField {...props} />
