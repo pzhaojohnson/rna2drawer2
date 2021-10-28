@@ -1,6 +1,5 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { AppInterface as App } from 'AppInterface';
 import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
@@ -22,28 +21,34 @@ type State = {
 // returns an empty string value for an empty tertiary bonds array
 // or if not all tertiary bonds have the same base padding 1
 function currBasePadding1(tertiaryBonds: TertiaryBondInterface[]): Value {
-  let bp1s = new Set<number>();
+  let bp1s = new Set<Value>();
   tertiaryBonds.forEach(tb => {
-    bp1s.add(round(tb.basePadding1, 1));
+    let bp1 = round(tb.basePadding1, 1);
+    bp1s.add(bp1.toString());
   });
   if (bp1s.size == 1) {
-    return bp1s.values().next().value.toString();
+    return bp1s.values().next().value;
   } else {
     return '';
   }
 }
 
-function valueIsValid(v: Value): boolean {
-  let n = Number.parseFloat(v);
-  return Number.isFinite(n) && n >= 0;
-}
-
-function valueIsBlank(v: Value): boolean {
+function isBlank(v: Value): boolean {
   return v.trim().length == 0;
 }
 
-function valuesAreEqual(v1: Value, v2: Value): boolean {
+function areEqual(v1: Value, v2: Value): boolean {
   return Number.parseFloat(v1) == Number.parseFloat(v2);
+}
+
+function constrainBasePadding(bp: number): number {
+  if (!Number.isFinite(bp)) {
+    return 0;
+  } else if (bp < 0) {
+    return 0;
+  } else {
+    return bp;
+  }
 }
 
 export class BasePadding1Field extends React.Component<Props> {
@@ -59,50 +64,46 @@ export class BasePadding1Field extends React.Component<Props> {
 
   render() {
     return (
-      <div>
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          <input
-            type='text'
-            className={textFieldStyles.input}
-            value={this.state.value}
-            onChange={event => this.setState({ value: event.target.value })}
-            onBlur={() => this.submit()}
-            onKeyUp={event => {
-              if (event.key.toLowerCase() == 'enter') {
-                this.submit();
-              }
-            }}
-            style={{ width: '36px' }}
-          />
-          <div style={{ marginLeft: '8px' }} >
-            <p className={`${textFieldStyles.label} unselectable`} >
-              Base Padding 1
-            </p>
-          </div>
-        </div>
-        {valueIsValid(this.state.value) || valueIsBlank(this.state.value) ? null : (
-          <p
-            key={Math.random()}
-            className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-            style={{ marginTop: '3px' }}
-          >
-            Must be a nonnegative number.
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+        <input
+          type='text'
+          className={textFieldStyles.input}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => {
+            this.submit();
+            this.props.app.drawingChangedNotByInteraction();
+          }}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              this.submit();
+              this.props.app.drawingChangedNotByInteraction();
+            }
+          }}
+          style={{ width: '36px' }}
+        />
+        <div style={{ marginLeft: '8px' }} >
+          <p className={`${textFieldStyles.label} unselectable`} >
+            Base Padding 1
           </p>
-        )}
+        </div>
       </div>
     );
   }
 
   submit() {
-    if (valueIsValid(this.state.value)) {
-      if (!valuesAreEqual(this.state.value, currBasePadding1(this.props.tertiaryBonds))) {
-        this.props.app.pushUndo();
-        let bp1 = Number.parseFloat(this.state.value);
-        this.props.tertiaryBonds.forEach(tb => {
-          tb.basePadding1 = bp1;
-        });
-        TertiaryBond.recommendedDefaults.basePadding1 = bp1;
-        this.props.app.drawingChangedNotByInteraction();
+    if (!isBlank(this.state.value)) {
+      let bp1 = Number.parseFloat(this.state.value);
+      if (Number.isFinite(bp1)) {
+        if (!areEqual(this.state.value, currBasePadding1(this.props.tertiaryBonds))) {
+          this.props.app.pushUndo();
+          bp1 = constrainBasePadding(bp1);
+          this.props.tertiaryBonds.forEach(tb => {
+            tb.basePadding1 = bp1;
+          });
+          TertiaryBond.recommendedDefaults.basePadding1 = bp1;
+          this.props.app.drawingChangedNotByInteraction();
+        }
       }
     }
   }
