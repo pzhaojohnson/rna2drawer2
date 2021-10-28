@@ -36,10 +36,10 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
               <div style={{ marginTop: '16px' }} >
                 <StrokeWidthField app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
-              <div style={{ marginTop: '16px' }} >
-                <DashedField {...props} />
+              <div style={{ marginTop: '12px' }} >
+                <DashedField app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
-              <div style={{ marginTop: '16px' }} >
+              <div style={{ marginTop: '12px' }} >
                 <BasePadding1Field app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
               <div style={{ marginTop: '8px' }} >
