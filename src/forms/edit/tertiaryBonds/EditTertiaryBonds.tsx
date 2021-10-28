@@ -65,7 +65,7 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
                 </div>
               </div>
               <div style={{ marginTop: '32px' }} >
-                <RemoveButton {...props} />
+                <RemoveButton app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
             </div>
           )}
