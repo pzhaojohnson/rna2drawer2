@@ -98,15 +98,17 @@ export class StrokeWidthField extends React.Component<Props> {
 
   submit() {
     if (!isBlank(this.state.value)) {
-      if (!areEqual(this.state.value, currStrokeWidth(this.props.tertiaryBonds))) {
-        this.props.app.pushUndo();
-        let sw = Number.parseFloat(this.state.value);
-        sw = constrainStrokeWidth(sw);
-        this.props.tertiaryBonds.forEach(tb => {
-          tb.path.attr({ 'stroke-width': sw });
-        });
-        TertiaryBond.recommendedDefaults.path['stroke-width'] = sw;
-        this.props.app.drawingChangedNotByInteraction();
+      let sw = Number.parseFloat(this.state.value);
+      if (Number.isFinite(sw)) {
+        if (!areEqual(this.state.value, currStrokeWidth(this.props.tertiaryBonds))) {
+          this.props.app.pushUndo();
+          sw = constrainStrokeWidth(sw);
+          this.props.tertiaryBonds.forEach(tb => {
+            tb.path.attr({ 'stroke-width': sw });
+          });
+          TertiaryBond.recommendedDefaults.path['stroke-width'] = sw;
+          this.props.app.drawingChangedNotByInteraction();
+        }
       }
     }
   }
