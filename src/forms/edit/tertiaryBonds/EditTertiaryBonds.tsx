@@ -3,7 +3,9 @@ import { ClosableContainer } from '../../containers/ClosableContainer';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
-import { StrokeField } from './StrokeField';
+import { StrokePicker } from './StrokePicker';
+import { StrokeOpacityInput } from './StrokeOpacityInput';
+import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import { StrokeWidthField } from './StrokeWidthField';
 import { DashedField } from './DashedField';
 import { BasePadding1Field } from './BasePadding1Field';
@@ -32,7 +34,17 @@ export function EditTertiaryBonds(props: Props): React.ReactElement {
             <p>No tertiary bonds are selected.</p>
           ) : (
             <div>
-              <StrokeField {...props} />
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                <StrokePicker app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
+                <div style={{ marginLeft: '12px' }} >
+                  <StrokeOpacityInput app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
+                </div>
+                <div style={{ marginLeft: '8px' }} >
+                  <p className={`${colorFieldStyles.label} unselectable`} >
+                    Color
+                  </p>
+                </div>
+              </div>
               <div style={{ marginTop: '16px' }} >
                 <StrokeWidthField app={props.app} tertiaryBonds={props.getTertiaryBonds()} />
               </div>
