@@ -30,7 +30,7 @@ export function GeneralBaseStyles(props: Props): React.ReactElement {
               <FontFamilyField app={props.app} bases={props.app.strictDrawing.drawing.bases()} />
             </div>
             <div style={{ marginTop: '16px' }} >
-              <FontSizeField app={props.app} />
+              <FontSizeField app={props.app} bases={props.app.strictDrawing.drawing.bases()} />
             </div>
             <div style={{ marginTop: '8px' }} >
               <BoldFontField app={props.app} />
