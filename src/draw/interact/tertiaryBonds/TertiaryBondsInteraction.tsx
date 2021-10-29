@@ -21,7 +21,7 @@ import { EditTertiaryBonds } from '../../../forms/edit/tertiaryBonds/EditTertiar
 
 class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   _app: App;
-  
+
   hovered?: string;
   selected: Set<string>;
 
@@ -35,7 +35,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
 
   constructor(app: App) {
     this._app = app;
-    
+
     this.selected = new Set<string>();
 
     this.dragging = false;
@@ -160,13 +160,8 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
       this._onRequestToRenderForm(close => (
         <EditTertiaryBonds
           app={this._app}
-          drawing={this.drawing}
-          getTertiaryBonds={
-            () => this.drawing.tertiaryBonds.filter(tb => this.selected.has(tb.id))
-          }
-          pushUndo={() => this.fireShouldPushUndo()}
-          changed={() => this.fireChange()}
-          close={close ? close : () => {}}
+          tertiaryBonds={this.drawing.tertiaryBonds.filter(tb => this.selected.has(tb.id))}
+          unmount={close ? close : () => this._app.unmountForm()}
         />
       ));
     }
