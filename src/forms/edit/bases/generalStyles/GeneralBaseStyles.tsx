@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../../AppInterface';
 import { ClosableContainer } from '../../../containers/ClosableContainer';
-import { WidthField, HeightField } from './DimensionsFields';
+import { WidthField } from './WidthField';
+import { HeightField } from './HeightField';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
 import { BoldFontField } from './BoldFontField';
