@@ -5,7 +5,7 @@ import { WidthField } from './WidthField';
 import { HeightField } from './HeightField';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
-import { BoldFontField } from './BoldFontField';
+import { BoldField } from './BoldField';
 
 interface Props {
   app: App;
@@ -34,7 +34,7 @@ export function GeneralBaseStyles(props: Props): React.ReactElement {
               <FontSizeField app={props.app} bases={props.app.strictDrawing.drawing.bases()} />
             </div>
             <div style={{ marginTop: '8px' }} >
-              <BoldFontField app={props.app} />
+              <BoldField app={props.app} bases={props.app.strictDrawing.drawing.bases()} />
             </div>
           </div>
         )
