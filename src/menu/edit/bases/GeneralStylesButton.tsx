@@ -15,7 +15,8 @@ export function GeneralStylesButton(props: Props): React.ReactElement {
         props.app.renderForm(close => (
           <GeneralBaseStyles
             app={props.app}
-            close={close}
+            bases={props.app.strictDrawing.drawing.bases()}
+            unmount={close}
           />
         ))
       }}
