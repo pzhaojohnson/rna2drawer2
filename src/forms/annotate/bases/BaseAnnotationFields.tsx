@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from 'AppInterface';
 import { FieldProps } from './FieldProps';
-import { BaseCharacterField } from './BaseCharacterField';
+import { CharacterField } from './CharacterField';
 import BaseColorField from './BaseColorField';
 import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 import { HasOutlineField, allBasesHaveOutlines } from './HasOutlineField';
@@ -21,7 +21,7 @@ export function BaseAnnotationFields(props: Props): React.ReactElement {
       <div>
         {bs.length != 1 ? null : (
           <div style={{ marginBottom: '12px' }} >
-            {BaseCharacterField(props)}
+            <CharacterField app={props.app} base={bs[0]} />
           </div>
         )}
         {BaseColorField(props)}
