@@ -1,6 +1,8 @@
 import * as React from 'react';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import { AppInterface as App } from 'AppInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { FieldProps } from './FieldProps';
 import { CharacterField } from './CharacterField';
 import { FillPicker } from './FillPicker';
@@ -8,15 +10,26 @@ import { FillOpacityInput } from './FillOpacityInput';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 import { OutlineField, allHaveOutlines } from './OutlineField';
-import OutlineRadiusField from './OutlineRadiusField';
+import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import OutlineStrokeField from './OutlineStrokeField';
 import OutlineStrokeWidthField from './OutlineStrokeWidthField';
 import OutlineFillField from './OutlineFillField';
 
 export type Props = FieldProps & { app: App }
 
+function outlines(bases: Base[]): CircleBaseAnnotation[] {
+  let os: CircleBaseAnnotation[] = [];
+  bases.forEach(b => {
+    if (b.outline) {
+      os.push(b.outline);
+    }
+  });
+  return os;
+}
+
 export function BaseAnnotationFields(props: Props): React.ReactElement {
   let bs = props.selectedBases();
+  let os = outlines(bs);
   if (bs.length == 0) {
     return <p>No bases are selected.</p>;
   } else {
@@ -51,7 +64,7 @@ export function BaseAnnotationFields(props: Props): React.ReactElement {
         {!allHaveOutlines(bs) ? null : (
           <div style={{ marginLeft: '16px' }} >
             <div style={{ marginTop: '12px' }} >
-              {OutlineRadiusField(props)}
+              <OutlineRadiusField app={props.app} outlines={os} />
             </div>
             <div style={{ marginTop: '12px' }} >
               {OutlineStrokeField(props)}
