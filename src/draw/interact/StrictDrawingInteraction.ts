@@ -13,7 +13,7 @@ type Mode = PivotingMode | FoldingMode | FlippingMode | TriangularizingMode | An
 
 class StrictDrawingInteraction {
   _app: App;
-  
+
   _tertiaryBondsInteraction!: TertiaryBondsInteraction;
 
   _pivotingMode!: PivotingMode;
@@ -31,7 +31,7 @@ class StrictDrawingInteraction {
 
   constructor(app: App) {
     this._app = app;
-    
+
     this._setBindings();
     this._initializePivotingMode();
     this._initializeFoldingMode();
@@ -149,7 +149,7 @@ class StrictDrawingInteraction {
   }
 
   _initializeAnnotatingMode() {
-    this._annotatingMode = new AnnotatingMode(this.strictDrawing);
+    this._annotatingMode = new AnnotatingMode(this._app);
     this._annotatingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
     this._annotatingMode.onChange(() => this.fireChange());
     this._annotatingMode.onRequestToRenderForm(ff => this.requestToRenderForm(ff));

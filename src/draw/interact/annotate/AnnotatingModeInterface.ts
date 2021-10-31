@@ -3,7 +3,7 @@ import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import * as React from 'react';
 
 export interface FormFactory {
-  (close?: () => void): React.ReactElement;
+  (close: () => void): React.ReactElement;
 }
 
 export interface AnnotatingModeInterface {

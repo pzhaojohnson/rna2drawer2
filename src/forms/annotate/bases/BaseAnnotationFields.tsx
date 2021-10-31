@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { FieldProps as Props } from './FieldProps';
+import { AppInterface as App } from 'AppInterface';
+import { FieldProps } from './FieldProps';
 import { BaseCharacterField } from './BaseCharacterField';
 import BaseColorField from './BaseColorField';
 import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
@@ -8,6 +9,8 @@ import OutlineRadiusField from './OutlineRadiusField';
 import OutlineStrokeField from './OutlineStrokeField';
 import OutlineStrokeWidthField from './OutlineStrokeWidthField';
 import OutlineFillField from './OutlineFillField';
+
+export type Props = FieldProps & { app: App }
 
 export function BaseAnnotationFields(props: Props): React.ReactElement {
   let bs = props.selectedBases();
