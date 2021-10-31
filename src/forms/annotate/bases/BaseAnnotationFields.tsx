@@ -13,7 +13,8 @@ import { OutlineField, allHaveOutlines } from './OutlineField';
 import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import OutlineStrokeField from './OutlineStrokeField';
 import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
-import OutlineFillField from './OutlineFillField';
+import { FillPicker as OutlineFillPicker } from './outlines/FillPicker';
+import { FillOpacityInput as OutlineFillOpacityInput } from './outlines/FillOpacityInput';
 
 export type Props = FieldProps & { app: App }
 
@@ -73,7 +74,17 @@ export function BaseAnnotationFields(props: Props): React.ReactElement {
               <OutlineStrokeWidthField app={props.app} outlines={os} />
             </div>
             <div style={{ marginTop: '12px' }} >
-              {OutlineFillField(props)}
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                <OutlineFillPicker app={props.app} outlines={os} />
+                <div style={{ marginLeft: '12px' }} >
+                  <OutlineFillOpacityInput app={props.app} outlines={os} />
+                </div>
+                <div style={{ marginLeft: '8px' }} >
+                  <p className={`${colorFieldStyles.label} unselectable`} >
+                    Fill
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         )}
