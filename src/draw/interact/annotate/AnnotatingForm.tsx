@@ -25,7 +25,7 @@ function selectedBases(mode: AnnotatingMode): Base[] {
 export function AnnotatingForm(props: Props): React.ReactElement {
   return (
     <ClosableContainer
-      close={() => close ? close() : undefined}
+      close={props.unmount}
       title={'Edit Bases'}
       contained={
         <div
