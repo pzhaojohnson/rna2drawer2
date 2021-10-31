@@ -12,7 +12,7 @@ import { SendToBackButton } from './SendToBackButton';
 import { OutlineField, allHaveOutlines } from './OutlineField';
 import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import OutlineStrokeField from './OutlineStrokeField';
-import OutlineStrokeWidthField from './OutlineStrokeWidthField';
+import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
 import OutlineFillField from './OutlineFillField';
 
 export type Props = FieldProps & { app: App }
@@ -70,7 +70,7 @@ export function BaseAnnotationFields(props: Props): React.ReactElement {
               {OutlineStrokeField(props)}
             </div>
             <div style={{ marginTop: '12px' }} >
-              {OutlineStrokeWidthField(props)}
+              <OutlineStrokeWidthField app={props.app} outlines={os} />
             </div>
             <div style={{ marginTop: '12px' }} >
               {OutlineFillField(props)}
