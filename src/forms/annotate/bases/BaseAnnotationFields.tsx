@@ -7,7 +7,7 @@ import { FillPicker } from './FillPicker';
 import { FillOpacityInput } from './FillOpacityInput';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
-import { HasOutlineField, allBasesHaveOutlines } from './HasOutlineField';
+import { OutlineField, allHaveOutlines } from './OutlineField';
 import OutlineRadiusField from './OutlineRadiusField';
 import OutlineStrokeField from './OutlineStrokeField';
 import OutlineStrokeWidthField from './OutlineStrokeWidthField';
@@ -46,9 +46,9 @@ export function BaseAnnotationFields(props: Props): React.ReactElement {
           </div>
         </div>
         <div style={{ marginTop: '16px' }} >
-          {HasOutlineField(props)}
+          <OutlineField app={props.app} bases={bs} />
         </div>
-        {!allBasesHaveOutlines(props.selectedBases()) ? null : (
+        {!allHaveOutlines(bs) ? null : (
           <div style={{ marginLeft: '16px' }} >
             <div style={{ marginTop: '12px' }} >
               {OutlineRadiusField(props)}
