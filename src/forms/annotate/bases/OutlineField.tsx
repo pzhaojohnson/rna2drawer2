@@ -3,9 +3,10 @@ import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
 import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { addCircleOutline, removeCircleOutline } from 'Draw/bases/annotate/circle/add';
+import { setValues as setOutlineValues } from 'Draw/bases/annotate/circle/values';
 import { sendToBack as sendOutlineToBack } from 'Draw/bases/annotate/circle/z';
-import { MostRecentOutlineProps } from './MostRecentOutlineProps';
 
 export type Props = {
   app: App;
@@ -30,14 +31,7 @@ function addOutlines(bases: Base[]) {
     // check that outline was added successfully
     // and don't overwrite the values of preexisting outlines
     if (b.outline && !hadOutline) {
-      b.outline.circle.attr({
-        'r': MostRecentOutlineProps.radius,
-        'stroke': MostRecentOutlineProps.stroke,
-        'stroke-width': MostRecentOutlineProps.strokeWidth,
-        'stroke-opacity': MostRecentOutlineProps.strokeOpacity,
-        'fill': MostRecentOutlineProps.fill,
-        'fill-opacity': MostRecentOutlineProps.fillOpacity,
-      });
+      setOutlineValues(b.outline, CircleBaseAnnotation.recommendedDefaults);
       sendOutlineToBack(b.outline);
     }
   });
