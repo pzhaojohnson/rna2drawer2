@@ -5,8 +5,20 @@ import {
 import { SVGCircleWrapper as Circle } from 'Draw/svg/circle';
 import { Point2D as Point } from 'Math/points/Point';
 import { assignUuid } from 'Draw/svg/id';
+import { Values } from './values';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
+  static recommendedDefaults: Values = {
+    circle: {
+      'r': 8,
+      'stroke': '#00ffff',
+      'stroke-width': 1,
+      'stroke-opacity': 0.5,
+      'fill': '#00ffff',
+      'fill-opacity': 0.25,
+    },
+  };
+
   readonly circle: Circle;
 
   _baseCenter: Point;
