@@ -5,7 +5,8 @@ import { FieldProps } from './FieldProps';
 import { CharacterField } from './CharacterField';
 import { FillPicker } from './FillPicker';
 import { FillOpacityInput } from './FillOpacityInput';
-import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
+import { BringToFrontButton } from './BringToFrontButton';
+import { SendToBackButton } from './SendToBackButton';
 import { HasOutlineField, allBasesHaveOutlines } from './HasOutlineField';
 import OutlineRadiusField from './OutlineRadiusField';
 import OutlineStrokeField from './OutlineStrokeField';
@@ -38,7 +39,11 @@ export function BaseAnnotationFields(props: Props): React.ReactElement {
           </div>
         </div>
         <div style={{ marginTop: '16px' }} >
-          <ForwardAndBackwardButtons {...props} />
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+            <BringToFrontButton app={props.app} bases={bs} />
+            <div style={{ width: '16px' }} />
+            <SendToBackButton app={props.app} bases={bs} />
+          </div>
         </div>
         <div style={{ marginTop: '16px' }} >
           {HasOutlineField(props)}
