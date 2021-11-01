@@ -1,49 +1,65 @@
 import * as React from 'react';
-import { useState } from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { AppInterface as App } from 'AppInterface';
-
-function valueIsValid(value: string): boolean {
-  let n = Number.parseFloat(value);
-  return Number.isFinite(n) && n >= 0;
-}
-
-function setTerminiGapIfShould(app: App, value: string) {
-  if (valueIsValid(value)) {
-    let n = Number.parseFloat(value);
-    let generalLayoutProps = app.strictDrawing.generalLayoutProps();
-    if (n != generalLayoutProps.terminiGap) {
-      app.pushUndo();
-      generalLayoutProps.terminiGap = n;
-      app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
-      app.strictDrawing.updateLayout();
-      app.drawingChangedNotByInteraction();
-    }
-  }
-}
+import { round } from 'Math/round';
 
 export type Props = {
   app: App;
 }
 
-export function TerminiGapField(props: Props) {
-  let [value, setValue] = useState(props.app.strictDrawing.generalLayoutProps().terminiGap.toString());
-  return (
-    <div>
+type Value = string;
+
+type State = {
+  value: Value;
+}
+
+function isBlank(v: Value): boolean {
+  return v.trim().length == 0;
+}
+
+function constrainTerminiGap(tg: number): number {
+  if (!Number.isFinite(tg)) {
+    return 0;
+  } else if (tg < 0) {
+    return 0;
+  } else {
+    return tg;
+  }
+}
+
+export class TerminiGapField extends React.Component<Props> {
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+
+    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps();
+    let tg = generalLayoutProps.terminiGap;
+    tg = round(tg, 2);
+    this.state = {
+      value: tg.toString(),
+    };
+  }
+
+  render() {
+    return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='text'
           className={textFieldStyles.input}
-          value={value}
-          onChange={event => setValue(event.target.value)}
-          onBlur={() => setTerminiGapIfShould(props.app, value)}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => {
+            this.submit();
+            this.props.app.drawingChangedNotByInteraction();
+          }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setTerminiGapIfShould(props.app, value);
+              this.submit();
+              this.props.app.drawingChangedNotByInteraction();
             }
           }}
-          style={{ width: '36px' }}
+          style={{ width: '32px' }}
         />
         <p
           className={`${textFieldStyles.label} unselectable`}
@@ -52,15 +68,24 @@ export function TerminiGapField(props: Props) {
           Termini Gap
         </p>
       </div>
-      {valueIsValid(value) ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn}`}
-          style={{ marginTop: '3px' }}
-        >
-          Must be a nonnegative number.
-        </p>
-      )}
-    </div>
-  );
+    );
+  }
+
+  submit() {
+    if (!isBlank(this.state.value)) {
+      let tg = Number.parseFloat(this.state.value);
+      if (Number.isFinite(tg)) {
+        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps();
+        if (tg != generalLayoutProps.terminiGap) {
+          this.props.app.pushUndo();
+          tg = constrainTerminiGap(tg);
+          tg = round(tg, 2);
+          generalLayoutProps.terminiGap = tg;
+          this.props.app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
+          this.props.app.strictDrawing.updateLayout();
+          this.props.app.drawingChangedNotByInteraction();
+        }
+      }
+    }
+  }
 }
