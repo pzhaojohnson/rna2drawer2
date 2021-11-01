@@ -1,56 +1,63 @@
 import * as React from 'react';
-import { useState } from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { AppInterface as App } from 'AppInterface';
 import { radiansToDegrees, degreesToRadians } from 'Math/angles/degrees';
-import { anglesAreClose } from 'Math/angles/close';
 import { normalizeAngle } from 'Math/angles/normalize';
+import { anglesAreClose } from 'Math/angles/close';
 import { round } from 'Math/round';
-
-function valueIsValid(value: string): boolean {
-  let n = Number.parseFloat(value);
-  return Number.isFinite(n);
-}
-
-function setRotationIfShould(app: App, value: string) {
-  if (valueIsValid(value)) {
-    let radians = degreesToRadians(Number.parseFloat(value));
-    let generalLayoutProps = app.strictDrawing.generalLayoutProps();
-    if (!anglesAreClose(radians, generalLayoutProps.rotation, 2)) {
-      app.pushUndo();
-      generalLayoutProps.rotation = normalizeAngle(radians, 0);
-      app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
-      app.strictDrawing.updateLayout();
-      app.drawingChangedNotByInteraction();
-    }
-  }
-}
 
 export type Props = {
   app: App;
 }
 
-export function RotationField(props: Props) {
-  let radians = props.app.strictDrawing.generalLayoutProps().rotation;
-  let degrees = radiansToDegrees(radians);
-  degrees = round(degrees, 2);
-  let [value, setValue] = useState(degrees.toString());
-  return (
-    <div>
+type Value = string;
+
+type State = {
+  value: Value;
+}
+
+const precision = 2;
+
+function isBlank(v: Value): boolean {
+  return v.trim().length == 0;
+}
+
+export class RotationField extends React.Component<Props> {
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+
+    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps();
+    let radians = generalLayoutProps.rotation;
+    radians = normalizeAngle(radians, 0);
+    let degrees = radiansToDegrees(radians);
+    degrees = round(degrees, precision);
+
+    this.state = {
+      value: degrees.toString(),
+    };
+  }
+
+  render() {
+    return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='text'
           className={textFieldStyles.input}
-          value={value}
-          onChange={event => setValue(event.target.value)}
-          onBlur={() => setRotationIfShould(props.app, value)}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => {
+            this.submit();
+            this.props.app.drawingChangedNotByInteraction();
+          }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setRotationIfShould(props.app, value);
+              this.submit();
+              this.props.app.drawingChangedNotByInteraction();
             }
           }}
-          style={{ width: '36px' }}
+          style={{ width: '32px' }}
         />
         <p
           className={`${textFieldStyles.label} unselectable`}
@@ -59,15 +66,25 @@ export function RotationField(props: Props) {
           Rotation
         </p>
       </div>
-      {valueIsValid(value) ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '3px' }}
-        >
-          Must be a number.
-        </p>
-      )}
-    </div>
-  );
+    );
+  }
+
+  submit() {
+    if (!isBlank(this.state.value)) {
+      let degrees = Number.parseFloat(this.state.value);
+      if (Number.isFinite(degrees)) {
+        let radians = degreesToRadians(degrees);
+        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps();
+        if (!anglesAreClose(radians, generalLayoutProps.rotation, precision)) {
+          this.props.app.pushUndo();
+          radians = normalizeAngle(radians, 0);
+          radians = round(radians, precision);
+          generalLayoutProps.rotation = radians;
+          this.props.app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
+          this.props.app.strictDrawing.updateLayout();
+          this.props.app.drawingChangedNotByInteraction();
+        }
+      }
+    }
+  }
 }
