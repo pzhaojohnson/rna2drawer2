@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
-import formStyles from './AnnotateBases.css';
+import formStyles from './EditBases.css';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 
 import { AppInterface as App } from 'AppInterface';
@@ -63,7 +63,7 @@ function TitleUnderline() {
   );
 }
 
-export function AnnotateBases(props: Props) {
+export function EditBases(props: Props) {
   let os = outlines(props.bases);
   return (
     <div

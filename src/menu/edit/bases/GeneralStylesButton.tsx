@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
 import { DroppedButton } from '../../DroppedButton';
-import { GeneralBaseStyles } from '../../../forms/edit/bases/generalStyles/GeneralBaseStyles';
+import { GeneralBaseStyles } from 'Forms/edit/bases/GeneralBaseStyles';
 
 interface Props {
   app: App;

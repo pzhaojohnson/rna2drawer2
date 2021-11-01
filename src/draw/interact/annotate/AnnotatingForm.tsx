@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
-import { AnnotateBases } from 'Forms/annotate/bases/AnnotateBases';
+import { EditBases } from 'Forms/edit/bases/EditBases';
 
 export type Props = {
   app: App;
@@ -23,7 +23,7 @@ function selectedBases(mode: AnnotatingMode): Base[] {
 
 export function AnnotatingForm(props: Props): React.ReactElement {
   return (
-    <AnnotateBases
+    <EditBases
       app={props.app}
       bases={selectedBases(props.mode)}
       unmount={props.unmount}

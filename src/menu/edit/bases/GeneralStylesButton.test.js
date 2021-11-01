@@ -1,7 +1,7 @@
 import App from '../../../App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { GeneralStylesButton } from './GeneralStylesButton';
-import { GeneralBaseStyles } from '../../../forms/edit/bases/generalStyles/GeneralBaseStyles';
+import { GeneralBaseStyles } from 'Forms/edit/bases/GeneralBaseStyles';
 
 let app = new App(() => NodeSVG());
 let b = GeneralStylesButton({ app: app });
