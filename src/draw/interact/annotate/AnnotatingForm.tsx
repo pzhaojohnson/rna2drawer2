@@ -2,8 +2,7 @@ import * as React from 'react';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
-import ClosableContainer from '../../../forms/containers/ClosableContainer';
-import BaseAnnotationFields from '../../../forms/annotate/bases/BaseAnnotationFields';
+import { AnnotateBases } from 'Forms/annotate/bases/AnnotateBases';
 
 export type Props = {
   app: App;
@@ -24,24 +23,10 @@ function selectedBases(mode: AnnotatingMode): Base[] {
 
 export function AnnotatingForm(props: Props): React.ReactElement {
   return (
-    <ClosableContainer
-      close={props.unmount}
-      title={'Edit Bases'}
-      contained={
-        <div
-          style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
-        >
-          {BaseAnnotationFields({
-            app: props.app,
-            strictDrawing: props.mode.strictDrawing,
-            selectedBases: () => selectedBases(props.mode),
-            clearSelection: () => props.mode.clearSelection(),
-            pushUndo: () => props.mode.fireShouldPushUndo(),
-            changed: () => props.mode.fireChange(),
-          })}
-        </div>
-      }
-      width={'400px'}
+    <AnnotateBases
+      app={props.app}
+      bases={selectedBases(props.mode)}
+      unmount={props.unmount}
     />
   );
 }
