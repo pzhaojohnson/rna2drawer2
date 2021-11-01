@@ -61,8 +61,15 @@ export class CharacterField extends React.Component<Props> {
       if (c != this.props.base.text.text()) {
         this.props.app.pushUndo();
 
+        // remember center coordinates
+        let bbox = this.props.base.text.bbox();
+        let center = { x: bbox.cx, y: bbox.cy };
+
         // ignore characters beyond the first input character
         this.props.base.text.text(c.charAt(0));
+
+        // recenter
+        this.props.base.text.center(center.x, center.y);
 
         this.props.app.drawingChangedNotByInteraction();
       }
