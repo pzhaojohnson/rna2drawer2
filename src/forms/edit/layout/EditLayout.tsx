@@ -42,7 +42,7 @@ export function EditLayout(props: Props) {
       className={styles.form}
       style={{
         position: 'relative',
-        width: '360px',
+        width: '332px',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
