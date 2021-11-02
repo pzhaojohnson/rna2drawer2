@@ -61,11 +61,11 @@ export function EditLayout(props: Props) {
       </div>
       <div style={{ margin: '24px 40px 0px 40px' }} >
         <RotationField app={props.app} />
-        <div style={{ marginTop: '18px' }} >
+        <div style={{ marginTop: '12px' }} >
           <FlatOutermostLoopField app={props.app} />
         </div>
         {hasFlatOutermostLoop(props.app.strictDrawing) ? null : (
-          <div style={{ marginTop: '18px' }} >
+          <div style={{ marginTop: '12px' }} >
             <TerminiGapField app={props.app} />
           </div>
         )}
