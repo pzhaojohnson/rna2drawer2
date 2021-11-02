@@ -33,7 +33,7 @@ export class RotationField extends React.Component<Props> {
     degrees = round(degrees, 2);
 
     this.state = {
-      value: degrees.toString(),
+      value: degrees + '\xB0',
     };
   }
 
