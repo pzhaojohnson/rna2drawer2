@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { AppInterface as App } from 'AppInterface';
 import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
@@ -14,59 +12,74 @@ export type Props = {
   primaryBonds: PrimaryBondInterface[];
 }
 
-// returns undefined for an empty primary bonds array
+type Value = string;
+
+type State = {
+  value: Value;
+}
+
+// returns an empty string value for an empty primary bonds array
 // or if not all primary bonds have the same base padding
-function currBasePadding(primaryBonds: PrimaryBondInterface[]): number | undefined {
-  let bps = new Set<number>();
+function currBasePadding(primaryBonds: PrimaryBondInterface[]): Value {
+  let bps = new Set<Value>();
   primaryBonds.forEach(pb => {
-    bps.add(round(pb.basePadding1, 1));
-    bps.add(round(pb.basePadding2, 1));
+    let bp1 = round(pb.basePadding1, 1);
+    let bp2 = round(pb.basePadding2, 1);
+    bps.add(bp1.toString());
+    bps.add(bp2.toString());
   });
   if (bps.size == 1) {
     return bps.values().next().value;
+  } else {
+    return '';
   }
 }
 
-function valueIsValid(value: string): boolean {
-  let n = Number.parseFloat(value);
-  return Number.isFinite(n) && n >= 0;
+function isBlank(v: Value): boolean {
+  return v.trim().length == 0;
 }
 
-function valueIsBlank(value: string): boolean {
-  return value.trim().length == 0;
+function areEqual(v1: Value, v2: Value): boolean {
+  return Number.parseFloat(v1) == Number.parseFloat(v2);
 }
 
-function setBasePaddingsIfShould(props: Props, value: string) {
-  if (valueIsValid(value)) {
-    let bp = Number.parseFloat(value);
-    if (bp != currBasePadding(props.primaryBonds)) {
-      props.app.pushUndo();
-      props.primaryBonds.forEach(pb => {
-        pb.basePadding1 = bp;
-        pb.basePadding2 = bp;
-      });
-      PrimaryBond.recommendedDefaults.basePadding1 = bp;
-      PrimaryBond.recommendedDefaults.basePadding2 = bp;
-      props.app.drawingChangedNotByInteraction();
+function constrainBasePadding(bp: number): number {
+  if (!Number.isFinite(bp)) {
+    return 0;
+  } else if (bp < 0) {
+    return 0;
+  } else {
+    return bp;
+  }
+}
+
+export class BasePaddingField extends React.Component<Props> {
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      value: currBasePadding(props.primaryBonds),
     }
   }
-}
 
-export function BasePaddingField(props: Props) {
-  let bp = currBasePadding(props.primaryBonds);
-  let [value, setValue] = useState(typeof bp == 'number' ? bp.toString() : '');
-  return (
-    <div>
+  render() {
+    return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='text'
           className={textFieldStyles.input}
-          value={value}
-          onChange={event => setValue(event.target.value)}
-          onBlur={() => setBasePaddingsIfShould(props, value)}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => {
+            this.submit();
+            this.props.app.drawingChangedNotByInteraction();
+          }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setBasePaddingsIfShould(props, value);
+              this.submit();
+              this.props.app.drawingChangedNotByInteraction();
             }
           }}
           style={{ width: '32px' }}
@@ -78,15 +91,26 @@ export function BasePaddingField(props: Props) {
           Base Padding
         </p>
       </div>
-      {valueIsValid(value) || valueIsBlank(value) ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '3px' }}
-        >
-          Must be a nonnegative number.
-        </p>
-      )}
-    </div>
-  );
+    );
+  }
+
+  submit() {
+    if (!isBlank(this.state.value)) {
+      let bp = Number.parseFloat(this.state.value);
+      if (Number.isFinite(bp)) {
+        if (!areEqual(this.state.value, currBasePadding(this.props.primaryBonds))) {
+          this.props.app.pushUndo();
+          bp = constrainBasePadding(bp);
+          bp = round(bp, 2);
+          this.props.primaryBonds.forEach(pb => {
+            pb.basePadding1 = bp;
+            pb.basePadding2 = bp;
+          });
+          PrimaryBond.recommendedDefaults.basePadding1 = bp;
+          PrimaryBond.recommendedDefaults.basePadding2 = bp;
+          this.props.app.drawingChangedNotByInteraction();
+        }
+      }
+    }
+  }
 }
