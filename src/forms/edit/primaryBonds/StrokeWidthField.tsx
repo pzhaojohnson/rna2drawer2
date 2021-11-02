@@ -69,7 +69,7 @@ export function StrokeWidthField(props: Props) {
               setStrokeWidthsIfShould(props, value);
             }
           }}
-          style={{ width: '36px' }}
+          style={{ width: '32px' }}
         />
         <p
           className={`${textFieldStyles.label} unselectable`}
