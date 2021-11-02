@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { useState } from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { AppInterface as App } from 'AppInterface';
 import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
+import { parseNumber } from 'Parse/svg/number';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -14,59 +13,77 @@ export type Props = {
   primaryBonds: PrimaryBondInterface[];
 }
 
-// returns undefined for an empty primary bonds array
+type Value = string;
+
+type State = {
+  value: Value;
+}
+
+// returns an empty string value for an empty primary bonds array
 // or if not all primary bonds have the same stroke width
-function currStrokeWidth(primaryBonds: PrimaryBondInterface[]): number | undefined {
-  let sws = new Set<number>();
+function currStrokeWidth(primaryBonds: PrimaryBondInterface[]): Value {
+  let sws = new Set<Value>();
   primaryBonds.forEach(pb => {
     let sw = pb.line.attr('stroke-width');
-    if (typeof sw == 'number') {
-      sws.add(round(sw, 2));
+    let n = parseNumber(sw);
+    if (n) {
+      let pxs = n.convert('px').valueOf();
+      pxs = round(pxs, 2);
+      sws.add(pxs.toString());
     }
   });
   if (sws.size == 1) {
     return sws.values().next().value;
+  } else {
+    return '';
   }
 }
 
-function valueIsValid(value: string): boolean {
-  let n = Number.parseFloat(value);
-  return Number.isFinite(n) && n >= 0;
+function isBlank(v: Value): boolean {
+  return v.trim().length == 0;
 }
 
-function valueIsBlank(value: string): boolean {
-  return value.trim().length == 0;
+function areEqual(v1: Value, v2: Value): boolean {
+  return Number.parseFloat(v1) == Number.parseFloat(v2);
 }
 
-function setStrokeWidthsIfShould(props: Props, value: string) {
-  if (valueIsValid(value)) {
-    let sw = Number.parseFloat(value);
-    if (sw != currStrokeWidth(props.primaryBonds)) {
-      props.app.pushUndo();
-      props.primaryBonds.forEach(pb => {
-        pb.line.attr({ 'stroke-width': sw });
-      });
-      PrimaryBond.recommendedDefaults.line['stroke-width'] = sw;
-      props.app.drawingChangedNotByInteraction();
+function constrainStrokeWidth(sw: number): number {
+  if (!Number.isFinite(sw)) {
+    return 1;
+  } else if (sw < 0) {
+    return 0;
+  } else {
+    return sw;
+  }
+}
+
+export class StrokeWidthField extends React.Component<Props> {
+  state: State;
+  
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      value: currStrokeWidth(props.primaryBonds),
     }
   }
-}
-
-export function StrokeWidthField(props: Props) {
-  let sw = currStrokeWidth(props.primaryBonds);
-  let [value, setValue] = useState(typeof sw == 'number' ? sw.toString() : '');
-  return (
-    <div>
+  
+  render() {
+    return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='text'
           className={textFieldStyles.input}
-          value={value}
-          onChange={event => setValue(event.target.value)}
-          onBlur={() => setStrokeWidthsIfShould(props, value)}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => {
+            this.submit();
+            this.props.app.drawingChangedNotByInteraction();
+          }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setStrokeWidthsIfShould(props, value);
+              this.submit();
+              this.props.app.drawingChangedNotByInteraction();
             }
           }}
           style={{ width: '32px' }}
@@ -78,15 +95,24 @@ export function StrokeWidthField(props: Props) {
           Line Width
         </p>
       </div>
-      {valueIsValid(value) || valueIsBlank(value) ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '3px' }}
-        >
-          Must be a nonnegative number.
-        </p>
-      )}
-    </div>
-  );
+    );
+  }
+
+  submit() {
+    if (!isBlank(this.state.value)) {
+      let sw = Number.parseFloat(this.state.value);
+      if (Number.isFinite(sw)) {
+        if (!areEqual(this.state.value, currStrokeWidth(this.props.primaryBonds))) {
+          this.props.app.pushUndo();
+          sw = constrainStrokeWidth(sw);
+          sw = round(sw, 2);
+          this.props.primaryBonds.forEach(pb => {
+            pb.line.attr({ 'stroke-width': sw });
+          });
+          PrimaryBond.recommendedDefaults.line['stroke-width'] = sw;
+          this.props.app.drawingChangedNotByInteraction();
+        }
+      }
+    }
+  }
 }
