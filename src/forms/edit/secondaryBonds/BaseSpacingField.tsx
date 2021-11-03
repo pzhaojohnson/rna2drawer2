@@ -1,59 +1,63 @@
 import * as React from 'react';
-import { useState } from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { AppInterface as App } from 'AppInterface';
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
 import { round } from 'Math/round';
 
 export type Props = {
   app: App;
 }
 
-function currBaseSpacing(strictDrawing: StrictDrawing): number {
-  return round(
-    strictDrawing.generalLayoutProps().basePairBondLength,
-    2,
-  );
+type Value = string;
+
+type State = {
+  value: Value;
 }
 
-function valueIsValid(value: string): boolean {
-  let n = Number.parseFloat(value);
-  return Number.isFinite(n) && n >= 0;
+function isBlank(v: Value): boolean {
+  return v.trim().length == 0;
 }
 
-function valueIsBlank(value: string): boolean {
-  return value.trim().length == 0;
-}
-
-function setBaseSpacingIfShould(props: Props, value: string) {
-  if (valueIsValid(value)) {
-    let bs = Number.parseFloat(value);
-    if (bs != currBaseSpacing(props.app.strictDrawing)) {
-      props.app.pushUndo();
-      let generalLayoutProps = props.app.strictDrawing.generalLayoutProps();
-      generalLayoutProps.basePairBondLength = bs;
-      props.app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
-      props.app.strictDrawing.updateLayout();
-      props.app.drawingChangedNotByInteraction();
-    }
+function constrainBaseSpacing(bs: number): number {
+  if (!Number.isFinite(bs)) {
+    return 0;
+  } else if (bs < 0) {
+    return 0;
+  } else {
+    return bs;
   }
 }
 
-export function BaseSpacingField(props: Props) {
-  let [value, setValue] = useState(currBaseSpacing(props.app.strictDrawing).toString());
-  return (
-    <div>
+export class BaseSpacingField extends React.Component<Props> {
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+
+    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps();
+    let bs = generalLayoutProps.basePairBondLength;
+    bs = round(bs, 2);
+
+    this.state = {
+      value: bs.toString(),
+    };
+  }
+
+  render() {
+    return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='text'
           className={textFieldStyles.input}
-          value={value}
-          onChange={event => setValue(event.target.value)}
-          onBlur={() => setBaseSpacingIfShould(props, value)}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => {
+            this.submit();
+            this.props.app.drawingChangedNotByInteraction();
+          }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setBaseSpacingIfShould(props, value);
+              this.submit();
+              this.props.app.drawingChangedNotByInteraction();
             }
           }}
           style={{ width: '32px' }}
@@ -65,15 +69,24 @@ export function BaseSpacingField(props: Props) {
           Base Spacing
         </p>
       </div>
-      {valueIsValid(value) || valueIsBlank(value) ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '3px' }}
-        >
-          Must be a nonnegative number.
-        </p>
-      )}
-    </div>
-  );
+    );
+  }
+
+  submit() {
+    if (!isBlank(this.state.value)) {
+      let bs = Number.parseFloat(this.state.value);
+      if (Number.isFinite(bs)) {
+        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps();
+        if (bs != generalLayoutProps.basePairBondLength) {
+          this.props.app.pushUndo();
+          bs = constrainBaseSpacing(bs);
+          bs = round(bs, 2);
+          generalLayoutProps.basePairBondLength = bs;
+          this.props.app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
+          this.props.app.strictDrawing.updateLayout();
+          this.props.app.drawingChangedNotByInteraction();
+        }
+      }
+    }
+  }
 }
