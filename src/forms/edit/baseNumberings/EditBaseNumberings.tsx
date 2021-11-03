@@ -77,7 +77,7 @@ export function EditBaseNumberings(props: Props) {
           <div style={{ marginBottom: '24px' }} >
             <FontFamilyField app={props.app} baseNumberings={bns} />
             <div style={{ marginTop: '8px' }} >
-              <FontSizeField app={props.app} />
+              <FontSizeField app={props.app} baseNumberings={bns} />
             </div>
             <div style={{ marginTop: '8px' }} >
               <BoldField app={props.app} />
