@@ -18,7 +18,7 @@ export function BringToFrontButton(props: Props) {
       onClick={() => {
         props.app.pushUndo();
         props.primaryBonds.forEach(pb => bringToFront(pb));
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
     />
   );
@@ -31,7 +31,7 @@ export function SendToBackButton(props: Props) {
       onClick={() => {
         props.app.pushUndo();
         props.primaryBonds.forEach(pb => sendToBack(pb));
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
     />
   );

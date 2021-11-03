@@ -119,24 +119,24 @@ describe('undo method', () => {
     app.strictDrawing.savableState = jest.fn(() => 'current state');
     app._undoRedo.undo = jest.fn(() => 'previous state');
     app.strictDrawing.applySavedState = jest.fn();
-    app.drawingChangedNotByInteraction = jest.fn();
+    app.refresh = jest.fn();
     expect(app.canUndo()).toBeTruthy();
     app.undo();
     expect(app._undoRedo.undo.mock.calls[0][0]).toBe('current state');
     expect(app.strictDrawing.applySavedState.mock.calls[0][0]).toBe('previous state');
-    expect(app.drawingChangedNotByInteraction.mock.calls.length).toBe(1);
+    expect(app.refresh.mock.calls.length).toBe(1);
   });
 
   it('when cannot undo', () => {
     let app = new App(() => NodeSVG());
     app._undoRedo.undo = jest.fn();
     app.strictDrawing.applySavedState = jest.fn();
-    app.drawingChangedNotByInteraction = jest.fn();
+    app.refresh = jest.fn();
     expect(app.canUndo()).toBeFalsy();
     app.undo();
     expect(app._undoRedo.undo.mock.calls.length).toBe(0);
     expect(app.strictDrawing.applySavedState.mock.calls.length).toBe(0);
-    expect(app.drawingChangedNotByInteraction.mock.calls.length).toBe(0);
+    expect(app.refresh.mock.calls.length).toBe(0);
   });
 });
 
@@ -159,34 +159,34 @@ describe('redo method', () => {
     app.strictDrawing.savableState = jest.fn(() => 'current state');
     app._undoRedo.redo = jest.fn(() => 'undone state');
     app.strictDrawing.applySavedState = jest.fn();
-    app.drawingChangedNotByInteraction = jest.fn();
+    app.refresh = jest.fn();
     expect(app.canRedo()).toBeTruthy();
     app.redo();
     expect(app._undoRedo.redo.mock.calls[0][0]).toBe('current state');
     expect(app.strictDrawing.applySavedState.mock.calls[0][0]).toBe('undone state');
-    expect(app.drawingChangedNotByInteraction.mock.calls.length).toBe(1);
+    expect(app.refresh.mock.calls.length).toBe(1);
   });
 
   it('when cannot redo', () => {
     let app = new App(() => NodeSVG());
     app._undoRedo.redo = jest.fn();
     app.strictDrawing.applySavedState = jest.fn();
-    app.drawingChangedNotByInteraction = jest.fn();
+    app.refresh = jest.fn();
     expect(app.canRedo()).toBeFalsy();
     app.redo();
     expect(app._undoRedo.redo.mock.calls.length).toBe(0);
     expect(app.strictDrawing.applySavedState.mock.calls.length).toBe(0);
-    expect(app.drawingChangedNotByInteraction.mock.calls.length).toBe(0);
+    expect(app.refresh.mock.calls.length).toBe(0);
   });
 });
 
-it('drawingChangedNotByInteraction method', () => {
+it('refresh method', () => {
   let app = new App(() => NodeSVG());
   let spies = [
     jest.spyOn(app.strictDrawingInteraction, 'refresh'),
     jest.spyOn(app, 'renderPeripherals'),
   ];
-  app.drawingChangedNotByInteraction();
+  app.refresh();
   spies.forEach(s => expect(s).toHaveBeenCalled());
 });
 

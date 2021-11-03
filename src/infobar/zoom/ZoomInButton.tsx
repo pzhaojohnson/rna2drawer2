@@ -16,7 +16,7 @@ export function ZoomInButton(props: Props) {
       onMouseOut={() => setHovered(false)}
       onClick={() => {
         zoomIn(props.app.strictDrawing.drawing);
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
       style={{
         width: '20px',

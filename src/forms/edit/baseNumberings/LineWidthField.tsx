@@ -36,7 +36,7 @@ function setLineWidthIfShould(app: App, value: string) {
         }
       });
       BaseNumbering.recommendedDefaults.line['stroke-width'] = n;
-      app.drawingChangedNotByInteraction();
+      app.refresh();
     }
   }
 }

@@ -53,7 +53,7 @@ export function OutlineField(props: Props) {
           } else {
             removeOutlines(props.bases);
           }
-          props.app.drawingChangedNotByInteraction();
+          props.app.refresh();
         }}
       />
       <p

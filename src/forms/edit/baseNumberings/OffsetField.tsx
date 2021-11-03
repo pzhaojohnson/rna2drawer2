@@ -30,7 +30,7 @@ function setOffsetIfShould(app: App, value: string) {
         seq.numberingOffset = n;
       });
       orientBaseNumberings(app.strictDrawing.drawing);
-      app.drawingChangedNotByInteraction();
+      app.refresh();
     }
   }
 }

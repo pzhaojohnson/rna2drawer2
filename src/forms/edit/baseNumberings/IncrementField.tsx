@@ -30,7 +30,7 @@ function setIncrementIfShould(app: App, value: string) {
         seq.numberingIncrement = n;
       });
       orientBaseNumberings(app.strictDrawing.drawing);
-      app.drawingChangedNotByInteraction();
+      app.refresh();
     }
   }
 }

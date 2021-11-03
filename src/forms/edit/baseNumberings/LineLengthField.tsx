@@ -32,7 +32,7 @@ function setLineLengthIfShould(app: App, value: string) {
         }
       });
       BaseNumbering.recommendedDefaults.lineLength = n;
-      app.drawingChangedNotByInteraction();
+      app.refresh();
     }
   }
 }

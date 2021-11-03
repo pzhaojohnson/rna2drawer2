@@ -18,7 +18,7 @@ export function SendToBackButton(props: Props) {
       onClick={() => {
         props.app.pushUndo();
         props.secondaryBonds.forEach(sb => sendToBack(sb));
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
     />
   );

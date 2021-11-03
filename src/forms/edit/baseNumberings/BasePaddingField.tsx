@@ -32,7 +32,7 @@ function setBasePaddingIfShould(app: App, value: string) {
         }
       });
       BaseNumbering.recommendedDefaults.basePadding = n;
-      app.drawingChangedNotByInteraction();
+      app.refresh();
     }
   }
 }

@@ -30,7 +30,7 @@ function setAnchorIfShould(app: App, value: string) {
         seq.numberingAnchor = n - seq.numberingOffset;
       });
       orientBaseNumberings(app.strictDrawing.drawing);
-      app.drawingChangedNotByInteraction();
+      app.refresh();
     }
   }
 }

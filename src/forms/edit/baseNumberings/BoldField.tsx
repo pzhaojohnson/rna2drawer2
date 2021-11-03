@@ -46,7 +46,7 @@ export function BoldField(props: Props) {
             }
           });
           BaseNumbering.recommendedDefaults.text['font-weight'] = fw;
-          props.app.drawingChangedNotByInteraction();
+          props.app.refresh();
         }}
       />
       <p

@@ -23,7 +23,7 @@ export interface AppInterface {
   drawingTitle: string;
   unspecifyDrawingTitle(): void;
   updateDocumentTitle(): void;
-  drawingChangedNotByInteraction(): void;
+  refresh(): void;
 
   pushUndo(): void;
   canUndo(): boolean;

@@ -51,7 +51,7 @@ export function RemoveSubsequence(props: Props): React.ReactElement {
                   props.close();
                   props.app.pushUndo();
                   remove(props.app.strictDrawing, range);
-                  props.app.drawingChangedNotByInteraction();
+                  props.app.refresh();
                 }
               }}
               disabled={!rangeIsValid}

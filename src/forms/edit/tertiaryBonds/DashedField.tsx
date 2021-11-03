@@ -38,7 +38,7 @@ export function DashedField(props: Props) {
             tb.path.attr({ 'stroke-dasharray': sda });
           });
           TertiaryBond.recommendedDefaults.path['stroke-dasharray'] = sda;
-          props.app.drawingChangedNotByInteraction();
+          props.app.refresh();
         }}
       />
       <p

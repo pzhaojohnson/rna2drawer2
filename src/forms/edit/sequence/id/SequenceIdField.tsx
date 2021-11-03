@@ -27,7 +27,7 @@ export class SequenceIdField extends React.Component {
           if (seq && id !== seq.id) {
             app.pushUndo();
             seq.id = id;
-            app.drawingChangedNotByInteraction();
+            app.refresh();
           }
         }}
       />

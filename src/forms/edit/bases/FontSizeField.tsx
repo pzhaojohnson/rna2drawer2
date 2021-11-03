@@ -78,12 +78,12 @@ export class FontSizeField extends React.Component<Props> {
           onChange={event => this.setState({ value: event.target.value })}
           onBlur={() => {
             this.submit();
-            this.props.app.drawingChangedNotByInteraction();
+            this.props.app.refresh();
           }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
               this.submit();
-              this.props.app.drawingChangedNotByInteraction();
+              this.props.app.refresh();
             }
           }}
           style={{ width: '36px' }}
@@ -118,7 +118,7 @@ export class FontSizeField extends React.Component<Props> {
           });
 
           Base.recommendedDefaults.text['font-size'] = fs;
-          this.props.app.drawingChangedNotByInteraction();
+          this.props.app.refresh();
         }
       }
     }

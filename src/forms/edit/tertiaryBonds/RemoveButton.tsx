@@ -22,7 +22,7 @@ export function RemoveButton(props: Props) {
           ids.forEach(id => {
             removeTertiaryBondById(props.app.strictDrawing.drawing, id);
           });
-          props.app.drawingChangedNotByInteraction();
+          props.app.refresh();
         }
       }}
     />

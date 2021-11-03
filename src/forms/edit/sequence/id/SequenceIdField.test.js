@@ -40,7 +40,7 @@ describe('create static method', () => {
 
       it('updates document title and refreshes field', () => {
         app.strictDrawing.drawing.getSequenceAtIndex(0).id = 'asdf';
-        let spy = jest.spyOn(app, 'drawingChangedNotByInteraction');
+        let spy = jest.spyOn(app, 'refresh');
         ele.props.setSequenceId('poiu');
         expect(document.title).toBe('poiu');
         expect(spy).toHaveBeenCalled();
@@ -59,7 +59,7 @@ describe('create static method', () => {
       app.strictDrawing.appendSequence('asdf', 'qwer');
       let ele = SequenceIdField.create(app);
       let spy1 = jest.spyOn(app, 'pushUndo');
-      let spy2 = jest.spyOn(app, 'drawingChangedNotByInteraction');
+      let spy2 = jest.spyOn(app, 'refresh');
       ele.props.setSequenceId('asdf');
       expect(spy1).not.toHaveBeenCalled();
       expect(spy2).not.toHaveBeenCalled();

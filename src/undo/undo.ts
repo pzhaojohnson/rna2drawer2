@@ -14,7 +14,7 @@ export function undo(app: App) {
     app.strictDrawing.applySavedState(
       app.undoRedo.undo(currState)
     );
-    app.drawingChangedNotByInteraction();
+    app.refresh();
   }
 }
 
@@ -25,6 +25,6 @@ export function redo(app: App) {
     app.strictDrawing.applySavedState(
       app.undoRedo.redo(currState)
     );
-    app.drawingChangedNotByInteraction();
+    app.refresh();
   }
 }

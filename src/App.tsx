@@ -184,12 +184,12 @@ export class App implements AppInterface {
 
   set drawingTitle(title: string) {
     this._drawingTitle = title;
-    this.drawingChangedNotByInteraction();
+    this.refresh();
   }
 
   unspecifyDrawingTitle() {
     this._drawingTitle = undefined;
-    this.drawingChangedNotByInteraction();
+    this.refresh();
   }
 
   updateDocumentTitle() {
@@ -197,7 +197,7 @@ export class App implements AppInterface {
     document.title = title ? title : 'RNA2Drawer';
   }
 
-  drawingChangedNotByInteraction() {
+  refresh() {
     this._strictDrawingInteraction.refresh();
     this.renderPeripherals();
   }

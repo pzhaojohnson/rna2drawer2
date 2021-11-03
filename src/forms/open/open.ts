@@ -12,7 +12,7 @@ function openRna2drawer1(app: App, saved: Saved): boolean {
   let rna2drawer1 = parseRna2drawer1(saved.contents);
   if (rna2drawer1) {
     addRna2drawer1(app.strictDrawing, rna2drawer1);
-    app.drawingChangedNotByInteraction();
+    app.refresh();
     return true;
   }
   return false;

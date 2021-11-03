@@ -48,7 +48,7 @@ it('exports name, ids, sequence and layout structure', () => {
   // ignores tertiary bonds
   addTertiaryBond(drawing, drawing.getBaseAtOverallPosition(5), drawing.getBaseAtOverallPosition(7));
   addTertiaryBond(drawing, drawing.getBaseAtOverallPosition(1), drawing.getBaseAtOverallPosition(14));
-  app.drawingChangedNotByInteraction();
+  app.refresh();
   Download.download = jest.fn();
   let b = ExportLayoutStructureButton({ app: app });
   b.props.onClick();
@@ -62,7 +62,7 @@ it('exports name, ids, sequence and layout structure', () => {
 it('when title of document is different from ids', () => {
   let app = new App(() => NodeSVG());
   app.strictDrawing.appendSequence('qwerzxcv', 'qwerqwer');
-  app.drawingChangedNotByInteraction();
+  app.refresh();
   document.title = 'QW ZXC asdf';
   Download.download = jest.fn();
   let b = ExportLayoutStructureButton({ app: app });
@@ -77,7 +77,7 @@ it('when title of document is different from ids', () => {
 it('when document has no title', () => {
   let app = new App(() => NodeSVG());
   app.strictDrawing.appendSequence('asdf', 'asdfqwer');
-  app.drawingChangedNotByInteraction();
+  app.refresh();
   document.title = '';
   Download.download = jest.fn();
   let b = ExportLayoutStructureButton({ app: app });

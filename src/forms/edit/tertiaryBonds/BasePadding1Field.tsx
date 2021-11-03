@@ -72,12 +72,12 @@ export class BasePadding1Field extends React.Component<Props> {
           onChange={event => this.setState({ value: event.target.value })}
           onBlur={() => {
             this.submit();
-            this.props.app.drawingChangedNotByInteraction();
+            this.props.app.refresh();
           }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
               this.submit();
-              this.props.app.drawingChangedNotByInteraction();
+              this.props.app.refresh();
             }
           }}
           style={{ width: '36px' }}
@@ -102,7 +102,7 @@ export class BasePadding1Field extends React.Component<Props> {
             tb.basePadding1 = bp1;
           });
           TertiaryBond.recommendedDefaults.basePadding1 = bp1;
-          this.props.app.drawingChangedNotByInteraction();
+          this.props.app.refresh();
         }
       }
     }

@@ -168,7 +168,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                     }
                     delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                     props.close();
-                    props.app.drawingChangedNotByInteraction();
+                    props.app.refresh();
                   }
                 }}
               />

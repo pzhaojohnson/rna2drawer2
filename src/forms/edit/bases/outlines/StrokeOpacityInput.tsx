@@ -79,12 +79,12 @@ export class StrokeOpacityInput extends React.Component<Props> {
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {
           this.submit();
-          this.props.app.drawingChangedNotByInteraction();
+          this.props.app.refresh();
         }}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.drawingChangedNotByInteraction();
+            this.props.app.refresh();
           }
         }}
         style={{ width: '32px', textAlign: 'end' }}
@@ -105,7 +105,7 @@ export class StrokeOpacityInput extends React.Component<Props> {
             o.circle.attr({ 'stroke-opacity': so });
           });
           CircleBaseAnnotation.recommendedDefaults.circle['stroke-opacity'] = so;
-          this.props.app.drawingChangedNotByInteraction();
+          this.props.app.refresh();
         }
       }
     }

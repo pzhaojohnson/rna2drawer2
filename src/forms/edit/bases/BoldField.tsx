@@ -57,7 +57,7 @@ export function BoldField(props: Props) {
             b.text.center(center.x, center.y);
           });
           Base.recommendedDefaults.text['font-weight'] = fw;
-          props.app.drawingChangedNotByInteraction();
+          props.app.refresh();
         }}
       />
       <p

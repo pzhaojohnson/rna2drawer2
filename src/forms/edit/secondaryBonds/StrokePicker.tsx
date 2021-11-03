@@ -55,7 +55,7 @@ export function StrokePicker(props: Props) {
               sb.line.attr({ 'stroke': hex });
               SecondaryBond.recommendedDefaults[sb.type].line['stroke'] = hex;
             });
-            props.app.drawingChangedNotByInteraction();
+            props.app.refresh();
           }
         }
       }}

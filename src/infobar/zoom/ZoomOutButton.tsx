@@ -16,7 +16,7 @@ export function ZoomOutButton(props: Props) {
       onMouseOut={() => setHovered(false)}
       onClick={() => {
         zoomOut(props.app.strictDrawing.drawing);
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
       style={{
         width: '20px',

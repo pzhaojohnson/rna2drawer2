@@ -6,7 +6,7 @@ import { sendToBack } from 'Draw/bonds/curved/z';
 
 export type Props = {
   app: App;
-  
+
   // the tertiary bonds to send to the back
   tertiaryBonds: TertiaryBond[];
 }
@@ -18,7 +18,7 @@ export function SendToBackButton(props: Props) {
       onClick={() => {
         props.app.pushUndo();
         props.tertiaryBonds.forEach(tb => sendToBack(tb));
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
     />
   );

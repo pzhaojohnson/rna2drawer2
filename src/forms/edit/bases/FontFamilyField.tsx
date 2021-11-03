@@ -48,7 +48,7 @@ export function FontFamilyField(props: Props) {
             });
 
             Base.recommendedDefaults.text['font-family'] = event.target.value;
-            props.app.drawingChangedNotByInteraction();
+            props.app.refresh();
           }
         }}
         styles={{ container: { minWidth: '232px' } }}

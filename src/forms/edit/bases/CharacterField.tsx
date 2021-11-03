@@ -35,12 +35,12 @@ export class CharacterField extends React.Component<Props> {
           onChange={event => this.setState({ value: event.target.value })}
           onBlur={() => {
             this.submit();
-            this.props.app.drawingChangedNotByInteraction();
+            this.props.app.refresh();
           }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
               this.submit();
-              this.props.app.drawingChangedNotByInteraction();
+              this.props.app.refresh();
             }
           }}
           style={{ width: '16px' }}
@@ -71,7 +71,7 @@ export class CharacterField extends React.Component<Props> {
         // recenter
         this.props.base.text.center(center.x, center.y);
 
-        this.props.app.drawingChangedNotByInteraction();
+        this.props.app.refresh();
       }
     }
   }

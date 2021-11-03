@@ -53,7 +53,7 @@ export function FillPicker(props: Props) {
             props.bases.forEach(b => {
               b.text.attr({ 'fill': value.color.toHex() });
             });
-            props.app.drawingChangedNotByInteraction();
+            props.app.refresh();
           }
         }
       }}

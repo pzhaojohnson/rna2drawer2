@@ -105,7 +105,7 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
                   updateDrawingTitle(props.app, fileName);
                   delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                   props.close();
-                  props.app.drawingChangedNotByInteraction();
+                  props.app.refresh();
                 }}
               />
             </div>

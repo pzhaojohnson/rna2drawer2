@@ -57,7 +57,7 @@ export function ColorField(props: Props) {
               });
               BaseNumbering.recommendedDefaults.text['fill'] = value.color.toHex();
               BaseNumbering.recommendedDefaults.line['stroke'] = value.color.toHex();
-              props.app.drawingChangedNotByInteraction();
+              props.app.refresh();
             }
           }
         }}

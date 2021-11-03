@@ -69,7 +69,7 @@ export function StrokePicker(props: Props) {
               }
             });
             TertiaryBond.recommendedDefaults.path['stroke'] = hex;
-            props.app.drawingChangedNotByInteraction();
+            props.app.refresh();
           }
         }
       }}

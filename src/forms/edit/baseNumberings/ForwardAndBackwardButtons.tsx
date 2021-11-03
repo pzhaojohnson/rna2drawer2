@@ -18,7 +18,7 @@ export function BringToFrontButton(props: Props) {
             bringToFront(b.numbering);
           }
         });
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
     />
   );
@@ -35,7 +35,7 @@ export function SendToBackButton(props: Props) {
             sendToBack(b.numbering);
           }
         });
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
     />
   );

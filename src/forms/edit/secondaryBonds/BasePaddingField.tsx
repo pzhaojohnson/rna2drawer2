@@ -74,12 +74,12 @@ export class BasePaddingField extends React.Component<Props> {
           onChange={event => this.setState({ value: event.target.value })}
           onBlur={() => {
             this.submit();
-            this.props.app.drawingChangedNotByInteraction();
+            this.props.app.refresh();
           }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
               this.submit();
-              this.props.app.drawingChangedNotByInteraction();
+              this.props.app.refresh();
             }
           }}
           style={{ width: '32px' }}
@@ -110,7 +110,7 @@ export class BasePaddingField extends React.Component<Props> {
             SecondaryBond.recommendedDefaults[t].basePadding1 = bp;
             SecondaryBond.recommendedDefaults[t].basePadding2 = bp;
           });
-          this.props.app.drawingChangedNotByInteraction();
+          this.props.app.refresh();
         }
       }
     }

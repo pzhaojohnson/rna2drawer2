@@ -78,12 +78,12 @@ export class StrokeWidthField extends React.Component<Props> {
           onChange={event => this.setState({ value: event.target.value })}
           onBlur={() => {
             this.submit();
-            this.props.app.drawingChangedNotByInteraction();
+            this.props.app.refresh();
           }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
               this.submit();
-              this.props.app.drawingChangedNotByInteraction();
+              this.props.app.refresh();
             }
           }}
           style={{ width: '32px' }}
@@ -108,7 +108,7 @@ export class StrokeWidthField extends React.Component<Props> {
             o.circle.attr({ 'stroke-width': sw });
           });
           CircleBaseAnnotation.recommendedDefaults.circle['stroke-width'] = sw;
-          this.props.app.drawingChangedNotByInteraction();
+          this.props.app.refresh();
         }
       }
     }

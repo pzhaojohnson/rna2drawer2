@@ -59,7 +59,7 @@ function constrainStrokeWidth(sw: number): number {
 
 export class StrokeWidthField extends React.Component<Props> {
   state: State;
-  
+
   constructor(props: Props) {
     super(props);
 
@@ -67,7 +67,7 @@ export class StrokeWidthField extends React.Component<Props> {
       value: currStrokeWidth(props.secondaryBonds),
     }
   }
-  
+
   render() {
     return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
@@ -78,12 +78,12 @@ export class StrokeWidthField extends React.Component<Props> {
           onChange={event => this.setState({ value: event.target.value })}
           onBlur={() => {
             this.submit();
-            this.props.app.drawingChangedNotByInteraction();
+            this.props.app.refresh();
           }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
               this.submit();
-              this.props.app.drawingChangedNotByInteraction();
+              this.props.app.refresh();
             }
           }}
           style={{ width: '32px' }}
@@ -112,7 +112,7 @@ export class StrokeWidthField extends React.Component<Props> {
           secondaryBondTypes.forEach(t => {
             SecondaryBond.recommendedDefaults[t].line['stroke-width'] = sw;
           });
-          this.props.app.drawingChangedNotByInteraction();
+          this.props.app.refresh();
         }
       }
     }

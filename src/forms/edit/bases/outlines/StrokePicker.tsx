@@ -57,7 +57,7 @@ export function StrokePicker(props: Props) {
               o.circle.attr({ 'stroke': hex });
             });
             CircleBaseAnnotation.recommendedDefaults.circle['stroke'] = hex;
-            props.app.drawingChangedNotByInteraction();
+            props.app.refresh();
           }
         }
       }}

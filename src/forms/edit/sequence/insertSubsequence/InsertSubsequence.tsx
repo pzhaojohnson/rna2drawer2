@@ -56,7 +56,7 @@ export function InsertSubsequence(props: Props): React.ReactElement {
                   props.app.pushUndo();
                   insert(props.app.strictDrawing, inputs);
                   delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
-                  props.app.drawingChangedNotByInteraction();
+                  props.app.refresh();
                 }
               }}
               disabled={!inputsAreValid}

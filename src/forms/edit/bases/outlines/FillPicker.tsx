@@ -56,7 +56,7 @@ export function FillPicker(props: Props) {
               o.circle.attr({ 'fill': hex });
             });
             CircleBaseAnnotation.recommendedDefaults.circle['fill'] = hex;
-            props.app.drawingChangedNotByInteraction();
+            props.app.refresh();
           }
         }
       }}

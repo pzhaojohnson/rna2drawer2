@@ -42,7 +42,7 @@ export function UsToTsButton(props: Props) {
               b.text.center(center.x, center.y);
             }
           });
-          props.app.drawingChangedNotByInteraction();
+          props.app.refresh();
         }
       }}
       borderStyle={props.borderStyle}

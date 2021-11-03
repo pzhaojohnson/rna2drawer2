@@ -18,7 +18,7 @@ export function BringToFrontButton(props: Props) {
       onClick={() => {
         props.app.pushUndo();
         props.secondaryBonds.forEach(sb => bringToFront(sb));
-        props.app.drawingChangedNotByInteraction();
+        props.app.refresh();
       }}
     />
   );

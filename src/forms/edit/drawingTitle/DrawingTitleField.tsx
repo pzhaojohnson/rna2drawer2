@@ -16,11 +16,11 @@ export function DrawingTitleField(props: Props): React.ReactElement {
         if (v) {
           if (v != props.app.drawingTitle) {
             props.app.drawingTitle = v;
-            props.app.drawingChangedNotByInteraction();
+            props.app.refresh();
           }
         } else {
           props.app.unspecifyDrawingTitle();
-          props.app.drawingChangedNotByInteraction();
+          props.app.refresh();
         }
       }}
     />
