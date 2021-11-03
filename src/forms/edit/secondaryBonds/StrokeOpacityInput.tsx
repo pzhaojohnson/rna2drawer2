@@ -38,18 +38,18 @@ function currStrokeOpacityPercentage(secondaryBonds: SecondaryBondInterface[]): 
   }
 }
 
-function valueIsValid(v: Value): boolean {
-  let n = Number.parseFloat(v);
-  return Number.isFinite(n);
+function isBlank(v: Value): boolean {
+  return v.trim().length == 0;
 }
 
-function valuesAreEqual(v1: Value, v2: Value): boolean {
+function areEqual(v1: Value, v2: Value): boolean {
   return Number.parseFloat(v1) == Number.parseFloat(v2);
 }
 
-// converts values less than 0 to 0 and greater than 1 to 1
-function clampOpacity(o: number): number {
-  if (o < 0) {
+function constrainOpacity(o: number): number {
+  if (!Number.isFinite(o)) {
+    return 1;
+  } else if (o < 0) {
     return 0;
   } else if (o > 1) {
     return 1;
@@ -92,18 +92,20 @@ export class StrokeOpacityInput extends React.Component<Props> {
   }
 
   submit() {
-    if (valueIsValid(this.state.value)) {
-      if (!valuesAreEqual(this.state.value, currStrokeOpacityPercentage(this.props.secondaryBonds))) {
-        this.props.app.pushUndo();
-        let sop = Number.parseFloat(this.state.value);
-        let so = sop / 100;
-        so = clampOpacity(so);
-        so = round(so, 4);
-        this.props.secondaryBonds.forEach(sb => {
-          sb.line.attr({ 'stroke-opacity': so });
-          SecondaryBond.recommendedDefaults[sb.type].line['stroke-opacity'] = so;
-        });
-        this.props.app.drawingChangedNotByInteraction();
+    if (!isBlank(this.state.value)) {
+      let sop = Number.parseFloat(this.state.value);
+      if (Number.isFinite(sop)) {
+        if (!areEqual(this.state.value, currStrokeOpacityPercentage(this.props.secondaryBonds))) {
+          this.props.app.pushUndo();
+          let so = sop / 100;
+          so = constrainOpacity(so);
+          so = round(so, 4);
+          this.props.secondaryBonds.forEach(sb => {
+            sb.line.attr({ 'stroke-opacity': so });
+            SecondaryBond.recommendedDefaults[sb.type].line['stroke-opacity'] = so;
+          });
+          this.props.app.drawingChangedNotByInteraction();
+        }
       }
     }
   }
