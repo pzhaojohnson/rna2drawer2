@@ -1,19 +1,24 @@
 import * as React from 'react';
 import { FontFamilySelect } from 'Forms/fields/font/FontFamilySelect';
 import { AppInterface as App } from 'AppInterface';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 
-// returns undefined if there are no base numberings in the drawing
-// or if base numberings do not all have the same font family
-function currFontFamilyOfBaseNumberings(drawing: Drawing): string | undefined {
+export type Props = {
+  app: App;
+
+  // the base numberings to edit
+  baseNumberings: BaseNumberingInterface[];
+}
+
+// returns undefined for an empty base numberings array
+// or if not all base numberings have the same font family
+function currFontFamily(baseNumberings: BaseNumberingInterface[]): string | undefined {
   let ffs = new Set<string>();
-  drawing.bases().forEach(b => {
-    if (b.numbering) {
-      let ff = b.numbering.text.attr('font-family');
-      if (typeof ff == 'string') {
-        ffs.add(ff);
-      }
+  baseNumberings.forEach(bn => {
+    let ff = bn.text.attr('font-family');
+    if (typeof ff == 'string') {
+      ffs.add(ff);
     }
   });
   if (ffs.size == 1) {
@@ -21,23 +26,17 @@ function currFontFamilyOfBaseNumberings(drawing: Drawing): string | undefined {
   }
 }
 
-export type Props = {
-  app: App;
-}
-
 export function FontFamilyField(props: Props) {
   return (
     <div style={{ width: '232px' }} >
       <FontFamilySelect
-        value={currFontFamilyOfBaseNumberings(props.app.strictDrawing.drawing)}
+        value={currFontFamily(props.baseNumberings)}
         onChange={event => {
-          if (event.target.value != currFontFamilyOfBaseNumberings(props.app.strictDrawing.drawing)) {
+          if (event.target.value != currFontFamily(props.baseNumberings)) {
             props.app.pushUndo();
-            props.app.strictDrawing.drawing.bases().forEach(b => {
-              if (b.numbering) {
-                b.numbering.text.attr({ 'font-family': event.target.value });
-                b.numbering.reposition();
-              }
+            props.baseNumberings.forEach(bn => {
+              bn.text.attr({ 'font-family': event.target.value });
+              bn.reposition();
             });
             BaseNumbering.recommendedDefaults.text['font-family'] = event.target.value;
             props.app.drawingChangedNotByInteraction();

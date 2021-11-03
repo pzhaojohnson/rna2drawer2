@@ -3,6 +3,7 @@ import { CloseButton } from 'Forms/buttons/CloseButton';
 import styles from './EditBaseNumberings.css';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/number/BaseNumberingInterface';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
 import { BoldField } from './BoldField';
@@ -14,14 +15,14 @@ import { OffsetField } from './OffsetField';
 import { AnchorField } from './AnchorField';
 import { IncrementField } from './IncrementField';
 
-function numBaseNumberings(drawing: Drawing): number {
-  let n = 0;
+function baseNumberings(drawing: Drawing): BaseNumbering[] {
+  let bns: BaseNumbering[] = [];
   drawing.bases().forEach(b => {
     if (b.numbering) {
-      n++;
+      bns.push(b.numbering);
     }
   });
-  return n;
+  return bns;
 }
 
 function Title() {
@@ -54,6 +55,7 @@ export interface Props {
 }
 
 export function EditBaseNumberings(props: Props) {
+  let bns = baseNumberings(props.app.strictDrawing.drawing);
   return (
     <div
       className={styles.form}
@@ -71,9 +73,9 @@ export function EditBaseNumberings(props: Props) {
         <TitleUnderline />
       </div>
       <div style={{ margin: '24px 40px 0px 40px' }} >
-        {numBaseNumberings(props.app.strictDrawing.drawing) == 0 ? null : (
+        {bns.length == 0 ? null : (
           <div style={{ marginBottom: '24px' }} >
-            <FontFamilyField app={props.app} />
+            <FontFamilyField app={props.app} baseNumberings={bns} />
             <div style={{ marginTop: '8px' }} >
               <FontSizeField app={props.app} />
             </div>
