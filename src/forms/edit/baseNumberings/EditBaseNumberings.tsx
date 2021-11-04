@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
-import styles from './EditBaseNumberings.css';
+import formStyles from './EditBaseNumberings.css';
+import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/number/BaseNumberingInterface';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
 import { BoldField } from './BoldField';
-import { ColorField } from './ColorField';
+import { ColorPicker } from './ColorPicker';
+import { OpacityInput } from './OpacityInput';
 import { LineWidthField } from './LineWidthField';
 import { LineLengthField } from './LineLengthField';
 import { BasePaddingField } from './BasePaddingField';
@@ -58,7 +60,7 @@ export function EditBaseNumberings(props: Props) {
   let bns = baseNumberings(props.app.strictDrawing.drawing);
   return (
     <div
-      className={styles.form}
+      className={formStyles.form}
       style={{ position: 'relative', width: '336px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
@@ -83,7 +85,17 @@ export function EditBaseNumberings(props: Props) {
               <BoldField app={props.app} baseNumberings={bns} />
             </div>
             <div style={{ marginTop: '24px' }} >
-              <ColorField app={props.app} />
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                <ColorPicker app={props.app} baseNumberings={bns} />
+                <div style={{ marginLeft: '12px' }} >
+                  <OpacityInput app={props.app} baseNumberings={bns} />
+                </div>
+                <div style={{ marginLeft: '8px' }} >
+                  <p className={`${colorFieldStyles.label} unselectable`} >
+                    Color
+                  </p>
+                </div>
+              </div>
             </div>
             <div style={{ marginTop: '24px' }} >
               <LineWidthField app={props.app} />
