@@ -98,7 +98,7 @@ export function EditBaseNumberings(props: Props) {
               </div>
             </div>
             <div style={{ marginTop: '24px' }} >
-              <LineWidthField app={props.app} />
+              <LineWidthField app={props.app} baseNumberings={bns} />
             </div>
             <div style={{ marginTop: '8px' }} >
               <LineLengthField app={props.app} />
