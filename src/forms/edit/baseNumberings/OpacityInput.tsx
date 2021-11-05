@@ -113,6 +113,8 @@ export class OpacityInput extends React.Component<Props> {
             bn.text.attr({ 'fill-opacity': o });
             bn.line.attr({ 'stroke-opacity': o });
           });
+          BaseNumbering.recommendedDefaults.text['fill-opacity'] = o;
+          BaseNumbering.recommendedDefaults.line['stroke-opacity'] = o;
           this.props.app.refresh();
         }
       }
