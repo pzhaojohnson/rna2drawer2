@@ -1,81 +1,113 @@
 import * as React from 'react';
-import { useState } from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { AppInterface as App } from 'AppInterface';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { round } from 'Math/round';
 
-// returns undefined if there are no base numberings in the drawing
-// and assumes that all line lengths are the same
-function currLineLength(drawing: Drawing): number | undefined {
-  let ll = drawing.bases().find(b => b.numbering)?.numbering?.lineLength;
-  if (typeof ll == 'number') {
-    return round(ll, 2);
-  }
-}
-
-function valueIsValid(value: string): boolean {
-  let n = Number.parseFloat(value);
-  return Number.isFinite(n) && n >= 0;
-}
-
-function setLineLengthIfShould(app: App, value: string) {
-  if (valueIsValid(value)) {
-    let n = Number.parseFloat(value);
-    if (n != currLineLength(app.strictDrawing.drawing)) {
-      app.pushUndo();
-      app.strictDrawing.drawing.bases().forEach(b => {
-        if (b.numbering) {
-          b.numbering.lineLength = n;
-        }
-      });
-      BaseNumbering.recommendedDefaults.lineLength = n;
-      app.refresh();
-    }
-  }
-}
-
 export type Props = {
   app: App;
+
+  // the base numberings to edit
+  baseNumberings: BaseNumberingInterface[];
 }
 
-export function LineLengthField(props: Props) {
-  let ll = currLineLength(props.app.strictDrawing.drawing);
-  let [value, setValue] = useState(typeof ll == 'number' ? ll.toString() : '');
-  return (
-    <div>
+type Value = string;
+
+type State = {
+  value: Value;
+}
+
+// returns an empty string value for an empty base numberings array
+// or if not all base numberings have the same line length
+function currLineLength(baseNumberings: BaseNumberingInterface[]): Value {
+  let lls = new Set<Value>();
+  baseNumberings.forEach(bn => {
+    let ll = bn.lineLength;
+    if (typeof ll == 'number') {
+      ll = round(ll, 2);
+      lls.add(ll.toString());
+    }
+  });
+  if (lls.size == 1) {
+    return lls.values().next().value;
+  } else {
+    return '';
+  }
+}
+
+function isBlank(v: Value): boolean {
+  return v.trim().length == 0;
+}
+
+function areEqual(v1: Value, v2: Value): boolean {
+  return Number.parseFloat(v1) == Number.parseFloat(v2);
+}
+
+function constrainLineLength(ll: number): number {
+  if (!Number.isFinite(ll)) {
+    return 8;
+  } else if (ll < 0) {
+    return 0;
+  } else {
+    return ll;
+  }
+}
+
+export class LineLengthField extends React.Component<Props> {
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      value: currLineLength(props.baseNumberings),
+    };
+  }
+
+  render() {
+    return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='text'
           className={textFieldStyles.input}
-          value={value}
-          onChange={event => setValue(event.target.value)}
-          onBlur={() => setLineLengthIfShould(props.app, value)}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => {
+            this.submit();
+            this.props.app.refresh();
+          }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setLineLengthIfShould(props.app, value);
+              this.submit();
+              this.props.app.refresh();
             }
           }}
-          style={{ width: '36px' }}
+          style={{ width: '32px' }}
         />
-        <p
-          className={`${textFieldStyles.label} unselectable`}
-          style={{ marginLeft: '8px' }}
-        >
-          Line Length
-        </p>
+        <div style={{ marginLeft: '8px' }} >
+          <p className={`${textFieldStyles.label} unselectable`} >
+            Line Length
+          </p>
+        </div>
       </div>
-      {valueIsValid(value) ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '3px' }}
-        >
-          Must be a nonnegative number.
-        </p>
-      )}
-    </div>
-  );
+    );
+  }
+
+  submit() {
+    if (!isBlank(this.state.value)) {
+      let ll = Number.parseFloat(this.state.value);
+      if (Number.isFinite(ll)) {
+        if (!areEqual(this.state.value, currLineLength(this.props.baseNumberings))) {
+          this.props.app.pushUndo();
+          ll = constrainLineLength(ll);
+          this.props.baseNumberings.forEach(bn => {
+            bn.lineLength = ll;
+          });
+          BaseNumbering.recommendedDefaults.lineLength = ll;
+          this.props.app.refresh();
+        }
+      }
+    }
+  }
 }
