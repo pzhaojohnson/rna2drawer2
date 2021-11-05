@@ -28,7 +28,7 @@ export class BaseNumbering implements BaseNumberingInterface {
 
     this.text = text;
     this.line = line;
-    
+
     // use the attr method to check if an ID is initialized
     // since the id method itself will initialize an ID (to
     // a non-UUID)
@@ -127,10 +127,12 @@ BaseNumbering.recommendedDefaults = {
     'font-size': 8,
     'font-weight': 'normal',
     'fill': '#808080',
+    'fill-opacity': 1,
   },
   line: {
     'stroke': '#808080',
     'stroke-width': 1,
+    'stroke-opacity': 1,
   },
   basePadding: 8,
   lineLength: 8,
