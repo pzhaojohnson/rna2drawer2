@@ -18,14 +18,6 @@ type State = {
   value: Value;
 }
 
-function constrainNumberingAnchor(na: number): number {
-  if (!Number.isFinite(na)) {
-    return 0;
-  } else {
-    return Math.floor(na);
-  }
-}
-
 export class NumberingAnchorInput extends React.Component<Props> {
   state: State;
 
@@ -63,18 +55,23 @@ export class NumberingAnchorInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let na = Number.parseFloat(this.state.value);
-      if (Number.isFinite(na)) {
-        na -= this.props.sequence.numberingOffset;
-        if (na != this.props.sequence.numberingAnchor) {
-          this.props.app.pushUndo();
-          na = constrainNumberingAnchor(na);
-          this.props.sequence.numberingAnchor = na;
-          orientBaseNumberings(this.props.app.strictDrawing.drawing);
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+    let na = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(na)) {
+      return;
+    }
+    na = Math.floor(na);
+    na -= this.props.sequence.numberingOffset;
+    if (na == this.props.sequence.numberingAnchor) {
+      return;
+    }
+
+    // set numbering anchor
+    this.props.app.pushUndo();
+    this.props.sequence.numberingAnchor = na;
+    orientBaseNumberings(this.props.app.strictDrawing.drawing);
+    this.props.app.refresh();
   }
 }

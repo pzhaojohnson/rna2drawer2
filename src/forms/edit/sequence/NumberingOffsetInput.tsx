@@ -18,14 +18,6 @@ type State = {
   value: Value;
 }
 
-function constrainNumberingOffset(no: number): number {
-  if (!Number.isFinite(no)) {
-    return 0;
-  } else {
-    return Math.floor(no);
-  }
-}
-
 export class NumberingOffsetInput extends React.Component<Props> {
   state: State;
 
@@ -60,17 +52,22 @@ export class NumberingOffsetInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let no = Number.parseFloat(this.state.value);
-      if (Number.isFinite(no)) {
-        if (no != this.props.sequence.numberingOffset) {
-          this.props.app.pushUndo();
-          no = constrainNumberingOffset(no);
-          this.props.sequence.numberingOffset = no;
-          orientBaseNumberings(this.props.app.strictDrawing.drawing);
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+    let no = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(no)) {
+      return;
+    }
+    no = Math.floor(no);
+    if (no == this.props.sequence.numberingOffset) {
+      return;
+    }
+
+    // set numbering offset
+    this.props.app.pushUndo();
+    this.props.sequence.numberingOffset = no;
+    orientBaseNumberings(this.props.app.strictDrawing.drawing);
+    this.props.app.refresh();
   }
 }
