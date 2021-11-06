@@ -1,7 +1,7 @@
 import App from '../../App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { EditSecondaryBondsButton } from './EditSecondaryBondsButton';
-import { EditSecondaryBonds } from '../../forms/edit/secondaryBonds/EditSecondaryBonds';
+import { EditSecondaryBonds } from 'Forms/edit/bonds/secondary/EditSecondaryBonds';
 
 let app = new App(() => NodeSVG());
 let b = EditSecondaryBondsButton({ app: app });

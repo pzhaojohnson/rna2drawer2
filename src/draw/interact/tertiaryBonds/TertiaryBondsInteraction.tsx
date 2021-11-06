@@ -17,7 +17,7 @@ import {
 import { addMousemoveListener } from '../listeners/addMousemoveListener';
 import { addMouseupListener } from '../listeners/addMouseupListener';
 import * as React from 'react';
-import { EditTertiaryBonds } from '../../../forms/edit/tertiaryBonds/EditTertiaryBonds';
+import { EditTertiaryBonds } from 'Forms/edit/bonds/tertiary/EditTertiaryBonds';
 
 class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   _app: App;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import { DroppedButton } from '../DroppedButton';
-import { EditSecondaryBonds } from '../../forms/edit/secondaryBonds/EditSecondaryBonds';
+import { EditSecondaryBonds } from 'Forms/edit/bonds/secondary/EditSecondaryBonds';
 
 interface Props {
   app: App;
