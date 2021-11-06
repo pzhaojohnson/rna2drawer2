@@ -3,6 +3,7 @@ import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
+import { isBlank } from 'Parse/isBlank';
 
 export type Props = {
   app: App;
@@ -15,10 +16,6 @@ type Value = string;
 
 type State = {
   value: Value;
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
 }
 
 export class NumberingIncrementInput extends React.Component<Props> {
