@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
 import formStyles from './EditBaseNumberings.css';
+import textFieldStyles from 'Forms/fields/text/TextField.css';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
@@ -13,9 +14,10 @@ import { OpacityInput } from './OpacityInput';
 import { LineWidthField } from './LineWidthField';
 import { LineLengthField } from './LineLengthField';
 import { BasePaddingField } from './BasePaddingField';
-import { OffsetField } from './OffsetField';
-import { AnchorField } from './AnchorField';
-import { IncrementField } from './IncrementField';
+import { NumberingOffsetInput } from 'Forms/edit/sequence/NumberingOffsetInput';
+import { NumberingAnchorInput } from 'Forms/edit/sequence/NumberingAnchorInput';
+import { NumberingIncrementInput } from 'Forms/edit/sequence/NumberingIncrementInput';
+import { atIndex } from 'Array/at';
 
 function baseNumberings(drawing: Drawing): BaseNumbering[] {
   let bns: BaseNumbering[] = [];
@@ -58,6 +60,10 @@ export interface Props {
 
 export function EditBaseNumberings(props: Props) {
   let bns = baseNumberings(props.app.strictDrawing.drawing);
+  let firstSequence = atIndex(props.app.strictDrawing.drawing.sequences, 0);
+  if (props.app.strictDrawing.drawing.sequences.length > 1) {
+    console.error('Unable to edit the numbering properties of more than one sequence.');
+  }
   return (
     <div
       className={formStyles.form}
@@ -108,13 +114,38 @@ export function EditBaseNumberings(props: Props) {
             </div>
           </div>
         )}
-        <OffsetField app={props.app} />
-        <div style={{ marginTop: '8px' }} >
-          <AnchorField app={props.app} />
-        </div>
-        <div style={{ marginTop: '8px' }} >
-          <IncrementField app={props.app} />
-        </div>
+        {!firstSequence ? null : (
+          <div>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+              <NumberingOffsetInput app={props.app} sequence={firstSequence} />
+              <div style={{ marginLeft: '8px' }} >
+                <p className={`${textFieldStyles.label} unselectable`} >
+                  Offset
+                </p>
+              </div>
+            </div>
+            <div style={{ marginTop: '8px' }} >
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                <NumberingAnchorInput app={props.app} sequence={firstSequence} />
+                <div style={{ marginLeft: '8px' }} >
+                  <p className={`${textFieldStyles.label} unselectable`} >
+                    Anchor
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div style={{ marginTop: '8px' }} >
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                <NumberingIncrementInput app={props.app} sequence={firstSequence} />
+                <div style={{ marginLeft: '8px' }} >
+                  <p className={`${textFieldStyles.label} unselectable`} >
+                    Increment
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
