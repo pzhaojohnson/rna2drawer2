@@ -21,16 +21,6 @@ function isBlank(v: Value): boolean {
   return v.trim().length == 0;
 }
 
-function constrainNumberingIncrement(ni: number): number {
-  if (!Number.isFinite(ni)) {
-    return 20;
-  } else if (ni < 1) {
-    return 1;
-  } else {
-    return Math.floor(ni);
-  }
-}
-
 export class NumberingIncrementInput extends React.Component<Props> {
   state: State;
 
@@ -65,17 +55,26 @@ export class NumberingIncrementInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let ni = Number.parseFloat(this.state.value);
-      if (Number.isFinite(ni)) {
-        if (ni != this.props.sequence.numberingIncrement) {
-          this.props.app.pushUndo();
-          ni = constrainNumberingIncrement(ni);
-          this.props.sequence.numberingIncrement = ni;
-          orientBaseNumberings(this.props.app.strictDrawing.drawing);
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+    let ni = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(ni)) {
+      return;
+    }
+    ni = Math.floor(ni);
+    if (ni == 0) {
+      return;
+    } else if (ni < 0) {
+      ni *= -1;
+    }
+    if (ni == this.props.sequence.numberingIncrement) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    this.props.sequence.numberingIncrement = ni;
+    orientBaseNumberings(this.props.app.strictDrawing.drawing);
+    this.props.app.refresh();
   }
 }
