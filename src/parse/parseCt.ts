@@ -1,10 +1,10 @@
 import { splitLines } from './splitLines';
-import isAllWhitespace from './isAllWhitespace';
+import { isBlank } from 'Parse/isBlank';
 import { nonemptySplitByWhitespace } from './nonemptySplitByWhitespace';
 import { areValid as partnersAreValid } from 'Partners/areValid';
 
 function _lineShouldBeIgnored(line: string): boolean {
-  if (isAllWhitespace(line)) {
+  if (isBlank(line)) {
     return true;
   } else {
     let items = nonemptySplitByWhitespace(line);

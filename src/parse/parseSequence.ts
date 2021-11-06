@@ -1,4 +1,4 @@
-import isAllWhitespace from './isAllWhitespace';
+import { isBlank } from 'Parse/isBlank';
 
 function _isNumber(c: string) {
   return c.match(/[0-9]/);
@@ -27,7 +27,7 @@ interface Options {
  * Letters are defined as [A-Z|a-z].
  * AUGCT letters are defined as [A|a|U|u|G|g|C|c|T|t].
  * Non-alphanumeric characters are those that are not letters or numbers.
- * 
+ *
  * Whitespace characters are always ignored.
  */
 function parseSequence(unparsed: string, options=({} as Options)): string {
@@ -35,7 +35,7 @@ function parseSequence(unparsed: string, options=({} as Options)): string {
   for (let i = 0; i < unparsed.length; i++) {
     let c = unparsed.charAt(i);
     let toBeIgnored = false;
-    if (isAllWhitespace(c)) {
+    if (isBlank(c)) {
       toBeIgnored = true;
     } else if (_isNumber(c) && options.ignoreNumbers) {
       toBeIgnored = true;

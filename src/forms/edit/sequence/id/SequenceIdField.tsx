@@ -1,5 +1,5 @@
 import * as React from 'react';
-import isAllWhitespace from '../../../../parse/isAllWhitespace';
+import { isBlank } from 'Parse/isBlank';
 import TextField from '../../../fields/text/TextField';
 import { AppInterface as App } from '../../../../AppInterface';
 
@@ -40,7 +40,7 @@ export class SequenceIdField extends React.Component {
         name={'Sequence ID'}
         initialValue={this.props.currSequenceId}
         checkValue={id => {
-          if (id.length == 0 || isAllWhitespace(id)) {
+          if (id.length == 0 || isBlank(id)) {
             return 'Sequence ID cannot be empty.';
           }
           return '';

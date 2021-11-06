@@ -1,4 +1,4 @@
-import isAllWhitespace from './isAllWhitespace';
+import { isBlank } from 'Parse/isBlank';
 
 /**
  * Returns the given string with all whitespace characters removed.
@@ -9,7 +9,7 @@ function removeWhitespace(s: string): string {
   for (let i = 0; i < s.length; i++) {
     let c = s.charAt(i);
 
-    if (!isAllWhitespace(c)) {
+    if (!isBlank(c)) {
       noWhitespace += c;
     }
   }
