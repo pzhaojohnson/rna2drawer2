@@ -7,7 +7,7 @@ import { RedoButton } from './RedoButton';
 import { EditDrawingTitleButton } from './EditDrawingTitleButton';
 import { EditSequenceDropright } from './sequence/EditSequenceDropright';
 import { EditBasesDropright } from './bases/EditBasesDropright';
-import { EditBaseNumberingButton } from './EditBaseNumberingButton';
+import { EditNumberingButton } from './EditNumberingButton';
 import { EditPrimaryBondsButton } from './EditPrimaryBondsButton';
 import { EditSecondaryBondsButton } from './EditSecondaryBondsButton';
 import { EditTertiaryBondsButton } from './EditTertiaryBondsButton';
@@ -35,7 +35,7 @@ export function EditDropdown(props: Props): React.ReactElement {
           <EditSecondaryBondsButton app={props.app} />
           <EditTertiaryBondsButton app={props.app} />
           <DroppedSeparator />
-          <EditBaseNumberingButton app={props.app} />
+          <EditNumberingButton app={props.app} />
           <EditLayoutButton app={props.app} />
         </div>
       )}
