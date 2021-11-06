@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
 import DroppedButton from '../../DroppedButton';
-import { EditSequenceId } from '../../../forms/edit/sequence/id/EditSequenceId';
+import { EditSequenceId } from 'Forms/edit/sequence/EditSequenceId';
 
 interface Props {
   app: App;
@@ -12,7 +12,12 @@ export function EditSequenceIdButton(props: Props): React.ReactElement {
     <DroppedButton
       text={'Sequence ID'}
       onClick={() => {
-        props.app.renderForm(() => EditSequenceId.create(props.app));
+        props.app.renderForm(close => (
+          <EditSequenceId
+            app={props.app}
+            unmount={close}
+          />
+        ));
       }}
     />
   );

@@ -1,7 +1,7 @@
 import App from '../../../App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { EditSequenceIdButton } from './EditSequenceIdButton';
-import { EditSequenceId } from '../../../forms/edit/sequence/id/EditSequenceId';
+import { EditSequenceId } from 'Forms/edit/sequence/EditSequenceId';
 
 let app = new App(() => NodeSVG());
 let b = EditSequenceIdButton({ app: app });
