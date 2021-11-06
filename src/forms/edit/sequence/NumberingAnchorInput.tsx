@@ -25,10 +25,10 @@ export class NumberingAnchorInput extends React.Component<Props> {
     super(props);
 
     let na = props.sequence.numberingAnchor;
-    let no = props.sequence.numberingOffset;
+    na += props.sequence.numberingOffset;
 
     this.state = {
-      value: (na + no).toString(),
+      value: na.toString(),
     };
   }
 
