@@ -1,67 +1,102 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { AppInterface as App } from 'AppInterface';
-import { round } from 'Math/round';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
-
-function allowedMismatchPercentage(app: App): string {
-  let n = 100 * app.strictDrawingInteraction.foldingMode.allowedMismatch;
-  n = round(n, 2);
-  return n.toString();
-}
-
-function valueIsValid(value: string): boolean {
-  let n = Number.parseFloat(value);
-  return Number.isFinite(n) && n >= 0 && n <= 100;
-}
-
-function setAllowedMismatchPercentageIfShould(app: App, value: string) {
-  if (valueIsValid(value) && value != allowedMismatchPercentage(app)) {
-    app.strictDrawingInteraction.foldingMode.allowedMismatch = Number.parseFloat(value) / 100;
-    app.renderPeripherals();
-  }
-}
+import { AppInterface as App } from 'AppInterface';
+import { FoldingModeInterface as FoldingMode } from 'Draw/interact/fold/FoldingModeInterface';
+import { round } from 'Math/round';
+import { isBlank } from 'Parse/isBlank';
 
 export type Props = {
   app: App;
 }
 
-export function AllowedMismatchField(props: Props) {
-  let [value, setValue] = useState(allowedMismatchPercentage(props.app));
-  return (
-    <div>
+// a percentage
+type Value = string;
+
+type State = {
+  value: Value;
+}
+
+function allowedMismatchPercentage(foldingMode: FoldingMode): Value {
+  let am = foldingMode.allowedMismatch;
+  let amp = 100 * am;
+  amp = round(amp, 0);
+  return amp + '%';
+}
+
+function areEqual(v1: Value, v2: Value): boolean {
+  return Number.parseFloat(v1) == Number.parseFloat(v2);
+}
+
+export class AllowedMismatchField extends React.Component<Props> {
+  state: State;
+
+  constructor(props: Props) {
+    super(props);
+
+    let foldingMode = props.app.strictDrawingInteraction.foldingMode;
+
+    this.state = {
+      value: allowedMismatchPercentage(foldingMode),
+    };
+  }
+
+  render() {
+    return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='text'
           className={textFieldStyles.input}
-          value={value}
-          onChange={event => setValue(event.target.value)}
-          onBlur={() => setAllowedMismatchPercentageIfShould(props.app, value)}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => {
+            this.submit();
+            this.props.app.refresh();
+          }}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setAllowedMismatchPercentageIfShould(props.app, value);
+              this.submit();
+              this.props.app.refresh();
             }
           }}
-          spellCheck='false'
-          style={{ width: '28px', textAlign: 'left', display: 'inline-block' }}
+          style={{ width: '32px' }}
         />
-        <p
-          className={`${textFieldStyles.label} unselectable`}
-          style={{ marginLeft: '4px' }}
-        >
-          % Mismatch Allowed
-        </p>
+        <div style={{ marginLeft: '8px' }} >
+          <p className={`${textFieldStyles.label} unselectable`} >
+            Mismatch Allowed
+          </p>
+        </div>
       </div>
-      {valueIsValid(value) ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '3px' }}
-        >
-          Must be between 0% and 100%.
-        </p>
-      )}
-    </div>
-  );
+    );
+  }
+
+  submit() {
+    if (isBlank(this.state.value)) {
+      return;
+    }
+
+    let foldingMode = this.props.app.strictDrawingInteraction.foldingMode;
+    if (areEqual(this.state.value, allowedMismatchPercentage(foldingMode))) {
+      return;
+    }
+
+    let amp = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(amp)) {
+      return;
+    }
+
+    let am = amp / 100;
+
+    // clamp value
+    if (am < 0) {
+      am = 0;
+    } else if (am > 1) {
+      am = 1;
+    }
+
+    am = round(am, 2);
+
+    // set value
+    foldingMode.allowedMismatch = am;
+    this.props.app.refresh();
+  }
 }
