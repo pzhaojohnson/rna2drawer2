@@ -22,12 +22,12 @@
 
 .input::placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.625);
+  color: rgba(0,0,0,0.65);
 }
 
 .input::-webkit-input-placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.625);
+  color: rgba(0,0,0,0.65);
 }
 
 /* for the text labeling the field */

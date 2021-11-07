@@ -51,12 +51,12 @@ input[type=text]:focus {
 
 input[type=text]::placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.625);
+  color: rgba(0,0,0,0.65);
 }
 
 input[type=text]::-webkit-input-placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.625);
+  color: rgba(0,0,0,0.65);
 }
 
 textarea {
@@ -84,12 +84,12 @@ textarea:focus {
 
 textarea::placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.625);
+  color: rgba(0,0,0,0.65);
 }
 
 textarea::-webkit-input-placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.625);
+  color: rgba(0,0,0,0.65);
 }
 
 button {
