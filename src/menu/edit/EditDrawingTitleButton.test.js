@@ -1,7 +1,7 @@
 import App from '../../App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { EditDrawingTitleButton } from './EditDrawingTitleButton';
-import { EditDrawingTitle } from '../../forms/edit/drawingTitle/EditDrawingTitle';
+import { EditDrawingTitle } from 'Forms/edit/title/EditDrawingTitle';
 
 let app = new App(() => NodeSVG());
 let b = EditDrawingTitleButton({ app: app });
