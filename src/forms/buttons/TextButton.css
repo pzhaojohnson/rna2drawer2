@@ -1,10 +1,13 @@
 .textButton {
   font-size: 12px;
-  color: blue;
+  color: #0000EE;
   cursor: pointer;
 }
 
 .textButton:hover {
-  transform: scale(1.15);
-  transition-duration: 0.25s;
+  text-decoration: underline;
+}
+
+.textButton:active {
+  transform: scale(0.9375);
 }
