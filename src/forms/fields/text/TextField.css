@@ -1,33 +1,33 @@
 /* for the input element of the field */
 .input {
-  border: 1px solid rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.175);
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.8);
+  color: rgba(0,0,0,0.875);
   border-radius: 2px;
 }
 
 .input:hover {
-  border-color: rgba(0,0,0,0.8);
+  border-color: rgba(0,0,0,0.875);
   transition-duration: 0.25s;
 }
 
 .input:focus {
   outline: none;
-  border-color: rgba(0,0,0,0.8);
+  border-color: rgba(0,0,0,0.875);
 }
 
 .input::placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.6);
+  color: rgba(0,0,0,0.625);
 }
 
 .input::-webkit-input-placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.6);
+  color: rgba(0,0,0,0.625);
 }
 
 /* for the text labeling the field */
@@ -36,7 +36,7 @@
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.8);
+  color: rgba(0,0,0,0.875);
 
   user-select: none;
   -webkit-user-select: none;
