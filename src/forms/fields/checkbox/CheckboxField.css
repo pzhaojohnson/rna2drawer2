@@ -31,13 +31,13 @@
   width: 14px;
   height: 14px;
   border: none;
-  background-color: #000033;
+  background-color: rgba(0,0,0,1);
 }
 
 .unchecked {
   width: 10px;
   height: 10px;
-  border: 2px solid rgba(0,0,0,0.2);
+  border: 2px solid rgba(0,0,0,0.175);
   background-color: white;
 }
 
@@ -46,7 +46,7 @@
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.8);
+  color: rgba(0,0,0,0.875);
 
   user-select: none;
   -webkit-user-select: none;
