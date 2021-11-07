@@ -46,7 +46,7 @@ export function GeneralBaseStyles(props: Props) {
   return (
     <div
       className={formStyles.form}
-      style={{ position: 'relative', width: '332px', height: '100%', overflow: 'auto' }}
+      style={{ position: 'relative', width: '324px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton

@@ -13,7 +13,7 @@ function Title() {
       className='unselectable'
       style={{ fontSize: '24px', color: 'rgba(0,0,0,1)' }}
     >
-      Edit Layout
+      Layout
     </p>
   );
 }
@@ -42,7 +42,7 @@ export function EditLayout(props: Props) {
       className={styles.form}
       style={{
         position: 'relative',
-        width: '332px',
+        width: '324px',
         height: '100%',
         display: 'flex',
         flexDirection: 'column',

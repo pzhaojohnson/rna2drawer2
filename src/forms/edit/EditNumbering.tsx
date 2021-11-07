@@ -35,7 +35,7 @@ function Title() {
       className='unselectable'
       style={{ fontSize: '24px', color: 'rgba(0,0,0,1)' }}
     >
-      Edit Numbering
+      Numbering
     </p>
   );
 }
@@ -67,7 +67,7 @@ export function EditNumbering(props: Props) {
   return (
     <div
       className={formStyles.form}
-      style={{ position: 'relative', width: '336px', height: '100%', overflow: 'auto' }}
+      style={{ position: 'relative', width: '324px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton

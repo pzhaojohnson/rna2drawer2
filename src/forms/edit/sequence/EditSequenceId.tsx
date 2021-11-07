@@ -16,7 +16,7 @@ function Title() {
       className='unselectable'
       style={{ fontSize: '24px', color: 'rgba(0,0,0,1)' }}
     >
-      Edit Sequence ID
+      Sequence ID
     </p>
   );
 }
