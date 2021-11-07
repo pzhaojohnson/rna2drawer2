@@ -40,7 +40,7 @@ export function FontFamilySelect(props: Props) {
   return (
     <Select
       defaultValue={typeof props.value == 'string' ? toOption(props.value) : undefined}
-      options={availableFontFamilies().map(ff => toOption(ff))}
+      options={availableFontFamilies().filter(ff => ff != props.value).map(ff => toOption(ff))}
       placeholder=''
       isMulti={false}
       isClearable={false}
@@ -69,12 +69,12 @@ export function FontFamilySelect(props: Props) {
           boxSizing: 'border-box',
           borderStyle: 'solid',
           borderWidth: '1px',
-          borderColor: state.isFocused ? 'rgba(0,0,0,0.8)' : 'rgba(0,0,0,0.2)',
+          borderColor: state.isFocused ? 'rgba(0,0,0,0.875)' : 'rgba(0,0,0,0.175)',
           borderRadius: '2px',
           boxShadow: 'none',
           cursor: 'pointer',
           '&:hover': {
-            borderColor: 'rgba(0,0,0,0.8)',
+            borderColor: 'rgba(0,0,0,0.875)',
           },
         }),
         valueContainer: provided => ({
@@ -90,11 +90,11 @@ export function FontFamilySelect(props: Props) {
           ...provided,
           margin: '0px 2px',
           padding: '0px',
-          color: 'rgba(0,0,0,0.8)',
-          transform: state.isFocused ? 'scale(0.735)' : 'scale(0.6)',
+          color: 'rgba(0,0,0,0.875)',
+          transform: state.isFocused ? 'scale(0.75)' : 'scale(0.6)',
           '&:hover': {
-            color: 'rgba(0,0,0,0.8)',
-            transform: 'scale(0.735)',
+            color: 'rgba(0,0,0,0.875)',
+            transform: 'scale(0.75)',
             transition: 'all 0.25s ease-in-out',
           },
         }),
@@ -110,21 +110,21 @@ export function FontFamilySelect(props: Props) {
         }),
         option: (provided, state) => ({
           ...provided,
-          backgroundColor: state.isSelected ? 'gray' : 'white',
+          backgroundColor: 'white',
           fontFamily: state.data.value,
-          color: state.isSelected ? 'white' : 'rgba(0,0,0,0.8)',
+          color: 'rgba(0,0,0,0.875)',
           cursor: 'pointer',
           '&:hover': {
-            backgroundColor: state.isSelected ? 'gray' : 'gainsboro',
-            color: state.isSelected ? 'white' : 'rgba(0,0,0,0.8)',
+            backgroundColor: 'rgba(0,0,0,0.075)',
+            color: 'rgba(0,0,0,0.875)',
           },
         }),
         singleValue: (provided, state) => ({
           ...provided,
-          marginLeft: '7px',
-          marginRight: '7px',
+          marginLeft: '8px',
+          marginRight: '8px',
           fontFamily: state.data.value,
-          color: 'rgba(0,0,0,0.8)',
+          color: 'rgba(0,0,0,0.875)',
           overflow: 'visible',
         }),
       }}
