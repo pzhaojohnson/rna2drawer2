@@ -42,6 +42,7 @@ export class IdInput extends React.Component<Props> {
             this.props.app.refresh();
           }
         }}
+        style={{ padding: '4px 8px' }}
       />
     );
   }
