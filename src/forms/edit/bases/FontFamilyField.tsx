@@ -28,7 +28,7 @@ function currFontFamily(bases: BaseInterface[]): string | undefined {
 
 export function FontFamilyField(props: Props) {
   return (
-    <div style={{ width: '232px' }} >
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
       <FontFamilySelect
         value={currFontFamily(props.bases)}
         onChange={event => {
@@ -51,7 +51,6 @@ export function FontFamilyField(props: Props) {
             props.app.refresh();
           }
         }}
-        styles={{ container: { minWidth: '232px' } }}
       />
     </div>
   );
