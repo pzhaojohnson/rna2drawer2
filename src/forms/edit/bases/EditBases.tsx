@@ -95,7 +95,7 @@ export function EditBases(props: Props) {
             )}
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
               <FillPicker app={props.app} bases={props.bases} />
-              <div style={{ marginLeft: '12px' }} >
+              <div style={{ marginLeft: '10px' }} >
                 <FillOpacityInput app={props.app} bases={props.bases} />
               </div>
               <div style={{ marginLeft: '8px' }} >
@@ -113,7 +113,7 @@ export function EditBases(props: Props) {
                 <div style={{ marginTop: '8px' }} >
                   <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                     <OutlineStrokePicker app={props.app} outlines={os} />
-                    <div style={{ marginLeft: '12px' }} >
+                    <div style={{ marginLeft: '10px' }} >
                       <OutlineStrokeOpacityInput app={props.app} outlines={os} />
                     </div>
                     <div style={{ marginLeft: '8px' }} >
@@ -129,7 +129,7 @@ export function EditBases(props: Props) {
                 <div style={{ marginTop: '8px' }} >
                   <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                     <OutlineFillPicker app={props.app} outlines={os} />
-                    <div style={{ marginLeft: '12px' }} >
+                    <div style={{ marginLeft: '10px' }} >
                       <OutlineFillOpacityInput app={props.app} outlines={os} />
                     </div>
                     <div style={{ marginLeft: '8px' }} >

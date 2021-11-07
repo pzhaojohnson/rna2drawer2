@@ -69,7 +69,7 @@ export function EditPrimaryBonds(props: Props) {
           <div>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
               <StrokePicker app={props.app} primaryBonds={props.primaryBonds} />
-              <div style={{ marginLeft: '12px' }} >
+              <div style={{ marginLeft: '10px' }} >
                 <StrokeOpacityInput app={props.app} primaryBonds={props.primaryBonds} />
               </div>
               <div style={{ marginLeft: '8px' }} >

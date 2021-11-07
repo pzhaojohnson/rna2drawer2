@@ -99,7 +99,7 @@ export function EditSecondaryBonds(props: Props) {
               <div style={{ paddingBottom: '8px' }} >
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                   <AUTStrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
-                  <div style={{ marginLeft: '12px' }} >
+                  <div style={{ marginLeft: '10px' }} >
                     <AUTStrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
                   </div>
                   <div style={{ marginLeft: '8px' }} >
@@ -114,7 +114,7 @@ export function EditSecondaryBonds(props: Props) {
               <div style={{ paddingBottom: '8px' }} >
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                   <GCStrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
-                  <div style={{ marginLeft: '12px' }} >
+                  <div style={{ marginLeft: '10px' }} >
                     <GCStrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
                   </div>
                   <div style={{ marginLeft: '8px' }} >
@@ -129,7 +129,7 @@ export function EditSecondaryBonds(props: Props) {
               <div style={{ paddingBottom: '8px' }} >
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                   <GUTStrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
-                  <div style={{ marginLeft: '12px' }} >
+                  <div style={{ marginLeft: '10px' }} >
                     <GUTStrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
                   </div>
                   <div style={{ marginLeft: '8px' }} >
@@ -144,7 +144,7 @@ export function EditSecondaryBonds(props: Props) {
               <div style={{ paddingBottom: '8px' }} >
                 <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                   <OtherStrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
-                  <div style={{ marginLeft: '12px' }} >
+                  <div style={{ marginLeft: '10px' }} >
                     <OtherStrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
                   </div>
                   <div style={{ marginLeft: '8px' }} >

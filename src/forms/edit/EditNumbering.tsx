@@ -93,7 +93,7 @@ export function EditNumbering(props: Props) {
             <div style={{ marginTop: '24px' }} >
               <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                 <ColorPicker app={props.app} baseNumberings={bns} />
-                <div style={{ marginLeft: '12px' }} >
+                <div style={{ marginLeft: '10px' }} >
                   <OpacityInput app={props.app} baseNumberings={bns} />
                 </div>
                 <div style={{ marginLeft: '8px' }} >

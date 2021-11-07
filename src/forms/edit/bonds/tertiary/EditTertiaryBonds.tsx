@@ -73,7 +73,7 @@ export function EditTertiaryBonds(props: Props) {
           <div>
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
               <StrokePicker app={props.app} tertiaryBonds={props.tertiaryBonds} />
-              <div style={{ marginLeft: '12px' }} >
+              <div style={{ marginLeft: '10px' }} >
                 <StrokeOpacityInput app={props.app} tertiaryBonds={props.tertiaryBonds} />
               </div>
               <div style={{ marginLeft: '8px' }} >
