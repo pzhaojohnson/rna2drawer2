@@ -60,36 +60,36 @@ input[type=text]::-webkit-input-placeholder {
 }
 
 textarea {
-  border: 1px solid rgba(0,0,0,0.2);
+  border: 1px solid rgba(0,0,0,0.175);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.8);
+  color: rgba(0,0,0,0.875);
   border-radius: 2px;
   resize: none;
 }
 
 textarea:hover {
-  border-color: rgba(0,0,0,0.8);
+  border-color: rgba(0,0,0,0.875);
   transition-duration: 0.25s;
 }
 
 textarea:focus {
   outline: none;
-  border-color: rgba(0,0,0,0.8);
+  border-color: rgba(0,0,0,0.875);
 }
 
 textarea::placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.6);
+  color: rgba(0,0,0,0.625);
 }
 
 textarea::-webkit-input-placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.6);
+  color: rgba(0,0,0,0.625);
 }
 
 button {
