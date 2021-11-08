@@ -13,21 +13,29 @@
   }
 }
 
+.underline {
+  height: 0px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.175);
+}
+
 .newAndOpenLinks:hover {
-  transform: scale(1.15);
-  transition-duration: 0.3s;
+  transform: scale(1.1);
+  transition-duration: 0.25s;
 }
 
 .helpLinks {
+  color: rgb(124,35,175);
   text-decoration-line: none;
 }
 
 .helpLinks:hover {
-  transition-duration: 0.4s;
-  font-size: 18.4px;
+  text-decoration-line: underline;
 }
 
 .updatesLink {
+  color: rgb(124,35,175);
   text-decoration-line: none;
 }
 

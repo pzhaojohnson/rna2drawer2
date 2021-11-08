@@ -1,7 +1,6 @@
 import { AppInterface as App } from '../../AppInterface';
 import * as React from 'react';
 import styles from './HomePage.css';
-import { Underline } from '../containers/Underline';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';
 import { OpenRna2drawer } from '../open/OpenRna2drawer';
 import { DrawingSlideshow } from './drawingSlideshow/DrawingSlideshow';
@@ -18,15 +17,17 @@ function Header() {
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1 }} ></div>
-          <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.6)', textAlign: 'right' }} >
+          <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)', textAlign: 'right' }} >
             Developed by Philip Johnson and Anne Simon
           </p>
-          <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.6)', textAlign: 'right' }} >
+          <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)', textAlign: 'right' }} >
             Last Updated on April 9, 2021
           </p>
         </div>
       </div>
-      <Underline margin={'8px 0px 0px 0px'} />
+      <div style={{ marginTop: '8px' }} >
+        <div className={styles.underline} />
+      </div>
     </div>
   );
 }
@@ -41,7 +42,7 @@ function Description() {
 
 const newAndOpenLinkStyles = {
   fontSize: '24px',
-  color: 'rgba(0,0,255,0.8)',
+  color: 'rgb(23,15,218)',
   cursor: 'pointer',
 };
 
