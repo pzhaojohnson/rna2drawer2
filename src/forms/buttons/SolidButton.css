@@ -2,7 +2,7 @@
   border: none;
   margin: 0px;
   padding: 4px 32px 4px 32px;
-  background-color: #000099;
+  background-color: #00007d;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
@@ -22,9 +22,14 @@
 }
 
 .enabled:hover {
-  transform: scale(1.075);
-  box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.2);
+  transform: scale(1.05);
+  box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.175);
   transition: transform 0.25s ease-in-out;
+}
+
+.enabled:active {
+  transform: scale(1);
+  box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.175);
 }
 
 .disabled {
