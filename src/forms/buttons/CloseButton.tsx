@@ -50,7 +50,7 @@ export class CloseButton extends React.Component {
           right: this.props.right,
           width: '27px',
           height: '27px',
-          backgroundColor: this.state.hovered ? '#ff0000' : 'transparent',
+          backgroundColor: this.state.hovered ? 'rgb(245,9,9)' : 'transparent',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
