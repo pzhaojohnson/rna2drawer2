@@ -1,104 +1,166 @@
 import * as React from 'react';
 import { useState } from 'react';
-import styles from './ExportDrawing.css';
-import { CloseButton } from 'Forms/buttons/CloseButton';
-import { Title, TitleUnderline } from './Title';
-import { ExportedBaseFontSizeField } from './ExportedBaseFontSizeField';
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import formStyles from './ExportDrawing.css';
+import textFieldStyles from 'Forms/fields/text/TextField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
-import { PptxNotes } from './PptxNotes';
+import { CloseButton } from 'Forms/buttons/CloseButton';
+import { SolidButton } from 'Forms/buttons/SolidButton';
 
 import { AppInterface as App } from 'AppInterface';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { atPosition } from 'Array/at';
 import { parseNumber } from 'Parse/svg/number';
+import { round } from 'Math/round';
+import { pointsToPixels } from 'Export/units'
 import { exportDrawing } from 'Export/export';
 
-// returns undefined if the drawing has no bases or if the font size
-// of the first base is unparsable
-function firstBaseFontSize(drawing: Drawing): number | undefined {
-  let firstBase = atPosition(drawing.bases(), 1);
-  if (firstBase) {
-    let n = parseNumber(firstBase.text.attr('font-size'));
-    if (n) {
-      return n.convert('px').valueOf();
-    }
+// returns undefined if the font size of the base cannot be parsed
+function fontSize(b: Base): number | undefined {
+  let n = parseNumber(b.text.attr('font-size'));
+  if (n) {
+    return n.convert('px').valueOf();
   }
 }
 
 type Inputs = {
-  exportedBaseFontSize: string;
+  exportedFontSizeOfBases: string;
 }
 
-let lastExportedInputs = {
-  exportedBaseFontSize: '6.0',
+let prevInputs: Inputs = {
+  exportedFontSizeOfBases: '6',
 };
 
-function exportedBaseFontSizeIsValid(value: string): boolean {
-  let n = Number(value);
-  return Number.isFinite(n) && n > 0;
+function constrainExportedFontSizeOfBases(fs: number): number {
+  if (!Number.isFinite(fs)) {
+    return 6;
+  } else {
+    fs = round(fs, 1);
+    if (fs <= 0) { // check after rounding
+      return 6;
+    } else {
+      return fs;
+    }
+  }
 }
 
-function inputsAreValid(inputs: Inputs): boolean {
-  return exportedBaseFontSizeIsValid(inputs.exportedBaseFontSize);
+function constrainInputs(inputs: Inputs): Inputs {
+  return {
+    exportedFontSizeOfBases: (
+      constrainExportedFontSizeOfBases(
+        Number.parseFloat(inputs.exportedFontSizeOfBases),
+      ).toString()
+    ),
+  };
 }
 
 export type Props = {
   app: App;
-  format: 'svg' | 'pptx'; // the format to export the drawing in
+
+  // the format to export the drawing in
+  format: 'svg' | 'pptx';
+
   unmount: () => void;
 }
 
+function PptxNotes() {
+  return (
+    <div>
+      <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
+        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
+        Exported PPTX files require PowerPoint 2016 or later to open.
+      </p>
+      <p className='unselectable' style={{ marginTop: '8px', fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
+        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
+        Large structures may take a while to export.
+      </p>
+    </div>
+  );
+}
+
 export function ExportDrawing(props: Props) {
-  let [inputs, setInputs] = useState<Inputs>({ ...lastExportedInputs });
+  let [inputs, setInputs] = useState<Inputs>({ ...prevInputs });
   let [errorExporting, setErrorExporting] = useState(false);
   return (
     <div
-      className={styles.form}
-      style={{ position: 'relative', width: '372px', height: '100%', overflow: 'auto' }}
+      className={formStyles.form}
+      style={{ position: 'relative', width: '368px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
           onClick={() => props.unmount()}
         />
       </div>
-      <div style={{ margin: '16px 32px 0 32px' }} >
-        <Title
-          text={`Export ${props.format.toUpperCase()}`}
-        />
+      <div style={{ margin: '16px 32px 0px 32px' }} >
+        <p className={`${formStyles.title} unselectable`} >
+          {`Export ${props.format.toUpperCase()}`}
+        </p>
       </div>
       <div style={{ margin: '8px 16px 0px 16px' }} >
-        <TitleUnderline />
+        <div className={formStyles.titleUnderline} />
       </div>
-      <div style={{ margin: '24px 40px 0 40px' }} >
-        <ExportedBaseFontSizeField
-          value={inputs.exportedBaseFontSize}
-          onChange={value => setInputs({ ...inputs, exportedBaseFontSize: value })}
-          errorMessage={exportedBaseFontSizeIsValid(inputs.exportedBaseFontSize) ? undefined : (
-            'Must be a positive number.'
-          )}
-        />
+      <div style={{ margin: '24px 40px 0px 40px' }} >
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+          <input
+            type='text'
+            className={textFieldStyles.input}
+            value={inputs.exportedFontSizeOfBases}
+            onChange={event => setInputs({
+              ...inputs,
+              exportedFontSizeOfBases: event.target.value,
+            })}
+            onBlur={() => setInputs(constrainInputs(inputs))}
+            onKeyUp={event => {
+              if (event.key.toLowerCase() == 'enter') {
+                setInputs(constrainInputs(inputs));
+              }
+            }}
+            style={{ width: '24px' }}
+          />
+          <div style={{ marginLeft: '8px' }} >
+            <p className={`${textFieldStyles.label} unselectable`} style={{ color: 'rgba(0,0,0,0.95)' }} >
+              Exported Font Size of Bases
+            </p>
+          </div>
+        </div>
+        <div style={{ marginTop: '6px' }} >
+          <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.55)' }} >
+            Use to scale the exported drawing.
+          </p>
+        </div>
       </div>
-      <div style={{ margin: '24px 40px 0 40px' }} >
+      <div style={{ margin: '32px 40px 0px 40px' }} >
         <SolidButton
           text='Export'
           onClick={() => {
             try {
-              let exportedBaseFontSize = Number(inputs.exportedBaseFontSize);
+              let exportedFontSizeOfBases = constrainExportedFontSizeOfBases(
+                Number.parseFloat(inputs.exportedFontSizeOfBases),
+              );
+              if (props.format == 'pptx') {
+                exportedFontSizeOfBases = pointsToPixels(exportedFontSizeOfBases);
+              }
+
               let drawing = props.app.strictDrawing.drawing;
+
+              let firstBase = atPosition(drawing.bases(), 1);
+              let fontSizeOfFirstBase = firstBase ? fontSize(firstBase) : undefined;
+
               exportDrawing(drawing, {
                 name: document.title ? document.title : 'Drawing',
                 format: props.format,
-                scale: exportedBaseFontSize / (firstBaseFontSize(drawing) ?? exportedBaseFontSize),
+
+                // assumes all bases have the same font size
+                scale: exportedFontSizeOfBases / (fontSizeOfFirstBase ?? exportedFontSizeOfBases),
               });
-              lastExportedInputs = { ...inputs };
+
+              prevInputs = { ...inputs };
               setErrorExporting(false);
+
             } catch (error) {
               console.error(error);
               setErrorExporting(true);
             }
           }}
-          disabled={!inputsAreValid(inputs)}
         />
         {!errorExporting ? null : (
           <p
@@ -111,7 +173,7 @@ export function ExportDrawing(props: Props) {
         )}
       </div>
       {props.format != 'pptx' ? null : (
-        <div style={{ margin: '16px 40px 0 40px' }} >
+        <div style={{ margin: '16px 40px 0px 40px' }} >
           <PptxNotes />
         </div>
       )}
