@@ -16,9 +16,9 @@ it('when already annotating', () => {
   let b = BySelectionButton({ app: app });
   app.unmountForm();
   // form to annotate bases is closed
-  expect(document.body.textContent.includes('Edit Bases')).toBeFalsy();
+  expect(document.body.textContent.includes('Bases')).toBeFalsy();
   b.props.onClick();
   expect(app.strictDrawingInteraction.annotating()).toBeTruthy();
   // reopens form to annotate bases even if already annotating
-  expect(document.body.textContent.includes('Edit Bases')).toBeTruthy();
+  expect(document.body.textContent.includes('Bases')).toBeTruthy();
 });
