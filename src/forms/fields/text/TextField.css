@@ -1,23 +1,23 @@
 /* for the input element of the field */
 .input {
-  border: 1px solid rgba(0,0,0,0.175);
+  border: 1px solid rgba(0,0,0,0.12);
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.875);
+  color: rgba(0,0,0,0.95);
   border-radius: 2px;
 }
 
 .input:hover {
-  border-color: rgba(0,0,0,0.875);
+  border-color: rgba(0,0,0,0.95);
   transition-duration: 0.25s;
 }
 
 .input:focus {
   outline: none;
-  border-color: rgba(0,0,0,0.875);
+  border-color: rgba(0,0,0,0.95);
 }
 
 .input::placeholder {
@@ -36,7 +36,7 @@
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.875);
+  color: rgba(0,0,0,0.95);
 
   user-select: none;
   -webkit-user-select: none;

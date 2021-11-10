@@ -28,25 +28,25 @@ p {
 }
 
 input[type=text] {
-  border: 1px solid rgba(0,0,0,0.175);
+  border: 1px solid rgba(0,0,0,0.12);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.875);
+  color: rgba(0,0,0,0.95);
   border-radius: 2px;
 }
 
 input[type=text]:hover {
-  border-color: rgba(0,0,0,0.875);
+  border-color: rgba(0,0,0,0.95);
   transition-duration: 0.25s;
 }
 
 input[type=text]:focus {
   outline: none;
-  border-color: rgba(0,0,0,0.875);
+  border-color: rgba(0,0,0,0.95);
 }
 
 input[type=text]::placeholder {
@@ -60,26 +60,26 @@ input[type=text]::-webkit-input-placeholder {
 }
 
 textarea {
-  border: 1px solid rgba(0,0,0,0.175);
+  border: 1px solid rgba(0,0,0,0.12);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
-  color: rgba(0,0,0,0.875);
+  color: rgba(0,0,0,0.95);
   border-radius: 2px;
   resize: none;
 }
 
 textarea:hover {
-  border-color: rgba(0,0,0,0.875);
+  border-color: rgba(0,0,0,0.95);
   transition-duration: 0.25s;
 }
 
 textarea:focus {
   outline: none;
-  border-color: rgba(0,0,0,0.875);
+  border-color: rgba(0,0,0,0.95);
 }
 
 textarea::placeholder {
