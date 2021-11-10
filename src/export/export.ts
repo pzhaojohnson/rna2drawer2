@@ -2,7 +2,7 @@ import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { prepareForExport } from 'Export/svg/prepareForExport';
 import { toPptx } from 'Export/pptx/toPptx';
-import { download } from 'Utilities/download';
+import { offerFileForDownload } from 'Utilities/offerFileForDownload';
 
 export type Options = {
   name?: string; // name for the exported drawing
@@ -39,7 +39,7 @@ export function exportDrawing(drawing: Drawing, options?: Options) {
       let pptx = toPptx(copy);
       pptx.writeFile({ fileName: name + '.pptx' });
     } else {
-      download({
+      offerFileForDownload({
         name: name + '.svg',
         type: 'text/plain',
         contents: copy.svg(),

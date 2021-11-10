@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import { AppInterface as App } from 'AppInterface';
-import { download } from 'Utilities/download';
+import { offerFileForDownload } from 'Utilities/offerFileForDownload';
 
 interface Props {
   app: App;
@@ -13,7 +13,7 @@ export function SaveButton(props: Props) {
       text='Save'
       onClick={() => {
         let name = document.title ? document.title : 'Drawing';
-        download({
+        offerFileForDownload({
           name: name + '.rna2drawer2',
           type: 'text/plain',
           contents: props.app.strictDrawing.savableString,

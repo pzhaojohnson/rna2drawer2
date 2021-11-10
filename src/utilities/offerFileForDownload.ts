@@ -4,7 +4,7 @@ export interface FileProps {
   contents: string;
 }
 
-export function download(fileProps: FileProps) {
+export function offerFileForDownload(fileProps: FileProps) {
   if (!fileProps.name) {
     console.error('Missing file name.');
     return;
