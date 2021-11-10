@@ -9,8 +9,8 @@ import { act } from 'react-dom/test-utils';
 import { render } from '@testing-library/react';
 import { unmountComponentAtNode } from 'react-dom';
 
-jest.mock('Utilities/download');
-import * as Download from 'Utilities/download';
+jest.mock('Utilities/offerFileForDownload');
+import * as OfferFileForDownload from 'Utilities/offerFileForDownload';
 
 let container = null;
 
@@ -49,10 +49,10 @@ it('exports name, ids, sequence and layout structure', () => {
   addTertiaryBond(drawing, drawing.getBaseAtOverallPosition(5), drawing.getBaseAtOverallPosition(7));
   addTertiaryBond(drawing, drawing.getBaseAtOverallPosition(1), drawing.getBaseAtOverallPosition(14));
   app.refresh();
-  Download.download = jest.fn();
+  OfferFileForDownload.offerFileForDownload = jest.fn();
   let b = ExportLayoutStructureButton({ app: app });
   b.props.onClick();
-  let c = Download.download.mock.calls[0];
+  let c = OfferFileForDownload.offerFileForDownload.mock.calls[0];
   let fileProps = c[0];
   expect(fileProps.name).toBe('asdf, qwer, zxG.txt');
   expect(fileProps.type).toBe('text/plain');
@@ -64,10 +64,10 @@ it('when title of document is different from ids', () => {
   app.strictDrawing.appendSequence('qwerzxcv', 'qwerqwer');
   app.refresh();
   document.title = 'QW ZXC asdf';
-  Download.download = jest.fn();
+  OfferFileForDownload.offerFileForDownload = jest.fn();
   let b = ExportLayoutStructureButton({ app: app });
   b.props.onClick();
-  let c = Download.download.mock.calls[0];
+  let c = OfferFileForDownload.offerFileForDownload.mock.calls[0];
   let fileProps = c[0];
   expect(fileProps.name).toBe('QW ZXC asdf.txt');
   expect(fileProps.type).toBe('text/plain');
@@ -79,10 +79,10 @@ it('when document has no title', () => {
   app.strictDrawing.appendSequence('asdf', 'asdfqwer');
   app.refresh();
   document.title = '';
-  Download.download = jest.fn();
+  OfferFileForDownload.offerFileForDownload = jest.fn();
   let b = ExportLayoutStructureButton({ app: app });
   b.props.onClick();
-  let c = Download.download.mock.calls[0];
+  let c = OfferFileForDownload.offerFileForDownload.mock.calls[0];
   let fileProps = c[0];
   expect(fileProps.name).toBe('Drawing.txt');
   expect(fileProps.type).toBe('text/plain');
