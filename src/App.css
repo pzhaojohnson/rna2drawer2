@@ -28,7 +28,7 @@ p {
 }
 
 input[type=text] {
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.15);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
@@ -60,7 +60,7 @@ input[type=text]::-webkit-input-placeholder {
 }
 
 textarea {
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.15);
   margin: 0px;
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
