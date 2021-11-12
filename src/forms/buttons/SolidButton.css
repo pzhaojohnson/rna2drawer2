@@ -10,6 +10,7 @@
   color: white;
   border-radius: 2px;
   box-shadow: none;
+  transition-duration: 0s;
 
   user-select: none;
   -webkit-user-select: none;
@@ -30,6 +31,7 @@
 .enabled:active {
   transform: scale(1);
   box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.175);
+  transition-duration: 0s;
 }
 
 .disabled {
