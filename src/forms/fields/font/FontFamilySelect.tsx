@@ -65,16 +65,17 @@ export function FontFamilySelect(props: Props) {
         }),
         control: (provided, state) => ({
           ...provided,
-          minHeight: '30px',
           boxSizing: 'border-box',
           borderStyle: 'solid',
           borderWidth: '1px',
-          borderColor: state.isFocused ? 'rgba(0,0,0,0.875)' : 'rgba(0,0,0,0.175)',
+          borderColor: state.isFocused ? 'rgba(0,0,0,0.95)' : 'rgba(0,0,0,0.15)',
           borderRadius: '2px',
+          padding: '6px 0px',
+          minHeight: '0px',
           boxShadow: 'none',
           cursor: 'pointer',
           '&:hover': {
-            borderColor: 'rgba(0,0,0,0.875)',
+            borderColor: 'rgba(0,0,0,0.95)',
           },
         }),
         valueContainer: provided => ({
@@ -83,14 +84,6 @@ export function FontFamilySelect(props: Props) {
           overflow: 'visible',
         }),
         indicatorsContainer: provided => ({
-          ...provided,
-          padding: '0px',
-        }),
-        dropdownIndicator: provided => ({
-          ...provided,
-          display: 'none',
-        }),
-        indicatorSeparator: provided => ({
           ...provided,
           display: 'none',
         }),
@@ -102,7 +95,8 @@ export function FontFamilySelect(props: Props) {
           ...provided,
           backgroundColor: 'white',
           fontFamily: state.data.value,
-          color: 'rgba(0,0,0,0.875)',
+          fontSize: '12px',
+          color: 'rgba(0,0,0,0.95)',
           cursor: 'pointer',
           '&:hover': {
             backgroundColor: 'rgba(0,0,0,0.075)',
@@ -113,7 +107,8 @@ export function FontFamilySelect(props: Props) {
           marginLeft: '6px',
           marginRight: '6px',
           fontFamily: state.data.value,
-          color: 'rgba(0,0,0,0.875)',
+          fontSize: '12px',
+          color: 'rgba(0,0,0,0.95)',
           overflow: 'visible',
         }),
       }}
