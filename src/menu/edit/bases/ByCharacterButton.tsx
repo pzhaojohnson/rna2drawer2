@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
 import { DroppedButton } from '../../DroppedButton';
-import { SelectBasesByCharacter } from '../../../forms/annotate/bases/character/SelectBasesByCharacter';
+import { BasesByCharacter } from 'Forms/edit/bases/by/character/BasesByCharacter';
 
 interface Props {
   app: App;
@@ -16,9 +16,9 @@ export function ByCharacterButton(props: Props): React.ReactElement {
       text={'By Character'}
       onClick={() => {
         props.app.renderForm(close => (
-          <SelectBasesByCharacter
+          <BasesByCharacter
             app={props.app}
-            close={close}
+            unmount={close}
           />
         ))
       }}
