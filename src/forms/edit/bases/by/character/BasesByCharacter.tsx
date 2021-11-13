@@ -37,7 +37,7 @@ export function BasesByCharacter(props: Props) {
   return (
     <div
       className={formStyles.form}
-      style={{ position: 'relative', width: '356px', height: '100%', overflow: 'auto' }}
+      style={{ position: 'relative', width: '348px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
@@ -70,7 +70,7 @@ export function BasesByCharacter(props: Props) {
                 setCharacter(constrainCharacter(character));
               }
             }}
-            style={{ width: '14px', textAlign: 'center' }}
+            style={{ width: '12px', textAlign: 'center' }}
           />
           <div style={{ marginLeft: '8px' }} >
             <p className={`${textFieldStyles.label} unselectable`} >
