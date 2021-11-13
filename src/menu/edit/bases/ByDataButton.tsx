@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppInterface as App } from '../../../AppInterface';
 import { DroppedButton } from '../../DroppedButton';
-import { SelectBasesByData } from '../../../forms/annotate/bases/data/SelectBasesByData';
+import { BasesByData } from 'Forms/edit/bases/by/data/BasesByData';
 
 interface Props {
   app: App;
@@ -16,9 +16,9 @@ export function ByDataButton(props: Props): React.ReactElement {
       text={'By Data (e.g., SHAPE)'}
       onClick={() => {
         props.app.renderForm(close => (
-          <SelectBasesByData
+          <BasesByData
             app={props.app}
-            close={close}
+            unmount={close}
           />
         ))
       }}
