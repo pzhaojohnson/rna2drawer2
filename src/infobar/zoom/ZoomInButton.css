@@ -1,0 +1,12 @@
+.zoomInButton {
+  background-color: transparent;
+}
+
+.zoomInButton:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.zoomInButton:active {
+  background-color: rgba(0,0,0,0.2);
+  transform: scale(0.95);
+}

@@ -1,0 +1,12 @@
+.zoomOutButton {
+  background-color: transparent;
+}
+
+.zoomOutButton:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.zoomOutButton:active {
+  background-color: rgba(0,0,0,0.2);
+  transform: scale(0.95);
+}

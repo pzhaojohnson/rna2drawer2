@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import styles from './ZoomOutButton.css';
 import { AppInterface as App } from 'AppInterface';
 import minus from './minus.svg';
 import { zoomOut } from './control';
@@ -9,11 +9,9 @@ export interface Props {
 }
 
 export function ZoomOutButton(props: Props) {
-  let [hovered, setHovered] = useState(false);
   return (
     <div
-      onMouseOver={() => setHovered(true)}
-      onMouseOut={() => setHovered(false)}
+      className={styles.zoomOutButton}
       onClick={() => {
         zoomOut(props.app.strictDrawing.drawing);
         props.app.refresh();
@@ -22,7 +20,6 @@ export function ZoomOutButton(props: Props) {
         width: '20px',
         height: '20px',
         borderRadius: '2px',
-        backgroundColor: hovered ? 'gainsboro' : 'transparent',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',

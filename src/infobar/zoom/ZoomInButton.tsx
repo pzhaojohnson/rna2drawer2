@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import styles from './ZoomInButton.css';
 import { AppInterface as App } from 'AppInterface';
 import plus from './plus.svg';
 import { zoomIn } from './control';
@@ -9,11 +9,9 @@ export interface Props {
 }
 
 export function ZoomInButton(props: Props) {
-  let [hovered, setHovered] = useState(false);
   return (
     <div
-      onMouseOver={() => setHovered(true)}
-      onMouseOut={() => setHovered(false)}
+      className={styles.zoomInButton}
       onClick={() => {
         zoomIn(props.app.strictDrawing.drawing);
         props.app.refresh();
@@ -22,7 +20,6 @@ export function ZoomInButton(props: Props) {
         width: '20px',
         height: '20px',
         borderRadius: '2px',
-        backgroundColor: hovered ? 'gainsboro' : 'transparent',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
