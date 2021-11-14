@@ -123,7 +123,7 @@ export function ExportDrawing(props: Props) {
           </div>
         </div>
         <div style={{ marginTop: '6px' }} >
-          <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.55)' }} >
+          <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)' }} >
             Use to scale the exported drawing.
           </p>
         </div>
