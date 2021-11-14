@@ -133,12 +133,9 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
               <div style={{ marginTop: '12px' }} >
                 <p
                   key={errorMessageKey}
-                  className={errorMessageStyles.fadesIn}
-                  style={{ fontSize: '14px', color: 'red' }}
+                  className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
                 >
-                  <span style={{ fontWeight: 600 }} >
-                    {errorMessage}
-                  </span>
+                  {errorMessage}
                 </p>
               </div>
             )}
