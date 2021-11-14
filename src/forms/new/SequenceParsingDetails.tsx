@@ -67,9 +67,9 @@ export function SequenceParsingDetails(props: Props): React.ReactElement {
       </p>
       <div style={{ marginLeft: '8px' }} >
         <p className={'unselectable-text'} style={{ marginTop: '6px', fontSize: '12px' }} >
-          All letters, numbers, and non-alphanumeric characters are read in as individual bases, unless specified to be ignored below:
+          All letters, numbers, and non-alphanumeric characters are read in as individual bases, unless specified to be ignored.
         </p>
-        <div style={{ margin: '6px 0 0 6px' }} >
+        <div style={{ margin: '8px 0 0 8px' }} >
           <IgnoreNumbersCheckbox {...props} />
           <div style={{ marginTop: '6px' }} >
             <IgnoreNonAugctLettersCheckbox {...props} />
@@ -78,7 +78,7 @@ export function SequenceParsingDetails(props: Props): React.ReactElement {
             <IgnoreNonAlphanumericsCheckbox {...props} />
           </div>
         </div>
-        <p className={'unselectable-text'} style={{ marginTop: '6px', fontSize: '12px' }}>
+        <p className={'unselectable-text'} style={{ marginTop: '8px', fontSize: '12px' }}>
           All whitespace is ignored.
         </p>
       </div>
