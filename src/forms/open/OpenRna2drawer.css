@@ -1,10 +1,54 @@
-.fadesIn {
-  animation: fadeIn 0.75s;
+.fileInput {
+  cursor: pointer;
+}
+
+.folderIcon {
+  width: 36px;
+  cursor: pointer;
+  transition-duration: 0s;
+}
+
+.fileInput:hover .folderIcon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+  transition: transform 0.25s ease-in-out;
+}
+
+.fileInput:active .folderIcon {
+  transform: scale(1.05);
+  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+  transition-duration: 0s;
+}
+
+.fileInputLabel {
+  font-size: 16px;
+  font-style: italic;
+  color: rgb(51,57,145);
+  cursor: pointer;
+}
+
+.fileInput:active .fileInputLabel {
+  transform: scale(0.95);
+}
+
+.fileName {
+  font-size: 14px;
+  font-style: normal;
+  color: rgba(0,0,0,0.95);
+  cursor: pointer;
+}
+
+.fileInput:active .fileName {
+  transform: scale(0.95);
+}
+
+.oldFileNotes {
+  animation: fadeIn 1s;
 }
 
 @keyframes fadeIn {
   0% {
-    opacity: 0.15;
+    opacity: 0.1;
   }
   100% {
     opacity: 1;

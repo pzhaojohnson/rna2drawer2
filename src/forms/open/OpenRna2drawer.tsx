@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { useState } from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import styles from './OpenRna2drawer.css';
-import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
-import { FileField } from '../fields//file/FileField';
-import { ErrorMessage } from '../ErrorMessage';
-import { SolidButton } from '../buttons/SolidButton';
+import { useState, useRef } from 'react';
+import formStyles from './OpenRna2drawer.css';
+import errorMessageStyles from 'Forms/ErrorMessage.css';
+import { FloatingDrawingsContainer } from 'Forms/containers/floatingDrawings/FloatingDrawingsContainer';
+import closedFolder from './closedFolder.svg';
+import openFolder from './openFolder.svg';
+import { SolidButton } from 'Forms/buttons/SolidButton';
+import { AppInterface as App } from 'AppInterface';
 import { open } from './open';
-import { removeFileExtension } from '../../parse/parseFileExtension';
+import parseFileExtension from 'Parse/parseFileExtension';
+import { removeFileExtension } from 'Parse/parseFileExtension';
 import { delayPivotingIfShould } from 'Draw/interact/pivot/delayPivoting';
 
 function updateDrawingTitle(app: App, fileName: string) {
@@ -41,75 +43,120 @@ function Header() {
   );
 }
 
-interface Props {
+export type Props = {
   app: App;
+
   close: () => void;
 }
 
-export function OpenRna2drawer(props: Props): React.ReactElement {
-  let [attemptedFileUpload, setAttemptedFileUpload] = useState(false);
+export function OpenRna2drawer(props: Props) {
+  let hiddenFileInput = useRef<HTMLInputElement>(null);
+
+  let [fileUploaded, setFileUploaded] = useState(false);
+
   let [fileName, setFileName] = useState('');
   let [fileExtension, setFileExtension] = useState('');
   let [fileContents, setFileContents] = useState('');
-  let [fileUploaded, setFileUploaded] = useState(false);
-  let [errorMessage, setErrorMessage] = useState<string[]>([]);
+  
+  // use String object to rerender every time the error message is set
+  let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+
   return (
     <FloatingDrawingsContainer
       contained={
         <div style={{ width: '920px', height: '524px', display: 'flex', flexDirection: 'column' }} >
           <Header />
-          <div style={{ margin: '0px 116px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+          <div
+            style={{
+              margin: '0px 116px',
+              flexGrow: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            }}
+          >
             <div style={{ marginTop: '32px' }} >
-              <FileField
-                onLoadStart={() => {
-                  setAttemptedFileUpload(true);
-                  setErrorMessage([]);
+              <input
+                ref={hiddenFileInput}
+                type='file'
+                onChange={event => {
+                  let files = event.target.files;
+                  if (files) {
+                    let f = files[0];
+                    if (f) {
+                      let fr = new FileReader();
+                      fr.addEventListener('load', () => {
+                        // should always be a string when readAsText is used
+                        if (typeof fr.result == 'string') {
+                          setFileName(f.name);
+                          setFileExtension(parseFileExtension(f.name));
+                          setFileContents(fr.result);
+                          setFileUploaded(true);
+                          setErrorMessage(new String(''));
+                        }
+                      })
+                      fr.readAsText(f);
+                    }
+                  }
                 }}
-                onLoad={f => {
-                  setFileName(f.name);
-                  setFileExtension(f.extension.toLowerCase());
-                  setFileContents(f.contents);
-                  setFileUploaded(true);
-                }}
+                style={{ display: 'none' }}
               />
+              <div
+                className={formStyles.fileInput}
+                onClick={() => hiddenFileInput.current?.click()}
+                style={{ minWidth: '256px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+              >
+                <img
+                  className={formStyles.folderIcon}
+                  src={fileUploaded ? openFolder : closedFolder}
+                  alt='File Folder'
+                  
+                  // file drag and drop not implemented yet
+                  onDragOver={event => event.preventDefault()}
+                  onDrop={event => event.preventDefault()}
+                />
+                <p
+                  className={fileUploaded ? formStyles.fileName : formStyles.fileInputLabel}
+                  style={{ marginLeft: '10px' }}
+                >
+                  {fileUploaded ? fileName : 'Upload a file...'}
+                </p>
+              </div>
             </div>
             {fileExtension != 'rna2drawer' ? null : (
-              <div className={styles.fadesIn} style={{ marginTop: '12px' }} >
-                <p className={'unselectable-text'} >
+              <div className={formStyles.oldFileNotes} style={{ marginTop: '12px' }} >
+                <p className='unselectable' >
                   <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
                   Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
                 </p>
                 <div style={{ margin: '6px 0px 0px 18px' }} >
-                  <p className={'unselectable-text'} >
+                  <p className='unselectable' >
                     (1) The sequence and its ID, (2) the secondary structure, (3) tertiary interactions and their colors,
                     (4) base numbering and the numbering offset, and (5) base colors and outlines.
                   </p>
                 </div>
               </div>
             )}
-            {!errorMessage.join('') ? null : (
-              <div style={{ marginTop: fileExtension == 'rna2drawer' ? '12px' : '20px' }} >
-                <ErrorMessage message={errorMessage.join('')} />
-              </div>
-            )}
-            <div style={{ marginTop: errorMessage.join('') ? '6px' : fileExtension == 'rna2drawer' ? '24px' : '32px' }} >
+            <div style={{ marginTop: '32px' }} >
               <SolidButton
-                text={'Submit'}
+                text='Submit'
                 onClick={() => {
                   if (!fileUploaded) {
-                    setErrorMessage([attemptedFileUpload ? 'Unable to read selected file.' : 'No file uploaded.']);
+                    setErrorMessage(new String('No file uploaded.'));
                     return;
                   }
-                  let fe = fileExtension.toLowerCase();
-                  if (fe != 'rna2drawer' && fe != 'rna2drawer2') {
-                    setErrorMessage(['File must have .rna2drawer extension.']);
+
+                  if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
+                    setErrorMessage(new String('File must have a .rna2drawer extension.'));
                     return;
                   }
+
                   let opened = open(props.app, { extension: fileExtension, contents: fileContents });
                   if (!opened) {
-                    setErrorMessage(['Invalid RNA2Drawer file.']);
+                    setErrorMessage(new String('Invalid RNA2Drawer file.'));
                     return;
                   }
+                  
                   updateDrawingTitle(props.app, fileName);
                   delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                   props.close();
@@ -117,6 +164,13 @@ export function OpenRna2drawer(props: Props): React.ReactElement {
                 }}
               />
             </div>
+            {!errorMessage.valueOf() ? null : (
+              <div key={Math.random()} style={{ marginTop: '6px' }} >
+                <p className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`} >
+                  {errorMessage.valueOf()}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       }
