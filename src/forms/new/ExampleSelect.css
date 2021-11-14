@@ -1,0 +1,14 @@
+.option {
+  font-size: 14px;
+  font-style: italic;
+  color: #3535c9;
+}
+
+.option:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.option:active {
+  transform: scale(0.95);
+}

@@ -1,26 +1,35 @@
 import * as React from 'react';
-import { SelectField } from '../fields/SelectField';
+import styles from './ExampleSelect.css';
 
-interface Props {
+export type Props = {
   examples: string[];
-  selected: string;
   select: (example: string) => void;
 }
 
 export function ExampleSelect(props: Props): React.ReactElement {
   return (
-    <SelectField
-      name='Example'
-      initialValue={props.selected}
-      options={props.examples}
-      set={ex => props.select(ex)}
-      style={{
-        label: { marginRight: '12px' },
-        select: {
-          container: { minWidth: '204px' },
-          control: { minHeight: '23.44px' },
-        },
-      }}
-    />
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <p
+        className='unselectable'
+        style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.75)' }}
+      >
+        Examples...
+      </p>
+      {props.examples.map((e, i) => (
+        <div
+          key={i}
+          style={{ flexGrow: 1, display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+        >
+          <div style={{ flexGrow: 1 }} />
+          <p
+            className={`${styles.option} unselectable`}
+            onClick={() => props.select(e)}
+          >
+            {e}
+          </p>
+          <div style={{ flexGrow: 1 }} />
+        </div>
+      ))}
+    </div>
   );
 }

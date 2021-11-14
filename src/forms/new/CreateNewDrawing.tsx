@@ -15,20 +15,14 @@ import { delayPivotingIfShould } from 'Draw/interact/pivot/delayPivoting';
 
 let examples = [
   {
-    name: '. . .',
-    sequenceId: '',
-    sequence: '',
-    dotBracket: '',
-  },
-  {
     name: 'A Small Structure',
     sequenceId: 'A Small Structure',
     sequence: 'UAAGCGCAUAGACGAUGCAACCGCAUCGCCUAGCGCUUAGAUCGGCCAACAGCAUCGGUUGGCCAAUAGGCUGCACGCCAUCAUUUGCAUGGUGUGUAAAGCUU',
     dotBracket:'...((((.....((((((....))))))....)))).......(((((((.......))))))).......(((((((((.........)))))))))......',
   },
   {
-    name: 'A Big Structure',
-    sequenceId: 'A Big Structure',
+    name: 'A Large Structure',
+    sequenceId: 'A Large Structure',
     sequence: 'GCCGCUAUAACAAUACUAGAUGGAAUUUCACAGUAUUCACUGAGACUCAUUGAUGCUAUGAUGUUCACAUCUGAUUUGGCUACUAACAAUCUAGUUGUAAUGGCCUACAUUACAGGUGGUGUUGUUCAGUUGACUUCGCAGUGGCUAACUAACAUCUUUGGCACUGUUUAUGAAAAACUCAAACCCGUCCUUGAUUGGCUUGAAGAGAAGUUUAAGGAAGGUGUAGAGUUUCUUAGAGACGGUUGGGAAAUUGUUAAAUUUAUCUCAACCUGUGCUUGUGAAAUUGUCGGUGGACAAAUUGUCACCUGUGCAAAGGAAAUUAAGGAGAGUGUUCAGACAUUCUUUAAGCUUGUAAAUAAAUUUUUGGCUUUGUGUGCUGACUCUAUCAUUAUUGGUGGAGCUAAACUUAAAGCCUUGAAUUUAGGUGAAACAUUUGUCACGCACUCAAAGGGAUUGUACAGAAAGUGUGUUAAAUCCAGAGAAGAAACUGGCCUACUCAUGCCUCUAAAAGCCCCAAAAGAAAUUAUCUUCUUAGAGGGA',
     dotBracket: '((((((..........((((((((((.(((.(((((.((.((.....)).))))))).))).)))).))))))..(..(((...(((((((((.((((((((.....)))))))).))).)))))).)))..)......))))))..((..(((((...(((((.((((.(((.((((((..(((..(((((((...((((......))))))))))).)))...)))))).))).))))((((((((((((....))))..)))))))).)))))...))...)))..)).(((((((..(((((.................(((((((((....)))))))))...........(((((((..(((((((.((..((.((((((((....)))))))).)).)).)))))))..))))))))))))...))))))).....(((...(((..(....(((..(((((......((((........))))......))))).)))...)..)))..(((((......))))).)))...',
   },
@@ -66,11 +60,9 @@ interface Props {
 }
 
 export function CreateNewDrawing(props: Props): React.ReactElement {
-  let e0 = examples[0];
-  let [example, setExample] = useState(e0 ? e0.name : '');
-  let [sequenceId, setSequenceId] = useState(e0 ? e0.sequenceId : '');
-  let [sequence, setSequence] = useState(e0 ? e0.sequence : '');
-  let [dotBracket, setDotBracket] = useState(e0 ? e0.dotBracket : '');
+  let [sequenceId, setSequenceId] = useState('');
+  let [sequence, setSequence] = useState('');
+  let [dotBracket, setDotBracket] = useState('');
 
   let [showingSequenceParsingDetails, showSequenceParsingDetails] = useState(false);
   let [ignoringNumbers, ignoreNumbers] = useState(true);
@@ -91,11 +83,9 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
             <div style={{ marginTop: '24px' }} >
               <ExampleSelect
                 examples={examples.map(e => e.name)}
-                selected={example}
                 select={name => {
                   let example = examples.find(e => e.name == name);
                   if (example) {
-                    setExample(name);
                     setSequenceId(example.sequenceId);
                     setSequence(example.sequence);
                     setDotBracket(example.dotBracket);
