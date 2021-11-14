@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { CheckboxField } from '../fields/checkbox/CheckboxField';
+import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
+import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 
 interface Props {
   ignoringNumbers: boolean;
@@ -12,31 +13,49 @@ interface Props {
 
 export function IgnoreNumbersCheckbox(props: Props): React.ReactElement {
   return (
-    <CheckboxField
-      name={'Ignore Numbers'}
-      initialValue={props.ignoringNumbers}
-      set={b => props.ignoreNumbers(b)}
-    />
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <Checkbox
+        checked={props.ignoringNumbers}
+        onChange={event => props.ignoreNumbers(event.target.checked)}
+      />
+      <div style={{ marginLeft: '6px' }} >
+        <p className={`${checkboxFieldStyles.label} unselectable`} >
+          Ignore Numbers
+        </p>
+      </div>
+    </div>
   );
 }
 
 export function IgnoreNonAugctLettersCheckbox(props: Props): React.ReactElement {
   return (
-    <CheckboxField
-      name={'Ignore Non-AUGCT Letters'}
-      initialValue={props.ignoringNonAugctLetters}
-      set={b => props.ignoreNonAugctLetters(b)}
-    />
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <Checkbox
+        checked={props.ignoringNonAugctLetters}
+        onChange={event => props.ignoreNonAugctLetters(event.target.checked)}
+      />
+      <div style={{ marginLeft: '6px' }} >
+        <p className={`${checkboxFieldStyles.label} unselectable`} >
+          Ignore Non-AUGCT Letters
+        </p>
+      </div>
+    </div>
   );
 }
 
 export function IgnoreNonAlphanumericsCheckbox(props: Props): React.ReactElement {
   return (
-    <CheckboxField
-      name={'Ignore Non-Alphanumerics'}
-      initialValue={props.ignoringNonAlphanumerics}
-      set={b => props.ignoreNonAlphanumerics(b)}
-    />
+    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <Checkbox
+        checked={props.ignoringNonAlphanumerics}
+        onChange={event => props.ignoreNonAlphanumerics(event.target.checked)}
+      />
+      <div style={{ marginLeft: '6px' }} >
+        <p className={`${checkboxFieldStyles.label} unselectable`} >
+          Ignore Non-Alphanumerics
+        </p>
+      </div>
+    </div>
   );
 }
 
