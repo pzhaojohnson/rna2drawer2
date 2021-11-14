@@ -13,7 +13,7 @@ export function SequenceIdField(props: Props): React.ReactElement {
         className={'unselectable-text'}
         style={{ marginRight: '12px', fontSize: '12px', display: 'inline-block' }}
       >
-        Sequence ID:
+        Sequence ID
       </p>
       <input
         type={'text'}
