@@ -3,7 +3,6 @@ import { useState } from 'react';
 import errorMessageStyles from '../ErrorMessage.css';
 import { AppInterface as App } from '../../AppInterface';
 import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
-import { Underline } from '../containers/Underline';
 import { ExampleSelect } from './ExampleSelect';
 import { SequenceIdField } from './SequenceIdField';
 import { SequenceField } from './SequenceField';
@@ -47,7 +46,16 @@ function Header() {
       <p style={{ margin: '0px 92px', fontSize: '24px', color: 'rgba(0,0,0,1)' }} >
         Create a New Drawing
       </p>
-      <Underline margin={'8px 0px 0px 0px'} />
+      <div style={{ marginTop: '8px' }} >
+        <div
+          style={{
+            height: '0px',
+            borderWidth: '0px 0px 1px 0px',
+            borderStyle: 'solid',
+            borderColor: 'rgba(0,0,0,0.15)',
+          }}
+        />
+      </div>
     </div>
   );
 }

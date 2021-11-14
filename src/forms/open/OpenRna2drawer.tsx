@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { AppInterface as App } from '../../AppInterface';
 import styles from './OpenRna2drawer.css';
 import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
-import { Underline } from '../containers/Underline';
 import { FileField } from '../fields//file/FileField';
 import { ErrorMessage } from '../ErrorMessage';
 import { SolidButton } from '../buttons/SolidButton';
@@ -28,7 +27,16 @@ function Header() {
       <p style={{ margin: '0px 92px', fontSize: '24px', color: 'rgba(0,0,0,1)' }} >
         Open an RNA2Drawer File
       </p>
-      <Underline margin={'8px 0px 0px 0px'} />
+      <div style={{ marginTop: '8px' }} >
+        <div
+          style={{
+            height: '0px',
+            borderWidth: '0px 0px 1px 0px',
+            borderStyle: 'solid',
+            borderColor: 'rgba(0,0,0,0.15)',
+          }}
+        />
+      </div>
     </div>
   );
 }
