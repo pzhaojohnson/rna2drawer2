@@ -1,5 +1,5 @@
 import * as React from 'react';
-import parsingDetailsStyles from './ParsingDetails.css';
+import { TextButton } from 'Forms/buttons/TextButton';
 
 interface Props {
   initialValue: string;
@@ -21,18 +21,12 @@ export function DotBracketField(props: Props): React.ReactElement {
         >
           (Optional)
         </p>
-        <p
-          className={parsingDetailsStyles.detailsToggle}
-          onClick={() => props.toggleParsingDetails()}
-          style={{
-            marginRight: '4px',
-            fontSize: '12px',
-            color: 'rgba(0,0,255,0.8)',
-            cursor: 'pointer',
-          }}
-        >
-          Details
-        </p>
+        <div style={{ marginRight: '4px' }} >
+          <TextButton
+            text='Details'
+            onClick={() => props.toggleParsingDetails()}
+          />
+        </div>
       </div>
       <textarea
         value={props.initialValue}
