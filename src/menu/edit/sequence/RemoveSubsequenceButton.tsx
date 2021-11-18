@@ -18,7 +18,7 @@ export function RemoveSubsequenceButton(props: Props): React.ReactElement {
         props.app.renderForm(close => (
           <RemoveSubsequence
             app={props.app}
-            close={close}
+            unmount={close}
           />
         ));
       }}
