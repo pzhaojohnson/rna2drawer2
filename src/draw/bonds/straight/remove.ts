@@ -3,9 +3,7 @@ import { atIndex } from 'Array/at';
 
 export function removePrimaryBondById(drawing: Drawing, id: string) {
   let i = drawing.primaryBonds.findIndex(pb => pb.id == id);
-  if (i < 0) {
-    console.error('No primary bond has the given ID: ' + id + '.');
-  } else {
+  if (i >= 0) {
     let pb = atIndex(drawing.primaryBonds, i);
     if (pb) {
       pb.line.remove();
@@ -16,9 +14,7 @@ export function removePrimaryBondById(drawing: Drawing, id: string) {
 
 export function removeSecondaryBondById(drawing: Drawing, id: string) {
   let i = drawing.secondaryBonds.findIndex(sb => sb.id == id);
-  if (i < 0) {
-    console.error('No secondary bond has the given ID: ' + id + '.');
-  } else {
+  if (i >= 0) {
     let sb = atIndex(drawing.secondaryBonds, i);
     if (sb) {
       sb.line.remove();
