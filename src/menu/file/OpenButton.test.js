@@ -2,8 +2,8 @@ import App from '../../App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { OpenButton } from './OpenButton';
 
-jest.mock('../openNewTab');
-import openNewTab from '../openNewTab';
+jest.mock('Utilities/openNewTab');
+import { openNewTab } from 'Utilities/openNewTab';
 
 import { OpenRna2drawer } from '../../forms/open/OpenRna2drawer';
 

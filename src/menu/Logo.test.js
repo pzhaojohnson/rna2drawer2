@@ -9,8 +9,8 @@ import { Logo } from './Logo';
 
 import { HomePage } from '../forms/home/HomePage';
 
-jest.mock('./openNewTab');
-import openNewTab from './openNewTab';
+jest.mock('Utilities/openNewTab');
+import { openNewTab } from 'Utilities/openNewTab';
 
 let app = null;
 

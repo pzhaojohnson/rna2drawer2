@@ -3,7 +3,7 @@ import * as React from 'react';
 import styles from './Logo.css';
 import logo from '../icons/logo.svg';
 import { HomePage } from '../forms/home/HomePage';
-import openNewTab from './openNewTab';
+import { openNewTab } from 'Utilities/openNewTab';
 
 interface Props {
   app: App;

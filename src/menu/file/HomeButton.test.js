@@ -3,8 +3,8 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import React from 'react';
 import { HomeButton } from './HomeButton';
 
-jest.mock('../openNewTab');
-import openNewTab from '../openNewTab';
+jest.mock('Utilities/openNewTab');
+import { openNewTab } from 'Utilities/openNewTab';
 
 import { HomePage } from '../../forms/home/HomePage';
 

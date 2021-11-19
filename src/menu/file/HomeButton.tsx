@@ -2,7 +2,7 @@ import { AppInterface as App } from '../../AppInterface';
 import * as React from 'react';
 import { DroppedButton } from '../DroppedButton';
 import { HomePage } from '../../forms/home/HomePage';
-import openNewTab from '../openNewTab';
+import { openNewTab } from 'Utilities/openNewTab';
 
 interface Props {
   app: App;
