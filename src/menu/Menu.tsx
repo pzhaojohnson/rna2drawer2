@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AppInterface as App } from '../AppInterface';
-import { Logo } from './Logo';
+import { AppIcon } from './AppIcon';
 import { FileDropdown } from './file/FileDropdown';
 import { ModeDropdown } from './mode/ModeDropdown';
 import { EditDropdown } from './edit/EditDropdown';
@@ -24,7 +24,7 @@ export function Menu(props: Props) {
         alignItems: 'center'
       }}
     >
-      <Logo app={props.app} />
+      <AppIcon app={props.app} />
       <FileDropdown app={props.app} />
       <ModeDropdown app={props.app} />
       <EditDropdown app={props.app} />
