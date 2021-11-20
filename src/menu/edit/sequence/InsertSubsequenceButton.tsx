@@ -18,7 +18,7 @@ export function InsertSubsequenceButton(props: Props): React.ReactElement {
         props.app.renderForm(close => (
           <InsertSubsequence
             app={props.app}
-            close={close}
+            unmount={close}
           />
         ));
       }}
