@@ -1,30 +1,21 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import DroppedButton from '../../DroppedButton';
-import { RemoveSubsequence } from '../../../forms/edit/sequence/removeSubsequence/RemoveSubsequence';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { RemoveSubsequence } from 'Forms/edit/sequence/removeSubsequence/RemoveSubsequence';
 
-interface Props {
+export type Props = {
   app: App;
-  borderStyle?: string;
-  borderWidth?: string;
-  borderColor?: string;
 }
 
-export function RemoveSubsequenceButton(props: Props): React.ReactElement {
+export function RemoveSubsequenceButton(props: Props) {
   return (
     <DroppedButton
-      text={'Remove Subsequence'}
+      text='Remove Subsequence'
       onClick={() => {
-        props.app.renderForm(close => (
-          <RemoveSubsequence
-            app={props.app}
-            unmount={close}
-          />
+        props.app.renderForm(unmount => (
+          <RemoveSubsequence app={props.app} unmount={unmount} />
         ));
       }}
-      borderStyle={props.borderStyle}
-      borderWidth={props.borderWidth}
-      borderColor={props.borderColor}
     />
   );
 }

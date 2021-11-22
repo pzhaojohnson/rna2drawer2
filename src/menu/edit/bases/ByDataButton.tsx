@@ -1,30 +1,21 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import { DroppedButton } from '../../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 import { BasesByData } from 'Forms/edit/bases/by/data/BasesByData';
 
-interface Props {
+export type Props = {
   app: App;
-  borderStyle?: string;
-  borderWidth?: string;
-  borderColor?: string;
 }
 
-export function ByDataButton(props: Props): React.ReactElement {
+export function ByDataButton(props: Props) {
   return (
     <DroppedButton
-      text={'By Data (e.g., SHAPE)'}
+      text='By Data (e.g., SHAPE)'
       onClick={() => {
-        props.app.renderForm(close => (
-          <BasesByData
-            app={props.app}
-            unmount={close}
-          />
+        props.app.renderForm(unmount => (
+          <BasesByData app={props.app} unmount={unmount} />
         ))
       }}
-      borderStyle={props.borderStyle}
-      borderWidth={props.borderWidth}
-      borderColor={props.borderColor}
     />
   );
 }

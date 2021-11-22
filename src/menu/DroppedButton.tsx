@@ -1,42 +1,50 @@
 import * as React from 'react';
 import styles from './DroppedButton.css';
-import CheckMark from './CheckMark';
+import checkMark from './checkMark.svg';
 
-interface Props {
-  text?: string;
-  onClick?: () => void;
-  keyBinding?: string;
-  checked?: boolean;
-  borderStyle?: string;
-  borderColor?: string;
-  borderWidth?: string;
-  disabled?: boolean;
-}
-
-export function DroppedButton(props: Props): React.ReactElement {
+function CheckMark() {
   return (
-    <button
-      className={`${styles.droppedButton} ${props.disabled ? '' : styles.enabled}`}
-      onClick={props.disabled ? undefined : props.onClick}
-      style={{
-        textAlign: 'left',
-        color: props.disabled ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.8)',
-        borderStyle: props.borderStyle,
-        borderColor: props.borderColor,
-        borderWidth: props.borderWidth,
-      }}
-    >
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'row' }} >
-        <div style={{ flexGrow: 1 }} >
-          {props.text}
-        </div>
-        <div>
-          {props.keyBinding}
-        </div>
-        {props.checked ? <CheckMark /> : null}
-      </div>
-    </button>
+    <img
+      src={checkMark}
+      alt='Check Mark'
+      style={{ height: '16px' }}
+    />
   );
 }
 
-export default DroppedButton;
+export type Props = {
+  text: string;
+  onClick: () => void;
+  keyBinding?: string;
+  checked?: boolean;
+  disabled?: boolean;
+}
+
+export function DroppedButton(props: Props) {
+  return (
+    <div
+      className={`
+        ${styles.droppedButton}
+        ${props.disabled ? styles.disabled : styles.enabled}
+        unselectable
+      `}
+      onClick={() => {
+        if (!props.disabled) {
+          props.onClick();
+        }
+      }}
+      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+    >
+      <p className={`${styles.text} unselectable`} >
+        {props.text}
+      </p>
+      <div style={{ flexGrow: 1 }} />
+      {!props.keyBinding ? null : (
+        <p className={`${styles.keyBinding} unselectable`} >
+          {props.keyBinding}
+        </p>
+      )}
+      {props.checked ? <CheckMark /> : null}
+    </div>
+  );
+}

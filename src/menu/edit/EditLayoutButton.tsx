@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import DroppedButton from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 import { EditLayout } from 'Forms/edit/layout/EditLayout';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function EditLayoutButton(props: Props): React.ReactElement {
+export function EditLayoutButton(props: Props) {
   return (
     <DroppedButton
-      text={'Layout'}
+      text='Layout'
       onClick={() => {
-        props.app.renderForm(close => (
-          <EditLayout app={props.app} unmount={close} />
+        props.app.renderForm(unmount => (
+          <EditLayout app={props.app} unmount={unmount} />
         ));
       }}
     />

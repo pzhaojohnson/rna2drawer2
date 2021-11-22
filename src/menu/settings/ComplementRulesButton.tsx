@@ -1,19 +1,19 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import DroppedButton from '../DroppedButton';
-import { ComplementRules } from '../../forms/settings/complements/ComplementRules';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { ComplementRules } from 'Forms/settings/complements/ComplementRules';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function ComplementRulesButton(props: Props): React.ReactElement {
+export function ComplementRulesButton(props: Props) {
   return (
     <DroppedButton
-      text={'Complement Rules'}
+      text='Complement Rules'
       onClick={() => {
-        props.app.renderForm(close => (
-          <ComplementRules app={props.app} unmount={close} />
+        props.app.renderForm(unmount => (
+          <ComplementRules app={props.app} unmount={unmount} />
         ));
       }}
     />

@@ -1,19 +1,21 @@
 import * as React from 'react';
-import rightCaret from '../icons/rightCaret.svg';
+import rightCaret from './rightCaret.svg';
 
-interface Props {
-  height?: string;
-  padding?: string;
+export type Props = {
+  style?: {
+    height?: string;
+    padding?: string;
+  }
 }
 
-export function RightCaret(props: Props): React.ReactElement {
+export function RightCaret(props: Props) {
   return (
     <img
       src={rightCaret}
-      alt={'Right Caret'}
+      alt='Right Caret'
       style={{
-        height: props.height ?? '16px',
-        padding: props.padding ?? '0px 4px 0px 4px',
+        height: props.style?.height ?? '16px',
+        padding: props.style?.padding ?? '0px 4px',
       }}
     />
   );

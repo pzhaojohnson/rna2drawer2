@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import { Dropright, trailingBorderStyles } from '../../Dropright';
-import { DroppedSeparator } from '../../DroppedSeparator';
+import styles from './EditBasesDropright.css';
+import { Dropright } from 'Menu/Dropright';
+import { DroppedSeparator } from 'Menu/DroppedSeparator';
+import { AppInterface as App } from 'AppInterface';
 import { GeneralStylesButton } from './GeneralStylesButton';
 import { BySelectionButton } from './BySelectionButton';
 import { ByCharacterButton } from './ByCharacterButton';
@@ -11,27 +12,31 @@ import { DecapitalizeButton } from './DecapitalizeButton';
 import { TsToUsButton } from './TsToUsButton';
 import { UsToTsButton } from './UsToTsButton';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function EditBasesDropright(props: Props): React.ReactElement {
+export function EditBasesDropright(props: Props) {
   return (
     <Dropright
       name='Bases'
       dropped={
-        <div>
-          <GeneralStylesButton app={props.app} />
-          <DroppedSeparator {...trailingBorderStyles} />
-          <BySelectionButton app={props.app} {...trailingBorderStyles} />
-          <ByCharacterButton app={props.app} {...trailingBorderStyles} />
-          <ByDataButton app={props.app} {...trailingBorderStyles} />
-          <DroppedSeparator {...trailingBorderStyles} />
-          <CapitalizeButton app={props.app} {...trailingBorderStyles} />
-          <DecapitalizeButton app={props.app} {...trailingBorderStyles} />
-          <DroppedSeparator {...trailingBorderStyles} />
-          <TsToUsButton app={props.app} {...trailingBorderStyles} />
-          <UsToTsButton app={props.app} {...trailingBorderStyles} />
+        <div style={{ width: '256px', display: 'flex', flexDirection: 'column' }} >
+          <div className={styles.whiteLeftBorder} >
+            <GeneralStylesButton app={props.app} />
+          </div>
+          <div className={styles.grayishLeftBorder} >
+            <DroppedSeparator />
+            <BySelectionButton app={props.app} />
+            <ByCharacterButton app={props.app} />
+            <ByDataButton app={props.app} />
+            <DroppedSeparator />
+            <CapitalizeButton app={props.app} />
+            <DecapitalizeButton app={props.app} />
+            <DroppedSeparator />
+            <TsToUsButton app={props.app} />
+            <UsToTsButton app={props.app} />
+          </div>
         </div>
       }
     />

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import { Dropdown } from '../Dropdown';
-import DroppedSeparator from '../DroppedSeparator';
+import { Dropdown } from 'Menu/Dropdown';
+import { DroppedSeparator } from 'Menu/DroppedSeparator';
+import { AppInterface as App } from 'AppInterface';
 import { PivotButton } from './PivotButton';
 import { ExpandButton } from './ExpandButton';
 import { PairComplementsButton } from './PairComplementsButton';
@@ -11,16 +11,16 @@ import { FlipButton } from './FlipButton';
 import { TriangularizeButton } from './TriangularizeButton';
 import { AnnotateButton } from './AnnotateButton';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function ModeDropdown(props: Props): React.ReactElement {
+export function ModeDropdown(props: Props) {
   return (
     <Dropdown
-      name={'Mode'}
+      name='Mode'
       dropped={(
-        <div>
+        <div style={{ width: '256px', display: 'flex', flexDirection: 'column' }} >
           <PivotButton app={props.app} />
           <ExpandButton app={props.app} />
           <DroppedSeparator />

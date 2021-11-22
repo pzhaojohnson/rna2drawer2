@@ -1,25 +1,20 @@
-import { AppInterface as App } from '../AppInterface';
 import * as React from 'react';
 import styles from './AppIcon.css';
-import icon from './appIcon.svg';
-import { HomePage } from '../forms/home/HomePage';
+import appIcon from './appIcon.svg';
+import { AppInterface as App } from 'AppInterface';
+import { HomePage } from 'Forms/home/HomePage';
 import { openNewTab } from 'Utilities/openNewTab';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function AppIcon(props: Props): React.ReactElement {
+export function AppIcon(props: Props) {
   return (
     <img
-      className={styles.spinsOnHover}
-      src={icon}
+      className={styles.appIcon}
+      src={appIcon}
       alt='Icon'
-      style={{
-        height: '18px',
-        padding: '4px 8px 4px 8px',
-        cursor: 'pointer',
-      }}
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
           props.app.renderForm(() => (

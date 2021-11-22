@@ -1,27 +1,27 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import DroppedButton from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { OpenRna2drawer } from 'Forms/open/OpenRna2drawer';
 import { openNewTab } from 'Utilities/openNewTab';
-import { OpenRna2drawer } from '../../forms/open/OpenRna2drawer';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function OpenButton(props: Props): React.ReactElement {
+export function OpenButton(props: Props) {
   return (
     <DroppedButton
-      text={'Open'}
+      text='Open'
       onClick={() => {
-        if (!props.app.strictDrawing.isEmpty()) {
-          openNewTab();
-        } else {
+        if (props.app.strictDrawing.isEmpty()) {
           props.app.renderForm(close => (
             <OpenRna2drawer
               app={props.app}
               close={close}
             />
           ));
+        } else {
+          openNewTab();
         }
       }}
       disabled={!props.app.strictDrawing.isEmpty()}

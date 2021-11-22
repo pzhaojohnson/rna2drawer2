@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { DroppedButton } from 'Menu/DroppedButton';
 import { AppInterface as App } from 'AppInterface';
 import { FoldingModeInterface as FoldingMode } from 'Draw/interact/fold/FoldingModeInterface';
 import { AnnotatingModeInterface as AnnotatingMode } from 'Draw/interact/annotate/AnnotatingModeInterface';
-import { DroppedButton } from 'Menu/DroppedButton';
 
 type ApplicableModes = [FoldingMode, AnnotatingMode];
 
@@ -21,7 +21,7 @@ function deselectingOnDblclick(app: App): boolean {
   return allModesAre;
 }
 
-interface Props {
+export type Props = {
   app: App;
 }
 

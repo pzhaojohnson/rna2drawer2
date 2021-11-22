@@ -1,29 +1,30 @@
 import * as React from 'react';
 import styles from './Dropdown.css';
-import TopButton from './TopButton';
 
-interface Props {
+export type Props = {
   name: string;
-  dropped: React.ReactElement;
+
+  // the content of the dropdown menu
+  dropped: React.ReactNode;
+
   disabled?: boolean;
 }
 
-export function Dropdown(props: Props): React.ReactElement {
+export function Dropdown(props: Props) {
   return (
-    <div className={styles.dropdown} >
-      <TopButton
-        text={props.name}
-        disabled={props.disabled}
-      />
+    <div
+      className={`
+        ${styles.dropdown}
+        ${props.disabled ? styles.disabled : styles.enabled}
+      `}
+    >
+      <div className={styles.button} >
+        <p className={`${styles.buttonText} unselectable`} >
+          {props.name}
+        </p>
+      </div>
       {props.disabled ? null : (
-        <div
-          className={styles.dropped}
-          style={{
-            borderWidth: '0px 1px 1px 1px',
-            borderStyle: 'solid',
-            borderColor: 'rgba(0,0,0,0.2)',
-          }}
-        >
+        <div className={styles.droppedContainer} >
           {props.dropped}
         </div>
       )}

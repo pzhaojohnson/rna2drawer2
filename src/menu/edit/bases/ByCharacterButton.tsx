@@ -1,30 +1,21 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import { DroppedButton } from '../../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 import { BasesByCharacter } from 'Forms/edit/bases/by/character/BasesByCharacter';
 
-interface Props {
+export type Props = {
   app: App;
-  borderStyle?: string;
-  borderWidth?: string;
-  borderColor?: string;
 }
 
-export function ByCharacterButton(props: Props): React.ReactElement {
+export function ByCharacterButton(props: Props) {
   return (
     <DroppedButton
-      text={'By Character'}
+      text='By Character'
       onClick={() => {
-        props.app.renderForm(close => (
-          <BasesByCharacter
-            app={props.app}
-            unmount={close}
-          />
+        props.app.renderForm(unmount => (
+          <BasesByCharacter app={props.app} unmount={unmount} />
         ))
       }}
-      borderStyle={props.borderStyle}
-      borderWidth={props.borderWidth}
-      borderColor={props.borderColor}
     />
   );
 }

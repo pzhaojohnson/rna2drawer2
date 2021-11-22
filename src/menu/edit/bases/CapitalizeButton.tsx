@@ -11,11 +11,8 @@ function onlyHasUpperCases(drawing: Drawing): boolean {
   return drawing.bases().every(b => isUpperCase(b.text.text()));
 }
 
-interface Props {
+export type Props = {
   app: App;
-  borderStyle?: string;
-  borderWidth?: string;
-  borderColor?: string;
 }
 
 export function CapitalizeButton(props: Props) {
@@ -44,9 +41,6 @@ export function CapitalizeButton(props: Props) {
           props.app.refresh();
         }
       }}
-      borderStyle={props.borderStyle}
-      borderWidth={props.borderWidth}
-      borderColor={props.borderColor}
     />
   );
 }

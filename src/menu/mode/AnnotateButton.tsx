@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
+import { AppInterface as App } from 'AppInterface';
 import { selectedRange } from 'Draw/interact/fold/selected';
-import DroppedButton from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
 
 function foldingSelection(app: App): number[] | undefined {
   let interaction = app.strictDrawingInteraction;
@@ -15,14 +15,14 @@ function foldingSelection(app: App): number[] | undefined {
   }
 }
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function AnnotateButton(props: Props): React.ReactElement {
+export function AnnotateButton(props: Props) {
   return (
     <DroppedButton
-      text={'Edit Bases'}
+      text='Edit Bases'
       onClick={() => {
         let interaction = props.app.strictDrawingInteraction;
         if (!interaction.annotating()) {

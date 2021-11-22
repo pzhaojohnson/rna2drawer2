@@ -11,11 +11,8 @@ function onlyHasLowerCases(drawing: Drawing): boolean {
   return drawing.bases().every(b => isLowerCase(b.text.text()));
 }
 
-interface Props {
+export type Props = {
   app: App;
-  borderStyle?: string;
-  borderWidth?: string;
-  borderColor?: string;
 }
 
 export function DecapitalizeButton(props: Props) {
@@ -44,9 +41,6 @@ export function DecapitalizeButton(props: Props) {
           props.app.refresh();
         }
       }}
-      borderStyle={props.borderStyle}
-      borderWidth={props.borderWidth}
-      borderColor={props.borderColor}
     />
   );
 }

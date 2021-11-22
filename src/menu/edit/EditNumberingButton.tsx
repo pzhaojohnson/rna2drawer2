@@ -1,22 +1,19 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import DroppedButton from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 import { EditNumbering } from 'Forms/edit/EditNumbering';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function EditNumberingButton(props: Props): React.ReactElement {
+export function EditNumberingButton(props: Props) {
   return (
     <DroppedButton
-      text={'Numbering'}
+      text='Numbering'
       onClick={() => {
-        props.app.renderForm(close => (
-          <EditNumbering
-            app={props.app}
-            unmount={close}
-          />
+        props.app.renderForm(unmount => (
+          <EditNumbering app={props.app} unmount={unmount} />
         ));
       }}
     />

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import DroppedButton from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 
 function alreadyPivoting(app: App): boolean {
   let interaction = app.strictDrawingInteraction;
@@ -8,14 +8,14 @@ function alreadyPivoting(app: App): boolean {
   return interaction.pivoting() && pivotingMode.addingAndRemovingStretch();
 }
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function PivotButton(props: Props): React.ReactElement {
+export function PivotButton(props: Props) {
   return (
     <DroppedButton
-      text={'Drag Stems'}
+      text='Drag Stems'
       onClick={() => {
         if (!alreadyPivoting(props.app)) {
           let interaction = props.app.strictDrawingInteraction;

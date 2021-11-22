@@ -1,14 +1,14 @@
-import { AppInterface as App } from '../../AppInterface';
 import * as React from 'react';
-import { DroppedButton } from '../DroppedButton';
-import { HomePage } from '../../forms/home/HomePage';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { HomePage } from 'Forms/home/HomePage';
 import { openNewTab } from 'Utilities/openNewTab';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function HomeButton(props: Props): React.ReactElement {
+export function HomeButton(props: Props) {
   return (
     <DroppedButton
       text='Home'

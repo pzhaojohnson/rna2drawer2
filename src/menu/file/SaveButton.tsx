@@ -3,7 +3,7 @@ import { DroppedButton } from 'Menu/DroppedButton';
 import { AppInterface as App } from 'AppInterface';
 import { offerFileForDownload } from 'Utilities/offerFileForDownload';
 
-interface Props {
+export type Props = {
   app: App;
 }
 

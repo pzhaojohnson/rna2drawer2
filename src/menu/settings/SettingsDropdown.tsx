@@ -1,25 +1,25 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import { Dropdown } from '../Dropdown';
+import { Dropdown } from 'Menu/Dropdown';
+import { AppInterface as App } from 'AppInterface';
 import { ComplementRulesButton } from './ComplementRulesButton';
 import { DeselectOnDblclickButton } from './DeselectOnDblclickButton';
 import { DelayedPivotingButton } from './DelayedPivotingButton';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function SettingsDropdown(props: Props): React.ReactElement {
+export function SettingsDropdown(props: Props) {
   return (
     <Dropdown
-      name={'Settings'}
-      dropped={(
-        <div>
+      name='Settings'
+      dropped={
+        <div style={{ width: '256px', display: 'flex', flexDirection: 'column' }} >
           <ComplementRulesButton app={props.app} />
           <DeselectOnDblclickButton app={props.app} />
           <DelayedPivotingButton app={props.app} />
         </div>
-      )}
+      }
       disabled={props.app.strictDrawing.isEmpty()}
     />
   );

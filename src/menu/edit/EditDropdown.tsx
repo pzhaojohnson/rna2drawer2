@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import { Dropdown } from '../Dropdown';
-import DroppedSeparator from '../DroppedSeparator';
+import { Dropdown } from 'Menu/Dropdown';
+import { DroppedSeparator } from 'Menu/DroppedSeparator';
+import { AppInterface as App } from 'AppInterface';
 import { UndoButton } from './UndoButton';
 import { RedoButton } from './RedoButton';
 import { EditDrawingTitleButton } from './EditDrawingTitleButton';
@@ -13,16 +13,16 @@ import { EditSecondaryBondsButton } from './EditSecondaryBondsButton';
 import { EditTertiaryBondsButton } from './EditTertiaryBondsButton';
 import { EditLayoutButton } from './EditLayoutButton';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function EditDropdown(props: Props): React.ReactElement {
+export function EditDropdown(props: Props) {
   return (
     <Dropdown
-      name={'Edit'}
+      name='Edit'
       dropped={(
-        <div>
+        <div style={{ width: '256px', display: 'flex', flexDirection: 'column' }} >
           <UndoButton app={props.app} />
           <RedoButton app={props.app} />
           <DroppedSeparator />

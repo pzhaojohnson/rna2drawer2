@@ -1,9 +1,13 @@
-.spinsOnHover {
+.appIcon {
+  height: 18px;
+  padding: 6px 8px;
+  cursor: pointer;
+
   transition: none;
   -webkit-transition: none;
 }
 
-.spinsOnHover:hover {
+.appIcon:hover {
   transform: rotate(720deg);
   -webkit-transform: rotate(720deg);
   transition: transform 0.3s ease-in-out;

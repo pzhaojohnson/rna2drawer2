@@ -1,24 +1,27 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import DroppedButton from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { CreateNewDrawing } from 'Forms/new/CreateNewDrawing';
 import { openNewTab } from 'Utilities/openNewTab';
-import { CreateNewDrawing } from '../../forms/new/CreateNewDrawing';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function NewButton(props: Props): React.ReactElement {
+export function NewButton(props: Props) {
   return (
     <DroppedButton
-      text={'New'}
+      text='New'
       onClick={() => {
-        if (!props.app.strictDrawing.isEmpty()) {
-          openNewTab();
-        } else {
+        if (props.app.strictDrawing.isEmpty()) {
           props.app.renderForm(close => (
-            <CreateNewDrawing app={props.app} close={close} />
+            <CreateNewDrawing
+              app={props.app}
+              close={close}
+            />
           ));
+        } else {
+          openNewTab();
         }
       }}
     />

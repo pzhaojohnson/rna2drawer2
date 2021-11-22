@@ -1,22 +1,19 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import DroppedButton from '../../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 import { EditSequenceId } from 'Forms/edit/sequence/EditSequenceId';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function EditSequenceIdButton(props: Props): React.ReactElement {
+export function EditSequenceIdButton(props: Props) {
   return (
     <DroppedButton
-      text={'Sequence ID'}
+      text='Sequence ID'
       onClick={() => {
-        props.app.renderForm(close => (
-          <EditSequenceId
-            app={props.app}
-            unmount={close}
-          />
+        props.app.renderForm(unmount => (
+          <EditSequenceId app={props.app} unmount={unmount} />
         ));
       }}
     />

@@ -1,25 +1,36 @@
 .droppedButton {
   border: none;
-  margin: 0px;
-  background-color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: normal;
-  font-style: normal;
-  color: rgba(0,0,0,0.8);
-  border-radius: 0px;
-  box-shadow: none;
-
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-.droppedButton:focus {
-  outline: none;
+  padding: 8px 12px;
 }
 
 .enabled:hover {
-  background-color: gainsboro;
+  background-color: rgb(247, 247, 252);
+}
+
+.text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.enabled .text {
+  color: rgb(60, 60, 77);
+}
+
+.disabled .text {
+  color: rgb(214, 214, 227);
+}
+
+.keyBinding {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.enabled .keyBinding {
+  color: rgba(0,0,0,0.65);
+}
+
+.disabled .keyBinding {
+  color: rgba(0,0,0,0.15);
 }

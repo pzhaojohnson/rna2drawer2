@@ -11,11 +11,8 @@ function hasTs(drawing: Drawing): boolean {
   return drawing.bases().some(b => isT(b.text.text()));
 }
 
-interface Props {
+export type Props = {
   app: App;
-  borderStyle?: string;
-  borderWidth?: string;
-  borderColor?: string;
 }
 
 export function TsToUsButton(props: Props) {
@@ -45,9 +42,6 @@ export function TsToUsButton(props: Props) {
           props.app.refresh();
         }
       }}
-      borderStyle={props.borderStyle}
-      borderWidth={props.borderWidth}
-      borderColor={props.borderColor}
     />
   );
 }

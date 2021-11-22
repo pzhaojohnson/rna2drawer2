@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import DroppedButton from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function EditTertiaryBondsButton(props: Props): React.ReactElement {
+export function EditTertiaryBondsButton(props: Props) {
   return (
     <DroppedButton
-      text={'Tertiary Bonds'}
+      text='Tertiary Bonds'
       onClick={() => {
         props.app.strictDrawingInteraction.tertiaryBondsInteraction.requestToRenderForm();
       }}

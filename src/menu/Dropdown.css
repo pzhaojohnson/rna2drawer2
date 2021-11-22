@@ -1,22 +1,43 @@
 .dropdown {
   position: relative;
-  display: inline-block;
 }
 
-.dropped {
+.button {
+  border: none;
+  padding: 6px 12px;
+  background-color: transparent;
+}
+
+.buttonText {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.enabled .buttonText {
+  color: rgb(60, 60, 77);
+}
+
+.disabled .buttonText {
+  color: rgb(214, 214, 227);
+}
+
+.enabled:hover .button {
+  background-color: rgb(247, 247, 252);
+}
+
+.droppedContainer {
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: rgb(216, 216, 230);
+
+  background-color: white;
+
   display: none;
   position: absolute;
   z-index: 1;
 }
 
-.dropped button {
-  display: block;
-  min-width: 220px;
-  margin: 0px;
-  padding: 6px 8px 6px 8px;
-  font-size: 12px;
-}
-
-.dropdown:hover .dropped {
+.dropdown:hover .droppedContainer {
   display: block;
 }

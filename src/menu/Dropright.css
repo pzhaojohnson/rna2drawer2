@@ -2,22 +2,35 @@
   position: relative;
 }
 
-.dropped {
+.button {
+  padding: 8px 12px;
+  background-color: white;
+}
+
+.buttonText {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(60, 60, 77);
+}
+
+.droppedContainer {
+  border-style: solid;
+  border-color: rgb(216, 216, 230);
+  border-width: 1px 1px 1px 0px;
+
+  background-color: white;
+
   display: none;
   position: absolute;
   top: -1px;
-  left: 220px;
+
+  /* currently hard coded to match width of dropdown menu */
+  left: 256px;
+
   z-index: 1;
 }
 
-.dropped button {
-  display: block;
-  min-width: 220px;
-  margin: 0px;
-  padding: 6px 8px 6px 8px;
-  font-size: 12px;
-}
-
-.dropright:hover .dropped {
+.dropright:hover .droppedContainer {
   display: block;
 }

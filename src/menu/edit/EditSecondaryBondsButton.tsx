@@ -1,22 +1,22 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import { DroppedButton } from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 import { EditSecondaryBonds } from 'Forms/edit/bonds/secondary/EditSecondaryBonds';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function EditSecondaryBondsButton(props: Props): React.ReactElement {
+export function EditSecondaryBondsButton(props: Props) {
   return (
     <DroppedButton
       text='Secondary Bonds'
       onClick={() => {
-        props.app.renderForm(close => (
+        props.app.renderForm(unmount => (
           <EditSecondaryBonds
             app={props.app}
             secondaryBonds={[...props.app.strictDrawing.drawing.secondaryBonds]}
-            unmount={close}
+            unmount={unmount}
           />
         ))
       }}

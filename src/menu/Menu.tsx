@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { AppInterface as App } from '../AppInterface';
+import styles from './Menu.css';
+import { AppInterface as App } from 'AppInterface';
 import { AppIcon } from './AppIcon';
 import { FileDropdown } from './file/FileDropdown';
 import { ModeDropdown } from './mode/ModeDropdown';
@@ -7,23 +8,13 @@ import { EditDropdown } from './edit/EditDropdown';
 import { ExportDropdown } from './export/ExportDropdown';
 import { SettingsDropdown } from './settings/SettingsDropdown';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
 export function Menu(props: Props) {
   return (
-    <div
-      style={{
-        borderWidth: '0px 0px 1px 0px',
-        borderStyle: 'solid',
-        borderColor: 'rgba(0,0,0,0.2)',
-        backgroundColor: '#ffffff',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
-      }}
-    >
+    <div className={styles.menu} >
       <AppIcon app={props.app} />
       <FileDropdown app={props.app} />
       <ModeDropdown app={props.app} />

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../AppInterface';
-import { DroppedButton } from '../DroppedButton';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 import { offerFileForDownload } from 'Utilities/offerFileForDownload';
 
 function getLayoutDotBracket(app: App): string {
@@ -17,11 +17,11 @@ function getLayoutDotBracket(app: App): string {
   return dtbr;
 }
 
-interface Props {
+export type Props = {
   app: App;
 }
 
-export function ExportLayoutStructureButton(props: Props): React.ReactElement {
+export function ExportLayoutStructureButton(props: Props) {
   return (
     <DroppedButton
       text='Layout Structure'

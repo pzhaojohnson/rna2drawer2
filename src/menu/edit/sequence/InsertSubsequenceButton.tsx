@@ -1,30 +1,21 @@
 import * as React from 'react';
-import { AppInterface as App } from '../../../AppInterface';
-import DroppedButton from '../../DroppedButton';
-import { InsertSubsequence } from '../../../forms/edit/sequence/insertSubsequence/InsertSubsequence';
+import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
+import { InsertSubsequence } from 'Forms/edit/sequence/insertSubsequence/InsertSubsequence';
 
-interface Props {
+export type Props = {
   app: App;
-  borderStyle?: string;
-  borderWidth?: string;
-  borderColor?: string;
 }
 
-export function InsertSubsequenceButton(props: Props): React.ReactElement {
+export function InsertSubsequenceButton(props: Props) {
   return (
     <DroppedButton
-      text={'Insert Subsequence'}
+      text='Insert Subsequence'
       onClick={() => {
-        props.app.renderForm(close => (
-          <InsertSubsequence
-            app={props.app}
-            unmount={close}
-          />
+        props.app.renderForm(unmount => (
+          <InsertSubsequence app={props.app} unmount={unmount} />
         ));
       }}
-      borderStyle={props.borderStyle}
-      borderWidth={props.borderWidth}
-      borderColor={props.borderColor}
     />
   );
 }

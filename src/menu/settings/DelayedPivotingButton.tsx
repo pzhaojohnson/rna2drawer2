@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { AppInterface as App } from 'AppInterface';
 import { DroppedButton } from 'Menu/DroppedButton';
+import { AppInterface as App } from 'AppInterface';
 
-interface Props {
+export type Props = {
   app: App;
 }
 
