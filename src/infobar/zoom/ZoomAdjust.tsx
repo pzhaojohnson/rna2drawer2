@@ -8,7 +8,7 @@ export interface Props {
   app: App;
 }
 
-export function ZoomControl(props: Props) {
+export function ZoomAdjust(props: Props) {
   return (
     <div
       style={{
