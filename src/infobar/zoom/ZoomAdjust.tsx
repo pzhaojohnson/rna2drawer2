@@ -5,7 +5,7 @@ import { ZoomDisplay } from './ZoomDisplay';
 import { ZoomInButton } from './ZoomInButton';
 import { ZoomOutButton } from './ZoomOutButton';
 
-export interface Props {
+export type Props = {
   app: App;
 }
 
