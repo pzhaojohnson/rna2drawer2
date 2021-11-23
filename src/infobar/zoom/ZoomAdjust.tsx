@@ -12,9 +12,9 @@ export type Props = {
 export function ZoomAdjust(props: Props) {
   return (
     <div className={styles.zoomAdjust} >
-      <ZoomOutButton {...props} />
-      <ZoomDisplay {...props} />
-      <ZoomInButton {...props} />
+      <ZoomOutButton app={props.app} />
+      <ZoomDisplay app={props.app} />
+      <ZoomInButton app={props.app} />
     </div>
   );
 }
