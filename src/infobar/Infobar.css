@@ -1,0 +1,17 @@
+.infobar {
+  border-width: 1px 0px 0px 0px;
+  border-style: solid;
+  border-color: rgb(216, 216, 230);
+
+  height: 26px;
+  
+  background-color: white;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.spacer {
+  flex-grow: 1;
+}
