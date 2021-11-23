@@ -1,8 +1,22 @@
 import * as React from 'react';
 import styles from './ZoomInButton.css';
 import { AppInterface as App } from 'AppInterface';
+import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { zoom, setZoom } from 'Draw/zoom';
 import plus from './plus.svg';
-import { zoomIn } from './control';
+import { nextHighestPresetZoom } from './control';
+
+function zoomIn(drawing: Drawing) {
+  let z = zoom(drawing);
+  if (typeof z != 'number') {
+    setZoom(drawing, 1); // reset zoom
+  } else {
+    let nextHighest = nextHighestPresetZoom(z);
+    if (typeof nextHighest == 'number') {
+      setZoom(drawing, nextHighest);
+    }
+  }
+}
 
 export interface Props {
   app: App;
