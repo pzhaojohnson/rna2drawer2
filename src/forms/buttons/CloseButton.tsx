@@ -1,7 +1,7 @@
 import * as React from 'react';
-import blackCrossMark from '../../icons/blackCrossMark.svg';
-import grayCrossMark from '../../icons/grayCrossMark.svg';
-import whiteCrossMark from '../../icons/whiteCrossMark.svg';
+import blackCrossMark from './blackCrossMark.svg';
+import grayCrossMark from './grayCrossMark.svg';
+import whiteCrossMark from './whiteCrossMark.svg';
 
 interface Props {
   position: 'absolute';
