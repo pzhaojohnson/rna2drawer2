@@ -4,7 +4,7 @@ import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { zoom, setZoom } from 'Draw/zoom';
 import plus from './plus.svg';
-import { nextHighestPresetZoom } from './control';
+import { nextHighestPresetZoom } from './presetZooms';
 
 function zoomIn(drawing: Drawing) {
   let z = zoom(drawing);
