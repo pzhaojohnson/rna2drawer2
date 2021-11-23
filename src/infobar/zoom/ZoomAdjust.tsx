@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './ZoomAdjust.css';
 import { AppInterface as App } from 'AppInterface';
 import { ZoomDisplay } from './ZoomDisplay';
 import { ZoomInButton } from './ZoomInButton';
@@ -10,14 +11,7 @@ export interface Props {
 
 export function ZoomAdjust(props: Props) {
   return (
-    <div
-      style={{
-        margin: '0px 6px 0px 8px',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}
-    >
+    <div className={styles.zoomAdjust} >
       <ZoomOutButton {...props} />
       <ZoomDisplay {...props} />
       <ZoomInButton {...props} />

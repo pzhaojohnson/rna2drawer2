@@ -1,0 +1,6 @@
+.zoomAdjust {
+  margin: 0px 6px 0px 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
