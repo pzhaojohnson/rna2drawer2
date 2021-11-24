@@ -8,13 +8,17 @@ import { nextLowestPresetZoom } from './presetZooms';
 
 function zoomOut(drawing: Drawing) {
   let z = zoom(drawing);
+
   if (typeof z != 'number') {
-    setZoom(drawing, 1); // reset zoom
-  } else {
-    let nextLowest = nextLowestPresetZoom(z);
-    if (typeof nextLowest == 'number') {
-      setZoom(drawing, nextLowest);
-    }
+    // reset zoom if somehow became undefined
+    setZoom(drawing, 1);
+    return;
+  }
+
+  let nextLowest = nextLowestPresetZoom(z);
+
+  if (typeof nextLowest == 'number') {
+    setZoom(drawing, nextLowest);
   }
 }
 

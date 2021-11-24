@@ -8,13 +8,17 @@ import { nextHighestPresetZoom } from './presetZooms';
 
 function zoomIn(drawing: Drawing) {
   let z = zoom(drawing);
+
   if (typeof z != 'number') {
-    setZoom(drawing, 1); // reset zoom
-  } else {
-    let nextHighest = nextHighestPresetZoom(z);
-    if (typeof nextHighest == 'number') {
-      setZoom(drawing, nextHighest);
-    }
+    // reset zoom if somehow became undefined
+    setZoom(drawing, 1);
+    return;
+  }
+
+  let nextHighest = nextHighestPresetZoom(z);
+
+  if (typeof nextHighest == 'number') {
+    setZoom(drawing, nextHighest);
   }
 }
 
