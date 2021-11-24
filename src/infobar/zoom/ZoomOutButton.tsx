@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styles from './ZoomOutButton.css';
+import minus from './minus.svg';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { zoom, setZoom } from 'Draw/zoom';
-import minus from './minus.svg';
 import { nextLowestPresetZoom } from './presetZooms';
 
 function zoomOut(drawing: Drawing) {
