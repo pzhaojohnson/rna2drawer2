@@ -30,23 +30,11 @@ export function ZoomOutButton(props: Props) {
         zoomOut(props.app.strictDrawing.drawing);
         props.app.refresh();
       }}
-      style={{
-        width: '20px',
-        height: '20px',
-        borderRadius: '2px',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
     >
       <img
-        className={'unselectable'}
+        className={`${styles.minus} unselectable`}
         src={minus}
         alt='Minus'
-        style={{
-          width: '8px',
-        }}
       />
     </div>
   );

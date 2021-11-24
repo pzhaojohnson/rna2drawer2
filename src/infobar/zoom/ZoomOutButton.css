@@ -1,5 +1,15 @@
 .zoomOutButton {
+  border-radius: 2px;
+
+  width: 20px;
+  height: 20px;
+
   background-color: transparent;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .zoomOutButton:hover {
@@ -9,4 +19,8 @@
 .zoomOutButton:active {
   background-color: rgba(0,0,0,0.2);
   transform: scale(0.95);
+}
+
+.minus {
+  width: 8px;
 }
