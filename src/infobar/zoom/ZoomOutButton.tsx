@@ -4,6 +4,7 @@ import minus from './minus.svg';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { zoom, setZoom } from 'Draw/zoom';
+import { round } from 'Math/round';
 import { nextLowestPresetZoom } from './presetZooms';
 
 function zoomOut(drawing: Drawing) {
@@ -14,6 +15,10 @@ function zoomOut(drawing: Drawing) {
     setZoom(drawing, 1);
     return;
   }
+
+  // account for floating point imprecision in calculating zoom
+  // (otherwise might get stuck on some preset zooms)
+  z = round(z, 2);
 
   let nextLowest = nextLowestPresetZoom(z);
 
