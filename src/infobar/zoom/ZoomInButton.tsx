@@ -18,7 +18,8 @@ function zoomIn(drawing: Drawing) {
 
   // account for floating point imprecision in calculating zoom
   // (otherwise might get stuck on some preset zooms)
-  z = round(z, 2);
+  // (and most likely no preset zoom has more than 6 decimal places)
+  z = round(z, 6);
 
   let nextHighest = nextHighestPresetZoom(z);
 
