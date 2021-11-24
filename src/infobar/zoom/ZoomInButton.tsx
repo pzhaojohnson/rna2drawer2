@@ -18,7 +18,7 @@ function zoomIn(drawing: Drawing) {
   }
 }
 
-export interface Props {
+export type Props = {
   app: App;
 }
 
