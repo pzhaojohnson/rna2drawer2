@@ -3,7 +3,7 @@ import {
   Stem,
 } from './PivotingModeInterface';
 import { zoom } from 'Draw/zoom';
-import { angleBetween } from '../../angleBetween';
+import { direction2D as direction } from 'Math/points/direction';
 import { normalizeAngle } from 'Math/angles/normalize';
 import { isPoint2D as isPoint } from 'Math/points/Point';
 
@@ -22,7 +22,7 @@ export function normalizedMagnitudeOfMovement(mode: PivotingMode, move: Movement
 }
 
 export function angleOfMovement(move: Movement): number {
-  return angleBetween(0, 0, move.x, move.y);
+  return direction({ x: move.x, y: move.y });
 }
 
 export function angleOfStem53(mode: PivotingMode, st: Stem): number | undefined {

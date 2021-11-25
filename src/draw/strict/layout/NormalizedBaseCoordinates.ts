@@ -1,6 +1,7 @@
 import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from 'Draw/angleBetween';
+import { displacement2D as displacement } from 'Math/points/displacement';
+import { direction2D as direction } from 'Math/points/direction';
 
 export class NormalizedBaseCoordinates {
   _xLeft: number;
@@ -49,12 +50,7 @@ export class NormalizedBaseCoordinates {
   }
 
   angleBetweenCenters(other: NormalizedBaseCoordinates): number {
-    return angleBetween(
-      this.xCenter,
-      this.yCenter,
-      other.xCenter,
-      other.yCenter
-    );
+    return direction(displacement(this.center(), other.center()));
   }
 }
 

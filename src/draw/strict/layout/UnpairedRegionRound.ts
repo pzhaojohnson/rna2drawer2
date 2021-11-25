@@ -2,7 +2,8 @@ import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
 import { normalizeAngle } from 'Math/angles/normalize';
 import { circleCenter } from './circleCenter';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from 'Draw/angleBetween';
+import { displacement2D as displacement } from 'Math/points/displacement';
+import { direction2D as direction } from 'Math/points/direction';
 import { RoundLoop } from './StemLayout';
 import { UnpairedRegionInterface as UnpairedRegion } from './StemInterface';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
@@ -109,7 +110,7 @@ function _angleBounding5(
   cb3: Coordinates,
 ): number {
   let center = _center(ur, generalProps, cb5, cb3);
-  return angleBetween(center.x, center.y, cb5.x, cb5.y);
+  return direction(displacement(center, cb5));
 }
 
 /**
@@ -123,7 +124,7 @@ function _angleBounding3(
   cb3: Coordinates,
 ): number {
   let center = _center(ur, generalProps, cb5, cb3);
-  return angleBetween(center.x, center.y, cb3.x, cb3.y);
+  return direction(displacement(center, cb3));
 }
 
 /**

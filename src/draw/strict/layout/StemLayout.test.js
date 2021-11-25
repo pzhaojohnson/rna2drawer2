@@ -7,7 +7,8 @@ import parseDotBracket from 'Parse/parseDotBracket';
 import { circleCircumference } from './circleCircumference';
 import { circleCenter } from './circleCenter';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from 'Draw/angleBetween';
+import { displacement2D as displacement } from 'Math/points/displacement';
+import { direction2D as direction } from 'Math/points/direction';
 
 function defaultPerBaseProps(length) {
   let pbps = [];
@@ -101,8 +102,9 @@ it('RoundLoop center - an inner stem with multiple branches', () => {
   ).toBeCloseTo(expectedRadius, 3);
   let xMiddle = (bct5.xCenter + bct3.xCenter) / 2;
   let yMiddle = (bct5.yCenter + bct3.yCenter) / 2;
+  let middle = { x: xMiddle, y: yMiddle };
   expect(
-    normalizeAngle(angleBetween(xMiddle, yMiddle, center.x, center.y))
+    normalizeAngle(direction(displacement(middle, center)))
   ).toBeCloseTo(normalizeAngle(st.angle), 3);
 });
 
