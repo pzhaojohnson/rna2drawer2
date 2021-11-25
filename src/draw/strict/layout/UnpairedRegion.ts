@@ -3,7 +3,7 @@ import {
   StemInterface as Stem,
 } from './StemInterface';
 import { Partners } from 'Partners/Partners';
-import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
+import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';

@@ -1,5 +1,5 @@
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from './../../../angleBetween';
+import angleBetween from 'Draw/angleBetween';
 
 /**
  * Calculates the angle between the straight line connecting the

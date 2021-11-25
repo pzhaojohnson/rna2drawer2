@@ -6,7 +6,7 @@ import { Partners as PartnersNotation } from 'Partners/Partners';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
   PerBaseStrictLayoutPropsArray as PerBasePropsArray,
-} from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
+} from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 import {
   Movement,
   normalizedMagnitudeOfMovement,
@@ -25,7 +25,7 @@ import {
 import {
   stretchOfUnpairedRegion,
   addStretchEvenly,
-} from '../../layout/singleseq/strict/stretch';
+} from 'Draw/strict/layout/stretch';
 import { closestStemOuterTo } from '../../../parse/closest';
 
 export function pivot(mode: PivotingMode, move: Movement) {

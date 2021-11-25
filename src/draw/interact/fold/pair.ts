@@ -4,7 +4,7 @@ import IntegerRange from './IntegerRange';
 import { Base } from 'Draw/bases/Base';
 import { selectedRange } from './selected';
 import hoveredPairable from './hoveredPairable';
-import { willPair } from '../../layout/singleseq/strict/stemProps';
+import { willPair } from 'Draw/strict/layout/stemProps';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import adjustStretches from './adjustStretches';

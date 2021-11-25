@@ -1,4 +1,4 @@
-import NormalizedBaseCoordinates from "../../NormalizedBaseCoordinates";
+import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
 
 export interface StemInterface {
   readonly position5: number;

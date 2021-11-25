@@ -7,11 +7,11 @@ import { Partners } from 'Partners/Partners';
 import {
   GeneralStrictLayoutProps as GeneralLayoutProps,
   GeneralStrictLayoutPropsSavableState as GeneralLayoutPropsSavableState,
-} from 'Draw/layout/singleseq/strict/GeneralStrictLayoutProps';
+} from 'Draw/strict/layout/GeneralStrictLayoutProps';
 import {
   PerBaseStrictLayoutProps as PerBaseLayoutProps,
   PerBaseStrictLayoutPropsSavableState as PerBaseLayoutPropsSavableState
-} from 'Draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
+} from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 import { Options as UpdateLayoutOptions } from 'Draw/edit/updateLayout';
 import { Structure } from 'Draw/edit/appendStructureToStrictDrawing';
 

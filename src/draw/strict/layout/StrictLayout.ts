@@ -8,7 +8,7 @@ import {
   PerBaseStrictLayoutProps,
   PerBaseStrictLayoutPropsArray,
 } from './PerBaseStrictLayoutProps';
-import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
+import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
 
 export class StrictLayout {
   _partners: Partners;

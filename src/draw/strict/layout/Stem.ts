@@ -2,7 +2,7 @@ import StemInterface from './StemInterface';
 import { Partners, partnerOf } from 'Partners/Partners';
 import { isUnpaired } from 'Partners/paired';
 import UnpairedRegion from './UnpairedRegion';
-import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
+import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
 import { normalizeAngle } from 'Math/angles/normalize';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import {

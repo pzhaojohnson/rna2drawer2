@@ -15,7 +15,7 @@ import {
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
-import parseDotBracket from '../../../../parse/parseDotBracket';
+import parseDotBracket from 'Parse/parseDotBracket';
 import { RoundLoop } from './StemLayout';
 import { normalizeAngle } from 'Math/angles/normalize';
 

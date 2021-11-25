@@ -1,7 +1,7 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import { selectedRange } from './selected';
 import secondaryBondsWith from './secondaryBondsWith';
-import { willUnpair } from '../../layout/singleseq/strict/stemProps';
+import { willUnpair } from 'Draw/strict/layout/stemProps';
 import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import adjustStretches from './adjustStretches';
 

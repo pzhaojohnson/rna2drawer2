@@ -2,7 +2,7 @@ import { Stem, UnpairedRegion } from './PivotingModeInterface';
 import { Partners as PartnersNotation } from 'Partners/Partners';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
-} from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
+} from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { closestStemOuterTo } from '../../../parse/closest';
 import { containingStem } from 'Partners/containing';

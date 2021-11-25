@@ -1,8 +1,8 @@
 import appendStructureToStrictDrawing from './appendStructureToStrictDrawing';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { PerBaseStrictLayoutProps as PerBaseLayoutProps } from '../layout/singleseq/strict/PerBaseStrictLayoutProps';
-import { radiateStems } from '../layout/singleseq/strict/radiateStems';
+import { PerBaseStrictLayoutProps as PerBaseLayoutProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
+import { radiateStems } from 'Draw/strict/layout/radiateStems';
 import parseDotBracket from '../../parse/parseDotBracket';
 
 it('appends structure to underlying drawing', () => {

@@ -4,7 +4,7 @@ import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
 import { baseCoordinatesRound } from './UnpairedRegionRound';
 import baseCoordinatesFlatOutermostLoop from './UnpairedRegionFlatOutermostLoop';
-import parseDotBracket from '../../../../parse/parseDotBracket';
+import parseDotBracket from 'Parse/parseDotBracket';
 import { StemLayout } from './StemLayout';
 
 function defaultPerBaseProps(length) {

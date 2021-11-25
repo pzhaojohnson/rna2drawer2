@@ -4,9 +4,9 @@ import {
   Structure,
   addTertiaryBonds,
 } from './addStructure';
-import PerBaseStrictLayoutProps from '../layout/singleseq/strict/PerBaseStrictLayoutProps';
+import PerBaseStrictLayoutProps from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import { radiateStems } from '../layout/singleseq/strict/radiateStems';
+import { radiateStems } from 'Draw/strict/layout/radiateStems';
 import { hasKnots } from 'Partners/hasKnots';
 import { removeKnots } from 'Partners/removeKnots';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';

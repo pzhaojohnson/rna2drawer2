@@ -10,11 +10,11 @@ import layoutPartnersOfStrictDrawing from 'Draw/edit/layoutPartnersOfStrictDrawi
 
 import {
   GeneralStrictLayoutProps as GeneralLayoutProps,
-} from 'Draw/layout/singleseq/strict/GeneralStrictLayoutProps';
+} from 'Draw/strict/layout/GeneralStrictLayoutProps';
 import {
   PerBaseStrictLayoutProps as PerBaseLayoutProps,
   PerBaseStrictLayoutPropsSavableState as PerBaseLayoutPropsSavableState,
-} from 'Draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
+} from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
 import { updateLayout, Options as UpdateLayoutOptions } from 'Draw/edit/updateLayout';
 

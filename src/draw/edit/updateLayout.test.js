@@ -3,7 +3,7 @@ import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { updateLayout } from './updateLayout';
 
-import { StrictLayout } from 'Draw/layout/singleseq/strict/StrictLayout';
+import { StrictLayout } from 'Draw/strict/layout/StrictLayout';
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
 
 let container = null;

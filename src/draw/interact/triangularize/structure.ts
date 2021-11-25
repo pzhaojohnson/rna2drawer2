@@ -7,8 +7,8 @@ import { hasKnots } from 'Partners/hasKnots';
 import { removeKnots } from 'Partners/removeKnots';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
-} from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
-import { positionsWithStretch3 } from '../../layout/singleseq/strict/stretch';
+} from 'Draw/strict/layout/PerBaseStrictLayoutProps';
+import { positionsWithStretch3 } from 'Draw/strict/layout/stretch';
 
 export type PerBasePropsArray = (PerBaseProps | undefined)[];
 

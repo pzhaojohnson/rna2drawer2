@@ -2,7 +2,7 @@ import { FlatOutermostLoop } from './StemLayout';
 import { UnpairedRegionInterface as UnpairdRegion } from './StemInterface';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import { PerBaseStrictLayoutPropsArray } from './PerBaseStrictLayoutProps';
-import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
+import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
 
 function baseCoordinatesFlatOutermostLoop(
   ur: UnpairdRegion,

@@ -1,10 +1,10 @@
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { parseSequence } from '../../../../parse/parseSequence';
-import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../../draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
-import { willInsertAt } from '../../../../draw/layout/singleseq/strict/stemProps';
+import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
+import { willInsertAt } from 'Draw/strict/layout/stemProps';
 import { insertSubsequence } from 'Draw/sequences/add/subsequence';
 import { containingUnpairedRegion } from 'Partners/containing';
-import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
+import { evenOutStretch } from 'Draw/strict/layout/stretch';
 
 interface Inputs {
   insertPosition: number;

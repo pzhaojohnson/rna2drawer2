@@ -2,8 +2,8 @@ import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawi
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { removeSubsequence } from 'Draw/sequences/remove/subsequence';
 import { containingUnpairedRegion } from 'Partners/containing';
-import { willRemove } from '../../../../draw/layout/singleseq/strict/stemProps';
-import { evenOutStretch } from '../../../../draw/layout/singleseq/strict/stretch';
+import { willRemove } from 'Draw/strict/layout/stemProps';
+import { evenOutStretch } from 'Draw/strict/layout/stretch';
 
 interface Range {
   start: number;

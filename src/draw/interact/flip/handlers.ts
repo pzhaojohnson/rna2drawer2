@@ -3,7 +3,7 @@ import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { containingStem } from 'Partners/containing';
 import { highlightStem } from './highlight';
 import { removeAllBaseHighlightings } from '../highlight/removeAllBaseHighlightings';
-import { PerBaseStrictLayoutProps as PerBaseProps } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
+import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
 export function handleMouseoverOnBase(mode: FlippingMode, b: Base) {
   let p = mode.strictDrawing.drawing.overallPositionOfBase(b);

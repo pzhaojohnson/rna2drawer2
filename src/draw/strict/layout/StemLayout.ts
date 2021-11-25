@@ -1,4 +1,4 @@
-import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
+import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
 import { circleCenter } from './circleCenter';
 import { circleCircumference } from './circleCircumference';
 import { StemInterface, UnpairedRegionInterface } from './StemInterface';

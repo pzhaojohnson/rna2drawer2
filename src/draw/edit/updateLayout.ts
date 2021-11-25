@@ -1,5 +1,5 @@
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
-import { StrictLayout } from 'Draw/layout/singleseq/strict/StrictLayout';
+import { StrictLayout } from 'Draw/strict/layout/StrictLayout';
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { resize } from 'Draw/dimensions';

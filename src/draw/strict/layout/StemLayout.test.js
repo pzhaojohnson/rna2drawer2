@@ -3,11 +3,11 @@ import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
 import { normalizeAngle } from 'Math/angles/normalize';
-import parseDotBracket from '../../../../parse/parseDotBracket';
+import parseDotBracket from 'Parse/parseDotBracket';
 import { circleCircumference } from './circleCircumference';
 import { circleCenter } from './circleCenter';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from '../../../angleBetween';
+import angleBetween from 'Draw/angleBetween';
 
 function defaultPerBaseProps(length) {
   let pbps = [];

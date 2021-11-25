@@ -2,12 +2,12 @@ import { StrictDrawing } from './StrictDrawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import parseDotBracket from 'Parse/parseDotBracket';
 
-import { StrictLayout } from 'Draw/layout/singleseq/strict/StrictLayout';
+import { StrictLayout } from 'Draw/strict/layout/StrictLayout';
 
 import * as AppendStructureToStrictDrawing from 'Draw/edit/appendStructureToStrictDrawing';
 
-import GeneralStrictLayoutProps from 'Draw/layout/singleseq/strict/GeneralStrictLayoutProps';
-import PerBaseStrictLayoutProps from 'Draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
+import GeneralStrictLayoutProps from 'Draw/strict/layout/GeneralStrictLayoutProps';
+import PerBaseStrictLayoutProps from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 import layoutPartnersOfStrictDrawing from 'Draw/edit/layoutPartnersOfStrictDrawing';
 
 let sd = new StrictDrawing();

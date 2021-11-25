@@ -3,7 +3,7 @@ import { UnpairedRegion } from 'Partners/UnpairedRegion';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { Stem } from 'Partners/Stem';
 import { containingStem } from 'Partners/containing';
-import { PerBaseStrictLayoutProps as PerBaseProps } from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
+import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
 function _positionsWithStrectch3(ur: UnpairedRegion): number[] {
   let ps = [] as number[];

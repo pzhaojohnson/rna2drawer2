@@ -1,5 +1,5 @@
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from '../angleBetween';
+import angleBetween from 'Draw/angleBetween';
 
 export class NormalizedBaseCoordinates {
   _xLeft: number;

@@ -1,8 +1,8 @@
-import NormalizedBaseCoordinates from '../../NormalizedBaseCoordinates';
+import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
 import { normalizeAngle } from 'Math/angles/normalize';
 import { circleCenter } from './circleCenter';
 import { distance2D as distance } from 'Math/distance';
-import angleBetween from '../../../angleBetween';
+import angleBetween from 'Draw/angleBetween';
 import { RoundLoop } from './StemLayout';
 import { UnpairedRegionInterface as UnpairedRegion } from './StemInterface';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';

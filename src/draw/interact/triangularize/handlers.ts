@@ -10,7 +10,7 @@ import { highlightHovered } from './highlight';
 import { removeAllBaseHighlightings } from '../highlight/removeAllBaseHighlightings';
 import {
   PerBaseStrictLayoutProps as PerBaseProps,
-} from '../../layout/singleseq/strict/PerBaseStrictLayoutProps';
+} from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
 export function handleMouseoverOnBase(mode: TriangularizingMode, b: Base) {
   let p = mode.strictDrawing.drawing.overallPositionOfBase(b);

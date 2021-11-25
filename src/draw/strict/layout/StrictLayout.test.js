@@ -1,5 +1,5 @@
 import StrictLayout from './StrictLayout';
-import parseDotBracket from '../../../../parse/parseDotBracket';
+import parseDotBracket from 'Parse/parseDotBracket';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
