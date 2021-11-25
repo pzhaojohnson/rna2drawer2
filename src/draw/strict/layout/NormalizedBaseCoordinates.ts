@@ -1,3 +1,4 @@
+import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';
 import angleBetween from 'Draw/angleBetween';
 
@@ -32,6 +33,10 @@ export class NormalizedBaseCoordinates {
 
   get yCenter(): number {
     return this.yTop + 0.5;
+  }
+
+  center(): Point {
+    return { x: this.xCenter, y: this.yCenter };
   }
 
   distanceBetweenCenters(other: NormalizedBaseCoordinates): number {

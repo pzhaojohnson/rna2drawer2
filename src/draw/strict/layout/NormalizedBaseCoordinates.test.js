@@ -19,6 +19,12 @@ it('derived coordinates', () => {
   expect(vbc.yCenter).toEqual(yTop + 0.5);
 });
 
+test('center method', () => {
+  let nbcs = new NormalizedBaseCoordinates(2.78, 20.91);
+  expect(nbcs.center().x).toBeCloseTo(3.28);
+  expect(nbcs.center().y).toBeCloseTo(21.41);
+});
+
 it('distanceBetweenCenters', () => {
   let vbc0 = new NormalizedBaseCoordinates(1, 2);
   let vbc1 = new NormalizedBaseCoordinates(4, 6);
