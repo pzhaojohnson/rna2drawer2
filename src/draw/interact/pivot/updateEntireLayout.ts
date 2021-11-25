@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { zoom } from 'Draw/zoom';
 
 interface Options {

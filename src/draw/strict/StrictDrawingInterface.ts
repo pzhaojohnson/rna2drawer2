@@ -1,19 +1,19 @@
 import {
   DrawingInterface as Drawing,
   DrawingSavableState,
-} from './DrawingInterface';
+} from 'Draw/DrawingInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { Partners } from 'Partners/Partners';
 import {
   GeneralStrictLayoutProps as GeneralLayoutProps,
   GeneralStrictLayoutPropsSavableState as GeneralLayoutPropsSavableState,
-} from './layout/singleseq/strict/GeneralStrictLayoutProps';
+} from 'Draw/layout/singleseq/strict/GeneralStrictLayoutProps';
 import {
   PerBaseStrictLayoutProps as PerBaseLayoutProps,
   PerBaseStrictLayoutPropsSavableState as PerBaseLayoutPropsSavableState
-} from './layout/singleseq/strict/PerBaseStrictLayoutProps';
-import { Options as UpdateLayoutOptions } from './edit/updateLayout';
-import { Structure } from './edit/appendStructureToStrictDrawing';
+} from 'Draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
+import { Options as UpdateLayoutOptions } from 'Draw/edit/updateLayout';
+import { Structure } from 'Draw/edit/appendStructureToStrictDrawing';
 
 export interface StrictDrawingSavableState {
   className: string;

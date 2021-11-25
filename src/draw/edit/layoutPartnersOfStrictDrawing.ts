@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from '../StrictDrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { Partners } from 'Partners/Partners';
 import { DrawingInterface as Drawing } from '../DrawingInterface';
 import { pair } from 'Partners/edit';

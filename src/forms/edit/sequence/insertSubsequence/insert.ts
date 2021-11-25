@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from '../../../../draw/StrictDrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { parseSequence } from '../../../../parse/parseSequence';
 import { PerBaseStrictLayoutProps as PerBaseProps } from '../../../../draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
 import { willInsertAt } from '../../../../draw/layout/singleseq/strict/stemProps';

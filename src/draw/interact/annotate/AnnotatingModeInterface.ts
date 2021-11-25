@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/StrictDrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import * as React from 'react';
 

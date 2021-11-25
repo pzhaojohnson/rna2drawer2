@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from '../../StrictDrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 
 export interface Stem {

@@ -1,6 +1,6 @@
 import basesInRange from './basesInRange';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import StrictDrawing from '../../StrictDrawing';
+import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import FoldingMode from './FoldingMode';
 import IntegerRange from './IntegerRange';
 

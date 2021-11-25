@@ -6,7 +6,7 @@ import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from './annotate/AnnotatingModeInterface';
 import { App } from 'App';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
-import StrictDrawing from '../StrictDrawing';
+import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
 
 type Mode = PivotingMode | FoldingMode | FlippingMode | TriangularizingMode | AnnotatingMode;

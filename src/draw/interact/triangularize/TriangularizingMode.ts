@@ -1,5 +1,5 @@
 import { TriangularizingModeInterface } from './TriangularizingModeInterface';
-import { StrictDrawingInterface as StrictDrawing } from '../../StrictDrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import {
   handleMouseoverOnBase,

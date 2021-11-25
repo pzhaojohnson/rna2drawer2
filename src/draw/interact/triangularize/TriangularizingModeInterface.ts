@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from '../../StrictDrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 
 export interface TriangularizingModeInterface {
   readonly className: 'TriangularizingMode';

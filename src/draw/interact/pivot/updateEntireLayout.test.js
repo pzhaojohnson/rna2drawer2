@@ -1,5 +1,5 @@
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import StrictDrawing from 'Draw/StrictDrawing';
+import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { updateEntireLayout } from './updateEntireLayout';
 import { resize } from 'Draw/dimensions';

@@ -1,7 +1,7 @@
 import { AppInterface as App } from '../../AppInterface';
 import { parseRna2drawer1 } from './parseRna2drawer1';
 import { addRna2drawer1 } from './addRna2drawer1';
-import { StrictDrawingSavableState } from '../../draw/StrictDrawingInterface';
+import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawingInterface';
 
 interface Saved {
   extension: string;

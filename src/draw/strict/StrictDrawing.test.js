@@ -1,14 +1,14 @@
-import StrictDrawing from './StrictDrawing';
+import { StrictDrawing } from './StrictDrawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import parseDotBracket from '../parse/parseDotBracket';
+import parseDotBracket from 'Parse/parseDotBracket';
 
-import { StrictLayout } from './layout/singleseq/strict/StrictLayout';
+import { StrictLayout } from 'Draw/layout/singleseq/strict/StrictLayout';
 
-import * as AppendStructureToStrictDrawing from './edit/appendStructureToStrictDrawing';
+import * as AppendStructureToStrictDrawing from 'Draw/edit/appendStructureToStrictDrawing';
 
-import GeneralStrictLayoutProps from './layout/singleseq/strict/GeneralStrictLayoutProps';
-import PerBaseStrictLayoutProps from './layout/singleseq/strict/PerBaseStrictLayoutProps';
-import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
+import GeneralStrictLayoutProps from 'Draw/layout/singleseq/strict/GeneralStrictLayoutProps';
+import PerBaseStrictLayoutProps from 'Draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
+import layoutPartnersOfStrictDrawing from 'Draw/edit/layoutPartnersOfStrictDrawing';
 
 let sd = new StrictDrawing();
 let container = document.createElement('div');

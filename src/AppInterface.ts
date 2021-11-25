@@ -2,7 +2,7 @@ import * as Svg from '@svgdotjs/svg.js';
 import {
   StrictDrawingInterface as StrictDrawing,
   StrictDrawingSavableState,
-} from './draw/StrictDrawingInterface';
+} from 'Draw/strict/StrictDrawingInterface';
 import UndoRedo from './undo/UndoRedo';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 import * as React from 'react';

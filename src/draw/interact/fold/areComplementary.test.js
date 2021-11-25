@@ -1,5 +1,5 @@
 import areComplementary from './areComplementary';
-import StrictDrawing from '../../StrictDrawing';
+import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import FoldingMode from './FoldingMode';
 

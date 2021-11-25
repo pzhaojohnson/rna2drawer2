@@ -1,4 +1,4 @@
-import StrictDrawing from '../../StrictDrawing';
+import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
 export interface FoldingModeInterface {
   readonly strictDrawing: StrictDrawing;

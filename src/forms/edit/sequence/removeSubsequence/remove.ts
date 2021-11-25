@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from '../../../../draw/StrictDrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { removeSubsequence } from 'Draw/sequences/remove/subsequence';
 import { containingUnpairedRegion } from 'Partners/containing';

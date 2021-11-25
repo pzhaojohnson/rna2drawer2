@@ -2,28 +2,28 @@ import {
   StrictDrawingInterface,
   StrictDrawingSavableState,
 } from './StrictDrawingInterface';
-import Drawing from './Drawing';
+import { Drawing } from 'Draw/Drawing';
 import * as Svg from '@svgdotjs/svg.js';
 
 import { Partners } from 'Partners/Partners';
-import layoutPartnersOfStrictDrawing from './edit/layoutPartnersOfStrictDrawing';
+import layoutPartnersOfStrictDrawing from 'Draw/edit/layoutPartnersOfStrictDrawing';
 
 import {
   GeneralStrictLayoutProps as GeneralLayoutProps,
-} from './layout/singleseq/strict/GeneralStrictLayoutProps';
+} from 'Draw/layout/singleseq/strict/GeneralStrictLayoutProps';
 import {
   PerBaseStrictLayoutProps as PerBaseLayoutProps,
   PerBaseStrictLayoutPropsSavableState as PerBaseLayoutPropsSavableState,
-} from './layout/singleseq/strict/PerBaseStrictLayoutProps';
+} from 'Draw/layout/singleseq/strict/PerBaseStrictLayoutProps';
 
-import { updateLayout, Options as UpdateLayoutOptions } from './edit/updateLayout';
+import { updateLayout, Options as UpdateLayoutOptions } from 'Draw/edit/updateLayout';
 
 import {
   appendStructureToStrictDrawing,
   Structure,
-} from './edit/appendStructureToStrictDrawing';
+} from 'Draw/edit/appendStructureToStrictDrawing';
 
-class StrictDrawing implements StrictDrawingInterface {
+export class StrictDrawing implements StrictDrawingInterface {
   _drawing: Drawing;
   _generalLayoutProps: GeneralLayoutProps;
   _perBaseLayoutProps: PerBaseLayoutProps[];
