@@ -105,13 +105,6 @@ describe('setPerBaseLayoutProps method', () => {
   });
 });
 
-it('baseWidth and baseHeight getters and setters', () => {
-  sd.baseWidth = 2.59;
-  sd.baseHeight = 23.09;
-  expect(sd.baseWidth).toBe(2.59);
-  expect(sd.baseHeight).toBe(23.09);
-});
-
 describe('outermost loop shape methods', () => {
   it('handle nullish general layout props', () => {
     sd.generalLayoutProps = undefined;

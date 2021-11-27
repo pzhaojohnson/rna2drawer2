@@ -27,16 +27,16 @@ export class StrictDrawing implements StrictDrawingInterface {
   _drawing: Drawing;
   generalLayoutProps: GeneralLayoutProps;
   _perBaseLayoutProps: PerBaseLayoutProps[];
-  _baseWidth: number;
-  _baseHeight: number;
+  baseWidth: number;
+  baseHeight: number;
 
   constructor() {
     this._drawing = new Drawing();
 
     this.generalLayoutProps = new GeneralLayoutProps();
     this._perBaseLayoutProps = [];
-    this._baseWidth = 13.5;
-    this._baseHeight = 13.5;
+    this.baseWidth = 13.5;
+    this.baseHeight = 13.5;
   }
 
   get drawing(): Drawing {
@@ -73,22 +73,6 @@ export class StrictDrawing implements StrictDrawingInterface {
     if (props) {
       this._perBaseLayoutProps = props;
     }
-  }
-
-  get baseWidth(): number {
-    return this._baseWidth;
-  }
-
-  set baseWidth(bw: number) {
-    this._baseWidth = bw;
-  }
-
-  get baseHeight(): number {
-    return this._baseHeight;
-  }
-
-  set baseHeight(bh: number) {
-    this._baseHeight = bh;
   }
 
   updateLayout(options?: UpdateLayoutOptions) {
@@ -144,8 +128,8 @@ export class StrictDrawing implements StrictDrawingInterface {
       drawing: this._drawing.savableState(),
       generalLayoutProps: this.generalLayoutProps.savableState(),
       perBaseLayoutProps: [] as PerBaseLayoutPropsSavableState[],
-      baseWidth: this._baseWidth,
-      baseHeight: this._baseHeight,
+      baseWidth: this.baseWidth,
+      baseHeight: this.baseHeight,
     };
     this._perBaseLayoutProps.forEach((props, i) => {
       if (props) {
@@ -222,8 +206,8 @@ export class StrictDrawing implements StrictDrawingInterface {
     if (typeof savedState.baseHeight !== 'number') {
       throw new Error('Unable to apply saved base height.');
     }
-    this._baseWidth = savedState.baseWidth;
-    this._baseHeight = savedState.baseHeight;
+    this.baseWidth = savedState.baseWidth;
+    this.baseHeight = savedState.baseHeight;
   }
 
   isEmpty(): boolean {
