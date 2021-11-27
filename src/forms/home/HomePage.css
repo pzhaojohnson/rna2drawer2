@@ -17,16 +17,16 @@
   height: 0px;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
-  border-color: rgba(0,0,0,0.175);
+  border-color: rgb(205 205 205);
 }
 
 .newAndOpenLinks:hover {
-  transform: scale(1.1);
-  transition-duration: 0.25s;
+  transform: scale(1.15);
+  transition-duration: 0.375s;
 }
 
 .helpLinks {
-  color: rgb(124,35,175);
+  color: rgb(135 20 201);
   text-decoration-line: none;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .updatesLink {
-  color: rgb(124,35,175);
+  color: rgb(135 20 201);
   text-decoration-line: none;
 }
 

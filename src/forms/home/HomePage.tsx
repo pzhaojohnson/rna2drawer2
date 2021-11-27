@@ -17,10 +17,10 @@ function Header() {
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ flexGrow: 1 }} ></div>
-          <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)', textAlign: 'right' }} >
+          <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'rgb(42 42 42)', textAlign: 'right' }} >
             Developed by Philip Johnson and Anne Simon
           </p>
-          <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)', textAlign: 'right' }} >
+          <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgb(42 42 42)', textAlign: 'right' }} >
             Last Updated on April 9, 2021
           </p>
         </div>
@@ -34,7 +34,7 @@ function Header() {
 
 function Description() {
   return (
-    <p style={{ fontSize: '16px' }} >
+    <p style={{ fontSize: '16px', color: 'rgb(32 32 32)' }} >
       A web app for drawing and exploring nucleic acid structures...
     </p>
   );
@@ -42,7 +42,7 @@ function Description() {
 
 const newAndOpenLinkStyles = {
   fontSize: '24px',
-  color: 'rgb(23,15,218)',
+  color: 'rgb(23 15 216)',
   cursor: 'pointer',
 };
 
@@ -99,7 +99,7 @@ function GitHubPageLink() {
 function HelpLinks() {
   return (
     <div style={{ minHeight: '28px' }} >
-      <p style={{ fontSize: '16px' }} >
+      <p style={{ fontSize: '16px', color: 'rgb(32 32 32)' }} >
         Questions or comments? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
       </p>
     </div>
@@ -122,7 +122,7 @@ function UpdatesNotice() {
     <div
       className={styles.updatesNotice}
       style={{
-        border: '2px dotted rgba(0,0,0,0.125)',
+        border: '2px dotted rgb(225 225 225)',
         borderRadius: '21px',
         height: '42px',
         display: 'flex',
@@ -130,7 +130,7 @@ function UpdatesNotice() {
         justifyContent: 'center',
       }}
     >
-      <p style={{ margin: '0px 21px', fontSize: '14px' }} >
+      <p style={{ margin: '0px 21px', fontSize: '14px', color: 'rgb(32 32 32)' }} >
         See the <UpdatesLink />! <em>(April 9, 2021)</em>
       </p>
     </div>
