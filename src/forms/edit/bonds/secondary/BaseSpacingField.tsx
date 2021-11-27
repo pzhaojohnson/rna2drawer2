@@ -33,7 +33,7 @@ export class BaseSpacingField extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps();
+    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps;
     let bs = generalLayoutProps.basePairBondLength;
     bs = round(bs, 2);
 
@@ -76,13 +76,12 @@ export class BaseSpacingField extends React.Component<Props> {
     if (!isBlank(this.state.value)) {
       let bs = Number.parseFloat(this.state.value);
       if (Number.isFinite(bs)) {
-        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps();
+        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
         if (bs != generalLayoutProps.basePairBondLength) {
           this.props.app.pushUndo();
           bs = constrainBaseSpacing(bs);
           bs = round(bs, 2);
           generalLayoutProps.basePairBondLength = bs;
-          this.props.app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
           this.props.app.strictDrawing.updateLayout();
           this.props.app.refresh();
         }

@@ -26,7 +26,7 @@ export class RotationField extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps();
+    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps;
     let radians = generalLayoutProps.rotation;
     radians = normalizeAngle(radians, 0);
     let degrees = radiansToDegrees(radians);
@@ -72,13 +72,12 @@ export class RotationField extends React.Component<Props> {
       let degrees = Number.parseFloat(this.state.value);
       if (Number.isFinite(degrees)) {
         let radians = degreesToRadians(degrees);
-        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps();
+        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
         if (!anglesAreClose(radians, generalLayoutProps.rotation, 6)) {
           this.props.app.pushUndo();
           radians = normalizeAngle(radians, 0);
           radians = round(radians, 6);
           generalLayoutProps.rotation = radians;
-          this.props.app.strictDrawing.setGeneralLayoutProps(generalLayoutProps);
           this.props.app.strictDrawing.updateLayout();
           this.props.app.refresh();
         }

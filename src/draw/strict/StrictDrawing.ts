@@ -25,7 +25,7 @@ import {
 
 export class StrictDrawing implements StrictDrawingInterface {
   _drawing: Drawing;
-  _generalLayoutProps: GeneralLayoutProps;
+  generalLayoutProps: GeneralLayoutProps;
   _perBaseLayoutProps: PerBaseLayoutProps[];
   _baseWidth: number;
   _baseHeight: number;
@@ -33,7 +33,7 @@ export class StrictDrawing implements StrictDrawingInterface {
   constructor() {
     this._drawing = new Drawing();
 
-    this._generalLayoutProps = new GeneralLayoutProps();
+    this.generalLayoutProps = new GeneralLayoutProps();
     this._perBaseLayoutProps = [];
     this._baseWidth = 13.5;
     this._baseHeight = 13.5;
@@ -49,19 +49,6 @@ export class StrictDrawing implements StrictDrawingInterface {
 
   layoutPartners(): Partners {
     return layoutPartnersOfStrictDrawing(this);
-  }
-
-  generalLayoutProps(): GeneralLayoutProps {
-    if (!this._generalLayoutProps) {
-      this._generalLayoutProps = new GeneralLayoutProps();
-    }
-    return this._generalLayoutProps.deepCopy();
-  }
-
-  setGeneralLayoutProps(props: GeneralLayoutProps) {
-    if (props) {
-      this._generalLayoutProps = props;
-    }
   }
 
   perBaseLayoutProps(): PerBaseLayoutProps[] {
@@ -113,8 +100,8 @@ export class StrictDrawing implements StrictDrawingInterface {
   }
 
   hasFlatOutermostLoop(): boolean {
-    if (this._generalLayoutProps) {
-      return this._generalLayoutProps.outermostLoopShape === 'flat';
+    if (this.generalLayoutProps) {
+      return this.generalLayoutProps.outermostLoopShape === 'flat';
     }
     return false;
   }
@@ -123,10 +110,10 @@ export class StrictDrawing implements StrictDrawingInterface {
     if (this.hasFlatOutermostLoop()) {
       return;
     }
-    if (!this._generalLayoutProps) {
-      this._generalLayoutProps = new GeneralLayoutProps();
+    if (!this.generalLayoutProps) {
+      this.generalLayoutProps = new GeneralLayoutProps();
     }
-    this._generalLayoutProps.outermostLoopShape = 'flat';
+    this.generalLayoutProps.outermostLoopShape = 'flat';
     this.updateLayout();
   }
 
@@ -138,16 +125,16 @@ export class StrictDrawing implements StrictDrawingInterface {
     if (this.hasRoundOutermostLoop()) {
       return;
     }
-    if (!this._generalLayoutProps) {
-      this._generalLayoutProps = new GeneralLayoutProps();
+    if (!this.generalLayoutProps) {
+      this.generalLayoutProps = new GeneralLayoutProps();
     }
-    this._generalLayoutProps.outermostLoopShape = 'round';
+    this.generalLayoutProps.outermostLoopShape = 'round';
     this.updateLayout();
   }
 
   savableState(): StrictDrawingSavableState {
-    if (!this._generalLayoutProps) {
-      this._generalLayoutProps = new GeneralLayoutProps();
+    if (!this.generalLayoutProps) {
+      this.generalLayoutProps = new GeneralLayoutProps();
     }
     if (!this._perBaseLayoutProps) {
       this._perBaseLayoutProps = [];
@@ -155,7 +142,7 @@ export class StrictDrawing implements StrictDrawingInterface {
     let state = {
       className: 'StrictDrawing',
       drawing: this._drawing.savableState(),
-      generalLayoutProps: this._generalLayoutProps.savableState(),
+      generalLayoutProps: this.generalLayoutProps.savableState(),
       perBaseLayoutProps: [] as PerBaseLayoutPropsSavableState[],
       baseWidth: this._baseWidth,
       baseHeight: this._baseHeight,
@@ -208,11 +195,11 @@ export class StrictDrawing implements StrictDrawingInterface {
 
   _applySavedGeneralLayoutProps(savedState: StrictDrawingSavableState): (void | never) {
     if (!savedState.generalLayoutProps) {
-      this._generalLayoutProps = new GeneralLayoutProps();
+      this.generalLayoutProps = new GeneralLayoutProps();
       return;
     }
     let props = GeneralLayoutProps.fromSavedState({ ...savedState.generalLayoutProps });
-    this._generalLayoutProps = props;
+    this.generalLayoutProps = props;
   }
 
   _applySavedPerBaseLayoutProps(savedState: StrictDrawingSavableState): (void | never) {

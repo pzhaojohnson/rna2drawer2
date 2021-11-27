@@ -43,9 +43,8 @@ export function handleMousedownOnBase(mode: TriangularizingMode, b: Base) {
         }
         mode.strictDrawing.setPerBaseLayoutProps(perBaseProps);
       } else { // hovering outermost loop
-        let generalProps = mode.strictDrawing.generalLayoutProps();
+        let generalProps = mode.strictDrawing.generalLayoutProps;
         generalProps.outermostLoopShape = generalProps.outermostLoopShape == 'flat' ? 'round' : 'flat';
-        mode.strictDrawing.setGeneralLayoutProps(generalProps);
       }
       mode.strictDrawing.updateLayout();
       mode.fireChange();

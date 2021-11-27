@@ -28,8 +28,7 @@ export interface StrictDrawingInterface {
   readonly drawing: Drawing;
   addTo(container: Node, SVG: () => Svg.Svg): void;
   layoutPartners(): Partners;
-  generalLayoutProps(): GeneralLayoutProps;
-  setGeneralLayoutProps(props: GeneralLayoutProps): void;
+  generalLayoutProps: GeneralLayoutProps;
   perBaseLayoutProps(): PerBaseLayoutProps[];
   setPerBaseLayoutProps(props: PerBaseLayoutProps[]): void;
   baseWidth: number;

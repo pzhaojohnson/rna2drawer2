@@ -36,11 +36,13 @@ afterEach(() => {
 });
 
 it('handles error in creating layout', () => {
-  strictDrawing.generalLayoutProps = () => { throw new Error() };
+  Object.defineProperty(strictDrawing, 'generalLayoutProps', {
+    get: () => { throw new Error(); },
+  });
   expect(() => {
     new StrictLayout(
       layoutPartnersOfStrictDrawing(strictDrawing),
-      strictDrawing.generalLayoutProps(),
+      strictDrawing.generalLayoutProps,
       strictDrawing.perBaseLayoutProps(),
     );
   }).toThrow(); // layout cannot be created

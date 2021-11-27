@@ -30,9 +30,8 @@ sd.appendStructure({
   secondaryPartners: partners2.secondaryPartners,
   tertiaryPartners: partners2.tertiaryPartners,
 });
-let generalProps = sd.generalLayoutProps();
+let generalProps = sd.generalLayoutProps;
 generalProps.basePairBondLength = 6.78;
-sd.setGeneralLayoutProps(generalProps);
 let perBaseProps = sd.perBaseLayoutProps();
 perBaseProps[0].flipStem = true;
 perBaseProps[11].stretch3 = 20;
@@ -63,34 +62,6 @@ it('layoutPartners method', () => {
   let received = sd.layoutPartners();
   let expected = layoutPartnersOfStrictDrawing(sd);
   expect(JSON.stringify(received)).toBe(JSON.stringify(expected));
-});
-
-describe('generalLayoutProps method', () => {
-  it('handles nullish props', () => {
-    sd._generalLayoutProps = undefined;
-    expect(sd.generalLayoutProps()).toBeTruthy();
-    expect(sd._generalLayoutProps).toBeTruthy(); // initializes new props
-  });
-
-  it('returns a copy', () => {
-    let props = sd.generalLayoutProps();
-    expect(props).not.toBe(sd._generalLayoutProps); // a new object
-    expect(JSON.stringify(props)).toBe(JSON.stringify(sd._generalLayoutProps));
-  });
-});
-
-describe('setGeneralLayoutProps method', () => {
-  it('handles missing argument', () => {
-    sd.setGeneralLayoutProps();
-    expect(sd.generalLayoutProps()).toBeTruthy();
-  });
-
-  it('sets props', () => {
-    let props = sd.generalLayoutProps();
-    props.basePairPadding += 5.5;
-    sd.setGeneralLayoutProps(props);
-    expect(JSON.stringify(sd.generalLayoutProps())).toBe(JSON.stringify(props));
-  });
 });
 
 describe('perBaseLayoutProps method', () => {
@@ -143,15 +114,15 @@ it('baseWidth and baseHeight getters and setters', () => {
 
 describe('outermost loop shape methods', () => {
   it('handle nullish general layout props', () => {
-    sd._generalLayoutProps = undefined;
+    sd.generalLayoutProps = undefined;
     expect(sd.hasFlatOutermostLoop()).toBeFalsy();
-    sd._generalLayoutProps = undefined;
+    sd.generalLayoutProps = undefined;
     sd.flatOutermostLoop();
     expect(sd.hasFlatOutermostLoop()).toBeTruthy();
-    expect(sd._generalLayoutProps).toBeTruthy(); // initializes new props
-    sd._generalLayoutProps = undefined;
+    expect(sd.generalLayoutProps).toBeTruthy(); // initializes new props
+    sd.generalLayoutProps = undefined;
     expect(sd.hasRoundOutermostLoop()).toBeTruthy();
-    sd._generalLayoutProps = undefined;
+    sd.generalLayoutProps = undefined;
     expect(sd.roundOutermostLoop());
     expect(sd.hasRoundOutermostLoop()).toBeTruthy();
     // does not have to initialize new props since loop is round by default
@@ -172,10 +143,10 @@ describe('outermost loop shape methods', () => {
 
 describe('savableState method', () => {
   it('handles nullish general layout props', () => {
-    sd._generalLayoutProps = undefined;
+    sd.generalLayoutProps = undefined;
     let savableState = sd.savableState();
     expect(savableState.generalLayoutProps).toBeTruthy();
-    expect(sd._generalLayoutProps).toBeTruthy(); // initializes new props
+    expect(sd.generalLayoutProps).toBeTruthy(); // initializes new props
   });
 
   it('handles nullish per base layout props list', () => {
@@ -204,9 +175,8 @@ describe('savableState method', () => {
   });
 
   it('gives correct values', () => {
-    let generalProps = sd.generalLayoutProps();
+    let generalProps = sd.generalLayoutProps;
     generalProps.basePairPadding += 12.71;
-    sd.setGeneralLayoutProps(generalProps);
     let perBaseProps = sd.perBaseLayoutProps();
     perBaseProps[0].triangleLoopHeight += 12.91;
     sd.setPerBaseLayoutProps(perBaseProps);

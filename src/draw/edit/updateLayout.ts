@@ -27,7 +27,7 @@ function createLayout(strictDrawing: StrictDrawing): StrictLayout | undefined {
   try {
     return new StrictLayout(
       layoutPartnersOfStrictDrawing(strictDrawing),
-      strictDrawing.generalLayoutProps(),
+      strictDrawing.generalLayoutProps,
       strictDrawing.perBaseLayoutProps(),
     );
   } catch (err) {
