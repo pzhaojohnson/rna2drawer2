@@ -190,41 +190,6 @@ it('refresh method', () => {
   spies.forEach(s => expect(s).toHaveBeenCalled());
 });
 
-it('binds undo', () => {
-  let app = new App(() => NodeSVG());
-  app.undo = jest.fn();
-  document.dispatchEvent(
-    new KeyboardEvent('keydown', { ctrlKey: false, key: 'z' })
-  ); // control key not pressed
-  document.dispatchEvent(
-    new KeyboardEvent('keydown', { ctrlKey: true, key: 'z' })
-  ); // control key pressed
-  document.dispatchEvent(
-    new KeyboardEvent('keydown', { ctrlKey: true, key: 'Z' })
-  ); // uppercase key
-  expect(app.undo.mock.calls.length).toBe(2);
-});
-
-it('binds redo', () => {
-  let app = new App(() => NodeSVG());
-  app.redo = jest.fn();
-  document.dispatchEvent(
-    new KeyboardEvent('keydown', { ctrlKey: true, shiftKey: false, key: 'z' })
-  ); // shift key not pressed
-  expect(app.redo.mock.calls.length).toBe(0);
-
-  // this causes infinite recursion somehow...
-  /*
-  document.dispatchEvent(
-    new KeyboardEvent('keydown', { ctrlKey: true, shiftKey: true, key: 'z' })
-  ); // shift key pressed
-  document.dispatchEvent(
-    new KeyboardEvent('keydown', { ctrlKey: true, shiftKey: true, key: 'Z' })
-  ); // uppercase key
-  expect(app.redo.mock.calls.length).toBe(2);
-  */
-});
-
 describe('drawingTitle property and unspecifyDrawingTitle method', () => {
   it('when drawing is empty', () => {
     let app = new App(() => NodeSVG());

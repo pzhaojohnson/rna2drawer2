@@ -118,14 +118,6 @@ export class App implements AppInterface {
   }
 
   _setBindings() {
-    document.addEventListener('keydown', event => {
-      let k = event.key.toUpperCase();
-      if (event.ctrlKey && event.shiftKey && k == 'Z') {
-        this.redo();
-      } else if (event.ctrlKey && k == 'Z') {
-        this.undo();
-      }
-    });
     window.addEventListener('beforeunload', event => {
       if (!this.strictDrawing.isEmpty() || this.canUndo() || this.canRedo()) {
         (event || window.event).returnValue = 'Are you sure?';
