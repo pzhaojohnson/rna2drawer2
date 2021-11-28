@@ -18,6 +18,7 @@ import { addMousemoveListener } from '../listeners/addMousemoveListener';
 import { addMouseupListener } from '../listeners/addMouseupListener';
 import * as React from 'react';
 import { EditTertiaryBonds } from 'Forms/edit/bonds/tertiary/EditTertiaryBonds';
+import { userIsTyping } from 'Utilities/userIsTyping';
 
 class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   _app: App;
@@ -116,7 +117,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
     window.addEventListener('keydown', event => {
       let k = event.key.toLowerCase();
       if (k == 'backspace' || k == 'delete') {
-        if (document.activeElement?.tagName.toLowerCase() != 'input') {
+        if (!userIsTyping()) {
           removeSelected(this);
         }
       }
