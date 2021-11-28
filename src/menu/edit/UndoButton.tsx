@@ -24,8 +24,8 @@ export function UndoButton(props: Props) {
       }
     };
     
-    document.addEventListener('keydown', listener);
-    return () => document.removeEventListener('keydown', listener);
+    document.addEventListener('keyup', listener);
+    return () => document.removeEventListener('keyup', listener);
   });
 
   return (
