@@ -51,12 +51,13 @@ input[type=text]:focus {
 
 input[type=text]::placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.65);
+  color: rgb(98, 98, 98);
+  opacity: 1; /* necessary for Firefox */
 }
 
 input[type=text]::-webkit-input-placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.65);
+  color: rgb(98, 98, 98);
 }
 
 textarea {
@@ -84,12 +85,13 @@ textarea:focus {
 
 textarea::placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.65);
+  color: rgb(98, 98, 98);
+  opacity: 1; /* necessary for Firefox */
 }
 
 textarea::-webkit-input-placeholder {
   font-style: italic;
-  color: rgba(0,0,0,0.65);
+  color: rgb(98, 98, 98);
 }
 
 button {
