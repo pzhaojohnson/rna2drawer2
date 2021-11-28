@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import { AppInterface as App } from 'AppInterface';
+import { detectMacOS } from 'Utilities/detectMacOS';
 
 export type Props = {
   app: App;
@@ -13,18 +14,34 @@ function redoIfCan(app: App) {
   }
 }
 
+function isCtrlShiftZ(event: KeyboardEvent): boolean {
+  return (
+    event.key.toLowerCase() == 'z'
+    && event.ctrlKey
+    && event.shiftKey
+  );
+}
+
+function isMetaShiftZ(event: KeyboardEvent): boolean {
+  return (
+    event.key.toLowerCase() == 'z'
+    && event.metaKey
+    && event.shiftKey
+  );
+}
+
 export function RedoButton(props: Props) {
   useEffect(() => {
     let listener = (event: KeyboardEvent) => {
-      let key = event.key;
-      key = key.toLowerCase();
-      if (key == 'z' && event.ctrlKey && event.shiftKey) {
-        redoIfCan(props.app);
+      if (!event.repeat) {
+        if (isCtrlShiftZ(event) || (detectMacOS() && isMetaShiftZ(event))) {
+          redoIfCan(props.app);
+        }
       }
     };
-    
-    document.addEventListener('keyup', listener);
-    return () => document.removeEventListener('keyup', listener);
+
+    document.addEventListener('keydown', listener);
+    return () => document.removeEventListener('keydown', listener);
   });
 
   return (
@@ -32,7 +49,7 @@ export function RedoButton(props: Props) {
       text='Redo'
       onClick={() => redoIfCan(props.app)}
       disabled={!props.app.canRedo()}
-      keyBinding='Ctrl+Shift+Z'
+      keyBinding={detectMacOS() ? '⇧ ⌘ Z' : 'Ctrl+Shift+Z'}
     />
   );
 }

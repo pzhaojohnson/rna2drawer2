@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import { AppInterface as App } from 'AppInterface';
+import { detectMacOS } from 'Utilities/detectMacOS';
 
 export type Props = {
   app: App;
@@ -13,19 +14,34 @@ function undoIfCan(app: App) {
   }
 }
 
+function isCtrlZ(event: KeyboardEvent): boolean {
+  return (
+    event.key.toLowerCase() == 'z'
+    && event.ctrlKey
+    && !event.shiftKey // with shift key is for redo
+  );
+}
+
+function isMetaZ(event: KeyboardEvent): boolean {
+  return (
+    event.key.toLowerCase() == 'z'
+    && event.metaKey
+    && !event.shiftKey // with shift key is for redo
+  );
+}
+
 export function UndoButton(props: Props) {
   useEffect(() => {
     let listener = (event: KeyboardEvent) => {
-      let key = event.key;
-      key = key.toLowerCase();
-      // must check shift key since Ctrl+Shift+Z is redo
-      if (key == 'z' && event.ctrlKey && !event.shiftKey) {
-        undoIfCan(props.app);
+      if (!event.repeat) {
+        if (isCtrlZ(event) || (detectMacOS() && isMetaZ(event))) {
+          undoIfCan(props.app);
+        }
       }
     };
-    
-    document.addEventListener('keyup', listener);
-    return () => document.removeEventListener('keyup', listener);
+
+    document.addEventListener('keydown', listener);
+    return () => document.removeEventListener('keydown', listener);
   });
 
   return (
@@ -33,7 +49,7 @@ export function UndoButton(props: Props) {
       text='Undo'
       onClick={() => undoIfCan(props.app)}
       disabled={!props.app.canUndo()}
-      keyBinding='Ctrl+Z'
+      keyBinding={detectMacOS() ? '⌘ Z' : 'Ctrl+Z'}
     />
   );
 }
