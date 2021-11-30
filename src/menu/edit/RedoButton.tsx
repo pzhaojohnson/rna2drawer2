@@ -49,7 +49,7 @@ export function RedoButton(props: Props) {
       text='Redo'
       onClick={() => redoIfCan(props.app)}
       disabled={!props.app.canRedo()}
-      keyBinding={detectMacOS() ? '⇧ ⌘ Z' : 'Ctrl+Shift+Z'}
+      keyBinding={detectMacOS() ? '⇧ ⌘ Z' : 'Shift+Ctrl+Z'}
     />
   );
 }
