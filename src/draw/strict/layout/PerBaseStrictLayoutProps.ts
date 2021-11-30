@@ -81,4 +81,22 @@ export class PerBaseStrictLayoutProps {
 
 export type PerBaseStrictLayoutPropsArray = (PerBaseStrictLayoutProps | undefined)[];
 
+// If the position is uninitialized, assigns a new per base props object
+// to the given position and returns the new per base props object.
+//
+// Behavior is not firmly defined if the position is already initialized.
+// Currently, if the position is already initialized, returns the already
+// present per base props object without modifying it. Recommended to avoid
+// using on positions that are already initialized.
+export function initializeAtPosition(arr: PerBaseStrictLayoutPropsArray, p: number): PerBaseStrictLayoutProps {
+  let props = arr[p - 1];
+  if (props) {
+    return props;
+  } else {
+    let props = new PerBaseStrictLayoutProps();
+    arr[p - 1] = props;
+    return props;
+  }
+}
+
 export default PerBaseStrictLayoutProps;

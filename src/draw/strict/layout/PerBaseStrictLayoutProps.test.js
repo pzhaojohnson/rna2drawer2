@@ -1,4 +1,4 @@
-import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
+import PerBaseStrictLayoutProps, { initializeAtPosition } from './PerBaseStrictLayoutProps';
 
 describe('deepCopyArray static method', () => {
   let arr = [
@@ -125,4 +125,23 @@ it('savableState - can be converted to and read from a JSON string', () => {
   Object.keys(savableState1).forEach(k => {
     expect(savableState2[k]).toBe(savableState1[k]);
   });
+});
+
+test('initializeAtPosition function', () => {
+  let props = new PerBaseStrictLayoutProps();
+  props.stretch3 = (100 * Math.random()) + 12.275; // make different from default value
+  expect(props).not.toStrictEqual(new PerBaseStrictLayoutProps());
+
+  let arr = [undefined, null, props];
+  let returned = [
+    initializeAtPosition(arr, 1),
+    initializeAtPosition(arr, 2),
+    initializeAtPosition(arr, 3),
+  ];
+  expect(arr).toStrictEqual([
+    new PerBaseStrictLayoutProps(), // initialized
+    new PerBaseStrictLayoutProps(), // initialized
+    props, // did not modify
+  ]);
+  expect(returned).toStrictEqual(arr);
 });
