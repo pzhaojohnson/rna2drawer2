@@ -18,7 +18,6 @@ function isCtrlZ(event: KeyboardEvent): boolean {
   return (
     event.ctrlKey
     && event.key.toLowerCase() == 'z'
-    && !event.shiftKey // with shift key is for redo
   );
 }
 
@@ -26,17 +25,19 @@ function isMetaZ(event: KeyboardEvent): boolean {
   return (
     event.metaKey
     && event.key.toLowerCase() == 'z'
-    && !event.shiftKey // with shift key is for redo
   );
 }
 
 export function UndoButton(props: Props) {
   useEffect(() => {
     let listener = (event: KeyboardEvent) => {
-      if (!event.repeat) {
-        if (isCtrlZ(event) || (detectMacOS() && isMetaZ(event))) {
-          undoIfCan(props.app);
-        }
+      let shouldUndoIfCan = (
+        isCtrlZ(event) || (detectMacOS() && isMetaZ(event))
+        && !event.shiftKey // with shift key is for redo
+        && !event.repeat
+      );
+      if (shouldUndoIfCan) {
+        undoIfCan(props.app);
       }
     };
 

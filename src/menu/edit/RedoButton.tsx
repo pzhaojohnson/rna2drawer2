@@ -33,10 +33,12 @@ function isShiftMetaZ(event: KeyboardEvent): boolean {
 export function RedoButton(props: Props) {
   useEffect(() => {
     let listener = (event: KeyboardEvent) => {
-      if (!event.repeat) {
-        if (isShiftCtrlZ(event) || (detectMacOS() && isShiftMetaZ(event))) {
-          redoIfCan(props.app);
-        }
+      let shouldRedoIfCan = (
+        isShiftCtrlZ(event) || (detectMacOS() && isShiftMetaZ(event))
+        && !event.repeat
+      );
+      if (shouldRedoIfCan) {
+        redoIfCan(props.app);
       }
     };
 
