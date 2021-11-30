@@ -14,19 +14,19 @@ function redoIfCan(app: App) {
   }
 }
 
-function isCtrlShiftZ(event: KeyboardEvent): boolean {
+function isShiftCtrlZ(event: KeyboardEvent): boolean {
   return (
-    event.key.toLowerCase() == 'z'
+    event.shiftKey
     && event.ctrlKey
-    && event.shiftKey
+    && event.key.toLowerCase() == 'z'
   );
 }
 
-function isMetaShiftZ(event: KeyboardEvent): boolean {
+function isShiftMetaZ(event: KeyboardEvent): boolean {
   return (
-    event.key.toLowerCase() == 'z'
+    event.shiftKey
     && event.metaKey
-    && event.shiftKey
+    && event.key.toLowerCase() == 'z'
   );
 }
 
@@ -34,7 +34,7 @@ export function RedoButton(props: Props) {
   useEffect(() => {
     let listener = (event: KeyboardEvent) => {
       if (!event.repeat) {
-        if (isCtrlShiftZ(event) || (detectMacOS() && isMetaShiftZ(event))) {
+        if (isShiftCtrlZ(event) || (detectMacOS() && isShiftMetaZ(event))) {
           redoIfCan(props.app);
         }
       }

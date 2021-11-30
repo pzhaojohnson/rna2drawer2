@@ -16,16 +16,16 @@ function undoIfCan(app: App) {
 
 function isCtrlZ(event: KeyboardEvent): boolean {
   return (
-    event.key.toLowerCase() == 'z'
-    && event.ctrlKey
+    event.ctrlKey
+    && event.key.toLowerCase() == 'z'
     && !event.shiftKey // with shift key is for redo
   );
 }
 
 function isMetaZ(event: KeyboardEvent): boolean {
   return (
-    event.key.toLowerCase() == 'z'
-    && event.metaKey
+    event.metaKey
+    && event.key.toLowerCase() == 'z'
     && !event.shiftKey // with shift key is for redo
   );
 }
