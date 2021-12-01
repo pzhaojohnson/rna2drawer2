@@ -25,3 +25,7 @@ export function unstructuredPartners(length=0): Partners {
   }
   return partners;
 }
+
+export function deepCopyPartners(partners: Partners): Partners {
+  return [...partners];
+}

@@ -2,6 +2,7 @@ import {
   partnerOf,
   pairs,
   unstructuredPartners,
+  deepCopyPartners,
 } from './Partners';
 
 describe('partnerOf function', () => {
@@ -66,4 +67,14 @@ describe('unstructuredPartners function', () => {
       [null, null, null, null, null]
     );
   });
+});
+
+test('deepCopyPartners function', () => {
+  let partners = [null, undefined, 8, 7, null, null, 4, 3];
+  // introduce some unassigned positions
+  partners[15 - 1] = 23;
+  partners[23 - 1] = 15;
+  let deepCopy = deepCopyPartners(partners);
+  expect(deepCopy).toEqual(partners);
+  expect(deepCopy).not.toBe(partners);
 });
