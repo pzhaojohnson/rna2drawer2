@@ -1,4 +1,5 @@
-import { Partners, unstructuredPartners } from './Partners';
+import { Partners } from './Partners';
+import { unstructuredPartners } from 'Partners/unstructuredPartners';
 import { pair } from './edit';
 
 // Returns a new partners notation with no knots

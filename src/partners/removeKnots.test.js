@@ -1,5 +1,5 @@
 import { removeKnots } from './removeKnots';
-import { unstructuredPartners } from './Partners';
+import { unstructuredPartners } from 'Partners/unstructuredPartners';
 import { pair } from './edit';
 import { hasKnots } from './hasKnots';
 

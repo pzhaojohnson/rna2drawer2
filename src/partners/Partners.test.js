@@ -1,7 +1,6 @@
 import {
   partnerOf,
   pairs,
-  unstructuredPartners,
   deepCopyPartners,
 } from './Partners';
 
@@ -50,21 +49,6 @@ describe('pairs function', () => {
     partners[32 - 1] = 25;
     expect(pairs(partners)).toStrictEqual(
       [[1, 6], [2, 5], [25, 32]]
-    );
-  });
-});
-
-describe('unstructuredPartners function', () => {
-  it('creates empty partners by default', () => {
-    expect(unstructuredPartners()).toStrictEqual([]);
-  });
-
-  it('creates partners of specified length', () => {
-    expect(unstructuredPartners(2)).toStrictEqual(
-      [null, null]
-    );
-    expect(unstructuredPartners(5)).toStrictEqual(
-      [null, null, null, null, null]
     );
   });
 });

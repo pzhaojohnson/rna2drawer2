@@ -1,4 +1,4 @@
-import { unstructuredPartners } from './Partners';
+import { unstructuredPartners } from 'Partners/unstructuredPartners';
 
 import { stems } from './stems';
 
