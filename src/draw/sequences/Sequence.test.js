@@ -107,4 +107,15 @@ describe('Sequence class', () => {
       expect(b).toBe(undefined);
     });
   });
+
+  test('positionOf method', () => {
+    let cs = 'ABCDasdfqwer';
+    let seq1 = appendSequence(drawing, { id: 'QQww', characters: cs });
+    expect(seq1.positionOf(seq1.bases[0])).toBe(1);
+    expect(seq1.positionOf(seq1.bases[3])).toBe(4);
+    expect(seq1.positionOf(seq1.bases[8])).toBe(9);
+    expect(seq1.positionOf(seq1.bases[seq.bases.length - 1])).toBe(seq.bases.length);
+    let seq2 = appendSequence(drawing, { id: 'ZxcV', characters: 'zxcv' });
+    expect(seq1.positionOf(seq2.bases[0])).toBe(0); // not in sequence
+  });
 });

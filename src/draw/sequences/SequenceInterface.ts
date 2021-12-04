@@ -12,4 +12,7 @@ export interface SequenceInterface {
   positionInRange(p: number): boolean;
   atPosition(p: number): Base | undefined;
   getBaseAtPosition(p: number): Base | undefined;
+
+  // returns 0 if the given base is not in the sequence
+  positionOf(b: Base): number;
 }

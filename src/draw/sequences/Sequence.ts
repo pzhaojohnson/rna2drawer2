@@ -88,6 +88,10 @@ export class Sequence implements SequenceInterface {
   getBaseAtPosition(p: number): Base | undefined {
     return this.atPosition(p);
   }
+
+  positionOf(b: Base): number {
+    return this.bases.indexOf(b) + 1;
+  }
 }
 
 Sequence.recommendedDefaults = {
