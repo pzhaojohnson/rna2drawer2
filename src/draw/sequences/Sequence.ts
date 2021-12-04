@@ -92,6 +92,15 @@ export class Sequence implements SequenceInterface {
   positionOf(b: Base): number {
     return this.bases.indexOf(b) + 1;
   }
+
+  basesToPositions(): Map<Base, number> {
+    let basesToPositions = new Map<Base, number>();
+    this.bases.forEach((b, i) => {
+      let p = i + 1;
+      basesToPositions.set(b, p);
+    });
+    return basesToPositions;
+  }
 }
 
 Sequence.recommendedDefaults = {

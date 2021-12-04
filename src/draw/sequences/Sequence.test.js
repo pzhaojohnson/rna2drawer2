@@ -118,4 +118,16 @@ describe('Sequence class', () => {
     let seq2 = appendSequence(drawing, { id: 'ZxcV', characters: 'zxcv' });
     expect(seq1.positionOf(seq2.bases[0])).toBe(0); // not in sequence
   });
+
+  test('basesToPositions method', () => {
+    let cs = 'bnT423mn';
+    let seq = appendSequence(drawing, { id: 'blah', characters: cs });
+    let basesToPositions = seq.basesToPositions();
+    expect(basesToPositions.size).toBe(seq.bases.length);
+    for (let i = 0; i < seq.bases.length; i++) {
+      let b = seq.bases[i];
+      let p = i + 1;
+      expect(basesToPositions.get(b)).toBe(p);
+    }
+  });
 });

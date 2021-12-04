@@ -15,4 +15,7 @@ export interface SequenceInterface {
 
   // returns 0 if the given base is not in the sequence
   positionOf(b: Base): number;
+
+  // returns a map of bases to their positions in the sequence
+  basesToPositions(): Map<Base, number>;
 }
