@@ -3,6 +3,7 @@ import {
   DrawingSavableState,
 } from 'Draw/DrawingInterface';
 import * as Svg from '@svgdotjs/svg.js';
+import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { Partners } from 'Partners/Partners';
 import {
   GeneralStrictLayoutProps as GeneralLayoutProps,
@@ -27,6 +28,14 @@ export interface StrictDrawingSavableState {
 export interface StrictDrawingInterface {
   readonly drawing: Drawing;
   addTo(container: Node, SVG: () => Svg.Svg): void;
+
+  // Returns the sequence of all bases in the drawing
+  // to which the strict layout is applied to.
+  //
+  // Is obtained by concatenating all sequences in the underlying drawing
+  // in the order they are present in the underlying drawing.
+  layoutSequence(): Sequence;
+  
   layoutPartners(): Partners;
   generalLayoutProps: GeneralLayoutProps;
   perBaseLayoutProps(): PerBaseLayoutProps[];

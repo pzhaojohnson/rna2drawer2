@@ -56,6 +56,17 @@ it('addTo method', () => {
   expect(container.childNodes.length).toBe(1); // drawing was added
 });
 
+test('layoutSequence method', () => {
+  // test with multiple sequences
+  expect(sd.drawing.sequences.length).toBeGreaterThan(1);
+  let seq = sd.layoutSequence();
+  let characters = 'asdfasdfasdfasdfqwerqwerqwerqwerqw';
+  expect(seq.bases.length).toBe(characters.length);
+  for (let i = 0; i < characters.length; i++) {
+    expect(seq.bases[i].text.text()).toBe(characters.charAt(i));
+  }
+});
+
 it('layoutPartners method', () => {
   expect(sd.drawing.numSequences).toBeGreaterThan(1); // handles multiple sequences
   expect(sd.drawing.secondaryBonds.length).toBeGreaterThan(1); // has a secondary structure

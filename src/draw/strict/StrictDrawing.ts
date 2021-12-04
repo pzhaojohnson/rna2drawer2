@@ -5,6 +5,8 @@ import {
 import { Drawing } from 'Draw/Drawing';
 import * as Svg from '@svgdotjs/svg.js';
 
+import { Sequence } from 'Draw/sequences/Sequence';
+
 import { Partners } from 'Partners/Partners';
 import layoutPartnersOfStrictDrawing from 'Draw/edit/layoutPartnersOfStrictDrawing';
 
@@ -45,6 +47,13 @@ export class StrictDrawing implements StrictDrawingInterface {
 
   addTo(container: Node, SVG: () => Svg.Svg) {
     this._drawing.addTo(container, SVG);
+  }
+
+  layoutSequence(): Sequence {
+    let id = this.drawing.sequences.map(seq => seq.id).join(', ');
+    let seq = new Sequence(id);
+    seq.bases.push(...this.drawing.sequences.flatMap(seq => seq.bases));
+    return seq;
   }
 
   layoutPartners(): Partners {
