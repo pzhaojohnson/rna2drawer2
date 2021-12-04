@@ -22,7 +22,7 @@ export function setPerLoopProps(pbps: PerBaseProps, plps: PerLoopProps) {
 
 // resets the per loop props of the given per base props
 // to their default values
-export function resetLoopProps(pbps: PerBaseProps) {
+export function resetPerLoopProps(pbps: PerBaseProps) {
   let defaults = new PerBaseProps();
   pbps.loopShape = defaults.loopShape;
   pbps.triangleLoopHeight = defaults.triangleLoopHeight;

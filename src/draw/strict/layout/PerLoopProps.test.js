@@ -3,7 +3,7 @@ import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/Per
 import {
   perLoopProps,
   setPerLoopProps,
-  resetLoopProps,
+  resetPerLoopProps,
 } from './PerLoopProps';
 
 test('perLoopProps function', () => {
@@ -28,7 +28,7 @@ test('setPerLoopProps function', () => {
   expect(perLoopProps(pbps)).toStrictEqual(plps);
 });
 
-test('resetLoopProps function', () => {
+test('resetPerLoopProps function', () => {
   let plps = {
     loopShape: Math.random() >= 0.5 ? 'triangle' : 'round',
     triangleLoopHeight: 25 * Math.random(),
@@ -37,6 +37,6 @@ test('resetLoopProps function', () => {
   setPerLoopProps(pbps, plps);
   let defaults = new PerBaseProps();
   expect(perLoopProps(pbps)).not.toStrictEqual(perLoopProps(defaults));
-  resetLoopProps(pbps);
+  resetPerLoopProps(pbps);
   expect(perLoopProps(pbps)).toStrictEqual(perLoopProps(defaults));
 });
