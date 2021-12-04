@@ -10,5 +10,6 @@ export interface SequenceInterface {
   length: number;
   positionOutOfRange(p: number): boolean;
   positionInRange(p: number): boolean;
+  atPosition(p: number): Base | undefined;
   getBaseAtPosition(p: number): Base | undefined;
 }

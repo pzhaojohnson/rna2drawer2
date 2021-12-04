@@ -91,15 +91,20 @@ describe('Sequence class', () => {
     });
   });
 
-  it('getBaseAtPosition method', () => {
+  test('atPosition and getBaseAtPosition methods', () => {
     let cs = 'zxcvZX';
     let seq = appendSequence(drawing, { id: 'qwer', characters: cs });
     [1, 2, 3, 4, 5, 6].forEach(p => {
-      let b = seq.getBaseAtPosition(p);
+      let b = seq.atPosition(p);
+      expect(b.character).toBe(cs.charAt(p - 1));
+      b = seq.getBaseAtPosition(p);
       expect(b.character).toBe(cs.charAt(p - 1));
     });
     [0, -1, -5, 7, 9, 12].forEach(p => {
-      expect(seq.getBaseAtPosition(p)).toBe(undefined);
+      let b = seq.atPosition(p);
+      expect(b).toBe(undefined);
+      b = seq.getBaseAtPosition(p);
+      expect(b).toBe(undefined);
     });
   });
 });

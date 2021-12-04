@@ -81,8 +81,12 @@ export class Sequence implements SequenceInterface {
     return !this.positionOutOfRange(p);
   }
 
-  getBaseAtPosition(p: number): (Base | undefined) {
+  atPosition(p: number): Base | undefined {
     return this.bases[p - 1];
+  }
+
+  getBaseAtPosition(p: number): Base | undefined {
+    return this.atPosition(p);
   }
 }
 
