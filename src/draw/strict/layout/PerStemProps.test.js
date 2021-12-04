@@ -3,7 +3,7 @@ import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/Per
 import {
   perStemProps,
   setPerStemProps,
-  resetStemProps,
+  resetPerStemProps,
 } from './PerStemProps';
 
 test('perStemProps function', () => {
@@ -31,7 +31,7 @@ test('setPerStemProps function', () => {
   expect(perStemProps(pbps)).toStrictEqual(psps);
 });
 
-test('resetStemProps function', () => {
+test('resetPerStemProps function', () => {
   let psps = {
     flipStem: Math.random() < 0.5,
     loopShape: Math.random() >= 0.5 ? 'triangle' : 'round',
@@ -41,6 +41,6 @@ test('resetStemProps function', () => {
   setPerStemProps(pbps, psps);
   let defaults = new PerBaseProps();
   expect(perStemProps(pbps)).not.toStrictEqual(perStemProps(defaults));
-  resetStemProps(pbps);
+  resetPerStemProps(pbps);
   expect(perStemProps(pbps)).toStrictEqual(perStemProps(defaults));
 });

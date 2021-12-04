@@ -25,7 +25,7 @@ export function setPerStemProps(pbps: PerBaseProps, psps: PerStemProps) {
 
 // resets the per stem props of the given per base props
 // to their default values
-export function resetStemProps(pbps: PerBaseProps) {
+export function resetPerStemProps(pbps: PerBaseProps) {
   let defaults = new PerBaseProps();
   pbps.flipStem = defaults.flipStem;
   pbps.loopShape = defaults.loopShape;
