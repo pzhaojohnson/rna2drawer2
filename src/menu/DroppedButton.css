@@ -4,21 +4,21 @@
 }
 
 .enabled:hover {
-  background-color: rgb(247, 247, 252);
+  background-color: rgb(247, 247, 247);
 }
 
 .text {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .enabled .text {
-  color: rgb(60, 60, 77);
+  color: rgb(33, 33, 33);
 }
 
 .disabled .text {
-  color: rgb(214, 214, 227);
+  color: rgb(172, 172, 172);
 }
 
 .keyBinding {
@@ -28,9 +28,9 @@
 }
 
 .enabled .keyBinding {
-  color: rgba(0,0,0,0.65);
+  color: rgb(97, 97, 97);
 }
 
 .disabled .keyBinding {
-  color: rgba(0,0,0,0.15);
+  color: rgb(198, 198, 198);
 }

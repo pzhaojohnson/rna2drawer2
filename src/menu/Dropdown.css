@@ -11,25 +11,25 @@
 .buttonText {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .enabled .buttonText {
-  color: rgb(60, 60, 77);
+  color: rgb(33, 33, 33);
 }
 
 .disabled .buttonText {
-  color: rgb(214, 214, 227);
+  color: rgb(172, 172, 172);
 }
 
 .enabled:hover .button {
-  background-color: rgb(247, 247, 252);
+  background-color: rgb(247, 247, 247);
 }
 
 .droppedContainer {
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: rgb(216, 216, 230);
+  border-color: rgb(221, 221, 221);
 
   background-color: white;
 

@@ -8,7 +8,7 @@ export function DroppedSeparator() {
           height: '0px',
           borderWidth: '0px 0px 1px 0px',
           borderStyle: 'solid',
-          borderColor: 'rgb(216, 216, 230)',
+          borderColor: 'rgb(221, 221, 221)',
           margin: '0px 8px',
         }}
       />

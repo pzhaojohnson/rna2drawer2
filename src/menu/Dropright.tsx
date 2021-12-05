@@ -19,7 +19,7 @@ export function Dropright(props: Props) {
         <p className={styles.buttonText} style={{ flexGrow: 1, textAlign: 'left' }} >
           {props.name}
         </p>
-        <RightCaret style={{ height: '16px', padding: '0px 0px 0px 2px' }} />
+        <RightCaret style={{ height: '16px', padding: '0px' }} />
       </div>
       <div className={styles.droppedContainer} >
         {props.dropped}
