@@ -6,6 +6,10 @@
   align-items: center;
 }
 
+.checkbox:hover {
+  cursor: pointer;
+}
+
 .checkContainer {
   border-radius: 2px;
   display: flex;
