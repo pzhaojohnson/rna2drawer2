@@ -5,9 +5,9 @@
 }
 
 .textButton:hover {
-  text-decoration: underline;
+  transform: scale(1.075);
 }
 
 .textButton:active {
-  transform: scale(0.9375);
+  transform: scale(0.975);
 }

@@ -5,10 +5,10 @@
 }
 
 .option:hover {
-  text-decoration: underline;
+  transform: scale(1.075);
   cursor: pointer;
 }
 
 .option:active {
-  transform: scale(0.95);
+  transform: scale(0.975);
 }
