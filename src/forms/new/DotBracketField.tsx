@@ -17,7 +17,7 @@ export function DotBracketField(props: Props): React.ReactElement {
         </p>
         <p
           className={'unselectable-text'}
-          style={{ marginLeft: '4px', flexGrow: 1, fontSize: '12px', color: 'rgba(0,0,0,0.4)' }}
+          style={{ marginLeft: '4px', flexGrow: 1, fontSize: '12px', color: 'rgb(130 130 130)' }}
         >
           (Optional)
         </p>

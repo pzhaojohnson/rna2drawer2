@@ -11,7 +11,7 @@ export function SequenceIdField(props: Props): React.ReactElement {
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
       <p
         className={'unselectable-text'}
-        style={{ marginRight: '12px', fontSize: '12px', display: 'inline-block' }}
+        style={{ marginRight: '8px', fontSize: '12px', display: 'inline-block' }}
       >
         Sequence ID
       </p>
