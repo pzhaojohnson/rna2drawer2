@@ -147,7 +147,7 @@ export function RemoveSubsequence(props: Props) {
           </div>
         </div>
         {!(seq && seq.length == 1 && seq.numberingOffset != 0) ? null : (
-          <div style={{ marginTop: '12px' }} >
+          <div style={{ marginTop: '10px' }} >
             <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
               <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
                 {seq.numberingOffset + 1}&nbsp;
@@ -157,7 +157,7 @@ export function RemoveSubsequence(props: Props) {
           </div>
         )}
         {!(seq && seq.length > 1) ? null : (
-          <div style={{ marginTop: '12px' }} >
+          <div style={{ marginTop: '10px' }} >
             {seq.numberingOffset == 0 ? null : (
               <div style={{ marginBottom: '4px' }} >
                 <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
