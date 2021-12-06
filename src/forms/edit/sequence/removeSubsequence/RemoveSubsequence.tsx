@@ -146,13 +146,13 @@ export function RemoveSubsequence(props: Props) {
             </div>
           </div>
         </div>
-        {!(seq && seq.length == 1 && seq.numberingOffset != 0) ? null : (
+        {!(seq && seq.length == 1) ? null : (
           <div style={{ marginTop: '10px' }} >
             <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
               <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
                 {seq.numberingOffset + 1}&nbsp;
               </span>
-              is the only position in the sequence.
+              is the first and last position of the sequence.
             </p>
           </div>
         )}
