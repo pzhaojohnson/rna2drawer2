@@ -78,7 +78,7 @@ export function RemoveSubsequence(props: Props) {
   return (
     <div
       className={formStyles.form}
-      style={{ position: 'relative', width: '356px', height: '100%', overflow: 'auto' }}
+      style={{ position: 'relative', width: '372px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
