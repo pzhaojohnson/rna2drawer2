@@ -82,7 +82,7 @@ export function EditNumbering(props: Props) {
       </div>
       <div style={{ margin: '24px 40px 8px 40px' }} >
         {bns.length == 0 ? null : (
-          <div style={{ marginBottom: '24px' }} >
+          <div style={{ marginBottom: '16px' }} >
             <FontFamilyField app={props.app} baseNumberings={bns} />
             <div style={{ marginTop: '8px' }} >
               <FontSizeField app={props.app} baseNumberings={bns} />
@@ -90,7 +90,7 @@ export function EditNumbering(props: Props) {
             <div style={{ marginTop: '8px' }} >
               <BoldField app={props.app} baseNumberings={bns} />
             </div>
-            <div style={{ marginTop: '24px' }} >
+            <div style={{ marginTop: '16px' }} >
               <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                 <ColorPicker app={props.app} baseNumberings={bns} />
                 <div style={{ marginLeft: '10px' }} >
@@ -103,7 +103,7 @@ export function EditNumbering(props: Props) {
                 </div>
               </div>
             </div>
-            <div style={{ marginTop: '24px' }} >
+            <div style={{ marginTop: '16px' }} >
               <LineWidthField app={props.app} baseNumberings={bns} />
             </div>
             <div style={{ marginTop: '8px' }} >

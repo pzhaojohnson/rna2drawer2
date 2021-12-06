@@ -155,7 +155,7 @@ export function EditSecondaryBonds(props: Props) {
                 </div>
               </div>
             )}
-            <div style={{ marginTop: '10px' }} >
+            <div style={{ marginTop: '8px' }} >
               <BaseSpacingField app={props.app} />
             </div>
             <div style={{ marginTop: '8px' }} >

@@ -78,7 +78,7 @@ export function EditPrimaryBonds(props: Props) {
                 </p>
               </div>
             </div>
-            <div style={{ marginTop: '18px' }} >
+            <div style={{ marginTop: '16px' }} >
               <StrokeWidthField app={props.app} primaryBonds={props.primaryBonds} />
             </div>
             <div style={{ marginTop: '8px' }} >
