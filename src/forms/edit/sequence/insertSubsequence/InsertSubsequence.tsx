@@ -103,7 +103,7 @@ export function InsertSubsequence(props: Props) {
               setInputs({ ...inputs, subsequence: event.target.value });
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
-            rows={8}
+            rows={9}
             style={{ marginTop: '4px' }}
           />
         </div>
