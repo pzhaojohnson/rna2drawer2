@@ -55,7 +55,7 @@ export function EditDrawingTitle(props: Props) {
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
           <DrawingTitleInput app={props.app} />
         </div>
-        <div style={{ marginTop: '8px' }} >
+        <div style={{ marginTop: '8px', marginBottom: '8px' }} >
           <p
             className='unselectable'
             style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)' }}

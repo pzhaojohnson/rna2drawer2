@@ -177,6 +177,7 @@ export function ExportDrawing(props: Props) {
           <PptxNotes />
         </div>
       )}
+      <div style={{ height: '8px' }} /> {/* bottom spacer */}
     </div>
   );
 }

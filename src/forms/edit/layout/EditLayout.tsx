@@ -46,6 +46,7 @@ export function EditLayout(props: Props) {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
+        overflow: 'auto',
       }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
@@ -59,7 +60,7 @@ export function EditLayout(props: Props) {
       <div style={{ margin: '8px 16px 0px 16px' }} >
         <TitleUnderline />
       </div>
-      <div style={{ margin: '24px 40px 0px 40px' }} >
+      <div style={{ margin: '24px 40px 8px 40px' }} >
         <RotationField app={props.app} />
         <div style={{ marginTop: '12px' }} >
           <FlatOutermostLoopField app={props.app} />

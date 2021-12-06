@@ -80,7 +80,7 @@ export function EditNumbering(props: Props) {
       <div style={{ margin: '8px 16px 0px 16px' }} >
         <TitleUnderline />
       </div>
-      <div style={{ margin: '24px 40px 0px 40px' }} >
+      <div style={{ margin: '24px 40px 8px 40px' }} >
         {bns.length == 0 ? null : (
           <div style={{ marginBottom: '24px' }} >
             <FontFamilyField app={props.app} baseNumberings={bns} />

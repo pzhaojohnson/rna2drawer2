@@ -52,7 +52,7 @@ export function BasesByCharacter(props: Props) {
       <div style={{ margin: '8px 16px 0px 16px' }} >
         <div className={formStyles.titleUnderline} />
       </div>
-      <div style={{ margin: '24px 40px 0px 40px' }} >
+      <div style={{ margin: '24px 40px 8px 40px' }} >
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
           <input
             type='text'

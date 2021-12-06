@@ -81,7 +81,7 @@ export function EditBases(props: Props) {
       <div style={{ margin: '8px 16px 0px 16px' }} >
         <TitleUnderline />
       </div>
-      <div style={{ margin: '24px 40px 0px 40px' }} >
+      <div style={{ margin: '24px 40px 8px 40px' }} >
         {props.bases.length == 0 ? (
           <p className='unselectable' style={{ fontSize: '12px' }} >
             No bases are selected.

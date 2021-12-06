@@ -77,7 +77,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
   return (
     <FloatingDrawingsContainer
       contained={
-        <div style={{ width: '920px', height: '572px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '920px', height: '580px', display: 'flex', flexDirection: 'column' }} >
           <Header />
           <div style={{ margin: '0px 116px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '24px' }} >
@@ -139,7 +139,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                 </p>
               </div>
             )}
-            <div style={{ marginTop: errorMessage ? '6px' : '24px' }} >
+            <div style={{ marginTop: errorMessage ? '6px' : '24px', marginBottom: '8px' }} >
               <SolidButton
                 text={'Submit'}
                 onClick={() => {

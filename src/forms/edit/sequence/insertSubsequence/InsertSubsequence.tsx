@@ -89,7 +89,7 @@ export function InsertSubsequence(props: Props) {
       <div style={{ margin: '8px 16px 0px 16px' }} >
         <div className={formStyles.titleUnderline} />
       </div>
-      <div style={{ margin: '24px 40px 0px 40px' }} >
+      <div style={{ margin: '24px 40px 8px 40px' }} >
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
           <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
             Subsequence

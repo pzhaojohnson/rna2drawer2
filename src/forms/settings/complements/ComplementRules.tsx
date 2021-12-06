@@ -58,7 +58,7 @@ export function ComplementRules(props: Props) {
       <div style={{ margin: '8px 16px 0px 16px' }} >
         <TitleUnderline />
       </div>
-      <div style={{ margin: '24px 40px 0px 40px' }} >
+      <div style={{ margin: '24px 40px 8px 40px' }} >
         <AllowedMismatchField app={props.app} />
         <div style={{ marginTop: '12px' }} >
           <IncludeGUTField app={props.app} />
