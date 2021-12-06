@@ -111,7 +111,7 @@ export function RemoveSubsequence(props: Props) {
                 setInputs(constrainInputs(inputs));
               }
             }}
-            style={{ width: '42px' }}
+            style={{ width: '52px' }}
           />
           <div style={{ marginLeft: '8px' }} >
             <p className={`${textFieldStyles.label} unselectable`} >
@@ -137,7 +137,7 @@ export function RemoveSubsequence(props: Props) {
                   setInputs(constrainInputs(inputs));
                 }
               }}
-              style={{ width: '42px' }}
+              style={{ width: '52px' }}
             />
             <div style={{ marginLeft: '8px' }} >
               <p className={`${textFieldStyles.label} unselectable`} >

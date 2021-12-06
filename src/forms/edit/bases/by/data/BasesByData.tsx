@@ -95,7 +95,7 @@ function constrainInputs(inputs: Inputs): Inputs {
 
 export function BasesByData(props: Props) {
   let [inputs, setInputs] = useState<Inputs>(prevInputs);
-  
+
   // use String object to rerender every time the error message is set
   let [errorMessage, setErrorMessage] = useState<String>(new String(''));
 
@@ -165,7 +165,7 @@ export function BasesByData(props: Props) {
                   setInputs(constrainInputs(inputs));
                 }
               }}
-              style={{ width: '36px' }}
+              style={{ width: '52px' }}
             />
             <div style={{ marginLeft: '8px' }} >
               <p className={`${textFieldStyles.label} unselectable`} >
@@ -258,7 +258,7 @@ export function BasesByData(props: Props) {
                 setErrorMessage(new String('All data must be a number.'));
                 return;
               }
-              
+
               if (isBlank(inputs.startPosition)) {
                 setErrorMessage(new String('Start position must be specified.'));
                 return;
@@ -269,7 +269,7 @@ export function BasesByData(props: Props) {
                 return;
               }
               startPosition = Math.floor(startPosition); // make an integer
-              
+
               if (isBlank(inputs.min)) {
                 setErrorMessage(new String('Specify a minimum value to select.'));
                 return;
@@ -279,7 +279,7 @@ export function BasesByData(props: Props) {
                 setErrorMessage(new String('Minimum value to select must be a number.'));
                 return;
               }
-              
+
               if (isBlank(inputs.max)) {
                 setErrorMessage(new String('Specify a maximum value to select.'));
                 return;
@@ -289,14 +289,14 @@ export function BasesByData(props: Props) {
                 setErrorMessage(new String('Maximum value to select must be a number.'));
                 return;
               }
-              
+
               let drawing = props.app.strictDrawing.drawing;
               if (drawing.sequences.length == 0 || drawing.bases().length == 0) {
                 setErrorMessage('Drawing has no bases.');
                 return;
               }
               let seq = drawing.sequences[0];
-              
+
               // account for numbering offset
               startPosition -= seq.numberingOffset;
 

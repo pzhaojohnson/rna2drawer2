@@ -173,7 +173,7 @@ export function InsertSubsequence(props: Props) {
                   setInputs(constrainInputs(inputs));
                 }
               }}
-              style={{ width: '42px' }}
+              style={{ width: '52px' }}
             />
             <div style={{ marginLeft: '8px' }} >
               <p className={`${textFieldStyles.label} unselectable`} >
@@ -222,7 +222,7 @@ export function InsertSubsequence(props: Props) {
               }
 
               let positionToInsertAt = Number.parseFloat(inputs.positionToInsertAt);
-              
+
               if (!Number.isFinite(positionToInsertAt)) {
                 setErrorMessage(new String('Position to insert at must be a number.'));
                 return;
@@ -230,7 +230,7 @@ export function InsertSubsequence(props: Props) {
 
               // make an integer
               positionToInsertAt = Math.floor(positionToInsertAt);
-              
+
               let values = {
                 subsequence: inputs.subsequence,
                 insertPosition: positionToInsertAt,
