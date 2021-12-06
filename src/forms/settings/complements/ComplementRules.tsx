@@ -60,7 +60,7 @@ export function ComplementRules(props: Props) {
       </div>
       <div style={{ margin: '24px 40px 8px 40px' }} >
         <AllowedMismatchField app={props.app} />
-        <div style={{ marginTop: '12px' }} >
+        <div style={{ marginTop: '14px' }} >
           <IncludeGUTField app={props.app} />
         </div>
       </div>
