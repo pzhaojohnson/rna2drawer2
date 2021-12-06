@@ -25,7 +25,7 @@ type Inputs = {
 function constrainPositionInput(position: string): string {
   let n = Number.parseFloat(position);
   if (!Number.isFinite(n)) {
-    return '';
+    return position.trim();
   } else {
     n = Math.floor(n); // make an integer
     return n.toString();
@@ -38,7 +38,7 @@ function constrainInputs(inputs: Inputs): Inputs {
     endPosition: constrainPositionInput(inputs.endPosition),
   };
 
-  // ensure start position is not greater than end position
+  // swap if start position is greater than end position
   let startPosition = Number.parseFloat(constrained.startPosition);
   let endPosition = Number.parseFloat(constrained.endPosition);
   if (Number.isFinite(startPosition) && Number.isFinite(endPosition)) {
