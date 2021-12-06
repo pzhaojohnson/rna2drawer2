@@ -38,7 +38,7 @@ export function EditDrawingTitle(props: Props) {
   return (
     <div
       className={formStyles.form}
-      style={{ position: 'relative', width: '324px', height: '100%', overflow: 'auto' }}
+      style={{ position: 'relative', width: '332px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
@@ -55,7 +55,7 @@ export function EditDrawingTitle(props: Props) {
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
           <DrawingTitleInput app={props.app} />
         </div>
-        <div style={{ marginTop: '8px', marginBottom: '8px' }} >
+        <div style={{ margin: '8px 0px 8px 3px' }} >
           <p
             className='unselectable'
             style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)' }}
