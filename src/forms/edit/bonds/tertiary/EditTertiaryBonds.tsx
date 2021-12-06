@@ -10,7 +10,6 @@ import { BasePadding1Field } from './BasePadding1Field';
 import { BasePadding2Field } from './BasePadding2Field';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
-import { RemoveButton } from './RemoveButton';
 import { AppInterface as App } from 'AppInterface';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 
@@ -100,9 +99,6 @@ export function EditTertiaryBonds(props: Props) {
                 <div style={{ width: '16px' }} />
                 <SendToBackButton app={props.app} tertiaryBonds={props.tertiaryBonds} />
               </div>
-            </div>
-            <div style={{ marginTop: '24px' }} >
-              <RemoveButton app={props.app} tertiaryBonds={props.tertiaryBonds} />
             </div>
           </div>
         )}
