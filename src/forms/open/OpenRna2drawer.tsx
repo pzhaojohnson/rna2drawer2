@@ -165,7 +165,7 @@ export function OpenRna2drawer(props: Props) {
               />
             </div>
             {!errorMessage.valueOf() ? null : (
-              <div key={Math.random()} style={{ marginTop: '6px' }} >
+              <div key={Math.random()} style={{ marginTop: '8px' }} >
                 <p className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`} >
                   {errorMessage.valueOf()}
                 </p>
