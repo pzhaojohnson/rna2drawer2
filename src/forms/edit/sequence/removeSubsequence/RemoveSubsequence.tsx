@@ -25,7 +25,7 @@ type Inputs = {
 function constrainPositionInput(position: string): string {
   let n = Number.parseFloat(position);
   if (!Number.isFinite(n)) {
-    return position.trim();
+    return '';
   } else {
     n = Math.floor(n); // make an integer
     return n.toString();
