@@ -41,7 +41,7 @@ export function ForwardAndBackwardButtons(props: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }} >
       <BringToFrontButton {...props} />
-      <div style={{ width: '16px' }} ></div>
+      <div style={{ width: '18px' }} ></div>
       <SendToBackButton {...props} />
     </div>
   );

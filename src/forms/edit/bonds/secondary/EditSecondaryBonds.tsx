@@ -167,7 +167,7 @@ export function EditSecondaryBonds(props: Props) {
             <div style={{ marginTop: '16px' }} >
               <div style={{ display: 'flex', flexDirection: 'row' }} >
                 <BringToFrontButton app={props.app} secondaryBonds={props.secondaryBonds} />
-                <div style={{ width: '16px' }} />
+                <div style={{ width: '18px' }} />
                 <SendToBackButton app={props.app} secondaryBonds={props.secondaryBonds} />
               </div>
             </div>

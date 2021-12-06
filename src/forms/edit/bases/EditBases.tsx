@@ -144,7 +144,7 @@ export function EditBases(props: Props) {
             <div style={{ marginTop: '16px' }} >
               <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                 <BringToFrontButton app={props.app} bases={props.bases} />
-                <div style={{ width: '16px' }} />
+                <div style={{ width: '18px' }} />
                 <SendToBackButton app={props.app} bases={props.bases} />
               </div>
             </div>
