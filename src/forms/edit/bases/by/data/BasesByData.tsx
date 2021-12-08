@@ -6,6 +6,7 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { CloseButton } from 'Forms/buttons/CloseButton';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { AppInterface as App } from 'AppInterface';
+import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 
 export type Props = {
@@ -94,6 +95,14 @@ function constrainInputs(inputs: Inputs): Inputs {
 }
 
 export function BasesByData(props: Props) {
+  let drawing = props.app.strictDrawing.drawing;
+  if (drawing.sequences.length == 0) {
+    console.error('Drawing has no sequences.');
+  } else if (drawing.sequences.length > 1) {
+    console.error('Unable to handle multiple sequences.');
+  }
+  let seq = atIndex(drawing.sequences, 0);
+
   let [inputs, setInputs] = useState<Inputs>(prevInputs);
 
   // use String object to rerender every time the error message is set
@@ -103,6 +112,41 @@ export function BasesByData(props: Props) {
   useEffect(() => {
     return () => { prevInputs = inputs; }
   });
+
+  function SequenceBounds() {
+    return !seq ? null : (
+      <div style={{ marginTop: '6px' }} >
+        {seq.length != 1 ? null : (
+          <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
+            <span style={{ fontWeight: 600, color: 'rgb(0,0,0)' }} >
+              {seq.numberingOffset + 1}&nbsp;
+            </span>
+            is the first and last position of the sequence.
+          </p>
+        )}
+        {seq.length <= 1 ? null : (
+          <div>
+            {seq.numberingOffset == 0 ? null : (
+              <div style={{ marginBottom: '4px' }} >
+                <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
+                  <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
+                    {seq.numberingOffset + 1}&nbsp;
+                  </span>
+                  is the first position of the sequence.
+                </p>
+              </div>
+            )}
+            <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
+              <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
+                {seq.length + seq.numberingOffset}&nbsp;
+              </span>
+              is the last position of the sequence.
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div
@@ -178,6 +222,7 @@ export function BasesByData(props: Props) {
               The position of the base where the data starts.
             </p>
           </div>
+          <SequenceBounds />
         </div>
         <div style={{ marginTop: '18px' }} >
           <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
@@ -350,22 +395,13 @@ export function BasesByData(props: Props) {
             Bases with values in the entered range will be selected and may then be edited.
           </p>
         </div>
-        <div style={{ marginTop: '6px' }} >
-          <p
-            className='unselectable'
-            style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
-          >
-            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-            The range is inclusive.
-          </p>
-        </div>
         <div style={{ marginTop: '6px', marginBottom: '8px' }} >
           <p
             className='unselectable'
             style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
           >
             <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-            The numbering offset of the sequence is applied to the start position.
+            The range is inclusive.
           </p>
         </div>
       </div>
