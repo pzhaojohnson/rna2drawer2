@@ -151,7 +151,7 @@ export function BasesByData(props: Props) {
   return (
     <div
       className={formStyles.form}
-      style={{ position: 'relative', width: '376px', height: '100%', overflow: 'auto' }}
+      style={{ position: 'relative', width: '378px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
         <CloseButton
