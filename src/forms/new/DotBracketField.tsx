@@ -33,7 +33,7 @@ export function DotBracketField(props: Props): React.ReactElement {
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}
         placeholder={
-          '...the structure in dot-bracket notation, e.g., "((((....))))"'
+          '...the structure in dot-bracket notation ..."(((((......)))))"'
           + ' ...also called "Vienna" format by Mfold and RNAfold'
         }
         style={{
