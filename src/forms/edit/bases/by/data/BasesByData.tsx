@@ -191,7 +191,7 @@ export function BasesByData(props: Props) {
             </p>
           </div>
         </div>
-        <div style={{ marginTop: '18px' }} >
+        <div style={{ marginTop: '20px' }} >
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
             <input
               type='text'
@@ -224,7 +224,7 @@ export function BasesByData(props: Props) {
           </div>
           <SequenceBounds />
         </div>
-        <div style={{ marginTop: '18px' }} >
+        <div style={{ marginTop: '20px' }} >
           <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
             Range to Select
           </p>
@@ -288,7 +288,7 @@ export function BasesByData(props: Props) {
             </p>
           </div>
         </div>
-        <div style={{ marginTop: '24px' }} >
+        <div style={{ marginTop: '28px' }} >
           <SolidButton
             text='Select'
             onClick={() => {
@@ -386,7 +386,7 @@ export function BasesByData(props: Props) {
             {errorMessage.valueOf()}
           </p>
         )}
-        <div style={{ marginTop: '16px' }} >
+        <div style={{ marginTop: '12px' }} >
           <p
             className='unselectable'
             style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
