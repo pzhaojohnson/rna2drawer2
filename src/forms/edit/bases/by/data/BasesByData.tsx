@@ -181,7 +181,7 @@ export function BasesByData(props: Props) {
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
             rows={12}
-            placeholder=' ...delimits by whitespace, commas and semicolons'
+            placeholder='...delimit by whitespace, commas and semicolons'
             spellCheck={false}
             style={{ marginTop: '4px' }}
           />
