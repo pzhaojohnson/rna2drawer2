@@ -228,7 +228,7 @@ export function BasesByData(props: Props) {
           <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
             Range to Select
           </p>
-          <div style={{ margin: '6px 0px 0px 12px' }} >
+          <div style={{ margin: '6px 0px 0px 8px' }} >
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
               <input
                 type='text'
@@ -246,11 +246,11 @@ export function BasesByData(props: Props) {
                     setInputs(constrainInputs(inputs));
                   }
                 }}
-                style={{ width: '32px' }}
+                style={{ width: '42px' }}
               />
               <div style={{ marginLeft: '8px' }} >
                 <p className={`${textFieldStyles.label} unselectable`} >
-                  Minimum
+                  Minimum Value
                 </p>
               </div>
             </div>
@@ -272,11 +272,11 @@ export function BasesByData(props: Props) {
                       setInputs(constrainInputs(inputs));
                     }
                   }}
-                  style={{ width: '32px' }}
+                  style={{ width: '42px' }}
                 />
                 <div style={{ marginLeft: '8px' }} >
                   <p className={`${textFieldStyles.label} unselectable`} >
-                    Maximum
+                    Maximum Value
                   </p>
                 </div>
               </div>
