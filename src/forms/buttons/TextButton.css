@@ -5,9 +5,9 @@
 }
 
 .textButton:hover {
-  transform: scale(1.0625);
+  transform: scale(1.065);
 }
 
 .textButton:active {
-  transform: scale(0.975);
+  transform: scale(1);
 }
