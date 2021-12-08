@@ -43,7 +43,7 @@ export class CharacterField extends React.Component<Props> {
               this.props.app.refresh();
             }
           }}
-          style={{ width: '16px' }}
+          style={{ width: '12px', textAlign: 'center' }}
         />
         <div style={{ marginLeft: '8px' }} >
           <p className={`${textFieldStyles.label} unselectable`} >
