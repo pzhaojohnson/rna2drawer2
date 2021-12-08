@@ -173,7 +173,7 @@ export function InsertSubsequence(props: Props) {
                   setInputs(constrainInputs(inputs));
                 }
               }}
-              style={{ width: '52px' }}
+              style={{ width: '48px' }}
             />
             <div style={{ marginLeft: '8px' }} >
               <p className={`${textFieldStyles.label} unselectable`} >
