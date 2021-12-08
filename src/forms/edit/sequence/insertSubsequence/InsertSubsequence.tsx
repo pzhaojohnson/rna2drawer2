@@ -104,6 +104,7 @@ export function InsertSubsequence(props: Props) {
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
             rows={9}
+            placeholder=' ...an RNA or DNA subsequence ..."CUGCCA"'
             style={{ marginTop: '4px' }}
           />
         </div>
