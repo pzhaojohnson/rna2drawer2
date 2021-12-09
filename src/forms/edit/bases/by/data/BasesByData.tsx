@@ -300,12 +300,12 @@ export function BasesByData(props: Props) {
                 setErrorMessage(new String('No data entered.'));
                 return;
               } else if (data.some(v => !Number.isFinite(v))) {
-                setErrorMessage(new String('All data must be a number.'));
+                setErrorMessage(new String('All data values must be numbers.'));
                 return;
               }
 
               if (isBlank(inputs.startPosition)) {
-                setErrorMessage(new String('Start position must be specified.'));
+                setErrorMessage(new String('Specify a start position.'));
                 return;
               }
               let startPosition = Number.parseFloat(inputs.startPosition);
@@ -363,7 +363,7 @@ export function BasesByData(props: Props) {
               });
 
               if (positions.length == 0) {
-                setErrorMessage(new String('No data in the entered range.'));
+                setErrorMessage(new String('No data values in the entered range.'));
                 return;
               }
 
