@@ -54,7 +54,7 @@ function constrainStartPosition(startPosition: string): string {
     n = Math.floor(n); // make an integer
     return n.toString();
   } else {
-    return '';
+    return startPosition.trim();
   }
 }
 
@@ -63,7 +63,7 @@ function constrainMin(min: string): string {
   if (Number.isFinite(n)) {
     return n.toString();
   } else {
-    return '';
+    return min.trim();
   }
 }
 
@@ -72,7 +72,7 @@ function constrainMax(max: string): string {
   if (Number.isFinite(n)) {
     return n.toString();
   } else {
-    return '';
+    return max.trim();
   }
 }
 
