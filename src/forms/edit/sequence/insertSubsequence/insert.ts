@@ -71,7 +71,7 @@ export function cannotInsert(strictDrawing: StrictDrawing, inputs: Inputs): stri
   let subsequence = parseSubsequence(inputs);
   if (subsequence.length == 0) {
     if (inputs.subsequence.trim().length == 0) {
-      return 'Subsequence is empty.';
+      return 'Specify a subsequence.';
     } else {
       return 'Subsequence has only ignored characters.';
     }
