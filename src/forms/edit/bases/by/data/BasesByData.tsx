@@ -312,8 +312,10 @@ export function BasesByData(props: Props) {
               if (!Number.isFinite(startPosition)) {
                 setErrorMessage(new String('Start position must be a number.'));
                 return;
+              } else if (!Number.isInteger(startPosition)) {
+                setErrorMessage(new String('Start position must be an integer.'));
+                return;
               }
-              startPosition = Math.floor(startPosition); // make an integer
 
               if (isBlank(inputs.min)) {
                 setErrorMessage(new String('Specify a minimum value to select.'));

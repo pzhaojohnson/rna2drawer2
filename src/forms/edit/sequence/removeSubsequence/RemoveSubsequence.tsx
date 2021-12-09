@@ -199,9 +199,13 @@ export function RemoveSubsequence(props: Props) {
                 return;
               }
 
-              // make integers
-              startPosition = Math.floor(startPosition);
-              endPosition = Math.floor(endPosition);
+              if (!Number.isInteger(startPosition)) {
+                setErrorMessage(new String('Start position must be an integer.'));
+                return;
+              } else if (!Number.isInteger(endPosition)) {
+                setErrorMessage(new String('End position must be an integer.'));
+                return;
+              }
 
               let message = cannotRemove(props.app.strictDrawing, { start: startPosition, end: endPosition });
               if (message) {

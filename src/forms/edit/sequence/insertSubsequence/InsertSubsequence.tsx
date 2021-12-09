@@ -227,10 +227,10 @@ export function InsertSubsequence(props: Props) {
               if (!Number.isFinite(positionToInsertAt)) {
                 setErrorMessage(new String('Position to insert at must be a number.'));
                 return;
+              } else if (!Number.isInteger(positionToInsertAt)) {
+                setErrorMessage(new String('Position to insert at must be an integer.'));
+                return;
               }
-
-              // make an integer
-              positionToInsertAt = Math.floor(positionToInsertAt);
 
               let values = {
                 subsequence: inputs.subsequence,
