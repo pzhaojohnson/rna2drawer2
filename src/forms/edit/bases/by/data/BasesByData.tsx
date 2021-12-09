@@ -186,7 +186,7 @@ export function BasesByData(props: Props) {
             style={{ marginTop: '4px' }}
           />
           <div style={{ marginTop: '4px' }} >
-            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)' }} >
+            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
               A list of numbers (e.g., SHAPE reactivities).
             </p>
           </div>
@@ -218,7 +218,7 @@ export function BasesByData(props: Props) {
             </div>
           </div>
           <div style={{ marginTop: '4px' }} >
-            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)' }} >
+            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
               The position of the base where the data starts.
             </p>
           </div>
@@ -283,7 +283,7 @@ export function BasesByData(props: Props) {
             </div>
           </div>
           <div style={{ marginTop: '4px' }} >
-            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)' }} >
+            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
               Bases with values in the range will be selected.
             </p>
           </div>

@@ -58,7 +58,7 @@ export function EditDrawingTitle(props: Props) {
         <div style={{ margin: '8px 0px 8px 3px' }} >
           <p
             className='unselectable'
-            style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgba(0,0,0,0.65)' }}
+            style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }}
           >
             Defaults to the sequence ID.
           </p>
