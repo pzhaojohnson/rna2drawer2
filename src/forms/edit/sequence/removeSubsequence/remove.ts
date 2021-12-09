@@ -24,11 +24,11 @@ export function cannotRemove(strictDrawing: StrictDrawing, inputs: Range): strin
   if (seq) {
     let r = reversePositionOffsets(seq, inputs);
     if (r.start > r.end) {
-      return 'Start cannot be greater than end.';
+      return 'Start position is greater than end position.';
     } else if (seq.positionOutOfRange(r.start)) {
-      return 'Start is out of range.';
+      return 'Start position is out of range.';
     } else if (seq.positionOutOfRange(r.end)) {
-      return 'End is out of range.';
+      return 'End position is out of range.';
     } else if (r.start == 1 && r.end == seq.length) {
       return 'Cannot remove entire sequence.';
     }
