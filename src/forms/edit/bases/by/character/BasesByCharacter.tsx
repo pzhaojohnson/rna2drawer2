@@ -83,7 +83,7 @@ export function BasesByCharacter(props: Props) {
             text='Select'
             onClick={() => {
               if (character.length == 0) {
-                setErrorMessage(new String('A character must be entered.'));
+                setErrorMessage(new String('Specify a character.'));
                 return;
               }
 
