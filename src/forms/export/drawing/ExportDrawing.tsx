@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import formStyles from './ExportDrawing.css';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
@@ -9,6 +9,7 @@ import { SolidButton } from 'Forms/buttons/SolidButton';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { atPosition } from 'Array/at';
+import { isBlank } from 'Parse/isBlank';
 import { parseNumber } from 'Parse/svg/number';
 import { round } from 'Math/round';
 import { pointsToPixels } from 'Export/units'
@@ -23,33 +24,27 @@ function fontSize(b: Base): number | undefined {
 }
 
 type Inputs = {
-  exportedFontSizeOfBases: string;
+  fontSizeOfBasesToExport: string;
 }
 
 let prevInputs: Inputs = {
-  exportedFontSizeOfBases: '6',
+  fontSizeOfBasesToExport: '6',
 };
 
-function constrainExportedFontSizeOfBases(fs: number): number {
-  if (!Number.isFinite(fs)) {
-    return 6;
+function constrainFontSizeInput(value: string): string {
+  let n = Number.parseFloat(value);
+  if (Number.isFinite(n)) {
+    // font sizes can only be so precise in applications such as PowerPoint
+    n = round(n, 1);
+    return n.toString();
   } else {
-    fs = round(fs, 1);
-    if (fs <= 0) { // check after rounding
-      return 6;
-    } else {
-      return fs;
-    }
+    return value.trim();
   }
 }
 
 function constrainInputs(inputs: Inputs): Inputs {
   return {
-    exportedFontSizeOfBases: (
-      constrainExportedFontSizeOfBases(
-        Number.parseFloat(inputs.exportedFontSizeOfBases),
-      ).toString()
-    ),
+    fontSizeOfBasesToExport: constrainFontSizeInput(inputs.fontSizeOfBasesToExport),
   };
 }
 
@@ -79,7 +74,15 @@ function PptxNotes() {
 
 export function ExportDrawing(props: Props) {
   let [inputs, setInputs] = useState<Inputs>({ ...prevInputs });
-  let [errorExporting, setErrorExporting] = useState(false);
+
+  // use String object for fade in animation every time the error message is set
+  let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+
+  // remember inputs
+  useEffect(() => {
+    return () => { prevInputs = { ...inputs }; };
+  });
+
   return (
     <div
       className={formStyles.form}
@@ -103,22 +106,24 @@ export function ExportDrawing(props: Props) {
           <input
             type='text'
             className={textFieldStyles.input}
-            value={inputs.exportedFontSizeOfBases}
-            onChange={event => setInputs({
-              ...inputs,
-              exportedFontSizeOfBases: event.target.value,
-            })}
+            value={inputs.fontSizeOfBasesToExport}
+            onChange={event => {
+              if (event.target.value.trim() != inputs.fontSizeOfBasesToExport.trim()) {
+                setErrorMessage(new String(''));
+              }
+              setInputs({ ...inputs, fontSizeOfBasesToExport: event.target.value });
+            }}
             onBlur={() => setInputs(constrainInputs(inputs))}
             onKeyUp={event => {
               if (event.key.toLowerCase() == 'enter') {
                 setInputs(constrainInputs(inputs));
               }
             }}
-            style={{ width: '24px' }}
+            style={{ width: '32px' }}
           />
           <div style={{ marginLeft: '8px' }} >
             <p className={`${textFieldStyles.label} unselectable`} style={{ color: 'rgba(0,0,0,0.95)' }} >
-              Exported Font Size of Bases
+              Font Size of Bases to Export
             </p>
           </div>
         </div>
@@ -133,11 +138,23 @@ export function ExportDrawing(props: Props) {
           text='Export'
           onClick={() => {
             try {
-              let exportedFontSizeOfBases = constrainExportedFontSizeOfBases(
-                Number.parseFloat(inputs.exportedFontSizeOfBases),
-              );
+              if (isBlank(inputs.fontSizeOfBasesToExport)) {
+                setErrorMessage(new String('Specify the font size of bases to export.'));
+                return;
+              }
+
+              let fontSizeOfBasesToExport = Number.parseFloat(inputs.fontSizeOfBasesToExport);
+
+              if (!Number.isFinite(fontSizeOfBasesToExport)) {
+                setErrorMessage(new String('Font size of bases must be a number.'));
+                return;
+              } else if (fontSizeOfBasesToExport <= 0) {
+                setErrorMessage(new String('Font size of bases must be positive.'));
+                return;
+              }
+
               if (props.format == 'pptx') {
-                exportedFontSizeOfBases = pointsToPixels(exportedFontSizeOfBases);
+                fontSizeOfBasesToExport = pointsToPixels(fontSizeOfBasesToExport);
               }
 
               let drawing = props.app.strictDrawing.drawing;
@@ -150,25 +167,24 @@ export function ExportDrawing(props: Props) {
                 format: props.format,
 
                 // assumes all bases have the same font size
-                scale: exportedFontSizeOfBases / (fontSizeOfFirstBase ?? exportedFontSizeOfBases),
+                scale: fontSizeOfBasesToExport / (fontSizeOfFirstBase ?? fontSizeOfBasesToExport),
               });
 
-              prevInputs = { ...inputs };
-              setErrorExporting(false);
+              setErrorMessage(new String(''));
 
             } catch (error) {
               console.error(error);
-              setErrorExporting(true);
+              setErrorMessage(new String('There was an error exporting the drawing.'));
             }
           }}
         />
-        {!errorExporting ? null : (
+        {!errorMessage.valueOf() ? null : (
           <p
             key={Math.random()}
             className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-            style={{ marginTop: '3px' }}
+            style={{ marginTop: '4px' }}
           >
-            There was an error exporting the drawing.
+            {errorMessage.valueOf()}
           </p>
         )}
       </div>
