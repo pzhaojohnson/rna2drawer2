@@ -50,8 +50,8 @@ function areEqual(v1: Value, v2: Value): boolean {
 function constrainFontSize(fs: number): number {
   if (!Number.isFinite(fs)) {
     return 8;
-  } else if (fs < 0) {
-    return 0;
+  } else if (fs < 1) {
+    return 1;
   } else {
     return fs;
   }

@@ -148,8 +148,8 @@ export function ExportDrawing(props: Props) {
               if (!Number.isFinite(fontSizeOfBasesToExport)) {
                 setErrorMessage(new String('Font size of bases must be a number.'));
                 return;
-              } else if (fontSizeOfBasesToExport <= 0) {
-                setErrorMessage(new String('Font size of bases must be positive.'));
+              } else if (fontSizeOfBasesToExport < 1) {
+                setErrorMessage(new String('Font size of bases must be at least 1.'));
                 return;
               }
 
