@@ -28,7 +28,7 @@ function currFontSize(baseNumberings: BaseNumberingInterface[]): Value {
     let n = parseNumber(fs);
     if (n) {
       let pxs = n.convert('px').valueOf();
-      pxs = round(pxs, 2);
+      pxs = round(pxs, 1); // match PowerPoint font size precision
       fss.add(pxs.toString());
     }
   });
