@@ -23,7 +23,7 @@ type State = {
 function currBasePadding1(tertiaryBonds: TertiaryBondInterface[]): Value {
   let bp1s = new Set<Value>();
   tertiaryBonds.forEach(tb => {
-    let bp1 = round(tb.basePadding1, 1);
+    let bp1 = round(tb.basePadding1, 0);
     bp1s.add(bp1.toString());
   });
   if (bp1s.size == 1) {
@@ -98,6 +98,7 @@ export class BasePadding1Field extends React.Component<Props> {
         if (!areEqual(this.state.value, currBasePadding1(this.props.tertiaryBonds))) {
           this.props.app.pushUndo();
           bp1 = constrainBasePadding(bp1);
+          bp1 = round(bp1, 0);
           this.props.tertiaryBonds.forEach(tb => {
             tb.basePadding1 = bp1;
           });

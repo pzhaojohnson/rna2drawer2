@@ -23,8 +23,8 @@ type State = {
 function currBasePadding(primaryBonds: PrimaryBondInterface[]): Value {
   let bps = new Set<Value>();
   primaryBonds.forEach(pb => {
-    let bp1 = round(pb.basePadding1, 1);
-    let bp2 = round(pb.basePadding2, 1);
+    let bp1 = round(pb.basePadding1, 0);
+    let bp2 = round(pb.basePadding2, 0);
     bps.add(bp1.toString());
     bps.add(bp2.toString());
   });
@@ -101,7 +101,7 @@ export class BasePaddingField extends React.Component<Props> {
         if (!areEqual(this.state.value, currBasePadding(this.props.primaryBonds))) {
           this.props.app.pushUndo();
           bp = constrainBasePadding(bp);
-          bp = round(bp, 2);
+          bp = round(bp, 0);
           this.props.primaryBonds.forEach(pb => {
             pb.basePadding1 = bp;
             pb.basePadding2 = bp;
