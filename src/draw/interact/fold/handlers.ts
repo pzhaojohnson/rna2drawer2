@@ -1,5 +1,6 @@
 import { FoldingModeInterface as FoldingMode } from './FoldingModeInterface';
 import setAllBaseHighlightings from './setAllBaseHighlightings';
+import { removeAllBaseHighlightings } from 'Draw/interact/highlight/removeAllBaseHighlightings';
 import { Base } from 'Draw/bases/Base';
 import { selectedRange } from './selected';
 import hoveredPairable from './hoveredPairable';
@@ -63,6 +64,28 @@ export function handleMouseup(mode: FoldingMode) {
   }
   mode.selecting = false;
   setAllBaseHighlightings(mode);
+}
+
+export function refresh(mode: FoldingMode) {
+  let seq = mode.strictDrawing.layoutSequence();
+
+  if (seq.length == 0) {
+    reset(mode);
+    return;
+  }
+
+  if (typeof mode.hovered == 'number' && mode.hovered > seq.length) {
+    mode.hovered = undefined;
+  }
+  if (mode.selected) {
+    if (mode.selected.tightEnd > seq.length || mode.selected.looseEnd > seq.length) {
+      mode.selected = undefined;
+    }
+  }
+  mode.selecting = false;
+  removeAllBaseHighlightings(mode.strictDrawing.drawing); // needed to restart animations
+  setAllBaseHighlightings(mode);
+  mode.fireChange();
 }
 
 export function reset(mode: FoldingMode) {

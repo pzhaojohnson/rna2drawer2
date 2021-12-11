@@ -176,7 +176,9 @@ class StrictDrawingInteraction {
 
   refresh() {
     if (this._currMode == this._annotatingMode) {
-      this._currMode.refresh();
+      this._annotatingMode.refresh();
+    } else if (this._currMode == this._foldingMode) {
+      this._foldingMode.refresh();
     } else {
       this._currMode.reset();
     }

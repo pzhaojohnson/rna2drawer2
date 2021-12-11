@@ -19,6 +19,7 @@ export interface FoldingModeInterface {
   allowedMismatch: number;
   readonly allowedMismatchPrecision: number;
 
+  refresh: () => void;
   reset: () => void;
 
   pairComplements: () => void;

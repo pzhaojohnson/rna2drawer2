@@ -8,6 +8,7 @@ import {
   handleMousedownOnDrawing,
   handleDblclickOnDrawing,
   handleMouseup,
+  refresh,
   reset,
 } from './handlers';
 import { round } from '../../../math/round';
@@ -102,6 +103,10 @@ class FoldingMode implements FoldingModeInterface {
     window.addEventListener('mouseup', () => {
       handleMouseup(this);
     });
+  }
+
+  refresh() {
+    refresh(this);
   }
 
   reset() {
