@@ -34,8 +34,7 @@ let prevInputs: Inputs = {
 function constrainFontSizeInput(value: string): string {
   let n = Number.parseFloat(value);
   if (Number.isFinite(n)) {
-    // font sizes can only be so precise in applications such as PowerPoint
-    n = round(n, 1);
+    n = round(n, 1); // match PowerPoint font size precision
     return n.toString();
   } else {
     return value.trim();
@@ -149,6 +148,7 @@ export function ExportDrawing(props: Props) {
                 setErrorMessage(new String('Font size of bases must be a number.'));
                 return;
               } else if (fontSizeOfBasesToExport < 1) {
+                // 1 is the minimum font size in PowerPoint
                 setErrorMessage(new String('Font size of bases must be at least 1.'));
                 return;
               }

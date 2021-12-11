@@ -51,7 +51,7 @@ function constrainFontSize(fs: number): number {
   if (!Number.isFinite(fs)) {
     return 8;
   } else if (fs < 1) {
-    return 1;
+    return 1; // 1 is the minimum font size in PowerPoint
   } else {
     return fs;
   }
