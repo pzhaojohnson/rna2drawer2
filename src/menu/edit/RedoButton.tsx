@@ -34,7 +34,7 @@ export function RedoButton(props: Props) {
   useEffect(() => {
     let listener = (event: KeyboardEvent) => {
       let shouldRedoIfCan = (
-        isShiftCtrlZ(event) || (detectMacOS() && isShiftMetaZ(event))
+        (isShiftCtrlZ(event) || (detectMacOS() && isShiftMetaZ(event)))
         && !event.repeat
       );
       if (shouldRedoIfCan) {

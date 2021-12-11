@@ -32,7 +32,7 @@ export function UndoButton(props: Props) {
   useEffect(() => {
     let listener = (event: KeyboardEvent) => {
       let shouldUndoIfCan = (
-        isCtrlZ(event) || (detectMacOS() && isMetaZ(event))
+        (isCtrlZ(event) || (detectMacOS() && isMetaZ(event)))
         && !event.shiftKey // with shift key is for redo
         && !event.repeat
       );
