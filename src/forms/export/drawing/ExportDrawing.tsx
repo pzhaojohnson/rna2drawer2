@@ -182,7 +182,7 @@ export function ExportDrawing(props: Props) {
           <p
             key={Math.random()}
             className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-            style={{ marginTop: '4px' }}
+            style={{ marginTop: '6px' }}
           >
             {errorMessage.valueOf()}
           </p>

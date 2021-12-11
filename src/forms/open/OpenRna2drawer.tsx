@@ -57,7 +57,7 @@ export function OpenRna2drawer(props: Props) {
   let [fileName, setFileName] = useState('');
   let [fileExtension, setFileExtension] = useState('');
   let [fileContents, setFileContents] = useState('');
-  
+
   // use String object to rerender every time the error message is set
   let [errorMessage, setErrorMessage] = useState<String>(new String(''));
 
@@ -110,7 +110,7 @@ export function OpenRna2drawer(props: Props) {
                   className={formStyles.folderIcon}
                   src={fileUploaded ? openFolder : closedFolder}
                   alt='File Folder'
-                  
+
                   // file drag and drop not implemented yet
                   onDragOver={event => event.preventDefault()}
                   onDrop={event => event.preventDefault()}
@@ -156,7 +156,7 @@ export function OpenRna2drawer(props: Props) {
                     setErrorMessage(new String('Invalid RNA2Drawer file.'));
                     return;
                   }
-                  
+
                   updateDrawingTitle(props.app, fileName);
                   delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                   props.close();
@@ -165,7 +165,7 @@ export function OpenRna2drawer(props: Props) {
               />
             </div>
             {!errorMessage.valueOf() ? null : (
-              <div key={Math.random()} style={{ marginTop: '8px' }} >
+              <div key={Math.random()} style={{ marginTop: '6px' }} >
                 <p className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`} >
                   {errorMessage.valueOf()}
                 </p>
