@@ -6,7 +6,7 @@ export function delayPivoting(mode: PivotingMode) {
 }
 
 export function shouldDelayPivoting(mode: PivotingMode): boolean {
-  return mode.strictDrawing.drawing.numBases > 850;
+  return mode.strictDrawing.drawing.numBases > 600;
 }
 
 export function delayPivotingIfShould(mode: PivotingMode) {
