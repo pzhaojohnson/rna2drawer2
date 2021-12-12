@@ -39,7 +39,7 @@ export function handleMousedownOnBase(mode: PivotingMode, b: Base) {
         let pt = { x: b.xCenter, y: b.yCenter };
         mode.onlyMoving = overallPositionsOfBases(
           mode.strictDrawing.drawing,
-          closestBasesTo(mode.strictDrawing.drawing, pt, 20)
+          closestBasesTo(mode.strictDrawing.drawing, pt, 18)
         );
       }
     }
