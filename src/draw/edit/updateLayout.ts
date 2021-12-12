@@ -104,6 +104,7 @@ function repositionBonds(drawing: Drawing, options?: Options) {
 }
 
 export function updateLayout(strictDrawing: StrictDrawing, options=defaultOptions) {
+  let layoutSeq = strictDrawing.layoutSequence();
   let layout = createLayout(strictDrawing);
   if (layout) {
     if (options.updatePadding) {
@@ -111,6 +112,8 @@ export function updateLayout(strictDrawing: StrictDrawing, options=defaultOption
     }
     moveBases(strictDrawing, layout, options);
     repositionBonds(strictDrawing.drawing, options);
-    orientBaseNumberings(strictDrawing.drawing);
+    if (!options.onlyMove || options.onlyMove.size == layoutSeq.length) {
+      orientBaseNumberings(strictDrawing.drawing);
+    }
   }
 }
