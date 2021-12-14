@@ -21,7 +21,7 @@ function Header() {
             Developed by Philip Johnson and Anne Simon
           </p>
           <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgb(42 42 42)', textAlign: 'right' }} >
-            Last Updated on April 9, 2021
+            Last Updated on Dec. 14, 2021
           </p>
         </div>
       </div>
@@ -131,7 +131,7 @@ function UpdatesNotice() {
       }}
     >
       <p style={{ margin: '0px 21px', fontSize: '14px', color: 'rgb(32 32 32)' }} >
-        See the <UpdatesLink />! <em>(April 9, 2021)</em>
+        See the <UpdatesLink />! <em>(Dec. 14, 2021)</em>
       </p>
     </div>
   );
