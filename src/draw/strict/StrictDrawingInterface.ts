@@ -27,7 +27,11 @@ export interface StrictDrawingSavableState {
 
 export interface StrictDrawingInterface {
   readonly drawing: Drawing;
+
+  // the outermost node of the drawing containing all elements of the drawing
+  // (add as a child to a container to add the drawing as a child to the container)
   readonly node: Node;
+
   addTo(container: Node, SVG: () => Svg.Svg): void;
 
   // Returns the sequence of all bases in the drawing
@@ -36,7 +40,7 @@ export interface StrictDrawingInterface {
   // Is obtained by concatenating all sequences in the underlying drawing
   // in the order they are present in the underlying drawing.
   layoutSequence(): Sequence;
-  
+
   layoutPartners(): Partners;
   generalLayoutProps: GeneralLayoutProps;
   perBaseLayoutProps(): PerBaseLayoutProps[];
