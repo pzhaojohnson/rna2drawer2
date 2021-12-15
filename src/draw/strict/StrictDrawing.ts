@@ -3,7 +3,7 @@ import {
   StrictDrawingSavableState,
 } from './StrictDrawingInterface';
 import { Drawing } from 'Draw/Drawing';
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 
 import { Sequence } from 'Draw/sequences/Sequence';
 
@@ -49,7 +49,7 @@ export class StrictDrawing implements StrictDrawingInterface {
     return this.drawing.node;
   }
 
-  addTo(container: Node, SVG: () => Svg.Svg) {
+  addTo(container: Node, SVG: () => SVG.Svg) {
     this._drawing.addTo(container, SVG);
   }
 
