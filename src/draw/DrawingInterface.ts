@@ -23,6 +23,7 @@ export interface DrawingSavableState {
 
 export interface DrawingInterface {
   readonly svg: SVG.Svg;
+  readonly svgContainer: HTMLElement;
 
   // the outermost node of the drawing containing all elements of the drawing
   // (add as a child to a container to add the drawing as a child to the container)

@@ -33,7 +33,7 @@ export interface BasesByIds {
 }
 
 export class Drawing implements DrawingInterface {
-  _svgContainer!: HTMLElement;
+  svgContainer!: HTMLElement;
   svg!: SVG.Svg;
 
   sequences: Sequence[];
@@ -49,14 +49,14 @@ export class Drawing implements DrawingInterface {
   }
 
   get node(): Node {
-    return this._svgContainer;
+    return this.svgContainer;
   }
 
   addTo(container: Node, SVG: () => SVG.Svg) {
-    this._svgContainer = document.createElement('div');
-    this._svgContainer.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
-    container.appendChild(this._svgContainer);
-    this.svg = SVG().addTo(this._svgContainer);
+    this.svgContainer = document.createElement('div');
+    this.svgContainer.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
+    container.appendChild(this.svgContainer);
+    this.svg = SVG().addTo(this.svgContainer);
 
     // initialize viewbox, width and height
     let width = 2 * window.screen.width;
@@ -66,27 +66,27 @@ export class Drawing implements DrawingInterface {
   }
 
   get scrollLeft(): number {
-    return this._svgContainer.scrollLeft;
+    return this.svgContainer.scrollLeft;
   }
 
   set scrollLeft(sl) {
-    this._svgContainer.scrollLeft = sl;
+    this.svgContainer.scrollLeft = sl;
   }
 
   get scrollWidth(): number {
-    return this._svgContainer.scrollWidth;
+    return this.svgContainer.scrollWidth;
   }
 
   get scrollTop(): number {
-    return this._svgContainer.scrollTop;
+    return this.svgContainer.scrollTop;
   }
 
   set scrollTop(st) {
-    this._svgContainer.scrollTop = st;
+    this.svgContainer.scrollTop = st;
   }
 
   get scrollHeight(): number {
-    return this._svgContainer.scrollHeight;
+    return this.svgContainer.scrollHeight;
   }
 
   get width(): number {
