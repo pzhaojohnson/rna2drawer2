@@ -27,6 +27,7 @@ export interface StrictDrawingSavableState {
 
 export interface StrictDrawingInterface {
   readonly drawing: Drawing;
+  readonly node: Node;
   addTo(container: Node, SVG: () => Svg.Svg): void;
 
   // Returns the sequence of all bases in the drawing

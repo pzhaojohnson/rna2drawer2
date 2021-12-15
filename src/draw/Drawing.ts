@@ -48,6 +48,10 @@ export class Drawing implements DrawingInterface {
     this.tertiaryBonds = [];
   }
 
+  get node(): Node {
+    return this._div;
+  }
+
   addTo(container: Node, SVG: () => Svg.Svg) {
     this._div = document.createElement('div');
     this._div.style.cssText = 'width: 100%; height: 100%; overflow: auto;';

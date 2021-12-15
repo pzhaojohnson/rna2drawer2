@@ -45,6 +45,10 @@ export class StrictDrawing implements StrictDrawingInterface {
     return this._drawing;
   }
 
+  get node(): Node {
+    return this.drawing.node;
+  }
+
   addTo(container: Node, SVG: () => Svg.Svg) {
     this._drawing.addTo(container, SVG);
   }

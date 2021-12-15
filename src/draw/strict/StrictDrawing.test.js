@@ -43,6 +43,10 @@ it('drawing getter', () => {
   expect(sd.drawing).toBe(sd._drawing);
 });
 
+test('node property', () => {
+  expect(sd.node).toBe(container.firstChild);
+});
+
 it('addTo method', () => {
   let sd = new StrictDrawing();
   let spy = jest.spyOn(sd._drawing, 'addTo');

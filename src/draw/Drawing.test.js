@@ -48,6 +48,10 @@ let tb2 = addTertiaryBond(
   seq2.getBaseAtPosition(7),
 );
 
+test('node property', () => {
+  expect(drawing.node).toBe(container.firstChild);
+});
+
 describe('addTo method', () => {
   let drawing = new Drawing();
   let container = document.createElement('div');
