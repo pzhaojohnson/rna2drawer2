@@ -2,7 +2,6 @@ import {
   DrawingInterface as Drawing,
   DrawingSavableState,
 } from 'Draw/DrawingInterface';
-import * as SVG from '@svgdotjs/svg.js';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { Partners } from 'Partners/Partners';
 import {
@@ -32,7 +31,7 @@ export interface StrictDrawingInterface {
   // (add as a child to a container to add the drawing as a child to the container)
   readonly node: Node;
 
-  addTo(container: Node, SVG: () => SVG.Svg): void;
+  appendTo(container: Node): void;
 
   // Returns the sequence of all bases in the drawing
   // to which the strict layout is applied to.

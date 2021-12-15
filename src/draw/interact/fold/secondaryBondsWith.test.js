@@ -5,8 +5,8 @@ import FoldingMode from './FoldingMode';
 import parseDotBracket from '../../../parse/parseDotBracket';
 import IntegerRange from './IntegerRange';
 
-let sd = new StrictDrawing();
-sd.addTo(document.body, () => NodeSVG());
+let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+sd.appendTo(document.body);
 let mode = new FoldingMode(sd);
 let secondaryPartners = parseDotBracket('...(((...)))').secondaryPartners;
 let chars = '';

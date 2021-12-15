@@ -3,8 +3,8 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { round } from '../../../math/round';
 
-let sd = new StrictDrawing();
-sd.addTo(document.body, () => NodeSVG());
+let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+sd.appendTo(document.body);
 let mode = new FoldingMode(sd);
 
 it('className getter', () => {
@@ -37,7 +37,7 @@ it('switching between submodes', () => {
   expect(mode.forcePairing()).toBeTruthy();
   expect(mode.onlyAddingTertiaryBonds()).toBeFalsy();
   expect(spy).toHaveBeenCalledTimes(2);
-  
+
   mode.pairComplements();
   expect(mode.pairingComplements()).toBeTruthy();
   expect(mode.forcePairing()).toBeFalsy();

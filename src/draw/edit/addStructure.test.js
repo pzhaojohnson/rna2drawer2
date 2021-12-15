@@ -8,8 +8,8 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 
 describe('addSecondaryBonds function', () => {
   it('adds secondary bonds', () => {
-    let drawing = new Drawing();
-    drawing.addTo(document.body, () => NodeSVG());
+    let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+    drawing.appendTo(document.body);
     let seq = drawing.appendSequence('qwer', 'asdfzxcv');
     addSecondaryBonds(drawing, 'qwer', [7, null, 6, 8, null, 3, 1, 4]);
     let bonds = [];
@@ -23,8 +23,8 @@ describe('addSecondaryBonds function', () => {
 
 describe('addTertiaryBonds function', () => {
   it('adds tertiary bonds', () => {
-    let drawing = new Drawing();
-    drawing.addTo(document.body, () => NodeSVG());
+    let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+    drawing.appendTo(document.body);
     let seq = drawing.appendSequence('asdf', 'qwertyui');
     addTertiaryBonds(drawing, 'asdf', [5, 6, null, 8, 1, 2, null, 4]);
     let bonds = [];
@@ -38,21 +38,21 @@ describe('addTertiaryBonds function', () => {
 
 describe('appendStructure function', () => {
   it('returns false if structure cannot be appended', () => {
-    let drawing = new Drawing();
-    drawing.addTo(document.body, () => NodeSVG());
+    let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+    drawing.appendTo(document.body);
     drawing.appendSequence('asdf', 'asdf');
     expect(appendStructure(drawing, { id: 'asdf', characters: 'qwer' })).toBeFalsy();
   });
 
   it('returns true if structure is appended', () => {
-    let drawing = new Drawing();
-    drawing.addTo(document.body, () => NodeSVG());
+    let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+    drawing.appendTo(document.body);
     expect(appendStructure(drawing, { id: 'asdf', characters: 'asdf' })).toBeTruthy();
   });
 
   it('adds primary, secondary and tertiary bonds', () => {
-    let drawing = new Drawing();
-    drawing.addTo(document.body, () => NodeSVG());
+    let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+    drawing.appendTo(document.body);
     appendStructure(drawing, {
       id: 'asdf',
       characters: 'asdfasdfasdf',

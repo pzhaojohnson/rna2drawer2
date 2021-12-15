@@ -12,8 +12,8 @@ beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 
-  drawing = new Drawing();
-  drawing.addTo(container, () => NodeSVG());
+  drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(container);
 
   seq = appendSequence(drawing, { id: 'asdfQWER', characters: 'asdfASDFQWERqwer' });
 });

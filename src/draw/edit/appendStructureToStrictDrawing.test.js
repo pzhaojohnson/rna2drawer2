@@ -6,8 +6,8 @@ import { radiateStems } from 'Draw/strict/layout/radiateStems';
 import parseDotBracket from '../../parse/parseDotBracket';
 
 it('appends structure to underlying drawing', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
+  let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+  sd.appendTo(document.body);
   let s = { id: 'asdf', characters: 'asdf' };
   let appended = appendStructureToStrictDrawing(sd, s);
   expect(appended).toBeTruthy();
@@ -15,8 +15,8 @@ it('appends structure to underlying drawing', () => {
 });
 
 it('handles failure to append structure to underlying drawing', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
+  let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+  sd.appendTo(document.body);
   sd.appendSequence('asdf', 'asdf');
   let savableState = sd.savableState();
   // ID is already taken
@@ -28,8 +28,8 @@ it('handles failure to append structure to underlying drawing', () => {
 });
 
 it('handles structure of length zero', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
+  let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+  sd.appendTo(document.body);
   // structure of length zero
   let appended = appendStructureToStrictDrawing(sd, { id: 'asdf', characters: '' });
   expect(appended).toBeTruthy(); // was appended
@@ -38,8 +38,8 @@ it('handles structure of length zero', () => {
 describe('appends per base layout props', () => {
   describe('handles preexisting sequences in drawing', () => {
     it('handles per base props list that is too short', () => {
-      let sd = new StrictDrawing();
-      sd.addTo(document.body, () => NodeSVG());
+      let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+      sd.appendTo(document.body);
       sd.appendSequence('asdf', 'asdf');
       sd.setPerBaseLayoutProps([]); // list is now too short
       appendStructureToStrictDrawing(sd, { id: 'qwer', characters: 'qwer' });
@@ -52,8 +52,8 @@ describe('appends per base layout props', () => {
     });
 
     it('handles per base props list that is too long', () => {
-      let sd = new StrictDrawing();
-      sd.addTo(document.body, () => NodeSVG());
+      let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+      sd.appendTo(document.body);
       sd.appendSequence('qwer', 'qwe');
       let perBaseProps = [];
       for (let i = 0; i < 7; i++) {
@@ -79,16 +79,16 @@ describe('appends per base layout props', () => {
 
 describe('radiates structure', () => {
   it('handles missing secondary partners', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => NodeSVG());
+    let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+    sd.appendTo(document.body);
     // no secondary partners
     let appended = appendStructureToStrictDrawing(sd, { id: 'asdf', characters: 'asdf' });
     expect(appended).toBeTruthy(); // was appended
   });
 
   it('handles knots in secondary partners', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => NodeSVG());
+    let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+    sd.appendTo(document.body);
     let partners = [9, 8, 7, 12, 11, 10, 3, 2, 1, 6, 5, 4]; // has a knot
     let appended = appendStructureToStrictDrawing(sd, {
       id: 'asdf',
@@ -99,8 +99,8 @@ describe('radiates structure', () => {
   });
 
   it('sets stretch3 for correct bases', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => NodeSVG());
+    let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+    sd.appendTo(document.body);
     sd.appendSequence('qwer', 'qwer'); // a preexisting sequence
     let dotBracket = '..(((.))).(((.)))................';
     let parsed = parseDotBracket(dotBracket);
@@ -121,8 +121,8 @@ describe('radiates structure', () => {
 });
 
 it('updates layout', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
+  let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+  sd.appendTo(document.body);
   let spy = jest.spyOn(sd, 'updateLayout');
   appendStructureToStrictDrawing(sd, { id: 'asdf', characters: 'asdf' });
   expect(spy).toHaveBeenCalled();

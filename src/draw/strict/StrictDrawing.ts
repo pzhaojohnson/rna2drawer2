@@ -3,7 +3,7 @@ import {
   StrictDrawingSavableState,
 } from './StrictDrawingInterface';
 import { Drawing } from 'Draw/Drawing';
-import * as SVG from '@svgdotjs/svg.js';
+import { Options } from 'Draw/Drawing';
 
 import { Sequence } from 'Draw/sequences/Sequence';
 
@@ -32,8 +32,8 @@ export class StrictDrawing implements StrictDrawingInterface {
   baseWidth: number;
   baseHeight: number;
 
-  constructor() {
-    this._drawing = new Drawing();
+  constructor(options?: Options) {
+    this._drawing = new Drawing(options);
 
     this.generalLayoutProps = new GeneralLayoutProps();
     this._perBaseLayoutProps = [];
@@ -49,8 +49,8 @@ export class StrictDrawing implements StrictDrawingInterface {
     return this.drawing.node;
   }
 
-  addTo(container: Node, SVG: () => SVG.Svg) {
-    this._drawing.addTo(container, SVG);
+  appendTo(container: Node) {
+    container.appendChild(this.node);
   }
 
   layoutSequence(): Sequence {

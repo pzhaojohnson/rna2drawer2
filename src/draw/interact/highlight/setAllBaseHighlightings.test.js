@@ -11,16 +11,16 @@ it('handles missing arguments', () => {
     () => setAllBaseHighlightings(null, [])
   ).not.toThrow();
   expect(
-    () => setAllBaseHighlightings(new Drawing(), undefined)
+    () => setAllBaseHighlightings(new Drawing({ SVG: { SVG: NodeSVG } }), undefined)
   ).not.toThrow();
   expect(
-    () => setAllBaseHighlightings(new Drawing(), null)
+    () => setAllBaseHighlightings(new Drawing({ SVG: { SVG: NodeSVG } }), null)
   ).not.toThrow();
 });
 
 it('can remove highlighting', () => {
-  let drawing = new Drawing();
-  drawing.addTo(document.body, () => NodeSVG());
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(document.body);
   let seq = drawing.appendSequence('asdf', 'asdf');
   let b2 = seq.getBaseAtPosition(2);
   let b4 = seq.getBaseAtPosition(4);
@@ -35,8 +35,8 @@ it('can remove highlighting', () => {
 });
 
 it('can add highlighting with default props', () => {
-  let drawing = new Drawing();
-  drawing.addTo(document.body, () => NodeSVG());
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(document.body);
   let seq = drawing.appendSequence('asdf', 'asdf');
   let b2 = seq.getBaseAtPosition(2);
   setAllBaseHighlightings(
@@ -52,8 +52,8 @@ it('can add highlighting with default props', () => {
 });
 
 it('can add highlighting with specified props', () => {
-  let drawing = new Drawing();
-  drawing.addTo(document.body, () => NodeSVG());
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(document.body);
   let seq = drawing.appendSequence('asdf', 'asdf');
   let b3 = seq.getBaseAtPosition(3);
   let props = {
@@ -76,8 +76,8 @@ it('can add highlighting with specified props', () => {
 });
 
 it('handles highlightings lists of wrong lengths', () => {
-  let drawing = new Drawing();
-  drawing.addTo(document.body, () => NodeSVG());
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(document.body);
   let seq = drawing.appendSequence('asd', 'asd');
   let b1 = seq.getBaseAtPosition(1);
   let b2 = seq.getBaseAtPosition(2);
@@ -99,8 +99,8 @@ it('handles highlightings lists of wrong lengths', () => {
 });
 
 it('handles multiple sequences', () => {
-  let drawing = new Drawing();
-  drawing.addTo(document.body, () => NodeSVG());
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(document.body);
   let seq1 = drawing.appendSequence('asd', 'asd');
   let seq2 = drawing.appendSequence('qwe', 'qwe');
   let b2 = seq1.getBaseAtPosition(2);

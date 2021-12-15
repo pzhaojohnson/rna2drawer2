@@ -4,8 +4,8 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import FoldingMode from './FoldingMode';
 import IntegerRange from './IntegerRange';
 
-let sd = new StrictDrawing();
-sd.addTo(document.body, () => NodeSVG());
+let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+sd.appendTo(document.body);
 let mode = new FoldingMode(sd);
 sd.appendSequence('asdf', 'AAAAUUUUGGGGCCCCUUUU');
 

@@ -10,10 +10,10 @@ import GeneralStrictLayoutProps from 'Draw/strict/layout/GeneralStrictLayoutProp
 import PerBaseStrictLayoutProps from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 import layoutPartnersOfStrictDrawing from 'Draw/edit/layoutPartnersOfStrictDrawing';
 
-let sd = new StrictDrawing();
+let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
 let container = document.createElement('div');
 document.body.appendChild(container);
-sd.addTo(container, () => NodeSVG());
+sd.appendTo(container);
 let dotBracket1 = '(((.[[[.))).]]].';
 let partners1 = parseDotBracket(dotBracket1);
 sd.appendStructure({
@@ -47,17 +47,12 @@ test('node property', () => {
   expect(sd.node).toBe(container.firstChild);
 });
 
-it('addTo method', () => {
-  let sd = new StrictDrawing();
-  let spy = jest.spyOn(sd._drawing, 'addTo');
+test('appendTo method', () => {
   let container = document.createElement('div');
-  document.body.appendChild(container);
-  let svg = () => NodeSVG();
-  sd.addTo(container, svg);
-  let c = spy.mock.calls[0];
-  expect(c[0]).toBe(container);
-  expect(c[1]).toBe(svg);
-  expect(container.childNodes.length).toBe(1); // drawing was added
+  let strictDrawing = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+  expect(container.contains(strictDrawing.node)).toBeFalsy();
+  strictDrawing.appendTo(container);
+  expect(container.lastChild).toBe(strictDrawing.node);
 });
 
 test('layoutSequence method', () => {
@@ -222,8 +217,8 @@ it('savableString method', () => {
 describe('applySavedState method', () => {
   describe('handles failure to apply saved state', () => {
     it('wrong class name', () => {
-      let sd = new StrictDrawing();
-      sd.addTo(document.body, () => NodeSVG());
+      let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+      sd.appendTo(document.body);
       sd.appendSequence('asdf', 'asdf');
       let savableState1 = sd.savableState();
       sd.appendSequence('qwer', 'qwer');
@@ -237,8 +232,8 @@ describe('applySavedState method', () => {
     });
 
     it('handles failure to apply saved state to underlying drawing', () => {
-      let sd = new StrictDrawing();
-      sd.addTo(document.body, () => NodeSVG());
+      let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+      sd.appendTo(document.body);
       let savableState1 = sd.savableState();
       sd.appendSequence('asdf', 'asdf');
       let savableState2 = sd.savableState();
@@ -252,8 +247,8 @@ describe('applySavedState method', () => {
   });
 
   it('can successfully apply saved state', () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => NodeSVG());
+    let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+    sd.appendTo(document.body);
     sd.appendSequence('asdf', 'asdf');
     sd.flatOutermostLoop();
     let perBaseProps = sd.perBaseLayoutProps();
@@ -281,8 +276,8 @@ describe('applySavedState method', () => {
 });
 
 it('isEmpty method', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
+  let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+  sd.appendTo(document.body);
   expect(sd.isEmpty()).toBeTruthy();
   sd.appendSequence('asdf', 'asdf');
   expect(sd.isEmpty()).toBeFalsy();

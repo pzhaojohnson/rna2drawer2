@@ -13,8 +13,8 @@ it('handles missing drawing argument', () => {
 });
 
 it('handles multiple sequences', () => {
-  let drawing = new Drawing();
-  drawing.addTo(document.body, () => NodeSVG());
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(document.body);
   let seq1 = drawing.appendSequence('asdf', 'asdf');
   let seq2 = drawing.appendSequence('qwer', 'qwer');
   let seq3 = drawing.appendSequence('zxcv', 'zxcv');

@@ -16,8 +16,8 @@ beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 
-  drawing = new Drawing();
-  drawing.addTo(container, () => NodeSVG());
+  drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(container);
 
   appendSequence(drawing, { id: 'asdf', characters: 'asdfasdf' });
   base = drawing.sequences[0].bases[0];
@@ -25,7 +25,7 @@ beforeEach(() => {
 
 afterEach(() => {
   base = null;
-  
+
   drawing.clear();
   drawing = null;
 

@@ -22,8 +22,8 @@ beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 
-  strictDrawing = new StrictDrawing();
-  strictDrawing.addTo(container, () => NodeSVG());
+  strictDrawing = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+  strictDrawing.appendTo(container);
 });
 
 afterEach(() => {

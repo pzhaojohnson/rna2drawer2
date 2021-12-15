@@ -2,8 +2,8 @@ import TertiaryBondsInteraction from './TertiaryBondsInteraction';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import Drawing from '../../Drawing';
 
-let drawing = new Drawing();
-drawing.addTo(document.body, () => NodeSVG());
+let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+drawing.appendTo(document.body);
 
 describe('shouldPushUndo event', () => {
   it('can fire with no binding', () => {

@@ -28,6 +28,15 @@ import {
 } from 'Draw/bonds/curved/save';
 import { addSavedTertiaryBonds } from 'Draw/bonds/curved/saved';
 
+export type Options = {
+  // for specifying alternatives to components of the SVG.js library
+  SVG?: {
+    // if specified, is used to generate the SVG document of the drawing
+    // (useful when testing on Node.js, which requires SVG documents be specially compatible)
+    SVG?: () => SVG.Svg;
+  }
+}
+
 export interface BasesByIds {
   [id: string]: Base | undefined;
 }
@@ -41,7 +50,19 @@ export class Drawing implements DrawingInterface {
   secondaryBonds: SecondaryBond[];
   tertiaryBonds: TertiaryBond[];
 
-  constructor() {
+  constructor(options?: Options) {
+    this.svgContainer = document.createElement('div');
+    this.svgContainer.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
+
+    this.svg = options?.SVG?.SVG ? options.SVG.SVG() : SVG.SVG();
+    this.svg.addTo(this.svgContainer);
+
+    // initialize viewbox, width and height
+    let width = 2 * window.screen.width;
+    let height = 2 * window.screen.height;
+    this.svg.viewbox(0, 0, width, height);
+    this.svg.attr({ 'width': width, 'height': height });
+
     this.sequences = [];
     this.primaryBonds = [];
     this.secondaryBonds = [];
@@ -52,17 +73,8 @@ export class Drawing implements DrawingInterface {
     return this.svgContainer;
   }
 
-  addTo(container: Node, SVG: () => SVG.Svg) {
-    this.svgContainer = document.createElement('div');
-    this.svgContainer.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
-    container.appendChild(this.svgContainer);
-    this.svg = SVG().addTo(this.svgContainer);
-
-    // initialize viewbox, width and height
-    let width = 2 * window.screen.width;
-    let height = 2 * window.screen.height;
-    this.svg.viewbox(0, 0, width, height);
-    this.svg.attr({ 'width': width, 'height': height });
+  appendTo(container: Node) {
+    container.appendChild(this.node);
   }
 
   get scrollLeft(): number {

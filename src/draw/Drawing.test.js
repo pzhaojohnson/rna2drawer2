@@ -11,10 +11,10 @@ import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import { savableState as savableTertiaryBondState } from 'Draw/bonds/curved/save';
 import { resize } from 'Draw/dimensions';
 
-let drawing = new Drawing();
+let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
 let container = document.createElement('div');
 document.body.appendChild(container);
-drawing.addTo(container, () => NodeSVG());
+drawing.appendTo(container);
 let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
 let seq2 = drawing.appendSequence('qwer', 'qwerqwerqwer');
 let pb1 = addPrimaryBond(
@@ -52,32 +52,29 @@ test('node property', () => {
   expect(drawing.node).toBe(container.firstChild);
 });
 
-describe('addTo method', () => {
-  let drawing = new Drawing();
+test('appendTo method', () => {
   let container = document.createElement('div');
-  document.body.appendChild(container);
-  drawing.addTo(container, () => NodeSVG());
-
-  it('addTo method added the drawing', () => {
-    expect(container.childNodes.length).toBe(1); // added the drawing
-  });
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  expect(container.contains(drawing.node)).toBeFalsy();
+  drawing.appendTo(container);
+  expect(container.lastChild).toBe(drawing.node);
 });
 
 it('isEmpty method', () => {
-  let drawing = new Drawing();
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
   let container = document.createElement('div');
   document.body.appendChild(container);
-  drawing.addTo(container, () => NodeSVG());
+  drawing.appendTo(container);
   expect(drawing.isEmpty()).toBeTruthy();
   drawing.appendSequence('asdf', 'asdf');
   expect(drawing.isEmpty()).toBeFalsy();
 });
 
 describe('sequence and base attributes', () => {
-  let drawing = new Drawing();
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
   let container = document.createElement('div');
   document.body.appendChild(container);
-  drawing.addTo(container, () => NodeSVG());
+  drawing.appendTo(container);
   let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
   let seq2 = drawing.appendSequence('qwer', 'qwerqwerqwer');
   let seq3 = drawing.appendSequence('zxcv', 'zxcv');
@@ -209,10 +206,10 @@ describe('sequence and base attributes', () => {
 });
 
 describe('appendSequence method', () => {
-  let drawing = new Drawing();
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
   let container = document.createElement('div');
   document.body.appendChild(container);
-  drawing.addTo(container, () => NodeSVG());
+  drawing.appendTo(container);
   let seq1 = drawing.appendSequence('qwer', 'qwerqwer');
 
   it('sequence ID is already taken', () => {
@@ -245,10 +242,10 @@ it('repositionBonds method', () => {
 });
 
 it('clear method removes elements and references', () => {
-  let drawing = new Drawing();
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
   let container = document.createElement('div');
   document.body.appendChild(container);
-  drawing.addTo(container, () => NodeSVG());
+  drawing.appendTo(container);
   let seq1 = drawing.appendSequence('qwer', 'qwerqwer');
   let seq2 = drawing.appendSequence('asdf', 'asdfas');
   let pb1 = addPrimaryBond(drawing, seq1.getBaseAtPosition(1), seq1.getBaseAtPosition(3));
@@ -272,8 +269,8 @@ it('svgString getter', () => {
 });
 
 describe('savableState method', () => {
-  let drawing = new Drawing();
-  drawing.addTo(container, () => NodeSVG());
+  let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing.appendTo(container);
   let seq1 = drawing.appendSequence('asdf', 'asdf');
   let seq2 = drawing.appendSequence('qwer', 'qwerzx');
   let b1 = seq1.getBaseAtPosition(1);
@@ -333,8 +330,8 @@ describe('savableState method', () => {
 
 describe('applySavedState method', () => {
   it('can successfully apply saved state', () => {
-    let drawing = new Drawing();
-    drawing.addTo(container, () => NodeSVG());
+    let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+    drawing.appendTo(container);
     resize(drawing, { width: 150, height: 330 });
     let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
     let seq2 = drawing.appendSequence('qwer', 'qwerzxcvzxcv');
@@ -362,8 +359,8 @@ describe('applySavedState method', () => {
   });
 
   it('handles failure to apply saved state', () => {
-    let drawing = new Drawing();
-    drawing.addTo(container, () => NodeSVG());
+    let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+    drawing.appendTo(container);
     let seq1 = drawing.appendSequence('asdf', 'asdfasdf');
     let seq2 = drawing.appendSequence('qwer', 'qwerqwer');
     let savableState1 = drawing.savableState();

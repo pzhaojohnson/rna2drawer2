@@ -29,7 +29,7 @@ export interface DrawingInterface {
   // (add as a child to a container to add the drawing as a child to the container)
   readonly node: Node;
 
-  addTo(container: Node, SVG: () => SVG.Svg): void;
+  appendTo(container: Node): void;
   scrollLeft: number;
   readonly scrollWidth: number;
   scrollTop: number;

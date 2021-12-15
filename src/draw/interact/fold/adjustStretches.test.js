@@ -4,8 +4,8 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import FoldingMode from './FoldingMode';
 import parseDotBracket from '../../../parse/parseDotBracket';
 
-let sd = new StrictDrawing();
-sd.addTo(document.body, () => NodeSVG());
+let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+sd.appendTo(document.body);
 let mode = new FoldingMode(sd);
 let secondaryPartners = parseDotBracket('...(((....(((...)))..(..)....)))..').secondaryPartners;
 let chars = '';
@@ -40,8 +40,8 @@ describe('evening out stretches of unpaired regions', () => {
   });
 
   it("with size of zero and a 5' bounding position of zero", () => {
-    let sd = new StrictDrawing();
-    sd.addTo(document.body, () => NodeSVG());
+    let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+    sd.appendTo(document.body);
     let mode = new FoldingMode(sd);
     let secondaryPartners = parseDotBracket('(((...)))').secondaryPartners;
     let chars = '';
@@ -56,14 +56,14 @@ describe('evening out stretches of unpaired regions', () => {
 });
 
 describe('removing stretch within stems', () => {
-  let sd = new StrictDrawing();
-  sd.addTo(document.body, () => NodeSVG());
+  let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
+  sd.appendTo(document.body);
   let mode = new FoldingMode(sd);
   let secondaryPartners = parseDotBracket('.(.(((.))).).').secondaryPartners;
   let chars = '';
   secondaryPartners.forEach(() => chars += 'A');
   sd.appendStructure({ id: 'asdf', characters: chars, secondaryPartners: secondaryPartners });
-  
+
   it('for a stem with one base pair', () => {
     let perBaseProps = sd.perBaseLayoutProps();
     perBaseProps[1].stretch3 = 18.5;

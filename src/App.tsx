@@ -41,7 +41,7 @@ export class App implements AppInterface {
     this._disableDragAndDrop();
     this._preventDblclickDefaultWhenNotTyping();
 
-    this._strictDrawing = new StrictDrawing();
+    this._strictDrawing = new StrictDrawing({ SVG: { SVG: SVG } });
     this._initializeDrawing();
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
     this._strictDrawingInteraction = new StrictDrawingInteraction(this);
@@ -90,7 +90,7 @@ export class App implements AppInterface {
   }
 
   _initializeDrawing() {
-    this._strictDrawing.addTo(this._drawingContainer, () => this.SVG());
+    this._strictDrawing.appendTo(this._drawingContainer);
   }
 
   get strictDrawing(): StrictDrawing {
