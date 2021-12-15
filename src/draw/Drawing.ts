@@ -2,7 +2,7 @@ import {
   DrawingInterface,
   DrawingSavableState,
 } from './DrawingInterface';
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 import { centerView } from 'Draw/view';
 import { resize } from 'Draw/dimensions';
 import { Sequence } from 'Draw/sequences/Sequence';
@@ -34,7 +34,7 @@ export interface BasesByIds {
 
 export class Drawing implements DrawingInterface {
   _div!: HTMLElement;
-  svg!: Svg.Svg;
+  svg!: SVG.Svg;
 
   sequences: Sequence[];
   primaryBonds: PrimaryBond[];
@@ -52,7 +52,7 @@ export class Drawing implements DrawingInterface {
     return this._div;
   }
 
-  addTo(container: Node, SVG: () => Svg.Svg) {
+  addTo(container: Node, SVG: () => SVG.Svg) {
     this._div = document.createElement('div');
     this._div.style.cssText = 'width: 100%; height: 100%; overflow: auto;';
     container.appendChild(this._div);
@@ -309,7 +309,7 @@ export class Drawing implements DrawingInterface {
   _applySavedSvg(savedState: DrawingSavableState): (void | never) {
     this.svg.clear();
     this.svg.svg(savedState.svg);
-    let nested = this.svg.first() as Svg.Svg;
+    let nested = this.svg.first() as SVG.Svg;
     let vb = nested.viewbox();
     let w = vb.width;
     let h = vb.height;

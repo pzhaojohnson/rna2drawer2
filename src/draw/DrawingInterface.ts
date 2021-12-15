@@ -1,4 +1,4 @@
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { SavableState as SavableSequenceState } from 'Draw/sequences/save';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
@@ -22,9 +22,9 @@ export interface DrawingSavableState {
 }
 
 export interface DrawingInterface {
-  readonly svg: Svg.Svg;
+  readonly svg: SVG.Svg;
   readonly node: Node;
-  addTo(container: Node, SVG: () => Svg.Svg): void;
+  addTo(container: Node, SVG: () => SVG.Svg): void;
   scrollLeft: number;
   readonly scrollWidth: number;
   scrollTop: number;
