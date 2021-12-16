@@ -82,6 +82,12 @@ export function removeBases(drawing: Drawing, bs: Base[]) {
   removeBondsWith(drawing, bs);
   _removeBases(drawing, bs);
   addMissingPrimaryBonds(drawing);
-  drawing.sequences.forEach(seq => updateBaseNumberings(seq));
+  drawing.sequences.forEach(seq => {
+    updateBaseNumberings(seq, {
+      offset: seq.numberingOffset,
+      increment: seq.numberingIncrement,
+      anchor: seq.numberingAnchor,
+    });
+  });
   orientBaseNumberings(drawing);
 }

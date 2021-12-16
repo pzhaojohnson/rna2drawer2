@@ -38,12 +38,9 @@ describe('updateBaseNumberings function', () => {
   it('updates base numberings', () => {
     drawing.appendSequence('asdf', 'ASDFasdfQWERzxcvZ');
     let seq = drawing.sequences[0];
-    seq.numberingOffset = 28;
-    seq.numberingAnchor = -3;
-    seq.numberingIncrement = 6;
     addNumbering(seq.bases[14], 101); // must remove
     addNumbering(seq.bases[8], 37); // may maintain
-    updateBaseNumberings(seq);
+    updateBaseNumberings(seq, { offset: 28, increment: 6, anchor: -3 });
     expect(baseNumbers(seq)).toEqual(
       [null, null, 31, null, null, null, null, null, 37, null, null, null, null, null, 43, null, null]
     );
@@ -54,9 +51,6 @@ describe('updateBaseNumberings function', () => {
     // depending on how the bases of the sequence are iterated over
     drawing.appendSequence('qwer', 'qwerQWERasdfASDF');
     let seq = drawing.sequences[0];
-    seq.numberingOffset = 0;
-    seq.numberingAnchor = 0;
-    seq.numberingIncrement = -5;
-    updateBaseNumberings(seq); // doesn't infinite loop
+    updateBaseNumberings(seq, { offset: 0, increment: -5, anchor: 0 }); // doesn't infinite loop
   });
 });

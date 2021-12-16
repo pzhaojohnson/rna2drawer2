@@ -41,7 +41,11 @@ export class Sequence implements SequenceInterface {
   set numberingOffset(no: number) {
     if (Number.isFinite(no)) {
       this._numberingOffset = Math.floor(no);
-      updateBaseNumberings(this);
+      updateBaseNumberings(this, {
+        offset: this.numberingOffset,
+        increment: this.numberingIncrement,
+        anchor: this.numberingAnchor,
+      });
     }
   }
 
@@ -52,7 +56,11 @@ export class Sequence implements SequenceInterface {
   set numberingAnchor(na: number) {
     if (Number.isFinite(na)) {
       this._numberingAnchor = Math.floor(na);
-      updateBaseNumberings(this);
+      updateBaseNumberings(this, {
+        offset: this.numberingOffset,
+        increment: this.numberingIncrement,
+        anchor: this.numberingAnchor,
+      });
       Sequence.recommendedDefaults.numberingAnchor = na;
     }
   }
@@ -64,7 +72,11 @@ export class Sequence implements SequenceInterface {
   set numberingIncrement(ni: number) {
     if (Number.isFinite(ni) && ni >= 1) {
       this._numberingIncrement = Math.floor(ni);
-      updateBaseNumberings(this);
+      updateBaseNumberings(this, {
+        offset: this.numberingOffset,
+        increment: this.numberingIncrement,
+        anchor: this.numberingAnchor,
+      });
       Sequence.recommendedDefaults.numberingIncrement = ni;
     }
   }

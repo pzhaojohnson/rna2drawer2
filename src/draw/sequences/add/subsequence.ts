@@ -69,6 +69,10 @@ export function insertSubsequence(drawing: Drawing, props: SubsequenceProps) {
   breakStrand(drawing, props);
   insertBases(drawing, props);
   repairStrand(drawing, props);
-  updateBaseNumberings(props.parent);
+  updateBaseNumberings(props.parent, {
+    offset: props.parent.numberingOffset,
+    increment: props.parent.numberingIncrement,
+    anchor: props.parent.numberingAnchor,
+  });
   orientBaseNumberings(drawing);
 }
