@@ -9,12 +9,6 @@ it('renders', () => {
   new App(() => NodeSVG());
 });
 
-it('SVG getter', () => {
-  let svg = jest.fn(() => NodeSVG());
-  let app = new App(svg);
-  expect(app.SVG).toBe(svg);
-});
-
 it('initializes drawing and adds it to its container', () => {
   let app = new App(() => NodeSVG());
   expect(

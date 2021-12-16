@@ -17,8 +17,6 @@ import { Infobar } from './infobar/Infobar';
 import { HomePage } from './forms/home/HomePage';
 
 export class App implements AppInterface {
-  _SVG: () => SVG.Svg;
-
   _menuContainer: HTMLDivElement;
   _drawingContainer: HTMLDivElement;
   _formContainer: HTMLDivElement;
@@ -31,8 +29,6 @@ export class App implements AppInterface {
   _drawingTitle?: string;
 
   constructor(SVG: () => SVG.Svg) {
-    this._SVG = SVG;
-
     this._menuContainer = document.createElement('div');
     this._drawingContainer = document.createElement('div');
     this._formContainer = document.createElement('div');
@@ -53,10 +49,6 @@ export class App implements AppInterface {
     this.renderForm(close => (
       <HomePage app={this} />
     ));
-  }
-
-  get SVG(): () => SVG.Svg {
-    return this._SVG;
   }
 
   _appendContainers() {
