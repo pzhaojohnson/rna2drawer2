@@ -8,7 +8,7 @@ export type SequenceNumbering = {
   anchor: number;
 }
 
-// does not orient base numbering line angles
+// does not reorient base numberings after updating them
 export function updateBaseNumberings(seq: Sequence, sn: SequenceNumbering) {
   seq.bases.forEach((b, i) => {
     let p = i + 1;
