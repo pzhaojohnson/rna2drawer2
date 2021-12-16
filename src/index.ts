@@ -1,4 +1,4 @@
-import App from './App';
-const { SVG } = require('@svgdotjs/svg.js');
+import { App } from 'App';
+import * as SVG from '@svgdotjs/svg.js';
 
-new App(() => SVG());
+new App(() => SVG.SVG());
