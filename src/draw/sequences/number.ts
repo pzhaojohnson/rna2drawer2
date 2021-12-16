@@ -1,5 +1,6 @@
 import { SequenceInterface as Sequence } from './SequenceInterface';
-import { addNumbering, removeNumbering } from 'Draw/bases/number/add';
+import { addNumbering } from 'Draw/bases/number/add';
+import { removeNumbering } from 'Draw/bases/number/add';
 
 export type SequenceNumbering = {
   offset: number;
