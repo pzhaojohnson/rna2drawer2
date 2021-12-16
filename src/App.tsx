@@ -8,7 +8,7 @@ import { pushUndo, undo, redo } from './undo/undo';
 
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawingInterface';
-import * as Svg from '@svgdotjs/svg.js';
+import * as SVG from '@svgdotjs/svg.js';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 
 import { Menu } from './menu/Menu';
@@ -17,7 +17,7 @@ import { Infobar } from './infobar/Infobar';
 import { HomePage } from './forms/home/HomePage';
 
 export class App implements AppInterface {
-  _SVG: () => Svg.Svg;
+  _SVG: () => SVG.Svg;
 
   _menuContainer: HTMLDivElement;
   _drawingContainer: HTMLDivElement;
@@ -30,7 +30,7 @@ export class App implements AppInterface {
   _formFactory?: FormFactory;
   _drawingTitle?: string;
 
-  constructor(SVG: () => Svg.Svg) {
+  constructor(SVG: () => SVG.Svg) {
     this._SVG = SVG;
 
     this._menuContainer = document.createElement('div');
@@ -55,7 +55,7 @@ export class App implements AppInterface {
     ));
   }
 
-  get SVG(): () => Svg.Svg {
+  get SVG(): () => SVG.Svg {
     return this._SVG;
   }
 
