@@ -1,6 +1,6 @@
 import { SequenceInterface } from './SequenceInterface';
 import { Base } from 'Draw/bases/Base';
-import { updateBaseNumberings } from './number';
+import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 
 export type Defaults = {
   numberingAnchor: number;

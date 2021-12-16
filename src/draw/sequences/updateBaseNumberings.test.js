@@ -1,4 +1,4 @@
-import { updateBaseNumberings } from './number';
+import { updateBaseNumberings } from './updateBaseNumberings';
 import Drawing from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addNumbering } from 'Draw/bases/number/add';

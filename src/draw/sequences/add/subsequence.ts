@@ -5,7 +5,7 @@ import { setValues as setBaseValues } from 'Draw/bases/values';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { removePrimaryBondById } from 'Draw/bonds/straight/remove';
 import { atPosition } from 'Array/at';
-import { updateBaseNumberings } from 'Draw/sequences/number';
+import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 export type SubsequenceProps = {

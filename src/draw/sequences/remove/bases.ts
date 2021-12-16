@@ -7,7 +7,7 @@ import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import { removeCircleOutline, removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 import { removeNumbering } from 'Draw/bases/number/add';
 import { atPosition } from 'Array/at';
-import { updateBaseNumberings } from 'Draw/sequences/number';
+import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 // removes all bonds with the bases
