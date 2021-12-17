@@ -62,7 +62,7 @@ export class App implements AppInterface {
   }
 
   _appendContainers() {
-    this.node.style.cssText = 'height: 100vh; display: flex; flex-direction: column;';
+    this.node.style.cssText = 'width: 100vw; height: 100vh; display: flex; flex-direction: column;';
     document.body.appendChild(this.node);
     this.node.appendChild(this._menuContainer);
     let div2 = document.createElement('div');
