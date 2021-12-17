@@ -222,46 +222,32 @@ describe('unspecifiedDrawingTitle method', () => {
 });
 
 describe('drawingTitle property and unspecifyDrawingTitle method', () => {
-  it('when drawing is empty', () => {
+  test('when the drawing is empty', () => {
     let app = new App({ SVG: { SVG: NodeSVG } });
     expect(app.strictDrawing.isEmpty()).toBeTruthy();
-    expect(app.drawingTitle).toBeFalsy(); // has not been set
-    app.drawingTitle = 'A Truthy Title';
-    expect(app.drawingTitle).toBe('A Truthy Title'); // can be set
+    expect(app.drawingTitle).toBe('');
+    app.drawingTitle = 'ASDF asdf'; // specify
+    expect(app.drawingTitle).toBe('ASDF asdf');
+    expect(document.title).toBe('ASDF asdf'); // updated the document title
     app.unspecifyDrawingTitle();
-    expect(app.drawingTitle).toBeFalsy(); // can be unspecified
+    expect(app.drawingTitle).toBe(''); // was unspecified
+    expect(document.title).not.toBe('ASDF asdf'); // updated the document title
   });
 
-  it('when drawing is not empty', () => {
+  test('when the drawing is not empty', () => {
     let app = new App({ SVG: { SVG: NodeSVG } });
-    app.strictDrawing.appendSequence('asdf', 'asdfasdf');
-    app.strictDrawing.appendSequence('qwer', 'qwerqwer');
-    app.strictDrawing.appendSequence('zxcv', 'zxcvzxcv');
-    expect(app.drawingTitle).toBe('asdf, qwer, zxcv'); // has not been set
-    app.drawingTitle = 'Not the sequence IDs';
-    expect(app.drawingTitle).toBe('Not the sequence IDs'); // can be set
+    appendSequence(app.strictDrawing.drawing, { id: 'asDF', characters: 'asdfasdf' });
+    appendSequence(app.strictDrawing.drawing, { id: 'qw er', characters: 'qwerqwer' });
+    appendSequence(app.strictDrawing.drawing, { id: 'Z', characters: 'zxcvzxcv' });
+    expect(app.strictDrawing.drawing.sequences.length).toBe(3);
+    expect(app.unspecifiedDrawingTitle()).toBe('asDF, qw er, Z');
+    expect(app.drawingTitle).toBe('asDF, qw er, Z'); // returns the unspecified title
+    app.drawingTitle = 'Another Title';
+    expect(app.drawingTitle).toBe('Another Title'); // was specified
+    expect(document.title).toBe('Another Title'); // updated the document title
     app.unspecifyDrawingTitle();
-    expect(app.drawingTitle).toBe('asdf, qwer, zxcv'); // can be unspecified
-  });
-
-  it('updates peripherals', () => {
-    let app = new App({ SVG: { SVG: NodeSVG } });
-    app.renderForm(() => <p>{app.drawingTitle}</p>);
-    app.drawingTitle = 'asdf QWER';
-    expect(document.title).toBe('asdf QWER');
-    expect(app._formContainer.textContent).toMatch(/asdf QWER/);
-    app.unspecifyDrawingTitle();
-    expect(app.drawingTitle).toBe(''); // drawing has no title
-    expect(document.title).toBe('RNA2Drawer');
-    expect(app._formContainer.textContent).toBe('');
-    app.strictDrawing.appendSequence('qwer', 'qwerqwer');
-    app.strictDrawing.appendSequence('asdf', 'asdfasdf');
-    app.drawingTitle = 'zz GB NM';
-    expect(document.title).toBe('zz GB NM');
-    expect(app._formContainer.textContent).toMatch(/zz GB NM/);
-    app.unspecifyDrawingTitle();
-    expect(document.title).toBe('qwer, asdf');
-    expect(app._formContainer.textContent).toMatch(/qwer, asdf/);
+    expect(app.drawingTitle).toBe('asDF, qw er, Z'); // was unspecified
+    expect(document.title).toBe('asDF, qw er, Z'); // updated the document title
   });
 });
 
