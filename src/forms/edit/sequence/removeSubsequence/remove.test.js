@@ -4,7 +4,7 @@ import { cannotRemove, remove } from './remove';
 import { parseDotBracket } from '../../../../parse/parseDotBracket';
 import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
-let app = new App(() => NodeSVG());
+let app = new App({ SVG: { SVG: NodeSVG } });
 
 beforeEach(() => {
   app.strictDrawing.drawing.clear();
@@ -48,7 +48,7 @@ describe('cannotRemove function', () => {
 
 describe('remove function', () => {
   it('does nothing when cannot remove', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     app.strictDrawing.appendSequence('asdf', 'asdfasdf');
     let r = { start: 5, end: 10 };
     expect(cannotRemove(app.strictDrawing, r)).toBeTruthy(); // end is out of range
@@ -59,7 +59,7 @@ describe('remove function', () => {
   });
 
   describe('when can remove', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     let strictDrawing = app.strictDrawing;
     let drawing = strictDrawing.drawing;
     let characters =    'abcdefghijklmnopqrstuvwxyzABCDEF';

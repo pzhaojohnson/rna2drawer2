@@ -6,11 +6,11 @@ import { Menu } from './menu/Menu';
 import { Infobar } from './infobar/Infobar';
 
 it('renders', () => {
-  new App(() => NodeSVG());
+  new App({ SVG: { SVG: NodeSVG } });
 });
 
 it('initializes drawing and adds it to its container', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   expect(
     () => app.strictDrawing.appendSequence('asdf', 'asdf')
   ).not.toThrow(); // will throw if SVG callback not passed
@@ -20,7 +20,7 @@ it('initializes drawing and adds it to its container', () => {
 });
 
 it('initializes drawing interaction and binds it', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   let interaction = app.strictDrawingInteraction;
   expect(interaction).toBeTruthy();
   expect(interaction.strictDrawing).toBe(app.strictDrawing); // passes drawing
@@ -34,7 +34,7 @@ it('initializes drawing interaction and binds it', () => {
 
 describe('renderPeripherals method', () => {
   it('when there is a form', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     let formFactory = () => <div></div>;
     app.renderForm(formFactory);
     app.renderMenu = jest.fn();
@@ -50,7 +50,7 @@ describe('renderPeripherals method', () => {
   });
 
   it('when there is no form', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     app.unmountForm();
     app.renderMenu = jest.fn();
     app.renderInfobar = jest.fn();
@@ -67,7 +67,7 @@ describe('renderPeripherals method', () => {
 it('renderForm method', () => {
   let textContent = 'Form was rendered.';
   let formFactory = () => <div>{textContent}</div>;
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   app.renderForm(formFactory);
   expect(app._formContainer.textContent).toBe(textContent);
   expect(app._formFactory).toBe(formFactory);
@@ -76,7 +76,7 @@ it('renderForm method', () => {
 it('unmountForm method', () => {
   let textContent = 'Form is still rendered.';
   let formFactory = () => <div>{textContent}</div>;
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   app.renderForm(formFactory);
   expect(app._formContainer.textContent).toBe(textContent);
   expect(app._formFactory).toBe(formFactory);
@@ -86,7 +86,7 @@ it('unmountForm method', () => {
 });
 
 it('pushUndo method', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   app.strictDrawing.appendSequence('asdf', 'asdf');
   let savableState = app.strictDrawing.savableState();
   app.renderPeripherals = jest.fn();
@@ -98,7 +98,7 @@ it('pushUndo method', () => {
 });
 
 it('canUndo method', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   expect(app.canUndo()).toBeFalsy();
   app.pushUndo();
   expect(app.canUndo()).toBeTruthy();
@@ -106,7 +106,7 @@ it('canUndo method', () => {
 
 describe('undo method', () => {
   it('when can undo', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     app.strictDrawing.appendSequence('asdf', 'asdf');
     app.pushUndo();
 
@@ -122,7 +122,7 @@ describe('undo method', () => {
   });
 
   it('when cannot undo', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     app._undoRedo.undo = jest.fn();
     app.strictDrawing.applySavedState = jest.fn();
     app.refresh = jest.fn();
@@ -135,7 +135,7 @@ describe('undo method', () => {
 });
 
 it('canRedo method', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   expect(app.canRedo()).toBeFalsy();
   app.pushUndo();
   app.undo();
@@ -144,7 +144,7 @@ it('canRedo method', () => {
 
 describe('redo method', () => {
   it('when can redo', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     app.strictDrawing.appendSequence('asdf', 'asdf');
     app.pushUndo();
     app.strictDrawing.appendSequence('qwer', 'qwer');
@@ -162,7 +162,7 @@ describe('redo method', () => {
   });
 
   it('when cannot redo', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     app._undoRedo.redo = jest.fn();
     app.strictDrawing.applySavedState = jest.fn();
     app.refresh = jest.fn();
@@ -175,7 +175,7 @@ describe('redo method', () => {
 });
 
 it('refresh method', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   let spies = [
     jest.spyOn(app.strictDrawingInteraction, 'refresh'),
     jest.spyOn(app, 'renderPeripherals'),
@@ -186,7 +186,7 @@ it('refresh method', () => {
 
 describe('drawingTitle property and unspecifyDrawingTitle method', () => {
   it('when drawing is empty', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     expect(app.strictDrawing.isEmpty()).toBeTruthy();
     expect(app.drawingTitle).toBeFalsy(); // has not been set
     app.drawingTitle = 'A Truthy Title';
@@ -196,7 +196,7 @@ describe('drawingTitle property and unspecifyDrawingTitle method', () => {
   });
 
   it('when drawing is not empty', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     app.strictDrawing.appendSequence('asdf', 'asdfasdf');
     app.strictDrawing.appendSequence('qwer', 'qwerqwer');
     app.strictDrawing.appendSequence('zxcv', 'zxcvzxcv');
@@ -208,7 +208,7 @@ describe('drawingTitle property and unspecifyDrawingTitle method', () => {
   });
 
   it('updates peripherals', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     app.renderForm(() => <p>{app.drawingTitle}</p>);
     app.drawingTitle = 'asdf QWER';
     expect(document.title).toBe('asdf QWER');
@@ -229,7 +229,7 @@ describe('drawingTitle property and unspecifyDrawingTitle method', () => {
 });
 
 it('updateDocumentTitle method', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   // make sure title is not already RNA2Drawer
   document.title = 'asdf';
   expect(app.drawingTitle).toBeFalsy(); // drawing has no title

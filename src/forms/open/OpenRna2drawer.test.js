@@ -7,7 +7,7 @@ import { OpenRna2drawer } from './OpenRna2drawer';
 let app = null;
 
 beforeEach(() => {
-  app = new App(() => NodeSVG());
+  app = new App({ SVG: { SVG: NodeSVG } });
 });
 
 it('renders', () => {

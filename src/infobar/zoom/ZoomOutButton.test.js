@@ -13,7 +13,7 @@ let app = null;
 let container = null;
 
 beforeEach(() => {
-  app = new App(() => NodeSVG());
+  app = new App({ SVG: { SVG: NodeSVG } });
 
   container = document.createElement('div');
   document.body.appendChild(container);

@@ -4,7 +4,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { setZoom } from 'Draw/zoom';
 import { resize } from 'Draw/dimensions';
 
-let app = new App(() => NodeSVG());
+let app = new App({ SVG: { SVG: NodeSVG } });
 app.strictDrawing.appendSequence('asdf', 'asdfasdf');
 
 describe('normalizedMagnitudeOfMovement function', () => {

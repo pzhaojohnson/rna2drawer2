@@ -4,6 +4,6 @@ import * as React from 'react';
 import { CreateNewDrawing } from './CreateNewDrawing';
 
 it('renders', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   app.renderForm(close => <CreateNewDrawing app={app} close={close} />);
 });

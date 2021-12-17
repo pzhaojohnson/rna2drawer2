@@ -22,7 +22,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 let app = null;
 
 beforeEach(() => {
-  app = new App(() => NodeSVG());
+  app = new App({ SVG: { SVG: NodeSVG } });
 });
 
 describe('opening a .rna2drawer file', () => {

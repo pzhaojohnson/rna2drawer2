@@ -8,7 +8,7 @@ let app = null;
 let rna2drawer1 = null;
 
 beforeEach(() => {
-  app = new App(() => NodeSVG());
+  app = new App({ SVG: { SVG: NodeSVG } });
 
   let characters = 'AAACCCUUU';
   let tertiaryPartners = [];

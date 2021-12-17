@@ -4,6 +4,6 @@ import React from 'react';
 import { HomePage } from './HomePage';
 
 it('renders', () => {
-  let app = new App(() => NodeSVG());
+  let app = new App({ SVG: { SVG: NodeSVG } });
   app.renderForm(() => <HomePage app={app} />);
 });

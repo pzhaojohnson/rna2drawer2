@@ -16,6 +16,15 @@ import { Infobar } from './infobar/Infobar';
 
 import { HomePage } from './forms/home/HomePage';
 
+export type Options = {
+  // for specifying alternatives to components of the SVG.js library
+  SVG?: {
+    // will be used to generate the SVG document of the drawing if specified
+    // (useful for testing on Node.js, which requires SVG documents be specially compatible)
+    SVG?: () => SVG.Svg;
+  }
+}
+
 export class App implements AppInterface {
   _menuContainer: HTMLDivElement;
   _drawingContainer: HTMLDivElement;
@@ -28,7 +37,7 @@ export class App implements AppInterface {
   _formFactory?: FormFactory;
   _drawingTitle?: string;
 
-  constructor(SVG: () => SVG.Svg) {
+  constructor(options?: Options) {
     this._menuContainer = document.createElement('div');
     this._drawingContainer = document.createElement('div');
     this._formContainer = document.createElement('div');
@@ -37,7 +46,7 @@ export class App implements AppInterface {
     this._disableDragAndDrop();
     this._preventDblclickDefaultWhenNotTyping();
 
-    this._strictDrawing = new StrictDrawing({ SVG: { SVG: SVG } });
+    this._strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
     this._initializeDrawing();
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
     this._strictDrawingInteraction = new StrictDrawingInteraction(this);

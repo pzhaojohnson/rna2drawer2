@@ -4,7 +4,7 @@ import { parseSubsequence, cannotInsert, insert } from './insert';
 import { parseDotBracket } from '../../../../parse/parseDotBracket';
 import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
-let app = new App(() => NodeSVG());
+let app = new App({ SVG: { SVG: NodeSVG } });
 
 let inputs = null;
 
@@ -101,7 +101,7 @@ describe('insert function', () => {
   });
 
   describe('when can insert', () => {
-    let app = new App(() => NodeSVG());
+    let app = new App({ SVG: { SVG: NodeSVG } });
     let strictDrawing = app.strictDrawing;
     let drawing = strictDrawing.drawing;
     let characters =    'abcdefghijklmnopqrstuvwx';
