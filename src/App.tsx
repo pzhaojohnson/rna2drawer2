@@ -159,6 +159,11 @@ export class App implements AppInterface {
     ReactDOM.unmountComponentAtNode(this._formContainer);
   }
 
+  unspecifiedDrawingTitle(): string {
+    let seqs = this.strictDrawing.drawing.sequences;
+    return seqs.map(seq => seq.id).join(', ');
+  }
+
   get drawingTitle(): string {
     if (this._specifiedDrawingTitle) {
       return this._specifiedDrawingTitle;
@@ -170,11 +175,6 @@ export class App implements AppInterface {
   set drawingTitle(title: string) {
     this._specifiedDrawingTitle = title;
     this.refresh();
-  }
-
-  unspecifiedDrawingTitle(): string {
-    let seqs = this.strictDrawing.drawing.sequences;
-    return seqs.map(seq => seq.id).join(', ');
   }
 
   unspecifyDrawingTitle() {

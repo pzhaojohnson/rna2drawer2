@@ -27,8 +27,8 @@ export interface AppInterface {
   renderForm(formFactory: FormFactory): void;
   unmountForm(): void;
 
-  drawingTitle: string;
   unspecifiedDrawingTitle(): string; // all sequence IDs joined by commas
+  drawingTitle: string;
   unspecifyDrawingTitle(): void;
 
   updateDocumentTitle(): void;
