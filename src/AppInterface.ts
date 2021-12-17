@@ -11,6 +11,12 @@ export interface FormFactory {
 }
 
 export interface AppInterface {
+
+  // the underlying DOM node of the app
+  // (can be added to and removed from containers
+  // to add and remove the app from containers)
+  readonly node: Node;
+
   readonly strictDrawing: StrictDrawing;
   readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawingInteraction: StrictDrawingInteraction;

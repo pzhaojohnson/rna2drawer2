@@ -26,6 +26,7 @@ export type Options = {
 }
 
 export class App implements AppInterface {
+  readonly node: HTMLDivElement;
   _menuContainer: HTMLDivElement;
   _drawingContainer: HTMLDivElement;
   _formContainer: HTMLDivElement;
@@ -38,6 +39,7 @@ export class App implements AppInterface {
   _drawingTitle?: string;
 
   constructor(options?: Options) {
+    this.node = document.createElement('div');
     this._menuContainer = document.createElement('div');
     this._drawingContainer = document.createElement('div');
     this._formContainer = document.createElement('div');
@@ -60,17 +62,16 @@ export class App implements AppInterface {
   }
 
   _appendContainers() {
-    let div1 = document.createElement('div');
-    div1.style.cssText = 'height: 100vh; display: flex; flex-direction: column;';
-    document.body.appendChild(div1);
-    div1.appendChild(this._menuContainer);
+    this.node.style.cssText = 'height: 100vh; display: flex; flex-direction: column;';
+    document.body.appendChild(this.node);
+    this.node.appendChild(this._menuContainer);
     let div2 = document.createElement('div');
     div2.style.cssText = 'min-height: 0px; flex-grow: 1; display: flex; flex-direction: row;';
-    div1.appendChild(div2);
+    this.node.appendChild(div2);
     this._drawingContainer.style.cssText = 'flex-grow: 1; overflow: auto;';
     div2.appendChild(this._drawingContainer);
     div2.appendChild(this._formContainer);
-    div1.appendChild(this._infobarContainer);
+    this.node.appendChild(this._infobarContainer);
   }
 
   _disableDragAndDrop() {

@@ -9,6 +9,12 @@ it('renders', () => {
   new App({ SVG: { SVG: NodeSVG } });
 });
 
+test('node property', () => {
+  let app = new App({ SVG: { SVG: NodeSVG } });
+  // should contain everything
+  expect(app.node.contains(app.strictDrawing.node)).toBeTruthy();
+});
+
 it('initializes drawing and adds it to its container', () => {
   let app = new App({ SVG: { SVG: NodeSVG } });
   expect(
