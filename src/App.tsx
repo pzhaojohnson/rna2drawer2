@@ -163,14 +163,18 @@ export class App implements AppInterface {
     if (this.specifiedDrawingTitle) {
       return this.specifiedDrawingTitle;
     } else {
-      let ids = this.strictDrawing.drawing.sequenceIds();
-      return ids.join(', ');
+      return this.unspecifiedDrawingTitle();
     }
   }
 
   set drawingTitle(title: string) {
     this.specifiedDrawingTitle = title;
     this.refresh();
+  }
+
+  unspecifiedDrawingTitle(): string {
+    let seqs = this.strictDrawing.drawing.sequences;
+    return seqs.map(seq => seq.id).join(', ');
   }
 
   unspecifyDrawingTitle() {

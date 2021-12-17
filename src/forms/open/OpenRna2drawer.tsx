@@ -15,8 +15,7 @@ import { delayPivotingIfShould } from 'Draw/interact/pivot/delayPivoting';
 function updateDrawingTitle(app: App, fileName: string) {
   let titleFromFileName = removeFileExtension(fileName).trim();
   app.unspecifyDrawingTitle();
-  let autoUpdatingTitle = app.drawingTitle;
-  if (titleFromFileName != autoUpdatingTitle) {
+  if (titleFromFileName != app.unspecifiedDrawingTitle()) {
     // only specify if necessary since a specified title doesn't update
     // automatically as the drawing changes
     app.drawingTitle = titleFromFileName;

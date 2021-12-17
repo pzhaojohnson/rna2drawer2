@@ -29,6 +29,7 @@ export interface AppInterface {
 
   drawingTitle: string;
   specifiedDrawingTitle?: string;
+  unspecifiedDrawingTitle(): string; // all sequence IDs joined by commas
   unspecifyDrawingTitle(): void;
 
   updateDocumentTitle(): void;

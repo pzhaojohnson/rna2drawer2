@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Menu } from './menu/Menu';
 import { Infobar } from './infobar/Infobar';
+import { appendSequence } from 'Draw/sequences/add/sequence';
 
 it('renders', () => {
   new App({ SVG: { SVG: NodeSVG } });
@@ -185,6 +186,39 @@ it('refresh method', () => {
   ];
   app.refresh();
   spies.forEach(s => expect(s).toHaveBeenCalled());
+});
+
+describe('unspecifiedDrawingTitle method', () => {
+  test('when the drawing is empty', () => {
+    let app = new App({ SVG: { SVG: NodeSVG } });
+    expect(app.strictDrawing.isEmpty()).toBeTruthy();
+    expect(app.unspecifiedDrawingTitle()).toBe('');
+  });
+
+  describe('when the drawing is not empty', () => {
+    test('when there is one sequence', () => {
+      let app = new App({ SVG: { SVG: NodeSVG } });
+      appendSequence(app.strictDrawing.drawing, { id: 'ASDFasdf', characters: 'asDFFDsa' });
+      expect(app.strictDrawing.drawing.sequences.length).toBe(1);
+      expect(app.unspecifiedDrawingTitle()).toBe('ASDFasdf');
+    });
+
+    test('when there are multiple sequences', () => {
+      let app = new App({ SVG: { SVG: NodeSVG } });
+      appendSequence(app.strictDrawing.drawing, { id: 'QWER', characters: 'qwerqwer' });
+      appendSequence(app.strictDrawing.drawing, { id: 'A', characters: 'B' });
+      appendSequence(app.strictDrawing.drawing, { id: 'z x C V', characters: 'zxcv ZXCV' });
+      expect(app.strictDrawing.drawing.sequences.length).toBe(3);
+      expect(app.unspecifiedDrawingTitle()).toBe('QWER, A, z x C V');
+    });
+
+    test('when a sequence has an empty ID', () => {
+      let app = new App({ SVG: { SVG: NodeSVG } });
+      appendSequence(app.strictDrawing.drawing, { id: '', characters: 'asdf' });
+      expect(app.strictDrawing.drawing.sequences.length).toBe(1);
+      expect(app.unspecifiedDrawingTitle()).toBe('');
+    });
+  });
 });
 
 describe('drawingTitle property and unspecifyDrawingTitle method', () => {
