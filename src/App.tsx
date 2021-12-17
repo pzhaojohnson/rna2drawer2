@@ -37,7 +37,7 @@ export class App implements AppInterface {
   _strictDrawingInteraction: StrictDrawingInteraction;
   _formFactory?: FormFactory;
 
-  specifiedDrawingTitle?: string;
+  _specifiedDrawingTitle?: string;
 
   constructor(options?: Options) {
     this.node = document.createElement('div');
@@ -160,15 +160,15 @@ export class App implements AppInterface {
   }
 
   get drawingTitle(): string {
-    if (this.specifiedDrawingTitle) {
-      return this.specifiedDrawingTitle;
+    if (this._specifiedDrawingTitle) {
+      return this._specifiedDrawingTitle;
     } else {
       return this.unspecifiedDrawingTitle();
     }
   }
 
   set drawingTitle(title: string) {
-    this.specifiedDrawingTitle = title;
+    this._specifiedDrawingTitle = title;
     this.refresh();
   }
 
@@ -178,7 +178,7 @@ export class App implements AppInterface {
   }
 
   unspecifyDrawingTitle() {
-    this.specifiedDrawingTitle = undefined;
+    this._specifiedDrawingTitle = undefined;
     this.refresh();
   }
 

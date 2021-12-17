@@ -28,7 +28,6 @@ export interface AppInterface {
   unmountForm(): void;
 
   drawingTitle: string;
-  specifiedDrawingTitle?: string;
   unspecifiedDrawingTitle(): string; // all sequence IDs joined by commas
   unspecifyDrawingTitle(): void;
 
