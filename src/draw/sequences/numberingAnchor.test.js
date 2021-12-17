@@ -27,16 +27,28 @@ afterEach(() => {
 });
 
 describe('numberingAnchor function', () => {
-  test('when the numbering anchor can be derived', () => {
-    let seq = appendSequence(drawing, { id: 'QWER', characters: 'QWERqwerASDFasdf' });
-    expect(areUnnumbered(seq.bases)).toBeTruthy();
-    addNumbering(seq.atPosition(2), 8);
-    addNumbering(seq.atPosition(6), 12);
-    addNumbering(seq.atPosition(10), 16);
-    addNumbering(seq.atPosition(14), 20);
-    expect(numberingOffset(seq)).toBe(6);
-    expect(numberingIncrement(seq)).toBe(4);
-    expect(numberingAnchor(seq)).toBe(2);
+  describe('when the numbering anchor can be derived', () => {
+    test('when there are multiple base numberings', () => {
+      let seq = appendSequence(drawing, { id: 'QWER', characters: 'QWERqwerASDFasdf' });
+      expect(areUnnumbered(seq.bases)).toBeTruthy();
+      addNumbering(seq.atPosition(2), 8);
+      addNumbering(seq.atPosition(6), 12);
+      addNumbering(seq.atPosition(10), 16);
+      addNumbering(seq.atPosition(14), 20);
+      expect(numberingOffset(seq)).toBe(6);
+      expect(numberingIncrement(seq)).toBe(4);
+      expect(numberingAnchor(seq)).toBe(2);
+    });
+
+    test('when there is only one base numbering', () => {
+      let seq = appendSequence(drawing, { id: 'one', characters: 'asdfas' });
+      expect(areUnnumbered(seq.bases)).toBeTruthy();
+      addNumbering(seq.atPosition(3), 5);
+      expect(numberingOffset(seq)).toBe(2);
+      expect(numberingIncrement(seq)).toBeUndefined();
+      // is defined even though the numbering increment is undefined
+      expect(numberingAnchor(seq)).toBe(3);
+    });
   });
 
   describe('when the numbering anchor cannot be derived', () => {
@@ -49,15 +61,6 @@ describe('numberingAnchor function', () => {
     test('when there are no base numberings', () => {
       let seq = appendSequence(drawing, { id: 'Unnumbered', characters: 'asdfASDF' });
       expect(areUnnumbered(seq.bases)).toBeTruthy();
-      expect(numberingAnchor(seq)).toBeUndefined();
-    });
-
-    test('when there is only one base numbering', () => {
-      let seq = appendSequence(drawing, { id: 'one', characters: 'asdfas' });
-      expect(areUnnumbered(seq.bases)).toBeTruthy();
-      addNumbering(seq.atPosition(3), 5);
-      expect(numberingOffset(seq)).toBe(2);
-      expect(numberingIncrement(seq)).toBeUndefined();
       expect(numberingAnchor(seq)).toBeUndefined();
     });
 
