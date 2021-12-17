@@ -25,6 +25,16 @@ it('initializes drawing and adds it to its container', () => {
   ).toBeGreaterThan(0);
 });
 
+test('appendTo method', () => {
+  let app = new App({ SVG: { SVG: NodeSVG } });
+  let container = document.createElement('div');
+  let siblings = [document.createElement('div'), document.createElement('div')];
+  siblings.forEach(sibling => container.appendChild(sibling));
+  expect(container.contains(app.node)).toBeFalsy();
+  app.appendTo(container);
+  expect(container.lastChild).toBe(app.node); // appended to end
+});
+
 describe('renderPeripherals method', () => {
   it('when there is a form', () => {
     let app = new App({ SVG: { SVG: NodeSVG } });

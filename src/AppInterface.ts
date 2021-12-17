@@ -21,6 +21,8 @@ export interface AppInterface {
   readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawingInteraction: StrictDrawingInteraction;
 
+  appendTo(container: Node): void;
+
   renderPeripherals(): void;
   renderForm(formFactory: FormFactory): void;
   unmountForm(): void;

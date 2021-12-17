@@ -74,6 +74,10 @@ export class App implements AppInterface {
     this.node.appendChild(this._infobarContainer);
   }
 
+  appendTo(container: Node) {
+    container.appendChild(this.node);
+  }
+
   _disableDragAndDrop() {
     document.body.ondragstart = () => false;
     document.body.ondrop = () => false;
