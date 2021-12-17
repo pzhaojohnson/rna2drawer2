@@ -19,19 +19,6 @@ it('initializes drawing and adds it to its container', () => {
   ).toBeGreaterThan(0);
 });
 
-it('initializes drawing interaction and binds it', () => {
-  let app = new App({ SVG: { SVG: NodeSVG } });
-  let interaction = app.strictDrawingInteraction;
-  expect(interaction).toBeTruthy();
-  expect(interaction.strictDrawing).toBe(app.strictDrawing); // passes drawing
-  app.pushUndo = jest.fn();
-  interaction.fireShouldPushUndo();
-  expect(app.pushUndo.mock.calls.length).toBe(1);
-  app.renderPeripherals = jest.fn();
-  interaction.fireChange();
-  expect(app.renderPeripherals.mock.calls.length).toBe(1);
-});
-
 describe('renderPeripherals method', () => {
   it('when there is a form', () => {
     let app = new App({ SVG: { SVG: NodeSVG } });

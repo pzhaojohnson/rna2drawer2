@@ -50,7 +50,6 @@ export class App implements AppInterface {
     this._initializeDrawing();
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
     this._strictDrawingInteraction = new StrictDrawingInteraction(this);
-    this._initializeDrawingInteraction();
     this.renderPeripherals();
 
     this._setBindings();
@@ -100,18 +99,6 @@ export class App implements AppInterface {
 
   get undoRedo(): UndoRedo<StrictDrawingSavableState> {
     return this._undoRedo;
-  }
-
-  _initializeDrawingInteraction() {
-    this._strictDrawingInteraction.onShouldPushUndo(() => {
-      this.pushUndo();
-    });
-    this._strictDrawingInteraction.onChange(() => {
-      this.renderPeripherals();
-    });
-    this._strictDrawingInteraction.onRequestToRenderForm(ff => {
-      this.renderForm(close => ff(close));
-    });
   }
 
   get strictDrawingInteraction(): StrictDrawingInteraction {

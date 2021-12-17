@@ -23,10 +23,6 @@ class StrictDrawingInteraction {
   _annotatingMode!: AnnotatingMode;
   _currMode: Mode;
 
-  _onShouldPushUndo?: () => void;
-  _onChange?: () => void;
-  _onRequestToRenderForm?: (ff: FormFactory) => void;
-
   _mouseoveredBase?: Base;
 
   constructor(app: App) {
@@ -186,34 +182,16 @@ class StrictDrawingInteraction {
     this.fireChange();
   }
 
-  onShouldPushUndo(cb: () => void) {
-    this._onShouldPushUndo = cb;
-  }
-
   fireShouldPushUndo() {
-    if (this._onShouldPushUndo) {
-      this._onShouldPushUndo();
-    }
-  }
-
-  onChange(cb: () => void) {
-    this._onChange = cb;
+    this._app.pushUndo();
   }
 
   fireChange() {
-    if (this._onChange) {
-      this._onChange();
-    }
-  }
-
-  onRequestToRenderForm(f: (ff: FormFactory) => void) {
-    this._onRequestToRenderForm = f;
+    this._app.renderPeripherals();
   }
 
   requestToRenderForm(ff: FormFactory) {
-    if (this._onRequestToRenderForm) {
-      this._onRequestToRenderForm(ff);
-    }
+    this._app.renderForm(close => ff(close));
   }
 
   get tertiaryBondsInteraction(): TertiaryBondsInteraction {
