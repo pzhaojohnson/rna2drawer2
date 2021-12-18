@@ -6,6 +6,7 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { CloseButton } from 'Forms/buttons/CloseButton';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { AppInterface as App } from 'AppInterface';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 import { cannotRemove, remove } from './remove';
@@ -61,10 +62,11 @@ export function RemoveSubsequence(props: Props) {
   }
 
   let seq = atIndex(drawing.sequences, 0);
+  let no = !seq ? 0 : (numberingOffset(seq) ?? 0);
 
   let [inputs, setInputs] = useState<Inputs>(prevInputs ?? {
-    startPosition: (1 + (seq?.numberingOffset ?? 0)).toString(),
-    endPosition: (1 + (seq?.numberingOffset ?? 0)).toString(),
+    startPosition: (1 + no).toString(),
+    endPosition: (1 + no).toString(),
   });
 
   // use String object for fade in animation every time the error message is set
@@ -150,7 +152,7 @@ export function RemoveSubsequence(props: Props) {
           <div style={{ marginTop: '10px' }} >
             <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
               <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                {seq.numberingOffset + 1}&nbsp;
+                {no + 1}&nbsp;
               </span>
               is the first and last position of the sequence.
             </p>
@@ -158,11 +160,11 @@ export function RemoveSubsequence(props: Props) {
         )}
         {!(seq && seq.length > 1) ? null : (
           <div style={{ marginTop: '10px' }} >
-            {seq.numberingOffset == 0 ? null : (
+            {no == 0 ? null : (
               <div style={{ marginBottom: '4px' }} >
                 <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
                   <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                    {seq.numberingOffset + 1}&nbsp;
+                    {no + 1}&nbsp;
                   </span>
                   is the first position of the sequence.
                 </p>
@@ -170,7 +172,7 @@ export function RemoveSubsequence(props: Props) {
             )}
             <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
               <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                {seq.length + seq.numberingOffset}&nbsp;
+                {seq.length + no}&nbsp;
               </span>
               is the last position of the sequence.
             </p>

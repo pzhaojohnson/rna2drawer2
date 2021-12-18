@@ -1,6 +1,5 @@
 import { SequenceInterface } from './SequenceInterface';
 import { Base } from 'Draw/bases/Base';
-import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 
 export type Defaults = {
   numberingAnchor: number;
@@ -13,17 +12,9 @@ export class Sequence implements SequenceInterface {
   id: string;
   readonly bases: Base[];
 
-  _numberingOffset: number;
-  _numberingAnchor: number;
-  _numberingIncrement: number;
-
   constructor(id: string) {
     this.id = id;
     this.bases = [];
-
-    this._numberingOffset = 0;
-    this._numberingAnchor = Sequence.recommendedDefaults.numberingAnchor;
-    this._numberingIncrement = Sequence.recommendedDefaults.numberingIncrement;
   }
 
   get characters(): string {
@@ -32,53 +23,6 @@ export class Sequence implements SequenceInterface {
       cs += b.character;
     });
     return cs;
-  }
-
-  get numberingOffset(): number {
-    return this._numberingOffset;
-  }
-
-  set numberingOffset(no: number) {
-    if (Number.isFinite(no)) {
-      this._numberingOffset = Math.floor(no);
-      updateBaseNumberings(this, {
-        offset: this.numberingOffset,
-        increment: this.numberingIncrement,
-        anchor: this.numberingAnchor,
-      });
-    }
-  }
-
-  get numberingAnchor(): number {
-    return this._numberingAnchor;
-  }
-
-  set numberingAnchor(na: number) {
-    if (Number.isFinite(na)) {
-      this._numberingAnchor = Math.floor(na);
-      updateBaseNumberings(this, {
-        offset: this.numberingOffset,
-        increment: this.numberingIncrement,
-        anchor: this.numberingAnchor,
-      });
-      Sequence.recommendedDefaults.numberingAnchor = na;
-    }
-  }
-
-  get numberingIncrement(): number {
-    return this._numberingIncrement;
-  }
-
-  set numberingIncrement(ni: number) {
-    if (Number.isFinite(ni) && ni >= 1) {
-      this._numberingIncrement = Math.floor(ni);
-      updateBaseNumberings(this, {
-        offset: this.numberingOffset,
-        increment: this.numberingIncrement,
-        anchor: this.numberingAnchor,
-      });
-      Sequence.recommendedDefaults.numberingIncrement = ni;
-    }
   }
 
   get length(): number {
@@ -114,8 +58,3 @@ export class Sequence implements SequenceInterface {
     return basesToPositions;
   }
 }
-
-Sequence.recommendedDefaults = {
-  numberingAnchor: 20,
-  numberingIncrement: 20,
-};

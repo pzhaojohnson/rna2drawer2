@@ -8,6 +8,7 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { CloseButton } from 'Forms/buttons/CloseButton';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { AppInterface as App } from 'AppInterface';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 import { cannotInsert, insert } from './insert';
@@ -54,10 +55,11 @@ export function InsertSubsequence(props: Props) {
   }
 
   let seq = atIndex(drawing.sequences, 0);
+  let no = !seq ? 0 : (numberingOffset(seq) ?? 0);
 
   let [inputs, setInputs] = useState<Inputs>(prevInputs ?? {
     subsequence: '',
-    positionToInsertAt: seq ? (seq.numberingOffset + 1).toString() : '',
+    positionToInsertAt: !seq ? '' : (no + 1).toString(),
     ignoreNumbers: true,
     ignoreNonAUGCTLetters: false,
     ignoreNonAlphanumerics: true,
@@ -187,7 +189,7 @@ export function InsertSubsequence(props: Props) {
           <div style={{ marginTop: '8px' }} >
             <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
               <span style={{ fontWeight: 600, color: 'rgb(0,0,0)' }} >
-                {seq.numberingOffset + 1}&nbsp;
+                {no + 1}&nbsp;
               </span>
               is the first and last position of the sequence.
             </p>
@@ -195,11 +197,11 @@ export function InsertSubsequence(props: Props) {
         )}
         {!(seq && seq.length > 1) ? null : (
           <div style={{ marginTop: '8px' }} >
-            {seq.numberingOffset == 0 ? null : (
+            {no == 0 ? null : (
               <div style={{ marginBottom: '4px' }} >
                 <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
                   <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                    {seq.numberingOffset + 1}&nbsp;
+                    {no + 1}&nbsp;
                   </span>
                   is the first position of the sequence.
                 </p>
@@ -207,7 +209,7 @@ export function InsertSubsequence(props: Props) {
             )}
             <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
               <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                {seq.length + seq.numberingOffset}&nbsp;
+                {seq.length + no}&nbsp;
               </span>
               is the last position of the sequence.
             </p>

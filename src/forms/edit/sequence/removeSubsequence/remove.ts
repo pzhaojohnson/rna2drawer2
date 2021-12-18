@@ -1,6 +1,7 @@
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { removeSubsequence } from 'Draw/sequences/remove/subsequence';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { willRemove } from 'Draw/strict/layout/stemProps';
 import { evenOutStretch } from 'Draw/strict/layout/stretch';
@@ -36,9 +37,10 @@ export function cannotRemove(strictDrawing: StrictDrawing, inputs: Range): strin
 }
 
 function reversePositionOffsets(seq: Sequence, r: Range): Range {
+  let no = numberingOffset(seq) ?? 0;
   return {
-    start: r.start - seq.numberingOffset,
-    end: r.end - seq.numberingOffset,
+    start: r.start - no,
+    end: r.end - no,
   };
 }
 

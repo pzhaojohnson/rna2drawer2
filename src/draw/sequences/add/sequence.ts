@@ -12,8 +12,6 @@ export type SequenceProps = {
 export function appendSequence(drawing: Drawing, props: SequenceProps): Sequence {
   let seq = new Sequence(props.id);
   drawing.sequences.push(seq);
-  seq.numberingAnchor = Sequence.recommendedDefaults.numberingAnchor;
-  seq.numberingIncrement = Sequence.recommendedDefaults.numberingIncrement;
   insertSubsequence(drawing, {
     parent: seq,
     characters: props.characters,

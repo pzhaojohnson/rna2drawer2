@@ -6,6 +6,7 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { CloseButton } from 'Forms/buttons/CloseButton';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { AppInterface as App } from 'AppInterface';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 
@@ -114,23 +115,24 @@ export function BasesByData(props: Props) {
   });
 
   function SequenceBounds() {
+    let no = !seq ? 0 : (numberingOffset(seq) ?? 0);
     return !seq ? null : (
       <div style={{ marginTop: '6px' }} >
         {seq.length != 1 ? null : (
           <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
             <span style={{ fontWeight: 600, color: 'rgb(0,0,0)' }} >
-              {seq.numberingOffset + 1}&nbsp;
+              {no + 1}&nbsp;
             </span>
             is the first and last position of the sequence.
           </p>
         )}
         {seq.length <= 1 ? null : (
           <div>
-            {seq.numberingOffset == 0 ? null : (
+            {no == 0 ? null : (
               <div style={{ marginBottom: '4px' }} >
                 <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
                   <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                    {seq.numberingOffset + 1}&nbsp;
+                    {no + 1}&nbsp;
                   </span>
                   is the first position of the sequence.
                 </p>
@@ -138,7 +140,7 @@ export function BasesByData(props: Props) {
             )}
             <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
               <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                {seq.length + seq.numberingOffset}&nbsp;
+                {seq.length + no}&nbsp;
               </span>
               is the last position of the sequence.
             </p>
@@ -345,7 +347,8 @@ export function BasesByData(props: Props) {
               let seq = drawing.sequences[0];
 
               // account for numbering offset
-              startPosition -= seq.numberingOffset;
+              let no = numberingOffset(seq) ?? 0;
+              startPosition -= no;
 
               if (startPosition < 1 || startPosition > seq.length) {
                 setErrorMessage(new String('Start position is out of range.'));

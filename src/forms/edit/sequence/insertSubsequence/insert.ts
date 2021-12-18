@@ -2,6 +2,7 @@ import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawi
 import { parseSequence } from '../../../../parse/parseSequence';
 import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 import { willInsertAt } from 'Draw/strict/layout/stemProps';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { insertSubsequence } from 'Draw/sequences/add/subsequence';
 import { containingUnpairedRegion } from 'Partners/containing';
 import { evenOutStretch } from 'Draw/strict/layout/stretch';
@@ -63,7 +64,8 @@ export function cannotInsert(strictDrawing: StrictDrawing, inputs: Inputs): stri
   }
   let seq = drawing.getSequenceAtIndex(0);
   if (seq) {
-    let insertPosition = inputs.insertPosition - seq.numberingOffset;
+    let no = numberingOffset(seq) ?? 0;
+    let insertPosition = inputs.insertPosition - no;
     if (insertPosition < 1 || insertPosition > seq.length + 1) {
       return 'Position to insert at is out of range.';
     }
@@ -83,7 +85,8 @@ export function insert(strictDrawing: StrictDrawing, inputs: Inputs) {
     let drawing = strictDrawing.drawing;
     let seq = drawing.getSequenceAtIndex(0);
     if (seq) {
-      let insertPosition = inputs.insertPosition - seq.numberingOffset;
+      let no = numberingOffset(seq) ?? 0;
+      let insertPosition = inputs.insertPosition - no;
       let subsequence = parseSubsequence(inputs);
       transferStemProps(strictDrawing, insertPosition);
       insertSubsequence(strictDrawing.drawing, {

@@ -2,6 +2,10 @@ import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
+import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 import { isBlank } from 'Parse/isBlank';
 
@@ -24,8 +28,10 @@ export class NumberingIncrementInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
+    let ni = numberingIncrement(props.sequence);
+
     this.state = {
-      value: props.sequence.numberingIncrement.toString(),
+      value: ni == undefined ? '' : ni.toString(),
     };
   }
 
@@ -66,13 +72,17 @@ export class NumberingIncrementInput extends React.Component<Props> {
       // convert negatives to positives
       ni *= -1;
     }
-    if (ni == this.props.sequence.numberingIncrement) {
+    if (ni == numberingIncrement(this.props.sequence)) {
       return;
     }
 
-    // set numbering increment
+    // update base numberings
     this.props.app.pushUndo();
-    this.props.sequence.numberingIncrement = ni;
+    updateBaseNumberings(this.props.sequence, {
+      offset: numberingOffset(this.props.sequence) ?? 0, // default to 0
+      increment: ni,
+      anchor: numberingAnchor(this.props.sequence) ?? 0, // default to 0
+    });
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
   }

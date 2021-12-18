@@ -8,9 +8,6 @@ export type SavableState = {
   className: 'Sequence';
   id: string;
   bases: SavableBaseState[];
-  numberingOffset: number;
-  numberingAnchor: number;
-  numberingIncrement: number;
 }
 
 export function savableState(seq: Sequence): SavableState {
@@ -18,9 +15,6 @@ export function savableState(seq: Sequence): SavableState {
     className: 'Sequence',
     id: seq.id,
     bases: [],
-    numberingOffset: seq.numberingOffset,
-    numberingAnchor: seq.numberingAnchor,
-    numberingIncrement: seq.numberingIncrement,
   };
   seq.bases.forEach(b => {
     saved.bases.push(savableBaseState(b));

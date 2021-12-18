@@ -3,6 +3,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { parseSubsequence, cannotInsert, insert } from './insert';
 import { parseDotBracket } from '../../../../parse/parseDotBracket';
 import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
+import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 
 let app = new App({ SVG: { SVG: NodeSVG } });
 
@@ -55,7 +56,7 @@ describe('cannotInsert function', () => {
     app.strictDrawing.appendSequence('asdf', 'asdfasdf');
     let seq = app.strictDrawing.drawing.getSequenceAtIndex(0);
     // takes into account numbering offset
-    seq.numberingOffset = 38;
+    updateBaseNumberings(seq, { offset: 38, increment: 3, anchor: 0 });
     inputs.insertPosition = 0 + 38; // just below range
     expect(cannotInsert(app.strictDrawing, inputs)).toBeTruthy();
     inputs.insertPosition = 1 + 38; // just in range
@@ -114,7 +115,8 @@ describe('insert function', () => {
       tertiaryPartners: parseDotBracket(tertiaryDtbr).tertiaryPartners,
     });
     let seq = drawing.getSequenceAtIndex(0);
-    seq.numberingOffset = 91; // must take into account numbering offset
+    // must take into account numbering offset
+    updateBaseNumberings(seq, { offset: 91, increment: 5, anchor: 0 });
 
     let perBaseProps = strictDrawing.perBaseLayoutProps();
 

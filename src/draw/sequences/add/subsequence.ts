@@ -5,6 +5,9 @@ import { setValues as setBaseValues } from 'Draw/bases/values';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { removePrimaryBondById } from 'Draw/bonds/straight/remove';
 import { atPosition } from 'Array/at';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
@@ -66,13 +69,17 @@ function repairStrand(drawing: Drawing, props: SubsequenceProps) {
 }
 
 export function insertSubsequence(drawing: Drawing, props: SubsequenceProps) {
+  let no = numberingOffset(props.parent);
+  let ni = numberingIncrement(props.parent);
+  let na = numberingAnchor(props.parent);
+
   breakStrand(drawing, props);
   insertBases(drawing, props);
   repairStrand(drawing, props);
-  updateBaseNumberings(props.parent, {
-    offset: props.parent.numberingOffset,
-    increment: props.parent.numberingIncrement,
-    anchor: props.parent.numberingAnchor,
-  });
+
+  if (no != undefined && ni != undefined && na != undefined) {
+    let numbering = { offset: no, increment: ni, anchor: na };
+    updateBaseNumberings(props.parent, numbering);
+  }
   orientBaseNumberings(drawing);
 }

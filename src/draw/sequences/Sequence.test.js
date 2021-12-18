@@ -42,38 +42,6 @@ describe('Sequence class', () => {
     }
   });
 
-  describe.each`
-    name
-    ${'numberingOffset'}
-    ${'numberingAnchor'}
-    ${'numberingIncrement'}
-  `('$name property', ({ name }) => {
-    it('floors numbers', () => {
-      let v = Math.floor(60 * Math.random()); // an integer
-      seq[name] = v + 0.6; // set to non-integer
-      expect(seq[name]).toBe(v); // floored
-    });
-
-    it('rejects nonfinite numbers', () => {
-      seq[name] = 28;
-      [NaN, Infinity, -Infinity].forEach(v => {
-        seq[name] = v;
-        expect(seq[name]).toBe(28); // didn't change
-      });
-    });
-
-    if (name == 'numberingIncrement') {
-      it('rejects nonpositive numbers', () => {
-        seq.numberingIncrement = 60;
-        [0, -1, -5, -10].forEach(v => {
-          seq.numberingIncrement = v;
-        });
-        seq.numberingIncrement = 0.68; // floors to zero
-        expect(seq.numberingIncrement).toBe(60); // didn't change
-      });
-    }
-  });
-
   it('length getter', () => {
     expect(seq.bases.length).toBeGreaterThanOrEqual(5);
     expect(seq.length).toBe(seq.bases.length);

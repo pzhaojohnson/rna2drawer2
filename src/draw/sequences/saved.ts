@@ -36,35 +36,14 @@ function recreateBase(drawing: Drawing, saved: SavedState): Base | never {
   return b;
 }
 
-function updateRecommendedDefaults(saved: SavedState) {
-  if (typeof saved.numberingAnchor == 'number') {
-    Sequence.recommendedDefaults.numberingAnchor = saved.numberingAnchor;
-  }
-  if (typeof saved.numberingIncrement == 'number') {
-    Sequence.recommendedDefaults.numberingIncrement = saved.numberingIncrement;
-  }
-}
-
 export function appendSavedSequence(drawing: Drawing, saved: SavedState): Sequence | never {
   assertIsSavedSequence(saved);
-  
+
   if (typeof saved.id != 'string') {
     throw new Error('Saved state is missing the ID of the sequence.');
   }
   let seq = new Sequence(saved.id);
-  
-  // set before adding the bases to the sequence since
-  // these setters may update base numberings
-  if (typeof saved.numberingOffset == 'number') {
-    seq.numberingOffset = saved.numberingOffset;
-  }
-  if (typeof saved.numberingAnchor == 'number') {
-    seq.numberingAnchor = saved.numberingAnchor;
-  }
-  if (typeof saved.numberingIncrement == 'number') {
-    seq.numberingIncrement = saved.numberingIncrement;
-  }
-  
+
   if (!(saved.bases instanceof Array)) {
     throw new Error('Saved state is missing the bases of the sequence.');
   }
@@ -73,8 +52,7 @@ export function appendSavedSequence(drawing: Drawing, saved: SavedState): Sequen
     seq.bases.push(b);
     Base.recommendedDefaults = baseValues(b);
   });
-  
+
   drawing.sequences.push(seq);
-  updateRecommendedDefaults(saved);
   return seq;
 }

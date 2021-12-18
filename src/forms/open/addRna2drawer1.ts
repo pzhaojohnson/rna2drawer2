@@ -6,6 +6,7 @@ import { addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import {
   sendToBack as sendOutlineToBack,
 } from 'Draw/bases/annotate/circle/z';
+import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
@@ -84,9 +85,11 @@ export function addRna2drawer1(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   addTertiaryInteractions(sd, rna2drawer1);
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);
   if (seq) {
-    seq.numberingOffset = rna2drawer1.numberingOffset;
-    seq.numberingAnchor = rna2drawer1.numberingAnchor;
-    seq.numberingIncrement = rna2drawer1.numberingIncrement;
+    updateBaseNumberings(seq, {
+      offset: rna2drawer1.numberingOffset,
+      increment: rna2drawer1.numberingIncrement,
+      anchor: rna2drawer1.numberingAnchor,
+    });
   }
   orientBaseNumberings(sd.drawing);
   addBaseColors(sd, rna2drawer1);

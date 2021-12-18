@@ -49,19 +49,4 @@ describe('savableState function', () => {
       expect(saved.bases[i]).toEqual(savableBaseState(seq.bases[i]));
     }
   });
-
-  it('includes numbering properties', () => {
-    let offset = Math.floor(100 * Math.random()) - 50;
-    let anchor = Math.floor(200 * Math.random()) - 100;
-    let increment = Math.floor(50 * Math.random()) + 1; // cannot be zero
-
-    seq.numberingOffset = offset;
-    seq.numberingAnchor = anchor;
-    seq.numberingIncrement = increment;
-
-    let saved = savableState(seq);
-    expect(saved.numberingOffset).toBe(offset);
-    expect(saved.numberingAnchor).toBe(anchor);
-    expect(saved.numberingIncrement).toBe(increment);
-  });
 });

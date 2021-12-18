@@ -3,6 +3,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { cannotRemove, remove } from './remove';
 import { parseDotBracket } from '../../../../parse/parseDotBracket';
 import { PerBaseStrictLayoutProps as PerBaseProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
+import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 
 let app = new App({ SVG: { SVG: NodeSVG } });
 
@@ -33,7 +34,8 @@ describe('cannotRemove function', () => {
   it('start or end are out of range', () => {
     app.strictDrawing.appendSequence('asdf', 'asdfasdfasdf');
     let seq = app.strictDrawing.drawing.getSequenceAtIndex(0);
-    seq.numberingOffset = 10; // must take into account numbering offset
+    // must take into account numbering offset
+    updateBaseNumberings(seq, { offset: 10, increment: 2, anchor: 1 });
     expect(cannotRemove(app.strictDrawing, { start: 20, end: 21 })).toBeFalsy(); // in range
     expect(cannotRemove(app.strictDrawing, { start: 10, end: 12 })).toBeTruthy(); // start is out of range
     expect(cannotRemove(app.strictDrawing, { start: 15, end: 23 })).toBeTruthy(); // end is out of range
@@ -72,7 +74,9 @@ describe('remove function', () => {
       tertiaryPartners: parseDotBracket(tertiaryDtbr).tertiaryPartners,
     });
     let seq = drawing.getSequenceAtIndex(0);
-    seq.numberingOffset = 1012; // must take into account numbering offset
+    // must take into account numbering offset
+    let numberingOffset = 1012;
+    updateBaseNumberings(seq, { offset: numberingOffset, increment: 6, anchor: 0 });
 
     let perBaseProps = strictDrawing.perBaseLayoutProps();
 
@@ -91,10 +95,10 @@ describe('remove function', () => {
 
     strictDrawing.setPerBaseLayoutProps(perBaseProps);
 
-    let r = { start: 5 + seq.numberingOffset, end: 8 + seq.numberingOffset };
+    let r = { start: 5 + numberingOffset, end: 8 + numberingOffset };
     remove(strictDrawing, r);
 
-    r = { start: 21 + seq.numberingOffset, end: 22 + seq.numberingOffset };
+    r = { start: 21 + numberingOffset, end: 22 + numberingOffset };
     remove(strictDrawing, r);
 
     it('transfers stem props', () => {

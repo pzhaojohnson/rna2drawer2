@@ -2,6 +2,10 @@ import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
+import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 import { isBlank } from 'Parse/isBlank';
 
@@ -24,11 +28,14 @@ export class NumberingAnchorInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let na = props.sequence.numberingAnchor;
-    na += props.sequence.numberingOffset;
+    let na = numberingAnchor(props.sequence);
+    let no = numberingOffset(props.sequence);
+    if (na != undefined && no != undefined) {
+      na += no;
+    }
 
     this.state = {
-      value: na.toString(),
+      value: na == undefined ? '' : na.toString(),
     };
   }
 
@@ -63,14 +70,21 @@ export class NumberingAnchorInput extends React.Component<Props> {
       return;
     }
     na = Math.floor(na);
-    na -= this.props.sequence.numberingOffset;
-    if (na == this.props.sequence.numberingAnchor) {
+    let no = numberingOffset(this.props.sequence);
+    if (no != undefined) {
+      na -= no;
+    }
+    if (na == numberingAnchor(this.props.sequence)) {
       return;
     }
 
-    // set numbering anchor
+    // update base numberings
     this.props.app.pushUndo();
-    this.props.sequence.numberingAnchor = na;
+    updateBaseNumberings(this.props.sequence, {
+      offset: numberingOffset(this.props.sequence) ?? 0, // default to 0
+      increment: numberingIncrement(this.props.sequence) ?? 20, // default to 20
+      anchor: na,
+    });
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
   }

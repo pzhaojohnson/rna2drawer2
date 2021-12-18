@@ -3,6 +3,9 @@ import App from '../../App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import * as Svg from '@svgdotjs/svg.js';
 import { pixelsToPoints } from 'Export/units';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
 
 let app = null;
 let rna2drawer1 = null;
@@ -125,13 +128,13 @@ describe('adding tertiary interactions', () => {
 it('adds numbering props', () => {
   rna2drawer1.sequenceId = 'asdf';
   rna2drawer1.numberingOffset = -1012;
-  rna2drawer1.numberingAnchor = 38;
-  rna2drawer1.numberingIncrement = 43;
+  rna2drawer1.numberingAnchor = 2;
+  rna2drawer1.numberingIncrement = 3;
   addRna2drawer1(app.strictDrawing, rna2drawer1);
   let seq = app.strictDrawing.drawing.getSequenceById('asdf');
-  expect(seq.numberingOffset).toBe(-1012);
-  expect(seq.numberingAnchor).toBe(38);
-  expect(seq.numberingIncrement).toBe(43);
+  expect(numberingOffset(seq)).toBe(-1012);
+  expect(numberingAnchor(seq)).toBe(2);
+  expect(numberingIncrement(seq)).toBe(3);
 });
 
 describe('adding base colors', () => {

@@ -1,4 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';
@@ -7,6 +8,10 @@ import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import { removeCircleOutline, removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 import { removeNumbering } from 'Draw/bases/number/add';
 import { atPosition } from 'Array/at';
+import { numberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
+import { SequenceNumbering } from 'Draw/sequences/updateBaseNumberings';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
@@ -79,15 +84,24 @@ function addMissingPrimaryBonds(drawing: Drawing) {
 }
 
 export function removeBases(drawing: Drawing, bs: Base[]) {
+  let numberings = new Map<Sequence, SequenceNumbering>();
+  drawing.sequences.forEach(seq => {
+    let no = numberingOffset(seq);
+    let ni = numberingIncrement(seq);
+    let na = numberingAnchor(seq);
+    if (no != undefined && ni != undefined && na != undefined) {
+      numberings.set(seq, { offset: no, increment: ni, anchor: na });
+    }
+  });
+
   removeBondsWith(drawing, bs);
   _removeBases(drawing, bs);
   addMissingPrimaryBonds(drawing);
   drawing.sequences.forEach(seq => {
-    updateBaseNumberings(seq, {
-      offset: seq.numberingOffset,
-      increment: seq.numberingIncrement,
-      anchor: seq.numberingAnchor,
-    });
+    let numbering = numberings.get(seq);
+    if (numbering) {
+      updateBaseNumberings(seq, numbering);
+    }
   });
   orientBaseNumberings(drawing);
 }
