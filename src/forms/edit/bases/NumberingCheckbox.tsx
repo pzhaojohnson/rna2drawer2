@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { isNumbered } from 'Draw/bases/number/isNumbered';
 import { addNumbering } from 'Draw/bases/number/add';
 import { removeNumbering } from 'Draw/bases/number/add';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
@@ -17,7 +18,7 @@ export type Props = {
 export function NumberingCheckbox(props: Props) {
   return (
     <Checkbox
-      checked={props.base.numbering ? true : false}
+      checked={isNumbered(props.base)}
       onChange={event => {
         if (!event.target.checked) {
           props.app.pushUndo();
