@@ -4,7 +4,6 @@ import { AppInterface as App } from 'AppInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
-import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 import { isBlank } from 'Parse/isBlank';
@@ -76,12 +75,15 @@ export class NumberingIncrementInput extends React.Component<Props> {
       return;
     }
 
+    let firstNumberedPosition = this.props.sequence.bases.findIndex(b => b.numbering) + 1;
+    let na = firstNumberedPosition > 0 ? firstNumberedPosition : 0; // default to 0
+
     // update base numberings
     this.props.app.pushUndo();
     updateBaseNumberings(this.props.sequence, {
       offset: numberingOffset(this.props.sequence) ?? 0, // default to 0
       increment: ni,
-      anchor: numberingAnchor(this.props.sequence) ?? 0, // default to 0
+      anchor: na,
     });
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
