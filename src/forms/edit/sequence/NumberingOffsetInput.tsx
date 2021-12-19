@@ -2,9 +2,8 @@ import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import { areUnnumbered } from 'Draw/bases/number/areUnnumbered';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
-import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
-import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 import { isBlank } from 'Parse/isBlank';
@@ -72,11 +71,17 @@ export class NumberingOffsetInput extends React.Component<Props> {
 
     // update base numberings
     this.props.app.pushUndo();
-    updateBaseNumberings(this.props.sequence, {
-      offset: no,
-      increment: numberingIncrement(this.props.sequence) ?? 20, // default to 20
-      anchor: numberingAnchor(this.props.sequence) ?? 0, // default to 0
-    });
+    if (areUnnumbered(this.props.sequence.bases)) {
+      updateBaseNumberings(this.props.sequence, { offset: no, increment: 20, anchor: 0 });
+    } else {
+      this.props.sequence.bases.forEach((b, i) => {
+        let p = i + 1;
+        let n = p + no;
+        if (b.numbering) {
+          b.numbering.text.wrapped.text(n.toString());
+        }
+      });
+    }
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
   }
