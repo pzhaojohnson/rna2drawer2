@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
 import formStyles from './EditBases.css';
+import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 
 import { AppInterface as App } from 'AppInterface';
@@ -8,6 +9,8 @@ import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 
 import { CharacterField } from './CharacterField';
+import { NumberingCheckbox } from './NumberingCheckbox';
+import { NumberInput } from './numberings/NumberInput';
 import { FillPicker } from './FillPicker';
 import { FillOpacityInput } from './FillOpacityInput';
 import { BringToFrontButton } from './BringToFrontButton';
@@ -91,6 +94,21 @@ export function EditBases(props: Props) {
             {props.bases.length != 1 ? null : (
               <div style={{ marginBottom: '16px' }} >
                 <CharacterField app={props.app} base={props.bases[0]} />
+                <div style={{ marginTop: '16px' }} >
+                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                    <NumberingCheckbox app={props.app} base={props.bases[0]} />
+                    {!props.bases[0].numbering ? null : (
+                      <div style={{ marginLeft: '10px' }} >
+                        <NumberInput app={props.app} baseNumbering={props.bases[0].numbering} />
+                      </div>
+                    )}
+                    <div style={{ marginLeft: props.bases[0].numbering ? '8px' : '6px' }} >
+                      <p className={`${checkboxFieldStyles.label}`}>
+                        Numbering
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
