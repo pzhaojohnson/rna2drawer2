@@ -79,6 +79,10 @@ export class App implements AppInterface {
     container.appendChild(this.node);
   }
 
+  remove() {
+    this.node.remove();
+  }
+
   _disableDragAndDrop() {
     document.body.ondragstart = () => false;
     document.body.ondrop = () => false;

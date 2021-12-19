@@ -22,6 +22,7 @@ export interface AppInterface {
   readonly strictDrawingInteraction: StrictDrawingInteraction;
 
   appendTo(container: Node): void;
+  remove(): void;
 
   renderPeripherals(): void;
   renderForm(formFactory: FormFactory): void;
