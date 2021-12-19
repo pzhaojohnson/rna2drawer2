@@ -15,8 +15,9 @@ import { LineWidthField } from 'Forms/edit/bases/numberings/LineWidthField';
 import { LineLengthField } from 'Forms/edit/bases/numberings/LineLengthField';
 import { BasePaddingField } from 'Forms/edit/bases/numberings/BasePaddingField';
 import { NumberingOffsetInput } from 'Forms/edit/sequence/NumberingOffsetInput';
-import { NumberingAnchorInput } from 'Forms/edit/sequence/NumberingAnchorInput';
 import { NumberingIncrementInput } from 'Forms/edit/sequence/NumberingIncrementInput';
+import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { NumberingAnchorInput } from 'Forms/edit/sequence/NumberingAnchorInput';
 import { atIndex } from 'Array/at';
 
 function baseNumberings(drawing: Drawing): BaseNumbering[] {
@@ -126,16 +127,6 @@ export function EditNumbering(props: Props) {
             </div>
             <div style={{ marginTop: '8px' }} >
               <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                <NumberingAnchorInput app={props.app} sequence={firstSequence} />
-                <div style={{ marginLeft: '8px' }} >
-                  <p className={`${textFieldStyles.label} unselectable`} >
-                    Anchor
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div style={{ marginTop: '8px' }} >
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
                 <NumberingIncrementInput app={props.app} sequence={firstSequence} />
                 <div style={{ marginLeft: '8px' }} >
                   <p className={`${textFieldStyles.label} unselectable`} >
@@ -144,6 +135,18 @@ export function EditNumbering(props: Props) {
                 </div>
               </div>
             </div>
+            {numberingIncrement(firstSequence) == undefined ? null : (
+              <div style={{ marginTop: '8px' }} >
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <NumberingAnchorInput app={props.app} sequence={firstSequence} />
+                  <div style={{ marginLeft: '8px' }} >
+                    <p className={`${textFieldStyles.label} unselectable`} >
+                      Anchor
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
