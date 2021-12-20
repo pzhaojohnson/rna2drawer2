@@ -72,7 +72,7 @@ export class NumberingOffsetInput extends React.Component<Props> {
     // update base numberings
     this.props.app.pushUndo();
     if (areUnnumbered(this.props.sequence.bases)) {
-      updateBaseNumberings(this.props.sequence, { offset: no, increment: 20, anchor: 0 });
+      updateBaseNumberings(this.props.sequence, { offset: no, increment: 20, anchor: 1 });
     } else {
       this.props.sequence.bases.forEach((b, i) => {
         let p = i + 1;
