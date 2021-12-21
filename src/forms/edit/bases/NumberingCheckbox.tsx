@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
+import { ChangeEvent } from 'Forms/fields/checkbox/Checkbox';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { isNumbered } from 'Draw/bases/number/isNumbered';
@@ -15,38 +16,42 @@ export type Props = {
   base: Base;
 }
 
-export function NumberingCheckbox(props: Props) {
-  return (
-    <Checkbox
-      checked={isNumbered(props.base)}
-      onChange={event => {
-        if (!event.target.checked) {
-          props.app.pushUndo();
-          removeNumbering(props.base);
-          props.app.refresh();
-          return;
-        }
+export class NumberingCheckbox extends React.Component<Props> {
+  render() {
+    return (
+      <Checkbox
+        checked={isNumbered(this.props.base)}
+        onChange={event => this.handleChange(event)}
+      />
+    );
+  }
 
-        let drawing = props.app.strictDrawing.drawing;
+  handleChange(event: ChangeEvent) {
+    if (!event.target.checked) {
+      this.props.app.pushUndo();
+      removeNumbering(this.props.base);
+      this.props.app.refresh();
+      return;
+    }
 
-        // the number for the numbering to be added
-        let n = 0; // default to zero
+    let drawing = this.props.app.strictDrawing.drawing;
 
-        let seq = drawing.sequences.find(seq => seq.bases.includes(props.base));
-        if (seq) {
-          n = seq.positionOf(props.base);
-          let no = numberingOffset(seq);
-          if (no != undefined) {
-            n += no;
-          }
-        }
+    // the number for the numbering to be added
+    let n = 0; // default to zero
 
-        // add numbering
-        props.app.pushUndo();
-        addNumbering(props.base, n);
-        orientBaseNumberings(drawing);
-        props.app.refresh();
-      }}
-    />
-  );
+    let seq = drawing.sequences.find(seq => seq.bases.includes(this.props.base));
+    if (seq) {
+      n = seq.positionOf(this.props.base);
+      let no = numberingOffset(seq);
+      if (no != undefined) {
+        n += no;
+      }
+    }
+
+    // add numbering
+    this.props.app.pushUndo();
+    addNumbering(this.props.base, n);
+    orientBaseNumberings(drawing);
+    this.props.app.refresh();
+  }
 }
