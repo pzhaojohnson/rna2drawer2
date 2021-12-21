@@ -75,8 +75,16 @@ export class NumberingIncrementInput extends React.Component<Props> {
       return;
     }
 
+    // ensure that at least the last base will be numbered
+    // if the input numbering increment is greater than the sequence length
+    let na = Math.min(ni, this.props.sequence.length);
+
     let firstNumberedPosition = this.props.sequence.bases.findIndex(b => b.numbering) + 1;
-    let na = firstNumberedPosition > 0 ? firstNumberedPosition : 0; // default to 0
+    if (firstNumberedPosition > 0) {
+      // use the first numbered position as the numbering anchor
+      // if there are base numberings already present
+      na = firstNumberedPosition;
+    }
 
     // update base numberings
     this.props.app.pushUndo();
