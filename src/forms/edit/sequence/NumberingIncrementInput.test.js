@@ -200,6 +200,20 @@ describe('NumberingIncrementInput component', () => {
     expect(numberingAnchor(sequence)).toBe(10);
   });
 
+  test('a sequence of length zero', () => {
+    let sequence = appendSequence(drawing, { id: 'Empty', characters: '' });
+    expect(sequence.length).toBe(0);
+    act(() => {
+      render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
+    });
+    expect(container.firstChild.value).toBe('');
+    container.firstChild.value = '15';
+    Simulate.change(container.firstChild);
+    expect(() => {
+      Simulate.blur(container.firstChild)
+    }).not.toThrow();
+  });
+
   it('ignores inputs of zero', () => {
     expect(areUnnumbered(sequence.bases)).toBeTruthy();
     act(() => {

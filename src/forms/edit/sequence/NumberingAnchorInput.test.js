@@ -165,6 +165,20 @@ describe('NumberingAnchorInput component', () => {
     expect(numberingAnchor(sequence)).toBe(5); // was floored
   });
 
+  test('a sequence of length zero', () => {
+    let sequence = appendSequence(drawing, { id: 'Empty', characters: '' });
+    expect(sequence.length).toBe(0);
+    act(() => {
+      render(<NumberingAnchorInput app={app} sequence={sequence} />, container);
+    });
+    expect(container.firstChild.value).toBe('');
+    container.firstChild.value = '2';
+    Simulate.change(container.firstChild);
+    expect(() => {
+      Simulate.blur(container.firstChild);
+    }).not.toThrow();
+  });
+
   it('ignores empty inputs', () => {
     updateBaseNumberings(sequence, { offset: 2, increment: 15, anchor: 8 });
     act(() => {

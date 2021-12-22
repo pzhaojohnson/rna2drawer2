@@ -191,6 +191,20 @@ describe('NumberingOffsetInput component', () => {
     });
   });
 
+  test('a sequence of length zero', () => {
+    let sequence = appendSequence(drawing, { id: 'Empty', characters: '' });
+    expect(sequence.length).toBe(0);
+    act(() => {
+      render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
+    });
+    expect(container.firstChild.value).toBe('');
+    container.firstChild.value = '10';
+    Simulate.change(container.firstChild);
+    expect(() => {
+      Simulate.blur(container.firstChild)
+    }).not.toThrow();
+  });
+
   it('ignores empty inputs', () => {
     updateBaseNumberings(sequence, { offset: 15, increment: 3, anchor: 20 });
     expect(numberingOffset(sequence)).toBe(15);
