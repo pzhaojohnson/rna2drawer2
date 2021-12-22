@@ -25,7 +25,8 @@
       "Undo/*": ["src/undo/*"],
       "Utilities/*": ["src/utilities/*"],
       "AppInterface": ["src/AppInterface"],
-      "App": ["src/App"]
+      "App": ["src/App"],
+      "Preferences": ["src/Preferences"],
     },
     "module": "es6",
     "target": "es5",

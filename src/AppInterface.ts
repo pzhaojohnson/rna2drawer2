@@ -5,6 +5,7 @@ import {
 import UndoRedo from './undo/UndoRedo';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 import * as React from 'react';
+import { Preferences } from 'Preferences';
 
 export interface FormFactory {
   (close: () => void): React.ReactElement;
@@ -20,6 +21,8 @@ export interface AppInterface {
   readonly strictDrawing: StrictDrawing;
   readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawingInteraction: StrictDrawingInteraction;
+
+  preferences: Preferences;
 
   appendTo(container: Node): void;
   remove(): void;

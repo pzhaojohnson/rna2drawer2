@@ -67,7 +67,8 @@
       "^Undo(.*)$": "<rootDir>/src/undo$1",
       "^Utilities(.*)$": "<rootDir>/src/utilities$1",
       "^AppInterface$": "<rootDir>/src/AppInterface.ts",
-      "^App$": "<rootDir>/src/App.tsx"
+      "^App$": "<rootDir>/src/App.tsx",
+      "^Preferences$": "<rootDir>/src/Preferences.ts"
     },
     "setupFilesAfterEnv": [
       "<rootDir>src/setupTests.js"

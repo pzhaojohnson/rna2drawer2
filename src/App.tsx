@@ -11,6 +11,8 @@ import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawingInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 
+import { Preferences } from 'Preferences';
+
 import { Menu } from './menu/Menu';
 import { Infobar } from './infobar/Infobar';
 
@@ -35,6 +37,9 @@ export class App implements AppInterface {
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   _strictDrawing: StrictDrawing;
   _strictDrawingInteraction: StrictDrawingInteraction;
+
+  preferences: Preferences;
+
   _formFactory?: FormFactory;
 
   _specifiedDrawingTitle?: string;
@@ -53,6 +58,9 @@ export class App implements AppInterface {
     this._initializeDrawing();
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
     this._strictDrawingInteraction = new StrictDrawingInteraction(this);
+
+    this.preferences = new Preferences();
+
     this.renderPeripherals();
 
     this._setBindings();
