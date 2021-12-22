@@ -125,9 +125,10 @@ export class App implements AppInterface {
 
   _setBindings() {
     window.addEventListener('beforeunload', event => {
+      let confirmationMessage = 'Are you sure?';
       if (!this.strictDrawing.isEmpty() || this.canUndo() || this.canRedo()) {
-        (event || window.event).returnValue = 'Are you sure?';
-        return 'Are you sure?';
+        (event || window.event).returnValue = confirmationMessage;
+        return confirmationMessage;
       }
     });
   }
