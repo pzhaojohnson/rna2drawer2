@@ -13,6 +13,7 @@ import { areUnnumbered } from 'Draw/bases/number/areUnnumbered';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
 
 import { NumberingOffsetInput } from './NumberingOffsetInput';
 
@@ -128,44 +129,66 @@ describe('NumberingOffsetInput component', () => {
     expect(numberingOffset(correspondingSequence)).toBe(7); // had pushed undo
   });
 
-  it('adds base numberings when none are already present', () => {
-    expect(areUnnumbered(sequence.bases)).toBeTruthy();
-    act(() => {
-      render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
+  describe('when there are already base numberings present', () => {
+    it('only edits existing base numberings', () => {
+      let sequence = appendSequence(drawing, { id: '12', characters: 'asdfASDFqwer' });
+      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      // results in both the numbering offset and increment being undefined
+      addNumbering(sequence.atPosition(1), 5);
+      addNumbering(sequence.atPosition(3), 9);
+      addNumbering(sequence.atPosition(7), 1);
+      addNumbering(sequence.atPosition(8), -1);
+      addNumbering(sequence.atPosition(11), 2);
+      sequence.atPosition(11).numbering.text.wrapped.text('asdf'); // make nonnumeric
+      act(() => {
+        render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
+      });
+      container.firstChild.value = '-15';
+      Simulate.change(container.firstChild);
+      Simulate.blur(container.firstChild);
+      expect(numberingOffset(sequence)).toBe(-15);
+      expect(numberingIncrement(sequence)).toBeUndefined(); // still undefined
+      let numberedBases = [1, 3, 7, 8, 11].map(p => sequence.atPosition(p));
+      expect(numberedBases.every(b => b.numbering)).toBeTruthy();
+      let unnumberedBases = [2, 4, 5, 6, 9, 10, 12].map(p => sequence.atPosition(p));
+      expect(areUnnumbered(unnumberedBases)).toBeTruthy();
     });
-    container.firstChild.value = '12';
-    Simulate.change(container.firstChild);
-    Simulate.blur(container.firstChild);
-    expect(numberingOffset(sequence)).toBe(12);
-    expect(areUnnumbered(sequence.bases)).toBeFalsy();
-    expect(numberingIncrement(sequence)).toBe(20); // a good default increment
-    // starting the numbering at the first base ensures that at least one base
-    // is numbered for any nonempty sequence
-    expect(sequence.bases[0].numbering).toBeTruthy();
   });
 
-  it('only edits existing base numberings if already present', () => {
-    let sequence = appendSequence(drawing, { id: '12', characters: 'asdfASDFqwer' });
-    expect(areUnnumbered(sequence.bases)).toBeTruthy();
-    // results in both the numbering offset and increment being undefined
-    addNumbering(sequence.atPosition(1), 5);
-    addNumbering(sequence.atPosition(3), 9);
-    addNumbering(sequence.atPosition(7), 1);
-    addNumbering(sequence.atPosition(8), -1);
-    addNumbering(sequence.atPosition(11), 2);
-    sequence.atPosition(11).numbering.text.wrapped.text('asdf'); // make nonnumeric
-    act(() => {
-      render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
+  describe('when there are no base numberings already present', () => {
+    it('defaults to a numbering increment of 20 and a numbering anchor of 20', () => {
+      let sequence = appendSequence(drawing, {
+        id: '48',
+        characters: 'asdfASDFqwerQWERzxcvZXCVasdfASDFqwerQWERzxcvZXCV',
+      });
+      sequence.bases.forEach(b => removeNumbering(b)); // remove any base numberings
+      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      act(() => {
+        render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
+      });
+      container.firstChild.value = '10';
+      Simulate.change(container.firstChild);
+      Simulate.blur(container.firstChild);
+      expect(numberingOffset(sequence)).toBe(10);
+      expect(numberingIncrement(sequence)).toBe(20); // defaulted to 20
+      expect(numberingAnchor(sequence)).toBe(20); // defaulted to 20
     });
-    container.firstChild.value = '-15';
-    Simulate.change(container.firstChild);
-    Simulate.blur(container.firstChild);
-    expect(numberingOffset(sequence)).toBe(-15);
-    expect(numberingIncrement(sequence)).toBeUndefined(); // still undefined
-    let numberedBases = [1, 3, 7, 8, 11].map(p => sequence.atPosition(p));
-    expect(numberedBases.every(b => b.numbering)).toBeTruthy();
-    let unnumberedBases = [2, 4, 5, 6, 9, 10, 12].map(p => sequence.atPosition(p));
-    expect(areUnnumbered(unnumberedBases)).toBeTruthy();
+
+    test('when the sequence length is less than 20 (and greater than zero)', () => {
+      let sequence = appendSequence(drawing, { id: 'one', characters: 'A' });
+      expect(sequence.length).toBe(1);
+      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      act(() => {
+        render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
+      });
+      container.firstChild.value = '12';
+      Simulate.change(container.firstChild);
+      Simulate.blur(container.firstChild);
+      expect(numberingOffset(sequence)).toBe(12);
+      expect(numberingIncrement(sequence)).toBeUndefined(); // not possible to define
+      // numbered the only existing base
+      expect(sequence.atPosition(1).numbering).toBeTruthy();
+    });
   });
 
   it('ignores empty inputs', () => {

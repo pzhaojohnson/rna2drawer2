@@ -2,7 +2,6 @@ import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
-import { areUnnumbered } from 'Draw/bases/number/areUnnumbered';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
@@ -71,16 +70,21 @@ export class NumberingOffsetInput extends React.Component<Props> {
 
     // update base numberings
     this.props.app.pushUndo();
-    if (areUnnumbered(this.props.sequence.bases)) {
-      updateBaseNumberings(this.props.sequence, { offset: no, increment: 20, anchor: 1 });
-    } else {
-      this.props.sequence.bases.forEach((b, i) => {
-        let p = i + 1;
-        let n = p + no;
-        if (b.numbering) {
-          b.numbering.text.wrapped.text(n.toString());
-        }
-      });
+    let updated = false;
+    this.props.sequence.bases.forEach((b, i) => {
+      let p = i + 1;
+      let n = p + no;
+      if (b.numbering) {
+        b.numbering.text.wrapped.text(n.toString());
+        updated = true;
+      }
+    });
+    if (!updated) { // there are no base numberings already present
+      let ni = 20; // a good default
+      // ensures that at least one base will be numbered for a nonempty sequence
+      let na = Math.min(ni, this.props.sequence.length);
+      let sequenceNumbering = { offset: no, increment: ni, anchor: na };
+      updateBaseNumberings(this.props.sequence, sequenceNumbering);
     }
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
