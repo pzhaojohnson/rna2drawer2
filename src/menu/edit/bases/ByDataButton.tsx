@@ -12,7 +12,7 @@ export function ByDataButton(props: Props) {
     <DroppedButton
       text='By Data (e.g., SHAPE)'
       onClick={() => {
-        props.app.renderForm(formProps => (
+        props.app.formContainer.renderForm(formProps => (
           <BasesByData app={props.app} unmount={formProps.unmount} />
         ))
       }}

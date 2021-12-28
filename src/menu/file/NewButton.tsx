@@ -14,7 +14,7 @@ export function NewButton(props: Props) {
       text='New'
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
-          props.app.renderForm(formProps => (
+          props.app.formContainer.renderForm(formProps => (
             <CreateNewDrawing
               app={props.app}
               close={formProps.unmount}

@@ -12,7 +12,7 @@ export function RemoveSubsequenceButton(props: Props) {
     <DroppedButton
       text='Remove Subsequence'
       onClick={() => {
-        props.app.renderForm(formProps => (
+        props.app.formContainer.renderForm(formProps => (
           <RemoveSubsequence app={props.app} unmount={formProps.unmount} />
         ));
       }}

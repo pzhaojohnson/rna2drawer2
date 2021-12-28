@@ -12,7 +12,7 @@ export function EditSequenceIdButton(props: Props) {
     <DroppedButton
       text='Sequence ID'
       onClick={() => {
-        props.app.renderForm(formProps => (
+        props.app.formContainer.renderForm(formProps => (
           <EditSequenceId app={props.app} unmount={formProps.unmount} />
         ));
       }}

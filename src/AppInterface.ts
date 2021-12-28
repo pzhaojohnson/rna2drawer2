@@ -4,16 +4,8 @@ import {
 } from 'Draw/strict/StrictDrawingInterface';
 import UndoRedo from './undo/UndoRedo';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
-import * as React from 'react';
 import { Preferences } from 'Preferences';
-
-export type FormProps = {
-  unmount: () => void;
-}
-
-export interface FormFactory {
-  (props: FormProps): React.ReactElement;
-}
+import { FormContainer } from 'FormContainer';
 
 export interface AppInterface {
 
@@ -32,8 +24,7 @@ export interface AppInterface {
   remove(): void;
 
   renderPeripherals(): void;
-  renderForm(formFactory: FormFactory): void;
-  unmountForm(): void;
+  readonly formContainer: FormContainer;
 
   unspecifiedDrawingTitle(): string; // all sequence IDs joined by commas
   drawingTitle: string;

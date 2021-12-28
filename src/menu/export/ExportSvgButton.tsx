@@ -12,7 +12,7 @@ export function ExportSvgButton(props: Props) {
     <DroppedButton
       text='SVG'
       onClick={() => {
-        props.app.renderForm(formProps => (
+        props.app.formContainer.renderForm(formProps => (
           <ExportDrawing
             app={props.app}
             format='svg'

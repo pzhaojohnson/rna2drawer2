@@ -12,7 +12,7 @@ export function ExportPptxButton(props: Props) {
     <DroppedButton
       text='PowerPoint (PPTX)'
       onClick={() => {
-        props.app.renderForm(formProps => (
+        props.app.formContainer.renderForm(formProps => (
           <ExportDrawing
             app={props.app}
             format='pptx'

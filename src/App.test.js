@@ -38,57 +38,17 @@ test('appendTo and remove methods', () => {
   expect(container.contains(app.node)).toBeFalsy(); // was removed
 });
 
-describe('renderPeripherals method', () => {
-  it('when there is a form', () => {
-    let app = new App({ SVG: { SVG: NodeSVG } });
-    let formFactory = () => <div></div>;
-    app.renderForm(formFactory);
-    app.renderMenu = jest.fn();
-    app.renderInfobar = jest.fn();
-    app.renderForm = jest.fn();
-    app.updateDocumentTitle = jest.fn();
-    app.renderPeripherals();
-    expect(app.renderMenu.mock.calls.length).toBe(1);
-    expect(app.renderInfobar.mock.calls.length).toBe(1);
-    expect(app.renderForm.mock.calls.length).toBe(1);
-    expect(app.renderForm.mock.calls[0][0]).toBe(formFactory);
-    expect(app.updateDocumentTitle.mock.calls.length).toBe(1);
-  });
-
-  it('when there is no form', () => {
-    let app = new App({ SVG: { SVG: NodeSVG } });
-    app.unmountForm();
-    app.renderMenu = jest.fn();
-    app.renderInfobar = jest.fn();
-    app.renderForm = jest.fn();
-    app.updateDocumentTitle = jest.fn();
-    app.renderPeripherals();
-    expect(app.renderMenu.mock.calls.length).toBe(1);
-    expect(app.renderInfobar.mock.calls.length).toBe(1);
-    expect(app.renderForm.mock.calls.length).toBe(0);
-    expect(app.updateDocumentTitle.mock.calls.length).toBe(1);
-  });
-});
-
-it('renderForm method', () => {
-  let textContent = 'Form was rendered.';
-  let formFactory = () => <div>{textContent}</div>;
+test('renderPeripherals method', () => {
   let app = new App({ SVG: { SVG: NodeSVG } });
-  app.renderForm(formFactory);
-  expect(app._formContainer.textContent).toBe(textContent);
-  expect(app._formFactory).toBe(formFactory);
-});
-
-it('unmountForm method', () => {
-  let textContent = 'Form is still rendered.';
-  let formFactory = () => <div>{textContent}</div>;
-  let app = new App({ SVG: { SVG: NodeSVG } });
-  app.renderForm(formFactory);
-  expect(app._formContainer.textContent).toBe(textContent);
-  expect(app._formFactory).toBe(formFactory);
-  app.unmountForm();
-  expect(app._formContainer.textContent).toBeFalsy();
-  expect(app._formFactory).toBeFalsy();
+  app.renderMenu = jest.fn();
+  app.renderInfobar = jest.fn();
+  app.formContainer.refresh = jest.fn();
+  app.updateDocumentTitle = jest.fn();
+  app.renderPeripherals();
+  expect(app.renderMenu.mock.calls.length).toBe(1);
+  expect(app.renderInfobar.mock.calls.length).toBe(1);
+  expect(app.formContainer.refresh.mock.calls.length).toBe(1);
+  expect(app.updateDocumentTitle.mock.calls.length).toBe(1);
 });
 
 it('pushUndo method', () => {

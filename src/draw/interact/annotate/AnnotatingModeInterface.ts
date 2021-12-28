@@ -1,6 +1,6 @@
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import { FormFactory } from 'AppInterface';
+import { FormFactory } from 'FormContainer';
 
 export interface AnnotatingModeInterface {
   hovered?: number;

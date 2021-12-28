@@ -1,5 +1,5 @@
 import { TertiaryBondsInteractionInterface } from './TertiaryBondsInteractionInterface';
-import { FormFactory } from 'AppInterface';
+import { FormFactory } from 'FormContainer';
 import { App } from 'App';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import {

@@ -5,5 +5,5 @@ import { HomePage } from './HomePage';
 
 it('renders', () => {
   let app = new App({ SVG: { SVG: NodeSVG } });
-  app.renderForm(() => <HomePage app={app} />);
+  app.formContainer.renderForm(() => <HomePage app={app} />);
 });

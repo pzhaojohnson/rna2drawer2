@@ -12,7 +12,7 @@ export function GeneralStylesButton(props: Props) {
     <DroppedButton
       text='General Styles'
       onClick={() => {
-        props.app.renderForm(formProps => (
+        props.app.formContainer.renderForm(formProps => (
           <GeneralBaseStyles
             app={props.app}
             bases={props.app.strictDrawing.drawing.bases()}

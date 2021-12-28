@@ -12,7 +12,7 @@ export function EditDrawingTitleButton(props: Props) {
     <DroppedButton
       text='Drawing Title'
       onClick={() => {
-        props.app.renderForm(formProps => (
+        props.app.formContainer.renderForm(formProps => (
           <EditDrawingTitle app={props.app} unmount={formProps.unmount} />
         ));
       }}

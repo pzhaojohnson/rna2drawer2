@@ -5,5 +5,5 @@ import { CreateNewDrawing } from './CreateNewDrawing';
 
 it('renders', () => {
   let app = new App({ SVG: { SVG: NodeSVG } });
-  app.renderForm(close => <CreateNewDrawing app={app} close={close} />);
+  app.formContainer.renderForm(close => <CreateNewDrawing app={app} close={close} />);
 });

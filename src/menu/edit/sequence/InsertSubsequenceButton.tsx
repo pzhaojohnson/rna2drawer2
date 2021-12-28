@@ -12,7 +12,7 @@ export function InsertSubsequenceButton(props: Props) {
     <DroppedButton
       text='Insert Subsequence'
       onClick={() => {
-        props.app.renderForm(formProps => (
+        props.app.formContainer.renderForm(formProps => (
           <InsertSubsequence app={props.app} unmount={formProps.unmount} />
         ));
       }}

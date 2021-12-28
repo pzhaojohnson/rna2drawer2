@@ -14,7 +14,7 @@ export function HomeButton(props: Props) {
       text='Home'
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
-          props.app.renderForm(() => (
+          props.app.formContainer.renderForm(() => (
             <HomePage app={props.app} />
           ));
         } else {

@@ -17,7 +17,7 @@ export function AppIcon(props: Props) {
       alt='Icon'
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
-          props.app.renderForm(() => (
+          props.app.formContainer.renderForm(() => (
             <HomePage app={props.app} />
           ));
         } else {

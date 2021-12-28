@@ -1,5 +1,5 @@
 import { AnnotatingModeInterface } from './AnnotatingModeInterface';
-import { FormFactory } from 'AppInterface';
+import { FormFactory } from 'FormContainer';
 import { App } from 'App';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import {

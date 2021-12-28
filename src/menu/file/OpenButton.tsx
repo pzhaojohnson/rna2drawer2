@@ -14,7 +14,7 @@ export function OpenButton(props: Props) {
       text='Open'
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
-          props.app.renderForm(formProps => (
+          props.app.formContainer.renderForm(formProps => (
             <OpenRna2drawer
               app={props.app}
               close={formProps.unmount}

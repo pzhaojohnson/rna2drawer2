@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from '../../DrawingInterface';
-import { FormFactory } from 'AppInterface';
+import { FormFactory } from 'FormContainer';
 
 export interface TertiaryBondsInteractionInterface {
   readonly drawing: Drawing;

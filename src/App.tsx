@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import './App.css';
-import { AppInterface, FormFactory } from './AppInterface';
+import { AppInterface } from './AppInterface';
 
 import UndoRedo from './undo/UndoRedo';
 import { pushUndo, undo, redo } from './undo/undo';
@@ -14,6 +14,7 @@ import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 import { Preferences } from 'Preferences';
 
 import { Menu } from './menu/Menu';
+import { FormContainer } from 'FormContainer';
 import { Infobar } from './infobar/Infobar';
 
 import { HomePage } from './forms/home/HomePage';
@@ -31,7 +32,7 @@ export class App implements AppInterface {
   readonly node: HTMLDivElement;
   _menuContainer: HTMLDivElement;
   _drawingContainer: HTMLDivElement;
-  _formContainer: HTMLDivElement;
+  readonly formContainer: FormContainer;
   _infobarContainer: HTMLDivElement;
 
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
@@ -40,15 +41,13 @@ export class App implements AppInterface {
 
   preferences: Preferences;
 
-  _formFactory?: FormFactory;
-
   _specifiedDrawingTitle?: string;
 
   constructor(options?: Options) {
     this.node = document.createElement('div');
     this._menuContainer = document.createElement('div');
     this._drawingContainer = document.createElement('div');
-    this._formContainer = document.createElement('div');
+    this.formContainer = new FormContainer();
     this._infobarContainer = document.createElement('div');
     this._appendContainers();
     this._disableDragAndDrop();
@@ -65,7 +64,7 @@ export class App implements AppInterface {
 
     this._setBindings();
 
-    this.renderForm(close => (
+    this.formContainer.renderForm(() => (
       <HomePage app={this} />
     ));
   }
@@ -79,7 +78,7 @@ export class App implements AppInterface {
     this.node.appendChild(div2);
     this._drawingContainer.style.cssText = 'flex-grow: 1; overflow: auto;';
     div2.appendChild(this._drawingContainer);
-    div2.appendChild(this._formContainer);
+    this.formContainer.appendTo(div2);
     this.node.appendChild(this._infobarContainer);
   }
 
@@ -141,9 +140,7 @@ export class App implements AppInterface {
   renderPeripherals() {
     this.renderMenu();
     this.renderInfobar();
-    if (this._formFactory) {
-      this.renderForm(this._formFactory);
-    }
+    this.formContainer.refresh();
     this.updateDocumentTitle();
   }
 
@@ -153,28 +150,6 @@ export class App implements AppInterface {
 
   renderInfobar() {
     ReactDOM.render(<Infobar app={this} />, this._infobarContainer);
-  }
-
-  renderForm(formFactory: FormFactory) {
-
-    // allows a form to be refreshed
-    ReactDOM.unmountComponentAtNode(this._formContainer);
-
-    let props = {
-      unmount: () => {
-        if (formFactory == this._formFactory) {
-          this.unmountForm();
-        }
-      },
-    };
-
-    ReactDOM.render(formFactory(props), this._formContainer);
-    this._formFactory = formFactory;
-  }
-
-  unmountForm() {
-    this._formFactory = undefined;
-    ReactDOM.unmountComponentAtNode(this._formContainer);
   }
 
   unspecifiedDrawingTitle(): string {

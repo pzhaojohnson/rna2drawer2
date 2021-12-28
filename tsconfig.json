@@ -26,6 +26,7 @@
       "Utilities/*": ["src/utilities/*"],
       "AppInterface": ["src/AppInterface"],
       "App": ["src/App"],
+      "FormContainer": ["src/FormContainer"],
       "Preferences": ["src/Preferences"],
     },
     "module": "es6",
