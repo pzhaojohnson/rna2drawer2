@@ -12,8 +12,8 @@ export function EditLayoutButton(props: Props) {
     <DroppedButton
       text='Layout'
       onClick={() => {
-        props.app.renderForm(unmount => (
-          <EditLayout app={props.app} unmount={unmount} />
+        props.app.renderForm(formProps => (
+          <EditLayout app={props.app} unmount={formProps.unmount} />
         ));
       }}
     />

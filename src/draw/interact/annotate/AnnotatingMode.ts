@@ -1,4 +1,5 @@
-import { AnnotatingModeInterface, FormFactory } from './AnnotatingModeInterface';
+import { AnnotatingModeInterface } from './AnnotatingModeInterface';
+import { FormFactory } from 'AppInterface';
 import { App } from 'App';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import {
@@ -132,12 +133,12 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
   requestToRenderForm() {
     if (this._onRequestToRenderForm) {
-      this._onRequestToRenderForm(close => {
-        this._closeForm = close;
+      this._onRequestToRenderForm(props => {
+        this._closeForm = props.unmount;
         return AnnotatingForm({
           app: this._app,
           mode: this,
-          unmount: close,
+          unmount: props.unmount,
         });
       });
     }

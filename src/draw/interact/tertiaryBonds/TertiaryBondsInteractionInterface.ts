@@ -1,8 +1,5 @@
 import { DrawingInterface as Drawing } from '../../DrawingInterface';
-
-export interface FormFactory {
-  (close?: () => void): React.ReactElement;
-}
+import { FormFactory } from 'AppInterface';
 
 export interface TertiaryBondsInteractionInterface {
   readonly drawing: Drawing;

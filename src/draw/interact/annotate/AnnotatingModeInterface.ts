@@ -1,10 +1,6 @@
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import * as React from 'react';
-
-export interface FormFactory {
-  (close: () => void): React.ReactElement;
-}
+import { FormFactory } from 'AppInterface';
 
 export interface AnnotatingModeInterface {
   hovered?: number;

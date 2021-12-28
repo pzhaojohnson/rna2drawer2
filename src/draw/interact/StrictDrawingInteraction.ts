@@ -3,7 +3,7 @@ import FoldingMode from './fold/FoldingMode';
 import { FlippingMode } from './flip/FlippingMode';
 import { TriangularizingMode } from './triangularize/TriangularizingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
-import { FormFactory } from './annotate/AnnotatingModeInterface';
+import { FormFactory } from 'AppInterface';
 import { App } from 'App';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
@@ -191,7 +191,7 @@ class StrictDrawingInteraction {
   }
 
   requestToRenderForm(ff: FormFactory) {
-    this._app.renderForm(close => ff(close));
+    this._app.renderForm(ff);
   }
 
   get tertiaryBondsInteraction(): TertiaryBondsInteraction {

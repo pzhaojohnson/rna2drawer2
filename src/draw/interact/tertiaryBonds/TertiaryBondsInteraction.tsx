@@ -1,7 +1,5 @@
-import {
-  TertiaryBondsInteractionInterface,
-  FormFactory,
-} from './TertiaryBondsInteractionInterface';
+import { TertiaryBondsInteractionInterface } from './TertiaryBondsInteractionInterface';
+import { FormFactory } from 'AppInterface';
 import { App } from 'App';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import {
@@ -158,11 +156,11 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
 
   requestToRenderForm() {
     if (this._onRequestToRenderForm) {
-      this._onRequestToRenderForm(close => (
+      this._onRequestToRenderForm(props => (
         <EditTertiaryBonds
           app={this._app}
           tertiaryBonds={this.drawing.tertiaryBonds.filter(tb => this.selected.has(tb.id))}
-          unmount={close ? close : () => this._app.unmountForm()}
+          unmount={props.unmount}
         />
       ));
     }

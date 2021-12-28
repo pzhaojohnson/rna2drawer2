@@ -12,8 +12,8 @@ export function EditNumberingButton(props: Props) {
     <DroppedButton
       text='Numbering'
       onClick={() => {
-        props.app.renderForm(unmount => (
-          <EditNumbering app={props.app} unmount={unmount} />
+        props.app.renderForm(formProps => (
+          <EditNumbering app={props.app} unmount={formProps.unmount} />
         ));
       }}
     />

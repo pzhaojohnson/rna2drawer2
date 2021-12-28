@@ -14,10 +14,10 @@ export function NewButton(props: Props) {
       text='New'
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
-          props.app.renderForm(close => (
+          props.app.renderForm(formProps => (
             <CreateNewDrawing
               app={props.app}
-              close={close}
+              close={formProps.unmount}
             />
           ));
         } else {

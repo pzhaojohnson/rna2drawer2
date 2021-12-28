@@ -7,8 +7,12 @@ import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 import * as React from 'react';
 import { Preferences } from 'Preferences';
 
+export type FormProps = {
+  unmount: () => void;
+}
+
 export interface FormFactory {
-  (close: () => void): React.ReactElement;
+  (props: FormProps): React.ReactElement;
 }
 
 export interface AppInterface {

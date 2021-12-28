@@ -12,11 +12,11 @@ export function EditSecondaryBondsButton(props: Props) {
     <DroppedButton
       text='Secondary Bonds'
       onClick={() => {
-        props.app.renderForm(unmount => (
+        props.app.renderForm(formProps => (
           <EditSecondaryBonds
             app={props.app}
             secondaryBonds={[...props.app.strictDrawing.drawing.secondaryBonds]}
-            unmount={unmount}
+            unmount={formProps.unmount}
           />
         ))
       }}

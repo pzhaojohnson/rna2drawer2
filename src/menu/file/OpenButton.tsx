@@ -14,10 +14,10 @@ export function OpenButton(props: Props) {
       text='Open'
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
-          props.app.renderForm(close => (
+          props.app.renderForm(formProps => (
             <OpenRna2drawer
               app={props.app}
-              close={close}
+              close={formProps.unmount}
             />
           ));
         } else {

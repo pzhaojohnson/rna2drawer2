@@ -12,8 +12,8 @@ export function EditSequenceIdButton(props: Props) {
     <DroppedButton
       text='Sequence ID'
       onClick={() => {
-        props.app.renderForm(unmount => (
-          <EditSequenceId app={props.app} unmount={unmount} />
+        props.app.renderForm(formProps => (
+          <EditSequenceId app={props.app} unmount={formProps.unmount} />
         ));
       }}
     />

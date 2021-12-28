@@ -12,8 +12,8 @@ export function ByCharacterButton(props: Props) {
     <DroppedButton
       text='By Character'
       onClick={() => {
-        props.app.renderForm(unmount => (
-          <BasesByCharacter app={props.app} unmount={unmount} />
+        props.app.renderForm(formProps => (
+          <BasesByCharacter app={props.app} unmount={formProps.unmount} />
         ))
       }}
     />

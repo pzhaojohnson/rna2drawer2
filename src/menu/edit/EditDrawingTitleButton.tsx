@@ -12,8 +12,8 @@ export function EditDrawingTitleButton(props: Props) {
     <DroppedButton
       text='Drawing Title'
       onClick={() => {
-        props.app.renderForm(unmount => (
-          <EditDrawingTitle app={props.app} unmount={unmount} />
+        props.app.renderForm(formProps => (
+          <EditDrawingTitle app={props.app} unmount={formProps.unmount} />
         ));
       }}
     />

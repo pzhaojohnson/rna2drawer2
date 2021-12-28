@@ -160,15 +160,15 @@ export class App implements AppInterface {
     // allows a form to be refreshed
     ReactDOM.unmountComponentAtNode(this._formContainer);
 
-    ReactDOM.render(
-      formFactory(() => {
+    let props = {
+      unmount: () => {
         if (formFactory == this._formFactory) {
           this.unmountForm();
         }
-      }),
-      this._formContainer,
-    );
+      },
+    };
 
+    ReactDOM.render(formFactory(props), this._formContainer);
     this._formFactory = formFactory;
   }
 
