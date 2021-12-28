@@ -1,0 +1,21 @@
+.forwardButton {}
+
+.forwardIconContainer {
+  border-radius: 2px;
+  padding: 2px;
+  background-color: white;
+}
+
+.forwardIcon {
+  width: 10px;
+}
+
+.enabled:hover .forwardIconContainer {
+  background-color: rgb(180 180 180);
+}
+
+.enabled:active .forwardIconContainer {
+  background-color: rgb(120 120 120);
+}
+
+.disabled {}

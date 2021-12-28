@@ -1,0 +1,21 @@
+.backwardButton {}
+
+.backwardIconContainer {
+  border-radius: 2px;
+  padding: 2px;
+  background-color: white;
+}
+
+.backwardIcon {
+  width: 10px;
+}
+
+.enabled:hover .backwardIconContainer {
+  background-color: rgb(180 180 180);
+}
+
+.enabled:active .backwardIconContainer {
+  background-color: rgb(120 120 120);
+}
+
+.disabled {}
