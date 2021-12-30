@@ -30,52 +30,46 @@ describe('FormContainer element', () => {
   });
 
   describe('renderForm method', () => {
-    it('renders the form', () => {
+    it('renders and caches the form', () => {
       expect(formContainer.node.childNodes.length).toBe(0);
-      expect(formContainer.node.textContent).toBe('');
       formContainer.renderForm(() => <p>A form.</p>);
-      expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-      expect(formContainer.node.textContent).toBe('A form.'); // rendered
+      expect(formContainer.node.firstChild.textContent).toBe('A form.');
+      // if the form were not cached, refreshing could unmount the form
+      formContainer.refresh();
+      // was not unmounted
+      expect(formContainer.node.firstChild.textContent).toBe('A form.');
     });
 
     describe('passed unmount callback', () => {
-      it('unmounts the rendered form', () => {
+      it('unmounts and uncaches the form', () => {
         let unmount = null;
         let formFactory = props => {
           unmount = props.unmount;
           return <p>Another form.</p>;
         }
-        expect(formContainer.node.childNodes.length).toBe(0);
-        expect(formContainer.node.textContent).toBe('');
         formContainer.renderForm(formFactory);
-        expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-        expect(formContainer.node.textContent).toBe('Another form.'); // rendered
+        // was rendered
+        expect(formContainer.node.firstChild.textContent).toBe('Another form.');
         unmount();
-        expect(formContainer.node.childNodes.length).toBe(0); // unmounted
-        expect(formContainer.node.textContent).toBe('');
+        expect(formContainer.node.childNodes.length).toBe(0); // was unmounted
         // must uncache the form to prevent rerendering on refresh
         formContainer.refresh();
-        expect(formContainer.node.childNodes.length).toBe(0); // uncached
-        expect(formContainer.node.textContent).toBe('');
+        expect(formContainer.node.childNodes.length).toBe(0); // was uncached
       });
 
-      it('does nothing if the form is already unmounted', () => {
+      it('does nothing if the form has already been unmounted', () => {
         let unmount = null;
         let formFactory = props => {
           unmount = props.unmount;
           return <p>Asdf qwer.</p>;
         }
-        expect(formContainer.node.childNodes.length).toBe(0);
-        expect(formContainer.node.textContent).toBe('');
         formContainer.renderForm(formFactory);
-        expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-        expect(formContainer.node.textContent).toBe('Asdf qwer.'); // rendered
+        // was rendered
+        expect(formContainer.node.firstChild.textContent).toBe('Asdf qwer.');
         formContainer.unmountForm();
-        expect(formContainer.node.childNodes.length).toBe(0); // unmounted
-        expect(formContainer.node.textContent).toBe('');
+        expect(formContainer.node.childNodes.length).toBe(0); // was unmounted
         expect(() => unmount()).not.toThrow();
         expect(formContainer.node.childNodes.length).toBe(0); // no change
-        expect(formContainer.node.textContent).toBe('');
       });
 
       it('does not unmount other forms', () => {
@@ -84,64 +78,157 @@ describe('FormContainer element', () => {
           unmount = props.unmount;
           return <p>Form 1.</p>;
         }
-        expect(formContainer.node.childNodes.length).toBe(0);
-        expect(formContainer.node.textContent).toBe('');
         formContainer.renderForm(formFactory1);
-        expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-        expect(formContainer.node.textContent).toBe('Form 1.'); // rendered form 1
+        // form 1 was rendered
+        expect(formContainer.node.firstChild.textContent).toBe('Form 1.');
         let formFactory2 = () => <p>Form 2.</p>;
         formContainer.renderForm(formFactory2);
-        expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-        expect(formContainer.node.textContent).toBe('Form 2.'); // rendered form 2
+        // form 2 was rendered
+        expect(formContainer.node.firstChild.textContent).toBe('Form 2.');
         unmount();
-        expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-        expect(formContainer.node.textContent).toBe('Form 2.'); // not unmounted
+        // form 2 was not unmounted
+        expect(formContainer.node.firstChild.textContent).toBe('Form 2.');
       });
+    });
+
+    it('passes the history interface of the form container', () => {
+      let history = null;
+      let formFactory = props => {
+        history = props.history;
+        return <p>A form.</p>;
+      }
+      formContainer.renderForm(formFactory);
+      expect(history).toBe(formContainer.history);
+    });
+
+    it('records forms in form history', () => {
+      formContainer.renderForm(() => <p>Form A.</p>);
+      formContainer.renderForm(() => <p>Form B.</p>);
+      expect(formContainer.node.firstChild.textContent).toBe('Form B.');
+      formContainer.history.goBackward();
+      expect(formContainer.node.firstChild.textContent).toBe('Form A.');
+      formContainer.history.goForward();
+      expect(formContainer.node.firstChild.textContent).toBe('Form B.');
+    });
+
+    it('does not duplicate forms in form history unnecessarily', () => {
+      let formFactory = () => <p>Asdf zxcv.</p>;
+      formContainer.renderForm(formFactory);
+      formContainer.renderForm(formFactory); // same form factory
+      expect(formContainer.history.canGoBackward()).toBeFalsy(); // did not duplicate
     });
   });
 
   describe('unmountForm method', () => {
-    test('when there is a rendered form', () => {
-      expect(formContainer.node.childNodes.length).toBe(0);
-      expect(formContainer.node.textContent).toBe('');
+    test('when there is a form to unmount', () => {
       formContainer.renderForm(() => <p>123456.</p>);
-      expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-      expect(formContainer.node.textContent).toBe('123456.'); // rendered
+      // was rendered
+      expect(formContainer.node.firstChild.textContent).toBe('123456.');
       formContainer.unmountForm();
-      expect(formContainer.node.childNodes.length).toBe(0); // unmounted
-      expect(formContainer.node.textContent).toBe('');
+      expect(formContainer.node.childNodes.length).toBe(0); // was unmounted
       // must uncache the form to prevent rerendering on refresh
       formContainer.refresh();
-      expect(formContainer.node.childNodes.length).toBe(0); // uncached
-      expect(formContainer.node.textContent).toBe('');
+      expect(formContainer.node.childNodes.length).toBe(0); // was uncached
     });
 
-    test('when there is no rendered form', () => {
+    test('when there is no form to unmount', () => {
       expect(formContainer.node.childNodes.length).toBe(0);
       expect(() => formContainer.unmountForm()).not.toThrow();
     });
   });
 
   describe('refresh method', () => {
-    test('when there is a rendered form', () => {
-      expect(formContainer.node.childNodes.length).toBe(0);
-      expect(formContainer.node.textContent).toBe('');
+    test('when a form is rendered', () => {
       let formFactory = () => <p>A form.</p>;
       formContainer.renderForm(formFactory);
-      expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-      expect(formContainer.node.textContent).toBe('A form.'); // rendered
+      // was rendered
+      expect(formContainer.node.firstChild.textContent).toBe('A form.');
       let spy = jest.spyOn(formContainer, 'renderForm');
       expect(spy).not.toHaveBeenCalled();
       formContainer.refresh();
       expect(spy).toHaveBeenCalledTimes(1);
-      expect(spy.mock.calls[0][0]).toBe(formFactory); // rerendered
-      expect(formContainer.node.childNodes.length).toBeGreaterThan(0);
-      expect(formContainer.node.textContent).toBe('A form.');
+      expect(spy.mock.calls[0][0]).toBe(formFactory); // was rerendered
+      expect(formContainer.node.firstChild.textContent).toBe('A form.');
     });
 
-    test('when there is no rendered form', () => {
+    test('when no form is rendered', () => {
       expect(formContainer.node.childNodes.length).toBe(0);
       expect(() => formContainer.refresh()).not.toThrow();
+    });
+  });
+
+  test('history interface', () => {
+    formContainer.renderForm(() => <p>Form 1.</p>);
+    formContainer.renderForm(() => <p>Form 2.</p>);
+
+    // when can go backward
+    expect(formContainer.node.firstChild.textContent).toBe('Form 2.');
+    expect(formContainer.history.canGoBackward()).toBeTruthy();
+    formContainer.history.goBackward();
+    expect(formContainer.node.firstChild.textContent).toBe('Form 1.'); // went backward
+
+    // when cannot go backward
+    expect(formContainer.history.canGoBackward()).toBeFalsy();
+    expect(() => formContainer.history.goBackward()).not.toThrow();
+    expect(formContainer.node.firstChild.textContent).toBe('Form 1.'); // was not unmounted
+
+    // when can go forward
+    expect(formContainer.history.canGoForward()).toBeTruthy();
+    formContainer.history.goForward();
+    expect(formContainer.node.firstChild.textContent).toBe('Form 2.'); // went forward
+
+    // when cannot go forward
+    expect(formContainer.history.canGoForward()).toBeFalsy();
+    expect(() => formContainer.history.goForward()).not.toThrow();
+    expect(formContainer.node.firstChild.textContent).toBe('Form 2.'); // was not unmounted
+  });
+
+  describe('clearHistory method', () => {
+    test('when there is no form history to clear', () => {
+      expect(formContainer.node.childNodes.length).toBe(0); // no form is rendered
+      // no forms to go backward or forward to
+      expect(formContainer.history.canGoBackward()).toBeFalsy();
+      expect(formContainer.history.canGoForward()).toBeFalsy();
+      expect(() => formContainer.clearHistory()).not.toThrow();
+    });
+
+    describe('when there is form history to clear', () => {
+      test('when no form is rendered', () => {
+        formContainer.renderForm(() => <p>Form 1.</p>);
+        formContainer.renderForm(() => <p>Form 2.</p>);
+        formContainer.history.goBackward();
+        formContainer.unmountForm();
+        expect(formContainer.node.childNodes.length).toBe(0); // no form is rendered
+        expect(formContainer.history.canGoBackward()).toBeTruthy();
+        expect(formContainer.history.canGoForward()).toBeTruthy();
+        formContainer.clearHistory();
+        expect(formContainer.node.childNodes.length).toBe(0); // still no form is rendered
+        // backward and forward history was cleared
+        expect(formContainer.history.canGoBackward()).toBeFalsy();
+        expect(formContainer.history.canGoForward()).toBeFalsy();
+      });
+
+      test('when a form is rendered', () => {
+        formContainer.renderForm(() => <p>Form A.</p>);
+        formContainer.renderForm(() => <p>Form B.</p>);
+        formContainer.renderForm(() => <p>Form C.</p>);
+        formContainer.history.goBackward();
+        // form B is rendered
+        expect(formContainer.node.firstChild.textContent).toBe('Form B.');
+        expect(formContainer.history.canGoBackward()).toBeTruthy();
+        expect(formContainer.history.canGoForward()).toBeTruthy();
+        formContainer.clearHistory();
+        // form B is still rendered
+        expect(formContainer.node.firstChild.textContent).toBe('Form B.');
+        // backward and forward history was cleared
+        expect(formContainer.history.canGoBackward()).toBeFalsy();
+        expect(formContainer.history.canGoForward()).toBeFalsy();
+        // if the current form was not recached, then refreshing could
+        // unmount the current form
+        formContainer.refresh();
+        // form B is still rendered
+        expect(formContainer.node.firstChild.textContent).toBe('Form B.');
+      });
     });
   });
 });
