@@ -59,6 +59,7 @@
       "^Draw(.*)$": "<rootDir>/src/draw$1",
       "^Export(.*)$": "<rootDir>/src/export$1",
       "^Forms(.*)$": "<rootDir>/src/forms$1",
+      "^History(.*)$": "<rootDir>/src/history$1",
       "^Infobar(.*)$": "<rootDir>/src/infobar$1",
       "^Math(.*)$": "<rootDir>/src/math$1",
       "^Menu(.*)$": "<rootDir>/src/menu$1",

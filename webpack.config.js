@@ -64,6 +64,7 @@ module.exports = {
       Draw: path.resolve(__dirname, 'src/draw/'),
       Export: path.resolve(__dirname, 'src/export/'),
       Forms: path.resolve(__dirname, 'src/forms/'),
+      History: path.resolve(__dirname, 'src/history/'),
       Infobar: path.resolve(__dirname, 'src/infobar/'),
       Math: path.resolve(__dirname, 'src/math/'),
       Menu: path.resolve(__dirname, 'src/menu/'),

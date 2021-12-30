@@ -17,6 +17,7 @@
       "Draw/*": ["src/draw/*"],
       "Export/*": ["src/export/*"],
       "Forms/*": ["src/forms/*"],
+      "History/*": ["src/history/*"],
       "Infobar/*": ["src/infobar/*"],
       "Math/*": ["src/math/*"],
       "Menu/*": ["src/menu/*"],
