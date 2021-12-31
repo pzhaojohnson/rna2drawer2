@@ -13,7 +13,7 @@ export function EditSequenceIdButton(props: Props) {
       text='Sequence ID'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <EditSequenceId app={props.app} unmount={formProps.unmount} />
+          <EditSequenceId {...formProps} app={props.app} />
         ));
       }}
     />

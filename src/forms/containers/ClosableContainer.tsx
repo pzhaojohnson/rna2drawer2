@@ -24,9 +24,6 @@ export function ClosableContainer(props: Props): React.ReactElement {
       }}
     >
       <CloseButton
-        position={'absolute'}
-        top={'0px'}
-        right={'0px'}
         onClick={() => props.close()}
       />
       <div style={{ padding: '16px 32px 0px 32px'}} >

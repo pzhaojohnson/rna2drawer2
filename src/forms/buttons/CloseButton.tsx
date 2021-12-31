@@ -4,9 +4,6 @@ import grayCrossMark from './grayCrossMark.svg';
 import whiteCrossMark from './whiteCrossMark.svg';
 
 interface Props {
-  position: 'absolute';
-  top: string;
-  right: string;
   onClick: () => void;
 }
 
@@ -45,9 +42,6 @@ export class CloseButton extends React.Component {
         onMouseLeave={() => this.onMouseLeave()}
         onClick={() => this.onClick()}
         style={{
-          position: this.props.position,
-          top: this.props.top,
-          right: this.props.right,
           width: '27px',
           height: '27px',
           backgroundColor: this.state.hovered ? 'rgb(238,23,23)' : 'transparent',
@@ -77,9 +71,6 @@ export class CloseButton extends React.Component {
 }
 
 CloseButton.defaultProps = {
-  position: 'absolute',
-  top: '0px',
-  right: '0px',
   onClick: () => {},
 };
 

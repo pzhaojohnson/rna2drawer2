@@ -13,7 +13,7 @@ export function EditLayoutButton(props: Props) {
       text='Layout'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <EditLayout app={props.app} unmount={formProps.unmount} />
+          <EditLayout {...formProps} app={props.app} />
         ));
       }}
     />

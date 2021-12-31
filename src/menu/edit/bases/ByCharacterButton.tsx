@@ -13,7 +13,7 @@ export function ByCharacterButton(props: Props) {
       text='By Character'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <BasesByCharacter app={props.app} unmount={formProps.unmount} />
+          <BasesByCharacter {...formProps} app={props.app} />
         ))
       }}
     />

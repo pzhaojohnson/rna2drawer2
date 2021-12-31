@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
 import styles from './EditLayout.css';
 import { AppInterface as App } from 'AppInterface';
 import { RotationField } from './RotationField';
@@ -34,6 +36,7 @@ function TitleUnderline() {
 export type Props = {
   app: App;
   unmount: () => void;
+  history: FormHistoryInterface;
 }
 
 export function EditLayout(props: Props) {
@@ -50,9 +53,10 @@ export function EditLayout(props: Props) {
       }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
-        <CloseButton
-          onClick={() => props.unmount()}
-        />
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }} >
+          <BackwardForwardButtons {...props.history} />
+          <CloseButton onClick={() => props.unmount()} />
+        </div>
       </div>
       <div style={{ margin: '16px 32px 0px 32px' }} >
         <Title />

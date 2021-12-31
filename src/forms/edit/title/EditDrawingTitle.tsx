@@ -1,6 +1,8 @@
 import * as React from 'react';
 import formStyles from './EditDrawingTitle.css';
 import { CloseButton } from 'Forms/buttons/CloseButton';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingTitleInput } from './DrawingTitleInput';
 
@@ -8,6 +10,7 @@ export type Props = {
   app: App;
 
   unmount: () => void;
+  history: FormHistoryInterface;
 }
 
 function Title() {
@@ -41,9 +44,10 @@ export function EditDrawingTitle(props: Props) {
       style={{ position: 'relative', width: '332px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
-        <CloseButton
-          onClick={() => props.unmount()}
-        />
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }} >
+          <BackwardForwardButtons {...props.history} />
+          <CloseButton onClick={() => props.unmount()} />
+        </div>
       </div>
       <div style={{ margin: '16px 32px 0px 32px' }} >
         <Title />

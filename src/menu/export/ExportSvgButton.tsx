@@ -14,9 +14,9 @@ export function ExportSvgButton(props: Props) {
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
           <ExportDrawing
+            {...formProps}
             app={props.app}
             format='svg'
-            unmount={formProps.unmount}
           />
         ));
       }}

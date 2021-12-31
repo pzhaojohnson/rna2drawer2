@@ -159,6 +159,8 @@ export function OpenRna2drawer(props: Props) {
                   updateDrawingTitle(props.app, fileName);
                   delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                   props.close();
+                  // prevent coming back to this form or preceding forms
+                  props.app.formContainer.clearHistory();
                   props.app.refresh();
                 }}
               />

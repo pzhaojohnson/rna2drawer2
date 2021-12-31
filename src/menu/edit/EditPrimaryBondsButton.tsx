@@ -14,9 +14,9 @@ export function EditPrimaryBondsButton(props: Props) {
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
           <EditPrimaryBonds
+            {...formProps}
             app={props.app}
             primaryBonds={[...props.app.strictDrawing.drawing.primaryBonds]}
-            unmount={formProps.unmount}
           />
         ))
       }}

@@ -136,9 +136,9 @@ export class AnnotatingMode implements AnnotatingModeInterface {
       this._onRequestToRenderForm(props => {
         this._closeForm = props.unmount;
         return AnnotatingForm({
+          ...props,
           app: this._app,
           mode: this,
-          unmount: props.unmount,
         });
       });
     }

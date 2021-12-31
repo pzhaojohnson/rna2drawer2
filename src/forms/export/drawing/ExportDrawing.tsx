@@ -4,6 +4,8 @@ import formStyles from './ExportDrawing.css';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { CloseButton } from 'Forms/buttons/CloseButton';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 
 import { AppInterface as App } from 'AppInterface';
@@ -54,6 +56,7 @@ export type Props = {
   format: 'svg' | 'pptx';
 
   unmount: () => void;
+  history: FormHistoryInterface;
 }
 
 function PptxNotes() {
@@ -88,9 +91,10 @@ export function ExportDrawing(props: Props) {
       style={{ position: 'relative', width: '368px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
-        <CloseButton
-          onClick={() => props.unmount()}
-        />
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }} >
+          <BackwardForwardButtons {...props.history} />
+          <CloseButton onClick={() => props.unmount()} />
+        </div>
       </div>
       <div style={{ margin: '16px 32px 0px 32px' }} >
         <p className={`${formStyles.title} unselectable`} >

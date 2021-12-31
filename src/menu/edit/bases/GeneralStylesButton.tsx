@@ -14,9 +14,9 @@ export function GeneralStylesButton(props: Props) {
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
           <GeneralBaseStyles
+            {...formProps}
             app={props.app}
             bases={props.app.strictDrawing.drawing.bases()}
-            unmount={formProps.unmount}
           />
         ))
       }}

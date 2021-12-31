@@ -14,9 +14,9 @@ export function ExportPptxButton(props: Props) {
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
           <ExportDrawing
+            {...formProps}
             app={props.app}
             format='pptx'
-            unmount={formProps.unmount}
           />
         ));
       }}

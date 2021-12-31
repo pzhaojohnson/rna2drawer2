@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { CloseButton } from 'Forms/buttons/CloseButton';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
 import formStyles from './GeneralBaseStyles.css';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
@@ -16,6 +18,7 @@ export type Props = {
   bases: Base[];
 
   unmount: () => void;
+  history: FormHistoryInterface;
 }
 
 function Title() {
@@ -49,9 +52,10 @@ export function GeneralBaseStyles(props: Props) {
       style={{ position: 'relative', width: '324px', height: '100%', overflow: 'auto' }}
     >
       <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
-        <CloseButton
-          onClick={() => props.unmount()}
-        />
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }} >
+          <BackwardForwardButtons {...props.history} />
+          <CloseButton onClick={() => props.unmount()} />
+        </div>
       </div>
       <div style={{ margin: '16px 32px 0px 32px' }} >
         <Title />

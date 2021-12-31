@@ -13,7 +13,7 @@ export function EditNumberingButton(props: Props) {
       text='Numbering'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <EditNumbering app={props.app} unmount={formProps.unmount} />
+          <EditNumbering {...formProps} app={props.app} />
         ));
       }}
     />

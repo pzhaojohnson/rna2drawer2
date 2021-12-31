@@ -66,9 +66,11 @@ export class FormContainer {
       history: this.history,
     };
 
-    ReactDOM.render(formFactory(props), this.node, () => {
-      this._renderedForm.current = { formFactory };
-    });
+    // set before rendering so that the form history is
+    // up-to-date when rendering
+    this._renderedForm.current = { formFactory };
+
+    ReactDOM.render(formFactory(props), this.node);
   }
 
   unmountForm() {
