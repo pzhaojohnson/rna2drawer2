@@ -10,12 +10,23 @@ export type FormProps = {
 
 export type FormFactory = (props: FormProps) => React.ReactElement;
 
+export type RenderFormOptions = {
+  // may be used to specify when two different form factories
+  // produce the same form (i.e., by giving them the same key)
+  key?: string;
+}
+
 type RenderedForm = {
   formFactory: FormFactory;
+  options?: RenderFormOptions;
 }
 
 function renderedFormsAreEqual(rf1: RenderedForm, rf2: RenderedForm): boolean {
-  return rf1.formFactory == rf2.formFactory;
+  if (rf1.options?.key != undefined && rf2.options?.key != undefined) {
+    return rf1.options.key == rf2.options.key;
+  } else {
+    return rf1.formFactory == rf2.formFactory;
+  }
 }
 
 export class FormContainer {
@@ -48,7 +59,7 @@ export class FormContainer {
     this.node.remove();
   }
 
-  renderForm(formFactory: FormFactory) {
+  renderForm(formFactory: FormFactory, options?: RenderFormOptions) {
     // seems to be necessary to update the displayed values of input elements
     ReactDOM.unmountComponentAtNode(this.node);
 
@@ -64,7 +75,7 @@ export class FormContainer {
 
     // set before rendering so that the form history is
     // up-to-date when rendering
-    this._renderedForm.current = { formFactory };
+    this._renderedForm.current = { formFactory, options };
 
     ReactDOM.render(formFactory(props), this.node);
   }

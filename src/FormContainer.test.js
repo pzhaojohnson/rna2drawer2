@@ -101,7 +101,7 @@ describe('FormContainer element', () => {
       expect(history).toBe(formContainer.history);
     });
 
-    it('records forms in form history', () => {
+    it('adds forms to form history', () => {
       formContainer.renderForm(() => <p>Form A.</p>);
       formContainer.renderForm(() => <p>Form B.</p>);
       expect(formContainer.node.firstChild.textContent).toBe('Form B.');
@@ -112,10 +112,28 @@ describe('FormContainer element', () => {
     });
 
     it('does not duplicate forms in form history unnecessarily', () => {
-      let formFactory = () => <p>Asdf zxcv.</p>;
-      formContainer.renderForm(formFactory);
-      formContainer.renderForm(formFactory); // same form factory
+      let formFactory1 = () => <p>Asdf zxcv.</p>;
+      let formFactory2 = () => <p>Asdf zxcv.</p>;
+      formContainer.renderForm(formFactory1); // with an undefined key
+      // same form factory with an undefined key
+      formContainer.renderForm(formFactory1);
       expect(formContainer.history.canGoBackward()).toBeFalsy(); // did not duplicate
+      // same form factory with a defined key
+      formContainer.renderForm(formFactory1, { key: '1234' });
+      expect(formContainer.history.canGoBackward()).toBeFalsy(); // did not duplicate
+
+      formContainer.unmountForm();
+      formContainer.clearHistory();
+      formContainer.renderForm(formFactory1, { key: '1234' }); // with a defined key
+      // same form factory with an undefined key
+      formContainer.renderForm(formFactory1);
+      expect(formContainer.history.canGoBackward()).toBeFalsy(); // did not duplicate
+      // a different form factory with the same key
+      formContainer.renderForm(formFactory2, { key: '1234' });
+      expect(formContainer.history.canGoBackward()).toBeFalsy(); // did not duplicate
+      // same form factory with a different key
+      formContainer.renderForm(formFactory1, { key: '5678' });
+      expect(formContainer.history.canGoBackward()).toBeTruthy(); // duplicated
     });
   });
 
