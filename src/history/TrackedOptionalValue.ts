@@ -1,7 +1,5 @@
-export type AreEqualFunction<Value> = (v1?: Value, v2?: Value) => boolean;
-
 export type Options<Value> = {
-  areEqual: AreEqualFunction<Value>;
+  readonly areEqual: (v1: Value, v2: Value) => boolean;
 }
 
 // A tracked value that is optional (i.e., may be undefined).
@@ -19,13 +17,23 @@ export class TrackedOptionalValue<Value> {
   _previousStack: Value[];
   _nextStack: Value[];
 
-  readonly areEqual: AreEqualFunction<Value>;
+  readonly options: Options<Value>;
 
   constructor(options: Options<Value>) {
     this._previousStack = [];
     this._nextStack = [];
 
-    this.areEqual = options.areEqual;
+    this.options = options;
+  }
+
+  areEqual(v1?: Value, v2?: Value): boolean {
+    if (v1 !== undefined && v2 !== undefined) {
+      return this.options.areEqual(v1, v2);
+    } else if (v1 === undefined && v2 === undefined) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   get current(): Value | undefined {

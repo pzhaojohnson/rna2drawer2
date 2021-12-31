@@ -14,12 +14,8 @@ type RenderedForm = {
   formFactory: FormFactory;
 }
 
-function renderedFormsAreEqual(rf1?: RenderedForm, rf2?: RenderedForm): boolean {
-  if (rf1 && rf2) {
-    return rf1.formFactory == rf2.formFactory;
-  } else {
-    return rf1 == rf2;
-  }
+function renderedFormsAreEqual(rf1: RenderedForm, rf2: RenderedForm): boolean {
+  return rf1.formFactory == rf2.formFactory;
 }
 
 export class FormContainer {

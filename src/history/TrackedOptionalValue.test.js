@@ -11,10 +11,12 @@ afterEach(() => {
 });
 
 describe('TrackedOptionalValue class', () => {
-  it('stores the provided areEqual callback', () => {
-    let areEqual = (v1, v2) => v1 == v2;
-    let value = new TrackedOptionalValue({ areEqual });
-    expect(value.areEqual).toBe(areEqual);
+  it('stores the provided options', () => {
+    let options = {
+      areEqual: (v1, v2) => v1 == v2,
+    };
+    let value = new TrackedOptionalValue(options);
+    expect(value.options).toBe(options);
   });
 
   describe('current, previous and next getters', () => {
