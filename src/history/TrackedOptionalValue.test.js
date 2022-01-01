@@ -136,8 +136,8 @@ describe('TrackedOptionalValue class', () => {
       expect(o1 == o2).toBeFalsy(); // cannot just use equality operator
       value.current = o1;
       value.current = o2;
-      expect(value.current).toBe(o1); // did not reassign
-      // did not push o1 to previous stack
+      expect(value.current).toBe(o2); // still reassigned
+      // but did not push previous stack
       expect(value.previous).toBeUndefined();
     });
 
@@ -199,14 +199,18 @@ describe('TrackedOptionalValue class', () => {
         });
 
         test('when the current value is the same value', () => {
+          let areEqual = (o1, o2) => o1.value == o2.value;
           let value = new TrackedOptionalValue({ areEqual });
-          value.current = 1000;
-          value.current = 2000;
+          let o1 = { value: 1000 };
+          let o2 = { value: 2000 };
+          let o3 = { value: 1000 };
+          value.current = o1;
+          value.current = o2;
           value.goBackward();
-          value.current = 1000; // try setting to same value
-          expect(value.current).toBe(1000); // maintained current value
-          expect(value.previous).toBeUndefined(); // did not push previous stack
-          expect(value.next).toBe(2000); // maintained next stack
+          value.current = o3; // different object but same value
+          expect(value.current).toBe(o3); // still reassigned
+          expect(value.previous).toBeUndefined(); // but did not push previous stack
+          expect(value.next).toBe(o2); // and maintained next stack
         });
       });
 
@@ -232,15 +236,19 @@ describe('TrackedOptionalValue class', () => {
         });
 
         test('when the previous value is the same value', () => {
+          let areEqual = (o1, o2) => o1.value == o2.value;
           let value = new TrackedOptionalValue({ areEqual });
-          value.current = 'Q';
-          value.current = 'W';
+          let o1 = { value: 'Q' };
+          let o2 = { value: 'W' };
+          let o3 = { value: 'Q' };
+          value.current = o1;
+          value.current = o2;
           value.goBackward();
-          value.current = undefined; // makes Q the previous value
-          value.current = 'Q';
-          expect(value.current).toBe('Q');
-          expect(value.previous).toBeUndefined(); // popped previous stack
-          expect(value.next).toBe('W'); // maintained next stack
+          value.current = undefined; // makes o1 the previous value
+          value.current = o3;
+          expect(value.current).toBe(o3); // assigned to o3
+          expect(value.previous).toBeUndefined(); // popped o1
+          expect(value.next).toBe(o2); // maintained next stack
         });
       });
     });

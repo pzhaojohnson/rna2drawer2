@@ -42,10 +42,16 @@ export class TrackedOptionalValue<Value> {
 
   set current(v: Value | undefined) {
     if (this.areEqual(v, this._current)) {
+      // probably safer to still set the current value
+      // even though it was already considered equal to the given value
+      this._current = v;
       return;
     }
+
     if (this._current === undefined && this.areEqual(v, this.previous)) {
-      this._current = this._previousStack.pop();
+      this._previousStack.pop();
+      // probably safer to set to the given value and not the popped value
+      this._current = v;
       return;
     }
 
