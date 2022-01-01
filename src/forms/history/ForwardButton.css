@@ -2,20 +2,23 @@
 
 .forwardIconContainer {
   border-radius: 2px;
-  padding: 2px;
+  padding: 4px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: white;
 }
 
 .forwardIcon {
-  width: 10px;
+  width: 16px;
 }
 
 .enabled:hover .forwardIconContainer {
-  background-color: rgb(180 180 180);
+  background-color: rgb(235 235 235);
 }
 
 .enabled:active .forwardIconContainer {
-  background-color: rgb(120 120 120);
+  background-color: rgb(210 210 210);
 }
 
 .disabled {}
