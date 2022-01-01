@@ -4,6 +4,7 @@ import { FlippingMode } from './flip/FlippingMode';
 import { TriangularizingMode } from './triangularize/TriangularizingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
+import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
 import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
@@ -148,7 +149,9 @@ class StrictDrawingInteraction {
     this._annotatingMode = new AnnotatingMode(this._app);
     this._annotatingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
     this._annotatingMode.onChange(() => this.fireChange());
-    this._annotatingMode.onRequestToRenderForm(ff => this.requestToRenderForm(ff));
+    this._annotatingMode.onRequestToRenderForm(
+      (ff, options) => this.requestToRenderForm(ff, options)
+    );
     this._annotatingMode.disable();
   }
 
@@ -162,7 +165,9 @@ class StrictDrawingInteraction {
     this._tertiaryBondsInteraction.onChange(() => {
       this.fireChange();
     });
-    this._tertiaryBondsInteraction.onRequestToRenderForm(ff => this.requestToRenderForm(ff));
+    this._tertiaryBondsInteraction.onRequestToRenderForm(
+      (ff, options) => this.requestToRenderForm(ff, options)
+    );
   }
 
   reset() {
@@ -190,8 +195,8 @@ class StrictDrawingInteraction {
     this._app.renderPeripherals();
   }
 
-  requestToRenderForm(ff: FormFactory) {
-    this._app.formContainer.renderForm(ff);
+  requestToRenderForm(ff: FormFactory, options?: RenderFormOptions) {
+    this._app.formContainer.renderForm(ff, options);
   }
 
   get tertiaryBondsInteraction(): TertiaryBondsInteraction {

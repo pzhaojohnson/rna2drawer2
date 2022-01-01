@@ -1,5 +1,7 @@
 import { TertiaryBondsInteractionInterface } from './TertiaryBondsInteractionInterface';
 import { FormFactory } from 'FormContainer';
+import { RenderFormOptions } from 'FormContainer';
+import { v4 as uuidv4 } from 'uuid';
 import { App } from 'App';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import {
@@ -18,6 +20,8 @@ import * as React from 'react';
 import { EditTertiaryBonds } from 'Forms/edit/bonds/tertiary/EditTertiaryBonds';
 import { userIsTyping } from 'Utilities/userIsTyping';
 
+const formKey = uuidv4();
+
 class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   _app: App;
 
@@ -30,7 +34,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
   _onShouldPushUndo?: () => void;
   _onChange?: () => void;
 
-  _onRequestToRenderForm?: (ff: FormFactory) => void;
+  _onRequestToRenderForm?: (ff: FormFactory, options?: RenderFormOptions) => void;
 
   constructor(app: App) {
     this._app = app;
@@ -150,7 +154,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
     reset(this);
   }
 
-  onRequestToRenderForm(f: (ff: FormFactory) => void) {
+  onRequestToRenderForm(f: (ff: FormFactory, options?: RenderFormOptions) => void) {
     this._onRequestToRenderForm = f;
   }
 
@@ -162,7 +166,7 @@ class TertiaryBondsInteraction implements TertiaryBondsInteractionInterface {
           app={this._app}
           tertiaryBonds={this.drawing.tertiaryBonds.filter(tb => this.selected.has(tb.id))}
         />
-      ));
+      ), { key: formKey });
     }
   }
 }

@@ -1,5 +1,7 @@
 import { AnnotatingModeInterface } from './AnnotatingModeInterface';
 import { FormFactory } from 'FormContainer';
+import { RenderFormOptions } from 'FormContainer';
+import { v4 as uuidv4 } from 'uuid';
 import { App } from 'App';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import {
@@ -16,6 +18,8 @@ import {
 } from './handlers';
 import { AnnotatingForm } from './AnnotatingForm';
 
+const formKey = uuidv4();
+
 export class AnnotatingMode implements AnnotatingModeInterface {
   _app: App;
 
@@ -29,7 +33,7 @@ export class AnnotatingMode implements AnnotatingModeInterface {
 
   _onShouldPushUndo: (() => void)[];
   _onChange: (() => void)[];
-  _onRequestToRenderForm?: (ff: FormFactory) => void;
+  _onRequestToRenderForm?: (ff: FormFactory, options?: RenderFormOptions) => void;
   _closeForm?: () => void;
 
   constructor(app: App) {
@@ -127,7 +131,7 @@ export class AnnotatingMode implements AnnotatingModeInterface {
     this._onChange.forEach(f => f());
   }
 
-  onRequestToRenderForm(f: (ff: FormFactory) => void) {
+  onRequestToRenderForm(f: (ff: FormFactory, options?: RenderFormOptions) => void) {
     this._onRequestToRenderForm = f;
   }
 
@@ -140,7 +144,7 @@ export class AnnotatingMode implements AnnotatingModeInterface {
           app: this._app,
           mode: this,
         });
-      });
+      }, { key: formKey });
     }
   }
 
