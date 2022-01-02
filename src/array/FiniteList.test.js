@@ -132,4 +132,20 @@ describe('FiniteList class', () => {
       expect(fl.elements()).toStrictEqual([5]); // did not modify
     });
   });
+
+  test('clear method', () => {
+    let fl = new FiniteList({ maxLength: 50 });
+    expect(() => fl.clear()).not.toThrow(); // on an empty list
+    expect(fl.elements()).toStrictEqual([]);
+    fl.push('A');
+    fl.push(2);
+    fl.push('qwer');
+    expect(fl.elements()).toStrictEqual(['A', 2, 'qwer']);
+    fl.clear();
+    expect(fl.elements()).toStrictEqual([]); // cleared itself
+    // check that can still add elements to the list again
+    fl.push('B');
+    fl.push(5);
+    expect(fl.elements()).toStrictEqual(['B', 5]);
+  });
 });

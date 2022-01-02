@@ -52,4 +52,8 @@ export class FiniteList<T> {
   get last(): T | undefined {
     return this._elements[this._elements.length - 1];
   }
+
+  clear() {
+    this._elements = [];
+  }
 }
