@@ -1,5 +1,14 @@
+import { FiniteList as FiniteStack } from 'Array/FiniteList';
+
 export type Options<Value> = {
   readonly areEqual: (v1: Value, v2: Value) => boolean;
+
+  // The maximum number of previous values that are remembered.
+  // (Effectively controls the maximum number of next values
+  // that are remembered.)
+  //
+  // Behavior is undefined when set to less than 1.
+  readonly maxPreviousStackSize: number;
 }
 
 // A tracked value that is optional (i.e., may be undefined).
@@ -14,14 +23,18 @@ export type Options<Value> = {
 // test this.)
 export class TrackedOptionalValue<Value> {
   _current?: Value;
-  _previousStack: Value[];
-  _nextStack: Value[];
+  _previousStack: FiniteStack<Value>;
+  _nextStack: FiniteStack<Value>;
 
   readonly options: Options<Value>;
 
   constructor(options: Options<Value>) {
-    this._previousStack = [];
-    this._nextStack = [];
+    this._previousStack = new FiniteStack<Value>({
+      maxLength: options.maxPreviousStackSize,
+    });
+    this._nextStack = new FiniteStack<Value>({
+      maxLength: options.maxPreviousStackSize,
+    });
 
     this.options = options;
   }
@@ -59,17 +72,17 @@ export class TrackedOptionalValue<Value> {
       this._previousStack.push(this._current);
     }
     if (v !== undefined) {
-      this._nextStack = []; // clear the next stack
+      this._nextStack.clear();
     }
     this._current = v;
   }
 
   get previous(): Value | undefined {
-    return this._previousStack[this._previousStack.length - 1];
+    return this._previousStack.last;
   }
 
   get next(): Value | undefined {
-    return this._nextStack[this._nextStack.length - 1];
+    return this._nextStack.last;
   }
 
   goBackward() {
@@ -83,7 +96,7 @@ export class TrackedOptionalValue<Value> {
   }
 
   canGoBackward(): boolean {
-    return this._previousStack.length > 0;
+    return this._previousStack.size > 0;
   }
 
   goForward() {
@@ -97,6 +110,6 @@ export class TrackedOptionalValue<Value> {
   }
 
   canGoForward(): boolean {
-    return this._nextStack.length > 0;
+    return this._nextStack.size > 0;
   }
 }

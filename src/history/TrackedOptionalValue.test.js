@@ -1,34 +1,59 @@
 import { TrackedOptionalValue } from './TrackedOptionalValue';
 
-let areEqual = null;
+let options = null;
 
 beforeEach(() => {
-  areEqual = (v1, v2) => v1 == v2;
+  options = {
+    areEqual: (v1, v2) => v1 == v2,
+    maxPreviousStackSize: 50,
+  };
 });
 
 afterEach(() => {
-  areEqual = null;
+  options = null;
 });
 
 describe('TrackedOptionalValue class', () => {
   it('stores the provided options', () => {
     let options = {
       areEqual: (v1, v2) => v1 == v2,
+      maxPreviousStackSize: 50,
     };
     let value = new TrackedOptionalValue(options);
     expect(value.options).toBe(options);
   });
 
+  test('maxPreviousStackSize option', () => {
+    let options = {
+      areEqual: (v1, v2) => v1 == v2,
+      maxPreviousStackSize: 3,
+    };
+    let value = new TrackedOptionalValue(options);
+    // assign 5 values
+    [1, 2, 3, 4, 5].forEach(n => value.current = n);
+    expect(value.current).toBe(5);
+    // try going backward 4 times
+    [1, 2, 3, 4].forEach(n => value.goBackward());
+    expect(value.current).toBe(2); // did not remember 1
+    // go forward 3 times
+    [1, 2, 3].forEach(n => value.goForward());
+    // next stack was able to hold as many values as previous stack
+    expect(value.current).toBe(5);
+    // can also directly inspect previous and next stacks
+    expect(value._previousStack.maxLength).toBe(3);
+    expect(value._nextStack.maxLength).toBe(3);
+  });
+
   describe('current, previous and next getters', () => {
     test('when there are no tracked values', () => {
-      let value = new TrackedOptionalValue({ areEqual });
+      let value = new TrackedOptionalValue(options);
       expect(value.current).toBeUndefined();
       expect(value.previous).toBeUndefined();
       expect(value.next).toBeUndefined();
     });
 
     test('when there is one tracked value', () => {
-      let value = new TrackedOptionalValue({ areEqual });
+      let value = new TrackedOptionalValue(options);
       value.current = 'asdf';
       expect(value.current).toBe('asdf');
       expect(value.previous).toBeUndefined();
@@ -42,7 +67,7 @@ describe('TrackedOptionalValue class', () => {
     });
 
     test('when there are multiple tracked values', () => {
-      let value = new TrackedOptionalValue({ areEqual });
+      let value = new TrackedOptionalValue(options);
       value.current = 10;
       value.current = 15;
       value.current = 'Q';
@@ -73,7 +98,7 @@ describe('TrackedOptionalValue class', () => {
 
   describe('goBackward and canGoBackward methods', () => {
     test('when there are no previous values', () => {
-      let value = new TrackedOptionalValue({ areEqual });
+      let value = new TrackedOptionalValue(options);
       value.current = 50;
       expect(value.canGoBackward()).toBeFalsy();
       expect(() => value.goBackward()).not.toThrow();
@@ -84,7 +109,7 @@ describe('TrackedOptionalValue class', () => {
     });
 
     test('when there are previous values', () => {
-      let value = new TrackedOptionalValue({ areEqual });
+      let value = new TrackedOptionalValue(options);
       value.current = 33;
       value.current = 64;
       value.current = 'A';
@@ -99,7 +124,7 @@ describe('TrackedOptionalValue class', () => {
 
   describe('goForward and canGoForward methods', () => {
     test('when there are no next values', () => {
-      let value = new TrackedOptionalValue({ areEqual });
+      let value = new TrackedOptionalValue(options);
       value.current = 100;
       value.current = 'Asdf';
       expect(value.canGoForward()).toBeFalsy();
@@ -111,7 +136,7 @@ describe('TrackedOptionalValue class', () => {
     });
 
     test('when there are next values', () => {
-      let value = new TrackedOptionalValue({ areEqual });
+      let value = new TrackedOptionalValue(options);
       value.current = -10;
       value.current = -14;
       value.current = 'G';
@@ -129,8 +154,11 @@ describe('TrackedOptionalValue class', () => {
 
   describe('current setter', () => {
     it('uses the provided areEqual callback', () => {
-      let areEqual = (o1, o2) => o1?.value == o2?.value;
-      let value = new TrackedOptionalValue({ areEqual });
+      let options = {
+        areEqual: (o1, o2) => o1?.value == o2?.value,
+        maxPreviousStackSize: 60,
+      };
+      let value = new TrackedOptionalValue(options);
       let o1 = { value: 112 };
       let o2 = { value: 112 };
       expect(o1 == o2).toBeFalsy(); // cannot just use equality operator
@@ -142,8 +170,11 @@ describe('TrackedOptionalValue class', () => {
     });
 
     test('defined falsy values', () => {
-      let areEqual = (v1, v2) => v1 === v2;
-      let value = new TrackedOptionalValue({ areEqual });
+      let options = {
+        areEqual: (v1, v2) => v1 === v2,
+        maxPreviousStackSize: 200,
+      };
+      let value = new TrackedOptionalValue(options);
       expect(value.current).toBeUndefined();
       expect(value.previous).toBeUndefined();
       value.current = null;
@@ -162,7 +193,7 @@ describe('TrackedOptionalValue class', () => {
 
     describe('setting to undefined', () => {
       test('when the current value is defined', () => {
-        let value = new TrackedOptionalValue({ areEqual });
+        let value = new TrackedOptionalValue(options);
         value.current = 'ASDF';
         value.current = 'QWER';
         value.goBackward();
@@ -173,7 +204,7 @@ describe('TrackedOptionalValue class', () => {
       });
 
       test('when the current value is undefined', () => {
-        let value = new TrackedOptionalValue({ areEqual });
+        let value = new TrackedOptionalValue(options);
         value.current = 55;
         value.current = 99;
         value.goBackward();
@@ -188,7 +219,7 @@ describe('TrackedOptionalValue class', () => {
     describe('setting to a defined value', () => {
       describe('when the current value is defined', () => {
         test('when the current value is a different value', () => {
-          let value = new TrackedOptionalValue({ areEqual });
+          let value = new TrackedOptionalValue(options);
           value.current = 60;
           value.current = 88;
           value.goBackward();
@@ -199,8 +230,11 @@ describe('TrackedOptionalValue class', () => {
         });
 
         test('when the current value is the same value', () => {
-          let areEqual = (o1, o2) => o1.value == o2.value;
-          let value = new TrackedOptionalValue({ areEqual });
+          let options = {
+            areEqual: (o1, o2) => o1.value == o2.value,
+            maxPreviousStackSize: 25,
+          };
+          let value = new TrackedOptionalValue(options);
           let o1 = { value: 1000 };
           let o2 = { value: 2000 };
           let o3 = { value: 1000 };
@@ -216,7 +250,7 @@ describe('TrackedOptionalValue class', () => {
 
       describe('when the current value is undefined', () => {
         test('when there are no previous values', () => {
-          let value = new TrackedOptionalValue({ areEqual });
+          let value = new TrackedOptionalValue(options);
           value.current = 90;
           expect(value.current).toBe(90);
           expect(value.previous).toBeUndefined();
@@ -224,7 +258,7 @@ describe('TrackedOptionalValue class', () => {
         });
 
         test('when the previous value is a different value', () => {
-          let value = new TrackedOptionalValue({ areEqual });
+          let value = new TrackedOptionalValue(options);
           value.current = 1012;
           value.current = 1088;
           value.goBackward();
@@ -236,8 +270,11 @@ describe('TrackedOptionalValue class', () => {
         });
 
         test('when the previous value is the same value', () => {
-          let areEqual = (o1, o2) => o1.value == o2.value;
-          let value = new TrackedOptionalValue({ areEqual });
+          let options = {
+            areEqual: (o1, o2) => o1.value == o2.value,
+            maxPreviousStackSize: 100,
+          };
+          let value = new TrackedOptionalValue(options);
           let o1 = { value: 'Q' };
           let o2 = { value: 'W' };
           let o3 = { value: 'Q' };

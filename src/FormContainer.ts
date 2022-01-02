@@ -29,6 +29,10 @@ function renderedFormsAreEqual(rf1: RenderedForm, rf2: RenderedForm): boolean {
   }
 }
 
+// the maximum number of previous forms to remember
+// (effectively controls the maximum number of more recent forms to remember)
+const maxPreviousStackSize = 100;
+
 export class FormContainer {
   readonly node: HTMLDivElement;
 
@@ -41,6 +45,7 @@ export class FormContainer {
 
     this._renderedForm = new TrackedOptionalValue<RenderedForm>({
       areEqual: renderedFormsAreEqual,
+      maxPreviousStackSize,
     });
 
     this.history = {
@@ -125,6 +130,7 @@ export class FormContainer {
     let current = this._renderedForm.current;
     this._renderedForm = new TrackedOptionalValue<RenderedForm>({
       areEqual: renderedFormsAreEqual,
+      maxPreviousStackSize,
     });
     this._renderedForm.current = current;
   }
