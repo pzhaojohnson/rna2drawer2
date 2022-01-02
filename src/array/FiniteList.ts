@@ -1,4 +1,5 @@
 export type Options = {
+  // behavior is undefined when set to less than 1
   maxLength: number;
 }
 
