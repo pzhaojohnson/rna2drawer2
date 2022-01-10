@@ -92,7 +92,8 @@ export class FormContainer {
 
   refresh() {
     if (this._renderedForm.current) {
-      this.renderForm(this._renderedForm.current.formFactory);
+      let current = this._renderedForm.current;
+      this.renderForm(current.formFactory, current.options);
     } else {
       // form should already be unmounted in this case
       // but can call just to be safe
@@ -104,7 +105,8 @@ export class FormContainer {
     if (this._renderedForm.canGoBackward()) {
       this._renderedForm.goBackward();
       if (this._renderedForm.current) {
-        this.renderForm(this._renderedForm.current.formFactory);
+        let current = this._renderedForm.current;
+        this.renderForm(current.formFactory, current.options);
       }
     }
   }
@@ -117,7 +119,8 @@ export class FormContainer {
     if (this._renderedForm.canGoForward()) {
       this._renderedForm.goForward();
       if (this._renderedForm.current) {
-        this.renderForm(this._renderedForm.current.formFactory);
+        let current = this._renderedForm.current;
+        this.renderForm(current.formFactory, current.options);
       }
     }
   }
