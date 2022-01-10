@@ -94,50 +94,6 @@ textarea::-webkit-input-placeholder {
   color: rgb(98, 98, 98);
 }
 
-button {
-  border: none;
-  margin: 0px;
-  padding: 4px 32px 4px 32px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: normal;
-  font-style: normal;
-  color: rgba(0,0,0,0.8);
-  border-radius: 2px;
-  box-shadow: none;
-
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-button:focus {
-  outline: none;
-}
-
-select {
-  min-width: 160px;
-  border: 1px solid rgba(0,0,0,0.2);
-  margin: 0px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: normal;
-  font-style: normal;
-  color: rgba(0,0,0,0.8);
-  border-radius: 2px;
-}
-
-select:hover {
-  border-color: rgba(0,0,0,0.8);
-  transition-duration: 0.25s;
-}
-
-select:focus {
-  outline: none;
-  border-color: rgba(0,0,0,0.8);
-}
-
 img {
   user-select: none;
   -webkit-user-select: none;
