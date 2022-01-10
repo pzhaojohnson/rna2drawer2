@@ -10,12 +10,12 @@ import { Values } from './values';
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   static recommendedDefaults: Values = {
     circle: {
-      'r': 8,
+      'r': 7,
       'stroke': '#00ffff',
       'stroke-width': 1,
-      'stroke-opacity': 0.5,
-      'fill': '#00ffff',
-      'fill-opacity': 0.25,
+      'stroke-opacity': 1,
+      'fill': '#c3ffff',
+      'fill-opacity': 1,
     },
   };
 
