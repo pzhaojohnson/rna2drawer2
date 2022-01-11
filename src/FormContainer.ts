@@ -85,6 +85,11 @@ export class FormContainer {
     ReactDOM.render(formFactory(props), this.node);
   }
 
+  // helps make code for going backward and forward and refreshing simpler
+  _rerenderForm(rf: RenderedForm) {
+    this.renderForm(rf.formFactory, rf.options);
+  }
+
   unmountForm() {
     ReactDOM.unmountComponentAtNode(this.node);
     this._renderedForm.current = undefined;
@@ -92,8 +97,7 @@ export class FormContainer {
 
   refresh() {
     if (this._renderedForm.current) {
-      let current = this._renderedForm.current;
-      this.renderForm(current.formFactory, current.options);
+      this._rerenderForm(this._renderedForm.current);
     } else {
       // form should already be unmounted in this case
       // but can call just to be safe
@@ -105,8 +109,7 @@ export class FormContainer {
     if (this._renderedForm.canGoBackward()) {
       this._renderedForm.goBackward();
       if (this._renderedForm.current) {
-        let current = this._renderedForm.current;
-        this.renderForm(current.formFactory, current.options);
+        this._rerenderForm(this._renderedForm.current);
       }
     }
   }
@@ -119,8 +122,7 @@ export class FormContainer {
     if (this._renderedForm.canGoForward()) {
       this._renderedForm.goForward();
       if (this._renderedForm.current) {
-        let current = this._renderedForm.current;
-        this.renderForm(current.formFactory, current.options);
+        this._rerenderForm(this._renderedForm.current);
       }
     }
   }
