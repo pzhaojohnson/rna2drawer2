@@ -10,15 +10,15 @@
 }
 
 .forwardIcon {
-  width: 16px;
+  height: 16px;
 }
 
 .enabled:hover .forwardIconContainer {
-  background-color: rgb(235 235 235);
+  background-color: rgb(242 242 242);
 }
 
 .enabled:active .forwardIconContainer {
-  background-color: rgb(210 210 210);
+  background-color: rgb(222 222 222);
 }
 
 .disabled {}

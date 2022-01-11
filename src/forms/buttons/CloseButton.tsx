@@ -30,7 +30,7 @@ export class CloseButton extends React.Component {
         className={'unselectable'}
         src={src}
         alt={'Cross'}
-        style={{ height: '18px' }}
+        style={{ height: '16px' }}
       />
     );
   }
@@ -42,8 +42,8 @@ export class CloseButton extends React.Component {
         onMouseLeave={() => this.onMouseLeave()}
         onClick={() => this.onClick()}
         style={{
-          width: '27px',
-          height: '27px',
+          width: '24px',
+          height: '24px',
           backgroundColor: this.state.hovered ? 'rgb(238,23,23)' : 'transparent',
           display: 'flex',
           alignItems: 'center',
