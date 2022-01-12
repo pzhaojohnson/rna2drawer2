@@ -12,11 +12,11 @@ export function DotBracketField(props: Props): React.ReactElement {
   return (
     <div style={{ flexGrow: props.flexGrow, display: 'flex', flexDirection: 'column' }} >
       <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'row' }} >
-        <p className={'unselectable-text'} style={{ fontSize: '12px' }} >
+        <p className={'unselectable'} style={{ fontSize: '12px' }} >
           Structure
         </p>
         <p
-          className={'unselectable-text'}
+          className={'unselectable'}
           style={{ marginLeft: '4px', flexGrow: 1, fontSize: '12px', color: 'rgb(130 130 130)' }}
         >
           (Optional)

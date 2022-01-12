@@ -10,7 +10,7 @@ export function SequenceIdField(props: Props): React.ReactElement {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
       <p
-        className={'unselectable-text'}
+        className={'unselectable'}
         style={{ marginRight: '8px', fontSize: '12px', display: 'inline-block' }}
       >
         Sequence ID

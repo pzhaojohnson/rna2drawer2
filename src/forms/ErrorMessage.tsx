@@ -30,7 +30,7 @@ export class ErrorMessage extends React.Component {
   p() {
     return (
       <p
-        className={`${styles.errorMessage} unselectable-text`}
+        className={`${styles.errorMessage} unselectable`}
         style={{
           fontSize: this.props.fontSize,
         }}
