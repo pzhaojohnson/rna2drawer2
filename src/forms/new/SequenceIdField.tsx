@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import textFieldStyles from 'Forms/fields/text/TextField.css';
 
 interface Props {
   initialValue: string;
@@ -17,6 +18,7 @@ export function SequenceIdField(props: Props): React.ReactElement {
       </p>
       <input
         type={'text'}
+        className={`${textFieldStyles.input}`}
         value={props.initialValue}
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}

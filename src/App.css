@@ -27,39 +27,6 @@ p {
   cursor: default;
 }
 
-input[type=text] {
-  border: 1px solid rgba(0,0,0,0.15);
-  margin: 0px;
-  padding: 3px 6px 3px 6px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: normal;
-  font-style: normal;
-  color: rgba(0,0,0,0.95);
-  border-radius: 2px;
-}
-
-input[type=text]:hover {
-  border-color: rgba(0,0,0,0.95);
-  transition-duration: 0.25s;
-}
-
-input[type=text]:focus {
-  outline: none;
-  border-color: rgba(0,0,0,0.95);
-}
-
-input[type=text]::placeholder {
-  font-style: italic;
-  color: rgb(98, 98, 98);
-  opacity: 1; /* necessary for Firefox */
-}
-
-input[type=text]::-webkit-input-placeholder {
-  font-style: italic;
-  color: rgb(98, 98, 98);
-}
-
 textarea {
   border: 1px solid rgba(0,0,0,0.15);
   margin: 0px;
