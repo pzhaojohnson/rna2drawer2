@@ -12,10 +12,6 @@
   justify-content: center;
 }
 
-.textContainer:hover {
-  box-shadow: 0 0 4px rgb(185 185 185);
-}
-
 .text {
   font-size: 10.5px;
   font-weight: 600;
@@ -24,7 +20,11 @@
 
 .on .textContainer {
   border: none;
-  background-color: rgb(85 85 85);
+  background-color: rgb(110 110 110);
+}
+
+.on:hover .textContainer {
+  box-shadow: 0 0 4px rgb(161 161 161);
 }
 
 .on .text {
@@ -34,6 +34,10 @@
 .off .textContainer {
   border: 1px solid rgb(171 171 171);
   background-color: white;
+}
+
+.off:hover .textContainer {
+  box-shadow: 0 0 4px rgb(185 185 185);
 }
 
 .off .text {
