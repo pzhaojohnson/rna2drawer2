@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import './App.css';
 import { AppInterface } from './AppInterface';
 
 import UndoRedo from './undo/UndoRedo';
