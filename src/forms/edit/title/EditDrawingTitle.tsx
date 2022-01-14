@@ -1,8 +1,6 @@
 import * as React from 'react';
-import formStyles from './EditDrawingTitle.css';
-import { CloseButton } from 'Forms/buttons/CloseButton';
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
 import { AppInterface as App } from 'AppInterface';
 import { DrawingTitleInput } from './DrawingTitleInput';
 
@@ -13,61 +11,25 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-function Title() {
-  return (
-    <p
-      className='unselectable'
-      style={{ fontSize: '24px', color: 'rgba(0,0,0,1)' }}
-    >
-      Drawing Title
-    </p>
-  );
-}
-
-function TitleUnderline() {
-  return (
-    <div
-      style={{
-        height: '0px',
-        borderWidth: '0px 0px 1px 0px',
-        borderStyle: 'solid',
-        borderColor: 'rgba(0,0,0,0.175)',
-      }}
-    />
-  );
-}
-
 export function EditDrawingTitle(props: Props) {
   return (
-    <div
-      className={formStyles.form}
-      style={{ position: 'relative', width: '332px', height: '100%', overflow: 'auto' }}
+    <PartialWidthContainer
+      unmount={props.unmount}
+      history={props.history}
+      title='Drawing Title'
+      style={{ width: '332px' }}
     >
-      <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }} >
-          <BackwardForwardButtons {...props.history} />
-          <CloseButton onClick={() => props.unmount()} />
-        </div>
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
+        <DrawingTitleInput app={props.app} />
       </div>
-      <div style={{ margin: '16px 32px 0px 32px' }} >
-        <Title />
+      <div style={{ margin: '8px 0px 8px 3px' }} >
+        <p
+          className='unselectable'
+          style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }}
+        >
+          Defaults to the sequence ID.
+        </p>
       </div>
-      <div style={{ margin: '8px 16px 0px 16px' }} >
-        <TitleUnderline />
-      </div>
-      <div style={{ margin: '24px 40px 0px 40px' }} >
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
-          <DrawingTitleInput app={props.app} />
-        </div>
-        <div style={{ margin: '8px 0px 8px 3px' }} >
-          <p
-            className='unselectable'
-            style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }}
-          >
-            Defaults to the sequence ID.
-          </p>
-        </div>
-      </div>
-    </div>
+    </PartialWidthContainer>
   );
 }
