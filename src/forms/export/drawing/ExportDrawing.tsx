@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import formStyles from './ExportDrawing.css';
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
-import { CloseButton } from 'Forms/buttons/CloseButton';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 
 import { AppInterface as App } from 'AppInterface';
@@ -86,25 +84,13 @@ export function ExportDrawing(props: Props) {
   });
 
   return (
-    <div
-      className={formStyles.form}
-      style={{ position: 'relative', width: '368px', height: '100%', overflow: 'auto' }}
+    <PartialWidthContainer
+      unmount={props.unmount}
+      history={props.history}
+      title={`Export ${props.format.toUpperCase()}`}
+      style={{ width: '368px' }}
     >
-      <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }} >
-          <BackwardForwardButtons {...props.history} />
-          <CloseButton onClick={() => props.unmount()} />
-        </div>
-      </div>
-      <div style={{ margin: '16px 32px 0px 32px' }} >
-        <p className={`${formStyles.title} unselectable`} >
-          {`Export ${props.format.toUpperCase()}`}
-        </p>
-      </div>
-      <div style={{ margin: '8px 16px 0px 16px' }} >
-        <div className={formStyles.titleUnderline} />
-      </div>
-      <div style={{ margin: '24px 40px 0px 40px' }} >
+      <div>
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
           <input
             type='text'
@@ -136,7 +122,7 @@ export function ExportDrawing(props: Props) {
           </p>
         </div>
       </div>
-      <div style={{ margin: '32px 40px 0px 40px' }} >
+      <div style={{ marginTop: '32px' }} >
         <SolidButton
           text='Export'
           onClick={() => {
@@ -193,11 +179,10 @@ export function ExportDrawing(props: Props) {
         )}
       </div>
       {props.format != 'pptx' ? null : (
-        <div style={{ margin: '16px 40px 0px 40px' }} >
+        <div style={{ marginTop: '16px' }} >
           <PptxNotes />
         </div>
       )}
-      <div style={{ height: '8px' }} /> {/* bottom spacer */}
-    </div>
+    </PartialWidthContainer>
   );
 }
