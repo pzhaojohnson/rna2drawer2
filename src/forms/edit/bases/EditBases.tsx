@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { CloseButton } from 'Forms/buttons/CloseButton';
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
-import formStyles from './EditBases.css';
 import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 
@@ -45,134 +43,98 @@ function outlines(bases: Base[]): CircleBaseAnnotation[] {
   return os;
 }
 
-function Title() {
-  return (
-    <p
-      className='unselectable'
-      style={{ fontSize: '24px', color: 'rgba(0,0,0,1)' }}
-    >
-      Bases
-    </p>
-  );
-}
-
-function TitleUnderline() {
-  return (
-    <div
-      style={{
-        height: '0px',
-        borderWidth: '0px 0px 1px 0px',
-        borderStyle: 'solid',
-        borderColor: 'rgba(0,0,0,0.175)',
-      }}
-    />
-  );
-}
-
 export function EditBases(props: Props) {
   let os = outlines(props.bases);
   return (
-    <div
-      className={formStyles.form}
-      style={{ position: 'relative', width: '324px', height: '100%', overflow: 'auto' }}
+    <PartialWidthContainer
+      unmount={props.unmount}
+      history={props.history}
+      title='Bases'
+      style={{ width: '324px' }}
     >
-      <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }} >
-          <BackwardForwardButtons {...props.history} />
-          <CloseButton onClick={() => props.unmount()} />
-        </div>
-      </div>
-      <div style={{ margin: '16px 32px 0px 32px' }} >
-        <Title />
-      </div>
-      <div style={{ margin: '8px 16px 0px 16px' }} >
-        <TitleUnderline />
-      </div>
-      <div style={{ margin: '24px 40px 8px 40px' }} >
-        {props.bases.length == 0 ? (
-          <p className='unselectable' style={{ fontSize: '12px' }} >
-            No bases are selected.
-          </p>
-        ) : (
-          <div>
-            {props.bases.length != 1 ? null : (
-              <div style={{ marginBottom: '16px' }} >
-                <CharacterField app={props.app} base={props.bases[0]} />
-                <div style={{ marginTop: '16px' }} >
-                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                    <NumberingCheckbox app={props.app} base={props.bases[0]} />
-                    {!props.bases[0].numbering ? null : (
-                      <div style={{ marginLeft: '10px' }} >
-                        <NumberInput app={props.app} baseNumbering={props.bases[0].numbering} />
-                      </div>
-                    )}
-                    <div style={{ marginLeft: props.bases[0].numbering ? '8px' : '6px' }} >
-                      <p className={`${checkboxFieldStyles.label}`}>
-                        Numbering
-                      </p>
+      {props.bases.length == 0 ? (
+        <p className='unselectable' style={{ fontSize: '12px' }} >
+          No bases are selected.
+        </p>
+      ) : (
+        <div>
+          {props.bases.length != 1 ? null : (
+            <div style={{ marginBottom: '16px' }} >
+              <CharacterField app={props.app} base={props.bases[0]} />
+              <div style={{ marginTop: '16px' }} >
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <NumberingCheckbox app={props.app} base={props.bases[0]} />
+                  {!props.bases[0].numbering ? null : (
+                    <div style={{ marginLeft: '10px' }} >
+                      <NumberInput app={props.app} baseNumbering={props.bases[0].numbering} />
                     </div>
+                  )}
+                  <div style={{ marginLeft: props.bases[0].numbering ? '8px' : '6px' }} >
+                    <p className={`${checkboxFieldStyles.label}`}>
+                      Numbering
+                    </p>
                   </div>
                 </div>
-              </div>
-            )}
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-              <FillPicker app={props.app} bases={props.bases} />
-              <div style={{ marginLeft: '10px' }} >
-                <FillOpacityInput app={props.app} bases={props.bases} />
-              </div>
-              <div style={{ marginLeft: '8px' }} >
-                <p className={`${colorFieldStyles.label} unselectable`} >
-                  Color
-                </p>
               </div>
             </div>
-            <div style={{ marginTop: '16px' }} >
-              <OutlineField app={props.app} bases={props.bases} />
+          )}
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+            <FillPicker app={props.app} bases={props.bases} />
+            <div style={{ marginLeft: '10px' }} >
+              <FillOpacityInput app={props.app} bases={props.bases} />
             </div>
-            {!allHaveOutlines(props.bases) ? null : (
-              <div style={{ margin: '12px 0px 0px 16px' }} >
-                <OutlineRadiusField app={props.app} outlines={os} />
-                <div style={{ marginTop: '8px' }} >
-                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                    <OutlineStrokePicker app={props.app} outlines={os} />
-                    <div style={{ marginLeft: '10px' }} >
-                      <OutlineStrokeOpacityInput app={props.app} outlines={os} />
-                    </div>
-                    <div style={{ marginLeft: '8px' }} >
-                      <p className={`${colorFieldStyles.label} unselectable`} >
-                        Line Color
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div style={{ marginTop: '8px' }} >
-                  <OutlineStrokeWidthField app={props.app} outlines={os} />
-                </div>
-                <div style={{ marginTop: '8px' }} >
-                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                    <OutlineFillPicker app={props.app} outlines={os} />
-                    <div style={{ marginLeft: '10px' }} >
-                      <OutlineFillOpacityInput app={props.app} outlines={os} />
-                    </div>
-                    <div style={{ marginLeft: '8px' }} >
-                      <p className={`${colorFieldStyles.label} unselectable`} >
-                        Fill
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div style={{ marginTop: '16px' }} >
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                <BringToFrontButton app={props.app} bases={props.bases} />
-                <div style={{ width: '18px' }} />
-                <SendToBackButton app={props.app} bases={props.bases} />
-              </div>
+            <div style={{ marginLeft: '8px' }} >
+              <p className={`${colorFieldStyles.label} unselectable`} >
+                Color
+              </p>
             </div>
           </div>
-        )}
-      </div>
-    </div>
+          <div style={{ marginTop: '16px' }} >
+            <OutlineField app={props.app} bases={props.bases} />
+          </div>
+          {!allHaveOutlines(props.bases) ? null : (
+            <div style={{ margin: '12px 0px 0px 16px' }} >
+              <OutlineRadiusField app={props.app} outlines={os} />
+              <div style={{ marginTop: '8px' }} >
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <OutlineStrokePicker app={props.app} outlines={os} />
+                  <div style={{ marginLeft: '10px' }} >
+                    <OutlineStrokeOpacityInput app={props.app} outlines={os} />
+                  </div>
+                  <div style={{ marginLeft: '8px' }} >
+                    <p className={`${colorFieldStyles.label} unselectable`} >
+                      Line Color
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div style={{ marginTop: '8px' }} >
+                <OutlineStrokeWidthField app={props.app} outlines={os} />
+              </div>
+              <div style={{ marginTop: '8px' }} >
+                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+                  <OutlineFillPicker app={props.app} outlines={os} />
+                  <div style={{ marginLeft: '10px' }} >
+                    <OutlineFillOpacityInput app={props.app} outlines={os} />
+                  </div>
+                  <div style={{ marginLeft: '8px' }} >
+                    <p className={`${colorFieldStyles.label} unselectable`} >
+                      Fill
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          <div style={{ marginTop: '16px' }} >
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+              <BringToFrontButton app={props.app} bases={props.bases} />
+              <div style={{ width: '18px' }} />
+              <SendToBackButton app={props.app} bases={props.bases} />
+            </div>
+          </div>
+        </div>
+      )}
+    </PartialWidthContainer>
   );
 }

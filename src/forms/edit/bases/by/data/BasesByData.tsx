@@ -1,11 +1,9 @@
 import * as React from 'react';
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { useState, useEffect } from 'react';
-import formStyles from './BasesByData.css';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
-import { CloseButton } from 'Forms/buttons/CloseButton';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { AppInterface as App } from 'AppInterface';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
@@ -154,60 +152,84 @@ export function BasesByData(props: Props) {
   }
 
   return (
-    <div
-      className={formStyles.form}
-      style={{ position: 'relative', width: '386px', height: '100%', overflow: 'auto' }}
+    <PartialWidthContainer
+      unmount={props.unmount}
+      history={props.history}
+      title='Bases by Data'
+      style={{ width: '386px' }}
     >
-      <div style={{ position: 'absolute', top: '0px', right: '0px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }} >
-          <BackwardForwardButtons {...props.history} />
-          <CloseButton onClick={() => props.unmount()} />
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
+        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
+          Data
+        </p>
+        <textarea
+          value={inputs.data}
+          onChange={event => {
+            if (event.target.value.trim() != inputs.data.trim()) {
+              setErrorMessage(new String(''));
+            }
+            setInputs({ ...inputs, data: event.target.value });
+          }}
+          onBlur={() => setInputs(constrainInputs(inputs))}
+          rows={12}
+          placeholder='...delimit by whitespace, commas and semicolons'
+          spellCheck={false}
+          style={{ marginTop: '4px' }}
+        />
+        <div style={{ marginTop: '4px' }} >
+          <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
+            A list of numbers (e.g., SHAPE reactivities).
+          </p>
         </div>
       </div>
-      <div style={{ margin: '16px 32px 0px 32px' }} >
-        <p className={`${formStyles.title} unselectable`} >
-          Bases by Data
-        </p>
-      </div>
-      <div style={{ margin: '8px 16px 0px 16px' }} >
-        <div className={formStyles.titleUnderline} />
-      </div>
-      <div style={{ margin: '24px 40px 8px 40px' }} >
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
-          <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-            Data
-          </p>
-          <textarea
-            value={inputs.data}
+      <div style={{ marginTop: '20px' }} >
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+          <input
+            type='text'
+            className={textFieldStyles.input}
+            value={inputs.startPosition}
             onChange={event => {
-              if (event.target.value.trim() != inputs.data.trim()) {
+              if (event.target.value.trim() != inputs.startPosition.trim()) {
                 setErrorMessage(new String(''));
               }
-              setInputs({ ...inputs, data: event.target.value });
+              setInputs({ ...inputs, startPosition: event.target.value });
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
-            rows={12}
-            placeholder='...delimit by whitespace, commas and semicolons'
-            spellCheck={false}
-            style={{ marginTop: '4px' }}
+            onKeyUp={event => {
+              if (event.key.toLowerCase() == 'enter') {
+                setInputs(constrainInputs(inputs));
+              }
+            }}
+            style={{ width: '48px' }}
           />
-          <div style={{ marginTop: '4px' }} >
-            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
-              A list of numbers (e.g., SHAPE reactivities).
+          <div style={{ marginLeft: '8px' }} >
+            <p className={`${textFieldStyles.label} unselectable`} >
+              Start Position
             </p>
           </div>
         </div>
-        <div style={{ marginTop: '20px' }} >
+        <div style={{ marginTop: '4px' }} >
+          <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
+            The position of the base where the data starts.
+          </p>
+        </div>
+        <SequenceBounds />
+      </div>
+      <div style={{ marginTop: '20px' }} >
+        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
+          Range to Select
+        </p>
+        <div style={{ margin: '6px 0px 0px 8px' }} >
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
             <input
               type='text'
               className={textFieldStyles.input}
-              value={inputs.startPosition}
+              value={inputs.min}
               onChange={event => {
-                if (event.target.value.trim() != inputs.startPosition.trim()) {
+                if (event.target.value.trim() != inputs.min.trim()) {
                   setErrorMessage(new String(''));
                 }
-                setInputs({ ...inputs, startPosition: event.target.value });
+                setInputs({ ...inputs, min: event.target.value });
               }}
               onBlur={() => setInputs(constrainInputs(inputs))}
               onKeyUp={event => {
@@ -215,36 +237,25 @@ export function BasesByData(props: Props) {
                   setInputs(constrainInputs(inputs));
                 }
               }}
-              style={{ width: '48px' }}
+              style={{ width: '42px' }}
             />
             <div style={{ marginLeft: '8px' }} >
               <p className={`${textFieldStyles.label} unselectable`} >
-                Start Position
+                Minimum Value
               </p>
             </div>
           </div>
-          <div style={{ marginTop: '4px' }} >
-            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
-              The position of the base where the data starts.
-            </p>
-          </div>
-          <SequenceBounds />
-        </div>
-        <div style={{ marginTop: '20px' }} >
-          <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-            Range to Select
-          </p>
-          <div style={{ margin: '6px 0px 0px 8px' }} >
+          <div style={{ marginTop: '8px' }} >
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
               <input
                 type='text'
                 className={textFieldStyles.input}
-                value={inputs.min}
+                value={inputs.max}
                 onChange={event => {
-                  if (event.target.value.trim() != inputs.min.trim()) {
+                  if (event.target.value.trim() != inputs.max.trim()) {
                     setErrorMessage(new String(''));
                   }
-                  setInputs({ ...inputs, min: event.target.value });
+                  setInputs({ ...inputs, max: event.target.value });
                 }}
                 onBlur={() => setInputs(constrainInputs(inputs))}
                 onKeyUp={event => {
@@ -256,164 +267,137 @@ export function BasesByData(props: Props) {
               />
               <div style={{ marginLeft: '8px' }} >
                 <p className={`${textFieldStyles.label} unselectable`} >
-                  Minimum Value
+                  Maximum Value
                 </p>
               </div>
             </div>
-            <div style={{ marginTop: '8px' }} >
-              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                <input
-                  type='text'
-                  className={textFieldStyles.input}
-                  value={inputs.max}
-                  onChange={event => {
-                    if (event.target.value.trim() != inputs.max.trim()) {
-                      setErrorMessage(new String(''));
-                    }
-                    setInputs({ ...inputs, max: event.target.value });
-                  }}
-                  onBlur={() => setInputs(constrainInputs(inputs))}
-                  onKeyUp={event => {
-                    if (event.key.toLowerCase() == 'enter') {
-                      setInputs(constrainInputs(inputs));
-                    }
-                  }}
-                  style={{ width: '42px' }}
-                />
-                <div style={{ marginLeft: '8px' }} >
-                  <p className={`${textFieldStyles.label} unselectable`} >
-                    Maximum Value
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style={{ marginTop: '4px' }} >
-            <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
-              Bases with values in the range will be selected.
-            </p>
           </div>
         </div>
-        <div style={{ marginTop: '28px' }} >
-          <SolidButton
-            text='Select'
-            onClick={() => {
-              let vs = splitData(inputs.data);
-              vs = vs.filter(v => v.length > 0); // remove empty strings
-              let data = vs.map(v => Number.parseFloat(v));
-
-              if (data.length == 0) {
-                setErrorMessage(new String('No data entered.'));
-                return;
-              } else if (data.some(v => !Number.isFinite(v))) {
-                setErrorMessage(new String('All data values must be numbers.'));
-                return;
-              }
-
-              if (isBlank(inputs.startPosition)) {
-                setErrorMessage(new String('Specify a start position.'));
-                return;
-              }
-              let startPosition = Number.parseFloat(inputs.startPosition);
-              if (!Number.isFinite(startPosition)) {
-                setErrorMessage(new String('Start position must be a number.'));
-                return;
-              } else if (!Number.isInteger(startPosition)) {
-                setErrorMessage(new String('Start position must be an integer.'));
-                return;
-              }
-
-              if (isBlank(inputs.min)) {
-                setErrorMessage(new String('Specify a minimum value to select.'));
-                return;
-              }
-              let min = Number.parseFloat(inputs.min);
-              if (!Number.isFinite(min)) {
-                setErrorMessage(new String('Minimum value to select must be a number.'));
-                return;
-              }
-
-              if (isBlank(inputs.max)) {
-                setErrorMessage(new String('Specify a maximum value to select.'));
-                return;
-              }
-              let max = Number.parseFloat(inputs.max);
-              if (!Number.isFinite(max)) {
-                setErrorMessage(new String('Maximum value to select must be a number.'));
-                return;
-              }
-
-              let drawing = props.app.strictDrawing.drawing;
-              if (drawing.sequences.length == 0 || drawing.bases().length == 0) {
-                setErrorMessage('Drawing has no bases.');
-                return;
-              }
-              let seq = drawing.sequences[0];
-
-              // account for numbering offset
-              let no = numberingOffset(seq) ?? 0;
-              startPosition -= no;
-
-              if (startPosition < 1 || startPosition > seq.length) {
-                setErrorMessage(new String('Start position is out of range.'));
-                return;
-              }
-
-              if (startPosition + data.length - 1 > seq.length) {
-                setErrorMessage(new String('Data go beyond the end of the sequence.'));
-                return;
-              }
-
-              let positions: number[] = [];
-              data.forEach((v, i) => {
-                if (v >= min && v <= max) {
-                  positions.push(startPosition + i);
-                }
-              });
-
-              if (positions.length == 0) {
-                setErrorMessage(new String('No data values in the entered range.'));
-                return;
-              }
-
-              // close the form and select bases
-              props.unmount();
-              props.app.strictDrawingInteraction.startAnnotating();
-              let annotatingMode = props.app.strictDrawingInteraction.annotatingMode;
-              annotatingMode.clearSelection();
-              annotatingMode.select(positions);
-              annotatingMode.requestToRenderForm();
-            }}
-          />
-        </div>
-        {!errorMessage.valueOf() ? null : (
-          <p
-            key={Math.random()}
-            className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-            style={{ marginTop: '6px' }}
-          >
-            {errorMessage.valueOf()}
-          </p>
-        )}
-        <div style={{ marginTop: '12px' }} >
-          <p
-            className='unselectable'
-            style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
-          >
-            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-            Bases with values in the entered range will be selected and may then be edited.
-          </p>
-        </div>
-        <div style={{ marginTop: '6px', marginBottom: '8px' }} >
-          <p
-            className='unselectable'
-            style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
-          >
-            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-            The range is inclusive.
+        <div style={{ marginTop: '4px' }} >
+          <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
+            Bases with values in the range will be selected.
           </p>
         </div>
       </div>
-    </div>
+      <div style={{ marginTop: '28px' }} >
+        <SolidButton
+          text='Select'
+          onClick={() => {
+            let vs = splitData(inputs.data);
+            vs = vs.filter(v => v.length > 0); // remove empty strings
+            let data = vs.map(v => Number.parseFloat(v));
+
+            if (data.length == 0) {
+              setErrorMessage(new String('No data entered.'));
+              return;
+            } else if (data.some(v => !Number.isFinite(v))) {
+              setErrorMessage(new String('All data values must be numbers.'));
+              return;
+            }
+
+            if (isBlank(inputs.startPosition)) {
+              setErrorMessage(new String('Specify a start position.'));
+              return;
+            }
+            let startPosition = Number.parseFloat(inputs.startPosition);
+            if (!Number.isFinite(startPosition)) {
+              setErrorMessage(new String('Start position must be a number.'));
+              return;
+            } else if (!Number.isInteger(startPosition)) {
+              setErrorMessage(new String('Start position must be an integer.'));
+              return;
+            }
+
+            if (isBlank(inputs.min)) {
+              setErrorMessage(new String('Specify a minimum value to select.'));
+              return;
+            }
+            let min = Number.parseFloat(inputs.min);
+            if (!Number.isFinite(min)) {
+              setErrorMessage(new String('Minimum value to select must be a number.'));
+              return;
+            }
+
+            if (isBlank(inputs.max)) {
+              setErrorMessage(new String('Specify a maximum value to select.'));
+              return;
+            }
+            let max = Number.parseFloat(inputs.max);
+            if (!Number.isFinite(max)) {
+              setErrorMessage(new String('Maximum value to select must be a number.'));
+              return;
+            }
+
+            let drawing = props.app.strictDrawing.drawing;
+            if (drawing.sequences.length == 0 || drawing.bases().length == 0) {
+              setErrorMessage('Drawing has no bases.');
+              return;
+            }
+            let seq = drawing.sequences[0];
+
+            // account for numbering offset
+            let no = numberingOffset(seq) ?? 0;
+            startPosition -= no;
+
+            if (startPosition < 1 || startPosition > seq.length) {
+              setErrorMessage(new String('Start position is out of range.'));
+              return;
+            }
+
+            if (startPosition + data.length - 1 > seq.length) {
+              setErrorMessage(new String('Data go beyond the end of the sequence.'));
+              return;
+            }
+
+            let positions: number[] = [];
+            data.forEach((v, i) => {
+              if (v >= min && v <= max) {
+                positions.push(startPosition + i);
+              }
+            });
+
+            if (positions.length == 0) {
+              setErrorMessage(new String('No data values in the entered range.'));
+              return;
+            }
+
+            // close the form and select bases
+            props.unmount();
+            props.app.strictDrawingInteraction.startAnnotating();
+            let annotatingMode = props.app.strictDrawingInteraction.annotatingMode;
+            annotatingMode.clearSelection();
+            annotatingMode.select(positions);
+            annotatingMode.requestToRenderForm();
+          }}
+        />
+      </div>
+      {!errorMessage.valueOf() ? null : (
+        <p
+          key={Math.random()}
+          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
+          style={{ marginTop: '6px' }}
+        >
+          {errorMessage.valueOf()}
+        </p>
+      )}
+      <div style={{ marginTop: '12px' }} >
+        <p
+          className='unselectable'
+          style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
+        >
+          <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
+          Bases with values in the entered range will be selected and may then be edited.
+        </p>
+      </div>
+      <div style={{ marginTop: '6px', marginBottom: '8px' }} >
+        <p
+          className='unselectable'
+          style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
+        >
+          <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
+          The range is inclusive.
+        </p>
+      </div>
+    </PartialWidthContainer>
   );
 }
