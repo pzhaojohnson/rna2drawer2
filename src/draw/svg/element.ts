@@ -81,38 +81,6 @@ export class SVGElementWrapper {
     }
   }
 
-  mouseover(f: () => void) {
-    try {
-      this.wrapped.mouseover(f);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  mouseout(f: () => void) {
-    try {
-      this.wrapped.mouseout(f);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  mousedown(f: () => void) {
-    try {
-      this.wrapped.mousedown(f);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  dblclick(f: () => void) {
-    try {
-      this.wrapped.dblclick(f);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   front() {
     try {
       this.wrapped.front();

@@ -127,21 +127,6 @@ describe('SVGElementWrapper', () => {
     });
   });
 
-  it('event binders', () => {
-    [
-      { name: 'mouseover' },
-      { name: 'mouseout' },
-      { name: 'mousedown' },
-      { name: 'dblclick' },
-    ].forEach(event => {
-      let f = jest.fn();
-      wrapper[event.name](f);
-      expect(f).not.toHaveBeenCalled();
-      element.fire(event.name);
-      expect(f).toHaveBeenCalled();
-    });
-  });
-
   it('other forwarded methods', () => {
     [
       { name: 'front', args: [] },
