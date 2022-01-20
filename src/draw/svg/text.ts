@@ -13,14 +13,10 @@ export class SVGTextWrapper extends SVGElementWrapper {
   }
 
   text(text?: string): unknown {
-    try {
-      if (typeof text == 'string') {
-        this.wrapped.text(text);
-      } else {
-        return this.wrapped.text();
-      }
-    } catch (error) {
-      console.error(error);
+    if (typeof text == 'string') {
+      this.wrapped.text(text);
+    } else {
+      return this.wrapped.text();
     }
   }
 }

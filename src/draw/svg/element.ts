@@ -10,114 +10,70 @@ export class SVGElementWrapper {
   }
 
   root(): unknown {
-    try {
-      return this.wrapped.root();
-    } catch (error) {
-      console.error(error);
-    }
+    return this.wrapped.root();
   }
 
   attr(arg?: string | { [key: string]: unknown }): unknown {
-    try {
-      if (typeof arg == 'string') {
-        return this.wrapped.attr(arg);
-      } else if (typeof arg == 'object') {
-        this.wrapped.attr(arg);
-      } else {
-        return this.wrapped.attr();
-      }
-    } catch (error) {
-      console.error(error);
+    if (typeof arg == 'string') {
+      return this.wrapped.attr(arg);
+    } else if (typeof arg == 'object') {
+      this.wrapped.attr(arg);
+    } else {
+      return this.wrapped.attr();
     }
   }
 
   css(arg?: string | CSSStyleDeclaration): unknown {
-    try {
-      if (typeof arg == 'string') {
-        return this.wrapped.css(arg);
-      } else if (typeof arg == 'object') {
-        this.wrapped.css(arg);
-      } else {
-        return this.wrapped.css();
-      }
-    } catch (error) {
-      console.error(error);
+    if (typeof arg == 'string') {
+      return this.wrapped.css(arg);
+    } else if (typeof arg == 'object') {
+      this.wrapped.css(arg);
+    } else {
+      return this.wrapped.css();
     }
   }
 
   id(id?: string): unknown {
-    try {
-      if (typeof id == 'string') {
-        this.wrapped.id(id);
-      } else {
-        return this.wrapped.id();
-      }
-    } catch (error) {
-      console.error(error);
+    if (typeof id == 'string') {
+      this.wrapped.id(id);
+    } else {
+      return this.wrapped.id();
     }
   }
 
   cx(cx?: number): unknown {
-    try {
-      if (typeof cx == 'number') {
-        this.wrapped.cx(cx);
-      } else {
-        return this.wrapped.cx();
-      }
-    } catch (error) {
-      console.error(error);
+    if (typeof cx == 'number') {
+      this.wrapped.cx(cx);
+    } else {
+      return this.wrapped.cx();
     }
   }
 
   cy(cy?: number): unknown {
-    try {
-      if (typeof cy == 'number') {
-        this.wrapped.cy(cy);
-      } else {
-        return this.wrapped.cy();
-      }
-    } catch (error) {
-      console.error(error);
+    if (typeof cy == 'number') {
+      this.wrapped.cy(cy);
+    } else {
+      return this.wrapped.cy();
     }
   }
 
   front() {
-    try {
-      this.wrapped.front();
-    } catch (error) {
-      console.error(error);
-    }
+    this.wrapped.front();
   }
 
   back() {
-    try {
-      this.wrapped.back();
-    } catch (error) {
-      console.error(error);
-    }
+    this.wrapped.back();
   }
 
   position(): unknown {
-    try {
-      return this.wrapped.position();
-    } catch (error) {
-      console.error(error);
-    }
+    return this.wrapped.position();
   }
 
   remove() {
-    try {
-      this.wrapped.remove();
-    } catch (error) {
-      console.error(error);
-    }
+    this.wrapped.remove();
   }
 
   svg(): unknown {
-    try {
-      return this.wrapped.svg();
-    } catch (error) {
-      console.error(error);
-    }
+    return this.wrapped.svg();
   }
 }
