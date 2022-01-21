@@ -1,6 +1,9 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { SVGElementWrapper } from './element';
 
+// the primary purpose of this wrapper class is to convert the return types
+// of forwarded methods and getters to unknown (since the SVG.js library
+// uses a lot of any types)
 export class SVGTextWrapper extends SVGElementWrapper {
 
   // the wrapped text
