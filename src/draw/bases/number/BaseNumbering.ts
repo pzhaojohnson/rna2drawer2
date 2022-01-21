@@ -2,8 +2,8 @@ import {
   BaseNumberingInterface,
   Repositioning,
 } from './BaseNumberingInterface';
-import { SVGTextWrapper as Text } from 'Draw/svg/text';
-import { SVGLineWrapper as Line } from 'Draw/svg/line';
+import { SVGTextWrapper as Text } from 'Draw/svg/SVGTextWrapper';
+import { SVGLineWrapper as Line } from 'Draw/svg/SVGLineWrapper';
 import { Values } from './values';
 import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';

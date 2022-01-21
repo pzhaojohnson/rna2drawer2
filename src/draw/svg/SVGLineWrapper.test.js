@@ -1,5 +1,6 @@
-import { SVGLineWrapper } from './line';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
+
+import { SVGLineWrapper } from './SVGLineWrapper';
 
 let container = null;
 let svg = null;

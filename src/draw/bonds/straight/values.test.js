@@ -1,6 +1,6 @@
 import { values, setValues } from './values';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { Base } from 'Draw/bases/Base';
 import { StraightBond } from './StraightBond';
 import { round } from 'Math/round';

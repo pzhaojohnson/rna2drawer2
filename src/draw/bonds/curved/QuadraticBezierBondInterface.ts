@@ -1,4 +1,4 @@
-import { SVGPathWrapper as Path } from 'Draw/svg/path';
+import { SVGPathWrapper as Path } from 'Draw/svg/SVGPathWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { ControlPointDisplacement } from './positioning';
 

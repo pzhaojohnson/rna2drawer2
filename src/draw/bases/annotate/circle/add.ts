@@ -2,7 +2,7 @@ import { CircleBaseAnnotationInterface } from './CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/circle';
+import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/SVGCircleWrapper';
 
 // creates a circle annotation for the given base
 function create(b: Base): CircleBaseAnnotation | undefined {

@@ -1,8 +1,8 @@
 import { BaseNumberingInterface } from './BaseNumberingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { findTextByUniqueId, findLineByUniqueId } from 'Draw/saved/svg';
 import { BaseNumbering } from './BaseNumbering';
 import { values } from './values';

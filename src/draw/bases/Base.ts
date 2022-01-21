@@ -1,6 +1,6 @@
 import { BaseInterface } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
 import { assignUuid } from 'Draw/svg/id';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
@@ -9,7 +9,7 @@ import { Point2D as Point } from 'Math/points/Point';
 
 export class Base implements BaseInterface {
   static recommendedDefaults: Values;
-  
+
   readonly text: Svg.Text;
   highlighting?: CircleBaseAnnotation;
   outline?: CircleBaseAnnotation;
@@ -32,7 +32,7 @@ export class Base implements BaseInterface {
   constructor(text: Svg.Text) {
     this.text = text;
     this._validateText();
-    
+
     let bbox = text.bbox();
     this._center = { x: bbox.cx, y: bbox.cy };
   }
@@ -52,7 +52,7 @@ export class Base implements BaseInterface {
     if (!this.text.attr('id')) {
       assignUuid(new TextWrapper(this.text));
     }
-    
+
     if (this.text.text().length !== 1) {
       throw new Error('Text content must be a single character.');
     }

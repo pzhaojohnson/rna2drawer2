@@ -1,6 +1,6 @@
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 
-import { SVGTextWrapper } from './text';
+import { SVGTextWrapper } from './SVGTextWrapper';
 
 let container = null;
 let svg = null;

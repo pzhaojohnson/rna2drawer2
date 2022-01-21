@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGElementWrapper } from './element';
+import { SVGElementWrapper } from 'Draw/svg/SVGElementWrapper';
 
 export class SVGPathWrapper extends SVGElementWrapper {
 
@@ -8,7 +8,7 @@ export class SVGPathWrapper extends SVGElementWrapper {
 
   constructor(path: SVG.Path) {
     super(path);
-    
+
     this.wrapped = path;
   }
 }

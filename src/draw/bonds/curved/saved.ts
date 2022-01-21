@@ -1,6 +1,6 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { findPathByUniqueId } from 'Draw/saved/svg';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { basesByUniqueId } from 'Draw/saved/bases';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { TertiaryBond } from './TertiaryBond';

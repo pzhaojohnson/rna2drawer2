@@ -1,4 +1,4 @@
-import { SVGCircleWrapper as Circle } from 'Draw/svg/circle';
+import { SVGCircleWrapper as Circle } from 'Draw/svg/SVGCircleWrapper';
 import { Point2D as Point } from 'Math/points/Point';
 
 export type Repositioning = {

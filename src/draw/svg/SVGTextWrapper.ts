@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGElementWrapper } from './element';
+import { SVGElementWrapper } from 'Draw/svg/SVGElementWrapper';
 
 // the primary purpose of this wrapper class is to convert the return types
 // of forwarded methods and getters to unknown (since the SVG.js library

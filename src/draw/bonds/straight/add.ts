@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { PrimaryBond } from './PrimaryBond';
 import { SecondaryBond } from './SecondaryBond';

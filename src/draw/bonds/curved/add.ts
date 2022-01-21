@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { TertiaryBond } from './TertiaryBond';
 import { setValues } from './values';
@@ -15,7 +15,7 @@ function setControlPointDisplacement(tb: TertiaryBond) {
 
   // will store the distance between the bases of the bond
   let d: unknown = undefined;
-  
+
   // work with variables with any types in try block
   try {
     let bbox1 = tb.base1.text.bbox();

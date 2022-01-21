@@ -1,6 +1,6 @@
 import { StraightBond } from './StraightBond';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { Base } from 'Draw/bases/Base';
 import { uuidRegex } from 'Draw/svg/id';
 import { round } from 'Math/round';
@@ -165,7 +165,7 @@ describe('StraightBond class', () => {
       expect(rp1).toEqual(rp2); // used cached value
     });
   });
-  
+
   describe('reposition method', () => {
     it('positions bond using cached base paddings 1 and 2', () => {
       bond.basePadding1 = 16.6;

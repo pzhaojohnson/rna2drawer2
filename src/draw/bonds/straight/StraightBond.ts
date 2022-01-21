@@ -1,5 +1,5 @@
 import { StraightBondInterface } from './StraightBondInterface';
-import { SVGLineWrapper as Line } from 'Draw/svg/line';
+import { SVGLineWrapper as Line } from 'Draw/svg/SVGLineWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
 import { assignUuid } from 'Draw/svg/id';

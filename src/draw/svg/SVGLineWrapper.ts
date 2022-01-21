@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGElementWrapper } from './element';
+import { SVGElementWrapper } from 'Draw/svg/SVGElementWrapper';
 
 export class SVGLineWrapper extends SVGElementWrapper {
 

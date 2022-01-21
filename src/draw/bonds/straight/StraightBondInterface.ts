@@ -1,4 +1,4 @@
-import { SVGLineWrapper as Line } from 'Draw/svg/line';
+import { SVGLineWrapper as Line } from 'Draw/svg/SVGLineWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface'
 
 export interface StraightBondInterface {

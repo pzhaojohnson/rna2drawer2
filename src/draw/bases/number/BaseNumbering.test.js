@@ -1,7 +1,7 @@
 import { BaseNumbering } from './BaseNumbering';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
 import { normalizeAngle } from 'Math/angles/normalize';
@@ -84,7 +84,7 @@ describe('BaseNumbering class', () => {
         expect(l.attr('id')).toMatch(uuidRegex);
       });
     });
-    
+
     it("doesn't overwrite text and line IDs", () => {
       // it is important that IDs aren't overwritten when
       // opening a saved drawing since elements in the

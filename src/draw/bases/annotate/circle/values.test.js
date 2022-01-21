@@ -1,7 +1,7 @@
 import { values, setValues } from './values';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
-import { SVGCircleWrapper } from 'Draw/svg/circle';
+import { SVGCircleWrapper } from 'Draw/svg/SVGCircleWrapper';
 
 let container = null;
 let svg = null;

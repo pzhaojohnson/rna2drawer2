@@ -1,11 +1,11 @@
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGTextWrapper as TextWrapper } from 'Draw/svg/text';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { BaseNumbering } from './BaseNumbering';
 import { setValues } from './values';
 
-function addText(svg: SVG.Svg, n: number): SVG.Text {  
+function addText(svg: SVG.Svg, n: number): SVG.Text {
 
   // input an empty function instead of an empty string
   // in case an empty string results in an empty tspan
@@ -14,7 +14,7 @@ function addText(svg: SVG.Svg, n: number): SVG.Text {
 
   // doesn't add a tspan
   text.plain(n.toString());
-  
+
   return text;
 }
 

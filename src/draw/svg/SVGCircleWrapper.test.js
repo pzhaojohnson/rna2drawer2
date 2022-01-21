@@ -1,9 +1,10 @@
-import { SVGPathWrapper } from './path';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
+
+import { SVGCircleWrapper } from './SVGCircleWrapper';
 
 let container = null;
 let svg = null;
-let path = null;
+let circle = null;
 let wrapper = null;
 
 beforeEach(() => {
@@ -13,13 +14,13 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  path = svg.path('M 10 20 Q 75 80 200 112');
-  wrapper = new SVGPathWrapper(path);
+  circle = svg.circle(10);
+  wrapper = new SVGCircleWrapper(circle);
 });
 
 afterEach(() => {
   wrapper = null;
-  path = null;
+  circle = null;
 
   svg.clear();
   svg.remove();
@@ -29,8 +30,8 @@ afterEach(() => {
   container = null;
 });
 
-describe('SVGPathWrapper', () => {
-  it('provides reference to wrapped path', () => {
-    expect(wrapper.wrapped).toBe(path);
+describe('SVGCircleWrapper', () => {
+  it('provides reference to wrapped circle', () => {
+    expect(wrapper.wrapped).toBe(circle);
   });
 });

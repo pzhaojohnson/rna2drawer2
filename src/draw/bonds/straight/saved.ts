@@ -4,7 +4,7 @@ import { PrimaryBond } from './PrimaryBond';
 import { SecondaryBondInterface, secondaryBondTypes } from './SecondaryBondInterface';
 import { SecondaryBond } from './SecondaryBond';
 import { findLineByUniqueId } from 'Draw/saved/svg';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/line';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { basesByUniqueId } from 'Draw/saved/bases';
 import { atIndex } from 'Array/at';

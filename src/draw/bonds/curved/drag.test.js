@@ -1,6 +1,6 @@
 import { shiftControlPoint } from './drag';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/path';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { Base } from 'Draw/bases/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { TertiaryBond } from './TertiaryBond';
@@ -45,9 +45,9 @@ describe('shiftControlPoint function', () => {
       magnitude: 33.2,
       angle: 0.9,
     });
-    
+
     shiftControlPoint(bond, { x: 44.5, y: -62 });
-    
+
     // updated path
     let pa = bond.path.wrapped.array();
     expect(pa.length).toBe(2);

@@ -1,10 +1,10 @@
 import { assignUuid, uuidRegex } from './id';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGElementWrapper as ElementWrapper } from './element';
-import { SVGTextWrapper as TextWrapper } from './text';
-import { SVGLineWrapper as LineWrapper } from './line';
-import { SVGCircleWrapper as CircleWrapper } from './circle';
-import { SVGPathWrapper as PathWrapper } from './path';
+import { SVGElementWrapper as ElementWrapper } from 'Draw/svg/SVGElementWrapper';
+import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
+import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
+import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/SVGCircleWrapper';
+import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { v4 as UUID } from 'uuid';
 
 let container = null;

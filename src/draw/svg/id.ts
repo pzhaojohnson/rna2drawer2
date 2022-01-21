@@ -1,4 +1,4 @@
-import { SVGElementWrapper as Element } from './element';
+import { SVGElementWrapper as Element } from 'Draw/svg/SVGElementWrapper';
 import { v4 as UUID } from 'uuid';
 
 export function assignUuid(ele: Element) {
