@@ -2,7 +2,7 @@ import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { Base } from 'Draw/bases/Base';
-import { uuidRegex } from 'Draw/svg/id';
+import { uuidRegex } from 'Draw/svg/assignUuid';
 import { positioning } from './positioning';
 import { position } from './position';
 import { round } from 'Math/round';

@@ -6,7 +6,7 @@ import {
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addCircleOutline, addCircleHighlighting } from './add';
-import { uuidRegex } from 'Draw/svg/id';
+import { uuidRegex } from 'Draw/svg/assignUuid';
 
 function areSameElement(ele1, ele2) {
   return (
@@ -156,7 +156,7 @@ describe('addSavedCircleHighlighting function', () => {
       () => addSavedCircleHighlighting(base2, saved)
     ).toThrow();
   });
-  
+
   it('throws if unable to find circle', () => {
     addCircleHighlighting(base1);
     let saved = savableState(base1.highlighting);
@@ -165,7 +165,7 @@ describe('addSavedCircleHighlighting function', () => {
       () => addSavedCircleHighlighting(base2, saved)
     ).toThrow();
   });
-  
+
   it('throws if base already has highlighting', () => {
     // it is preferrable not to remove the previous highlighting
     // since doing so could remove the circle of the saved

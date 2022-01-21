@@ -8,7 +8,7 @@ import { Values } from './values';
 import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
-import { assignUuid } from 'Draw/svg/id';
+import { assignUuid } from 'Draw/svg/assignUuid';
 
 export class BaseNumbering implements BaseNumberingInterface {
   static recommendedDefaults: Values;

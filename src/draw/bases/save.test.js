@@ -2,7 +2,7 @@ import { savableState } from './save';
 import { Drawing } from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
-import { uuidRegex } from 'Draw/svg/id';
+import { uuidRegex } from 'Draw/svg/assignUuid';
 import { addCircleHighlighting, addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
 import { addNumbering } from 'Draw/bases/number/add';

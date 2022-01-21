@@ -4,7 +4,7 @@ import {
 } from './CircleBaseAnnotationInterface';
 import { SVGCircleWrapper as Circle } from 'Draw/svg/SVGCircleWrapper';
 import { Point2D as Point } from 'Math/points/Point';
-import { assignUuid } from 'Draw/svg/id';
+import { assignUuid } from 'Draw/svg/assignUuid';
 import { Values } from './values';
 
 export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {

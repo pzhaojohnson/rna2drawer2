@@ -1,7 +1,7 @@
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/SVGCircleWrapper';
-import { uuidRegex } from 'Draw/svg/id';
+import { uuidRegex } from 'Draw/svg/assignUuid';
 
 let container = null;
 let svg = null;

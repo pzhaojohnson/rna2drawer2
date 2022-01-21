@@ -7,7 +7,7 @@ import { addNumbering } from './add';
 import { normalizeAngle } from 'Math/angles/normalize';
 import { round } from 'Math/round';
 import { position } from './position';
-import { uuidRegex } from 'Draw/svg/id';
+import { uuidRegex } from 'Draw/svg/assignUuid';
 
 let container = null;
 let svg = null;

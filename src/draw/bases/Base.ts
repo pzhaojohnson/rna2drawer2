@@ -1,7 +1,7 @@
 import { BaseInterface } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
-import { assignUuid } from 'Draw/svg/id';
+import { assignUuid } from 'Draw/svg/assignUuid';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { Values, setValues } from './values';

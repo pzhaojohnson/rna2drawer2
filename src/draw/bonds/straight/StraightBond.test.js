@@ -2,7 +2,7 @@ import { StraightBond } from './StraightBond';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { Base } from 'Draw/bases/Base';
-import { uuidRegex } from 'Draw/svg/id';
+import { uuidRegex } from 'Draw/svg/assignUuid';
 import { round } from 'Math/round';
 import { position } from './position';
 
