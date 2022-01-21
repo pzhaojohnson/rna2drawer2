@@ -13,29 +13,35 @@ export class SVGElementWrapper {
     return this.wrapped.root();
   }
 
-  attr(arg?: string | { [key: string]: unknown }): unknown {
-    if (typeof arg == 'string') {
-      return this.wrapped.attr(arg);
-    } else if (typeof arg == 'object') {
-      this.wrapped.attr(arg);
-    } else {
+  attr(): unknown;
+  attr(name: string, value?: unknown): unknown;
+  attr(obj: object): unknown;
+  attr(...args: unknown[]): unknown {
+    if (args.length == 0) {
       return this.wrapped.attr();
+    } else if (typeof args[0] == 'string') {
+      return this.wrapped.attr(args[0], args[1]);
+    } else if (typeof args[0] == 'object' && args[0] != null) {
+      return this.wrapped.attr(args[0]);
     }
   }
 
-  css(arg?: string | CSSStyleDeclaration): unknown {
-    if (typeof arg == 'string') {
-      return this.wrapped.css(arg);
-    } else if (typeof arg == 'object') {
-      this.wrapped.css(arg);
-    } else {
+  css(): unknown;
+  css(name: string): unknown;
+  css(style: Partial<CSSStyleDeclaration>): unknown;
+  css(...args: unknown[]): unknown {
+    if (args.length == 0) {
       return this.wrapped.css();
+    } else if (typeof args[0] == 'string') {
+      return this.wrapped.css(args[0]);
+    } else if (typeof args[0] == 'object' && args[0] != null) {
+      return this.wrapped.css(args[0]);
     }
   }
 
   id(id?: string): unknown {
     if (typeof id == 'string') {
-      this.wrapped.id(id);
+      return this.wrapped.id(id);
     } else {
       return this.wrapped.id();
     }
@@ -43,7 +49,7 @@ export class SVGElementWrapper {
 
   cx(cx?: number): unknown {
     if (typeof cx == 'number') {
-      this.wrapped.cx(cx);
+      return this.wrapped.cx(cx);
     } else {
       return this.wrapped.cx();
     }
@@ -51,26 +57,26 @@ export class SVGElementWrapper {
 
   cy(cy?: number): unknown {
     if (typeof cy == 'number') {
-      this.wrapped.cy(cy);
+      return this.wrapped.cy(cy);
     } else {
       return this.wrapped.cy();
     }
   }
 
-  front() {
-    this.wrapped.front();
+  front(): unknown {
+    return this.wrapped.front();
   }
 
-  back() {
-    this.wrapped.back();
+  back(): unknown {
+    return this.wrapped.back();
   }
 
   position(): unknown {
     return this.wrapped.position();
   }
 
-  remove() {
-    this.wrapped.remove();
+  remove(): unknown {
+    return this.wrapped.remove();
   }
 
   svg(): unknown {

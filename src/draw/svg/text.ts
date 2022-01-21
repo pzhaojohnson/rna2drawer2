@@ -14,7 +14,7 @@ export class SVGTextWrapper extends SVGElementWrapper {
 
   text(text?: string): unknown {
     if (typeof text == 'string') {
-      this.wrapped.text(text);
+      return this.wrapped.text(text);
     } else {
       return this.wrapped.text();
     }
