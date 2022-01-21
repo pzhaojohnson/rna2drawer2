@@ -1,10 +1,9 @@
-import { SVGTextWrapper } from './text';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
+
+import { SVGTextWrapper } from './text';
 
 let container = null;
 let svg = null;
-let text = null;
-let wrapper = null;
 
 beforeEach(() => {
   container = document.createElement('div');
@@ -12,15 +11,9 @@ beforeEach(() => {
 
   svg = NodeSVG();
   svg.addTo(container);
-
-  text = svg.text('asdf qwer');
-  wrapper = new SVGTextWrapper(text);
 });
 
 afterEach(() => {
-  wrapper = null;
-  text = null;
-
   svg.clear();
   svg.remove();
   svg = null;
@@ -29,19 +22,38 @@ afterEach(() => {
   container = null;
 });
 
-describe('SVGTextWrapper', () => {
+describe('SVGTextWrapper class', () => {
   it('provides reference to wrapped text', () => {
+    let text = svg.text('asdf');
+    let wrapper = new SVGTextWrapper(text);
     expect(wrapper.wrapped).toBe(text);
   });
 
-  it('getter-setter methods', () => {
+  test('method forwarding', () => {
     [
-      { name: 'text', value: 'a9e' },
-    ].forEach(nv => {
-      expect(text[nv.name]()).not.toEqual(nv.value);
-      wrapper[nv.name](nv.value);
-      expect(text[nv.name]()).toBe(nv.value); // sets
-      expect(wrapper[nv.name]()).toBe(nv.value); // gets
+      {
+        name: 'text',
+        args: [],
+      },
+      {
+        name: 'text',
+        args: ['zxCV'],
+      },
+    ].forEach(({ name, args }) => {
+      let text = svg.text('QWER');
+      let wrapper = new SVGTextWrapper(text);
+
+      let spy = jest.spyOn(text, name);
+      expect(spy).not.toHaveBeenCalled();
+      let result = wrapper[name](...args);
+
+      // could have been called more than once
+      // if the wrapped method uses recursion
+      expect(spy).toHaveBeenCalled();
+
+      // the first call should be the forwarded call
+      expect(spy.mock.calls[0]).toEqual(args); // arguments were forwarded
+      expect(result).toBe(spy.mock.results[0].value); // result was relayed
     });
   });
 });

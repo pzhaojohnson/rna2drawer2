@@ -19,20 +19,19 @@ export class SVGElementWrapper {
   attr(...args: unknown[]): unknown {
     if (args.length == 0) {
       return this.wrapped.attr();
-    } else if (typeof args[0] == 'string') {
+    } else if (typeof args[0] == 'string' && args.length == 1) {
+      return this.wrapped.attr(args[0]);
+    } else if (typeof args[0] == 'string' && args.length == 2) {
       return this.wrapped.attr(args[0], args[1]);
     } else if (typeof args[0] == 'object' && args[0] != null) {
       return this.wrapped.attr(args[0]);
     }
   }
 
-  css(): unknown;
   css(name: string): unknown;
   css(style: Partial<CSSStyleDeclaration>): unknown;
   css(...args: unknown[]): unknown {
-    if (args.length == 0) {
-      return this.wrapped.css();
-    } else if (typeof args[0] == 'string') {
+    if (typeof args[0] == 'string') {
       return this.wrapped.css(args[0]);
     } else if (typeof args[0] == 'object' && args[0] != null) {
       return this.wrapped.css(args[0]);
