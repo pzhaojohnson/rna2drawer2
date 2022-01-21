@@ -1,6 +1,8 @@
 import { SVGElementWrapper as Element } from 'Draw/svg/SVGElementWrapper';
 import { v4 as UUID } from 'uuid';
 
+// assigns a UUID to the given element that is compatible
+// with SVG rules for element IDs
 export function assignUuid(ele: Element) {
   // IDs in XML documents must begin with a letter
   ele.id('i' + UUID());
