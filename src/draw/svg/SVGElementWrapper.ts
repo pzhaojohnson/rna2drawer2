@@ -3,12 +3,12 @@ import * as SVG from '@svgdotjs/svg.js';
 // the primary purpose of this wrapper class is to convert the return types
 // of forwarded methods and getters to unknown (since the SVG.js library
 // uses a lot of any types)
-export class SVGElementWrapper {
+export class SVGElementWrapper<T extends SVG.Element = SVG.Element> {
 
   // the wrapped element
-  readonly wrapped: SVG.Element;
+  readonly wrapped: T;
 
-  constructor(element: SVG.Element) {
+  constructor(element: T) {
     this.wrapped = element;
   }
 
