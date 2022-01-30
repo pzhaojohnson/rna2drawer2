@@ -21,43 +21,41 @@ export class DrawingOverlay {
   // (to be "drawn on")
   readonly svg: SVG.Svg;
 
-  constructor(options?: Options) {
-    this.svg = options?.SVG?.SVG ? options.SVG.SVG() : SVG.SVG();
+  readonly svgContainer: HTMLDivElement;
 
-    this.svg.node.style.position = 'fixed';
+  constructor(options?: Options) {
+    this.svgContainer = document.createElement('div');
+    this.svgContainer.style.position = 'relative';
+    this.svgContainer.style.width = '0px';
+    this.svgContainer.style.height = '0px';
+    this.svgContainer.style.pointerEvents = 'none';
+
+    this.svg = options?.SVG?.SVG ? options.SVG.SVG() : SVG.SVG();
+    this.svg.node.style.position = 'absolute';
     this.svg.node.style.pointerEvents = 'none';
+    this.svg.addTo(this.svgContainer);
   }
 
   placeOver(drawing: Drawing) {
-    this.svg.node.style.position = 'fixed'; // in case got changed
-
     let parent = drawing.svg.node.parentNode;
     if (parent) {
-      parent.insertBefore(this.svg.node, drawing.svg.node.nextSibling);
+      parent.insertBefore(this.svgContainer, drawing.svg.node);
+      // assumes that the SVG document of the drawing has a Z index of zero
+      this.svgContainer.style.zIndex = '1';
     }
   }
 
   placeUnder(drawing: Drawing) {
-    this.svg.node.style.position = 'fixed'; // in case got changed
-
     let parent = drawing.svg.node.parentNode;
     if (parent) {
-      parent.insertBefore(this.svg.node, drawing.svg.node);
+      this.svgContainer.style.zIndex = '0';
+      // places under the SVG document of the drawing
+      // (assuming the SVG document of the drawing has a Z index of zero)
+      parent.insertBefore(this.svgContainer, drawing.svg.node);
     }
   }
 
   fitTo(drawing: Drawing) {
-    if (!(drawing.svg.node instanceof Element)) { // should never be true
-      console.error('SVG document node is not an Element instance.');
-      return;
-    }
-
-    this.svg.node.style.position = 'fixed'; // in case got changed
-
-    let r = drawing.svg.node.getBoundingClientRect();
-    this.svg.node.style.left = r.left + 'px';
-    this.svg.node.style.top = r.top + 'px';
-
     this.svg.attr({
       'width': drawing.svg.attr('width'),
       'height': drawing.svg.attr('height'),

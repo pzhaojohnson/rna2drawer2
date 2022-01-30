@@ -6,7 +6,7 @@ import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
-import TertiaryBondsInteraction from './tertiaryBonds/TertiaryBondsInteraction';
+import { TertiaryBondsInteraction } from 'Draw/interact/bonds/tertiary/TertiaryBondsInteraction';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
 
@@ -15,7 +15,7 @@ type Mode = PivotingMode | FoldingMode | FlippingMode | TriangularizingMode | An
 class StrictDrawingInteraction {
   _app: App;
 
-  _tertiaryBondsInteraction!: TertiaryBondsInteraction;
+  readonly tertiaryBondsInteraction: TertiaryBondsInteraction;
 
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
@@ -35,7 +35,11 @@ class StrictDrawingInteraction {
     this._initializeFlippingMode();
     this._initializeTriangularizingMode();
     this._initializeAnnotatingMode();
-    this._initializeTertiaryBondsInteraction();
+
+    this.tertiaryBondsInteraction = new TertiaryBondsInteraction({
+      app: app,
+      drawing: app.strictDrawing.drawing,
+    });
 
     this._currMode = this._pivotingMode;
   }
@@ -155,21 +159,6 @@ class StrictDrawingInteraction {
     this._annotatingMode.disable();
   }
 
-  _initializeTertiaryBondsInteraction() {
-    this._tertiaryBondsInteraction = new TertiaryBondsInteraction(
-      this._app
-    );
-    this._tertiaryBondsInteraction.onShouldPushUndo(() => {
-      this.fireShouldPushUndo();
-    });
-    this._tertiaryBondsInteraction.onChange(() => {
-      this.fireChange();
-    });
-    this._tertiaryBondsInteraction.onRequestToRenderForm(
-      (ff, options) => this.requestToRenderForm(ff, options)
-    );
-  }
-
   reset() {
     this.tertiaryBondsInteraction.reset();
     this._currMode.reset();
@@ -197,10 +186,6 @@ class StrictDrawingInteraction {
 
   requestToRenderForm(ff: FormFactory, options?: RenderFormOptions) {
     this._app.formContainer.renderForm(ff, options);
-  }
-
-  get tertiaryBondsInteraction(): TertiaryBondsInteraction {
-    return this._tertiaryBondsInteraction;
   }
 
   get pivotingMode(): PivotingMode {
