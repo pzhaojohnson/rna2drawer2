@@ -152,6 +152,10 @@ export class TertiaryBondsInteraction {
 
     highlightings.forEach(h => h.refit());
     this._highlightings = highlightings;
+
+    this.options.drawing.svg.css({
+      'cursor': this._dragging ? 'pointer' : 'auto',
+    });
   }
 
   reset() {
@@ -187,6 +191,7 @@ export class TertiaryBondsInteraction {
 
     if (hovered) {
       this._hovered = hovered.id;
+      hovered.path.css({ 'cursor': 'pointer' });
       this.refresh();
     }
   }
@@ -195,6 +200,7 @@ export class TertiaryBondsInteraction {
     let hovered = this.hovered;
     if (hovered && event.target == hovered.path.wrapped.node) {
       this._hovered = undefined;
+      hovered.path.css({ 'cursor': '' });
       this.refresh();
     }
   }
@@ -258,6 +264,7 @@ export class TertiaryBondsInteraction {
   handleMouseup(event: MouseEvent) {
     this._dragging = false;
     this._dragged = false;
+    this.refresh();
   }
 
   handleDblclick(event: MouseEvent) {
