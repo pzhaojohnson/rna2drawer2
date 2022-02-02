@@ -27,7 +27,7 @@ afterEach(() => {
 
 describe('DrawingOverlay class', () => {
   it('is absolutely positioned by default', () => {
-    expect(drawingOverlay.svg.node.style.position).toBe('fixed');
+    expect(drawingOverlay.svg.node.style.position).toBe('absolute');
   });
 
   it('ignores pointer events by default', () => {

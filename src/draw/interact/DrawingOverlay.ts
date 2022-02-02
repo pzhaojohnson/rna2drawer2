@@ -37,22 +37,15 @@ export class DrawingOverlay {
   }
 
   placeOver(drawing: Drawing) {
-    let parent = drawing.svg.node.parentNode;
-    if (parent) {
-      parent.insertBefore(this.svgContainer, drawing.svg.node);
-      // assumes that the SVG document of the drawing has a Z index of zero
-      this.svgContainer.style.zIndex = '1';
-    }
+    drawing.svgContainer.insertBefore(this.svgContainer, drawing.svgContainer.firstChild);
+    // assumes that the SVG document of the drawing has a Z index of zero
+    this.svgContainer.style.zIndex = '1';
   }
 
   placeUnder(drawing: Drawing) {
-    let parent = drawing.svg.node.parentNode;
-    if (parent) {
-      this.svgContainer.style.zIndex = '0';
-      // places under the SVG document of the drawing
-      // (assuming the SVG document of the drawing has a Z index of zero)
-      parent.insertBefore(this.svgContainer, drawing.svg.node);
-    }
+    drawing.svgContainer.insertBefore(this.svgContainer, drawing.svgContainer.firstChild);
+    // assumes that the SVG document of the drawing has a Z index of zero
+    this.svgContainer.style.zIndex = '0';
   }
 
   fitTo(drawing: Drawing) {

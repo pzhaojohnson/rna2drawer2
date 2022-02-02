@@ -9,10 +9,22 @@ import { App } from 'App';
 import { TertiaryBondsInteraction } from 'Draw/interact/bonds/tertiary/TertiaryBondsInteraction';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
+import * as SVG from '@svgdotjs/svg.js';
+
+export type Options = {
+  // for specifying alternatives to components of the SVG.js library
+  // (useful for testing)
+  SVG?: {
+    // can specify an SVG function that generates SVG documents
+    // compatible with Node.js
+    SVG?: () => SVG.Svg;
+  }
+}
 
 type Mode = PivotingMode | FoldingMode | FlippingMode | TriangularizingMode | AnnotatingMode;
 
 class StrictDrawingInteraction {
+  readonly options?: Options;
   _app: App;
 
   readonly tertiaryBondsInteraction: TertiaryBondsInteraction;
@@ -26,7 +38,8 @@ class StrictDrawingInteraction {
 
   _mouseoveredBase?: Base;
 
-  constructor(app: App) {
+  constructor(app: App, options?: Options) {
+    this.options = options;
     this._app = app;
 
     this._setBindings();
@@ -39,6 +52,7 @@ class StrictDrawingInteraction {
     this.tertiaryBondsInteraction = new TertiaryBondsInteraction({
       app: app,
       drawing: app.strictDrawing.drawing,
+      SVG: options?.SVG,
     });
 
     this._currMode = this._pivotingMode;

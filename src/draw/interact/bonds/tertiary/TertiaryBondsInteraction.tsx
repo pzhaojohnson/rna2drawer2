@@ -16,6 +16,8 @@ import * as React from 'react';
 import { EditTertiaryBonds } from 'Forms/edit/bonds/tertiary/EditTertiaryBonds';
 import { v4 as uuidv4 } from 'uuid';
 
+import * as SVG from '@svgdotjs/svg.js';
+
 export type Options = {
 
   // a reference to the whole app
@@ -23,6 +25,14 @@ export type Options = {
 
   // the drawing of the app
   readonly drawing: Drawing;
+
+  // for specifying alternatives to components of the SVG.js library
+  // (useful for testing)
+  SVG?: {
+    // can specify an SVG function that generates SVG documents
+    // compatible with Node.js
+    SVG?: () => SVG.Svg;
+  }
 }
 
 type TertiaryBondId = string;
@@ -53,7 +63,7 @@ export class TertiaryBondsInteraction {
 
     this._selected = new Set<TertiaryBondId>();
 
-    this.drawingOverlay = new DrawingOverlay();
+    this.drawingOverlay = new DrawingOverlay({ SVG: options.SVG });
     this.drawingOverlay.placeOver(options.drawing);
 
     this._highlightings = new Map<TertiaryBondId, TertiaryBondHighlighting>();

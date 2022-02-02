@@ -55,7 +55,7 @@ export class App implements AppInterface {
     this._strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
     this._initializeDrawing();
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
-    this._strictDrawingInteraction = new StrictDrawingInteraction(this);
+    this._strictDrawingInteraction = new StrictDrawingInteraction(this, { SVG: options?.SVG });
 
     this.preferences = new Preferences();
 
