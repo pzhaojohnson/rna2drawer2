@@ -87,6 +87,7 @@ export class TertiaryBondsInteraction {
   }
 
   select(tb: TertiaryBond) {
+    this._selected.clear();
     this._selected.add(tb.id);
     this.refresh();
     this.options.app.refresh();
@@ -101,14 +102,18 @@ export class TertiaryBondsInteraction {
     return this._selected.has(tb.id);
   }
 
-  deselect(tb: TertiaryBond) {
-    this._selected.delete(tb.id);
+  addToSelected(tb: TertiaryBond) {
+    this._selected.add(tb.id);
     this.refresh();
     this.options.app.refresh();
   }
 
-  deselectAll() {
-    this._selected.clear();
+  deselect(tb?: TertiaryBond) {
+    if (tb) {
+      this._selected.delete(tb.id);
+    } else {
+      this._selected.clear();
+    }
     this.refresh();
     this.options.app.refresh();
   }
@@ -196,6 +201,7 @@ export class TertiaryBondsInteraction {
 
   handleMousedown(event: MouseEvent) {
     if (!(event.target instanceof Node)) {
+      // should always be a Node
       return;
     }
 
@@ -210,7 +216,7 @@ export class TertiaryBondsInteraction {
       if (this._selected.size > 0) {
         // only if there are tertiary bonds to deselect
         // since this will refresh the app
-        this.deselectAll();
+        this.deselect();
       }
       return;
     }
@@ -218,9 +224,8 @@ export class TertiaryBondsInteraction {
     if (this.isSelected(hovered)) {
       // nothing to do
     } else if (event.shiftKey) {
-      this.select(hovered);
+      this.addToSelected(hovered);
     } else {
-      this.deselectAll();
       this.select(hovered);
     }
     this._dragging = true;
