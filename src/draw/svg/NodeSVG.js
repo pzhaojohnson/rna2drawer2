@@ -12,8 +12,11 @@ export function NodeSVG() {
   // elements seem to linger from previously created root SVG nodes
   svg.clear();
 
-  // is normally defined for a root SVG node and is used in some tests
-  svg.addTo = () => svg;
-  
+  // actual addTo method does not seem to work on Node.js
+  svg.addTo = () => {
+    console.log('Using placeholder addTo method.');
+    return svg;
+  };
+
   return svg;
 }
