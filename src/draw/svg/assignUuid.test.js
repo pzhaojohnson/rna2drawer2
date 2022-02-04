@@ -20,10 +20,15 @@ beforeEach(() => {
   svg.addTo(container);
 
   elements = [
+    svg.rect(10, 20),
     new ElementWrapper(svg.rect(10, 20)),
+    svg.text('asdf'),
     new TextWrapper(svg.text('asdf')),
+    svg.line(200, 250, 150, 75),
     new LineWrapper(svg.line(200, 250, 150, 75)),
+    svg.circle(100),
     new CircleWrapper(svg.circle(100)),
+    svg.path('M 2 2 Q 3 4 50 60'),
     new PathWrapper(svg.path('M 2 2 Q 3 4 50 60')),
   ];
 });
