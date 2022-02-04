@@ -59,7 +59,9 @@ describe('values function', () => {
         'stroke-opacity': 0.435,
         'stroke-dasharray': '8 1.1 2 3.8',
         'fill': '#3320bc',
-        'cursor': 'crosshair',
+        style: {
+          'cursor': 'crosshair',
+        },
       },
       basePadding1: 8.26,
       basePadding2: 13.05,
@@ -77,7 +79,9 @@ describe('setValues function', () => {
         'stroke-opacity': 0.842,
         'stroke-dasharray': '9 7 5.2',
         'fill': '#975a31',
-        'cursor': 'zoom-in',
+        style: {
+          'cursor': 'zoom-in',
+        },
       },
       basePadding1: 18.29,
       basePadding2: 3.98,
@@ -96,14 +100,16 @@ describe('setValues function', () => {
         'stroke-opacity': 0.912,
         'stroke-dasharray': '1 1 2.37',
         'fill': '#4469ba',
-        'cursor': 'wait',
+        style: {
+          'cursor': 'wait',
+        },
       },
       basePadding1: 5.59,
       basePadding2: 9.07,
     };
     setValues(bond, vs1);
-    // should be able to handle a defined and undefined
-    // path values object
+    // should be able to handle undefined path and style objects
+    setValues(bond, { path: { style: {} } });
     setValues(bond, { path: {} });
     setValues(bond, {});
     let vs2 = values(bond);
