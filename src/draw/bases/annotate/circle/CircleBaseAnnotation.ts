@@ -2,6 +2,7 @@ import {
   CircleBaseAnnotationInterface,
   Repositioning,
 } from './CircleBaseAnnotationInterface';
+import * as SVG from '@svgdotjs/svg.js';
 import { SVGCircleWrapper as Circle } from 'Draw/svg/SVGCircleWrapper';
 import { Point2D as Point } from 'Math/points/Point';
 import { assignUuid } from 'Draw/svg/assignUuid';
@@ -42,6 +43,14 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
 
   get id(): string {
     return String(this.circle.id());
+  }
+
+  contains(node: SVG.Element | Node): boolean {
+    let circleNode = this.circle.wrapped.node;
+    if (node instanceof SVG.Element) {
+      node = node.node;
+    }
+    return circleNode == node || circleNode.contains(node);
   }
 
   reposition(rp?: Repositioning) {

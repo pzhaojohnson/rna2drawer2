@@ -82,6 +82,16 @@ describe('CircleBaseAnnotation class', () => {
     expect(cba.id).toBe('asdfasdf');
   });
 
+  test('contains method', () => {
+    let c = new CircleWrapper(svg.circle(30));
+    let cba = new CircleBaseAnnotation(c, { x: 100, y: 110 });
+    expect(cba.contains(cba.circle.wrapped)).toBeTruthy();
+    expect(cba.contains(cba.circle.wrapped.node)).toBeTruthy();
+    c = new CircleWrapper(svg.circle(25));
+    expect(cba.contains(c.wrapped)).toBeFalsy();
+    expect(cba.contains(c.wrapped.node)).toBeFalsy();
+  });
+
   describe('reposition method', () => {
     it('centers circle on given base center', () => {
       let c = new CircleWrapper(svg.circle(20));
