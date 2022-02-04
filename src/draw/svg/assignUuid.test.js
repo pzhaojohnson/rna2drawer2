@@ -3,7 +3,6 @@ import { SVGElementWrapper as ElementWrapper } from 'Draw/svg/SVGElementWrapper'
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
 import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/SVGCircleWrapper';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { v4 as UUID } from 'uuid';
 
 import { assignUuid, uuidRegex } from './assignUuid';
@@ -29,7 +28,6 @@ beforeEach(() => {
     svg.circle(100),
     new CircleWrapper(svg.circle(100)),
     svg.path('M 2 2 Q 3 4 50 60'),
-    new PathWrapper(svg.path('M 2 2 Q 3 4 50 60')),
   ];
 });
 
