@@ -98,6 +98,14 @@ describe('QuadraticBezierBond class', () => {
     expect(bond.id).toMatch(uuidRegex);
   });
 
+  test('contains method', () => {
+    expect(bond.contains(bond.path.wrapped)).toBeTruthy();
+    expect(bond.contains(bond.path.wrapped.node)).toBeTruthy();
+    let path = svg.path('M 50 60 Q 0 0 100 200');
+    expect(bond.contains(path)).toBeFalsy();
+    expect(bond.contains(path.node)).toBeFalsy();
+  });
+
   it('binds method', () => {
     expect(bond.binds(bond.base1)).toBeTruthy();
     expect(bond.binds(bond.base2)).toBeTruthy();

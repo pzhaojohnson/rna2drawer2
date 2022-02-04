@@ -1,4 +1,5 @@
 import { QuadraticBezierBondInterface } from './QuadraticBezierBondInterface';
+import * as SVG from '@svgdotjs/svg.js';
 import { SVGPathWrapper as Path } from 'Draw/svg/SVGPathWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
@@ -49,6 +50,14 @@ export class QuadraticBezierBond implements QuadraticBezierBondInterface {
 
   get id(): string {
     return String(this.path.id());
+  }
+
+  contains(node: SVG.Element | Node): boolean {
+    let pathNode = this.path.wrapped.node;
+    if (node instanceof SVG.Element) {
+      node = node.node;
+    }
+    return pathNode == node || pathNode.contains(node);
   }
 
   binds(b: Base): boolean {
