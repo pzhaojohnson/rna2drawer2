@@ -113,6 +113,14 @@ describe('StraightBond class', () => {
     expect(bond.id).toBeTruthy();
   });
 
+  test('contains method', () => {
+    expect(bond.contains(bond.line.wrapped)).toBeTruthy();
+    expect(bond.contains(bond.line.wrapped.node)).toBeTruthy();
+    let line = svg.line(1, 20, 300, 4000);
+    expect(bond.contains(line)).toBeFalsy();
+    expect(bond.contains(line.node)).toBeFalsy();
+  });
+
   it('binds method', () => {
     expect(bond.binds(bond.base1)).toBeTruthy();
     expect(bond.binds(bond.base2)).toBeTruthy();

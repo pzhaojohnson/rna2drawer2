@@ -1,4 +1,5 @@
 import { StraightBondInterface } from './StraightBondInterface';
+import * as SVG from '@svgdotjs/svg.js';
 import { SVGLineWrapper as Line } from 'Draw/svg/SVGLineWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
@@ -36,6 +37,14 @@ export class StraightBond implements StraightBondInterface {
 
   get id(): string {
     return String(this.line.id());
+  }
+
+  contains(node: SVG.Element | Node): boolean {
+    let lineNode = this.line.wrapped.node;
+    if (node instanceof SVG.Element) {
+      node = node.node;
+    }
+    return lineNode == node || lineNode.contains(node);
   }
 
   binds(b: Base): boolean {
