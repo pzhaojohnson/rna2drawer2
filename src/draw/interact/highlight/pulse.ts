@@ -26,7 +26,7 @@ export function pulsateBetween(cba: CircleBaseAnnotation, pulsedProps: PulsedPro
     let withFill = fill == 'none' ? {} : { 'fill': fill };
     let attrs = { ...withoutFill, ...withFill };
     let duration = pulseProps?.duration ?? 2000;
-    cba.circle.wrapped.animate(duration).attr(attrs).loop(undefined, true);
+    cba.circle.animate(duration).attr(attrs).loop(undefined, true);
   } catch (error) {
     console.error(error);
     console.error('Unable to pulsate circle base annotation.');

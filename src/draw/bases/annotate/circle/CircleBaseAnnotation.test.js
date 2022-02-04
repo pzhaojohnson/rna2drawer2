@@ -1,6 +1,5 @@
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGCircleWrapper as CircleWrapper } from 'Draw/svg/SVGCircleWrapper';
 import { uuidRegex } from 'Draw/svg/assignUuid';
 
 let container = null;
@@ -25,22 +24,22 @@ afterEach(() => {
 
 describe('CircleBaseAnnotation class', () => {
   describe('constructor', () => {
-    it('checks wrapped SVG element type', () => {
-      let r = new CircleWrapper(svg.rect(10, 20));
+    it('checks SVG element type', () => {
+      let r = svg.rect(10, 20);
       expect(
         () => new CircleBaseAnnotation(r, { x: 5, y: 6 })
       ).toThrow();
     });
 
     it('stores reference to circle', () => {
-      let c = new CircleWrapper(svg.circle(20));
+      let c = svg.circle(20);
       let cba = new CircleBaseAnnotation(c, { x: 50, y: 60 });
       expect(cba.circle).toBe(c);
     });
 
     it('initializes falsy circle IDs with UUIDs', () => {
       [undefined, ''].forEach(v => {
-        let c = new CircleWrapper(svg.circle(30));
+        let c = svg.circle(30);
         c.attr({ 'id': v });
         // use the attr method to check the value of an ID
         // since the id method itself will initialize IDs
@@ -56,14 +55,14 @@ describe('CircleBaseAnnotation class', () => {
       // in the drawing may reference other elements
       // using saved IDs (e.g., bonds referencing their
       // bases)
-      let c = new CircleWrapper(svg.circle(50));
+      let c = svg.circle(50);
       c.attr({ 'id': 'circleId132435' });
       let cba = new CircleBaseAnnotation(c, { x: 50, y: 100 });
       expect(c.attr('id')).toBe('circleId132435');
     });
 
     it('caches base center', () => {
-      let c = new CircleWrapper(svg.circle(20));
+      let c = svg.circle(20);
       let cba = new CircleBaseAnnotation(c, { x: 601.1, y: 233 });
       c.attr({ 'cx': 100, 'cy': 50 });
       expect(c.attr('cx')).toBeCloseTo(100);
@@ -76,25 +75,25 @@ describe('CircleBaseAnnotation class', () => {
   });
 
   it('id getter', () => {
-    let c = new CircleWrapper(svg.circle(8));
+    let c = svg.circle(8);
     c.id('asdfasdf');
     let cba = new CircleBaseAnnotation(c, { x: 0, y: 0 });
     expect(cba.id).toBe('asdfasdf');
   });
 
   test('contains method', () => {
-    let c = new CircleWrapper(svg.circle(30));
+    let c = svg.circle(30);
     let cba = new CircleBaseAnnotation(c, { x: 100, y: 110 });
-    expect(cba.contains(cba.circle.wrapped)).toBeTruthy();
-    expect(cba.contains(cba.circle.wrapped.node)).toBeTruthy();
-    c = new CircleWrapper(svg.circle(25));
-    expect(cba.contains(c.wrapped)).toBeFalsy();
-    expect(cba.contains(c.wrapped.node)).toBeFalsy();
+    expect(cba.contains(cba.circle)).toBeTruthy();
+    expect(cba.contains(cba.circle.node)).toBeTruthy();
+    c = svg.circle(25);
+    expect(cba.contains(c)).toBeFalsy();
+    expect(cba.contains(c.node)).toBeFalsy();
   });
 
   describe('reposition method', () => {
     it('centers circle on given base center', () => {
-      let c = new CircleWrapper(svg.circle(20));
+      let c = svg.circle(20);
       let cba = new CircleBaseAnnotation(c, { x: 32, y: 156 });
       c.attr({ 'cx': 5.68, 'cy': 205.2 });
       cba.reposition({ baseCenter: { x: 200.6, y: 129 } });
@@ -103,7 +102,7 @@ describe('CircleBaseAnnotation class', () => {
     });
 
     it('caches base center and can use cached base center', () => {
-      let c = new CircleWrapper(svg.circle(60));
+      let c = svg.circle(60);
       let cba = new CircleBaseAnnotation(c, { x: 50, y: 150 });
       // must cache the given base center
       cba.reposition({ baseCenter: { x: 455.2, y: 812.3 } });

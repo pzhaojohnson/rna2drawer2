@@ -3,7 +3,6 @@ import {
   Repositioning,
 } from './CircleBaseAnnotationInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGCircleWrapper as Circle } from 'Draw/svg/SVGCircleWrapper';
 import { Point2D as Point } from 'Math/points/Point';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { Values } from './values';
@@ -20,13 +19,13 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
     },
   };
 
-  readonly circle: Circle;
+  readonly circle: SVG.Circle;
 
   _baseCenter: Point;
 
-  constructor(circle: Circle, baseCenter: Point) {
-    if (circle.wrapped.type != 'circle') {
-      throw new Error("Wrapped element isn't a circle.");
+  constructor(circle: SVG.Circle, baseCenter: Point) {
+    if (circle.type != 'circle') {
+      throw new Error("Element isn't a circle.");
     }
 
     this.circle = circle;
@@ -46,11 +45,10 @@ export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
   }
 
   contains(node: SVG.Element | Node): boolean {
-    let circleNode = this.circle.wrapped.node;
     if (node instanceof SVG.Element) {
       node = node.node;
     }
-    return circleNode == node || circleNode.contains(node);
+    return this.circle.node == node || this.circle.node.contains(node);
   }
 
   reposition(rp?: Repositioning) {

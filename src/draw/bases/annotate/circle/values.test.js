@@ -1,7 +1,6 @@
 import { values, setValues } from './values';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
-import { SVGCircleWrapper } from 'Draw/svg/SVGCircleWrapper';
 
 let container = null;
 let svg = null;
@@ -14,7 +13,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let circle = new SVGCircleWrapper(svg.circle(50));
+  let circle = svg.circle(50);
   circle.attr({ 'cx': 50, 'cy': 100 });
   cba = new CircleBaseAnnotation(circle, { x: 50, y: 100 });
 });
