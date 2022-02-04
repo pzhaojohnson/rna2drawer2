@@ -1,6 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { findPathByUniqueId } from 'Draw/saved/svg';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { basesByUniqueId } from 'Draw/saved/bases';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { TertiaryBond } from './TertiaryBond';
@@ -31,9 +30,7 @@ export function addSavedTertiaryBonds(drawing: Drawing, saveds: SavedState[]): T
   let bases = basesByUniqueId(drawing);
   saveds.forEach(saved => {
     assertIsSavedQuadraticBezierBond(saved);
-    let path = new PathWrapper(
-      findPathByUniqueId(drawing.svg, saved.pathId)
-    );
+    let path = findPathByUniqueId(drawing.svg, saved.pathId);
     let base1 = getBaseById(bases, saved.baseId1);
     let base2 = getBaseById(bases, saved.baseId2);
     tbs.push(new TertiaryBond(path, base1, base2));

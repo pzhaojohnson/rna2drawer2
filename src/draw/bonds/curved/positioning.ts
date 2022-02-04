@@ -43,7 +43,7 @@ function positioningIsFinite(p: Positioning): boolean {
 export function positioning(bond: QuadraticBezierBond): Positioning | undefined {
   try {
     // forgo type checking until end of try block
-    let pa: any = bond.path.wrapped.array();
+    let pa: any = bond.path.array();
     let m = pa[0];
     let q = pa[1];
     let startingPoint = { x: m[1], y: m[2] };
@@ -52,11 +52,11 @@ export function positioning(bond: QuadraticBezierBond): Positioning | undefined 
 
     let baseCenter1 = { x: bond.base1.xCenter, y: bond.base1.yCenter };
     let baseCenter2 = { x: bond.base2.xCenter, y: bond.base2.yCenter };
-    
+
     let mp = midpoint(baseCenter1, baseCenter2);
     let a12 = Math.atan2(baseCenter2.y - baseCenter1.y, baseCenter2.x - baseCenter1.x);
     let amc = Math.atan2(controlPoint.y - mp.y, controlPoint.x - mp.x);
-    
+
     let p = {
       basePadding1: distance(baseCenter1.x, baseCenter1.y, startingPoint.x, startingPoint.y),
       basePadding2: distance(baseCenter2.x, baseCenter2.y, endPoint.x, endPoint.y),

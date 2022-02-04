@@ -1,6 +1,5 @@
 import { values, setValues } from './values';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { Base } from 'Draw/bases/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { round } from 'Math/round';
@@ -21,7 +20,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let path = new PathWrapper(svg.path('M 20 30 Q 90 80 50 40'));
+  let path = svg.path('M 20 30 Q 90 80 50 40');
   let base1 = Base.create(svg, 'T', 15, 10);
   let base2 = Base.create(svg, 'A', 100, 110);
   bond = new QuadraticBezierBond(path, base1, base2);
@@ -48,7 +47,7 @@ describe('values function', () => {
       'stroke-dasharray': '8 1.1 2 3.8',
       'fill': '#3320bc',
     });
-    bond.path.wrapped.css('cursor', 'crosshair');
+    bond.path.css('cursor', 'crosshair');
     bond.basePadding1 = 8.26;
     bond.basePadding2 = 13.05;
     let vs = values(bond);

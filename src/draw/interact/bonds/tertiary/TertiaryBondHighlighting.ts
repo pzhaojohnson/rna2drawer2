@@ -30,7 +30,7 @@ export class TertiaryBondHighlighting {
   }
 
   refit() {
-    let bbox = this.tertiaryBond.path.wrapped.bbox();
+    let bbox = this.tertiaryBond.path.bbox();
     this.rect.attr({
       'x': bbox.x,
       'y': bbox.y,

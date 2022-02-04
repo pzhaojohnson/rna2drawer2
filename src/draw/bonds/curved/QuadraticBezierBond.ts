@@ -1,6 +1,5 @@
 import { QuadraticBezierBondInterface } from './QuadraticBezierBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGPathWrapper as Path } from 'Draw/svg/SVGPathWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
 import { assignUuid } from 'Draw/svg/assignUuid';
@@ -12,17 +11,17 @@ import {
 import { position } from './position';
 
 export class QuadraticBezierBond implements QuadraticBezierBondInterface {
-  readonly path: Path;
+  readonly path: SVG.Path;
   readonly base1: Base;
   readonly base2: Base;
 
   _positioning: Positioning;
 
-  constructor(path: Path, b1: Base, b2: Base) {
-    if (path.wrapped.type != 'path') {
+  constructor(path: SVG.Path, b1: Base, b2: Base) {
+    if (path.type != 'path') {
       throw new Error('Passed element is not a path.');
     }
-    if (!isQuadraticBezierCurve(path.wrapped.array())) {
+    if (!isQuadraticBezierCurve(path.array())) {
       throw new Error('Path is not a quadratic bezier curve.');
     }
 
@@ -53,11 +52,10 @@ export class QuadraticBezierBond implements QuadraticBezierBondInterface {
   }
 
   contains(node: SVG.Element | Node): boolean {
-    let pathNode = this.path.wrapped.node;
     if (node instanceof SVG.Element) {
       node = node.node;
     }
-    return pathNode == node || pathNode.contains(node);
+    return this.path.node == node || this.path.node.contains(node);
   }
 
   binds(b: Base): boolean {

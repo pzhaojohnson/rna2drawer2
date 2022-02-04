@@ -24,7 +24,7 @@ export type Vector = {
 export function shiftControlPoint(bond: QuadraticBezierBond, v: Vector) {
   try {
     // forgo type checking until end of try block
-    let pa: any = bond.path.wrapped.array();
+    let pa: any = bond.path.array();
     let q = pa[1];
     let controlPoint = { x: q[1], y: q[2] };
 
@@ -48,7 +48,7 @@ export function shiftControlPoint(bond: QuadraticBezierBond, v: Vector) {
     } else {
       console.error('Unable to shift control point of quadratic bezier bond.');
     }
-    
+
   } catch (error) {
     console.error(error);
     console.error('Unable to shift control point of quadratic bezier bond.');

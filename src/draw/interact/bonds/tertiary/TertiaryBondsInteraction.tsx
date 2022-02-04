@@ -186,7 +186,7 @@ export class TertiaryBondsInteraction {
 
     let hovered = tbs.find(tb => (
       event.target instanceof Node
-      && tb.path.wrapped.node.contains(event.target)
+      && tb.path.node.contains(event.target)
     ));
 
     if (hovered) {
@@ -198,7 +198,7 @@ export class TertiaryBondsInteraction {
 
   handleMouseout(event: MouseEvent) {
     let hovered = this.hovered;
-    if (hovered && event.target == hovered.path.wrapped.node) {
+    if (hovered && event.target == hovered.path.node) {
       this._hovered = undefined;
       hovered.path.css({ 'cursor': '' });
       this.refresh();

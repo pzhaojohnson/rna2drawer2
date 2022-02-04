@@ -1,6 +1,5 @@
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { Base } from 'Draw/bases/Base';
 import { uuidRegex } from 'Draw/svg/assignUuid';
 import { positioning } from './positioning';
@@ -30,7 +29,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  path = new PathWrapper(svg.path('M 10 20 Q 100 200 300 400'));
+  path = svg.path('M 10 20 Q 100 200 300 400');
   base1 = Base.create(svg, 'G', 200, 100);
   base2 = Base.create(svg, 'C', 20, 1000);
   bond = new QuadraticBezierBond(path, base1, base2);
@@ -63,7 +62,7 @@ describe('QuadraticBezierBond class', () => {
       undefined,
       '',
     ])('initializes path ID if uninitialized', (v) => {
-      let path = new PathWrapper(svg.path('M 20 30 Q 40 40 60 60'));
+      let path = svg.path('M 20 30 Q 40 40 60 60');
       path.attr({ 'id': v });
       expect(path.attr('id')).toBe(v);
       let bond = new QuadraticBezierBond(path, base1, base2);
@@ -99,8 +98,8 @@ describe('QuadraticBezierBond class', () => {
   });
 
   test('contains method', () => {
-    expect(bond.contains(bond.path.wrapped)).toBeTruthy();
-    expect(bond.contains(bond.path.wrapped.node)).toBeTruthy();
+    expect(bond.contains(bond.path)).toBeTruthy();
+    expect(bond.contains(bond.path.node)).toBeTruthy();
     let path = svg.path('M 50 60 Q 0 0 100 200');
     expect(bond.contains(path)).toBeFalsy();
     expect(bond.contains(path.node)).toBeFalsy();

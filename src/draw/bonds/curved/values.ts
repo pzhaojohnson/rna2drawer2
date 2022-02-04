@@ -69,7 +69,7 @@ export function setValues(bond: QuadraticBezierBond, vs: Values) {
     }
     if (typeof vs.path['cursor'] == 'string') {
       // work with wrapped element in try block
-      try { bond.path.wrapped.css('cursor', vs.path['cursor']) } catch {}
+      try { bond.path.css('cursor', vs.path['cursor']) } catch {}
     }
   }
   if (typeof vs.basePadding1 == 'number') {

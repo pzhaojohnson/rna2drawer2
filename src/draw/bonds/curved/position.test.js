@@ -1,6 +1,5 @@
 import { position } from './position';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGPathWrapper as PathWrapper } from 'Draw/svg/SVGPathWrapper';
 import { Base } from 'Draw/bases/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
 
@@ -15,7 +14,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let path = new PathWrapper(svg.path('M 20 30 Q 50 40 10 200'));
+  let path = svg.path('M 20 30 Q 50 40 10 200');
   let base1 = Base.create(svg, 'A', 20, 30);
   let base2 = Base.create(svg, 'U', 50, 60);
   bond = new QuadraticBezierBond(path, base1, base2);
@@ -44,7 +43,7 @@ describe('position function', () => {
         angle: 3.87,
       },
     });
-    let pa = bond.path.wrapped.array();
+    let pa = bond.path.array();
     expect(pa.length).toBe(2);
     let m = pa[0];
     expect(m[0]).toBe('M');
