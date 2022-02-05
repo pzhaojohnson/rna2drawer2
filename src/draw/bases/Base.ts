@@ -1,6 +1,5 @@
 import { BaseInterface } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
-import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
@@ -50,7 +49,7 @@ export class Base implements BaseInterface {
     // use the attr method to check if the ID is already initialized
     // since the id method itself will initialize the ID (to a non-UUID)
     if (!this.text.attr('id')) {
-      assignUuid(new TextWrapper(this.text));
+      assignUuid(this.text);
     }
 
     if (this.text.text().length !== 1) {
