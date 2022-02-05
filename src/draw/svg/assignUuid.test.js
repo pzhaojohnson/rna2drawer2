@@ -1,7 +1,6 @@
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { SVGElementWrapper as ElementWrapper } from 'Draw/svg/SVGElementWrapper';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { v4 as UUID } from 'uuid';
 
 import { assignUuid, uuidRegex } from './assignUuid';
@@ -23,7 +22,6 @@ beforeEach(() => {
     svg.text('asdf'),
     new TextWrapper(svg.text('asdf')),
     svg.line(200, 250, 150, 75),
-    new LineWrapper(svg.line(200, 250, 150, 75)),
     svg.circle(100),
     svg.path('M 2 2 Q 3 4 50 60'),
   ];
