@@ -3,7 +3,7 @@ import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import { AppInterface as App } from 'AppInterface';
 import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
-import { parseColor } from 'Parse/svg/color';
+import { interpretColor } from 'Draw/svg/interpretColor';
 
 export type Props = {
   app: App;
@@ -17,13 +17,13 @@ export type Props = {
 function currStroke(primaryBonds: PrimaryBondInterface[]): Value | undefined {
   let hexs = new Set<string>();
   primaryBonds.forEach(pb => {
-    let c = parseColor(pb.line.attr('stroke'));
+    let c = interpretColor(pb.line.attr('stroke'));
     if (c) {
       hexs.add(c.toHex().toLowerCase());
     }
   });
   if (hexs.size == 1) {
-    let c = parseColor(hexs.values().next().value);
+    let c = interpretColor(hexs.values().next().value);
     if (c) {
       return { color: c };
     }

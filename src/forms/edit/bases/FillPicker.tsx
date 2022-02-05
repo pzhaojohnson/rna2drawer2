@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import { parseColor } from 'Parse/svg/color';
+import { interpretColor } from 'Draw/svg/interpretColor';
 
 export type Props = {
   app: App;
@@ -16,14 +16,14 @@ export type Props = {
 function currFill(bases: Base[]): Value | undefined {
   let hexs = new Set<string>();
   bases.forEach(b => {
-    let c = parseColor(b.text.attr('fill'));
+    let c = interpretColor(b.text.attr('fill'));
     if (c) {
       hexs.add(c.toHex().toLowerCase());
     }
   });
   if (hexs.size == 1) {
     let hex = hexs.values().next().value;
-    let c = parseColor(hex);
+    let c = interpretColor(hex);
     if (c) {
       return { color: c };
     }

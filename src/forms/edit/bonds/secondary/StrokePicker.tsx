@@ -3,20 +3,20 @@ import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import { AppInterface as App } from 'AppInterface';
 import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
-import { parseColor } from 'Parse/svg/color';
+import { interpretColor } from 'Draw/svg/interpretColor';
 
 // returns undefined for an empty secondary bonds array
 // or if not all secondary bonds have the same stroke
 function currStroke(secondaryBonds: SecondaryBondInterface[]): Value | undefined {
   let hexs = new Set<string>();
   secondaryBonds.forEach(sb => {
-    let c = parseColor(sb.line.attr('stroke'));
+    let c = interpretColor(sb.line.attr('stroke'));
     if (c) {
       hexs.add(c.toHex().toLowerCase());
     }
   });
   if (hexs.size == 1) {
-    let c = parseColor(hexs.values().next().value);
+    let c = interpretColor(hexs.values().next().value);
     if (c) {
       return { color: c };
     }

@@ -3,7 +3,7 @@ import { ColorPicker as UnderlyingColorPicker, Value } from 'Forms/fields/color/
 import { AppInterface as App } from 'AppInterface';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-import { parseColor } from 'Parse/svg/color';
+import { interpretColor } from 'Draw/svg/interpretColor';
 
 export type Props = {
   app: App;
@@ -17,18 +17,18 @@ export type Props = {
 function currColor(baseNumberings: BaseNumberingInterface[]): Value | undefined {
   let hexs = new Set<string>();
   baseNumberings.forEach(bn => {
-    let textColor = parseColor(bn.text.attr('fill'));
+    let textColor = interpretColor(bn.text.attr('fill'));
     if (textColor) {
       hexs.add(textColor.toHex().toLowerCase());
     }
-    let lineColor = parseColor(bn.line.attr('stroke'));
+    let lineColor = interpretColor(bn.line.attr('stroke'));
     if (lineColor) {
       hexs.add(lineColor.toHex().toLowerCase());
     }
   });
   if (hexs.size == 1) {
     let hex = hexs.values().next().value;
-    let c = parseColor(hex);
+    let c = interpretColor(hex);
     if (c) {
       return { color: c };
     }

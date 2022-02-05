@@ -3,7 +3,7 @@ import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import { AppInterface as App } from 'AppInterface';
 import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-import { parseColor } from 'Parse/svg/color';
+import { interpretColor } from 'Draw/svg/interpretColor';
 
 export type Props = {
   app: App;
@@ -17,14 +17,14 @@ export type Props = {
 function currStroke(tertiaryBonds: TertiaryBondInterface[]): Value | undefined {
   let hexs = new Set<string>();
   tertiaryBonds.forEach(tb => {
-    let c = parseColor(tb.path.attr('stroke'));
+    let c = interpretColor(tb.path.attr('stroke'));
     if (c) {
       hexs.add(c.toHex().toLowerCase());
     }
   });
   if (hexs.size == 1) {
     let hex = hexs.values().next().value;
-    let c = parseColor(hex);
+    let c = interpretColor(hex);
     if (c) {
       return { color: c };
     }

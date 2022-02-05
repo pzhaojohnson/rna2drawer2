@@ -3,7 +3,7 @@ import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import { AppInterface as App } from 'AppInterface';
 import { CircleBaseAnnotationInterface } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
-import { parseColor } from 'Parse/svg/color';
+import { interpretColor } from 'Draw/svg/interpretColor';
 
 export type Props = {
   app: App;
@@ -17,14 +17,14 @@ export type Props = {
 function currFill(outlines: CircleBaseAnnotationInterface[]): Value | undefined {
   let hexs = new Set<string>();
   outlines.forEach(o => {
-    let c = parseColor(o.circle.attr('fill'));
+    let c = interpretColor(o.circle.attr('fill'));
     if (c) {
       hexs.add(c.toHex().toLowerCase());
     }
   });
   if (hexs.size == 1) {
     let hex = hexs.values().next().value;
-    let c = parseColor(hex);
+    let c = interpretColor(hex);
     if (c) {
       return { color: c };
     }

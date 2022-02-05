@@ -1,6 +1,6 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { pixelsToInches, pixelsToPoints } from 'Export/units';
-import { parseColor } from 'Parse/svg/color';
+import { interpretColor } from 'Draw/svg/interpretColor';
 import { toPptxHex } from 'Export/pptx/color';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
@@ -109,7 +109,7 @@ function color(text: SVG.Text) {
   if (f == undefined || isBlankString(f)) {
     pptxHex = '000000';
   } else {
-    let c = parseColor(f);
+    let c = interpretColor(f);
     if (c) {
       pptxHex = toPptxHex(c);
     } else {
