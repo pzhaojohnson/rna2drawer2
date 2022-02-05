@@ -4,9 +4,9 @@ import { SketchPicker, ColorResult } from 'react-color';
 import styles from './ColorPicker.css';
 import * as SVG from '@svgdotjs/svg.js';
 import { PresetColorsList } from './PresetColorsList';
-import { parseColors } from './parseColors';
+import { interpretColors } from './interpretColors';
 
-let fixedColors = parseColors([
+let fixedColors = interpretColors([
   '#800000', '#ff0000', '#f5a623', '#fff000', '#c56200', '#8b572a', '#194d33', '#228b22',
   '#7ed321', '#b8e986', '#fda1ff', '#bd10e0', '#9013fe', '#4a148c', '#111dd6', '#009ce0',
   '#73d8ff', '#50e3c2', '#000000', '#4a4a4a', '#9b9b9b', '#d3d3d3', '#ffffff',
