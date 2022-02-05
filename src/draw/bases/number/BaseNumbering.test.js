@@ -1,7 +1,6 @@
 import { BaseNumbering } from './BaseNumbering';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
 import { normalizeAngle } from 'Math/angles/normalize';
@@ -58,21 +57,21 @@ describe('BaseNumbering class', () => {
   describe('constructor', () => {
     it('checks passed element types', () => {
       let t = new TextWrapper(svg.text('a'));
-      let l = new LineWrapper(svg.line(1, 5, 8, 12));
+      let l = svg.line(1, 5, 8, 12);
       let c = svg.circle(20);
       let bc = { x: 3, y: 8 };
       expect(
         () => new BaseNumbering(new TextWrapper(c), l, bc)
       ).toThrow();
       expect(
-        () => new BaseNumbering(t, new LineWrapper(c), bc)
+        () => new BaseNumbering(t, c, bc)
       ).toThrow();
     });
 
     it('initializes falsy text and line IDs with UUIDs', () => {
       [undefined, ''].forEach(v => {
         let t = new TextWrapper(svg.text('5'));
-        let l = new LineWrapper(svg.line(5, 15, 22, 300));
+        let l = svg.line(5, 15, 22, 300);
         t.attr({ 'id': v });
         l.attr({ 'id': v });
         // use the attr method to check the value of an ID
@@ -91,7 +90,7 @@ describe('BaseNumbering class', () => {
       // drawing may reference other elements using saved
       // IDs (e.g., bonds referencing their bases)
       let t = new TextWrapper(svg.text('1'));
-      let l = new LineWrapper(svg.line(1, 5, 8, 12));
+      let l = svg.line(1, 5, 8, 12);
       t.attr({ 'id': 'textId1234' });
       l.attr({ 'id': 'lineId5678' });
       let bn = new BaseNumbering(t, l, { x: 1, y: 2 });
@@ -102,7 +101,7 @@ describe('BaseNumbering class', () => {
 
   it('id getter', () => {
     let t = new TextWrapper(svg.text('6'));
-    let l = new LineWrapper(svg.line(10, 20, 30, 40));
+    let l = svg.line(10, 20, 30, 40);
     let bn = new BaseNumbering(t, l, { x: 10, y: 20 });
     expect(bn.id).toBe(t.id());
   });

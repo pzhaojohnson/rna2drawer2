@@ -2,7 +2,6 @@ import { BaseNumberingInterface } from './BaseNumberingInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { findTextByUniqueId, findLineByUniqueId } from 'Draw/saved/svg';
 import { BaseNumbering } from './BaseNumbering';
 import { values } from './values';
@@ -35,7 +34,7 @@ export function addSavedNumbering(b: Base, saved: SavedState): void | never {
     let line = findLineByUniqueId(svg, saved.lineId);
     let bn = new BaseNumbering(
       new TextWrapper(text),
-      new LineWrapper(line),
+      line,
       { x: b.xCenter, y: b.yCenter },
     );
     if (b.numbering) {

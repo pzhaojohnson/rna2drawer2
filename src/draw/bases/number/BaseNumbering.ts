@@ -2,8 +2,8 @@ import {
   BaseNumberingInterface,
   Repositioning,
 } from './BaseNumberingInterface';
+import * as SVG from '@svgdotjs/svg.js';
 import { SVGTextWrapper as Text } from 'Draw/svg/SVGTextWrapper';
-import { SVGLineWrapper as Line } from 'Draw/svg/SVGLineWrapper';
 import { Values } from './values';
 import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';
@@ -14,16 +14,16 @@ export class BaseNumbering implements BaseNumberingInterface {
   static recommendedDefaults: Values;
 
   readonly text: Text;
-  readonly line: Line;
+  readonly line: SVG.Line;
 
   _baseCenter: Point;
 
-  constructor(text: Text, line: Line, baseCenter: Point) {
+  constructor(text: Text, line: SVG.Line, baseCenter: Point) {
     if (text.wrapped.type != 'text') {
       throw new Error('Wrapped element is not a text.');
     }
-    if (line.wrapped.type != 'line') {
-      throw new Error('Wrapped element is not a line.');
+    if (line.type != 'line') {
+      throw new Error('Element is not a line.');
     }
 
     this.text = text;
