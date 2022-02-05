@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 
 export type Shift = {
   x: number;
@@ -7,8 +7,8 @@ export type Shift = {
 }
 
 function shiftText(text: SVG.Text, s: Shift) {
-  let x = parseNumber(text.attr('x'));
-  let y = parseNumber(text.attr('y'));
+  let x = interpretNumber(text.attr('x'));
+  let y = interpretNumber(text.attr('y'));
   if (x && y) {
     // faster than using the dmove method
     text.attr({

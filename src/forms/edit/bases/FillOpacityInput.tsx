@@ -2,7 +2,7 @@ import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -24,7 +24,7 @@ function currFillOpacityPercentage(bases: Base[]): Value {
   let fops = new Set<Value>();
   bases.forEach(b => {
     let fo = b.text.attr('fill-opacity');
-    let n = parseNumber(fo);
+    let n = interpretNumber(fo);
     if (n) {
       let fop = 100 * n.valueOf();
       fop = round(fop, 0);

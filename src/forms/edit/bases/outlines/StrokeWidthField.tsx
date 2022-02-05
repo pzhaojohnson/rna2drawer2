@@ -3,7 +3,7 @@ import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { CircleBaseAnnotationInterface } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -25,7 +25,7 @@ function currStrokeWidth(outlines: CircleBaseAnnotationInterface[]): Value {
   let sws = new Set<Value>();
   outlines.forEach(o => {
     let sw = o.circle.attr('stroke-width');
-    let n = parseNumber(sw);
+    let n = interpretNumber(sw);
     if (n) {
       let pxs = n.convert('px').valueOf();
       pxs = round(pxs, 2);

@@ -3,7 +3,7 @@ import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -25,7 +25,7 @@ function currFontSize(baseNumberings: BaseNumberingInterface[]): Value {
   let fss = new Set<Value>();
   baseNumberings.forEach(bn => {
     let fs = bn.text.attr('font-size');
-    let n = parseNumber(fs);
+    let n = interpretNumber(fs);
     if (n) {
       let pxs = n.convert('px').valueOf();
       pxs = round(pxs, 1); // match PowerPoint font size precision

@@ -4,7 +4,7 @@ import { AppInterface as App } from 'AppInterface';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import * as SVG from '@svgdotjs/svg.js';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -31,11 +31,11 @@ function toRoundedPercentage(n: SVG.Number): Value {
 function currOpacityPercentage(baseNumberings: BaseNumberingInterface[]): Value {
   let ops = new Set<Value>();
   baseNumberings.forEach(bn => {
-    let textOpacity = parseNumber(bn.text.attr('fill-opacity'));
+    let textOpacity = interpretNumber(bn.text.attr('fill-opacity'));
     if (textOpacity) {
       ops.add(toRoundedPercentage(textOpacity));
     }
-    let lineOpacity = parseNumber(bn.line.attr('stroke-opacity'));
+    let lineOpacity = interpretNumber(bn.line.attr('stroke-opacity'));
     if (lineOpacity) {
       ops.add(toRoundedPercentage(lineOpacity));
     }

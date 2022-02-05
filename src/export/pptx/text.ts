@@ -2,7 +2,7 @@ import * as SVG from '@svgdotjs/svg.js';
 import { pixelsToInches, pixelsToPoints } from 'Export/units';
 import { parseColor } from 'Parse/svg/color';
 import { toPptxHex } from 'Export/pptx/color';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 import PptxGenJS from 'pptxgenjs';
 
@@ -39,7 +39,7 @@ function fontFace(text: SVG.Text): string | undefined {
 
 function fontSize(text: SVG.Text): number {
   let fs = text.attr('font-size');
-  let n = parseNumber(fs);
+  let n = interpretNumber(fs);
   if (n) {
     let pxs = n.convert('px').valueOf();
     let pts = pixelsToPoints(pxs);
@@ -57,7 +57,7 @@ function isBold(text: SVG.Text): boolean {
   } else if (fw == 'bold') {
     return true;
   } else {
-    let n = parseNumber(fw);
+    let n = interpretNumber(fw);
     if (n) {
       return n.valueOf() > 550;
     } else {
@@ -83,7 +83,7 @@ function interpretOpacity(o: unknown): number {
   if (o == undefined || isBlankString(o)) {
     return 1;
   } else {
-    let n = parseNumber(o);
+    let n = interpretNumber(o);
     if (n) {
       let v = n.valueOf();
       return clampOpacity(v);

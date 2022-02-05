@@ -3,7 +3,7 @@ import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -25,7 +25,7 @@ function currStrokeOpacityPercentage(primaryBonds: PrimaryBondInterface[]): Valu
   let sops = new Set<Value>();
   primaryBonds.forEach(pb => {
     let so = pb.line.attr('stroke-opacity');
-    let n = parseNumber(so);
+    let n = interpretNumber(so);
     if (n) {
       let sop = 100 * n.valueOf();
       sop = round(sop, 0);

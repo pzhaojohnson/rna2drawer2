@@ -4,7 +4,7 @@ import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import { AppInterface as App } from 'AppInterface';
 import { BaseInterface } from 'Draw/bases/BaseInterface';
 import { Base } from 'Draw/bases/Base';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 
 function isBlankString(v: unknown): boolean {
   return typeof v == 'string' && v.trim().length == 0;
@@ -17,7 +17,7 @@ function isBold(b: BaseInterface): boolean {
   } else if (fw == 'bold') {
     return true;
   } else {
-    let n = parseNumber(fw);
+    let n = interpretNumber(fw);
     if (n) {
       return n.valueOf() >= 550;
     } else {

@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 
 export type Box = {
   x: number;
@@ -20,9 +20,9 @@ function merge(box1: Box, box2: Box): Box {
 }
 
 function crudeTextBoundingBox(text: SVG.Text): Box {
-  let x = parseNumber(text.attr('x'));
-  let y = parseNumber(text.attr('y'));
-  let fontSize = parseNumber(text.attr('font-size'));
+  let x = interpretNumber(text.attr('x'));
+  let y = interpretNumber(text.attr('y'));
+  let fontSize = interpretNumber(text.attr('font-size'));
   if (x && y && fontSize) {
     return {
       x: x.convert('px').valueOf(),

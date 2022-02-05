@@ -10,14 +10,14 @@ import { AppInterface as App } from 'AppInterface';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { atPosition } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 import { pointsToPixels } from 'Export/units'
 import { exportDrawing } from 'Export/export';
 
 // returns undefined if the font size of the base cannot be parsed
 function fontSize(b: Base): number | undefined {
-  let n = parseNumber(b.text.attr('font-size'));
+  let n = interpretNumber(b.text.attr('font-size'));
   if (n) {
     return n.convert('px').valueOf();
   }

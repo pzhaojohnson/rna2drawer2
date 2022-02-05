@@ -1,12 +1,12 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { pixelsToInches } from 'Export/units';
 import { round } from 'Math/round';
 import PptxGenJS from 'pptxgenjs';
 
 function strokeWidth(ele: SVG.Element): number {
   let sw = ele.attr('stroke-width');
-  let n = parseNumber(sw);
+  let n = interpretNumber(sw);
   if (n) {
     return n.convert('px').valueOf();
   } else {

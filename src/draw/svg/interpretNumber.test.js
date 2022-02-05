@@ -1,7 +1,7 @@
-import { parseNumber } from './number';
+import { interpretNumber } from './interpretNumber';
 
-test('parseNumber function', () => {
-  
+test('interpretNumber function', () => {
+
   // are numbers
   [
     { v: 25, valueOf: 25 },
@@ -10,7 +10,7 @@ test('parseNumber function', () => {
     { v: '67.2%', valueOf: 0.672 },
     { v: '0.23em', valueOf: 0.23 },
   ].forEach(({ v, valueOf }) => {
-    let n = parseNumber(v);
+    let n = interpretNumber(v);
     expect(n.valueOf()).toBe(valueOf);
   });
 
@@ -23,7 +23,7 @@ test('parseNumber function', () => {
     true,
     'f5a',
   ].forEach(v => {
-    let n = parseNumber(v);
+    let n = interpretNumber(v);
     expect(n.valueOf()).toBe(0); // is the built-in behavior
   });
 });

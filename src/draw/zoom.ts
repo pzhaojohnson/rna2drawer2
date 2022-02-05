@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { centerOfView, centerViewOn } from 'Draw/view';
 
 function isFiniteNumber(v: unknown): v is number {
@@ -9,7 +9,7 @@ function isFiniteNumber(v: unknown): v is number {
 // Calculates the current zoom of the drawing where 1 corresponds to 100%.
 // Returns undefined if unable to calculate the current zoom.
 export function zoom(drawing: Drawing): number | undefined {
-  let width = parseNumber(drawing.svg.attr('width'));
+  let width = interpretNumber(drawing.svg.attr('width'));
   if (!width) {
     console.error(`Unable to parse width attribute: ${drawing.svg.attr('width')}.`);
     return undefined;

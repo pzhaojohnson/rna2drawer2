@@ -3,7 +3,7 @@ import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -25,7 +25,7 @@ function currStrokeWidth(tertiaryBonds: TertiaryBondInterface[]): Value {
   let sws = new Set<Value>();
   tertiaryBonds.forEach(tb => {
     let sw = tb.path.attr('stroke-width');
-    let n = parseNumber(sw);
+    let n = interpretNumber(sw);
     if (n) {
       let pxs = n.convert('px').valueOf();
       sws.add(round(pxs, 2).toString());

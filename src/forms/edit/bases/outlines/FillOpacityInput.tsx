@@ -3,7 +3,7 @@ import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
 import { CircleBaseAnnotationInterface } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
-import { parseNumber } from 'Parse/svg/number';
+import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -25,7 +25,7 @@ function currFillOpacityPercentage(outlines: CircleBaseAnnotationInterface[]): V
   let fops = new Set<Value>();
   outlines.forEach(o => {
     let fo = o.circle.attr('fill-opacity');
-    let n = parseNumber(fo);
+    let n = interpretNumber(fo);
     if (n) {
       let fop = 100 * n.valueOf();
       fop = round(fop, 0);
