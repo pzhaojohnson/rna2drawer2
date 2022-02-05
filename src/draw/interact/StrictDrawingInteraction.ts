@@ -6,7 +6,7 @@ import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
-import { TertiaryBondsInteraction } from 'Draw/interact/bonds/tertiary/TertiaryBondsInteraction';
+import { TertiaryBondsTool } from 'Draw/interact/bonds/tertiary/TertiaryBondsTool';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
@@ -27,7 +27,7 @@ class StrictDrawingInteraction {
   readonly options?: Options;
   _app: App;
 
-  readonly tertiaryBondsInteraction: TertiaryBondsInteraction;
+  readonly tertiaryBondsTool: TertiaryBondsTool;
 
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
@@ -49,7 +49,7 @@ class StrictDrawingInteraction {
     this._initializeTriangularizingMode();
     this._initializeAnnotatingMode();
 
-    this.tertiaryBondsInteraction = new TertiaryBondsInteraction({
+    this.tertiaryBondsTool = new TertiaryBondsTool({
       app: app,
       drawing: app.strictDrawing.drawing,
       SVG: options?.SVG,
@@ -67,6 +67,9 @@ class StrictDrawingInteraction {
     this._bindMouseout();
     this._bindMousedown();
     this._bindDblclick();
+    this._bindMousemove();
+    this._bindMouseup();
+    this._bindKeyup();
   }
 
   _bindMouseover() {
@@ -81,15 +84,19 @@ class StrictDrawingInteraction {
         this._mouseoveredBase = mouseoveredBase;
         this._handleMouseoverOnBase(mouseoveredBase);
       }
+
+      this.tertiaryBondsTool.handleMouseover(event);
     });
   }
 
   _bindMouseout() {
-    window.addEventListener('mouseout', () => {
+    window.addEventListener('mouseout', event => {
       if (this._mouseoveredBase) {
         this._handleMouseoutOnBase(this._mouseoveredBase);
         this._mouseoveredBase = undefined;
       }
+
+      this.tertiaryBondsTool.handleMouseout(event);
     });
   }
 
@@ -100,6 +107,8 @@ class StrictDrawingInteraction {
       } else if (event.target == this.strictDrawing.drawing.svg.node) {
         this._handleMousedownOnDrawing();
       }
+
+      this.tertiaryBondsTool.handleMousedown(event);
     });
   }
 
@@ -108,6 +117,26 @@ class StrictDrawingInteraction {
       if (!this._mouseoveredBase && event.target == this.strictDrawing.drawing.svg.node) {
         this._handleDblclickOnDrawing();
       }
+
+      this.tertiaryBondsTool.handleDblclick(event);
+    });
+  }
+
+  _bindMousemove() {
+    window.addEventListener('mousemove', event => {
+      this.tertiaryBondsTool.handleMousemove(event);
+    });
+  }
+
+  _bindMouseup() {
+    window.addEventListener('mouseup', event => {
+      this.tertiaryBondsTool.handleMouseup(event);
+    });
+  }
+
+  _bindKeyup() {
+    window.addEventListener('keyup', event => {
+      this.tertiaryBondsTool.handleKeyup(event);
     });
   }
 
@@ -174,7 +203,7 @@ class StrictDrawingInteraction {
   }
 
   reset() {
-    this.tertiaryBondsInteraction.reset();
+    this.tertiaryBondsTool.reset();
     this._currMode.reset();
   }
 
@@ -186,7 +215,7 @@ class StrictDrawingInteraction {
     } else {
       this._currMode.reset();
     }
-    this.tertiaryBondsInteraction.refresh();
+    this.tertiaryBondsTool.refresh();
     this.fireChange();
   }
 

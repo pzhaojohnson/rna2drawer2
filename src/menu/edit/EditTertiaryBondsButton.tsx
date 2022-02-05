@@ -11,7 +11,7 @@ export function EditTertiaryBondsButton(props: Props) {
     <DroppedButton
       text='Tertiary Bonds'
       onClick={() => {
-        props.app.strictDrawingInteraction.tertiaryBondsInteraction.renderForm();
+        props.app.strictDrawingInteraction.tertiaryBondsTool.renderForm();
       }}
     />
   );

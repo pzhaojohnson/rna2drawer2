@@ -39,7 +39,8 @@ type TertiaryBondId = string;
 
 const formKey = uuidv4();
 
-export class TertiaryBondsInteraction {
+// handles interaction with tertiary bonds
+export class TertiaryBondsTool {
   readonly options: Options;
 
   // the ID of the hovered tertiary bond
@@ -67,14 +68,6 @@ export class TertiaryBondsInteraction {
     this.drawingOverlay.placeOver(options.drawing);
 
     this._highlightings = new Map<TertiaryBondId, TertiaryBondHighlighting>();
-
-    window.addEventListener('mouseover', event => this.handleMouseover(event));
-    window.addEventListener('mouseout', event => this.handleMouseout(event));
-    window.addEventListener('mousedown', event => this.handleMousedown(event));
-    window.addEventListener('mousemove', event => this.handleMousemove(event));
-    window.addEventListener('mouseup', event => this.handleMouseup(event));
-    window.addEventListener('dblclick', event => this.handleDblclick(event));
-    window.addEventListener('keyup', event => this.handleKeyup(event));
   }
 
   get hovered(): TertiaryBond | undefined {
