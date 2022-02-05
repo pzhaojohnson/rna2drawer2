@@ -126,7 +126,7 @@ describe('numberingIncrement function', () => {
         addNumbering(seq.atPosition(6), 11);
         expect(numberingOffset(seq)).toBe(5);
         expect(numberingIncrement(seq)).toBe(4);
-        seq.atPosition(6).numbering.text.wrapped.text('12');
+        seq.atPosition(6).numbering.text.text('12');
         expect(numberingOffset(seq)).toBeUndefined();
         expect(numberingIncrement(seq)).toBeUndefined();
       });
@@ -138,7 +138,7 @@ describe('numberingIncrement function', () => {
         addNumbering(seq.atPosition(5), 2);
         expect(numberingOffset(seq)).toBe(-3);
         expect(numberingIncrement(seq)).toBe(4);
-        seq.atPosition(5).numbering.text.wrapped.text('asdf');
+        seq.atPosition(5).numbering.text.text('asdf');
         expect(numberingOffset(seq)).toBeUndefined();
         expect(numberingIncrement(seq)).toBeUndefined();
       });

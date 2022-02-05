@@ -1,6 +1,5 @@
 import { BaseNumbering } from './BaseNumbering';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
 import { normalizeAngle } from 'Math/angles/normalize';
@@ -56,12 +55,12 @@ function getRoundedPositioning(bn) {
 describe('BaseNumbering class', () => {
   describe('constructor', () => {
     it('checks passed element types', () => {
-      let t = new TextWrapper(svg.text('a'));
+      let t = svg.text('a');
       let l = svg.line(1, 5, 8, 12);
       let c = svg.circle(20);
       let bc = { x: 3, y: 8 };
       expect(
-        () => new BaseNumbering(new TextWrapper(c), l, bc)
+        () => new BaseNumbering(c, l, bc)
       ).toThrow();
       expect(
         () => new BaseNumbering(t, c, bc)
@@ -70,7 +69,7 @@ describe('BaseNumbering class', () => {
 
     it('initializes falsy text and line IDs with UUIDs', () => {
       [undefined, ''].forEach(v => {
-        let t = new TextWrapper(svg.text('5'));
+        let t = svg.text('5');
         let l = svg.line(5, 15, 22, 300);
         t.attr({ 'id': v });
         l.attr({ 'id': v });
@@ -89,7 +88,7 @@ describe('BaseNumbering class', () => {
       // opening a saved drawing since elements in the
       // drawing may reference other elements using saved
       // IDs (e.g., bonds referencing their bases)
-      let t = new TextWrapper(svg.text('1'));
+      let t = svg.text('1');
       let l = svg.line(1, 5, 8, 12);
       t.attr({ 'id': 'textId1234' });
       l.attr({ 'id': 'lineId5678' });
@@ -100,7 +99,7 @@ describe('BaseNumbering class', () => {
   });
 
   it('id getter', () => {
-    let t = new TextWrapper(svg.text('6'));
+    let t = svg.text('6');
     let l = svg.line(10, 20, 30, 40);
     let bn = new BaseNumbering(t, l, { x: 10, y: 20 });
     expect(bn.id).toBe(t.id());

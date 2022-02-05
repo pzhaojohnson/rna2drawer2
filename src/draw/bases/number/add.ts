@@ -1,6 +1,5 @@
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGTextWrapper as TextWrapper } from 'Draw/svg/SVGTextWrapper';
 import { BaseNumbering } from './BaseNumbering';
 import { setValues } from './values';
 
@@ -26,7 +25,7 @@ export function addNumbering(b: Base, n: number) {
     let text = addText(svg, n);
     let line = svg.line(0, 0, 1, 1);
     let bn = new BaseNumbering(
-      new TextWrapper(text),
+      text,
       line,
       { x: b.xCenter, y: b.yCenter },
     );

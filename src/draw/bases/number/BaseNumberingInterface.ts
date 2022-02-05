@@ -1,5 +1,4 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGTextWrapper as Text } from 'Draw/svg/SVGTextWrapper';
 import { Point2D as Point } from 'Math/points/Point';
 
 export type Repositioning = {
@@ -10,7 +9,7 @@ export type Repositioning = {
 }
 
 export interface BaseNumberingInterface {
-  readonly text: Text;
+  readonly text: SVG.Text;
   readonly line: SVG.Line;
   readonly id: string;
   basePadding: number | undefined;

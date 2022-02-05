@@ -67,9 +67,9 @@ describe('NumberInput component', () => {
     });
     container.firstChild.value = '111';
     Simulate.change(container.firstChild);
-    expect(base.numbering.text.wrapped.text()).toBe('10');
+    expect(base.numbering.text.text()).toBe('10');
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.wrapped.text()).toBe('111');
+    expect(base.numbering.text.text()).toBe('111');
   });
 
   it('updates number on pressing the enter key', () => {
@@ -79,9 +79,9 @@ describe('NumberInput component', () => {
     });
     container.firstChild.value = '-250';
     Simulate.change(container.firstChild);
-    expect(base.numbering.text.wrapped.text()).toBe('1012');
+    expect(base.numbering.text.text()).toBe('1012');
     Simulate.keyUp(container.firstChild, { key: 'Enter' });
-    expect(base.numbering.text.wrapped.text()).toBe('-250');
+    expect(base.numbering.text.text()).toBe('-250');
   });
 
   it('pushes undo when updating number', () => {
@@ -92,11 +92,11 @@ describe('NumberInput component', () => {
     container.firstChild.value = '50';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.wrapped.text()).toBe('50'); // updated number
+    expect(base.numbering.text.text()).toBe('50'); // updated number
     app.undo();
     // new Base instances may have been created after undo
     let correspondingBase = drawing.bases().find(b => b.id == base.id);
-    expect(correspondingBase.numbering.text.wrapped.text()).toBe('1'); // was undone
+    expect(correspondingBase.numbering.text.text()).toBe('1'); // was undone
   });
 
   it('ignores empty inputs', () => {
@@ -107,7 +107,7 @@ describe('NumberInput component', () => {
     container.firstChild.value = '';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.wrapped.text()).toBe('33'); // did not change
+    expect(base.numbering.text.text()).toBe('33'); // did not change
     expect(app.canUndo()).toBeFalsy(); // did not push undo
   });
 
@@ -119,7 +119,7 @@ describe('NumberInput component', () => {
     container.firstChild.value = '      ';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.wrapped.text()).toBe('-58'); // did not change
+    expect(base.numbering.text.text()).toBe('-58'); // did not change
     expect(app.canUndo()).toBeFalsy(); // did not push undo
   });
 
@@ -131,7 +131,7 @@ describe('NumberInput component', () => {
     container.firstChild.value = 'asdf';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.wrapped.text()).toBe('109'); // did not change
+    expect(base.numbering.text.text()).toBe('109'); // did not change
     expect(app.canUndo()).toBeFalsy(); // did not push undo
   });
 
@@ -144,7 +144,7 @@ describe('NumberInput component', () => {
       container.firstChild.value = v;
       Simulate.change(container.firstChild);
       Simulate.blur(container.firstChild);
-      expect(base.numbering.text.wrapped.text()).toBe('15'); // did not change
+      expect(base.numbering.text.text()).toBe('15'); // did not change
       expect(app.canUndo()).toBeFalsy(); // did not push undo
     });
   });
@@ -158,7 +158,7 @@ describe('NumberInput component', () => {
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
     expect(app.canUndo()).toBeFalsy(); // did not push undo
-    expect(base.numbering.text.wrapped.text()).toBe('11'); // did not change either
+    expect(base.numbering.text.text()).toBe('11'); // did not change either
   });
 
   it('floors non-integer inputs', () => {
@@ -169,6 +169,6 @@ describe('NumberInput component', () => {
     container.firstChild.value = '140.45';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.wrapped.text()).toBe('140'); // floored
+    expect(base.numbering.text.text()).toBe('140'); // floored
   });
 });

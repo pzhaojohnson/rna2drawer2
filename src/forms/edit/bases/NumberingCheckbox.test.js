@@ -90,7 +90,7 @@ describe('NumberingCheckbox component', () => {
       let comp = new NumberingCheckbox({ app, base });
       comp.handleChange({ target: { checked: true } });
       expect(base.numbering).toBeTruthy(); // added numbering
-      expect(base.numbering.text.wrapped.text()).toBe('3');
+      expect(base.numbering.text.text()).toBe('3');
     });
 
     test('when the numbering offset is nonzero', () => {
@@ -101,7 +101,7 @@ describe('NumberingCheckbox component', () => {
       let comp = new NumberingCheckbox({ app, base });
       comp.handleChange({ target: { checked: true } });
       expect(base.numbering).toBeTruthy(); // added numbering
-      expect(base.numbering.text.wrapped.text()).toBe('-47');
+      expect(base.numbering.text.text()).toBe('-47');
     });
 
     test('when the numbering offset is undefined', () => {
@@ -115,7 +115,7 @@ describe('NumberingCheckbox component', () => {
       comp.handleChange({ target: { checked: true } });
       expect(base.numbering).toBeTruthy(); // added numbering
       // defaulted to a numbering offset of zero
-      expect(base.numbering.text.wrapped.text()).toBe('6');
+      expect(base.numbering.text.text()).toBe('6');
     });
 
     test('when the base must be found from among multiple sequences', () => {
@@ -130,7 +130,7 @@ describe('NumberingCheckbox component', () => {
       comp.handleChange({ target: { checked: true } });
       expect(base.numbering).toBeTruthy(); // added numbering
       // had to have found the sequence to apply its numbering offset
-      expect(base.numbering.text.wrapped.text()).toBe('31');
+      expect(base.numbering.text.text()).toBe('31');
     });
 
     it('pushes undo', () => {

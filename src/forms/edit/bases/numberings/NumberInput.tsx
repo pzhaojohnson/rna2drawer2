@@ -21,7 +21,7 @@ export class NumberInput extends React.Component<Props> {
     super(props);
 
     this.state = {
-      value: props.baseNumbering.text.wrapped.text(),
+      value: props.baseNumbering.text.text(),
     };
   }
 
@@ -60,14 +60,14 @@ export class NumberInput extends React.Component<Props> {
 
     n = Math.floor(n); // make an integer
 
-    let currNumber = Number.parseFloat(this.props.baseNumbering.text.wrapped.text());
+    let currNumber = Number.parseFloat(this.props.baseNumbering.text.text());
     if (n == currNumber) {
       return;
     }
 
     // update number
     this.props.app.pushUndo();
-    this.props.baseNumbering.text.wrapped.text(n.toString());
+    this.props.baseNumbering.text.text(n.toString());
     this.props.app.refresh();
   }
 }

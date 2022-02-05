@@ -72,7 +72,7 @@ describe('numberingOffset function', () => {
       addNumbering(seq.atPosition(12), 15);
       addNumbering(seq.atPosition(14), 17);
       expect(numberingOffset(seq)).toBe(3);
-      seq.atPosition(12).numbering.text.wrapped.text('14');
+      seq.atPosition(12).numbering.text.text('14');
       expect(numberingOffset(seq)).toBe(undefined);
     });
 
@@ -89,7 +89,7 @@ describe('numberingOffset function', () => {
         addNumbering(seq.atPosition(5), 7);
         addNumbering(seq.atPosition(8), 10);
         expect(numberingOffset(seq)).toBe(2);
-        seq.atPosition(5).numbering.text.wrapped.text(v.toString());
+        seq.atPosition(5).numbering.text.text(v.toString());
         expect(numberingOffset(seq)).toBe(undefined);
       });
     });

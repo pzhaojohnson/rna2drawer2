@@ -75,7 +75,7 @@ export class NumberingOffsetInput extends React.Component<Props> {
       let p = i + 1;
       let n = p + no;
       if (b.numbering) {
-        b.numbering.text.wrapped.text(n.toString());
+        b.numbering.text.text(n.toString());
         updated = true;
       }
     });

@@ -8,7 +8,7 @@ export function numberingOffset(seq: Sequence): number | undefined {
   seq.bases.forEach((b, i) => {
     let p = i + 1;
     if (b.numbering) {
-      let n = Number.parseFloat(b.numbering.text.wrapped.text());
+      let n = Number.parseFloat(b.numbering.text.text());
       offsets.add(n - p);
     }
   });

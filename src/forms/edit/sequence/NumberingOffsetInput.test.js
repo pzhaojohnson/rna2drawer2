@@ -139,7 +139,7 @@ describe('NumberingOffsetInput component', () => {
       addNumbering(sequence.atPosition(7), 1);
       addNumbering(sequence.atPosition(8), -1);
       addNumbering(sequence.atPosition(11), 2);
-      sequence.atPosition(11).numbering.text.wrapped.text('asdf'); // make nonnumeric
+      sequence.atPosition(11).numbering.text.text('asdf'); // make nonnumeric
       act(() => {
         render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
       });

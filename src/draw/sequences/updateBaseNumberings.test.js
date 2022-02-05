@@ -40,9 +40,9 @@ describe('updateBaseNumberings function', () => {
     expect(areUnnumbered(
       [1, 3, 4, 6, 7].map(p => seq.atPosition(p))
     )).toBeTruthy();
-    expect(seq.atPosition(2).numbering.text.wrapped.text()).toBe('0');
-    expect(seq.atPosition(5).numbering.text.wrapped.text()).toBe('3');
-    expect(seq.atPosition(8).numbering.text.wrapped.text()).toBe('6');
+    expect(seq.atPosition(2).numbering.text.text()).toBe('0');
+    expect(seq.atPosition(5).numbering.text.text()).toBe('3');
+    expect(seq.atPosition(8).numbering.text.text()).toBe('6');
   });
 
   it('removes and replaces base numberings', () => {
@@ -52,7 +52,7 @@ describe('updateBaseNumberings function', () => {
     addNumbering(seq.atPosition(6), 8); // should be replaced
     updateBaseNumberings(seq, { offset: 10, increment: 5, anchor: 1 });
     expect(seq.atPosition(3).numbering).toBeFalsy(); // was removed
-    expect(seq.atPosition(6).numbering.text.wrapped.text()).toBe('16'); // was replaced
+    expect(seq.atPosition(6).numbering.text.text()).toBe('16'); // was replaced
   });
 
   it('handles negative numbering increments', () => {
@@ -62,9 +62,9 @@ describe('updateBaseNumberings function', () => {
     expect(areUnnumbered(
       [1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16].map(p => seq.atPosition(p))
     )).toBeTruthy();
-    expect(seq.atPosition(5).numbering.text.wrapped.text()).toBe('5');
-    expect(seq.atPosition(10).numbering.text.wrapped.text()).toBe('10');
-    expect(seq.atPosition(15).numbering.text.wrapped.text()).toBe('15');
+    expect(seq.atPosition(5).numbering.text.text()).toBe('5');
+    expect(seq.atPosition(10).numbering.text.text()).toBe('10');
+    expect(seq.atPosition(15).numbering.text.text()).toBe('15');
   });
 
   test('when there should be no base numberings in the end', () => {
@@ -82,6 +82,6 @@ describe('updateBaseNumberings function', () => {
     expect(areUnnumbered(
       [1, 2, 4].map(p => seq.atPosition(p))
     )).toBeTruthy();
-    expect(seq.atPosition(3).numbering.text.wrapped.text()).toBe('15');
+    expect(seq.atPosition(3).numbering.text.text()).toBe('15');
   });
 });

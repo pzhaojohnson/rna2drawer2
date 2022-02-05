@@ -72,7 +72,7 @@ describe('numberingAnchor function', () => {
       addNumbering(seq.atPosition(8), 10);
       expect(numberingOffset(seq)).toBe(2);
       expect(numberingAnchor(seq)).toBe(2);
-      seq.atPosition(5).numbering.text.wrapped.text('6'); // an inconsistent offset
+      seq.atPosition(5).numbering.text.text('6'); // an inconsistent offset
       expect(numberingOffset(seq)).toBeUndefined();
       expect(numberingAnchor(seq)).toBeUndefined();
     });
@@ -100,7 +100,7 @@ describe('numberingAnchor function', () => {
       expect(numberingOffset(seq)).toBe(0);
       expect(numberingIncrement(seq)).toBe(4);
       expect(numberingAnchor(seq)).toBe(3);
-      seq.atPosition(11).numbering.text.wrapped.text('Q'); // not an integer
+      seq.atPosition(11).numbering.text.text('Q'); // not an integer
       expect(numberingOffset(seq)).toBeUndefined();
       expect(numberingIncrement(seq)).toBeUndefined();
       expect(numberingAnchor(seq)).toBeUndefined();
