@@ -4,7 +4,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addPrimaryBond, addSecondaryBond } from './add';
 
 function lineWasRemoved(line) {
-  return line.wrapped.root() ? false : true;
+  return line.root() ? false : true;
 }
 
 let container = null;

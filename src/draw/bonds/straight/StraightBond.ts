@@ -1,22 +1,21 @@
 import { StraightBondInterface } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGLineWrapper as Line } from 'Draw/svg/SVGLineWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { distance2D as distance } from 'Math/distance';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { position } from './position';
 
 export class StraightBond implements StraightBondInterface {
-  readonly line: Line;
+  readonly line: SVG.Line;
   readonly base1: Base;
   readonly base2: Base;
 
   _basePadding1: number;
   _basePadding2: number;
 
-  constructor(line: Line, base1: Base, base2: Base) {
-    if (line.wrapped.type != 'line') {
-      throw new Error('Wrapped element is not a line.');
+  constructor(line: SVG.Line, base1: Base, base2: Base) {
+    if (line.type != 'line') {
+      throw new Error('Element is not a line.');
     }
 
     this.line = line;
@@ -40,11 +39,10 @@ export class StraightBond implements StraightBondInterface {
   }
 
   contains(node: SVG.Element | Node): boolean {
-    let lineNode = this.line.wrapped.node;
     if (node instanceof SVG.Element) {
       node = node.node;
     }
-    return lineNode == node || lineNode.contains(node);
+    return this.line.node == node || this.line.node.contains(node);
   }
 
   binds(b: Base): boolean {

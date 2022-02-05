@@ -1,6 +1,5 @@
 import { savableState } from './save';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { Base } from 'Draw/bases/Base';
 import { StraightBond } from './StraightBond';
 
@@ -15,7 +14,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let line = new LineWrapper(svg.line(100, 500, 550, 500));
+  let line = svg.line(100, 500, 550, 500);
   let base1 = Base.create(svg, 'A', 50, 500);
   let base2 = Base.create(svg, 'T', 600, 500);
   bond = new StraightBond(line, base1, base2);

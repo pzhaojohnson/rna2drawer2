@@ -1,9 +1,8 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { SVGLineWrapper as Line } from 'Draw/svg/SVGLineWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface'
 
 export interface StraightBondInterface {
-  readonly line: Line;
+  readonly line: SVG.Line;
   readonly base1: Base;
   readonly base2: Base;
   id: string;

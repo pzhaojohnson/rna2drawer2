@@ -1,6 +1,5 @@
 import { values, setValues } from './values';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { Base } from 'Draw/bases/Base';
 import { StraightBond } from './StraightBond';
 import { round } from 'Math/round';
@@ -21,7 +20,7 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  let line = new LineWrapper(svg.line(50, 20, 100, 20));
+  let line = svg.line(50, 20, 100, 20);
   let base1 = Base.create(svg, 'T', 25, 20);
   let base2 = Base.create(svg, 'A', 150, 20);
   bond = new StraightBond(line, base1, base2);

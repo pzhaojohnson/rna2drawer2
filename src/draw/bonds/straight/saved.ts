@@ -4,7 +4,6 @@ import { PrimaryBond } from './PrimaryBond';
 import { SecondaryBondInterface, secondaryBondTypes } from './SecondaryBondInterface';
 import { SecondaryBond } from './SecondaryBond';
 import { findLineByUniqueId } from 'Draw/saved/svg';
-import { SVGLineWrapper as LineWrapper } from 'Draw/svg/SVGLineWrapper';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { basesByUniqueId } from 'Draw/saved/bases';
 import { atIndex } from 'Array/at';
@@ -41,9 +40,7 @@ export function addSavedPrimaryBonds(drawing: Drawing, saveds: SavedState[]): Pr
   let bases = basesByUniqueId(drawing);
   saveds.forEach(saved => {
     assertIsSavedStraightBond(saved);
-    let line = new LineWrapper(
-      findLineByUniqueId(drawing.svg, saved.lineId)
-    );
+    let line = findLineByUniqueId(drawing.svg, saved.lineId);
     let base1 = getBaseById(bases, saved.baseId1);
     let base2 = getBaseById(bases, saved.baseId2);
     pbs.push(new PrimaryBond(line, base1, base2));
@@ -88,9 +85,7 @@ export function addSavedSecondaryBonds(drawing: Drawing, saveds: SavedState[]): 
   let bases = basesByUniqueId(drawing);
   saveds.forEach(saved => {
     assertIsSavedStraightBond(saved);
-    let line = new LineWrapper(
-      findLineByUniqueId(drawing.svg, saved.lineId)
-    );
+    let line = findLineByUniqueId(drawing.svg, saved.lineId);
     let base1 = getBaseById(bases, saved.baseId1);
     let base2 = getBaseById(bases, saved.baseId2);
     let sb = new SecondaryBond(line, base1, base2);
