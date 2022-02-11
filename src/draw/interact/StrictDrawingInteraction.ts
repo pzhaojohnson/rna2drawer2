@@ -6,6 +6,7 @@ import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
+import { EditingTool } from 'Draw/interact/edit/EditingTool';
 import { TertiaryBondsTool } from 'Draw/interact/bonds/tertiary/TertiaryBondsTool';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
@@ -27,6 +28,7 @@ class StrictDrawingInteraction {
   readonly options?: Options;
   _app: App;
 
+  readonly editingTool: EditingTool;
   readonly tertiaryBondsTool: TertiaryBondsTool;
 
   _pivotingMode!: PivotingMode;
@@ -48,6 +50,12 @@ class StrictDrawingInteraction {
     this._initializeFlippingMode();
     this._initializeTriangularizingMode();
     this._initializeAnnotatingMode();
+
+    this.editingTool = new EditingTool({
+      app: app,
+      drawing: app.strictDrawing.drawing,
+      SVG: options?.SVG,
+    });
 
     this.tertiaryBondsTool = new TertiaryBondsTool({
       app: app,
@@ -82,61 +90,68 @@ class StrictDrawingInteraction {
       });
       if (mouseoveredBase) {
         this._mouseoveredBase = mouseoveredBase;
-        this._handleMouseoverOnBase(mouseoveredBase);
+        //this._handleMouseoverOnBase(mouseoveredBase);
       }
 
-      this.tertiaryBondsTool.handleMouseover(event);
+      this.editingTool.handleMouseover(event);
+      //this.tertiaryBondsTool.handleMouseover(event);
     });
   }
 
   _bindMouseout() {
     window.addEventListener('mouseout', event => {
       if (this._mouseoveredBase) {
-        this._handleMouseoutOnBase(this._mouseoveredBase);
+        //this._handleMouseoutOnBase(this._mouseoveredBase);
         this._mouseoveredBase = undefined;
       }
 
-      this.tertiaryBondsTool.handleMouseout(event);
+      this.editingTool.handleMouseout(event);
+      //this.tertiaryBondsTool.handleMouseout(event);
     });
   }
 
   _bindMousedown() {
     window.addEventListener('mousedown', event => {
       if (this._mouseoveredBase) {
-        this._handleMousedownOnBase(this._mouseoveredBase);
+        //this._handleMousedownOnBase(this._mouseoveredBase);
       } else if (event.target == this.strictDrawing.drawing.svg.node) {
-        this._handleMousedownOnDrawing();
+        //this._handleMousedownOnDrawing();
       }
 
-      this.tertiaryBondsTool.handleMousedown(event);
+      this.editingTool.handleMousedown(event);
+      //this.tertiaryBondsTool.handleMousedown(event);
     });
   }
 
   _bindDblclick() {
     window.addEventListener('dblclick', event => {
       if (!this._mouseoveredBase && event.target == this.strictDrawing.drawing.svg.node) {
-        this._handleDblclickOnDrawing();
+        //this._handleDblclickOnDrawing();
       }
 
-      this.tertiaryBondsTool.handleDblclick(event);
+      this.editingTool.handleDblclick(event);
+      //this.tertiaryBondsTool.handleDblclick(event);
     });
   }
 
   _bindMousemove() {
     window.addEventListener('mousemove', event => {
-      this.tertiaryBondsTool.handleMousemove(event);
+      this.editingTool.handleMousemove(event);
+      //this.tertiaryBondsTool.handleMousemove(event);
     });
   }
 
   _bindMouseup() {
     window.addEventListener('mouseup', event => {
-      this.tertiaryBondsTool.handleMouseup(event);
+      this.editingTool.handleMouseup(event);
+      //this.tertiaryBondsTool.handleMouseup(event);
     });
   }
 
   _bindKeyup() {
     window.addEventListener('keyup', event => {
-      this.tertiaryBondsTool.handleKeyup(event);
+      this.editingTool.handleKeyup(event);
+      //this.tertiaryBondsTool.handleKeyup(event);
     });
   }
 
@@ -215,6 +230,7 @@ class StrictDrawingInteraction {
     } else {
       this._currMode.reset();
     }
+    this.editingTool.refresh();
     this.tertiaryBondsTool.refresh();
     this.fireChange();
   }
@@ -286,6 +302,8 @@ class StrictDrawingInteraction {
       this._currMode = mode;
       this.fireChange();
     }
+
+    this._currMode.disable();
   }
 
   startPivoting() {
