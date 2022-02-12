@@ -4,6 +4,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { DrawingElementInterface as DrawingElement } from './DrawingElementInterface';
 
 import { Base } from 'Draw/bases/Base';
+import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
@@ -11,6 +12,7 @@ import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import * as React from 'react';
 
 import { EditBases } from 'Forms/edit/bases/EditBases';
+import { EditBaseNumberings } from 'Forms/edit/bases/numberings/EditBaseNumberings';
 import { EditPrimaryBonds } from 'Forms/edit/bonds/primary/EditPrimaryBonds';
 import { EditSecondaryBonds } from 'Forms/edit/bonds/secondary/EditSecondaryBonds';
 import { EditTertiaryBonds } from 'Forms/edit/bonds/tertiary/EditTertiaryBonds';
@@ -23,6 +25,16 @@ function filterBases(eles: DrawingElement[]): Base[] {
     }
   });
   return bs;
+}
+
+function filterBaseNumberings(eles: DrawingElement[]): BaseNumbering[] {
+  let bns: BaseNumbering[] = [];
+  eles.forEach(ele => {
+    if (ele instanceof BaseNumbering) {
+      bns.push(ele);
+    }
+  });
+  return bns;
 }
 
 function filterPrimaryBonds(eles: DrawingElement[]): PrimaryBond[] {
@@ -74,6 +86,8 @@ export type Props = {
 export function EditingForm(props: Props) {
   if (props.editingType == Base) {
     return <EditBases {...props} bases={filterBases(props.elements)} />;
+  } else if (props.editingType == BaseNumbering) {
+    return <EditBaseNumberings {...props} baseNumberings={filterBaseNumberings(props.elements)} />
   } else if (props.editingType == PrimaryBond) {
     return <EditPrimaryBonds {...props} primaryBonds={filterPrimaryBonds(props.elements)} />
   } else if (props.editingType == SecondaryBond) {

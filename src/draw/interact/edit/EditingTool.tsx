@@ -2,8 +2,10 @@ import { AppInterface as App } from 'AppInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 
 import { DrawingElementInterface as DrawingElement } from './DrawingElementInterface';
+import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 
 import { Base } from 'Draw/bases/Base';
+import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
@@ -45,6 +47,7 @@ type ElementId = string;
 
 let formKeys = new Map<Function, string>();
 formKeys.set(Base, uuidv4());
+formKeys.set(BaseNumbering, uuidv4());
 formKeys.set(PrimaryBond, uuidv4());
 formKeys.set(SecondaryBond, uuidv4());
 formKeys.set(TertiaryBond, uuidv4());
@@ -98,8 +101,18 @@ export class EditingTool {
 
   // returns all drawing elements that may be edited with this tool
   drawingElements(): DrawingElement[] {
+    let bases = this.options.drawing.bases();
+
+    let baseNumberings: BaseNumberingInterface[] = [];
+    bases.forEach(b => {
+      if (b.numbering) {
+        baseNumberings.push(b.numbering);
+      }
+    });
+
     return [
-      ...this.options.drawing.bases(),
+      ...bases,
+      ...baseNumberings,
       ...this.options.drawing.primaryBonds,
       ...this.options.drawing.secondaryBonds,
       ...this.options.drawing.tertiaryBonds,
@@ -112,6 +125,8 @@ export class EditingTool {
     return this.drawingElements().find(ele => {
       if (ele instanceof Base) {
         return ele.text.node.contains(node) || ele.outline?.contains(node);
+      } else if (ele instanceof BaseNumbering) {
+        return ele.text.node.contains(node) || ele.line.node.contains(node);
       } else if (ele instanceof PrimaryBond) {
         return ele.contains(node);
       } else if (ele instanceof SecondaryBond) {

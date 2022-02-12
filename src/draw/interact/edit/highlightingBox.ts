@@ -1,6 +1,7 @@
 import { DrawingElementInterface as DrawingElement } from './DrawingElementInterface';
 
 import { Base } from 'Draw/bases/Base';
+import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
@@ -29,6 +30,18 @@ function expand(box: Box, length: number): Box {
   };
 }
 
+// returns a new box that is the bounding box of both boxes
+function merge(box1: Box, box2: Box): Box {
+  let x = Math.min(box1.x, box2.x);
+  let y = Math.min(box1.y, box2.y);
+  return {
+    x,
+    y,
+    width: Math.max(box1.x + box1.width, box2.x + box2.width) - x,
+    height: Math.max(box1.y + box1.height, box2.y + box2.height) - y,
+  };
+}
+
 function highlightingBoxOfBase(b: Base): Box {
   let textBBox = b.text.bbox();
 
@@ -42,6 +55,19 @@ function highlightingBoxOfBase(b: Base): Box {
     box = expand(box, sw.convert('px').valueOf());
   }
   return expand(box, 1);
+}
+
+function highlightingBoxOfBaseNumbering(bn: BaseNumbering): Box {
+  let textBox: Box = bn.text.bbox();
+  textBox = expand(textBox, 4);
+
+  let lineBox: Box = bn.line.bbox();
+  let sw = interpretNumber(bn.line.attr('stroke-width'));
+  if (sw) {
+    lineBox = expand(lineBox, sw.convert('px').valueOf());
+  }
+
+  return merge(textBox, lineBox);
 }
 
 function highlightingBoxOfStraightBond(sb: StraightBond): Box {
@@ -80,6 +106,8 @@ function highlightingBoxOfTertiaryBond(tb: TertiaryBond): Box {
 export function highlightingBox(ele: DrawingElement): Box | undefined {
   if (ele instanceof Base) {
     return highlightingBoxOfBase(ele);
+  } else if (ele instanceof BaseNumbering) {
+    return highlightingBoxOfBaseNumbering(ele);
   } else if (ele instanceof PrimaryBond) {
     return highlightingBoxOfStraightBond(ele);
   } else if (ele instanceof SecondaryBond) {
