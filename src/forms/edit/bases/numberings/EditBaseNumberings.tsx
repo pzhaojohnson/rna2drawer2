@@ -24,7 +24,7 @@ export interface Props {
   baseNumberings: BaseNumbering[];
 }
 
-export function EditNumbering(props: Props) {
+export function EditBaseNumberings(props: Props) {
   return (
     <PartialWidthContainer
       unmount={props.unmount}
