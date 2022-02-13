@@ -19,9 +19,10 @@ export class OverlaidMessageContainer {
 
     drawing.svgContainer.appendChild(this.node);
 
+    let rect = drawing.svgContainer.getBoundingClientRect();
     let bottom = (
-      document.documentElement.clientHeight
-      - drawing.svgContainer.getBoundingClientRect().bottom
+      (document.documentElement.clientHeight - rect.bottom)
+      + (rect.height - drawing.svgContainer.clientHeight) // accounts for scrollbar
       + 6
     );
     this.node.style.bottom = `${bottom}px`;
