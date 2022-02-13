@@ -58,7 +58,7 @@ describe('OverlaidMessageContainer element', () => {
     expect(messageContainer.node.parent).toBeFalsy();
   });
 
-  test('append method', () => {
+  test('append and clear methods', () => {
     let p = document.createElement('p');
     p.textContent = 'Asdf.';
 
@@ -75,6 +75,10 @@ describe('OverlaidMessageContainer element', () => {
     expect(messageContainer.node.childNodes[0]).toBe(p);
     expect(messageContainer.node.childNodes[1]).toBe(div);
     expect(messageContainer.node.textContent).toBe('Asdf.Qwer.');
+
+    messageContainer.clear();
+    expect(messageContainer.node.childNodes.length).toBe(0);
+    expect(messageContainer.node.textContent).toBe('');
   });
 
   test('style getter', () => {

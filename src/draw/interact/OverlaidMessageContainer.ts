@@ -38,6 +38,12 @@ export class OverlaidMessageContainer {
     this.node.appendChild(child);
   }
 
+  clear() {
+    while (this.node.lastChild) {
+      this.node.lastChild.remove();
+    }
+  }
+
   get style() {
     return this.node.style;
   }
