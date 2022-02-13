@@ -57,6 +57,7 @@ export class EditingTool {
 
   _editingType: Function;
 
+  // track by element ID so that these are maintained on undo and redo
   _hovered?: ElementId;
   _activated?: ElementId;
   _selected: Set<ElementId>;
@@ -70,7 +71,8 @@ export class EditingTool {
 
   selectingRect?: SelectingRect;
 
-  _elementHighlightings: Map<ElementId, ElementHighlighting>;
+  // track by element object so that these are refreshed on undo and redo
+  _elementHighlightings: Map<DrawingElement, ElementHighlighting>;
 
   constructor(options: Options) {
     this.options = options;
@@ -82,7 +84,7 @@ export class EditingTool {
     this.drawingOverlay = new DrawingOverlay({ SVG: options.SVG });
     this.drawingOverlay.placeOver(options.drawing);
 
-    this._elementHighlightings = new Map<ElementId, ElementHighlighting>();
+    this._elementHighlightings = new Map<DrawingElement, ElementHighlighting>();
   }
 
   // constructor function for the type of element currently being edited
@@ -436,18 +438,15 @@ export class EditingTool {
   updateElementHighlightings() {
 
     // the elements to highlight
-    let eles = this.drawingElements().filter(ele => this.shouldBeHighlighted(ele));
-
-    // the IDs of the elements to highlight
-    let ids = new Set<ElementId>(
-      eles.map(ele => ele.id)
+    let eles = new Set<DrawingElement>(
+      this.drawingElements().filter(ele => this.shouldBeHighlighted(ele))
     );
 
-    let elementHighlightings = new Map<ElementId, ElementHighlighting>();
+    let elementHighlightings = new Map<DrawingElement, ElementHighlighting>();
 
     this._elementHighlightings.forEach(h => {
-      if (ids.has(h.element.id)) {
-        elementHighlightings.set(h.element.id, h);
+      if (eles.has(h.element)) {
+        elementHighlightings.set(h.element, h);
         h.refit();
       } else {
         h.remove();
@@ -455,10 +454,10 @@ export class EditingTool {
     });
 
     eles.forEach(ele => {
-      if (!elementHighlightings.has(ele.id)) {
+      if (!elementHighlightings.has(ele)) {
         let h = new ElementHighlighting(ele);
         h.appendTo(this.drawingOverlay.svg);
-        elementHighlightings.set(ele.id, h);
+        elementHighlightings.set(ele, h);
       }
     });
 
