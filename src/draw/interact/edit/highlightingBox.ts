@@ -6,10 +6,12 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
+import { interpretNumber } from 'Draw/svg/interpretNumber';
+
+import { bboxOfLine } from './bboxOfLine';
+
 import { StraightBondInterface as StraightBond } from 'Draw/bonds/straight/StraightBondInterface';
 import { straightBondIsInvisible } from './straightBondIsInvisible';
-
-import { interpretNumber } from 'Draw/svg/interpretNumber';
 
 type Box = {
   x: number;
@@ -61,11 +63,7 @@ function highlightingBoxOfBaseNumbering(bn: BaseNumbering): Box {
   let textBox: Box = bn.text.bbox();
   textBox = expand(textBox, 4);
 
-  let lineBox: Box = bn.line.bbox();
-  let sw = interpretNumber(bn.line.attr('stroke-width'));
-  if (sw) {
-    lineBox = expand(lineBox, sw.convert('px').valueOf());
-  }
+  let lineBox: Box = bboxOfLine(bn.line);
 
   return merge(textBox, lineBox);
 }
@@ -82,12 +80,7 @@ function highlightingBoxOfStraightBond(sb: StraightBond): Box {
     };
   }
 
-  let box: Box = sb.line.bbox();
-  let sw = interpretNumber(sb.line.attr('stroke-width'));
-  if (sw) {
-    box = expand(box, sw.convert('px').valueOf());
-  }
-  return box;
+  return bboxOfLine(sb.line);
 }
 
 function highlightingBoxOfTertiaryBond(tb: TertiaryBond): Box {
