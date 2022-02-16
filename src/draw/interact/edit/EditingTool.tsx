@@ -19,10 +19,18 @@ import { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
 import { SelectingRect } from './SelectingRect';
 import { ElementHighlighting } from './ElementHighlighting';
 
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import styles from './EditingTool.css';
+
+import { OverlaidMessageContainer } from 'Draw/interact/OverlaidMessageContainer';
+import { BasePositionDescription } from './BasePositionDescription';
+import { SelectedElementsDescription } from './SelectedElementsDescription';
+import { detectMacOS } from 'Utilities/detectMacOS';
+
 import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import { userIsTyping } from 'Utilities/userIsTyping';
 
-import * as React from 'react';
 import { EditingForm } from './EditingForm';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -74,6 +82,8 @@ export class EditingTool {
   // track by element object so that these are refreshed on undo and redo
   _elementHighlightings: Map<DrawingElement, ElementHighlighting>;
 
+  readonly overlaidMessageContainer: OverlaidMessageContainer;
+
   constructor(options: Options) {
     this.options = options;
 
@@ -85,6 +95,11 @@ export class EditingTool {
     this.drawingOverlay.placeOver(options.drawing);
 
     this._elementHighlightings = new Map<DrawingElement, ElementHighlighting>();
+
+    this.overlaidMessageContainer = new OverlaidMessageContainer();
+    this.overlaidMessageContainer.placeOver(options.drawing);
+    this.overlaidMessageContainer.style.display = 'flex';
+    this.overlaidMessageContainer.style.flexDirection = 'row';
   }
 
   // constructor function for the type of element currently being edited
@@ -404,6 +419,8 @@ export class EditingTool {
     this.updateSelectingRectStrokeWidth();
     this.updateElementHighlightings();
     this.updateCursor();
+    this.overlaidMessageContainer.placeOver(this.options.drawing);
+    this.updateOverlaidMessage();
   }
 
   updateSelectingRectStrokeWidth() {
@@ -472,6 +489,75 @@ export class EditingTool {
     this.options.drawing.svg.css({
       'cursor': shouldBePointer ? 'pointer' : 'auto',
     });
+  }
+
+  updateOverlaidMessage() {
+    if (this._hovered == undefined) {
+      this._updateOverlaidMessageWithSelected();
+    } else if (this.selectingRect) {
+      this._updateOverlaidMessageWithSelected();
+    } else if (this._activated != undefined && this._activated != this._hovered) {
+      this._updateOverlaidMessageWithSelected();
+    } else {
+      this._updateOverlaidMessageWithHovered();
+    }
+  }
+
+  // describe the hovered element and actions regarding it
+  _updateOverlaidMessageWithHovered() {
+    this.overlaidMessageContainer.clear();
+
+    let hovered = this.hovered;
+    if (!hovered) {
+      console.error(`No element is hovered.`);
+      return;
+    }
+
+    if (hovered instanceof Base) {
+      let div = document.createElement('div');
+      ReactDOM.render(
+        <BasePositionDescription
+          drawing={this.options.drawing}
+          base={hovered}
+          style={{ margin: '0px 4px 0px 0px' }}
+        />,
+        div,
+      );
+      this.overlaidMessageContainer.append(div);
+    }
+
+    let p = document.createElement('p');
+    p.textContent = 'Click to select. ';
+    p.textContent += `${detectMacOS() ? '⇧ ' : 'Shift+'}Click to add to selected.`;
+    p.className = styles.overlaidMessageActions;
+    this.overlaidMessageContainer.append(p);
+  }
+
+  // describe the selected elements and actions regarding them
+  _updateOverlaidMessageWithSelected() {
+    this.overlaidMessageContainer.clear();
+
+    if (this._selected.size == 0) {
+      return;
+    }
+
+    let div = document.createElement('div');
+    ReactDOM.render(
+      <SelectedElementsDescription
+        editingType={this.editingType}
+        selectedElements={this.selected()}
+      />,
+      div,
+    );
+    this.overlaidMessageContainer.append(div);
+
+    if (this.editingType == TertiaryBond) {
+      let p = document.createElement('p');
+      p.textContent = 'Drag to move. Press Delete to remove.';
+      p.className = styles.overlaidMessageActions;
+      p.style.marginLeft = '4px';
+      this.overlaidMessageContainer.append(p);
+    }
   }
 
   reset() {
