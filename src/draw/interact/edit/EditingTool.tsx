@@ -496,7 +496,7 @@ export class EditingTool {
       this._updateOverlaidMessageWithSelected();
     } else if (this.selectingRect) {
       this._updateOverlaidMessageWithSelected();
-    } else if (this._activated != undefined && this._activated != this._hovered) {
+    } else if (this._activated != undefined && this._dragged) {
       this._updateOverlaidMessageWithSelected();
     } else {
       this._updateOverlaidMessageWithHovered();
