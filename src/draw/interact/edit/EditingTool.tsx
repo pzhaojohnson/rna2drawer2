@@ -524,15 +524,17 @@ export class EditingTool {
       this.overlaidMessageContainer.append(div);
     }
 
-    let p = document.createElement('p');
-    if (this.isSelected(hovered)) {
-      p.textContent += `${detectMacOS() ? '⇧ ' : 'Shift+'}Click to remove from selected.`;
-    } else {
-      p.textContent = 'Click to select. ';
-      p.textContent += `${detectMacOS() ? '⇧ ' : 'Shift+'}Click to add to selected.`;
+    if (this._activated == undefined) {
+      let p = document.createElement('p');
+      if (this.isSelected(hovered)) {
+        p.textContent += `${detectMacOS() ? '⇧ ' : 'Shift+'}Click to remove from selected.`;
+      } else {
+        p.textContent = 'Click to select. ';
+        p.textContent += `${detectMacOS() ? '⇧ ' : 'Shift+'}Click to add to selected.`;
+      }
+      p.className = styles.overlaidMessageActions;
+      this.overlaidMessageContainer.append(p);
     }
-    p.className = styles.overlaidMessageActions;
-    this.overlaidMessageContainer.append(p);
   }
 
   // describe the selected elements and actions regarding them
