@@ -320,8 +320,12 @@ export class EditingTool {
     }
 
     let activated = this.activated;
-    if (activated instanceof TertiaryBond) {
-      this._handleMousemoveWhenDraggingTertiaryBonds(event);
+    if (activated) {
+      if (activated instanceof TertiaryBond) {
+        this._handleMousemoveWhenDraggingTertiaryBonds(event);
+      } else {
+        this._dragged = true;
+      }
     }
   }
 
