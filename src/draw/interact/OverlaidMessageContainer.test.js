@@ -35,13 +35,11 @@ describe('OverlaidMessageContainer element', () => {
 
     // should reassign
     messageContainer.node.style.position = 'relative';
-    messageContainer.node.style.zIndex = '-1';
 
     messageContainer.placeOver(drawing);
 
     // reassigned
     expect(messageContainer.node.style.position).toBe('fixed');
-    expect(messageContainer.node.style.zIndex).toBe('1');
 
     // added to document and inside the drawing
     expect(drawing.svgContainer.contains(messageContainer.node)).toBeTruthy();

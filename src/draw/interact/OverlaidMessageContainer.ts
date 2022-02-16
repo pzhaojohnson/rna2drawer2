@@ -14,9 +14,7 @@ export class OverlaidMessageContainer {
   placeOver(drawing: Drawing) {
     this.node.style.position = 'fixed';
 
-    // assumes the Z index of the drawing is zero
-    this.node.style.zIndex = '1';
-
+    // places after (and on top of) the drawing
     drawing.svgContainer.appendChild(this.node);
 
     let rect = drawing.svgContainer.getBoundingClientRect();
