@@ -482,10 +482,8 @@ export class EditingTool {
   }
 
   updateCursor() {
-    let shouldBePointer = (
-      (this._hovered != undefined && !this.selectingRect)
-      || this.activated instanceof TertiaryBond
-    );
+    let notDragging = !this.selectingRect && this._activated == undefined;
+    let shouldBePointer = this._hovered != undefined && notDragging;
     this.options.drawing.svg.css({
       'cursor': shouldBePointer ? 'pointer' : 'auto',
     });
