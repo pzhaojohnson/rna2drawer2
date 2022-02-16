@@ -317,13 +317,11 @@ export class EditingTool {
   handleMousemove(event: MouseEvent) {
     if (this.selectingRect) {
       this._handleMousemoveWhenDraggingSelectingRect(event);
-      return;
     }
 
     let activated = this.activated;
     if (activated instanceof TertiaryBond) {
       this._handleMousemoveWhenDraggingTertiaryBonds(event);
-      return;
     }
   }
 
