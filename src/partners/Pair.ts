@@ -9,3 +9,8 @@ export function partner5(pr: Pair): number {
 export function partner3(pr: Pair): number {
   return Math.max(...pr);
 }
+
+export {
+  partner5 as upstreamPartner,
+  partner3 as downstreamPartner,
+};
