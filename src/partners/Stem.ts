@@ -14,6 +14,18 @@ export type Stem = {
   size: number;
 };
 
+export type StemSpecification = { bottomPair: Pair, size: number };
+
+// allows for stem objects to be specified in different ways
+// without knowledge of the underlying object structure
+export function createStem(spec: StemSpecification): Stem {
+  return {
+    position5: partner5(spec.bottomPair),
+    position3: partner3(spec.bottomPair),
+    size: spec.size,
+  };
+}
+
 // returns the pairs in the stem
 export function pairs(st: Stem): Pair[] {
   let prs: Pair[] = [];

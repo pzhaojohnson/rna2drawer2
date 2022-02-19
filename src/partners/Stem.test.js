@@ -1,9 +1,27 @@
 import {
+  createStem,
   pairs,
   bottomPair,
   topPair,
   contains,
 } from './Stem';
+
+test('createStem function', () => {
+
+  // upstream partner of bottom pair before downstream partner
+  expect(createStem(
+    { bottomPair: [20, 102], size: 6 }
+  )).toStrictEqual(
+    { position5: 20, position3: 102, size: 6 }
+  );
+
+  // upstream partner of bottom pair after downstream partner
+  expect(createStem(
+    { bottomPair: [102, 20], size: 6 }
+  )).toStrictEqual(
+    { position5: 20, position3: 102, size: 6 }
+  );
+});
 
 describe('pairs function', () => {
   it('stem of size greater than one', () => {
@@ -38,7 +56,7 @@ it('topPair function', () => {
 describe('contains function', () => {
   it('stem of size greater than one', () => {
     let st = { position5: 12, position3: 45, size: 3 };
-    
+
     // contained
     expect(contains(st, 12)).toBeTruthy();
     expect(contains(st, 13)).toBeTruthy();
