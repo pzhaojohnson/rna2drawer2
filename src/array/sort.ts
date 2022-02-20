@@ -9,7 +9,7 @@ export function compareNumbersDescending(a: number, b: number): number {
   return -1 * compareNumbersAscending(a, b);
 }
 
-// a compare function that can be used when sorting a strings array
+// a compare function that can be used when sorting strings
 export function compareStringsAscending(a: string, b: string): number {
   if (a < b) {
     return -1;
