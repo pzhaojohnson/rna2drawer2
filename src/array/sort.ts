@@ -1,3 +1,14 @@
+// a compare function that can be used when sorting numbers
+export function compareNumbersAscending(a: number, b: number): number {
+  return a - b;
+}
+
+export { compareNumbersAscending as compareNumbers };
+
+export function compareNumbersDescending(a: number, b: number): number {
+  return -1 * compareNumbersAscending(a, b);
+}
+
 // a compare function that can be used when sorting a strings array
 export function compareStringsAscending(a: string, b: string): number {
   if (a < b) {
