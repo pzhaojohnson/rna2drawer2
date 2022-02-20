@@ -54,3 +54,7 @@ export function traverseLoopDownstream(partners: Partners, closingStem?: Stem): 
 
   return traversed;
 }
+
+export function traverseOutermostLoopDownstream(partners: Partners): Traversed {
+  return traverseLoopDownstream(partners);
+}

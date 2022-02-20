@@ -1,6 +1,7 @@
 import { createStem } from 'Partners/Stem';
 
 import { traverseLoopDownstream } from './traverseLoopDownstream';
+import { traverseOutermostLoopDownstream } from './traverseLoopDownstream';
 
 describe('traverseLoopDownstream function', () => {
   describe('traversing the outermost loop', () => {
@@ -156,4 +157,19 @@ describe('traverseLoopDownstream function', () => {
       });
     });
   });
+});
+
+test('traverseOutermostLoopDownstream function', () => {
+  let partners = [
+    null, null,
+    10, 9, 8,
+    undefined, null,
+    5, 4, 3,
+    undefined,
+  ];
+  expect(
+    traverseOutermostLoopDownstream(partners)
+  ).toStrictEqual(
+    traverseLoopDownstream(partners)
+  );
 });
