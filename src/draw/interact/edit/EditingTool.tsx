@@ -44,6 +44,12 @@ export type Options = {
   // the drawing to edit
   readonly drawing: Drawing;
 
+  // for drawing element highlightings and the selecting rect on
+  readonly drawingOverlay: DrawingOverlay;
+
+  // for showing overlaid messages in
+  readonly overlaidMessageContainer: OverlaidMessageContainer;
+
   // for specifying alternatives to components of the SVG.js library
   // (useful for meeting the compatibility requirements of Node.js)
   SVG?: {
@@ -74,15 +80,10 @@ export class EditingTool {
   // since an element was activated
   _dragged?: boolean;
 
-  // for the selecting rect and element highlightings to be drawn on
-  readonly drawingOverlay: DrawingOverlay;
-
   selectingRect?: SelectingRect;
 
   // track by element object so that these are refreshed on undo and redo
   _elementHighlightings: Map<DrawingElement, ElementHighlighting>;
-
-  readonly overlaidMessageContainer: OverlaidMessageContainer;
 
   constructor(options: Options) {
     this.options = options;
@@ -91,15 +92,7 @@ export class EditingTool {
 
     this._selected = new Set<ElementId>();
 
-    this.drawingOverlay = new DrawingOverlay({ SVG: options.SVG });
-    this.drawingOverlay.placeOver(options.drawing);
-
     this._elementHighlightings = new Map<DrawingElement, ElementHighlighting>();
-
-    this.overlaidMessageContainer = new OverlaidMessageContainer();
-    this.overlaidMessageContainer.placeOver(options.drawing);
-    this.overlaidMessageContainer.style.display = 'flex';
-    this.overlaidMessageContainer.style.flexDirection = 'row';
   }
 
   // constructor function for the type of element currently being edited
@@ -311,7 +304,7 @@ export class EditingTool {
     // create a new selecting rect
     let start = this.options.drawing.svg.point(event.pageX, event.pageY);
     this.selectingRect = new SelectingRect(start);
-    this.selectingRect.appendTo(this.drawingOverlay.svg);
+    this.selectingRect.appendTo(this.options.drawingOverlay.svg);
   }
 
   handleMousemove(event: MouseEvent) {
@@ -417,11 +410,11 @@ export class EditingTool {
   }
 
   refresh() {
-    this.drawingOverlay.fitTo(this.options.drawing);
+    this.options.drawingOverlay.fitTo(this.options.drawing);
     this.updateSelectingRectStrokeWidth();
     this.updateElementHighlightings();
     this.updateCursor();
-    this.overlaidMessageContainer.placeOver(this.options.drawing);
+    this.options.overlaidMessageContainer.placeOver(this.options.drawing);
     this.updateOverlaidMessage();
   }
 
@@ -475,7 +468,7 @@ export class EditingTool {
     eles.forEach(ele => {
       if (!elementHighlightings.has(ele)) {
         let h = new ElementHighlighting(ele);
-        h.appendTo(this.drawingOverlay.svg);
+        h.appendTo(this.options.drawingOverlay.svg);
         elementHighlightings.set(ele, h);
       }
     });
@@ -505,7 +498,9 @@ export class EditingTool {
 
   // describe the hovered element and actions regarding it
   _updateOverlaidMessageWithHovered() {
-    this.overlaidMessageContainer.clear();
+    this.options.overlaidMessageContainer.clear();
+    this.options.overlaidMessageContainer.style.display = 'flex';
+    this.options.overlaidMessageContainer.style.flexDirection = 'row';
 
     let hovered = this.hovered;
     if (!hovered) {
@@ -523,7 +518,7 @@ export class EditingTool {
         />,
         div,
       );
-      this.overlaidMessageContainer.append(div);
+      this.options.overlaidMessageContainer.append(div);
     }
 
     if (this._activated == undefined) {
@@ -535,13 +530,15 @@ export class EditingTool {
         p.textContent += `${detectMacOS() ? '⇧ ' : 'Shift+'}Click to add to selected.`;
       }
       p.className = styles.overlaidMessageActions;
-      this.overlaidMessageContainer.append(p);
+      this.options.overlaidMessageContainer.append(p);
     }
   }
 
   // describe the selected elements and actions regarding them
   _updateOverlaidMessageWithSelected() {
-    this.overlaidMessageContainer.clear();
+    this.options.overlaidMessageContainer.clear();
+    this.options.overlaidMessageContainer.style.display = 'flex';
+    this.options.overlaidMessageContainer.style.flexDirection = 'row';
 
     if (this._selected.size == 0) {
       return;
@@ -555,14 +552,14 @@ export class EditingTool {
       />,
       div,
     );
-    this.overlaidMessageContainer.append(div);
+    this.options.overlaidMessageContainer.append(div);
 
     if (this.editingType == TertiaryBond) {
       let p = document.createElement('p');
       p.textContent = 'Drag to move. Press Delete to remove.';
       p.className = styles.overlaidMessageActions;
       p.style.marginLeft = '4px';
-      this.overlaidMessageContainer.append(p);
+      this.options.overlaidMessageContainer.append(p);
     }
   }
 

@@ -11,6 +11,9 @@ import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
 
+import { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
+import { OverlaidMessageContainer } from 'Draw/interact/OverlaidMessageContainer';
+
 export type Options = {
   // for specifying alternatives to components of the SVG.js library
   // (useful for testing)
@@ -29,6 +32,11 @@ class StrictDrawingInteraction {
   readonly options?: Options;
   _app: App;
 
+  readonly drawingOverlay: DrawingOverlay;
+  readonly drawingUnderlay: DrawingOverlay;
+
+  readonly overlaidMessageContainer: OverlaidMessageContainer;
+
   readonly editingTool: EditingTool;
   _currentTool: Tool;
 
@@ -45,6 +53,14 @@ class StrictDrawingInteraction {
     this.options = options;
     this._app = app;
 
+    this.drawingOverlay = new DrawingOverlay({ SVG: options?.SVG });
+    this.drawingOverlay.placeOver(this.strictDrawing.drawing);
+    this.drawingUnderlay = new DrawingOverlay({ SVG: options?.SVG });
+    this.drawingUnderlay.placeUnder(this.strictDrawing.drawing);
+
+    this.overlaidMessageContainer = new OverlaidMessageContainer();
+    this.overlaidMessageContainer.placeOver(this.strictDrawing.drawing);
+
     this._setBindings();
     this._initializePivotingMode();
     this._initializeFoldingMode();
@@ -55,6 +71,8 @@ class StrictDrawingInteraction {
     this.editingTool = new EditingTool({
       app: app,
       drawing: app.strictDrawing.drawing,
+      drawingOverlay: this.drawingOverlay,
+      overlaidMessageContainer: this.overlaidMessageContainer,
       SVG: options?.SVG,
     });
 
