@@ -23,11 +23,14 @@ export type Options = {
 
 type Mode = PivotingMode | FoldingMode | FlippingMode | TriangularizingMode | AnnotatingMode;
 
+export type Tool = EditingTool;
+
 class StrictDrawingInteraction {
   readonly options?: Options;
   _app: App;
 
   readonly editingTool: EditingTool;
+  _currentTool: Tool;
 
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
@@ -55,11 +58,25 @@ class StrictDrawingInteraction {
       SVG: options?.SVG,
     });
 
+    this._currentTool = this.editingTool;
+
     this._currMode = this._pivotingMode;
   }
 
   get strictDrawing(): StrictDrawing {
     return this._app.strictDrawing;
+  }
+
+  get currentTool(): Tool {
+    return this._currentTool;
+  }
+
+  set currentTool(t: Tool) {
+    if (t != this._currentTool) {
+      this._currentTool.reset();
+      this._currentTool = t;
+      this._app.refresh();
+    }
   }
 
   _setBindings() {
@@ -85,8 +102,7 @@ class StrictDrawingInteraction {
         //this._handleMouseoverOnBase(mouseoveredBase);
       }
 
-      this.editingTool.handleMouseover(event);
-      //this.tertiaryBondsTool.handleMouseover(event);
+      this.currentTool.handleMouseover(event);
     });
   }
 
@@ -97,8 +113,7 @@ class StrictDrawingInteraction {
         this._mouseoveredBase = undefined;
       }
 
-      this.editingTool.handleMouseout(event);
-      //this.tertiaryBondsTool.handleMouseout(event);
+      this.currentTool.handleMouseout(event);
     });
   }
 
@@ -110,8 +125,7 @@ class StrictDrawingInteraction {
         //this._handleMousedownOnDrawing();
       }
 
-      this.editingTool.handleMousedown(event);
-      //this.tertiaryBondsTool.handleMousedown(event);
+      this.currentTool.handleMousedown(event);
     });
   }
 
@@ -121,29 +135,25 @@ class StrictDrawingInteraction {
         //this._handleDblclickOnDrawing();
       }
 
-      this.editingTool.handleDblclick(event);
-      //this.tertiaryBondsTool.handleDblclick(event);
+      this.currentTool.handleDblclick(event);
     });
   }
 
   _bindMousemove() {
     window.addEventListener('mousemove', event => {
-      this.editingTool.handleMousemove(event);
-      //this.tertiaryBondsTool.handleMousemove(event);
+      this.currentTool.handleMousemove(event);
     });
   }
 
   _bindMouseup() {
     window.addEventListener('mouseup', event => {
-      this.editingTool.handleMouseup(event);
-      //this.tertiaryBondsTool.handleMouseup(event);
+      this.currentTool.handleMouseup(event);
     });
   }
 
   _bindKeyup() {
     window.addEventListener('keyup', event => {
-      this.editingTool.handleKeyup(event);
-      //this.tertiaryBondsTool.handleKeyup(event);
+      this.currentTool.handleKeyup(event);
     });
   }
 
@@ -221,7 +231,7 @@ class StrictDrawingInteraction {
     } else {
       this._currMode.reset();
     }
-    this.editingTool.refresh();
+    this.currentTool.refresh();
     this.fireChange();
   }
 
