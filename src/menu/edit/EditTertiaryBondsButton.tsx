@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import { AppInterface as App } from 'AppInterface';
+import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 export type Props = {
   app: App;
@@ -11,7 +12,10 @@ export function EditTertiaryBondsButton(props: Props) {
     <DroppedButton
       text='Tertiary Bonds'
       onClick={() => {
-        props.app.strictDrawingInteraction.tertiaryBondsTool.renderForm();
+        if (props.app.strictDrawingInteraction.editingTool.editingType != TertiaryBond) {
+          props.app.strictDrawingInteraction.editingTool.editingType = TertiaryBond;
+        }
+        props.app.strictDrawingInteraction.editingTool.renderForm();
       }}
     />
   );

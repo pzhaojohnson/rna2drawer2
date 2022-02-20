@@ -7,7 +7,6 @@ import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
-import { TertiaryBondsTool } from 'Draw/interact/bonds/tertiary/TertiaryBondsTool';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
@@ -29,7 +28,6 @@ class StrictDrawingInteraction {
   _app: App;
 
   readonly editingTool: EditingTool;
-  readonly tertiaryBondsTool: TertiaryBondsTool;
 
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
@@ -52,12 +50,6 @@ class StrictDrawingInteraction {
     this._initializeAnnotatingMode();
 
     this.editingTool = new EditingTool({
-      app: app,
-      drawing: app.strictDrawing.drawing,
-      SVG: options?.SVG,
-    });
-
-    this.tertiaryBondsTool = new TertiaryBondsTool({
       app: app,
       drawing: app.strictDrawing.drawing,
       SVG: options?.SVG,
@@ -218,7 +210,6 @@ class StrictDrawingInteraction {
   }
 
   reset() {
-    this.tertiaryBondsTool.reset();
     this._currMode.reset();
   }
 
@@ -231,7 +222,6 @@ class StrictDrawingInteraction {
       this._currMode.reset();
     }
     this.editingTool.refresh();
-    this.tertiaryBondsTool.refresh();
     this.fireChange();
   }
 
