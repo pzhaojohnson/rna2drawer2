@@ -10,7 +10,7 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
-import { straightBondIsInvisible } from './straightBondIsInvisible';
+import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
 import { shiftControlPoint } from 'Draw/bonds/curved/drag';
 import { zoom } from 'Draw/zoom';

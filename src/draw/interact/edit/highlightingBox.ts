@@ -11,7 +11,7 @@ import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { bboxOfLine } from './bboxOfLine';
 
 import { StraightBondInterface as StraightBond } from 'Draw/bonds/straight/StraightBondInterface';
-import { straightBondIsInvisible } from './straightBondIsInvisible';
+import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
 type Box = {
   x: number;
