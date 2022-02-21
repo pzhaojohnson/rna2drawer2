@@ -25,10 +25,21 @@ afterEach(() => {
 });
 
 test('stemOfBase function', () => {
-  let seq = appendSequence(strictDrawing.drawing, {
+
+  // test multiple sequences
+  appendSequence(strictDrawing.drawing, {
     id: 'asdf',
-    characters: 'asdfQWERzxcv',
+    characters: 'asdf',
   });
+  appendSequence(strictDrawing.drawing, {
+    id: 'Q',
+    characters: 'Q',
+  });
+  appendSequence(strictDrawing.drawing, {
+    id: 'zxcv',
+    characters: 'zxcvzxc',
+  });
+  let seq = strictDrawing.layoutSequence();
 
   // add a hairpin
   addSecondaryBond(strictDrawing.drawing, seq.atPosition(2), seq.atPosition(10));
