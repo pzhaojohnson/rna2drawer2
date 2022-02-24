@@ -7,7 +7,6 @@ import { ExpandButton } from './ExpandButton';
 import { PairComplementsButton } from './PairComplementsButton';
 import { ForcePairButton } from './ForcePairButton';
 import { AddTertiaryBondsButton } from './AddTertiaryBondsButton';
-import { FlipButton } from './FlipButton';
 import { TriangularizeButton } from './TriangularizeButton';
 import { AnnotateButton } from './AnnotateButton';
 
@@ -28,7 +27,6 @@ export function ModeDropdown(props: Props) {
           <ForcePairButton app={props.app} />
           <AddTertiaryBondsButton app={props.app} />
           <DroppedSeparator />
-          <FlipButton app={props.app} />
           <TriangularizeButton app={props.app} />
           <DroppedSeparator />
           <AnnotateButton app={props.app} />

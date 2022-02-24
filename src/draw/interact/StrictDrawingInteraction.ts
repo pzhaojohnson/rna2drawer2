@@ -1,11 +1,11 @@
 import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './fold/FoldingMode';
-import { FlippingMode } from './flip/FlippingMode';
 import { TriangularizingMode } from './triangularize/TriangularizingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
+import { FlippingTool } from 'Draw/interact/flip/FlippingTool';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
@@ -24,9 +24,12 @@ export type Options = {
   }
 }
 
-type Mode = PivotingMode | FoldingMode | FlippingMode | TriangularizingMode | AnnotatingMode;
+type Mode = PivotingMode | FoldingMode | TriangularizingMode | AnnotatingMode;
 
-export type Tool = EditingTool;
+export type Tool = (
+  FlippingTool
+  | EditingTool
+);
 
 class StrictDrawingInteraction {
   readonly options?: Options;
@@ -37,12 +40,12 @@ class StrictDrawingInteraction {
 
   readonly overlaidMessageContainer: OverlaidMessageContainer;
 
+  readonly flippingTool: FlippingTool;
   readonly editingTool: EditingTool;
   _currentTool: Tool;
 
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
-  _flippingMode!: FlippingMode;
   _triangularizingMode!: TriangularizingMode;
   _annotatingMode!: AnnotatingMode;
   _currMode: Mode;
@@ -64,9 +67,15 @@ class StrictDrawingInteraction {
     this._setBindings();
     this._initializePivotingMode();
     this._initializeFoldingMode();
-    this._initializeFlippingMode();
     this._initializeTriangularizingMode();
     this._initializeAnnotatingMode();
+
+    this.flippingTool = new FlippingTool({
+      app: app,
+      strictDrawing: app.strictDrawing,
+      drawingUnderlay: this.drawingUnderlay,
+      overlaidMessageContainer: this.overlaidMessageContainer,
+    });
 
     this.editingTool = new EditingTool({
       app: app,
@@ -76,7 +85,7 @@ class StrictDrawingInteraction {
       SVG: options?.SVG,
     });
 
-    this._currentTool = this.editingTool;
+    this._currentTool = this.flippingTool;
 
     this._currMode = this._pivotingMode;
   }
@@ -213,13 +222,6 @@ class StrictDrawingInteraction {
     this._foldingMode.disable();
   }
 
-  _initializeFlippingMode() {
-    this._flippingMode = new FlippingMode(this.strictDrawing);
-    this._flippingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
-    this._flippingMode.onChange(() => this.fireChange());
-    this._flippingMode.disable();
-  }
-
   _initializeTriangularizingMode() {
     this._triangularizingMode = new TriangularizingMode(this.strictDrawing);
     this._triangularizingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
@@ -271,10 +273,6 @@ class StrictDrawingInteraction {
 
   get foldingMode(): FoldingMode {
     return this._foldingMode;
-  }
-
-  get flippingMode(): FlippingMode {
-    return this._flippingMode;
   }
 
   get triangularizingMode(): TriangularizingMode {
@@ -330,10 +328,6 @@ class StrictDrawingInteraction {
 
   startFolding() {
     this._start(this._foldingMode);
-  }
-
-  startFlipping() {
-    this._start(this._flippingMode);
   }
 
   startTriangularizing() {

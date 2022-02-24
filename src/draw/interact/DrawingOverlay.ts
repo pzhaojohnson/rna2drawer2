@@ -45,7 +45,7 @@ export class DrawingOverlay {
   placeUnder(drawing: Drawing) {
     drawing.svgContainer.insertBefore(this.svgContainer, drawing.svgContainer.firstChild);
     // assumes that the SVG document of the drawing has a Z index of zero
-    this.svgContainer.style.zIndex = '0';
+    this.svgContainer.style.zIndex = '-1';
   }
 
   fitTo(drawing: Drawing) {
