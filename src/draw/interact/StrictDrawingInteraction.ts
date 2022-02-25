@@ -1,11 +1,11 @@
 import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './fold/FoldingMode';
-import { TriangularizingMode } from './triangularize/TriangularizingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
 import { FlippingTool } from 'Draw/interact/flip/FlippingTool';
+import { FlatteningTool } from 'Draw/interact/flatten/FlatteningTool';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
@@ -24,10 +24,11 @@ export type Options = {
   }
 }
 
-type Mode = PivotingMode | FoldingMode | TriangularizingMode | AnnotatingMode;
+type Mode = PivotingMode | FoldingMode | AnnotatingMode;
 
 export type Tool = (
   FlippingTool
+  | FlatteningTool
   | EditingTool
 );
 
@@ -41,12 +42,12 @@ class StrictDrawingInteraction {
   readonly overlaidMessageContainer: OverlaidMessageContainer;
 
   readonly flippingTool: FlippingTool;
+  readonly flatteningTool: FlatteningTool;
   readonly editingTool: EditingTool;
   _currentTool: Tool;
 
   _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
-  _triangularizingMode!: TriangularizingMode;
   _annotatingMode!: AnnotatingMode;
   _currMode: Mode;
 
@@ -67,10 +68,16 @@ class StrictDrawingInteraction {
     this._setBindings();
     this._initializePivotingMode();
     this._initializeFoldingMode();
-    this._initializeTriangularizingMode();
     this._initializeAnnotatingMode();
 
     this.flippingTool = new FlippingTool({
+      app: app,
+      strictDrawing: app.strictDrawing,
+      drawingUnderlay: this.drawingUnderlay,
+      overlaidMessageContainer: this.overlaidMessageContainer,
+    });
+
+    this.flatteningTool = new FlatteningTool({
       app: app,
       strictDrawing: app.strictDrawing,
       drawingUnderlay: this.drawingUnderlay,
@@ -85,7 +92,7 @@ class StrictDrawingInteraction {
       SVG: options?.SVG,
     });
 
-    this._currentTool = this.flippingTool;
+    this._currentTool = this.flatteningTool;
 
     this._currMode = this._pivotingMode;
   }
@@ -222,13 +229,6 @@ class StrictDrawingInteraction {
     this._foldingMode.disable();
   }
 
-  _initializeTriangularizingMode() {
-    this._triangularizingMode = new TriangularizingMode(this.strictDrawing);
-    this._triangularizingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
-    this._triangularizingMode.onChange(() => this.fireChange());
-    this._triangularizingMode.disable();
-  }
-
   _initializeAnnotatingMode() {
     this._annotatingMode = new AnnotatingMode(this._app);
     this._annotatingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
@@ -273,10 +273,6 @@ class StrictDrawingInteraction {
 
   get foldingMode(): FoldingMode {
     return this._foldingMode;
-  }
-
-  get triangularizingMode(): TriangularizingMode {
-    return this._triangularizingMode;
   }
 
   get annotatingMode(): AnnotatingMode {
@@ -328,10 +324,6 @@ class StrictDrawingInteraction {
 
   startFolding() {
     this._start(this._foldingMode);
-  }
-
-  startTriangularizing() {
-    this._start(this._triangularizingMode);
   }
 
   startAnnotating() {
