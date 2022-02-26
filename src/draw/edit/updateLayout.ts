@@ -4,6 +4,7 @@ import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { resize } from 'Draw/dimensions';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import { Point2D as Point } from 'Math/points/Point';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 export interface Options {
@@ -50,11 +51,18 @@ function updateDimensions(strictDrawing: StrictDrawing, layout: StrictLayout) {
   resize(strictDrawing.drawing, { width, height });
 }
 
-function moveBases(strictDrawing: StrictDrawing, layout: StrictLayout, options?: Options) {
+type BaseCoordinates = {
+  center: Point;
+};
+
+// returns updated coordinates for each base based on the given strict layout
+// and options
+export function updatedBaseCoordinates(strictDrawing: StrictDrawing, layout: StrictLayout, options?: Options): BaseCoordinates[] {
   let layoutMins = {
     x: layout.xMin,
     y: layout.yMin,
   }; // cache to improve performance
+
   let xOffset = 0;
   let yOffset = 0;
   if (options?.updatePadding) {
@@ -68,15 +76,41 @@ function moveBases(strictDrawing: StrictDrawing, layout: StrictLayout, options?:
       yOffset = b1.yCenter - (strictDrawing.baseHeight * (bcs1.yCenter - layoutMins.y));
     }
   }
+
+  let baseCoordinates: BaseCoordinates[] = [];
+
+  // first add the current coordinates for every base
+  strictDrawing.drawing.forEachBase(b => {
+    baseCoordinates.push({ center: { x: b.xCenter, y: b.yCenter } });
+  });
+
+  // then update coordinates for bases that should be moved
   strictDrawing.drawing.forEachBase((b, p) => {
     let shouldBeMoved = !options || !options.onlyMove || options.onlyMove.has(p);
     if (shouldBeMoved) {
       let bcs = layout.baseCoordinatesAtPosition(p);
       if (bcs) {
-        b.recenter({
-          x: xOffset + (strictDrawing.baseWidth * (bcs.xCenter - layoutMins.x)),
-          y: yOffset + (strictDrawing.baseHeight * (bcs.yCenter - layoutMins.y)),
-        });
+        baseCoordinates[p - 1] = {
+          center: {
+            x: xOffset + (strictDrawing.baseWidth * (bcs.xCenter - layoutMins.x)),
+            y: yOffset + (strictDrawing.baseHeight * (bcs.yCenter - layoutMins.y)),
+          },
+        };
+      }
+    }
+  });
+
+  return baseCoordinates;
+}
+
+function moveBases(strictDrawing: StrictDrawing, layout: StrictLayout, options?: Options) {
+  let baseCoordinates = updatedBaseCoordinates(strictDrawing, layout, options);
+  strictDrawing.drawing.forEachBase((b, p) => {
+    let shouldBeMoved = !options || !options.onlyMove || options.onlyMove.has(p);
+    if (shouldBeMoved) {
+      let bcs: BaseCoordinates | undefined = baseCoordinates[p - 1];
+      if (bcs) {
+        b.recenter(bcs.center);
       }
     }
   });
