@@ -1,4 +1,3 @@
-import PivotingMode from './pivot/PivotingMode';
 import FoldingMode from './fold/FoldingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
@@ -25,7 +24,7 @@ export type Options = {
   }
 }
 
-type Mode = PivotingMode | FoldingMode | AnnotatingMode;
+type Mode = FoldingMode | AnnotatingMode;
 
 export type Tool = (
   DraggingTool
@@ -49,7 +48,6 @@ class StrictDrawingInteraction {
   readonly editingTool: EditingTool;
   _currentTool: Tool;
 
-  _pivotingMode!: PivotingMode;
   _foldingMode!: FoldingMode;
   _annotatingMode!: AnnotatingMode;
   _currMode: Mode;
@@ -69,7 +67,6 @@ class StrictDrawingInteraction {
     this.overlaidMessageContainer.placeOver(this.strictDrawing.drawing);
 
     this._setBindings();
-    this._initializePivotingMode();
     this._initializeFoldingMode();
     this._initializeAnnotatingMode();
 
@@ -104,7 +101,7 @@ class StrictDrawingInteraction {
 
     this._currentTool = this.draggingTool;
 
-    this._currMode = this._pivotingMode;
+    this._currMode = this._foldingMode;
   }
 
   get strictDrawing(): StrictDrawing {
@@ -225,13 +222,6 @@ class StrictDrawingInteraction {
     this._currMode.handleMousedownOnBase(b);
   }
 
-  _initializePivotingMode() {
-    this._pivotingMode = new PivotingMode(this.strictDrawing);
-    this._pivotingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
-    this._pivotingMode.onChange(() => this.fireChange());
-    this._pivotingMode.enable();
-  }
-
   _initializeFoldingMode() {
     this._foldingMode = new FoldingMode(this.strictDrawing);
     this._foldingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
@@ -275,10 +265,6 @@ class StrictDrawingInteraction {
 
   requestToRenderForm(ff: FormFactory, options?: RenderFormOptions) {
     this._app.formContainer.renderForm(ff, options);
-  }
-
-  get pivotingMode(): PivotingMode {
-    return this._pivotingMode;
   }
 
   get foldingMode(): FoldingMode {
@@ -326,10 +312,6 @@ class StrictDrawingInteraction {
     }
 
     this._currMode.disable();
-  }
-
-  startPivoting() {
-    this._start(this._pivotingMode);
   }
 
   startFolding() {

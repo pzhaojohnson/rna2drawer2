@@ -8,8 +8,8 @@ export function pushUndo(app: App) {
 }
 
 export function undo(app: App) {
-  let pivotingMode = app.strictDrawingInteraction.pivotingMode;
-  if (app.canUndo() && !pivotingMode.pivoting()) {
+  let activated = app.strictDrawingInteraction.currentTool.activated;
+  if (app.canUndo() && !activated) {
     let currState = app.strictDrawing.savableState();
     app.strictDrawing.applySavedState(
       app.undoRedo.undo(currState)
@@ -19,8 +19,8 @@ export function undo(app: App) {
 }
 
 export function redo(app: App) {
-  let pivotingMode = app.strictDrawingInteraction.pivotingMode;
-  if (app.canRedo() && !pivotingMode.pivoting()) {
+  let activated = app.strictDrawingInteraction.currentTool.activated;
+  if (app.canRedo() && !activated) {
     let currState = app.strictDrawing.savableState();
     app.strictDrawing.applySavedState(
       app.undoRedo.redo(currState)

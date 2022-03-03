@@ -10,7 +10,6 @@ import { AppInterface as App } from 'AppInterface';
 import { open } from './open';
 import parseFileExtension from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
-import { delayPivotingIfShould } from 'Draw/interact/pivot/delayPivoting';
 
 function updateDrawingTitle(app: App, fileName: string) {
   let titleFromFileName = removeFileExtension(fileName).trim();
@@ -157,7 +156,6 @@ export function OpenRna2drawer(props: Props) {
                   }
 
                   updateDrawingTitle(props.app, fileName);
-                  delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
                   props.close();
                   // prevent coming back to this form or preceding forms
                   props.app.formContainer.clearHistory();

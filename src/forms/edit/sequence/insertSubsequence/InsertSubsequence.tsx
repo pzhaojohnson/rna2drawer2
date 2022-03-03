@@ -12,7 +12,6 @@ import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 import { cannotInsert, insert } from './insert';
-import { delayPivotingIfShould } from 'Draw/interact/pivot/delayPivoting';
 
 export type Props = {
   app: App;
@@ -241,7 +240,6 @@ export function InsertSubsequence(props: Props) {
             props.unmount();
             props.app.pushUndo();
             insert(props.app.strictDrawing, values);
-            delayPivotingIfShould(props.app.strictDrawingInteraction.pivotingMode);
             props.app.refresh();
           }}
         />
