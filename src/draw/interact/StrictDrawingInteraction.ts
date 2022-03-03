@@ -4,6 +4,7 @@ import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
+import { DraggingTool } from 'Draw/interact/drag/DraggingTool';
 import { FlippingTool } from 'Draw/interact/flip/FlippingTool';
 import { FlatteningTool } from 'Draw/interact/flatten/FlatteningTool';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
@@ -27,7 +28,8 @@ export type Options = {
 type Mode = PivotingMode | FoldingMode | AnnotatingMode;
 
 export type Tool = (
-  FlippingTool
+  DraggingTool
+  | FlippingTool
   | FlatteningTool
   | EditingTool
 );
@@ -41,6 +43,7 @@ class StrictDrawingInteraction {
 
   readonly overlaidMessageContainer: OverlaidMessageContainer;
 
+  readonly draggingTool: DraggingTool;
   readonly flippingTool: FlippingTool;
   readonly flatteningTool: FlatteningTool;
   readonly editingTool: EditingTool;
@@ -70,6 +73,13 @@ class StrictDrawingInteraction {
     this._initializeFoldingMode();
     this._initializeAnnotatingMode();
 
+    this.draggingTool = new DraggingTool({
+      app: app,
+      strictDrawing: app.strictDrawing,
+      drawingUnderlay: this.drawingUnderlay,
+      overlaidMessageContainer: this.overlaidMessageContainer,
+    });
+
     this.flippingTool = new FlippingTool({
       app: app,
       strictDrawing: app.strictDrawing,
@@ -92,7 +102,7 @@ class StrictDrawingInteraction {
       SVG: options?.SVG,
     });
 
-    this._currentTool = this.flatteningTool;
+    this._currentTool = this.draggingTool;
 
     this._currMode = this._pivotingMode;
   }
