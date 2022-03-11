@@ -4,6 +4,7 @@ import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
 import { DraggingTool } from 'Draw/interact/drag/DraggingTool';
+import { BindingTool } from 'Draw/interact/bind/BindingTool';
 import { FlippingTool } from 'Draw/interact/flip/FlippingTool';
 import { FlatteningTool } from 'Draw/interact/flatten/FlatteningTool';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
@@ -28,6 +29,7 @@ type Mode = FoldingMode | AnnotatingMode;
 
 export type Tool = (
   DraggingTool
+  | BindingTool
   | FlippingTool
   | FlatteningTool
   | EditingTool
@@ -43,6 +45,7 @@ class StrictDrawingInteraction {
   readonly overlaidMessageContainer: OverlaidMessageContainer;
 
   readonly draggingTool: DraggingTool;
+  readonly bindingTool: BindingTool;
   readonly flippingTool: FlippingTool;
   readonly flatteningTool: FlatteningTool;
   readonly editingTool: EditingTool;
@@ -77,6 +80,14 @@ class StrictDrawingInteraction {
       overlaidMessageContainer: this.overlaidMessageContainer,
     });
 
+    this.bindingTool = new BindingTool({
+      app,
+      strictDrawing: app.strictDrawing,
+      drawingOverlay: this.drawingOverlay,
+      drawingUnderlay: this.drawingUnderlay,
+      overlaidMessageContainer: this.overlaidMessageContainer,
+    });
+
     this.flippingTool = new FlippingTool({
       app: app,
       strictDrawing: app.strictDrawing,
@@ -99,7 +110,7 @@ class StrictDrawingInteraction {
       SVG: options?.SVG,
     });
 
-    this._currentTool = this.draggingTool;
+    this._currentTool = this.bindingTool;
 
     this._currMode = this._foldingMode;
   }
