@@ -27,6 +27,8 @@ import { SideSpecification } from './Side';
 import { specifySide } from './Side';
 import { specifiedSide } from './Side';
 
+import { spannedBases } from 'Draw/strict/spannedBases';
+
 import { compareNumbers } from 'Array/sort';
 
 import { bondBindsSide } from './bondBindsSide';
@@ -266,18 +268,7 @@ export class BindingTool {
 
   // returns the side spanned by two bases
   spannedSide(base1: BaseInterface, base2: BaseInterface): Side {
-    let sequence = this.options.strictDrawing.layoutSequence();
-    let p1 = sequence.positionOf(base1);
-    let p2 = sequence.positionOf(base2);
-
-    let side: Side = [];
-    for (let p = Math.min(p1, p2); p <= Math.max(p1, p2); p++) {
-      let b = sequence.atPosition(p);
-      if (b) { // should never be undefined
-        side.push(b);
-      }
-    }
-    return side;
+    return spannedBases(this.options.strictDrawing, base1, base2);
   }
 
   hoveredSide(): Side | undefined {
