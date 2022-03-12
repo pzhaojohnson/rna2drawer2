@@ -216,16 +216,16 @@ describe('NumberingAnchorInput component', () => {
   });
 
   it('ignores nonfinite inputs', () => {
+    updateBaseNumberings(sequence, { offset: 0, increment: 10, anchor: 2 });
+    act(() => {
+      render(<NumberingAnchorInput app={app} sequence={sequence} />, container);
+    });
     ['NaN', 'Infinity', '-Infinity'].forEach(value => {
-      updateBaseNumberings(sequence, { offset: 0, increment: 10, anchor: 2 });
-      act(() => {
-        render(<NumberingAnchorInput app={app} sequence={sequence} />, container);
-      });
       container.firstChild.value = value;
       Simulate.change(container.firstChild);
       Simulate.blur(container.firstChild);
-      expect(numberingAnchor(sequence)).toBe(2); // unchanged
-      expect(app.canUndo()).toBeFalsy(); // did not push undo
     });
+    expect(numberingAnchor(sequence)).toBe(2); // unchanged
+    expect(app.canUndo()).toBeFalsy(); // never pushed undo
   });
 });

@@ -283,18 +283,18 @@ describe('NumberingIncrementInput component', () => {
   });
 
   it('ignores nonfinite inputs', () => {
+    updateBaseNumberings(sequence, { offset: 33, increment: 5, anchor: -3 });
+    expect(numberingIncrement(sequence)).toBe(5);
+    act(() => {
+      render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
+    });
     ['NaN', 'Infinity', '-Infinity'].forEach(value => {
-      updateBaseNumberings(sequence, { offset: 33, increment: 5, anchor: -3 });
-      expect(numberingIncrement(sequence)).toBe(5);
-      act(() => {
-        render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
-      });
       container.firstChild.value = value;
       Simulate.change(container.firstChild);
       Simulate.blur(container.firstChild);
-      expect(numberingIncrement(sequence)).toBe(5); // did not change
-      expect(app.canUndo()).toBeFalsy(); // did not push undo
     });
+    expect(numberingIncrement(sequence)).toBe(5); // did not change
+    expect(app.canUndo()).toBeFalsy(); // never pushed undo
   });
 
   it('ignores inputs that are the same as the current numbering increment', () => {

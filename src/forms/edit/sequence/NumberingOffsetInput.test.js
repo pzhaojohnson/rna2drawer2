@@ -245,18 +245,18 @@ describe('NumberingOffsetInput component', () => {
   });
 
   it('ignores nonfinite inputs', () => {
+    updateBaseNumberings(sequence, { offset: 11, increment: 3, anchor: 9 });
+    expect(numberingOffset(sequence)).toBe(11);
+    act(() => {
+      render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
+    });
     ['NaN', 'Infinity', '-Infinity'].forEach(value => {
-      updateBaseNumberings(sequence, { offset: 11, increment: 3, anchor: 9 });
-      expect(numberingOffset(sequence)).toBe(11);
-      act(() => {
-        render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
-      });
       container.firstChild.value = value;
       Simulate.change(container.firstChild);
       Simulate.blur(container.firstChild);
-      expect(numberingOffset(sequence)).toBe(11); // did not change
-      expect(app.canUndo()).toBeFalsy(); // did not push undo
     });
+    expect(numberingOffset(sequence)).toBe(11); // did not change
+    expect(app.canUndo()).toBeFalsy(); // never pushed undo
   });
 
   it('ignores inputs that are the same as the current numbering offset', () => {
