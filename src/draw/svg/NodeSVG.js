@@ -20,3 +20,7 @@ export function NodeSVG() {
 
   return svg;
 }
+
+export {
+  NodeSVG as SVG,
+};
