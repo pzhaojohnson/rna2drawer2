@@ -135,11 +135,16 @@ export class BindingTool {
   // since becoming activated
   _activatedElementWasDragged?: boolean;
 
+  // whether to highlight complements to the selected side
+  showComplements?: boolean;
+
   // options to control what motifs and sides are considered complementary
   complementsOptions: ComplementsOptions;
 
   constructor(options: Options) {
     this.options = options;
+
+    this.showComplements = true;
 
     this.complementsOptions = {
       GUT: true,
@@ -276,12 +281,7 @@ export class BindingTool {
   // returns all sides that are complementary to the selected side
   complementarySides(): Side[] {
     let selectedSide = this.selectedSide();
-    if (!selectedSide) {
-      return [];
-    }
-
-    let bindableSides = this.bindableSides();
-    return bindableSides.filter(side => (
+    return this.bindableSides().filter(side => (
       selectedSide
       && sidesAreComplementary(selectedSide, side, this.complementsOptions)
     ));
@@ -298,6 +298,20 @@ export class BindingTool {
       return selectedSide;
     }
 
+    let bindableSides = this.bindableSides().filter(
+      side => hoveredElement && this.sideSpansElement(side, hoveredElement)
+    );
+
+    if (this.showComplements) {
+      let complementarySide = bindableSides.find(side => (
+        selectedSide
+        && sidesAreComplementary(selectedSide, side, this.complementsOptions)
+      ));
+      if (complementarySide) {
+        return complementarySide;
+      }
+    }
+
     let hoveredBase: BaseInterface;
     if (!(hoveredElement instanceof Base)) {
       return undefined;
@@ -309,7 +323,6 @@ export class BindingTool {
       return [hoveredBase];
     }
 
-    let bindableSides = this.bindableSides();
     bindableSides = bindableSides.filter(side => side.includes(hoveredBase));
 
     // sort by how centered the sides are over the hovered base
@@ -323,14 +336,6 @@ export class BindingTool {
     } else {
       return bindableSides[0];
     }
-  }
-
-  isHoveredSide(side: Side): boolean {
-    let hoveredSide = this.hoveredSide();
-    if (!hoveredSide) {
-      return false;
-    }
-    return sidesAreEqual(hoveredSide, side);
   }
 
   // returns true if the side can be bound to the selected side
@@ -631,7 +636,16 @@ export class BindingTool {
     let selectedSide = this.selectedSide();
     let hoveredSide = this.hoveredSide();
 
-    if (selectedSide && !this.isHoveredSide(selectedSide)) {
+    if (this.showComplements && !(this._activatedElement instanceof Base)) {
+      this.complementarySides().forEach(side => {
+        if (!hoveredSide || !sidesAreEqual(hoveredSide, side)) {
+          let highlighting = new SideHighlighting({ side, type: 'bindable', isHovered: false });
+          highlighting.appendTo(this.options.drawingUnderlay.svg);
+        }
+      });
+    }
+
+    if (selectedSide && (!hoveredSide || !sidesAreEqual(hoveredSide, selectedSide))) {
       let highlighting = new SideHighlighting({ side: selectedSide, type: 'selected' });
       highlighting.appendTo(this.options.drawingUnderlay.svg);
     }
