@@ -24,11 +24,11 @@ export function sidesOverlap(side1: Side, side2: Side): boolean {
   if (side1.length == 0 || side2.length == 0) {
     return false;
   }
-  return (
-    side1.includes(side2[0])
-    || side1.includes(side2[side2.length - 1])
-    || side2.includes(side1[0])
-    || side2.includes(side1[side1.length - 1])
+  return !(
+    !side1.includes(side2[0])
+    && !side1.includes(side2[side2.length - 1])
+    && !side2.includes(side1[0])
+    && !side2.includes(side1[side1.length - 1])
   );
 }
 
