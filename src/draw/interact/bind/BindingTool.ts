@@ -27,6 +27,9 @@ import { SideSpecification } from './Side';
 import { specifySide } from './Side';
 import { specifiedSide } from './Side';
 
+import { sidesAreComplementary } from './sidesAreComplementary';
+import { Options as ComplementsOptions } from './sidesAreComplementary';
+
 import { spannedBases } from 'Draw/strict/spannedBases';
 
 import { compareNumbers } from 'Array/sort';
@@ -132,8 +135,17 @@ export class BindingTool {
   // since becoming activated
   _activatedElementWasDragged?: boolean;
 
+  // options to control what motifs and sides are considered complementary
+  complementsOptions: ComplementsOptions;
+
   constructor(options: Options) {
     this.options = options;
+
+    this.complementsOptions = {
+      GUT: true,
+      IUPAC: false,
+      mismatchesAllowed: 0,
+    };
   }
 
   // the elements that this tool responds to interaction with
@@ -239,6 +251,42 @@ export class BindingTool {
     return spannedBases(this.options.strictDrawing, base1, base2);
   }
 
+  // returns all sides that can be bound to the selected side
+  bindableSides(): Side[] {
+    let selectedSide = this.selectedSide();
+    if (!selectedSide) {
+      return [];
+    }
+
+    let bindableSides: Side[] = [];
+
+    // first push all sides that are the same length as the selected side
+    let sequence = this.options.strictDrawing.layoutSequence();
+    for (let p1 = 1; p1 + selectedSide.length - 1 <= sequence.length; p1++) {
+      bindableSides.push(sequence.bases.slice(p1 - 1, p1 + selectedSide.length - 1));
+    }
+
+    bindableSides = bindableSides.filter(
+      side => selectedSide && !sidesOverlap(selectedSide, side)
+    );
+
+    return bindableSides;
+  }
+
+  // returns all sides that are complementary to the selected side
+  complementarySides(): Side[] {
+    let selectedSide = this.selectedSide();
+    if (!selectedSide) {
+      return [];
+    }
+
+    let bindableSides = this.bindableSides();
+    return bindableSides.filter(side => (
+      selectedSide
+      && sidesAreComplementary(selectedSide, side, this.complementsOptions)
+    ));
+  }
+
   hoveredSide(): Side | undefined {
     let hoveredElement = this.hoveredElement;
     if (hoveredElement == undefined) {
@@ -261,19 +309,8 @@ export class BindingTool {
       return [hoveredBase];
     }
 
-    let bindableSides: Side[] = [];
-
-    // first push all sides that are the same length as the selected side
-    let sequence = this.options.strictDrawing.layoutSequence();
-    for (let p1 = 1; p1 + selectedSide.length - 1 <= sequence.length; p1++) {
-      bindableSides.push(sequence.bases.slice(p1 - 1, p1 + selectedSide.length - 1));
-    }
-
+    let bindableSides = this.bindableSides();
     bindableSides = bindableSides.filter(side => side.includes(hoveredBase));
-
-    bindableSides = bindableSides.filter(
-      side => selectedSide && !sidesOverlap(selectedSide, side)
-    );
 
     // sort by how centered the sides are over the hovered base
     bindableSides.sort((a, b) => compareNumbers(
