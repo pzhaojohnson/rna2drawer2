@@ -125,9 +125,8 @@ export class BindingTool {
   _hoveredElement?: DrawingElement;
   _activatedElement?: DrawingElement;
 
-  // store specifications to remember after undo and redo
+  // store specification to remember after undo and redo
   _selectedSide?: SideSpecification;
-  _consideredSide?: SideSpecification;
 
   // used to indicate if the activated element has been dragged at all
   // since becoming activated
@@ -206,42 +205,11 @@ export class BindingTool {
     }
 
     this._selectedSide = specifySide(side);
-    this._consideredSide = undefined;
     this.options.app.refresh();
   }
 
   deselect() {
     this._selectedSide = undefined;
-    this._consideredSide = undefined;
-    this.options.app.refresh();
-  }
-
-  consideredSide(): Side | undefined {
-    if (this._consideredSide == undefined) {
-      return undefined;
-    }
-    return this.specifiedSide(this._consideredSide);
-  }
-
-  isConsideredSide(side: Side): boolean {
-    let consideredSide = this.consideredSide();
-    if (!consideredSide) {
-      return false;
-    }
-    return sidesAreEqual(consideredSide, side);
-  }
-
-  consider(side: Side) {
-    if (this.isConsideredSide(side)) {
-      return;
-    } else if (side.length == 0) {
-      return;
-    } else if (this._selectedSide == undefined) {
-      this.select(side);
-      return;
-    }
-
-    this._consideredSide = specifySide(side);
     this.options.app.refresh();
   }
 
@@ -278,11 +246,8 @@ export class BindingTool {
     }
 
     let selectedSide = this.selectedSide();
-    let consideredSide = this.consideredSide();
     if (selectedSide && this.sideSpansElement(selectedSide, hoveredElement)) {
       return selectedSide;
-    } else if (consideredSide && this.sideSpansElement(consideredSide, hoveredElement)) {
-      return consideredSide;
     }
 
     let hoveredBase: BaseInterface;
@@ -484,7 +449,6 @@ export class BindingTool {
     this._activatedElement = undefined;
     this._activatedElementWasDragged = false;
     this._selectedSide = undefined;
-    this._consideredSide = undefined;
     this.options.app.refresh();
   }
 
@@ -628,13 +592,7 @@ export class BindingTool {
     this.options.drawingUnderlay.fitTo(this.options.strictDrawing.drawing);
 
     let selectedSide = this.selectedSide();
-    let consideredSide = this.consideredSide();
     let hoveredSide = this.hoveredSide();
-
-    if (consideredSide && !this.isHoveredSide(consideredSide)) {
-      let highlighting = new SideHighlighting({ side: consideredSide, type: 'bindable', isHovered: false });
-      highlighting.appendTo(this.options.drawingUnderlay.svg);
-    }
 
     if (selectedSide && !this.isHoveredSide(selectedSide)) {
       let highlighting = new SideHighlighting({ side: selectedSide, type: 'selected' });
