@@ -639,7 +639,7 @@ export class BindingTool {
     if (this.showComplements && !(this._activatedElement instanceof Base)) {
       this.complementarySides().forEach(side => {
         if (!hoveredSide || !sidesAreEqual(hoveredSide, side)) {
-          let highlighting = new SideHighlighting({ side, type: 'bindable', isHovered: false });
+          let highlighting = new SideHighlighting({ side, type: 'complementary' });
           highlighting.appendTo(this.options.drawingUnderlay.svg);
         }
       });
@@ -662,7 +662,7 @@ export class BindingTool {
         type = 'selected';
       }
       if (type != undefined) {
-        let highlighting = new SideHighlighting({ side: hoveredSide, type, isHovered: true });
+        let highlighting = new SideHighlighting({ side: hoveredSide, type });
         highlighting.appendTo(this.options.drawingUnderlay.svg);
       }
     }

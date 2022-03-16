@@ -6,6 +6,7 @@ import * as SVG from '@svgdotjs/svg.js';
 export type SideHighlightingType = (
   'selected'
   | 'bindable'
+  | 'complementary'
   | 'unbindable'
 );
 
@@ -16,20 +17,19 @@ export type Options = {
 
   // the type of side
   type: SideHighlightingType;
-
-  // whether the side is hovered
-  isHovered?: boolean;
 };
 
 const outlineTraceStrokes = {
   'selected': '#f3e500',
-  'bindable': '#d43dff',
+  'bindable': '#d619ff',
+  'complementary': '#efaaff',
   'unbindable': '#ff0e0e',
 };
 
 const fillTraceStrokes = {
   'selected': '#fff785',
-  'bindable': '#f9e4ff',
+  'bindable': '#f9e0ff',
+  'complementary': '#f9e6ff',
   'unbindable': '#ffdddd',
 };
 
@@ -48,16 +48,11 @@ export class SideHighlighting {
       bases.push(bases[0]);
     }
 
-    let strokeOpacity = 1;
-    if (options.type == 'bindable' && !options.isHovered) {
-      strokeOpacity = 0.5;
-    }
-
     this.outlineTrace = new BasesTrace({ bases, close: false });
     this.outlineTrace.path.attr({
       'stroke': outlineTraceStrokes[options.type],
       'stroke-width': 18,
-      'stroke-opacity': strokeOpacity,
+      'stroke-opacity': 1,
       'stroke-linecap': 'round',
       'stroke-linejoin': 'round',
       'fill-opacity': 0,
@@ -67,7 +62,7 @@ export class SideHighlighting {
     this.fillTrace.path.attr({
       'stroke': fillTraceStrokes[options.type],
       'stroke-width': 14,
-      'stroke-opacity': strokeOpacity,
+      'stroke-opacity': 1,
       'stroke-linecap': 'round',
       'stroke-linejoin': 'round',
       'fill-opacity': 0,
