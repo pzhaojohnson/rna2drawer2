@@ -15,6 +15,8 @@ import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isIn
 import { shiftControlPoint } from 'Draw/bonds/curved/drag';
 import { zoom } from 'Draw/zoom';
 
+import { spannedBases } from 'Draw/strict/spannedBases';
+
 import { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
 import { SelectingRect } from './SelectingRect';
 import { ElementHighlighting } from './ElementHighlighting';
@@ -35,6 +37,7 @@ import { EditingForm } from './EditingForm';
 import { v4 as uuidv4 } from 'uuid';
 
 import * as SVG from '@svgdotjs/svg.js';
+import { BaseInterface } from 'Draw/bases/BaseInterface';
 
 export type Options = {
 
@@ -153,6 +156,10 @@ export class EditingTool {
     });
   }
 
+  spannedBases(base1: BaseInterface, base2: BaseInterface): BaseInterface[] {
+    return spannedBases(this.options.strictDrawing, base1, base2);
+  }
+
   // the currently hovered element
   get hovered(): DrawingElement | undefined {
     if (this._hovered == undefined) {
@@ -181,9 +188,17 @@ export class EditingTool {
     return this._selected.has(ele.id);
   }
 
-  select(ele: DrawingElement) {
+  select(eles: DrawingElement[] | DrawingElement) {
+    if (Array.isArray(eles) && eles.length == 0) {
+      return; // nothing to do
+    }
+
     this._selected.clear();
-    this._selected.add(ele.id);
+    if (Array.isArray(eles)) {
+      eles.forEach(ele => this._selected.add(ele.id));
+    } else {
+      this._selected.add(eles.id);
+    }
     this.renderForm();
     this.refresh();
     this.options.app.refresh();
@@ -232,6 +247,14 @@ export class EditingTool {
 
     if (hovered) {
       this._hovered = hovered.id;
+    }
+
+    let activated = this.activated;
+    if (activated instanceof Base && hovered instanceof Base) {
+      this.addToSelected(this.spannedBases(activated, hovered));
+    }
+
+    if (hovered) {
       this.refresh();
     }
   }
