@@ -121,6 +121,14 @@ function baseNumberings(drawing: Drawing): BaseNumberingInterface[] {
   return bns;
 }
 
+// can be used to prevent unnecessary recomputation
+// (such as when refreshing the tool)
+type PreretrievedState = {
+  selectedSide?: Side;
+  hoveredSide?: Side;
+  complementarySides?: Side[];
+};
+
 export class BindingTool {
   readonly options: Options;
 
@@ -622,22 +630,29 @@ export class BindingTool {
   }
 
   refresh() {
-    this.updateDrawingUnderlay();
+    let preretrievedState = {
+      selectedSide: this.selectedSide(),
+      hoveredSide: this.hoveredSide(),
+      complementarySides: this.showComplements ? this.complementarySides() : undefined,
+    };
+
+    this.updateDrawingUnderlay(preretrievedState);
     this.updateDrawingOverlay();
     this.options.overlaidMessageContainer.placeOver(this.options.strictDrawing.drawing);
-    this.updateOverlaidMessage();
+    this.updateOverlaidMessage(preretrievedState);
     this.updateCursor();
   }
 
-  updateDrawingUnderlay() {
+  updateDrawingUnderlay(preretrievedState?: PreretrievedState) {
     this.options.drawingUnderlay.clear();
     this.options.drawingUnderlay.fitTo(this.options.strictDrawing.drawing);
 
-    let selectedSide = this.selectedSide();
-    let hoveredSide = this.hoveredSide();
+    let selectedSide = preretrievedState?.selectedSide ?? this.selectedSide();
+    let hoveredSide = preretrievedState?.hoveredSide ?? this.hoveredSide();
 
     if (this.showComplements && !(this._activatedElement instanceof Base)) {
-      this.complementarySides().forEach(side => {
+      let complementarySides = preretrievedState?.complementarySides ?? this.complementarySides();
+      complementarySides.forEach(side => {
         if (!hoveredSide || !sidesAreEqual(hoveredSide, side)) {
           let highlighting = new SideHighlighting({ side, type: 'complementary' });
           highlighting.appendTo(this.options.drawingUnderlay.svg);
@@ -684,19 +699,19 @@ export class BindingTool {
     }
   }
 
-  updateOverlaidMessage() {
+  updateOverlaidMessage(preretrievedState?: PreretrievedState) {
     this.options.overlaidMessageContainer.clear();
     let p = document.createElement('p');
     p.className = styles.overlaidMessageActions;
-    p.textContent = this.overlaidMessage;
+    p.textContent = this.messageToOverlay(preretrievedState);
     this.options.overlaidMessageContainer.append(p);
   }
 
-  get overlaidMessage(): string {
+  messageToOverlay(preretrievedState?: PreretrievedState): string {
     let hoveredElement = this.hoveredElement;
     let activatedElement = this.activatedElement;
-    let hoveredSide = this.hoveredSide();
-    let selectedSide = this.selectedSide();
+    let hoveredSide = preretrievedState?.hoveredSide ?? this.hoveredSide();
+    let selectedSide = preretrievedState?.selectedSide ?? this.selectedSide();
 
     if (activatedElement instanceof TertiaryBond) {
       return 'Drag to move. Double-click to edit.';
