@@ -1,5 +1,5 @@
 import { AppInterface as App } from 'AppInterface';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 
 import { DrawingElementInterface as DrawingElement } from './DrawingElementInterface';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
@@ -42,7 +42,7 @@ export type Options = {
   readonly app: App;
 
   // the drawing to edit
-  readonly drawing: Drawing;
+  readonly strictDrawing: StrictDrawing;
 
   // for drawing element highlightings and the selecting rect on
   readonly drawingOverlay: DrawingOverlay;
@@ -109,9 +109,13 @@ export class EditingTool {
     }
   }
 
+  get drawing() {
+    return this.options.strictDrawing.drawing;
+  }
+
   // returns all drawing elements that may be edited with this tool
   drawingElements(): DrawingElement[] {
-    let bases = this.options.drawing.bases();
+    let bases = this.drawing.bases();
 
     let baseNumberings: BaseNumberingInterface[] = [];
     bases.forEach(b => {
@@ -123,9 +127,9 @@ export class EditingTool {
     return [
       ...bases,
       ...baseNumberings,
-      ...this.options.drawing.primaryBonds,
-      ...this.options.drawing.secondaryBonds,
-      ...this.options.drawing.tertiaryBonds,
+      ...this.drawing.primaryBonds,
+      ...this.drawing.secondaryBonds,
+      ...this.drawing.tertiaryBonds,
     ];
   }
 
@@ -247,7 +251,7 @@ export class EditingTool {
   handleMousedown(event: MouseEvent) {
     if (!(event.target instanceof Node)) {
       return;
-    } else if (!this.options.drawing.svg.node.contains(event.target)) {
+    } else if (!this.drawing.svg.node.contains(event.target)) {
       return; // ignore clicks outside of the drawing
     }
 
@@ -302,7 +306,7 @@ export class EditingTool {
     }
 
     // create a new selecting rect
-    let start = this.options.drawing.svg.point(event.pageX, event.pageY);
+    let start = this.drawing.svg.point(event.pageX, event.pageY);
     this.selectingRect = new SelectingRect(start);
     this.selectingRect.appendTo(this.options.drawingOverlay.svg);
   }
@@ -328,7 +332,7 @@ export class EditingTool {
       return;
     }
 
-    let end = this.options.drawing.svg.point(event.pageX, event.pageY);
+    let end = this.drawing.svg.point(event.pageX, event.pageY);
     this.selectingRect.dragTo({ x: end.x, y: end.y });
     this.refresh();
   }
@@ -353,7 +357,7 @@ export class EditingTool {
     });
 
     // drag the tertiary bonds
-    let z = zoom(this.options.drawing) ?? 1;
+    let z = zoom(this.drawing) ?? 1;
     tbs.forEach(tb => {
       shiftControlPoint(tb, {
         x: 2 * event.movementX / z,
@@ -400,7 +404,7 @@ export class EditingTool {
       if (this.editingType == TertiaryBond && this._selected.size > 0) {
         this.options.app.pushUndo();
         this._selected.forEach(id => {
-          removeTertiaryBondById(this.options.drawing, id);
+          removeTertiaryBondById(this.drawing, id);
           this._selected.delete(id);
         });
         this.refresh();
@@ -410,17 +414,17 @@ export class EditingTool {
   }
 
   refresh() {
-    this.options.drawingOverlay.fitTo(this.options.drawing);
+    this.options.drawingOverlay.fitTo(this.drawing);
     this.updateSelectingRectStrokeWidth();
     this.updateElementHighlightings();
     this.updateCursor();
-    this.options.overlaidMessageContainer.placeOver(this.options.drawing);
+    this.options.overlaidMessageContainer.placeOver(this.drawing);
     this.updateOverlaidMessage();
   }
 
   updateSelectingRectStrokeWidth() {
     if (this.selectingRect) {
-      let z = zoom(this.options.drawing) ?? 1;
+      let z = zoom(this.drawing) ?? 1;
       this.selectingRect.rect.attr('stroke-width', 0.5 / z);
     }
   }
@@ -479,7 +483,7 @@ export class EditingTool {
   updateCursor() {
     let notDragging = !this.selectingRect && this._activated == undefined;
     let shouldBePointer = this._hovered != undefined && notDragging;
-    this.options.drawing.svg.css({
+    this.drawing.svg.css({
       'cursor': shouldBePointer ? 'pointer' : 'auto',
     });
   }
@@ -512,7 +516,7 @@ export class EditingTool {
       let div = document.createElement('div');
       ReactDOM.render(
         <BasePositionDescription
-          drawing={this.options.drawing}
+          drawing={this.drawing}
           base={hovered}
           style={{ margin: '0px 4px 0px 0px' }}
         />,

@@ -104,7 +104,7 @@ class StrictDrawingInteraction {
 
     this.editingTool = new EditingTool({
       app: app,
-      drawing: app.strictDrawing.drawing,
+      strictDrawing: app.strictDrawing,
       drawingOverlay: this.drawingOverlay,
       overlaidMessageContainer: this.overlaidMessageContainer,
       SVG: options?.SVG,
