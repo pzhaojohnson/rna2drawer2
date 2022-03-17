@@ -771,7 +771,13 @@ export class BindingTool {
         characters = characters.substring(0, 24) + '...';
       }
       let period = characters.length <= 24 ? '.' : '';
-      return `Selected "${characters}"${period}`;
+      let message = `Selected "${characters}"${period}`;
+      if (this.showComplements) {
+        let complementarySides = preretrievedState?.complementarySides ?? this.complementarySides();
+        let s = complementarySides.length == 1 ? '' : 's';
+        message += ` (${complementarySides.length} Complement${s}.)`;
+      }
+      return message;
     }
 
     return '';
