@@ -20,17 +20,17 @@ export type Options = {
 };
 
 const outlineTraceStrokes = {
-  'selected': '#f3e500',
-  'bindable': '#d619ff',
-  'complementary': '#efaaff',
-  'unbindable': '#ff0e0e',
+  'selected': '#edd800',
+  'bindable': '#c000e9',
+  'complementary': '#f0afff',
+  'unbindable': '#e40d0d',
 };
 
 const fillTraceStrokes = {
-  'selected': '#fff785',
-  'bindable': '#f9e0ff',
-  'complementary': '#f9e6ff',
-  'unbindable': '#ffdddd',
+  'selected': '#fff97c',
+  'bindable': '#f7cfff',
+  'complementary': '#ffecff',
+  'unbindable': '#ffd1d1',
 };
 
 export class SideHighlighting {
@@ -51,7 +51,7 @@ export class SideHighlighting {
     this.outlineTrace = new BasesTrace({ bases, close: false });
     this.outlineTrace.path.attr({
       'stroke': outlineTraceStrokes[options.type],
-      'stroke-width': 18,
+      'stroke-width': 20,
       'stroke-opacity': 1,
       'stroke-linecap': 'round',
       'stroke-linejoin': 'round',
@@ -61,7 +61,7 @@ export class SideHighlighting {
     this.fillTrace = new BasesTrace({ bases, close: false });
     this.fillTrace.path.attr({
       'stroke': fillTraceStrokes[options.type],
-      'stroke-width': 14,
+      'stroke-width': 16,
       'stroke-opacity': 1,
       'stroke-linecap': 'round',
       'stroke-linejoin': 'round',
