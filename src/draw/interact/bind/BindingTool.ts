@@ -716,7 +716,7 @@ export class BindingTool {
     if (activatedElement instanceof TertiaryBond) {
       return 'Drag to move. Double-click to edit.';
     } else if (activatedElement instanceof Base) {
-      return 'Drag to select';
+      return 'Drag to select.';
     } else if (activatedElement) {
       return '';
     }
