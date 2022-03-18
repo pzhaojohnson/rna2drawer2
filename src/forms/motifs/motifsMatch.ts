@@ -1,4 +1,5 @@
 import { charactersMatch } from './charactersMatch';
+import { round } from 'Math/round';
 
 export type Options = {
 
@@ -8,9 +9,9 @@ export type Options = {
   // whether to match based on IUPAC single letter codes
   IUPAC?: boolean;
 
-  // the number of mismatched characters allowed before two motifs no longer match
-  // (is interpreted as zero if left unspecified)
-  mismatchesAllowed?: number;
+  // the proportion of mismatched pairs allowed before two motifs no longer match
+  // (interpreted as zero if left unspecified)
+  allowedMismatch?: number;
 };
 
 /**
@@ -23,7 +24,7 @@ export type Options = {
 export function motifsMatch(motif1: string, motif2: string, options?: Options): boolean {
   let UT = options?.UT;
   let IUPAC = options?.IUPAC;
-  let mismatchesAllowed = options?.mismatchesAllowed ?? 0;
+  let allowedMismatch = options?.allowedMismatch ?? 0;
 
   if (motif1.length == 0 && motif2.length == 0) {
     return true;
@@ -33,6 +34,10 @@ export function motifsMatch(motif1: string, motif2: string, options?: Options): 
 
   motif1 = motif1.toUpperCase();
   motif2 = motif2.toUpperCase();
+
+  let mismatchesAllowed = allowedMismatch * motif1.length;
+  // account for possible floating point imprecision
+  mismatchesAllowed = round(mismatchesAllowed, 6);
 
   let mismatches = 0;
   for (let i = 0; i < motif1.length; i++) {

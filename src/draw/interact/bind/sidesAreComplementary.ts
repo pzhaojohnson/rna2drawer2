@@ -1,6 +1,7 @@
 import { Side } from './Side';
 import { sidesOverlap } from './Side';
 import { charactersAreComplementary } from './charactersAreComplementary';
+import { round } from 'Math/round';
 
 export type Options = {
 
@@ -10,10 +11,10 @@ export type Options = {
   // whether to allow complements based on IUPAC single letter codes
   IUPAC?: boolean;
 
-  // the number of mismatched characters allowed before two motifs are no longer
+  // the proportion of mismatched pairs allowed before two sides are not
   // considered complementary
   // (interpreted as zero if left unspecified)
-  mismatchesAllowed?: number;
+  allowedMismatch?: number;
 };
 
 /**
@@ -22,7 +23,7 @@ export type Options = {
 export function sidesAreComplementary(side1: Side, side2: Side, options?: Options): boolean {
   let GUT = options?.GUT;
   let IUPAC = options?.IUPAC;
-  let mismatchesAllowed = options?.mismatchesAllowed ?? 0;
+  let allowedMismatch = options?.allowedMismatch ?? 0;
 
   if (side1.length == 0 && side2.length == 0) {
     return true;
@@ -31,6 +32,10 @@ export function sidesAreComplementary(side1: Side, side2: Side, options?: Option
   } else if (sidesOverlap(side1, side2)) {
     return false;
   }
+
+  let mismatchesAllowed = allowedMismatch * side1.length;
+  // account for possible floating point imprecision
+  mismatchesAllowed = round(mismatchesAllowed, 6);
 
   let mismatches = 0;
   let i = 0;

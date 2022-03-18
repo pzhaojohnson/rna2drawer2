@@ -51,13 +51,14 @@ describe('motifsMatch function', () => {
     expect(motifsMatch('R', 'A')).toBeFalsy();
   });
 
-  test('mismatchesAllowed option', () => {
+  test('allowedMismatch option', () => {
     // when specified
-    expect(motifsMatch('AbGCAU', 'AUGhAU', { mismatchesAllowed: 0 })).toBeFalsy();
-    expect(motifsMatch('AbGCAU', 'AUGhAU', { mismatchesAllowed: 1 })).toBeFalsy();
-    expect(motifsMatch('AbGCAU', 'AUGhAU', { mismatchesAllowed: 2 })).toBeTruthy();
-    expect(motifsMatch('AbGCAU', 'AUGhAU', { mismatchesAllowed: 3 })).toBeTruthy();
+    expect(motifsMatch('bGCAU', 'UGhAU', { allowedMismatch: 0 })).toBeFalsy();
+    expect(motifsMatch('bGCAU', 'UGhAU', { allowedMismatch: 0.2 })).toBeFalsy();
+    expect(motifsMatch('bGCAU', 'UGhAU', { allowedMismatch: 0.4 })).toBeTruthy();
+    expect(motifsMatch('bGCAU', 'UGhAU', { allowedMismatch: 0.6 })).toBeTruthy();
+    expect(motifsMatch('bGCAU', 'UGhAU', { allowedMismatch: 1 })).toBeTruthy();
     // when left unspecified
-    expect(motifsMatch('AbGCAU', 'AUGhAU')).toBeFalsy();
+    expect(motifsMatch('bGCAU', 'UGhAU')).toBeFalsy();
   });
 });

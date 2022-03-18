@@ -116,13 +116,14 @@ describe('sidesAreComplementary function', () => {
     expect(sidesAreComplementary(side1, side2, { IUPAC: false })).toBeFalsy();
   });
 
-  test('mismatchesAllowed option', () => {
+  test('allowedMismatch option', () => {
     let sequence = appendSequence(drawing, { id: 'Mis', characters: 'AAGGCCaaaaGGCCUU' });
-    let side1 = sequence.bases.slice(2, 8);
-    let side2 = sequence.bases.slice(8, 14);
-    expect(sidesAreComplementary(side1, side2, { mismatchesAllowed: 0 })).toBeFalsy();
-    expect(sidesAreComplementary(side1, side2, { mismatchesAllowed: 1 })).toBeFalsy();
-    expect(sidesAreComplementary(side1, side2, { mismatchesAllowed: 2 })).toBeTruthy();
-    expect(sidesAreComplementary(side1, side2, { mismatchesAllowed: 3 })).toBeTruthy();
+    let side1 = sequence.bases.slice(3, 8);
+    let side2 = sequence.bases.slice(8, 13);
+    expect(sidesAreComplementary(side1, side2, { allowedMismatch: 0 })).toBeFalsy();
+    expect(sidesAreComplementary(side1, side2, { allowedMismatch: 0.2 })).toBeFalsy();
+    expect(sidesAreComplementary(side1, side2, { allowedMismatch: 0.4 })).toBeTruthy();
+    expect(sidesAreComplementary(side1, side2, { allowedMismatch: 0.6 })).toBeTruthy();
+    expect(sidesAreComplementary(side1, side2, { allowedMismatch: 1 })).toBeTruthy();
   });
 });
