@@ -1,7 +1,7 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import { AppInterface as App } from 'AppInterface';
-import { FoldingModeInterface as FoldingMode } from 'Draw/interact/fold/FoldingModeInterface';
+import type { BindingTool } from 'Draw/interact/bind/BindingTool';
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 
@@ -16,8 +16,8 @@ type State = {
   value: Value;
 }
 
-function allowedMismatchPercentage(foldingMode: FoldingMode): Value {
-  let am = foldingMode.allowedMismatch;
+function allowedMismatchPercentage(bindingTool: BindingTool): Value {
+  let am = bindingTool.complementsOptions.allowedMismatch ?? 0;
   let amp = 100 * am;
   amp = round(amp, 0);
   return amp + '%';
@@ -33,10 +33,10 @@ export class AllowedMismatchField extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let foldingMode = props.app.strictDrawingInteraction.foldingMode;
+    let bindingTool = props.app.strictDrawingInteraction.bindingTool;
 
     this.state = {
-      value: allowedMismatchPercentage(foldingMode),
+      value: allowedMismatchPercentage(bindingTool),
     };
   }
 
@@ -74,8 +74,8 @@ export class AllowedMismatchField extends React.Component<Props> {
       return;
     }
 
-    let foldingMode = this.props.app.strictDrawingInteraction.foldingMode;
-    if (areEqual(this.state.value, allowedMismatchPercentage(foldingMode))) {
+    let bindingTool = this.props.app.strictDrawingInteraction.bindingTool;
+    if (areEqual(this.state.value, allowedMismatchPercentage(bindingTool))) {
       return;
     }
 
@@ -96,7 +96,7 @@ export class AllowedMismatchField extends React.Component<Props> {
     am = round(am, 2);
 
     // set value
-    foldingMode.allowedMismatch = am;
+    bindingTool.complementsOptions.allowedMismatch = am;
     this.props.app.refresh();
   }
 }

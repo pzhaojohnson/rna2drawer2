@@ -11,9 +11,11 @@ export function IncludeGUTField(props: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
       <Checkbox
-        checked={props.app.strictDrawingInteraction.foldingMode.includeGUT}
+        checked={props.app.strictDrawingInteraction.bindingTool.complementsOptions.GUT ?? false}
         onChange={event => {
-          props.app.strictDrawingInteraction.foldingMode.includeGUT = event.target.checked;
+          let bindingTool = props.app.strictDrawingInteraction.bindingTool;
+          bindingTool.complementsOptions.GUT = event.target.checked;
+          props.app.refresh();
         }}
       />
       <p
