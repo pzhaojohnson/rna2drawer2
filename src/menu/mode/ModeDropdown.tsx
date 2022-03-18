@@ -1,10 +1,6 @@
 import * as React from 'react';
 import { Dropdown } from 'Menu/Dropdown';
-import { DroppedSeparator } from 'Menu/DroppedSeparator';
 import { AppInterface as App } from 'AppInterface';
-import { PairComplementsButton } from './PairComplementsButton';
-import { ForcePairButton } from './ForcePairButton';
-import { AddTertiaryBondsButton } from './AddTertiaryBondsButton';
 import { AnnotateButton } from './AnnotateButton';
 
 export type Props = {
@@ -17,10 +13,6 @@ export function ModeDropdown(props: Props) {
       name='Mode'
       dropped={(
         <div style={{ width: '256px', display: 'flex', flexDirection: 'column' }} >
-          <PairComplementsButton app={props.app} />
-          <ForcePairButton app={props.app} />
-          <AddTertiaryBondsButton app={props.app} />
-          <DroppedSeparator />
           <AnnotateButton app={props.app} />
         </div>
       )}

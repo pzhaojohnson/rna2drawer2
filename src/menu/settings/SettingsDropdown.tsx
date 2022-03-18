@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Dropdown } from 'Menu/Dropdown';
 import { AppInterface as App } from 'AppInterface';
 import { ComplementRulesButton } from './ComplementRulesButton';
-import { DeselectOnDblclickButton } from './DeselectOnDblclickButton';
 
 export type Props = {
   app: App;
@@ -15,7 +14,6 @@ export function SettingsDropdown(props: Props) {
       dropped={
         <div style={{ width: '256px', display: 'flex', flexDirection: 'column' }} >
           <ComplementRulesButton app={props.app} />
-          <DeselectOnDblclickButton app={props.app} />
         </div>
       }
       disabled={props.app.strictDrawing.isEmpty()}

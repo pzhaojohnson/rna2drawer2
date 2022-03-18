@@ -1,4 +1,3 @@
-import FoldingMode from './fold/FoldingMode';
 import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
@@ -25,7 +24,7 @@ export type Options = {
   }
 }
 
-type Mode = FoldingMode | AnnotatingMode;
+type Mode = AnnotatingMode;
 
 export type Tool = (
   DraggingTool
@@ -51,7 +50,6 @@ class StrictDrawingInteraction {
   readonly editingTool: EditingTool;
   _currentTool: Tool;
 
-  _foldingMode!: FoldingMode;
   _annotatingMode!: AnnotatingMode;
   _currMode: Mode;
 
@@ -70,7 +68,6 @@ class StrictDrawingInteraction {
     this.overlaidMessageContainer.placeOver(this.strictDrawing.drawing);
 
     this._setBindings();
-    this._initializeFoldingMode();
     this._initializeAnnotatingMode();
 
     this.draggingTool = new DraggingTool({
@@ -112,7 +109,7 @@ class StrictDrawingInteraction {
 
     this._currentTool = this.bindingTool;
 
-    this._currMode = this._foldingMode;
+    this._currMode = this._annotatingMode;
   }
 
   get strictDrawing(): StrictDrawing {
@@ -214,9 +211,7 @@ class StrictDrawingInteraction {
   }
 
   _handleDblclickOnDrawing() {
-    if (this._currMode == this._foldingMode) {
-      this._foldingMode.handleDblclickOnDrawing();
-    } else if (this._currMode == this._annotatingMode) {
+    if (this._currMode == this._annotatingMode) {
       this._annotatingMode.handleDblclickOnDrawing();
     }
   }
@@ -231,13 +226,6 @@ class StrictDrawingInteraction {
 
   _handleMousedownOnBase(b: Base) {
     this._currMode.handleMousedownOnBase(b);
-  }
-
-  _initializeFoldingMode() {
-    this._foldingMode = new FoldingMode(this.strictDrawing);
-    this._foldingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
-    this._foldingMode.onChange(() => this.fireChange());
-    this._foldingMode.disable();
   }
 
   _initializeAnnotatingMode() {
@@ -257,8 +245,6 @@ class StrictDrawingInteraction {
   refresh() {
     if (this._currMode == this._annotatingMode) {
       this._annotatingMode.refresh();
-    } else if (this._currMode == this._foldingMode) {
-      this._foldingMode.refresh();
     } else {
       this._currMode.reset();
     }
@@ -276,10 +262,6 @@ class StrictDrawingInteraction {
 
   requestToRenderForm(ff: FormFactory, options?: RenderFormOptions) {
     this._app.formContainer.renderForm(ff, options);
-  }
-
-  get foldingMode(): FoldingMode {
-    return this._foldingMode;
   }
 
   get annotatingMode(): AnnotatingMode {
@@ -323,10 +305,6 @@ class StrictDrawingInteraction {
     }
 
     this._currMode.disable();
-  }
-
-  startFolding() {
-    this._start(this._foldingMode);
   }
 
   startAnnotating() {

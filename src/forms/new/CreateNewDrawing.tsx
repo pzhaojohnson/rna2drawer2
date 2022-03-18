@@ -157,8 +157,9 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                     props.app.strictDrawing.appendStructure({ ...parsed, characters: parsed.sequence });
                     if (props.app.strictDrawing.drawing.secondaryBonds.length == 0) {
                       props.app.strictDrawing.flatOutermostLoop();
-                      props.app.strictDrawingInteraction.startFolding();
-                      props.app.strictDrawingInteraction.foldingMode.forcePair();
+                      let strictDrawingInteraction = props.app.strictDrawingInteraction;
+                      strictDrawingInteraction.currentTool = strictDrawingInteraction.bindingTool;
+                      strictDrawingInteraction.bindingTool.showComplements = false;
                     }
                     props.close();
                     // prevent coming back to this form or preceding forms
