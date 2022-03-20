@@ -1,0 +1,72 @@
+.optionsToggle {
+  padding: 3px 9px;
+  border-radius: 12px;
+  align-self: start;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: italic;
+  text-align: center;
+  color: #080d5e;
+  cursor: pointer;
+}
+
+.toggledOptionsToggle {
+  background-color: #d1e7ff;
+}
+
+.untoggledOptionsToggle {
+  background-color: white;
+}
+
+.untoggledOptionsToggle:hover {
+  background-color: #e8f3ff;
+}
+
+.numMatchesView {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: italic;
+  color: #242424;
+}
+
+.numberingOffsetView {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: italic;
+  color: #707070;
+}
+
+.startPositionColumnLabel {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: italic;
+  color: black;
+}
+
+.matchingMotifColumnLabel {
+  margin-left: 6px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: italic;
+  color: #6f6f6f;
+}
+
+.startPositionView {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: black;
+  text-align: end;
+}
+
+.matchingMotifView {
+  margin-left: 8px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  color: #636363;
+}

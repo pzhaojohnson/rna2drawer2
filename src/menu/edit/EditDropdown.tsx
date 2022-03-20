@@ -7,6 +7,7 @@ import { RedoButton } from './RedoButton';
 import { EditDrawingTitleButton } from './EditDrawingTitleButton';
 import { EditSequenceDropright } from './sequence/EditSequenceDropright';
 import { EditBasesDropright } from './bases/EditBasesDropright';
+import { FindMotifsButton } from './FindMotifsButton';
 import { EditNumberingButton } from './EditNumberingButton';
 import { EditPrimaryBondsButton } from './EditPrimaryBondsButton';
 import { EditSecondaryBondsButton } from './EditSecondaryBondsButton';
@@ -30,6 +31,7 @@ export function EditDropdown(props: Props) {
           <DroppedSeparator />
           <EditSequenceDropright app={props.app} />
           <EditBasesDropright app={props.app} />
+          <FindMotifsButton app={props.app} />
           <DroppedSeparator />
           <EditPrimaryBondsButton app={props.app} />
           <EditSecondaryBondsButton app={props.app} />
