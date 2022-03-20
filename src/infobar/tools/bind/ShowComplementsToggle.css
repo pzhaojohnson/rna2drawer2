@@ -1,0 +1,26 @@
+.showComplementsToggle {
+  padding: 1px 11px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-style: 11px;
+  font-weight: 600;
+  font-style: normal;
+  color: #0e0e5b;
+  cursor: pointer;
+}
+
+.toggledShowComplementsToggle {
+  border-color: #cce3ff;
+  background-color: #cce3ff;
+}
+
+.untoggledShowComplementsToggle {
+  border-color: #b7cddd;
+  background-color: white;
+}
+
+.untoggledShowComplementsToggle:hover {
+  box-shadow: 0px 0px 2px #a6c8dd;
+}
