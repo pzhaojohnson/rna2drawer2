@@ -152,7 +152,7 @@ export class BindingTool {
   constructor(options: Options) {
     this.options = options;
 
-    this.showComplements = true;
+    this.showComplements = false;
 
     this.complementsOptions = {
       GUT: true,
