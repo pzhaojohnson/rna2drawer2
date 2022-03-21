@@ -1,0 +1,59 @@
+.toolSelect {
+  align-self: stretch;
+  padding: 0px 6px;
+}
+
+.openToolSelect {}
+
+.closedToolSelect {
+  background-color: white;
+  cursor: pointer;
+}
+
+.closedToolSelect:hover {
+  background-color: #f0f0f0;
+}
+
+.toolLabel {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  color: #2c2c2c;
+  cursor: pointer;
+}
+
+.currentToolView {
+  padding-left: 4px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  color: #353535;
+  cursor: pointer;
+}
+
+.toolButton {
+  margin-left: 6px;
+  padding: 1px 9px;
+  border-radius: 12px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  cursor: pointer;
+}
+
+.toggledToolButton {
+  background-color: #565656;
+  color: white;
+}
+
+.untoggledToolButton {
+  background-color: white;
+  color: #222222;
+}
+
+.untoggledToolButton:hover {
+  background-color: #e3e3e3;
+}
