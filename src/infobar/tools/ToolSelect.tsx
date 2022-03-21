@@ -36,6 +36,25 @@ function nameOfTool(tool: Tool): string {
   }
 }
 
+function descriptionOfTool(tool: Tool) {
+  let p = document.createElement('p');
+  p.className = styles.toolDescription;
+  if (tool instanceof DraggingTool) {
+    p.textContent = 'Drag stems and loops.';
+  } else if (tool instanceof BindingTool) {
+    p.textContent = 'Bind and unbind bases with secondary and tertiary bonds.';
+  } else if (tool instanceof FlatteningTool) {
+    p.textContent = 'Flatten and unflatten loops and straighten and bend consecutive stems.';
+  } else if (tool instanceof FlippingTool) {
+    p.textContent = 'Flip stems and loops.';
+  } else if (tool instanceof EditingTool) {
+    p.textContent = 'Edit element colors, sizes, fonts and other attributes.';
+  } else {
+    p.textContent = '';
+  }
+  return p;
+}
+
 type ToolLabelProps = {
   onClick?: () => void;
 }
@@ -64,6 +83,8 @@ type ToolButtonProps = {
   toolName: string;
   isToggled: boolean;
   onClick: () => void;
+  onMouseOver?: () => void;
+  onMouseOut?: () => void;
 };
 
 function ToolButton(props: ToolButtonProps) {
@@ -74,6 +95,8 @@ function ToolButton(props: ToolButtonProps) {
         ${props.isToggled ? styles.toggledToolButton : styles.untoggledToolButton}
       `}
       onClick={props.onClick}
+      onMouseOver={props.onMouseOver}
+      onMouseOut={props.onMouseOut}
     >
       {props.toolName}
     </p>
@@ -130,6 +153,8 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
               toolName={nameOfTool(currentTool)}
               isToggled={true}
               onClick={() => this.close()}
+              onMouseOver={() => this.showToolDescription(currentTool)}
+              onMouseOut={() => this.hideToolDescription()}
             />
             {tools.filter(tool => tool != currentTool).map((tool, i) => (
               <ToolButton
@@ -137,6 +162,8 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
                 toolName={nameOfTool(tool)}
                 isToggled={false}
                 onClick={() => this.select(tool)}
+                onMouseOver={() => this.showToolDescription(tool)}
+                onMouseOut={() => this.hideToolDescription()}
               />
             ))}
           </div>
@@ -170,5 +197,19 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
   select(tool: Tool) {
     this.props.app.strictDrawingInteraction.currentTool = tool;
     this.close();
+  }
+
+  showToolDescription(tool: Tool) {
+    let strictDrawingInteraction = this.props.app.strictDrawingInteraction;
+    let overlaidMessageContainer = strictDrawingInteraction.overlaidMessageContainer;
+    overlaidMessageContainer.clear();
+    overlaidMessageContainer.append(descriptionOfTool(tool));
+  }
+
+  hideToolDescription() {
+    let strictDrawingInteraction = this.props.app.strictDrawingInteraction;
+    let overlaidMessageContainer = strictDrawingInteraction.overlaidMessageContainer;
+    overlaidMessageContainer.clear();
+    this.props.app.refresh(); // restores the previous overlaid message
   }
 }

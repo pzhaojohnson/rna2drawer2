@@ -57,3 +57,12 @@
 .untoggledToolButton:hover {
   background-color: #e3e3e3;
 }
+
+.toolDescription {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: italic;
+  color: #797979;
+  white-space: nowrap;
+}
