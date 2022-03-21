@@ -3,7 +3,6 @@ import styles from './Menu.css';
 import { AppInterface as App } from 'AppInterface';
 import { AppIcon } from './AppIcon';
 import { FileDropdown } from './file/FileDropdown';
-import { ModeDropdown } from './mode/ModeDropdown';
 import { EditDropdown } from './edit/EditDropdown';
 import { ExportDropdown } from './export/ExportDropdown';
 import { AskBeforeLeavingToggle } from 'Menu/preferences/AskBeforeLeavingToggle';
@@ -17,7 +16,6 @@ export function Menu(props: Props) {
     <div className={styles.menu} >
       <AppIcon app={props.app} />
       <FileDropdown app={props.app} />
-      <ModeDropdown app={props.app} />
       <EditDropdown app={props.app} />
       <ExportDropdown app={props.app} />
       <div style={{ flexGrow: 1 }} />
