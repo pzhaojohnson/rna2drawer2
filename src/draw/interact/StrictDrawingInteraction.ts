@@ -107,7 +107,7 @@ class StrictDrawingInteraction {
       SVG: options?.SVG,
     });
 
-    this._currentTool = this.bindingTool;
+    this._currentTool = this.draggingTool;
 
     this._currMode = this._annotatingMode;
   }
