@@ -79,7 +79,7 @@ export class Base implements BaseInterface {
     this.text.center(center.x, center.y);
   }
 
-  center(): { x: unknown, y: unknown } {
+  center(): Point {
     return { ...this._center };
   }
 
