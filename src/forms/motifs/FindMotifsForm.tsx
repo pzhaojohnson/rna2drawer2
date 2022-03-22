@@ -17,6 +17,9 @@ import { motifsMatch } from './motifsMatch';
 import { round } from 'Math/round';
 import { compareNumbersDescending } from 'Array/sort';
 
+import { centerViewOnBases } from './centerViewOnBases';
+import { BaseBlinker } from './BaseBlinker';
+
 export type FormProps = {
 
   // a reference to the whole app
@@ -333,6 +336,7 @@ type MatchViewProps = {
   match: Match;
   startPositionViewWidth: string;
   numberingOffset: number;
+  onClick: () => void;
 };
 
 function MatchView(props: MatchViewProps) {
@@ -344,7 +348,11 @@ function MatchView(props: MatchViewProps) {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+    <div
+      className={formStyles.matchView}
+      onClick={props.onClick}
+      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+    >
       <p
         className={formStyles.startPositionView}
         style={{ width: props.startPositionViewWidth }}
@@ -432,6 +440,7 @@ export class FindMotifsForm extends React.Component<FormProps> {
                         match={match}
                         startPositionViewWidth={startPositionColumnWidth}
                         numberingOffset={no}
+                        onClick={() => this.highlight(match)}
                       />
                     ))}
                   </div>
@@ -521,5 +530,23 @@ export class FindMotifsForm extends React.Component<FormProps> {
       next = it.next();
     }
     return matches;
+  }
+
+  matchingBases(match: Match): Base[] {
+    let p1 = match.startPosition;
+    let length = match.matchingMotif.length;
+    return this.sequence().bases.slice(p1 - 1, (p1 - 1) + length);
+  }
+
+  highlight(match: Match) {
+    let matchingBases = this.matchingBases(match);
+    centerViewOnBases(this.props.app.strictDrawing, matchingBases);
+
+    let strictDrawingInteraction = this.props.app.strictDrawingInteraction;
+    let drawingOverlay = strictDrawingInteraction.drawingOverlay
+    drawingOverlay.fitTo(this.props.app.strictDrawing.drawing);
+    let blinkers = matchingBases.map(base => new BaseBlinker(base));
+    blinkers.forEach(blinker => blinker.appendTo(drawingOverlay.svg));
+    blinkers.forEach(blinker => blinker.blink({ remove: true }));
   }
 }
