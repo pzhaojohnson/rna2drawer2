@@ -3,6 +3,7 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { AppInterface as App } from 'AppInterface';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { IncludeGUTField } from './IncludeGUTField';
+import { IUPACField } from './IUPACField';
 import { AllowedMismatchField } from './AllowedMismatchField';
 
 export type Props = {
@@ -22,6 +23,9 @@ export function ComplementRules(props: Props) {
       <AllowedMismatchField app={props.app} />
       <div style={{ marginTop: '12px' }} >
         <IncludeGUTField app={props.app} />
+      </div>
+      <div style={{ marginTop: '8px' }} >
+        <IUPACField app={props.app} />
       </div>
     </PartialWidthContainer>
   );
