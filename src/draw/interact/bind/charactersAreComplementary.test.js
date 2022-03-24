@@ -1,20 +1,21 @@
 import { charactersAreComplementary } from './charactersAreComplementary';
 
 describe('charactersAreComplementary function', () => {
-  test('basic complements', () => {
-    // some basic complements
-    expect(charactersAreComplementary('a', 'u')).toBeTruthy();
+  test('some basic complements', () => {
+    expect(charactersAreComplementary('A', 'U')).toBeTruthy();
     expect(charactersAreComplementary('T', 'A')).toBeTruthy();
     expect(charactersAreComplementary('G', 'C')).toBeTruthy();
-
-    // some mismatches
-    expect(charactersAreComplementary('A', 'A')).toBeFalsy();
-    expect(charactersAreComplementary('c', 'a')).toBeFalsy();
   });
 
   it('is not case-sensitive', () => {
+    expect(charactersAreComplementary('t', 'a')).toBeTruthy();
     expect(charactersAreComplementary('a', 'U')).toBeTruthy();
     expect(charactersAreComplementary('C', 'g')).toBeTruthy();
+  });
+
+  test('some mismatches', () => {
+    expect(charactersAreComplementary('A', 'A')).toBeFalsy();
+    expect(charactersAreComplementary('C', 'A')).toBeFalsy();
   });
 
   test('GUT option', () => {
