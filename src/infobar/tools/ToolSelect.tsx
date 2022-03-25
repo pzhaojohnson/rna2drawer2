@@ -46,9 +46,9 @@ function descriptionOfTool(tool: Tool) {
   } else if (tool instanceof FlatteningTool) {
     p.textContent = 'Flatten and unflatten loops and straighten and bend consecutive stems.';
   } else if (tool instanceof FlippingTool) {
-    p.textContent = 'Flip stems and loops.';
+    p.textContent = 'Flip hairpins, substructures or entire structure.';
   } else if (tool instanceof EditingTool) {
-    p.textContent = 'Edit element colors, sizes, fonts and other attributes.';
+    p.textContent = 'Edit object colors, sizes, fonts and other attributes.';
   } else {
     p.textContent = '';
   }
