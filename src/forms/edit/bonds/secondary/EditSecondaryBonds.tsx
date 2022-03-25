@@ -3,7 +3,7 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import type { App } from 'App';
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
+import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import {
   AUTStrokePicker,
   GCStrokePicker,

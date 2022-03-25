@@ -6,7 +6,7 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
-import { StraightBondInterface as StraightBond } from 'Draw/bonds/straight/StraightBondInterface';
+import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
 export type Box = {

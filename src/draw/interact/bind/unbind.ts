@@ -1,6 +1,6 @@
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
+import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { unpair as unpairInPartners } from 'Partners/edit';
 import { willUnpair } from 'Draw/strict/layout/stemProps';
 import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';

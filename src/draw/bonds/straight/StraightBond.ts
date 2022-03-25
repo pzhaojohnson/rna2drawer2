@@ -1,11 +1,10 @@
-import { StraightBondInterface } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import type { Base } from 'Draw/bases/Base';
 import { distance2D as distance } from 'Math/distance';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { position } from './position';
 
-export class StraightBond implements StraightBondInterface {
+export class StraightBond {
   readonly line: SVG.Line;
   readonly base1: Base;
   readonly base2: Base;

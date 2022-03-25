@@ -1,6 +1,6 @@
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
-import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
+import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
+import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { isSecondaryBond } from './isSecondaryBond';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { isTertiaryBond } from './isTertiaryBond';

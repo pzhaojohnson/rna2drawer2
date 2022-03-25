@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextButton } from 'Forms/buttons/TextButton';
 import type { App } from 'App';
-import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
+import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { bringToFront, sendToBack } from 'Draw/bonds/straight/z';
 
 export type Props = {

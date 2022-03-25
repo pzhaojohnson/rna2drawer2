@@ -1,4 +1,4 @@
-import { StraightBondInterface as StraightBond } from './StraightBondInterface';
+import type { StraightBond } from './StraightBond';
 
 export function bringToFront(sb: StraightBond) {
   sb.line.front();

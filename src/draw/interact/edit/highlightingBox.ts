@@ -10,7 +10,7 @@ import { interpretNumber } from 'Draw/svg/interpretNumber';
 
 import { bboxOfLine } from './bboxOfLine';
 
-import { StraightBondInterface as StraightBond } from 'Draw/bonds/straight/StraightBondInterface';
+import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
 type Box = {

@@ -1,13 +1,13 @@
 import type { Base } from 'Draw/bases/Base';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
-import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
-import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
+import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
+import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 
 export type DrawingElementInterface = (
   Base
   | BaseNumberingInterface
-  | PrimaryBondInterface
-  | SecondaryBondInterface
+  | PrimaryBond
+  | SecondaryBond
   | TertiaryBondInterface
 );

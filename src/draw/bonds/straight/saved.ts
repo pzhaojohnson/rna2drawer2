@@ -1,7 +1,6 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { PrimaryBondInterface } from './PrimaryBondInterface';
 import { PrimaryBond } from './PrimaryBond';
-import { SecondaryBondInterface, secondaryBondTypes } from './SecondaryBondInterface';
+import { secondaryBondTypes } from './SecondaryBond';
 import { SecondaryBond } from './SecondaryBond';
 import { findLineByUniqueId } from 'Draw/saved/svg';
 import type { Base } from 'Draw/bases/Base';
@@ -28,7 +27,7 @@ function getBaseById(bases: Map<string, Base>, id: unknown): Base | never {
   return b;
 }
 
-function updateRecommendedDefaultsForPrimaryBonds(addedPrimaryBonds: PrimaryBondInterface[]) {
+function updateRecommendedDefaultsForPrimaryBonds(addedPrimaryBonds: PrimaryBond[]) {
   let last = atIndex(addedPrimaryBonds, addedPrimaryBonds.length - 1);
   if (last) {
     PrimaryBond.recommendedDefaults = values(last);
@@ -50,7 +49,7 @@ export function addSavedPrimaryBonds(drawing: Drawing, saveds: SavedState[]): Pr
   return pbs;
 }
 
-function updateRecommendedDefaultsForSecondaryBonds(addedSecondaryBonds: SecondaryBondInterface[]) {
+function updateRecommendedDefaultsForSecondaryBonds(addedSecondaryBonds: SecondaryBond[]) {
   addedSecondaryBonds.forEach(sb => {
     let stroke = sb.line.attr('stroke');
     if (typeof stroke == 'string') {

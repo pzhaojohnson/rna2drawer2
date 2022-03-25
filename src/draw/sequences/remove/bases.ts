@@ -1,7 +1,7 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import type { Base } from 'Draw/bases/Base';
-import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
+import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { removePrimaryBondById, removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';

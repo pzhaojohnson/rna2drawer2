@@ -1,4 +1,4 @@
-import { StraightBondInterface as StraightBond } from 'Draw/bonds/straight/StraightBondInterface';
+import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 
 // checks if the opacity of its line element is zero

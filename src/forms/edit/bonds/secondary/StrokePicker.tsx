@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import type { App } from 'App';
-import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { interpretColor } from 'Draw/svg/interpretColor';
 
 // returns undefined for an empty secondary bonds array
 // or if not all secondary bonds have the same stroke
-function currStroke(secondaryBonds: SecondaryBondInterface[]): Value | undefined {
+function currStroke(secondaryBonds: SecondaryBond[]): Value | undefined {
   let hexs = new Set<string>();
   secondaryBonds.forEach(sb => {
     let c = interpretColor(sb.line.attr('stroke'));
@@ -38,7 +37,7 @@ export type Props = {
   app: App;
 
   // the secondary bonds to edit
-  secondaryBonds: SecondaryBondInterface[];
+  secondaryBonds: SecondaryBond[];
 }
 
 export function StrokePicker(props: Props) {

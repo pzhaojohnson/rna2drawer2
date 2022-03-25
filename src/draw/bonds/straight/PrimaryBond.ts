@@ -1,8 +1,7 @@
-import { PrimaryBondInterface } from './PrimaryBondInterface';
 import { StraightBond } from './StraightBond';
 import { Values } from './values';
 
-export class PrimaryBond extends StraightBond implements PrimaryBondInterface {
+export class PrimaryBond extends StraightBond {
   static recommendedDefaults: Values;
 }
 

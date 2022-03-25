@@ -1,4 +1,3 @@
-import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { values } from 'Draw/bonds/straight/values';
 import { setValues } from 'Draw/bonds/straight/values';
@@ -10,11 +9,11 @@ import * as SVG from '@svgdotjs/svg.js';
 export class SecondaryBondShroud {
 
   // the secondary bond to be shrouded
-  readonly secondaryBond: SecondaryBondInterface;
+  readonly secondaryBond: SecondaryBond;
 
   readonly shroud: SecondaryBond;
 
-  constructor(secondaryBond: SecondaryBondInterface) {
+  constructor(secondaryBond: SecondaryBond) {
     this.secondaryBond = secondaryBond;
 
     let line = new SVG.Line();

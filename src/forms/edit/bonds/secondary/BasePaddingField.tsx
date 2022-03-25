@@ -1,15 +1,15 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { SecondaryBondInterface, secondaryBondTypes } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
+import { secondaryBondTypes } from 'Draw/bonds/straight/SecondaryBond';
 import { round } from 'Math/round';
 
 export type Props = {
   app: App;
 
   // the secondary bonds to edit
-  secondaryBonds: SecondaryBondInterface[];
+  secondaryBonds: SecondaryBond[];
 }
 
 type Value = string;
@@ -20,7 +20,7 @@ type State = {
 
 // returns an empty string value for an empty secondary bonds array
 // or if not all secondary bonds have the same base padding
-function currBasePadding(secondaryBonds: SecondaryBondInterface[]): Value {
+function currBasePadding(secondaryBonds: SecondaryBond[]): Value {
   let bps = new Set<Value>();
   secondaryBonds.forEach(sb => {
     let bp1 = round(sb.basePadding1, 0);

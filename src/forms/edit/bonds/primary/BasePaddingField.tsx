@@ -1,7 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { round } from 'Math/round';
 
@@ -9,7 +8,7 @@ export type Props = {
   app: App;
 
   // the primary bonds to edit
-  primaryBonds: PrimaryBondInterface[];
+  primaryBonds: PrimaryBond[];
 }
 
 type Value = string;
@@ -20,7 +19,7 @@ type State = {
 
 // returns an empty string value for an empty primary bonds array
 // or if not all primary bonds have the same base padding
-function currBasePadding(primaryBonds: PrimaryBondInterface[]): Value {
+function currBasePadding(primaryBonds: PrimaryBond[]): Value {
   let bps = new Set<Value>();
   primaryBonds.forEach(pb => {
     let bp1 = round(pb.basePadding1, 0);

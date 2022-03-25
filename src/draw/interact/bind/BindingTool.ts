@@ -4,8 +4,6 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
-import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
-import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 
 import { Base } from 'Draw/bases/Base';
@@ -79,14 +77,14 @@ export type Options = {
 type DrawingElement = (
   Base
   | BaseNumberingInterface
-  | PrimaryBondInterface
-  | SecondaryBondInterface
+  | PrimaryBond
+  | SecondaryBond
   | TertiaryBondInterface
 );
 
 type Bond = (
-  PrimaryBondInterface
-  | SecondaryBondInterface
+  PrimaryBond
+  | SecondaryBond
   | TertiaryBondInterface
 );
 
@@ -402,7 +400,7 @@ export class BindingTool {
     return bondBindsSide(bond, selectedSide);
   }
 
-  secondaryBondsBindingSelectedSide(): SecondaryBondInterface[] {
+  secondaryBondsBindingSelectedSide(): SecondaryBond[] {
     let selectedSide = this.selectedSide();
     if (!selectedSide) {
       return [];
@@ -419,7 +417,7 @@ export class BindingTool {
   }
 
   // returns all secondary bonds that are stacked with the given secondary bond
-  stackedSecondaryBonds(secondaryBond: SecondaryBondInterface): Set<SecondaryBondInterface> {
+  stackedSecondaryBonds(secondaryBond: SecondaryBond): Set<SecondaryBond> {
     return stackedSecondaryBonds(this.options.strictDrawing, secondaryBond);
   }
 
@@ -430,7 +428,7 @@ export class BindingTool {
 
   // returns the secondary bonds to be removed at any given moment
   // should an action be performed to remove secondary bonds
-  secondaryBondsToRemove(): SecondaryBondInterface[] {
+  secondaryBondsToRemove(): SecondaryBond[] {
     let binding = this.secondaryBondsBindingSelectedSide();
 
     let hoveredSide = this.hoveredSide();
@@ -440,7 +438,7 @@ export class BindingTool {
 
     let hoveredElement = this.hoveredElement;
     if (hoveredElement instanceof SecondaryBond && binding.includes(hoveredElement)) {
-      let toRemove: SecondaryBondInterface[] = [hoveredElement];
+      let toRemove: SecondaryBond[] = [hoveredElement];
       let stacked = this.stackedSecondaryBonds(hoveredElement);
       toRemove.push(...binding.filter(secondaryBond => stacked.has(secondaryBond)));
       return toRemove;
@@ -553,7 +551,7 @@ export class BindingTool {
     }
   }
 
-  _handleMousedownOnSecondaryBond(event: MouseEvent, secondaryBond: SecondaryBondInterface) {
+  _handleMousedownOnSecondaryBond(event: MouseEvent, secondaryBond: SecondaryBond) {
     if (!this.bondBindsSelectedSide(secondaryBond)) {
       return;
     }

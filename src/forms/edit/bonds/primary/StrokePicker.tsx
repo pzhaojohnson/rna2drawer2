@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import type { App } from 'App';
-import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { interpretColor } from 'Draw/svg/interpretColor';
 
@@ -9,12 +8,12 @@ export type Props = {
   app: App;
 
   // the primary bonds to edit
-  primaryBonds: PrimaryBondInterface[];
+  primaryBonds: PrimaryBond[];
 }
 
 // returns undefined for an empty primary bonds array
 // or if not all primary bonds have the same stroke
-function currStroke(primaryBonds: PrimaryBondInterface[]): Value | undefined {
+function currStroke(primaryBonds: PrimaryBond[]): Value | undefined {
   let hexs = new Set<string>();
   primaryBonds.forEach(pb => {
     let c = interpretColor(pb.line.attr('stroke'));

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { SecondaryBondInterface, secondaryBondTypes } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
+import { secondaryBondTypes } from 'Draw/bonds/straight/SecondaryBond';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 
@@ -10,7 +10,7 @@ export type Props = {
   app: App;
 
   // the secondary bonds to edit
-  secondaryBonds: SecondaryBondInterface[];
+  secondaryBonds: SecondaryBond[];
 }
 
 type Value = string;
@@ -21,7 +21,7 @@ type State = {
 
 // returns an empty string value for an empty secondary bonds array
 // or if not all secondary bonds have the same stroke width
-function currStrokeWidth(secondaryBonds: SecondaryBondInterface[]): Value {
+function currStrokeWidth(secondaryBonds: SecondaryBond[]): Value {
   let sws = new Set<Value>();
   secondaryBonds.forEach(sb => {
     let sw = sb.line.attr('stroke-width');

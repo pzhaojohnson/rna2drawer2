@@ -2,8 +2,8 @@ import * as SVG from '@svgdotjs/svg.js';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { SavableState as SavableSequenceState } from 'Draw/sequences/save';
 import type { Base } from 'Draw/bases/Base';
-import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
-import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
+import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
+import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import {
   SavableState as SavableStraightBondState,
 } from 'Draw/bonds/straight/save';

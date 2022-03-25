@@ -1,4 +1,4 @@
-import { StraightBondInterface } from './StraightBondInterface';
+import type { StraightBond } from './StraightBond';
 
 export type SavableState = {
   className: 'StraightBond';
@@ -7,7 +7,7 @@ export type SavableState = {
   baseId2: string;
 }
 
-export function savableState(sb: StraightBondInterface): SavableState {
+export function savableState(sb: StraightBond): SavableState {
   return {
     className: 'StraightBond',
     lineId: String(sb.line.id()),

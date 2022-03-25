@@ -1,4 +1,4 @@
-import { StraightBondInterface as StraightBond } from './StraightBondInterface';
+import type { StraightBond } from './StraightBond';
 import { distance2D as distance } from 'Math/distance';
 
 export type Positioning = {

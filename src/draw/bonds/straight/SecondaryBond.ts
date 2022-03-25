@@ -1,11 +1,10 @@
 import { StraightBond } from './StraightBond';
-import {
-  SecondaryBondInterface,
-  SecondaryBondType,
-} from './SecondaryBondInterface';
 import { Values } from './values';
 
-export class SecondaryBond extends StraightBond implements SecondaryBondInterface {
+export const secondaryBondTypes = ['AUT', 'GC', 'GUT', 'other'] as const;
+export type SecondaryBondType = typeof secondaryBondTypes[number];
+
+export class SecondaryBond extends StraightBond {
   static recommendedDefaults: {
     'AUT': Values,
     'GC': Values,

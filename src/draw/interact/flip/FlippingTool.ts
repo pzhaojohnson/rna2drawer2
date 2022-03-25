@@ -8,12 +8,8 @@ import { Base } from 'Draw/bases/Base';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 
-import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
-
-import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
-
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
 import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
@@ -48,8 +44,8 @@ import styles from './FlippingTool.css';
 type DrawingElement = (
   Base
   | BaseNumberingInterface
-  | PrimaryBondInterface
-  | SecondaryBondInterface
+  | PrimaryBond
+  | SecondaryBond
   | TertiaryBondInterface
 );
 
