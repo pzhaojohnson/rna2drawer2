@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TextButton } from 'Forms/buttons/TextButton';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { bringToFront } from 'Draw/bases/z';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Dropdown } from 'Menu/Dropdown';
 import { DroppedSeparator } from 'Menu/DroppedSeparator';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { UndoButton } from './UndoButton';
 import { RedoButton } from './RedoButton';
 import { EditDrawingTitleButton } from './EditDrawingTitleButton';

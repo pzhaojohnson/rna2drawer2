@@ -1,6 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { radiansToDegrees, degreesToRadians } from 'Math/angles/degrees';
 import { normalizeAngle } from 'Math/angles/normalize';
 import { anglesAreClose } from 'Math/angles/close';

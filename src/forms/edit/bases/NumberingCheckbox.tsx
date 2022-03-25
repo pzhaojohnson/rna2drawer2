@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
 import { ChangeEvent } from 'Forms/fields/checkbox/Checkbox';
-import { AppInterface as App } from 'AppInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { App } from 'App';
+import type { Base } from 'Draw/bases/Base';
 import { isNumbered } from 'Draw/bases/number/isNumbered';
 import { addNumbering } from 'Draw/bases/number/add';
 import { removeNumbering } from 'Draw/bases/number/add';

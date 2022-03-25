@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './AppIcon.css';
 import appIcon from './appIcon.svg';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { HomePage } from 'Forms/home/HomePage';
 import { openNewTab } from 'Utilities/openNewTab';
 

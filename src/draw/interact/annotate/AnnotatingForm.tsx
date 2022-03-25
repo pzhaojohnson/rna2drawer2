@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { AppInterface as App } from 'AppInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { App } from 'App';
+import { Base } from 'Draw/bases/Base';
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { EditBases } from 'Forms/edit/bases/EditBases';
@@ -16,7 +16,7 @@ function selectedBases(mode: AnnotatingMode): Base[] {
   let bs = [] as Base[];
   mode.selected.forEach(p => {
     let b = mode.strictDrawing.drawing.getBaseAtOverallPosition(p);
-    if (b) {
+    if (b instanceof Base) {
       bs.push(b);
     }
   });

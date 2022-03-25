@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './EditBasesDropright.css';
 import { Dropright } from 'Menu/Dropright';
 import { DroppedSeparator } from 'Menu/DroppedSeparator';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { GeneralStylesButton } from './GeneralStylesButton';
 import { BySelectionButton } from './BySelectionButton';
 import { ByCharacterButton } from './ByCharacterButton';

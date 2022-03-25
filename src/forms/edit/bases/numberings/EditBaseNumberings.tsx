@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/number/BaseNumberingInterface';
 import { FontFamilyField } from 'Forms/edit/bases/numberings/FontFamilyField';
 import { FontSizeField } from 'Forms/edit/bases/numberings/FontSizeField';

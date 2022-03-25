@@ -5,7 +5,7 @@ import textFieldStyles from 'Forms/fields/text/TextField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 
 export type Props = {
   app: App;

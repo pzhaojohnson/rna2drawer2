@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TextButton } from 'Forms/buttons/TextButton';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { sendToBack } from 'Draw/bonds/curved/z';
 

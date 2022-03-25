@@ -67,7 +67,6 @@
       "^Partners(.*)$": "<rootDir>/src/partners$1",
       "^Undo(.*)$": "<rootDir>/src/undo$1",
       "^Utilities(.*)$": "<rootDir>/src/utilities$1",
-      "^AppInterface$": "<rootDir>/src/AppInterface.ts",
       "^App$": "<rootDir>/src/App.tsx",
       "^FormContainer$": "<rootDir>/src/FormContainer.ts",
       "^Preferences$": "<rootDir>/src/Preferences.ts"

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './ZoomAdjust.css';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { ZoomInput } from './ZoomInput';
 import { v4 as uuidv4 } from 'uuid';
 import { ZoomInButton } from './ZoomInButton';

@@ -1,4 +1,4 @@
-import { AppInterface as App } from '../../AppInterface';
+import type { App } from 'App';
 import * as React from 'react';
 import styles from './HomePage.css';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';

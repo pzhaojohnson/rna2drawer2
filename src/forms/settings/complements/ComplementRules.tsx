@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { AllowedGUTField } from './AllowedGUTField';
 import { IUPACField } from './IUPACField';

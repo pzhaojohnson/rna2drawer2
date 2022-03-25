@@ -1,6 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';

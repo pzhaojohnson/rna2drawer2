@@ -10,7 +10,7 @@ import { BasePadding1Field } from './BasePadding1Field';
 import { BasePadding2Field } from './BasePadding2Field';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
 
 export type Props = {

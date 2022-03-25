@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './AskBeforeLeavingToggle.css';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 
 export type Props = {
   app: App;

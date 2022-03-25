@@ -1,4 +1,4 @@
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';

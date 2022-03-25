@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './ZoomOutButton.css';
 import minus from './minus.svg';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { zoom, setZoom } from 'Draw/zoom';
 import { round } from 'Math/round';

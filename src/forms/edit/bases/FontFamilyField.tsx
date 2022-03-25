@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FontFamilySelect } from 'Forms/fields/font/FontFamilySelect';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { BaseInterface } from 'Draw/bases/BaseInterface';
 import { Base } from 'Draw/bases/Base';
 

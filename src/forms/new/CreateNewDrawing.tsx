@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import errorMessageStyles from '../ErrorMessage.css';
-import { AppInterface as App } from '../../AppInterface';
+import type { App } from 'App';
 import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
 import { ExampleSelect } from './ExampleSelect';
 import { SequenceIdField } from './SequenceIdField';

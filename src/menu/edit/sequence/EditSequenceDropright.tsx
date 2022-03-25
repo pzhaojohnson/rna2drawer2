@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './EditSequenceDropright.css';
 import { Dropright } from 'Menu/Dropright';
 import { DroppedSeparator } from 'Menu/DroppedSeparator';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { EditSequenceIdButton } from './EditSequenceIdButton';
 import { InsertSubsequenceButton } from './InsertSubsequenceButton';
 import { RemoveSubsequenceButton } from './RemoveSubsequenceButton';

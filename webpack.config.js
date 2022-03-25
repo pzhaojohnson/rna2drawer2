@@ -72,7 +72,6 @@ module.exports = {
       Partners: path.resolve(__dirname, 'src/partners/'),
       Undo: path.resolve(__dirname, 'src/undo/'),
       Utilities: path.resolve(__dirname, 'src/utilities/'),
-      AppInterface$: path.resolve(__dirname, 'src/AppInterface.ts'),
       App$: path.resolve(__dirname, 'src/App.tsx'),
       FormContainer$: path.resolve(__dirname, 'src/FormContainer.ts'),
       Preferences$: path.resolve(__dirname, 'src/Preferences.ts'),

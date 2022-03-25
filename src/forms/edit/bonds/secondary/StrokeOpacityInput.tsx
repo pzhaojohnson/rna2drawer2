@@ -1,6 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { interpretNumber } from 'Draw/svg/interpretNumber';

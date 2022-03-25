@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './Menu.css';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { AppIcon } from './AppIcon';
 import { FileDropdown } from './file/FileDropdown';
 import { EditDropdown } from './edit/EditDropdown';

@@ -1,4 +1,4 @@
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 
 import { Tool } from 'Draw/interact/StrictDrawingInteraction';
 import { DraggingTool } from 'Draw/interact/drag/DraggingTool';

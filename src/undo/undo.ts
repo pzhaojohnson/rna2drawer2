@@ -1,4 +1,4 @@
-import { AppInterface as App } from '../AppInterface';
+import type { App } from 'App';
 
 export function pushUndo(app: App) {
   app.undoRedo.pushUndo(

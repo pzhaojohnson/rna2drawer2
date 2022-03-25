@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TextButton } from 'Forms/buttons/TextButton';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { bringToFront, sendToBack } from 'Draw/bonds/straight/z';
 

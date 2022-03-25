@@ -4,8 +4,8 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 
-import { AppInterface as App } from 'AppInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { App } from 'App';
+import type { Base } from 'Draw/bases/Base';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 
 import { CharacterField } from './CharacterField';

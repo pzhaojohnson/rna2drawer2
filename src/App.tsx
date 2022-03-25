@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AppInterface } from './AppInterface';
 
 import UndoRedo from './undo/UndoRedo';
 import { pushUndo, undo, redo } from './undo/undo';
@@ -27,7 +26,7 @@ export type Options = {
   }
 }
 
-export class App implements AppInterface {
+export class App {
   readonly node: HTMLDivElement;
   _menuContainer: HTMLDivElement;
   _drawingContainer: HTMLDivElement;

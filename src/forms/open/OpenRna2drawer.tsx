@@ -6,7 +6,7 @@ import { FloatingDrawingsContainer } from 'Forms/containers/floatingDrawings/Flo
 import closedFolder from './closedFolder.svg';
 import openFolder from './openFolder.svg';
 import { SolidButton } from 'Forms/buttons/SolidButton';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { open } from './open';
 import parseFileExtension from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';

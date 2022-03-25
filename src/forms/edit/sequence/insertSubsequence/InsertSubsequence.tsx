@@ -7,7 +7,7 @@ import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';

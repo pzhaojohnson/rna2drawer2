@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './ZoomInButton.css';
 import plus from './plus.svg';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { zoom, setZoom } from 'Draw/zoom';
 import { round } from 'Math/round';

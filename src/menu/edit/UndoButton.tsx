@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { detectMacOS } from 'Utilities/detectMacOS';
 
 export type Props = {

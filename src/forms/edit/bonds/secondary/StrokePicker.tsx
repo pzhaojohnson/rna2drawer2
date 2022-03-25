@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { interpretColor } from 'Draw/svg/interpretColor';

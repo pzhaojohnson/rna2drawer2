@@ -1,4 +1,4 @@
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 
 import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';

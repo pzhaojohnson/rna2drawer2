@@ -1,4 +1,4 @@
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import type { BindingTool } from 'Draw/interact/bind/BindingTool';
 
 import * as React from 'react';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Dropdown } from 'Menu/Dropdown';
 import { DroppedSeparator } from 'Menu/DroppedSeparator';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { HomeButton } from './HomeButton';
 import { NewButton } from './NewButton';
 import { OpenButton } from './OpenButton';

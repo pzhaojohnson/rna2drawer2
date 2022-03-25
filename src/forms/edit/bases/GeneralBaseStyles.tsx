@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';

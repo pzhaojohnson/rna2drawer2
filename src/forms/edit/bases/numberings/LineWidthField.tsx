@@ -1,6 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { interpretNumber } from 'Draw/svg/interpretNumber';

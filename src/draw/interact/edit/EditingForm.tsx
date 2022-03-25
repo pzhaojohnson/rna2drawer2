@@ -1,4 +1,4 @@
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { DrawingElementInterface as DrawingElement } from './DrawingElementInterface';

@@ -25,7 +25,6 @@
       "Partners/*": ["src/partners/*"],
       "Undo/*": ["src/undo/*"],
       "Utilities/*": ["src/utilities/*"],
-      "AppInterface": ["src/AppInterface"],
       "App": ["src/App"],
       "FormContainer": ["src/FormContainer"],
       "Preferences": ["src/Preferences"],

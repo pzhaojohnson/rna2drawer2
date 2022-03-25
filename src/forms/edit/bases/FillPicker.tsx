@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { interpretColor } from 'Draw/svg/interpretColor';
 

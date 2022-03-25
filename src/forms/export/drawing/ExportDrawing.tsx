@@ -6,7 +6,7 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 
-import { AppInterface as App } from 'AppInterface';
+import type { App } from 'App';
 import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
 import { atPosition } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
