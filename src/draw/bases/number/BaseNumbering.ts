@@ -1,7 +1,3 @@
-import {
-  BaseNumberingInterface,
-  Repositioning,
-} from './BaseNumberingInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { Values } from './values';
 import { Point2D as Point } from 'Math/points/Point';
@@ -9,7 +5,14 @@ import { distance2D as distance } from 'Math/distance';
 import { position } from './position';
 import { assignUuid } from 'Draw/svg/assignUuid';
 
-export class BaseNumbering implements BaseNumberingInterface {
+export type Repositioning = {
+  baseCenter?: Point;
+  basePadding?: number;
+  lineAngle?: number;
+  lineLength?: number;
+}
+
+export class BaseNumbering {
   static recommendedDefaults: Values;
 
   readonly text: SVG.Text;

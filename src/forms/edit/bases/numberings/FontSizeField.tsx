@@ -1,7 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
@@ -10,7 +9,7 @@ export type Props = {
   app: App;
 
   // the base numberings to edit
-  baseNumberings: BaseNumberingInterface[];
+  baseNumberings: BaseNumbering[];
 }
 
 type Value = string;
@@ -21,7 +20,7 @@ type State = {
 
 // returns an empty string value for an empty base numberings array
 // or if not all base numberings have the same font size
-function currFontSize(baseNumberings: BaseNumberingInterface[]): Value {
+function currFontSize(baseNumberings: BaseNumbering[]): Value {
   let fss = new Set<Value>();
   baseNumberings.forEach(bn => {
     let fs = bn.text.attr('font-size');

@@ -3,7 +3,7 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import type { App } from 'App';
-import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/number/BaseNumberingInterface';
+import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { FontFamilyField } from 'Forms/edit/bases/numberings/FontFamilyField';
 import { FontSizeField } from 'Forms/edit/bases/numberings/FontSizeField';
 import { BoldField } from 'Forms/edit/bases/numberings/BoldField';

@@ -3,8 +3,6 @@ import type { App } from 'App';
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 
-import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
-
 import { Base } from 'Draw/bases/Base';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
@@ -75,7 +73,7 @@ export type Options = {
 
 type DrawingElement = (
   Base
-  | BaseNumberingInterface
+  | BaseNumbering
   | PrimaryBond
   | SecondaryBond
   | TertiaryBond
@@ -107,8 +105,8 @@ function elementContainsNode(ele: DrawingElement, node: Node): boolean {
 }
 
 // returns all base numberings in the drawing
-function baseNumberings(drawing: Drawing): BaseNumberingInterface[] {
-  let bns: BaseNumberingInterface[] = [];
+function baseNumberings(drawing: Drawing): BaseNumbering[] {
+  let bns: BaseNumbering[] = [];
   drawing.bases().forEach(b => {
     if (b.numbering) {
       bns.push(b.numbering);

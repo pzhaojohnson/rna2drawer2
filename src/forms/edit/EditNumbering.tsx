@@ -5,7 +5,7 @@ import textFieldStyles from 'Forms/fields/text/TextField.css';
 import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 import type { App } from 'App';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/number/BaseNumberingInterface';
+import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { FontFamilyField } from 'Forms/edit/bases/numberings/FontFamilyField';
 import { FontSizeField } from 'Forms/edit/bases/numberings/FontSizeField';
 import { BoldField } from 'Forms/edit/bases/numberings/BoldField';

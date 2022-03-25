@@ -2,7 +2,6 @@ import type { App } from 'App';
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
 import { DrawingElementInterface as DrawingElement } from './DrawingElementInterface';
-import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 
 import { Base } from 'Draw/bases/Base';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
@@ -119,7 +118,7 @@ export class EditingTool {
   drawingElements(): DrawingElement[] {
     let bases = this.drawing.bases();
 
-    let baseNumberings: BaseNumberingInterface[] = [];
+    let baseNumberings: BaseNumbering[] = [];
     bases.forEach(b => {
       if (b.numbering) {
         baseNumberings.push(b.numbering);

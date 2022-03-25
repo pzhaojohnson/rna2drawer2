@@ -1,4 +1,4 @@
-import { BaseNumberingInterface as BaseNumbering } from './BaseNumberingInterface';
+import type { BaseNumbering } from './BaseNumbering';
 
 export type Values = {
   text: {

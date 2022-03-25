@@ -1,4 +1,4 @@
-import { BaseNumberingInterface as BaseNumbering } from './BaseNumberingInterface';
+import type { BaseNumbering } from './BaseNumbering';
 import { Point2D as Point } from 'Math/points/Point';
 import { normalizeAngle } from 'Math/angles/normalize';
 

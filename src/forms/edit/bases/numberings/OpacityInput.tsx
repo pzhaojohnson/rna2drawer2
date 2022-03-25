@@ -1,7 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import * as SVG from '@svgdotjs/svg.js';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
@@ -11,7 +10,7 @@ export type Props = {
   app: App;
 
   // the base numberings to edit
-  baseNumberings: BaseNumberingInterface[];
+  baseNumberings: BaseNumbering[];
 }
 
 type Value = string;
@@ -28,7 +27,7 @@ function toRoundedPercentage(n: SVG.Number): Value {
 
 // returns an empty string value for an empty base numberings array
 // or if not all base numbering texts and lines have the same opacity
-function currOpacityPercentage(baseNumberings: BaseNumberingInterface[]): Value {
+function currOpacityPercentage(baseNumberings: BaseNumbering[]): Value {
   let ops = new Set<Value>();
   baseNumberings.forEach(bn => {
     let textOpacity = interpretNumber(bn.text.attr('fill-opacity'));

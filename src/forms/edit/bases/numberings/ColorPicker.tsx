@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ColorPicker as UnderlyingColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import type { App } from 'App';
-import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { interpretColor } from 'Draw/svg/interpretColor';
 
@@ -9,12 +8,12 @@ export type Props = {
   app: App;
 
   // the base numberings to edit
-  baseNumberings: BaseNumberingInterface[];
+  baseNumberings: BaseNumbering[];
 }
 
 // returns undefined for an empty base numberings array
 // or if not all base numbering texts and lines have the same color
-function currColor(baseNumberings: BaseNumberingInterface[]): Value | undefined {
+function currColor(baseNumberings: BaseNumbering[]): Value | undefined {
   let hexs = new Set<string>();
   baseNumberings.forEach(bn => {
     let textColor = interpretColor(bn.text.attr('fill'));

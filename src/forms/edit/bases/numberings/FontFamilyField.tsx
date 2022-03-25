@@ -1,19 +1,18 @@
 import * as React from 'react';
 import { FontFamilySelect } from 'Forms/fields/font/FontFamilySelect';
 import type { App } from 'App';
-import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 
 export type Props = {
   app: App;
 
   // the base numberings to edit
-  baseNumberings: BaseNumberingInterface[];
+  baseNumberings: BaseNumbering[];
 }
 
 // returns undefined for an empty base numberings array
 // or if not all base numberings have the same font family
-function currFontFamily(baseNumberings: BaseNumberingInterface[]): string | undefined {
+function currFontFamily(baseNumberings: BaseNumbering[]): string | undefined {
   let ffs = new Set<string>();
   baseNumberings.forEach(bn => {
     let ff = bn.text.attr('font-family');

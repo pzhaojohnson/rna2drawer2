@@ -4,9 +4,7 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { initializeAtPosition } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
 import { Base } from 'Draw/bases/Base';
-
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
@@ -42,7 +40,7 @@ import styles from './FlatteningTool.css';
 
 type DrawingElement = (
   Base
-  | BaseNumberingInterface
+  | BaseNumbering
   | PrimaryBond
   | SecondaryBond
   | TertiaryBond
@@ -104,7 +102,7 @@ export class FlatteningTool {
   watchedElements(): DrawingElement[] {
     let bases = this.options.strictDrawing.drawing.bases();
 
-    let baseNumberings: BaseNumberingInterface[] = [];
+    let baseNumberings: BaseNumbering[] = [];
     bases.forEach(b => {
       if (b.numbering) {
         baseNumberings.push(b.numbering);

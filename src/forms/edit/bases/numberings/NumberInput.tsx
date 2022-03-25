@@ -1,7 +1,7 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { BaseNumberingInterface as BaseNumbering } from 'Draw/bases/number/BaseNumberingInterface';
+import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 
 export type Props = {
   app: App;
