@@ -12,9 +12,7 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
-import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-
 import { shiftControlPoint } from 'Draw/bonds/curved/drag';
 import { zoom } from 'Draw/zoom';
 
@@ -46,7 +44,7 @@ type DrawingElement = (
   | BaseNumberingInterface
   | PrimaryBond
   | SecondaryBond
-  | TertiaryBondInterface
+  | TertiaryBond
 );
 
 type ElementId = string;

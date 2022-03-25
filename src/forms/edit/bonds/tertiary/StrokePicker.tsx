@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import type { App } from 'App';
-import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { interpretColor } from 'Draw/svg/interpretColor';
 
@@ -9,12 +8,12 @@ export type Props = {
   app: App;
 
   // the tertiary bonds to edit
-  tertiaryBonds: TertiaryBondInterface[];
+  tertiaryBonds: TertiaryBond[];
 }
 
 // returns undefined for an empty tertiary bonds array
 // or if not all tertiary bonds have the same stroke
-function currStroke(tertiaryBonds: TertiaryBondInterface[]): Value | undefined {
+function currStroke(tertiaryBonds: TertiaryBond[]): Value | undefined {
   let hexs = new Set<string>();
   tertiaryBonds.forEach(tb => {
     let c = interpretColor(tb.path.attr('stroke'));
@@ -42,7 +41,7 @@ function areEqual(v1?: Value, v2?: Value): boolean {
   }
 }
 
-function hasFill(tb: TertiaryBondInterface): boolean {
+function hasFill(tb: TertiaryBond): boolean {
   let f = tb.path.attr('fill');
   if (typeof f == 'string') {
     f = f.trim().toLowerCase();

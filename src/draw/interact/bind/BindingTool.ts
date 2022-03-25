@@ -4,7 +4,6 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
-import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 
 import { Base } from 'Draw/bases/Base';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
@@ -79,13 +78,13 @@ type DrawingElement = (
   | BaseNumberingInterface
   | PrimaryBond
   | SecondaryBond
-  | TertiaryBondInterface
+  | TertiaryBond
 );
 
 type Bond = (
   PrimaryBond
   | SecondaryBond
-  | TertiaryBondInterface
+  | TertiaryBond
 );
 
 function elementContainsNode(ele: DrawingElement, node: Node): boolean {
@@ -408,7 +407,7 @@ export class BindingTool {
     return secondaryBondsBindingSide(this.options.strictDrawing, selectedSide);
   }
 
-  tertiaryBondsBindingSelectedSide(): TertiaryBondInterface[] {
+  tertiaryBondsBindingSelectedSide(): TertiaryBond[] {
     let selectedSide = this.selectedSide();
     if (!selectedSide) {
       return [];
@@ -422,7 +421,7 @@ export class BindingTool {
   }
 
   // returns all tertiary bonds that are stacked with the given tertiary bond
-  stackedTertiaryBonds(tertiaryBond: TertiaryBondInterface): Set<TertiaryBondInterface> {
+  stackedTertiaryBonds(tertiaryBond: TertiaryBond): Set<TertiaryBond> {
     return stackedTertiaryBonds(this.options.strictDrawing, tertiaryBond);
   }
 
@@ -449,7 +448,7 @@ export class BindingTool {
 
   // returns the tertiary bonds to be removed at any given moment
   // should an action be performed to remove tertiary bonds
-  tertiaryBondsToRemove(): TertiaryBondInterface[] {
+  tertiaryBondsToRemove(): TertiaryBond[] {
     let binding = this.tertiaryBondsBindingSelectedSide();
 
     let hoveredSide = this.hoveredSide();
@@ -459,7 +458,7 @@ export class BindingTool {
 
     let hoveredElement = this.hoveredElement;
     if (hoveredElement instanceof TertiaryBond && binding.includes(hoveredElement)) {
-      let toRemove: TertiaryBondInterface[] = [hoveredElement];
+      let toRemove: TertiaryBond[] = [hoveredElement];
       let stacked = this.stackedTertiaryBonds(hoveredElement);
       toRemove.push(...binding.filter(tertiaryBond => stacked.has(tertiaryBond)));
       return toRemove;
@@ -561,7 +560,7 @@ export class BindingTool {
     this.options.app.refresh();
   }
 
-  _handleMousedownOnTertiaryBond(event: MouseEvent, tertiaryBond: TertiaryBondInterface) {
+  _handleMousedownOnTertiaryBond(event: MouseEvent, tertiaryBond: TertiaryBond) {
     if (!this.bondBindsSelectedSide(tertiaryBond)) {
       return;
     }

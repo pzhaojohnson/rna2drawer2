@@ -1,4 +1,3 @@
-import { QuadraticBezierBondInterface } from './QuadraticBezierBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import type { Base } from 'Draw/bases/Base';
 import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
@@ -10,7 +9,7 @@ import {
 } from './positioning';
 import { position } from './position';
 
-export class QuadraticBezierBond implements QuadraticBezierBondInterface {
+export class QuadraticBezierBond {
   readonly path: SVG.Path;
   readonly base1: Base;
   readonly base2: Base;

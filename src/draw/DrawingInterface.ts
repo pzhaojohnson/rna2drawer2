@@ -7,7 +7,7 @@ import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import {
   SavableState as SavableStraightBondState,
 } from 'Draw/bonds/straight/save';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import {
   SavableState as SavableTertiaryBondState,
 } from 'Draw/bonds/curved/save';

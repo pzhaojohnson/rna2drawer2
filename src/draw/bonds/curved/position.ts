@@ -1,4 +1,4 @@
-import { QuadraticBezierBondInterface as QuadraticBezierBond } from './QuadraticBezierBondInterface';
+import type { QuadraticBezierBond } from './QuadraticBezierBond';
 import { Positioning } from './positioning';
 import { midpoint2D as midpoint } from 'Math/points/midpoint';
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextButton } from 'Forms/buttons/TextButton';
 import type { App } from 'App';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { sendToBack } from 'Draw/bonds/curved/z';
 
 export type Props = {

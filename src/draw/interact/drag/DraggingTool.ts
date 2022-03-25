@@ -7,7 +7,6 @@ import { createStrictLayout } from './createStrictLayout';
 import { updateLayout } from './updateLayout';
 
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
-import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 
 import { Base } from 'Draw/bases/Base';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
@@ -67,7 +66,7 @@ type DrawingElement = (
   | BaseNumberingInterface
   | PrimaryBond
   | SecondaryBond
-  | TertiaryBondInterface
+  | TertiaryBond
 );
 
 type ElementId = string;

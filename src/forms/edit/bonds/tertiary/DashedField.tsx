@@ -2,17 +2,16 @@ import * as React from 'react';
 import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
 import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import type { App } from 'App';
-import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 export type Props = {
   app: App;
 
   // the tertiary bonds to edit
-  tertiaryBonds: TertiaryBondInterface[];
+  tertiaryBonds: TertiaryBond[];
 }
 
-function isDashed(tb: TertiaryBondInterface): boolean {
+function isDashed(tb: TertiaryBond): boolean {
   let sda = tb.path.attr('stroke-dasharray');
   if (typeof sda == 'string') {
     sda = sda.trim().toLowerCase();
@@ -22,7 +21,7 @@ function isDashed(tb: TertiaryBondInterface): boolean {
   }
 }
 
-function areAllDashed(tbs: TertiaryBondInterface[]): boolean {
+function areAllDashed(tbs: TertiaryBond[]): boolean {
   return tbs.filter(tb => !isDashed(tb)).length == 0;
 }
 

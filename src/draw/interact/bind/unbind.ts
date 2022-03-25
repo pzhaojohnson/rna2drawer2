@@ -5,7 +5,7 @@ import { unpair as unpairInPartners } from 'Partners/edit';
 import { willUnpair } from 'Draw/strict/layout/stemProps';
 import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 
 export function removeSecondaryBonds(strictDrawing: StrictDrawing, secondaryBonds: SecondaryBond[]) {

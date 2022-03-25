@@ -1,8 +1,7 @@
 import { QuadraticBezierBond } from './QuadraticBezierBond';
-import { TertiaryBondInterface } from './TertiaryBondInterface';
 import { Values } from './values';
 
-export class TertiaryBond extends QuadraticBezierBond implements TertiaryBondInterface {
+export class TertiaryBond extends QuadraticBezierBond {
   static recommendedDefaults: Values;
 
   static dashedStrokeDasharray: string;

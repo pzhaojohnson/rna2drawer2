@@ -1,4 +1,3 @@
-import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { values } from 'Draw/bonds/curved/values';
 import { setValues } from 'Draw/bonds/curved/values';
@@ -10,11 +9,11 @@ import * as SVG from '@svgdotjs/svg.js';
 export class TertiaryBondShroud {
 
   // the tertiary bond to be shrouded
-  readonly tertiaryBond: TertiaryBondInterface;
+  readonly tertiaryBond: TertiaryBond;
 
   readonly shroud: TertiaryBond;
 
-  constructor(tertiaryBond: TertiaryBondInterface) {
+  constructor(tertiaryBond: TertiaryBond) {
     this.tertiaryBond = tertiaryBond;
 
     let path = new SVG.Path();

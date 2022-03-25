@@ -11,7 +11,7 @@ import { BasePadding2Field } from './BasePadding2Field';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 import type { App } from 'App';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 export type Props = {
   app: App;

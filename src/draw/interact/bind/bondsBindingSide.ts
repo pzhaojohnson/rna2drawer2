@@ -2,7 +2,7 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { isSecondaryBond } from './isSecondaryBond';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { isTertiaryBond } from './isTertiaryBond';
 import { Side } from './Side';
 import { bondBindsSide } from './bondBindsSide';

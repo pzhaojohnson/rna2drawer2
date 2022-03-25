@@ -2,11 +2,10 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import type { Base } from 'Draw/bases/Base';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { isSecondaryBond } from './isSecondaryBond';
-import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { isTertiaryBond } from './isTertiaryBond';
 
-export type StackableBond = SecondaryBond | TertiaryBondInterface;
+export type StackableBond = SecondaryBond | TertiaryBond;
 
 // returns the secondary and tertiary bonds that are stacked with the given
 // bond with regards to the positions of bound bases in the layout sequence

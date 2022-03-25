@@ -1,6 +1,6 @@
 import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
-import { TertiaryBondInterface as TertiaryBond } from 'Draw/bonds/curved/TertiaryBondInterface';
+import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { Side } from './Side';
 
 export type Bond = (

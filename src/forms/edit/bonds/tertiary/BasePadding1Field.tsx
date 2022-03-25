@@ -1,7 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { TertiaryBondInterface } from 'Draw/bonds/curved/TertiaryBondInterface';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { round } from 'Math/round';
 
@@ -9,7 +8,7 @@ export type Props = {
   app: App;
 
   // the tertiary bonds to edit
-  tertiaryBonds: TertiaryBondInterface[];
+  tertiaryBonds: TertiaryBond[];
 }
 
 type Value = string;
@@ -20,7 +19,7 @@ type State = {
 
 // returns an empty string value for an empty tertiary bonds array
 // or if not all tertiary bonds have the same base padding 1
-function currBasePadding1(tertiaryBonds: TertiaryBondInterface[]): Value {
+function currBasePadding1(tertiaryBonds: TertiaryBond[]): Value {
   let bp1s = new Set<Value>();
   tertiaryBonds.forEach(tb => {
     let bp1 = round(tb.basePadding1, 0);

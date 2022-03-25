@@ -1,4 +1,4 @@
-import { QuadraticBezierBondInterface as QuadraticBezierBond } from './QuadraticBezierBondInterface';
+import type { QuadraticBezierBond } from './QuadraticBezierBond';
 
 export function bringToFront(bond: QuadraticBezierBond) {
   bond.path.front();
