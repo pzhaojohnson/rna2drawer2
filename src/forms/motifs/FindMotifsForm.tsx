@@ -234,15 +234,7 @@ type OptionsPanelProps = {
 function OptionsPanel(props: OptionsPanelProps) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <TreatMotifAsRegExpField
-        checked={props.value.treatMotifAsRegExp}
-        onChange={event => {
-          let treatMotifAsRegExp = event.target.checked;
-          props.onChange({ target: { value: { ...props.value, treatMotifAsRegExp } } });
-        }}
-      />
       <div style={{ position: 'relative' }} >
-        <div style={{ height: '6px' }} />
         <UTField
           checked={props.value.UT}
           onChange={event => {
@@ -267,13 +259,21 @@ function OptionsPanel(props: OptionsPanelProps) {
           }}
         />
         {!props.value.treatMotifAsRegExp ? null : (
-          // shrouds the other option fields
+          // shrouds the above option fields
           <div style={{
             position: 'absolute', top: '0px', right: '0px', bottom: '0px', left: '0px',
             backgroundColor: 'white', opacity: 0.8,
           }} />
         )}
       </div>
+      <div style={{ height: '6px' }} />
+      <TreatMotifAsRegExpField
+        checked={props.value.treatMotifAsRegExp}
+        onChange={event => {
+          let treatMotifAsRegExp = event.target.checked;
+          props.onChange({ target: { value: { ...props.value, treatMotifAsRegExp } } });
+        }}
+      />
     </div>
   );
 }
