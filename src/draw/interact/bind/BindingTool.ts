@@ -155,7 +155,7 @@ export class BindingTool {
     this.showComplements = false;
 
     this.complementsOptions = {
-      GUT: true,
+      allowedGUT: 1,
       IUPAC: false,
       allowedMismatch: 0,
     };

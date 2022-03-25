@@ -97,15 +97,24 @@ describe('sidesAreComplementary function', () => {
     expect(sidesAreComplementary(side2, side1)).toBeFalsy(); // switch order
   });
 
-  test('GUT option', () => {
-    let sequence = appendSequence(drawing, { id: 'GUT', characters: 'GGUUTT' });
-    let side1 = [sequence.atPosition(2)];
-    let side2 = [sequence.atPosition(4)];
-    let side3 = [sequence.atPosition(6)];
-    expect(sidesAreComplementary(side1, side2, { GUT: true })).toBeTruthy();
-    expect(sidesAreComplementary(side1, side3, { GUT: true })).toBeTruthy();
-    expect(sidesAreComplementary(side1, side2, { GUT: false })).toBeFalsy();
-    expect(sidesAreComplementary(side1, side3, { GUT: false })).toBeFalsy();
+  test('allowedGUT option', () => {
+    let sequence1 = appendSequence(drawing, { id: 'GUT', characters: 'GuCTAccUgGGt' });
+    let side1 = sequence1.bases.slice(0, 5);
+    let side2 = sequence1.bases.slice(7, 12);
+    expect(sidesAreComplementary(side1, side2, { allowedGUT: 0 })).toBeFalsy();
+    expect(sidesAreComplementary(side1, side2, { allowedGUT: 0.2 })).toBeFalsy();
+    expect(sidesAreComplementary(side1, side2, { allowedGUT: 0.4 })).toBeFalsy();
+    expect(sidesAreComplementary(side1, side2, { allowedGUT: 0.6 })).toBeTruthy();
+    expect(sidesAreComplementary(side1, side2, { allowedGUT: 0.8 })).toBeTruthy();
+    expect(sidesAreComplementary(side1, side2, { allowedGUT: 1 })).toBeTruthy();
+
+    // uses the special IUPAC single letter code K
+    let sequence2 = appendSequence(drawing, { id: 'K', characters: 'GKtkAAkAuk' });
+    let side3 = sequence2.bases.slice(0, 4);
+    let side4 = sequence2.bases.slice(6, 10);
+    expect(sidesAreComplementary(side3, side4, { allowedGUT: 0.75, IUPAC: false })).toBeFalsy();
+    expect(sidesAreComplementary(side3, side4, { allowedGUT: 0.75, IUPAC: true })).toBeTruthy();
+    expect(sidesAreComplementary(side3, side4, { allowedGUT: 0.5, IUPAC: true })).toBeFalsy();
   });
 
   test('IUPAC option', () => {

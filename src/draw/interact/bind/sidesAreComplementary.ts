@@ -1,12 +1,14 @@
 import { Side } from './Side';
 import { sidesOverlap } from './Side';
 import { charactersAreComplementary } from './charactersAreComplementary';
+import { charactersAreGUTPair } from './charactersAreGUTPair';
 import { round } from 'Math/round';
 
 export type Options = {
 
-  // whether to consider Gs complementary with Us and Ts
-  GUT?: boolean;
+  // the proportion of GU and GT pairs allowed in complementary sides
+  // (interpreted as zero if left unspecified)
+  allowedGUT?: number;
 
   // whether to allow complements based on IUPAC single letter codes
   IUPAC?: boolean;
@@ -21,7 +23,8 @@ export type Options = {
  * It is vacuously true that two sides both of length zero are complementary.
  */
 export function sidesAreComplementary(side1: Side, side2: Side, options?: Options): boolean {
-  let GUT = options?.GUT;
+  let allowedGUT = options?.allowedGUT ?? 0;
+  let GUT = true;
   let IUPAC = options?.IUPAC;
   let allowedMismatch = options?.allowedMismatch ?? 0;
 
@@ -33,10 +36,13 @@ export function sidesAreComplementary(side1: Side, side2: Side, options?: Option
     return false;
   }
 
+  let gutsAllowed = allowedGUT * side1.length;
   let mismatchesAllowed = allowedMismatch * side1.length;
   // account for possible floating point imprecision
+  gutsAllowed = round(gutsAllowed, 6);
   mismatchesAllowed = round(mismatchesAllowed, 6);
 
+  let guts = 0;
   let mismatches = 0;
   let i = 0;
   while (i < side1.length && mismatches <= mismatchesAllowed) {
@@ -44,10 +50,15 @@ export function sidesAreComplementary(side1: Side, side2: Side, options?: Option
     let c2 = side2[side2.length - i - 1].text.text().toUpperCase();
     if (c1.length != 1 || c2.length != 1) {
       mismatches++;
+    } else if (charactersAreGUTPair(c1, c2, { IUPAC })) {
+      guts++;
     } else if (!charactersAreComplementary(c1, c2, { GUT, IUPAC })) {
       mismatches++;
     }
     i++;
   }
-  return mismatches <= mismatchesAllowed;
+  return (
+    guts <= gutsAllowed
+    && mismatches <= mismatchesAllowed
+  );
 }

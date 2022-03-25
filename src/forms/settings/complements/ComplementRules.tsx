@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { AppInterface as App } from 'AppInterface';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { IncludeGUTField } from './IncludeGUTField';
+import { AllowedGUTField } from './AllowedGUTField';
 import { IUPACField } from './IUPACField';
 import { AllowedMismatchField } from './AllowedMismatchField';
 
@@ -22,9 +22,9 @@ export function ComplementRules(props: Props) {
     >
       <AllowedMismatchField app={props.app} />
       <div style={{ marginTop: '12px' }} >
-        <IncludeGUTField app={props.app} />
+        <AllowedGUTField app={props.app} />
       </div>
-      <div style={{ marginTop: '8px' }} >
+      <div style={{ marginTop: '12px' }} >
         <IUPACField app={props.app} />
       </div>
     </PartialWidthContainer>
