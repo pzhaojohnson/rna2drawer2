@@ -1,5 +1,5 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
+import type { Base } from 'Draw/bases/Base';
 import { unpair } from 'Draw/strict/unpair';
 import { removeBases as removeBasesFromDrawing } from 'Draw/sequences/remove/bases';
 

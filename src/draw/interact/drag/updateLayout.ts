@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { StrictLayoutSpecification } from './StrictLayoutSpecification';
 import { centerOfOutermostLoop } from './centerOfOutermostLoop';
 import { zoom } from 'Draw/zoom';

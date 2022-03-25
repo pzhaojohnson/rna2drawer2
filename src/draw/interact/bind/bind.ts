@@ -1,6 +1,6 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 
 import { Side } from './Side';
 import { sidesOverlap } from './Side';

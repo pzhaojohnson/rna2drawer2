@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { ControlPointDisplacement } from './positioning';
 
 export interface QuadraticBezierBondInterface {

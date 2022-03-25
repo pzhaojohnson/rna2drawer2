@@ -1,6 +1,6 @@
 import { DrawingInterface as Drawing } from '../DrawingInterface';
 import { Partners } from 'Partners/Partners';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { addTertiaryBond } from 'Draw/bonds/curved/add';
 

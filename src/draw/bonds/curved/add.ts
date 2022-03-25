@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { TertiaryBond } from './TertiaryBond';
 import { setValues } from './values';
 import { distance2D as distance } from 'Math/distance';

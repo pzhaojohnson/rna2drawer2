@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 
 import * as React from 'react';

@@ -1,9 +1,8 @@
 import type { App } from 'App';
 
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { initializeAtPosition } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
-import { BaseInterface } from 'Draw/bases/BaseInterface';
 import { Base } from 'Draw/bases/Base';
 
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
@@ -47,7 +46,7 @@ import { OverlaidMessageContainer } from 'Draw/interact/OverlaidMessageContainer
 import styles from './FlippingTool.css';
 
 type DrawingElement = (
-  BaseInterface
+  Base
   | BaseNumberingInterface
   | PrimaryBondInterface
   | SecondaryBondInterface
@@ -370,7 +369,7 @@ export class FlippingTool {
     sortNumbers(ps);
 
     let seq = this.options.strictDrawing.layoutSequence();
-    let bases: BaseInterface[] = [];
+    let bases: Base[] = [];
     ps.forEach(p => {
       let b = seq.atPosition(p);
       if (b) {

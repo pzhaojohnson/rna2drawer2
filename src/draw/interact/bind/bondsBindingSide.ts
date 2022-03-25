@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { PrimaryBondInterface as PrimaryBond } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { SecondaryBondInterface as SecondaryBond } from 'Draw/bonds/straight/SecondaryBondInterface';
 import { isSecondaryBond } from './isSecondaryBond';

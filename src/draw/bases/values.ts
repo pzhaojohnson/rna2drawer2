@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from './BaseInterface';
+import type { Base } from './Base';
 
 export type Values = {
   text: {

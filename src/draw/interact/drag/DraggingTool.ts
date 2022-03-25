@@ -1,12 +1,11 @@
 import type { App } from 'App';
 
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { StrictLayoutSpecification } from './StrictLayoutSpecification';
 import { layoutSpecification } from './StrictLayoutSpecification';
 import { createStrictLayout } from './createStrictLayout';
 import { updateLayout } from './updateLayout';
 
-import { BaseInterface } from 'Draw/bases/BaseInterface';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
@@ -66,7 +65,7 @@ import { OverlaidMessageContainer } from 'Draw/interact/OverlaidMessageContainer
 import styles from './DraggingTool.css';
 
 type DrawingElement = (
-  BaseInterface
+  Base
   | BaseNumberingInterface
   | PrimaryBondInterface
   | SecondaryBondInterface

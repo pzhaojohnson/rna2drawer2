@@ -3,7 +3,7 @@ import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { v4 as uuidv4 } from 'uuid';
 import { App } from 'App';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import {
   handleMouseoverOnBase,
   handleMouseoutOnBase,

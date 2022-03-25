@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
 export function hasFlatOutermostLoop(strictDrawing: StrictDrawing): boolean {
   return strictDrawing.generalLayoutProps.outermostLoopShape == 'flat';

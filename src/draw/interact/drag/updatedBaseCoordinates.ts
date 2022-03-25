@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { StrictLayoutSpecification } from './StrictLayoutSpecification';
 import { createStrictLayout } from './createStrictLayout';
 import { Point2D as Point } from 'Math/points/Point';

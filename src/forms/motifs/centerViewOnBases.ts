@@ -1,5 +1,5 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
+import type { Base } from 'Draw/bases/Base';
 import { Point2D as Point } from 'Math/points/Point';
 import { centroid2D as centroid } from 'Math/points/centroid';
 import { displacement2D as displacement } from 'Math/points/displacement';

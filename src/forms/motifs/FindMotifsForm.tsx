@@ -1,7 +1,7 @@
 import type { App } from 'App';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 
 import * as React from 'react';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';

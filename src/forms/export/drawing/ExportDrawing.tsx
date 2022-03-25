@@ -7,7 +7,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 
 import type { App } from 'App';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { atPosition } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 import { interpretNumber } from 'Draw/svg/interpretNumber';

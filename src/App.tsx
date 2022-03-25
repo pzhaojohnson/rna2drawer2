@@ -5,7 +5,7 @@ import UndoRedo from './undo/UndoRedo';
 import { pushUndo, undo, redo } from './undo/undo';
 
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
-import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawingInterface';
+import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawing';
 import * as SVG from '@svgdotjs/svg.js';
 import StrictDrawingInteraction from './draw/interact/StrictDrawingInteraction';
 

@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { addCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 

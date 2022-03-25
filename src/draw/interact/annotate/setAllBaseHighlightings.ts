@@ -2,7 +2,7 @@ import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInter
 import highlightBase from '../highlight/highlightBase';
 import { pulsateBetween } from 'Draw/interact/highlight/pulse';
 import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { isPoint2D as isPoint } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';
 import {

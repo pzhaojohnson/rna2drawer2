@@ -1,19 +1,18 @@
 import * as React from 'react';
 import { FontFamilySelect } from 'Forms/fields/font/FontFamilySelect';
 import type { App } from 'App';
-import { BaseInterface } from 'Draw/bases/BaseInterface';
 import { Base } from 'Draw/bases/Base';
 
 export type Props = {
   app: App;
 
   // the bases to edit
-  bases: BaseInterface[];
+  bases: Base[];
 }
 
 // returns undefined for an empty bases array
 // or if not all bases have the same font family
-function currFontFamily(bases: BaseInterface[]): string | undefined {
+function currFontFamily(bases: Base[]): string | undefined {
   let ffs = new Set<string>();
   bases.forEach(b => {
     let ff = b.text.attr('font-family');

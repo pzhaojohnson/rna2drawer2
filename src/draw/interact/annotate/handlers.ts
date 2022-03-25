@@ -1,5 +1,5 @@
 import { AnnotatingModeInterface as AnnotatingMode } from './AnnotatingModeInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import setAllBaseHighlightings from './setAllBaseHighlightings';
 import removeAllBaseHighlightings from '../highlight/removeAllBaseHighlightings';
 import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';

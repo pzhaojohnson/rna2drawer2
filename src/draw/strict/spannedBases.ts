@@ -1,5 +1,5 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
+import type { Base } from 'Draw/bases/Base';
 
 /**
  * Returns an array of bases containing the given two bases and the bases

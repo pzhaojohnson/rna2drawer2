@@ -1,7 +1,7 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { findPathByUniqueId } from 'Draw/saved/svg';
 import { basesByUniqueId } from 'Draw/saved/bases';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { TertiaryBond } from './TertiaryBond';
 import { atIndex } from 'Array/at';
 import { values } from './values';

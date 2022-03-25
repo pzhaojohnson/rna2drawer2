@@ -1,4 +1,3 @@
-import { BaseInterface } from './BaseInterface';
 import * as Svg from '@svgdotjs/svg.js';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
@@ -6,7 +5,7 @@ import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { Values, setValues } from './values';
 import { Point2D as Point } from 'Math/points/Point';
 
-export class Base implements BaseInterface {
+export class Base {
   static recommendedDefaults: Values;
 
   readonly text: Svg.Text;

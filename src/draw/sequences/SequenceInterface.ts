@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 
 export interface SequenceInterface {
   id: string;

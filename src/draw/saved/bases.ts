@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { atIndex } from 'Array/at';
 
 export function getBaseByUniqueId(drawing: Drawing, id: unknown): Base | never {

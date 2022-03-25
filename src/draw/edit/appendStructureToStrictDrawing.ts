@@ -1,11 +1,11 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import {
   appendStructure,
   Structure,
   addTertiaryBonds,
 } from './addStructure';
 import PerBaseStrictLayoutProps from 'Draw/strict/layout/PerBaseStrictLayoutProps';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { radiateStems } from 'Draw/strict/layout/radiateStems';
 import { hasKnots } from 'Partners/hasKnots';
 import { removeKnots } from 'Partners/removeKnots';

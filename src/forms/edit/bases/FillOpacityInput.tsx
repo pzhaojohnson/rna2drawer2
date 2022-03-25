@@ -1,7 +1,7 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 

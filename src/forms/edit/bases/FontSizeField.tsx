@@ -1,7 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { BaseInterface } from 'Draw/bases/BaseInterface';
 import { Base } from 'Draw/bases/Base';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
@@ -10,7 +9,7 @@ export type Props = {
   app: App;
 
   // the bases to edit
-  bases: BaseInterface[];
+  bases: Base[];
 }
 
 type Value = string;
@@ -21,7 +20,7 @@ type State = {
 
 // returns an empty string value for an empty bases array
 // or if not all bases have the same font size
-function currFontSize(bases: BaseInterface[]): Value {
+function currFontSize(bases: Base[]): Value {
   let fss = new Set<Value>();
   bases.forEach(b => {
     let fs = b.text.attr('font-size');

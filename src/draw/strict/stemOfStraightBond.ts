@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { StraightBondInterface as StraightBond } from 'Draw/bonds/straight/StraightBondInterface';
 import { Stem } from 'Partners/Stem';
 import { containingStem } from 'Partners/containing';

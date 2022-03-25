@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { centerOfOutermostLoop } from './centerOfOutermostLoop';
 import { direction2D as direction } from 'Math/points/direction';
 import { displacement2D as displacement } from 'Math/points/displacement';

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
 import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
 import type { App } from 'App';
-import { BaseInterface } from 'Draw/bases/BaseInterface';
 import { Base } from 'Draw/bases/Base';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 
@@ -10,7 +9,7 @@ function isBlankString(v: unknown): boolean {
   return typeof v == 'string' && v.trim().length == 0;
 }
 
-function isBold(b: BaseInterface): boolean {
+function isBold(b: Base): boolean {
   let fw = b.text.attr('font-weight');
   if (fw == undefined || isBlankString(fw)) {
     return false;
@@ -26,7 +25,7 @@ function isBold(b: BaseInterface): boolean {
   }
 }
 
-function areAllBold(bs: BaseInterface[]): boolean {
+function areAllBold(bs: Base[]): boolean {
   return bs.filter(b => !isBold(b)).length == 0;
 }
 
@@ -34,7 +33,7 @@ export type Props = {
   app: App;
 
   // the bases to edit
-  bases: BaseInterface[];
+  bases: Base[];
 }
 
 export function BoldField(props: Props) {

@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 
 // Returns true if none of the given bases have numberings
 // and false otherwise.

@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
 import { BaseNumbering } from './BaseNumbering';
 import { setValues } from './values';

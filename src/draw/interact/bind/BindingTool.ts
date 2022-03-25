@@ -1,9 +1,8 @@
 import type { App } from 'App';
 
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 
-import { BaseInterface } from 'Draw/bases/BaseInterface';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
 import { PrimaryBondInterface } from 'Draw/bonds/straight/PrimaryBondInterface';
 import { SecondaryBondInterface } from 'Draw/bonds/straight/SecondaryBondInterface';
@@ -78,7 +77,7 @@ export type Options = {
 };
 
 type DrawingElement = (
-  BaseInterface
+  Base
   | BaseNumberingInterface
   | PrimaryBondInterface
   | SecondaryBondInterface
@@ -260,7 +259,7 @@ export class BindingTool {
   }
 
   // returns the side spanned by two bases
-  spannedSide(base1: BaseInterface, base2: BaseInterface): Side {
+  spannedSide(base1: Base, base2: Base): Side {
     return spannedBases(this.options.strictDrawing, base1, base2);
   }
 
@@ -320,7 +319,7 @@ export class BindingTool {
       }
     }
 
-    let hoveredBase: BaseInterface;
+    let hoveredBase: Base;
     if (!(hoveredElement instanceof Base)) {
       return undefined;
     } else {

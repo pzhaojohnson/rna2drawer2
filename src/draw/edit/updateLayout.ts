@@ -1,9 +1,9 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { StrictLayout } from 'Draw/strict/layout/StrictLayout';
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import { resize } from 'Draw/dimensions';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { Point2D as Point } from 'Math/points/Point';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 

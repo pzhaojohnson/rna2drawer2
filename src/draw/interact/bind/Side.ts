@@ -1,5 +1,5 @@
-import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Sequence } from 'Draw/sequences/Sequence';
+import type { Base } from 'Draw/bases/Base';
 
 // consecutive bases in a sequence that could form the side of a stem
 // (bases should be in ascending order by sequence position)

@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
 import { DrawingElementInterface as DrawingElement } from './DrawingElementInterface';
 import { BaseNumberingInterface } from 'Draw/bases/number/BaseNumberingInterface';
@@ -37,7 +37,6 @@ import { EditingForm } from './EditingForm';
 import { v4 as uuidv4 } from 'uuid';
 
 import * as SVG from '@svgdotjs/svg.js';
-import { BaseInterface } from 'Draw/bases/BaseInterface';
 
 export type Options = {
 
@@ -156,7 +155,7 @@ export class EditingTool {
     });
   }
 
-  spannedBases(base1: BaseInterface, base2: BaseInterface): BaseInterface[] {
+  spannedBases(base1: Base, base2: Base): Base[] {
     return spannedBases(this.options.strictDrawing, base1, base2);
   }
 

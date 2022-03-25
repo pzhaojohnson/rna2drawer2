@@ -1,4 +1,4 @@
-import { BaseInterface as Base } from './BaseInterface';
+import type { Base } from './Base';
 import {
   bringToFront as bringOutlineToFront,
   sendToBack as sendOutlineToBack,

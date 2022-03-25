@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { removeSubsequence } from 'Draw/sequences/remove/subsequence';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';

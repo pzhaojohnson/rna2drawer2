@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Partners } from 'Partners/Partners';
 import { GeneralStrictLayoutProps } from 'Draw/strict/layout/GeneralStrictLayoutProps';
 import { PerBaseStrictLayoutProps } from 'Draw/strict/layout/PerBaseStrictLayoutProps';

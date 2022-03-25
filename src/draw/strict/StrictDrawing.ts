@@ -1,9 +1,6 @@
-import {
-  StrictDrawingInterface,
-  StrictDrawingSavableState,
-} from './StrictDrawingInterface';
 import { Drawing } from 'Draw/Drawing';
 import { Options } from 'Draw/Drawing';
+import { DrawingSavableState } from 'Draw/DrawingInterface';
 
 import { Sequence } from 'Draw/sequences/Sequence';
 
@@ -12,6 +9,7 @@ import layoutPartnersOfStrictDrawing from 'Draw/edit/layoutPartnersOfStrictDrawi
 
 import {
   GeneralStrictLayoutProps as GeneralLayoutProps,
+  GeneralStrictLayoutPropsSavableState as GeneralLayoutPropsSavableState,
 } from 'Draw/strict/layout/GeneralStrictLayoutProps';
 import {
   PerBaseStrictLayoutProps as PerBaseLayoutProps,
@@ -25,7 +23,16 @@ import {
   Structure,
 } from 'Draw/edit/appendStructureToStrictDrawing';
 
-export class StrictDrawing implements StrictDrawingInterface {
+export interface StrictDrawingSavableState {
+  className: string;
+  drawing: DrawingSavableState;
+  generalLayoutProps: GeneralLayoutPropsSavableState;
+  perBaseLayoutProps: PerBaseLayoutPropsSavableState[];
+  baseWidth: number;
+  baseHeight: number;
+}
+
+export class StrictDrawing {
   _drawing: Drawing;
   generalLayoutProps: GeneralLayoutProps;
   _perBaseLayoutProps: PerBaseLayoutProps[];

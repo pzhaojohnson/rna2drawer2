@@ -1,5 +1,5 @@
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { atPosition } from 'Array/at';
 import { isPoint2D as isPoint } from 'Math/points/Point';
 import { normalizeAngle } from 'Math/angles/normalize';
@@ -58,7 +58,7 @@ function bisectingAnglesAtPosition(bs: Base[], p: number): BisectingAngles {
 
 export function orientBaseNumberings(drawing: Drawing) {
   let lineAnglesById: { [id: string]: number | undefined } = {};
-  
+
   let bs = drawing.bases();
   bs.forEach((b, i) => {
     let p = i + 1;
@@ -73,10 +73,10 @@ export function orientBaseNumberings(drawing: Drawing) {
     if (sb.base1.numbering || sb.base2.numbering) {
       let xy1 = { x: sb.base1.text.attr('x'), y: sb.base1.text.attr('y') };
       let xy2 = { x: sb.base2.text.attr('x'), y: sb.base2.text.attr('y') };
-      
+
       if (isPoint(xy1) && isPoint(xy2)) {
         let a12 = Math.atan2(xy2.y - xy1.y, xy2.x - xy1.x);
-        
+
         if (sb.base1.numbering) {
           let la1 = lineAnglesById[sb.base1.numbering.id];
           if (typeof la1 == 'number') {

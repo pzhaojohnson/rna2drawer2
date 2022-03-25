@@ -1,4 +1,4 @@
-import { StrictDrawingInterface as StrictDrawing } from 'Draw/strict/StrictDrawingInterface';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Base } from 'Draw/bases/Base';
 import { removeBases } from 'Draw/strict/removeBases';
 import { SubsequenceProps } from 'Draw/sequences/remove/subsequence';

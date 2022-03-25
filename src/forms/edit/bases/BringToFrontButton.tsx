@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextButton } from 'Forms/buttons/TextButton';
 import type { App } from 'App';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { bringToFront } from 'Draw/bases/z';
 
 export type Props = {

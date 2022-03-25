@@ -1,6 +1,6 @@
 import { StraightBondInterface } from './StraightBondInterface';
 import * as SVG from '@svgdotjs/svg.js';
-import { BaseInterface as Base } from 'Draw/bases/BaseInterface';
+import type { Base } from 'Draw/bases/Base';
 import { distance2D as distance } from 'Math/distance';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { position } from './position';
