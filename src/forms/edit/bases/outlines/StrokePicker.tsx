@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
 import type { App } from 'App';
-import { CircleBaseAnnotationInterface } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { interpretColor } from 'Draw/svg/interpretColor';
 
@@ -9,12 +8,12 @@ export type Props = {
   app: App;
 
   // the outlines to edit
-  outlines: CircleBaseAnnotationInterface[];
+  outlines: CircleBaseAnnotation[];
 }
 
 // returns undefined for an empty outlines array
 // or if not all outlines have the same stroke
-function currStroke(outlines: CircleBaseAnnotationInterface[]): Value | undefined {
+function currStroke(outlines: CircleBaseAnnotation[]): Value | undefined {
   let hexs = new Set<string>();
   outlines.forEach(o => {
     let s = o.circle.attr('stroke');

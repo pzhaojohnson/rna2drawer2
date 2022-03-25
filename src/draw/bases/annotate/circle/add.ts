@@ -1,4 +1,3 @@
-import { CircleBaseAnnotationInterface } from './CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import type { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
@@ -32,7 +31,7 @@ export function addCircleHighlighting(b: Base) {
   }
 }
 
-function remove(cba: CircleBaseAnnotationInterface) {
+function remove(cba: CircleBaseAnnotation) {
   cba.circle.remove();
 }
 

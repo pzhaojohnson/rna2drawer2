@@ -1,7 +1,6 @@
 import * as React from 'react';
 import textFieldStyles from 'Forms/fields/text/TextField.css';
 import type { App } from 'App';
-import { CircleBaseAnnotationInterface } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
@@ -10,7 +9,7 @@ export type Props = {
   app: App;
 
   // the outlines to edit
-  outlines: CircleBaseAnnotationInterface[];
+  outlines: CircleBaseAnnotation[];
 }
 
 type Value = string;
@@ -21,7 +20,7 @@ type State = {
 
 // returns an empty string value for an empty outlines array
 // or if not all outlines have the same radius
-function currRadius(outlines: CircleBaseAnnotationInterface[]): Value {
+function currRadius(outlines: CircleBaseAnnotation[]): Value {
   let rs = new Set<Value>();
   outlines.forEach(o => {
     let r = o.circle.attr('r');

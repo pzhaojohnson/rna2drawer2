@@ -1,4 +1,4 @@
-import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from './CircleBaseAnnotationInterface';
+import type { CircleBaseAnnotation } from './CircleBaseAnnotation';
 
 export type Values = {
   circle: {

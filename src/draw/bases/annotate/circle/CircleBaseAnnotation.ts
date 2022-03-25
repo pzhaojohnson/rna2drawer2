@@ -1,13 +1,13 @@
-import {
-  CircleBaseAnnotationInterface,
-  Repositioning,
-} from './CircleBaseAnnotationInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { Point2D as Point } from 'Math/points/Point';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { Values } from './values';
 
-export class CircleBaseAnnotation implements CircleBaseAnnotationInterface {
+export type Repositioning = {
+  baseCenter?: Point;
+}
+
+export class CircleBaseAnnotation {
   static recommendedDefaults: Values = {
     circle: {
       'r': 7,

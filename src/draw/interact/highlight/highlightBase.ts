@@ -1,5 +1,5 @@
 import type { Base } from 'Draw/bases/Base';
-import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
+import type { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { addCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 
 export interface HighlightingProps {

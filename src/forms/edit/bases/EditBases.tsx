@@ -6,7 +6,7 @@ import colorFieldStyles from 'Forms/fields/color/ColorField.css';
 
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
-import { CircleBaseAnnotationInterface as CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotationInterface';
+import type { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
 import { CharacterField } from './CharacterField';
 import { NumberingCheckbox } from './NumberingCheckbox';

@@ -1,4 +1,3 @@
-import { CircleBaseAnnotationInterface } from './CircleBaseAnnotationInterface';
 import { CircleBaseAnnotation } from './CircleBaseAnnotation';
 import type { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
@@ -9,7 +8,7 @@ export type SavableState = {
   circleId: string;
 }
 
-export function savableState(cba: CircleBaseAnnotationInterface): SavableState {
+export function savableState(cba: CircleBaseAnnotation): SavableState {
   return {
     className: 'CircleBaseAnnotation',
     circleId: String(cba.circle.id()),
