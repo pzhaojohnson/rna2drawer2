@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import textFieldStyles from 'Forms/fields/text/TextField.css';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';

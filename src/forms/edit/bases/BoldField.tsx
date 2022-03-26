@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
-import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
+import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
+import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
 import type { App } from 'App';
 import { Base } from 'Draw/bases/Base';
 import { interpretNumber } from 'Draw/svg/interpretNumber';

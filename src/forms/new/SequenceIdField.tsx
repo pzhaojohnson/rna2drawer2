@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import textFieldStyles from 'Forms/fields/text/TextField.css';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
 
 interface Props {
   initialValue: string;

@@ -2,8 +2,8 @@ import type { App } from 'App';
 import type { BindingTool } from 'Draw/interact/bind/BindingTool';
 
 import * as React from 'react';
-import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
-import textFieldStyles from 'Forms/fields/text/TextField.css';
+import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 

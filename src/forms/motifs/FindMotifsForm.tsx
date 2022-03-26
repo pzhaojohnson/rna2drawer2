@@ -6,11 +6,11 @@ import type { Base } from 'Draw/bases/Base';
 import * as React from 'react';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
+import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 
 import formStyles from './FindMotifsForm.css';
-import textFieldStyles from 'Forms/fields/text/TextField.css';
-import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
 
 import { isBlank } from 'Parse/isBlank';
 import { motifsMatch } from './motifsMatch';

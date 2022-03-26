@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FontFamilySelect } from 'Forms/fields/font/FontFamilySelect';
+import { FontFamilySelect } from 'Forms/inputs/font/FontFamilySelect';
 import type { App } from 'App';
 import { Base } from 'Draw/bases/Base';
 

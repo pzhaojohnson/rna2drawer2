@@ -1,5 +1,5 @@
 import * as React from 'react';
-import textFieldStyles from 'Forms/fields/text/TextField.css';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 
 export type Props = {

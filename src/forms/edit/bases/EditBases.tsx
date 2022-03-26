@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
-import colorFieldStyles from 'Forms/fields/color/ColorField.css';
+import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
+import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';

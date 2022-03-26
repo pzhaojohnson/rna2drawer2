@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ColorPicker, Value } from 'Forms/fields/color/ColorPicker';
+import { ColorPicker, Value } from 'Forms/inputs/color/ColorPicker';
 import type { App } from 'App';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { interpretColor } from 'Draw/svg/interpretColor';

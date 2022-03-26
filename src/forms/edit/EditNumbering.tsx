@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import textFieldStyles from 'Forms/fields/text/TextField.css';
-import colorFieldStyles from 'Forms/fields/color/ColorField.css';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import type { App } from 'App';
 import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
 import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';

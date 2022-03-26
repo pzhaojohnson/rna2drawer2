@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import colorFieldStyles from 'Forms/fields/color/ColorField.css';
+import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { StrokePicker } from './StrokePicker';
 import { StrokeOpacityInput } from './StrokeOpacityInput';

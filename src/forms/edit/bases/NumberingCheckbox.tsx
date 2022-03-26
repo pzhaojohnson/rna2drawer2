@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
-import { ChangeEvent } from 'Forms/fields/checkbox/Checkbox';
+import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
+import { ChangeEvent } from 'Forms/inputs/checkbox/Checkbox';
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
 import { isNumbered } from 'Draw/bases/number/isNumbered';

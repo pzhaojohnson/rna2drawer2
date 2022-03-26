@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import textFieldStyles from 'Forms/fields/text/TextField.css';
-import { Checkbox } from 'Forms/fields/checkbox/Checkbox';
-import checkboxFieldStyles from 'Forms/fields/checkbox/CheckboxField.css';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
+import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
