@@ -73,19 +73,25 @@ export class BaseSpacingField extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let bs = Number.parseFloat(this.state.value);
-      if (Number.isFinite(bs)) {
-        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
-        if (bs != generalLayoutProps.basePairBondLength) {
-          this.props.app.pushUndo();
-          bs = constrainBaseSpacing(bs);
-          bs = round(bs, 2);
-          generalLayoutProps.basePairBondLength = bs;
-          this.props.app.strictDrawing.updateLayout();
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let bs = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(bs)) {
+      return;
+    }
+
+    let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
+    if (bs == generalLayoutProps.basePairBondLength) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    bs = constrainBaseSpacing(bs);
+    bs = round(bs, 2);
+    generalLayoutProps.basePairBondLength = bs;
+    this.props.app.strictDrawing.updateLayout();
+    this.props.app.refresh();
   }
 }
