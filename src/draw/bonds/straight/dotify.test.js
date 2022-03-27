@@ -5,7 +5,9 @@ import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { distance2D as distance } from 'Math/distance';
 
 import { dotify } from './dotify';
+import { squarify } from './dotify';
 import { isDot } from './dotify';
+import { isSquare } from './dotify';
 
 let container = null;
 let drawing = null;
@@ -37,7 +39,7 @@ describe('dotify function', () => {
     expect(bond.line.attr('stroke-linecap')).toBe('round');
   });
 
-  it('makes line length near zero', () => {
+  it('makes line length close to zero', () => {
     bond.base1.recenter({ x: 100, y: 200 });
     bond.base2.recenter({ x: 109, y: 240 });
     bond.reposition();
@@ -66,6 +68,46 @@ describe('dotify function', () => {
   it('unhides hidden bonds', () => {
     bond.line.attr('opacity', 0); // hide
     dotify(bond);
+    expect(bond.line.attr('opacity')).toBe(1); // was unhidden
+  });
+});
+
+describe('squarify function', () => {
+  it('changes line stroke-linecap to square', () => {
+    bond.line.attr('stroke-linecap', 'butt');
+    squarify(bond);
+    expect(bond.line.attr('stroke-linecap')).toBe('square');
+  });
+
+  it('makes line length close to zero', () => {
+    bond.base1.recenter({ x: 550, y: 250 });
+    bond.base2.recenter({ x: 517, y: 306 });
+    bond.reposition();
+    bond.basePadding1 = 7;
+    bond.basePadding2 = 6;
+    expect(bond.basePadding1).toBeCloseTo(7);
+    expect(bond.basePadding2).toBeCloseTo(6);
+    squarify(bond);
+    expect(bond.basePadding1).toBeCloseTo(32.25);
+    expect(bond.basePadding2).toBeCloseTo(32.25);
+    // total base padding should be slightly less than
+    // the distance between the two base centers
+    // to prevent the bond from becoming hidden
+    expect(2 * 32.5).toBeCloseTo(distance(550, 250, 517, 306));
+  });
+
+  test('when the distance between the two base centers is zero', () => {
+    bond.base1.recenter({ x: 111.2, y: 8 });
+    bond.base2.recenter({ x: 111.2, y: 8 });
+    bond.reposition();
+    squarify(bond);
+    expect(bond.basePadding1).toBeCloseTo(-0.25);
+    expect(bond.basePadding2).toBeCloseTo(-0.25);
+  });
+
+  it('unhides hidden bonds', () => {
+    bond.line.attr('opacity', 0); // hide
+    squarify(bond);
     expect(bond.line.attr('opacity')).toBe(1); // was unhidden
   });
 });
@@ -119,5 +161,57 @@ describe('isDot function', () => {
     bond.basePadding1 = -0.25; // change back
     bond.basePadding2 = -0.25;
     expect(isDot(bond)).toBeTruthy();
+  });
+});
+
+describe('isSquare function', () => {
+  test('when the distance between the two base centers is positive', () => {
+    bond.base1.recenter({ x: 91, y: 61 });
+    bond.base2.recenter({ x: 67, y: 68 });
+    bond.reposition();
+    bond.basePadding1 = 12.25;
+    bond.basePadding2 = 12.25;
+    bond.line.attr('stroke-linecap', 'square');
+    expect(isSquare(bond)).toBeTruthy();
+
+    // line stroke-linecap is not square
+    expect(isSquare(bond)).toBeTruthy();
+    bond.line.attr('stroke-linecap', 'round');
+    expect(isSquare(bond)).toBeFalsy();
+    bond.line.attr('stroke-linecap', 'square'); // change back
+    expect(isSquare(bond)).toBeTruthy();
+
+    // line is too long
+    expect(isSquare(bond)).toBeTruthy();
+    bond.basePadding1 = 11.75;
+    bond.basePadding2 = 11.75;
+    expect(isSquare(bond)).toBeFalsy();
+    bond.basePadding1 = 12.25; // change back
+    bond.basePadding2 = 12.25;
+    expect(isSquare(bond)).toBeTruthy();
+  });
+
+  test('when the distance between the two base centers is zero', () => {
+    bond.base1.recenter({ x: 41, y: 37.6 });
+    bond.base2.recenter({ x: 41, y: 37.6 });
+    bond.reposition();
+    bond.basePadding1 = 0;
+    bond.basePadding2 = 0;
+    bond.line.attr('stroke-linecap', 'square');
+    expect(isSquare(bond)).toBeTruthy();
+
+    // base paddings are slightly negative
+    bond.basePadding1 = -0.25;
+    bond.basePadding2 = -0.25;
+    expect(isSquare(bond)).toBeTruthy();
+
+    // base paddings are too negative
+    expect(isSquare(bond)).toBeTruthy();
+    bond.basePadding1 = -0.75;
+    bond.basePadding2 = -0.75;
+    expect(isSquare(bond)).toBeFalsy();
+    bond.basePadding1 = -0.25; // change back
+    bond.basePadding2 = -0.25;
+    expect(isSquare(bond)).toBeTruthy();
   });
 });
