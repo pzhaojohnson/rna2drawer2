@@ -3,6 +3,11 @@ import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { round } from 'Math/round';
 
+import { isDot } from 'Draw/bonds/straight/dotify';
+import { isSquare } from 'Draw/bonds/straight/dotify';
+import { dotify } from 'Draw/bonds/straight/dotify';
+import { squarify } from 'Draw/bonds/straight/dotify';
+
 export type Props = {
   app: App;
 }
@@ -88,10 +93,19 @@ export class BaseSpacingField extends React.Component<Props> {
     }
 
     this.props.app.pushUndo();
+
+    let secondaryBonds = this.props.app.strictDrawing.drawing.secondaryBonds;
+    let dotSecondaryBonds = secondaryBonds.filter(bond => isDot(bond));
+    let squareSecondaryBonds = secondaryBonds.filter(bond => isSquare(bond));
+
     bs = constrainBaseSpacing(bs);
     bs = round(bs, 2);
     generalLayoutProps.basePairBondLength = bs;
     this.props.app.strictDrawing.updateLayout();
+
+    dotSecondaryBonds.forEach(bond => dotify(bond));
+    squareSecondaryBonds.forEach(bond => squarify(bond));
+
     this.props.app.refresh();
   }
 }
