@@ -44,6 +44,7 @@ describe('values function', () => {
       'stroke': '#665a1f',
       'stroke-width': 8.57,
       'stroke-opacity': 0.62,
+      'stroke-linecap': 'square',
     });
     bond.basePadding1 = 18.3;
     bond.basePadding2 = 9.7;
@@ -54,6 +55,7 @@ describe('values function', () => {
         'stroke': '#665a1f',
         'stroke-width': 8.57,
         'stroke-opacity': 0.62,
+        'stroke-linecap': 'square',
       },
       basePadding1: 18.3,
       basePadding2: 9.7,
@@ -69,6 +71,7 @@ describe('setValues function', () => {
         'stroke': '#ab90f0',
         'stroke-width': 12.02,
         'stroke-opacity': 0.24,
+        'stroke-linecap': 'round',
       },
       basePadding1: 9.8,
       basePadding2: 12.1,
@@ -85,6 +88,7 @@ describe('setValues function', () => {
         'stroke': '#66a210',
         'stroke-width': 9.3,
         'stroke-opacity': 0.28,
+        'stroke-linecap': 'square',
       },
       basePadding1: 12.6,
       basePadding2: 3.2,
