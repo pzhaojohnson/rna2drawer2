@@ -19,6 +19,7 @@ import {
 import { BaseSpacingField } from './BaseSpacingField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
+import { StrokeLinecapField } from './StrokeLinecapField';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 
@@ -131,7 +132,10 @@ export function EditSecondaryBonds(props: Props) {
           <div style={{ marginTop: '8px' }} >
             <StrokeWidthField app={props.app} secondaryBonds={props.secondaryBonds} />
           </div>
-          <div style={{ marginTop: '16px' }} >
+          <div style={{ marginTop: '14px' }} >
+            <StrokeLinecapField app={props.app} secondaryBonds={props.secondaryBonds} />
+          </div>
+          <div style={{ marginTop: '14px' }} >
             <div style={{ display: 'flex', flexDirection: 'row' }} >
               <BringToFrontButton app={props.app} secondaryBonds={props.secondaryBonds} />
               <div style={{ width: '18px' }} />

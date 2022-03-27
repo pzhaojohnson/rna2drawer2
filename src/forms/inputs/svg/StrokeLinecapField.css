@@ -1,0 +1,49 @@
+.optionButton {
+  min-width: 54px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 12px;
+  padding: 2px 0px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #181818;
+  text-align: center;
+  cursor: pointer;
+}
+
+.toggledOptionButton {
+  border-color: #e7e7e7;
+  background-color: #e7e7e7;
+}
+
+.untoggledOptionButton {
+  border-color: white;
+  background-color: white;
+}
+
+.untoggledOptionButton:hover {
+  border-color: #cfcfcf;
+}
+
+.strokeLinecapSelect {
+  min-width: 172px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.strokeLinecapField {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.strokeLinecapFieldLabel {
+  margin-right: 6px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #767676;
+}
