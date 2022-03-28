@@ -10,7 +10,7 @@ function lineLengthIsCloseToZero(bond: StraightBond): boolean {
 
   let basePadding = bond.basePadding1 + bond.basePadding2;
 
-  return Math.abs(d - basePadding) < 1;
+  return Math.abs(d - basePadding) < 0.1;
 }
 
 function makeLineLengthCloseToZero(bond: StraightBond) {
@@ -21,7 +21,7 @@ function makeLineLengthCloseToZero(bond: StraightBond) {
   // make total base padding slightly less than
   // the distance between the two base centers
   // to prevent the bond from becoming hidden
-  let basePadding = d - 0.5;
+  let basePadding = d - 0.05;
 
   bond.basePadding1 = basePadding / 2;
   bond.basePadding2 = basePadding / 2;
