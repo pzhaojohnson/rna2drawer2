@@ -8,6 +8,7 @@ import { StrokePicker } from './StrokePicker';
 import { StrokeOpacityInput } from './StrokeOpacityInput';
 import { StrokeWidthField } from './StrokeWidthField';
 import { BasePaddingField } from './BasePaddingField';
+import { StrokeLinecapField } from './StrokeLinecapField';
 import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 
 export type Props = {
@@ -51,7 +52,10 @@ export function EditPrimaryBonds(props: Props) {
           <div style={{ marginTop: '8px' }} >
             <BasePaddingField app={props.app} primaryBonds={props.primaryBonds} />
           </div>
-          <div style={{ marginTop: '16px' }} >
+          <div style={{ marginTop: '14px' }} >
+            <StrokeLinecapField app={props.app} primaryBonds={props.primaryBonds} />
+          </div>
+          <div style={{ marginTop: '14px' }} >
             <ForwardAndBackwardButtons app={props.app} primaryBonds={props.primaryBonds} />
           </div>
         </div>
