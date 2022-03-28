@@ -65,6 +65,16 @@ describe('dotify function', () => {
     expect(bond.basePadding2).toBeCloseTo(-0.025);
   });
 
+  it('makes line stroke-width at least 4', () => {
+    bond.line.attr('stroke-width', 1); // less than 4
+    dotify(bond);
+    expect(bond.line.attr('stroke-width')).toBe(4); // raised
+
+    bond.line.attr('stroke-width', 5); // greater than 4
+    dotify(bond);
+    expect(bond.line.attr('stroke-width')).toBe(5); // didn't change
+  });
+
   it('unhides hidden bonds', () => {
     bond.line.attr('opacity', 0); // hide
     dotify(bond);
@@ -103,6 +113,16 @@ describe('squarify function', () => {
     squarify(bond);
     expect(bond.basePadding1).toBeCloseTo(-0.025);
     expect(bond.basePadding2).toBeCloseTo(-0.025);
+  });
+
+  it('makes line stroke-width at least 4', () => {
+    bond.line.attr('stroke-width', 1); // less than 4
+    squarify(bond);
+    expect(bond.line.attr('stroke-width')).toBe(4); // raised
+
+    bond.line.attr('stroke-width', 5); // greater than 4
+    squarify(bond);
+    expect(bond.line.attr('stroke-width')).toBe(5); // didn't change
   });
 
   it('unhides hidden bonds', () => {

@@ -27,6 +27,15 @@ function makeLineLengthCloseToZero(bond: StraightBond) {
   bond.basePadding2 = basePadding / 2;
 }
 
+// sets line stroke-width to the given value
+// if it is less than the given value
+function makeLineStrokeWidthAtLeast(bond: StraightBond, value: number) {
+  let strokeWidthNumber = interpretNumber(bond.line.attr('stroke-width'));
+  if (strokeWidthNumber && strokeWidthNumber.valueOf() < value) {
+    bond.line.attr('stroke-width', value);
+  }
+}
+
 function unhide(bond: StraightBond) {
   let opacity: unknown = bond.line.attr('opacity');
   if (interpretNumber(opacity)?.valueOf() == 0) {
@@ -37,12 +46,14 @@ function unhide(bond: StraightBond) {
 export function dotify(bond: StraightBond) {
   unhide(bond);
   makeLineLengthCloseToZero(bond);
+  makeLineStrokeWidthAtLeast(bond, 4);
   bond.line.attr('stroke-linecap', 'round');
 }
 
 export function squarify(bond: StraightBond) {
   unhide(bond);
   makeLineLengthCloseToZero(bond);
+  makeLineStrokeWidthAtLeast(bond, 4);
   bond.line.attr('stroke-linecap', 'square');
 }
 
