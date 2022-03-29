@@ -43,6 +43,20 @@ function unhide(bond: StraightBond) {
   }
 }
 
+export function isDot(bond: StraightBond): boolean {
+  return (
+    bond.line.attr('stroke-linecap') == 'round'
+    && lineLengthIsCloseToZero(bond)
+  );
+}
+
+export function isSquare(bond: StraightBond): boolean {
+  return (
+    bond.line.attr('stroke-linecap') == 'square'
+    && lineLengthIsCloseToZero(bond)
+  );
+}
+
 export function dotify(bond: StraightBond) {
   unhide(bond);
   makeLineLengthCloseToZero(bond);
@@ -57,16 +71,3 @@ export function squarify(bond: StraightBond) {
   bond.line.attr('stroke-linecap', 'square');
 }
 
-export function isDot(bond: StraightBond): boolean {
-  return (
-    bond.line.attr('stroke-linecap') == 'round'
-    && lineLengthIsCloseToZero(bond)
-  );
-}
-
-export function isSquare(bond: StraightBond): boolean {
-  return (
-    bond.line.attr('stroke-linecap') == 'square'
-    && lineLengthIsCloseToZero(bond)
-  );
-}

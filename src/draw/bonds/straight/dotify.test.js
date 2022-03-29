@@ -4,10 +4,10 @@ import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { distance2D as distance } from 'Math/distance';
 
-import { dotify } from './dotify';
-import { squarify } from './dotify';
 import { isDot } from './dotify';
 import { isSquare } from './dotify';
+import { dotify } from './dotify';
+import { squarify } from './dotify';
 
 let container = null;
 let drawing = null;
@@ -30,106 +30,6 @@ afterEach(() => {
 
   container.remove();
   container = null;
-});
-
-describe('dotify function', () => {
-  it('changes line stroke-linecap to round', () => {
-    bond.line.attr('stroke-linecap', 'butt');
-    dotify(bond);
-    expect(bond.line.attr('stroke-linecap')).toBe('round');
-  });
-
-  it('makes line length close to zero', () => {
-    bond.base1.recenter({ x: 100, y: 200 });
-    bond.base2.recenter({ x: 109, y: 240 });
-    bond.reposition();
-    bond.basePadding1 = 5;
-    bond.basePadding2 = 3;
-    expect(bond.basePadding1).toBeCloseTo(5);
-    expect(bond.basePadding2).toBeCloseTo(3);
-    dotify(bond);
-    expect(bond.basePadding1).toBeCloseTo(20.475);
-    expect(bond.basePadding2).toBeCloseTo(20.475);
-    // total base padding should be slightly less than
-    // the distance between the two base centers
-    // to prevent the bond from becoming hidden
-    expect(2 * 20.5).toBeCloseTo(distance(100, 200, 109, 240));
-  });
-
-  test('when the distance between the two base centers is zero', () => {
-    bond.base1.recenter({ x: 105, y: 56 });
-    bond.base2.recenter({ x: 105, y: 56 });
-    bond.reposition();
-    dotify(bond);
-    expect(bond.basePadding1).toBeCloseTo(-0.025);
-    expect(bond.basePadding2).toBeCloseTo(-0.025);
-  });
-
-  it('makes line stroke-width at least 4', () => {
-    bond.line.attr('stroke-width', 1); // less than 4
-    dotify(bond);
-    expect(bond.line.attr('stroke-width')).toBe(4); // raised
-
-    bond.line.attr('stroke-width', 5); // greater than 4
-    dotify(bond);
-    expect(bond.line.attr('stroke-width')).toBe(5); // didn't change
-  });
-
-  it('unhides hidden bonds', () => {
-    bond.line.attr('opacity', 0); // hide
-    dotify(bond);
-    expect(bond.line.attr('opacity')).toBe(1); // was unhidden
-  });
-});
-
-describe('squarify function', () => {
-  it('changes line stroke-linecap to square', () => {
-    bond.line.attr('stroke-linecap', 'butt');
-    squarify(bond);
-    expect(bond.line.attr('stroke-linecap')).toBe('square');
-  });
-
-  it('makes line length close to zero', () => {
-    bond.base1.recenter({ x: 550, y: 250 });
-    bond.base2.recenter({ x: 517, y: 306 });
-    bond.reposition();
-    bond.basePadding1 = 7;
-    bond.basePadding2 = 6;
-    expect(bond.basePadding1).toBeCloseTo(7);
-    expect(bond.basePadding2).toBeCloseTo(6);
-    squarify(bond);
-    expect(bond.basePadding1).toBeCloseTo(32.475);
-    expect(bond.basePadding2).toBeCloseTo(32.475);
-    // total base padding should be slightly less than
-    // the distance between the two base centers
-    // to prevent the bond from becoming hidden
-    expect(2 * 32.5).toBeCloseTo(distance(550, 250, 517, 306));
-  });
-
-  test('when the distance between the two base centers is zero', () => {
-    bond.base1.recenter({ x: 111.2, y: 8 });
-    bond.base2.recenter({ x: 111.2, y: 8 });
-    bond.reposition();
-    squarify(bond);
-    expect(bond.basePadding1).toBeCloseTo(-0.025);
-    expect(bond.basePadding2).toBeCloseTo(-0.025);
-  });
-
-  it('makes line stroke-width at least 4', () => {
-    bond.line.attr('stroke-width', 1); // less than 4
-    squarify(bond);
-    expect(bond.line.attr('stroke-width')).toBe(4); // raised
-
-    bond.line.attr('stroke-width', 5); // greater than 4
-    squarify(bond);
-    expect(bond.line.attr('stroke-width')).toBe(5); // didn't change
-  });
-
-  it('unhides hidden bonds', () => {
-    bond.line.attr('opacity', 0); // hide
-    squarify(bond);
-    expect(bond.line.attr('opacity')).toBe(1); // was unhidden
-  });
 });
 
 describe('isDot function', () => {
@@ -233,5 +133,105 @@ describe('isSquare function', () => {
     bond.basePadding1 = -0.025; // change back
     bond.basePadding2 = -0.025;
     expect(isSquare(bond)).toBeTruthy();
+  });
+});
+
+describe('dotify function', () => {
+  it('changes line stroke-linecap to round', () => {
+    bond.line.attr('stroke-linecap', 'butt');
+    dotify(bond);
+    expect(bond.line.attr('stroke-linecap')).toBe('round');
+  });
+
+  it('makes line length close to zero', () => {
+    bond.base1.recenter({ x: 100, y: 200 });
+    bond.base2.recenter({ x: 109, y: 240 });
+    bond.reposition();
+    bond.basePadding1 = 5;
+    bond.basePadding2 = 3;
+    expect(bond.basePadding1).toBeCloseTo(5);
+    expect(bond.basePadding2).toBeCloseTo(3);
+    dotify(bond);
+    expect(bond.basePadding1).toBeCloseTo(20.475);
+    expect(bond.basePadding2).toBeCloseTo(20.475);
+    // total base padding should be slightly less than
+    // the distance between the two base centers
+    // to prevent the bond from becoming hidden
+    expect(2 * 20.5).toBeCloseTo(distance(100, 200, 109, 240));
+  });
+
+  test('when the distance between the two base centers is zero', () => {
+    bond.base1.recenter({ x: 105, y: 56 });
+    bond.base2.recenter({ x: 105, y: 56 });
+    bond.reposition();
+    dotify(bond);
+    expect(bond.basePadding1).toBeCloseTo(-0.025);
+    expect(bond.basePadding2).toBeCloseTo(-0.025);
+  });
+
+  it('makes line stroke-width at least 4', () => {
+    bond.line.attr('stroke-width', 1); // less than 4
+    dotify(bond);
+    expect(bond.line.attr('stroke-width')).toBe(4); // raised
+
+    bond.line.attr('stroke-width', 5); // greater than 4
+    dotify(bond);
+    expect(bond.line.attr('stroke-width')).toBe(5); // didn't change
+  });
+
+  it('unhides hidden bonds', () => {
+    bond.line.attr('opacity', 0); // hide
+    dotify(bond);
+    expect(bond.line.attr('opacity')).toBe(1); // was unhidden
+  });
+});
+
+describe('squarify function', () => {
+  it('changes line stroke-linecap to square', () => {
+    bond.line.attr('stroke-linecap', 'butt');
+    squarify(bond);
+    expect(bond.line.attr('stroke-linecap')).toBe('square');
+  });
+
+  it('makes line length close to zero', () => {
+    bond.base1.recenter({ x: 550, y: 250 });
+    bond.base2.recenter({ x: 517, y: 306 });
+    bond.reposition();
+    bond.basePadding1 = 7;
+    bond.basePadding2 = 6;
+    expect(bond.basePadding1).toBeCloseTo(7);
+    expect(bond.basePadding2).toBeCloseTo(6);
+    squarify(bond);
+    expect(bond.basePadding1).toBeCloseTo(32.475);
+    expect(bond.basePadding2).toBeCloseTo(32.475);
+    // total base padding should be slightly less than
+    // the distance between the two base centers
+    // to prevent the bond from becoming hidden
+    expect(2 * 32.5).toBeCloseTo(distance(550, 250, 517, 306));
+  });
+
+  test('when the distance between the two base centers is zero', () => {
+    bond.base1.recenter({ x: 111.2, y: 8 });
+    bond.base2.recenter({ x: 111.2, y: 8 });
+    bond.reposition();
+    squarify(bond);
+    expect(bond.basePadding1).toBeCloseTo(-0.025);
+    expect(bond.basePadding2).toBeCloseTo(-0.025);
+  });
+
+  it('makes line stroke-width at least 4', () => {
+    bond.line.attr('stroke-width', 1); // less than 4
+    squarify(bond);
+    expect(bond.line.attr('stroke-width')).toBe(4); // raised
+
+    bond.line.attr('stroke-width', 5); // greater than 4
+    squarify(bond);
+    expect(bond.line.attr('stroke-width')).toBe(5); // didn't change
+  });
+
+  it('unhides hidden bonds', () => {
+    bond.line.attr('opacity', 0); // hide
+    squarify(bond);
+    expect(bond.line.attr('opacity')).toBe(1); // was unhidden
   });
 });
