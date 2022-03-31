@@ -61,8 +61,6 @@ export class StrictDrawingInteraction {
     this.overlaidMessageContainer = new OverlaidMessageContainer();
     this.overlaidMessageContainer.placeOver(this.strictDrawing.drawing);
 
-    this._setBindings();
-
     this.draggingTool = new DraggingTool({
       app: options.app,
       strictDrawing: options.strictDrawing,
@@ -101,6 +99,34 @@ export class StrictDrawingInteraction {
     });
 
     this._currentTool = this.draggingTool;
+
+    window.addEventListener('mouseover', event => {
+      this.currentTool.handleMouseover(event);
+    });
+
+    window.addEventListener('mouseout', event => {
+      this.currentTool.handleMouseout(event);
+    });
+
+    window.addEventListener('mousedown', event => {
+      this.currentTool.handleMousedown(event);
+    });
+
+    window.addEventListener('mousemove', event => {
+      this.currentTool.handleMousemove(event);
+    });
+
+    window.addEventListener('mouseup', event => {
+      this.currentTool.handleMouseup(event);
+    });
+
+    window.addEventListener('dblclick', event => {
+      this.currentTool.handleDblclick(event);
+    });
+
+    window.addEventListener('keyup', event => {
+      this.currentTool.handleKeyup(event);
+    });
   }
 
   get app() {
@@ -121,58 +147,6 @@ export class StrictDrawingInteraction {
       this._currentTool = t;
       this.app.refresh();
     }
-  }
-
-  _setBindings() {
-    this._bindMouseover();
-    this._bindMouseout();
-    this._bindMousedown();
-    this._bindDblclick();
-    this._bindMousemove();
-    this._bindMouseup();
-    this._bindKeyup();
-  }
-
-  _bindMouseover() {
-    window.addEventListener('mouseover', event => {
-      this.currentTool.handleMouseover(event);
-    });
-  }
-
-  _bindMouseout() {
-    window.addEventListener('mouseout', event => {
-      this.currentTool.handleMouseout(event);
-    });
-  }
-
-  _bindMousedown() {
-    window.addEventListener('mousedown', event => {
-      this.currentTool.handleMousedown(event);
-    });
-  }
-
-  _bindDblclick() {
-    window.addEventListener('dblclick', event => {
-      this.currentTool.handleDblclick(event);
-    });
-  }
-
-  _bindMousemove() {
-    window.addEventListener('mousemove', event => {
-      this.currentTool.handleMousemove(event);
-    });
-  }
-
-  _bindMouseup() {
-    window.addEventListener('mouseup', event => {
-      this.currentTool.handleMouseup(event);
-    });
-  }
-
-  _bindKeyup() {
-    window.addEventListener('keyup', event => {
-      this.currentTool.handleKeyup(event);
-    });
   }
 
   reset() {
