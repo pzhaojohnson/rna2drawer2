@@ -6,6 +6,7 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import type { App } from 'App';
+import { Base } from 'Draw/bases/Base';
 
 export type Props = {
   app: App;
@@ -77,25 +78,19 @@ export function BasesByCharacter(props: Props) {
             }
 
             let drawing = props.app.strictDrawing.drawing;
-            let positions: number[] = [];
-            drawing.bases().forEach((b, i) => {
-              let p = i + 1;
-              if (b.text.text() == character) {
-                positions.push(p);
-              }
-            });
+            let bases = drawing.bases().filter(b => b.text.text() == character);
 
-            if (positions.length == 0) {
+            if (bases.length == 0) {
               setErrorMessage(new String('No bases have the entered character.'));
               return;
             }
 
             props.unmount();
-            props.app.strictDrawingInteraction.startAnnotating();
-            let annotatingMode = props.app.strictDrawingInteraction.annotatingMode;
-            annotatingMode.clearSelection();
-            annotatingMode.select(positions);
-            annotatingMode.requestToRenderForm();
+            let drawingInteraction = props.app.strictDrawingInteraction;
+            drawingInteraction.currentTool = drawingInteraction.editingTool;
+            drawingInteraction.editingTool.editingType = Base;
+            drawingInteraction.editingTool.select(bases);
+            drawingInteraction.editingTool.renderForm();
 
             prevCharacter = character;
           }}
