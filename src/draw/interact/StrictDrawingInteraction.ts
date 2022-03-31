@@ -47,8 +47,6 @@ export class StrictDrawingInteraction {
   readonly editingTool: EditingTool;
   _currentTool: Tool;
 
-  _mouseoveredBase?: Base;
-
   constructor(app: App, options?: Options) {
     this.options = options;
     this._app = app;
