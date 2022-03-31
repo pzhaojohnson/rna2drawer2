@@ -5,7 +5,6 @@ import { FlippingTool } from 'Draw/interact/flip/FlippingTool';
 import { FlatteningTool } from 'Draw/interact/flatten/FlatteningTool';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
-import { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
 
 import { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
