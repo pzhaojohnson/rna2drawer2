@@ -9,6 +9,7 @@ import type { App } from 'App';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
+import { Base } from 'Draw/bases/Base';
 
 export type Props = {
   app: App;
@@ -361,13 +362,18 @@ export function BasesByData(props: Props) {
               return;
             }
 
+            // all positions should be in the sequence range given the checks above
+            let bases = positions.map(p => seq.atPosition(p)).filter(
+              (b): b is Base => b instanceof Base
+            );
+
             // close the form and select bases
             props.unmount();
-            props.app.strictDrawingInteraction.startAnnotating();
-            let annotatingMode = props.app.strictDrawingInteraction.annotatingMode;
-            annotatingMode.clearSelection();
-            annotatingMode.select(positions);
-            annotatingMode.requestToRenderForm();
+            let drawingInteraction = props.app.strictDrawingInteraction;
+            drawingInteraction.currentTool = drawingInteraction.editingTool;
+            drawingInteraction.editingTool.editingType = Base;
+            drawingInteraction.editingTool.select(bases);
+            drawingInteraction.editingTool.renderForm();
           }}
         />
       </div>
