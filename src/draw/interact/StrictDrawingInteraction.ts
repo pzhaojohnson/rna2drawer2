@@ -1,4 +1,3 @@
-import AnnotatingMode from './annotate/AnnotatingMode';
 import { FormFactory } from 'FormContainer';
 import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
@@ -24,8 +23,6 @@ export type Options = {
   }
 }
 
-type Mode = AnnotatingMode;
-
 export type Tool = (
   DraggingTool
   | BindingTool
@@ -50,9 +47,6 @@ class StrictDrawingInteraction {
   readonly editingTool: EditingTool;
   _currentTool: Tool;
 
-  _annotatingMode!: AnnotatingMode;
-  _currMode: Mode;
-
   _mouseoveredBase?: Base;
 
   constructor(app: App, options?: Options) {
@@ -68,7 +62,6 @@ class StrictDrawingInteraction {
     this.overlaidMessageContainer.placeOver(this.strictDrawing.drawing);
 
     this._setBindings();
-    this._initializeAnnotatingMode();
 
     this.draggingTool = new DraggingTool({
       app: app,
@@ -108,8 +101,6 @@ class StrictDrawingInteraction {
     });
 
     this._currentTool = this.draggingTool;
-
-    this._currMode = this._annotatingMode;
   }
 
   get strictDrawing(): StrictDrawing {
@@ -206,48 +197,11 @@ class StrictDrawingInteraction {
     });
   }
 
-  _handleMousedownOnDrawing() {
-    this._currMode.handleMousedownOnDrawing();
-  }
-
-  _handleDblclickOnDrawing() {
-    if (this._currMode == this._annotatingMode) {
-      this._annotatingMode.handleDblclickOnDrawing();
-    }
-  }
-
-  _handleMouseoverOnBase(b: Base) {
-    this._currMode.handleMouseoverOnBase(b);
-  }
-
-  _handleMouseoutOnBase(b: Base) {
-    this._currMode.handleMouseoutOnBase(b);
-  }
-
-  _handleMousedownOnBase(b: Base) {
-    this._currMode.handleMousedownOnBase(b);
-  }
-
-  _initializeAnnotatingMode() {
-    this._annotatingMode = new AnnotatingMode(this._app);
-    this._annotatingMode.onShouldPushUndo(() => this.fireShouldPushUndo());
-    this._annotatingMode.onChange(() => this.fireChange());
-    this._annotatingMode.onRequestToRenderForm(
-      (ff, options) => this.requestToRenderForm(ff, options)
-    );
-    this._annotatingMode.disable();
-  }
-
   reset() {
-    this._currMode.reset();
+    this.currentTool.reset();
   }
 
   refresh() {
-    if (this._currMode == this._annotatingMode) {
-      this._annotatingMode.refresh();
-    } else {
-      this._currMode.reset();
-    }
     this.currentTool.refresh();
     this.fireChange();
   }
@@ -262,53 +216,6 @@ class StrictDrawingInteraction {
 
   requestToRenderForm(ff: FormFactory, options?: RenderFormOptions) {
     this._app.formContainer.renderForm(ff, options);
-  }
-
-  get annotatingMode(): AnnotatingMode {
-    return this._annotatingMode;
-  }
-
-  pivoting(): boolean {
-    return this._currMode.className == 'PivotingMode';
-  }
-
-  folding(): boolean {
-    return this._currMode.className == 'FoldingMode';
-  }
-
-  flipping(): boolean {
-    return this._currMode.className == 'FlippingMode';
-  }
-
-  triangularizing(): boolean {
-    return this._currMode.className == 'TriangularizingMode';
-  }
-
-  annotating(): boolean {
-    return this._currMode.className == 'AnnotatingMode';
-  }
-
-  _start(mode: Mode) {
-    if (this._currMode != mode) {
-      this._currMode.reset();
-      if (this._currMode == this._annotatingMode) {
-        this._annotatingMode.closeForm();
-      }
-      this._currMode.disable();
-      mode.enable();
-      mode.reset();
-      if (mode == this._annotatingMode) {
-        this._annotatingMode.requestToRenderForm();
-      }
-      this._currMode = mode;
-      this.fireChange();
-    }
-
-    this._currMode.disable();
-  }
-
-  startAnnotating() {
-    this._start(this._annotatingMode);
   }
 }
 
