@@ -1,4 +1,5 @@
 import type { App } from 'App';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
 import * as SVG from '@svgdotjs/svg.js';
 
@@ -12,6 +13,12 @@ import { FlatteningTool } from 'Draw/interact/flatten/FlatteningTool';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
 
 export type Options = {
+
+  // a reference to the whole app
+  app: App;
+
+  // the strict drawing to manage interaction with
+  strictDrawing: StrictDrawing;
 
   // for specifying alternatives to components of the SVG.js library
   // (such as alternative components compatible with Node.js)
@@ -29,8 +36,7 @@ export type Tool = (
 );
 
 export class StrictDrawingInteraction {
-  readonly options?: Options;
-  _app: App;
+  readonly options: Options;
 
   readonly drawingOverlay: DrawingOverlay;
   readonly drawingUnderlay: DrawingOverlay;
@@ -44,9 +50,8 @@ export class StrictDrawingInteraction {
   readonly editingTool: EditingTool;
   _currentTool: Tool;
 
-  constructor(app: App, options?: Options) {
+  constructor(options: Options) {
     this.options = options;
-    this._app = app;
 
     this.drawingOverlay = new DrawingOverlay({ SVG: options?.SVG });
     this.drawingOverlay.placeOver(this.strictDrawing.drawing);
@@ -59,37 +64,37 @@ export class StrictDrawingInteraction {
     this._setBindings();
 
     this.draggingTool = new DraggingTool({
-      app: app,
-      strictDrawing: app.strictDrawing,
+      app: options.app,
+      strictDrawing: options.strictDrawing,
       drawingUnderlay: this.drawingUnderlay,
       overlaidMessageContainer: this.overlaidMessageContainer,
     });
 
     this.bindingTool = new BindingTool({
-      app,
-      strictDrawing: app.strictDrawing,
+      app: options.app,
+      strictDrawing: options.strictDrawing,
       drawingOverlay: this.drawingOverlay,
       drawingUnderlay: this.drawingUnderlay,
       overlaidMessageContainer: this.overlaidMessageContainer,
     });
 
     this.flippingTool = new FlippingTool({
-      app: app,
-      strictDrawing: app.strictDrawing,
+      app: options.app,
+      strictDrawing: options.strictDrawing,
       drawingUnderlay: this.drawingUnderlay,
       overlaidMessageContainer: this.overlaidMessageContainer,
     });
 
     this.flatteningTool = new FlatteningTool({
-      app: app,
-      strictDrawing: app.strictDrawing,
+      app: options.app,
+      strictDrawing: options.strictDrawing,
       drawingUnderlay: this.drawingUnderlay,
       overlaidMessageContainer: this.overlaidMessageContainer,
     });
 
     this.editingTool = new EditingTool({
-      app: app,
-      strictDrawing: app.strictDrawing,
+      app: options.app,
+      strictDrawing: options.strictDrawing,
       drawingOverlay: this.drawingOverlay,
       overlaidMessageContainer: this.overlaidMessageContainer,
       SVG: options?.SVG,
@@ -98,8 +103,12 @@ export class StrictDrawingInteraction {
     this._currentTool = this.draggingTool;
   }
 
+  get app() {
+    return this.options.app;
+  }
+
   get strictDrawing() {
-    return this._app.strictDrawing;
+    return this.options.strictDrawing;
   }
 
   get currentTool(): Tool {
@@ -110,7 +119,7 @@ export class StrictDrawingInteraction {
     if (t != this._currentTool) {
       this._currentTool.reset();
       this._currentTool = t;
-      this._app.refresh();
+      this.app.refresh();
     }
   }
 
