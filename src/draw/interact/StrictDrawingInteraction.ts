@@ -12,11 +12,10 @@ import { FlatteningTool } from 'Draw/interact/flatten/FlatteningTool';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
 
 export type Options = {
+
   // for specifying alternatives to components of the SVG.js library
-  // (useful for testing)
+  // (such as alternative components compatible with Node.js)
   SVG?: {
-    // can specify an SVG function that generates SVG documents
-    // compatible with Node.js
     SVG?: () => SVG.Svg;
   }
 }
