@@ -1,5 +1,3 @@
-import { FormFactory } from 'FormContainer';
-import { RenderFormOptions } from 'FormContainer';
 import { App } from 'App';
 import { DraggingTool } from 'Draw/interact/drag/DraggingTool';
 import { BindingTool } from 'Draw/interact/bind/BindingTool';
@@ -175,18 +173,5 @@ export class StrictDrawingInteraction {
 
   refresh() {
     this.currentTool.refresh();
-    this.fireChange();
-  }
-
-  fireShouldPushUndo() {
-    this._app.pushUndo();
-  }
-
-  fireChange() {
-    this._app.renderPeripherals();
-  }
-
-  requestToRenderForm(ff: FormFactory, options?: RenderFormOptions) {
-    this._app.formContainer.renderForm(ff, options);
   }
 }
