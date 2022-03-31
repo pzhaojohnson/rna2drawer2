@@ -1,5 +1,4 @@
 import type { App } from 'App';
-import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
 import * as SVG from '@svgdotjs/svg.js';
 
@@ -100,7 +99,7 @@ export class StrictDrawingInteraction {
     this._currentTool = this.draggingTool;
   }
 
-  get strictDrawing(): StrictDrawing {
+  get strictDrawing() {
     return this._app.strictDrawing;
   }
 
