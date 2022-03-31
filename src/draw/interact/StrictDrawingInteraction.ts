@@ -131,50 +131,24 @@ export class StrictDrawingInteraction {
 
   _bindMouseover() {
     window.addEventListener('mouseover', event => {
-      let mouseoveredBase: Base | undefined = undefined;
-      this.strictDrawing.drawing.bases().forEach(b => {
-        if (event.target instanceof Node && b.text.node.contains(event.target)) {
-          mouseoveredBase = b;
-        }
-      });
-      if (mouseoveredBase) {
-        this._mouseoveredBase = mouseoveredBase;
-        //this._handleMouseoverOnBase(mouseoveredBase);
-      }
-
       this.currentTool.handleMouseover(event);
     });
   }
 
   _bindMouseout() {
     window.addEventListener('mouseout', event => {
-      if (this._mouseoveredBase) {
-        //this._handleMouseoutOnBase(this._mouseoveredBase);
-        this._mouseoveredBase = undefined;
-      }
-
       this.currentTool.handleMouseout(event);
     });
   }
 
   _bindMousedown() {
     window.addEventListener('mousedown', event => {
-      if (this._mouseoveredBase) {
-        //this._handleMousedownOnBase(this._mouseoveredBase);
-      } else if (event.target == this.strictDrawing.drawing.svg.node) {
-        //this._handleMousedownOnDrawing();
-      }
-
       this.currentTool.handleMousedown(event);
     });
   }
 
   _bindDblclick() {
     window.addEventListener('dblclick', event => {
-      if (!this._mouseoveredBase && event.target == this.strictDrawing.drawing.svg.node) {
-        //this._handleDblclickOnDrawing();
-      }
-
       this.currentTool.handleDblclick(event);
     });
   }
