@@ -31,7 +31,7 @@ export type Tool = (
   | EditingTool
 );
 
-class StrictDrawingInteraction {
+export class StrictDrawingInteraction {
   readonly options?: Options;
   _app: App;
 
@@ -218,5 +218,3 @@ class StrictDrawingInteraction {
     this._app.formContainer.renderForm(ff, options);
   }
 }
-
-export default StrictDrawingInteraction;
