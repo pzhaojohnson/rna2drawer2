@@ -1,4 +1,4 @@
-import { App } from 'App';
+import type { App } from 'App';
 import { DraggingTool } from 'Draw/interact/drag/DraggingTool';
 import { BindingTool } from 'Draw/interact/bind/BindingTool';
 import { FlippingTool } from 'Draw/interact/flip/FlippingTool';
