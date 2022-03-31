@@ -1,14 +1,16 @@
 import type { App } from 'App';
+import { StrictDrawing } from 'Draw/strict/StrictDrawing';
+
+import * as SVG from '@svgdotjs/svg.js';
+
+import { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
+import { OverlaidMessageContainer } from 'Draw/interact/OverlaidMessageContainer';
+
 import { DraggingTool } from 'Draw/interact/drag/DraggingTool';
 import { BindingTool } from 'Draw/interact/bind/BindingTool';
 import { FlippingTool } from 'Draw/interact/flip/FlippingTool';
 import { FlatteningTool } from 'Draw/interact/flatten/FlatteningTool';
 import { EditingTool } from 'Draw/interact/edit/EditingTool';
-import { StrictDrawing } from 'Draw/strict/StrictDrawing';
-import * as SVG from '@svgdotjs/svg.js';
-
-import { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
-import { OverlaidMessageContainer } from 'Draw/interact/OverlaidMessageContainer';
 
 export type Options = {
   // for specifying alternatives to components of the SVG.js library
