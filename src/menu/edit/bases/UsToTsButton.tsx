@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 
 function isU(s: string): boolean {
   return s.toLowerCase() == 'u';

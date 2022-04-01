@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import type { Base } from 'Draw/bases/Base';
 import { atPosition } from 'Array/at';
 import { isPoint2D as isPoint } from 'Math/points/Point';

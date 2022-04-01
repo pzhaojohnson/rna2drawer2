@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './ZoomInButton.css';
 import plus from './plus.svg';
 import type { App } from 'App';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { zoom, setZoom } from 'Draw/zoom';
 import { round } from 'Math/round';
 import { nextHighestPresetZoom } from './presetZooms';

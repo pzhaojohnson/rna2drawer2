@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './ZoomOutButton.css';
 import minus from './minus.svg';
 import type { App } from 'App';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { zoom, setZoom } from 'Draw/zoom';
 import { round } from 'Math/round';
 import { nextLowestPresetZoom } from './presetZooms';

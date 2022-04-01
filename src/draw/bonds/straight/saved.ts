@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { PrimaryBond } from './PrimaryBond';
 import { secondaryBondTypes } from './SecondaryBond';
 import { SecondaryBond } from './SecondaryBond';

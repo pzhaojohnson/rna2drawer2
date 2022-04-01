@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { centerOfView, centerViewOn } from 'Draw/view';
 

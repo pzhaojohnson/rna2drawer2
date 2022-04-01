@@ -1,7 +1,7 @@
 import type { App } from 'App';
 
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 
 import { Base } from 'Draw/bases/Base';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';

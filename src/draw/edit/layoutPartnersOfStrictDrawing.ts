@@ -1,6 +1,6 @@
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { Partners } from 'Partners/Partners';
-import { DrawingInterface as Drawing } from '../DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { pair } from 'Partners/edit';
 import { hasKnots } from 'Partners/hasKnots';
 import { removeKnots } from 'Partners/removeKnots';

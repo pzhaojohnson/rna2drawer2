@@ -1,7 +1,7 @@
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { StrictLayout } from 'Draw/strict/layout/StrictLayout';
 import layoutPartnersOfStrictDrawing from './layoutPartnersOfStrictDrawing';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { resize } from 'Draw/dimensions';
 import type { Base } from 'Draw/bases/Base';
 import { Point2D as Point } from 'Math/points/Point';

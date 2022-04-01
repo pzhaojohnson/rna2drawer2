@@ -1,6 +1,6 @@
 import { Drawing } from 'Draw/Drawing';
 import { Options } from 'Draw/Drawing';
-import { DrawingSavableState } from 'Draw/DrawingInterface';
+import { DrawingSavableState } from 'Draw/Drawing';
 
 import { Sequence } from 'Draw/sequences/Sequence';
 

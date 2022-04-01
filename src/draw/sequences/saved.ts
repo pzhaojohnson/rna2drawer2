@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { Base } from 'Draw/bases/Base';
 import { findTextByUniqueId } from 'Draw/saved/svg';

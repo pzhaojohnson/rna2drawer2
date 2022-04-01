@@ -1,7 +1,3 @@
-import {
-  DrawingInterface,
-  DrawingSavableState,
-} from './DrawingInterface';
 import * as SVG from '@svgdotjs/svg.js';
 import { centerView } from 'Draw/view';
 import { resize } from 'Draw/dimensions';
@@ -41,7 +37,16 @@ export interface BasesByIds {
   [id: string]: Base | undefined;
 }
 
-export class Drawing implements DrawingInterface {
+export interface DrawingSavableState {
+  className: string;
+  svg: string;
+  sequences: SavableSequenceState[];
+  primaryBonds: SavableStraightBondState[];
+  secondaryBonds: SavableStraightBondState[];
+  tertiaryBonds: SavableTertiaryBondState[];
+}
+
+export class Drawing {
   svgContainer!: HTMLElement;
   svg!: SVG.Svg;
 

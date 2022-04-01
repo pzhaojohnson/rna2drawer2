@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 
 export type Options = {
 

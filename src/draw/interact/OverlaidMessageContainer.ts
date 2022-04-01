@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 
 // for displaying messages in the bottom left corner of a drawing
 export class OverlaidMessageContainer {

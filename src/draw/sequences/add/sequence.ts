@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { insertSubsequence } from './subsequence';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';

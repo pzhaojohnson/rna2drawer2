@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { findPathByUniqueId } from 'Draw/saved/svg';
 import { basesByUniqueId } from 'Draw/saved/bases';
 import type { Base } from 'Draw/bases/Base';

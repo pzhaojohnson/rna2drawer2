@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { atIndex } from 'Array/at';
 
 export function removeTertiaryBondById(drawing: Drawing, id: string) {

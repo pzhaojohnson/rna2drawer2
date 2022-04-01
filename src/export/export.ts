@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import * as SVG from '@svgdotjs/svg.js';
 import { prepareForExport } from 'Export/svg/prepareForExport';
 import { toPptx } from 'Export/pptx/toPptx';

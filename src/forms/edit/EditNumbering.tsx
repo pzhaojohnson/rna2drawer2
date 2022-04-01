@@ -4,7 +4,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import type { App } from 'App';
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { FontFamilyField } from 'Forms/edit/bases/numberings/FontFamilyField';
 import { FontSizeField } from 'Forms/edit/bases/numberings/FontSizeField';

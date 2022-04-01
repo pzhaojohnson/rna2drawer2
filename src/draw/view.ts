@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { Point2D as Point } from 'Math/points/Point';
 
 export function centerOfView(drawing: Drawing): Point {

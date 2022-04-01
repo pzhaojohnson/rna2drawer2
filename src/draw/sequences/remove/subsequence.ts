@@ -1,4 +1,4 @@
-import { DrawingInterface as Drawing } from 'Draw/DrawingInterface';
+import type { Drawing } from 'Draw/Drawing';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import type { Base } from 'Draw/bases/Base';
 import { atPosition } from 'Array/at';
