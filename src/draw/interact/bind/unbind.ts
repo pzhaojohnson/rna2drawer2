@@ -5,9 +5,6 @@ import { unpair as unpairInPartners } from 'Partners/edit';
 import { willUnpair } from 'Draw/strict/layout/stemProps';
 import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 
-import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
-
 export function removeSecondaryBonds(strictDrawing: StrictDrawing, secondaryBonds: SecondaryBond[]) {
   let sequence = strictDrawing.layoutSequence();
   let partners = strictDrawing.layoutPartners();
@@ -27,10 +24,4 @@ export function removeSecondaryBonds(strictDrawing: StrictDrawing, secondaryBond
 
   strictDrawing.setPerBaseLayoutProps(perBaseLayoutProps);
   strictDrawing.updateLayout();
-}
-
-export function removeTertiaryBonds(strictDrawing: StrictDrawing, tertiaryBonds: TertiaryBond[]) {
-  tertiaryBonds.forEach(tertiaryBond => {
-    removeTertiaryBondById(strictDrawing.drawing, tertiaryBond.id);
-  });
 }

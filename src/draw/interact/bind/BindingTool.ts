@@ -41,7 +41,7 @@ import { stackedSecondaryBonds } from './stackedBonds';
 import { stackedTertiaryBonds } from './stackedBonds';
 
 import { removeSecondaryBonds } from './unbind';
-import { removeTertiaryBonds } from './unbind';
+import { removeTertiaryBonds } from 'Draw/strict/removeTertiaryBonds';
 
 import type { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
 
