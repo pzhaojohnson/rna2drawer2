@@ -1,9 +1,8 @@
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
-
 import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
+import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { unpair as unpairInPartners } from 'Partners/edit';
 import { willUnpair } from 'Draw/strict/layout/stemProps';
-import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 
 export function removeSecondaryBonds(strictDrawing: StrictDrawing, secondaryBonds: SecondaryBond[]) {
   let sequence = strictDrawing.layoutSequence();
