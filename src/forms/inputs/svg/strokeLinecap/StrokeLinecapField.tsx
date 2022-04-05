@@ -1,4 +1,4 @@
-import { StrokeLinecapValue } from 'Forms/inputs/svg/strokeLinecap';
+import { StrokeLinecapValue } from 'Forms/inputs/svg/strokeLinecap/strokeLinecap';
 
 import * as React from 'react';
 import { useState } from 'react';

@@ -4,9 +4,9 @@ import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import * as React from 'react';
 
 // underlying component and functions
-import { StrokeLinecapField as _StrokeLinecapField } from 'Forms/inputs/svg/StrokeLinecapField';
-import { strokeLinecap as _strokeLinecap } from 'Forms/inputs/svg/strokeLinecap';
-import { setStrokeLinecap as _setStrokeLinecap } from 'Forms/inputs/svg/strokeLinecap';
+import { StrokeLinecapField as _StrokeLinecapField } from 'Forms/inputs/svg/strokeLinecap/StrokeLinecapField';
+import { strokeLinecap as _strokeLinecap } from 'Forms/inputs/svg/strokeLinecap/strokeLinecap';
+import { setStrokeLinecap as _setStrokeLinecap } from 'Forms/inputs/svg/strokeLinecap/strokeLinecap';
 
 // returns the line elements of the secondary bonds
 function lines(secondaryBonds: SecondaryBond[]) {
