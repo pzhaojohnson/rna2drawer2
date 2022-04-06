@@ -75,12 +75,6 @@ describe('strokeWidth function', () => {
     // nonnumeric values seem to be interpreted as zero
     expect(strokeWidth([ele])).toBe(0);
   });
-
-  it('ignores units', () => {
-    let ele = eles[0];
-    ele.attr('stroke-width', '6pt');
-    expect(strokeWidth([ele])).toBe(6);
-  });
 });
 
 describe('setStrokeWidth function', () => {
