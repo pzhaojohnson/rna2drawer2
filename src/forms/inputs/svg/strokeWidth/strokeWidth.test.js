@@ -111,8 +111,7 @@ describe('setStrokeWidth function', () => {
   test('a nonnumeric value', () => {
     eles.forEach(ele => ele.attr('stroke-width', 5));
     setStrokeWidth(eles, 'asdf');
-    // nonnumeric values seem to be interpreted as zero
-    expect(strokeWidth(eles)).toBe(0);
+    expect(strokeWidth(eles)).toBe(5); // didn't change
   });
 
   it('ignores units', () => {

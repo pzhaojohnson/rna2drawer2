@@ -25,26 +25,24 @@ export function strokeWidth(eles: SVG.Element[]): number | undefined {
 }
 
 /**
- * Sets the stroke-width of all elements to the number interpreted
- * from the given value.
+ * Sets the stroke-width of each element to the number parsed from
+ * the string produced by converting the given value to a string.
  *
- * Does nothing if the given value cannot be interpreted as a number.
+ * Does nothing if the number parsed is nonfinite.
  *
- * If the given value is negative, sets the stroke-width of all
- * elements to zero.
+ * Clamps negative values to zero.
  */
 export function setStrokeWidth(eles: SVG.Element[], value: unknown) {
-  let n = interpretNumber(value);
-  if (!n) {
+  let n = Number.parseFloat(String(value));
+  if (!Number.isFinite(n)) {
     return;
   }
 
-  let v = n.valueOf();
-  if (v < 0) {
-    v = 0;
+  if (n < 0) {
+    n = 0;
   }
 
   eles.forEach(ele => {
-    ele.attr('stroke-width', v);
+    ele.attr('stroke-width', n);
   });
 }
