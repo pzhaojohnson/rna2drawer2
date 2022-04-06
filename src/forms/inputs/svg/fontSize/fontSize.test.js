@@ -116,7 +116,7 @@ describe('setFontSize function', () => {
     expect(fontSize(eles)).toBe(1);
   });
 
-  test('nonnumeric values', () => {
+  it('ignores nonnumeric values', () => {
     eles.forEach(ele => ele.attr('font-size', 12));
     setFontSize(eles, 'asdf');
     setFontSize(eles, '');
