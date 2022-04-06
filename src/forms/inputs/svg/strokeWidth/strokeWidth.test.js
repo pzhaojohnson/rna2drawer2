@@ -44,6 +44,9 @@ describe('strokeWidth function', () => {
 
   test('multiple elements', () => {
     eles.forEach(ele => ele.attr('stroke-width', 32.6));
+    // different ways of expressing the same stroke-width
+    eles[1].attr('stroke-width', '32.6');
+    eles[2].attr('stroke-width', '32.6px');
     expect(strokeWidth(eles)).toBe(32.6);
   });
 
@@ -102,10 +105,24 @@ describe('setStrokeWidth function', () => {
     expect(strokeWidth(eles)).toBe(0);
   });
 
-  test('a nonnumeric value', () => {
+  it('ignores nonfinite values', () => {
+    eles.forEach(ele => ele.attr('stroke-width', 3));
+    setStrokeWidth(eles, 'NaN');
+    setStrokeWidth(eles, 'Infinity');
+    setStrokeWidth(eles, '-Infinity');
+    expect(strokeWidth(eles)).toBe(3); // never changed
+  });
+
+  it('ignores nonnumeric values', () => {
     eles.forEach(ele => ele.attr('stroke-width', 5));
     setStrokeWidth(eles, 'asdf');
-    expect(strokeWidth(eles)).toBe(5); // didn't change
+    setStrokeWidth(eles, '');
+    setStrokeWidth(eles, '    ');
+    setStrokeWidth(eles, undefined);
+    setStrokeWidth(eles, null);
+    setStrokeWidth(eles, {});
+    setStrokeWidth(eles, true);
+    expect(strokeWidth(eles)).toBe(5); // never changed
   });
 
   it('ignores units', () => {
