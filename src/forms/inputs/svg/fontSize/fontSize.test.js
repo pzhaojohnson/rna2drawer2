@@ -116,6 +116,14 @@ describe('setFontSize function', () => {
     expect(fontSize(eles)).toBe(1);
   });
 
+  it('ignores nonfinite values', () => {
+    eles.forEach(ele => ele.attr('font-size', 11));
+    setFontSize(eles, 'NaN');
+    setFontSize(eles, 'Infinity');
+    setFontSize(eles, '-Infinity');
+    expect(fontSize(eles)).toBe(11); // never changed
+  });
+
   it('ignores nonnumeric values', () => {
     eles.forEach(ele => ele.attr('font-size', 12));
     setFontSize(eles, 'asdf');
