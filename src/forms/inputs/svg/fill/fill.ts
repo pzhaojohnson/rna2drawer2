@@ -1,8 +1,6 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { interpretColor } from 'Draw/svg/interpretColor';
 
-export type HexCode = string;
-
 /**
  * Returns the fill of the elements.
  *
@@ -13,7 +11,7 @@ export type HexCode = string;
  * This function cannot currently handle non-color fill values
  * (e.g., gradients).
  */
-export function fill(eles: SVG.Element[]): HexCode | undefined {
+export function fill(eles: SVG.Element[]): SVG.Color | undefined {
   if (eles.length == 0) {
     return undefined;
   }
@@ -24,9 +22,14 @@ export function fill(eles: SVG.Element[]): HexCode | undefined {
     ))
   );
 
-  if (hexs.size == 1) {
-    return hexs.values().next().value;
-  } else {
+  if (hexs.size != 1) {
     return undefined;
   }
+
+  let hex: string | undefined = hexs.values().next().value;
+  if (hex == undefined) {
+    return undefined;
+  }
+
+  return interpretColor(hex);
 }

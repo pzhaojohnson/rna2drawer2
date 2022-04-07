@@ -40,7 +40,7 @@ describe('fill function', () => {
   test('one element', () => {
     let ele = eles[0];
     ele.attr('fill', '#4566ac');
-    expect(fill([ele])).toBe('#4566ac');
+    expect(fill([ele]).toHex()).toBe('#4566ac');
   });
 
   test('multiple elements', () => {
@@ -49,7 +49,7 @@ describe('fill function', () => {
     eles[4].attr('fill', '#BBC2E4');
     eles[3].attr('fill', 'rgb(187, 194, 228)');
     eles[1].attr('fill', { r: 187, g: 194, b: 228 });
-    expect(fill(eles)).toBe('#bbc2e4');
+    expect(fill(eles).toHex()).toBe('#bbc2e4');
   });
 
   test('an empty array of elements', () => {
@@ -58,14 +58,14 @@ describe('fill function', () => {
 
   test('when one element has a different fill', () => {
     eles.forEach(ele => ele.attr('fill', '#bb1123'));
-    expect(fill(eles)).toBe('#bb1123');
+    expect(fill(eles).toHex()).toBe('#bb1123');
     eles[2].attr('fill', '#bb1122');
     expect(fill(eles)).toBeUndefined();
   });
 
   test('when multiple elements have a different fill', () => {
     eles.forEach(ele => ele.attr('fill', '#010203'));
-    expect(fill(eles)).toBe('#010203');
+    expect(fill(eles).toHex()).toBe('#010203');
     eles[1].attr('fill', '#102030');
     eles[3].attr('fill', '#bbca22');
     eles[4].attr('fill', '#45bcaf');
