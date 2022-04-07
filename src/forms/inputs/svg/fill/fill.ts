@@ -1,5 +1,6 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { interpretColor } from 'Draw/svg/interpretColor';
+import { colorsAreEqual } from 'Draw/svg/colorsAreEqual';
 
 /**
  * Returns the fill of the elements.
@@ -33,4 +34,16 @@ export function fill(eles: SVG.Element[]): SVG.Color | undefined {
   }
 
   return interpretColor(hex);
+}
+
+/**
+ * Returns true if the fill of the elements equals the given value.
+ */
+export function fillEquals(eles: SVG.Element[], value: SVG.Color): boolean {
+  let v = fill(eles);
+  if (v == undefined) {
+    return false;
+  }
+
+  return colorsAreEqual(v, value);
 }

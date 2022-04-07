@@ -1,5 +1,6 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { interpretColor } from 'Draw/svg/interpretColor';
+import { colorsAreEqual } from 'Draw/svg/colorsAreEqual';
 
 /**
  * Returns the stroke of the elements.
@@ -33,4 +34,16 @@ export function stroke(eles: SVG.Element[]): SVG.Color | undefined {
   }
 
   return interpretColor(hex);
+}
+
+/**
+ * Returns true if the stroke of the elements equals the given value.
+ */
+export function strokeEquals(eles: SVG.Element[], value: SVG.Color): boolean {
+  let v = stroke(eles);
+  if (v == undefined) {
+    return false;
+  }
+
+  return colorsAreEqual(v, value);
 }

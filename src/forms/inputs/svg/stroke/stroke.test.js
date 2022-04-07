@@ -1,6 +1,8 @@
-import * as SVG from 'Draw/svg/NodeSVG';
+import * as SVG from '@svgdotjs/svg.js';
+import * as NodeSVG from 'Draw/svg/NodeSVG';
 
 import { stroke } from './stroke';
+import { strokeEquals } from './stroke';
 
 let container = null;
 let svg = null;
@@ -10,7 +12,7 @@ beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 
-  svg = SVG.SVG();
+  svg = NodeSVG.SVG();
   svg.addTo(container);
 
   eles = [
@@ -78,5 +80,35 @@ describe('stroke function', () => {
     // check that non-color values are not automatically ignored
     expect(ele.attr('stroke')).toBe('asdf');
     expect(stroke([ele])).toBeUndefined();
+  });
+});
+
+describe('strokeEquals function', () => {
+  test('one element', () => {
+    let ele = eles[0];
+    ele.attr('stroke', '#af6b2e');
+    expect(strokeEquals([ele], new SVG.Color('#af6b2e'))).toBeTruthy();
+    expect(strokeEquals([ele], new SVG.Color('#af6b3e'))).toBeFalsy();
+  });
+
+  test('multiple elements', () => {
+    eles.forEach(ele => ele.attr('stroke', '#ff2e12'));
+    expect(strokeEquals(eles, new SVG.Color('#ff2e12'))).toBeTruthy();
+    expect(strokeEquals(eles, new SVG.Color('#ff2b12'))).toBeFalsy();
+  });
+
+  test('different ways of expressing the same color', () => {
+    eles.forEach(ele => ele.attr('stroke', '#11bbee'));
+    expect(strokeEquals(eles, new SVG.Color('#11BBEE'))).toBeTruthy(); // UPPERCASE
+    expect(strokeEquals(eles, new SVG.Color('#1be'))).toBeTruthy(); // three character hex code
+    expect(strokeEquals(eles, new SVG.Color('rgb(17, 187, 238)'))).toBeTruthy(); // RGB string
+  });
+
+  test('when stroke is undefined', () => {
+    eles.forEach(ele => ele.attr('stroke', '#abcdef'));
+    eles[1].attr('stroke', '#abcdee');
+    expect(stroke(eles)).toBeUndefined();
+    expect(strokeEquals(eles, new SVG.Color('#abcdef'))).toBeFalsy();
+    expect(strokeEquals(eles, new SVG.Color('#abcdee'))).toBeFalsy();
   });
 });

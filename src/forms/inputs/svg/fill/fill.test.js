@@ -1,6 +1,8 @@
-import * as SVG from 'Draw/svg/NodeSVG';
+import * as SVG from '@svgdotjs/svg.js';
+import * as NodeSVG from 'Draw/svg/NodeSVG';
 
 import { fill } from './fill';
+import { fillEquals } from './fill';
 
 let container = null;
 let svg = null;
@@ -10,7 +12,7 @@ beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 
-  svg = SVG.SVG();
+  svg = NodeSVG.SVG();
   svg.addTo(container);
 
   eles = [
@@ -78,5 +80,35 @@ describe('fill function', () => {
     // check that non-color values are not automatically ignored
     expect(ele.attr('fill')).toBe('qwer');
     expect(fill([ele])).toBeUndefined();
+  });
+});
+
+describe('fillEquals function', () => {
+  test('one element', () => {
+    let ele = eles[0];
+    ele.attr('fill', '#fe2887');
+    expect(fillEquals([ele], new SVG.Color('#fe2887'))).toBeTruthy();
+    expect(fillEquals([ele], new SVG.Color('#fd2887'))).toBeFalsy();
+  });
+
+  test('multiple elements', () => {
+    eles.forEach(ele => ele.attr('fill', '#bbcca2'));
+    expect(fillEquals(eles, new SVG.Color('#bbcca2'))).toBeTruthy();
+    expect(fillEquals(eles, new SVG.Color('#bbcac2'))).toBeFalsy();
+  });
+
+  test('different ways of expressing the same color', () => {
+    eles.forEach(ele => ele.attr('fill', '#1133bb'));
+    expect(fillEquals(eles, new SVG.Color('#1133BB'))).toBeTruthy(); // UPPERCASE
+    expect(fillEquals(eles, new SVG.Color('#13b'))).toBeTruthy(); // three character hex code
+    expect(fillEquals(eles, new SVG.Color('rgb(17, 51, 187)'))).toBeTruthy(); // RGB string
+  });
+
+  test('when fill is undefined', () => {
+    eles.forEach(ele => ele.attr('fill', '#bcadef'));
+    eles[1].attr('fill', '#bcadee');
+    expect(fill(eles)).toBeUndefined();
+    expect(fillEquals(eles, new SVG.Color('#bcadef'))).toBeFalsy();
+    expect(fillEquals(eles, new SVG.Color('#bcadee'))).toBeFalsy();
   });
 });
