@@ -5,8 +5,9 @@ import { interpretColor } from 'Draw/svg/interpretColor';
  * Returns the fill of the elements.
  *
  * Returns undefined:
- *  1) for an empty array of elements or
- *  2) if not all elements have the same fill.
+ *  1) for an empty array of elements,
+ *  2) if not all elements have the same fill, or
+ *  3) if the fill of an element cannot be interpreted as a color.
  *
  * This function cannot currently handle non-color fill values
  * (e.g., gradients).

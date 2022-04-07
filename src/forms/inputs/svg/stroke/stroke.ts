@@ -5,8 +5,9 @@ import { interpretColor } from 'Draw/svg/interpretColor';
  * Returns the stroke of the elements.
  *
  * Returns undefined:
- *  1) for an empty array of elements or
- *  2) if not all elements have the same stroke.
+ *  1) for an empty array of elements,
+ *  2) if not all elements have the same stroke, or
+ *  3) if the stroke of an element cannot be interpreted as a color.
  *
  * This function cannot currently handle non-color stroke values
  * (e.g., gradients).
