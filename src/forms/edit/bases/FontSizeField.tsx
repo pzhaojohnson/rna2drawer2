@@ -1,9 +1,19 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { Base } from 'Draw/bases/Base';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-import { round } from 'Math/round';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { fontSize } from 'Forms/inputs/svg/fontSize/fontSize';
+import { setFontSize } from 'Forms/inputs/svg/fontSize/fontSize';
+import { numberToDisplayableString as displayableString } from 'Forms/inputs/numbers/numberToDisplayableString';
+import { isBlank } from 'Parse/isBlank';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+
+// returns the text elements of the bases
+function texts(bases: Base[]): SVG.Text[] {
+  return bases.map(base => base.text);
+}
 
 export type Props = {
   app: App;
@@ -12,58 +22,16 @@ export type Props = {
   bases: Base[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty bases array
-// or if not all bases have the same font size
-function currFontSize(bases: Base[]): Value {
-  let fss = new Set<Value>();
-  bases.forEach(b => {
-    let fs = b.text.attr('font-size');
-    let n = interpretNumber(fs);
-    if (n) {
-      let pxs = n.convert('px').valueOf();
-      pxs = round(pxs, 1); // match PowerPoint font size precision
-      fss.add(pxs.toString());
-    }
-  });
-  if (fss.size == 1) {
-    return fss.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainFontSize(fs: number): number {
-  if (!Number.isFinite(fs)) {
-    return 9;
-  } else if (fs < 1) {
-    return 1; // 1 is the minimum font size in PowerPoint
-  } else {
-    return fs;
-  }
-}
-
 export class FontSizeField extends React.Component<Props> {
-  state: State;
+  state: {
+    value: string;
+  };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: currFontSize(props.bases),
+      value: displayableString(fontSize(texts(props.bases)), { places: 1 }),
     };
   }
 
@@ -97,29 +65,33 @@ export class FontSizeField extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let fs = Number.parseFloat(this.state.value);
-      if (Number.isFinite(fs)) {
-        if (!areEqual(this.state.value, currFontSize(this.props.bases))) {
-          this.props.app.pushUndo();
-          fs = constrainFontSize(fs);
-
-          this.props.bases.forEach(b => {
-
-            // remember center coordinates
-            let bbox = b.text.bbox();
-            let center = { x: bbox.cx, y: bbox.cy };
-
-            b.text.attr({ 'font-size': fs });
-
-            // recenter
-            b.text.center(center.x, center.y);
-          });
-
-          Base.recommendedDefaults.text['font-size'] = fs;
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let n = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(n)) {
+      return;
+    } else if (n == fontSize(texts(this.props.bases))) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+
+    // remember center coordinates
+    let centers = texts(this.props.bases).map(text => {
+      let bbox = text.bbox();
+      return { x: bbox.cx, y: bbox.cy };
+    });
+
+    setFontSize(texts(this.props.bases), n);
+
+    // recenter
+    texts(this.props.bases).forEach((text, i) => {
+      let center = centers[i];
+      text.center(center.x, center.y);
+    });
+
+    Base.recommendedDefaults.text['font-size'] = n;
   }
 }
