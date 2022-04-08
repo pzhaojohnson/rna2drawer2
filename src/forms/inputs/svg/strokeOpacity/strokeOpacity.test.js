@@ -116,16 +116,11 @@ describe('setStrokeOpacity function', () => {
     expect(strokeOpacity(eles)).toBe(1);
   });
 
-  test('a percentage value', () => {
-    eles.forEach(ele => ele.attr('stroke-opacity', 1));
-    setStrokeOpacity(eles, '62%');
-    expect(strokeOpacity(eles)).toBe(0.62);
-  });
-
-  test('a nonnumeric value', () => {
-    eles.forEach(ele => ele.attr('stroke-opacity', 0.5));
-    setStrokeOpacity(eles, 'zxcv');
-    // nonnumeric values seem to be interpreted as zero
-    expect(strokeOpacity(eles)).toBe(0);
+  it('ignores nonfinite values', () => {
+    eles.forEach(ele => ele.attr('stroke-opacity', 0.27));
+    setStrokeOpacity(eles, NaN);
+    setStrokeOpacity(eles, Infinity);
+    setStrokeOpacity(eles, -Infinity);
+    expect(strokeOpacity(eles)).toBe(0.27); // never changed
   });
 });

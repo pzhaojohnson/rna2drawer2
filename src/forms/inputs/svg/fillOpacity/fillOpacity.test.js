@@ -117,16 +117,11 @@ describe('setFillOpacity function', () => {
     expect(fillOpacity(eles)).toBe(1);
   });
 
-  test('a percentage value', () => {
-    eles.forEach(ele => ele.attr('fill-opacity', 1));
-    setFillOpacity(eles, '88%');
-    expect(fillOpacity(eles)).toBe(0.88);
-  });
-
-  test('a nonnumeric value', () => {
-    eles.forEach(ele => ele.attr('fill-opacity', 0.75));
-    setFillOpacity(eles, 'bleh');
-    // nonnumeric values seem to be interpreted as zero
-    expect(fillOpacity(eles)).toBe(0);
+  it('ignores nonfinite values', () => {
+    eles.forEach(ele => ele.attr('fill-opacity', 0.81));
+    setFillOpacity(eles, NaN);
+    setFillOpacity(eles, Infinity);
+    setFillOpacity(eles, -Infinity);
+    expect(fillOpacity(eles)).toBe(0.81); // never changed
   });
 });

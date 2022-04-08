@@ -27,24 +27,22 @@ export function fontSize(eles: SVG.Element[]): number | undefined {
 }
 
 /**
- * Sets the font-size of each element to the number parsed from
- * the string produced by converting the given value to a string.
+ * Sets the font-size of each element to the given value.
  *
- * Does nothing if the number parsed is nonfinite.
+ * Does nothing if the given value is nonfinite.
  *
  * Clamps values less than one to one.
  */
-export function setFontSize(eles: SVG.Element[], value: unknown) {
-  let n = Number.parseFloat(String(value));
-  if (!Number.isFinite(n)) {
+export function setFontSize(eles: SVG.Element[], value: number) {
+  if (!Number.isFinite(value)) {
     return;
   }
 
-  if (n < 1) {
-    n = 1;
+  if (value < 1) {
+    value = 1;
   }
 
   eles.forEach(ele => {
-    ele.attr('font-size', n);
+    ele.attr('font-size', value);
   });
 }

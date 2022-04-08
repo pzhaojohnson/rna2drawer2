@@ -107,26 +107,9 @@ describe('setStrokeWidth function', () => {
 
   it('ignores nonfinite values', () => {
     eles.forEach(ele => ele.attr('stroke-width', 3));
-    setStrokeWidth(eles, 'NaN');
-    setStrokeWidth(eles, 'Infinity');
-    setStrokeWidth(eles, '-Infinity');
+    setStrokeWidth(eles, NaN);
+    setStrokeWidth(eles, Infinity);
+    setStrokeWidth(eles, -Infinity);
     expect(strokeWidth(eles)).toBe(3); // never changed
-  });
-
-  it('ignores nonnumeric values', () => {
-    eles.forEach(ele => ele.attr('stroke-width', 5));
-    setStrokeWidth(eles, 'asdf');
-    setStrokeWidth(eles, '');
-    setStrokeWidth(eles, '    ');
-    setStrokeWidth(eles, undefined);
-    setStrokeWidth(eles, null);
-    setStrokeWidth(eles, {});
-    setStrokeWidth(eles, true);
-    expect(strokeWidth(eles)).toBe(5); // never changed
-  });
-
-  it('ignores units', () => {
-    setStrokeWidth(eles, '12cm');
-    expect(strokeWidth(eles)).toBe(12);
   });
 });

@@ -94,16 +94,6 @@ describe('setFontSize function', () => {
     ).not.toThrow();
   });
 
-  test('string values', () => {
-    eles.forEach(ele => ele.attr('font-size', 10));
-    setFontSize(eles, '9');
-    expect(fontSize(eles)).toBe(9);
-    setFontSize(eles, '4.3');
-    expect(fontSize(eles)).toBe(4.3);
-    setFontSize(eles, '6px');
-    expect(fontSize(eles)).toBe(6);
-  });
-
   test('values less than one', () => {
     eles.forEach(ele => ele.attr('font-size', 8));
     expect(fontSize(eles)).toBe(8);
@@ -118,27 +108,9 @@ describe('setFontSize function', () => {
 
   it('ignores nonfinite values', () => {
     eles.forEach(ele => ele.attr('font-size', 11));
-    setFontSize(eles, 'NaN');
-    setFontSize(eles, 'Infinity');
-    setFontSize(eles, '-Infinity');
+    setFontSize(eles, NaN);
+    setFontSize(eles, Infinity);
+    setFontSize(eles, -Infinity);
     expect(fontSize(eles)).toBe(11); // never changed
-  });
-
-  it('ignores nonnumeric values', () => {
-    eles.forEach(ele => ele.attr('font-size', 12));
-    setFontSize(eles, 'asdf');
-    setFontSize(eles, '');
-    setFontSize(eles, '    ');
-    setFontSize(eles, {});
-    setFontSize(eles, undefined);
-    setFontSize(eles, null);
-    setFontSize(eles, false);
-    expect(fontSize(eles)).toBe(12); // never changed
-  });
-
-  it('ignores units', () => {
-    eles.forEach(ele => ele.attr('font-size', 8));
-    setFontSize(eles, '15.6cm');
-    expect(fontSize(eles)).toBe(15.6);
   });
 });

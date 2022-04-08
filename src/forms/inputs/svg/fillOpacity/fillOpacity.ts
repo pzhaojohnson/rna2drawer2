@@ -25,28 +25,25 @@ export function fillOpacity(eles: SVG.Element[]): number | undefined {
 }
 
 /**
- * Sets the fill-opacity of each element to the number interpreted
- * from the given value.
+ * Sets the fill-opacity of each element to the given value.
  *
- * Does nothing if a number cannot be interpreted from the given value.
+ * Does nothing if the given value is nonfinite.
  *
  * Negative values are clamped to zero, and values above one are clamped
  * to one.
  */
-export function setFillOpacity(eles: SVG.Element[], value: unknown) {
-  let n = interpretNumber(value);
-  if (!n) {
+export function setFillOpacity(eles: SVG.Element[], value: number) {
+  if (!Number.isFinite(value)) {
     return;
   }
 
-  let v = n.valueOf();
-  if (v < 0) {
-    v = 0;
-  } else if (v > 1) {
-    v = 1;
+  if (value < 0) {
+    value = 0;
+  } else if (value > 1) {
+    value = 1;
   }
 
   eles.forEach(ele => {
-    ele.attr('fill-opacity', v);
+    ele.attr('fill-opacity', value);
   });
 }

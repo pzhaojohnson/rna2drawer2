@@ -25,28 +25,25 @@ export function strokeOpacity(eles: SVG.Element[]): number | undefined {
 }
 
 /**
- * Sets the stroke-opacity of each element to the number interpreted
- * from the given value.
+ * Sets the stroke-opacity of each element to the given value.
  *
- * Does nothing if a number cannot be interpreted from the given value.
+ * Does nothing if the given value is nonfinite.
  *
  * Values less than zero are clamped to zero, and values greater than one
  * are clamped to one.
  */
-export function setStrokeOpacity(eles: SVG.Element[], value: unknown) {
-  let n = interpretNumber(value);
-  if (!n) {
+export function setStrokeOpacity(eles: SVG.Element[], value: number) {
+  if (!Number.isFinite(value)) {
     return;
   }
 
-  let v = n.valueOf();
-  if (v < 0) {
-    v = 0;
-  } else if (v > 1) {
-    v = 1;
+  if (value < 0) {
+    value = 0;
+  } else if (value > 1) {
+    value = 1;
   }
 
   eles.forEach(ele => {
-    ele.attr('stroke-opacity', v);
+    ele.attr('stroke-opacity', value);
   });
 }
