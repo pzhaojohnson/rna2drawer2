@@ -70,14 +70,18 @@ export type CloseEvent = {
 }
 
 export type Props = {
-  value?: Value;
+  value?: Value | SVG.Color;
   onClose?: (event: CloseEvent) => void;
   disableAlpha?: boolean;
 }
 
 export function ColorPicker(props: Props) {
-  let [value, setValue] = useState<Value | undefined>(props.value);
+  let [value, setValue] = useState<Value | undefined>(
+    props.value instanceof SVG.Color ? { color: props.value } : props.value
+  );
+
   let [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className={isOpen ? styles.isOpen : undefined} >
       <Swatch
