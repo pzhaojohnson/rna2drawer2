@@ -1,71 +1,39 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-import { round } from 'Math/round';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { strokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
+import { setStrokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
+import { proportionToDisplayablePercentageString as displayablePercentageString } from 'Forms/inputs/numbers/proportionToDisplayablePercentageString';
+import { isBlank } from 'Parse/isBlank';
+import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+
+function circles(outlines: CircleBaseAnnotation[]): SVG.Circle[] {
+  return outlines.map(outline => outline.circle);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the outlines to edit
   outlines: CircleBaseAnnotation[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty outlines array
-// or if not all outlines have the same stroke opacity
-function currStrokeOpacityPercentage(outlines: CircleBaseAnnotation[]): Value {
-  let sops = new Set<Value>();
-  outlines.forEach(o => {
-    let so = o.circle.attr('stroke-opacity');
-    let n = interpretNumber(so);
-    if (n) {
-      let sop = 100 * n.valueOf();
-      sop = round(sop, 0);
-      sops.add(sop + '%');
-    }
-  });
-  if (sops.size == 1) {
-    return sops.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainOpacity(o: number): number {
-  if (!Number.isFinite(o)) {
-    return 1;
-  } else if (o < 0) {
-    return 0;
-  } else if (o > 1) {
-    return 1;
-  } else {
-    return o;
-  }
-}
-
 export class StrokeOpacityInput extends React.Component<Props> {
-  state: State;
+  state: {
+    value: string;
+  };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: currStrokeOpacityPercentage(props.outlines),
+      value: displayablePercentageString(strokeOpacity(circles(props.outlines)), { places: 0 }),
     };
   }
 
@@ -92,21 +60,20 @@ export class StrokeOpacityInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let sop = Number.parseFloat(this.state.value);
-      if (Number.isFinite(sop)) {
-        if (!areEqual(this.state.value, currStrokeOpacityPercentage(this.props.outlines))) {
-          this.props.app.pushUndo();
-          let so = sop / 100;
-          so = constrainOpacity(so);
-          so = round(so, 4);
-          this.props.outlines.forEach(o => {
-            o.circle.attr({ 'stroke-opacity': so });
-          });
-          CircleBaseAnnotation.recommendedDefaults.circle['stroke-opacity'] = so;
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let proportion = parsePercentageString(this.state.value);
+    if (!Number.isFinite(proportion)) {
+      return;
+    } else if (proportion == strokeOpacity(circles(this.props.outlines))) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    setStrokeOpacity(circles(this.props.outlines), proportion);
+    CircleBaseAnnotation.recommendedDefaults.circle['stroke-opacity'] = proportion;
+    this.props.app.refresh();
   }
 }
