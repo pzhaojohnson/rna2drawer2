@@ -1,71 +1,40 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-import { round } from 'Math/round';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { strokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
+import { setStrokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
+import { proportionToDisplayablePercentageString as displayablePercentageString } from 'Forms/inputs/numbers/proportionToDisplayablePercentageString';
+import { isBlank } from 'Parse/isBlank';
+import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+
+// returns the line elements of the primary bonds
+function lines(primaryBonds: PrimaryBond[]): SVG.Line[] {
+  return primaryBonds.map(primaryBond => primaryBond.line);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the primary bonds to edit
   primaryBonds: PrimaryBond[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty primary bonds array
-// or if not all primary bonds have the same stroke opacity
-function currStrokeOpacityPercentage(primaryBonds: PrimaryBond[]): Value {
-  let sops = new Set<Value>();
-  primaryBonds.forEach(pb => {
-    let so = pb.line.attr('stroke-opacity');
-    let n = interpretNumber(so);
-    if (n) {
-      let sop = 100 * n.valueOf();
-      sop = round(sop, 0);
-      sops.add(sop + '%');
-    }
-  });
-  if (sops.size == 1) {
-    return sops.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainOpacity(o: number): number {
-  if (!Number.isFinite(o)) {
-    return 1;
-  } else if (o < 0) {
-    return 0;
-  } else if (o > 1) {
-    return 1;
-  } else {
-    return o;
-  }
-}
-
 export class StrokeOpacityInput extends React.Component<Props> {
-  state: State;
+  state: {
+    value: string;
+  };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: currStrokeOpacityPercentage(props.primaryBonds),
+      value: displayablePercentageString(strokeOpacity(lines(props.primaryBonds)), { places: 0 }),
     };
   }
 
@@ -92,21 +61,23 @@ export class StrokeOpacityInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let sop = Number.parseFloat(this.state.value);
-      if (Number.isFinite(sop)) {
-        if (!areEqual(this.state.value, currStrokeOpacityPercentage(this.props.primaryBonds))) {
-          this.props.app.pushUndo();
-          let so = sop / 100;
-          so = constrainOpacity(so);
-          so = round(so, 4);
-          this.props.primaryBonds.forEach(pb => {
-            pb.line.attr({ 'stroke-opacity': so });
-          });
-          PrimaryBond.recommendedDefaults.line['stroke-opacity'] = so;
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let proportion = parsePercentageString(this.state.value);
+    if (!Number.isFinite(proportion)) {
+      return;
+    } else if (proportion == strokeOpacity(lines(this.props.primaryBonds))) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    setStrokeOpacity(lines(this.props.primaryBonds), proportion);
+
+    PrimaryBond.recommendedDefaults.line['stroke-opacity'] = (
+      strokeOpacity(lines(this.props.primaryBonds))
+      ?? PrimaryBond.recommendedDefaults.line['stroke-opacity']
+    );
   }
 }
