@@ -47,3 +47,13 @@ export function fillEquals(eles: SVG.Element[], value: SVG.Color): boolean {
 
   return colorsAreEqual(v, value);
 }
+
+/**
+ * Sets the fill of each element to the given value.
+ */
+export function setFill(eles: SVG.Element[], value: SVG.Color) {
+  let hex = value.toHex();
+  eles.forEach(ele => {
+    ele.attr('fill', hex);
+  });
+}

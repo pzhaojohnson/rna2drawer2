@@ -4,6 +4,7 @@ import type { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
 import { fill } from 'Forms/inputs/svg/fill/fill';
 import { fillEquals } from 'Forms/inputs/svg/fill/fill';
+import { setFill } from 'Forms/inputs/svg/fill/fill';
 
 import * as React from 'react';
 import { ColorPicker } from 'Forms/inputs/color/ColorPicker';
@@ -34,10 +35,7 @@ export function FillPicker(props: Props) {
         }
 
         props.app.pushUndo();
-        let hex = event.target.value.color.toHex();
-        props.bases.forEach(b => {
-          b.text.attr({ 'fill': hex });
-        });
+        setFill(texts(props.bases), event.target.value.color);
         props.app.refresh();
       }}
       disableAlpha={true}

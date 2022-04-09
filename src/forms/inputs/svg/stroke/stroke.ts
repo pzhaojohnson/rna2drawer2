@@ -47,3 +47,13 @@ export function strokeEquals(eles: SVG.Element[], value: SVG.Color): boolean {
 
   return colorsAreEqual(v, value);
 }
+
+/**
+ * Sets the stroke of each element to the given value.
+ */
+export function setStroke(eles: SVG.Element[], value: SVG.Color) {
+  let hex = value.toHex();
+  eles.forEach(ele => {
+    ele.attr('stroke', hex);
+  });
+}

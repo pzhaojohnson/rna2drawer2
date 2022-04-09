@@ -3,6 +3,7 @@ import * as NodeSVG from 'Draw/svg/NodeSVG';
 
 import { fill } from './fill';
 import { fillEquals } from './fill';
+import { setFill } from './fill';
 
 let container = null;
 let svg = null;
@@ -110,5 +111,35 @@ describe('fillEquals function', () => {
     expect(fill(eles)).toBeUndefined();
     expect(fillEquals(eles, new SVG.Color('#bcadef'))).toBeFalsy();
     expect(fillEquals(eles, new SVG.Color('#bcadee'))).toBeFalsy();
+  });
+});
+
+describe('setFill function', () => {
+  test('one element', () => {
+    let ele = eles[0];
+    setFill([ele], new SVG.Color('#abc55e'));
+    expect(fill([ele]).toHex()).toBe('#abc55e');
+  });
+
+  test('multiple elements', () => {
+    setFill(eles, new SVG.Color('#bbaa23'));
+    expect(fill(eles).toHex()).toBe('#bbaa23');
+  });
+
+  test('an empty array of elements', () => {
+    expect(
+      () => setFill([], new SVG.Color('#abc558'))
+    ).not.toThrow();
+  });
+
+  test('different ways of expressing colors', () => {
+    setFill(eles, new SVG.Color('#12FBCC')); // UPPERCASE
+    expect(fill(eles).toHex()).toBe('#12fbcc');
+
+    setFill(eles, new SVG.Color('#abc')); // three character hex code
+    expect(fill(eles).toHex()).toBe('#aabbcc');
+
+    setFill(eles, new SVG.Color('rgb(180, 91, 22)')); // RGB string
+    expect(fill(eles).toHex()).toBe('#b45b16');
   });
 });

@@ -3,6 +3,7 @@ import * as NodeSVG from 'Draw/svg/NodeSVG';
 
 import { stroke } from './stroke';
 import { strokeEquals } from './stroke';
+import { setStroke } from './stroke';
 
 let container = null;
 let svg = null;
@@ -110,5 +111,35 @@ describe('strokeEquals function', () => {
     expect(stroke(eles)).toBeUndefined();
     expect(strokeEquals(eles, new SVG.Color('#abcdef'))).toBeFalsy();
     expect(strokeEquals(eles, new SVG.Color('#abcdee'))).toBeFalsy();
+  });
+});
+
+describe('setStroke function', () => {
+  test('one element', () => {
+    let ele = eles[0];
+    setStroke([ele], new SVG.Color('#bb5734'));
+    expect(stroke([ele]).toHex()).toBe('#bb5734');
+  });
+
+  test('multiple elements', () => {
+    setStroke(eles, new SVG.Color('#fa6566'));
+    expect(stroke(eles).toHex()).toBe('#fa6566');
+  });
+
+  test('an empty array of elements', () => {
+    expect(
+      () => setStroke([], new SVG.Color('#335567'))
+    ).not.toThrow();
+  });
+
+  test('different ways of expressing colors', () => {
+    setStroke(eles, new SVG.Color('#FFABCD')); // UPPERCASE
+    expect(stroke(eles).toHex()).toBe('#ffabcd');
+
+    setStroke(eles, new SVG.Color('#35c')); // three character hex code
+    expect(stroke(eles).toHex()).toBe('#3355cc');
+
+    setStroke(eles, new SVG.Color('rgb(88, 23, 2)')); // RGB string
+    expect(stroke(eles).toHex()).toBe('#581702');
   });
 });
