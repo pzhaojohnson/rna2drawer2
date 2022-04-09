@@ -1,9 +1,20 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-import { round } from 'Math/round';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { fillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
+import { setFillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
+import { proportionToDisplayablePercentageString as displayablePercentageString } from 'Forms/inputs/numbers/proportionToDisplayablePercentageString';
+import { isBlank } from 'Parse/isBlank';
+import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+
+// returns the text elements of the bases
+function texts(bases: Base[]): SVG.Text[] {
+  return bases.map(base => base.text);
+}
 
 export type Props = {
   app: App;
@@ -12,60 +23,16 @@ export type Props = {
   bases: Base[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty bases array
-// or if not all bases have the same fill opacity
-function currFillOpacityPercentage(bases: Base[]): Value {
-  let fops = new Set<Value>();
-  bases.forEach(b => {
-    let fo = b.text.attr('fill-opacity');
-    let n = interpretNumber(fo);
-    if (n) {
-      let fop = 100 * n.valueOf();
-      fop = round(fop, 0);
-      fops.add(fop + '%');
-    }
-  });
-  if (fops.size == 1) {
-    return fops.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainOpacity(o: number): number {
-  if (!Number.isFinite(o)) {
-    return 1;
-  } else if (o < 0) {
-    return 0;
-  } else if (o > 1) {
-    return 1;
-  } else {
-    return o;
-  }
-}
-
 export class FillOpacityInput extends React.Component<Props> {
-  state: State;
+  state: {
+    value: string;
+  };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: currFillOpacityPercentage(props.bases),
+      value: displayablePercentageString(fillOpacity(texts(props.bases)), { places: 0 }),
     };
   }
 
@@ -92,20 +59,18 @@ export class FillOpacityInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let fop = Number.parseFloat(this.state.value);
-      if (Number.isFinite(fop)) {
-        if (!areEqual(this.state.value, currFillOpacityPercentage(this.props.bases))) {
-          this.props.app.pushUndo();
-          let fo = fop / 100;
-          fo = constrainOpacity(fo);
-          fo = round(fo, 4);
-          this.props.bases.forEach(b => {
-            b.text.attr({ 'fill-opacity': fo });
-          });
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let proportion = parsePercentageString(this.state.value);
+    if (!Number.isFinite(proportion)) {
+      return;
+    } else if (proportion == fillOpacity(texts(this.props.bases))) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    setFillOpacity(texts(this.props.bases), proportion);
   }
 }
