@@ -1,61 +1,44 @@
-import * as React from 'react';
-import { ColorPicker, Value } from 'Forms/inputs/color/ColorPicker';
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
-import { interpretColor } from 'Draw/svg/interpretColor';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { fill } from 'Forms/inputs/svg/fill/fill';
+import { fillEquals } from 'Forms/inputs/svg/fill/fill';
+
+import * as React from 'react';
+import { ColorPicker } from 'Forms/inputs/color/ColorPicker';
+
+// returns the text elements of the bases
+function texts(bases: Base[]): SVG.Text[] {
+  return bases.map(base => base.text);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the bases to edit
   bases: Base[];
 }
 
-// returns undefined for an empty bases array
-// or if not all bases have the same fill
-function currFill(bases: Base[]): Value | undefined {
-  let hexs = new Set<string>();
-  bases.forEach(b => {
-    let c = interpretColor(b.text.attr('fill'));
-    if (c) {
-      hexs.add(c.toHex().toLowerCase());
-    }
-  });
-  if (hexs.size == 1) {
-    let hex = hexs.values().next().value;
-    let c = interpretColor(hex);
-    if (c) {
-      return { color: c };
-    }
-  }
-}
-
-function areEqual(v1?: Value, v2?: Value): boolean {
-  if (v1 && v2) {
-    return (
-      v1.color.toHex().toLowerCase() == v2.color.toHex().toLowerCase()
-      && v1.alpha == v2.alpha
-    );
-  } else {
-    return v1 == v2;
-  }
-}
-
 export function FillPicker(props: Props) {
   return (
     <ColorPicker
-      value={currFill(props.bases)}
+      value={fill(texts(props.bases))}
       onClose={event => {
-        if (event.target.value) {
-          let value = event.target.value;
-          if (!areEqual(value, currFill(props.bases))) {
-            props.app.pushUndo();
-            props.bases.forEach(b => {
-              b.text.attr({ 'fill': value.color.toHex() });
-            });
-            props.app.refresh();
-          }
+        if (!event.target.value) {
+          return;
+        } else if (fillEquals(texts(props.bases), event.target.value.color)) {
+          return;
         }
+
+        props.app.pushUndo();
+        let hex = event.target.value.color.toHex();
+        props.bases.forEach(b => {
+          b.text.attr({ 'fill': hex });
+        });
+        props.app.refresh();
       }}
       disableAlpha={true}
     />
