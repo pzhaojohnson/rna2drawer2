@@ -71,16 +71,22 @@ export class StrokeWidthField extends React.Component<Props> {
       return;
     }
 
-    let n = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(n)) {
+    let value = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(value)) {
       return;
-    } else if (n == strokeWidth(circles(this.props.outlines))) {
+    } else if (value == strokeWidth(circles(this.props.outlines))) {
       return;
     }
 
     this.props.app.pushUndo();
-    setStrokeWidth(circles(this.props.outlines), n);
-    CircleBaseAnnotation.recommendedDefaults.circle['stroke-width'] = n;
-    this.props.app.refresh();
+    setStrokeWidth(circles(this.props.outlines), value);
+
+    // may be different from the value that was specified
+    let constrainedValue = strokeWidth(circles(this.props.outlines));
+
+    CircleBaseAnnotation.recommendedDefaults.circle['stroke-width'] = (
+      constrainedValue
+      ?? CircleBaseAnnotation.recommendedDefaults.circle['stroke-width']
+    );
   }
 }

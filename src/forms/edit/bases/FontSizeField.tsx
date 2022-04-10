@@ -69,10 +69,10 @@ export class FontSizeField extends React.Component<Props> {
       return;
     }
 
-    let n = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(n)) {
+    let value = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(value)) {
       return;
-    } else if (n == fontSize(texts(this.props.bases))) {
+    } else if (value == fontSize(texts(this.props.bases))) {
       return;
     }
 
@@ -84,7 +84,7 @@ export class FontSizeField extends React.Component<Props> {
       return { x: bbox.cx, y: bbox.cy };
     });
 
-    setFontSize(texts(this.props.bases), n);
+    setFontSize(texts(this.props.bases), value);
 
     // recenter
     texts(this.props.bases).forEach((text, i) => {
@@ -92,6 +92,12 @@ export class FontSizeField extends React.Component<Props> {
       text.center(center.x, center.y);
     });
 
-    Base.recommendedDefaults.text['font-size'] = n;
+    // may be different from the value that was specified
+    let constrainedValue = fontSize(texts(this.props.bases));
+
+    Base.recommendedDefaults.text['font-size'] = (
+      constrainedValue
+      ?? Base.recommendedDefaults.text['font-size']
+    );
   }
 }

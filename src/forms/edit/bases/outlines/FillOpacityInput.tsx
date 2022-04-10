@@ -64,16 +64,22 @@ export class FillOpacityInput extends React.Component<Props> {
       return;
     }
 
-    let proportion = parsePercentageString(this.state.value);
-    if (!Number.isFinite(proportion)) {
+    let value = parsePercentageString(this.state.value);
+    if (!Number.isFinite(value)) {
       return;
-    } else if (proportion == fillOpacity(circles(this.props.outlines))) {
+    } else if (value == fillOpacity(circles(this.props.outlines))) {
       return;
     }
 
     this.props.app.pushUndo();
-    setFillOpacity(circles(this.props.outlines), proportion);
-    CircleBaseAnnotation.recommendedDefaults.circle['fill-opacity'] = proportion;
-    this.props.app.refresh();
+    setFillOpacity(circles(this.props.outlines), value);
+
+    // may be different from the value that was specified
+    let constrainedValue = fillOpacity(circles(this.props.outlines));
+
+    CircleBaseAnnotation.recommendedDefaults.circle['fill-opacity'] = (
+      constrainedValue
+      ?? CircleBaseAnnotation.recommendedDefaults.circle['fill-opacity']
+    );
   }
 }

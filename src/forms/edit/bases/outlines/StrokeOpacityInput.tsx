@@ -64,16 +64,22 @@ export class StrokeOpacityInput extends React.Component<Props> {
       return;
     }
 
-    let proportion = parsePercentageString(this.state.value);
-    if (!Number.isFinite(proportion)) {
+    let value = parsePercentageString(this.state.value);
+    if (!Number.isFinite(value)) {
       return;
-    } else if (proportion == strokeOpacity(circles(this.props.outlines))) {
+    } else if (value == strokeOpacity(circles(this.props.outlines))) {
       return;
     }
 
     this.props.app.pushUndo();
-    setStrokeOpacity(circles(this.props.outlines), proportion);
-    CircleBaseAnnotation.recommendedDefaults.circle['stroke-opacity'] = proportion;
-    this.props.app.refresh();
+    setStrokeOpacity(circles(this.props.outlines), value);
+
+    // may be different from the value that was specified
+    let constrainedValue = strokeOpacity(circles(this.props.outlines));
+
+    CircleBaseAnnotation.recommendedDefaults.circle['stroke-opacity'] = (
+      constrainedValue
+      ?? CircleBaseAnnotation.recommendedDefaults.circle['stroke-opacity']
+    );
   }
 }
