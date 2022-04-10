@@ -1,76 +1,43 @@
-import * as React from 'react';
-import { ColorPicker, Value } from 'Forms/inputs/color/ColorPicker';
 import type { App } from 'App';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-import { interpretColor } from 'Draw/svg/interpretColor';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { stroke } from 'Forms/inputs/svg/stroke/stroke';
+import { strokeEquals } from 'Forms/inputs/svg/stroke/stroke';
+import { setStroke } from 'Forms/inputs/svg/stroke/stroke';
+
+import * as React from 'react';
+import { ColorPicker } from 'Forms/inputs/color/ColorPicker';
+
+// returns the path elements of the tertiary bonds
+function paths(tertiaryBonds: TertiaryBond[]): SVG.Path[] {
+  return tertiaryBonds.map(bond => bond.path);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the tertiary bonds to edit
   tertiaryBonds: TertiaryBond[];
 }
 
-// returns undefined for an empty tertiary bonds array
-// or if not all tertiary bonds have the same stroke
-function currStroke(tertiaryBonds: TertiaryBond[]): Value | undefined {
-  let hexs = new Set<string>();
-  tertiaryBonds.forEach(tb => {
-    let c = interpretColor(tb.path.attr('stroke'));
-    if (c) {
-      hexs.add(c.toHex().toLowerCase());
-    }
-  });
-  if (hexs.size == 1) {
-    let hex = hexs.values().next().value;
-    let c = interpretColor(hex);
-    if (c) {
-      return { color: c };
-    }
-  }
-}
-
-function areEqual(v1?: Value, v2?: Value): boolean {
-  if (v1 && v2) {
-    return (
-      v1.color.toHex().toLowerCase() == v2.color.toHex().toLowerCase()
-      && v1.alpha == v2.alpha
-    );
-  } else {
-    return v1 == v2;
-  }
-}
-
-function hasFill(tb: TertiaryBond): boolean {
-  let f = tb.path.attr('fill');
-  if (typeof f == 'string') {
-    f = f.trim().toLowerCase();
-    return f != '' && f != 'none';
-  } else {
-    return false;
-  }
-}
-
 export function StrokePicker(props: Props) {
   return (
     <ColorPicker
-      value={currStroke(props.tertiaryBonds)}
+      value={stroke(paths(props.tertiaryBonds))}
       onClose={event => {
-        if (event.target.value) {
-          let value = event.target.value;
-          if (!areEqual(value, currStroke(props.tertiaryBonds))) {
-            props.app.pushUndo();
-            let hex = value.color.toHex();
-            props.tertiaryBonds.forEach(tb => {
-              tb.path.attr({ 'stroke': hex });
-              if (hasFill(tb)) {
-                tb.path.attr({ 'fill': hex });
-              }
-            });
-            TertiaryBond.recommendedDefaults.path['stroke'] = hex;
-            props.app.refresh();
-          }
+        if (!event.target.value) {
+          return;
+        } else if (strokeEquals(paths(props.tertiaryBonds), event.target.value.color)) {
+          return;
         }
+
+        props.app.pushUndo();
+        setStroke(paths(props.tertiaryBonds), event.target.value.color);
+        TertiaryBond.recommendedDefaults.path['stroke'] = event.target.value.color.toHex();
+        props.app.refresh();
       }}
       disableAlpha={true}
     />
