@@ -1,68 +1,39 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-import { round } from 'Math/round';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { strokeWidth } from 'Forms/inputs/svg/strokeWidth/strokeWidth';
+import { setStrokeWidth } from 'Forms/inputs/svg/strokeWidth/strokeWidth';
+import { numberToDisplayableString as displayableString } from 'Forms/inputs/numbers/numberToDisplayableString';
+import { isBlank } from 'Parse/isBlank';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+
+// returns the path elements of the tertiary bonds
+function paths(tertiaryBonds: TertiaryBond[]): SVG.Path[] {
+  return tertiaryBonds.map(bond => bond.path);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the tertiary bonds to edit
   tertiaryBonds: TertiaryBond[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty tertiary bonds array
-// or if not all tertiary bonds have the same stroke width
-function currStrokeWidth(tertiaryBonds: TertiaryBond[]): Value {
-  let sws = new Set<Value>();
-  tertiaryBonds.forEach(tb => {
-    let sw = tb.path.attr('stroke-width');
-    let n = interpretNumber(sw);
-    if (n) {
-      let pxs = n.convert('px').valueOf();
-      sws.add(round(pxs, 2).toString());
-    }
-  });
-  if (sws.size == 1) {
-    return sws.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainStrokeWidth(sw: number): number {
-  if (!Number.isFinite(sw)) {
-    return 1;
-  } else if (sw < 0) {
-    return 0;
-  } else {
-    return sw;
-  }
-}
-
 export class StrokeWidthField extends React.Component<Props> {
-  state: State;
+  state: {
+    value: string;
+  };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: currStrokeWidth(props.tertiaryBonds),
+      value: displayableString(strokeWidth(paths(props.tertiaryBonds)), { places: 2 }),
     };
   }
 
@@ -96,19 +67,26 @@ export class StrokeWidthField extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let sw = Number.parseFloat(this.state.value);
-      if (Number.isFinite(sw)) {
-        if (!areEqual(this.state.value, currStrokeWidth(this.props.tertiaryBonds))) {
-          this.props.app.pushUndo();
-          sw = constrainStrokeWidth(sw);
-          this.props.tertiaryBonds.forEach(tb => {
-            tb.path.attr({ 'stroke-width': sw });
-          });
-          TertiaryBond.recommendedDefaults.path['stroke-width'] = sw;
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let value = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(value)) {
+      return;
+    } else if (value == strokeWidth(paths(this.props.tertiaryBonds))) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    setStrokeWidth(paths(this.props.tertiaryBonds), value);
+
+    // may be different from the value that was specified
+    let constrainedValue = strokeWidth(paths(this.props.tertiaryBonds));
+
+    TertiaryBond.recommendedDefaults.path['stroke-width'] = (
+      constrainedValue
+      ?? TertiaryBond.recommendedDefaults.path['stroke-width']
+    );
   }
 }
