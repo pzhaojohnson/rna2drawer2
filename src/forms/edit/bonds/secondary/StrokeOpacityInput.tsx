@@ -1,70 +1,40 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-import { round } from 'Math/round';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { strokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
+import { setStrokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
+import { displayablePercentageString } from 'Forms/inputs/numbers/displayablePercentageString';
+import { isBlank } from 'Parse/isBlank';
+import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+
+// returns the line elements of the secondary bonds
+function lines(secondaryBonds: SecondaryBond[]): SVG.Line[] {
+  return secondaryBonds.map(bond => bond.line);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the secondary bonds to edit
   secondaryBonds: SecondaryBond[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty secondary bonds array
-// or if not all secondary bonds have the same stroke opacity
-function currStrokeOpacityPercentage(secondaryBonds: SecondaryBond[]): Value {
-  let sops = new Set<number>();
-  secondaryBonds.forEach(sb => {
-    let so = sb.line.attr('stroke-opacity');
-    let n = interpretNumber(so);
-    if (n) {
-      let sop = 100 * n.valueOf();
-      sops.add(round(sop, 0));
-    }
-  });
-  if (sops.size == 1) {
-    return sops.values().next().value + '%';
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainOpacity(o: number): number {
-  if (!Number.isFinite(o)) {
-    return 1;
-  } else if (o < 0) {
-    return 0;
-  } else if (o > 1) {
-    return 1;
-  } else {
-    return o;
-  }
-}
-
 export class StrokeOpacityInput extends React.Component<Props> {
-  state: State;
+  state: {
+    value: string;
+  };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: currStrokeOpacityPercentage(props.secondaryBonds),
+      value: displayablePercentageString(strokeOpacity(lines(props.secondaryBonds)), { places: 0 }),
     };
   }
 
@@ -91,22 +61,26 @@ export class StrokeOpacityInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let sop = Number.parseFloat(this.state.value);
-      if (Number.isFinite(sop)) {
-        if (!areEqual(this.state.value, currStrokeOpacityPercentage(this.props.secondaryBonds))) {
-          this.props.app.pushUndo();
-          let so = sop / 100;
-          so = constrainOpacity(so);
-          so = round(so, 4);
-          this.props.secondaryBonds.forEach(sb => {
-            sb.line.attr({ 'stroke-opacity': so });
-            SecondaryBond.recommendedDefaults[sb.type].line['stroke-opacity'] = so;
-          });
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let value = parsePercentageString(this.state.value);
+    if (!Number.isFinite(value)) {
+      return;
+    } else if (value == strokeOpacity(lines(this.props.secondaryBonds))) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    setStrokeOpacity(lines(this.props.secondaryBonds), value);
+
+    // may be different from the value that was specified
+    let constrainedValue = strokeOpacity(lines(this.props.secondaryBonds));
+
+    this.props.secondaryBonds.forEach(bond => {
+      SecondaryBond.recommendedDefaults[bond.type].line['stroke-opacity'] = constrainedValue;
+    });
   }
 }
 
