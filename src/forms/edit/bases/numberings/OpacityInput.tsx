@@ -1,79 +1,48 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+
 import * as SVG from '@svgdotjs/svg.js';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-import { round } from 'Math/round';
+import { fillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
+import { setFillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
+import { strokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
+import { setStrokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
+import { displayablePercentageString } from 'Forms/inputs/numbers/displayablePercentageString';
+import { isBlank } from 'Parse/isBlank';
+import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+
+// returns the text elements of the base numberings
+function texts(baseNumberings: BaseNumbering[]): SVG.Text[] {
+  return baseNumberings.map(bn => bn.text);
+}
+
+// returns the line elements of the base numberings
+function lines(baseNumberings: BaseNumbering[]): SVG.Line[] {
+  return baseNumberings.map(bn => bn.line);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the base numberings to edit
   baseNumberings: BaseNumbering[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-function toRoundedPercentage(n: SVG.Number): Value {
-  let p = 100 * n.valueOf();
-  p = round(p, 0);
-  return p + '%';
-}
-
-// returns an empty string value for an empty base numberings array
-// or if not all base numbering texts and lines have the same opacity
-function currOpacityPercentage(baseNumberings: BaseNumbering[]): Value {
-  let ops = new Set<Value>();
-  baseNumberings.forEach(bn => {
-    let textOpacity = interpretNumber(bn.text.attr('fill-opacity'));
-    if (textOpacity) {
-      ops.add(toRoundedPercentage(textOpacity));
-    }
-    let lineOpacity = interpretNumber(bn.line.attr('stroke-opacity'));
-    if (lineOpacity) {
-      ops.add(toRoundedPercentage(lineOpacity));
-    }
-  });
-  if (ops.size == 1) {
-    return ops.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainOpacity(o: number): number {
-  if (!Number.isFinite(o)) {
-    return 1;
-  } else if (o < 0) {
-    return 0;
-  } else if (o > 1) {
-    return 1;
-  } else {
-    return o;
-  }
-}
-
 export class OpacityInput extends React.Component<Props> {
-  state: State;
+  state: {
+    value: string;
+  };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: currOpacityPercentage(props.baseNumberings),
+      // assumes that texts fill-opacity is the same as lines stroke-opacity
+      value: displayablePercentageString(fillOpacity(texts(props.baseNumberings)), { places: 0 }),
     };
   }
 
@@ -100,23 +69,35 @@ export class OpacityInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let op = Number.parseFloat(this.state.value);
-      if (Number.isFinite(op)) {
-        if (!areEqual(this.state.value, currOpacityPercentage(this.props.baseNumberings))) {
-          this.props.app.pushUndo();
-          let o = op / 100;
-          o = constrainOpacity(o);
-          o = round(o, 6);
-          this.props.baseNumberings.forEach(bn => {
-            bn.text.attr({ 'fill-opacity': o });
-            bn.line.attr({ 'stroke-opacity': o });
-          });
-          BaseNumbering.recommendedDefaults.text['fill-opacity'] = o;
-          BaseNumbering.recommendedDefaults.line['stroke-opacity'] = o;
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let value = parsePercentageString(this.state.value);
+    if (!Number.isFinite(value)) {
+      return;
+    } else if (value == fillOpacity(texts(this.props.baseNumberings))) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    setFillOpacity(texts(this.props.baseNumberings), value);
+    setStrokeOpacity(lines(this.props.baseNumberings), value);
+
+    // may be different from the value that was specified
+    let constrainedValue = fillOpacity(texts(this.props.baseNumberings));
+
+    BaseNumbering.recommendedDefaults.text['fill-opacity'] = (
+      constrainedValue
+      ?? BaseNumbering.recommendedDefaults.text['fill-opacity']
+    );
+
+    // may be different from the value that was specified
+    constrainedValue = strokeOpacity(lines(this.props.baseNumberings));
+
+    BaseNumbering.recommendedDefaults.line['stroke-opacity'] = (
+      constrainedValue
+      ?? BaseNumbering.recommendedDefaults.line['stroke-opacity']
+    );
   }
 }
