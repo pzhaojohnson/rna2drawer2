@@ -16,7 +16,7 @@ export type Options = {
  *
  * Returns an empty string if the proportion is nullish or NaN.
  */
-export function proportionToDisplayablePercentageString(proportion: number | Nullish, options: Options): string {
+export function displayablePercentageString(proportion: number | Nullish, options: Options): string {
   if (proportion == null) {
     return '';
   } else if (Number.isNaN(proportion)) {

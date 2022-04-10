@@ -4,7 +4,7 @@ import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnot
 import * as SVG from '@svgdotjs/svg.js';
 import { fillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
 import { setFillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
-import { proportionToDisplayablePercentageString as displayablePercentageString } from 'Forms/inputs/numbers/proportionToDisplayablePercentageString';
+import { displayablePercentageString } from 'Forms/inputs/numbers/displayablePercentageString';
 import { isBlank } from 'Parse/isBlank';
 import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
 
