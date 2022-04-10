@@ -1,39 +1,22 @@
-import * as React from 'react';
-import { ColorPicker, Value } from 'Forms/inputs/color/ColorPicker';
 import type { App } from 'App';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
-import { interpretColor } from 'Draw/svg/interpretColor';
 
-// returns undefined for an empty secondary bonds array
-// or if not all secondary bonds have the same stroke
-function currStroke(secondaryBonds: SecondaryBond[]): Value | undefined {
-  let hexs = new Set<string>();
-  secondaryBonds.forEach(sb => {
-    let c = interpretColor(sb.line.attr('stroke'));
-    if (c) {
-      hexs.add(c.toHex().toLowerCase());
-    }
-  });
-  if (hexs.size == 1) {
-    let c = interpretColor(hexs.values().next().value);
-    if (c) {
-      return { color: c };
-    }
-  }
-}
+import * as SVG from '@svgdotjs/svg.js';
+import { stroke } from 'Forms/inputs/svg/stroke/stroke';
+import { strokeEquals } from 'Forms/inputs/svg/stroke/stroke';
+import { setStroke } from 'Forms/inputs/svg/stroke/stroke';
 
-function valuesAreEqual(v1?: Value, v2?: Value): boolean {
-  if (v1 && v2) {
-    return (
-      v1.color.toHex().toLowerCase() == v2.color.toHex().toLowerCase()
-      && v1.alpha == v2.alpha
-    );
-  } else {
-    return v1 == v2;
-  }
+import * as React from 'react';
+import { ColorPicker } from 'Forms/inputs/color/ColorPicker';
+
+// returns the line elements of the secondary bonds
+function lines(secondaryBonds: SecondaryBond[]): SVG.Line[] {
+  return secondaryBonds.map(secondaryBond => secondaryBond.line);
 }
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the secondary bonds to edit
@@ -43,20 +26,23 @@ export type Props = {
 export function StrokePicker(props: Props) {
   return (
     <ColorPicker
-      value={currStroke(props.secondaryBonds)}
+      value={stroke(lines(props.secondaryBonds))}
       onClose={event => {
-        if (event.target.value) {
-          let value = event.target.value;
-          if (!valuesAreEqual(value, currStroke(props.secondaryBonds))) {
-            props.app.pushUndo();
-            let hex = value.color.toHex();
-            props.secondaryBonds.forEach(sb => {
-              sb.line.attr({ 'stroke': hex });
-              SecondaryBond.recommendedDefaults[sb.type].line['stroke'] = hex;
-            });
-            props.app.refresh();
-          }
+        if (!event.target.value) {
+          return;
+        } else if (strokeEquals(lines(props.secondaryBonds), event.target.value.color)) {
+          return;
         }
+
+        props.app.pushUndo();
+        setStroke(lines(props.secondaryBonds), event.target.value.color);
+
+        let hex = event.target.value.color.toHex();
+        props.secondaryBonds.forEach(secondaryBond => {
+          SecondaryBond.recommendedDefaults[secondaryBond.type].line['stroke'] = hex;
+        });
+
+        props.app.refresh();
       }}
       disableAlpha={true}
     />
