@@ -1,69 +1,39 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-import { round } from 'Math/round';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { strokeWidth } from 'Forms/inputs/svg/strokeWidth/strokeWidth';
+import { setStrokeWidth } from 'Forms/inputs/svg/strokeWidth/strokeWidth';
+import { numberToDisplayableString as displayableString } from 'Forms/inputs/numbers/numberToDisplayableString';
+import { isBlank } from 'Parse/isBlank';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+
+// returns the line elements of the base numberings
+function lines(baseNumberings: BaseNumbering[]): SVG.Line[] {
+  return baseNumberings.map(bn => bn.line);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the base numberings to edit
   baseNumberings: BaseNumbering[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty base numberings array
-// or if not all base numberings have the same line width
-function currLineWidth(baseNumberings: BaseNumbering[]): Value {
-  let lws = new Set<Value>();
-  baseNumberings.forEach(bn => {
-    let sw = bn.line.attr('stroke-width');
-    let n = interpretNumber(sw);
-    if (n) {
-      let pxs = n.convert('px').valueOf();
-      pxs = round(pxs, 2);
-      lws.add(pxs.toString());
-    }
-  });
-  if (lws.size == 1) {
-    return lws.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainLineWidth(lw: number): number {
-  if (!Number.isFinite(lw)) {
-    return 1;
-  } else if (lw < 0) {
-    return 0;
-  } else {
-    return lw;
-  }
-}
-
 export class LineWidthField extends React.Component<Props> {
-  state: State;
+  state: {
+    value: string;
+  };
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      value: currLineWidth(props.baseNumberings),
+      value: displayableString(strokeWidth(lines(props.baseNumberings)), { places: 2 }),
     };
   }
 
@@ -97,19 +67,26 @@ export class LineWidthField extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let lw = Number.parseFloat(this.state.value);
-      if (Number.isFinite(lw)) {
-        if (!areEqual(this.state.value, currLineWidth(this.props.baseNumberings))) {
-          this.props.app.pushUndo();
-          lw = constrainLineWidth(lw);
-          this.props.baseNumberings.forEach(bn => {
-            bn.line.attr({ 'stroke-width': lw });
-          });
-          BaseNumbering.recommendedDefaults.line['stroke-width'] = lw;
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let value = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(value)) {
+      return;
+    } else if (value == strokeWidth(lines(this.props.baseNumberings))) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    setStrokeWidth(lines(this.props.baseNumberings), value);
+
+    // may be different from the value that was specified
+    let constrainedValue = strokeWidth(lines(this.props.baseNumberings));
+
+    BaseNumbering.recommendedDefaults.line['stroke-width'] = (
+      constrainedValue
+      ?? BaseNumbering.recommendedDefaults.line['stroke-width']
+    );
   }
 }
