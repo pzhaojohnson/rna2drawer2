@@ -1,69 +1,52 @@
-import * as React from 'react';
-import { ColorPicker as UnderlyingColorPicker, Value } from 'Forms/inputs/color/ColorPicker';
 import type { App } from 'App';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-import { interpretColor } from 'Draw/svg/interpretColor';
+
+import * as SVG from '@svgdotjs/svg.js';
+import { fill } from 'Forms/inputs/svg/fill/fill';
+import { fillEquals } from 'Forms/inputs/svg/fill/fill';
+import { setFill } from 'Forms/inputs/svg/fill/fill';
+import { setStroke } from 'Forms/inputs/svg/stroke/stroke';
+
+import * as React from 'react';
+import { ColorPicker as _ColorPicker } from 'Forms/inputs/color/ColorPicker';
+
+// returns the text elements of the base numberings
+function texts(baseNumberings: BaseNumbering[]): SVG.Text[] {
+  return baseNumberings.map(bn => bn.text);
+}
+
+// returns the line elements of the base numberings
+function lines(baseNumberings: BaseNumbering[]): SVG.Line[] {
+  return baseNumberings.map(bn => bn.line);
+}
 
 export type Props = {
+
+  // a reference to the whole app
   app: App;
 
   // the base numberings to edit
   baseNumberings: BaseNumbering[];
 }
 
-// returns undefined for an empty base numberings array
-// or if not all base numbering texts and lines have the same color
-function currColor(baseNumberings: BaseNumbering[]): Value | undefined {
-  let hexs = new Set<string>();
-  baseNumberings.forEach(bn => {
-    let textColor = interpretColor(bn.text.attr('fill'));
-    if (textColor) {
-      hexs.add(textColor.toHex().toLowerCase());
-    }
-    let lineColor = interpretColor(bn.line.attr('stroke'));
-    if (lineColor) {
-      hexs.add(lineColor.toHex().toLowerCase());
-    }
-  });
-  if (hexs.size == 1) {
-    let hex = hexs.values().next().value;
-    let c = interpretColor(hex);
-    if (c) {
-      return { color: c };
-    }
-  }
-}
-
-function areEqual(v1?: Value, v2?: Value): boolean {
-  if (v1 && v2) {
-    return (
-      v1.color.toHex().toLowerCase() == v2.color.toHex().toLowerCase()
-      && v1.alpha == v2.alpha
-    );
-  } else {
-    return v1 == v2;
-  }
-}
-
 export function ColorPicker(props: Props) {
   return (
-    <UnderlyingColorPicker
-      value={currColor(props.baseNumberings)}
+    <_ColorPicker
+      // assumes that texts fill is the same as lines stroke
+      value={fill(texts(props.baseNumberings))}
       onClose={event => {
-        if (event.target.value) {
-          let value = event.target.value;
-          if (!areEqual(value, currColor(props.baseNumberings))) {
-            props.app.pushUndo();
-            let hex = value.color.toHex();
-            props.baseNumberings.forEach(bn => {
-              bn.text.attr({ 'fill': hex });
-              bn.line.attr({ 'stroke': hex });
-            });
-            BaseNumbering.recommendedDefaults.text['fill'] = hex;
-            BaseNumbering.recommendedDefaults.line['stroke'] = hex;
-            props.app.refresh();
-          }
+        if (!event.target.value) {
+          return;
+        } else if (fillEquals(texts(props.baseNumberings), event.target.value.color)) {
+          return;
         }
+
+        props.app.pushUndo();
+        setFill(texts(props.baseNumberings), event.target.value.color);
+        setStroke(lines(props.baseNumberings), event.target.value.color);
+        BaseNumbering.recommendedDefaults.text['fill'] = event.target.value.color.toHex();
+        BaseNumbering.recommendedDefaults.line['stroke'] = event.target.value.color.toHex();
+        props.app.refresh();
       }}
       disableAlpha={true}
     />
