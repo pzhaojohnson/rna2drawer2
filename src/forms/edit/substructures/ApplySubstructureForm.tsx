@@ -8,6 +8,7 @@ import { applySecondarySubstructure } from 'Draw/strict/applySecondarySubstructu
 import { applyTertiarySubstructure } from 'Draw/strict/applyTertiarySubstructure';
 
 import * as React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
@@ -180,6 +181,8 @@ let prevInputs: Inputs = {
 };
 
 export class ApplySubstructureForm extends React.Component<Props> {
+  static key = uuidv4();
+
   state: State;
 
   constructor(props: Props) {

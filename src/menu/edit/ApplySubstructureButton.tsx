@@ -4,10 +4,6 @@ import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 
 import { ApplySubstructureForm } from 'Forms/edit/substructures/ApplySubstructureForm';
-import { v4 as uuidv4 } from 'uuid';
-
-const formKey = uuidv4();
-
 export type Props = {
 
   // a reference to the whole app
@@ -24,7 +20,7 @@ export function ApplySubstructureButton(props: Props) {
             {...formProps}
             app={props.app}
           />
-        ), { key: formKey });
+        ), { key: ApplySubstructureForm.key });
       }}
     />
   );
