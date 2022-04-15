@@ -12,6 +12,7 @@ import { EditNumberingButton } from './EditNumberingButton';
 import { EditPrimaryBondsButton } from './EditPrimaryBondsButton';
 import { EditSecondaryBondsButton } from './EditSecondaryBondsButton';
 import { EditTertiaryBondsButton } from './EditTertiaryBondsButton';
+import { ApplySubstructureButton } from './ApplySubstructureButton';
 import { EditLayoutButton } from './EditLayoutButton';
 
 export type Props = {
@@ -36,6 +37,7 @@ export function EditDropdown(props: Props) {
           <EditPrimaryBondsButton app={props.app} />
           <EditSecondaryBondsButton app={props.app} />
           <EditTertiaryBondsButton app={props.app} />
+          <ApplySubstructureButton app={props.app} />
           <DroppedSeparator />
           <EditNumberingButton app={props.app} />
           <EditLayoutButton app={props.app} />
