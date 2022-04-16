@@ -1,0 +1,13 @@
+.applySubstructureLink {
+  margin-left: 12px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: italic;
+  color: #1528c9;
+  cursor: pointer;
+}
+
+.applySubstructureLink:hover {
+  text-decoration: underline;
+}
