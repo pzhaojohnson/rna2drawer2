@@ -278,6 +278,7 @@ export function InsertSubsequence(props: Props) {
                 <ApplySubstructureForm
                   {...formProps}
                   app={props.app}
+                  substructure=''
                   startPosition={inputs.positionToInsertAt ? inputs.positionToInsertAt : undefined}
                 />
               ));
