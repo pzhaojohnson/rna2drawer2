@@ -7,7 +7,8 @@
 
 .title {
   font-size: 24px;
-  color: black;
+  font-weight: 500;
+  color: #0e0e0e;
 }
 
 .titleUnderline {

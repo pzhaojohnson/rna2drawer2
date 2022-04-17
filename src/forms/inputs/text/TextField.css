@@ -4,9 +4,9 @@
   padding: 3px 6px 3px 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: normal;
+  font-weight: 500;
   font-style: normal;
-  color: rgba(0,0,0,0.95);
+  color: #202020;
   border-radius: 2px;
 }
 
@@ -34,9 +34,9 @@
 .label {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: normal;
+  font-weight: 500;
   font-style: normal;
-  color: rgba(0,0,0,0.95);
+  color: #333333;
 
   user-select: none;
   -webkit-user-select: none;
