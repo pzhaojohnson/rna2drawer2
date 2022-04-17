@@ -18,11 +18,14 @@
 }
 
 .blinksIn {
-  animation: blinkIn 1.25s;
+  animation: blinkIn 1.33s;
 }
 
 @keyframes blinkIn {
-  0%, 43.75%, 81.25% {
+  0% {
+    opacity: 0.05;
+  }
+  6.25%, 43.75%, 81.25% {
     opacity: 0;
   }
   25%, 62.5%, 100% {
