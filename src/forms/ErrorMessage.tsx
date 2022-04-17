@@ -19,7 +19,7 @@ export class ErrorMessage extends React.Component {
       <div
         key={id}
         id={id}
-        className={styles.fadesIn}
+        className={styles.blinksIn}
         style={{ margin: this.props.margin }}
       >
         {this.props.message ? this.p() : null}
