@@ -54,7 +54,7 @@ function StartPositionField(
           onChange={props.onChange}
           style={{ marginRight: '8px', width: '6ch' }}
         />
-        Start Position
+        Start Position of Substructure
       </label>
       {!props.numberingOffset ? null : (
         <p className={styles.numberingOffsetView} >
@@ -82,7 +82,7 @@ function RemoveTertiaryBondsField(
           onChange={props.onChange}
         />
         <span style={{ marginLeft: '6px' }} >
-          Maintain Tertiary Bonds
+          Maintain Preexisting Tertiary Bonds
         </span>
       </label>
     </div>
