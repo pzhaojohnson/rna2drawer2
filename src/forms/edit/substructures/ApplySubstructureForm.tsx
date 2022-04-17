@@ -8,10 +8,10 @@ import { applySecondarySubstructure } from 'Draw/strict/applySecondarySubstructu
 import { applyTertiarySubstructure } from 'Draw/strict/applyTertiarySubstructure';
 
 import * as React from 'react';
+import styles from './ApplySubstructureForm.css';
 import { v4 as uuidv4 } from 'uuid';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
@@ -24,10 +24,11 @@ function SubstructureField(
 ) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p>
+      <p className={styles.substructureFieldLabel} >
         Substructure
       </p>
       <textarea
+        className={styles.substructureFieldTextarea}
         value={props.value}
         onChange={props.onChange}
         rows={9}
@@ -46,21 +47,21 @@ function StartPositionField(
   },
 ) {
   return (
-    <div style={{ marginTop: '16px' }} >
+    <div style={{ marginTop: '18px' }} >
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='text'
-          className={textFieldStyles.input}
+          className={styles.startPositionFieldInput}
           value={props.value}
           onChange={props.onChange}
           style={{ width: '6ch' }}
         />
-        <p style={{ marginLeft: '8px' }} >
+        <p className={styles.startPositionFieldLabel} >
           Start Position
         </p>
       </div>
       {!props.numberingOffset ? null : (
-        <p style={{ marginTop: '4px' }} >
+        <p className={styles.numberingOffsetView} >
           <span style={{ fontWeight: 600, color: 'black' }}>
             {props.numberingOffset}&nbsp;
           </span>
@@ -78,13 +79,13 @@ function RemoveTertiaryBondsField(
   },
 ) {
   return (
-    <div style={{ marginTop: '12px' }} >
+    <div style={{ marginTop: '14px' }} >
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <Checkbox
           checked={!props.checked}
           onChange={props.onChange}
         />
-        <p style={{ marginLeft: '6px' }} >
+        <p className={styles.removeTertiaryBondsFieldLabel} >
           Maintain Tertiary Bonds
         </p>
       </div>
@@ -121,7 +122,7 @@ function ErrorMessage(
 
 function ExplanatoryNote() {
   return (
-    <p style={{ marginTop: '16px' }} >
+    <p className={styles.note} style={{ marginTop: '16px' }} >
       <span style={{ fontWeight: 600, color: 'black' }} >Note:&nbsp;</span>
       The substructure will be applied beginning at
       the provided start position in the drawing.
@@ -131,7 +132,7 @@ function ExplanatoryNote() {
 
 function TertiaryBondsNote() {
   return (
-    <p style={{ marginTop: '8px' }} >
+    <p className={styles.note} style={{ marginTop: '8px' }} >
       <span style={{ fontWeight: 600, color: 'black' }} >Note:&nbsp;</span>
       Preexisting tertiary bonds can be maintained
       or removed when applying the substructure.

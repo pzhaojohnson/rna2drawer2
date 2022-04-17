@@ -1,0 +1,76 @@
+.substructureFieldLabel {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #535353;
+  user-select: none;
+}
+
+.substructureFieldTextarea {
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 2px;
+  padding: 3px 6px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4b4b4b;
+}
+
+.substructureFieldTextarea::placeholder {
+  font-style: italic;
+  color: #717171;
+}
+
+.startPositionFieldInput {
+  border: 1px solid #d6d6d6;
+  border-radius: 2px;
+  padding: 3px 6px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #2a2a2a;
+}
+
+.startPositionFieldInput:hover {
+  border-color: #333333;
+}
+
+.startPositionFieldInput:focus {
+  border-color: #333333;
+  outline: none;
+}
+
+.startPositionFieldLabel {
+  margin-left: 8px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #535353;
+  user-select: none;
+}
+
+.numberingOffsetView {
+  margin-top: 4px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #3f3f3f;
+  user-select: none;
+}
+
+.removeTertiaryBondsFieldLabel {
+  margin-left: 6px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #535353;
+  user-select: none;
+}
+
+.note {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #3f3f3f;
+  user-select: none;
+}
