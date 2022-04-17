@@ -9,7 +9,6 @@ export type Props = {
 export class AskBeforeLeavingToggle extends React.Component<Props> {
   render() {
     let askBeforeLeaving = this.props.app.preferences.askBeforeLeaving;
-    // will display as OFF when the askBeforeLeaving preference is false or undefined
     return (
       <div
         className={`
@@ -20,7 +19,7 @@ export class AskBeforeLeavingToggle extends React.Component<Props> {
       >
         <div className={`${styles.textContainer}`} >
           <p className={`${styles.text}`} >
-            {`Ask Before Leaving: ${askBeforeLeaving ? 'ON' : 'OFF'}`}
+            Ask Before Leaving
           </p>
         </div>
       </div>

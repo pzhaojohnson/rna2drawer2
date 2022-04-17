@@ -4,7 +4,7 @@
 
 .textContainer {
   border-radius: 10px;
-  width: 138px;
+  width: 126px;
   padding-top: 2px;
   padding-bottom: 2px;
   display: flex;
@@ -20,11 +20,11 @@
 
 .on .textContainer {
   border: none;
-  background-color: rgb(110 110 110);
+  background-color: #565656;
 }
 
 .on:hover .textContainer {
-  box-shadow: 0 0 4px rgb(161 161 161);
+  box-shadow: 0 0 4px #a0a0a0;
 }
 
 .on .text {

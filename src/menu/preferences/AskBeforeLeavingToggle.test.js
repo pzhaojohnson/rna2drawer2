@@ -36,7 +36,6 @@ describe('AskBeforeLeavingToggle component', () => {
     act(() => {
       render(<AskBeforeLeavingToggle app={app} />, container);
     });
-    expect(container.firstChild.textContent).toBe('Ask Before Leaving: ON');
     expect(container.firstChild.className).toMatch(/on/);
     expect(container.firstChild.className).not.toMatch(/off/);
     Simulate.click(container.firstChild);
@@ -48,7 +47,6 @@ describe('AskBeforeLeavingToggle component', () => {
     act(() => {
       render(<AskBeforeLeavingToggle app={app} />, container);
     });
-    expect(container.firstChild.textContent).toBe('Ask Before Leaving: OFF');
     expect(container.firstChild.className).not.toMatch(/on/);
     expect(container.firstChild.className).toMatch(/off/);
     Simulate.click(container.firstChild);
@@ -60,7 +58,6 @@ describe('AskBeforeLeavingToggle component', () => {
     act(() => {
       render(<AskBeforeLeavingToggle app={app} />, container);
     });
-    expect(container.firstChild.textContent).toBe('Ask Before Leaving: OFF');
     expect(container.firstChild.className).not.toMatch(/on/);
     expect(container.firstChild.className).toMatch(/off/);
     Simulate.click(container.firstChild);
