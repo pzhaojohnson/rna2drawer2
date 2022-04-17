@@ -23,10 +23,8 @@ function SubstructureField(
   },
 ) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p className={styles.substructureFieldLabel} >
-        Substructure
-      </p>
+    <label className={styles.substructureFieldLabel} >
+      Substructure
       <textarea
         className={styles.substructureFieldTextarea}
         value={props.value}
@@ -35,7 +33,7 @@ function SubstructureField(
         placeholder='...in dot-bracket notation "(((....)))"'
         style={{ marginTop: '4px' }}
       />
-    </div>
+    </label>
   );
 }
 
@@ -48,18 +46,16 @@ function StartPositionField(
 ) {
   return (
     <div style={{ marginTop: '18px' }} >
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <label className={styles.startPositionFieldLabel} >
         <input
           type='text'
           className={styles.startPositionFieldInput}
           value={props.value}
           onChange={props.onChange}
-          style={{ width: '6ch' }}
+          style={{ marginRight: '8px', width: '6ch' }}
         />
-        <p className={styles.startPositionFieldLabel} >
-          Start Position
-        </p>
-      </div>
+        Start Position
+      </label>
       {!props.numberingOffset ? null : (
         <p className={styles.numberingOffsetView} >
           <span style={{ fontWeight: 600, color: 'black' }}>
@@ -80,15 +76,15 @@ function RemoveTertiaryBondsField(
 ) {
   return (
     <div style={{ marginTop: '14px' }} >
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <label className={styles.removeTertiaryBondsFieldLabel} >
         <Checkbox
           checked={!props.checked}
           onChange={props.onChange}
         />
-        <p className={styles.removeTertiaryBondsFieldLabel} >
+        <span style={{ marginLeft: '6px' }} >
           Maintain Tertiary Bonds
-        </p>
-      </div>
+        </span>
+      </label>
     </div>
   );
 }

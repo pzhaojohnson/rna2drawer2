@@ -4,6 +4,8 @@
   font-weight: 600;
   color: #535353;
   user-select: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .substructureFieldTextarea {
@@ -41,12 +43,14 @@
 }
 
 .startPositionFieldLabel {
-  margin-left: 8px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 600;
   color: #535353;
   user-select: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .numberingOffsetView {
@@ -59,12 +63,14 @@
 }
 
 .removeTertiaryBondsFieldLabel {
-  margin-left: 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 600;
   color: #535353;
   user-select: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .note {
