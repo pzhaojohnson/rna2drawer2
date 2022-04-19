@@ -1,8 +1,8 @@
 .errorMessage {
   font-size: 14px;
-  font-weight: 800;
-  font-style: italic;
-  color: #ea1313;
+  font-weight: 700;
+  font-style: normal;
+  color: #e60d0d;
 }
 
 .fadesIn {
