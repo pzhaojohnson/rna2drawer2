@@ -1,7 +1,8 @@
 .errorMessage {
   font-size: 14px;
-  font-weight: 700;
-  color: #e60000;
+  font-weight: 800;
+  font-style: italic;
+  color: #ea1313;
 }
 
 .fadesIn {
@@ -18,17 +19,14 @@
 }
 
 .blinksIn {
-  animation: blinkIn 1.33s;
+  animation: blinkIn 1.25s;
 }
 
 @keyframes blinkIn {
-  0% {
-    opacity: 0.05;
-  }
-  6.25%, 43.75%, 81.25% {
+  0%, 55%, 85% {
     opacity: 0;
   }
-  25%, 62.5%, 100% {
+  40%, 70%, 100% {
     opacity: 1;
   }
 }
