@@ -31,7 +31,7 @@ function SubstructureField(
         className={styles.substructureFieldTextarea}
         value={props.value}
         onChange={props.onChange}
-        rows={9}
+        rows={10}
         placeholder='...in dot-bracket notation "(((....)))"'
         style={{ marginTop: '4px' }}
       />
