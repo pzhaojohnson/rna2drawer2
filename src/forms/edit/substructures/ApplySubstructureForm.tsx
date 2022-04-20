@@ -114,7 +114,7 @@ function ExplanatoryNote() {
     <div style={{ marginTop: '16px' }} >
       <DottedNote>
         The substructure will be applied beginning at
-        the provided start position in the drawing.
+        the provided start position in the sequence.
       </DottedNote>
     </div>
   );
