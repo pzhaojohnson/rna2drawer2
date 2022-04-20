@@ -1,13 +1,10 @@
-import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import * as React from 'react';
 import { act } from 'react-dom/test-utils';
+import { render } from 'react-dom';
 import { fireEvent } from '@testing-library/react';
-import { Checkbox } from './Checkbox';
+import { unmountComponentAtNode } from 'react-dom';
 
-function isChecked(checkbox) {
-  let eles = checkbox.getElementsByTagName('img');
-  return eles.length == 1 && eles[0].alt == 'Check';
-}
+import { Checkbox } from './Checkbox';
 
 let container = null;
 
@@ -23,32 +20,26 @@ afterEach(() => {
 });
 
 test('Checkbox component', () => {
+  // render checked
+  act(() => {
+    render(<Checkbox checked={true} onChange={jest.fn()} />, container);
+  });
+  expect(container.firstChild.checked).toBeTruthy();
+
+  // render unchecked
+  act(() => {
+    render(<Checkbox checked={false} onChange={jest.fn()} />, container);
+  });
+  expect(container.firstChild.checked).toBeFalsy();
+
+  // passes onChange callback
   let onChange = jest.fn();
   act(() => {
     render(<Checkbox checked={true} onChange={onChange} />, container);
   });
-  expect(isChecked(container.firstChild)).toBeTruthy();
-  
-  // click 10 times
-  let i = 0;
-  let intervalId;
-  intervalId = setInterval(() => {
-    if (i >= 10) {
-      clearInterval(intervalId);
-    } else {
-      act(() => {
-        fireEvent.click(container.firstChild, { bubbles: true });
-      });
-      i++;
-
-      setTimeout(() => {
-        // checks and unchecks
-        expect(isChecked(container.firstChild)).toBe(i % 2 == 1);
-        
-        // calls change callback
-        expect(onChange.mock.calls.length).toBe(i + 1);
-        expect(onChange.mock.calls[i][0]).toEqual({ target: { checked: i % 2 == 1 } });
-      }, 250);
-    }
-  }, 1000);
+  expect(onChange).not.toHaveBeenCalled();
+  act(() => {
+    fireEvent.click(container.firstChild, { bubbles: true });
+  });
+  expect(onChange).toHaveBeenCalledTimes(1);
 });
