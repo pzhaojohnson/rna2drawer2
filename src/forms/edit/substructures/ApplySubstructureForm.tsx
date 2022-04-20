@@ -12,6 +12,7 @@ import styles from './ApplySubstructureForm.css';
 import { v4 as uuidv4 } from 'uuid';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
@@ -42,7 +43,6 @@ function StartPositionField(
   props: {
     value: string,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    numberingOffset: number | undefined,
   },
 ) {
   return (
@@ -57,14 +57,6 @@ function StartPositionField(
         />
         Start Position of Substructure
       </label>
-      {!props.numberingOffset ? null : (
-        <p className={styles.numberingOffsetView} >
-          <span style={{ fontWeight: 600, color: 'black' }}>
-            {props.numberingOffset}&nbsp;
-          </span>
-          is the numbering offset.
-        </p>
-      )}
     </div>
   );
 }
@@ -220,7 +212,10 @@ export class ApplySubstructureForm extends React.Component<Props> {
           <StartPositionField
             value={this.state.startPosition}
             onChange={event => this.setState({ startPosition: event.target.value })}
-            numberingOffset={numberingOffset(this.props.app.strictDrawing.layoutSequence())}
+          />
+          <div style={{ height: '6px' }} />
+          <DisplayableSequenceRange
+            sequence={this.props.app.strictDrawing.layoutSequence()}
           />
           <MaintainTertiaryBondsField
             checked={!this.state.removeTertiaryBonds}
