@@ -15,6 +15,7 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
+import { DottedNote } from 'Forms/notes/DottedNote';
 
 function SubstructureField(
   props: {
@@ -118,21 +119,23 @@ function ErrorMessage(
 
 function ExplanatoryNote() {
   return (
-    <p className={styles.note} style={{ marginTop: '16px' }} >
-      <span style={{ fontWeight: 600, color: 'black' }} >Note:&nbsp;</span>
-      The substructure will be applied beginning at
-      the provided start position in the drawing.
-    </p>
+    <div style={{ marginTop: '16px' }} >
+      <DottedNote>
+        The substructure will be applied beginning at
+        the provided start position in the drawing.
+      </DottedNote>
+    </div>
   );
 }
 
 function TertiaryBondsNote() {
   return (
-    <p className={styles.note} style={{ marginTop: '8px' }} >
-      <span style={{ fontWeight: 600, color: 'black' }} >Note:&nbsp;</span>
-      Preexisting tertiary bonds can be maintained
-      or removed when applying the substructure.
-    </p>
+    <div style={{ marginTop: '12px' }} >
+      <DottedNote>
+        Preexisting tertiary bonds can be maintained
+        or removed when applying the substructure.
+      </DottedNote>
+    </div>
   );
 }
 

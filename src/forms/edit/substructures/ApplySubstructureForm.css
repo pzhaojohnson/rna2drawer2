@@ -72,11 +72,3 @@
   flex-direction: row;
   align-items: center;
 }
-
-.note {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: #3f3f3f;
-  user-select: none;
-}

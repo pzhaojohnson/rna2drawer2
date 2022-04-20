@@ -1,0 +1,26 @@
+.dottedNote {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #3f3f3f;
+  user-select: none;
+}
+
+.dot {
+  /* Use min-width instead of width so that wrapped text
+  in the note doesn't smush the dot. */
+  min-width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #434343;
+}
+
+.spacer {
+  /* Use min-width instead of width so that wrapped text
+  in the note doesn't smush the spacer. */
+  min-width: 6px;
+}
