@@ -61,6 +61,31 @@ textarea::-webkit-input-placeholder {
   color: rgb(98, 98, 98);
 }
 
+input[type="checkbox"] {
+  appearance: none;
+  border: 2px solid #bfbfbf;
+  border-radius: 2px;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  border-color: #333333;
+  background-color: #333333;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgOTYgOTYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIGlkPSJJY29uc19DaGVja21hcmsiIG92ZXJmbG93PSJoaWRkZW4iPjxwYXRoIGQ9Ik04Ni4xIDE1LjggMzQuOSA2NC4yIDEwLjMgMzkgMS44IDQ3LjEgMzQuNSA4MC43IDQzLjEgNzIuNyA5NC4yIDI0LjJaIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMy42NjY2NyIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPg==);
+}
+
+input[type="checkbox"]:hover {
+  transform: scale(1.1);
+  transition-duration: 0.2s;
+}
+
+input[type="checkbox"]:active {
+  transform: scale(1);
+  transition-duration: 0s;
+}
+
 img {
   user-select: none;
   -webkit-user-select: none;
