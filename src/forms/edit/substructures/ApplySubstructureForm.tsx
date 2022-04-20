@@ -69,7 +69,7 @@ function StartPositionField(
   );
 }
 
-function RemoveTertiaryBondsField(
+function MaintainTertiaryBondsField(
   props: {
     checked: boolean,
     onChange: (event: { target: { checked: boolean } }) => void,
@@ -77,9 +77,9 @@ function RemoveTertiaryBondsField(
 ) {
   return (
     <div style={{ marginTop: '14px' }} >
-      <label className={styles.removeTertiaryBondsFieldLabel} >
+      <label className={styles.maintainTertiaryBondsFieldLabel} >
         <Checkbox
-          checked={!props.checked}
+          checked={props.checked}
           onChange={props.onChange}
         />
         <span style={{ marginLeft: '6px' }} >
@@ -222,9 +222,9 @@ export class ApplySubstructureForm extends React.Component<Props> {
             onChange={event => this.setState({ startPosition: event.target.value })}
             numberingOffset={numberingOffset(this.props.app.strictDrawing.layoutSequence())}
           />
-          <RemoveTertiaryBondsField
-            checked={this.state.removeTertiaryBonds}
-            onChange={event => this.setState({ removeTertiaryBonds: event.target.checked })}
+          <MaintainTertiaryBondsField
+            checked={!this.state.removeTertiaryBonds}
+            onChange={event => this.setState({ removeTertiaryBonds: !event.target.checked })}
           />
           <SubmitButton
             onClick={() => {
