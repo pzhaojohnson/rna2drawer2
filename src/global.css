@@ -63,6 +63,8 @@ textarea::-webkit-input-placeholder {
 
 input[type="checkbox"] {
   appearance: none;
+  margin: 0px;
+  padding: 0px;
   border: 2px solid #bfbfbf;
   border-radius: 2px;
   width: 14px;
