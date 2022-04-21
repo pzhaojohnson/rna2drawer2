@@ -14,7 +14,6 @@
 
 .text {
   font-size: 10.5px;
-  font-weight: 600;
   cursor: pointer;
 }
 
@@ -26,14 +25,15 @@
 
 .on .pillContainer {
   border: none;
-  background-color: #565656;
+  background-color: #404040;
 }
 
 .on:hover .pillContainer {
-  box-shadow: 0 0 4px #a0a0a0;
+  box-shadow: 0 0 4px #b6b6b6;
 }
 
 .on .text {
+  font-weight: 600;
   color: white;
 }
 
@@ -46,16 +46,17 @@
 }
 
 .off .pillContainer {
-  border: 1px solid rgb(171 171 171);
+  border: 1px solid #cfcfcf;
   background-color: white;
 }
 
 .off:hover .pillContainer {
-  box-shadow: 0 0 4px rgb(185 185 185);
+  box-shadow: 0 0 4px #dbdbdb;
 }
 
 .off .text {
-  color: rgb(63 63 63);
+  font-weight: 600;
+  color: #999999;
 }
 
 .off .spacer {
