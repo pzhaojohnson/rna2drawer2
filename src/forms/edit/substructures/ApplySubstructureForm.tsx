@@ -247,12 +247,12 @@ export class ApplySubstructureForm extends React.Component<Props> {
     if (isBlank(inputs.substructure)) {
       throw new Error('Substructure is empty.');
     } else if (parsedDotBracket == null) {
-      throw new Error('Substructure is invalid.');
+      throw new Error('Dot-bracket notation is invalid.');
     }
 
     let startPosition = Number.parseFloat(inputs.startPosition);
     if (isBlank(inputs.startPosition)) {
-      throw new Error('Enter a start position.');
+      throw new Error('Specify a start position.');
     } else if (!Number.isFinite(startPosition)) {
       throw new Error('Start position must be a number.');
     }
