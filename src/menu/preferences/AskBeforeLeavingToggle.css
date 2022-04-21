@@ -2,9 +2,9 @@
   cursor: pointer;
 }
 
-.textContainer {
+.pillContainer {
   border-radius: 10px;
-  width: 126px;
+  width: 144px;
   padding-top: 2px;
   padding-bottom: 2px;
   display: flex;
@@ -18,12 +18,18 @@
   cursor: pointer;
 }
 
-.on .textContainer {
+.spacer {
+  width: 6px;
+}
+
+.check {}
+
+.on .pillContainer {
   border: none;
   background-color: #565656;
 }
 
-.on:hover .textContainer {
+.on:hover .pillContainer {
   box-shadow: 0 0 4px #a0a0a0;
 }
 
@@ -31,15 +37,31 @@
   color: white;
 }
 
-.off .textContainer {
+.on .spacer {
+  display: block;
+}
+
+.on .check {
+  display: block;
+}
+
+.off .pillContainer {
   border: 1px solid rgb(171 171 171);
   background-color: white;
 }
 
-.off:hover .textContainer {
+.off:hover .pillContainer {
   box-shadow: 0 0 4px rgb(185 185 185);
 }
 
 .off .text {
   color: rgb(63 63 63);
+}
+
+.off .spacer {
+  display: none;
+}
+
+.off .check {
+  display: none;
 }
