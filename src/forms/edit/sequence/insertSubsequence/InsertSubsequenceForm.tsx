@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import formStyles from './InsertSubsequence.css';
+import formStyles from './InsertSubsequenceForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
@@ -75,7 +75,7 @@ function ApplySubstructureNote() {
   );
 }
 
-export function InsertSubsequence(props: Props) {
+export function InsertSubsequenceForm(props: Props) {
   let drawing = props.app.strictDrawing.drawing;
 
   if (drawing.sequences.length > 1) {

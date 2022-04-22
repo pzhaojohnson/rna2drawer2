@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { InsertSubsequence } from 'Forms/edit/sequence/insertSubsequence/InsertSubsequence';
+import { InsertSubsequenceForm } from 'Forms/edit/sequence/insertSubsequence/InsertSubsequenceForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
@@ -16,7 +16,7 @@ export function InsertSubsequenceButton(props: Props) {
       text='Insert Subsequence'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <InsertSubsequence {...formProps} app={props.app} />
+          <InsertSubsequenceForm {...formProps} app={props.app} />
         ), { key: formKey });
       }}
     />
