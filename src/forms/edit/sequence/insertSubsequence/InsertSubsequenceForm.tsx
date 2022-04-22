@@ -300,7 +300,6 @@ export function InsertSubsequenceForm(props: Props) {
               }
 
               // insert the subsequence
-              props.unmount();
               props.app.pushUndo();
               insert(props.app.strictDrawing, values);
               props.app.refresh();
