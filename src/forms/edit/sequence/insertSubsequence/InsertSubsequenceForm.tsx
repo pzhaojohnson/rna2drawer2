@@ -1,25 +1,138 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import formStyles from './InsertSubsequenceForm.css';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
-import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
-import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
-import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { SolidButton } from 'Forms/buttons/SolidButton';
 import type { App } from 'App';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
-import { isBlank } from 'Parse/isBlank';
-import { cannotInsert, insert } from './insert';
+
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import styles from './InsertSubsequenceForm.css';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { SolidButton } from 'Forms/buttons/SolidButton';
+import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
+import { DottedNote } from 'Forms/notes/DottedNote';
+
 import { ApplySubstructureForm } from 'Forms/edit/substructures/ApplySubstructureForm';
 
-export type Props = {
-  app: App;
+import { isBlank } from 'Parse/isBlank';
+import { cannotInsert, insert } from './insert';
 
+function SubsequenceField(
+  props: {
+    value: string,
+    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void,
+    onBlur: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+  },
+) {
+  return (
+    <label className={`${styles.fieldLabel} ${styles.subsequenceFieldLabel}`} >
+      Subsequence
+      <textarea
+        className={`${styles.textInput} ${styles.subsequenceFieldTextarea}`}
+        value={props.value}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+        rows={9}
+        placeholder='...an RNA or DNA subsequence "CUGCCA"'
+      />
+    </label>
+  );
+}
+
+function CheckboxField(
+  props: {
+    label: string,
+    checked: boolean,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  },
+) {
+  return (
+    <label className={`${styles.fieldLabel} ${styles.checkboxFieldLabel}`} >
+      <input
+        type='checkbox'
+        className={styles.checkboxFieldInput}
+        checked={props.checked}
+        onChange={props.onChange}
+      />
+      <div style={{ width: '6px' }} />
+      {props.label}
+    </label>
+  );
+}
+
+function InsertPositionField(
+  props: {
+    value: string,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    onBlur: (event: React.FocusEvent<HTMLInputElement>) => void,
+    onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void,
+  },
+) {
+  return (
+    <label className={`${styles.fieldLabel} ${styles.insertPositionFieldLabel}`} >
+      <input
+        type='text'
+        className={`${styles.textInput} ${styles.insertPositionFieldInput}`}
+        value={props.value}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+        onKeyUp={props.onKeyUp}
+      />
+      Position to Insert At
+    </label>
+  );
+}
+
+function ErrorMessage(
+  props: {
+    textContent?: string,
+  },
+) {
+  return (
+    <div style={{ marginTop: '6px' }} >
+      <_ErrorMessage
+        message={props.textContent}
+      />
+    </div>
+  );
+}
+
+function ExplanatoryNote() {
+  return (
+    <div style={{ marginTop: '18px' }} >
+      <DottedNote>
+        The subsequence will be inserted beginning at the specified position.
+      </DottedNote>
+    </div>
+  );
+}
+
+function ApplySubstructureNote() {
+  return (
+    <div style={{ marginTop: '8px' }} >
+      <DottedNote>
+        A substructure can be applied after inserting a subsequence.
+      </DottedNote>
+    </div>
+  );
+}
+
+function BaseNumberingNote() {
+  return (
+    <div style={{ marginTop: '8px' }} >
+      <DottedNote>
+        Base numbering must be updated manually after inserting a subsequence.
+      </DottedNote>
+    </div>
+  );
+}
+
+export type Props = {
   unmount: () => void;
   history: FormHistoryInterface;
+
+  // a reference to the whole app
+  app: App;
 }
 
 type Inputs = {
@@ -56,21 +169,10 @@ function ApplySubstructureLink(
 ) {
   return (
     <p
-      className={formStyles.applySubstructureLink}
+      className={styles.applySubstructureLink}
       onClick={props.onClick}
     >
       Have a substructure too?
-    </p>
-  );
-}
-
-function ApplySubstructureNote() {
-  return (
-    <p className='unselectable' style={{ marginTop: '8px' }} >
-      <span style={{ fontWeight: 600, color: 'black' }} >
-        Note:&nbsp;
-      </span>
-      A substructure can be applied after inserting a subsequence.
     </p>
   );
 }
@@ -108,129 +210,61 @@ export function InsertSubsequenceForm(props: Props) {
       title='Insert Subsequence'
       style={{ width: '372px' }}
     >
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
-        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-          Subsequence
-        </p>
-        <textarea
-          value={inputs.subsequence}
+      <SubsequenceField
+        value={inputs.subsequence}
+        onChange={event => {
+          if (event.target.value.trim() != inputs.subsequence.trim()) {
+            setErrorMessage(new String(''));
+          }
+          setInputs({ ...inputs, subsequence: event.target.value });
+        }}
+        onBlur={() => setInputs(constrainInputs(inputs))}
+      />
+      <div style={{ margin: '8px 0px 0px 8px' }} >
+        <CheckboxField
+          label='Ignore Numbers'
+          checked={inputs.ignoreNumbers}
           onChange={event => {
-            if (event.target.value.trim() != inputs.subsequence.trim()) {
-              setErrorMessage(new String(''));
-            }
-            setInputs({ ...inputs, subsequence: event.target.value });
+            setErrorMessage(new String(''));
+            setInputs({ ...inputs, ignoreNumbers: event.target.checked });
           }}
-          onBlur={() => setInputs(constrainInputs(inputs))}
-          rows={9}
-          placeholder='...an RNA or DNA subsequence "CUGCCA"'
-          style={{ marginTop: '4px' }}
+        />
+        <div style={{ height: '6px' }} />
+        <CheckboxField
+          label='Ignore Non-AUGCT Letters'
+          checked={inputs.ignoreNonAUGCTLetters}
+          onChange={event => {
+            setErrorMessage(new String(''));
+            setInputs({ ...inputs, ignoreNonAUGCTLetters: event.target.checked });
+          }}
+        />
+        <div style={{ height: '6px' }} />
+        <CheckboxField
+          label='Ignore Non-Alphanumerics'
+          checked={inputs.ignoreNonAlphanumerics}
+          onChange={event => {
+            setErrorMessage(new String(''));
+            setInputs({ ...inputs, ignoreNonAlphanumerics: event.target.checked });
+          }}
         />
       </div>
-      <div style={{ margin: '8px 0px 0px 8px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          <Checkbox
-            checked={inputs.ignoreNumbers}
-            onChange={event => {
-              setErrorMessage(new String(''));
-              setInputs({ ...inputs, ignoreNumbers: event.target.checked });
-            }}
-          />
-          <div style={{ marginLeft: '6px' }} >
-            <p className={`${checkboxFieldStyles.label} unselectable`} >
-              Ignore Numbers
-            </p>
-          </div>
-        </div>
-        <div style={{ marginTop: '6px' }} >
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <Checkbox
-              checked={inputs.ignoreNonAUGCTLetters}
-              onChange={event => {
-                setErrorMessage(new String(''));
-                setInputs({ ...inputs, ignoreNonAUGCTLetters: event.target.checked });
-              }}
-            />
-            <div style={{ marginLeft: '6px' }} >
-              <p className={`${checkboxFieldStyles.label} unselectable`} >
-                Ignore Non-AUGCT Letters
-              </p>
-            </div>
-          </div>
-        </div>
-        <div style={{ marginTop: '6px' }} >
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <Checkbox
-              checked={inputs.ignoreNonAlphanumerics}
-              onChange={event => {
-                setErrorMessage(new String(''));
-                setInputs({ ...inputs, ignoreNonAlphanumerics: event.target.checked });
-              }}
-            />
-            <div style={{ marginLeft: '6px' }} >
-              <p className={`${checkboxFieldStyles.label} unselectable`} >
-                Ignore Non-Alphanumerics
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style={{ marginTop: '24px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          <input
-            type='text'
-            className={textFieldStyles.input}
-            value={inputs.positionToInsertAt}
-            onChange={event => {
-              if (event.target.value.trim() != inputs.positionToInsertAt.trim()) {
-                setErrorMessage(new String(''));
-              }
-              setInputs({ ...inputs, positionToInsertAt: event.target.value });
-            }}
-            onBlur={() => setInputs(constrainInputs(inputs))}
-            onKeyUp={event => {
-              if (event.key.toLowerCase() == 'enter') {
-                setInputs(constrainInputs(inputs));
-              }
-            }}
-            style={{ width: '48px' }}
-          />
-          <div style={{ marginLeft: '8px' }} >
-            <p className={`${textFieldStyles.label} unselectable`} >
-              Position to Insert At
-            </p>
-          </div>
-        </div>
-      </div>
-      {!(seq && seq.length == 1) ? null : (
-        <div style={{ marginTop: '8px' }} >
-          <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-            <span style={{ fontWeight: 600, color: 'rgb(0,0,0)' }} >
-              {no + 1}&nbsp;
-            </span>
-            is the first and last position of the sequence.
-          </p>
-        </div>
-      )}
-      {!(seq && seq.length > 1) ? null : (
-        <div style={{ marginTop: '8px' }} >
-          {no == 0 ? null : (
-            <div style={{ marginBottom: '4px' }} >
-              <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-                <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                  {no + 1}&nbsp;
-                </span>
-                is the first position of the sequence.
-              </p>
-            </div>
-          )}
-          <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-              {seq.length + no}&nbsp;
-            </span>
-            is the last position of the sequence.
-          </p>
-        </div>
-      )}
+      <InsertPositionField
+        value={inputs.positionToInsertAt}
+        onChange={event => {
+          if (event.target.value.trim() != inputs.positionToInsertAt.trim()) {
+            setErrorMessage(new String(''));
+          }
+          setInputs({ ...inputs, positionToInsertAt: event.target.value });
+        }}
+        onBlur={() => setInputs(constrainInputs(inputs))}
+        onKeyUp={event => {
+          if (event.key.toLowerCase() == 'enter') {
+            setInputs(constrainInputs(inputs));
+          }
+        }}
+      />
+      <div style={{ height: '6px' }} />
+      {!seq ? null : <DisplayableSequenceRange sequence={seq} />}
       <div style={{ marginTop: '32px' }} >
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
           <SolidButton
@@ -287,27 +321,11 @@ export function InsertSubsequenceForm(props: Props) {
         </div>
       </div>
       {!errorMessage.valueOf() ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '6px' }}
-        >
-          {errorMessage.valueOf()}
-        </p>
+        <ErrorMessage textContent={errorMessage.valueOf()} />
       )}
-      <div style={{ marginTop: '18px' }} >
-        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-          <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-          The subsequence will be inserted beginning at the specified position.
-        </p>
-      </div>
+      <ExplanatoryNote />
       <ApplySubstructureNote />
-      <div style={{ marginTop: '8px' }} >
-        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-          <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-          Base numbering must be updated manually after inserting a subsequence.
-        </p>
-      </div>
+      <BaseNumberingNote />
     </PartialWidthContainer>
   );
 }
