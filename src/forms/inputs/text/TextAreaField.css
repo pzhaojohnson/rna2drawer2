@@ -1,0 +1,30 @@
+.label {
+  display: flex;
+  flex-direction: column;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #535353;
+  user-select: none;
+}
+
+.textArea {
+  margin-top: 4px;
+  border: 1px solid #d6d6d6;
+  border-radius: 2px;
+  padding: 3px 6px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #2a2a2a;
+}
+
+.textArea:hover {
+  border-color: #333333;
+}
+
+.textArea:focus {
+  border-color: #333333;
+  outline: none;
+}
