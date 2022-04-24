@@ -8,6 +8,7 @@ export type Props = {
   onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
 
   rows?: number;
+  placeholder?: string;
 
   style?: React.CSSProperties;
 };
@@ -26,6 +27,7 @@ export function TextArea(props: Props) {
       onChange={props.onChange}
       onBlur={props.onBlur}
       rows={props.rows}
+      placeholder={props.placeholder}
       style={props.style}
     />
   );

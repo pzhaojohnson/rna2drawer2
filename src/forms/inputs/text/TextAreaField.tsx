@@ -11,6 +11,7 @@ export type Props = {
 
   textArea?: {
     rows?: number;
+    placeholder?: string;
   };
 
   style?: React.CSSProperties;
@@ -34,6 +35,7 @@ export function TextAreaField(props: Props) {
         onChange={props.onChange}
         onBlur={props.onBlur}
         rows={props.textArea?.rows ?? 10}
+        placeholder={props.textArea?.placeholder}
         style={{ marginTop: '4px' }}
       />
     </FieldLabel>

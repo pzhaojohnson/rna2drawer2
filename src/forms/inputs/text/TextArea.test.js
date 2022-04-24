@@ -62,6 +62,13 @@ describe('TextArea component', () => {
     expect(container.firstChild.rows).toBe(63);
   });
 
+  it('renders with specified placeholder text', () => {
+    act(() => {
+      render(<TextArea placeholder='11 2 333 asdf' />, container);
+    });
+    expect(container.firstChild.placeholder).toBe('11 2 333 asdf');
+  });
+
   it('renders with specified CSS styles', () => {
     act(() => {
       render(<TextArea style={{ marginTop: '18.07px' }} />, container);
