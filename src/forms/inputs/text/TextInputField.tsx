@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from './TextInputField.css';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
 export type Props = {
   label?: string;
@@ -22,9 +23,13 @@ export type Props = {
  */
 export function TextInputField(props: Props) {
   return (
-    <label
-      className={styles.label}
-      style={props.style}
+    <FieldLabel
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        ...props.style,
+      }}
     >
       <input
         type='text'
@@ -36,6 +41,6 @@ export function TextInputField(props: Props) {
         style={props.textInput?.style}
       />
       {props.label}
-    </label>
+    </FieldLabel>
   );
 }

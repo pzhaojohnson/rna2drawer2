@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './CheckboxField.css';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
 export type Props = {
   label?: string;
@@ -15,8 +15,7 @@ export type Props = {
  */
 export function CheckboxField(props: Props) {
   return (
-    <label
-      className={styles.label}
+    <FieldLabel
       style={{
         display: 'flex',
         flexDirection: 'row',
@@ -31,6 +30,6 @@ export function CheckboxField(props: Props) {
         style={{ marginRight: '6px' }}
       />
       {props.label}
-    </label>
+    </FieldLabel>
   );
 }
