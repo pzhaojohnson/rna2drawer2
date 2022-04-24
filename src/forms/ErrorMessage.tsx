@@ -3,8 +3,6 @@ import styles from './ErrorMessage.css';
 
 interface Props {
   message: string;
-  margin?: string;
-  fontSize?: string;
 }
 
 export class ErrorMessage extends React.Component {
@@ -16,7 +14,6 @@ export class ErrorMessage extends React.Component {
     return (
       <div
         className={styles.blinksIn}
-        style={{ margin: this.props.margin }}
       >
         {this.props.message ? this.p() : null}
       </div>
@@ -27,9 +24,6 @@ export class ErrorMessage extends React.Component {
     return (
       <p
         className={`${styles.errorMessage} unselectable`}
-        style={{
-          fontSize: this.props.fontSize,
-        }}
       >
         <span>
           {this.props.message}
@@ -41,7 +35,6 @@ export class ErrorMessage extends React.Component {
 
 ErrorMessage.defaultProps = {
   message: '',
-  margin: '0px',
 };
 
 export default ErrorMessage;

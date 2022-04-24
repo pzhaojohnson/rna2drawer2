@@ -36,44 +36,9 @@ describe('message prop', () => {
   });
 });
 
-describe('margin prop', () => {
-  it('renders with given margin prop', () => {
-    act(() => {
-      render(<ErrorMessage margin={'37px 112px'} />, container);
-    });
-    let style = window.getComputedStyle(getErrorMessage());
-    expect(style.margin).toBe('37px 112px');
-  });
-
-  it('is zero by default', () => {
-    act(() => {
-      render(<ErrorMessage message={'asdf'} />, container);
-    });
-    let style = window.getComputedStyle(getErrorMessage());
-    expect(style.margin).toBe('0px');
-  });
-});
-
 it('does not render p element when message is empty', () => {
   act(() => {
     render(<ErrorMessage message={''} />, container);
   });
   expect(getErrorMessage().childNodes.length).toBe(0);
-});
-
-describe('fontSize prop', () => {
-  it('renders with given fontSize prop', () => {
-    act(() => {
-      render(<ErrorMessage message={'qwer'} fontSize={'49.2px'} />, container);
-    });
-    let em = getErrorMessage();
-    let style = window.getComputedStyle(em.childNodes[0]);
-    expect(style.fontSize).toBe('49.2px');
-  });
-
-  it('has a default value', () => {
-    act(() => {
-      render(<ErrorMessage message={'asdf'} />, container);
-    });
-  });
 });
