@@ -3,6 +3,9 @@ import styles from './ErrorMessage.css';
 
 interface Props {
   message?: string;
+
+  // message may also be specified through child elements
+  children?: React.ReactNode;
 }
 
 export class ErrorMessage extends React.Component<Props> {
@@ -16,6 +19,7 @@ export class ErrorMessage extends React.Component<Props> {
         `}
       >
         {this.props.message}
+        {this.props.children}
       </p>
     );
   }

@@ -25,4 +25,18 @@ describe('ErrorMessage component', () => {
     });
     expect(container.textContent).toMatch(/1234 zzxXCV/);
   });
+
+  it('renders with specified children', () => {
+    act(() => {
+      render(
+        <ErrorMessage>
+          Blah blah.
+          {new String('asdf QWER.')}
+          <span>QQWWeerr.</span>
+        </ErrorMessage>,
+        container,
+      );
+    });
+    expect(container.textContent).toMatch(/Blah blah.asdf QWER.QQWWeerr./);
+  });
 });
