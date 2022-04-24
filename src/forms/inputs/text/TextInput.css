@@ -17,3 +17,8 @@
   border-color: #333333;
   outline: none;
 }
+
+.textInput::placeholder {
+  font-style: italic;
+  color: #717171;
+}
