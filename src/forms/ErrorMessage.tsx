@@ -2,12 +2,10 @@ import * as React from 'react';
 import styles from './ErrorMessage.css';
 
 interface Props {
-  message: string;
+  message?: string;
 }
 
 export class ErrorMessage extends React.Component {
-  static defaultProps: Props;
-
   props!: Props;
 
   render() {
@@ -32,9 +30,5 @@ export class ErrorMessage extends React.Component {
     );
   }
 }
-
-ErrorMessage.defaultProps = {
-  message: '',
-};
 
 export default ErrorMessage;
