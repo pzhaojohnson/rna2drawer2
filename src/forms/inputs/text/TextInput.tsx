@@ -8,6 +8,8 @@ export type Props = {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 
+  placeholder?: string;
+
   style?: React.CSSProperties;
 };
 
@@ -26,6 +28,7 @@ export function TextInput(props: Props) {
       onChange={props.onChange}
       onBlur={props.onBlur}
       onKeyUp={props.onKeyUp}
+      placeholder={props.placeholder}
       style={props.style}
     />
   );

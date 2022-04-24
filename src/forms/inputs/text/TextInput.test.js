@@ -69,6 +69,13 @@ describe('TextInput component', () => {
     expect(onKeyUp.mock.calls[0][0].key).toBe('Enter');
   });
 
+  it('renders with specified placeholder text', () => {
+    act(() => {
+      render(<TextInput placeholder='plok zxCV.' />, container);
+    });
+    expect(container.firstChild.placeholder).toBe('plok zxCV.');
+  });
+
   it('renders with specified CSS styles', () => {
     act(() => {
       render(<TextInput style={{ marginRight: '6.92px' }} />, container);

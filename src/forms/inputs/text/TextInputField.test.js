@@ -80,6 +80,14 @@ describe('TextInputField component', () => {
     expect(onKeyUp.mock.calls[0][0].key).toBe('Enter');
   });
 
+  it('passes specified placeholder text to the input element', () => {
+    act(() => {
+      render(<TextInputField textInput={{ placeholder: 'Blah bleh zxcv.' }} />, container);
+    });
+    let textInput = container.getElementsByTagName('input')[0];
+    expect(textInput.placeholder).toBe('Blah bleh zxcv.');
+  });
+
   it('renders with specified CSS styles', () => {
     act(() => {
       render(<TextInputField style={{ marginTop: '32.58px' }} />, container);
