@@ -10,6 +10,9 @@ export type Props = {
   style?: React.CSSProperties;
 };
 
+/**
+ * A labeled checkbox input element.
+ */
 export function CheckboxField(props: Props) {
   return (
     <label
