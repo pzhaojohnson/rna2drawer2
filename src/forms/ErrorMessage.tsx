@@ -5,9 +5,7 @@ interface Props {
   message?: string;
 }
 
-export class ErrorMessage extends React.Component {
-  props!: Props;
-
+export class ErrorMessage extends React.Component<Props> {
   render() {
     return (
       <div
