@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styles from './ErrorMessage.css';
-const uuidv1 = require('uuid/v1');
 
 interface Props {
   message: string;
@@ -14,11 +13,8 @@ export class ErrorMessage extends React.Component {
   props!: Props;
 
   render() {
-    let id = uuidv1();
     return (
       <div
-        key={id}
-        id={id}
         className={styles.blinksIn}
         style={{ margin: this.props.margin }}
       >

@@ -20,15 +20,6 @@ function getErrorMessage() {
   return container.childNodes[0];
 }
 
-it('renders with unique ID', () => {
-  /* Necessary for the fade in animation to occur when the component
-  is rerendered without the message or other props changing. */
-  act(() => {
-    render(<ErrorMessage />, container);
-  });
-  expect(getErrorMessage().id).toBeTruthy();
-});
-
 describe('message prop', () => {
   it('renders the text of the message', () => {
     act(() => {
