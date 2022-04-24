@@ -1,6 +1,6 @@
 import * as React from 'react';
-import styles from './TextAreaField.css';
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+import { TextArea } from 'Forms/inputs/text/TextArea';
 
 export type Props = {
   label?: string;
@@ -29,12 +29,12 @@ export function TextAreaField(props: Props) {
       }}
     >
       {props.label}
-      <textarea
-        className={styles.textArea}
+      <TextArea
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
         rows={props.textArea?.rows ?? 10}
+        style={{ marginTop: '4px' }}
       />
     </FieldLabel>
   );
