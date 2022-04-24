@@ -1,6 +1,6 @@
 import * as React from 'react';
-import styles from './TextInputField.css';
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+import { TextInput } from 'Forms/inputs/text/TextInput';
 
 export type Props = {
   label?: string;
@@ -31,14 +31,15 @@ export function TextInputField(props: Props) {
         ...props.style,
       }}
     >
-      <input
-        type='text'
-        className={styles.textInput}
+      <TextInput
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
         onKeyUp={props.onKeyUp}
-        style={props.textInput?.style}
+        style={{
+          marginRight: '8px',
+          ...props.textInput?.style,
+        }}
       />
       {props.label}
     </FieldLabel>
