@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import ErrorMessage from './ErrorMessage';
+import { render } from 'react-dom';
+import { unmountComponentAtNode } from 'react-dom';
+
+import { ErrorMessage } from './ErrorMessage';
 
 let container = null;
 
@@ -16,29 +18,11 @@ afterEach(() => {
   container = null;
 });
 
-function getErrorMessage() {
-  return container.childNodes[0];
-}
-
-describe('message prop', () => {
-  it('renders the text of the message', () => {
+describe('ErrorMessage component', () => {
+  it('renders with specified message', () => {
     act(() => {
-      render(<ErrorMessage message={'A unique message'} />, container);
+      render(<ErrorMessage message='1234 zzxXCV' />, container);
     });
-    expect(getErrorMessage().textContent).toBe('A unique message');
+    expect(container.textContent).toMatch(/1234 zzxXCV/);
   });
-
-  it('is empty by default', () => {
-    act(() => {
-      render(<ErrorMessage />, container);
-    });
-    expect(getErrorMessage().textContent).toBeFalsy();
-  });
-});
-
-it('does not render p element when message is empty', () => {
-  act(() => {
-    render(<ErrorMessage message={''} />, container);
-  });
-  expect(getErrorMessage().childNodes.length).toBe(0);
 });

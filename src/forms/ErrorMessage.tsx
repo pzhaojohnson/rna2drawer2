@@ -8,22 +8,14 @@ interface Props {
 export class ErrorMessage extends React.Component<Props> {
   render() {
     return (
-      <div
-        className={styles.blinksIn}
-      >
-        {this.props.message ? this.p() : null}
-      </div>
-    );
-  }
-
-  p() {
-    return (
       <p
-        className={`${styles.errorMessage} unselectable`}
+        className={`
+          ${styles.errorMessage}
+          ${styles.blinksIn}
+          unselectable
+        `}
       >
-        <span>
-          {this.props.message}
-        </span>
+        {this.props.message}
       </p>
     );
   }
