@@ -11,7 +11,7 @@ export type Props = {
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 
   // for specifying attributes of the text input element of the field
-  textInput?: {
+  input?: {
     placeholder?: string;
     style?: React.CSSProperties;
   };
@@ -37,10 +37,10 @@ export function TextInputField(props: Props) {
         onChange={props.onChange}
         onBlur={props.onBlur}
         onKeyUp={props.onKeyUp}
-        placeholder={props.textInput?.placeholder}
+        placeholder={props.input?.placeholder}
         style={{
           marginRight: '8px',
-          ...props.textInput?.style,
+          ...props.input?.style,
         }}
       />
       {props.label}

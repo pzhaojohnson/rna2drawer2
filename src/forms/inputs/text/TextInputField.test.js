@@ -31,8 +31,8 @@ describe('TextInputField component', () => {
     act(() => {
       render(<TextInputField value='-123.08' />, container);
     });
-    let textInput = container.getElementsByTagName('input')[0];
-    expect(textInput.value).toBe('-123.08');
+    let input = container.getElementsByTagName('input')[0];
+    expect(input.value).toBe('-123.08');
   });
 
   it('passes onChange callback to the text input element', () => {
@@ -41,13 +41,13 @@ describe('TextInputField component', () => {
       render(<TextInputField onChange={onChange} />, container);
     });
     expect(onChange).not.toHaveBeenCalled();
-    let textInput = container.getElementsByTagName('input')[0];
+    let input = container.getElementsByTagName('input')[0];
     act(() => {
-      textInput.value = 'zxcvQWER1234';
-      Simulate.change(textInput);
+      input.value = 'zxcvQWER1234';
+      Simulate.change(input);
     });
     expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange.mock.calls[0][0].target).toBe(textInput);
+    expect(onChange.mock.calls[0][0].target).toBe(input);
     expect(onChange.mock.calls[0][0].target.value).toBe('zxcvQWER1234');
   });
 
@@ -57,12 +57,12 @@ describe('TextInputField component', () => {
       render(<TextInputField onBlur={onBlur} />, container);
     });
     expect(onBlur).not.toHaveBeenCalled();
-    let textInput = container.getElementsByTagName('input')[0];
+    let input = container.getElementsByTagName('input')[0];
     act(() => {
-      Simulate.blur(textInput);
+      Simulate.blur(input);
     });
     expect(onBlur).toHaveBeenCalledTimes(1);
-    expect(onBlur.mock.calls[0][0].target).toBe(textInput);
+    expect(onBlur.mock.calls[0][0].target).toBe(input);
   });
 
   it('passes onKeyUp callback to the text input element', () => {
@@ -71,21 +71,21 @@ describe('TextInputField component', () => {
       render(<TextInputField onKeyUp={onKeyUp} />, container);
     });
     expect(onKeyUp).not.toHaveBeenCalled();
-    let textInput = container.getElementsByTagName('input')[0];
+    let input = container.getElementsByTagName('input')[0];
     act(() => {
-      Simulate.keyUp(textInput, { key: 'Enter' });
+      Simulate.keyUp(input, { key: 'Enter' });
     });
     expect(onKeyUp).toHaveBeenCalledTimes(1);
-    expect(onKeyUp.mock.calls[0][0].target).toBe(textInput);
+    expect(onKeyUp.mock.calls[0][0].target).toBe(input);
     expect(onKeyUp.mock.calls[0][0].key).toBe('Enter');
   });
 
   it('passes specified placeholder text to the input element', () => {
     act(() => {
-      render(<TextInputField textInput={{ placeholder: 'Blah bleh zxcv.' }} />, container);
+      render(<TextInputField input={{ placeholder: 'Blah bleh zxcv.' }} />, container);
     });
-    let textInput = container.getElementsByTagName('input')[0];
-    expect(textInput.placeholder).toBe('Blah bleh zxcv.');
+    let input = container.getElementsByTagName('input')[0];
+    expect(input.placeholder).toBe('Blah bleh zxcv.');
   });
 
   it('renders with specified CSS styles', () => {
@@ -97,9 +97,9 @@ describe('TextInputField component', () => {
 
   it('passes specified CSS styles to the text input element', () => {
     act(() => {
-      render(<TextInputField textInput={{ style: { width: '18.22px' } }} />, container);
+      render(<TextInputField input={{ style: { width: '18.22px' } }} />, container);
     });
-    let textInput = container.getElementsByTagName('input')[0];
-    expect(textInput.style.width).toBe('18.22px');
+    let input = container.getElementsByTagName('input')[0];
+    expect(input.style.width).toBe('18.22px');
   });
 });
