@@ -49,8 +49,8 @@ function StartPositionField(
       label='Start Position of Substructure'
       value={props.value}
       onChange={props.onChange}
-      input={{ style: { width: '6ch' } }}
-      style={{ marginTop: '18px' }}
+      input={{ style: { width: '7ch' } }}
+      style={{ marginTop: '16px', alignSelf: 'flex-start' }}
     />
   );
 }
@@ -66,7 +66,7 @@ function MaintainTertiaryBondsField(
       label='Maintain Preexisting Tertiary Bonds'
       checked={props.checked}
       onChange={props.onChange}
-      style={{ marginTop: '14px' }}
+      style={{ marginTop: '16px', alignSelf: 'flex-start' }}
     />
   );
 }
@@ -202,7 +202,7 @@ export class ApplySubstructureForm extends React.Component<Props> {
             value={this.state.startPosition}
             onChange={event => this.setState({ startPosition: event.target.value })}
           />
-          <div style={{ height: '6px' }} />
+          <div style={{ height: '8px' }} />
           <DisplayableSequenceRange
             sequence={this.props.app.strictDrawing.layoutSequence()}
           />
