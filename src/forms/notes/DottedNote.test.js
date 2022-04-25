@@ -18,22 +18,40 @@ afterEach(() => {
   container = null;
 });
 
-test('DottedNote component', () => {
-  expect(container.textContent).toBe('');
-  act(() => {
-    render(
-      <DottedNote>Asdf qwer zxcv.</DottedNote>,
-      container,
-    );
+describe('DottedNote component', () => {
+  it('has no text content by default', () => {
+    act(() => {
+      render(<DottedNote />, container);
+    });
+    expect(container.textContent).toBe('');
   });
-  expect(container.textContent).toBe('Asdf qwer zxcv.');
-  act(() => {
-    render(
-      <DottedNote>
-        <p>A paragraph and <span>span</span> note.</p>
-      </DottedNote>,
-      container,
-    );
+
+  it('renders text children', () => {
+    act(() => {
+      render(
+        <DottedNote>Asdf qwer zxcv.</DottedNote>,
+        container,
+      );
+    });
+    expect(container.textContent).toBe('Asdf qwer zxcv.');
   });
-  expect(container.textContent).toBe('A paragraph and span note.');
+
+  it('renders paragraph and span element children', () => {
+    act(() => {
+      render(
+        <DottedNote>
+          <p>A paragraph and <span>span</span> note.</p>
+        </DottedNote>,
+        container,
+      );
+    });
+    expect(container.textContent).toBe('A paragraph and span note.');
+  });
+
+  it('renders with specified CSS styles', () => {
+    act(() => {
+      render(<DottedNote style={{ marginTop: '88.098px' }} />, container);
+    });
+    expect(container.firstChild.style.marginTop).toBe('88.098px');
+  });
 });

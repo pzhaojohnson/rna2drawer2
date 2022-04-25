@@ -4,7 +4,9 @@ import styles from './DottedNote.css';
 export type Props = {
 
   // the contents of the note
-  children: React.ReactNode;
+  children?: React.ReactNode;
+
+  style?: React.CSSProperties;
 };
 
 /**
@@ -16,7 +18,7 @@ export type Props = {
  */
 export function DottedNote(props: Props) {
   return (
-    <div className={styles.dottedNote} >
+    <div className={styles.dottedNote} style={props.style} >
       <div className={styles.dot} />
       <div className={styles.spacer} />
       {props.children}
