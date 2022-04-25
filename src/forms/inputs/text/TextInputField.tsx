@@ -29,6 +29,7 @@ export function TextInputField(props: Props) {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        cursor: 'text',
         ...props.style,
       }}
     >

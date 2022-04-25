@@ -20,6 +20,7 @@ export function CheckboxField(props: Props) {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
+        cursor: 'pointer',
         ...props.style,
       }}
     >

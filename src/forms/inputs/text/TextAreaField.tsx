@@ -26,6 +26,7 @@ export function TextAreaField(props: Props) {
       style={{
         display: 'flex',
         flexDirection: 'column',
+        cursor: 'text',
         ...props.style,
       }}
     >
