@@ -8,12 +8,13 @@ import { applySecondarySubstructure } from 'Draw/strict/applySecondarySubstructu
 import { applyTertiarySubstructure } from 'Draw/strict/applyTertiarySubstructure';
 
 import * as React from 'react';
-import styles from './ApplySubstructureForm.css';
 import { v4 as uuidv4 } from 'uuid';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { TextAreaField } from 'Forms/inputs/text/TextAreaField';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
-import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
+import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
 import { DottedNote } from 'Forms/notes/DottedNote';
@@ -25,17 +26,16 @@ function SubstructureField(
   },
 ) {
   return (
-    <label className={styles.substructureFieldLabel} >
-      Substructure
-      <textarea
-        className={styles.substructureFieldTextarea}
-        value={props.value}
-        onChange={props.onChange}
-        rows={10}
-        placeholder='...in dot-bracket notation "(((....)))"'
-        style={{ marginTop: '4px' }}
-      />
-    </label>
+    <TextAreaField
+      label='Substructure'
+      value={props.value}
+      onChange={props.onChange}
+      textArea={{
+        rows: 10,
+        placeholder: '...in dot-bracket notation "(((....)))"',
+      }}
+      style={{ marginTop: '4px' }}
+    />
   );
 }
 
@@ -46,18 +46,13 @@ function StartPositionField(
   },
 ) {
   return (
-    <div style={{ marginTop: '18px' }} >
-      <label className={styles.startPositionFieldLabel} >
-        <input
-          type='text'
-          className={styles.startPositionFieldInput}
-          value={props.value}
-          onChange={props.onChange}
-          style={{ marginRight: '8px', width: '6ch' }}
-        />
-        Start Position of Substructure
-      </label>
-    </div>
+    <TextInputField
+      label='Start Position of Substructure'
+      value={props.value}
+      onChange={props.onChange}
+      input={{ style: { width: '6ch' } }}
+      style={{ marginTop: '18px' }}
+    />
   );
 }
 
@@ -68,17 +63,12 @@ function MaintainTertiaryBondsField(
   },
 ) {
   return (
-    <div style={{ marginTop: '14px' }} >
-      <label className={styles.maintainTertiaryBondsFieldLabel} >
-        <Checkbox
-          checked={props.checked}
-          onChange={props.onChange}
-        />
-        <span style={{ marginLeft: '6px' }} >
-          Maintain Preexisting Tertiary Bonds
-        </span>
-      </label>
-    </div>
+    <CheckboxField
+      label='Maintain Preexisting Tertiary Bonds'
+      checked={props.checked}
+      onChange={props.onChange}
+      style={{ marginTop: '14px' }}
+    />
   );
 }
 
