@@ -39,4 +39,11 @@ describe('ErrorMessage component', () => {
     });
     expect(container.textContent).toMatch(/Blah blah.asdf QWER.QQWWeerr./);
   });
+
+  it('renders with specified CSS styles', () => {
+    act(() => {
+      render(<ErrorMessage style={{ marginTop: '23.74px' }} />, container);
+    });
+    expect(container.firstChild.style.marginTop).toBe('23.74px');
+  });
 });

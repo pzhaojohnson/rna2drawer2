@@ -6,6 +6,8 @@ interface Props {
 
   // message may also be specified through child elements
   children?: React.ReactNode;
+
+  style?: React.CSSProperties;
 }
 
 export class ErrorMessage extends React.Component<Props> {
@@ -17,6 +19,7 @@ export class ErrorMessage extends React.Component<Props> {
           ${styles.blinksIn}
           unselectable
         `}
+        style={this.props.style}
       >
         {this.props.message}
         {this.props.children}
