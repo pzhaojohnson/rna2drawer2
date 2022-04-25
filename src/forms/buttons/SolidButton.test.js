@@ -41,6 +41,13 @@ it('binds onClick callback', () => {
   expect(onClick).toHaveBeenCalled();
 });
 
+it('renders with specified CSS styles', () => {
+  act(() => {
+    render(<SolidButton style={{ margin: '0px 0px 12.87px 1px' }} />, container);
+  });
+  expect(container.firstChild.style.margin).toBe('0px 0px 12.87px 1px');
+});
+
 describe('when disabled', () => {
   it('has disabled CSS styles', () => {
     let b = SolidButton({ disabled: true });

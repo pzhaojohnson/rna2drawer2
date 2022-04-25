@@ -5,6 +5,7 @@ interface Props {
   text: string;
   onClick: () => void;
   disabled?: boolean;
+  style?: React.CSSProperties;
 }
 
 export function SolidButton(props: Props): React.ReactElement {
@@ -12,6 +13,7 @@ export function SolidButton(props: Props): React.ReactElement {
     <button
       className={`${styles.solidButton} ${props.disabled ? styles.disabled : styles.enabled}`}
       onClick={props.disabled ? undefined : () => props.onClick()}
+      style={props.style}
     >
       {props.text}
     </button>
