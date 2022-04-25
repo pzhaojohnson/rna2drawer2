@@ -34,7 +34,6 @@ function SubstructureField(
         rows: 10,
         placeholder: '...in dot-bracket notation "(((....)))"',
       }}
-      style={{ marginTop: '4px' }}
     />
   );
 }
