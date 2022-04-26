@@ -16,7 +16,7 @@ import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import { SolidButton } from 'Forms/buttons/SolidButton';
-import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
+import { ErrorMessage } from 'Forms/ErrorMessage';
 import { DottedNote } from 'Forms/notes/DottedNote';
 
 function SubstructureField(
@@ -86,18 +86,6 @@ function SubmitButton(
   );
 }
 
-function ErrorMessage(
-  props: {
-    textContent?: string,
-  },
-) {
-  return (
-    <div style={{ marginTop: '6px' }} >
-      <_ErrorMessage message={props.textContent} />
-    </div>
-  );
-}
-
 function ExplanatoryNote() {
   return (
     <div style={{ marginTop: '16px' }} >
@@ -149,6 +137,11 @@ type Inputs = {
 
 interface State extends Inputs {
   errorMessage?: string;
+
+  // to be updated every time the error message is set
+  // (allows for error message animations to be played
+  // every time the error message is set)
+  errorMessageKey: number;
 }
 
 function deepCopyInputs(inputs: Inputs | State): Inputs {
@@ -176,8 +169,11 @@ export class ApplySubstructureForm extends React.Component<Props> {
 
     this.state = {
       ...deepCopyInputs(prevInputs),
+
       substructure: props.substructure ?? prevInputs.substructure,
       startPosition: props.startPosition ?? prevInputs.startPosition,
+
+      errorMessageKey: 0,
     };
   }
 
@@ -212,17 +208,24 @@ export class ApplySubstructureForm extends React.Component<Props> {
           />
           <SubmitButton
             onClick={() => {
+              let errorMessage;
               try {
                 this.submit(this.state);
-                this.setState({ errorMessage: '' });
+                errorMessage = '';
               } catch (error) {
-                let errorMessage = error instanceof Error ? error.message : String(error);
-                this.setState({ errorMessage });
+                errorMessage = error instanceof Error ? error.message : String(error);
               }
+
+              this.setState({
+                errorMessage,
+                errorMessageKey: this.state.errorMessageKey + 1,
+              });
             }}
           />
           {!this.state.errorMessage ? null : (
-            <ErrorMessage textContent={this.state.errorMessage} />
+            <ErrorMessage key={this.state.errorMessageKey} style={{ marginTop: '6px' }} >
+              {this.state.errorMessage}
+            </ErrorMessage>
           )}
           <ExplanatoryNote />
           <TertiaryBondsNote />
