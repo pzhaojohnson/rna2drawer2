@@ -19,22 +19,24 @@ export type Props = {
  * is empty.
  */
 export function DisplayableSequenceRange(props: Props) {
-  if (props.sequence.length == 0) {
-    return (
-      <p className={styles.displayableSequenceRange} >
-        Sequence is empty.
-      </p>
-    );
-  }
-
   let no = numberingOffset(props.sequence) ?? 0;
+
+  let children = (
+    props.sequence.length == 0 ? (
+      'Sequence is empty.'
+    ) : [
+      <span key={0} className={styles.range} >
+        {1 + no}...{props.sequence.length + no}&nbsp;
+      </span>,
+      <span key={1} >
+        is the sequence range.
+      </span>,
+    ]
+  );
 
   return (
     <p className={styles.displayableSequenceRange} >
-      <span className={styles.range} >
-        {1 + no}...{props.sequence.length + no}&nbsp;
-      </span>
-      is the sequence range.
+      {children}
     </p>
   );
 }
