@@ -105,4 +105,15 @@ describe('DisplayableSequenceRange component', () => {
     });
     expect(container.textContent).toBe(`1...15${nbsp}is the sequence range.`);
   });
+
+  it('renders with specified CSS styles', () => {
+    let sequence = appendSequence(drawing, { id: '1', characters: 'asdfQWER' });
+    act(() => {
+      render(
+        <DisplayableSequenceRange sequence={sequence} style={{ marginTop: '80.93px' }} />,
+        container,
+      );
+    });
+    expect(container.firstChild.style.marginTop).toBe('80.93px');
+  });
 });

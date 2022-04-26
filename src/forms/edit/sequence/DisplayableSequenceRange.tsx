@@ -8,6 +8,8 @@ export type Props = {
 
   // the sequence to show the range of
   sequence: Sequence;
+
+  style?: React.CSSProperties;
 };
 
 /**
@@ -35,7 +37,10 @@ export function DisplayableSequenceRange(props: Props) {
   );
 
   return (
-    <p className={styles.displayableSequenceRange} >
+    <p
+      className={styles.displayableSequenceRange}
+      style={props.style}
+    >
       {children}
     </p>
   );
