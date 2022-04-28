@@ -103,27 +103,29 @@ export function EditBasesByCharacterForm(props: Props) {
       />
       <SubmitButton
         onClick={() => {
-          if (character.length == 0) {
-            setErrorMessage('Specify a character.');
+          try {
+            if (character.length == 0) {
+              throw new Error('Specify a character.');
+            }
+
+            let drawing = props.app.strictDrawing.drawing;
+            let bases = drawing.bases().filter(b => b.text.text() == character);
+
+            if (bases.length == 0) {
+              throw new Error('No bases have the entered character.');
+            }
+
+            props.unmount();
+            let drawingInteraction = props.app.strictDrawingInteraction;
+            drawingInteraction.currentTool = drawingInteraction.editingTool;
+            drawingInteraction.editingTool.editingType = Base;
+            drawingInteraction.editingTool.select(bases);
+            drawingInteraction.editingTool.renderForm();
+
+          } catch (error) {
+            setErrorMessage(error instanceof Error ? error.message : String(error));
             setErrorMessageKey(errorMessageKey + 1);
-            return;
           }
-
-          let drawing = props.app.strictDrawing.drawing;
-          let bases = drawing.bases().filter(b => b.text.text() == character);
-
-          if (bases.length == 0) {
-            setErrorMessage('No bases have the entered character.');
-            setErrorMessageKey(errorMessageKey + 1);
-            return;
-          }
-
-          props.unmount();
-          let drawingInteraction = props.app.strictDrawingInteraction;
-          drawingInteraction.currentTool = drawingInteraction.editingTool;
-          drawingInteraction.editingTool.editingType = Base;
-          drawingInteraction.editingTool.select(bases);
-          drawingInteraction.editingTool.renderForm();
         }}
       />
       {!errorMessage ? null : (
