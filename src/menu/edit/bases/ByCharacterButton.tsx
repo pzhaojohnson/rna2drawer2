@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { BasesByCharacter } from 'Forms/edit/bases/by/character/BasesByCharacter';
+import { EditBasesByCharacterForm } from 'Forms/edit/bases/by/character/EditBasesByCharacterForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
@@ -16,7 +16,7 @@ export function ByCharacterButton(props: Props) {
       text='By Character'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <BasesByCharacter {...formProps} app={props.app} />
+          <EditBasesByCharacterForm {...formProps} app={props.app} />
         ), { key: formKey });
       }}
     />

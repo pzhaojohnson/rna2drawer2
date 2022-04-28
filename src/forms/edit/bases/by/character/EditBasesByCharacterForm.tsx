@@ -30,7 +30,7 @@ function constrainCharacter(c: string): string {
   }
 }
 
-export function BasesByCharacter(props: Props) {
+export function EditBasesByCharacterForm(props: Props) {
   let [character, setCharacter] = useState(prevCharacter);
 
   // use String object to rerender every time the error message is set
