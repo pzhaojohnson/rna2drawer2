@@ -3,6 +3,7 @@ import { Base } from 'Draw/bases/Base';
 
 import * as React from 'react';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
@@ -79,6 +80,10 @@ export function EditBasesByCharacterForm(props: Props) {
   // (to trigger error message animations)
   let [errorMessageKey, setErrorMessageKey] = useState(0);
 
+  useEffect(() => {
+    return () => { prevCharacter = character; }
+  });
+
   return (
     <PartialWidthContainer
       unmount={props.unmount}
@@ -119,8 +124,6 @@ export function EditBasesByCharacterForm(props: Props) {
           drawingInteraction.editingTool.editingType = Base;
           drawingInteraction.editingTool.select(bases);
           drawingInteraction.editingTool.renderForm();
-
-          prevCharacter = character;
         }}
       />
       {!errorMessage.valueOf() ? null : (
