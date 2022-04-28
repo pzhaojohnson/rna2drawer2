@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
+import { ErrorMessage } from 'Forms/ErrorMessage';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
+import { DottedNote } from 'Forms/notes/DottedNote';
 
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
@@ -14,6 +15,27 @@ import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { round } from 'Math/round';
 import { pointsToPixels } from 'Export/units'
 import { exportDrawing } from 'Export/export';
+
+function FontSizeOfBasesToExportField(
+  props: {
+    value: string,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    onBlur: (event: React.FocusEvent<HTMLInputElement>) => void,
+    onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void,
+  },
+) {
+  return (
+    <TextInputField
+      label='Font Size of Bases to Export'
+      value={props.value}
+      onChange={props.onChange}
+      onBlur={props.onBlur}
+      onKeyUp={props.onKeyUp}
+      input={{ style: { width: '32px' } }}
+      style={{ alignSelf: 'flex-start' }}
+    />
+  );
+}
 
 // returns undefined if the font size of the base cannot be parsed
 function fontSize(b: Base): number | undefined {
@@ -60,14 +82,12 @@ export type Props = {
 function PptxNotes() {
   return (
     <div>
-      <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
+      <DottedNote>
         Exported PPTX files require PowerPoint 2016 or later to open.
-      </p>
-      <p className='unselectable' style={{ marginTop: '8px', fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
+      </DottedNote>
+      <DottedNote style={{ marginTop: '12px' }} >
         Large structures may take a while to export.
-      </p>
+      </DottedNote>
     </div>
   );
 }
@@ -90,32 +110,22 @@ export function ExportDrawing(props: Props) {
       title={`Export ${props.format.toUpperCase()}`}
       style={{ width: '368px' }}
     >
-      <div>
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          <input
-            type='text'
-            className={textFieldStyles.input}
-            value={inputs.fontSizeOfBasesToExport}
-            onChange={event => {
-              if (event.target.value.trim() != inputs.fontSizeOfBasesToExport.trim()) {
-                setErrorMessage(new String(''));
-              }
-              setInputs({ ...inputs, fontSizeOfBasesToExport: event.target.value });
-            }}
-            onBlur={() => setInputs(constrainInputs(inputs))}
-            onKeyUp={event => {
-              if (event.key.toLowerCase() == 'enter') {
-                setInputs(constrainInputs(inputs));
-              }
-            }}
-            style={{ width: '32px' }}
-          />
-          <div style={{ marginLeft: '8px' }} >
-            <p className={`${textFieldStyles.label} unselectable`} style={{ color: 'rgba(0,0,0,0.95)' }} >
-              Font Size of Bases to Export
-            </p>
-          </div>
-        </div>
+      <div style={{ display: 'flex', flexDirection: 'column' }} >
+        <FontSizeOfBasesToExportField
+          value={inputs.fontSizeOfBasesToExport}
+          onChange={event => {
+            if (event.target.value.trim() != inputs.fontSizeOfBasesToExport.trim()) {
+              setErrorMessage(new String(''));
+            }
+            setInputs({ ...inputs, fontSizeOfBasesToExport: event.target.value });
+          }}
+          onBlur={() => setInputs(constrainInputs(inputs))}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              setInputs(constrainInputs(inputs));
+            }
+          }}
+        />
         <div style={{ marginTop: '6px' }} >
           <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
             Use to scale the exported drawing.
@@ -169,13 +179,9 @@ export function ExportDrawing(props: Props) {
           }}
         />
         {!errorMessage.valueOf() ? null : (
-          <p
-            key={Math.random()}
-            className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-            style={{ marginTop: '6px' }}
-          >
+          <ErrorMessage key={Math.random()} style={{ marginTop: '6px' }} >
             {errorMessage.valueOf()}
-          </p>
+          </ErrorMessage>
         )}
       </div>
       {props.format != 'pptx' ? null : (
