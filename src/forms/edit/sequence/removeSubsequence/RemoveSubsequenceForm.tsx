@@ -55,7 +55,7 @@ function constrainInputs(inputs: Inputs): Inputs {
 
 let prevInputs: Inputs | undefined = undefined;
 
-export function RemoveSubsequence(props: Props) {
+export function RemoveSubsequenceForm(props: Props) {
   let drawing = props.app.strictDrawing.drawing;
 
   if (drawing.sequences.length > 1) {
