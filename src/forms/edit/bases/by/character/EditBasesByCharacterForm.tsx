@@ -88,12 +88,7 @@ export function EditBasesByCharacterForm(props: Props) {
     >
       <CharacterField
         value={character}
-        onChange={event => {
-          if (event.target.value.trim() != character.trim()) {
-            setErrorMessage('');
-          }
-          setCharacter(event.target.value);
-        }}
+        onChange={event => setCharacter(event.target.value)}
         onBlur={() => setCharacter(constrainCharacter(character))}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
