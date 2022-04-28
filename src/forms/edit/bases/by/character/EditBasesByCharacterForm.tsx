@@ -73,8 +73,11 @@ function constrainCharacter(c: string): string {
 export function EditBasesByCharacterForm(props: Props) {
   let [character, setCharacter] = useState(prevCharacter);
 
-  // use String object to rerender every time the error message is set
-  let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+  let [errorMessage, setErrorMessage] = useState('');
+
+  // should be incremented every time the error message is set
+  // (to trigger error message animations)
+  let [errorMessageKey, setErrorMessageKey] = useState(0);
 
   return (
     <PartialWidthContainer
@@ -87,7 +90,7 @@ export function EditBasesByCharacterForm(props: Props) {
         value={character}
         onChange={event => {
           if (event.target.value.trim() != character.trim()) {
-            setErrorMessage(new String(''));
+            setErrorMessage('');
           }
           setCharacter(event.target.value);
         }}
@@ -101,7 +104,8 @@ export function EditBasesByCharacterForm(props: Props) {
       <SubmitButton
         onClick={() => {
           if (character.length == 0) {
-            setErrorMessage(new String('Specify a character.'));
+            setErrorMessage('Specify a character.');
+            setErrorMessageKey(errorMessageKey + 1);
             return;
           }
 
@@ -109,7 +113,8 @@ export function EditBasesByCharacterForm(props: Props) {
           let bases = drawing.bases().filter(b => b.text.text() == character);
 
           if (bases.length == 0) {
-            setErrorMessage(new String('No bases have the entered character.'));
+            setErrorMessage('No bases have the entered character.');
+            setErrorMessageKey(errorMessageKey + 1);
             return;
           }
 
@@ -124,7 +129,7 @@ export function EditBasesByCharacterForm(props: Props) {
         }}
       />
       {!errorMessage.valueOf() ? null : (
-        <ErrorMessage style={{ marginTop: '8px' }} >
+        <ErrorMessage key={errorMessageKey} style={{ marginTop: '8px' }} >
           {errorMessage.valueOf()}
         </ErrorMessage>
       )}
