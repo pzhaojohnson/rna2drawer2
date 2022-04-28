@@ -89,7 +89,7 @@ export function EditBasesByCharacterForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Bases by Character'
-      style={{ width: '348px' }}
+      style={{ width: '356px' }}
     >
       <CharacterField
         value={character}
@@ -112,7 +112,7 @@ export function EditBasesByCharacterForm(props: Props) {
             let bases = drawing.bases().filter(b => b.text.text() == character);
 
             if (bases.length == 0) {
-              throw new Error('No bases have the entered character.');
+              throw new Error('No bases have the specified character.');
             }
 
             props.unmount();
@@ -134,7 +134,7 @@ export function EditBasesByCharacterForm(props: Props) {
         </ErrorMessage>
       )}
       <DottedNote style={{ marginTop: '16px' }} >
-        Bases with the entered character will be selected and may then be edited.
+        Bases with the specified character will be selected and may then be edited.
       </DottedNote>
       <DottedNote style={{ marginTop: '12px' }} >
         Is case-sensitive.
