@@ -30,7 +30,8 @@ function CharacterField(
       onChange={props.onChange}
       onBlur={props.onBlur}
       onKeyUp={props.onKeyUp}
-      input={{ style: { width: '12px', textAlign: 'center' } }}
+      input={{ style: { width: '2ch', textAlign: 'center' } }}
+      style={{ alignSelf: 'flex-start' }}
     />
   );
 }
@@ -44,7 +45,7 @@ function SubmitButton(
     <SolidButton
       text='Select'
       onClick={props.onClick}
-      style={{ marginTop: '24px' }}
+      style={{ marginTop: '32px', alignSelf: 'flex-start' }}
     />
   );
 }
@@ -89,56 +90,58 @@ export function EditBasesByCharacterForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Bases by Character'
-      style={{ width: '356px' }}
+      style={{ width: '364px' }}
     >
-      <CharacterField
-        value={character}
-        onChange={event => setCharacter(event.target.value)}
-        onBlur={() => setCharacter(constrainCharacter(character))}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            setCharacter(constrainCharacter(character));
-          }
-        }}
-      />
-      <SubmitButton
-        onClick={() => {
-          try {
-            if (character.length == 0) {
-              throw new Error('Specify a character.');
+      <div style={{ display: 'flex', flexDirection: 'column' }} >
+        <CharacterField
+          value={character}
+          onChange={event => setCharacter(event.target.value)}
+          onBlur={() => setCharacter(constrainCharacter(character))}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              setCharacter(constrainCharacter(character));
             }
+          }}
+        />
+        <SubmitButton
+          onClick={() => {
+            try {
+              if (character.length == 0) {
+                throw new Error('Specify a character.');
+              }
 
-            let drawing = props.app.strictDrawing.drawing;
-            let bases = drawing.bases().filter(b => b.text.text() == character);
+              let drawing = props.app.strictDrawing.drawing;
+              let bases = drawing.bases().filter(b => b.text.text() == character);
 
-            if (bases.length == 0) {
-              throw new Error('No bases have the specified character.');
+              if (bases.length == 0) {
+                throw new Error('No bases have the specified character.');
+              }
+
+              props.unmount();
+              let drawingInteraction = props.app.strictDrawingInteraction;
+              drawingInteraction.currentTool = drawingInteraction.editingTool;
+              drawingInteraction.editingTool.editingType = Base;
+              drawingInteraction.editingTool.select(bases);
+              drawingInteraction.editingTool.renderForm();
+
+            } catch (error) {
+              setErrorMessage(error instanceof Error ? error.message : String(error));
+              setErrorMessageKey(errorMessageKey + 1);
             }
-
-            props.unmount();
-            let drawingInteraction = props.app.strictDrawingInteraction;
-            drawingInteraction.currentTool = drawingInteraction.editingTool;
-            drawingInteraction.editingTool.editingType = Base;
-            drawingInteraction.editingTool.select(bases);
-            drawingInteraction.editingTool.renderForm();
-
-          } catch (error) {
-            setErrorMessage(error instanceof Error ? error.message : String(error));
-            setErrorMessageKey(errorMessageKey + 1);
-          }
-        }}
-      />
-      {!errorMessage ? null : (
-        <ErrorMessage key={errorMessageKey} style={{ marginTop: '8px' }} >
-          {errorMessage}
-        </ErrorMessage>
-      )}
-      <DottedNote style={{ marginTop: '16px' }} >
-        Bases with the specified character will be selected and may then be edited.
-      </DottedNote>
-      <DottedNote style={{ marginTop: '12px' }} >
-        Is case-sensitive.
-      </DottedNote>
+          }}
+        />
+        {!errorMessage ? null : (
+          <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
+            {errorMessage}
+          </ErrorMessage>
+        )}
+        <DottedNote style={{ marginTop: '16px' }} >
+          Bases with the specified character will be selected and may then be edited.
+        </DottedNote>
+        <DottedNote style={{ marginTop: '12px' }} >
+          Is case-sensitive.
+        </DottedNote>
+      </div>
     </PartialWidthContainer>
   );
 }
