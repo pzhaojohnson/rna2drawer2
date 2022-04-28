@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { ExportDrawing } from 'Forms/export/drawing/ExportDrawing';
+import { ExportDrawingForm } from 'Forms/export/drawing/ExportDrawingForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
@@ -16,7 +16,7 @@ export function ExportSvgButton(props: Props) {
       text='SVG'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <ExportDrawing
+          <ExportDrawingForm
             {...formProps}
             app={props.app}
             format='svg'

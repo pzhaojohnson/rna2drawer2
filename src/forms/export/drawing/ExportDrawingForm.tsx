@@ -1,19 +1,27 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
-import { ErrorMessage } from 'Forms/ErrorMessage';
-import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { SolidButton } from 'Forms/buttons/SolidButton';
-import { DottedNote } from 'Forms/notes/DottedNote';
-
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
-import { atPosition } from 'Array/at';
+
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
+
+import { SolidButton } from 'Forms/buttons/SolidButton';
+import { ErrorMessage } from 'Forms/ErrorMessage';
+
+import { DottedNote } from 'Forms/notes/DottedNote';
+
 import { isBlank } from 'Parse/isBlank';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
+
 import { round } from 'Math/round';
 import { pointsToPixels } from 'Export/units'
+
+import { atPosition } from 'Array/at';
+
 import { exportDrawing } from 'Export/export';
 
 function FontSizeOfBasesToExportField(
@@ -92,7 +100,7 @@ function PptxNotes() {
   );
 }
 
-export function ExportDrawing(props: Props) {
+export function ExportDrawingForm(props: Props) {
   let [inputs, setInputs] = useState<Inputs>({ ...prevInputs });
 
   // use String object for fade in animation every time the error message is set
