@@ -126,9 +126,9 @@ export function EditBasesByCharacterForm(props: Props) {
           drawingInteraction.editingTool.renderForm();
         }}
       />
-      {!errorMessage.valueOf() ? null : (
+      {!errorMessage ? null : (
         <ErrorMessage key={errorMessageKey} style={{ marginTop: '8px' }} >
-          {errorMessage.valueOf()}
+          {errorMessage}
         </ErrorMessage>
       )}
       <DottedNote style={{ marginTop: '16px' }} >
