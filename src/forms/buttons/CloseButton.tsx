@@ -26,10 +26,9 @@ interface Props {
   onClick: () => void;
 }
 
-export class CloseButton extends React.Component {
+export class CloseButton extends React.Component<Props> {
   static defaultProps: Props;
 
-  props!: Props;
   state: {
     hovered: boolean;
   }
