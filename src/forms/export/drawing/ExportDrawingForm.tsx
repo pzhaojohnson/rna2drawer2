@@ -143,7 +143,7 @@ type Inputs = {
   exportedFontSizeOfBases: string;
 }
 
-function constrainFontSizeInput(value: string): string {
+function constrainFontSize(value: string): string {
   let n = Number.parseFloat(value);
   if (Number.isFinite(n)) {
     n = round(n, 1); // match PowerPoint font size precision
@@ -155,7 +155,7 @@ function constrainFontSizeInput(value: string): string {
 
 function constrainInputs(inputs: Inputs): Inputs {
   return {
-    exportedFontSizeOfBases: constrainFontSizeInput(inputs.exportedFontSizeOfBases),
+    exportedFontSizeOfBases: constrainFontSize(inputs.exportedFontSizeOfBases),
   };
 }
 
