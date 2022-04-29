@@ -122,9 +122,6 @@ export function ExportDrawingForm(props: Props) {
         <FontSizeOfBasesToExportField
           value={inputs.fontSizeOfBasesToExport}
           onChange={event => {
-            if (event.target.value.trim() != inputs.fontSizeOfBasesToExport.trim()) {
-              setErrorMessage(new String(''));
-            }
             setInputs({ ...inputs, fontSizeOfBasesToExport: event.target.value });
           }}
           onBlur={() => setInputs(constrainInputs(inputs))}
