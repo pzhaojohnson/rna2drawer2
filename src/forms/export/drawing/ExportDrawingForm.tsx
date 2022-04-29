@@ -45,6 +45,19 @@ function FontSizeOfBasesToExportField(
   );
 }
 
+function PptxNotes() {
+  return (
+    <div>
+      <DottedNote>
+        Exported PPTX files require PowerPoint 2016 or later to open.
+      </DottedNote>
+      <DottedNote style={{ marginTop: '12px' }} >
+        Large structures may take a while to export.
+      </DottedNote>
+    </div>
+  );
+}
+
 // returns undefined if the font size of the base cannot be parsed
 function fontSize(b: Base): number | undefined {
   let n = interpretNumber(b.text.attr('font-size'));
@@ -53,13 +66,19 @@ function fontSize(b: Base): number | undefined {
   }
 }
 
+export type Props = {
+  app: App;
+
+  // the format to export the drawing in
+  format: 'svg' | 'pptx';
+
+  unmount: () => void;
+  history: FormHistoryInterface;
+}
+
 type Inputs = {
   fontSizeOfBasesToExport: string;
 }
-
-let prevInputs: Inputs = {
-  fontSizeOfBasesToExport: '6',
-};
 
 function constrainFontSizeInput(value: string): string {
   let n = Number.parseFloat(value);
@@ -77,28 +96,9 @@ function constrainInputs(inputs: Inputs): Inputs {
   };
 }
 
-export type Props = {
-  app: App;
-
-  // the format to export the drawing in
-  format: 'svg' | 'pptx';
-
-  unmount: () => void;
-  history: FormHistoryInterface;
-}
-
-function PptxNotes() {
-  return (
-    <div>
-      <DottedNote>
-        Exported PPTX files require PowerPoint 2016 or later to open.
-      </DottedNote>
-      <DottedNote style={{ marginTop: '12px' }} >
-        Large structures may take a while to export.
-      </DottedNote>
-    </div>
-  );
-}
+let prevInputs: Inputs = {
+  fontSizeOfBasesToExport: '6',
+};
 
 export function ExportDrawingForm(props: Props) {
   let [inputs, setInputs] = useState<Inputs>({ ...prevInputs });
