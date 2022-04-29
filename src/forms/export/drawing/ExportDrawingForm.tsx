@@ -44,31 +44,31 @@ export function exportDrawing(
   args: {
     app: App, // a reference to the whole app
     format: 'svg' | 'pptx', // the format to export in
-    fontSizeOfBasesToExport: string,
+    exportedFontSizeOfBases: string,
   },
 ): void | never {
-  if (isBlank(args.fontSizeOfBasesToExport)) {
+  if (isBlank(args.exportedFontSizeOfBases)) {
     throw new Error('Specify the font size of bases to export.');
   }
 
-  let fontSizeOfBasesToExport = Number.parseFloat(args.fontSizeOfBasesToExport);
+  let exportedFontSizeOfBases = Number.parseFloat(args.exportedFontSizeOfBases);
 
-  if (!Number.isFinite(fontSizeOfBasesToExport)) {
+  if (!Number.isFinite(exportedFontSizeOfBases)) {
     throw new Error('Font size of bases must be a number.');
-  } else if (fontSizeOfBasesToExport < 1) {
+  } else if (exportedFontSizeOfBases < 1) {
     // 1 is the minimum font size in PowerPoint
     throw new Error('Font size of bases must be at least 1.');
   }
 
   if (args.format == 'pptx') {
-    fontSizeOfBasesToExport = pointsToPixels(fontSizeOfBasesToExport);
+    exportedFontSizeOfBases = pointsToPixels(exportedFontSizeOfBases);
   }
 
   // assumes all bases have the same font size
   let fontSizeOfBases = fontSizeOfFirstBase(args.app.strictDrawing.drawing);
   // no scaling if the font size of bases is undefined
-  fontSizeOfBases = fontSizeOfBases ?? fontSizeOfBasesToExport;
-  let scale = fontSizeOfBasesToExport / fontSizeOfBases;
+  fontSizeOfBases = fontSizeOfBases ?? exportedFontSizeOfBases;
+  let scale = exportedFontSizeOfBases / fontSizeOfBases;
 
   try {
     _exportDrawing(args.app.strictDrawing.drawing, {
@@ -81,7 +81,7 @@ export function exportDrawing(
   }
 }
 
-function FontSizeOfBasesToExportField(
+function ExportedFontSizeOfBasesField(
   props: {
     value: string,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
@@ -91,7 +91,7 @@ function FontSizeOfBasesToExportField(
 ) {
   return (
     <TextInputField
-      label='Font Size of Bases to Export'
+      label='Exported Font Size of Bases'
       value={props.value}
       onChange={props.onChange}
       onBlur={props.onBlur}
@@ -140,7 +140,7 @@ export type Props = {
 }
 
 type Inputs = {
-  fontSizeOfBasesToExport: string;
+  exportedFontSizeOfBases: string;
 }
 
 function constrainFontSizeInput(value: string): string {
@@ -155,12 +155,12 @@ function constrainFontSizeInput(value: string): string {
 
 function constrainInputs(inputs: Inputs): Inputs {
   return {
-    fontSizeOfBasesToExport: constrainFontSizeInput(inputs.fontSizeOfBasesToExport),
+    exportedFontSizeOfBases: constrainFontSizeInput(inputs.exportedFontSizeOfBases),
   };
 }
 
 let prevInputs: Inputs = {
-  fontSizeOfBasesToExport: '6',
+  exportedFontSizeOfBases: '6',
 };
 
 export function ExportDrawingForm(props: Props) {
@@ -185,10 +185,10 @@ export function ExportDrawingForm(props: Props) {
       style={{ width: '368px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
-        <FontSizeOfBasesToExportField
-          value={inputs.fontSizeOfBasesToExport}
+        <ExportedFontSizeOfBasesField
+          value={inputs.exportedFontSizeOfBases}
           onChange={event => {
-            setInputs({ ...inputs, fontSizeOfBasesToExport: event.target.value });
+            setInputs({ ...inputs, exportedFontSizeOfBases: event.target.value });
           }}
           onBlur={() => setInputs(constrainInputs(inputs))}
           onKeyUp={event => {
@@ -209,7 +209,7 @@ export function ExportDrawingForm(props: Props) {
             exportDrawing({
               app: props.app,
               format: props.format,
-              fontSizeOfBasesToExport: inputs.fontSizeOfBasesToExport,
+              exportedFontSizeOfBases: inputs.exportedFontSizeOfBases,
             });
             setErrorMessage('');
           } catch (error) {
