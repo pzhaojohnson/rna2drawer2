@@ -9,6 +9,7 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
+import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
@@ -187,11 +188,9 @@ export function ExportDrawingForm(props: Props) {
             }
           }}
         />
-        <div style={{ marginTop: '6px' }} >
-          <p style={{ fontSize: '14px', fontStyle: 'italic', fontWeight: 600, color: '#9797ac' }} >
-            Use to scale the exported drawing.
-          </p>
-        </div>
+        <FieldDescription style={{ marginTop: '6px' }} >
+          Use to scale the exported drawing.
+        </FieldDescription>
       </div>
       <ExportButton
         onClick={() => {
