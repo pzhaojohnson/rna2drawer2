@@ -96,7 +96,7 @@ function ExportedFontSizeOfBasesField(
       onChange={props.onChange}
       onBlur={props.onBlur}
       onKeyUp={props.onKeyUp}
-      input={{ style: { width: '32px' } }}
+      input={{ style: { width: '5ch' } }}
       style={{ alignSelf: 'flex-start' }}
     />
   );
