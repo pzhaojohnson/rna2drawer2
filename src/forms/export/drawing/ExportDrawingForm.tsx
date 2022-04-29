@@ -103,8 +103,11 @@ function PptxNotes() {
 export function ExportDrawingForm(props: Props) {
   let [inputs, setInputs] = useState<Inputs>({ ...prevInputs });
 
-  // use String object for fade in animation every time the error message is set
-  let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+  let [errorMessage, setErrorMessage] = useState('');
+
+  // should be incremented every time the error message is set
+  // (to trigger error message animations)
+  let [errorMessageKey, setErrorMessageKey] = useState(0);
 
   // remember inputs
   useEffect(() => {
@@ -143,18 +146,21 @@ export function ExportDrawingForm(props: Props) {
           onClick={() => {
             try {
               if (isBlank(inputs.fontSizeOfBasesToExport)) {
-                setErrorMessage(new String('Specify the font size of bases to export.'));
+                setErrorMessage('Specify the font size of bases to export.');
+                setErrorMessageKey(errorMessageKey + 1);
                 return;
               }
 
               let fontSizeOfBasesToExport = Number.parseFloat(inputs.fontSizeOfBasesToExport);
 
               if (!Number.isFinite(fontSizeOfBasesToExport)) {
-                setErrorMessage(new String('Font size of bases must be a number.'));
+                setErrorMessage('Font size of bases must be a number.');
+                setErrorMessageKey(errorMessageKey + 1);
                 return;
               } else if (fontSizeOfBasesToExport < 1) {
                 // 1 is the minimum font size in PowerPoint
-                setErrorMessage(new String('Font size of bases must be at least 1.'));
+                setErrorMessage('Font size of bases must be at least 1.');
+                setErrorMessageKey(errorMessageKey + 1);
                 return;
               }
 
@@ -175,17 +181,19 @@ export function ExportDrawingForm(props: Props) {
                 scale: fontSizeOfBasesToExport / (fontSizeOfFirstBase ?? fontSizeOfBasesToExport),
               });
 
-              setErrorMessage(new String(''));
+              setErrorMessage('');
+              setErrorMessageKey(errorMessageKey + 1);
 
             } catch (error) {
               console.error(error);
-              setErrorMessage(new String('There was an error exporting the drawing.'));
+              setErrorMessage('There was an error exporting the drawing.');
+              setErrorMessageKey(errorMessageKey + 1);
             }
           }}
         />
-        {!errorMessage.valueOf() ? null : (
-          <ErrorMessage key={Math.random()} style={{ marginTop: '6px' }} >
-            {errorMessage.valueOf()}
+        {!errorMessage ? null : (
+          <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
+            {errorMessage}
           </ErrorMessage>
         )}
       </div>
