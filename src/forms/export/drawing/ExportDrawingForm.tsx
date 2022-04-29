@@ -188,7 +188,7 @@ export function ExportDrawingForm(props: Props) {
           }}
         />
         <div style={{ marginTop: '6px' }} >
-          <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
+          <p style={{ fontSize: '14px', fontStyle: 'italic', fontWeight: 600, color: '#9797ac' }} >
             Use to scale the exported drawing.
           </p>
         </div>
