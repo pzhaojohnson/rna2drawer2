@@ -102,9 +102,23 @@ function FontSizeOfBasesToExportField(
   );
 }
 
+function ExportButton(
+  props: {
+    onClick: () => void,
+  },
+) {
+  return (
+    <SolidButton
+      text='Export'
+      onClick={props.onClick}
+      style={{ marginTop: '32px' }}
+    />
+  );
+}
+
 function PptxNotes() {
   return (
-    <div>
+    <div style={{ marginTop: '16px' }} >
       <DottedNote>
         Exported PPTX files require PowerPoint 2016 or later to open.
       </DottedNote>
@@ -189,34 +203,27 @@ export function ExportDrawingForm(props: Props) {
           </p>
         </div>
       </div>
-      <div style={{ marginTop: '32px' }} >
-        <SolidButton
-          text='Export'
-          onClick={() => {
-            try {
-              exportDrawing({
-                app: props.app,
-                format: props.format,
-                fontSizeOfBasesToExport: inputs.fontSizeOfBasesToExport,
-              });
-              setErrorMessage('');
-            } catch (error) {
-              setErrorMessage(error instanceof Error ? error.message : String(error));
-              setErrorMessageKey(errorMessageKey + 1);
-            }
-          }}
-        />
-        {!errorMessage ? null : (
-          <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
-            {errorMessage}
-          </ErrorMessage>
-        )}
-      </div>
-      {props.format != 'pptx' ? null : (
-        <div style={{ marginTop: '16px' }} >
-          <PptxNotes />
-        </div>
+      <ExportButton
+        onClick={() => {
+          try {
+            exportDrawing({
+              app: props.app,
+              format: props.format,
+              fontSizeOfBasesToExport: inputs.fontSizeOfBasesToExport,
+            });
+            setErrorMessage('');
+          } catch (error) {
+            setErrorMessage(error instanceof Error ? error.message : String(error));
+            setErrorMessageKey(errorMessageKey + 1);
+          }
+        }}
+      />
+      {!errorMessage ? null : (
+        <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
+          {errorMessage}
+        </ErrorMessage>
       )}
+      {props.format == 'pptx' ? <PptxNotes /> : null}
     </PartialWidthContainer>
   );
 }
