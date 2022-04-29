@@ -58,7 +58,7 @@ function PptxNotes() {
   );
 }
 
-// returns undefined if the font size of the base cannot be parsed
+// returns undefined if the font size of the base cannot be interpreted
 function fontSizeOfBase(b: Base): number | undefined {
   let n = interpretNumber(b.text.attr('font-size'));
   if (n) {
