@@ -1,4 +1,5 @@
 import type { App } from 'App';
+import type { Drawing } from 'Draw/Drawing';
 import type { Base } from 'Draw/bases/Base';
 
 import * as React from 'react';
@@ -19,8 +20,6 @@ import { interpretNumber } from 'Draw/svg/interpretNumber';
 
 import { round } from 'Math/round';
 import { pointsToPixels } from 'Export/units'
-
-import { atPosition } from 'Array/at';
 
 import { exportDrawing } from 'Export/export';
 
@@ -64,6 +63,11 @@ function fontSizeOfBase(b: Base): number | undefined {
   if (n) {
     return n.convert('px').valueOf();
   }
+}
+
+function fontSizeOfFirstBase(drawing: Drawing): number | undefined {
+  let firstBase: Base | undefined = drawing.bases()[0];
+  return firstBase ? fontSizeOfBase(firstBase) : undefined;
 }
 
 export type Props = {
@@ -132,9 +136,8 @@ export function ExportDrawingForm(props: Props) {
       fontSizeOfBasesToExport = pointsToPixels(fontSizeOfBasesToExport);
     }
 
-    let firstBase: Base | undefined = props.app.strictDrawing.drawing.bases()[0];
     // assumes all bases have the same font size
-    let fontSizeOfBases = firstBase ? fontSizeOfBase(firstBase) : undefined;
+    let fontSizeOfBases = fontSizeOfFirstBase(props.app.strictDrawing.drawing);
     // no scaling if the font size of bases is undefined
     fontSizeOfBases = fontSizeOfBases ?? fontSizeOfBasesToExport;
     let scale = fontSizeOfBasesToExport / fontSizeOfBases;
