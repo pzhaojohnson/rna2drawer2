@@ -139,10 +139,6 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-type Inputs = {
-  exportedFontSizeOfBases: string;
-}
-
 function constrainFontSize(value: string): string {
   let n = Number.parseFloat(value);
   if (Number.isFinite(n)) {
@@ -153,18 +149,12 @@ function constrainFontSize(value: string): string {
   }
 }
 
-function constrainInputs(inputs: Inputs): Inputs {
-  return {
-    exportedFontSizeOfBases: constrainFontSize(inputs.exportedFontSizeOfBases),
-  };
-}
-
-let prevInputs: Inputs = {
+let prevInputs = {
   exportedFontSizeOfBases: '6',
 };
 
 export function ExportDrawingForm(props: Props) {
-  let [inputs, setInputs] = useState<Inputs>({ ...prevInputs });
+  let [exportedFontSizeOfBases, setExportedFontSizeOfBases] = useState(prevInputs.exportedFontSizeOfBases);
 
   let [errorMessage, setErrorMessage] = useState('');
 
@@ -174,7 +164,9 @@ export function ExportDrawingForm(props: Props) {
 
   // remember inputs
   useEffect(() => {
-    return () => { prevInputs = { ...inputs }; };
+    return () => {
+      prevInputs = { exportedFontSizeOfBases };
+    };
   });
 
   return (
@@ -186,14 +178,12 @@ export function ExportDrawingForm(props: Props) {
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <ExportedFontSizeOfBasesField
-          value={inputs.exportedFontSizeOfBases}
-          onChange={event => {
-            setInputs({ ...inputs, exportedFontSizeOfBases: event.target.value });
-          }}
-          onBlur={() => setInputs(constrainInputs(inputs))}
+          value={exportedFontSizeOfBases}
+          onChange={event => setExportedFontSizeOfBases(event.target.value)}
+          onBlur={() => setExportedFontSizeOfBases(constrainFontSize(exportedFontSizeOfBases))}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setInputs(constrainInputs(inputs));
+              setExportedFontSizeOfBases(constrainFontSize(exportedFontSizeOfBases));
             }
           }}
         />
@@ -209,7 +199,7 @@ export function ExportDrawingForm(props: Props) {
             exportDrawing({
               app: props.app,
               format: props.format,
-              exportedFontSizeOfBases: inputs.exportedFontSizeOfBases,
+              exportedFontSizeOfBases,
             });
             setErrorMessage('');
           } catch (error) {
