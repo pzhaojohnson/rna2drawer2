@@ -132,18 +132,18 @@ export function ExportDrawingForm(props: Props) {
       fontSizeOfBasesToExport = pointsToPixels(fontSizeOfBasesToExport);
     }
 
-    let drawing = props.app.strictDrawing.drawing;
-
-    let firstBase = atPosition(drawing.bases(), 1);
-    let fontSizeOfFirstBase = firstBase ? fontSizeOfBase(firstBase) : undefined;
+    let firstBase: Base | undefined = props.app.strictDrawing.drawing.bases()[0];
+    // assumes all bases have the same font size
+    let fontSizeOfBases = firstBase ? fontSizeOfBase(firstBase) : undefined;
+    // no scaling if the font size of bases is undefined
+    fontSizeOfBases = fontSizeOfBases ?? fontSizeOfBasesToExport;
+    let scale = fontSizeOfBasesToExport / fontSizeOfBases;
 
     try {
-      exportDrawing(drawing, {
+      exportDrawing(props.app.strictDrawing.drawing, {
         name: document.title ? document.title : 'Drawing',
         format: props.format,
-
-        // assumes all bases have the same font size
-        scale: fontSizeOfBasesToExport / (fontSizeOfFirstBase ?? fontSizeOfBasesToExport),
+        scale,
       });
     } catch { throw new Error('There was an error exporting the drawing.'); }
   };
