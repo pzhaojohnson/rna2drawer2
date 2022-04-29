@@ -59,7 +59,7 @@ function PptxNotes() {
 }
 
 // returns undefined if the font size of the base cannot be parsed
-function fontSize(b: Base): number | undefined {
+function fontSizeOfBase(b: Base): number | undefined {
   let n = interpretNumber(b.text.attr('font-size'));
   if (n) {
     return n.convert('px').valueOf();
@@ -135,7 +135,7 @@ export function ExportDrawingForm(props: Props) {
     let drawing = props.app.strictDrawing.drawing;
 
     let firstBase = atPosition(drawing.bases(), 1);
-    let fontSizeOfFirstBase = firstBase ? fontSize(firstBase) : undefined;
+    let fontSizeOfFirstBase = firstBase ? fontSizeOfBase(firstBase) : undefined;
 
     try {
       exportDrawing(drawing, {
