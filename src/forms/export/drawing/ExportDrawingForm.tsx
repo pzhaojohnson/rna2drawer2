@@ -114,6 +114,40 @@ export function ExportDrawingForm(props: Props) {
     return () => { prevInputs = { ...inputs }; };
   });
 
+  let submit = (): void | never => {
+    if (isBlank(inputs.fontSizeOfBasesToExport)) {
+      throw new Error('Specify the font size of bases to export.');
+    }
+
+    let fontSizeOfBasesToExport = Number.parseFloat(inputs.fontSizeOfBasesToExport);
+
+    if (!Number.isFinite(fontSizeOfBasesToExport)) {
+      throw new Error('Font size of bases must be a number.');
+    } else if (fontSizeOfBasesToExport < 1) {
+      // 1 is the minimum font size in PowerPoint
+      throw new Error('Font size of bases must be at least 1.');
+    }
+
+    if (props.format == 'pptx') {
+      fontSizeOfBasesToExport = pointsToPixels(fontSizeOfBasesToExport);
+    }
+
+    let drawing = props.app.strictDrawing.drawing;
+
+    let firstBase = atPosition(drawing.bases(), 1);
+    let fontSizeOfFirstBase = firstBase ? fontSize(firstBase) : undefined;
+
+    try {
+      exportDrawing(drawing, {
+        name: document.title ? document.title : 'Drawing',
+        format: props.format,
+
+        // assumes all bases have the same font size
+        scale: fontSizeOfBasesToExport / (fontSizeOfFirstBase ?? fontSizeOfBasesToExport),
+      });
+    } catch { throw new Error('There was an error exporting the drawing.'); }
+  };
+
   return (
     <PartialWidthContainer
       unmount={props.unmount}
@@ -145,48 +179,10 @@ export function ExportDrawingForm(props: Props) {
           text='Export'
           onClick={() => {
             try {
-              if (isBlank(inputs.fontSizeOfBasesToExport)) {
-                setErrorMessage('Specify the font size of bases to export.');
-                setErrorMessageKey(errorMessageKey + 1);
-                return;
-              }
-
-              let fontSizeOfBasesToExport = Number.parseFloat(inputs.fontSizeOfBasesToExport);
-
-              if (!Number.isFinite(fontSizeOfBasesToExport)) {
-                setErrorMessage('Font size of bases must be a number.');
-                setErrorMessageKey(errorMessageKey + 1);
-                return;
-              } else if (fontSizeOfBasesToExport < 1) {
-                // 1 is the minimum font size in PowerPoint
-                setErrorMessage('Font size of bases must be at least 1.');
-                setErrorMessageKey(errorMessageKey + 1);
-                return;
-              }
-
-              if (props.format == 'pptx') {
-                fontSizeOfBasesToExport = pointsToPixels(fontSizeOfBasesToExport);
-              }
-
-              let drawing = props.app.strictDrawing.drawing;
-
-              let firstBase = atPosition(drawing.bases(), 1);
-              let fontSizeOfFirstBase = firstBase ? fontSize(firstBase) : undefined;
-
-              exportDrawing(drawing, {
-                name: document.title ? document.title : 'Drawing',
-                format: props.format,
-
-                // assumes all bases have the same font size
-                scale: fontSizeOfBasesToExport / (fontSizeOfFirstBase ?? fontSizeOfBasesToExport),
-              });
-
+              submit();
               setErrorMessage('');
-              setErrorMessageKey(errorMessageKey + 1);
-
             } catch (error) {
-              console.error(error);
-              setErrorMessage('There was an error exporting the drawing.');
+              setErrorMessage(error instanceof Error ? error.message : String(error));
               setErrorMessageKey(errorMessageKey + 1);
             }
           }}
