@@ -66,15 +66,15 @@ export function exportDrawing(
 
   // assumes all bases have the same font size
   let fontSizeOfBases = fontSizeOfFirstBase(args.app.strictDrawing.drawing);
+
   // no scaling if the font size of bases is undefined
   fontSizeOfBases = fontSizeOfBases ?? exportedFontSizeOfBases;
-  let scale = exportedFontSizeOfBases / fontSizeOfBases;
 
   try {
     _exportDrawing(args.app.strictDrawing.drawing, {
       name: document.title ? document.title : 'Drawing',
       format: args.format,
-      scale,
+      scale: exportedFontSizeOfBases / fontSizeOfBases,
     });
   } catch {
     throw new Error('There was an error exporting the drawing.');
