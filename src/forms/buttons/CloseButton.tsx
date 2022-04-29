@@ -80,5 +80,3 @@ export class CloseButton extends React.Component {
 CloseButton.defaultProps = {
   onClick: () => {},
 };
-
-export default CloseButton;
