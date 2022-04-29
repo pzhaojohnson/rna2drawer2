@@ -48,16 +48,16 @@ export function exportDrawing(
   },
 ): void | never {
   if (isBlank(args.exportedFontSizeOfBases)) {
-    throw new Error('Specify the font size of bases to export.');
+    throw new Error('Specify a font size for bases.');
   }
 
   let exportedFontSizeOfBases = Number.parseFloat(args.exportedFontSizeOfBases);
 
   if (!Number.isFinite(exportedFontSizeOfBases)) {
-    throw new Error('Font size of bases must be a number.');
+    throw new Error('Font size must be a number.');
   } else if (exportedFontSizeOfBases < 1) {
     // 1 is the minimum font size in PowerPoint
-    throw new Error('Font size of bases must be at least 1.');
+    throw new Error('Font size must be at least 1.');
   }
 
   if (args.format == 'pptx') {
