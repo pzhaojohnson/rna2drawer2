@@ -28,14 +28,14 @@ interface Props {
 
 export class CloseButton extends React.Component<Props> {
   state: {
-    hovered: boolean;
+    isHovered: boolean;
   }
 
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      hovered: false,
+      isHovered: false,
     };
   }
 
@@ -48,22 +48,22 @@ export class CloseButton extends React.Component<Props> {
         style={{
           width: '24px',
           height: '24px',
-          backgroundColor: this.state.hovered ? 'rgb(238,23,23)' : 'transparent',
+          backgroundColor: this.state.isHovered ? 'rgb(238,23,23)' : 'transparent',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <CrossMark color={this.state.hovered ? '#ffffff' : '#2a2a2a'} />
+        <CrossMark color={this.state.isHovered ? '#ffffff' : '#2a2a2a'} />
       </div>
     );
   }
 
   onMouseEnter() {
-    this.setState({ hovered: true });
+    this.setState({ isHovered: true });
   }
 
   onMouseLeave() {
-    this.setState({ hovered: false });
+    this.setState({ isHovered: false });
   }
 }
