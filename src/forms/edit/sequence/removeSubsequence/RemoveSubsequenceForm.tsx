@@ -5,6 +5,7 @@ import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
+import { DottedNote } from 'Forms/notes/DottedNote';
 import type { App } from 'App';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
@@ -221,18 +222,12 @@ export function RemoveSubsequenceForm(props: Props) {
           {errorMessage.valueOf()}
         </p>
       )}
-      <div style={{ marginTop: '18px' }} >
-        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-          <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-          Bases between and including the start and end positions will be removed.
-        </p>
-      </div>
-      <div style={{ marginTop: '8px' }} >
-        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-          <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-          Base numbering must be updated manually after removing a subsequence.
-        </p>
-      </div>
+      <DottedNote style={{ marginTop: '16px' }} >
+        Bases between and including the start and end positions will be removed.
+      </DottedNote>
+      <DottedNote style={{ marginTop: '12px' }} >
+        Base numbering must be updated manually after removing a subsequence.
+      </DottedNote>
     </PartialWidthContainer>
   );
 }
