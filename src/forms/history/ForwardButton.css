@@ -11,6 +11,10 @@
 
 .forwardIcon {}
 
+.enabled {
+  cursor: pointer;
+}
+
 .enabled .forwardIcon {
   stroke: #262626;
   fill: #262626;

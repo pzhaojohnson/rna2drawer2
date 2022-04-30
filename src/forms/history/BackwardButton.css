@@ -11,6 +11,10 @@
 
 .backwardIcon {}
 
+.enabled {
+  cursor: pointer;
+}
+
 .enabled .backwardIcon {
   stroke: #262626;
   fill: #262626;
