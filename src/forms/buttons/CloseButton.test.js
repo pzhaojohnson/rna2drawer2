@@ -21,14 +21,16 @@ function getCloseButton() {
   return container.childNodes[0];
 }
 
-it('calls onClick callback', () => {
-  let onClick = jest.fn();
-  act(() => {
-    render(<CloseButton onClick={onClick} />, container);
-    let cb = getCloseButton();
-    cb.dispatchEvent(
-      new Event('click', { bubbles: true })
-    );
+describe('CloseButton component', () => {
+  it('calls onClick callback', () => {
+    let onClick = jest.fn();
+    act(() => {
+      render(<CloseButton onClick={onClick} />, container);
+      let cb = getCloseButton();
+      cb.dispatchEvent(
+        new Event('click', { bubbles: true })
+      );
+    });
+    expect(onClick.mock.calls.length).toBe(1);
   });
-  expect(onClick.mock.calls.length).toBe(1);
 });
