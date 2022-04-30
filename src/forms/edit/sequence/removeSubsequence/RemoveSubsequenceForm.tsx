@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
@@ -87,10 +87,9 @@ export function RemoveSubsequenceForm(props: Props) {
       title='Remove Subsequence'
       style={{ width: '372px' }}
     >
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type='text'
-          className={textFieldStyles.input}
+      <div style={{ display: 'flex', flexDirection: 'column' }} >
+        <TextInputField
+          label='Start Position'
           value={inputs.startPosition}
           onChange={event => {
             if (event.target.value.trim() != inputs.startPosition.trim()) {
@@ -104,40 +103,27 @@ export function RemoveSubsequenceForm(props: Props) {
               setInputs(constrainInputs(inputs));
             }
           }}
-          style={{ width: '48px' }}
+          input={{ style: { width: '48px' } }}
+          style={{ alignSelf: 'flex-start' }}
         />
-        <div style={{ marginLeft: '8px' }} >
-          <p className={`${textFieldStyles.label} unselectable`} >
-            Start Position
-          </p>
-        </div>
-      </div>
-      <div style={{ marginTop: '8px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          <input
-            type='text'
-            className={textFieldStyles.input}
-            value={inputs.endPosition}
-            onChange={event => {
-              if (event.target.value.trim() != inputs.endPosition.trim()) {
-                setErrorMessage(new String(''));
-              }
-              setInputs({ ...inputs, endPosition: event.target.value });
-            }}
-            onBlur={() => setInputs(constrainInputs(inputs))}
-            onKeyUp={event => {
-              if (event.key.toLowerCase() == 'enter') {
-                setInputs(constrainInputs(inputs));
-              }
-            }}
-            style={{ width: '48px' }}
-          />
-          <div style={{ marginLeft: '8px' }} >
-            <p className={`${textFieldStyles.label} unselectable`} >
-              End Position
-            </p>
-          </div>
-        </div>
+        <TextInputField
+          label='End Position'
+          value={inputs.endPosition}
+          onChange={event => {
+            if (event.target.value.trim() != inputs.endPosition.trim()) {
+              setErrorMessage(new String(''));
+            }
+            setInputs({ ...inputs, endPosition: event.target.value });
+          }}
+          onBlur={() => setInputs(constrainInputs(inputs))}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              setInputs(constrainInputs(inputs));
+            }
+          }}
+          input={{ style: { width: '48px' } }}
+          style={{ alignSelf: 'flex-start', marginTop: '8px' }}
+        />
       </div>
       {!seq ? null : (
         <DisplayableSequenceRange sequence={seq} style={{ marginTop: '8px' }} />
