@@ -32,15 +32,6 @@ afterEach(() => {
 
 describe('ForwardButton component', () => {
   describe('when can go forward', () => {
-    it('shows dark forward icon', () => {
-      history.canGoForward = jest.fn(() => true);
-      act(() => {
-        render(<ForwardButton {...history} />, container);
-      });
-      expect(container.firstChild.outerHTML).toMatch(/darkForwardIcon.svg/);
-      expect(container.firstChild.outerHTML).not.toMatch(/lightForwardIcon.svg/);
-    });
-
     it('has enabled CSS styles', () => {
       history.canGoForward = jest.fn(() => true);
       act(() => {
@@ -64,15 +55,6 @@ describe('ForwardButton component', () => {
   });
 
   describe('when cannot go forward', () => {
-    it('shows light forward icon', () => {
-      history.canGoForward = jest.fn(() => false);
-      act(() => {
-        render(<ForwardButton {...history} />, container);
-      });
-      expect(container.firstChild.outerHTML).toMatch(/lightForwardIcon.svg/);
-      expect(container.firstChild.outerHTML).not.toMatch(/darkForwardIcon.svg/);
-    });
-
     it('has disabled CSS styles', () => {
       history.canGoForward = jest.fn(() => false);
       act(() => {

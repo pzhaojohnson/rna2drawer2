@@ -32,15 +32,6 @@ afterEach(() => {
 
 describe('BackwardButton component', () => {
   describe('when can go backward', () => {
-    it('shows dark backward icon', () => {
-      history.canGoBackward = jest.fn(() => true);
-      act(() => {
-        render(<BackwardButton {...history} />, container);
-      });
-      expect(container.firstChild.outerHTML).toMatch(/darkBackwardIcon.svg/);
-      expect(container.firstChild.outerHTML).not.toMatch(/lightBackwardIcon.svg/);
-    });
-
     it('has enabled CSS styles', () => {
       history.canGoBackward = jest.fn(() => true);
       act(() => {
@@ -64,15 +55,6 @@ describe('BackwardButton component', () => {
   });
 
   describe('when cannot go backward', () => {
-    it('shows light backward icon', () => {
-      history.canGoBackward = jest.fn(() => false);
-      act(() => {
-        render(<BackwardButton {...history} />, container);
-      });
-      expect(container.firstChild.outerHTML).toMatch(/lightBackwardIcon.svg/);
-      expect(container.firstChild.outerHTML).not.toMatch(/darkBackwardIcon.svg/);
-    });
-
     it('has disabled CSS styles', () => {
       history.canGoBackward = jest.fn(() => false);
       act(() => {
