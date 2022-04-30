@@ -37,22 +37,10 @@ function constrainPosition(value: string): string {
 }
 
 function constrainInputs(inputs: Inputs): Inputs {
-  let constrained: Inputs = {
+  return {
     startPosition: constrainPosition(inputs.startPosition),
     endPosition: constrainPosition(inputs.endPosition),
   };
-
-  // swap if start position is greater than end position
-  let startPosition = Number.parseFloat(constrained.startPosition);
-  let endPosition = Number.parseFloat(constrained.endPosition);
-  if (Number.isFinite(startPosition) && Number.isFinite(endPosition)) {
-    if (startPosition > endPosition) {
-      constrained.startPosition = endPosition.toString();
-      constrained.endPosition = startPosition.toString();
-    }
-  }
-
-  return constrained;
 }
 
 let prevInputs: Inputs | undefined = undefined;
