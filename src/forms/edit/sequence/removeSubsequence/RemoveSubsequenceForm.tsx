@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
+import { ErrorMessage } from 'Forms/ErrorMessage';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { DottedNote } from 'Forms/notes/DottedNote';
@@ -174,13 +174,9 @@ export function RemoveSubsequenceForm(props: Props) {
         />
       </div>
       {!errorMessage.valueOf() ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '6px' }}
-        >
+        <ErrorMessage key={Math.random()} style={{ marginTop: '6px' }} >
           {errorMessage.valueOf()}
-        </p>
+        </ErrorMessage>
       )}
       <DottedNote style={{ marginTop: '16px' }} >
         Bases between and including the start and end positions will be removed.
