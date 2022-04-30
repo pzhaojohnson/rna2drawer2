@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
@@ -138,35 +139,8 @@ export function RemoveSubsequenceForm(props: Props) {
           </div>
         </div>
       </div>
-      {!(seq && seq.length == 1) ? null : (
-        <div style={{ marginTop: '10px' }} >
-          <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-              {no + 1}&nbsp;
-            </span>
-            is the first and last position of the sequence.
-          </p>
-        </div>
-      )}
-      {!(seq && seq.length > 1) ? null : (
-        <div style={{ marginTop: '10px' }} >
-          {no == 0 ? null : (
-            <div style={{ marginBottom: '4px' }} >
-              <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-                <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                  {no + 1}&nbsp;
-                </span>
-                is the first position of the sequence.
-              </p>
-            </div>
-          )}
-          <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-            <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-              {seq.length + no}&nbsp;
-            </span>
-            is the last position of the sequence.
-          </p>
-        </div>
+      {!seq ? null : (
+        <DisplayableSequenceRange sequence={seq} style={{ marginTop: '8px' }} />
       )}
       <div style={{ marginTop: '28px' }} >
         <SolidButton
