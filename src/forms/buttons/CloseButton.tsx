@@ -44,7 +44,7 @@ export class CloseButton extends React.Component<Props> {
       <div
         onMouseEnter={() => this.onMouseEnter()}
         onMouseLeave={() => this.onMouseLeave()}
-        onClick={() => this.onClick()}
+        onClick={this.props.onClick}
         style={{
           width: '24px',
           height: '24px',
@@ -65,11 +65,5 @@ export class CloseButton extends React.Component<Props> {
 
   onMouseLeave() {
     this.setState({ hovered: false });
-  }
-
-  onClick() {
-    if (this.props.onClick) {
-      this.props.onClick();
-    }
   }
 }
