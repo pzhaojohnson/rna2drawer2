@@ -91,12 +91,7 @@ export function RemoveSubsequenceForm(props: Props) {
         <TextInputField
           label='Start Position'
           value={inputs.startPosition}
-          onChange={event => {
-            if (event.target.value.trim() != inputs.startPosition.trim()) {
-              setErrorMessage(new String(''));
-            }
-            setInputs({ ...inputs, startPosition: event.target.value });
-          }}
+          onChange={event => setInputs({ ...inputs, startPosition: event.target.value })}
           onBlur={() => setInputs(constrainInputs(inputs))}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
@@ -109,12 +104,7 @@ export function RemoveSubsequenceForm(props: Props) {
         <TextInputField
           label='End Position'
           value={inputs.endPosition}
-          onChange={event => {
-            if (event.target.value.trim() != inputs.endPosition.trim()) {
-              setErrorMessage(new String(''));
-            }
-            setInputs({ ...inputs, endPosition: event.target.value });
-          }}
+          onChange={event => setInputs({ ...inputs, endPosition: event.target.value })}
           onBlur={() => setInputs(constrainInputs(inputs))}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
