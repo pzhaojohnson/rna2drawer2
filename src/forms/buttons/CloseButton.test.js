@@ -17,20 +17,16 @@ afterEach(() => {
   container = null;
 });
 
-function getCloseButton() {
-  return container.childNodes[0];
-}
-
 describe('CloseButton component', () => {
-  it('calls onClick callback', () => {
+  it('calls onClick callback on click', () => {
     let onClick = jest.fn();
     act(() => {
       render(<CloseButton onClick={onClick} />, container);
-      let cb = getCloseButton();
-      cb.dispatchEvent(
-        new Event('click', { bubbles: true })
-      );
     });
+    expect(onClick).not.toHaveBeenCalled();
+    container.firstChild.dispatchEvent(
+      new Event('click', { bubbles: true })
+    );
     expect(onClick.mock.calls.length).toBe(1);
   });
 });
