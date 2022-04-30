@@ -27,8 +27,6 @@ interface Props {
 }
 
 export class CloseButton extends React.Component<Props> {
-  static defaultProps: Props;
-
   state: {
     hovered: boolean;
   }
@@ -75,7 +73,3 @@ export class CloseButton extends React.Component<Props> {
     }
   }
 }
-
-CloseButton.defaultProps = {
-  onClick: () => {},
-};
