@@ -8,7 +8,6 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { DottedNote } from 'Forms/notes/DottedNote';
 import type { App } from 'App';
-import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 import { cannotRemove, remove } from './remove';
@@ -63,12 +62,6 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-type Inputs = {
-  // start and end positions (inclusive) of the subsequence to remove
-  startPosition: string;
-  endPosition: string;
-}
-
 function constrainPosition(value: string): string {
   let n = Number.parseFloat(value);
   if (!Number.isFinite(n)) {
@@ -79,14 +72,10 @@ function constrainPosition(value: string): string {
   }
 }
 
-function constrainInputs(inputs: Inputs): Inputs {
-  return {
-    startPosition: constrainPosition(inputs.startPosition),
-    endPosition: constrainPosition(inputs.endPosition),
-  };
-}
-
-let prevInputs: Inputs | undefined = undefined;
+let prevInputs = {
+  startPosition: '1',
+  endPosition: '1',
+};
 
 export function RemoveSubsequenceForm(props: Props) {
   let drawing = props.app.strictDrawing.drawing;
@@ -96,19 +85,18 @@ export function RemoveSubsequenceForm(props: Props) {
   }
 
   let seq = atIndex(drawing.sequences, 0);
-  let no = !seq ? 0 : (numberingOffset(seq) ?? 0);
 
-  let [inputs, setInputs] = useState<Inputs>(prevInputs ?? {
-    startPosition: (1 + no).toString(),
-    endPosition: (1 + no).toString(),
-  });
+  let [startPosition, setStartPosition] = useState(prevInputs.startPosition);
+  let [endPosition, setEndPosition] = useState(prevInputs.endPosition);
 
   // use String object for fade in animation every time the error message is set
   let [errorMessage, setErrorMessage] = useState<String>(new String(''));
 
   // remember inputs
   useEffect(() => {
-    return () => { prevInputs = { ...inputs }; };
+    return () => {
+      prevInputs = { startPosition, endPosition };
+    };
   });
 
   return (
@@ -121,12 +109,12 @@ export function RemoveSubsequenceForm(props: Props) {
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <TextInputField
           label='Start Position'
-          value={inputs.startPosition}
-          onChange={event => setInputs({ ...inputs, startPosition: event.target.value })}
-          onBlur={() => setInputs(constrainInputs(inputs))}
+          value={startPosition}
+          onChange={event => setStartPosition(event.target.value)}
+          onBlur={() => setStartPosition(constrainPosition(startPosition))}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setInputs(constrainInputs(inputs));
+              setStartPosition(constrainPosition(startPosition));
             }
           }}
           input={{ style: { width: '48px' } }}
@@ -134,12 +122,12 @@ export function RemoveSubsequenceForm(props: Props) {
         />
         <TextInputField
           label='End Position'
-          value={inputs.endPosition}
-          onChange={event => setInputs({ ...inputs, endPosition: event.target.value })}
-          onBlur={() => setInputs(constrainInputs(inputs))}
+          value={endPosition}
+          onChange={event => setEndPosition(event.target.value)}
+          onBlur={() => setEndPosition(constrainPosition(endPosition))}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setInputs(constrainInputs(inputs));
+              setEndPosition(constrainPosition(endPosition));
             }
           }}
           input={{ style: { width: '48px' } }}
@@ -156,8 +144,8 @@ export function RemoveSubsequenceForm(props: Props) {
             try {
               removeSubsequence({
                 app: props.app,
-                startPosition: inputs.startPosition,
-                endPosition: inputs.endPosition,
+                startPosition,
+                endPosition,
               });
               props.unmount();
             } catch (error) {
