@@ -149,6 +149,7 @@ export function RemoveSubsequenceForm(props: Props) {
                 startPosition,
                 endPosition,
               });
+              setErrorMessage('');
             } catch (error) {
               setErrorMessage(error instanceof Error ? error.message : String(error));
               setErrorMessageKey(errorMessageKey + 1);
