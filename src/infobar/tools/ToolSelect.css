@@ -11,7 +11,7 @@
 }
 
 .closedToolSelect:hover {
-  background-color: #f0f0f0;
+  background-color: #ececf5;
 }
 
 .toolLabel {
@@ -19,7 +19,7 @@
   font-size: 12px;
   font-weight: 700;
   font-style: normal;
-  color: #2c2c2c;
+  color: #1a1a1c;
   cursor: pointer;
 }
 
@@ -29,7 +29,7 @@
   font-size: 12px;
   font-weight: 600;
   font-style: normal;
-  color: #353535;
+  color: #3d3d46;
   cursor: pointer;
 }
 
@@ -45,17 +45,17 @@
 }
 
 .toggledToolButton {
-  background-color: #565656;
+  background-color: #3f3f43;
   color: white;
 }
 
 .untoggledToolButton {
   background-color: white;
-  color: #222222;
+  color: #1e1e20;
 }
 
 .untoggledToolButton:hover {
-  background-color: #e3e3e3;
+  background-color: #dedee8;
 }
 
 .toolDescription {
