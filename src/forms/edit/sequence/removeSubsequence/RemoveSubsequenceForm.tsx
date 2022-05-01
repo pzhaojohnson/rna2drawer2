@@ -125,7 +125,7 @@ export function RemoveSubsequenceForm(props: Props) {
               setStartPosition(constrainPosition(startPosition));
             }
           }}
-          input={{ style: { width: '48px' } }}
+          input={{ style: { width: '8ch' } }}
           style={{ alignSelf: 'flex-start' }}
         />
         <TextInputField
@@ -138,7 +138,7 @@ export function RemoveSubsequenceForm(props: Props) {
               setEndPosition(constrainPosition(endPosition));
             }
           }}
-          input={{ style: { width: '48px' } }}
+          input={{ style: { width: '8ch' } }}
           style={{ alignSelf: 'flex-start', marginTop: '8px' }}
         />
       </div>
