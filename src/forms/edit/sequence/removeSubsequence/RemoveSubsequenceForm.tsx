@@ -89,8 +89,11 @@ export function RemoveSubsequenceForm(props: Props) {
   let [startPosition, setStartPosition] = useState(prevInputs.startPosition);
   let [endPosition, setEndPosition] = useState(prevInputs.endPosition);
 
-  // use String object for fade in animation every time the error message is set
-  let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+  let [errorMessage, setErrorMessage] = useState('');
+
+  // should be incremented every time the error message is set
+  // (to trigger error message animations)
+  let [errorMessageKey, setErrorMessageKey] = useState(0);
 
   // remember inputs
   useEffect(() => {
@@ -149,16 +152,15 @@ export function RemoveSubsequenceForm(props: Props) {
               });
               props.unmount();
             } catch (error) {
-              setErrorMessage(
-                new String(error instanceof Error ? error.message : String(error))
-              );
+              setErrorMessage(error instanceof Error ? error.message : String(error));
+              setErrorMessageKey(errorMessageKey + 1);
             }
           }}
         />
       </div>
-      {!errorMessage.valueOf() ? null : (
-        <ErrorMessage key={Math.random()} style={{ marginTop: '6px' }} >
-          {errorMessage.valueOf()}
+      {!errorMessage ? null : (
+        <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
+          {errorMessage}
         </ErrorMessage>
       )}
       <DottedNote style={{ marginTop: '16px' }} >
