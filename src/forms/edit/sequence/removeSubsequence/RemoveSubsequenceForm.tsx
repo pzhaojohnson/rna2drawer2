@@ -1,13 +1,19 @@
+import type { App } from 'App';
+
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
-import { ErrorMessage } from 'Forms/ErrorMessage';
-import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
 import { SolidButton } from 'Forms/buttons/SolidButton';
+import { ErrorMessage } from 'Forms/ErrorMessage';
+
 import { DottedNote } from 'Forms/notes/DottedNote';
-import type { App } from 'App';
+
 import { isBlank } from 'Parse/isBlank';
 import { cannotRemove, remove } from './remove';
 
