@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { ToolSelect } from 'Infobar/tools/ToolSelect';
 import { BindingToolControls } from 'Infobar/tools/bind/BindingToolControls';
+import { EditingToolControls } from 'Infobar/tools/edit/EditingToolControls';
 
 export type Props = {
 
@@ -17,6 +18,7 @@ export function ToolControls(props: Props) {
   let strictDrawingInteraction = props.app.strictDrawingInteraction;
   let currentTool = strictDrawingInteraction.currentTool;
   let bindingTool = strictDrawingInteraction.bindingTool;
+  let editingTool = strictDrawingInteraction.editingTool;
 
   return (
     <div
@@ -32,10 +34,18 @@ export function ToolControls(props: Props) {
         onOpen={() => setToolSelectIsOpen(true)}
         onClose={() => setToolSelectIsOpen(false)}
       />
-      {toolSelectIsOpen || currentTool != bindingTool ? null : (
+      {toolSelectIsOpen ? (
+        null
+      ) : (
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
           <div style={{ width: '8px' }} />
-          <BindingToolControls app={props.app} />
+          {currentTool == bindingTool ? (
+            <BindingToolControls app={props.app} />
+          ) : currentTool == editingTool ? (
+            <EditingToolControls app={props.app} />
+          ) : (
+            null
+          )}
         </div>
       )}
     </div>
