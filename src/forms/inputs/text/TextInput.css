@@ -1,20 +1,20 @@
 .textInput {
-  border: 1px solid #d6d6d6;
+  border: 1px solid #d4d4e4;
   border-radius: 2px;
   width: 6ch;
   padding: 3px 6px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #2a2a2a;
+  color: #19191b;
 }
 
 .textInput:hover {
-  border-color: #333333;
+  border-color: #666670;
 }
 
 .textInput:focus {
-  border-color: #333333;
+  border-color: #666670;
   outline: none;
 }
 
