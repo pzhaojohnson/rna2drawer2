@@ -145,7 +145,7 @@ export function RemoveSubsequenceForm(props: Props) {
       {drawing.sequences.length == 0 ? null : (
         <DisplayableSequenceRange sequence={drawing.sequences[0]} style={{ marginTop: '8px' }} />
       )}
-      <div style={{ marginTop: '28px' }} >
+      <div style={{ marginTop: '32px' }} >
         <SolidButton
           text='Remove'
           onClick={() => {
