@@ -13,6 +13,49 @@ import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 import { cannotRemove, remove } from './remove';
 
+/**
+ * Removes the specified subsequence from the first sequence
+ * in the drawing of the app.
+ */
+export function removeSubsequence(
+  args: {
+    app: App, // a reference to the whole app
+    startPosition: string, // start position of the subsequence to remove
+    endPosition: string, // end position of the subsequence to remove
+  },
+): void | never {
+  if (isBlank(args.startPosition)) {
+    throw new Error('Specify a start position.');
+  } else if (isBlank(args.endPosition)) {
+    throw new Error('Specify an end position.');
+  }
+
+  let startPosition = Number.parseFloat(args.startPosition);
+  let endPosition = Number.parseFloat(args.endPosition);
+
+  if (!Number.isFinite(startPosition)) {
+    throw new Error('Start position must be a number.');
+  } else if (!Number.isFinite(endPosition)) {
+    throw new Error('End position must be a number.');
+  }
+
+  if (!Number.isInteger(startPosition)) {
+    throw new Error('Start position must be an integer.');
+  } else if (!Number.isInteger(endPosition)) {
+    throw new Error('End position must be an integer.');
+  }
+
+  let message = cannotRemove(args.app.strictDrawing, { start: startPosition, end: endPosition });
+  if (message) {
+    throw new Error(message);
+  }
+
+  // remove the subsequence
+  args.app.pushUndo();
+  remove(args.app.strictDrawing, { start: startPosition, end: endPosition });
+  args.app.refresh();
+}
+
 export type Props = {
   app: App;
 
@@ -110,44 +153,18 @@ export function RemoveSubsequenceForm(props: Props) {
         <SolidButton
           text='Remove'
           onClick={() => {
-            if (isBlank(inputs.startPosition)) {
-              setErrorMessage(new String('Specify a start position.'));
-              return;
-            } else if (isBlank(inputs.endPosition)) {
-              setErrorMessage(new String('Specify an end position.'));
-              return;
+            try {
+              removeSubsequence({
+                app: props.app,
+                startPosition: inputs.startPosition,
+                endPosition: inputs.endPosition,
+              });
+              props.unmount();
+            } catch (error) {
+              setErrorMessage(
+                new String(error instanceof Error ? error.message : String(error))
+              );
             }
-
-            let startPosition = Number.parseFloat(inputs.startPosition);
-            let endPosition = Number.parseFloat(inputs.endPosition);
-
-            if (!Number.isFinite(startPosition)) {
-              setErrorMessage(new String('Start position must be a number.'));
-              return;
-            } else if (!Number.isFinite(endPosition)) {
-              setErrorMessage(new String('End position must be a number.'));
-              return;
-            }
-
-            if (!Number.isInteger(startPosition)) {
-              setErrorMessage(new String('Start position must be an integer.'));
-              return;
-            } else if (!Number.isInteger(endPosition)) {
-              setErrorMessage(new String('End position must be an integer.'));
-              return;
-            }
-
-            let message = cannotRemove(props.app.strictDrawing, { start: startPosition, end: endPosition });
-            if (message) {
-              setErrorMessage(new String(message));
-              return;
-            }
-
-            // remove the subsequence
-            props.unmount();
-            props.app.pushUndo();
-            remove(props.app.strictDrawing, { start: startPosition, end: endPosition });
-            props.app.refresh();
           }}
         />
       </div>
