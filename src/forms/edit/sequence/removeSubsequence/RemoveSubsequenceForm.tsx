@@ -8,7 +8,6 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { DottedNote } from 'Forms/notes/DottedNote';
 import type { App } from 'App';
-import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 import { cannotRemove, remove } from './remove';
 
@@ -84,8 +83,6 @@ export function RemoveSubsequenceForm(props: Props) {
     console.error('Unable to remove subsequences from multiple sequences.');
   }
 
-  let seq = atIndex(drawing.sequences, 0);
-
   let [startPosition, setStartPosition] = useState(prevInputs.startPosition);
   let [endPosition, setEndPosition] = useState(prevInputs.endPosition);
 
@@ -137,8 +134,8 @@ export function RemoveSubsequenceForm(props: Props) {
           style={{ alignSelf: 'flex-start', marginTop: '8px' }}
         />
       </div>
-      {!seq ? null : (
-        <DisplayableSequenceRange sequence={seq} style={{ marginTop: '8px' }} />
+      {drawing.sequences.length == 0 ? null : (
+        <DisplayableSequenceRange sequence={drawing.sequences[0]} style={{ marginTop: '8px' }} />
       )}
       <div style={{ marginTop: '28px' }} >
         <SolidButton
