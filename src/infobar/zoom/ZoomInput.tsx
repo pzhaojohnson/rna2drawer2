@@ -61,8 +61,8 @@ export class ZoomInput extends React.Component<Props> {
           fontFamily: "'Open Sans', sans-serif",
           fontSize: '12px',
           fontStyle: 'normal',
-          fontWeight: 500,
-          color: 'rgba(0, 0, 0, 0.95)',
+          fontWeight: 600,
+          color: '#28282b',
           textAlign: 'center',
         }}
       />
