@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import styles from './DrawingSlideshow.css';
-const uuidv1 = require('uuid/v1');
+import { v1 as uuidv1 } from 'uuid';
 
 import drawing1 from './drawing1.svg';
 import drawing2 from './drawing2.svg';
