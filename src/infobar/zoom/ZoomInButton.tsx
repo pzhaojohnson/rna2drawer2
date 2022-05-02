@@ -30,12 +30,12 @@ function zoomIn(drawing: Drawing) {
 function PlusIcon() {
   return (
     <svg
-      width="10px" height="10px" viewBox="0 0 96 96"
+      width="11px" height="11px" viewBox="0 0 96 96"
       xmlns="http://www.w3.org/2000/svg" id="Icons_Add" overflow="hidden"
     >
       <path
         d="M88 42 54 42 54 8 42 8 42 42 8 42 8 54 42 54 42 88 54 88 54 54 88 54Z"
-        fill="#333333"
+        fill="#1a1a1c"
       />
     </svg>
   );

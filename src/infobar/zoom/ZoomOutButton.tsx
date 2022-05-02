@@ -30,7 +30,7 @@ function zoomOut(drawing: Drawing) {
 function MinusIcon() {
   return (
     <svg
-      width="8px" height="8px" viewBox="0 0 72 13"
+      width="9px" height="9px" viewBox="0 0 72 13"
       xmlns="http://www.w3.org/2000/svg" overflow="hidden"
     >
       <defs>
@@ -42,7 +42,7 @@ function MinusIcon() {
         </clipPath>
       </defs>
       <g clipPath="url(#clip0)" transform="translate(-692 -330)" >
-        <rect x="691.725" y="330.738" width="70.5503" height="11.5248" fill="#333333" />
+        <rect x="691.725" y="330.738" width="70.5503" height="11.5248" fill="#1a1a1c" />
       </g>
     </svg>
   );
