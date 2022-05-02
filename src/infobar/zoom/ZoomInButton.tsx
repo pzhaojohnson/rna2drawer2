@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styles from './ZoomInButton.css';
-import plus from './plus.svg';
 import type { App } from 'App';
 import type { Drawing } from 'Draw/Drawing';
 import { zoom, setZoom } from 'Draw/zoom';
@@ -28,6 +27,20 @@ function zoomIn(drawing: Drawing) {
   }
 }
 
+function PlusIcon() {
+  return (
+    <svg
+      width="10px" height="10px" viewBox="0 0 96 96"
+      xmlns="http://www.w3.org/2000/svg" id="Icons_Add" overflow="hidden"
+    >
+      <path
+        d="M88 42 54 42 54 8 42 8 42 42 8 42 8 54 42 54 42 88 54 88 54 54 88 54Z"
+        fill="#333333"
+      />
+    </svg>
+  );
+}
+
 export type Props = {
   app: App;
 }
@@ -41,11 +54,7 @@ export function ZoomInButton(props: Props) {
         props.app.refresh();
       }}
     >
-      <img
-        className={`${styles.plus} unselectable`}
-        src={plus}
-        alt='Plus'
-      />
+      <PlusIcon />
     </div>
   );
 }
