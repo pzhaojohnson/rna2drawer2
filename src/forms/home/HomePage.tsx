@@ -100,7 +100,7 @@ function HelpLinks() {
   return (
     <div style={{ minHeight: '28px' }} >
       <p style={{ fontSize: '16px', color: 'rgb(32 32 32)' }} >
-        Questions or comments? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
+        Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
       </p>
     </div>
   );
