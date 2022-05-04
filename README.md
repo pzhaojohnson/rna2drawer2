@@ -12,7 +12,7 @@ This project is a successor to the [first version](https://github.com/pzhaojohns
 which was published in the journal <em>RNA Biology</em>.
 
 &nbsp;&nbsp;&nbsp;&nbsp;<b>Article:</b> [https://doi.org/10.1080/15476286.2019.1659081](https://doi.org/10.1080/15476286.2019.1659081)
-    
+
 &nbsp;&nbsp;&nbsp;&nbsp;<b><em>If you use RNA2Drawer to draw structures in a publication, please cite the above article.</em></b>
 
 If you have questions or experience issues, open an issue thread here on GitHub or email [help@rna2drawer.app](mailto:help@rna2drawer.app).
@@ -38,7 +38,7 @@ General comments and feature requests are also welcome!
 
 ## Creating a New Drawing
 
-Open the form to create a new drawing via the link on the home page
+Open the form to create a new drawing via the link on the welcome page
 or via the `File`: `New` menu button.
 In the form,
 enter the sequence and the ID of the sequence
@@ -62,7 +62,7 @@ By default your web browser will place the file in your downloads folder,
 though this can be changed in your browser settings.
 
 To open a saved drawing,
-navigate to the form to do so via the link on the home page
+navigate to the form to do so via the link on the welcome page
 or via `File`: `Open` menu button
 and upload the saved file with `.rna2drawer2` extension.
 

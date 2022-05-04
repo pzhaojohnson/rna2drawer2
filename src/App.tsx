@@ -15,7 +15,7 @@ import { Menu } from './menu/Menu';
 import { FormContainer } from 'FormContainer';
 import { Infobar } from './infobar/Infobar';
 
-import { HomePage } from './forms/home/HomePage';
+import { WelcomePage } from './forms/welcome/WelcomePage';
 
 export type Options = {
   // for specifying alternatives to components of the SVG.js library
@@ -68,7 +68,7 @@ export class App {
     this._setBindings();
 
     this.formContainer.renderForm(() => (
-      <HomePage app={this} />
+      <WelcomePage app={this} />
     ));
   }
 

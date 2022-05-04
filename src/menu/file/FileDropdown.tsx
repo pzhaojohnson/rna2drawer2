@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dropdown } from 'Menu/Dropdown';
 import { DroppedSeparator } from 'Menu/DroppedSeparator';
 import type { App } from 'App';
-import { HomeButton } from './HomeButton';
+import { WelcomeButton } from './WelcomeButton';
 import { NewButton } from './NewButton';
 import { OpenButton } from './OpenButton';
 import { SaveButton } from './SaveButton';
@@ -17,7 +17,7 @@ export function FileDropdown(props: Props) {
       name='File'
       dropped={
         <div style={{ width: '256px', display: 'flex', flexDirection: 'column' }} >
-          <HomeButton app={props.app} />
+          <WelcomeButton app={props.app} />
           <DroppedSeparator />
           <NewButton app={props.app} />
           <OpenButton app={props.app} />

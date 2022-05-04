@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './AppIcon.css';
 import appIcon from './appIcon.svg';
 import type { App } from 'App';
-import { HomePage } from 'Forms/home/HomePage';
+import { WelcomePage } from 'Forms/welcome/WelcomePage';
 import { openNewTab } from 'Utilities/openNewTab';
 
 export type Props = {
@@ -18,7 +18,7 @@ export function AppIcon(props: Props) {
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
           props.app.formContainer.renderForm(() => (
-            <HomePage app={props.app} />
+            <WelcomePage app={props.app} />
           ));
         } else {
           openNewTab();

@@ -1,6 +1,6 @@
 import type { App } from 'App';
 import * as React from 'react';
-import styles from './HomePage.css';
+import styles from './WelcomePage.css';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';
 import { OpenRna2drawer } from '../open/OpenRna2drawer';
 import { DrawingSlideshow } from './drawingSlideshow/DrawingSlideshow';
@@ -146,7 +146,7 @@ function Slideshow() {
   );
 }
 
-export function HomePage(props: Props): React.ReactElement {
+export function WelcomePage(props: Props): React.ReactElement {
   return (
     <div style={{ width: '100vw', height: '100%', overflow: 'auto' }} >
       <div style={{ margin: '0px auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
