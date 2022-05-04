@@ -1,5 +1,5 @@
 .onTop {
-  animation: onTopEnter 0.75s ease-in-out;
+  animation: onTopEnter 0.6s ease-in-out;
 }
 
 @keyframes onTopEnter {
@@ -17,16 +17,29 @@
   height: 0px;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
-  border-color: rgb(205 205 205);
+  border-color: #dfdfed;
+}
+
+.newAndOpenLinks {
+  border: 1px solid #d5d5e6;
+  border-radius: 24px;
+  flex-grow: 1;
+  padding: 9px 0px;
+  font-size: 20px;
+  color: #2b2b88;
+  text-align: center;
+  cursor: pointer;
 }
 
 .newAndOpenLinks:hover {
-  transform: scale(1.15);
-  transition-duration: 0.375s;
+  background-color: #fdfdfe;
+  box-shadow: 0px 2px 2px #f0f0f9;
+  transform: scale(1.025);
+  transition: transform 0.05s;
 }
 
 .helpLinks {
-  color: rgb(135 20 201);
+  color: #7632a7;
   text-decoration-line: none;
 }
 
@@ -35,7 +48,7 @@
 }
 
 .updatesLink {
-  color: rgb(135 20 201);
+  color: #7337a0;
   text-decoration-line: none;
 }
 

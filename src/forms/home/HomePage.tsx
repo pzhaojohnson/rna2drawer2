@@ -12,15 +12,15 @@ interface Props {
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <div style={{ margin: '0px 64px', display: 'flex', flexDirection: 'row' }} >
-        <p style={{ fontSize: '32px', color: 'rgba(0,0,0,1)' }} >RNA2Drawer</p>
+      <div style={{ margin: '0px 64px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+        <p style={{ fontSize: '32px', fontWeight: 500, color: '#2b2b30' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
-          <div style={{ flexGrow: 1 }} ></div>
-          <p style={{ fontSize: '12px', fontStyle: 'italic', color: 'rgb(42 42 42)', textAlign: 'right' }} >
+          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 500, color: '#6d6d80', textAlign: 'right' }} >
             Developed by Philip Johnson and Anne Simon
           </p>
-          <p style={{ marginTop: '4px', fontSize: '12px', fontStyle: 'italic', color: 'rgb(42 42 42)', textAlign: 'right' }} >
+          <div style={{ height: '4px' }} />
+          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 500, color: '#6d6d80', textAlign: 'right' }} >
             Last Updated on Dec. 14, 2021
           </p>
         </div>
@@ -34,23 +34,16 @@ function Header() {
 
 function Description() {
   return (
-    <p style={{ fontSize: '16px', color: 'rgb(32 32 32)' }} >
+    <p style={{ fontSize: '16px', fontWeight: 500, color: '#74748d' }} >
       A web app for drawing and exploring nucleic acid structures...
     </p>
   );
 }
 
-const newAndOpenLinkStyles = {
-  fontSize: '24px',
-  color: 'rgb(23 15 216)',
-  cursor: 'pointer',
-};
-
 function NewLink(props: Props) {
   return (
     <p
       className={styles.newAndOpenLinks}
-      style={{ ...newAndOpenLinkStyles }}
       onClick={() => props.app.formContainer.renderForm(newFormProps => (
         <CreateNewDrawing app={props.app} close={newFormProps.unmount} />
       ))}
@@ -64,7 +57,6 @@ function OpenLink(props: Props) {
   return (
     <p
       className={styles.newAndOpenLinks}
-      style={{ ...newAndOpenLinkStyles }}
       onClick={() => props.app.formContainer.renderForm(openFormProps => (
         <OpenRna2drawer app={props.app} close={openFormProps.unmount} />
       ))}
@@ -99,7 +91,7 @@ function GitHubPageLink() {
 function HelpLinks() {
   return (
     <div style={{ minHeight: '28px' }} >
-      <p style={{ fontSize: '16px', color: 'rgb(32 32 32)' }} >
+      <p style={{ fontSize: '16px', fontWeight: 500, color: '#74748d' }} >
         Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
       </p>
     </div>
@@ -122,16 +114,15 @@ function UpdatesNotice() {
     <div
       className={styles.updatesNotice}
       style={{
-        border: '2px dotted rgb(225 225 225)',
-        borderRadius: '21px',
-        height: '42px',
+        border: '3px dotted #e1e1ee',
+        borderRadius: '32px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      <p style={{ margin: '0px 21px', fontSize: '14px', color: 'rgb(32 32 32)' }} >
-        See the <UpdatesLink />! <em>(Dec. 14, 2021)</em>
+      <p style={{ margin: '10px 28px', fontSize: '14px', fontWeight: 500, color: '#7a7a8e' }} >
+        See the <UpdatesLink />! <em style={{ color: '#84849f' }} >(Dec. 14, 2021)</em>
       </p>
     </div>
   );
@@ -169,16 +160,16 @@ export function HomePage(props: Props): React.ReactElement {
               <Description />
             </div>
             <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row' }} >
-              <div style={{ margin: '0px 64px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+              <div style={{ margin: '0px 48px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
                 <NewLink {...props} />
-                <div style={{ flexGrow: 1 }} ></div>
+                <div style={{ width: '36px' }} ></div>
                 <OpenLink {...props} />
               </div>
             </div>
             <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
               <HelpLinks />
             </div>
-            <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+            <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
               <UpdatesNotice />
             </div>
           </div>
