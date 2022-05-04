@@ -16,11 +16,11 @@ function Header() {
         <p style={{ fontSize: '32px', fontWeight: 500, color: '#2b2b30' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
-          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 500, color: '#6d6d80', textAlign: 'right' }} >
+          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 600, color: '#85859c', textAlign: 'right' }} >
             Developed by Philip Johnson and Anne Simon
           </p>
           <div style={{ height: '4px' }} />
-          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 500, color: '#6d6d80', textAlign: 'right' }} >
+          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 600, color: '#85859c', textAlign: 'right' }} >
             Last Updated on Dec. 14, 2021
           </p>
         </div>

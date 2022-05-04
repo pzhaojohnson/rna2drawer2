@@ -21,25 +21,24 @@
 }
 
 .newAndOpenLinks {
-  border: 1px solid #d5d5e6;
+  border: 1px solid #d6d6e6;
   border-radius: 24px;
   flex-grow: 1;
   padding: 9px 0px;
   font-size: 20px;
-  color: #2b2b88;
+  color: #232377;
   text-align: center;
   cursor: pointer;
 }
 
 .newAndOpenLinks:hover {
-  background-color: #fdfdfe;
-  box-shadow: 0px 2px 2px #f0f0f9;
+  box-shadow: 0px 2px 2px #f0f0f5;
   transform: scale(1.025);
   transition: transform 0.05s;
 }
 
 .helpLinks {
-  color: #7632a7;
+  color: #692a97;
   text-decoration-line: none;
 }
 
@@ -48,7 +47,7 @@
 }
 
 .updatesLink {
-  color: #7337a0;
+  color: #6b3196;
   text-decoration-line: none;
 }
 
