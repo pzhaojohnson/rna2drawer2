@@ -3,14 +3,14 @@
   font-size: 12px;
   font-weight: 600;
   font-style: italic;
-  color: #5c0e71;
+  color: #060674;
   cursor: pointer;
 }
 
 .textButton:hover {
-  text-decoration: underline;
+  transform: scale(1.06);
 }
 
 .textButton:active {
-  transform: scale(0.95);
+  transform: scale(1);
 }
