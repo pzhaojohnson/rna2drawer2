@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+import { TextArea } from 'Forms/inputs/text/TextArea';
 import { TextButton } from 'Forms/buttons/TextButton';
 
 interface Props {
@@ -12,15 +14,12 @@ export function DotBracketField(props: Props): React.ReactElement {
   return (
     <div style={{ flexGrow: props.flexGrow, display: 'flex', flexDirection: 'column' }} >
       <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'row' }} >
-        <p className={'unselectable'} style={{ fontSize: '12px' }} >
+        <FieldLabel htmlFor='structure' style={{ flexGrow: 1, cursor: 'text' }} >
           Structure
-        </p>
-        <p
-          className={'unselectable'}
-          style={{ marginLeft: '4px', flexGrow: 1, fontSize: '12px', color: 'rgb(130 130 130)' }}
-        >
-          (Optional)
-        </p>
+          <span style={{ marginLeft: '8px', color: '#6b6b7b' }} >
+            (Optional)
+          </span>
+        </FieldLabel>
         <div style={{ marginRight: '4px' }} >
           <TextButton
             text='Details...'
@@ -28,7 +27,8 @@ export function DotBracketField(props: Props): React.ReactElement {
           />
         </div>
       </div>
-      <textarea
+      <TextArea
+        id='structure'
         value={props.initialValue}
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}

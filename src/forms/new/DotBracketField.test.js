@@ -39,7 +39,7 @@ it('binds callback to toggle parsing details', () => {
   let header = field.childNodes[0];
   expect(toggle).not.toHaveBeenCalled();
   act(() => {
-    fireEvent(header.childNodes[2].childNodes[0], new MouseEvent('click', { bubbles: true }));
+    fireEvent(header.childNodes[1].childNodes[0], new MouseEvent('click', { bubbles: true }));
   });
   expect(toggle).toHaveBeenCalled();
 });
