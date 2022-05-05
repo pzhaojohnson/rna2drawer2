@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useState } from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+import { TextInput } from 'Forms/inputs/text/TextInput';
 
 interface Props {
   initialValue: string;
@@ -9,22 +9,20 @@ interface Props {
 
 export function SequenceIdField(props: Props): React.ReactElement {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <p
-        className={'unselectable'}
-        style={{ marginRight: '8px', fontSize: '12px', display: 'inline-block' }}
-      >
-        Sequence ID
-      </p>
-      <input
-        type={'text'}
-        className={`${textFieldStyles.input}`}
+    <FieldLabel
+      style={{
+        display: 'flex', flexDirection: 'row', alignItems: 'center',
+        cursor: 'text',
+      }}
+    >
+      Sequence ID
+      <TextInput
         value={props.initialValue}
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}
         placeholder={'...the name of your sequence'}
-        style={{ flexGrow: 1 }}
+        style={{ marginLeft: '8px', flexGrow: 1 }}
       />
-    </div>
+    </FieldLabel>
   );
 }
