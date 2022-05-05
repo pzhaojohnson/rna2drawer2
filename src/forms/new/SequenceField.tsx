@@ -17,7 +17,7 @@ export function SequenceField(props: Props): React.ReactElement {
         </p>
         <div style={{ marginRight: '4px' }} >
           <TextButton
-            text='Details'
+            text='Details...'
             onClick={() => props.toggleParsingDetails()}
           />
         </div>
