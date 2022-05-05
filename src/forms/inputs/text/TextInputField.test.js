@@ -88,6 +88,20 @@ describe('TextInputField component', () => {
     expect(input.placeholder).toBe('Blah bleh zxcv.');
   });
 
+  it('passes specified spellCheck attribute to the input element', () => {
+    act(() => {
+      render(<TextInputField input={{ spellCheck: true }} />, container);
+    });
+    let input = container.getElementsByTagName('input')[0];
+    // simply checking spellcheck property on input element doesn't seem to work
+    expect(input.outerHTML).toMatch(/spellcheck="true"/);
+    act(() => {
+      render(<TextInputField input={{ spellCheck: false }} />, container);
+    });
+    input = container.getElementsByTagName('input')[0];
+    expect(input.outerHTML).toMatch(/spellcheck="false"/);
+  });
+
   it('renders with specified CSS styles', () => {
     act(() => {
       render(<TextInputField style={{ marginTop: '32.58px' }} />, container);

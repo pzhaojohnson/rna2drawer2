@@ -9,7 +9,7 @@ export type Props = {
 
   rows?: number;
   placeholder?: string;
-
+  spellCheck?: boolean | 'true' | 'false';
   style?: React.CSSProperties;
 };
 
@@ -28,6 +28,7 @@ export function TextArea(props: Props) {
       onBlur={props.onBlur}
       rows={props.rows}
       placeholder={props.placeholder}
+      spellCheck={props.spellCheck}
       style={props.style}
     />
   );

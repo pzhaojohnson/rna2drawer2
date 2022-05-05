@@ -69,6 +69,18 @@ describe('TextArea component', () => {
     expect(container.firstChild.placeholder).toBe('11 2 333 asdf');
   });
 
+  it('renders with specified spellCheck attribute', () => {
+    act(() => {
+      render(<TextArea spellCheck={true} />, container);
+    });
+    // simply checking spellcheck property on textarea element doesn't seem to work
+    expect(container.firstChild.outerHTML).toMatch(/spellcheck="true"/);
+    act(() => {
+      render(<TextArea spellCheck={false} />, container);
+    });
+    expect(container.firstChild.outerHTML).toMatch(/spellcheck="false"/);
+  });
+
   it('renders with specified CSS styles', () => {
     act(() => {
       render(<TextArea style={{ marginTop: '18.07px' }} />, container);

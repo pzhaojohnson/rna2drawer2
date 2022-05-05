@@ -76,6 +76,18 @@ describe('TextInput component', () => {
     expect(container.firstChild.placeholder).toBe('plok zxCV.');
   });
 
+  it('renders with specified spellCheck attribute', () => {
+    act(() => {
+      render(<TextInput spellCheck={true} />, container);
+    });
+    // simply checking spellcheck property on input element doesn't seem to work
+    expect(container.firstChild.outerHTML).toMatch(/spellcheck="true"/);
+    act(() => {
+      render(<TextInput spellCheck={false} />, container);
+    });
+    expect(container.firstChild.outerHTML).toMatch(/spellcheck="false"/);
+  });
+
   it('renders with specified CSS styles', () => {
     act(() => {
       render(<TextInput style={{ marginRight: '6.92px' }} />, container);

@@ -88,6 +88,20 @@ describe('TextAreaField component', () => {
     expect(textArea.placeholder).toBe('asdfQWzx.');
   });
 
+  it('passes spellCheck attribute to the textarea element', () => {
+    act(() => {
+      render(<TextAreaField textArea={{ spellCheck: true }} />, container);
+    });
+    let textArea = container.getElementsByTagName('textarea')[0];
+    // simply checking spellcheck property on textarea element doesn't seem to work
+    expect(textArea.outerHTML).toMatch(/spellcheck="true"/);
+    act(() => {
+      render(<TextAreaField textArea={{ spellCheck: false }} />, container);
+    });
+    textArea = container.getElementsByTagName('textarea')[0];
+    expect(textArea.outerHTML).toMatch(/spellcheck="false"/);
+  });
+
   it('sets number of rows for the textarea element to 10 by default', () => {
     act(() => {
       render(<TextAreaField />, container);

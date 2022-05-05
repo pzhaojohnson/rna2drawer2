@@ -13,6 +13,7 @@ export type Props = {
   // for specifying attributes of the text input element of the field
   input?: {
     placeholder?: string;
+    spellCheck?: boolean | 'true' | 'false';
     style?: React.CSSProperties;
   };
 
@@ -39,6 +40,7 @@ export function TextInputField(props: Props) {
         onBlur={props.onBlur}
         onKeyUp={props.onKeyUp}
         placeholder={props.input?.placeholder}
+        spellCheck={props.input?.spellCheck}
         style={{
           marginRight: '8px',
           ...props.input?.style,

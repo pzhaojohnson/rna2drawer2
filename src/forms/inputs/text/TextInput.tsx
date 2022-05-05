@@ -9,7 +9,7 @@ export type Props = {
   onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 
   placeholder?: string;
-
+  spellCheck?: boolean | 'true' | 'false';
   style?: React.CSSProperties;
 };
 
@@ -29,6 +29,7 @@ export function TextInput(props: Props) {
       onBlur={props.onBlur}
       onKeyUp={props.onKeyUp}
       placeholder={props.placeholder}
+      spellCheck={props.spellCheck}
       style={props.style}
     />
   );
