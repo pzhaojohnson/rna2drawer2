@@ -2,6 +2,8 @@ import * as React from 'react';
 import styles from './TextArea.css';
 
 export type Props = {
+  id?: string;
+
   value?: string;
 
   onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -22,6 +24,7 @@ export type Props = {
 export function TextArea(props: Props) {
   return (
     <textarea
+      id={props.id}
       className={styles.textArea}
       value={props.value}
       onChange={props.onChange}

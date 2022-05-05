@@ -2,6 +2,8 @@ import * as React from 'react';
 import styles from './TextInput.css';
 
 export type Props = {
+  id?: string;
+
   value?: string;
 
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -23,6 +25,7 @@ export function TextInput(props: Props) {
   return (
     <input
       type='text'
+      id={props.id}
       className={styles.textInput}
       value={props.value}
       onChange={props.onChange}

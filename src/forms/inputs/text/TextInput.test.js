@@ -20,6 +20,13 @@ afterEach(() => {
 });
 
 describe('TextInput component', () => {
+  it('renders with specified ID', () => {
+    act(() => {
+      render(<TextInput id='1223xxZY' />, container);
+    });
+    expect(container.firstChild.id).toBe('1223xxZY');
+  });
+
   it('renders with specified value', () => {
     act(() => {
       render(<TextInput value='1234 zzxx' />, container);

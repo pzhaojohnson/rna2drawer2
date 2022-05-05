@@ -20,6 +20,13 @@ afterEach(() => {
 });
 
 describe('TextArea component', () => {
+  it('renders with specified ID', () => {
+    act(() => {
+      render(<TextArea id='55BzxcvaA' />, container);
+    });
+    expect(container.firstChild.id).toBe('55BzxcvaA');
+  });
+
   it('renders with specified value', () => {
     act(() => {
       render(<TextArea value='11qQwx cnv' />, container);
