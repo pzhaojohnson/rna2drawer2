@@ -3,7 +3,7 @@ import * as React from 'react';
 export function DotBracketParsingDetails(): React.ReactElement {
   return (
     <div style={{ width: '360px', margin: '16px 0px 0px 12px' }} >
-      <p className={'unselectable'} style={{ fontWeight: 600, fontSize: '14px', color: 'rgba(0,0,0,1)' }} >
+      <p className={'unselectable'} style={{ fontWeight: 600, fontSize: '14px', color: '#1e1e23' }} >
         Structure Parsing Details
       </p>
       <div style={{ marginLeft: '8px' }} >

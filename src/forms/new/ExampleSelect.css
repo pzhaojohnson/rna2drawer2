@@ -1,11 +1,12 @@
 .option {
   font-size: 14px;
+  font-weight: 500;
   font-style: italic;
-  color: #3535c9;
+  color: #242489;
 }
 
 .option:hover {
-  transform: scale(1.065);
+  transform: scale(1.05);
   cursor: pointer;
 }
 
