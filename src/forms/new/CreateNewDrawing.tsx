@@ -36,7 +36,7 @@ let examples = [
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p style={{ margin: '0px 92px', fontSize: '24px', fontWeight: 500, color: '#18181b' }} >
+      <p style={{ margin: '0px 90px', fontSize: '24px', fontWeight: 500, color: '#18181b' }} >
         Create a New Drawing
       </p>
       <div style={{ marginTop: '8px' }} >
@@ -76,9 +76,9 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
   return (
     <FloatingDrawingsContainer
       contained={
-        <div style={{ width: '920px', height: '580px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '924px', height: '576px', display: 'flex', flexDirection: 'column' }} >
           <Header />
-          <div style={{ margin: '0px 116px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
+          <div style={{ margin: '0px 120px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '24px' }} >
               <ExampleSelect
                 examples={examples.map(e => e.name)}
@@ -93,7 +93,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                 }}
               />
             </div>
-            <div style={{ marginTop: '18px' }} >
+            <div style={{ marginTop: '24px' }} >
               <SequenceIdField
                 initialValue={sequenceId}
                 set={id => setSequenceId(id)}

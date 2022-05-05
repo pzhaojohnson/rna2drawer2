@@ -13,11 +13,11 @@ interface Props {
 export function SequenceField(props: Props): React.ReactElement {
   return (
     <div style={{ flexGrow: props.flexGrow, display: 'flex', flexDirection: 'column' }} >
-      <div style={{ marginTop: '18px', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row' }} >
         <FieldLabel htmlFor='sequence' style={{ flexGrow: 1, cursor: 'text' }} >
           Sequence
         </FieldLabel>
-        <div style={{ marginRight: '4px' }} >
+        <div style={{ marginRight: '3px' }} >
           <TextButton
             text='Details...'
             onClick={() => props.toggleParsingDetails()}
