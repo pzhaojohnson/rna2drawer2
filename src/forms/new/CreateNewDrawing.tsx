@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import errorMessageStyles from '../ErrorMessage.css';
+import { ErrorMessage } from 'Forms/ErrorMessage';
 import type { App } from 'App';
 import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
 import { ExampleSelect } from './ExampleSelect';
@@ -130,12 +130,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
             </div>
             {!errorMessage ? null : (
               <div style={{ marginTop: '10px' }} >
-                <p
-                  key={errorMessageKey}
-                  className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-                >
-                  {errorMessage}
-                </p>
+                <ErrorMessage key={errorMessageKey} >{errorMessage}</ErrorMessage>
               </div>
             )}
             <div style={{ marginTop: errorMessage ? '6px' : '24px', marginBottom: '8px' }} >
