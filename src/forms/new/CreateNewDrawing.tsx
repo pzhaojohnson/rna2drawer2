@@ -128,12 +128,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                 {showingDotBracketParsingDetails ? <DotBracketParsingDetails /> : null}
               </div>
             </div>
-            {!errorMessage ? null : (
-              <div style={{ marginTop: '10px' }} >
-                <ErrorMessage key={errorMessageKey} >{errorMessage}</ErrorMessage>
-              </div>
-            )}
-            <div style={{ marginTop: errorMessage ? '6px' : '24px', marginBottom: '8px' }} >
+            <div style={{ margin: '24px 0 8px 0', display: 'flex', alignItems: 'center' }} >
               <SolidButton
                 text={'Submit'}
                 onClick={() => {
@@ -163,6 +158,11 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                   }
                 }}
               />
+              {!errorMessage ? null : (
+                <ErrorMessage key={errorMessageKey} style={{ marginLeft: '10px' }} >
+                  {errorMessage}
+                </ErrorMessage>
+              )}
             </div>
           </div>
         </div>
