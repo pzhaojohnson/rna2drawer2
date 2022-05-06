@@ -16,9 +16,6 @@ export function DotBracketField(props: Props): React.ReactElement {
       <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row' }} >
         <FieldLabel htmlFor='structure' style={{ flexGrow: 1, cursor: 'text' }} >
           Structure
-          <span style={{ marginLeft: '8px', color: '#6b6b7b' }} >
-            (Optional)
-          </span>
         </FieldLabel>
         <div style={{ marginRight: '3px' }} >
           <TextButton
