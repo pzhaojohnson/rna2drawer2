@@ -13,7 +13,7 @@ function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
       <div style={{ margin: '0px 64px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <p style={{ fontSize: '32px', fontWeight: 500, color: '#2b2b30' }} >RNA2Drawer</p>
+        <p style={{ fontSize: '32px', fontWeight: 600, color: '#232326' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 600, color: '#85859c', textAlign: 'right' }} >
@@ -34,7 +34,7 @@ function Header() {
 
 function Description() {
   return (
-    <p style={{ fontSize: '16px', fontWeight: 500, color: '#74748d' }} >
+    <p style={{ fontSize: '16px', fontWeight: 500, color: '#6a6a81' }} >
       A web app for drawing and exploring nucleic acid structures...
     </p>
   );
@@ -91,7 +91,7 @@ function GitHubPageLink() {
 function HelpLinks() {
   return (
     <div style={{ minHeight: '28px' }} >
-      <p style={{ fontSize: '16px', fontWeight: 500, color: '#74748d' }} >
+      <p style={{ fontSize: '16px', fontWeight: 500, color: '#6a6a81' }} >
         Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
       </p>
     </div>
@@ -121,8 +121,8 @@ function UpdatesNotice() {
         justifyContent: 'center',
       }}
     >
-      <p style={{ margin: '10px 28px', fontSize: '14px', fontWeight: 500, color: '#7a7a8e' }} >
-        See the <UpdatesLink />! <em style={{ color: '#84849f' }} >(Dec. 14, 2021)</em>
+      <p style={{ margin: '10px 28px', fontSize: '14px', fontWeight: 500, color: '#77778a' }} >
+        See the <UpdatesLink />! <em style={{ color: '#80809b' }} >(Dec. 14, 2021)</em>
       </p>
     </div>
   );
