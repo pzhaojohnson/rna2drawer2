@@ -2,3 +2,22 @@
   transform: scale(1.15);
   transition: transform 0.125s ease-in-out;
 }
+
+.parsingDetails {}
+
+.parsingDetails p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #252528;
+  user-select: none;
+}
+
+.header {
+  margin: 0px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e1e20;
+  user-select: none;
+}
