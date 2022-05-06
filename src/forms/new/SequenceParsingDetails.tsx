@@ -28,7 +28,7 @@ export function IgnoreNonAugctLettersCheckbox(props: Props): React.ReactElement 
       label='Ignore Non-AUGCT Letters'
       checked={props.ignoringNonAugctLetters}
       onChange={event => props.ignoreNonAugctLetters(event.target.checked)}
-      style={{ alignSelf: 'start', fontWeight: 500, color: '#1b1b1d' }}
+      style={{ fontWeight: 500, color: '#1b1b1d' }}
     />
   );
 }
@@ -39,7 +39,7 @@ export function IgnoreNonAlphanumericsCheckbox(props: Props): React.ReactElement
       label='Ignore Non-Alphanumerics'
       checked={props.ignoringNonAlphanumerics}
       onChange={event => props.ignoreNonAlphanumerics(event.target.checked)}
-      style={{ alignSelf: 'start', fontWeight: 500, color: '#1b1b1d' }}
+      style={{ fontWeight: 500, color: '#1b1b1d' }}
     />
   );
 }
@@ -57,10 +57,10 @@ export function SequenceParsingDetails(props: Props): React.ReactElement {
         </p>
         <div style={{ margin: '8px 0 0 8px', display: 'flex', flexDirection: 'column' }} >
           <IgnoreNumbersCheckbox {...props} />
-          <div style={{ marginTop: '8px' }} >
+          <div style={{ marginTop: '8px', alignSelf: 'start' }} >
             <IgnoreNonAugctLettersCheckbox {...props} />
           </div>
-          <div style={{ marginTop: '8px' }} >
+          <div style={{ marginTop: '8px', alignSelf: 'start' }} >
             <IgnoreNonAlphanumericsCheckbox {...props} />
           </div>
         </div>
