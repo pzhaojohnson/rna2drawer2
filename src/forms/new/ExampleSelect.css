@@ -1,8 +1,8 @@
 .option {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   font-style: italic;
-  color: #22228c;
+  color: #1d1d73;
 }
 
 .option:hover {

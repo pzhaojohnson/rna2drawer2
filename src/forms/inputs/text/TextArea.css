@@ -1,5 +1,5 @@
 .textArea {
-  border: 1px solid #d6d6d6;
+  border: 1px solid #d4d4de;
   border-radius: 2px;
   padding: 3px 6px;
   font-family: 'Open Sans', sans-serif;
@@ -19,5 +19,6 @@
 
 .textArea::placeholder {
   font-style: italic;
-  color: #717171;
+  font-weight: 600;
+  color: #868692;
 }

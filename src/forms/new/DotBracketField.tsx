@@ -14,7 +14,10 @@ export function DotBracketField(props: Props): React.ReactElement {
   return (
     <div style={{ flexGrow: props.flexGrow, display: 'flex', flexDirection: 'column' }} >
       <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row' }} >
-        <FieldLabel htmlFor='structure' style={{ flexGrow: 1, cursor: 'text' }} >
+        <FieldLabel
+          htmlFor='structure'
+          style={{ flexGrow: 1, cursor: 'text', fontWeight: 700, color: '#202021' }}
+        >
           Structure
         </FieldLabel>
         <div style={{ marginRight: '3px' }} >
@@ -37,6 +40,8 @@ export function DotBracketField(props: Props): React.ReactElement {
           flexGrow: 1,
           margin: '4px 0px 0px 0px',
           fontSize: '12px',
+          fontWeight: 600,
+          color: '#707078',
         }}
       />
     </div>

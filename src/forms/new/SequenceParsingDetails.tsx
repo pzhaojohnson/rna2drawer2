@@ -17,7 +17,7 @@ export function IgnoreNumbersCheckbox(props: Props): React.ReactElement {
       label='Ignore Numbers'
       checked={props.ignoringNumbers}
       onChange={event => props.ignoreNumbers(event.target.checked)}
-      style={{ alignSelf: 'start' }}
+      style={{ alignSelf: 'start', fontWeight: 500, color: '#1b1b1d' }}
     />
   );
 }
@@ -28,7 +28,7 @@ export function IgnoreNonAugctLettersCheckbox(props: Props): React.ReactElement 
       label='Ignore Non-AUGCT Letters'
       checked={props.ignoringNonAugctLetters}
       onChange={event => props.ignoreNonAugctLetters(event.target.checked)}
-      style={{ alignSelf: 'start' }}
+      style={{ alignSelf: 'start', fontWeight: 500, color: '#1b1b1d' }}
     />
   );
 }
@@ -39,7 +39,7 @@ export function IgnoreNonAlphanumericsCheckbox(props: Props): React.ReactElement
       label='Ignore Non-Alphanumerics'
       checked={props.ignoringNonAlphanumerics}
       onChange={event => props.ignoreNonAlphanumerics(event.target.checked)}
-      style={{ alignSelf: 'start' }}
+      style={{ alignSelf: 'start', fontWeight: 500, color: '#1b1b1d' }}
     />
   );
 }
