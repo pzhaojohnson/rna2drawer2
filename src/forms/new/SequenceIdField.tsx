@@ -12,7 +12,7 @@ export function SequenceIdField(props: Props): React.ReactElement {
     <FieldLabel
       style={{
         display: 'flex', flexDirection: 'row', alignItems: 'center',
-        fontWeight: 700, color: '#1c1c1e',
+        fontWeight: 700, color: '#202024',
         cursor: 'text',
       }}
     >

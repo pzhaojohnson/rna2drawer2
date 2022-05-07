@@ -16,7 +16,7 @@ export function DotBracketField(props: Props): React.ReactElement {
       <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row' }} >
         <FieldLabel
           htmlFor='structure'
-          style={{ flexGrow: 1, cursor: 'text', fontWeight: 700, color: '#1c1c1e' }}
+          style={{ flexGrow: 1, cursor: 'text', fontWeight: 700, color: '#202024' }}
         >
           Structure
         </FieldLabel>
