@@ -19,6 +19,6 @@
 
 .textArea::placeholder {
   font-style: italic;
-  font-weight: 600;
-  color: #868692;
+  font-weight: 500;
+  color: #74747d;
 }

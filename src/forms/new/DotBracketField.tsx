@@ -16,7 +16,7 @@ export function DotBracketField(props: Props): React.ReactElement {
       <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row' }} >
         <FieldLabel
           htmlFor='structure'
-          style={{ flexGrow: 1, cursor: 'text', fontWeight: 700, color: '#202021' }}
+          style={{ flexGrow: 1, cursor: 'text', fontWeight: 600, color: '#1f1f20' }}
         >
           Structure
         </FieldLabel>
@@ -24,6 +24,7 @@ export function DotBracketField(props: Props): React.ReactElement {
           <TextButton
             text='Details...'
             onClick={() => props.toggleParsingDetails()}
+            style={{ fontWeight: 500, color: '#090972' }}
           />
         </div>
       </div>
@@ -40,8 +41,8 @@ export function DotBracketField(props: Props): React.ReactElement {
           flexGrow: 1,
           margin: '4px 0px 0px 0px',
           fontSize: '12px',
-          fontWeight: 600,
-          color: '#707078',
+          fontWeight: 500,
+          color: '#74747d',
         }}
       />
     </div>
