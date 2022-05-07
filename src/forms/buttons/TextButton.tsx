@@ -3,6 +3,8 @@ import styles from './TextButton.css';
 
 interface Props {
   text: string;
+  children?: React.ReactNode;
+
   onClick: () => void;
 
   style?: React.CSSProperties;
@@ -16,6 +18,7 @@ export function TextButton(props: Props) {
       style={props.style}
     >
       {props.text}
+      {props.children}
     </p>
   );
 }

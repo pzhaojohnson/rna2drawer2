@@ -25,6 +25,13 @@ describe('TextButton component', () => {
     expect(container.textContent).toMatch(/asdf QWERqwer/);
   });
 
+  it('renders with specified children', () => {
+    act(() => {
+      render(<TextButton>Asdf qqwWEr.</TextButton>, container);
+    });
+    expect(container.textContent).toMatch(/Asdf qqwWEr./);
+  });
+
   it('binds given onClick callback', () => {
     let onClick = jest.fn();
     act(() => {
