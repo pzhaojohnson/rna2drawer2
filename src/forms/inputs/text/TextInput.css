@@ -22,4 +22,7 @@
   font-style: italic;
   font-weight: 500;
   color: #797983;
+
+  /* necessary for Firefox */
+  opacity: 1;
 }
