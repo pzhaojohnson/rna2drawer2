@@ -17,24 +17,26 @@ afterEach(() => {
   container = null;
 });
 
-it('renders with given text', () => {
-  act(() => {
-    render(<TextButton text='asdf QWERqwer' />, container);
+describe('TextButton component', () => {
+  it('renders with given text', () => {
+    act(() => {
+      render(<TextButton text='asdf QWERqwer' />, container);
+    });
+    expect(container.textContent).toMatch(/asdf QWERqwer/);
   });
-  expect(container.textContent).toMatch(/asdf QWERqwer/);
-});
 
-it('binds given onClick callback', () => {
-  let onClick = jest.fn();
-  act(() => {
-    render(<TextButton onClick={onClick} />, container);
+  it('binds given onClick callback', () => {
+    let onClick = jest.fn();
+    act(() => {
+      render(<TextButton onClick={onClick} />, container);
+    });
+    expect(onClick).not.toHaveBeenCalled();
+    act(() => {
+      fireEvent(
+        container.childNodes[0],
+        new MouseEvent('click', { bubbles: true })
+      );
+    });
+    expect(onClick).toHaveBeenCalled();
   });
-  expect(onClick).not.toHaveBeenCalled();
-  act(() => {
-    fireEvent(
-      container.childNodes[0],
-      new MouseEvent('click', { bubbles: true })
-    );
-  });
-  expect(onClick).toHaveBeenCalled();
 });
