@@ -42,7 +42,7 @@ export function DotBracketField(props: Props): React.ReactElement {
           margin: '4px 0px 0px 0px',
           fontSize: '12px',
           fontWeight: 500,
-          color: '#74747d',
+          color: '#787882',
         }}
       />
     </div>

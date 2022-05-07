@@ -42,7 +42,7 @@ export function SequenceField(props: Props): React.ReactElement {
           margin: '4px 0px 0px 0px',
           fontSize: '12px',
           fontWeight: 500,
-          color: '#7a7a84',
+          color: '#73737d',
         }}
       />
     </div>
