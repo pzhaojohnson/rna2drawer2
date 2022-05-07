@@ -10,11 +10,11 @@
 }
 
 .textInput:hover {
-  border-color: #666670;
+  border-color: #4f4f56;
 }
 
 .textInput:focus {
-  border-color: #666670;
+  border-color: #4f4f56;
   outline: none;
 }
 

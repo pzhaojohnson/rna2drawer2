@@ -9,11 +9,11 @@
 }
 
 .textArea:hover {
-  border-color: #333333;
+  border-color: #4f4f56;
 }
 
 .textArea:focus {
-  border-color: #333333;
+  border-color: #4f4f56;
   outline: none;
 }
 
