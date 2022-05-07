@@ -39,4 +39,11 @@ describe('TextButton component', () => {
     });
     expect(onClick).toHaveBeenCalled();
   });
+
+  it('renders with specified CSS styles', () => {
+    act(() => {
+      render(<TextButton style={{ margin: '8px 0px 0px 2.5px' }} />, container);
+    });
+    expect(container.firstChild.style.margin).toBe('8px 0px 0px 2.5px');
+  });
 });
