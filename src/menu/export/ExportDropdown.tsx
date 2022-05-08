@@ -15,7 +15,7 @@ export function ExportDropdown(props: Props) {
     <Dropdown
       name='Export'
       dropped={
-        <div style={{ width: '256px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '290px', display: 'flex', flexDirection: 'column' }} >
           <ExportSvgButton app={props.app} />
           <ExportPptxButton app={props.app} />
           <DroppedSeparator />
