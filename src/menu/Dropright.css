@@ -5,6 +5,7 @@
 .button {
   padding: 8px 18px;
   background-color: white;
+  cursor: pointer;
 }
 
 .buttonText {
@@ -12,6 +13,8 @@
   font-size: 12px;
   font-weight: 500;
   color: rgb(33, 33, 33);
+  cursor: pointer;
+  user-select: none;
 }
 
 .droppedContainer {

@@ -19,7 +19,7 @@ export function Dropdown(props: Props) {
       `}
     >
       <div className={styles.button} >
-        <p className={`${styles.buttonText} unselectable`} >
+        <p className={styles.buttonText} >
           {props.name}
         </p>
       </div>

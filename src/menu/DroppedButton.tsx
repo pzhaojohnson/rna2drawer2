@@ -28,7 +28,6 @@ export function DroppedButton(props: Props) {
       className={`
         ${styles.droppedButton}
         ${props.disabled ? styles.disabled : styles.enabled}
-        unselectable
       `}
       onClick={() => {
         if (!props.disabled) {
@@ -37,12 +36,12 @@ export function DroppedButton(props: Props) {
       }}
       style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
     >
-      <p className={`${styles.text} unselectable`} >
+      <p className={styles.text} >
         {props.text}
       </p>
       <div style={{ flexGrow: 1 }} />
       {!props.keyBinding ? null : (
-        <p className={`${styles.keyBinding} unselectable`} >
+        <p className={styles.keyBinding} >
           {props.keyBinding}
         </p>
       )}

@@ -3,6 +3,10 @@
   padding: 8px 18px;
 }
 
+.enabled {
+  cursor: pointer;
+}
+
 .enabled:hover {
   background-color: rgb(247, 247, 247);
 }
@@ -11,10 +15,12 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
+  user-select: none;
 }
 
 .enabled .text {
   color: rgb(33, 33, 33);
+  cursor: pointer;
 }
 
 .disabled .text {
@@ -25,10 +31,12 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
+  user-select: none;
 }
 
 .enabled .keyBinding {
   color: rgb(97, 97, 97);
+  cursor: pointer;
 }
 
 .disabled .keyBinding {
