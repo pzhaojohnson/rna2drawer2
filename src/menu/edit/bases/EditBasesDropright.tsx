@@ -21,7 +21,7 @@ export function EditBasesDropright(props: Props) {
     <Dropright
       name='Bases'
       dropped={
-        <div style={{ width: '293px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '296px', display: 'flex', flexDirection: 'column' }} >
           <div className={styles.whiteLeftBorder} >
             <GeneralStylesButton app={props.app} />
           </div>
