@@ -8,23 +8,23 @@
 }
 
 .enabled:hover {
-  background-color: rgb(247, 247, 247);
+  background-color: #f7f7f7;
 }
 
 .text {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   user-select: none;
 }
 
 .enabled .text {
-  color: rgb(33, 33, 33);
+  color: #151516;
   cursor: pointer;
 }
 
 .disabled .text {
-  color: rgb(172, 172, 172);
+  color: #a7a7b3;
 }
 
 .keyBinding {
@@ -35,10 +35,10 @@
 }
 
 .enabled .keyBinding {
-  color: rgb(97, 97, 97);
+  color: #505055;
   cursor: pointer;
 }
 
 .disabled .keyBinding {
-  color: rgb(198, 198, 198);
+  color: #c3c3ce;
 }

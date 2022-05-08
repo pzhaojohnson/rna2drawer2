@@ -11,15 +11,15 @@
 .buttonText {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 500;
-  color: rgb(33, 33, 33);
+  font-weight: 400;
+  color: #151516;
   cursor: pointer;
   user-select: none;
 }
 
 .droppedContainer {
   border-style: solid;
-  border-color: rgb(221, 221, 221);
+  border-color: #dedee4;
   border-width: 1px 1px 1px 0px;
   border-radius: 0px 3px 3px 3px;
 

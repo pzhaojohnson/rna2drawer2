@@ -20,22 +20,22 @@
 }
 
 .enabled .buttonText {
-  color: rgb(33, 33, 33);
+  color: #313135;
   cursor: pointer;
 }
 
 .disabled .buttonText {
-  color: rgb(172, 172, 172);
+  color: #95959f;
 }
 
 .enabled:hover .button {
-  background-color: rgb(247, 247, 247);
+  background-color: #f7f7f7;
 }
 
 .droppedContainer {
   border-width: 0px 1px 1px 1px;
   border-style: solid;
-  border-color: rgb(221, 221, 221);
+  border-color: #dedee4;
   border-radius: 0px 0px 3px 3px;
 
   background-color: white;
