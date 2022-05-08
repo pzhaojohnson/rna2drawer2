@@ -9,7 +9,7 @@ export function DroppedSeparator() {
           borderWidth: '0px 0px 1px 0px',
           borderStyle: 'solid',
           borderColor: 'rgb(221, 221, 221)',
-          margin: '0px 8px',
+          margin: '0px 12px',
         }}
       />
     </div>
