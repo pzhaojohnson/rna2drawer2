@@ -16,7 +16,7 @@ export function SequenceField(props: Props): React.ReactElement {
       <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row' }} >
         <FieldLabel
           htmlFor='sequence'
-          style={{ flexGrow: 1, cursor: 'text', fontWeight: 700, color: '#202024' }}
+          style={{ flexGrow: 1, cursor: 'text', fontWeight: 700, color: '#161619' }}
         >
           Sequence
         </FieldLabel>
@@ -42,7 +42,7 @@ export function SequenceField(props: Props): React.ReactElement {
           margin: '4px 0px 0px 0px',
           fontSize: '12px',
           fontWeight: 500,
-          color: '#73737d',
+          color: '#767681',
         }}
       />
     </div>

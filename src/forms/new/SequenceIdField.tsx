@@ -12,7 +12,7 @@ export function SequenceIdField(props: Props): React.ReactElement {
     <FieldLabel
       style={{
         display: 'flex', flexDirection: 'row', alignItems: 'center',
-        fontWeight: 700, color: '#202024',
+        fontWeight: 700, color: '#161619',
         cursor: 'text',
       }}
     >
@@ -22,7 +22,7 @@ export function SequenceIdField(props: Props): React.ReactElement {
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}
         placeholder={'...the name of your sequence'}
-        style={{ marginLeft: '8px', flexGrow: 1, fontWeight: 500, color: '#676770' }}
+        style={{ marginLeft: '8px', flexGrow: 1, fontWeight: 500, color: '#626268' }}
       />
     </FieldLabel>
   );

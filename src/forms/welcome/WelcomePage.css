@@ -21,7 +21,7 @@
 }
 
 .newAndOpenLinks {
-  border: 1px solid #cecee5;
+  border: 1px solid #cfcfe6;
   border-radius: 24px;
   flex-grow: 1;
   padding: 9px 0px;
@@ -32,7 +32,7 @@
 }
 
 .newAndOpenLinks:hover {
-  box-shadow: 0px 2px 2px #ececf2;
+  box-shadow: 0px 2px 2px #eeeef3;
   transform: scale(1.025);
   transition: transform 0.05s;
 }

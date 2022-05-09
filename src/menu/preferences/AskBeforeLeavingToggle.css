@@ -25,11 +25,11 @@
 
 .on .pillContainer {
   border: none;
-  background-color: #404040;
+  background-color: #45454a;
 }
 
 .on:hover .pillContainer {
-  box-shadow: 0 0 4px #b6b6b6;
+  box-shadow: 0 0 4px #a4a4b0;
 }
 
 .on .text {
@@ -46,17 +46,17 @@
 }
 
 .off .pillContainer {
-  border: 1px solid #cfcfcf;
+  border: 1px solid #d2d2db;
   background-color: white;
 }
 
 .off:hover .pillContainer {
-  box-shadow: 0 0 4px #dbdbdb;
+  box-shadow: 0 0 4px #e5e5ed;
 }
 
 .off .text {
   font-weight: 600;
-  color: #999999;
+  color: #9c9ca5;
 }
 
 .off .spacer {
