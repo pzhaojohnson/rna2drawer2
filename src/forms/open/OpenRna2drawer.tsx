@@ -25,7 +25,7 @@ function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
       <p style={{ margin: '0px 92px', fontSize: '24px', color: 'rgba(0,0,0,1)' }} >
-        Open an RNA2Drawer File
+        Open a Saved Drawing
       </p>
       <div style={{ marginTop: '8px' }} >
         <div
@@ -117,7 +117,7 @@ export function OpenRna2drawer(props: Props) {
                   className={fileUploaded ? formStyles.fileName : formStyles.fileInputLabel}
                   style={{ marginLeft: '10px' }}
                 >
-                  {fileUploaded ? fileName : 'Upload a file...'}
+                  {fileUploaded ? fileName : 'Upload a file with .rna2drawer extension...'}
                 </p>
               </div>
             </div>
