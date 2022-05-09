@@ -24,7 +24,7 @@ function updateDrawingTitle(app: App, fileName: string) {
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p style={{ margin: '0px 92px', fontSize: '24px', color: 'rgba(0,0,0,1)' }} >
+      <p style={{ margin: '0px 92px', fontSize: '24px', fontWeight: 600, color: '#151516' }} >
         Open a Saved Drawing
       </p>
       <div style={{ marginTop: '8px' }} >
