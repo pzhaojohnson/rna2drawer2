@@ -3,7 +3,9 @@
   border-style: solid;
   border-color: #e0e0ec;
 
-  height: 30px;
+  /* use min-height instead of height so that height can increase
+  if scrollbars appear */
+  min-height: 30px;
 
   background-color: white;
 
