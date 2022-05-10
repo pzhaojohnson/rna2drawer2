@@ -5,7 +5,6 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 import { FloatingDrawingsContainer } from 'Forms/containers/floatingDrawings/FloatingDrawingsContainer';
 import closedFolder from './closedFolder.svg';
 import openFolder from './openFolder.svg';
-import { SolidButton } from 'Forms/buttons/SolidButton';
 import type { App } from 'App';
 import { open } from './open';
 import parseFileExtension from 'Parse/parseFileExtension';
@@ -82,8 +81,6 @@ export function OpenRna2drawer(props: Props) {
   let [fileUploaded, setFileUploaded] = useState(false);
 
   let [fileName, setFileName] = useState('');
-  let [fileExtension, setFileExtension] = useState('');
-  let [fileContents, setFileContents] = useState('');
 
   // use String object to rerender every time the error message is set
   let [errorMessage, setErrorMessage] = useState<String>(new String(''));
@@ -118,10 +115,24 @@ export function OpenRna2drawer(props: Props) {
                         // should always be a string when readAsText is used
                         if (typeof fr.result == 'string') {
                           setFileName(f.name);
-                          setFileExtension(parseFileExtension(f.name));
-                          setFileContents(fr.result);
                           setFileUploaded(true);
-                          setErrorMessage(new String(''));
+
+                          if (parseFileExtension(f.name).toLowerCase().indexOf('rna2drawer') != 0) {
+                            setErrorMessage(new String('File must have a .rna2drawer extension.'));
+                            return;
+                          }
+
+                          let opened = open(props.app, { extension: parseFileExtension(f.name), contents: fr.result });
+                          if (!opened) {
+                            setErrorMessage(new String('Invalid RNA2Drawer file.'));
+                            return;
+                          }
+
+                          updateDrawingTitle(props.app, f.name);
+                          props.close();
+                          // prevent coming back to this form or preceding forms
+                          props.app.formContainer.clearHistory();
+                          props.app.refresh();
                         }
                       })
                       fr.readAsText(f);
@@ -151,34 +162,6 @@ export function OpenRna2drawer(props: Props) {
                   {fileUploaded ? fileName : 'Upload a file with .rna2drawer extension...'}
                 </p>
               </div>
-            </div>
-            <div style={{ marginTop: '32px' }} >
-              <SolidButton
-                text='Submit'
-                onClick={() => {
-                  if (!fileUploaded) {
-                    setErrorMessage(new String('No file uploaded.'));
-                    return;
-                  }
-
-                  if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
-                    setErrorMessage(new String('File must have a .rna2drawer extension.'));
-                    return;
-                  }
-
-                  let opened = open(props.app, { extension: fileExtension, contents: fileContents });
-                  if (!opened) {
-                    setErrorMessage(new String('Invalid RNA2Drawer file.'));
-                    return;
-                  }
-
-                  updateDrawingTitle(props.app, fileName);
-                  props.close();
-                  // prevent coming back to this form or preceding forms
-                  props.app.formContainer.clearHistory();
-                  props.app.refresh();
-                }}
-              />
             </div>
             {!errorMessage.valueOf() ? null : (
               <div key={Math.random()} style={{ marginTop: '6px' }} >
