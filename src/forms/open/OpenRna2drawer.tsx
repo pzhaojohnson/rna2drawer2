@@ -41,6 +41,18 @@ function Header() {
   );
 }
 
+function DetailsToggle(
+  props: {
+    onClick: () => void,
+  },
+) {
+  return (
+    <p className={formStyles.detailsToggle} onClick={props.onClick} >
+      Details...
+    </p>
+  );
+}
+
 function OldFileNotes() {
   return (
     <div className={formStyles.oldFileNotes} style={{ marginTop: '12px' }} >
@@ -75,6 +87,8 @@ export function OpenRna2drawer(props: Props) {
 
   // use String object to rerender every time the error message is set
   let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+
+  let [showDetails, setShowDetails] = useState(false);
 
   return (
     <FloatingDrawingsContainer
@@ -138,7 +152,6 @@ export function OpenRna2drawer(props: Props) {
                 </p>
               </div>
             </div>
-            {fileExtension == 'rna2drawer' ? <OldFileNotes /> : null}
             <div style={{ marginTop: '32px' }} >
               <SolidButton
                 text='Submit'
@@ -174,6 +187,8 @@ export function OpenRna2drawer(props: Props) {
                 </p>
               </div>
             )}
+            <DetailsToggle onClick={() => setShowDetails(!showDetails)} />
+            {showDetails ? <OldFileNotes /> : null}
           </div>
         </div>
       }

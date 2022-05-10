@@ -42,7 +42,33 @@
   transform: scale(0.95);
 }
 
+.detailsToggle {
+  margin-top: 32px;
+  margin-left: 32px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: italic;
+  color: #060685;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.detailsToggle:hover {
+  transform: scale(1.06);
+  transition: transform 0.04s;
+}
+
+.detailsToggle:active {
+  transform: scale(1);
+  transition: transform 0s;
+}
+
 .oldFileNotes {
+  margin-top: 32px;
+
   animation: fadeIn 1s;
 }
 
