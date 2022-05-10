@@ -108,31 +108,26 @@ export function OpenRna2drawer(props: Props) {
                   if (files) {
                     let f = files[0];
                     if (f) {
-                      let fr = new FileReader();
-                      fr.addEventListener('load', () => {
-                        // should always be a string when readAsText is used
-                        if (typeof fr.result == 'string') {
-                          setFileName(f.name);
+                      setFileName(f.name);
 
-                          if (parseFileExtension(f.name).toLowerCase().indexOf('rna2drawer') != 0) {
-                            setErrorMessage(new String('File must have a .rna2drawer extension.'));
-                            return;
-                          }
+                      if (parseFileExtension(f.name).toLowerCase().indexOf('rna2drawer') != 0) {
+                        setErrorMessage(new String('File must have a .rna2drawer extension.'));
+                        return;
+                      }
 
-                          let opened = open(props.app, { extension: parseFileExtension(f.name), contents: fr.result });
-                          if (!opened) {
-                            setErrorMessage(new String('Invalid RNA2Drawer file.'));
-                            return;
-                          }
-
-                          updateDrawingTitle(props.app, f.name);
-                          props.close();
-                          // prevent coming back to this form or preceding forms
-                          props.app.formContainer.clearHistory();
-                          props.app.refresh();
+                      f.text().then(text => {
+                        let opened = open(props.app, { extension: parseFileExtension(f.name), contents: text });
+                        if (!opened) {
+                          setErrorMessage(new String('Invalid RNA2Drawer file.'));
+                          return;
                         }
-                      })
-                      fr.readAsText(f);
+
+                        updateDrawingTitle(props.app, f.name);
+                        props.close();
+                        // prevent coming back to this form or preceding forms
+                        props.app.formContainer.clearHistory();
+                        props.app.refresh();
+                      });
                     }
                   }
                 }}
