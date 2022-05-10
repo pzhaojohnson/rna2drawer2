@@ -41,6 +41,23 @@ function Header() {
   );
 }
 
+function OldFileNotes() {
+  return (
+    <div className={formStyles.oldFileNotes} style={{ marginTop: '12px' }} >
+      <p className='unselectable' >
+        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
+        Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
+      </p>
+      <div style={{ margin: '6px 0px 0px 18px' }} >
+        <p className='unselectable' >
+          (1) The sequence and its ID, (2) the secondary structure, (3) tertiary interactions and their colors,
+          (4) base numbering and the numbering offset, and (5) base colors and outlines.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export type Props = {
   app: App;
 
@@ -121,20 +138,7 @@ export function OpenRna2drawer(props: Props) {
                 </p>
               </div>
             </div>
-            {fileExtension != 'rna2drawer' ? null : (
-              <div className={formStyles.oldFileNotes} style={{ marginTop: '12px' }} >
-                <p className='unselectable' >
-                  <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-                  Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
-                </p>
-                <div style={{ margin: '6px 0px 0px 18px' }} >
-                  <p className='unselectable' >
-                    (1) The sequence and its ID, (2) the secondary structure, (3) tertiary interactions and their colors,
-                    (4) base numbering and the numbering offset, and (5) base colors and outlines.
-                  </p>
-                </div>
-              </div>
-            )}
+            {fileExtension == 'rna2drawer' ? <OldFileNotes /> : null}
             <div style={{ marginTop: '32px' }} >
               <SolidButton
                 text='Submit'
