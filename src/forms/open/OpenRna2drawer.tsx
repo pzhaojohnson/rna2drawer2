@@ -78,8 +78,6 @@ export type Props = {
 export function OpenRna2drawer(props: Props) {
   let hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  let [fileUploaded, setFileUploaded] = useState(false);
-
   let [fileName, setFileName] = useState('');
 
   // use String object to rerender every time the error message is set
@@ -115,7 +113,6 @@ export function OpenRna2drawer(props: Props) {
                         // should always be a string when readAsText is used
                         if (typeof fr.result == 'string') {
                           setFileName(f.name);
-                          setFileUploaded(true);
 
                           if (parseFileExtension(f.name).toLowerCase().indexOf('rna2drawer') != 0) {
                             setErrorMessage(new String('File must have a .rna2drawer extension.'));
@@ -148,7 +145,7 @@ export function OpenRna2drawer(props: Props) {
               >
                 <img
                   className={formStyles.folderIcon}
-                  src={fileUploaded ? openFolder : closedFolder}
+                  src={fileName ? openFolder : closedFolder}
                   alt='File Folder'
 
                   // file drag and drop not implemented yet
@@ -156,10 +153,10 @@ export function OpenRna2drawer(props: Props) {
                   onDrop={event => event.preventDefault()}
                 />
                 <p
-                  className={fileUploaded ? formStyles.fileName : formStyles.fileInputLabel}
+                  className={fileName ? formStyles.fileName : formStyles.fileInputLabel}
                   style={{ marginLeft: '10px' }}
                 >
-                  {fileUploaded ? fileName : 'Upload a file with .rna2drawer extension...'}
+                  {fileName ? fileName : 'Upload a file with .rna2drawer extension...'}
                 </p>
               </div>
             </div>
