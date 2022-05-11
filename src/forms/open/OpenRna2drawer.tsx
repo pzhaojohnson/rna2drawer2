@@ -104,32 +104,33 @@ export function OpenRna2drawer(props: Props) {
                 ref={hiddenFileInput}
                 type='file'
                 onChange={event => {
-                  let files = event.target.files;
-                  if (files) {
-                    let f = files[0];
-                    if (f) {
-                      setFileName(f.name);
-
-                      if (parseFileExtension(f.name).toLowerCase().indexOf('rna2drawer') != 0) {
-                        setErrorMessage(new String('File must have a .rna2drawer extension.'));
-                        return;
-                      }
-
-                      f.text().then(text => {
-                        let opened = open(props.app, { extension: parseFileExtension(f.name), contents: text });
-                        if (!opened) {
-                          setErrorMessage(new String('Invalid RNA2Drawer file.'));
-                          return;
-                        }
-
-                        updateDrawingTitle(props.app, f.name);
-                        props.close();
-                        // prevent coming back to this form or preceding forms
-                        props.app.formContainer.clearHistory();
-                        props.app.refresh();
-                      });
-                    }
+                  let f: File | undefined = event.target.files ? event.target.files[0] : undefined;
+                  if (!f) {
+                    return;
                   }
+
+                  let fileName = f.name;
+                  setFileName(fileName);
+
+                  f.text().then(text => {
+                    let fileExtension = parseFileExtension(fileName);
+                    if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
+                      throw new Error('File must have a .rna2drawer extension.');
+                    }
+
+                    let opened = open(props.app, { extension: fileExtension, contents: text });
+                    if (!opened) {
+                      throw new Error('Invalid RNA2Drawer file.');
+                    }
+
+                    updateDrawingTitle(props.app, fileName);
+                    props.close();
+                    // prevent coming back to this form or preceding forms
+                    props.app.formContainer.clearHistory();
+                    props.app.refresh();
+                  }).catch(error => {
+                    setErrorMessage(new String(error instanceof Error ? error.message : error));
+                  });
                 }}
                 style={{ display: 'none' }}
               />
