@@ -10,6 +10,14 @@ import { open } from './open';
 import parseFileExtension from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
 
+/**
+ * Returns the first file stored in the referenced file input
+ * or undefined if there are no files stored in the referenced file input.
+ */
+function firstFile(fileInputRef: React.RefObject<HTMLInputElement>): File | undefined {
+  return fileInputRef.current?.files ? fileInputRef.current.files[0] : undefined;
+}
+
 function updateDrawingTitle(app: App, fileName: string) {
   let titleFromFileName = removeFileExtension(fileName).trim();
   app.unspecifyDrawingTitle();
@@ -78,8 +86,6 @@ export type Props = {
 export function OpenRna2drawer(props: Props) {
   let hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  let [fileName, setFileName] = useState('');
-
   // use String object to rerender every time the error message is set
   let [errorMessage, setErrorMessage] = useState<String>(new String(''));
 
@@ -110,7 +116,6 @@ export function OpenRna2drawer(props: Props) {
                   }
 
                   let fileName = f.name;
-                  setFileName(fileName);
 
                   f.text().then(text => {
                     let fileExtension = parseFileExtension(fileName);
@@ -141,7 +146,7 @@ export function OpenRna2drawer(props: Props) {
               >
                 <img
                   className={formStyles.folderIcon}
-                  src={fileName ? openFolder : closedFolder}
+                  src={firstFile(hiddenFileInput) ? openFolder : closedFolder}
                   alt='File Folder'
 
                   // file drag and drop not implemented yet
@@ -149,10 +154,10 @@ export function OpenRna2drawer(props: Props) {
                   onDrop={event => event.preventDefault()}
                 />
                 <p
-                  className={fileName ? formStyles.fileName : formStyles.fileInputLabel}
+                  className={firstFile(hiddenFileInput) ? formStyles.fileName : formStyles.fileInputLabel}
                   style={{ marginLeft: '10px' }}
                 >
-                  {fileName ? fileName : 'Upload a file with .rna2drawer extension...'}
+                  {firstFile(hiddenFileInput)?.name ?? 'Upload a file with .rna2drawer extension...'}
                 </p>
               </div>
             </div>
