@@ -1,45 +1,32 @@
-.fileInput {
-  cursor: pointer;
-}
-
-.folderIcon {
-  width: 36px;
-  cursor: pointer;
-  transition-duration: 0s;
-}
-
-.fileInput:hover .folderIcon {
-  transform: scale(1.15);
-  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
-  transition: transform 0.25s ease-in-out;
-}
-
-.fileInput:active .folderIcon {
-  transform: scale(1.05);
-  filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
-  transition-duration: 0s;
-}
-
 .fileInputLabel {
-  font-size: 16px;
-  font-style: italic;
-  color: rgb(17, 20, 66);
-  cursor: pointer;
-}
+  width: 581px;
 
-.fileInput:active .fileInputLabel {
-  transform: scale(0.95);
-}
+  border: 1px solid #d1d1e7;
+  border-radius: 60px;
 
-.fileName {
-  font-size: 14px;
+  padding: 12px 24px;
+
+  font-size: 18px;
   font-style: normal;
-  color: rgba(0,0,0,0.95);
+  color: #050562;
+  text-align: center;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   cursor: pointer;
 }
 
-.fileInput:active .fileName {
-  transform: scale(0.95);
+.rna2drawerExtension {
+  font-weight: 700;
+  font-style: italic;
+}
+
+.fileInputLabel:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 2px 2px #efeff3;
+  transition: transform 0.04s;
 }
 
 .detailsToggle {

@@ -3,8 +3,6 @@ import { useState, useRef } from 'react';
 import formStyles from './OpenRna2drawer.css';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 import { FloatingDrawingsContainer } from 'Forms/containers/floatingDrawings/FloatingDrawingsContainer';
-import closedFolder from './closedFolder.svg';
-import openFolder from './openFolder.svg';
 import type { App } from 'App';
 import { open } from './open';
 import parseFileExtension from 'Parse/parseFileExtension';
@@ -105,10 +103,10 @@ export function OpenRna2drawer(props: Props) {
               flexGrow: 1,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start',
+              alignItems: 'center',
             }}
           >
-            <div style={{ marginTop: '32px' }} >
+            <div style={{ marginTop: '42px' }} >
               <input
                 ref={hiddenFileInput}
                 type='file'
@@ -143,27 +141,22 @@ export function OpenRna2drawer(props: Props) {
                 }}
                 style={{ display: 'none' }}
               />
-              <div
-                className={formStyles.fileInput}
+              <p
+                className={formStyles.fileInputLabel}
                 onClick={() => hiddenFileInput.current?.click()}
-                style={{ minWidth: '256px', display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+                style={{
+                  // make file name text a slightly different color
+                  color: firstFile(hiddenFileInput) ? '#070766' : undefined,
+                }}
               >
-                <img
-                  className={formStyles.folderIcon}
-                  src={firstFile(hiddenFileInput) ? openFolder : closedFolder}
-                  alt='File Folder'
-
-                  // file drag and drop not implemented yet
-                  onDragOver={event => event.preventDefault()}
-                  onDrop={event => event.preventDefault()}
-                />
-                <p
-                  className={firstFile(hiddenFileInput) ? formStyles.fileName : formStyles.fileInputLabel}
-                  style={{ marginLeft: '10px' }}
-                >
-                  {firstFile(hiddenFileInput)?.name ?? 'Upload a file with .rna2drawer extension...'}
-                </p>
-              </div>
+                {firstFile(hiddenFileInput)?.name ?? (
+                  <span>
+                    Upload a file with
+                    <span className={formStyles.rna2drawerExtension} >&nbsp;.rna2drawer&nbsp;</span>
+                    extension...
+                  </span>
+                )}
+              </p>
             </div>
             {!errorMessage ? null : (
               <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
