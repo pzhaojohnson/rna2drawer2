@@ -121,12 +121,12 @@ export function OpenRna2drawer(props: Props) {
                   f.text().then(text => {
                     let fileExtension = parseFileExtension(fileName);
                     if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
-                      throw new Error('File must have a .rna2drawer extension.');
+                      throw new Error('File must have .rna2drawer extension.');
                     }
 
                     let opened = open(props.app, { extension: fileExtension, contents: text });
                     if (!opened) {
-                      throw new Error('Invalid RNA2Drawer file.');
+                      throw new Error('Invalid .rna2drawer file.');
                     }
 
                     updateDrawingTitle(props.app, fileName);
