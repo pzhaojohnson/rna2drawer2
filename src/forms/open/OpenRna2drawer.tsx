@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
 import formStyles from './OpenRna2drawer.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
+import { ErrorMessage } from 'Forms/ErrorMessage';
 import { FloatingDrawingsContainer } from 'Forms/containers/floatingDrawings/FloatingDrawingsContainer';
 import closedFolder from './closedFolder.svg';
 import openFolder from './openFolder.svg';
@@ -162,11 +162,9 @@ export function OpenRna2drawer(props: Props) {
               </div>
             </div>
             {!errorMessage.valueOf() ? null : (
-              <div key={Math.random()} style={{ marginTop: '6px' }} >
-                <p className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`} >
-                  {errorMessage.valueOf()}
-                </p>
-              </div>
+              <ErrorMessage key={Math.random()} style={{ marginTop: '6px' }} >
+                {errorMessage.valueOf()}
+              </ErrorMessage>
             )}
             <DetailsToggle onClick={() => setShowDetails(!showDetails)} />
             {showDetails ? <OldFileNotes /> : null}
