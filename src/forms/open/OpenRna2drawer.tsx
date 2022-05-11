@@ -159,7 +159,7 @@ export function OpenRna2drawer(props: Props) {
               </p>
             </div>
             {!errorMessage ? null : (
-              <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
+              <ErrorMessage key={errorMessageKey} style={{ marginTop: '16px', fontSize: '16px' }} >
                 {errorMessage}
               </ErrorMessage>
             )}
