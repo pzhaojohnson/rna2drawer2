@@ -86,8 +86,11 @@ export type Props = {
 export function OpenRna2drawer(props: Props) {
   let hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  // use String object to rerender every time the error message is set
-  let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+  let [errorMessage, setErrorMessage] = useState('');
+
+  // should be incremented every time the error message is set
+  // (to trigger error message animations)
+  let [errorMessageKey, setErrorMessageKey] = useState(0);
 
   let [showDetails, setShowDetails] = useState(false);
 
@@ -134,7 +137,8 @@ export function OpenRna2drawer(props: Props) {
                     props.app.formContainer.clearHistory();
                     props.app.refresh();
                   }).catch(error => {
-                    setErrorMessage(new String(error instanceof Error ? error.message : error));
+                    setErrorMessage(error instanceof Error ? error.message : String(error));
+                    setErrorMessageKey(errorMessageKey + 1);
                   });
                 }}
                 style={{ display: 'none' }}
@@ -161,9 +165,9 @@ export function OpenRna2drawer(props: Props) {
                 </p>
               </div>
             </div>
-            {!errorMessage.valueOf() ? null : (
-              <ErrorMessage key={Math.random()} style={{ marginTop: '6px' }} >
-                {errorMessage.valueOf()}
+            {!errorMessage ? null : (
+              <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
+                {errorMessage}
               </ErrorMessage>
             )}
             <DetailsToggle onClick={() => setShowDetails(!showDetails)} />
