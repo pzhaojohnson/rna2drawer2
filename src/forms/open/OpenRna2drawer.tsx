@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import formStyles from './OpenRna2drawer.css';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 import { FloatingDrawingsContainer } from 'Forms/containers/floatingDrawings/FloatingDrawingsContainer';
+import { OldFileNotes } from './OldFileNotes';
 import type { App } from 'App';
 import { open } from './open';
 import parseFileExtension from 'Parse/parseFileExtension';
@@ -55,23 +56,6 @@ function DetailsToggle(
     <p className={formStyles.detailsToggle} onClick={props.onClick} >
       Details...
     </p>
-  );
-}
-
-function OldFileNotes() {
-  return (
-    <div className={formStyles.oldFileNotes} style={{ marginTop: '12px' }} >
-      <p className='unselectable' >
-        <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-        Not all aspects of a drawing from the first version of RNA2Drawer will be preserved. The following will be preserved:
-      </p>
-      <div style={{ margin: '6px 0px 0px 18px' }} >
-        <p className='unselectable' >
-          (1) The sequence and its ID, (2) the secondary structure, (3) tertiary interactions and their colors,
-          (4) base numbering and the numbering offset, and (5) base colors and outlines.
-        </p>
-      </div>
-    </div>
   );
 }
 
