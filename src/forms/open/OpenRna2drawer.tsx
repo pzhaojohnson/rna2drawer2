@@ -75,6 +75,22 @@ function OldFileNotes() {
   );
 }
 
+/**
+ * Creates an element that when appended to the document body
+ * blocks all user interaction with the app and changes the cursor
+ * style to wait.
+ */
+function createWaitOverlay() {
+  let waitOverlay = document.createElement('div');
+  waitOverlay.style.position = 'fixed';
+  waitOverlay.style.top = '0px';
+  waitOverlay.style.right = '0px';
+  waitOverlay.style.bottom = '0px';
+  waitOverlay.style.left = '0px';
+  waitOverlay.style.cursor = 'wait';
+  return waitOverlay;
+}
+
 export type Props = {
   app: App;
 
@@ -118,6 +134,9 @@ export function OpenRna2drawer(props: Props) {
 
                   let fileName = f.name;
 
+                  let waitOverlay = createWaitOverlay();
+                  document.body.appendChild(waitOverlay);
+
                   f.text().then(text => {
                     let fileExtension = parseFileExtension(fileName);
                     if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
@@ -137,6 +156,8 @@ export function OpenRna2drawer(props: Props) {
                   }).catch(error => {
                     setErrorMessage(error instanceof Error ? error.message : String(error));
                     setErrorMessageKey(errorMessageKey + 1);
+                  }).finally(() => {
+                    waitOverlay.remove();
                   });
                 }}
                 style={{ display: 'none' }}
