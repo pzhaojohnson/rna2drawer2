@@ -3,7 +3,7 @@ import * as React from 'react';
 import styles from './WelcomePage.css';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';
 import { OpenRna2drawer } from '../open/OpenRna2drawer';
-import { DrawingSlideshow } from './drawingSlideshow/DrawingSlideshow';
+import { DrawingSlideshow } from './drawings/DrawingSlideshow';
 
 interface Props {
   app: App;
