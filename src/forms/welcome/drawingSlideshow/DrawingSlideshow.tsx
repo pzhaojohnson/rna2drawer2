@@ -94,7 +94,7 @@ export function DrawingSlideshow(props: Props) {
       alt='Drawing'
       style={{
         ...props.style,
-        opacity: 0,
+        opacity: 0, // prevents flashing of drawing at end of animation
         animation: `${styles.enterAndLeave} ${interval}s ease-in-out`
       }}
     />
