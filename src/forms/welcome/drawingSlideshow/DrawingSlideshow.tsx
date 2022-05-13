@@ -65,16 +65,19 @@ interface Props {
 }
 
 export function DrawingSlideshow(props: Props) {
-  let [index, setIndex] = useState(pickRandomIndex(drawingURLs.length));
+  let [drawingIndex, setDrawingIndex] = useState(pickRandomIndex(drawingURLs.length));
 
-  let drawingURL = drawingURLs[index];
+  let drawingURL = drawingURLs[drawingIndex];
 
   let interval = 6;
 
   useEffect(() => {
-    let nextIndex = pickRandomIndex(drawingURLs.length, index);
+    let nextDrawingIndex = pickRandomIndex(drawingURLs.length, drawingIndex);
 
-    let timeoutId = setTimeout(() => setIndex(nextIndex), 1000 * interval);
+    let timeoutId = setTimeout(
+      () => setDrawingIndex(nextDrawingIndex),
+      1000 * interval,
+    );
 
     return () => clearTimeout(timeoutId);
   });
