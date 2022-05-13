@@ -89,7 +89,7 @@ export function DrawingSlideshow(props: Props) {
     <img
       key={key}
       src={drawingURL}
-      alt='Drawing'
+      alt='Example Drawing'
       style={{
         ...props.style,
         opacity: 0, // prevents flashing of drawing at end of animation
