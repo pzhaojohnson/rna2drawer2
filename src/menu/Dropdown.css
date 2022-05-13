@@ -3,7 +3,12 @@
 }
 
 .button {
-  border: none;
+  /* accounts for 1px border of dropped container
+  to align button with dropped content */
+  border-width: 0px 0px 0px 1px;
+  border-style: solid;
+  border-color: white;
+
   padding: 6px 20px;
   background-color: transparent;
 }
