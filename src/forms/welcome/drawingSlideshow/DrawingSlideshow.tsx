@@ -58,9 +58,7 @@ function pickRandomIndex(ceiling: number, previous?: number): number {
 }
 
 interface Props {
-  style?: {
-    width?: string,
-  }
+  style?: React.CSSProperties;
 }
 
 export function DrawingSlideshow(props: Props) {
