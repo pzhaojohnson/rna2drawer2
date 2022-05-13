@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
 import styles from './DrawingSlideshow.css';
 import { v1 as uuidv1 } from 'uuid';
 
