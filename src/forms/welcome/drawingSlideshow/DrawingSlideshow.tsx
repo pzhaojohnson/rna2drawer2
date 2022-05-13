@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 import styles from './DrawingSlideshow.css';
-import { v1 as uuidv1 } from 'uuid';
 
 import { drawingString1 } from './drawing1';
 import { drawingString2 } from './drawing2';
@@ -66,8 +65,11 @@ interface Props {
 
 export function DrawingSlideshow(props: Props) {
   let [drawingIndex, setDrawingIndex] = useState(pickRandomIndex(drawingURLs.length));
-
   let drawingURL = drawingURLs[drawingIndex];
+
+  // should be incremented every time the drawing changes
+  // to trigger animations
+  let [key, setKey] = useState(0);
 
   let interval = 6;
 
@@ -75,7 +77,10 @@ export function DrawingSlideshow(props: Props) {
     let nextDrawingIndex = pickRandomIndex(drawingURLs.length, drawingIndex);
 
     let timeoutId = setTimeout(
-      () => setDrawingIndex(nextDrawingIndex),
+      () => {
+        setDrawingIndex(nextDrawingIndex);
+        setKey(key + 1);
+      },
       1000 * interval,
     );
 
@@ -84,7 +89,7 @@ export function DrawingSlideshow(props: Props) {
 
   return (
     <img
-      key={uuidv1()}
+      key={key}
       src={drawingURL}
       alt='Drawing'
       style={{
