@@ -93,7 +93,7 @@ export function DrawingSlideshow(props: Props) {
       src={drawingURL}
       alt='Drawing'
       style={{
-        ...(props.style ?? {}),
+        ...props.style,
         opacity: 0,
         animation: `${styles.enterAndLeave} ${interval}s ease-in-out`
       }}
