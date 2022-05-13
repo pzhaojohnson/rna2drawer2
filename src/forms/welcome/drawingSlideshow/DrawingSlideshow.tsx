@@ -40,8 +40,22 @@ let drawingURLs = (
   ))
 );
 
-function pickRandomIndex() {
-  return Math.floor(Math.random() * drawingStrings.length);
+/**
+ * Picks a random index less than the given ceiling
+ * and that is not the given previous index if specified.
+ *
+ * It is undefined what index is returned when the ceiling is 1
+ * and the previous index is 0.
+ */
+function pickRandomIndex(ceiling: number, previous?: number): number {
+  let index = Math.floor(Math.random() * ceiling);
+  if (index == previous) {
+    index++;
+  }
+  if (index >= ceiling) {
+    index = 0;
+  }
+  return index;
 }
 
 interface Props {
@@ -51,21 +65,17 @@ interface Props {
 }
 
 export function DrawingSlideshow(props: Props) {
-  let [index, setIndex] = useState(pickRandomIndex());
+  let [index, setIndex] = useState(pickRandomIndex(drawingURLs.length));
 
   let drawingURL = drawingURLs[index];
 
   let interval = 6;
 
   useEffect(() => {
-    let nextIndex = pickRandomIndex();
-    if (nextIndex == index) {
-      nextIndex++;
-    }
-    if (nextIndex >= drawingStrings.length) {
-      nextIndex = 0;
-    }
+    let nextIndex = pickRandomIndex(drawingURLs.length, index);
+
     let timeoutId = setTimeout(() => setIndex(nextIndex), 1000 * interval);
+
     return () => clearTimeout(timeoutId);
   });
 
