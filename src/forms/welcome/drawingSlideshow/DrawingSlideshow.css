@@ -1,4 +1,4 @@
-@keyframes enterAndLeave {
+@keyframes fadeInAndOut {
   0% {
     opacity: 0;
   }
