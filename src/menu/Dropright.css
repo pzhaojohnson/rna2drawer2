@@ -35,6 +35,10 @@
   z-index: 1;
 }
 
+.dropright:hover .button {
+  background-color: #f7f7f7;
+}
+
 .dropright:hover .droppedContainer {
   display: block;
 }
