@@ -60,6 +60,29 @@ export class StrictDrawing {
     container.appendChild(this.node);
   }
 
+  /**
+   * Returns the SVG document of the strict drawing.
+   */
+  get svg() {
+    return this.drawing.svg;
+  }
+
+  get sequences() {
+    return this.drawing.sequences;
+  }
+
+  get primaryBonds() {
+    return this.drawing.primaryBonds;
+  }
+
+  get secondaryBonds() {
+    return this.drawing.secondaryBonds;
+  }
+
+  get tertiaryBonds() {
+    return this.drawing.tertiaryBonds;
+  }
+
   layoutSequence(): Sequence {
     let id = this.drawing.sequences.map(seq => seq.id).join(', ');
     let seq = new Sequence(id);
