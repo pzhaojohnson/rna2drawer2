@@ -117,12 +117,20 @@ export class App {
     return this._strictDrawing;
   }
 
+  get drawing() {
+    return this.strictDrawing;
+  }
+
   get undoRedo(): UndoRedo<StrictDrawingSavableState> {
     return this._undoRedo;
   }
 
   get strictDrawingInteraction(): StrictDrawingInteraction {
     return this._strictDrawingInteraction;
+  }
+
+  get drawingInteraction() {
+    return this.strictDrawingInteraction;
   }
 
   _setBindings() {
