@@ -21,10 +21,10 @@ import { Infobar } from './infobar/Infobar';
 import { WelcomePage } from './forms/welcome/WelcomePage';
 
 export type Options = {
+
   // for specifying alternatives to components of the SVG.js library
+  // (such as those compatible with unit testing on Node.js)
   SVG?: {
-    // will be used to generate the SVG document of the drawing if specified
-    // (useful for testing on Node.js, which requires SVG documents be specially compatible)
     SVG?: () => SVG.Svg;
   }
 }
