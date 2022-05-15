@@ -16,7 +16,7 @@ describe('App class', () => {
     expect(container.contains(app.node)).toBeFalsy(); // was removed
   });
 
-  it('updateDocumentTitle method', () => {
+  test('updateDocumentTitle method', () => {
     let app = new App({ SVG });
     // make sure title is not already RNA2Drawer
     document.title = 'asdf';
