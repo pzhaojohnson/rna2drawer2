@@ -1,9 +1,9 @@
 import { App } from './App';
-import { NodeSVG } from 'Draw/svg/NodeSVG';
+import * as SVG from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 
 test('appendTo and remove methods', () => {
-  let app = new App({ SVG: { SVG: NodeSVG } });
+  let app = new App({ SVG });
   let container = document.createElement('div');
   let siblings = [document.createElement('div'), document.createElement('div')];
   siblings.forEach(sibling => container.appendChild(sibling));
@@ -15,7 +15,7 @@ test('appendTo and remove methods', () => {
 });
 
 it('updateDocumentTitle method', () => {
-  let app = new App({ SVG: { SVG: NodeSVG } });
+  let app = new App({ SVG });
   // make sure title is not already RNA2Drawer
   document.title = 'asdf';
   expect(app.drawing.isEmpty()).toBeTruthy();
