@@ -4,7 +4,7 @@ import { App } from 'App';
 let app = new App();
 
 // ask for confirmation before leaving if the drawing is nonempty
-// and the app preference to set to do so
+// and the app preference is set to do so
 window.addEventListener('beforeunload', event => {
   if (app.drawing.isEmpty()) {
     return;
