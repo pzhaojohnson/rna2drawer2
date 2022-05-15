@@ -110,6 +110,7 @@ export class App {
   }
 
   refresh() {
+    // refresh first since others might depend on it
     this.strictDrawingInteraction.refresh();
 
     ReactDOM.render(<Menu app={this} />, this.menuContainer);
