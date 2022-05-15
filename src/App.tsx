@@ -80,12 +80,12 @@ export class App {
     this.node.className = styles.app;
     document.body.appendChild(this.node);
     this.node.appendChild(this._menuContainer);
-    let div2 = document.createElement('div');
-    div2.className = styles.div2;
-    this.node.appendChild(div2);
+    let drawingAndFormContainer = document.createElement('div');
+    drawingAndFormContainer.className = styles.drawingAndFormContainer;
+    this.node.appendChild(drawingAndFormContainer);
     this._drawingContainer.className = styles.drawingContainer;
-    div2.appendChild(this._drawingContainer);
-    this.formContainer.appendTo(div2);
+    drawingAndFormContainer.appendChild(this._drawingContainer);
+    this.formContainer.appendTo(drawingAndFormContainer);
     this.node.appendChild(this._infobarContainer);
   }
 
