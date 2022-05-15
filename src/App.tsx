@@ -38,13 +38,14 @@ export class App {
   readonly formContainer: FormContainer;
   readonly infobarContainer: HTMLDivElement;
 
-  readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawing: StrictDrawing;
   readonly strictDrawingInteraction: StrictDrawingInteraction;
+  drawingTitle: DrawingTitle;
+
+  readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
 
   preferences: Preferences;
 
-  drawingTitle: DrawingTitle;
 
   constructor(options?: Options) {
     this.node = document.createElement('div');
@@ -69,14 +70,16 @@ export class App {
 
     this.strictDrawing = new StrictDrawing({ SVG: options?.SVG });
     this.strictDrawing.appendTo(this.drawingContainer);
-    this.drawingTitle = new DrawingTitle({ drawing: this.strictDrawing });
-    this.undoRedo = new UndoRedo<StrictDrawingSavableState>();
 
     this.strictDrawingInteraction = new StrictDrawingInteraction({
       app: this,
       strictDrawing: this.strictDrawing,
       SVG: options?.SVG,
     });
+
+    this.drawingTitle = new DrawingTitle({ drawing: this.strictDrawing });
+
+    this.undoRedo = new UndoRedo<StrictDrawingSavableState>();
 
     this.preferences = new Preferences();
 
