@@ -1,23 +1,25 @@
 import styles from './App.css';
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { StrictDrawing } from 'Draw/strict/StrictDrawing';
+import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawing';
+import * as SVG from '@svgdotjs/svg.js';
+
+import { StrictDrawingInteraction } from './draw/interact/StrictDrawingInteraction';
+
+import { DrawingTitle } from './DrawingTitle';
 
 import UndoRedo from './undo/UndoRedo';
 import { pushUndo, undo, redo } from './undo/undo';
 
-import { StrictDrawing } from 'Draw/strict/StrictDrawing';
-import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawing';
-import * as SVG from '@svgdotjs/svg.js';
-import { DrawingTitle } from './DrawingTitle';
-import { StrictDrawingInteraction } from './draw/interact/StrictDrawingInteraction';
-
 import { Preferences } from './Preferences';
 
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+
 import { Menu } from './menu/Menu';
-import { FormContainer } from './FormContainer';
 import { Infobar } from './infobar/Infobar';
 
+import { FormContainer } from './FormContainer';
 import { WelcomePage } from './forms/welcome/WelcomePage';
 
 export type Options = {
