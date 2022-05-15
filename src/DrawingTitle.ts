@@ -1,10 +1,11 @@
 import type { Drawing } from 'Draw/Drawing';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { isBlank } from 'Parse/isBlank';
 
 export type Options = {
 
   // the drawing being titled
-  drawing: Drawing;
+  drawing: Drawing | StrictDrawing;
 };
 
 /**
