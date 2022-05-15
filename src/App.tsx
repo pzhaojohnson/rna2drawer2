@@ -1,3 +1,5 @@
+import styles from './App.css';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
@@ -75,13 +77,13 @@ export class App {
   }
 
   _appendContainers() {
-    this.node.style.cssText = 'width: 100vw; height: 100vh; display: flex; flex-direction: column;';
+    this.node.className = styles.app;
     document.body.appendChild(this.node);
     this.node.appendChild(this._menuContainer);
     let div2 = document.createElement('div');
-    div2.style.cssText = 'min-height: 0px; flex-grow: 1; display: flex; flex-direction: row;';
+    div2.className = styles.div2;
     this.node.appendChild(div2);
-    this._drawingContainer.style.cssText = 'flex-grow: 1; overflow: auto;';
+    this._drawingContainer.className = styles.drawingContainer;
     div2.appendChild(this._drawingContainer);
     this.formContainer.appendTo(div2);
     this.node.appendChild(this._infobarContainer);
