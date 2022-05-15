@@ -4,7 +4,7 @@ export function pushUndo(app: App) {
   app.undoRedo.pushUndo(
     app.strictDrawing.savableState()
   );
-  app.renderPeripherals();
+  app.refresh();
 }
 
 export function undo(app: App) {

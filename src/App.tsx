@@ -46,7 +46,6 @@ export class App {
 
   preferences: Preferences;
 
-
   constructor(options?: Options) {
     this.node = document.createElement('div');
     this.node.className = styles.app;
@@ -83,7 +82,7 @@ export class App {
 
     this.preferences = new Preferences();
 
-    this.renderPeripherals();
+    this.refresh();
 
     this.formContainer.renderForm(() => (
       <WelcomePage app={this} />
@@ -106,28 +105,17 @@ export class App {
     return this.strictDrawingInteraction;
   }
 
-  renderPeripherals() {
-    this.renderMenu();
-    this.renderInfobar();
-    this.formContainer.refresh();
-    this.updateDocumentTitle();
-  }
-
-  renderMenu() {
-    ReactDOM.render(<Menu app={this} />, this.menuContainer);
-  }
-
-  renderInfobar() {
-    ReactDOM.render(<Infobar app={this} />, this.infobarContainer);
-  }
-
   updateDocumentTitle() {
     document.title = this.drawing.isEmpty() ? 'RNA2Drawer' : this.drawingTitle.value;
   }
 
   refresh() {
     this.strictDrawingInteraction.refresh();
-    this.renderPeripherals();
+
+    ReactDOM.render(<Menu app={this} />, this.menuContainer);
+    ReactDOM.render(<Infobar app={this} />, this.infobarContainer);
+    this.formContainer.refresh();
+    this.updateDocumentTitle();
   }
 
   pushUndo() {

@@ -38,15 +38,11 @@ test('appendTo and remove methods', () => {
   expect(container.contains(app.node)).toBeFalsy(); // was removed
 });
 
-test('renderPeripherals method', () => {
+test('refresh method', () => {
   let app = new App({ SVG: { SVG: NodeSVG } });
-  app.renderMenu = jest.fn();
-  app.renderInfobar = jest.fn();
   app.formContainer.refresh = jest.fn();
   app.updateDocumentTitle = jest.fn();
-  app.renderPeripherals();
-  expect(app.renderMenu.mock.calls.length).toBe(1);
-  expect(app.renderInfobar.mock.calls.length).toBe(1);
+  app.refresh();
   expect(app.formContainer.refresh.mock.calls.length).toBe(1);
   expect(app.updateDocumentTitle.mock.calls.length).toBe(1);
 });
@@ -55,12 +51,12 @@ it('pushUndo method', () => {
   let app = new App({ SVG: { SVG: NodeSVG } });
   app.strictDrawing.appendSequence('asdf', 'asdf');
   let savableState = app.strictDrawing.savableState();
-  app.renderPeripherals = jest.fn();
+  app.refresh = jest.fn();
   app.pushUndo();
   expect(
     JSON.stringify(app.undoRedo.peekUndo())
   ).toBe(JSON.stringify(savableState));
-  expect(app.renderPeripherals.mock.calls.length).toBe(1);
+  expect(app.refresh.mock.calls.length).toBe(1);
 });
 
 it('canUndo method', () => {
@@ -144,7 +140,6 @@ it('refresh method', () => {
   let app = new App({ SVG: { SVG: NodeSVG } });
   let spies = [
     jest.spyOn(app.strictDrawingInteraction, 'refresh'),
-    jest.spyOn(app, 'renderPeripherals'),
   ];
   app.refresh();
   spies.forEach(s => expect(s).toHaveBeenCalled());
