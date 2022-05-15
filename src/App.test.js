@@ -1,6 +1,7 @@
-import { App } from './App';
 import * as SVG from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
+
+import { App } from './App';
 
 test('appendTo and remove methods', () => {
   let app = new App({ SVG });
