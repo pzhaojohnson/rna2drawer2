@@ -194,5 +194,3 @@ export class App {
     redo(this);
   }
 }
-
-export default App;
