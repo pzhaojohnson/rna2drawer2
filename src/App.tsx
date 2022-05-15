@@ -46,11 +46,24 @@ export class App {
 
   constructor(options?: Options) {
     this.node = document.createElement('div');
+    this.node.className = styles.app;
+
     this._menuContainer = document.createElement('div');
+    this.node.appendChild(this._menuContainer);
+
+    let drawingAndFormContainer = document.createElement('div');
+    drawingAndFormContainer.className = styles.drawingAndFormContainer;
+    this.node.appendChild(drawingAndFormContainer);
+
     this._drawingContainer = document.createElement('div');
+    this._drawingContainer.className = styles.drawingContainer;
+    drawingAndFormContainer.appendChild(this._drawingContainer);
+
     this.formContainer = new FormContainer();
+    this.formContainer.appendTo(drawingAndFormContainer);
+
     this._infobarContainer = document.createElement('div');
-    this._appendContainers();
+    this.node.appendChild(this._infobarContainer);
 
     this.strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
     this._initializeDrawing();
@@ -70,18 +83,6 @@ export class App {
     this.formContainer.renderForm(() => (
       <WelcomePage app={this} />
     ));
-  }
-
-  _appendContainers() {
-    this.node.className = styles.app;
-    this.node.appendChild(this._menuContainer);
-    let drawingAndFormContainer = document.createElement('div');
-    drawingAndFormContainer.className = styles.drawingAndFormContainer;
-    this.node.appendChild(drawingAndFormContainer);
-    this._drawingContainer.className = styles.drawingContainer;
-    drawingAndFormContainer.appendChild(this._drawingContainer);
-    this.formContainer.appendTo(drawingAndFormContainer);
-    this.node.appendChild(this._infobarContainer);
   }
 
   appendTo(container: Node) {
