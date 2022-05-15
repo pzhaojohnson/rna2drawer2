@@ -3,9 +3,27 @@ import { appendSequence } from 'Draw/sequences/add/sequence';
 
 import { App } from './App';
 
+let container = null;
+let app = null;
+
+beforeEach(() => {
+  container = document.createElement('div');
+  document.body.appendChild(container);
+
+  app = new App({ SVG });
+  app.appendTo(container);
+});
+
+afterEach(() => {
+  app.remove();
+  app = null;
+
+  container.remove();
+  container = null;
+});
+
 describe('App class', () => {
   test('appendTo and remove methods', () => {
-    let app = new App({ SVG });
     let container = document.createElement('div');
     let siblings = [document.createElement('div'), document.createElement('div')];
     siblings.forEach(sibling => container.appendChild(sibling));
@@ -17,7 +35,6 @@ describe('App class', () => {
   });
 
   test('updateDocumentTitle method', () => {
-    let app = new App({ SVG });
     // make sure title is not already RNA2Drawer
     document.title = 'asdf';
     expect(app.drawing.isEmpty()).toBeTruthy();
