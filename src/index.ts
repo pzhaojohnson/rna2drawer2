@@ -4,14 +4,17 @@ import { App } from 'App';
 let app = new App();
 
 window.addEventListener('beforeunload', event => {
-  let preference = app.preferences.askBeforeLeaving;
-  if (preference != undefined && !preference) {
+  if (app.drawing.isEmpty()) {
     return;
-  } else if (app.strictDrawing.isEmpty()) {
-    return;
-  } else {
-    let confirmationMessage = 'Are you sure?';
-    (event || window.event).returnValue = confirmationMessage;
-    return confirmationMessage;
   }
+
+  let askBeforeLeaving = app.preferences.askBeforeLeaving;
+  if (askBeforeLeaving != undefined && !askBeforeLeaving) {
+    // only if explicitly set to false
+    return;
+  }
+
+  let confirmationMessage = 'Are you sure?';
+  (event || window.event).returnValue = confirmationMessage;
+  return confirmationMessage;
 });
