@@ -4,6 +4,7 @@ import { App } from 'App';
 import { userIsTyping } from 'Utilities/userIsTyping';
 
 let app = new App();
+app.appendTo(document.body);
 
 // disable drag and drop
 document.body.ondragstart = () => false;

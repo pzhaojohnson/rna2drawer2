@@ -74,7 +74,6 @@ export class App {
 
   _appendContainers() {
     this.node.className = styles.app;
-    document.body.appendChild(this.node);
     this.node.appendChild(this._menuContainer);
     let drawingAndFormContainer = document.createElement('div');
     drawingAndFormContainer.className = styles.drawingAndFormContainer;
