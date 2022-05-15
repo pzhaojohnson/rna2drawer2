@@ -69,8 +69,6 @@ export class App {
 
     this.renderPeripherals();
 
-    this._setBindings();
-
     this.formContainer.renderForm(() => (
       <WelcomePage app={this} />
     ));
@@ -135,21 +133,6 @@ export class App {
 
   get drawingInteraction() {
     return this.strictDrawingInteraction;
-  }
-
-  _setBindings() {
-    window.addEventListener('beforeunload', event => {
-      let preference = this.preferences.askBeforeLeaving;
-      if (preference != undefined && !preference) {
-        return;
-      } else if (this.strictDrawing.isEmpty()) {
-        return;
-      } else {
-        let confirmationMessage = 'Are you sure?';
-        (event || window.event).returnValue = confirmationMessage;
-        return confirmationMessage;
-      }
-    });
   }
 
   renderPeripherals() {
