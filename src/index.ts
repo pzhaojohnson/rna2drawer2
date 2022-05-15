@@ -1,5 +1,7 @@
 import './global.css';
+
 import { App } from 'App';
+import { userIsTyping } from 'Utilities/userIsTyping';
 
 let app = new App();
 
@@ -12,11 +14,8 @@ document.body.ondrop = () => false;
 document.addEventListener('mousedown', event => {
   // cannot simply listen for the dblclick event since text selection
   // seems to happen before dblclick events are dispatched
-  if (event.detail > 1) { // clicked more than once
-    let tn = document.activeElement?.tagName.toLowerCase();
-    if (tn != 'input' && tn != 'textarea') {
-      event.preventDefault();
-    }
+  if (event.detail > 1 && !userIsTyping()) {
+    event.preventDefault();
   }
 }, false);
 
