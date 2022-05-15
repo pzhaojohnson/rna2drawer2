@@ -51,7 +51,6 @@ export class App {
     this.formContainer = new FormContainer();
     this._infobarContainer = document.createElement('div');
     this._appendContainers();
-    this._preventDblclickDefaultWhenNotTyping();
 
     this._strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
     this._initializeDrawing();
@@ -92,17 +91,6 @@ export class App {
 
   remove() {
     this.node.remove();
-  }
-
-  _preventDblclickDefaultWhenNotTyping() {
-    document.addEventListener('mousedown', event => {
-      if (event.detail > 1) { // clicked more than once
-        let tn = document.activeElement?.tagName.toLowerCase();
-        if (tn != 'input' && tn != 'textarea') {
-          event.preventDefault();
-        }
-      }
-    }, false);
   }
 
   _initializeDrawing() {

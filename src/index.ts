@@ -7,6 +7,19 @@ let app = new App();
 document.body.ondragstart = () => false;
 document.body.ondrop = () => false;
 
+// prevent text selection after double-click
+// when the user is not typing
+document.addEventListener('mousedown', event => {
+  // cannot simply listen for the dblclick event since text selection
+  // seems to happen before dblclick events are dispatched
+  if (event.detail > 1) { // clicked more than once
+    let tn = document.activeElement?.tagName.toLowerCase();
+    if (tn != 'input' && tn != 'textarea') {
+      event.preventDefault();
+    }
+  }
+}, false);
+
 // ask for confirmation before leaving if the drawing is nonempty
 // and the app preference is set to do so
 window.addEventListener('beforeunload', event => {
