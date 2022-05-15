@@ -22,7 +22,7 @@ it('initializes drawing and adds it to its container', () => {
     () => app.strictDrawing.appendSequence('asdf', 'asdf')
   ).not.toThrow(); // will throw if SVG callback not passed
   expect(
-    app._drawingContainer.childNodes.length
+    app.drawingContainer.childNodes.length
   ).toBeGreaterThan(0);
 });
 

@@ -31,10 +31,10 @@ export type Options = {
 
 export class App {
   readonly node: HTMLDivElement;
-  _menuContainer: HTMLDivElement;
-  _drawingContainer: HTMLDivElement;
+  readonly menuContainer: HTMLDivElement;
+  readonly drawingContainer: HTMLDivElement;
   readonly formContainer: FormContainer;
-  _infobarContainer: HTMLDivElement;
+  readonly infobarContainer: HTMLDivElement;
 
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawing: StrictDrawing;
@@ -48,22 +48,22 @@ export class App {
     this.node = document.createElement('div');
     this.node.className = styles.app;
 
-    this._menuContainer = document.createElement('div');
-    this.node.appendChild(this._menuContainer);
+    this.menuContainer = document.createElement('div');
+    this.node.appendChild(this.menuContainer);
 
     let drawingAndFormContainer = document.createElement('div');
     drawingAndFormContainer.className = styles.drawingAndFormContainer;
     this.node.appendChild(drawingAndFormContainer);
 
-    this._drawingContainer = document.createElement('div');
-    this._drawingContainer.className = styles.drawingContainer;
-    drawingAndFormContainer.appendChild(this._drawingContainer);
+    this.drawingContainer = document.createElement('div');
+    this.drawingContainer.className = styles.drawingContainer;
+    drawingAndFormContainer.appendChild(this.drawingContainer);
 
     this.formContainer = new FormContainer();
     this.formContainer.appendTo(drawingAndFormContainer);
 
-    this._infobarContainer = document.createElement('div');
-    this.node.appendChild(this._infobarContainer);
+    this.infobarContainer = document.createElement('div');
+    this.node.appendChild(this.infobarContainer);
 
     this.strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
     this._initializeDrawing();
@@ -94,7 +94,7 @@ export class App {
   }
 
   _initializeDrawing() {
-    this.strictDrawing.appendTo(this._drawingContainer);
+    this.strictDrawing.appendTo(this.drawingContainer);
   }
 
   get drawing() {
@@ -117,11 +117,11 @@ export class App {
   }
 
   renderMenu() {
-    ReactDOM.render(<Menu app={this} />, this._menuContainer);
+    ReactDOM.render(<Menu app={this} />, this.menuContainer);
   }
 
   renderInfobar() {
-    ReactDOM.render(<Infobar app={this} />, this._infobarContainer);
+    ReactDOM.render(<Infobar app={this} />, this.infobarContainer);
   }
 
   updateDocumentTitle() {
