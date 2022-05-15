@@ -56,7 +56,6 @@ it('pushUndo method', () => {
   expect(
     JSON.stringify(app.undoRedo.peekUndo())
   ).toBe(JSON.stringify(savableState));
-  expect(app.refresh.mock.calls.length).toBe(1);
 });
 
 it('canUndo method', () => {
