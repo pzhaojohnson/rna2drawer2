@@ -66,7 +66,7 @@ export class App {
     this.node.appendChild(this.infobarContainer);
 
     this.strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
-    this._initializeDrawing();
+    this.strictDrawing.appendTo(this.drawingContainer);
     this.drawingTitle = new DrawingTitle({ drawing: this.strictDrawing });
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
 
@@ -91,10 +91,6 @@ export class App {
 
   remove() {
     this.node.remove();
-  }
-
-  _initializeDrawing() {
-    this.strictDrawing.appendTo(this.drawingContainer);
   }
 
   get drawing() {
