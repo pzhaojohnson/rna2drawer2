@@ -7,6 +7,7 @@ import { pushUndo, undo, redo } from './undo/undo';
 import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawing';
 import * as SVG from '@svgdotjs/svg.js';
+import { DrawingTitle } from './DrawingTitle';
 import { StrictDrawingInteraction } from './draw/interact/StrictDrawingInteraction';
 
 import { Preferences } from 'Preferences';
@@ -39,7 +40,7 @@ export class App {
 
   preferences: Preferences;
 
-  _specifiedDrawingTitle?: string;
+  drawingTitle: DrawingTitle;
 
   constructor(options?: Options) {
     this.node = document.createElement('div');
@@ -53,6 +54,7 @@ export class App {
 
     this._strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
     this._initializeDrawing();
+    this.drawingTitle = new DrawingTitle({ drawing: this._strictDrawing });
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
 
     this._strictDrawingInteraction = new StrictDrawingInteraction({
@@ -163,32 +165,8 @@ export class App {
     ReactDOM.render(<Infobar app={this} />, this._infobarContainer);
   }
 
-  unspecifiedDrawingTitle(): string {
-    let seqs = this.strictDrawing.drawing.sequences;
-    return seqs.map(seq => seq.id).join(', ');
-  }
-
-  get drawingTitle(): string {
-    if (this._specifiedDrawingTitle) {
-      return this._specifiedDrawingTitle;
-    } else {
-      return this.unspecifiedDrawingTitle();
-    }
-  }
-
-  set drawingTitle(title: string) {
-    this._specifiedDrawingTitle = title;
-    this.refresh();
-  }
-
-  unspecifyDrawingTitle() {
-    this._specifiedDrawingTitle = undefined;
-    this.refresh();
-  }
-
   updateDocumentTitle() {
-    let title = this.drawingTitle;
-    document.title = title ? title : 'RNA2Drawer';
+    document.title = this.drawing.isEmpty() ? 'RNA2Drawer' : this.drawingTitle.value;
   }
 
   refresh() {

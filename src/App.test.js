@@ -150,77 +150,14 @@ it('refresh method', () => {
   spies.forEach(s => expect(s).toHaveBeenCalled());
 });
 
-describe('unspecifiedDrawingTitle method', () => {
-  test('when the drawing is empty', () => {
-    let app = new App({ SVG: { SVG: NodeSVG } });
-    expect(app.strictDrawing.isEmpty()).toBeTruthy();
-    expect(app.unspecifiedDrawingTitle()).toBe('');
-  });
-
-  describe('when the drawing is not empty', () => {
-    test('when there is one sequence', () => {
-      let app = new App({ SVG: { SVG: NodeSVG } });
-      appendSequence(app.strictDrawing.drawing, { id: 'ASDFasdf', characters: 'asDFFDsa' });
-      expect(app.strictDrawing.drawing.sequences.length).toBe(1);
-      expect(app.unspecifiedDrawingTitle()).toBe('ASDFasdf');
-    });
-
-    test('when there are multiple sequences', () => {
-      let app = new App({ SVG: { SVG: NodeSVG } });
-      appendSequence(app.strictDrawing.drawing, { id: 'QWER', characters: 'qwerqwer' });
-      appendSequence(app.strictDrawing.drawing, { id: 'A', characters: 'B' });
-      appendSequence(app.strictDrawing.drawing, { id: 'z x C V', characters: 'zxcv ZXCV' });
-      expect(app.strictDrawing.drawing.sequences.length).toBe(3);
-      expect(app.unspecifiedDrawingTitle()).toBe('QWER, A, z x C V');
-    });
-
-    test('when a sequence has an empty ID', () => {
-      let app = new App({ SVG: { SVG: NodeSVG } });
-      appendSequence(app.strictDrawing.drawing, { id: '', characters: 'asdf' });
-      expect(app.strictDrawing.drawing.sequences.length).toBe(1);
-      expect(app.unspecifiedDrawingTitle()).toBe('');
-    });
-  });
-});
-
-describe('drawingTitle property and unspecifyDrawingTitle method', () => {
-  test('when the drawing is empty', () => {
-    let app = new App({ SVG: { SVG: NodeSVG } });
-    expect(app.strictDrawing.isEmpty()).toBeTruthy();
-    expect(app.drawingTitle).toBe('');
-    app.drawingTitle = 'ASDF asdf'; // specify
-    expect(app.drawingTitle).toBe('ASDF asdf');
-    expect(document.title).toBe('ASDF asdf'); // updated the document title
-    app.unspecifyDrawingTitle();
-    expect(app.drawingTitle).toBe(''); // was unspecified
-    expect(document.title).not.toBe('ASDF asdf'); // updated the document title
-  });
-
-  test('when the drawing is not empty', () => {
-    let app = new App({ SVG: { SVG: NodeSVG } });
-    appendSequence(app.strictDrawing.drawing, { id: 'asDF', characters: 'asdfasdf' });
-    appendSequence(app.strictDrawing.drawing, { id: 'qw er', characters: 'qwerqwer' });
-    appendSequence(app.strictDrawing.drawing, { id: 'Z', characters: 'zxcvzxcv' });
-    expect(app.strictDrawing.drawing.sequences.length).toBe(3);
-    expect(app.unspecifiedDrawingTitle()).toBe('asDF, qw er, Z');
-    expect(app.drawingTitle).toBe('asDF, qw er, Z'); // returns the unspecified title
-    app.drawingTitle = 'Another Title';
-    expect(app.drawingTitle).toBe('Another Title'); // was specified
-    expect(document.title).toBe('Another Title'); // updated the document title
-    app.unspecifyDrawingTitle();
-    expect(app.drawingTitle).toBe('asDF, qw er, Z'); // was unspecified
-    expect(document.title).toBe('asDF, qw er, Z'); // updated the document title
-  });
-});
-
 it('updateDocumentTitle method', () => {
   let app = new App({ SVG: { SVG: NodeSVG } });
   // make sure title is not already RNA2Drawer
   document.title = 'asdf';
-  expect(app.drawingTitle).toBeFalsy(); // drawing has no title
+  expect(app.drawing.isEmpty()).toBeTruthy();
   app.updateDocumentTitle();
   expect(document.title).toBe('RNA2Drawer');
-  app.drawingTitle = 'Title of Drawing'; // drawing has a title
+  appendSequence(app.strictDrawing.drawing, { id: '1123nm', characters: 'asdfQWER' });
   app.updateDocumentTitle();
-  expect(document.title).toBe('Title of Drawing');
+  expect(document.title).toBe('1123nm');
 });

@@ -19,11 +19,10 @@ function firstFile(fileInputRef: React.RefObject<HTMLInputElement>): File | unde
 
 function updateDrawingTitle(app: App, fileName: string) {
   let titleFromFileName = removeFileExtension(fileName).trim();
-  app.unspecifyDrawingTitle();
-  if (titleFromFileName != app.unspecifiedDrawingTitle()) {
+  if (titleFromFileName != app.drawingTitle.unspecifiedValue) {
     // only specify if necessary since a specified title doesn't update
     // automatically as the drawing changes
-    app.drawingTitle = titleFromFileName;
+    app.drawingTitle.value = titleFromFileName;
   }
 }
 

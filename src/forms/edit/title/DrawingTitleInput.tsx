@@ -17,7 +17,7 @@ export class DrawingTitleInput extends React.Component<Props> {
     super(props);
 
     this.state = {
-      value: props.app.drawingTitle,
+      value: props.app.drawingTitle.value,
     };
   }
 
@@ -47,11 +47,11 @@ export class DrawingTitleInput extends React.Component<Props> {
     let title = this.state.value;
     title = title.trim();
     if (title.length == 0) {
-      this.props.app.unspecifyDrawingTitle();
+      this.props.app.drawingTitle.unspecify();
       this.props.app.refresh();
     } else {
-      if (title != this.props.app.drawingTitle) {
-        this.props.app.drawingTitle = title;
+      if (title != this.props.app.drawingTitle.value) {
+        this.props.app.drawingTitle.value = title;
         this.props.app.refresh();
       }
     }
