@@ -73,8 +73,6 @@ module.exports = {
       Undo: path.resolve(__dirname, 'src/undo/'),
       Utilities: path.resolve(__dirname, 'src/utilities/'),
       App$: path.resolve(__dirname, 'src/App.tsx'),
-      FormContainer$: path.resolve(__dirname, 'src/FormContainer.ts'),
-      Preferences$: path.resolve(__dirname, 'src/Preferences.ts'),
     },
     modules: ['node_modules'],
     extensions: [ '.tsx', '.ts', '.js' ]

@@ -12,10 +12,10 @@ import * as SVG from '@svgdotjs/svg.js';
 import { DrawingTitle } from './DrawingTitle';
 import { StrictDrawingInteraction } from './draw/interact/StrictDrawingInteraction';
 
-import { Preferences } from 'Preferences';
+import { Preferences } from './Preferences';
 
 import { Menu } from './menu/Menu';
-import { FormContainer } from 'FormContainer';
+import { FormContainer } from './FormContainer';
 import { Infobar } from './infobar/Infobar';
 
 import { WelcomePage } from './forms/welcome/WelcomePage';

@@ -26,8 +26,6 @@
       "Undo/*": ["src/undo/*"],
       "Utilities/*": ["src/utilities/*"],
       "App": ["src/App"],
-      "FormContainer": ["src/FormContainer"],
-      "Preferences": ["src/Preferences"],
     },
     "module": "es6",
     "target": "es5",
