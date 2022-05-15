@@ -71,6 +71,10 @@ export class StrictDrawing {
     return this.drawing.sequences;
   }
 
+  bases() {
+    return this.drawing.bases();
+  }
+
   get primaryBonds() {
     return this.drawing.primaryBonds;
   }
