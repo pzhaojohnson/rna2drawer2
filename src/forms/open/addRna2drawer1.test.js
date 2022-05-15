@@ -1,5 +1,5 @@
 import { addRna2drawer1 } from './addRna2drawer1';
-import App from '../../App';
+import { App } from 'App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import * as Svg from '@svgdotjs/svg.js';
 import { pixelsToPoints } from 'Export/units';

@@ -1,4 +1,4 @@
-import App from './App';
+import { App } from './App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import React from 'react';
 import ReactDOM from 'react-dom';

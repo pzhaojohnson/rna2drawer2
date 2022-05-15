@@ -1,4 +1,4 @@
-import App from '../../App';
+import { App } from 'App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import * as fs from 'fs';
 import { open } from './open';
