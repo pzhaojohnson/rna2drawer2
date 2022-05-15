@@ -51,7 +51,6 @@ export class App {
     this.formContainer = new FormContainer();
     this._infobarContainer = document.createElement('div');
     this._appendContainers();
-    this._disableDragAndDrop();
     this._preventDblclickDefaultWhenNotTyping();
 
     this._strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
@@ -93,11 +92,6 @@ export class App {
 
   remove() {
     this.node.remove();
-  }
-
-  _disableDragAndDrop() {
-    document.body.ondragstart = () => false;
-    document.body.ondrop = () => false;
   }
 
   _preventDblclickDefaultWhenNotTyping() {

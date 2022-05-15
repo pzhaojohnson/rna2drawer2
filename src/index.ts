@@ -3,6 +3,10 @@ import { App } from 'App';
 
 let app = new App();
 
+// disable drag and drop
+document.body.ondragstart = () => false;
+document.body.ondrop = () => false;
+
 // ask for confirmation before leaving if the drawing is nonempty
 // and the app preference is set to do so
 window.addEventListener('beforeunload', event => {
