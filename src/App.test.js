@@ -35,8 +35,7 @@ describe('App class', () => {
   });
 
   test('updateDocumentTitle method', () => {
-    // make sure title is not already RNA2Drawer
-    document.title = 'asdf';
+    document.title = 'asdf'; // make sure title is not already RNA2Drawer
     expect(app.drawing.isEmpty()).toBeTruthy();
     app.updateDocumentTitle();
     expect(document.title).toBe('RNA2Drawer');
