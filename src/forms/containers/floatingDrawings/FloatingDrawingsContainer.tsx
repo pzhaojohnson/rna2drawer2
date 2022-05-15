@@ -1,7 +1,23 @@
 import * as React from 'react';
 import styles from './FloatingDrawingsContainer.css';
-import lowerLeftDrawing from './lowerLeftDrawing.svg';
-import upperRightDrawing from './upperRightDrawing.svg';
+import { lowerLeftDrawingString } from './lowerLeftDrawing';
+import { upperRightDrawingString } from './upperRightDrawing';
+
+// necessary for unit testing with Jest
+if (URL.createObjectURL == undefined) {
+  console.error('URL.createObjectURL static method is undefined.');
+  Object.defineProperty(URL, 'createObjectURL', { value: () => {} });
+  console.error('Placeholder function assigned to URL.createObjectURL.');
+}
+
+function drawingStringToURL(drawingString: string) {
+  return URL.createObjectURL(
+    new Blob([drawingString], { type: 'image/svg+xml' })
+  );
+}
+
+const lowerLeftDrawingURL = drawingStringToURL(lowerLeftDrawingString);
+const upperRightDrawingURL = drawingStringToURL(upperRightDrawingString);
 
 const drawingsOpacity = 0.125;
 
@@ -15,7 +31,7 @@ function LowerLeftDrawing() {
       }}
     >
       <img
-        src={lowerLeftDrawing}
+        src={lowerLeftDrawingURL}
         alt='Lower Left Drawing'
         style={{
           position: 'relative',
@@ -39,7 +55,7 @@ function UpperRightDrawing() {
       }}
     >
       <img
-        src={upperRightDrawing}
+        src={upperRightDrawingURL}
         alt='Upper Right Drawing'
         style={{
           position: 'relative',
