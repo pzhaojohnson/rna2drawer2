@@ -38,7 +38,7 @@ export class App {
   readonly formContainer: FormContainer;
   readonly infobarContainer: HTMLDivElement;
 
-  _undoRedo: UndoRedo<StrictDrawingSavableState>;
+  readonly undoRedo: UndoRedo<StrictDrawingSavableState>;
   readonly strictDrawing: StrictDrawing;
   readonly strictDrawingInteraction: StrictDrawingInteraction;
 
@@ -70,7 +70,7 @@ export class App {
     this.strictDrawing = new StrictDrawing({ SVG: options?.SVG });
     this.strictDrawing.appendTo(this.drawingContainer);
     this.drawingTitle = new DrawingTitle({ drawing: this.strictDrawing });
-    this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
+    this.undoRedo = new UndoRedo<StrictDrawingSavableState>();
 
     this.strictDrawingInteraction = new StrictDrawingInteraction({
       app: this,
@@ -97,10 +97,6 @@ export class App {
 
   get drawing() {
     return this.strictDrawing;
-  }
-
-  get undoRedo(): UndoRedo<StrictDrawingSavableState> {
-    return this._undoRedo;
   }
 
   get drawingInteraction() {
@@ -136,7 +132,7 @@ export class App {
   }
 
   canUndo(): boolean {
-    return this._undoRedo.canUndo();
+    return this.undoRedo.canUndo();
   }
 
   undo() {
@@ -144,7 +140,7 @@ export class App {
   }
 
   canRedo(): boolean {
-    return this._undoRedo.canRedo();
+    return this.undoRedo.canRedo();
   }
 
   redo() {

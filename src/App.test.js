@@ -58,7 +58,7 @@ it('pushUndo method', () => {
   app.renderPeripherals = jest.fn();
   app.pushUndo();
   expect(
-    JSON.stringify(app._undoRedo.peekUndo())
+    JSON.stringify(app.undoRedo.peekUndo())
   ).toBe(JSON.stringify(savableState));
   expect(app.renderPeripherals.mock.calls.length).toBe(1);
 });
@@ -77,24 +77,24 @@ describe('undo method', () => {
     app.pushUndo();
 
     app.strictDrawing.savableState = jest.fn(() => 'current state');
-    app._undoRedo.undo = jest.fn(() => 'previous state');
+    app.undoRedo.undo = jest.fn(() => 'previous state');
     app.strictDrawing.applySavedState = jest.fn();
     app.refresh = jest.fn();
     expect(app.canUndo()).toBeTruthy();
     app.undo();
-    expect(app._undoRedo.undo.mock.calls[0][0]).toBe('current state');
+    expect(app.undoRedo.undo.mock.calls[0][0]).toBe('current state');
     expect(app.strictDrawing.applySavedState.mock.calls[0][0]).toBe('previous state');
     expect(app.refresh.mock.calls.length).toBe(1);
   });
 
   it('when cannot undo', () => {
     let app = new App({ SVG: { SVG: NodeSVG } });
-    app._undoRedo.undo = jest.fn();
+    app.undoRedo.undo = jest.fn();
     app.strictDrawing.applySavedState = jest.fn();
     app.refresh = jest.fn();
     expect(app.canUndo()).toBeFalsy();
     app.undo();
-    expect(app._undoRedo.undo.mock.calls.length).toBe(0);
+    expect(app.undoRedo.undo.mock.calls.length).toBe(0);
     expect(app.strictDrawing.applySavedState.mock.calls.length).toBe(0);
     expect(app.refresh.mock.calls.length).toBe(0);
   });
@@ -117,24 +117,24 @@ describe('redo method', () => {
     app.undo();
 
     app.strictDrawing.savableState = jest.fn(() => 'current state');
-    app._undoRedo.redo = jest.fn(() => 'undone state');
+    app.undoRedo.redo = jest.fn(() => 'undone state');
     app.strictDrawing.applySavedState = jest.fn();
     app.refresh = jest.fn();
     expect(app.canRedo()).toBeTruthy();
     app.redo();
-    expect(app._undoRedo.redo.mock.calls[0][0]).toBe('current state');
+    expect(app.undoRedo.redo.mock.calls[0][0]).toBe('current state');
     expect(app.strictDrawing.applySavedState.mock.calls[0][0]).toBe('undone state');
     expect(app.refresh.mock.calls.length).toBe(1);
   });
 
   it('when cannot redo', () => {
     let app = new App({ SVG: { SVG: NodeSVG } });
-    app._undoRedo.redo = jest.fn();
+    app.undoRedo.redo = jest.fn();
     app.strictDrawing.applySavedState = jest.fn();
     app.refresh = jest.fn();
     expect(app.canRedo()).toBeFalsy();
     app.redo();
-    expect(app._undoRedo.redo.mock.calls.length).toBe(0);
+    expect(app.undoRedo.redo.mock.calls.length).toBe(0);
     expect(app.strictDrawing.applySavedState.mock.calls.length).toBe(0);
     expect(app.refresh.mock.calls.length).toBe(0);
   });
