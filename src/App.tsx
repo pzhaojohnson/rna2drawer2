@@ -37,8 +37,8 @@ export class App {
   _infobarContainer: HTMLDivElement;
 
   _undoRedo: UndoRedo<StrictDrawingSavableState>;
-  _strictDrawing: StrictDrawing;
-  _strictDrawingInteraction: StrictDrawingInteraction;
+  readonly strictDrawing: StrictDrawing;
+  readonly strictDrawingInteraction: StrictDrawingInteraction;
 
   preferences: Preferences;
 
@@ -52,14 +52,14 @@ export class App {
     this._infobarContainer = document.createElement('div');
     this._appendContainers();
 
-    this._strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
+    this.strictDrawing = new StrictDrawing({ SVG: { SVG: options?.SVG?.SVG } });
     this._initializeDrawing();
-    this.drawingTitle = new DrawingTitle({ drawing: this._strictDrawing });
+    this.drawingTitle = new DrawingTitle({ drawing: this.strictDrawing });
     this._undoRedo = new UndoRedo<StrictDrawingSavableState>();
 
-    this._strictDrawingInteraction = new StrictDrawingInteraction({
+    this.strictDrawingInteraction = new StrictDrawingInteraction({
       app: this,
-      strictDrawing: this._strictDrawing,
+      strictDrawing: this.strictDrawing,
       SVG: options?.SVG,
     });
 
@@ -93,11 +93,7 @@ export class App {
   }
 
   _initializeDrawing() {
-    this._strictDrawing.appendTo(this._drawingContainer);
-  }
-
-  get strictDrawing(): StrictDrawing {
-    return this._strictDrawing;
+    this.strictDrawing.appendTo(this._drawingContainer);
   }
 
   get drawing() {
@@ -106,10 +102,6 @@ export class App {
 
   get undoRedo(): UndoRedo<StrictDrawingSavableState> {
     return this._undoRedo;
-  }
-
-  get strictDrawingInteraction(): StrictDrawingInteraction {
-    return this._strictDrawingInteraction;
   }
 
   get drawingInteraction() {
@@ -136,7 +128,7 @@ export class App {
   }
 
   refresh() {
-    this._strictDrawingInteraction.refresh();
+    this.strictDrawingInteraction.refresh();
     this.renderPeripherals();
   }
 
