@@ -14,7 +14,7 @@ window.addEventListener('beforeunload', event => {
     return;
   }
 
-  let confirmationMessage = 'Are you sure?';
-  (event || window.event).returnValue = confirmationMessage;
-  return confirmationMessage;
+  let message = 'Are you sure?';
+  (event || window.event).returnValue = message;
+  return message;
 });
