@@ -5,6 +5,11 @@
   flex-direction: column;
 }
 
+.menuContainer {
+  /* want to ensure that the menu is always on top of everything else */
+  z-index: 2;
+}
+
 .drawingAndFormContainer {
   min-height: 0px;
   flex-grow: 1;

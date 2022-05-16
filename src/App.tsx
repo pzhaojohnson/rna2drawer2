@@ -51,6 +51,7 @@ export class App {
     this.node.className = styles.app;
 
     this.menuContainer = document.createElement('div');
+    this.menuContainer.className = styles.menuContainer;
     this.node.appendChild(this.menuContainer);
 
     let drawingAndFormContainer = document.createElement('div');
