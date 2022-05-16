@@ -30,20 +30,13 @@ function zoomOut(drawing: Drawing) {
 function MinusIcon() {
   return (
     <svg
-      width="9px" height="9px" viewBox="0 0 72 13"
+      width="9px" height="9px" viewBox="0 0 9 9"
       xmlns="http://www.w3.org/2000/svg" overflow="hidden"
     >
-      <defs>
-        <clipPath id="clip0" >
-          <path
-            d="M692 330 764 330 764 343 692 343Z"
-            fillRule="evenodd" clipRule="evenodd"
-          />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#clip0)" transform="translate(-692 -330)" >
-        <rect x="691.725" y="330.738" width="70.5503" height="11.5248" fill="#1a1a1c" />
-      </g>
+      <rect
+        x="0" y="3.75" width="9" height="1.5"
+        fill="#1a1a1c"
+      />
     </svg>
   );
 }
