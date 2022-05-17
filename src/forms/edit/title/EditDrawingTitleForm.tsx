@@ -7,7 +7,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { DrawingTitleInput } from './DrawingTitleInput';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
 
   unmount: () => void;
   history: FormHistoryInterface;
