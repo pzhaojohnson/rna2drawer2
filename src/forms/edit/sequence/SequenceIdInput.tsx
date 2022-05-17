@@ -49,18 +49,18 @@ export class SequenceIdInput extends React.Component<Props> {
   }
 
   submit() {
-    let id = this.state.value;
-    id = id.trim();
-    if (id.length == 0) {
+    let value = this.state.value;
+    value = value.trim();
+    if (value.length == 0) {
       return;
     }
-    if (id == this.props.sequence.id) {
+    if (value == this.props.sequence.id) {
       return;
     }
 
     // set ID
     this.props.app.pushUndo();
-    this.props.sequence.id = id;
+    this.props.sequence.id = value;
     this.props.app.refresh();
   }
 }
