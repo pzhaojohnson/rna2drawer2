@@ -30,9 +30,7 @@ export function EditSequenceIdForm(props: Props) {
       style={{ width: '332px' }}
     >
       {drawing.sequences.length == 0 ? (
-        <p className='unselectable' style={{ fontSize: '12px' }} >
-          Drawing has no sequences.
-        </p>
+        'Drawing has no sequences.' // never supposed to happen
       ) : (
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
           <SequenceIdInput app={props.app} sequence={drawing.sequences[0]} />
