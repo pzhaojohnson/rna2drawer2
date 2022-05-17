@@ -24,6 +24,10 @@ export class DrawingTitle {
     return this.options.drawing;
   }
 
+  get specifiedValue(): string | undefined {
+    return this._specifiedValue;
+  }
+
   /**
    * What the title of the drawing would automatically be
    * if no title were specified.

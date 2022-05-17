@@ -51,13 +51,16 @@ describe('DrawingTitle class', () => {
     });
   });
 
-  test('value getter and setter and unspecify method', () => {
+  test('specifiedValue getter, value getter and setter, and unspecify method', () => {
     appendSequence(drawing, { id: 'asdf', characters: 'asdfASDF' });
     appendSequence(drawing, { id: 'qwer', characters: 'QWer', });
+    expect(drawingTitle.specifiedValue).toBeUndefined();
     expect(drawingTitle.value).toBe('asdf, qwer'); // the unspecified value
     drawingTitle.value = '112234';
-    expect(drawingTitle.value).toBe('112234'); // was specified
+    expect(drawingTitle.specifiedValue).toBe('112234'); // was set
+    expect(drawingTitle.value).toBe('112234'); // the specified value
     drawingTitle.unspecify();
+    expect(drawingTitle.specifiedValue).toBeUndefined(); // was undefined
     expect(drawingTitle.value).toBe('asdf, qwer'); // was unspecified
   });
 });
