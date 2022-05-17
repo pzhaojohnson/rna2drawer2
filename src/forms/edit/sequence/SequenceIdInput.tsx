@@ -4,6 +4,8 @@ import type { Sequence } from 'Draw/sequences/Sequence';
 import * as React from 'react';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
 
+import { isBlank } from 'Parse/isBlank';
+
 export type Props = {
   app: App; // a reference to the whole app
 
@@ -52,7 +54,7 @@ export class SequenceIdInput extends React.Component<Props> {
     let value = this.state.value;
     value = value.trim(); // remove leading and trailing whitespace
 
-    if (value.length == 0) {
+    if (isBlank(value)) {
       return;
     }
     if (value == this.props.sequence.id) {
