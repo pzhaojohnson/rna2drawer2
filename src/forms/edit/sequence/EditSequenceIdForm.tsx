@@ -19,7 +19,7 @@ export function EditSequenceIdForm(props: Props) {
   if (drawing.sequences.length == 0) {
     console.error('Drawing has no sequences.');
   } else if (drawing.sequences.length > 1) {
-    console.error('Unable to edit the IDs of more than one sequence.');
+    console.error('Drawing has multiple sequences. This form can only edit the ID of the first sequence.');
   }
 
   return (
