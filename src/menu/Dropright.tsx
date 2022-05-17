@@ -1,6 +1,20 @@
 import * as React from 'react';
 import styles from './Dropright.css';
-import { RightCaret } from './RightCaret';
+
+function RightCaret() {
+  return (
+    <svg
+      viewBox="0 0 3.89 6.72" xmlns="http://www.w3.org/2000/svg" overflow="hidden"
+      style={{ height: '12px' }}
+    >
+      <path
+        d="M 0.53 0.53 L 3.36 3.36 L 0.53 6.19" strokeWidth="0.75"
+        stroke="#38383c" fillOpacity="0"
+        strokeLinecap="round" strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export type Props = {
   name: string;
@@ -19,7 +33,7 @@ export function Dropright(props: Props) {
         <p className={styles.buttonText} style={{ flexGrow: 1, textAlign: 'left' }} >
           {props.name}
         </p>
-        <RightCaret style={{ height: '12px', padding: '0px' }} />
+        <RightCaret />
       </div>
       <div className={styles.droppedContainer} >
         {props.dropped}
