@@ -56,8 +56,7 @@ export class SequenceIdInput extends React.Component<Props> {
 
     if (isBlank(value)) {
       return;
-    }
-    if (value == this.props.sequence.id) {
+    } else if (value == this.props.sequence.id) {
       return;
     }
 
