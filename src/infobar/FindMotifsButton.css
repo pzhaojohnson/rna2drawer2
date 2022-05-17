@@ -1,0 +1,30 @@
+.findMotifsButton {
+  margin-right: 4px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  padding: 2px 24px;
+  border: 1px solid #cdcdeb;
+  border-radius: 30px;
+
+  cursor: pointer;
+}
+
+.findMotifsButton:hover {
+  box-shadow: 0px 0px 4px #d7d7e4;
+}
+
+.findMotifsButtonText {
+  margin-left: 4px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  color: #07074b;
+
+  cursor: pointer;
+  user-select: none;
+}
