@@ -50,7 +50,8 @@ export class SequenceIdInput extends React.Component<Props> {
 
   submit() {
     let value = this.state.value;
-    value = value.trim();
+    value = value.trim(); // remove leading and trailing whitespace
+
     if (value.length == 0) {
       return;
     }
