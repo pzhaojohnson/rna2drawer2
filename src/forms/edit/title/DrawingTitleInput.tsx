@@ -4,7 +4,7 @@ import * as React from 'react';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
 }
 
 type State = {
