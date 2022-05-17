@@ -3,6 +3,8 @@ import type { App } from 'App';
 import * as React from 'react';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
 
+import { isBlank } from 'Parse/isBlank';
+
 export type Props = {
   app: App; // a reference to the whole app
 }
@@ -47,7 +49,7 @@ export class DrawingTitleInput extends React.Component<Props> {
   submit() {
     let title = this.state.value;
     title = title.trim();
-    if (title.length == 0) {
+    if (isBlank(title)) {
       this.props.app.drawingTitle.unspecify();
     } else {
       if (title != this.props.app.drawingTitle.value) {
