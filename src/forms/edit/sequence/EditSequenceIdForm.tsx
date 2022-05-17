@@ -16,7 +16,9 @@ export type Props = {
 export function EditSequenceIdForm(props: Props) {
   let drawing = props.app.drawing;
 
-  if (drawing.sequences.length > 1) {
+  if (drawing.sequences.length == 0) {
+    console.error('Drawing has no sequences.');
+  } else if (drawing.sequences.length > 1) {
     console.error('Unable to edit the IDs of more than one sequence.');
   }
 
