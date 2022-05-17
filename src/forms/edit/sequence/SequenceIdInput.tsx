@@ -1,7 +1,8 @@
-import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import type { App } from 'App';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+
+import * as React from 'react';
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
 
 export type Props = {
   app: App;
