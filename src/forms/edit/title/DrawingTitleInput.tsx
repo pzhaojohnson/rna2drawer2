@@ -49,12 +49,11 @@ export class DrawingTitleInput extends React.Component<Props> {
   submit() {
     let value = this.state.value;
     value = value.trim(); // remove leading and trailing whitespace
+
     if (isBlank(value)) {
       this.props.app.drawingTitle.unspecify();
-    } else {
-      if (value != this.props.app.drawingTitle.value) {
-        this.props.app.drawingTitle.value = value;
-      }
+    } else if (value != this.props.app.drawingTitle.value) {
+      this.props.app.drawingTitle.value = value;
     }
   }
 }
