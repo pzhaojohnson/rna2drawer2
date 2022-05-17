@@ -49,11 +49,9 @@ export class DrawingTitleInput extends React.Component<Props> {
     title = title.trim();
     if (title.length == 0) {
       this.props.app.drawingTitle.unspecify();
-      this.props.app.refresh();
     } else {
       if (title != this.props.app.drawingTitle.value) {
         this.props.app.drawingTitle.value = title;
-        this.props.app.refresh();
       }
     }
   }
