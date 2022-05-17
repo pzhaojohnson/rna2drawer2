@@ -2,7 +2,7 @@ import type { App } from 'App';
 import type { Sequence } from 'Draw/sequences/Sequence';
 
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import styles from './SequenceIdInput.css';
 
 import { isBlank } from 'Parse/isBlank';
 
@@ -32,7 +32,7 @@ export class SequenceIdInput extends React.Component<Props> {
     return (
       <input
         type='text'
-        className={textFieldStyles.input}
+        className={styles.sequenceIdInput}
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {
@@ -45,7 +45,6 @@ export class SequenceIdInput extends React.Component<Props> {
             this.props.app.refresh();
           }
         }}
-        style={{ padding: '4px 8px' }}
       />
     );
   }
