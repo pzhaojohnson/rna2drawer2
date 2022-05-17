@@ -14,7 +14,7 @@ type State = {
   value: string;
 }
 
-export class IdInput extends React.Component<Props> {
+export class SequenceIdInput extends React.Component<Props> {
   state: State;
 
   constructor(props: Props) {

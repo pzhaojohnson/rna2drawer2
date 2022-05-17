@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import type { App } from 'App';
-import { IdInput } from './IdInput';
+import { SequenceIdInput } from './SequenceIdInput';
 
 export type Props = {
   app: App;
@@ -30,7 +30,7 @@ export function EditSequenceIdForm(props: Props) {
         </p>
       ) : (
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
-          <IdInput app={props.app} sequence={drawing.sequences[0]} />
+          <SequenceIdInput app={props.app} sequence={drawing.sequences[0]} />
         </div>
       )}
     </PartialWidthContainer>
