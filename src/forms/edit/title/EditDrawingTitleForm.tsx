@@ -5,6 +5,7 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { DrawingTitleInput } from './DrawingTitleInput';
+import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
 export type Props = {
   app: App; // a reference to the whole app
@@ -24,14 +25,9 @@ export function EditDrawingTitleForm(props: Props) {
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
         <DrawingTitleInput app={props.app} />
       </div>
-      <div style={{ margin: '8px 0px 8px 3px' }} >
-        <p
-          className='unselectable'
-          style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }}
-        >
-          Defaults to the sequence ID.
-        </p>
-      </div>
+      <FieldDescription style={{ margin: '8px 0px 8px 3px' }} >
+        Defaults to the sequence ID.
+      </FieldDescription>
     </PartialWidthContainer>
   );
 }
