@@ -1,7 +1,7 @@
 import type { App } from 'App';
 
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import styles from './DrawingTitleInput.css';
 
 import { isBlank } from 'Parse/isBlank';
 
@@ -28,7 +28,7 @@ export class DrawingTitleInput extends React.Component<Props> {
     return (
       <input
         type='text'
-        className={textFieldStyles.input}
+        className={styles.drawingTitleInput}
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {
@@ -41,7 +41,6 @@ export class DrawingTitleInput extends React.Component<Props> {
             this.props.app.refresh();
           }
         }}
-        style={{ padding: '4px 8px' }}
       />
     );
   }

@@ -1,0 +1,27 @@
+.drawingTitleInput {
+  border: 1px solid #d3d3de;
+  border-radius: 2px;
+  padding: 4px 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1c1c1e;
+}
+
+.drawingTitleInput:hover {
+  border-color: #3b3b40;
+}
+
+.drawingTitleInput:focus {
+  border-color: #3b3b40;
+  outline: none;
+}
+
+.drawingTitleInput::placeholder {
+  font-style: italic;
+  font-weight: 500;
+  color: #70707a;
+
+  /* necessary for Firefox */
+  opacity: 1;
+}
