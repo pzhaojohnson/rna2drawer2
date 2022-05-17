@@ -63,6 +63,5 @@ export class SequenceIdInput extends React.Component<Props> {
     // set ID
     this.props.app.pushUndo();
     this.props.sequence.id = value;
-    this.props.app.refresh();
   }
 }
