@@ -1,7 +1,9 @@
+import type { App } from 'App';
+
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import type { App } from 'App';
+
 import { SequenceIdInput } from './SequenceIdInput';
 
 export type Props = {
