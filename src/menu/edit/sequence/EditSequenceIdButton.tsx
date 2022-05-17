@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { EditSequenceId } from 'Forms/edit/sequence/EditSequenceId';
+import { EditSequenceIdForm } from 'Forms/edit/sequence/EditSequenceIdForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
@@ -16,7 +16,7 @@ export function EditSequenceIdButton(props: Props) {
       text='Sequence ID'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <EditSequenceId {...formProps} app={props.app} />
+          <EditSequenceIdForm {...formProps} app={props.app} />
         ), { key: formKey });
       }}
     />

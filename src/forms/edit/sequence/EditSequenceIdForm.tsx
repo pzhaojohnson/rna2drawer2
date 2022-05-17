@@ -11,7 +11,7 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-export function EditSequenceId(props: Props) {
+export function EditSequenceIdForm(props: Props) {
   let drawing = props.app.strictDrawing.drawing;
   if (drawing.sequences.length > 1) {
     console.error('Unable to edit the IDs of more than one sequence.');
