@@ -7,7 +7,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { SequenceIdInput } from './SequenceIdInput';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
 
   unmount: () => void;
   history: FormHistoryInterface;
