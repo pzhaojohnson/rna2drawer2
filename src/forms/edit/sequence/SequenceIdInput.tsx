@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import type { Sequence } from 'Draw/sequences/Sequence';
 
 import * as React from 'react';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
