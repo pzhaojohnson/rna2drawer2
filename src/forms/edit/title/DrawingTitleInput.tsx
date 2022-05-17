@@ -47,13 +47,13 @@ export class DrawingTitleInput extends React.Component<Props> {
   }
 
   submit() {
-    let title = this.state.value;
-    title = title.trim();
-    if (isBlank(title)) {
+    let value = this.state.value;
+    value = value.trim();
+    if (isBlank(value)) {
       this.props.app.drawingTitle.unspecify();
     } else {
-      if (title != this.props.app.drawingTitle.value) {
-        this.props.app.drawingTitle.value = title;
+      if (value != this.props.app.drawingTitle.value) {
+        this.props.app.drawingTitle.value = value;
       }
     }
   }
