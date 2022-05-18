@@ -1,6 +1,6 @@
 .oldFileNotes {
-  margin: 55px 0px 0px 0px;
-  width: 679px;
+  margin: 48px 0px 0px 0px;
+  width: 678px;
 }
 
 .disclaimer {
@@ -18,7 +18,7 @@
 }
 
 .preservedAspectsLeadingText {
-  margin: 15px 0px 0px 30px;
+  margin: 16px 0px 0px 32px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
@@ -29,6 +29,8 @@
 }
 
 .preservedAspect {
+  margin-bottom: 2px;
+
   display: flex;
   flex-direction: row;
   align-items: center;

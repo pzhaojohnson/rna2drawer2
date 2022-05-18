@@ -40,7 +40,7 @@ export function OldFileNotes() {
     <div className={styles.oldFileNotes} >
       <Disclaimer />
       <PreservedAspectsLeadingText />
-      <div style={{ margin: '15px 0px 0px 60px' }} >
+      <div style={{ margin: '16px 0px 0px 64px' }} >
         <PreservedAspect>The sequence and its ID</PreservedAspect>
         <PreservedAspect>The secondary structure</PreservedAspect>
         <PreservedAspect>Tertiary interactions and their colors</PreservedAspect>

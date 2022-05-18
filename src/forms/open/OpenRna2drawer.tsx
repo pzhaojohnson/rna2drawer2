@@ -163,11 +163,11 @@ export function OpenRna2drawer(props: Props) {
               </p>
             </div>
             {!errorMessage ? null : (
-              <ErrorMessage key={errorMessageKey} style={{ marginTop: '16px', fontSize: '16px' }} >
+              <ErrorMessage key={errorMessageKey} style={{ marginTop: '14px', fontSize: '16px' }} >
                 {errorMessage}
               </ErrorMessage>
             )}
-            <div style={{ height: errorMessage ? '14px' : '23px' }} />
+            <div style={{ height: errorMessage ? '12px' : '32px' }} />
             <DetailsToggle onClick={() => setShowDetails(!showDetails)} />
             {showDetails ? <OldFileNotes /> : null}
           </div>
