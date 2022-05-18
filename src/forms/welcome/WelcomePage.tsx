@@ -1,6 +1,7 @@
 import type { App } from 'App';
 import * as React from 'react';
 import styles from './WelcomePage.css';
+import { AppIcon } from './AppIcon';
 import { CreateNewDrawing } from '../new/CreateNewDrawing';
 import { OpenRna2drawer } from '../open/OpenRna2drawer';
 import { DrawingSlideshow } from './drawings/DrawingSlideshow';
@@ -13,6 +14,8 @@ function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
       <div style={{ margin: '0px 64px', display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+        <AppIcon />
+        <div style={{ width: '14px' }} />
         <p style={{ fontSize: '32px', fontWeight: 600, color: '#232326' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
