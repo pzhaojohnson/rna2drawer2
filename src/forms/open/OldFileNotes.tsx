@@ -5,7 +5,7 @@ function Disclaimer() {
   return (
     <div className={styles.disclaimer} >
       <p className={styles.disclaimerText} >
-        Old drawings from the first version of RNA2Drawer (before the web app) will not be perfectly preserved.
+        Old drawings from before the web app version of RNA2Drawer will not be perfectly preserved.
       </p>
     </div>
   );
