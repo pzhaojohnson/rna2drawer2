@@ -24,6 +24,17 @@
   user-select: none;
 }
 
+.preservedAspectsLeadingText {
+  margin: 15px 0px 0px 30px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: italic;
+  color: #101010;
+  user-select: none;
+}
+
 .preservedAspect {
   display: flex;
   flex-direction: row;
