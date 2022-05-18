@@ -7,8 +7,7 @@ function Disclaimer() {
       <div className={styles.solidDot} />
       <div style={{ minWidth: '10px' }} />
       <p className={styles.disclaimerText} >
-        Not all aspects of a drawing from the first version of RNA2Drawer
-        (before the web app) will be preserved
+        Old drawings from the first version of RNA2Drawer (before the web app) will not be perfectly preserved
       </p>
     </div>
   );
@@ -17,7 +16,7 @@ function Disclaimer() {
 function PreservedAspectsLeadingText() {
   return (
     <p className={styles.preservedAspectsLeadingText} >
-      The following will be preserved...
+      Only the following will be preserved for these drawings...
     </p>
   );
 }
