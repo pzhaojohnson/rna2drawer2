@@ -26,7 +26,7 @@ function PreservedAspect(
 ) {
   return (
     <div className={styles.preservedAspect} >
-      <div className={styles.hollowDot} />
+      <div className={styles.solidDot} />
       <div style={{ width: '8px' }} />
       <p className={styles.preservedAspectText} >
         {props.children}

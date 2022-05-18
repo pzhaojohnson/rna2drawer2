@@ -34,12 +34,11 @@
   align-items: center;
 }
 
-.hollowDot {
-  width: 5px;
-  height: 5px;
+.solidDot {
+  width: 6px;
+  height: 6px;
   border-radius: 3px;
-  border: 1px solid #5b5b61;
-  background-color: transparent;
+  background-color: #35353a;
 }
 
 .preservedAspectText {
