@@ -3,12 +3,16 @@
   border-radius: 16px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   font-style: italic;
-  color: #0b0d68;
+  color: #070843;
   cursor: pointer;
 }
 
 .complementRulesButton:hover {
-  text-decoration: underline;
+  transform: scale(1.03);
+}
+
+.complementRulesButton:active {
+  transform: scale(1);
 }
