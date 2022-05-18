@@ -15,10 +15,10 @@
 }
 
 .zoomInButton:hover {
-  background-color: #ebebf3;
+  background-color: #e6e6ed;
 }
 
 .zoomInButton:active {
-  background-color: #d7d7e6;
+  background-color: #d6d6dc;
   transform: scale(0.95);
 }
