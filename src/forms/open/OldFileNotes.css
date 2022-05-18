@@ -1,19 +1,12 @@
 .oldFileNotes {
   margin: 55px 0px 0px 0px;
-  width: 588px;
+  width: 679px;
 }
 
 .disclaimer {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.solidDot {
-  min-width: 8px;
-  height: 8px;
-  border-radius: 4px;
-  background-color: #171718;
 }
 
 .disclaimerText {

@@ -4,10 +4,8 @@ import styles from './OldFileNotes.css';
 function Disclaimer() {
   return (
     <div className={styles.disclaimer} >
-      <div className={styles.solidDot} />
-      <div style={{ minWidth: '10px' }} />
       <p className={styles.disclaimerText} >
-        Old drawings from the first version of RNA2Drawer (before the web app) will not be perfectly preserved
+        Old drawings from the first version of RNA2Drawer (before the web app) will not be perfectly preserved.
       </p>
     </div>
   );
