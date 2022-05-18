@@ -1,24 +1,58 @@
 .showComplementsToggle {
-  padding: 1px 11px;
+  width: 164px;
+
   border-width: 1px;
   border-style: solid;
   border-radius: 16px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.text {
   font-family: 'Open Sans', sans-serif;
   font-style: 11px;
   font-weight: 600;
   font-style: normal;
   color: #0e0e5b;
+  user-select: none;
   cursor: pointer;
 }
+
+.spacer {
+  width: 6px;
+}
+
+.check {}
 
 .toggledShowComplementsToggle {
   border-color: #cce3ff;
   background-color: #cce3ff;
 }
 
+.toggledShowComplementsToggle .spacer {
+  display: block;
+}
+
+.toggledShowComplementsToggle .check {
+  display: block;
+}
+
 .untoggledShowComplementsToggle {
   border-color: #b7cddd;
   background-color: white;
+}
+
+.untoggledShowComplementsToggle .spacer {
+  display: none;
+}
+
+.untoggledShowComplementsToggle .check {
+  display: none;
 }
 
 .untoggledShowComplementsToggle:hover {
