@@ -54,7 +54,7 @@ export class ZoomInput extends React.Component<Props> {
           }
         }}
         style={{
-          margin: '0px 1px',
+          margin: '0px 2px',
           border: 'none',
           padding: '0px',
           width: (this.state.value.length + 1) + 'ch',
