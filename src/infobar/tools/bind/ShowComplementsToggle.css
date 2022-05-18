@@ -1,5 +1,6 @@
 .showComplementsToggle {
-  width: 164px;
+  width: 159px;
+  padding: 1px 0px;
 
   border-width: 1px;
   border-style: solid;
@@ -15,10 +16,9 @@
 
 .text {
   font-family: 'Open Sans', sans-serif;
-  font-style: 11px;
+  font-size: 12px;
   font-weight: 600;
   font-style: normal;
-  color: #0e0e5b;
   user-select: none;
   cursor: pointer;
 }
@@ -34,6 +34,10 @@
   background-color: #cce3ff;
 }
 
+.toggled .text {
+  color: #080838;
+}
+
 .toggled .spacer {
   display: block;
 }
@@ -43,8 +47,12 @@
 }
 
 .untoggled {
-  border-color: #b7cddd;
+  border-color: #d0d0dc;
   background-color: white;
+}
+
+.untoggled .text {
+  color: #09094b;
 }
 
 .untoggled .spacer {
@@ -56,5 +64,5 @@
 }
 
 .untoggled:hover {
-  box-shadow: 0px 0px 2px #a6c8dd;
+  box-shadow: 0px 0px 4px #dedeec;
 }
