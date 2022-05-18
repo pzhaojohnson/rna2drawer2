@@ -8,7 +8,7 @@ function Disclaimer() {
       <div style={{ minWidth: '10px' }} />
       <p className={styles.disclaimerText} >
         Not all aspects of a drawing from the first version of RNA2Drawer
-        (from before the web app) will be preserved -
+        (before the web app) will be preserved -
         <span style={{ fontWeight: 700, fontStyle: 'italic', color: '#101010' }}>
           &nbsp;The following will be preserved...
         </span>
