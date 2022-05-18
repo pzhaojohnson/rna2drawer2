@@ -29,32 +29,32 @@
 
 .check {}
 
-.toggledShowComplementsToggle {
+.toggled {
   border-color: #cce3ff;
   background-color: #cce3ff;
 }
 
-.toggledShowComplementsToggle .spacer {
+.toggled .spacer {
   display: block;
 }
 
-.toggledShowComplementsToggle .check {
+.toggled .check {
   display: block;
 }
 
-.untoggledShowComplementsToggle {
+.untoggled {
   border-color: #b7cddd;
   background-color: white;
 }
 
-.untoggledShowComplementsToggle .spacer {
+.untoggled .spacer {
   display: none;
 }
 
-.untoggledShowComplementsToggle .check {
+.untoggled .check {
   display: none;
 }
 
-.untoggledShowComplementsToggle:hover {
+.untoggled:hover {
   box-shadow: 0px 0px 2px #a6c8dd;
 }

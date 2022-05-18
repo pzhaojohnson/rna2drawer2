@@ -32,14 +32,11 @@ export type Props = {
 export function ShowComplementsToggle(props: Props) {
   let bindingTool = props.app.strictDrawingInteraction.bindingTool;
 
-  let toggledClassName = styles.toggledShowComplementsToggle;
-  let untoggledClassName = styles.untoggledShowComplementsToggle;
-
   return (
     <div
       className={`
         ${styles.showComplementsToggle}
-        ${bindingTool.showComplements ? toggledClassName : untoggledClassName}
+        ${bindingTool.showComplements ? styles.toggled : styles.untoggled}
       `}
       onClick={() => {
         bindingTool.showComplements = !bindingTool.showComplements;
