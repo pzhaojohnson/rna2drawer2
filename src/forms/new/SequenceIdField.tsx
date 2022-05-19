@@ -1,6 +1,6 @@
 import * as React from 'react';
+import fieldStyles from './SequenceIdField.css';
 import fieldLabelStyles from './FieldLabel.css';
-import { TextInput } from 'Forms/inputs/text/TextInput';
 
 interface Props {
   initialValue: string;
@@ -17,12 +17,13 @@ export function SequenceIdField(props: Props): React.ReactElement {
       }}
     >
       Sequence ID
-      <TextInput
+      <input
+        type='text'
+        className={fieldStyles.textInput}
         value={props.initialValue}
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}
         placeholder={'...the name of your sequence'}
-        style={{ marginLeft: '8px', flexGrow: 1, fontWeight: 500, color: '#626268' }}
       />
     </label>
   );
