@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+import fieldLabelStyles from './FieldLabel.css';
 import { TextArea } from 'Forms/inputs/text/TextArea';
 import { TextButton } from 'Forms/buttons/TextButton';
 
@@ -14,12 +14,13 @@ export function SequenceField(props: Props): React.ReactElement {
   return (
     <div style={{ flexGrow: props.flexGrow, display: 'flex', flexDirection: 'column' }} >
       <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row' }} >
-        <FieldLabel
+        <label
+          className={fieldLabelStyles.fieldLabel}
           htmlFor='sequence'
-          style={{ flexGrow: 1, cursor: 'text', fontWeight: 700, color: '#1c1c1e' }}
+          style={{ flexGrow: 1, cursor: 'text' }}
         >
           Sequence
-        </FieldLabel>
+        </label>
         <div style={{ marginRight: '3px' }} >
           <TextButton
             text='Details...'

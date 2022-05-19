@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+import fieldLabelStyles from './FieldLabel.css';
 import { TextInput } from 'Forms/inputs/text/TextInput';
 
 interface Props {
@@ -9,10 +9,10 @@ interface Props {
 
 export function SequenceIdField(props: Props): React.ReactElement {
   return (
-    <FieldLabel
+    <label
+      className={fieldLabelStyles.fieldLabel}
       style={{
         display: 'flex', flexDirection: 'row', alignItems: 'center',
-        fontWeight: 700, color: '#1c1c1e',
         cursor: 'text',
       }}
     >
@@ -24,6 +24,6 @@ export function SequenceIdField(props: Props): React.ReactElement {
         placeholder={'...the name of your sequence'}
         style={{ marginLeft: '8px', flexGrow: 1, fontWeight: 500, color: '#626268' }}
       />
-    </FieldLabel>
+    </label>
   );
 }
