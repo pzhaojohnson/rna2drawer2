@@ -68,20 +68,20 @@ export class TerminiGapField extends React.Component<Props> {
       return;
     }
 
-    let tg = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(tg)) {
+    let value = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(value)) {
       return;
     }
 
     let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
-    if (tg == generalLayoutProps.terminiGap) {
+    if (value == generalLayoutProps.terminiGap) {
       return;
     }
 
     this.props.app.pushUndo();
-    tg = constrainTerminiGap(tg);
-    tg = round(tg, 2);
-    generalLayoutProps.terminiGap = tg;
+    value = constrainTerminiGap(value);
+    value = round(value, 2);
+    generalLayoutProps.terminiGap = value;
     this.props.app.strictDrawing.updateLayout();
   }
 }
