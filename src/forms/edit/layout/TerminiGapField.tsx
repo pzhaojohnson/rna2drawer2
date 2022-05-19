@@ -73,15 +73,15 @@ export class TerminiGapField extends React.Component<Props> {
       return;
     }
 
-    let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
-    if (value == generalLayoutProps.terminiGap) {
+    let strictDrawing = this.props.app.strictDrawing;
+    if (value == strictDrawing.generalLayoutProps.terminiGap) {
       return;
     }
 
     this.props.app.pushUndo();
     value = constrainTerminiGap(value);
     value = round(value, 2);
-    generalLayoutProps.terminiGap = value;
-    this.props.app.strictDrawing.updateLayout();
+    strictDrawing.generalLayoutProps.terminiGap = value;
+    strictDrawing.updateLayout();
   }
 }
