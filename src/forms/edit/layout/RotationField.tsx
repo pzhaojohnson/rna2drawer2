@@ -12,7 +12,7 @@ import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
 }
 
 type Value = string;
