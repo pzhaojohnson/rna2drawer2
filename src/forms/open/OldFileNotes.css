@@ -23,7 +23,7 @@
   font-size: 14px;
   font-weight: 700;
   font-style: italic;
-  color: #101010;
+  color: #101011;
   user-select: none;
 }
 
@@ -39,7 +39,7 @@
   width: 6px;
   height: 6px;
   border-radius: 3px;
-  background-color: #35353a;
+  background-color: #252527;
 }
 
 .preservedAspectText {
