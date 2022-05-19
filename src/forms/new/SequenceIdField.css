@@ -24,7 +24,7 @@
 .textInput::placeholder {
   font-style: italic;
   font-weight: 500;
-  color: #70707a;
+  color: #4e4e53;
 
   /* necessary for Firefox */
   opacity: 1;
