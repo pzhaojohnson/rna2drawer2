@@ -7,7 +7,7 @@ import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
 import { hasFlatOutermostLoop } from './hasFlatOutermostLoop';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
 }
 
 export function FlatOutermostLoopField(props: Props) {
