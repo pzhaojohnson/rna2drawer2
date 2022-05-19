@@ -61,20 +61,27 @@ export class RotationField extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let degrees = Number.parseFloat(this.state.value);
-      if (Number.isFinite(degrees)) {
-        let radians = degreesToRadians(degrees);
-        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
-        if (!anglesAreClose(radians, generalLayoutProps.rotation, 6)) {
-          this.props.app.pushUndo();
-          radians = normalizeAngle(radians, 0);
-          radians = round(radians, 6);
-          generalLayoutProps.rotation = radians;
-          this.props.app.strictDrawing.updateLayout();
-          this.props.app.refresh();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let degrees = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(degrees)) {
+      return;
+    }
+
+    let radians = degreesToRadians(degrees);
+
+    let strictDrawing = this.props.app.strictDrawing;
+    if (anglesAreClose(radians, strictDrawing.generalLayoutProps.rotation, 6)) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    radians = normalizeAngle(radians, 0);
+    radians = round(radians, 6);
+    strictDrawing.generalLayoutProps.rotation = radians;
+    strictDrawing.updateLayout();
+    this.props.app.refresh();
   }
 }
