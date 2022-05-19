@@ -14,13 +14,13 @@ type State = {
   value: string;
 }
 
-function constrainTerminiGap(tg: number): number {
-  if (!Number.isFinite(tg)) {
+function constrainTerminiGap(value: number): number {
+  if (!Number.isFinite(value)) {
     return 0;
-  } else if (tg < 0) {
+  } else if (value < 0) {
     return 0;
   } else {
-    return tg;
+    return value;
   }
 }
 
