@@ -28,6 +28,7 @@ export function FlatOutermostLoopField(props: Props) {
 
         props.app.refresh();
       }}
+      style={{ alignSelf: 'start' }}
     />
   );
 }

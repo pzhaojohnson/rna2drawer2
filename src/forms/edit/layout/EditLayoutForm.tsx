@@ -26,7 +26,7 @@ export function EditLayoutForm(props: Props) {
       style={{ width: '324px' }}
     >
       <RotationField app={props.app} />
-      <div style={{ marginTop: '12px' }} >
+      <div style={{ marginTop: '12px', display: 'flex' }} >
         <FlatOutermostLoopField app={props.app} />
       </div>
       {hasFlatOutermostLoop(props.app.strictDrawing) ? null : (
