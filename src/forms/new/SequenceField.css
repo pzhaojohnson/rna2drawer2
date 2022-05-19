@@ -1,0 +1,31 @@
+.textArea {
+  margin: 4px 0px 0px 0px;
+  flex-grow: 1;
+
+  border: 1px solid #d4d4de;
+  border-radius: 2px;
+  padding: 3px 6px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #767681;
+}
+
+.textArea:hover {
+  border-color: #4f4f56;
+}
+
+.textArea:focus {
+  border-color: #4f4f56;
+  outline: none;
+}
+
+.textArea::placeholder {
+  font-style: italic;
+  font-weight: 500;
+  color: #75757f;
+
+  /* necessary for Firefox */
+  opacity: 1;
+}

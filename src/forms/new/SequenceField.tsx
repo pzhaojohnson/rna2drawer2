@@ -1,6 +1,6 @@
 import * as React from 'react';
+import fieldStyles from './SequenceField.css';
 import fieldLabelStyles from './FieldLabel.css';
-import { TextArea } from 'Forms/inputs/text/TextArea';
 import { TextButton } from 'Forms/buttons/TextButton';
 
 interface Props {
@@ -29,8 +29,9 @@ export function SequenceField(props: Props): React.ReactElement {
           />
         </div>
       </div>
-      <TextArea
+      <textarea
         id='sequence'
+        className={fieldStyles.textArea}
         value={props.initialValue}
         onChange={event => props.set(event.target.value)}
         spellCheck={'false'}
@@ -38,13 +39,6 @@ export function SequenceField(props: Props): React.ReactElement {
           '...an RNA or DNA sequence "ACCUUCUGCCAGAGGU"'
           + '  ...input parameters are to the right'
         }
-        style={{
-          flexGrow: 1,
-          margin: '4px 0px 0px 0px',
-          fontSize: '12px',
-          fontWeight: 500,
-          color: '#767681',
-        }}
       />
     </div>
   );
