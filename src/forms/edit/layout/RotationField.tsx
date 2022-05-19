@@ -53,7 +53,7 @@ export class RotationField extends React.Component<Props> {
           }
         }}
         input={{
-          style: { width: '32px' },
+          style: { width: '6ch' },
         }}
         style={{ alignSelf: 'start' }}
       />
