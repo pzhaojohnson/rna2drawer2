@@ -10,10 +10,8 @@ export type Props = {
   app: App; // a reference to the whole app
 }
 
-type Value = string;
-
 type State = {
-  value: Value;
+  value: string;
 }
 
 function constrainTerminiGap(tg: number): number {
