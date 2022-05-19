@@ -9,6 +9,8 @@ import { normalizeAngle } from 'Math/angles/normalize';
 import { anglesAreClose } from 'Math/angles/close';
 import { round } from 'Math/round';
 
+import { isBlank } from 'Parse/isBlank';
+
 export type Props = {
   app: App;
 }
@@ -17,10 +19,6 @@ type Value = string;
 
 type State = {
   value: Value;
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
 }
 
 export class RotationField extends React.Component<Props> {
