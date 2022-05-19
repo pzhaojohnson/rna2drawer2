@@ -1,7 +1,7 @@
 import type { App } from 'App';
 
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
@@ -41,31 +41,24 @@ export class TerminiGapField extends React.Component<Props> {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type='text'
-          className={textFieldStyles.input}
-          value={this.state.value}
-          onChange={event => this.setState({ value: event.target.value })}
-          onBlur={() => {
+      <TextInputField
+        label='Termini Gap'
+        value={this.state.value}
+        onChange={event => this.setState({ value: event.target.value })}
+        onBlur={() => {
+          this.submit();
+          this.props.app.refresh();
+        }}
+        onKeyUp={event => {
+          if (event.key.toLowerCase() == 'enter') {
             this.submit();
             this.props.app.refresh();
-          }}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              this.submit();
-              this.props.app.refresh();
-            }
-          }}
-          style={{ width: '32px' }}
-        />
-        <p
-          className={`${textFieldStyles.label} unselectable`}
-          style={{ marginLeft: '8px' }}
-        >
-          Termini Gap
-        </p>
-      </div>
+          }
+        }}
+        input={{
+          style: { width: '32px' },
+        }}
+      />
     );
   }
 
