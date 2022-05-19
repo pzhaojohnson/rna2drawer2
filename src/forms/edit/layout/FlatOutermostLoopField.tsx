@@ -20,9 +20,12 @@ export function FlatOutermostLoopField(props: Props) {
         }
 
         props.app.pushUndo();
-        let generalLayoutProps = props.app.strictDrawing.generalLayoutProps;
-        generalLayoutProps.outermostLoopShape = event.target.checked ? 'flat' : 'round';
+
+        // set outermost loop shape
+        let outermostLoopShape = event.target.checked ? 'flat' : 'round';
+        props.app.strictDrawing.generalLayoutProps.outermostLoopShape = outermostLoopShape;
         props.app.strictDrawing.updateLayout();
+
         props.app.refresh();
       }}
     />
