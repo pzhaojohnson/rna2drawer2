@@ -11,7 +11,8 @@ import { hasFlatOutermostLoop } from './hasFlatOutermostLoop';
 import { TerminiGapField } from './TerminiGapField';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
+
   unmount: () => void;
   history: FormHistoryInterface;
 }
