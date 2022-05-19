@@ -13,7 +13,7 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-export function EditLayout(props: Props) {
+export function EditLayoutForm(props: Props) {
   return (
     <PartialWidthContainer
       unmount={props.unmount}
