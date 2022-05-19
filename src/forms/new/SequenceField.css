@@ -2,7 +2,7 @@
   margin: 4px 0px 0px 0px;
   flex-grow: 1;
 
-  border: 1px solid #d4d4de;
+  border: 1px solid #d8d8e4;
   border-radius: 2px;
   padding: 3px 6px;
 
@@ -13,18 +13,18 @@
 }
 
 .textArea:hover {
-  border-color: #4f4f56;
+  border-color: #414147;
 }
 
 .textArea:focus {
-  border-color: #4f4f56;
+  border-color: #414147;
   outline: none;
 }
 
 .textArea::placeholder {
   font-style: italic;
   font-weight: 500;
-  color: #5a5a61;
+  color: #5f5f69;
 
   /* necessary for Firefox */
   opacity: 1;

@@ -2,29 +2,29 @@
   margin-left: 8px;
   flex-grow: 1;
 
-  border: 1px solid #d4d4de;
+  border: 1px solid #d8d8e4;
   border-radius: 2px;
   padding: 3px 6px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #55555e;
+  color: #53535c;
 }
 
 .textInput:hover {
-  border-color: #4f4f56;
+  border-color: #414147;
 }
 
 .textInput:focus {
-  border-color: #4f4f56;
+  border-color: #414147;
   outline: none;
 }
 
 .textInput::placeholder {
   font-style: italic;
   font-weight: 500;
-  color: #4e4e53;
+  color: #55555d;
 
   /* necessary for Firefox */
   opacity: 1;
