@@ -6,7 +6,7 @@ import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import { round } from 'Math/round';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
 }
 
 type Value = string;
