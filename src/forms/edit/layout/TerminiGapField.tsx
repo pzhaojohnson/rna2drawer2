@@ -31,10 +31,11 @@ export class TerminiGapField extends React.Component<Props> {
     super(props);
 
     let generalLayoutProps = props.app.strictDrawing.generalLayoutProps;
-    let tg = generalLayoutProps.terminiGap;
-    tg = round(tg, 2);
+    let terminiGap = generalLayoutProps.terminiGap;
+    terminiGap = round(terminiGap, 2);
+
     this.state = {
-      value: tg.toString(),
+      value: terminiGap.toString(),
     };
   }
 
