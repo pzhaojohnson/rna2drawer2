@@ -79,6 +79,8 @@ export class TerminiGapField extends React.Component<Props> {
     }
 
     this.props.app.pushUndo();
+
+    // set termini gap
     value = constrainTerminiGap(value);
     value = round(value, 2);
     strictDrawing.generalLayoutProps.terminiGap = value;
