@@ -74,7 +74,6 @@ export class TerminiGapField extends React.Component<Props> {
           tg = round(tg, 2);
           generalLayoutProps.terminiGap = tg;
           this.props.app.strictDrawing.updateLayout();
-          this.props.app.refresh();
         }
       }
     }
