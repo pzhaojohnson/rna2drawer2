@@ -4,6 +4,7 @@ import * as React from 'react';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
 
 import { round } from 'Math/round';
+import { isBlank } from 'Parse/isBlank';
 
 export type Props = {
   app: App; // a reference to the whole app
@@ -13,10 +14,6 @@ type Value = string;
 
 type State = {
   value: Value;
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
 }
 
 function constrainTerminiGap(tg: number): number {
