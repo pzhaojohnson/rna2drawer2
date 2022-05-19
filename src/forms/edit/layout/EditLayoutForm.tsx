@@ -32,7 +32,7 @@ export function EditLayoutForm(props: Props) {
         <FlatOutermostLoopField app={props.app} />
       </div>
       {hasFlatOutermostLoop(props.app.strictDrawing) ? null : (
-        <div style={{ marginTop: '12px' }} >
+        <div style={{ marginTop: '12px', display: 'flex' }} >
           <TerminiGapField app={props.app} />
         </div>
       )}
