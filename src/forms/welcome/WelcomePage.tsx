@@ -163,7 +163,7 @@ export function WelcomePage(props: Props): React.ReactElement {
               <Description />
             </div>
             <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row' }} >
-              <div style={{ margin: '0px 42px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+              <div style={{ margin: '0px 44px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
                 <NewLink {...props} />
                 <div style={{ width: '28px' }} ></div>
                 <OpenLink {...props} />
