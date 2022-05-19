@@ -24,7 +24,7 @@
 }
 
 .fileInputLabel:hover {
-  transform: scale(1.02);
+  transform: scale(1.0175);
   box-shadow: 0px 2px 2px #efeff3;
   transition: transform 0.04s;
 }
