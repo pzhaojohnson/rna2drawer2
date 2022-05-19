@@ -15,13 +15,15 @@ export function FlatOutermostLoopField(props: Props) {
       label='Flat Outermost Loop'
       checked={hasFlatOutermostLoop(props.app.strictDrawing)}
       onChange={event => {
-        if (event.target.checked != hasFlatOutermostLoop(props.app.strictDrawing)) {
-          props.app.pushUndo();
-          let generalLayoutProps = props.app.strictDrawing.generalLayoutProps;
-          generalLayoutProps.outermostLoopShape = event.target.checked ? 'flat' : 'round';
-          props.app.strictDrawing.updateLayout();
-          props.app.refresh();
+        if (event.target.checked == hasFlatOutermostLoop(props.app.strictDrawing)) {
+          return;
         }
+
+        props.app.pushUndo();
+        let generalLayoutProps = props.app.strictDrawing.generalLayoutProps;
+        generalLayoutProps.outermostLoopShape = event.target.checked ? 'flat' : 'round';
+        props.app.strictDrawing.updateLayout();
+        props.app.refresh();
       }}
     />
   );
