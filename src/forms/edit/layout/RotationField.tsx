@@ -29,7 +29,7 @@ export class RotationField extends React.Component<Props> {
     let radians = generalLayoutProps.rotation;
     radians = normalizeAngle(radians, 0);
     let degrees = radiansToDegrees(radians);
-    degrees = round(degrees, 2);
+    degrees = round(degrees, 1);
 
     this.state = {
       value: degrees + '\xB0',
