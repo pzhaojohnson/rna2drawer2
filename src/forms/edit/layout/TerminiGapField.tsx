@@ -64,18 +64,24 @@ export class TerminiGapField extends React.Component<Props> {
   }
 
   submit() {
-    if (!isBlank(this.state.value)) {
-      let tg = Number.parseFloat(this.state.value);
-      if (Number.isFinite(tg)) {
-        let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
-        if (tg != generalLayoutProps.terminiGap) {
-          this.props.app.pushUndo();
-          tg = constrainTerminiGap(tg);
-          tg = round(tg, 2);
-          generalLayoutProps.terminiGap = tg;
-          this.props.app.strictDrawing.updateLayout();
-        }
-      }
+    if (isBlank(this.state.value)) {
+      return;
     }
+
+    let tg = Number.parseFloat(this.state.value);
+    if (!Number.isFinite(tg)) {
+      return;
+    }
+
+    let generalLayoutProps = this.props.app.strictDrawing.generalLayoutProps;
+    if (tg == generalLayoutProps.terminiGap) {
+      return;
+    }
+
+    this.props.app.pushUndo();
+    tg = constrainTerminiGap(tg);
+    tg = round(tg, 2);
+    generalLayoutProps.terminiGap = tg;
+    this.props.app.strictDrawing.updateLayout();
   }
 }
