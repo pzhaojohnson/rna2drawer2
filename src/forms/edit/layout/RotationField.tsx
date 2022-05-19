@@ -78,10 +78,13 @@ export class RotationField extends React.Component<Props> {
     }
 
     this.props.app.pushUndo();
+
+    // set rotation
     radians = normalizeAngle(radians, 0);
     radians = round(radians, 6);
     strictDrawing.generalLayoutProps.rotation = radians;
     strictDrawing.updateLayout();
+
     this.props.app.refresh();
   }
 }
