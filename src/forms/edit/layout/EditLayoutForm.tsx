@@ -1,9 +1,12 @@
+import type { App } from 'App';
+
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import type { App } from 'App';
+
 import { RotationField } from './RotationField';
 import { FlatOutermostLoopField } from './FlatOutermostLoopField';
+
 import { hasFlatOutermostLoop } from './hasFlatOutermostLoop';
 import { TerminiGapField } from './TerminiGapField';
 
