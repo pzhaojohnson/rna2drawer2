@@ -1,7 +1,7 @@
 .currentTypeView {
   border-width: 1px;
   border-style: solid;
-  border-color: #d7d7e5;
+  border-color: #d7d7e1;
   border-radius: 12px;
   padding: 2px 13px;
   font-family: 'Open Sans', sans-serif;
@@ -14,7 +14,7 @@
 }
 
 .currentTypeView:hover {
-  box-shadow: 0px 0px 3px #d1d1e1;
+  box-shadow: 0px 0px 4px #dddde7;
 }
 
 .typeOption {
@@ -32,11 +32,11 @@
 }
 
 .toggledTypeOption {
-  border-color: #d7d7e5;
+  border-color: #d7d7e1;
 }
 
 .toggledTypeOption:hover {
-  box-shadow: 0px 0px 3px #d1d1e1;
+  box-shadow: 0px 0px 4px #dddde7;
 }
 
 .untoggledTypeOption {
@@ -44,5 +44,5 @@
 }
 
 .untoggledTypeOption:hover {
-  border-color: #d7d7e5;
+  border-color: #d7d7e1;
 }
