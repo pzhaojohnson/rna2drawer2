@@ -38,7 +38,6 @@ export function ToolControls(props: Props) {
         null
       ) : (
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          <div style={{ width: '2px' }} />
           {currentTool == bindingTool ? (
             <BindingToolControls app={props.app} />
           ) : currentTool == editingTool ? (
