@@ -33,7 +33,11 @@ export function EditTertiaryBondsForm(props: Props) {
       title='Tertiary Bonds'
       style={{ width: '324px' }}
     >
-      {props.tertiaryBonds.length == 0 ? (
+      {props.app.drawing.tertiaryBonds.length == 0 ? (
+        <p>
+          Drawing has no tertiary bonds.
+        </p>
+      ) : props.tertiaryBonds.length == 0 ? (
         <p className='unselectable' style={{ fontSize: '12px' }} >
           No tertiary bonds are selected.
         </p>
