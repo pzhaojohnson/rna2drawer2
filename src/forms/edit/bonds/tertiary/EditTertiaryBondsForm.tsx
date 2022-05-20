@@ -2,6 +2,7 @@ import type { App } from 'App';
 import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import * as React from 'react';
+import formStyles from './EditTertiaryBondsForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
@@ -34,8 +35,8 @@ export function EditTertiaryBondsForm(props: Props) {
       style={{ width: '324px' }}
     >
       {props.app.drawing.tertiaryBonds.length == 0 ? (
-        <p>
-          Drawing has no tertiary bonds.
+        <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
+          Drawing has no tertiary bonds...
         </p>
       ) : props.tertiaryBonds.length == 0 ? (
         <p className='unselectable' style={{ fontSize: '12px' }} >
