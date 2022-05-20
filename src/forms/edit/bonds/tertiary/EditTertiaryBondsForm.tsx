@@ -16,7 +16,7 @@ import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
 
   // the tertiary bonds to edit
   tertiaryBonds: TertiaryBond[];
