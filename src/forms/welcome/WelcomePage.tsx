@@ -19,11 +19,11 @@ function Header() {
         <p style={{ fontSize: '32px', fontWeight: 600, color: '#232326' }} >RNA2Drawer</p>
         <div style={{ flexGrow: 1 }} ></div>
         <div style={{ display: 'flex', flexDirection: 'column' }} >
-          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 600, color: '#85859c', textAlign: 'right' }} >
+          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 600, color: '#828296', textAlign: 'right' }} >
             Developed by Philip Johnson and Anne Simon
           </p>
           <div style={{ height: '4px' }} />
-          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 600, color: '#85859c', textAlign: 'right' }} >
+          <p style={{ fontSize: '12px', fontStyle: 'italic', fontWeight: 600, color: '#828296', textAlign: 'right' }} >
             Last Updated on Dec. 14, 2021
           </p>
         </div>
@@ -37,7 +37,7 @@ function Header() {
 
 function Description() {
   return (
-    <p style={{ fontSize: '16px', fontWeight: 500, color: '#6a6a81' }} >
+    <p style={{ fontSize: '16px', fontWeight: 500, color: '#68687d' }} >
       A web app for drawing and exploring nucleic acid structures...
     </p>
   );
@@ -94,7 +94,7 @@ function GitHubPageLink() {
 function HelpLinks() {
   return (
     <div style={{ minHeight: '28px' }} >
-      <p style={{ fontSize: '16px', fontWeight: 500, color: '#6a6a81' }} >
+      <p style={{ fontSize: '16px', fontWeight: 500, color: '#68687d' }} >
         Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
       </p>
     </div>
@@ -124,8 +124,8 @@ function UpdatesNotice() {
         justifyContent: 'center',
       }}
     >
-      <p style={{ margin: '10px 28px', fontSize: '14px', fontWeight: 500, color: '#77778a' }} >
-        See the <UpdatesLink />! <em style={{ color: '#80809b' }} >(Dec. 14, 2021)</em>
+      <p style={{ margin: '10px 28px', fontSize: '14px', fontWeight: 500, color: '#757587' }} >
+        See the <UpdatesLink />! <em style={{ color: '#7e7e98' }} >(Dec. 14, 2021)</em>
       </p>
     </div>
   );
