@@ -24,7 +24,7 @@
 .textArea::placeholder {
   font-style: italic;
   font-weight: 500;
-  color: #5f5f69;
+  color: #60606a;
 
   /* necessary for Firefox */
   opacity: 1;
