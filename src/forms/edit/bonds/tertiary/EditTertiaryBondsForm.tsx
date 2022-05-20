@@ -1,7 +1,11 @@
+import type { App } from 'App';
+import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
+
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
+import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { StrokePicker } from './StrokePicker';
 import { StrokeOpacityInput } from './StrokeOpacityInput';
 import { StrokeWidthField } from './StrokeWidthField';
@@ -10,8 +14,6 @@ import { BasePadding1Field } from './BasePadding1Field';
 import { BasePadding2Field } from './BasePadding2Field';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
-import type { App } from 'App';
-import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 export type Props = {
   app: App;
