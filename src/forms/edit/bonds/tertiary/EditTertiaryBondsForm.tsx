@@ -35,9 +35,15 @@ export function EditTertiaryBondsForm(props: Props) {
       style={{ width: '324px' }}
     >
       {props.app.drawing.tertiaryBonds.length == 0 ? (
-        <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
-          Drawing has no tertiary bonds...
-        </p>
+        <div>
+          <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
+            Drawing has no tertiary bonds...
+          </p>
+          <div style={{ height: '24px' }} />
+          <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
+            Add tertiary bonds using the binding tool...
+          </p>
+        </div>
       ) : props.tertiaryBonds.length == 0 ? (
         <p className='unselectable' style={{ fontSize: '12px' }} >
           No tertiary bonds are selected.
