@@ -16,6 +16,24 @@ import { BasePadding2Field } from './BasePadding2Field';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 
+function SelectAllTertiaryBondsButton(
+  props: {
+    app: App,
+  },
+) {
+  return (
+    <p
+      className={formStyles.selectAllTertiaryBondsButton}
+      onClick={() => {
+        props.app.drawingInteraction.currentTool = props.app.drawingInteraction.editingTool;
+        props.app.drawingInteraction.editingTool.select([...props.app.drawing.tertiaryBonds]);
+      }}
+    >
+      Select All Tertiary Bonds
+    </p>
+  );
+}
+
 export type Props = {
   app: App; // a reference to the whole app
 
@@ -53,6 +71,7 @@ export function EditTertiaryBondsForm(props: Props) {
           <p className={formStyles.noTertiaryBondsAreSelectedMessage} >
             Select tertiary bonds using the editing tool...
           </p>
+          <SelectAllTertiaryBondsButton app={props.app} />
         </div>
       ) : (
         <div>
