@@ -30,6 +30,20 @@ function DrawingHasNoTertiaryBondsNotes() {
   );
 }
 
+function NoTertiaryBondsAreSelectedNotes() {
+  return (
+    <div>
+      <p className={formStyles.noTertiaryBondsAreSelectedMessage} >
+        No tertiary bonds are selected...
+      </p>
+      <div style={{ height: '24px' }} />
+      <p className={formStyles.noTertiaryBondsAreSelectedMessage} >
+        Select tertiary bonds using the editing tool...
+      </p>
+    </div>
+  );
+}
+
 function SelectAllTertiaryBondsButton(
   props: {
     app: App,
@@ -70,13 +84,7 @@ export function EditTertiaryBondsForm(props: Props) {
         <DrawingHasNoTertiaryBondsNotes />
       ) : props.tertiaryBonds.length == 0 ? (
         <div>
-          <p className={formStyles.noTertiaryBondsAreSelectedMessage} >
-            No tertiary bonds are selected...
-          </p>
-          <div style={{ height: '24px' }} />
-          <p className={formStyles.noTertiaryBondsAreSelectedMessage} >
-            Select tertiary bonds using the editing tool...
-          </p>
+          <NoTertiaryBondsAreSelectedNotes />
           <SelectAllTertiaryBondsButton app={props.app} />
         </div>
       ) : (
