@@ -16,6 +16,20 @@ import { BasePadding2Field } from './BasePadding2Field';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 
+function DrawingHasNoTertiaryBondsNotes() {
+  return (
+    <div>
+      <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
+        Drawing has no tertiary bonds...
+      </p>
+      <div style={{ height: '24px' }} />
+      <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
+        Add tertiary bonds using the binding tool...
+      </p>
+    </div>
+  );
+}
+
 function SelectAllTertiaryBondsButton(
   props: {
     app: App,
@@ -53,15 +67,7 @@ export function EditTertiaryBondsForm(props: Props) {
       style={{ width: '324px' }}
     >
       {props.app.drawing.tertiaryBonds.length == 0 ? (
-        <div>
-          <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
-            Drawing has no tertiary bonds...
-          </p>
-          <div style={{ height: '24px' }} />
-          <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
-            Add tertiary bonds using the binding tool...
-          </p>
-        </div>
+        <DrawingHasNoTertiaryBondsNotes />
       ) : props.tertiaryBonds.length == 0 ? (
         <div>
           <p className={formStyles.noTertiaryBondsAreSelectedMessage} >
