@@ -19,11 +19,11 @@ import { SendToBackButton } from './SendToBackButton';
 function DrawingHasNoTertiaryBondsNotes() {
   return (
     <div>
-      <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
+      <p className={formStyles.notesText} >
         Drawing has no tertiary bonds...
       </p>
       <div style={{ height: '24px' }} />
-      <p className={formStyles.drawingHasNoTertiaryBondsMessage} >
+      <p className={formStyles.notesText} >
         Add tertiary bonds using the binding tool...
       </p>
     </div>
@@ -33,11 +33,11 @@ function DrawingHasNoTertiaryBondsNotes() {
 function NoTertiaryBondsAreSelectedNotes() {
   return (
     <div>
-      <p className={formStyles.noTertiaryBondsAreSelectedMessage} >
+      <p className={formStyles.notesText} >
         No tertiary bonds are selected...
       </p>
       <div style={{ height: '24px' }} />
-      <p className={formStyles.noTertiaryBondsAreSelectedMessage} >
+      <p className={formStyles.notesText} >
         Select tertiary bonds using the editing tool...
       </p>
     </div>
