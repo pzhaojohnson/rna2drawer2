@@ -53,6 +53,7 @@ function SelectAllTertiaryBondsButton(
     <p
       className={formStyles.selectAllTertiaryBondsButton}
       onClick={() => {
+        // set the current tool in case it is not already the editing tool
         props.app.drawingInteraction.currentTool = props.app.drawingInteraction.editingTool;
         props.app.drawingInteraction.editingTool.select([...props.app.drawing.tertiaryBonds]);
       }}
