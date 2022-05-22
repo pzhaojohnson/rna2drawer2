@@ -8,7 +8,7 @@ import { numberToDisplayableString as displayableString } from 'Forms/inputs/num
 import { isBlank } from 'Parse/isBlank';
 
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
 // returns the line elements of the primary bonds
 function lines(primaryBonds: PrimaryBond[]): SVG.Line[] {
@@ -39,31 +39,24 @@ export class StrokeWidthField extends React.Component<Props> {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type='text'
-          className={textFieldStyles.input}
-          value={this.state.value}
-          onChange={event => this.setState({ value: event.target.value })}
-          onBlur={() => {
+      <TextInputField
+        label='Line Width'
+        value={this.state.value}
+        onChange={event => this.setState({ value: event.target.value })}
+        onBlur={() => {
+          this.submit();
+          this.props.app.refresh();
+        }}
+        onKeyUp={event => {
+          if (event.key.toLowerCase() == 'enter') {
             this.submit();
             this.props.app.refresh();
-          }}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              this.submit();
-              this.props.app.refresh();
-            }
-          }}
-          style={{ width: '32px' }}
-        />
-        <p
-          className={`${textFieldStyles.label} unselectable`}
-          style={{ marginLeft: '8px' }}
-        >
-          Line Width
-        </p>
-      </div>
+          }
+        }}
+        input={{
+          style: { width: '32px' },
+        }}
+      />
     );
   }
 
