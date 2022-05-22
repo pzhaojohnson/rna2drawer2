@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { EditPrimaryBonds } from 'Forms/edit/bonds/primary/EditPrimaryBonds';
+import { EditPrimaryBondsForm } from 'Forms/edit/bonds/primary/EditPrimaryBondsForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
@@ -16,7 +16,7 @@ export function EditPrimaryBondsButton(props: Props) {
       text='Primary Bonds'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <EditPrimaryBonds
+          <EditPrimaryBondsForm
             {...formProps}
             app={props.app}
             primaryBonds={[...props.app.strictDrawing.drawing.primaryBonds]}

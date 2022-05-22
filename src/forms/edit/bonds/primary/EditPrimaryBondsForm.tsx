@@ -21,7 +21,7 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-export function EditPrimaryBonds(props: Props) {
+export function EditPrimaryBondsForm(props: Props) {
   return (
     <PartialWidthContainer
       unmount={props.unmount}

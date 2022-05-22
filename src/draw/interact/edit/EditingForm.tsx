@@ -13,7 +13,7 @@ import * as React from 'react';
 
 import { EditBases } from 'Forms/edit/bases/EditBases';
 import { EditBaseNumberings } from 'Forms/edit/bases/numberings/EditBaseNumberings';
-import { EditPrimaryBonds } from 'Forms/edit/bonds/primary/EditPrimaryBonds';
+import { EditPrimaryBondsForm } from 'Forms/edit/bonds/primary/EditPrimaryBondsForm';
 import { EditSecondaryBonds } from 'Forms/edit/bonds/secondary/EditSecondaryBonds';
 import { EditTertiaryBondsForm } from 'Forms/edit/bonds/tertiary/EditTertiaryBondsForm';
 
@@ -89,7 +89,7 @@ export function EditingForm(props: Props) {
   } else if (props.editingType == BaseNumbering) {
     return <EditBaseNumberings {...props} baseNumberings={filterBaseNumberings(props.elements)} />
   } else if (props.editingType == PrimaryBond) {
-    return <EditPrimaryBonds {...props} primaryBonds={filterPrimaryBonds(props.elements)} />
+    return <EditPrimaryBondsForm {...props} primaryBonds={filterPrimaryBonds(props.elements)} />
   } else if (props.editingType == SecondaryBond) {
     return <EditSecondaryBonds {...props} secondaryBonds={filterSecondaryBonds(props.elements)} />
   } else if (props.editingType == TertiaryBond) {
