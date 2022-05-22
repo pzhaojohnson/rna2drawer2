@@ -99,7 +99,7 @@ export function EditPrimaryBondsForm(props: Props) {
           <div style={{ marginTop: '16px', display: 'flex' }} >
             <StrokeWidthField app={props.app} primaryBonds={props.primaryBonds} />
           </div>
-          <div style={{ marginTop: '8px' }} >
+          <div style={{ marginTop: '8px', display: 'flex' }} >
             <BasePaddingField app={props.app} primaryBonds={props.primaryBonds} />
           </div>
           <div style={{ marginTop: '14px' }} >
