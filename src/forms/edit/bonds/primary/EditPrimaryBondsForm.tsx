@@ -22,6 +22,19 @@ function DrawingHasNoPrimaryBondsNotes() {
   );
 }
 
+function NoPrimaryBondsAreSelectedNotes() {
+  return (
+    <div>
+      <p className={formStyles.notesText} >
+        No primary bonds are selected...
+      </p>
+      <p className={formStyles.notesText} style={{ marginTop: '24px' }} >
+        Select primary bonds using the editing tool...
+      </p>
+    </div>
+  );
+}
+
 export type Props = {
   app: App; // a reference to the whole app
 
@@ -43,9 +56,7 @@ export function EditPrimaryBondsForm(props: Props) {
       {props.app.drawing.primaryBonds.length == 0 ? (
         <DrawingHasNoPrimaryBondsNotes />
       ) : props.primaryBonds.length == 0 ? (
-        <p className={'unselectable'} style={{ fontSize: '12px' }} >
-          No primary bonds to edit.
-        </p>
+        <NoPrimaryBondsAreSelectedNotes />
       ) : (
         <div>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
