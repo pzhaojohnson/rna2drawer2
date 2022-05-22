@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
+import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 
 import * as React from 'react';
 import formStyles from './EditPrimaryBondsForm.css';
@@ -35,6 +35,29 @@ function NoPrimaryBondsAreSelectedNotes() {
   );
 }
 
+function SelectAllPrimaryBondsButton(
+  props: {
+    app: App,
+  },
+) {
+  return (
+    <button
+      className={formStyles.selectAllPrimaryBondsButton}
+      onClick={() => {
+        let drawing = props.app.drawing;
+        let drawingInteraction = props.app.drawingInteraction;
+        let editingTool = drawingInteraction.editingTool;
+
+        drawingInteraction.currentTool = editingTool; // switch to editing tool
+        editingTool.editingType = PrimaryBond; // set to edit primary bonds
+        editingTool.select([...drawing.primaryBonds]); // select all primary bonds
+      }}
+    >
+      Select All Primary Bonds
+    </button>
+  );
+}
+
 export type Props = {
   app: App; // a reference to the whole app
 
@@ -56,7 +79,10 @@ export function EditPrimaryBondsForm(props: Props) {
       {props.app.drawing.primaryBonds.length == 0 ? (
         <DrawingHasNoPrimaryBondsNotes />
       ) : props.primaryBonds.length == 0 ? (
-        <NoPrimaryBondsAreSelectedNotes />
+        <div>
+          <NoPrimaryBondsAreSelectedNotes />
+          <SelectAllPrimaryBondsButton app={props.app} />
+        </div>
       ) : (
         <div>
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >

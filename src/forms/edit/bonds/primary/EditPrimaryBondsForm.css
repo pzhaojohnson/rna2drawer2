@@ -6,3 +6,31 @@
   color: #646469;
   user-select: none;
 }
+
+.selectAllPrimaryBondsButton {
+  margin: 24px 0px 8px 12px;
+  padding: 3px 20px;
+  text-align: center;
+
+  border: 1px solid #d3d3e5;
+  border-radius: 40px;
+  outline: none;
+  box-shadow: none;
+
+  background-color: transparent;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  color: #060668;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.selectAllPrimaryBondsButton:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 2px 2px #eeeef5;
+  transition: transform 0.04s;
+}
