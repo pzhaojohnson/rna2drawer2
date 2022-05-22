@@ -116,7 +116,7 @@ export function EditTertiaryBondsForm(props: Props) {
           <div style={{ marginTop: '16px' }} >
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
               <BringToFrontButton app={props.app} tertiaryBonds={props.tertiaryBonds} />
-              <div style={{ width: '18px' }} />
+              <div style={{ width: '8px' }} />
               <SendToBackButton app={props.app} tertiaryBonds={props.tertiaryBonds} />
             </div>
           </div>

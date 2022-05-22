@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextButton } from 'Forms/buttons/TextButton';
+import { HollowButton } from 'Forms/buttons/HollowButton';
 import type { App } from 'App';
 import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { bringToFront } from 'Draw/bonds/curved/z';
@@ -13,13 +13,14 @@ export type Props = {
 
 export function BringToFrontButton(props: Props) {
   return (
-    <TextButton
-      text='Bring to Front'
+    <HollowButton
       onClick={() => {
         props.app.pushUndo();
         props.tertiaryBonds.forEach(tb => bringToFront(tb));
         props.app.refresh();
       }}
-    />
+    >
+      Bring to Front
+    </HollowButton>
   );
 }
