@@ -6,7 +6,7 @@ import formStyles from './EditTertiaryBondsForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 import { StrokePicker } from './StrokePicker';
 import { StrokeOpacityInput } from './StrokeOpacityInput';
 import { StrokeWidthField } from './StrokeWidthField';
@@ -92,14 +92,10 @@ export function EditTertiaryBondsForm(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
             <StrokePicker app={props.app} tertiaryBonds={props.tertiaryBonds} />
-            <div style={{ marginLeft: '10px' }} >
+            <FieldLabel style={{ marginLeft: '10px', alignSelf: 'start', cursor: 'text' }} >
               <StrokeOpacityInput app={props.app} tertiaryBonds={props.tertiaryBonds} />
-            </div>
-            <div style={{ marginLeft: '8px' }} >
-              <p className={`${colorFieldStyles.label} unselectable`} >
-                Color
-              </p>
-            </div>
+              Color
+            </FieldLabel>
           </div>
           <div style={{ marginTop: '16px', display: 'flex' }} >
             <StrokeWidthField app={props.app} tertiaryBonds={props.tertiaryBonds} />
