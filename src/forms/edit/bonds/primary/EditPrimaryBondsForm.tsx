@@ -84,7 +84,7 @@ export function EditPrimaryBondsForm(props: Props) {
           <SelectAllPrimaryBondsButton app={props.app} />
         </div>
       ) : (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
             <StrokePicker app={props.app} primaryBonds={props.primaryBonds} />
             <div style={{ marginLeft: '10px' }} >
@@ -96,7 +96,7 @@ export function EditPrimaryBondsForm(props: Props) {
               </p>
             </div>
           </div>
-          <div style={{ marginTop: '16px' }} >
+          <div style={{ marginTop: '16px', display: 'flex' }} >
             <StrokeWidthField app={props.app} primaryBonds={props.primaryBonds} />
           </div>
           <div style={{ marginTop: '8px' }} >
