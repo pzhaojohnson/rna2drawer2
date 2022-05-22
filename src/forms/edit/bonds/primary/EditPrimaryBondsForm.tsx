@@ -14,7 +14,7 @@ import { StrokeLinecapField } from './StrokeLinecapField';
 import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
 
 export type Props = {
-  app: App;
+  app: App; // a reference to the whole app
 
   // the primary bonds to edit
   primaryBonds: PrimaryBond[];
