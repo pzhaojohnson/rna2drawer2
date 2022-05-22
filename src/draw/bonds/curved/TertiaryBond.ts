@@ -11,9 +11,9 @@ TertiaryBond.dashedStrokeDasharray = '8 2';
 
 TertiaryBond.recommendedDefaults = {
   path: {
-    'stroke': '#63c5da',
+    'stroke': '#8cd4e8',
     'stroke-width': 1.5,
-    'stroke-opacity': 0.5,
+    'stroke-opacity': 1,
     'stroke-dasharray': '',
     'fill': 'none',
     style: {
