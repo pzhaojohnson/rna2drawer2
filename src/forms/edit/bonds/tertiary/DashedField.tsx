@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
-import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
+import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import type { App } from 'App';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
@@ -27,25 +26,18 @@ function areAllDashed(tbs: TertiaryBond[]): boolean {
 
 export function DashedField(props: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <Checkbox
-        checked={areAllDashed(props.tertiaryBonds)}
-        onChange={event => {
-          props.app.pushUndo();
-          let sda = event.target.checked ? TertiaryBond.dashedStrokeDasharray : '';
-          props.tertiaryBonds.forEach(tb => {
-            tb.path.attr({ 'stroke-dasharray': sda });
-          });
-          TertiaryBond.recommendedDefaults.path['stroke-dasharray'] = sda;
-          props.app.refresh();
-        }}
-      />
-      <p
-        className={`${checkboxFieldStyles.label} unselectable`}
-        style={{ marginLeft: '6px' }}
-      >
-        Dashed
-      </p>
-    </div>
+    <CheckboxField
+      label='Dashed'
+      checked={areAllDashed(props.tertiaryBonds)}
+      onChange={event => {
+        props.app.pushUndo();
+        let sda = event.target.checked ? TertiaryBond.dashedStrokeDasharray : '';
+        props.tertiaryBonds.forEach(tb => {
+          tb.path.attr({ 'stroke-dasharray': sda });
+        });
+        TertiaryBond.recommendedDefaults.path['stroke-dasharray'] = sda;
+        props.app.refresh();
+      }}
+    />
   );
 }
