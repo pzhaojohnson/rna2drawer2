@@ -107,7 +107,7 @@ export function EditTertiaryBondsForm(props: Props) {
           <div style={{ marginTop: '12px', display: 'flex' }} >
             <DashedField app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
-          <div style={{ marginTop: '12px' }} >
+          <div style={{ marginTop: '12px', display: 'flex' }} >
             <BasePadding1Field app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
           <div style={{ marginTop: '8px' }} >
