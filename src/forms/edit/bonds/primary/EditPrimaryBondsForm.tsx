@@ -1,9 +1,11 @@
+import type { App } from 'App';
+import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
+
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
 import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
-import type { App } from 'App';
-import type { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { StrokePicker } from './StrokePicker';
 import { StrokeOpacityInput } from './StrokeOpacityInput';
 import { StrokeWidthField } from './StrokeWidthField';
