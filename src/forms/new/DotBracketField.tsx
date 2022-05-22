@@ -25,7 +25,7 @@ export function DotBracketField(props: Props): React.ReactElement {
           <TextButton
             text='Details...'
             onClick={() => props.toggleParsingDetails()}
-            style={{ fontWeight: 500, color: '#090972' }}
+            style={{ fontWeight: 500, color: '#090980' }}
           />
         </div>
       </div>
