@@ -38,6 +38,7 @@ export function DashedField(props: Props) {
         TertiaryBond.recommendedDefaults.path['stroke-dasharray'] = sda;
         props.app.refresh();
       }}
+      style={{ alignSelf: 'start' }}
     />
   );
 }

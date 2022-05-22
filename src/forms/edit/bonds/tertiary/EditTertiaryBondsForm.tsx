@@ -89,7 +89,7 @@ export function EditTertiaryBondsForm(props: Props) {
           <SelectAllTertiaryBondsButton app={props.app} />
         </div>
       ) : (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
             <StrokePicker app={props.app} tertiaryBonds={props.tertiaryBonds} />
             <div style={{ marginLeft: '10px' }} >
@@ -101,10 +101,10 @@ export function EditTertiaryBondsForm(props: Props) {
               </p>
             </div>
           </div>
-          <div style={{ marginTop: '16px' }} >
+          <div style={{ marginTop: '16px', display: 'flex' }} >
             <StrokeWidthField app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
-          <div style={{ marginTop: '12px' }} >
+          <div style={{ marginTop: '12px', display: 'flex' }} >
             <DashedField app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
           <div style={{ marginTop: '12px' }} >

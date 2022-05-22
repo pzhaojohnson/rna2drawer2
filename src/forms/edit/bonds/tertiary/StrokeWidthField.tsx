@@ -56,6 +56,7 @@ export class StrokeWidthField extends React.Component<Props> {
         input={{
           style: { width: '36px' },
         }}
+        style={{ alignSelf: 'start' }}
       />
     );
   }
