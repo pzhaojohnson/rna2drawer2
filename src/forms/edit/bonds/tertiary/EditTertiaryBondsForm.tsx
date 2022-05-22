@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
+import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import * as React from 'react';
 import formStyles from './EditTertiaryBondsForm.css';
@@ -53,9 +53,13 @@ function SelectAllTertiaryBondsButton(
     <p
       className={formStyles.selectAllTertiaryBondsButton}
       onClick={() => {
-        // set the current tool in case it is not already the editing tool
-        props.app.drawingInteraction.currentTool = props.app.drawingInteraction.editingTool;
-        props.app.drawingInteraction.editingTool.select([...props.app.drawing.tertiaryBonds]);
+        let drawing = props.app.drawing;
+        let drawingInteraction = props.app.drawingInteraction;
+        let editingTool = drawingInteraction.editingTool;
+
+        drawingInteraction.currentTool = editingTool; // switch to editing tool
+        editingTool.editingType = TertiaryBond; // set to edit tertiary bonds
+        editingTool.select([...drawing.tertiaryBonds]); // select all tertiary bonds
       }}
     >
       Select All Tertiary Bonds
