@@ -101,19 +101,19 @@ export function EditTertiaryBondsForm(props: Props) {
               Color
             </FieldLabel>
           </div>
-          <div style={{ marginTop: '16px', display: 'flex' }} >
+          <div style={{ marginTop: '14px', display: 'flex' }} >
             <StrokeWidthField app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
-          <div style={{ marginTop: '12px', display: 'flex' }} >
+          <div style={{ marginTop: '14px', display: 'flex' }} >
             <DashedField app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
-          <div style={{ marginTop: '12px', display: 'flex' }} >
+          <div style={{ marginTop: '14px', display: 'flex' }} >
             <BasePadding1Field app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
-          <div style={{ marginTop: '8px', display: 'flex' }} >
+          <div style={{ marginTop: '10px', display: 'flex' }} >
             <BasePadding2Field app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
-          <div style={{ marginTop: '16px' }} >
+          <div style={{ marginTop: '18px' }} >
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
               <BringToFrontButton app={props.app} tertiaryBonds={props.tertiaryBonds} />
               <div style={{ width: '8px' }} />
