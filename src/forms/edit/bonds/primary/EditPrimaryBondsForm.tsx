@@ -86,7 +86,6 @@ export function EditPrimaryBondsForm(props: Props) {
           <StrokeField {...props} />
           <StrokeWidthField {...props} />
           <BasePaddingField {...props} />
-          <div style={{ height: '16px' }} />
           <StrokeLinecapField {...props} />
           <ForwardBackwardButtons {...props} />
         </div>
