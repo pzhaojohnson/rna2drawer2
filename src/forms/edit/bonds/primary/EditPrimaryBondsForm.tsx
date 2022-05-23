@@ -6,6 +6,7 @@ import formStyles from './EditPrimaryBondsForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { StrokePicker } from './StrokePicker';
 import { StrokeOpacityInput } from './StrokeOpacityInput';
@@ -87,14 +88,10 @@ export function EditPrimaryBondsForm(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
             <StrokePicker app={props.app} primaryBonds={props.primaryBonds} />
-            <div style={{ marginLeft: '10px' }} >
+            <FieldLabel style={{ marginLeft: '10px', cursor: 'text' }} >
               <StrokeOpacityInput app={props.app} primaryBonds={props.primaryBonds} />
-            </div>
-            <div style={{ marginLeft: '8px' }} >
-              <p className={`${colorFieldStyles.label} unselectable`} >
-                Color
-              </p>
-            </div>
+              Color
+            </FieldLabel>
           </div>
           <div style={{ marginTop: '16px', display: 'flex' }} >
             <StrokeWidthField app={props.app} primaryBonds={props.primaryBonds} />
