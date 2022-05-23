@@ -51,7 +51,9 @@ export class FontSizeField extends React.Component<Props> {
             this.props.app.refresh();
           }
         }}
-        style={{ width: '32px' }}
+        input={{
+          style: { width: '32px' },
+        }}
       />
     );
   }
