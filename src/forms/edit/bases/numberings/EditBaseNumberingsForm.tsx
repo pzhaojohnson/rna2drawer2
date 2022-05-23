@@ -5,12 +5,10 @@ import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
 import { BoldField } from './BoldField';
-import { ColorPicker } from './ColorPicker';
-import { OpacityInput } from './OpacityInput';
+import { ColorField } from './ColorField';
 import { LineWidthField } from './LineWidthField';
 import { LineLengthField } from './LineLengthField';
 import { BasePaddingField } from './BasePaddingField';
@@ -44,17 +42,7 @@ export function EditBaseNumberingsForm(props: Props) {
             <BoldField app={props.app} baseNumberings={props.baseNumberings} />
           </div>
           <div style={{ marginTop: '16px' }} >
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-              <ColorPicker app={props.app} baseNumberings={props.baseNumberings} />
-              <div style={{ marginLeft: '10px' }} >
-                <OpacityInput app={props.app} baseNumberings={props.baseNumberings} />
-              </div>
-              <div style={{ marginLeft: '8px' }} >
-                <p className={`${colorFieldStyles.label} unselectable`} >
-                  Color
-                </p>
-              </div>
-            </div>
+            <ColorField {...props} />
           </div>
           <div style={{ marginTop: '16px' }} >
             <LineWidthField app={props.app} baseNumberings={props.baseNumberings} />
