@@ -1,5 +1,5 @@
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { round } from 'Math/round';
@@ -66,30 +66,22 @@ export class BasePaddingField extends React.Component<Props> {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type='text'
-          className={textFieldStyles.input}
-          value={this.state.value}
-          onChange={event => this.setState({ value: event.target.value })}
-          onBlur={() => {
+      <TextInputField
+        label='Base Padding'
+        value={this.state.value}
+        onChange={event => this.setState({ value: event.target.value })}
+        onBlur={() => {
+          this.submit();
+          this.props.app.refresh();
+        }}
+        onKeyUp={event => {
+          if (event.key.toLowerCase() == 'enter') {
             this.submit();
             this.props.app.refresh();
-          }}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              this.submit();
-              this.props.app.refresh();
-            }
-          }}
-          style={{ width: '32px' }}
-        />
-        <div style={{ marginLeft: '8px' }} >
-          <p className={`${textFieldStyles.label} unselectable`} >
-            Base Padding
-          </p>
-        </div>
-      </div>
+          }
+        }}
+        style={{ width: '32px' }}
+      />
     );
   }
 

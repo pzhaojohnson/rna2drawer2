@@ -8,7 +8,7 @@ import { numberToDisplayableString as displayableString } from 'Forms/inputs/num
 import { isBlank } from 'Parse/isBlank';
 
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
 // returns the line elements of the base numberings
 function lines(baseNumberings: BaseNumbering[]): SVG.Line[] {
@@ -39,30 +39,22 @@ export class LineWidthField extends React.Component<Props> {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type='text'
-          className={textFieldStyles.input}
-          value={this.state.value}
-          onChange={event => this.setState({ value: event.target.value })}
-          onBlur={() => {
+      <TextInputField
+        label='Line Width'
+        value={this.state.value}
+        onChange={event => this.setState({ value: event.target.value })}
+        onBlur={() => {
+          this.submit();
+          this.props.app.refresh();
+        }}
+        onKeyUp={event => {
+          if (event.key.toLowerCase() == 'enter') {
             this.submit();
             this.props.app.refresh();
-          }}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              this.submit();
-              this.props.app.refresh();
-            }
-          }}
-          style={{ width: '32px' }}
-        />
-        <div style={{ marginLeft: '8px' }} >
-          <p className={`${textFieldStyles.label} unselectable`} >
-            Line Width
-          </p>
-        </div>
-      </div>
+          }
+        }}
+        style={{ width: '32px' }}
+      />
     );
   }
 
