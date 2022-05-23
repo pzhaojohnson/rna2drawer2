@@ -89,31 +89,31 @@ export function EditTertiaryBondsForm(props: Props) {
       ) : props.tertiaryBonds.length == 0 ? (
         <div>
           <NoTertiaryBondsAreSelectedNotes />
-          <SelectAllTertiaryBondsButton app={props.app} />
+          <SelectAllTertiaryBondsButton {...props} />
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <StrokePicker app={props.app} tertiaryBonds={props.tertiaryBonds} />
+            <StrokePicker {...props} />
             <FieldLabel style={{ marginLeft: '10px', alignSelf: 'start', cursor: 'text' }} >
-              <StrokeOpacityInput app={props.app} tertiaryBonds={props.tertiaryBonds} />
+              <StrokeOpacityInput {...props} />
               Color
             </FieldLabel>
           </div>
           <div style={{ marginTop: '14px', display: 'flex' }} >
-            <StrokeWidthField app={props.app} tertiaryBonds={props.tertiaryBonds} />
+            <StrokeWidthField {...props} />
           </div>
           <div style={{ marginTop: '14px', display: 'flex' }} >
-            <DashedField app={props.app} tertiaryBonds={props.tertiaryBonds} />
+            <DashedField {...props} />
           </div>
           <div style={{ marginTop: '14px', display: 'flex' }} >
-            <BasePadding1Field app={props.app} tertiaryBonds={props.tertiaryBonds} />
+            <BasePadding1Field {...props} />
           </div>
           <div style={{ marginTop: '10px', display: 'flex' }} >
-            <BasePadding2Field app={props.app} tertiaryBonds={props.tertiaryBonds} />
+            <BasePadding2Field {...props} />
           </div>
           <div style={{ marginTop: '18px' }} >
-            <ForwardBackwardButtons app={props.app} tertiaryBonds={props.tertiaryBonds} />
+            <ForwardBackwardButtons {...props} />
           </div>
         </div>
       )}
