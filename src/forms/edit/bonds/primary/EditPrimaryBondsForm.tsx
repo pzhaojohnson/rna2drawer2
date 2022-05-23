@@ -93,16 +93,16 @@ export function EditPrimaryBondsForm(props: Props) {
               Color
             </FieldLabel>
           </div>
-          <div style={{ marginTop: '16px', display: 'flex' }} >
+          <div style={{ marginTop: '14px', display: 'flex' }} >
             <StrokeWidthField app={props.app} primaryBonds={props.primaryBonds} />
           </div>
-          <div style={{ marginTop: '8px', display: 'flex' }} >
+          <div style={{ marginTop: '10px', display: 'flex' }} >
             <BasePaddingField app={props.app} primaryBonds={props.primaryBonds} />
           </div>
-          <div style={{ marginTop: '14px' }} >
+          <div style={{ marginTop: '16px' }} >
             <StrokeLinecapField app={props.app} primaryBonds={props.primaryBonds} />
           </div>
-          <div style={{ marginTop: '14px' }} >
+          <div style={{ marginTop: '20px' }} >
             <ForwardAndBackwardButtons app={props.app} primaryBonds={props.primaryBonds} />
           </div>
         </div>
