@@ -2,7 +2,7 @@ import type { App } from 'App';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import * as React from 'react';
-import formStyles from './EditTertiaryBondsForm.css';
+import styles from './EditTertiaryBondsForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
@@ -18,11 +18,11 @@ import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 function DrawingHasNoTertiaryBondsNotes() {
   return (
     <div>
-      <p className={formStyles.notesText} >
+      <p className={styles.notesText} >
         Drawing has no tertiary bonds...
       </p>
       <div style={{ height: '24px' }} />
-      <p className={formStyles.notesText} >
+      <p className={styles.notesText} >
         Add tertiary bonds using the binding tool...
       </p>
     </div>
@@ -32,11 +32,11 @@ function DrawingHasNoTertiaryBondsNotes() {
 function NoTertiaryBondsAreSelectedNotes() {
   return (
     <div>
-      <p className={formStyles.notesText} >
+      <p className={styles.notesText} >
         No tertiary bonds are selected...
       </p>
       <div style={{ height: '24px' }} />
-      <p className={formStyles.notesText} >
+      <p className={styles.notesText} >
         Select tertiary bonds using the editing tool...
       </p>
     </div>
@@ -50,7 +50,7 @@ function SelectAllTertiaryBondsButton(
 ) {
   return (
     <p
-      className={formStyles.selectAllTertiaryBondsButton}
+      className={styles.selectAllTertiaryBondsButton}
       onClick={() => {
         let drawing = props.app.drawing;
         let drawingInteraction = props.app.drawingInteraction;
