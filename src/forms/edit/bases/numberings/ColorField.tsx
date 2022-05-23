@@ -2,7 +2,7 @@ import type { App } from 'App';
 import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 
 import * as React from 'react';
-import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 import { ColorPicker } from './ColorPicker';
 import { OpacityInput } from './OpacityInput';
 
@@ -17,14 +17,10 @@ export function ColorField(props: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
       <ColorPicker app={props.app} baseNumberings={props.baseNumberings} />
-      <div style={{ marginLeft: '10px' }} >
+      <FieldLabel style={{ marginLeft: '10px', cursor: 'text' }} >
         <OpacityInput app={props.app} baseNumberings={props.baseNumberings} />
-      </div>
-      <div style={{ marginLeft: '8px' }} >
-        <p className={`${colorFieldStyles.label} unselectable`} >
-          Color
-        </p>
-      </div>
+        Color
+      </FieldLabel>
     </div>
   );
 }

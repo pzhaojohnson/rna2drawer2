@@ -63,7 +63,7 @@ export class OpacityInput extends React.Component<Props> {
             this.props.app.refresh();
           }
         }}
-        style={{ width: '32px', textAlign: 'end' }}
+        style={{ marginRight: '8px', width: '32px', textAlign: 'end' }}
       />
     );
   }
