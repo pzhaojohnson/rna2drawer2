@@ -6,14 +6,14 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
-import { FontFamilyField } from 'Forms/edit/bases/numberings/FontFamilyField';
-import { FontSizeField } from 'Forms/edit/bases/numberings/FontSizeField';
-import { BoldField } from 'Forms/edit/bases/numberings/BoldField';
-import { ColorPicker } from 'Forms/edit/bases/numberings/ColorPicker';
-import { OpacityInput } from 'Forms/edit/bases/numberings/OpacityInput';
-import { LineWidthField } from 'Forms/edit/bases/numberings/LineWidthField';
-import { LineLengthField } from 'Forms/edit/bases/numberings/LineLengthField';
-import { BasePaddingField } from 'Forms/edit/bases/numberings/BasePaddingField';
+import { FontFamilyField } from './FontFamilyField';
+import { FontSizeField } from './FontSizeField';
+import { BoldField } from './BoldField';
+import { ColorPicker } from './ColorPicker';
+import { OpacityInput } from './OpacityInput';
+import { LineWidthField } from './LineWidthField';
+import { LineLengthField } from './LineLengthField';
+import { BasePaddingField } from './BasePaddingField';
 
 export interface Props {
   unmount: () => void;
