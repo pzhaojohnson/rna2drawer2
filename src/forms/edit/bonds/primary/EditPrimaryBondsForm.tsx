@@ -6,9 +6,7 @@ import styles from './EditPrimaryBondsForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
-import { StrokePicker } from './StrokePicker';
-import { StrokeOpacityInput } from './StrokeOpacityInput';
+import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeLinecapField } from './StrokeLinecapField';
@@ -85,13 +83,7 @@ export function EditPrimaryBondsForm(props: Props) {
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <StrokePicker {...props} />
-            <FieldLabel style={{ marginLeft: '10px', cursor: 'text' }} >
-              <StrokeOpacityInput {...props} />
-              Color
-            </FieldLabel>
-          </div>
+          <StrokeField {...props} />
           <StrokeWidthField {...props} />
           <BasePaddingField {...props} />
           <div style={{ height: '16px' }} />
