@@ -13,8 +13,7 @@ import { StrokeWidthField } from './StrokeWidthField';
 import { DashedField } from './DashedField';
 import { BasePadding1Field } from './BasePadding1Field';
 import { BasePadding2Field } from './BasePadding2Field';
-import { BringToFrontButton } from './BringToFrontButton';
-import { SendToBackButton } from './SendToBackButton';
+import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 function DrawingHasNoTertiaryBondsNotes() {
   return (
@@ -114,11 +113,7 @@ export function EditTertiaryBondsForm(props: Props) {
             <BasePadding2Field app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
           <div style={{ marginTop: '18px' }} >
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-              <BringToFrontButton app={props.app} tertiaryBonds={props.tertiaryBonds} />
-              <div style={{ width: '8px' }} />
-              <SendToBackButton app={props.app} tertiaryBonds={props.tertiaryBonds} />
-            </div>
+            <ForwardBackwardButtons app={props.app} tertiaryBonds={props.tertiaryBonds} />
           </div>
         </div>
       )}
