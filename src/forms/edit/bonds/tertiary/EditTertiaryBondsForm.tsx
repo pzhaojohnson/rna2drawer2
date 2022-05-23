@@ -6,9 +6,7 @@ import styles from './EditTertiaryBondsForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
-import { StrokePicker } from './StrokePicker';
-import { StrokeOpacityInput } from './StrokeOpacityInput';
+import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { DashedField } from './DashedField';
 import { BasePadding1Field } from './BasePadding1Field';
@@ -93,13 +91,7 @@ export function EditTertiaryBondsForm(props: Props) {
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <StrokePicker {...props} />
-            <FieldLabel style={{ marginLeft: '10px', alignSelf: 'start', cursor: 'text' }} >
-              <StrokeOpacityInput {...props} />
-              Color
-            </FieldLabel>
-          </div>
+          <StrokeField {...props} />
           <StrokeWidthField {...props} />
           <DashedField {...props} />
           <BasePadding1Field {...props} />
