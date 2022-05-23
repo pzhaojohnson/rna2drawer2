@@ -26,6 +26,7 @@ export function ForwardBackwardButtons(props: Props) {
         props.tertiaryBonds.forEach(tb => sendToBack(tb));
         props.app.refresh();
       }}
+      style={{ marginTop: '18px' }}
     />
   );
 }

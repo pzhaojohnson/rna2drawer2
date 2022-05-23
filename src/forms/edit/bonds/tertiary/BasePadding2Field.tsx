@@ -80,7 +80,7 @@ export class BasePadding2Field extends React.Component<Props> {
         input={{
           style: { width: '36px' },
         }}
-        style={{ alignSelf: 'start' }}
+        style={{ marginTop: '10px', alignSelf: 'start' }}
       />
     );
   }

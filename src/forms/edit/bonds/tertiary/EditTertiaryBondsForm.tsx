@@ -100,21 +100,11 @@ export function EditTertiaryBondsForm(props: Props) {
               Color
             </FieldLabel>
           </div>
-          <div style={{ marginTop: '14px', display: 'flex' }} >
-            <StrokeWidthField {...props} />
-          </div>
-          <div style={{ marginTop: '14px', display: 'flex' }} >
-            <DashedField {...props} />
-          </div>
-          <div style={{ marginTop: '14px', display: 'flex' }} >
-            <BasePadding1Field {...props} />
-          </div>
-          <div style={{ marginTop: '10px', display: 'flex' }} >
-            <BasePadding2Field {...props} />
-          </div>
-          <div style={{ marginTop: '18px' }} >
-            <ForwardBackwardButtons {...props} />
-          </div>
+          <StrokeWidthField {...props} />
+          <DashedField {...props} />
+          <BasePadding1Field {...props} />
+          <BasePadding2Field {...props} />
+          <ForwardBackwardButtons {...props} />
         </div>
       )}
     </PartialWidthContainer>
