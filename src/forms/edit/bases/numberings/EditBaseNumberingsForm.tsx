@@ -34,24 +34,24 @@ export function EditBaseNumberingsForm(props: Props) {
     >
       {props.baseNumberings.length == 0 ? null : (
         <div style={{ marginBottom: '16px' }} >
-          <FontFamilyField app={props.app} baseNumberings={props.baseNumberings} />
+          <FontFamilyField {...props} />
           <div style={{ marginTop: '8px' }} >
-            <FontSizeField app={props.app} baseNumberings={props.baseNumberings} />
+            <FontSizeField {...props} />
           </div>
           <div style={{ marginTop: '8px' }} >
-            <BoldField app={props.app} baseNumberings={props.baseNumberings} />
+            <BoldField {...props} />
           </div>
           <div style={{ marginTop: '16px' }} >
             <ColorField {...props} />
           </div>
           <div style={{ marginTop: '16px' }} >
-            <LineWidthField app={props.app} baseNumberings={props.baseNumberings} />
+            <LineWidthField {...props} />
           </div>
           <div style={{ marginTop: '8px' }} >
-            <LineLengthField app={props.app} baseNumberings={props.baseNumberings} />
+            <LineLengthField {...props} />
           </div>
           <div style={{ marginTop: '8px' }} >
-            <BasePaddingField app={props.app} baseNumberings={props.baseNumberings} />
+            <BasePaddingField {...props} />
           </div>
         </div>
       )}
