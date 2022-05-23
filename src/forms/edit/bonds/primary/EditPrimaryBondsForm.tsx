@@ -81,28 +81,28 @@ export function EditPrimaryBondsForm(props: Props) {
       ) : props.primaryBonds.length == 0 ? (
         <div>
           <NoPrimaryBondsAreSelectedNotes />
-          <SelectAllPrimaryBondsButton app={props.app} />
+          <SelectAllPrimaryBondsButton {...props} />
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <StrokePicker app={props.app} primaryBonds={props.primaryBonds} />
+            <StrokePicker {...props} />
             <FieldLabel style={{ marginLeft: '10px', cursor: 'text' }} >
-              <StrokeOpacityInput app={props.app} primaryBonds={props.primaryBonds} />
+              <StrokeOpacityInput {...props} />
               Color
             </FieldLabel>
           </div>
           <div style={{ marginTop: '14px', display: 'flex' }} >
-            <StrokeWidthField app={props.app} primaryBonds={props.primaryBonds} />
+            <StrokeWidthField {...props} />
           </div>
           <div style={{ marginTop: '10px', display: 'flex' }} >
-            <BasePaddingField app={props.app} primaryBonds={props.primaryBonds} />
+            <BasePaddingField {...props} />
           </div>
           <div style={{ marginTop: '16px' }} >
-            <StrokeLinecapField app={props.app} primaryBonds={props.primaryBonds} />
+            <StrokeLinecapField {...props} />
           </div>
           <div style={{ marginTop: '20px' }} >
-            <ForwardBackwardButtons app={props.app} primaryBonds={props.primaryBonds} />
+            <ForwardBackwardButtons {...props} />
           </div>
         </div>
       )}
