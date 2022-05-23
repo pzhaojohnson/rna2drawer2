@@ -13,7 +13,7 @@ import { StrokeOpacityInput } from './StrokeOpacityInput';
 import { StrokeWidthField } from './StrokeWidthField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeLinecapField } from './StrokeLinecapField';
-import { ForwardAndBackwardButtons } from './ForwardAndBackwardButtons';
+import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 function DrawingHasNoPrimaryBondsNotes() {
   return (
@@ -103,7 +103,7 @@ export function EditPrimaryBondsForm(props: Props) {
             <StrokeLinecapField app={props.app} primaryBonds={props.primaryBonds} />
           </div>
           <div style={{ marginTop: '20px' }} >
-            <ForwardAndBackwardButtons app={props.app} primaryBonds={props.primaryBonds} />
+            <ForwardBackwardButtons app={props.app} primaryBonds={props.primaryBonds} />
           </div>
         </div>
       )}
