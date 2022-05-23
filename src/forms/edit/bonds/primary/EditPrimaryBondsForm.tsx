@@ -2,7 +2,7 @@ import type { App } from 'App';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 
 import * as React from 'react';
-import formStyles from './EditPrimaryBondsForm.css';
+import styles from './EditPrimaryBondsForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
@@ -16,7 +16,7 @@ import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 function DrawingHasNoPrimaryBondsNotes() {
   return (
-    <p className={formStyles.notesText} >
+    <p className={styles.notesText} >
       Drawing has no primary bonds...
     </p>
   );
@@ -25,10 +25,10 @@ function DrawingHasNoPrimaryBondsNotes() {
 function NoPrimaryBondsAreSelectedNotes() {
   return (
     <div>
-      <p className={formStyles.notesText} >
+      <p className={styles.notesText} >
         No primary bonds are selected...
       </p>
-      <p className={formStyles.notesText} style={{ marginTop: '24px' }} >
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
         Select primary bonds using the editing tool...
       </p>
     </div>
@@ -42,7 +42,7 @@ function SelectAllPrimaryBondsButton(
 ) {
   return (
     <button
-      className={formStyles.selectAllPrimaryBondsButton}
+      className={styles.selectAllPrimaryBondsButton}
       onClick={() => {
         let drawing = props.app.drawing;
         let drawingInteraction = props.app.drawingInteraction;
