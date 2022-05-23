@@ -9,7 +9,7 @@ import { isBlank } from 'Parse/isBlank';
 import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
 
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInput } from 'Forms/inputs/text/TextInput';
 
 // returns the line elements of the primary bonds
 function lines(primaryBonds: PrimaryBond[]): SVG.Line[] {
@@ -40,9 +40,7 @@ export class StrokeOpacityInput extends React.Component<Props> {
 
   render() {
     return (
-      <input
-        type='text'
-        className={textFieldStyles.input}
+      <TextInput
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {
