@@ -74,11 +74,14 @@ export function StrokeLinecapSelect(props: StrokeLinecapSelectProps) {
   );
 }
 
-export type StrokeLinecapFieldProps = StrokeLinecapSelectProps;
+export type StrokeLinecapFieldProps = (
+  StrokeLinecapSelectProps
+  & { style?: React.CSSProperties }
+);
 
 export function StrokeLinecapField(props: StrokeLinecapFieldProps) {
   return (
-    <div className={styles.strokeLinecapField} >
+    <div className={styles.strokeLinecapField} style={props.style} >
       <p className={styles.strokeLinecapFieldLabel} >
         Line Cap:
       </p>
