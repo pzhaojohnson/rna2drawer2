@@ -7,7 +7,6 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
-import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { StrokePicker } from './StrokePicker';
 import { StrokeOpacityInput } from './StrokeOpacityInput';
 import { StrokeWidthField } from './StrokeWidthField';
