@@ -15,7 +15,12 @@ export type Props = {
 
 export function ColorField(props: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+    <div
+      style={{
+        marginTop: '16px',
+        display: 'flex', flexDirection: 'row', alignItems: 'center',
+      }}
+    >
       <ColorPicker app={props.app} baseNumberings={props.baseNumberings} />
       <FieldLabel style={{ marginLeft: '10px', cursor: 'text' }} >
         <OpacityInput app={props.app} baseNumberings={props.baseNumberings} />

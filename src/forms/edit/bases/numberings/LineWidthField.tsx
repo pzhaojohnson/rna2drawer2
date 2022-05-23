@@ -56,6 +56,7 @@ export class LineWidthField extends React.Component<Props> {
         input={{
           style: { width: '32px' },
         }}
+        style={{ marginTop: '16px' }}
       />
     );
   }

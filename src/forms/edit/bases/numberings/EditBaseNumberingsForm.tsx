@@ -35,24 +35,12 @@ export function EditBaseNumberingsForm(props: Props) {
       {props.baseNumberings.length == 0 ? null : (
         <div style={{ marginBottom: '16px' }} >
           <FontFamilyField {...props} />
-          <div style={{ marginTop: '8px' }} >
-            <FontSizeField {...props} />
-          </div>
-          <div style={{ marginTop: '8px' }} >
-            <BoldField {...props} />
-          </div>
-          <div style={{ marginTop: '16px' }} >
-            <ColorField {...props} />
-          </div>
-          <div style={{ marginTop: '16px' }} >
-            <LineWidthField {...props} />
-          </div>
-          <div style={{ marginTop: '8px' }} >
-            <LineLengthField {...props} />
-          </div>
-          <div style={{ marginTop: '8px' }} >
-            <BasePaddingField {...props} />
-          </div>
+          <FontSizeField {...props} />
+          <BoldField {...props} />
+          <ColorField {...props} />
+          <LineWidthField {...props} />
+          <LineLengthField {...props} />
+          <BasePaddingField {...props} />
         </div>
       )}
     </PartialWidthContainer>
