@@ -1,9 +1,11 @@
+import type { App } from 'App';
+import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
 import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
-import type { App } from 'App';
-import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 import { FontFamilyField } from 'Forms/edit/bases/numberings/FontFamilyField';
 import { FontSizeField } from 'Forms/edit/bases/numberings/FontSizeField';
 import { BoldField } from 'Forms/edit/bases/numberings/BoldField';
