@@ -33,7 +33,7 @@ export function EditBaseNumberingsForm(props: Props) {
       style={{ width: '324px' }}
     >
       {props.baseNumberings.length == 0 ? null : (
-        <div style={{ marginBottom: '16px' }} >
+        <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column' }} >
           <FontFamilyField {...props} />
           <FontSizeField {...props} />
           <BoldField {...props} />

@@ -19,6 +19,7 @@ export function ColorField(props: Props) {
       style={{
         marginTop: '16px',
         display: 'flex', flexDirection: 'row', alignItems: 'center',
+        alignSelf: 'start',
       }}
     >
       <ColorPicker app={props.app} baseNumberings={props.baseNumberings} />
