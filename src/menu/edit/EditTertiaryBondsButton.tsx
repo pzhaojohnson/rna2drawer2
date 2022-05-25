@@ -12,10 +12,16 @@ export function EditTertiaryBondsButton(props: Props) {
     <DroppedButton
       text='Tertiary Bonds'
       onClick={() => {
-        if (props.app.strictDrawingInteraction.editingTool.editingType != TertiaryBond) {
-          props.app.strictDrawingInteraction.editingTool.editingType = TertiaryBond;
+        let drawingInteraction = props.app.drawingInteraction;
+        let editingTool = drawingInteraction.editingTool;
+
+        if (drawingInteraction.currentTool != editingTool) {
+          drawingInteraction.currentTool = editingTool;
         }
-        props.app.strictDrawingInteraction.editingTool.renderForm();
+        if (editingTool.editingType != TertiaryBond) {
+          editingTool.editingType = TertiaryBond;
+        }
+        editingTool.renderForm();
       }}
     />
   );

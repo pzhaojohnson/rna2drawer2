@@ -12,12 +12,15 @@ export function EditPrimaryBondsButton(props: Props) {
     <DroppedButton
       text='Primary Bonds'
       onClick={() => {
-        let editingTool = props.app.drawingInteraction.editingTool;
+        let drawingInteraction = props.app.drawingInteraction;
+        let editingTool = drawingInteraction.editingTool;
 
+        if (drawingInteraction.currentTool != editingTool) {
+          drawingInteraction.currentTool = editingTool;
+        }
         if (editingTool.editingType != PrimaryBond) {
           editingTool.editingType = PrimaryBond;
         }
-
         editingTool.renderForm();
       }}
     />
