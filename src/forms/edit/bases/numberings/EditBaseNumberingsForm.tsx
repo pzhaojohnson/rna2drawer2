@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 
 import * as React from 'react';
 import styles from './EditBaseNumberings.css';
@@ -43,6 +43,33 @@ function NoBaseNumberingsAreSelectedNotes() {
   );
 }
 
+function SelectAllBaseNumberingsButton(
+  props: {
+    app: App,
+  },
+) {
+  return (
+    <button
+      className={styles.selectAllBaseNumberingsButton}
+      onClick={() => {
+        let drawing = props.app.drawing;
+        let drawingInteraction = props.app.drawingInteraction;
+        let editingTool = drawingInteraction.editingTool;
+
+        let allBaseNumberings = drawing.bases().map(b => b.numbering).filter(
+          (bn): bn is BaseNumbering => bn instanceof BaseNumbering
+        );
+
+        drawingInteraction.currentTool = editingTool; // switch to the editing tool
+        editingTool.editingType = BaseNumbering; // set to edit base numberings
+        editingTool.select(allBaseNumberings);
+      }}
+    >
+      Select All Numberings
+    </button>
+  );
+}
+
 export interface Props {
   unmount: () => void;
   history: FormHistoryInterface;
@@ -74,7 +101,10 @@ export function EditBaseNumberingsForm(props: Props) {
       {numBaseNumberingsInDrawing == 0 ? (
         <DrawingHasNoBaseNumberingsNotes />
       ) : props.baseNumberings.length == 0 ? (
-        <NoBaseNumberingsAreSelectedNotes />
+        <div>
+          <NoBaseNumberingsAreSelectedNotes />
+          <SelectAllBaseNumberingsButton {...props} />
+        </div>
       ) : (
         <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column' }} >
           <FontFamilyField {...props} />
