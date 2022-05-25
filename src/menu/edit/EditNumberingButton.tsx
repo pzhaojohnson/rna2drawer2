@@ -1,23 +1,27 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { EditNumbering } from 'Forms/edit/EditNumbering';
-import { v4 as uuidv4 } from 'uuid';
+import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 
 export type Props = {
   app: App;
 }
-
-const formKey = uuidv4();
 
 export function EditNumberingButton(props: Props) {
   return (
     <DroppedButton
       text='Numbering'
       onClick={() => {
-        props.app.formContainer.renderForm(formProps => (
-          <EditNumbering {...formProps} app={props.app} />
-        ), { key: formKey });
+        let drawingInteraction = props.app.drawingInteraction;
+        let editingTool = drawingInteraction.editingTool;
+
+        if (drawingInteraction.currentTool != editingTool) {
+          drawingInteraction.currentTool = editingTool;
+        }
+        if (editingTool.editingType != BaseNumbering) {
+          editingTool.editingType = BaseNumbering;
+        }
+        editingTool.renderForm();
       }}
     />
   );
