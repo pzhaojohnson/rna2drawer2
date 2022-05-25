@@ -5,6 +5,9 @@ import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
+import { NumberingOffsetField } from './NumberingOffsetField';
+import { NumberingAnchorField } from './NumberingAnchorField';
+import { NumberingIncrementField } from './NumberingIncrementField';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
 import { BoldField } from './BoldField';
@@ -32,6 +35,13 @@ export function EditBaseNumberingsForm(props: Props) {
       title='Numberings'
       style={{ width: '324px' }}
     >
+      {props.baseNumberings.length != 0 ? null : (
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
+          <NumberingOffsetField {...props} />
+          <NumberingAnchorField {...props} />
+          <NumberingIncrementField {...props} />
+        </div>
+      )}
       {props.baseNumberings.length == 0 ? null : (
         <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column' }} >
           <FontFamilyField {...props} />
