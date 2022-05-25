@@ -6,11 +6,9 @@ import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
 import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { CharacterField } from './CharacterField';
-import { NumberingCheckbox } from './NumberingCheckbox';
-import { NumberInput } from './numberings/NumberInput';
+import { NumberingField } from './NumberingField';
 import { FillPicker } from './FillPicker';
 import { FillOpacityInput } from './FillOpacityInput';
 import { BringToFrontButton } from './BringToFrontButton';
@@ -61,21 +59,7 @@ export function EditBasesForm(props: Props) {
           {props.bases.length != 1 ? null : (
             <div style={{ marginBottom: '16px' }} >
               <CharacterField app={props.app} base={props.bases[0]} />
-              <div style={{ marginTop: '16px' }} >
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                  <NumberingCheckbox app={props.app} base={props.bases[0]} />
-                  {!props.bases[0].numbering ? null : (
-                    <div style={{ marginLeft: '10px' }} >
-                      <NumberInput app={props.app} baseNumbering={props.bases[0].numbering} />
-                    </div>
-                  )}
-                  <div style={{ marginLeft: props.bases[0].numbering ? '8px' : '6px' }} >
-                    <p className={`${checkboxFieldStyles.label}`}>
-                      Numbering
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <NumberingField {...props} base={props.bases[0]} />
             </div>
           )}
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
