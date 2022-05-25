@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
-import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
-
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
 import type { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
+import * as React from 'react';
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
+import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
+import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { CharacterField } from './CharacterField';
 import { NumberingCheckbox } from './NumberingCheckbox';
 import { NumberInput } from './numberings/NumberInput';
