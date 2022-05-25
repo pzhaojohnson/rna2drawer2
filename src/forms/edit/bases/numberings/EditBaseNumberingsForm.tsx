@@ -2,6 +2,7 @@ import type { App } from 'App';
 import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
 
 import * as React from 'react';
+import styles from './EditBaseNumberings.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
@@ -16,6 +17,19 @@ import { LineWidthField } from './LineWidthField';
 import { LineLengthField } from './LineLengthField';
 import { BasePaddingField } from './BasePaddingField';
 
+function DrawingHasNoBaseNumberingsNotes() {
+  return (
+    <div style={{ marginTop: '24px' }} >
+      <p className={styles.notesText} >
+        Drawing has no numberings...
+      </p>
+      <p className={styles.notesText} style={{ marginTop: '14px' }} >
+        Add numberings by adjusting the numbering anchor and increment...
+      </p>
+    </div>
+  );
+}
+
 export interface Props {
   unmount: () => void;
   history: FormHistoryInterface;
@@ -28,6 +42,8 @@ export interface Props {
 }
 
 export function EditBaseNumberingsForm(props: Props) {
+  let numBaseNumberingsInDrawing = props.app.drawing.bases().filter(b => b.numbering).length;
+
   return (
     <PartialWidthContainer
       unmount={props.unmount}
@@ -42,7 +58,11 @@ export function EditBaseNumberingsForm(props: Props) {
           <NumberingIncrementField {...props} />
         </div>
       )}
-      {props.baseNumberings.length == 0 ? null : (
+      {numBaseNumberingsInDrawing == 0 ? (
+        <DrawingHasNoBaseNumberingsNotes />
+      ) : props.baseNumberings.length == 0 ? (
+        null
+      ) : (
         <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column' }} >
           <FontFamilyField {...props} />
           <FontSizeField {...props} />
