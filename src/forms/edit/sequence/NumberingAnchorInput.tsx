@@ -1,5 +1,5 @@
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInput } from 'Forms/inputs/text/TextInput';
 import type { App } from 'App';
 import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
@@ -41,9 +41,7 @@ export class NumberingAnchorInput extends React.Component<Props> {
 
   render() {
     return (
-      <input
-        type='text'
-        className={textFieldStyles.input}
+      <TextInput
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {
