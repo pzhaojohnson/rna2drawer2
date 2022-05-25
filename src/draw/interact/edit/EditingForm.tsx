@@ -11,7 +11,7 @@ import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import * as React from 'react';
 
-import { EditBases } from 'Forms/edit/bases/EditBases';
+import { EditBasesForm } from 'Forms/edit/bases/EditBasesForm';
 import { EditBaseNumberingsForm } from 'Forms/edit/bases/numberings/EditBaseNumberingsForm';
 import { EditPrimaryBondsForm } from 'Forms/edit/bonds/primary/EditPrimaryBondsForm';
 import { EditSecondaryBonds } from 'Forms/edit/bonds/secondary/EditSecondaryBonds';
@@ -85,7 +85,7 @@ export type Props = {
 // returns null for an unrecognized editing type
 export function EditingForm(props: Props) {
   if (props.editingType == Base) {
-    return <EditBases {...props} bases={filterBases(props.elements)} />;
+    return <EditBasesForm {...props} bases={filterBases(props.elements)} />;
   } else if (props.editingType == BaseNumbering) {
     return <EditBaseNumberingsForm {...props} baseNumberings={filterBaseNumberings(props.elements)} />
   } else if (props.editingType == PrimaryBond) {

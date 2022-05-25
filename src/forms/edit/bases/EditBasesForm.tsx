@@ -43,7 +43,7 @@ function outlines(bases: Base[]): CircleBaseAnnotation[] {
   return os;
 }
 
-export function EditBases(props: Props) {
+export function EditBasesForm(props: Props) {
   let os = outlines(props.bases);
   return (
     <PartialWidthContainer
