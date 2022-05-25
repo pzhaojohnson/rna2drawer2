@@ -9,8 +9,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { CharacterField } from './CharacterField';
 import { NumberingField } from './NumberingField';
-import { FillPicker } from './FillPicker';
-import { FillOpacityInput } from './FillOpacityInput';
+import { FillField } from './FillField';
 import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 import { OutlineField, allHaveOutlines } from './OutlineField';
@@ -62,17 +61,7 @@ export function EditBasesForm(props: Props) {
               <NumberingField {...props} base={props.bases[0]} />
             </div>
           )}
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <FillPicker app={props.app} bases={props.bases} />
-            <div style={{ marginLeft: '10px' }} >
-              <FillOpacityInput app={props.app} bases={props.bases} />
-            </div>
-            <div style={{ marginLeft: '8px' }} >
-              <p className={`${colorFieldStyles.label} unselectable`} >
-                Color
-              </p>
-            </div>
-          </div>
+          <FillField {...props} />
           <div style={{ marginTop: '16px' }} >
             <OutlineField app={props.app} bases={props.bases} />
           </div>
