@@ -30,6 +30,19 @@ function DrawingHasNoBaseNumberingsNotes() {
   );
 }
 
+function NoBaseNumberingsAreSelectedNotes() {
+  return (
+    <div style={{ marginTop: '24px' }} >
+      <p className={styles.notesText} >
+        No numberings are selected...
+      </p>
+      <p className={styles.notesText} style={{ marginTop: '14px' }} >
+        Select numberings using the editing tool...
+      </p>
+    </div>
+  );
+}
+
 export interface Props {
   unmount: () => void;
   history: FormHistoryInterface;
@@ -61,7 +74,7 @@ export function EditBaseNumberingsForm(props: Props) {
       {numBaseNumberingsInDrawing == 0 ? (
         <DrawingHasNoBaseNumberingsNotes />
       ) : props.baseNumberings.length == 0 ? (
-        null
+        <NoBaseNumberingsAreSelectedNotes />
       ) : (
         <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column' }} >
           <FontFamilyField {...props} />
