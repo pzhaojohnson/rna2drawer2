@@ -9,7 +9,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { CharacterField } from './CharacterField';
 import { NumberingField } from './NumberingField';
 import { FillField } from './FillField';
-import { OutlineField, allHaveOutlines } from './OutlineField';
+import { OutlineField } from './OutlineField';
 import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import { StrokeField as OutlineStrokeField } from './outlines/StrokeField';
 import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
@@ -49,7 +49,7 @@ export function EditBasesForm(props: Props) {
           )}
           <FillField {...props} />
           <OutlineField {...props} />
-          {!allHaveOutlines(props.bases) ? null : (
+          {!props.bases.every(b => b.outline) ? null : (
             <div style={{ margin: '12px 0px 0px 16px' }} >
               <OutlineFillField {...props} outlines={outlines} />
               <OutlineRadiusField {...props} outlines={outlines} />
