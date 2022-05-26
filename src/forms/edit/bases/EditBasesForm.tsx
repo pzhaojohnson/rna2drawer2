@@ -91,7 +91,7 @@ export function EditBasesForm(props: Props) {
       {props.app.drawing.bases().length == 0 ? (
         <DrawingHasNoBasesNotes />
       ) : props.bases.length == 0 ? (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
           <WidthField {...props} />
           <HeightField {...props} />
           <NoBasesAreSelectedNotes />
