@@ -54,7 +54,7 @@ export function OutlineField(props: Props) {
         }
         props.app.refresh();
       }}
-      style={{ marginTop: '16px', alignSelf: 'start' }}
+      style={{ marginTop: '20px', alignSelf: 'start' }}
     />
   );
 }

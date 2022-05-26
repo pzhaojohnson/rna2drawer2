@@ -56,7 +56,7 @@ export function EditBasesForm(props: Props) {
           <BoldField {...props} />
           <OutlineField {...props} />
           {!props.bases.every(b => b.outline) ? null : (
-            <div style={{ margin: '12px 0 0 16px', display: 'flex', flexDirection: 'column' }} >
+            <div style={{ margin: '12px 0 0 18px', display: 'flex', flexDirection: 'column' }} >
               <OutlineFillField {...props} outlines={outlines} />
               <OutlineRadiusField {...props} outlines={outlines} />
               <OutlineStrokeField {...props} outlines={outlines} />
