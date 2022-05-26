@@ -86,7 +86,7 @@ export class RadiusField extends React.Component<Props> {
         input={{
           style: { width: '32px' },
         }}
-        style={{ marginTop: '8px' }}
+        style={{ marginTop: '8px', alignSelf: 'start' }}
       />
     );
   }

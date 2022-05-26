@@ -54,7 +54,7 @@ export class FontSizeField extends React.Component<Props> {
         input={{
           style: { width: '36px' },
         }}
-        style={{ marginTop: '10px' }}
+        style={{ marginTop: '10px', alignSelf: 'start' }}
       />
     );
   }
