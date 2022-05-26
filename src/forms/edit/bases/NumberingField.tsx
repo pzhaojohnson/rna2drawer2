@@ -13,21 +13,31 @@ export type Props = {
 };
 
 export function NumberingField(props: Props) {
+  if (!props.base.numbering) {
+    return (
+      <div style={{ marginTop: '16px', alignSelf: 'start', display: 'flex' }} >
+        <FieldLabel style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} >
+          <NumberingCheckbox {...props} />
+          <span style={{ marginLeft: '6px' }} >
+            Numbering
+          </span>
+        </FieldLabel>
+      </div>
+    );
+  }
+
   return (
-    <FieldLabel
-      style={{
-        marginTop: '16px',
-        display: 'flex', flexDirection: 'row', alignItems: 'center',
-      }}
-    >
-      <NumberingCheckbox {...props} />
-      <span style={{ marginRight: props.base.numbering ? '10px' : '0px' }} />
-      {!props.base.numbering ? null : (
-        <NumberInput {...props} baseNumbering={props.base.numbering} />
-      )}
-      <span style={{ marginLeft: props.base.numbering ? '8px' : '6px' }} >
-        Numbering
-      </span>
-    </FieldLabel>
+    <div style={{ marginTop: '16px', alignSelf: 'start', display: 'flex' }} >
+      <div style={{ display: 'flex', alignItems: 'center' }} >
+        <NumberingCheckbox {...props} />
+        <span style={{ width: '10px' }} />
+        <FieldLabel style={{ display: 'flex', alignItems: 'center', cursor: 'text' }} >
+          <NumberInput {...props} baseNumbering={props.base.numbering} />
+          <span style={{ marginLeft: '8px' }} >
+            Numbering
+          </span>
+        </FieldLabel>
+      </div>
+    </div>
   );
 }
