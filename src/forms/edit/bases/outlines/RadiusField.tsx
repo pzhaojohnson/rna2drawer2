@@ -69,7 +69,12 @@ export class RadiusField extends React.Component<Props> {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <div
+        style={{
+          marginTop: '8px',
+          display: 'flex', flexDirection: 'row', alignItems: 'center',
+        }}
+      >
         <input
           type='text'
           className={textFieldStyles.input}

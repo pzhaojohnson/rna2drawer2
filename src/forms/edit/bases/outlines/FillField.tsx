@@ -16,7 +16,7 @@ export function FillField(props: Props) {
   return (
     <div
       style={{
-        marginTop: '8px', alignSelf: 'start',
+        alignSelf: 'start',
         display: 'flex', flexDirection: 'row', alignItems: 'center',
       }}
     >

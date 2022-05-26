@@ -27,7 +27,12 @@ export class CharacterField extends React.Component<Props> {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+      <div
+        style={{
+          marginBottom: '16px',
+          display: 'flex', flexDirection: 'row', alignItems: 'center',
+        }}
+      >
         <input
           type='text'
           className={textFieldStyles.input}
