@@ -9,13 +9,12 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { CharacterField } from './CharacterField';
 import { NumberingField } from './NumberingField';
 import { FillField } from './FillField';
-import { BringToFrontButton } from './BringToFrontButton';
-import { SendToBackButton } from './SendToBackButton';
 import { OutlineField, allHaveOutlines } from './OutlineField';
 import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import { StrokeField as OutlineStrokeField } from './outlines/StrokeField';
 import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
 import { FillField as OutlineFillField } from './outlines/FillField';
+import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 export type Props = {
   app: App;
@@ -72,13 +71,7 @@ export function EditBasesForm(props: Props) {
               <OutlineFillField {...props} outlines={os} />
             </div>
           )}
-          <div style={{ marginTop: '16px' }} >
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-              <BringToFrontButton app={props.app} bases={props.bases} />
-              <div style={{ width: '18px' }} />
-              <SendToBackButton app={props.app} bases={props.bases} />
-            </div>
-          </div>
+          <ForwardBackwardButtons {...props} />
         </div>
       )}
     </PartialWidthContainer>
