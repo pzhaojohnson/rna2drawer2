@@ -6,3 +6,30 @@
   color: #646469;
   user-select: none;
 }
+
+.selectAllBasesButton {
+  margin: 24px 0px 8px 8px;
+  width: 200px;
+  padding: 3px 0px;
+  text-align: center;
+
+  border: 1px solid #d3d3e5;
+  border-radius: 40px;
+
+  background-color: transparent;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  color: #1a1a5d;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.selectAllBasesButton:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 2px 2px #eeeef5;
+  transition: transform 0.04s;
+}

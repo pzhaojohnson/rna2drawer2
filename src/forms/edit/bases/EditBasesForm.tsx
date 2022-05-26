@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import type { Base } from 'Draw/bases/Base';
+import { Base } from 'Draw/bases/Base';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
 import * as React from 'react';
@@ -41,6 +41,29 @@ function NoBasesAreSelectedNotes() {
   );
 }
 
+function SelectAllBasesButton(
+  props: {
+    app: App,
+  },
+) {
+  return (
+    <button
+      className={styles.selectAllBasesButton}
+      onClick={() => {
+        let drawing = props.app.drawing;
+        let drawingInteraction = props.app.drawingInteraction;
+        let editingTool = drawingInteraction.editingTool;
+
+        drawingInteraction.currentTool = editingTool; // switch to editing tool
+        editingTool.editingType = Base; // set to edit bases
+        editingTool.select(drawing.bases()); // select all bases
+      }}
+    >
+      Select All Bases
+    </button>
+  );
+}
+
 export type Props = {
   app: App;
 
@@ -66,7 +89,10 @@ export function EditBasesForm(props: Props) {
       {props.app.drawing.bases().length == 0 ? (
         <DrawingHasNoBasesNotes />
       ) : props.bases.length == 0 ? (
-        <NoBasesAreSelectedNotes />
+        <div>
+          <NoBasesAreSelectedNotes />
+          <SelectAllBasesButton {...props} />
+        </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           {props.bases.length != 1 ? null : (
