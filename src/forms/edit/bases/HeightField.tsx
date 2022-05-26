@@ -41,7 +41,7 @@ export class HeightField extends React.Component<Props> {
   render() {
     return (
       <TextInputField
-        label='Height'
+        label='Height of All Bases'
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {

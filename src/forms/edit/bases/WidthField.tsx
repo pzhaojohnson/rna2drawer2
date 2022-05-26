@@ -41,7 +41,7 @@ export class WidthField extends React.Component<Props> {
   render() {
     return (
       <TextInputField
-        label='Width'
+        label='Width of All Bases'
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {
