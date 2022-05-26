@@ -1,5 +1,5 @@
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
@@ -69,35 +69,25 @@ export class RadiusField extends React.Component<Props> {
 
   render() {
     return (
-      <div
-        style={{
-          marginTop: '8px',
-          display: 'flex', flexDirection: 'row', alignItems: 'center',
+      <TextInputField
+        label='Radius'
+        value={this.state.value}
+        onChange={event => this.setState({ value: event.target.value })}
+        onBlur={() => {
+          this.submit();
+          this.props.app.refresh();
         }}
-      >
-        <input
-          type='text'
-          className={textFieldStyles.input}
-          value={this.state.value}
-          onChange={event => this.setState({ value: event.target.value })}
-          onBlur={() => {
+        onKeyUp={event => {
+          if (event.key.toLowerCase() == 'enter') {
             this.submit();
             this.props.app.refresh();
-          }}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              this.submit();
-              this.props.app.refresh();
-            }
-          }}
-          style={{ width: '32px' }}
-        />
-        <div style={{ marginLeft: '8px' }} >
-          <p className={`${textFieldStyles.label} unselectable`} >
-            Radius
-          </p>
-        </div>
-      </div>
+          }
+        }}
+        input={{
+          style: { width: '32px' },
+        }}
+        style={{ marginTop: '8px' }}
+      />
     );
   }
 
