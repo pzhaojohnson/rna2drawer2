@@ -1,6 +1,6 @@
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
-import type { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
+import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
 import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
@@ -26,18 +26,11 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-function outlines(bases: Base[]): CircleBaseAnnotation[] {
-  let os: CircleBaseAnnotation[] = [];
-  bases.forEach(b => {
-    if (b.outline) {
-      os.push(b.outline);
-    }
-  });
-  return os;
-}
-
 export function EditBasesForm(props: Props) {
-  let os = outlines(props.bases);
+  let outlines = props.bases.map(b => b.outline).filter(
+    (o): o is CircleBaseAnnotation => o instanceof CircleBaseAnnotation
+  );
+
   return (
     <PartialWidthContainer
       unmount={props.unmount}
@@ -61,10 +54,10 @@ export function EditBasesForm(props: Props) {
           <OutlineField {...props} />
           {!allHaveOutlines(props.bases) ? null : (
             <div style={{ margin: '12px 0px 0px 16px' }} >
-              <OutlineRadiusField {...props} outlines={os} />
-              <OutlineStrokeField {...props} outlines={os} />
-              <OutlineStrokeWidthField {...props} outlines={os} />
-              <OutlineFillField {...props} outlines={os} />
+              <OutlineRadiusField {...props} outlines={outlines} />
+              <OutlineStrokeField {...props} outlines={outlines} />
+              <OutlineStrokeWidthField {...props} outlines={outlines} />
+              <OutlineFillField {...props} outlines={outlines} />
             </div>
           )}
           <ForwardBackwardButtons {...props} />
