@@ -6,7 +6,6 @@ import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
 import { CharacterField } from './CharacterField';
 import { NumberingField } from './NumberingField';
 import { FillField } from './FillField';
@@ -16,8 +15,7 @@ import { OutlineField, allHaveOutlines } from './OutlineField';
 import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import { StrokeField as OutlineStrokeField } from './outlines/StrokeField';
 import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
-import { FillPicker as OutlineFillPicker } from './outlines/FillPicker';
-import { FillOpacityInput as OutlineFillOpacityInput } from './outlines/FillOpacityInput';
+import { FillField as OutlineFillField } from './outlines/FillField';
 
 export type Props = {
   app: App;
@@ -71,19 +69,7 @@ export function EditBasesForm(props: Props) {
               <div style={{ marginTop: '8px' }} >
                 <OutlineStrokeWidthField app={props.app} outlines={os} />
               </div>
-              <div style={{ marginTop: '8px' }} >
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                  <OutlineFillPicker app={props.app} outlines={os} />
-                  <div style={{ marginLeft: '10px' }} >
-                    <OutlineFillOpacityInput app={props.app} outlines={os} />
-                  </div>
-                  <div style={{ marginLeft: '8px' }} >
-                    <p className={`${colorFieldStyles.label} unselectable`} >
-                      Fill
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <OutlineFillField {...props} outlines={os} />
             </div>
           )}
           <div style={{ marginTop: '16px' }} >
