@@ -27,7 +27,12 @@ function currFontFamily(bases: Base[]): string | undefined {
 
 export function FontFamilyField(props: Props) {
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
+    <div
+      style={{
+        marginTop: '12px', width: '100%',
+        display: 'flex', flexDirection: 'column',
+      }}
+    >
       <FontFamilySelect
         value={currFontFamily(props.bases)}
         onChange={event => {

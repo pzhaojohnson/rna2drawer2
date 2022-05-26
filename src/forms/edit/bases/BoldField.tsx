@@ -38,7 +38,12 @@ export type Props = {
 
 export function BoldField(props: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+    <div
+      style={{
+        marginTop: '10px',
+        display: 'flex', flexDirection: 'row', alignItems: 'center',
+      }}
+    >
       <Checkbox
         checked={areAllBold(props.bases)}
         onChange={event => {
