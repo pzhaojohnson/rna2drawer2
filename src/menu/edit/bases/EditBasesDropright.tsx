@@ -3,7 +3,6 @@ import styles from './EditBasesDropright.css';
 import { Dropright } from 'Menu/Dropright';
 import { DroppedSeparator } from 'Menu/DroppedSeparator';
 import type { App } from 'App';
-import { GeneralStylesButton } from './GeneralStylesButton';
 import { BySelectionButton } from './BySelectionButton';
 import { ByCharacterButton } from './ByCharacterButton';
 import { ByDataButton } from './ByDataButton';
@@ -23,11 +22,10 @@ export function EditBasesDropright(props: Props) {
       dropped={
         <div style={{ width: '296px', display: 'flex', flexDirection: 'column' }} >
           <div className={styles.lightGrayishLeftBorder} >
-            <GeneralStylesButton app={props.app} />
+            <BySelectionButton app={props.app} />
           </div>
           <div className={styles.grayishLeftBorder} >
             <DroppedSeparator />
-            <BySelectionButton app={props.app} />
             <ByCharacterButton app={props.app} />
             <ByDataButton app={props.app} />
             <DroppedSeparator />
