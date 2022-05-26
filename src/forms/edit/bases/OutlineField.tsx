@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
-import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
+import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import type { App } from 'App';
 import type { Base } from 'Draw/bases/Base';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
@@ -43,30 +42,19 @@ function removeOutlines(bases: Base[]) {
 
 export function OutlineField(props: Props) {
   return (
-    <div
-      style={{
-        marginTop: '16px',
-        display: 'flex', flexDirection: 'row', alignItems: 'center',
+    <CheckboxField
+      label='Outline'
+      checked={allHaveOutlines(props.bases)}
+      onChange={event => {
+        props.app.pushUndo();
+        if (event.target.checked) {
+          addOutlines(props.bases);
+        } else {
+          removeOutlines(props.bases);
+        }
+        props.app.refresh();
       }}
-    >
-      <Checkbox
-        checked={allHaveOutlines(props.bases)}
-        onChange={event => {
-          props.app.pushUndo();
-          if (event.target.checked) {
-            addOutlines(props.bases);
-          } else {
-            removeOutlines(props.bases);
-          }
-          props.app.refresh();
-        }}
-      />
-      <p
-        className={`${checkboxFieldStyles.label} unselectable`}
-        style={{ marginLeft: '6px' }}
-      >
-        Outline
-      </p>
-    </div>
+      style={{ marginTop: '16px', alignSelf: 'start' }}
+    />
   );
 }

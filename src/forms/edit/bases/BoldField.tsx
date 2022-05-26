@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
-import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
+import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import type { App } from 'App';
 import { Base } from 'Draw/bases/Base';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
@@ -38,38 +37,27 @@ export type Props = {
 
 export function BoldField(props: Props) {
   return (
-    <div
-      style={{
-        marginTop: '10px',
-        display: 'flex', flexDirection: 'row', alignItems: 'center',
+    <CheckboxField
+      label='Bold'
+      checked={areAllBold(props.bases)}
+      onChange={event => {
+        props.app.pushUndo();
+        let fw = event.target.checked ? 700 : 400;
+        props.bases.forEach(b => {
+
+          // remember center coordinates
+          let bbox = b.text.bbox();
+          let center = { x: bbox.cx, y: bbox.cy };
+
+          b.text.attr({ 'font-weight': fw });
+
+          // recenter
+          b.text.center(center.x, center.y);
+        });
+        Base.recommendedDefaults.text['font-weight'] = fw;
+        props.app.refresh();
       }}
-    >
-      <Checkbox
-        checked={areAllBold(props.bases)}
-        onChange={event => {
-          props.app.pushUndo();
-          let fw = event.target.checked ? 700 : 400;
-          props.bases.forEach(b => {
-
-            // remember center coordinates
-            let bbox = b.text.bbox();
-            let center = { x: bbox.cx, y: bbox.cy };
-
-            b.text.attr({ 'font-weight': fw });
-
-            // recenter
-            b.text.center(center.x, center.y);
-          });
-          Base.recommendedDefaults.text['font-weight'] = fw;
-          props.app.refresh();
-        }}
-      />
-      <p
-        className={`${checkboxFieldStyles.label} unselectable`}
-        style={{ marginLeft: '6px' }}
-      >
-        Bold
-      </p>
-    </div>
+      style={{ marginTop: '10px', alignSelf: 'start' }}
+    />
   );
 }
