@@ -28,6 +28,19 @@ function DrawingHasNoBasesNotes() {
   );
 }
 
+function NoBasesAreSelectedNotes() {
+  return (
+    <div>
+      <p className={styles.notesText} >
+        No bases are selected...
+      </p>
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
+        Select bases using the editing tool...
+      </p>
+    </div>
+  );
+}
+
 export type Props = {
   app: App;
 
@@ -53,9 +66,7 @@ export function EditBasesForm(props: Props) {
       {props.app.drawing.bases().length == 0 ? (
         <DrawingHasNoBasesNotes />
       ) : props.bases.length == 0 ? (
-        <p className='unselectable' style={{ fontSize: '12px' }} >
-          No bases are selected.
-        </p>
+        <NoBasesAreSelectedNotes />
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           {props.bases.length != 1 ? null : (
