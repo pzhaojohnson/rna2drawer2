@@ -3,6 +3,7 @@ import type { Base } from 'Draw/bases/Base';
 import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
 import * as React from 'react';
+import styles from './EditBasesForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
@@ -18,6 +19,14 @@ import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWi
 import { FillField as OutlineFillField } from './outlines/FillField';
 import { NumberingField } from './NumberingField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
+
+function DrawingHasNoBasesNotes() {
+  return (
+    <p className={styles.notesText} >
+      Drawing has no bases...
+    </p>
+  );
+}
 
 export type Props = {
   app: App;
@@ -41,7 +50,9 @@ export function EditBasesForm(props: Props) {
       title='Bases'
       style={{ width: '324px' }}
     >
-      {props.bases.length == 0 ? (
+      {props.app.drawing.bases().length == 0 ? (
+        <DrawingHasNoBasesNotes />
+      ) : props.bases.length == 0 ? (
         <p className='unselectable' style={{ fontSize: '12px' }} >
           No bases are selected.
         </p>
