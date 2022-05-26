@@ -7,6 +7,8 @@ import styles from './EditBasesForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
+import { WidthField } from './WidthField';
+import { HeightField } from './HeightField';
 import { CharacterField } from './CharacterField';
 import { FillField } from './FillField';
 import { FontFamilyField } from './FontFamilyField';
@@ -30,7 +32,7 @@ function DrawingHasNoBasesNotes() {
 
 function NoBasesAreSelectedNotes() {
   return (
-    <div>
+    <div style={{ marginTop: '32px' }} >
       <p className={styles.notesText} >
         No bases are selected...
       </p>
@@ -90,6 +92,8 @@ export function EditBasesForm(props: Props) {
         <DrawingHasNoBasesNotes />
       ) : props.bases.length == 0 ? (
         <div>
+          <WidthField {...props} />
+          <HeightField {...props} />
           <NoBasesAreSelectedNotes />
           <SelectAllBasesButton {...props} />
         </div>
