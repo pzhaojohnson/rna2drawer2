@@ -43,7 +43,12 @@ function removeOutlines(bases: Base[]) {
 
 export function OutlineField(props: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+    <div
+      style={{
+        marginTop: '16px',
+        display: 'flex', flexDirection: 'row', alignItems: 'center',
+      }}
+    >
       <Checkbox
         checked={allHaveOutlines(props.bases)}
         onChange={event => {
