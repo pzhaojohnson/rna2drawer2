@@ -53,17 +53,17 @@ export function EditBasesForm(props: Props) {
         <div>
           {props.bases.length != 1 ? null : (
             <div style={{ marginBottom: '16px' }} >
-              <CharacterField app={props.app} base={props.bases[0]} />
+              <CharacterField {...props} base={props.bases[0]} />
               <NumberingField {...props} base={props.bases[0]} />
             </div>
           )}
           <FillField {...props} />
-          <OutlineField app={props.app} bases={props.bases} />
+          <OutlineField {...props} />
           {!allHaveOutlines(props.bases) ? null : (
             <div style={{ margin: '12px 0px 0px 16px' }} >
-              <OutlineRadiusField app={props.app} outlines={os} />
+              <OutlineRadiusField {...props} outlines={os} />
               <OutlineStrokeField {...props} outlines={os} />
-              <OutlineStrokeWidthField app={props.app} outlines={os} />
+              <OutlineStrokeWidthField {...props} outlines={os} />
               <OutlineFillField {...props} outlines={os} />
             </div>
           )}
