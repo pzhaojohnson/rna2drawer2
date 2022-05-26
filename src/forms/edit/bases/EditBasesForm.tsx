@@ -14,8 +14,7 @@ import { BringToFrontButton } from './BringToFrontButton';
 import { SendToBackButton } from './SendToBackButton';
 import { OutlineField, allHaveOutlines } from './OutlineField';
 import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
-import { StrokePicker as OutlineStrokePicker } from './outlines/StrokePicker';
-import { StrokeOpacityInput as OutlineStrokeOpacityInput } from './outlines/StrokeOpacityInput';
+import { StrokeField as OutlineStrokeField } from './outlines/StrokeField';
 import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
 import { FillPicker as OutlineFillPicker } from './outlines/FillPicker';
 import { FillOpacityInput as OutlineFillOpacityInput } from './outlines/FillOpacityInput';
@@ -68,19 +67,7 @@ export function EditBasesForm(props: Props) {
           {!allHaveOutlines(props.bases) ? null : (
             <div style={{ margin: '12px 0px 0px 16px' }} >
               <OutlineRadiusField app={props.app} outlines={os} />
-              <div style={{ marginTop: '8px' }} >
-                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-                  <OutlineStrokePicker app={props.app} outlines={os} />
-                  <div style={{ marginLeft: '10px' }} >
-                    <OutlineStrokeOpacityInput app={props.app} outlines={os} />
-                  </div>
-                  <div style={{ marginLeft: '8px' }} >
-                    <p className={`${colorFieldStyles.label} unselectable`} >
-                      Line Color
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <OutlineStrokeField {...props} outlines={os} />
               <div style={{ marginTop: '8px' }} >
                 <OutlineStrokeWidthField app={props.app} outlines={os} />
               </div>
