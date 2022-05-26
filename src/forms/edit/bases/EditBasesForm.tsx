@@ -7,7 +7,6 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { CharacterField } from './CharacterField';
-import { NumberingField } from './NumberingField';
 import { FillField } from './FillField';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
@@ -17,6 +16,7 @@ import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import { StrokeField as OutlineStrokeField } from './outlines/StrokeField';
 import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
 import { FillField as OutlineFillField } from './outlines/FillField';
+import { NumberingField } from './NumberingField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 export type Props = {
