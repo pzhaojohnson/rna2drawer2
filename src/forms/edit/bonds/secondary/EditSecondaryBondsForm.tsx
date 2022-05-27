@@ -2,6 +2,7 @@ import type { App } from 'App';
 import type { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 
 import * as React from 'react';
+import styles from './EditSecondaryBondsForm.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
@@ -12,6 +13,19 @@ import { StrokeWidthField } from './StrokeWidthField';
 import { StrokeLinecapField } from './StrokeLinecapField';
 import { DotifyAndSquarifyButtons } from './DotifyAndSquarifyButtons';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
+
+function DrawingHasNoSecondaryBondsNotes() {
+  return (
+    <div>
+      <p className={styles.notesText} >
+        Drawing has no secondary bonds...
+      </p>
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
+        Add secondary bonds using the binding tool...
+      </p>
+    </div>
+  );
+}
 
 export type Props = {
   app: App;
@@ -31,7 +45,9 @@ export function EditSecondaryBondsForm(props: Props) {
       title='Secondary Bonds'
       style={{ width: '324px' }}
     >
-      {props.secondaryBonds.length == 0 ? (
+      {props.app.drawing.secondaryBonds.length == 0 ? (
+        <DrawingHasNoSecondaryBondsNotes />
+      ) : props.secondaryBonds.length == 0 ? (
         <p className='unselectable' style={{ fontSize: '12px' }} >
           No secondary bonds to edit.
         </p>
