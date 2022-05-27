@@ -15,3 +15,30 @@
   color: #646469;
   user-select: none;
 }
+
+.selectSecondaryBondsButton {
+  margin: 0px 0px 12px 6px;
+  padding: 4px 0px;
+  width: 232px;
+  text-align: center;
+
+  border: 1px solid #d3d3e5;
+  border-radius: 40px;
+
+  background-color: transparent;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  color: #202060;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.selectSecondaryBondsButton:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 2px 2px #eeeef5;
+  transition: transform 0.04s;
+}
