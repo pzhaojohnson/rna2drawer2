@@ -14,7 +14,7 @@ import * as React from 'react';
 import { EditBasesForm } from 'Forms/edit/bases/EditBasesForm';
 import { EditBaseNumberingsForm } from 'Forms/edit/bases/numberings/EditBaseNumberingsForm';
 import { EditPrimaryBondsForm } from 'Forms/edit/bonds/primary/EditPrimaryBondsForm';
-import { EditSecondaryBonds } from 'Forms/edit/bonds/secondary/EditSecondaryBonds';
+import { EditSecondaryBondsForm } from 'Forms/edit/bonds/secondary/EditSecondaryBondsForm';
 import { EditTertiaryBondsForm } from 'Forms/edit/bonds/tertiary/EditTertiaryBondsForm';
 
 function filterBases(eles: DrawingElement[]): Base[] {
@@ -91,7 +91,7 @@ export function EditingForm(props: Props) {
   } else if (props.editingType == PrimaryBond) {
     return <EditPrimaryBondsForm {...props} primaryBonds={filterPrimaryBonds(props.elements)} />
   } else if (props.editingType == SecondaryBond) {
-    return <EditSecondaryBonds {...props} secondaryBonds={filterSecondaryBonds(props.elements)} />
+    return <EditSecondaryBondsForm {...props} secondaryBonds={filterSecondaryBonds(props.elements)} />
   } else if (props.editingType == TertiaryBond) {
     return <EditTertiaryBondsForm {...props} tertiaryBonds={filterTertiaryBonds(props.elements)} />
   } else {

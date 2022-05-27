@@ -50,7 +50,7 @@ function numOtherBonds(secondaryBonds: SecondaryBond[]): number {
   return secondaryBonds.filter(sb => sb.type == 'other').length;
 }
 
-export function EditSecondaryBonds(props: Props) {
+export function EditSecondaryBondsForm(props: Props) {
   return (
     <PartialWidthContainer
       unmount={props.unmount}
