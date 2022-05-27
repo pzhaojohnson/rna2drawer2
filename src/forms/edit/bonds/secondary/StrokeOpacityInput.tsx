@@ -83,39 +83,3 @@ export class StrokeOpacityInput extends React.Component<Props> {
     });
   }
 }
-
-export function AUTStrokeOpacityInput(props: Props) {
-  return (
-    <StrokeOpacityInput
-      app={props.app}
-      secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'AUT')}
-    />
-  );
-}
-
-export function GCStrokeOpacityInput(props: Props) {
-  return (
-    <StrokeOpacityInput
-      app={props.app}
-      secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'GC')}
-    />
-  );
-}
-
-export function GUTStrokeOpacityInput(props: Props) {
-  return (
-    <StrokeOpacityInput
-      app={props.app}
-      secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'GUT')}
-    />
-  );
-}
-
-export function OtherStrokeOpacityInput(props: Props) {
-  return (
-    <StrokeOpacityInput
-      app={props.app}
-      secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'other')}
-    />
-  );
-}

@@ -48,39 +48,3 @@ export function StrokePicker(props: Props) {
     />
   );
 }
-
-export function AUTStrokePicker(props: Props) {
-  return (
-    <StrokePicker
-      app={props.app}
-      secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'AUT')}
-    />
-  );
-}
-
-export function GCStrokePicker(props: Props) {
-  return (
-    <StrokePicker
-      app={props.app}
-      secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'GC')}
-    />
-  );
-}
-
-export function GUTStrokePicker(props: Props) {
-  return (
-    <StrokePicker
-      app={props.app}
-      secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'GUT')}
-    />
-  );
-}
-
-export function OtherStrokePicker(props: Props) {
-  return (
-    <StrokePicker
-      app={props.app}
-      secondaryBonds={props.secondaryBonds.filter(sb => sb.type == 'other')}
-    />
-  );
-}
