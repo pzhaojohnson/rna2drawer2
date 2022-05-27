@@ -1,27 +1,27 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { EditSecondaryBondsForm } from 'Forms/edit/bonds/secondary/EditSecondaryBondsForm';
-import { v4 as uuidv4 } from 'uuid';
+import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 
 export type Props = {
   app: App;
 }
-
-const formKey = uuidv4();
 
 export function EditSecondaryBondsButton(props: Props) {
   return (
     <DroppedButton
       text='Secondary Bonds'
       onClick={() => {
-        props.app.formContainer.renderForm(formProps => (
-          <EditSecondaryBondsForm
-            {...formProps}
-            app={props.app}
-            secondaryBonds={[...props.app.strictDrawing.drawing.secondaryBonds]}
-          />
-        ), { key: formKey });
+        let drawingInteraction = props.app.drawingInteraction;
+        let editingTool = drawingInteraction.editingTool;
+
+        if (drawingInteraction.currentTool != editingTool) {
+          drawingInteraction.currentTool = editingTool;
+        }
+        if (editingTool.editingType != SecondaryBond) {
+          editingTool.editingType = SecondaryBond;
+        }
+        editingTool.renderForm();
       }}
     />
   );
