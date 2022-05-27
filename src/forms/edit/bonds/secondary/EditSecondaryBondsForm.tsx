@@ -77,8 +77,8 @@ export function EditSecondaryBondsForm(props: Props) {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeField {...props} />
-          <BasePaddingField {...props} />
           <StrokeWidthField {...props} />
+          <BasePaddingField {...props} />
           <StrokeLinecapField {...props} />
           <DotifyAndSquarifyButtons {...props} />
           <ForwardBackwardButtons {...props} />
