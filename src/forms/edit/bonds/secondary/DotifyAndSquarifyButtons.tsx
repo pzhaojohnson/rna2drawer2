@@ -43,7 +43,7 @@ export function SquarifyButton(props: Props) {
 
 export function DotifyAndSquarifyButtons(props: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
+    <div style={{ margin: '8px 0px 0px 40px', display: 'flex', alignItems: 'center' }} >
       <DotifyButton {...props} />
       <div style={{ width: '48px' }} />
       <SquarifyButton {...props} />

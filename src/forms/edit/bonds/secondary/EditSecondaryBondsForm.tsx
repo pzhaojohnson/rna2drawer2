@@ -38,24 +38,12 @@ export function EditSecondaryBondsForm(props: Props) {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeField {...props} />
-          <div style={{ marginTop: '8px', display: 'flex' }} >
-            <BaseSpacingField {...props} />
-          </div>
-          <div style={{ marginTop: '8px', display: 'flex' }} >
-            <BasePaddingField {...props} />
-          </div>
-          <div style={{ marginTop: '8px', display: 'flex' }} >
-            <StrokeWidthField {...props} />
-          </div>
-          <div style={{ marginTop: '16px' }} >
-            <StrokeLinecapField {...props} />
-          </div>
-          <div style={{ margin: '8px 0px 0px 40px' }} >
-            <DotifyAndSquarifyButtons {...props} />
-          </div>
-          <div style={{ marginTop: '16px' }} >
-            <ForwardBackwardButtons {...props} />
-          </div>
+          <BaseSpacingField {...props} />
+          <BasePaddingField {...props} />
+          <StrokeWidthField {...props} />
+          <StrokeLinecapField {...props} />
+          <DotifyAndSquarifyButtons {...props} />
+          <ForwardBackwardButtons {...props} />
         </div>
       )}
     </PartialWidthContainer>
