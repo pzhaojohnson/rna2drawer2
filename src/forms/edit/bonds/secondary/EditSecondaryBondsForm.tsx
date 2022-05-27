@@ -37,15 +37,15 @@ export function EditSecondaryBondsForm(props: Props) {
           No secondary bonds to edit.
         </p>
       ) : (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeField {...props} />
-          <div style={{ marginTop: '8px' }} >
+          <div style={{ marginTop: '8px', display: 'flex' }} >
             <BaseSpacingField app={props.app} />
           </div>
-          <div style={{ marginTop: '8px' }} >
+          <div style={{ marginTop: '8px', display: 'flex' }} >
             <BasePaddingField app={props.app} secondaryBonds={props.secondaryBonds} />
           </div>
-          <div style={{ marginTop: '8px' }} >
+          <div style={{ marginTop: '8px', display: 'flex' }} >
             <StrokeWidthField app={props.app} secondaryBonds={props.secondaryBonds} />
           </div>
           <div style={{ marginTop: '16px' }} >
