@@ -39,19 +39,19 @@ export function EditSecondaryBondsForm(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeField {...props} />
           <div style={{ marginTop: '8px', display: 'flex' }} >
-            <BaseSpacingField app={props.app} />
+            <BaseSpacingField {...props} />
           </div>
           <div style={{ marginTop: '8px', display: 'flex' }} >
-            <BasePaddingField app={props.app} secondaryBonds={props.secondaryBonds} />
+            <BasePaddingField {...props} />
           </div>
           <div style={{ marginTop: '8px', display: 'flex' }} >
-            <StrokeWidthField app={props.app} secondaryBonds={props.secondaryBonds} />
+            <StrokeWidthField {...props} />
           </div>
           <div style={{ marginTop: '16px' }} >
-            <StrokeLinecapField app={props.app} secondaryBonds={props.secondaryBonds} />
+            <StrokeLinecapField {...props} />
           </div>
           <div style={{ margin: '8px 0px 0px 40px' }} >
-            <DotifyAndSquarifyButtons app={props.app} secondaryBonds={props.secondaryBonds} />
+            <DotifyAndSquarifyButtons {...props} />
           </div>
           <div style={{ marginTop: '16px' }} >
             <ForwardBackwardButtons {...props} />
