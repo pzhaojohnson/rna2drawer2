@@ -27,6 +27,19 @@ function DrawingHasNoSecondaryBondsNotes() {
   );
 }
 
+function NoSecondaryBondsAreSelectedNotes() {
+  return (
+    <div>
+      <p className={styles.notesText} >
+        No secondary bonds are selected...
+      </p>
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
+        Select secondary bonds using the editing tool...
+      </p>
+    </div>
+  );
+}
+
 export type Props = {
   app: App;
 
@@ -48,9 +61,7 @@ export function EditSecondaryBondsForm(props: Props) {
       {props.app.drawing.secondaryBonds.length == 0 ? (
         <DrawingHasNoSecondaryBondsNotes />
       ) : props.secondaryBonds.length == 0 ? (
-        <p className='unselectable' style={{ fontSize: '12px' }} >
-          No secondary bonds to edit.
-        </p>
+        <NoSecondaryBondsAreSelectedNotes />
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeField {...props} />
