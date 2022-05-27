@@ -196,6 +196,12 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
 
   select(tool: Tool) {
     this.props.app.strictDrawingInteraction.currentTool = tool;
+
+    // open the editing tool form when switching to the editing tool
+    if (tool == this.props.app.strictDrawingInteraction.editingTool) {
+      this.props.app.strictDrawingInteraction.editingTool.renderForm();
+    }
+
     this.close();
   }
 

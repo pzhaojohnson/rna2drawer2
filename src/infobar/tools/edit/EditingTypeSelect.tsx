@@ -92,6 +92,7 @@ export function EditingTypeSelect(props: Props) {
             isToggled={false}
             onClick={() => {
               editingTool.editingType = t;
+              editingTool.renderForm();
               setIsOpen(false);
             }}
             style={{ marginLeft: '2px' }}
