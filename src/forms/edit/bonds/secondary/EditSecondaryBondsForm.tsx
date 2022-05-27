@@ -11,8 +11,7 @@ import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { StrokeLinecapField } from './StrokeLinecapField';
 import { DotifyAndSquarifyButtons } from './DotifyAndSquarifyButtons';
-import { BringToFrontButton } from './BringToFrontButton';
-import { SendToBackButton } from './SendToBackButton';
+import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 export type Props = {
   app: App;
@@ -55,11 +54,7 @@ export function EditSecondaryBondsForm(props: Props) {
             <DotifyAndSquarifyButtons app={props.app} secondaryBonds={props.secondaryBonds} />
           </div>
           <div style={{ marginTop: '16px' }} >
-            <div style={{ display: 'flex', flexDirection: 'row' }} >
-              <BringToFrontButton app={props.app} secondaryBonds={props.secondaryBonds} />
-              <div style={{ width: '18px' }} />
-              <SendToBackButton app={props.app} secondaryBonds={props.secondaryBonds} />
-            </div>
+            <ForwardBackwardButtons {...props} />
           </div>
         </div>
       )}
