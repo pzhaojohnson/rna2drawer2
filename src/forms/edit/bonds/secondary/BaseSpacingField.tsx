@@ -66,7 +66,7 @@ export class BaseSpacingField extends React.Component<Props> {
         input={{
           style: { width: '32px' },
         }}
-        style={{ marginTop: '8px', alignSelf: 'start' }}
+        style={{ margin: '10px 0 0 10px', alignSelf: 'start' }}
       />
     );
   }
