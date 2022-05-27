@@ -5,9 +5,7 @@ import * as React from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import colorFieldStyles from 'Forms/inputs/color/ColorField.css';
-import { StrokePicker } from './StrokePicker';
-import { StrokeOpacityInput } from './StrokeOpacityInput';
+import { StrokeField } from './StrokeField';
 import { BaseSpacingField } from './BaseSpacingField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
@@ -40,19 +38,7 @@ export function EditSecondaryBondsForm(props: Props) {
         </p>
       ) : (
         <div>
-          <div style={{ paddingBottom: '8px' }} >
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-              <StrokePicker app={props.app} secondaryBonds={props.secondaryBonds} />
-              <div style={{ marginLeft: '10px' }} >
-                <StrokeOpacityInput app={props.app} secondaryBonds={props.secondaryBonds} />
-              </div>
-              <div style={{ marginLeft: '8px' }} >
-                <p className={`${colorFieldStyles.label} unselectable`} >
-                  Color
-                </p>
-              </div>
-            </div>
-          </div>
+          <StrokeField {...props} />
           <div style={{ marginTop: '8px' }} >
             <BaseSpacingField app={props.app} />
           </div>
