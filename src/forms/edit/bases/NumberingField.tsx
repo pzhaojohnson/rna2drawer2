@@ -17,7 +17,7 @@ export function NumberingField(props: Props) {
     return (
       <div style={{ marginTop: '20px', alignSelf: 'start', display: 'flex' }} >
         <FieldLabel style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} >
-          <NumberingCheckbox {...props} />
+          <NumberingCheckbox {...props} bases={[props.base]} />
           <span style={{ marginLeft: '6px' }} >
             Numbering
           </span>
@@ -29,7 +29,7 @@ export function NumberingField(props: Props) {
   return (
     <div style={{ marginTop: '20px', alignSelf: 'start', display: 'flex' }} >
       <div style={{ display: 'flex', alignItems: 'center' }} >
-        <NumberingCheckbox {...props} />
+        <NumberingCheckbox {...props} bases={[props.base]} />
         <span style={{ width: '10px' }} />
         <FieldLabel style={{ display: 'flex', alignItems: 'center', cursor: 'text' }} >
           <NumberInput {...props} baseNumbering={props.base.numbering} />

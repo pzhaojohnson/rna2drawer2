@@ -17,7 +17,7 @@ import { NumberingCheckbox } from './NumberingCheckbox';
 let app = null;
 let drawing = null;
 let sequence = null;
-let base = null;
+let bases = null;
 
 let container = null;
 
@@ -27,7 +27,13 @@ beforeEach(() => {
 
   drawing = app.strictDrawing.drawing;
   sequence = appendSequence(drawing, { id: 'asdf', characters: 'asdfASDFqwerQWER' });
-  base = sequence.atPosition(6);
+
+  bases = [
+    sequence.atPosition(2),
+    sequence.atPosition(6),
+    sequence.atPosition(7),
+    sequence.atPosition(10),
+  ];
 
   container = document.createElement('div');
   document.body.appendChild(container);
@@ -38,7 +44,7 @@ afterEach(() => {
   container.remove();
   container = null;
 
-  base = null;
+  bases = null;
   sequence = null;
   drawing = null;
 
@@ -48,37 +54,37 @@ afterEach(() => {
 
 describe('NumberingCheckbox component', () => {
   describe('rendering', () => {
-    test('when the base is numbered', () => {
-      addNumbering(base, 10);
-      expect(base.numbering).toBeTruthy();
+    test('when the bases are numbered', () => {
+      bases.forEach((base, i) => addNumbering(base, i));
+      expect(bases.every(base => base.numbering)).toBeTruthy();
       expect(() => {
         act(() => {
-          render(<NumberingCheckbox app={app} base={base} />, container);
+          render(<NumberingCheckbox app={app} bases={bases} />, container);
         });
       }).not.toThrow();
     });
 
-    test('when the base is not numbered', () => {
-      removeNumbering(base);
-      expect(base.numbering).toBeFalsy();
+    test('when the bases are not numbered', () => {
+      bases.forEach(base => removeNumbering(base));
+      expect(bases.every(base => !base.numbering)).toBeTruthy();
       expect(() => {
         act(() => {
-          render(<NumberingCheckbox app={app} base={base} />, container);
+          render(<NumberingCheckbox app={app} bases={bases} />, container);
         });
       }).not.toThrow();
     });
   });
 
   test('removing base numbering', () => {
-    addNumbering(base, 50);
-    expect(base.numbering).toBeTruthy();
-    let comp = new NumberingCheckbox({ app, base });
+    bases.forEach((base, i) => addNumbering(base, i));
+    expect(bases.every(base => base.numbering)).toBeTruthy();
+    let comp = new NumberingCheckbox({ app, bases });
     comp.handleChange({ target: { checked: false } });
-    expect(base.numbering).toBeFalsy(); // removed numbering
+    expect(bases.every(base => !base.numbering)).toBeTruthy(); // removed numbering
     app.undo();
     // new Base instances may have been created on undo
-    let correspondingBase = drawing.bases().find(b => b.id == base.id);
-    expect(correspondingBase.numbering).toBeTruthy(); // pushed undo
+    let correspondingBases = bases.map(base => drawing.bases().find(b => b.id == base.id));
+    expect(correspondingBases.every(base => base.numbering)).toBeTruthy(); // pushed undo
   });
 
   describe('adding base numbering', () => {
@@ -87,7 +93,7 @@ describe('NumberingCheckbox component', () => {
       expect(numberingOffset(sequence)).toBe(0);
       let base = sequence.atPosition(3);
       expect(base.numbering).toBeFalsy();
-      let comp = new NumberingCheckbox({ app, base });
+      let comp = new NumberingCheckbox({ app, bases: [base] });
       comp.handleChange({ target: { checked: true } });
       expect(base.numbering).toBeTruthy(); // added numbering
       expect(base.numbering.text.text()).toBe('3');
@@ -98,7 +104,7 @@ describe('NumberingCheckbox component', () => {
       expect(numberingOffset(sequence)).toBe(-52);
       let base = sequence.atPosition(5);
       expect(base.numbering).toBeFalsy();
-      let comp = new NumberingCheckbox({ app, base });
+      let comp = new NumberingCheckbox({ app, bases: [base] });
       comp.handleChange({ target: { checked: true } });
       expect(base.numbering).toBeTruthy(); // added numbering
       expect(base.numbering.text.text()).toBe('-47');
@@ -111,7 +117,7 @@ describe('NumberingCheckbox component', () => {
       expect(numberingOffset(sequence)).toBeUndefined();
       let base = sequence.atPosition(6);
       expect(base.numbering).toBeFalsy();
-      let comp = new NumberingCheckbox({ app, base });
+      let comp = new NumberingCheckbox({ app, bases: [base] });
       comp.handleChange({ target: { checked: true } });
       expect(base.numbering).toBeTruthy(); // added numbering
       // defaulted to a numbering offset of zero
@@ -126,7 +132,7 @@ describe('NumberingCheckbox component', () => {
       updateBaseNumberings(sequence, { offset: 23, increment: 6, anchor: 0 });
       let base = sequence.atPosition(8);
       expect(base.numbering).toBeFalsy();
-      let comp = new NumberingCheckbox({ app, base });
+      let comp = new NumberingCheckbox({ app, bases: [base] });
       comp.handleChange({ target: { checked: true } });
       expect(base.numbering).toBeTruthy(); // added numbering
       // had to have found the sequence to apply its numbering offset
@@ -134,15 +140,15 @@ describe('NumberingCheckbox component', () => {
     });
 
     it('pushes undo', () => {
-      removeNumbering(base);
-      expect(base.numbering).toBeFalsy();
-      let comp = new NumberingCheckbox({ app, base });
+      bases.forEach(base => removeNumbering(base));
+      expect(bases.every(base => !base.numbering)).toBeTruthy();
+      let comp = new NumberingCheckbox({ app, bases });
       comp.handleChange({ target: { checked: true } });
-      expect(base.numbering).toBeTruthy(); // added numbering
+      expect(bases.every(base => base.numbering)).toBeTruthy(); // added numbering
       app.undo();
       // new Base instances may have been created on undo
-      let correspondingBase = drawing.bases().find(b => b.id == base.id);
-      expect(correspondingBase.numbering).toBeFalsy(); // pushed undo
+      let correspondingBases = bases.map(base => drawing.bases().find(b => b.id == base.id));
+      expect(correspondingBases.every(base => !base.numbering)).toBeTruthy(); // pushed undo
     });
   });
 });
