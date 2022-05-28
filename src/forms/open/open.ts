@@ -1,7 +1,18 @@
 import type { App } from 'App';
+import type { Drawing } from 'Draw/Drawing';
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
+
 import { parseRna2drawer1 } from './parseRna2drawer1';
 import { addRna2drawer1 } from './addRna2drawer1';
 import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawing';
+
+import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
+
+// no highlightings from user interaction should carry over
+// when opening a saved drawing
+function removeAllBaseHighlightings(drawing: Drawing | StrictDrawing) {
+  drawing.bases().forEach(b => removeCircleHighlighting(b));
+}
 
 interface Saved {
   extension: string;
@@ -24,6 +35,7 @@ function openRna2drawer2(app: App, saved: Saved): boolean {
     let applied = app.strictDrawing.applySavedState(savedState as StrictDrawingSavableState);
     if (applied) {
       app.strictDrawing.updateLayout(); // adjust padding of drawing for current screen
+      removeAllBaseHighlightings(app.drawing);
       return true;
     }
   } catch (err) {}
