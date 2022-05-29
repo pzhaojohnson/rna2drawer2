@@ -23,7 +23,7 @@ export function EditLayoutForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Layout'
-      style={{ width: '324px' }}
+      style={{ width: '330px' }}
     >
       <div style={{ display: 'flex' }} >
         <RotationField app={props.app} />
