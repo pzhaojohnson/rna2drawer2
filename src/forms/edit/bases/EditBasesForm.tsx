@@ -99,9 +99,7 @@ export function EditBasesForm(props: Props) {
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
-          {props.bases.length != 1 ? null : (
-            <CharacterField {...props} base={props.bases[0]} />
-          )}
+          <CharacterField {...props} />
           <FillField {...props} />
           <FontFamilyField {...props} />
           <FontSizeField {...props} />

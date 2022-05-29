@@ -7,8 +7,8 @@ import { TextInputField } from 'Forms/inputs/text/TextInputField';
 export type Props = {
   app: App;
 
-  // the base to edit
-  base: Base;
+  // the bases to edit
+  bases: Base[];
 }
 
 type State = {
@@ -22,7 +22,19 @@ export class CharacterField extends React.Component<Props> {
     super(props);
 
     this.state = {
-      value: props.base.text.text(),
+      value: this.initialValue,
+    }
+  }
+
+  get initialValue(): string {
+    let texts = new Set(
+      this.props.bases.map(base => base.text.text())
+    );
+
+    if (texts.size == 1) {
+      return texts.values().next().value;
+    } else {
+      return '';
     }
   }
 
@@ -52,23 +64,26 @@ export class CharacterField extends React.Component<Props> {
 
   submit() {
     let c = this.state.value;
-    c = c.trim();
-    if (c.length > 0) {
-      if (c != this.props.base.text.text()) {
-        this.props.app.pushUndo();
+    c = c.trim(); // remove leading and trailing whitespace
 
-        // remember center coordinates
-        let bbox = this.props.base.text.bbox();
-        let center = { x: bbox.cx, y: bbox.cy };
-
-        // ignore characters beyond the first input character
-        this.props.base.text.text(c.charAt(0));
-
-        // recenter
-        this.props.base.text.center(center.x, center.y);
-
-        this.props.app.refresh();
-      }
+    if (c.length == 0) {
+      return;
+    } else if (c == this.initialValue) {
+      return;
     }
+
+    this.props.app.pushUndo();
+
+    this.props.bases.forEach(base => {
+      // remember center coordinates
+      let bbox = base.text.bbox();
+      let center = { x: bbox.cx, y: bbox.cy };
+
+      // bases text should be a single character
+      base.text.text(c.charAt(0));
+
+      // recenter
+      base.text.center(center.x, center.y);
+    });
   }
 }
