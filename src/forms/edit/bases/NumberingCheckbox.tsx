@@ -22,7 +22,10 @@ export class NumberingCheckbox extends React.Component<Props> {
     return (
       <input
         type='checkbox'
-        checked={this.props.bases.every(base => base.numbering)}
+        checked={(
+          this.props.bases.length > 0
+          && this.props.bases.every(base => base.numbering)
+        )}
         onChange={event => this.handleChange(event)}
       />
     );
