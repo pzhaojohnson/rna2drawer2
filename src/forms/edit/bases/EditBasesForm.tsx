@@ -115,9 +115,7 @@ export function EditBasesForm(props: Props) {
               <OutlineStrokeWidthField {...props} outlines={outlines} />
             </div>
           )}
-          {props.bases.length != 1 ? null : (
-            <NumberingField {...props} base={props.bases[0]} />
-          )}
+          <NumberingField {...props} />
           <ForwardBackwardButtons {...props} />
         </div>
       )}
