@@ -7,8 +7,8 @@ import { TextInput } from 'Forms/inputs/text/TextInput';
 export type Props = {
   app: App;
 
-  // the base numbering to edit
-  baseNumbering: BaseNumbering;
+  // the base numberings to edit
+  baseNumberings: BaseNumbering[];
 }
 
 type State = {
@@ -22,8 +22,20 @@ export class NumberInput extends React.Component<Props> {
     super(props);
 
     this.state = {
-      value: props.baseNumbering.text.text(),
+      value: this.initialValue,
     };
+  }
+
+  get initialValue(): string {
+    let texts = new Set(
+      this.props.baseNumberings.map(bn => bn.text.text())
+    );
+
+    if (texts.size == 1) {
+      return texts.values().next().value;
+    } else {
+      return '';
+    }
   }
 
   render() {
@@ -59,14 +71,13 @@ export class NumberInput extends React.Component<Props> {
 
     n = Math.floor(n); // make an integer
 
-    let currNumber = Number.parseFloat(this.props.baseNumbering.text.text());
-    if (n == currNumber) {
+    if (n == Number.parseFloat(this.initialValue)) {
       return;
     }
 
     // update number
     this.props.app.pushUndo();
-    this.props.baseNumbering.text.text(n.toString());
+    this.props.baseNumberings.forEach(bn => bn.text.text(n.toString()));
     this.props.app.refresh();
   }
 }

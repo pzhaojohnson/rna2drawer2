@@ -14,7 +14,7 @@ import { NumberInput } from './NumberInput';
 let app = null;
 let drawing = null;
 let sequence = null;
-let base = null;
+let bases = null;
 
 let container = null;
 
@@ -24,7 +24,13 @@ beforeEach(() => {
 
   drawing = app.strictDrawing.drawing;
   sequence = appendSequence(drawing, { id: 'asdf', characters: 'asdfQWERasdfZXCVzxcv' });
-  base = sequence.atPosition(3);
+
+  bases = [
+    sequence.atPosition(3),
+    sequence.atPosition(4),
+    sequence.atPosition(6),
+    sequence.atPosition(11),
+  ];
 
   container = document.createElement('div');
   document.body.appendChild(container);
@@ -35,7 +41,7 @@ afterEach(() => {
   container.remove();
   container = null;
 
-  base = null;
+  bases = null;
   sequence = null;
   drawing = null;
 
@@ -45,130 +51,130 @@ afterEach(() => {
 
 describe('NumberInput component', () => {
   it('renders positive numbers', () => {
-    addNumbering(base, 78);
+    bases.forEach(base => addNumbering(base, 78));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     expect(container.firstChild.value).toBe('78');
   });
 
   it('renders negative numbers', () => {
-    addNumbering(base, -128);
+    bases.forEach(base => addNumbering(base, -128));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     expect(container.firstChild.value).toBe('-128');
   });
 
   it('updates number on blur', () => {
-    addNumbering(base, 10);
+    bases.forEach(base => addNumbering(base, 10));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     container.firstChild.value = '111';
     Simulate.change(container.firstChild);
-    expect(base.numbering.text.text()).toBe('10');
+    expect(bases.every(base => base.numbering.text.text() == '10')).toBeTruthy();
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.text()).toBe('111');
+    expect(bases.every(base => base.numbering.text.text() == '111')).toBeTruthy();
   });
 
   it('updates number on pressing the enter key', () => {
-    addNumbering(base, 1012);
+    bases.forEach(base => addNumbering(base, 1012));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     container.firstChild.value = '-250';
     Simulate.change(container.firstChild);
-    expect(base.numbering.text.text()).toBe('1012');
+    expect(bases.every(base => base.numbering.text.text() == '1012')).toBeTruthy();
     Simulate.keyUp(container.firstChild, { key: 'Enter' });
-    expect(base.numbering.text.text()).toBe('-250');
+    expect(bases.every(base => base.numbering.text.text() == '-250')).toBeTruthy();
   });
 
   it('pushes undo when updating number', () => {
-    addNumbering(base, 1);
+    bases.forEach(base => addNumbering(base, 1));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     container.firstChild.value = '50';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.text()).toBe('50'); // updated number
+    expect(bases.every(base => base.numbering.text.text() == '50')).toBeTruthy(); // updated number
     app.undo();
     // new Base instances may have been created after undo
-    let correspondingBase = drawing.bases().find(b => b.id == base.id);
-    expect(correspondingBase.numbering.text.text()).toBe('1'); // was undone
+    let correspondingBases = bases.map(base => drawing.bases().find(b => b.id == base.id));
+    expect(correspondingBases.every(base => base.numbering.text.text() == '1')).toBeTruthy(); // was undone
   });
 
   it('ignores empty inputs', () => {
-    addNumbering(base, 33);
+    bases.forEach(base => addNumbering(base, 33));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     container.firstChild.value = '';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.text()).toBe('33'); // did not change
+    expect(bases.every(base => base.numbering.text.text() == '33')).toBeTruthy(); // did not change
     expect(app.canUndo()).toBeFalsy(); // did not push undo
   });
 
   it('ignores blank inputs', () => {
-    addNumbering(base, -58);
+    bases.forEach(base => addNumbering(base, -58));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     container.firstChild.value = '      ';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.text()).toBe('-58'); // did not change
+    expect(bases.every(base => base.numbering.text.text() == '-58')).toBeTruthy(); // did not change
     expect(app.canUndo()).toBeFalsy(); // did not push undo
   });
 
   it('ignores nonnumeric inputs', () => {
-    addNumbering(base, 109);
+    bases.forEach(base => addNumbering(base, 109));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     container.firstChild.value = 'asdf';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.text()).toBe('109'); // did not change
+    expect(bases.every(base => base.numbering.text.text() == '109')).toBeTruthy(); // did not change
     expect(app.canUndo()).toBeFalsy(); // did not push undo
   });
 
   it('ignores nonfinite inputs', () => {
-    addNumbering(base, 15);
+    bases.forEach(base => addNumbering(base, 15));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     ['NaN', 'Infinity', '-Infinity'].forEach(v => {
       container.firstChild.value = v;
       Simulate.change(container.firstChild);
       Simulate.blur(container.firstChild);
-      expect(base.numbering.text.text()).toBe('15'); // did not change
+      expect(bases.every(base => base.numbering.text.text() == '15')).toBeTruthy(); // did not change
       expect(app.canUndo()).toBeFalsy(); // did not push undo
     });
   });
 
   it('does not push undo if input is the same as the current number', () => {
-    addNumbering(base, 11);
+    bases.forEach(base => addNumbering(base, 11));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     container.firstChild.value = '11';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
     expect(app.canUndo()).toBeFalsy(); // did not push undo
-    expect(base.numbering.text.text()).toBe('11'); // did not change either
+    expect(bases.every(base => base.numbering.text.text() == '11')).toBeTruthy(); // did not change either
   });
 
   it('floors non-integer inputs', () => {
-    addNumbering(base, 12);
+    bases.forEach(base => addNumbering(base, 12));
     act(() => {
-      render(<NumberInput app={app} baseNumbering={base.numbering} />, container);
+      render(<NumberInput app={app} baseNumberings={bases.map(base => base.numbering)} />, container);
     });
     container.firstChild.value = '140.45';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(base.numbering.text.text()).toBe('140'); // floored
+    expect(bases.every(base => base.numbering.text.text() == '140')).toBeTruthy(); // floored
   });
 });

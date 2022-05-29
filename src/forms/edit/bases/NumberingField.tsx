@@ -32,7 +32,7 @@ export function NumberingField(props: Props) {
         <NumberingCheckbox {...props} bases={[props.base]} />
         <span style={{ width: '10px' }} />
         <FieldLabel style={{ display: 'flex', alignItems: 'center', cursor: 'text' }} >
-          <NumberInput {...props} baseNumbering={props.base.numbering} />
+          <NumberInput {...props} baseNumberings={[props.base.numbering]} />
           <span style={{ marginLeft: '8px' }} >
             Numbering
           </span>
