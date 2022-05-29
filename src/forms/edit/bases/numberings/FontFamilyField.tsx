@@ -27,7 +27,7 @@ function currFontFamily(baseNumberings: BaseNumbering[]): string | undefined {
 
 export function FontFamilyField(props: Props) {
   return (
-    <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
+    <div style={{ marginTop: '14px', width: '100%', display: 'flex', flexDirection: 'column' }} >
       <FontFamilySelect
         value={currFontFamily(props.baseNumberings)}
         onChange={event => {

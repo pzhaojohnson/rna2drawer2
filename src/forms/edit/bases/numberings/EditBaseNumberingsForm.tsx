@@ -9,6 +9,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { NumberingOffsetField } from './NumberingOffsetField';
 import { NumberingAnchorField } from './NumberingAnchorField';
 import { NumberingIncrementField } from './NumberingIncrementField';
+import { NumberField } from './NumberField';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
 import { BoldField } from './BoldField';
@@ -107,6 +108,7 @@ export function EditBaseNumberingsForm(props: Props) {
         </div>
       ) : (
         <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column' }} >
+          <NumberField {...props} />
           <FontFamilyField {...props} />
           <FontSizeField {...props} />
           <BoldField {...props} />
