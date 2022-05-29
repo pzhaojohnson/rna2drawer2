@@ -9,8 +9,6 @@ import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { orientBaseNumberings } from 'Draw/bases/number/orient';
 
 import * as React from 'react';
-import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
-import { ChangeEvent } from 'Forms/inputs/checkbox/Checkbox';
 
 export type Props = {
   app: App;
@@ -22,14 +20,15 @@ export type Props = {
 export class NumberingCheckbox extends React.Component<Props> {
   render() {
     return (
-      <Checkbox
+      <input
+        type='checkbox'
         checked={this.props.bases.every(base => base.numbering)}
         onChange={event => this.handleChange(event)}
       />
     );
   }
 
-  handleChange(event: ChangeEvent) {
+  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     this.props.app.pushUndo();
 
     if (event.target.checked) {
