@@ -30,6 +30,14 @@ function DrawingHasNoBasesNotes() {
   );
 }
 
+function ForAllBasesLabel() {
+  return (
+    <p className={styles.forAllBasesLabel} >
+      For all bases...
+    </p>
+  );
+}
+
 function NoBasesAreSelectedNotes() {
   return (
     <div style={{ marginTop: '32px' }} >
@@ -92,6 +100,7 @@ export function EditBasesForm(props: Props) {
         <DrawingHasNoBasesNotes />
       ) : props.bases.length == 0 ? (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
+          <ForAllBasesLabel />
           <WidthField {...props} />
           <HeightField {...props} />
           <NoBasesAreSelectedNotes />
