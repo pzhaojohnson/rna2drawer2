@@ -1,7 +1,8 @@
-import * as React from 'react';
-import { TextInput } from 'Forms/inputs/text/TextInput';
 import type { App } from 'App';
 import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+
+import * as React from 'react';
+import { TextInput } from 'Forms/inputs/text/TextInput';
 
 export type Props = {
   app: App;
