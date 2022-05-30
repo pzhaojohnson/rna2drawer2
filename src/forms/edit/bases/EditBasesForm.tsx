@@ -9,6 +9,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { WidthField } from './WidthField';
 import { HeightField } from './HeightField';
+
 import { CharacterField } from './CharacterField';
 import { FillField } from './FillField';
 import { FontFamilyField } from './FontFamilyField';
