@@ -104,8 +104,8 @@ export function FontFamilySelect(props: Props) {
         }),
         singleValue: (provided, state) => ({
           ...provided,
-          marginLeft: '6px',
-          marginRight: '6px',
+          marginLeft: '8px',
+          marginRight: '8px',
           fontFamily: state.data.value,
           fontSize: '12px',
           color: 'rgba(0,0,0,0.95)',
