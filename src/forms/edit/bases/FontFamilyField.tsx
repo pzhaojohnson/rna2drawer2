@@ -29,7 +29,7 @@ export function FontFamilyField(props: Props) {
   return (
     <div
       style={{
-        marginTop: '12px', width: '100%',
+        marginTop: '14px', width: '100%',
         display: 'flex', flexDirection: 'column',
       }}
     >

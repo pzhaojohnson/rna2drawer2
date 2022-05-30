@@ -57,7 +57,7 @@ export class CharacterField extends React.Component<Props> {
         input={{
           style: { width: '2ch', textAlign: 'center' },
         }}
-        style={{ marginBottom: '12px', alignSelf: 'start' }}
+        style={{ marginBottom: '14px', alignSelf: 'start' }}
       />
     );
   }
