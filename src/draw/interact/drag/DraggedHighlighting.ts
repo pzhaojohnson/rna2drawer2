@@ -28,20 +28,20 @@ export class DraggedHighlighting {
     this.fillPath = new SVG.Path();
 
     this.borderPath.attr({
-      'stroke': '#344FFF',
-      'stroke-width': 17.5,
+      'stroke': '#839EEC',
+      'stroke-width': 27,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
-      'fill': '#344FFF',
+      'fill': '#839EEC',
       'fill-opacity': 1,
     });
 
     this.fillPath.attr({
-      'stroke': '#AAFBFF',
-      'stroke-width': 13.5,
+      'stroke': 'white',
+      'stroke-width': 18,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
-      'fill': '#AAFBFF',
+      'fill': 'white',
       'fill-opacity': 1,
     });
 

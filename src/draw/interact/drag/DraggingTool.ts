@@ -18,6 +18,7 @@ import { shiftControlPoint } from 'Draw/bonds/curved/drag';
 import { zoom } from 'Draw/zoom';
 
 import { Stem } from 'Partners/Stem';
+import { pairs } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
 import { downstreamPartner, upstreamPartner } from 'Partners/Pair';
@@ -28,6 +29,8 @@ import { nearestStemEnclosingPosition } from './nearestStemEnclosingPosition';
 import { stemOfBase } from 'Draw/strict/stemOfBase';
 import { stemOfStraightBond } from 'Draw/strict/stemOfStraightBond';
 
+import { traverseLoopDownstream } from 'Partners/traverseLoopDownstream';
+import { sortNumbers } from 'Array/sortNumbers';
 import { compareNumbers } from 'Array/sort';
 
 import { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
@@ -133,6 +136,7 @@ export class DraggingTool {
   _draggedStrictLayoutSpecification?: StrictLayoutSpecification;
 
   layoutTrace?: LayoutTrace;
+  draggedHighlighting?: DraggedHighlighting;
 
   constructor(options: Options) {
     this.options = options;
@@ -514,6 +518,8 @@ export class DraggingTool {
     let ele = this.activated ?? this.hovered;
 
     if (!ele || !isDraggedWithLayout(ele)) {
+      this.draggedHighlighting?.remove();
+      this.draggedHighlighting = undefined;
       this.layoutTrace?.remove();
       this.layoutTrace = undefined;
       return;
@@ -541,6 +547,21 @@ export class DraggingTool {
       this.layoutTrace.appendTo(this.options.drawingUnderlay.svg);
     } else {
       this.layoutTrace.retrace({ baseCoordinates });
+    }
+
+    if (!this.draggedHighlighting) {
+      let partners = this.options.strictDrawing.layoutPartners();
+      let traversed = traverseLoopDownstream(partners, stem);
+      let ps = traversed.positions;
+      if (stem) {
+        ps.push(...pairs(stem).flat());
+      }
+      ps = Array.from(new Set(ps));
+      sortNumbers(ps);
+      this.draggedHighlighting = new DraggedHighlighting(ps, { baseCoordinates });
+      this.draggedHighlighting.appendTo(this.options.drawingUnderlay.svg);
+    } else {
+      this.draggedHighlighting.refit({ baseCoordinates });
     }
   }
 
