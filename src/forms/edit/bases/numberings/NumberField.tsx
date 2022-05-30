@@ -26,7 +26,7 @@ export function NumberField(props: Props) {
           Number
         </span>
       </FieldLabel>
-      <div style={{ width: '8px' }} />
+      <div style={{ width: '8px' }} /> {/* right side padding for very long number values */}
     </div>
   );
 }

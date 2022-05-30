@@ -29,7 +29,7 @@ export function NumberingField(props: Props) {
             Numbering
           </span>
         </FieldLabel>
-        <div style={{ width: '8px' }} />
+        <div style={{ width: '8px' }} /> {/* right side padding for very long number values */}
       </div>
     );
   }
@@ -46,7 +46,7 @@ export function NumberingField(props: Props) {
           </span>
         </FieldLabel>
       </div>
-      <div style={{ width: '8px' }} />
+      <div style={{ width: '8px' }} /> {/* right side padding for very long number values */}
     </div>
   );
 }
