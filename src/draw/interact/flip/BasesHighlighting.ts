@@ -36,18 +36,18 @@ export class BasesHighlighting {
     this.fillTrace = new BasesTrace({ bases: options.bases, close: true });
 
     this.borderTrace.path.attr({
-      'stroke': '#344FFF',
+      'stroke': '#D0D9FF',
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
-      'fill': '#344FFF',
+      'fill': '#D0D9FF',
       'fill-opacity': 1,
     });
 
     this.fillTrace.path.attr({
-      'stroke': '#AAFBFF',
+      'stroke': 'white',
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
-      'fill': '#AAFBFF',
+      'fill': 'white',
       'fill-opacity': 1,
     });
 
@@ -69,8 +69,8 @@ export class BasesHighlighting {
     if (!Number.isFinite(fs) || fs < 1) {
       fs = 1; // guarantee to be finite and at least one
     }
-    this.borderTrace.path.attr('stroke-width', 2 * fs);
-    this.fillTrace.path.attr('stroke-width', 1.5 * fs);
+    this.borderTrace.path.attr('stroke-width', 3 * fs);
+    this.fillTrace.path.attr('stroke-width', 2 * fs);
 
     this.borderTrace.retrace();
     this.fillTrace.retrace();
