@@ -13,17 +13,20 @@ export type Props = {
 
 export function NumberField(props: Props) {
   return (
-    <FieldLabel
-      style={{
-        alignSelf: 'start',
-        display: 'flex', flexDirection: 'row', alignItems: 'center',
-        cursor: 'text',
-      }}
-    >
-      <NumberInput {...props} />
-      <span style={{ marginLeft: '8px' }} >
-        Number
-      </span>
-    </FieldLabel>
+    <div style={{ alignSelf: 'start', display: 'flex' }} >
+      <FieldLabel
+        style={{
+          alignSelf: 'start',
+          display: 'flex', flexDirection: 'row', alignItems: 'center',
+          cursor: 'text',
+        }}
+      >
+        <NumberInput {...props} />
+        <span style={{ marginLeft: '8px' }} >
+          Number
+        </span>
+      </FieldLabel>
+      <div style={{ width: '8px' }} />
+    </div>
   );
 }

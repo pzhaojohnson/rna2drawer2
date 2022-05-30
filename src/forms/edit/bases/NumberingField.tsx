@@ -29,6 +29,7 @@ export function NumberingField(props: Props) {
             Numbering
           </span>
         </FieldLabel>
+        <div style={{ width: '8px' }} />
       </div>
     );
   }
@@ -45,6 +46,7 @@ export function NumberingField(props: Props) {
           </span>
         </FieldLabel>
       </div>
+      <div style={{ width: '8px' }} />
     </div>
   );
 }
