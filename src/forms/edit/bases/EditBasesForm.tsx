@@ -32,7 +32,7 @@ function DrawingHasNoBasesNotes() {
 
 function ForAllBasesLabel() {
   return (
-    <p className={styles.forAllBasesLabel} >
+    <p className={styles.notesText} >
       For all bases...
     </p>
   );
