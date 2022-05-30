@@ -41,12 +41,15 @@ function ForAllBasesLabel() {
 
 function NoBasesAreSelectedNotes() {
   return (
-    <div style={{ marginTop: '32px' }} >
+    <div style={{ marginTop: '48px' }} >
       <p className={styles.notesText} >
         No bases are selected...
       </p>
       <p className={styles.notesText} style={{ marginTop: '24px' }} >
         Select bases using the editing tool...
+      </p>
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
+        Or...
       </p>
     </div>
   );
