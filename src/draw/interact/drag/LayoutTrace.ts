@@ -21,14 +21,14 @@ export class LayoutTrace {
 
     this.borderPath.attr({
       'stroke': '#D0D9FF',
-      'stroke-width': 19.5,
+      'stroke-width': 27,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
     });
 
     this.fillPath.attr({
       'stroke': 'white',
-      'stroke-width': 13.5,
+      'stroke-width': 18,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
       'fill': 'white',
