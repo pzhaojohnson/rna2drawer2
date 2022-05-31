@@ -96,7 +96,7 @@ export function FontFamilySelect(props: Props) {
           backgroundColor: 'white',
           fontFamily: state.data.value,
           fontSize: '12px',
-          color: 'rgba(0,0,0,0.95)',
+          color: 'black',
           cursor: 'pointer',
           '&:hover': {
             backgroundColor: 'rgba(0,0,0,0.075)',
@@ -108,7 +108,7 @@ export function FontFamilySelect(props: Props) {
           marginRight: '8px',
           fontFamily: state.data.value,
           fontSize: '12px',
-          color: 'rgba(0,0,0,0.95)',
+          color: 'black',
           overflow: 'visible',
         }),
       }}
