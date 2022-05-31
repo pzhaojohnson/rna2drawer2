@@ -1,0 +1,42 @@
+.convertToLabel {
+  margin-right: 6px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: italic;
+  color: #58585e;
+
+  user-select: none;
+}
+
+.shapifyButton {
+  width: 72px;
+  padding: 2px 0px;
+  border: 1px solid #d4d4e6;
+  border-radius: 40px;
+  outline: none;
+  box-shadow: none;
+
+  background-color: transparent;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  color: #050564;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.shapifyButton:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 2px 2px #f5f5fb;
+  transition: transform 0.04s;
+}
+
+.shapifyButton:active {
+  transform: scale(1);
+  transition: transform 0s;
+}

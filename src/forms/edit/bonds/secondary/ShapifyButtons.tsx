@@ -4,7 +4,7 @@ import { dotify } from 'Draw/bonds/straight/dotify';
 import { squarify } from 'Draw/bonds/straight/dotify';
 
 import * as React from 'react';
-import { TextButton } from 'Forms/buttons/TextButton';
+import styles from './ShapifyButtons.css';
 
 export type Props = {
 
@@ -17,35 +17,42 @@ export type Props = {
 
 export function DotifyButton(props: Props) {
   return (
-    <TextButton
-      text='Dotify...'
+    <button
+      className={styles.shapifyButton}
       onClick={() => {
         props.app.pushUndo();
         props.secondaryBonds.forEach(bond => dotify(bond));
         props.app.refresh();
       }}
-    />
+    >
+      Dots
+    </button>
   );
 }
 
 export function SquarifyButton(props: Props) {
   return (
-    <TextButton
-      text='Squarify...'
+    <button
+      className={styles.shapifyButton}
       onClick={() => {
         props.app.pushUndo();
         props.secondaryBonds.forEach(bond => squarify(bond));
         props.app.refresh();
       }}
-    />
+    >
+      Squares
+    </button>
   );
 }
 
 export function ShapifyButtons(props: Props) {
   return (
-    <div style={{ margin: '8px 0px 0px 40px', display: 'flex', alignItems: 'center' }} >
+    <div style={{ margin: '16px 0px 0px 0px', display: 'flex', alignItems: 'center' }} >
+      <p className={styles.convertToLabel} >
+        Convert to...
+      </p>
       <DotifyButton {...props} />
-      <div style={{ width: '48px' }} />
+      <div style={{ width: '8px' }} />
       <SquarifyButton {...props} />
     </div>
   );
