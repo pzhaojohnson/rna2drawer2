@@ -1,6 +1,7 @@
 .forwardBackwardButton {
-  padding: 3px 16px;
-  border: 1px solid #d6d6e5;
+  width: 116px;
+  padding: 3px 0px;
+  border: 1px solid #d4d4e6;
   border-radius: 40px;
   outline: none;
   box-shadow: none;
@@ -11,7 +12,7 @@
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
-  color: #060668;
+  color: #050564;
 
   cursor: pointer;
   user-select: none;
@@ -19,7 +20,7 @@
 
 .forwardBackwardButton:hover {
   transform: scale(1.03);
-  box-shadow: 0px 2px 2px #f2f2f7;
+  box-shadow: 0px 2px 2px #f5f5fb;
   transition: transform 0.04s;
 }
 
