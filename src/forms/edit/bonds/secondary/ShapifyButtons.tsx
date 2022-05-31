@@ -41,7 +41,7 @@ export function SquarifyButton(props: Props) {
   );
 }
 
-export function DotifyAndSquarifyButtons(props: Props) {
+export function ShapifyButtons(props: Props) {
   return (
     <div style={{ margin: '8px 0px 0px 40px', display: 'flex', alignItems: 'center' }} >
       <DotifyButton {...props} />
