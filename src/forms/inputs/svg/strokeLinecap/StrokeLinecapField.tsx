@@ -3,6 +3,7 @@ import { StrokeLinecapValue } from 'Forms/inputs/svg/strokeLinecap/strokeLinecap
 import * as React from 'react';
 import { useState } from 'react';
 import styles from './StrokeLinecapField.css';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
 type Option = {
   value: StrokeLinecapValue;
@@ -82,9 +83,9 @@ export type StrokeLinecapFieldProps = (
 export function StrokeLinecapField(props: StrokeLinecapFieldProps) {
   return (
     <div className={styles.strokeLinecapField} style={props.style} >
-      <p className={styles.strokeLinecapFieldLabel} >
+      <FieldLabel style={{ marginRight: '6px' }} >
         Line Cap:
-      </p>
+      </FieldLabel>
       <StrokeLinecapSelect {...props} />
     </div>
   );
