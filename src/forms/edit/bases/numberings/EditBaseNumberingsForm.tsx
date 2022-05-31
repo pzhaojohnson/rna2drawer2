@@ -17,6 +17,7 @@ import { ColorField } from './ColorField';
 import { LineWidthField } from './LineWidthField';
 import { LineLengthField } from './LineLengthField';
 import { BasePaddingField } from './BasePaddingField';
+import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 function DrawingHasNoBaseNumberingsNotes() {
   return (
@@ -116,6 +117,7 @@ export function EditBaseNumberingsForm(props: Props) {
           <LineWidthField {...props} />
           <LineLengthField {...props} />
           <BasePaddingField {...props} />
+          <ForwardBackwardButtons {...props} />
         </div>
       )}
     </PartialWidthContainer>
