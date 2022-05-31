@@ -1,29 +1,31 @@
 .optionButton {
-  min-width: 54px;
+  margin: 0 2px;
+  min-width: 55px;
   border-width: 1px;
   border-style: solid;
   border-radius: 12px;
-  padding: 2px 0px;
+  padding: 1px 0px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 600;
-  color: #181818;
+  color: #151517;
   text-align: center;
-  cursor: pointer;
 }
 
 .toggledOptionButton {
-  border-color: #e7e7e7;
-  background-color: #e7e7e7;
+  border-color: #eaeaf0;
+  background-color: #eaeaf0;
+  cursor: auto;
 }
 
 .untoggledOptionButton {
   border-color: white;
   background-color: white;
+  cursor: pointer;
 }
 
 .untoggledOptionButton:hover {
-  border-color: #cfcfcf;
+  border-color: #d0d0da;
 }
 
 .strokeLinecapSelect {
