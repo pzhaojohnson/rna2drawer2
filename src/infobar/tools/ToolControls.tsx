@@ -3,6 +3,7 @@ import type { App } from 'App';
 import * as React from 'react';
 import { useState } from 'react';
 import { ToolSelect } from 'Infobar/tools/ToolSelect';
+import { DraggingToolControls } from 'Infobar/tools/drag/DraggingToolControls';
 import { BindingToolControls } from 'Infobar/tools/bind/BindingToolControls';
 import { EditingToolControls } from 'Infobar/tools/edit/EditingToolControls';
 
@@ -17,6 +18,7 @@ export function ToolControls(props: Props) {
 
   let strictDrawingInteraction = props.app.strictDrawingInteraction;
   let currentTool = strictDrawingInteraction.currentTool;
+  let draggingTool = strictDrawingInteraction.draggingTool;
   let bindingTool = strictDrawingInteraction.bindingTool;
   let editingTool = strictDrawingInteraction.editingTool;
 
@@ -38,7 +40,9 @@ export function ToolControls(props: Props) {
         null
       ) : (
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          {currentTool == bindingTool ? (
+          {currentTool == draggingTool ? (
+            <DraggingToolControls {...props} />
+          ) : currentTool == bindingTool ? (
             <BindingToolControls app={props.app} />
           ) : currentTool == editingTool ? (
             <EditingToolControls app={props.app} />

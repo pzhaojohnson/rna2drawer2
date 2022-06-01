@@ -1,0 +1,80 @@
+.onlyExpandToggle {
+  width: 136px;
+  padding: 2px 0px;
+
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 16px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  user-select: none;
+  cursor: pointer;
+}
+
+.spacer {
+  width: 6px;
+}
+
+.check {}
+
+.toggled {
+  border-color: #ececff;
+  background-color: #ececff;
+}
+
+.toggled .text {
+  color: #04042a;
+}
+
+.toggled .spacer {
+  display: block;
+}
+
+.toggled .check {
+  display: block;
+}
+
+.untoggled {
+  border-color: #d1d1e7;
+  background-color: white;
+}
+
+.untoggled .text {
+  color: #060634;
+}
+
+.untoggled .spacer {
+  display: none;
+}
+
+.untoggled .check {
+  display: none;
+}
+
+.untoggled:hover {
+  box-shadow: 0px 2px 2px #ececf4;
+  transform: scale(1.012);
+  transition: transform 0.04s;
+}
+
+.toggleMessage {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: italic;
+  color: #797979;
+  white-space: nowrap;
+  user-select: none;
+}
