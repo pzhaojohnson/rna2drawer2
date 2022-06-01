@@ -1,6 +1,5 @@
 import type { App } from 'App';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
-import { secondaryBondTypes } from 'Draw/bonds/straight/SecondaryBond';
 
 import * as SVG from '@svgdotjs/svg.js';
 import { strokeWidth } from 'Forms/inputs/svg/strokeWidth/strokeWidth';
@@ -14,6 +13,11 @@ import { TextInputField } from 'Forms/inputs/text/TextInputField';
 // returns the line elements of the secondary bonds
 function lines(secondaryBonds: SecondaryBond[]): SVG.Line[] {
   return secondaryBonds.map(bond => bond.line);
+}
+
+// returns a set of the secondary bond types present
+function types(secondaryBonds: SecondaryBond[]) {
+  return new Set(secondaryBonds.map(bond => bond.type));
 }
 
 export type Props = {
@@ -80,7 +84,7 @@ export class StrokeWidthField extends React.Component<Props> {
     // may be different from the value that was specified
     let constrainedValue = strokeWidth(lines(this.props.secondaryBonds));
 
-    secondaryBondTypes.forEach(t => {
+    types(this.props.secondaryBonds).forEach(t => {
       SecondaryBond.recommendedDefaults[t].line['stroke-width'] = (
         constrainedValue
         ?? SecondaryBond.recommendedDefaults[t].line['stroke-width']

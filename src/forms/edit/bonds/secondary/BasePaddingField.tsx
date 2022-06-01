@@ -2,7 +2,6 @@ import * as React from 'react';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
-import { secondaryBondTypes } from 'Draw/bonds/straight/SecondaryBond';
 import { round } from 'Math/round';
 
 export type Props = {
@@ -16,6 +15,11 @@ type Value = string;
 
 type State = {
   value: Value;
+}
+
+// returns a set of the secondary bond types present
+function types(secondaryBonds: SecondaryBond[]) {
+  return new Set(secondaryBonds.map(bond => bond.type));
 }
 
 // returns an empty string value for an empty secondary bonds array
@@ -100,7 +104,7 @@ export class BasePaddingField extends React.Component<Props> {
             sb.basePadding1 = bp;
             sb.basePadding2 = bp;
           });
-          secondaryBondTypes.forEach(t => {
+          types(this.props.secondaryBonds).forEach(t => {
             SecondaryBond.recommendedDefaults[t].basePadding1 = bp;
             SecondaryBond.recommendedDefaults[t].basePadding2 = bp;
           });
