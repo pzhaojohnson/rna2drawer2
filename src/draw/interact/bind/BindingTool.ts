@@ -366,6 +366,9 @@ export class BindingTool {
       return;
     }
 
+    // prevents updates to the layout from registering as dragging
+    this._activatedElement = undefined;
+
     this.options.app.pushUndo();
     bindWithTertiaryBonds(this.options.strictDrawing, selectedSide, side);
     this.options.app.refresh();
@@ -383,6 +386,9 @@ export class BindingTool {
     if (!selectedSide) {
       return;
     }
+
+    // prevents updates to the layout from registering as dragging
+    this._activatedElement = undefined;
 
     this.options.app.pushUndo();
     bindWithSecondaryBonds(this.options.strictDrawing, selectedSide, side);
@@ -481,6 +487,9 @@ export class BindingTool {
     if (secondaryBonds.length == 0 && tertiaryBonds.length == 0) {
       return;
     }
+
+    // prevents updates to the layout from registering as dragging
+    this._activatedElement = undefined;
 
     this.options.app.pushUndo();
     removeSecondaryBonds(this.options.strictDrawing, secondaryBonds);
