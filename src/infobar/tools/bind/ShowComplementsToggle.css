@@ -1,6 +1,6 @@
 .showComplementsToggle {
-  width: 159px;
-  padding: 1px 0px;
+  width: 158px;
+  padding: 2px 0px;
 
   border-width: 1px;
   border-style: solid;
@@ -17,7 +17,7 @@
 .text {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
   user-select: none;
   cursor: pointer;
@@ -30,12 +30,12 @@
 .check {}
 
 .toggled {
-  border-color: #cce3ff;
-  background-color: #cce3ff;
+  border-color: #ececff;
+  background-color: #ececff;
 }
 
 .toggled .text {
-  color: #080838;
+  color: #04042a;
 }
 
 .toggled .spacer {
@@ -47,12 +47,12 @@
 }
 
 .untoggled {
-  border-color: #d0d0dc;
+  border-color: #d1d1e7;
   background-color: white;
 }
 
 .untoggled .text {
-  color: #09094b;
+  color: #060634;
 }
 
 .untoggled .spacer {
@@ -64,5 +64,7 @@
 }
 
 .untoggled:hover {
-  box-shadow: 0px 0px 4px #dedeec;
+  box-shadow: 0px 2px 2px #ececf4;
+  transform: scale(1.012);
+  transition: transform 0.04s;
 }
