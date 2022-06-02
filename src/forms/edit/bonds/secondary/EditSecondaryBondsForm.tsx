@@ -11,7 +11,7 @@ import { BaseSpacingField } from './BaseSpacingField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { StrokeLinecapField } from './StrokeLinecapField';
-import { ShapifyButtons } from './ShapifyButtons';
+import { ShapeField } from './ShapeField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 function DrawingHasNoSecondaryBondsNotes() {
@@ -188,7 +188,7 @@ export function EditSecondaryBondsForm(props: Props) {
           <StrokeWidthField {...props} />
           <BasePaddingField {...props} />
           <StrokeLinecapField {...props} />
-          <ShapifyButtons {...props} />
+          <ShapeField {...props} />
           <ForwardBackwardButtons {...props} />
         </div>
       )}

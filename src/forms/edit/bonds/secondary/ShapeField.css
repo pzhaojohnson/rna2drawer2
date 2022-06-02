@@ -1,0 +1,45 @@
+.shapeField {
+  margin-top: 16px;
+
+  display: flex;
+  align-items: center;
+}
+
+.labelSpacer {
+  width: 6px;
+}
+
+.shapeOption {
+  min-width: 55px;
+  text-align: center;
+
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 12px;
+  padding: 1px 0px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #151517;
+}
+
+.toggledShapeOption {
+  border-color: #eaeaf0;
+  background-color: #eaeaf0;
+  cursor: auto;
+}
+
+.untoggledShapeOption {
+  border-color: white;
+  background-color: white;
+  cursor: pointer;
+}
+
+.untoggledShapeOption:hover {
+  border-color: #d0d0da;
+}
+
+.optionsSpacer {
+  width: 4px;
+}
