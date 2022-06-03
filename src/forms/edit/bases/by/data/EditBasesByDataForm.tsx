@@ -1,11 +1,9 @@
 import type { App } from 'App';
 
-import { Base } from 'Draw/bases/Base';
-
-import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
-import { isBlank } from 'Parse/isBlank';
+import { splitDataNonempty } from './splitDataNonempty';
+import { selectBasesWithValuesInRange } from './selectBasesWithValuesInRange';
 
 import * as React from 'react';
 import { useState } from 'react';
@@ -61,16 +59,8 @@ let prevInputs: Inputs = {
   max: '1',
 };
 
-// splits on whitespace, commas and semicolons
-function splitData(data: string): string[] {
-  return data.split(/[\s|,|;]+/);
-}
-
 function formatData(data: string): string {
-  let vs = splitData(data);
-
-  // remove empty strings
-  vs = vs.filter(v => v.length > 0);
+  let vs = splitDataNonempty(data);
 
   // one value per line
   return vs.join('\n');
@@ -234,96 +224,14 @@ export function EditBasesByDataForm(props: Props) {
         <SolidButton
           text='Select'
           onClick={() => {
-            let vs = splitData(inputs.data);
-            vs = vs.filter(v => v.length > 0); // remove empty strings
-            let data = vs.map(v => Number.parseFloat(v));
-
-            if (data.length == 0) {
-              setErrorMessage(new String('No data entered.'));
-              return;
-            } else if (data.some(v => !Number.isFinite(v))) {
-              setErrorMessage(new String('All data values must be numbers.'));
-              return;
+            try {
+              let app = props.app;
+              selectBasesWithValuesInRange({ app, ...inputs });
+            } catch (error) {
+              setErrorMessage(new String(
+                error instanceof Error ? error.message : error
+              ));
             }
-
-            if (isBlank(inputs.startPosition)) {
-              setErrorMessage(new String('Specify a start position.'));
-              return;
-            }
-            let startPosition = Number.parseFloat(inputs.startPosition);
-            if (!Number.isFinite(startPosition)) {
-              setErrorMessage(new String('Start position must be a number.'));
-              return;
-            } else if (!Number.isInteger(startPosition)) {
-              setErrorMessage(new String('Start position must be an integer.'));
-              return;
-            }
-
-            if (isBlank(inputs.min)) {
-              setErrorMessage(new String('Specify a minimum value to select.'));
-              return;
-            }
-            let min = Number.parseFloat(inputs.min);
-            if (!Number.isFinite(min)) {
-              setErrorMessage(new String('Minimum value to select must be a number.'));
-              return;
-            }
-
-            if (isBlank(inputs.max)) {
-              setErrorMessage(new String('Specify a maximum value to select.'));
-              return;
-            }
-            let max = Number.parseFloat(inputs.max);
-            if (!Number.isFinite(max)) {
-              setErrorMessage(new String('Maximum value to select must be a number.'));
-              return;
-            }
-
-            let drawing = props.app.strictDrawing.drawing;
-            if (drawing.bases().length == 0) {
-              setErrorMessage('Drawing has no bases.');
-              return;
-            }
-            let seq = props.app.strictDrawing.layoutSequence();
-
-            // account for numbering offset
-            let no = numberingOffset(seq) ?? 0;
-            startPosition -= no;
-
-            if (startPosition < 1 || startPosition > seq.length) {
-              setErrorMessage(new String('Start position is out of range.'));
-              return;
-            }
-
-            if (startPosition + data.length - 1 > seq.length) {
-              setErrorMessage(new String('Data go beyond the end of the sequence.'));
-              return;
-            }
-
-            let positions: number[] = [];
-            data.forEach((v, i) => {
-              if (v >= min && v <= max) {
-                positions.push(startPosition + i);
-              }
-            });
-
-            if (positions.length == 0) {
-              setErrorMessage(new String('No data values in the entered range.'));
-              return;
-            }
-
-            // all positions should be in the sequence range given the checks above
-            let bases = positions.map(p => seq.atPosition(p)).filter(
-              (b): b is Base => b instanceof Base
-            );
-
-            // close the form and select bases
-            props.unmount();
-            let drawingInteraction = props.app.strictDrawingInteraction;
-            drawingInteraction.currentTool = drawingInteraction.editingTool;
-            drawingInteraction.editingTool.editingType = Base;
-            drawingInteraction.editingTool.select(bases);
-            drawingInteraction.editingTool.renderForm();
           }}
         />
       </div>
