@@ -97,7 +97,7 @@ function constrainInputs(inputs: Inputs): Inputs {
   return constrained;
 }
 
-export function BasesByData(props: Props) {
+export function EditBasesByDataForm(props: Props) {
   let drawing = props.app.strictDrawing.drawing;
   if (drawing.sequences.length == 0) {
     console.error('Drawing has no sequences.');

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { BasesByData } from 'Forms/edit/bases/by/data/BasesByData';
+import { EditBasesByDataForm } from 'Forms/edit/bases/by/data/EditBasesByDataForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
@@ -16,7 +16,7 @@ export function ByDataButton(props: Props) {
       text='By Data (e.g., SHAPE)'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <BasesByData {...formProps} app={props.app} />
+          <EditBasesByDataForm {...formProps} app={props.app} />
         ), { key: formKey });
       }}
     />
