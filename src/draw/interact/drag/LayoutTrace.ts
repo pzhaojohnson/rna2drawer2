@@ -20,15 +20,15 @@ export class LayoutTrace {
     this.fillPath = new SVG.Path();
 
     this.borderPath.attr({
-      'stroke': '#D0D9FF',
-      'stroke-width': 27,
+      'stroke': '#D4DEFF',
+      'stroke-width': 31.5,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
     });
 
     this.fillPath.attr({
       'stroke': 'white',
-      'stroke-width': 18,
+      'stroke-width': 20.25,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
       'fill': 'white',

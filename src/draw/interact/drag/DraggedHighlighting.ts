@@ -28,11 +28,11 @@ export class DraggedHighlighting {
     this.fillPath = new SVG.Path();
 
     this.borderPath.attr({
-      'stroke': '#839EEC',
-      'stroke-width': 27,
+      'stroke': '#89A2EE',
+      'stroke-width': 31.5,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
-      'fill': '#839EEC',
+      'fill': '#89A2EE',
       'fill-opacity': 1,
     });
 
