@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
 import { SolidButton } from 'Forms/buttons/SolidButton';
@@ -164,31 +164,23 @@ export function EditBasesByDataForm(props: Props) {
         </FieldDescription>
       </div>
       <div style={{ marginTop: '20px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          <input
-            type='text'
-            className={textFieldStyles.input}
-            value={inputs.startPosition}
-            onChange={event => {
-              if (event.target.value.trim() != inputs.startPosition.trim()) {
-                setErrorMessage(new String(''));
-              }
-              setInputs({ ...inputs, startPosition: event.target.value });
-            }}
-            onBlur={() => setInputs(constrainInputs(inputs))}
-            onKeyUp={event => {
-              if (event.key.toLowerCase() == 'enter') {
-                setInputs(constrainInputs(inputs));
-              }
-            }}
-            style={{ width: '48px' }}
-          />
-          <div style={{ marginLeft: '8px' }} >
-            <p className={`${textFieldStyles.label} unselectable`} >
-              Start Position
-            </p>
-          </div>
-        </div>
+        <TextInputField
+          label='Start Position'
+          value={inputs.startPosition}
+          onChange={event => {
+            if (event.target.value.trim() != inputs.startPosition.trim()) {
+              setErrorMessage(new String(''));
+            }
+            setInputs({ ...inputs, startPosition: event.target.value });
+          }}
+          onBlur={() => setInputs(constrainInputs(inputs))}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              setInputs(constrainInputs(inputs));
+            }
+          }}
+          input={{ style: { width: '48px' } }}
+        />
         <FieldDescription style={{ marginTop: '4px' }} >
           The position of the base where the data starts.
         </FieldDescription>
@@ -199,58 +191,41 @@ export function EditBasesByDataForm(props: Props) {
           Range to Select
         </p>
         <div style={{ margin: '6px 0px 0px 8px' }} >
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <input
-              type='text'
-              className={textFieldStyles.input}
-              value={inputs.min}
-              onChange={event => {
-                if (event.target.value.trim() != inputs.min.trim()) {
-                  setErrorMessage(new String(''));
-                }
-                setInputs({ ...inputs, min: event.target.value });
-              }}
-              onBlur={() => setInputs(constrainInputs(inputs))}
-              onKeyUp={event => {
-                if (event.key.toLowerCase() == 'enter') {
-                  setInputs(constrainInputs(inputs));
-                }
-              }}
-              style={{ width: '42px' }}
-            />
-            <div style={{ marginLeft: '8px' }} >
-              <p className={`${textFieldStyles.label} unselectable`} >
-                Minimum Value
-              </p>
-            </div>
-          </div>
-          <div style={{ marginTop: '8px' }} >
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-              <input
-                type='text'
-                className={textFieldStyles.input}
-                value={inputs.max}
-                onChange={event => {
-                  if (event.target.value.trim() != inputs.max.trim()) {
-                    setErrorMessage(new String(''));
-                  }
-                  setInputs({ ...inputs, max: event.target.value });
-                }}
-                onBlur={() => setInputs(constrainInputs(inputs))}
-                onKeyUp={event => {
-                  if (event.key.toLowerCase() == 'enter') {
-                    setInputs(constrainInputs(inputs));
-                  }
-                }}
-                style={{ width: '42px' }}
-              />
-              <div style={{ marginLeft: '8px' }} >
-                <p className={`${textFieldStyles.label} unselectable`} >
-                  Maximum Value
-                </p>
-              </div>
-            </div>
-          </div>
+          <TextInputField
+            label='Minimum Value'
+            value={inputs.min}
+            onChange={event => {
+              if (event.target.value.trim() != inputs.min.trim()) {
+                setErrorMessage(new String(''));
+              }
+              setInputs({ ...inputs, min: event.target.value });
+            }}
+            onBlur={() => setInputs(constrainInputs(inputs))}
+            onKeyUp={event => {
+              if (event.key.toLowerCase() == 'enter') {
+                setInputs(constrainInputs(inputs));
+              }
+            }}
+            input={{ style: { width: '42px' } }}
+          />
+          <TextInputField
+            label='Maximum Value'
+            value={inputs.max}
+            onChange={event => {
+              if (event.target.value.trim() != inputs.max.trim()) {
+                setErrorMessage(new String(''));
+              }
+              setInputs({ ...inputs, max: event.target.value });
+            }}
+            onBlur={() => setInputs(constrainInputs(inputs))}
+            onKeyUp={event => {
+              if (event.key.toLowerCase() == 'enter') {
+                setInputs(constrainInputs(inputs));
+              }
+            }}
+            input={{ style: { width: '42px' } }}
+            style={{ marginTop: '8px' }}
+          />
         </div>
         <FieldDescription style={{ marginTop: '4px' }} >
           Bases with values in the range will be selected.
