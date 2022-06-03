@@ -15,9 +15,9 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
 
 import { SolidButton } from 'Forms/buttons/SolidButton';
+import { ErrorMessage } from 'Forms/ErrorMessage';
 
 import { DottedNote } from 'Forms/notes/DottedNote';
 
@@ -359,13 +359,9 @@ export function EditBasesByDataForm(props: Props) {
         />
       </div>
       {!errorMessage.valueOf() ? null : (
-        <p
-          key={Math.random()}
-          className={`${errorMessageStyles.errorMessage} ${errorMessageStyles.fadesIn} unselectable`}
-          style={{ marginTop: '6px' }}
-        >
+        <ErrorMessage key={Math.random()} style={{ marginTop: '6px' }} >
           {errorMessage.valueOf()}
-        </p>
+        </ErrorMessage>
       )}
       <TrailingNotes />
     </PartialWidthContainer>
