@@ -121,13 +121,7 @@ function constrainInputs(inputs: Inputs): Inputs {
 }
 
 export function EditBasesByDataForm(props: Props) {
-  let drawing = props.app.strictDrawing.drawing;
-  if (drawing.sequences.length == 0) {
-    console.error('Drawing has no sequences.');
-  } else if (drawing.sequences.length > 1) {
-    console.error('Unable to handle multiple sequences.');
-  }
-  let seq = atIndex(drawing.sequences, 0);
+  let seq = props.app.strictDrawing.layoutSequence();
 
   let [inputs, setInputs] = useState<Inputs>(prevInputs);
 
@@ -353,11 +347,11 @@ export function EditBasesByDataForm(props: Props) {
             }
 
             let drawing = props.app.strictDrawing.drawing;
-            if (drawing.sequences.length == 0 || drawing.bases().length == 0) {
+            if (drawing.bases().length == 0) {
               setErrorMessage('Drawing has no bases.');
               return;
             }
-            let seq = drawing.sequences[0];
+            let seq = props.app.strictDrawing.layoutSequence();
 
             // account for numbering offset
             let no = numberingOffset(seq) ?? 0;
