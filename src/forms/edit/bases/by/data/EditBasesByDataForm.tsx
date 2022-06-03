@@ -19,6 +19,8 @@ import errorMessageStyles from 'Forms/ErrorMessage.css';
 
 import { SolidButton } from 'Forms/buttons/SolidButton';
 
+import { DottedNote } from 'Forms/notes/DottedNote';
+
 export type Props = {
   app: App;
 
@@ -394,24 +396,12 @@ export function EditBasesByDataForm(props: Props) {
           {errorMessage.valueOf()}
         </p>
       )}
-      <div style={{ marginTop: '12px' }} >
-        <p
-          className='unselectable'
-          style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
-        >
-          <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-          Bases with values in the entered range will be selected and may then be edited.
-        </p>
-      </div>
-      <div style={{ marginTop: '6px', marginBottom: '8px' }} >
-        <p
-          className='unselectable'
-          style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }}
-        >
-          <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >Note:&nbsp;</span>
-          The range is inclusive.
-        </p>
-      </div>
+      <DottedNote style={{ marginTop: '12px' }} >
+        Bases with values in the entered range will be selected and may then be edited.
+      </DottedNote>
+      <DottedNote style={{ margin: '6px 0 8px 0' }} >
+        The range is inclusive.
+      </DottedNote>
     </PartialWidthContainer>
   );
 }
