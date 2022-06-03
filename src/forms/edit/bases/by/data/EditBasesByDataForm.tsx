@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
@@ -142,9 +143,7 @@ export function EditBasesByDataForm(props: Props) {
       style={{ width: '386px' }}
     >
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
-        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-          Data
-        </p>
+        <FieldLabel>Data</FieldLabel>
         <textarea
           value={inputs.data}
           onChange={event => {
