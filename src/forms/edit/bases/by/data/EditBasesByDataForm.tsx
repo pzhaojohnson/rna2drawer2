@@ -3,8 +3,8 @@ import type { App } from 'App';
 import { Base } from 'Draw/bases/Base';
 
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
+import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
-import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
 
 import * as React from 'react';
@@ -133,42 +133,6 @@ export function EditBasesByDataForm(props: Props) {
     return () => { prevInputs = inputs; }
   });
 
-  function SequenceBounds() {
-    let no = !seq ? 0 : (numberingOffset(seq) ?? 0);
-    return !seq ? null : (
-      <div style={{ marginTop: '6px' }} >
-        {seq.length != 1 ? null : (
-          <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-            <span style={{ fontWeight: 600, color: 'rgb(0,0,0)' }} >
-              {no + 1}&nbsp;
-            </span>
-            is the first and last position of the sequence.
-          </p>
-        )}
-        {seq.length <= 1 ? null : (
-          <div>
-            {no == 0 ? null : (
-              <div style={{ marginBottom: '4px' }} >
-                <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-                  <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                    {no + 1}&nbsp;
-                  </span>
-                  is the first position of the sequence.
-                </p>
-              </div>
-            )}
-            <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-              <span style={{ fontWeight: 600, color: 'rgba(0,0,0,1)' }} >
-                {seq.length + no}&nbsp;
-              </span>
-              is the last position of the sequence.
-            </p>
-          </div>
-        )}
-      </div>
-    );
-  }
-
   return (
     <PartialWidthContainer
       unmount={props.unmount}
@@ -231,7 +195,7 @@ export function EditBasesByDataForm(props: Props) {
             The position of the base where the data starts.
           </p>
         </div>
-        <SequenceBounds />
+        <DisplayableSequenceRange sequence={seq} style={{ marginTop: '6px' }} />
       </div>
       <div style={{ marginTop: '20px' }} >
         <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
