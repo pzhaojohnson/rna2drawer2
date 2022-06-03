@@ -1,15 +1,23 @@
-import * as React from 'react';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import { useState, useEffect } from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
-import errorMessageStyles from 'Forms/ErrorMessage.css';
-import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { SolidButton } from 'Forms/buttons/SolidButton';
 import type { App } from 'App';
+
+import { Base } from 'Draw/bases/Base';
+
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
+
 import { atIndex } from 'Array/at';
 import { isBlank } from 'Parse/isBlank';
-import { Base } from 'Draw/bases/Base';
+
+import * as React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
+import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import errorMessageStyles from 'Forms/ErrorMessage.css';
+
+import { SolidButton } from 'Forms/buttons/SolidButton';
 
 export type Props = {
   app: App;
