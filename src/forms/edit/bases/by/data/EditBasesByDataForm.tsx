@@ -15,6 +15,7 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
@@ -158,11 +159,9 @@ export function EditBasesByDataForm(props: Props) {
           spellCheck={false}
           style={{ marginTop: '4px' }}
         />
-        <div style={{ marginTop: '4px' }} >
-          <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
-            A list of numbers (e.g., SHAPE reactivities).
-          </p>
-        </div>
+        <FieldDescription style={{ marginTop: '4px' }} >
+          A list of numbers (e.g., SHAPE reactivities).
+        </FieldDescription>
       </div>
       <div style={{ marginTop: '20px' }} >
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
@@ -190,11 +189,9 @@ export function EditBasesByDataForm(props: Props) {
             </p>
           </div>
         </div>
-        <div style={{ marginTop: '4px' }} >
-          <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
-            The position of the base where the data starts.
-          </p>
-        </div>
+        <FieldDescription style={{ marginTop: '4px' }} >
+          The position of the base where the data starts.
+        </FieldDescription>
         <DisplayableSequenceRange sequence={seq} style={{ marginTop: '6px' }} />
       </div>
       <div style={{ marginTop: '20px' }} >
@@ -255,11 +252,9 @@ export function EditBasesByDataForm(props: Props) {
             </div>
           </div>
         </div>
-        <div style={{ marginTop: '4px' }} >
-          <p className='unselectable' style={{ fontSize: '14px', fontStyle: 'italic', color: 'rgb(115 115 115)' }} >
-            Bases with values in the range will be selected.
-          </p>
-        </div>
+        <FieldDescription style={{ marginTop: '4px' }} >
+          Bases with values in the range will be selected.
+        </FieldDescription>
       </div>
       <div style={{ marginTop: '28px' }} >
         <SolidButton
