@@ -21,6 +21,19 @@ import { SolidButton } from 'Forms/buttons/SolidButton';
 
 import { DottedNote } from 'Forms/notes/DottedNote';
 
+function TrailingNotes() {
+  return (
+    <div style={{ margin: '12px 0 8px 0' }} >
+      <DottedNote>
+        Bases with values in the entered range will be selected and may then be edited.
+      </DottedNote>
+      <DottedNote style={{ marginTop: '6px' }} >
+        The range is inclusive.
+      </DottedNote>
+    </div>
+  );
+}
+
 export type Props = {
   app: App;
 
@@ -396,12 +409,7 @@ export function EditBasesByDataForm(props: Props) {
           {errorMessage.valueOf()}
         </p>
       )}
-      <DottedNote style={{ marginTop: '12px' }} >
-        Bases with values in the entered range will be selected and may then be edited.
-      </DottedNote>
-      <DottedNote style={{ margin: '6px 0 8px 0' }} >
-        The range is inclusive.
-      </DottedNote>
+      <TrailingNotes />
     </PartialWidthContainer>
   );
 }
