@@ -150,9 +150,6 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           <textarea
             value={inputs.data}
             onChange={event => {
-              if (event.target.value.trim() != inputs.data.trim()) {
-                setErrorMessage('');
-              }
               setInputs({ ...inputs, data: event.target.value });
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
@@ -171,9 +168,6 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           label='Start Position of Data'
           value={inputs.startPosition}
           onChange={event => {
-            if (event.target.value.trim() != inputs.startPosition.trim()) {
-              setErrorMessage('');
-            }
             setInputs({ ...inputs, startPosition: event.target.value });
           }}
           onBlur={() => setInputs(constrainInputs(inputs))}
@@ -196,9 +190,6 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             label='Minimum Value'
             value={inputs.minValue}
             onChange={event => {
-              if (event.target.value.trim() != inputs.minValue.trim()) {
-                setErrorMessage('');
-              }
               setInputs({ ...inputs, minValue: event.target.value });
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
@@ -213,9 +204,6 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             label='Maximum Value'
             value={inputs.maxValue}
             onChange={event => {
-              if (event.target.value.trim() != inputs.maxValue.trim()) {
-                setErrorMessage('');
-              }
               setInputs({ ...inputs, maxValue: event.target.value });
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
