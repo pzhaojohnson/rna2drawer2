@@ -32,9 +32,9 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   } else if (isBlank(args.startPosition)) {
     throw new Error('Specify a start position.');
   } else if (isBlank(args.min)) {
-    throw new Error('Specify a minimum value to select.');
+    throw new Error('Specify a minimum value.');
   } else if (isBlank(args.max)) {
-    throw new Error('Specify a maximum value to select.');
+    throw new Error('Specify a maximum value.');
   }
 
   let data = splitDataNonempty(args.data).map(v => Number.parseFloat(v));
@@ -43,13 +43,13 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   let max = Number.parseFloat(args.max);
 
   if (data.some(v => !Number.isFinite(v))) {
-    throw new Error('All data values must be numbers.');
+    throw new Error('All data values must be a number.');
   } else if (!Number.isFinite(startPosition)) {
     throw new Error('Start position must be a number.');
   } else if (!Number.isFinite(min)) {
-    throw new Error('Minimum value to select must be a number.');
+    throw new Error('Minimum value must be a number.');
   } else if (!Number.isFinite(max)) {
-    throw new Error('Maximum value to select must be a number.');
+    throw new Error('Maximum value must be a number.');
   }
 
   if (!Number.isInteger(startPosition)) {
@@ -67,9 +67,9 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   startPosition -= no;
 
   if (startPosition < 1 || startPosition > sequence.length) {
-    throw new Error('Start position is out of range.');
+    throw new Error('Start position outside of sequence range.');
   } else if (startPosition + data.length - 1 > sequence.length) {
-    throw new Error('Data go beyond the end of the sequence.');
+    throw new Error('Data go beyond end of sequence range.');
   }
 
   let positions: number[] = [];
@@ -80,7 +80,7 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   });
 
   if (positions.length == 0) {
-    throw new Error('No data values in the entered range.');
+    throw new Error('No data values in range to select.');
   }
 
   // all positions should be in the sequence range given the checks above
