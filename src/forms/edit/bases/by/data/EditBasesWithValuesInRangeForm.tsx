@@ -13,13 +13,33 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { DataField } from './DataField';
+import { StartPositionField } from './StartPositionField';
+import { MinValueField } from './MinValueField';
+import { MaxValueField } from './MaxValueField';
+
+import { SelectButton } from './SelectButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 
 import { DottedNote } from 'Forms/notes/DottedNote';
+
+function DataFieldDescription() {
+  return (
+    <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+      ...a list of numbers (e.g., SHAPE reactivities)
+    </FieldDescription>
+  );
+}
+
+function StartPositionFieldDescription() {
+  return (
+    <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+      ...the sequence position where the data start
+    </FieldDescription>
+  );
+}
 
 function TrailingNotes() {
   return (
@@ -144,82 +164,35 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
       title='Bases by Data'
       style={{ width: '396px' }}
     >
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
-        <FieldLabel style={{ display: 'flex', flexDirection: 'column', cursor: 'text' }} >
-          Data
-          <textarea
-            value={inputs.data}
-            onChange={event => {
-              setInputs({ ...inputs, data: event.target.value });
-            }}
-            onBlur={() => setInputs(constrainInputs(inputs))}
-            rows={11}
-            placeholder='...delimit by whitespace, commas and semicolons'
-            spellCheck={false}
-            style={{ marginTop: '4px' }}
-          />
-        </FieldLabel>
-        <FieldDescription style={{ margin: '6px 0 0 16px' }} >
-          ...a list of numbers (e.g., SHAPE reactivities)
-        </FieldDescription>
-      </div>
-      <div style={{ marginTop: '24px' }} >
-        <TextInputField
-          label='Start Position of Data'
-          value={inputs.startPosition}
-          onChange={event => {
-            setInputs({ ...inputs, startPosition: event.target.value });
-          }}
+      <div style={{ display: 'flex', flexDirection: 'column' }} >
+        <DataField
+          value={inputs.data}
+          onChange={event => setInputs({ ...inputs, data: event.target.value })}
           onBlur={() => setInputs(constrainInputs(inputs))}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              setInputs(constrainInputs(inputs));
-            }
-          }}
-          input={{ style: { width: '8ch' } }}
         />
-        <FieldDescription style={{ margin: '6px 0 0 16px' }} >
-          ...the sequence position where the data start
-        </FieldDescription>
-        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 0 3px' }} />
-      </div>
-      <div style={{ marginTop: '24px' }} >
+        <DataFieldDescription />
+        <StartPositionField
+          value={inputs.startPosition}
+          onChange={event => setInputs({ ...inputs, startPosition: event.target.value })}
+          onBlur={() => setInputs(constrainInputs(inputs))}
+          onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
+        />
+        <StartPositionFieldDescription />
+        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 24px 3px' }} />
         <FieldLabel>Range of Data to Select:</FieldLabel>
-        <div style={{ margin: '8px 0px 0px 8px' }} >
-          <TextInputField
-            label='Minimum Value'
-            value={inputs.minValue}
-            onChange={event => {
-              setInputs({ ...inputs, minValue: event.target.value });
-            }}
-            onBlur={() => setInputs(constrainInputs(inputs))}
-            onKeyUp={event => {
-              if (event.key.toLowerCase() == 'enter') {
-                setInputs(constrainInputs(inputs));
-              }
-            }}
-            input={{ style: { width: '7ch' } }}
-          />
-          <TextInputField
-            label='Maximum Value'
-            value={inputs.maxValue}
-            onChange={event => {
-              setInputs({ ...inputs, maxValue: event.target.value });
-            }}
-            onBlur={() => setInputs(constrainInputs(inputs))}
-            onKeyUp={event => {
-              if (event.key.toLowerCase() == 'enter') {
-                setInputs(constrainInputs(inputs));
-              }
-            }}
-            input={{ style: { width: '7ch' } }}
-            style={{ marginTop: '8px' }}
-          />
-        </div>
-      </div>
-      <div style={{ marginTop: '32px' }} >
-        <SolidButton
-          text='Select'
+        <MinValueField
+          value={inputs.minValue}
+          onChange={event => setInputs({ ...inputs, minValue: event.target.value })}
+          onBlur={() => setInputs(constrainInputs(inputs))}
+          onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
+        />
+        <MaxValueField
+          value={inputs.maxValue}
+          onChange={event => setInputs({ ...inputs, maxValue: event.target.value })}
+          onBlur={() => setInputs(constrainInputs(inputs))}
+          onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
+        />
+        <SelectButton
           onClick={() => {
             try {
               let app = props.app;
@@ -230,13 +203,13 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             }
           }}
         />
+        {!errorMessage ? null : (
+          <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
+            {errorMessage}
+          </ErrorMessage>
+        )}
+        <TrailingNotes />
       </div>
-      {!errorMessage ? null : (
-        <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
-          {errorMessage}
-        </ErrorMessage>
-      )}
-      <TrailingNotes />
     </PartialWidthContainer>
   );
 }
