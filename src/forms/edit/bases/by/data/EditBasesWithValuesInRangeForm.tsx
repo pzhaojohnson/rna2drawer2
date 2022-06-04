@@ -112,7 +112,7 @@ function constrainInputs(inputs: Inputs): Inputs {
   return constrained;
 }
 
-export function EditBasesByDataForm(props: Props) {
+export function EditBasesWithValuesInRangeForm(props: Props) {
   let seq = props.app.strictDrawing.layoutSequence();
 
   let [inputs, setInputs] = useState<Inputs>(prevInputs);
