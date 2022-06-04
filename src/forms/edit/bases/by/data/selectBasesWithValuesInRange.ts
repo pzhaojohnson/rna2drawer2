@@ -60,15 +60,15 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
     throw new Error('Drawing has no bases.');
   }
 
-  let seq = strictDrawing.layoutSequence();
+  let sequence = strictDrawing.layoutSequence();
 
   // account for any numbering offset
-  let no = numberingOffset(seq) ?? 0;
+  let no = numberingOffset(sequence) ?? 0;
   startPosition -= no;
 
-  if (startPosition < 1 || startPosition > seq.length) {
+  if (startPosition < 1 || startPosition > sequence.length) {
     throw new Error('Start position is out of range.');
-  } else if (startPosition + data.length - 1 > seq.length) {
+  } else if (startPosition + data.length - 1 > sequence.length) {
     throw new Error('Data go beyond the end of the sequence.');
   }
 
@@ -84,7 +84,7 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   }
 
   // all positions should be in the sequence range given the checks above
-  let bases = positions.map(p => seq.atPosition(p)).filter(
+  let bases = positions.map(p => sequence.atPosition(p)).filter(
     (b): b is Base => b instanceof Base
   );
 
