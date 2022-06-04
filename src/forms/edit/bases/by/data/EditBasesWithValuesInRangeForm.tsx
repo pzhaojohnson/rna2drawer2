@@ -49,15 +49,15 @@ function TrailingNotes() {
         (One value per base.)
       </DottedNote>
       <DottedNote style={{ marginTop: '8px' }} >
-        Bases with values in the specified range of data to select
+        Bases with values in the range of data to select
         will be selected and may then be edited.
       </DottedNote>
       <DottedNote style={{ marginTop: '8px' }} >
         The range of data to select is inclusive.
       </DottedNote>
       <DottedNote style={{ marginTop: '8px' }} >
-        Come back to this form to select bases with values
-        in other ranges of data.
+        Come back to this form to select and edit bases
+        with values in other ranges of data.
       </DottedNote>
     </div>
   );
