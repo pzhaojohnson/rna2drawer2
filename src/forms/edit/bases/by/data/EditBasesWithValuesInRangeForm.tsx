@@ -179,10 +179,10 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           }}
           input={{ style: { width: '48px' } }}
         />
-        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 0 3px' }} />
         <FieldDescription style={{ margin: '5px 0 0 3px' }} >
           The sequence position where the data start.
         </FieldDescription>
+        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 0 3px' }} />
       </div>
       <div style={{ marginTop: '24px' }} >
         <FieldLabel>Range to Select:</FieldLabel>
