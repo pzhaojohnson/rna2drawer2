@@ -1,0 +1,29 @@
+.dataTextArea {
+  border: 1px solid #d8d8e1;
+  border-radius: 2px;
+  padding: 3px 6px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  color: #2b2b30;
+
+  resize: none;
+}
+
+.dataTextArea::placeholder {
+  font-weight: 600;
+  font-style: italic;
+  color: #75757c;
+  opacity: 1; /* necessary for Firefox */
+}
+
+.dataTextArea:hover {
+  border-color: #1f1f21;
+}
+
+.dataTextArea:focus {
+  border-color: #1f1f21;
+  outline: none;
+}

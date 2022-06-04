@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './DataField.css';
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
 export type Props = {
@@ -17,6 +18,7 @@ export function DataField(props: Props) {
     >
       Data
       <textarea
+        className={styles.dataTextArea}
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
