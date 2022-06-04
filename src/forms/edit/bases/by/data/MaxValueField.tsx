@@ -21,7 +21,7 @@ export function MaxValueField(props: Props) {
         }
       }}
       input={{ style: { width: '7ch' } }}
-      style={{ margin: '8px 0 0 8px', alignSelf: 'start' }}
+      style={{ margin: '8px 0 0 10px', alignSelf: 'start' }}
     />
   );
 }

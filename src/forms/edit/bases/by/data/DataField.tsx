@@ -22,7 +22,7 @@ export function DataField(props: Props) {
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
-        rows={11}
+        rows={12}
         placeholder='...delimit by whitespace, commas and semicolons'
         spellCheck={false}
         style={{ marginTop: '4px' }}

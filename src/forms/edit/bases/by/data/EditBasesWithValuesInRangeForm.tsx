@@ -27,7 +27,7 @@ import { DottedNote } from 'Forms/notes/DottedNote';
 
 function DataFieldDescription() {
   return (
-    <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+    <FieldDescription style={{ margin: '6px 0 0 18px' }} >
       ...a list of numbers (e.g., SHAPE reactivities)
     </FieldDescription>
   );
@@ -35,7 +35,7 @@ function DataFieldDescription() {
 
 function StartPositionFieldDescription() {
   return (
-    <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+    <FieldDescription style={{ margin: '6px 0 0 18px' }} >
       ...the sequence position where the data start
     </FieldDescription>
   );
@@ -43,7 +43,7 @@ function StartPositionFieldDescription() {
 
 function TrailingNotes() {
   return (
-    <div style={{ margin: '16px 0 12px 0' }} >
+    <div style={{ margin: '18px 0 12px 0' }} >
       <DottedNote>
         Enter data for a set of consecutive bases in the drawing.
         (One value per base.)
@@ -82,7 +82,7 @@ type Inputs = {
 }
 
 let prevInputs: Inputs = {
-  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75].join('\n') + '\n',
+  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75, 0.6].join('\n') + '\n',
   startPosition: '1',
   minValue: '0',
   maxValue: '1',
@@ -178,7 +178,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
         />
         <StartPositionFieldDescription />
-        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 24px 3px' }} />
+        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 32px 3px' }} />
         <FieldLabel>Range of Data to Select:</FieldLabel>
         <MinValueField
           value={inputs.minValue}
