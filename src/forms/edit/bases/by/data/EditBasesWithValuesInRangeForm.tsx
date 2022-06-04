@@ -25,10 +25,19 @@ function TrailingNotes() {
   return (
     <div style={{ margin: '12px 0 8px 0' }} >
       <DottedNote>
-        Bases with values in the specified range will be selected and may then be edited.
+        Enter data corresponding to consecutive bases
+        in the sequence of the drawing.
+      </DottedNote>
+      <DottedNote style={{ marginTop: '6px' }} >
+        Bases with values in the specified range to select
+        will be selected and may then be edited.
       </DottedNote>
       <DottedNote style={{ marginTop: '6px' }} >
         The range to select is inclusive.
+      </DottedNote>
+      <DottedNote style={{ marginTop: '6px' }} >
+        Come back to this form to select bases with values
+        in other ranges of data.
       </DottedNote>
     </div>
   );
