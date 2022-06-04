@@ -154,7 +154,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
       </div>
       <div style={{ marginTop: '20px' }} >
         <TextInputField
-          label='Start Position'
+          label='Start Position of Data'
           value={inputs.startPosition}
           onChange={event => {
             if (event.target.value.trim() != inputs.startPosition.trim()) {
@@ -170,10 +170,10 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           }}
           input={{ style: { width: '48px' } }}
         />
-        <FieldDescription style={{ marginTop: '4px' }} >
-          The position of the base where the data starts.
-        </FieldDescription>
         <DisplayableSequenceRange sequence={seq} style={{ marginTop: '6px' }} />
+        <FieldDescription style={{ marginTop: '4px' }} >
+          The sequence position where the data start.
+        </FieldDescription>
       </div>
       <div style={{ marginTop: '20px' }} >
         <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
