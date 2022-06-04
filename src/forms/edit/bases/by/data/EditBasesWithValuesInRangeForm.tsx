@@ -126,8 +126,11 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
 
   let [inputs, setInputs] = useState<Inputs>(prevInputs);
 
-  // use String object to rerender every time the error message is set
-  let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+  let [errorMessage, setErrorMessage] = useState('');
+
+  // to be incremented every time the error message is set
+  // (to trigger error message animations)
+  let [errorMessageKey, setErrorMessageKey] = useState(0);
 
   // remember inputs between mountings
   useEffect(() => {
@@ -148,7 +151,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             value={inputs.data}
             onChange={event => {
               if (event.target.value.trim() != inputs.data.trim()) {
-                setErrorMessage(new String(''));
+                setErrorMessage('');
               }
               setInputs({ ...inputs, data: event.target.value });
             }}
@@ -169,7 +172,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           value={inputs.startPosition}
           onChange={event => {
             if (event.target.value.trim() != inputs.startPosition.trim()) {
-              setErrorMessage(new String(''));
+              setErrorMessage('');
             }
             setInputs({ ...inputs, startPosition: event.target.value });
           }}
@@ -194,7 +197,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             value={inputs.minValue}
             onChange={event => {
               if (event.target.value.trim() != inputs.minValue.trim()) {
-                setErrorMessage(new String(''));
+                setErrorMessage('');
               }
               setInputs({ ...inputs, minValue: event.target.value });
             }}
@@ -211,7 +214,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             value={inputs.maxValue}
             onChange={event => {
               if (event.target.value.trim() != inputs.maxValue.trim()) {
-                setErrorMessage(new String(''));
+                setErrorMessage('');
               }
               setInputs({ ...inputs, maxValue: event.target.value });
             }}
@@ -234,16 +237,15 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
               let app = props.app;
               selectBasesWithValuesInRange({ app, ...inputs });
             } catch (error) {
-              setErrorMessage(new String(
-                error instanceof Error ? error.message : error
-              ));
+              setErrorMessage(error instanceof Error ? error.message : String(error));
+              setErrorMessageKey(errorMessageKey + 1);
             }
           }}
         />
       </div>
-      {!errorMessage.valueOf() ? null : (
-        <ErrorMessage key={Math.random()} style={{ marginTop: '6px' }} >
-          {errorMessage.valueOf()}
+      {!errorMessage ? null : (
+        <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
+          {errorMessage}
         </ErrorMessage>
       )}
       <TrailingNotes />
