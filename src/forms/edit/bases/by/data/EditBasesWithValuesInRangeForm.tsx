@@ -176,9 +176,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
         </FieldDescription>
       </div>
       <div style={{ marginTop: '20px' }} >
-        <p className='unselectable' style={{ fontSize: '12px', color: 'rgba(0,0,0,0.95)' }} >
-          Range to Select
-        </p>
+        <FieldLabel>Range to Select:</FieldLabel>
         <div style={{ margin: '6px 0px 0px 8px' }} >
           <TextInputField
             label='Minimum Value'
