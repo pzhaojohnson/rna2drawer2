@@ -142,21 +142,23 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
       style={{ width: '396px' }}
     >
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
-        <FieldLabel>Data</FieldLabel>
-        <textarea
-          value={inputs.data}
-          onChange={event => {
-            if (event.target.value.trim() != inputs.data.trim()) {
-              setErrorMessage(new String(''));
-            }
-            setInputs({ ...inputs, data: event.target.value });
-          }}
-          onBlur={() => setInputs(constrainInputs(inputs))}
-          rows={11}
-          placeholder='...delimit by whitespace, commas and semicolons'
-          spellCheck={false}
-          style={{ marginTop: '4px' }}
-        />
+        <FieldLabel style={{ display: 'flex', flexDirection: 'column', cursor: 'text' }} >
+          Data
+          <textarea
+            value={inputs.data}
+            onChange={event => {
+              if (event.target.value.trim() != inputs.data.trim()) {
+                setErrorMessage(new String(''));
+              }
+              setInputs({ ...inputs, data: event.target.value });
+            }}
+            onBlur={() => setInputs(constrainInputs(inputs))}
+            rows={11}
+            placeholder='...delimit by whitespace, commas and semicolons'
+            spellCheck={false}
+            style={{ marginTop: '4px' }}
+          />
+        </FieldLabel>
         <FieldDescription style={{ margin: '6px 0 0 16px' }} >
           ...a list of numbers (e.g., SHAPE reactivities)
         </FieldDescription>
