@@ -29,11 +29,11 @@ function TrailingNotes() {
         in the sequence of the drawing.
       </DottedNote>
       <DottedNote style={{ marginTop: '8px' }} >
-        Bases with values in the specified range to select
+        Bases with values in the specified range of data to select
         will be selected and may then be edited.
       </DottedNote>
       <DottedNote style={{ marginTop: '8px' }} >
-        The range to select is inclusive.
+        The range of data to select is inclusive.
       </DottedNote>
       <DottedNote style={{ marginTop: '8px' }} >
         Come back to this form to select bases with values
@@ -185,7 +185,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
         <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 0 3px' }} />
       </div>
       <div style={{ marginTop: '24px' }} >
-        <FieldLabel>Range to Select:</FieldLabel>
+        <FieldLabel>Range of Data to Select:</FieldLabel>
         <div style={{ margin: '8px 0px 0px 8px' }} >
           <TextInputField
             label='Minimum Value'
