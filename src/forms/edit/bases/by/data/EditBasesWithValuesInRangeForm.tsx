@@ -25,8 +25,8 @@ function TrailingNotes() {
   return (
     <div style={{ margin: '16px 0 12px 0' }} >
       <DottedNote>
-        Enter data (e.g., SHAPE reactivities)
-        for a set of consecutive bases in the drawing.
+        Enter data for a set of consecutive bases in the drawing.
+        (One value per base.)
       </DottedNote>
       <DottedNote style={{ marginTop: '8px' }} >
         Bases with values in the specified range of data to select
