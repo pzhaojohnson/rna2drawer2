@@ -25,10 +25,10 @@ function TrailingNotes() {
   return (
     <div style={{ margin: '12px 0 8px 0' }} >
       <DottedNote>
-        Bases with values in the entered range will be selected and may then be edited.
+        Bases with values in the specified range will be selected and may then be edited.
       </DottedNote>
       <DottedNote style={{ marginTop: '6px' }} >
-        The range is inclusive.
+        The range to select is inclusive.
       </DottedNote>
     </div>
   );
