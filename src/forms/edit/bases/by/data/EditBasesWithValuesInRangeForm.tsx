@@ -23,19 +23,19 @@ import { DottedNote } from 'Forms/notes/DottedNote';
 
 function TrailingNotes() {
   return (
-    <div style={{ margin: '12px 0 8px 0' }} >
+    <div style={{ margin: '16px 0 12px 0' }} >
       <DottedNote>
         Enter data corresponding to consecutive bases
         in the sequence of the drawing.
       </DottedNote>
-      <DottedNote style={{ marginTop: '6px' }} >
+      <DottedNote style={{ marginTop: '8px' }} >
         Bases with values in the specified range to select
         will be selected and may then be edited.
       </DottedNote>
-      <DottedNote style={{ marginTop: '6px' }} >
+      <DottedNote style={{ marginTop: '8px' }} >
         The range to select is inclusive.
       </DottedNote>
-      <DottedNote style={{ marginTop: '6px' }} >
+      <DottedNote style={{ marginTop: '8px' }} >
         Come back to this form to select bases with values
         in other ranges of data.
       </DottedNote>
@@ -157,11 +157,11 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           spellCheck={false}
           style={{ marginTop: '4px' }}
         />
-        <FieldDescription style={{ marginTop: '4px' }} >
+        <FieldDescription style={{ margin: '5px 0 0 3px' }} >
           A list of numbers (e.g., SHAPE reactivities).
         </FieldDescription>
       </div>
-      <div style={{ marginTop: '20px' }} >
+      <div style={{ marginTop: '24px' }} >
         <TextInputField
           label='Start Position of Data'
           value={inputs.startPosition}
@@ -179,14 +179,14 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           }}
           input={{ style: { width: '48px' } }}
         />
-        <DisplayableSequenceRange sequence={seq} style={{ marginTop: '6px' }} />
-        <FieldDescription style={{ marginTop: '4px' }} >
+        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 0 3px' }} />
+        <FieldDescription style={{ margin: '5px 0 0 3px' }} >
           The sequence position where the data start.
         </FieldDescription>
       </div>
-      <div style={{ marginTop: '20px' }} >
+      <div style={{ marginTop: '24px' }} >
         <FieldLabel>Range to Select:</FieldLabel>
-        <div style={{ margin: '6px 0px 0px 8px' }} >
+        <div style={{ margin: '8px 0px 0px 8px' }} >
           <TextInputField
             label='Minimum Value'
             value={inputs.minValue}
@@ -224,7 +224,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           />
         </div>
       </div>
-      <div style={{ marginTop: '28px' }} >
+      <div style={{ marginTop: '32px' }} >
         <SolidButton
           text='Select'
           onClick={() => {
