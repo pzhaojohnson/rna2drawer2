@@ -62,7 +62,7 @@ type Inputs = {
 }
 
 let prevInputs: Inputs = {
-  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75, 0.6].join('\n'),
+  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75].join('\n'),
   startPosition: '1',
   minValue: '0',
   maxValue: '1',
@@ -152,7 +152,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             setInputs({ ...inputs, data: event.target.value });
           }}
           onBlur={() => setInputs(constrainInputs(inputs))}
-          rows={12}
+          rows={11}
           placeholder='...delimit by whitespace, commas and semicolons'
           spellCheck={false}
           style={{ marginTop: '4px' }}
@@ -177,7 +177,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
               setInputs(constrainInputs(inputs));
             }
           }}
-          input={{ style: { width: '48px' } }}
+          input={{ style: { width: '8ch' } }}
         />
         <FieldDescription style={{ margin: '6px 0 0 16px' }} >
           ...the sequence position where the data start
@@ -202,7 +202,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
                 setInputs(constrainInputs(inputs));
               }
             }}
-            input={{ style: { width: '42px' } }}
+            input={{ style: { width: '7ch' } }}
           />
           <TextInputField
             label='Maximum Value'
@@ -219,7 +219,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
                 setInputs(constrainInputs(inputs));
               }
             }}
-            input={{ style: { width: '42px' } }}
+            input={{ style: { width: '7ch' } }}
             style={{ marginTop: '8px' }}
           />
         </div>
