@@ -62,7 +62,7 @@ type Inputs = {
 }
 
 let prevInputs: Inputs = {
-  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75].join('\n'),
+  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75].join('\n') + '\n',
   startPosition: '1',
   minValue: '0',
   maxValue: '1',
@@ -71,8 +71,8 @@ let prevInputs: Inputs = {
 function formatData(data: string): string {
   let vs = splitDataNonempty(data);
 
-  // one value per line
-  return vs.join('\n');
+  // one value per line and a trailing newline
+  return vs.join('\n') + '\n';
 }
 
 function constrainStartPosition(startPosition: string): string {
