@@ -214,9 +214,6 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             style={{ marginTop: '8px' }}
           />
         </div>
-        <FieldDescription style={{ marginTop: '4px' }} >
-          Bases with values in the range will be selected.
-        </FieldDescription>
       </div>
       <div style={{ marginTop: '28px' }} >
         <SolidButton
