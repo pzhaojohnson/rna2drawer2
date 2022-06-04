@@ -76,23 +76,23 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
     throw new Error('Data go beyond end of sequence range.');
   }
 
-  let positions: number[] = [];
+  let positionsToSelect: number[] = [];
   data.forEach((v, i) => {
     if (v >= min && v <= max) {
-      positions.push(startPosition + i);
+      positionsToSelect.push(startPosition + i);
     }
   });
 
-  if (positions.length == 0) {
+  if (positionsToSelect.length == 0) {
     throw new Error('No data values in range to select.');
   }
 
   // all positions should be in the sequence range given the checks above
-  let bases = positions.map(p => sequence.atPosition(p)).filter(isBase);
+  let basesToSelect = positionsToSelect.map(p => sequence.atPosition(p)).filter(isBase);
 
   let drawingInteraction = args.app.strictDrawingInteraction;
   drawingInteraction.currentTool = drawingInteraction.editingTool; // switch to editing tool
   drawingInteraction.editingTool.editingType = Base; // set to edit bases
-  drawingInteraction.editingTool.select(bases); // select the bases
+  drawingInteraction.editingTool.select(basesToSelect); // select the bases
   drawingInteraction.editingTool.renderForm(); // render the editing form
 }
