@@ -24,8 +24,8 @@ export type Args = {
   // (inclusive) to select bases in
   // (bases with data values in the specified range will be selected
   // and may then be edited by the user)
-  min: string;
-  max: string;
+  minValue: string;
+  maxValue: string;
 };
 
 export function selectBasesWithValuesInRange(args: Args): void | never {
@@ -35,24 +35,24 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
     throw new Error('No data entered.');
   } else if (isBlank(args.startPosition)) {
     throw new Error('Specify a start position.');
-  } else if (isBlank(args.min)) {
+  } else if (isBlank(args.minValue)) {
     throw new Error('Specify a minimum value.');
-  } else if (isBlank(args.max)) {
+  } else if (isBlank(args.maxValue)) {
     throw new Error('Specify a maximum value.');
   }
 
   let data = splitDataNonempty(args.data).map(v => Number.parseFloat(v));
   let startPosition = Number.parseFloat(args.startPosition);
-  let min = Number.parseFloat(args.min);
-  let max = Number.parseFloat(args.max);
+  let minValue = Number.parseFloat(args.minValue);
+  let maxValue = Number.parseFloat(args.maxValue);
 
   if (data.some(v => !Number.isFinite(v))) {
     throw new Error('All data values must be a number.');
   } else if (!Number.isFinite(startPosition)) {
     throw new Error('Start position must be a number.');
-  } else if (!Number.isFinite(min)) {
+  } else if (!Number.isFinite(minValue)) {
     throw new Error('Minimum value must be a number.');
-  } else if (!Number.isFinite(max)) {
+  } else if (!Number.isFinite(maxValue)) {
     throw new Error('Maximum value must be a number.');
   }
 
@@ -78,7 +78,7 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
 
   let positionsToSelect: number[] = [];
   data.forEach((v, i) => {
-    if (v >= min && v <= max) {
+    if (v >= minValue && v <= maxValue) {
       positionsToSelect.push(startPosition + i);
     }
   });

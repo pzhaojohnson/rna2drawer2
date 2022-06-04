@@ -48,15 +48,15 @@ type Inputs = {
   startPosition: string;
 
   // bases with values in this range (inclusive) will be selected
-  min: string;
-  max: string;
+  minValue: string;
+  maxValue: string;
 }
 
 let prevInputs: Inputs = {
   data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75, 0.6].join('\n'),
   startPosition: '1',
-  min: '0',
-  max: '1',
+  minValue: '0',
+  maxValue: '1',
 };
 
 function formatData(data: string): string {
@@ -76,21 +76,21 @@ function constrainStartPosition(startPosition: string): string {
   }
 }
 
-function constrainMin(min: string): string {
-  let n = Number.parseFloat(min);
+function constrainMinValue(minValue: string): string {
+  let n = Number.parseFloat(minValue);
   if (Number.isFinite(n)) {
     return n.toString();
   } else {
-    return min.trim();
+    return minValue.trim();
   }
 }
 
-function constrainMax(max: string): string {
-  let n = Number.parseFloat(max);
+function constrainMaxValue(maxValue: string): string {
+  let n = Number.parseFloat(maxValue);
   if (Number.isFinite(n)) {
     return n.toString();
   } else {
-    return max.trim();
+    return maxValue.trim();
   }
 }
 
@@ -98,15 +98,15 @@ function constrainInputs(inputs: Inputs): Inputs {
   let constrained: Inputs = {
     data: formatData(inputs.data),
     startPosition: constrainStartPosition(inputs.startPosition),
-    min: constrainMin(inputs.min),
-    max: constrainMax(inputs.max),
+    minValue: constrainMinValue(inputs.minValue),
+    maxValue: constrainMaxValue(inputs.maxValue),
   };
-  let min = Number.parseFloat(constrained.min);
-  let max = Number.parseFloat(constrained.max);
-  if (Number.isFinite(min) && Number.isFinite(max)) {
-    if (min > max) {
-      constrained.min = max.toString();
-      constrained.max = min.toString();
+  let minValue = Number.parseFloat(constrained.minValue);
+  let maxValue = Number.parseFloat(constrained.maxValue);
+  if (Number.isFinite(minValue) && Number.isFinite(maxValue)) {
+    if (minValue > maxValue) {
+      constrained.minValue = maxValue.toString();
+      constrained.maxValue = minValue.toString();
     }
   }
   return constrained;
@@ -182,12 +182,12 @@ export function EditBasesByDataForm(props: Props) {
         <div style={{ margin: '6px 0px 0px 8px' }} >
           <TextInputField
             label='Minimum Value'
-            value={inputs.min}
+            value={inputs.minValue}
             onChange={event => {
-              if (event.target.value.trim() != inputs.min.trim()) {
+              if (event.target.value.trim() != inputs.minValue.trim()) {
                 setErrorMessage(new String(''));
               }
-              setInputs({ ...inputs, min: event.target.value });
+              setInputs({ ...inputs, minValue: event.target.value });
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
             onKeyUp={event => {
@@ -199,12 +199,12 @@ export function EditBasesByDataForm(props: Props) {
           />
           <TextInputField
             label='Maximum Value'
-            value={inputs.max}
+            value={inputs.maxValue}
             onChange={event => {
-              if (event.target.value.trim() != inputs.max.trim()) {
+              if (event.target.value.trim() != inputs.maxValue.trim()) {
                 setErrorMessage(new String(''));
               }
-              setInputs({ ...inputs, max: event.target.value });
+              setInputs({ ...inputs, maxValue: event.target.value });
             }}
             onBlur={() => setInputs(constrainInputs(inputs))}
             onKeyUp={event => {
