@@ -157,8 +157,8 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           spellCheck={false}
           style={{ marginTop: '4px' }}
         />
-        <FieldDescription style={{ margin: '5px 0 0 3px' }} >
-          A list of numbers (e.g., SHAPE reactivities).
+        <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+          ...a list of numbers (e.g., SHAPE reactivities)
         </FieldDescription>
       </div>
       <div style={{ marginTop: '24px' }} >
@@ -179,8 +179,8 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           }}
           input={{ style: { width: '48px' } }}
         />
-        <FieldDescription style={{ margin: '5px 0 0 3px' }} >
-          The sequence position where the data start.
+        <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+          ...the sequence position where the data start
         </FieldDescription>
         <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 0 3px' }} />
       </div>

@@ -188,8 +188,8 @@ export function ExportDrawingForm(props: Props) {
             }
           }}
         />
-        <FieldDescription style={{ marginTop: '6px' }} >
-          Use to scale the exported drawing.
+        <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+          ...use to scale the exported drawing
         </FieldDescription>
       </div>
       <ExportButton
