@@ -5,6 +5,10 @@ import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { isBlank } from 'Parse/isBlank';
 import { splitDataNonempty } from './splitDataNonempty';
 
+function isBase(v: unknown): v is Base {
+  return v instanceof Base;
+}
+
 export type Args = {
   app: App; // a reference to the whole app
 
@@ -84,9 +88,7 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   }
 
   // all positions should be in the sequence range given the checks above
-  let bases = positions.map(p => sequence.atPosition(p)).filter(
-    (b): b is Base => b instanceof Base
-  );
+  let bases = positions.map(p => sequence.atPosition(p)).filter(isBase);
 
   let drawingInteraction = args.app.strictDrawingInteraction;
   drawingInteraction.currentTool = drawingInteraction.editingTool; // switch to editing tool
