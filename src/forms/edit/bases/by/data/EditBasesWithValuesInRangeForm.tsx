@@ -173,7 +173,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Bases by Data'
-      style={{ width: '398px' }}
+      style={{ width: '400px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <DataField
