@@ -1,7 +1,5 @@
 import type { App } from 'App';
 
-import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
-
 import { splitDataNonempty } from './splitDataNonempty';
 import { selectBasesWithValuesInRange } from './selectBasesWithValuesInRange';
 
@@ -19,6 +17,8 @@ import { DataField } from './DataField';
 import { StartPositionField } from './StartPositionField';
 import { MinValueField } from './MinValueField';
 import { MaxValueField } from './MaxValueField';
+
+import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
 import { SelectButton } from './SelectButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
