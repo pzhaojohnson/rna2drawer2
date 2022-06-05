@@ -10,7 +10,7 @@ export function SelectButton(props: Props) {
     <SolidButton
       text='Select'
       onClick={props.onClick}
-      style={{ marginTop: '38px', alignSelf: 'start' }}
+      style={{ marginTop: '40px', alignSelf: 'start' }}
     />
   );
 }

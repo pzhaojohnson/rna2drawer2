@@ -21,7 +21,7 @@ export function StartPositionField(props: Props) {
         }
       }}
       input={{ style: { width: '8ch' } }}
-      style={{ marginTop: '36px', alignSelf: 'start' }}
+      style={{ marginTop: '38px', alignSelf: 'start' }}
     />
   );
 }
