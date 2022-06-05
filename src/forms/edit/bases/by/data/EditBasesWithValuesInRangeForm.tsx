@@ -41,9 +41,13 @@ function StartPositionFieldDescription() {
   );
 }
 
-function TrailingNotes() {
+function TrailingNotes(
+  props: {
+    style?: React.CSSProperties,
+  },
+) {
   return (
-    <div style={{ margin: '18px 0 12px 0' }} >
+    <div style={{ marginBottom: '12px', ...props.style }} >
       <DottedNote>
         Enter data for a set of consecutive bases in the drawing.
         (One value per base.)
@@ -215,7 +219,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
             {errorMessage}
           </ErrorMessage>
         )}
-        <TrailingNotes />
+        <TrailingNotes style={{ marginTop: errorMessage ? '16px' : '18px' }} />
       </div>
     </PartialWidthContainer>
   );
