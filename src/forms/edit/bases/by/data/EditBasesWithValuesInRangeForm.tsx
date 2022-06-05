@@ -74,24 +74,6 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-type Inputs = {
-  data: string;
-
-  // the position of the base that the data starts at
-  startPosition: string;
-
-  // bases with values in this range (inclusive) will be selected
-  minValue: string;
-  maxValue: string;
-}
-
-let prevInputs: Inputs = {
-  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75, 0.6].join('\n') + '\n',
-  startPosition: '1',
-  minValue: '0',
-  maxValue: '1',
-};
-
 function formatData(data: string): string {
   let vs = splitDataNonempty(data);
 
@@ -108,54 +90,55 @@ function formatData(data: string): string {
 
 function constrainStartPosition(startPosition: string): string {
   let n = Number.parseFloat(startPosition);
-  if (Number.isFinite(n)) {
-    n = Math.floor(n); // make an integer
-    return n.toString();
-  } else {
-    return startPosition.trim();
+
+  if (!Number.isFinite(n)) {
+    return startPosition.trim(); // just trim whitespace
   }
+
+  n = Math.floor(n); // make an integer
+  return n.toString();
 }
 
-function constrainMinValue(minValue: string): string {
-  let n = Number.parseFloat(minValue);
-  if (Number.isFinite(n)) {
-    return n.toString();
-  } else {
-    return minValue.trim();
-  }
-}
-
-function constrainMaxValue(maxValue: string): string {
-  let n = Number.parseFloat(maxValue);
-  if (Number.isFinite(n)) {
-    return n.toString();
-  } else {
-    return maxValue.trim();
-  }
-}
-
-function constrainInputs(inputs: Inputs): Inputs {
-  let constrained: Inputs = {
-    data: formatData(inputs.data),
-    startPosition: constrainStartPosition(inputs.startPosition),
-    minValue: constrainMinValue(inputs.minValue),
-    maxValue: constrainMaxValue(inputs.maxValue),
-  };
-  let minValue = Number.parseFloat(constrained.minValue);
-  let maxValue = Number.parseFloat(constrained.maxValue);
-  if (Number.isFinite(minValue) && Number.isFinite(maxValue)) {
-    if (minValue > maxValue) {
-      constrained.minValue = maxValue.toString();
-      constrained.maxValue = minValue.toString();
-    }
-  }
-  return constrained;
-}
+let prevInputs = {
+  data: [0.5, 1.25, 0.25, -0.25, 0.75, -0.1, 0.9, -0.6, 0.8, 1.75, 0.6].join('\n') + '\n',
+  startPosition: '1',
+  minValue: '0',
+  maxValue: '1',
+};
 
 export function EditBasesWithValuesInRangeForm(props: Props) {
   let sequence = props.app.strictDrawing.layoutSequence();
 
-  let [inputs, setInputs] = useState<Inputs>(prevInputs);
+  let [data, setData] = useState(prevInputs.data);
+  let [startPosition, setStartPosition] = useState(prevInputs.startPosition);
+  let [minValue, setMinValue] = useState(prevInputs.minValue);
+  let [maxValue, setMaxValue] = useState(prevInputs.maxValue);
+
+  let processData = () => {
+    setData(formatData(data));
+  };
+
+  let processStartPosition = () => {
+    setStartPosition(constrainStartPosition(startPosition));
+  };
+
+  let processMinValue = () => {
+    let v = minValue.trim();
+    setMinValue(v);
+
+    if (Number.parseFloat(v) > Number.parseFloat(maxValue)) {
+      setMaxValue(v);
+    }
+  };
+
+  let processMaxValue = () => {
+    let v = maxValue.trim();
+    setMaxValue(v);
+
+    if (Number.parseFloat(v) < Number.parseFloat(minValue)) {
+      setMinValue(v);
+    }
+  };
 
   let [errorMessage, setErrorMessage] = useState('');
 
@@ -163,9 +146,9 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
   // (to trigger error message animations)
   let [errorMessageKey, setErrorMessageKey] = useState(0);
 
-  // remember inputs between mountings
+  // remember inputs between renderings
   useEffect(() => {
-    return () => { prevInputs = inputs; }
+    return () => { prevInputs = { data, startPosition, minValue, maxValue }; }
   });
 
   return (
@@ -177,37 +160,37 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <DataField
-          value={inputs.data}
-          onChange={event => setInputs({ ...inputs, data: event.target.value })}
-          onBlur={() => setInputs(constrainInputs(inputs))}
+          value={data}
+          onChange={event => setData(event.target.value)}
+          onBlur={() => processData()}
         />
         <DataFieldDescription />
         <StartPositionField
-          value={inputs.startPosition}
-          onChange={event => setInputs({ ...inputs, startPosition: event.target.value })}
-          onBlur={() => setInputs(constrainInputs(inputs))}
-          onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
+          value={startPosition}
+          onChange={event => setStartPosition(event.target.value)}
+          onBlur={() => processStartPosition()}
+          onEnterKeyUp={() => processStartPosition()}
         />
         <StartPositionFieldDescription />
         <DisplayableSequenceRange sequence={sequence} style={{ margin: '6px 0 36px 3px' }} />
         <FieldLabel>Range of Data to Select:</FieldLabel>
         <MinValueField
-          value={inputs.minValue}
-          onChange={event => setInputs({ ...inputs, minValue: event.target.value })}
-          onBlur={() => setInputs(constrainInputs(inputs))}
-          onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
+          value={minValue}
+          onChange={event => setMinValue(event.target.value)}
+          onBlur={() => processMinValue()}
+          onEnterKeyUp={() => processMinValue()}
         />
         <MaxValueField
-          value={inputs.maxValue}
-          onChange={event => setInputs({ ...inputs, maxValue: event.target.value })}
-          onBlur={() => setInputs(constrainInputs(inputs))}
-          onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
+          value={maxValue}
+          onChange={event => setMaxValue(event.target.value)}
+          onBlur={() => processMaxValue()}
+          onEnterKeyUp={() => processMaxValue()}
         />
         <SelectButton
           onClick={() => {
             try {
               let app = props.app;
-              selectBasesWithValuesInRange({ app, ...inputs });
+              selectBasesWithValuesInRange({ app, data, startPosition, minValue, maxValue });
             } catch (error) {
               setErrorMessage(error instanceof Error ? error.message : String(error));
               setErrorMessageKey(errorMessageKey + 1);
