@@ -16,7 +16,7 @@ export function DataField(props: Props) {
         cursor: 'text',
       }}
     >
-      Data
+      Data to Edit Bases By
       <textarea
         className={styles.dataTextArea}
         value={props.value}

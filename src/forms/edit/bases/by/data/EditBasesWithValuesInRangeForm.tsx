@@ -49,15 +49,15 @@ function TrailingNotes(
   return (
     <div style={{ marginBottom: '12px', ...props.style }} >
       <DottedNote>
-        Enter data for a set of consecutive bases in the drawing.
+        Enter data for a consecutive set of bases in the drawing.
         (One value per base.)
       </DottedNote>
       <DottedNote style={{ marginTop: '9px' }} >
-        Bases with values in the range of data to select
+        Bases with values in the range of data to select bases in
         will be selected and may then be edited.
       </DottedNote>
       <DottedNote style={{ marginTop: '9px' }} >
-        The range of data to select is inclusive.
+        The range of data to select bases in is inclusive.
       </DottedNote>
       <DottedNote style={{ marginTop: '9px' }} >
         Come back to this form to select and edit bases
@@ -173,7 +173,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
         />
         <StartPositionFieldDescription />
         <DisplayableSequenceRange sequence={sequence} style={{ margin: '6px 0 38px 3px' }} />
-        <FieldLabel>Range of Data to Select:</FieldLabel>
+        <FieldLabel>Range of Data to Select Bases In:</FieldLabel>
         <MinValueField
           value={minValue}
           onChange={event => setMinValue(event.target.value)}
