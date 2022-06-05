@@ -153,7 +153,7 @@ function constrainInputs(inputs: Inputs): Inputs {
 }
 
 export function EditBasesWithValuesInRangeForm(props: Props) {
-  let seq = props.app.strictDrawing.layoutSequence();
+  let sequence = props.app.strictDrawing.layoutSequence();
 
   let [inputs, setInputs] = useState<Inputs>(prevInputs);
 
@@ -189,7 +189,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
         />
         <StartPositionFieldDescription />
-        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 36px 3px' }} />
+        <DisplayableSequenceRange sequence={sequence} style={{ margin: '6px 0 36px 3px' }} />
         <FieldLabel>Range of Data to Select:</FieldLabel>
         <MinValueField
           value={inputs.minValue}
