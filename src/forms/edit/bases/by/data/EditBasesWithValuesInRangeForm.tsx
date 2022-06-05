@@ -91,8 +91,15 @@ let prevInputs: Inputs = {
 function formatData(data: string): string {
   let vs = splitDataNonempty(data);
 
-  // one value per line and a trailing newline
-  return vs.join('\n') + '\n';
+  // one value per line
+  let formattedData = vs.join('\n');
+
+  // avoid a blank first line
+  if (vs.length > 0) {
+    formattedData += '\n'; // add trailing newline
+  }
+
+  return formattedData;
 }
 
 function constrainStartPosition(startPosition: string): string {
