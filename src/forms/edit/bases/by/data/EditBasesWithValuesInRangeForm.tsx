@@ -27,7 +27,7 @@ import { DottedNote } from 'Forms/notes/DottedNote';
 
 function DataFieldDescription() {
   return (
-    <FieldDescription style={{ margin: '6px 0 0 18px' }} >
+    <FieldDescription style={{ margin: '6px 0 0 16px' }} >
       ...a list of numbers (e.g., SHAPE reactivities)
     </FieldDescription>
   );
@@ -35,7 +35,7 @@ function DataFieldDescription() {
 
 function StartPositionFieldDescription() {
   return (
-    <FieldDescription style={{ margin: '6px 0 0 18px' }} >
+    <FieldDescription style={{ margin: '6px 0 0 16px' }} >
       ...the sequence position where the data start
     </FieldDescription>
   );
@@ -48,14 +48,14 @@ function TrailingNotes() {
         Enter data for a set of consecutive bases in the drawing.
         (One value per base.)
       </DottedNote>
-      <DottedNote style={{ marginTop: '8px' }} >
+      <DottedNote style={{ marginTop: '9px' }} >
         Bases with values in the range of data to select
         will be selected and may then be edited.
       </DottedNote>
-      <DottedNote style={{ marginTop: '8px' }} >
+      <DottedNote style={{ marginTop: '9px' }} >
         The range of data to select is inclusive.
       </DottedNote>
-      <DottedNote style={{ marginTop: '8px' }} >
+      <DottedNote style={{ marginTop: '9px' }} >
         Come back to this form to select and edit bases
         with values in other ranges of data.
       </DottedNote>
@@ -169,7 +169,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Bases by Data'
-      style={{ width: '396px' }}
+      style={{ width: '398px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <DataField
@@ -185,7 +185,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           onEnterKeyUp={() => setInputs(constrainInputs(inputs))}
         />
         <StartPositionFieldDescription />
-        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 32px 3px' }} />
+        <DisplayableSequenceRange sequence={seq} style={{ margin: '6px 0 36px 3px' }} />
         <FieldLabel>Range of Data to Select:</FieldLabel>
         <MinValueField
           value={inputs.minValue}
