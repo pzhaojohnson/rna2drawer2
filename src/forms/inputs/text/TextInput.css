@@ -1,4 +1,6 @@
 .textInput {
+  margin: 0px; /* is nonzero by default for Safari */
+
   border: 1px solid #d1d1e4;
   border-radius: 2px;
   width: 6ch;
