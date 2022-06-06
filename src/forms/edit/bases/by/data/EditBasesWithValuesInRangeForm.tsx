@@ -47,7 +47,7 @@ function TrailingNotes(
   },
 ) {
   return (
-    <div style={{ marginBottom: '12px', ...props.style }} >
+    <div style={props.style} >
       <DottedNote>
         Enter data for a consecutive set of bases in the drawing.
         (One value per base.)
