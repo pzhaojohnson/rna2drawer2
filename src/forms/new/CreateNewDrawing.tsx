@@ -105,6 +105,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                   initialValue={sequence}
                   set={s => setSequence(s)}
                   toggleParsingDetails={() => showSequenceParsingDetails(!showingSequenceParsingDetails)}
+                  showDescription={!showingSequenceParsingDetails}
                   flexGrow={1}
                 />
                 {!showingSequenceParsingDetails ? null : (
@@ -123,6 +124,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                   initialValue={dotBracket}
                   set={s => setDotBracket(s)}
                   toggleParsingDetails={() => showDotBracketParsingDetails(!showingDotBracketParsingDetails)}
+                  showDescription={!showingDotBracketParsingDetails}
                   flexGrow={1}
                 />
                 {showingDotBracketParsingDetails ? <DotBracketParsingDetails /> : null}

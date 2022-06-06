@@ -1,0 +1,10 @@
+.fieldDescription {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: italic;
+  color: rgb(88, 88, 105);
+
+  user-select: none;
+  -webkit-user-select: none;
+}
