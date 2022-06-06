@@ -1,15 +1,26 @@
 .option {
-  font-size: 14px;
-  font-weight: 400;
-  font-style: italic;
-  color: #232370;
+  border: 1px solid #d5d5ed;
+  border-radius: 40px;
+  padding: 2px 0;
+  width: 146px;
+  text-align: center;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  color: #292971;
+
+  cursor: pointer;
 }
 
 .option:hover {
-  transform: scale(1.05);
-  cursor: pointer;
+  box-shadow: 0 2px 2px rgb(246, 246, 251);
+  transform: scale(1.0275);
+  transition: transform 0.04s;
 }
 
 .option:active {
   transform: scale(1);
+  transition: transform 0s;
 }
