@@ -1,7 +1,7 @@
 import * as React from 'react';
 import fieldStyles from './SequenceField.css';
 import fieldLabelStyles from './FieldLabel.css';
-import { TextButton } from 'Forms/buttons/TextButton';
+import { DetailsToggle } from './DetailsToggle';
 
 interface Props {
   initialValue: string;
@@ -21,13 +21,9 @@ export function SequenceField(props: Props): React.ReactElement {
         >
           Sequence
         </label>
-        <div style={{ marginRight: '3px' }} >
-          <TextButton
-            text='Details...'
-            onClick={() => props.toggleParsingDetails()}
-            style={{ fontWeight: 500, color: '#090980' }}
-          />
-        </div>
+        <DetailsToggle
+          onClick={() => props.toggleParsingDetails()}
+        />
       </div>
       <textarea
         id='sequence'

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import fieldStyles from './DotBracketField.css';
 import fieldLabelStyles from './FieldLabel.css';
-import { TextButton } from 'Forms/buttons/TextButton';
+import { DetailsToggle } from './DetailsToggle';
 
 interface Props {
   initialValue: string;
@@ -21,13 +21,9 @@ export function DotBracketField(props: Props): React.ReactElement {
         >
           Structure
         </label>
-        <div style={{ marginRight: '3px' }} >
-          <TextButton
-            text='Details...'
-            onClick={() => props.toggleParsingDetails()}
-            style={{ fontWeight: 500, color: '#090980' }}
-          />
-        </div>
+        <DetailsToggle
+          onClick={() => props.toggleParsingDetails()}
+        />
       </div>
       <textarea
         id='structure'
