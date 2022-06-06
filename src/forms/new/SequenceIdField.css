@@ -1,5 +1,5 @@
 .textInput {
-  margin-left: 8px;
+  margin: 0 0 0 8px; /* margins are nonzero by default for Safari */
   flex-grow: 1;
 
   border: 1px solid #d8d8e5;
