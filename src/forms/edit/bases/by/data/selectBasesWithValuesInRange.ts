@@ -84,7 +84,7 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   });
 
   if (positionsToSelect.length == 0) {
-    throw new Error('No data values in range to select.');
+    throw new Error('No data values in range to select for.');
   }
 
   // all positions should be in the sequence range given the checks above
