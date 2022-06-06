@@ -172,7 +172,7 @@ export function EditBasesWithValuesInRangeForm(props: Props) {
           onEnterKeyUp={() => processStartPosition()}
         />
         <StartPositionFieldDescription />
-        <DisplayableSequenceRange sequence={sequence} style={{ margin: '6px 0 38px 3px' }} />
+        <DisplayableSequenceRange sequence={sequence} style={{ margin: '8px 0 38px 3px' }} />
         <FieldLabel>Range of Data to Select For:</FieldLabel>
         <MinValueField
           value={minValue}
