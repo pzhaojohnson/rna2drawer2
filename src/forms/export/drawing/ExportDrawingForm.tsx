@@ -1,6 +1,8 @@
 import type { App } from 'App';
-import type { Drawing } from 'Draw/Drawing';
-import type { Base } from 'Draw/bases/Base';
+
+import { isBlank } from 'Parse/isBlank';
+
+import { pointsToPixels } from 'Export/units';
 
 import * as React from 'react';
 import { useState, useEffect } from 'react';
@@ -16,27 +18,8 @@ import { ErrorMessage } from 'Forms/ErrorMessage';
 
 import { DottedNote } from 'Forms/notes/DottedNote';
 
-import { isBlank } from 'Parse/isBlank';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-
-import { round } from 'Math/round';
-import { pointsToPixels } from 'Export/units';
-
 // the underlying exportDrawing function
 import { exportDrawing as _exportDrawing } from 'Export/export';
-
-// returns undefined if the font size of the base cannot be interpreted
-function fontSizeOfBase(b: Base): number | undefined {
-  let n = interpretNumber(b.text.attr('font-size'));
-  if (n) {
-    return n.convert('px').valueOf();
-  }
-}
-
-function fontSizeOfFirstBase(drawing: Drawing): number | undefined {
-  let firstBase: Base | undefined = drawing.bases()[0];
-  return firstBase ? fontSizeOfBase(firstBase) : undefined;
-}
 
 /**
  * Exports the drawing of the app in SVG or PPTX format.
@@ -45,44 +28,35 @@ export function exportDrawing(
   args: {
     app: App, // a reference to the whole app
     format: 'svg' | 'pptx', // the format to export in
-    exportedFontSizeOfBases: string,
+    scalingFactor: string,
   },
 ): void | never {
-  if (isBlank(args.exportedFontSizeOfBases)) {
-    throw new Error('Specify a font size for bases.');
-  }
+  let scalingFactor = Number.parseFloat(args.scalingFactor);
 
-  let exportedFontSizeOfBases = Number.parseFloat(args.exportedFontSizeOfBases);
-
-  if (!Number.isFinite(exportedFontSizeOfBases)) {
-    throw new Error('Font size must be a number.');
-  } else if (exportedFontSizeOfBases < 1) {
-    // 1 is the minimum font size in PowerPoint
-    throw new Error('Font size must be at least 1.');
+  if (isBlank(args.scalingFactor)) {
+    scalingFactor = 1;
+  } else if (!Number.isFinite(scalingFactor)) {
+    throw new Error('Scaling factor must be a number.');
+  } else if (scalingFactor <= 0) {
+    throw new Error('Scaling factor must be positive.');
   }
 
   if (args.format == 'pptx') {
-    exportedFontSizeOfBases = pointsToPixels(exportedFontSizeOfBases);
+    scalingFactor *= pointsToPixels(1);
   }
-
-  // assumes all bases have the same font size
-  let fontSizeOfBases = fontSizeOfFirstBase(args.app.strictDrawing.drawing);
-
-  // no scaling if the font size of bases is undefined
-  fontSizeOfBases = fontSizeOfBases ?? exportedFontSizeOfBases;
 
   try {
     _exportDrawing(args.app.strictDrawing.drawing, {
       name: document.title ? document.title : 'Drawing',
       format: args.format,
-      scale: exportedFontSizeOfBases / fontSizeOfBases,
+      scale: scalingFactor,
     });
   } catch {
     throw new Error('There was an error exporting the drawing.');
   }
 }
 
-function ExportedFontSizeOfBasesField(
+function ScalingFactorField(
   props: {
     value: string,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
@@ -92,13 +66,13 @@ function ExportedFontSizeOfBasesField(
 ) {
   return (
     <TextInputField
-      label='Exported Font Size of Bases'
+      label='Scaling Factor'
       value={props.value}
       onChange={props.onChange}
       onBlur={props.onBlur}
       onKeyUp={props.onKeyUp}
-      input={{ style: { width: '5ch' } }}
-      style={{ alignSelf: 'flex-start' }}
+      input={{ style: { width: '7ch' } }}
+      style={{ marginRight: '8px', alignSelf: 'flex-start' }}
     />
   );
 }
@@ -140,22 +114,16 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-function constrainFontSize(value: string): string {
-  let n = Number.parseFloat(value);
-  if (Number.isFinite(n)) {
-    n = round(n, 1); // match PowerPoint font size precision
-    return n.toString();
-  } else {
-    return value.trim();
-  }
-}
-
 let prevInputs = {
-  exportedFontSizeOfBases: '6',
+  scalingFactor: '1',
 };
 
 export function ExportDrawingForm(props: Props) {
-  let [exportedFontSizeOfBases, setExportedFontSizeOfBases] = useState(prevInputs.exportedFontSizeOfBases);
+  let [scalingFactor, setScalingFactor] = useState(prevInputs.scalingFactor);
+
+  let processScalingFactor = () => {
+    setScalingFactor(scalingFactor.trim());
+  };
 
   let [errorMessage, setErrorMessage] = useState('');
 
@@ -166,7 +134,7 @@ export function ExportDrawingForm(props: Props) {
   // remember inputs
   useEffect(() => {
     return () => {
-      prevInputs = { exportedFontSizeOfBases };
+      prevInputs = { scalingFactor };
     };
   });
 
@@ -178,18 +146,18 @@ export function ExportDrawingForm(props: Props) {
       style={{ width: '368px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
-        <ExportedFontSizeOfBasesField
-          value={exportedFontSizeOfBases}
-          onChange={event => setExportedFontSizeOfBases(event.target.value)}
-          onBlur={() => setExportedFontSizeOfBases(constrainFontSize(exportedFontSizeOfBases))}
+        <ScalingFactorField
+          value={scalingFactor}
+          onChange={event => setScalingFactor(event.target.value)}
+          onBlur={() => processScalingFactor()}
           onKeyUp={event => {
             if (event.key.toLowerCase() == 'enter') {
-              setExportedFontSizeOfBases(constrainFontSize(exportedFontSizeOfBases));
+              processScalingFactor();
             }
           }}
         />
         <FieldDescription style={{ margin: '6px 0 0 16px' }} >
-          ...use to scale the exported drawing
+          ...scales the exported drawing
         </FieldDescription>
       </div>
       <ExportButton
@@ -198,7 +166,7 @@ export function ExportDrawingForm(props: Props) {
             exportDrawing({
               app: props.app,
               format: props.format,
-              exportedFontSizeOfBases,
+              scalingFactor,
             });
             setErrorMessage('');
           } catch (error) {
