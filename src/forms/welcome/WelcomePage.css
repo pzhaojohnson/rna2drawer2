@@ -56,7 +56,7 @@
 }
 
 .updatesNotice {
-  animation: updatesNoticeEnter 1.75s ease-in;
+  animation: updatesNoticeEnter 2s ease-in;
 }
 
 @keyframes updatesNoticeEnter {

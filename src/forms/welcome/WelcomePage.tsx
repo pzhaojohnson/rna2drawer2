@@ -114,21 +114,12 @@ function UpdatesLink() {
 
 function UpdatesNotice() {
   return (
-    <div
+    <p
       className={styles.updatesNotice}
-      style={{
-        borderStyle: 'solid',
-        borderWidth: '0 1px 0 1px',
-        borderColor: 'rgb(211, 211, 228)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+      style={{ fontSize: '14px', fontWeight: 500, color: 'rgb(100, 100, 111)' }}
     >
-      <p style={{ margin: '2px 32px', fontSize: '14px', fontWeight: 500, color: 'rgb(109, 109, 124)' }} >
-        See the <UpdatesLink />! <em style={{ color: 'rgb(115, 115, 135)' }} >(Dec. 14, 2021)</em>
-      </p>
-    </div>
+      See the <UpdatesLink />! <em style={{ color: 'rgb(109, 109, 124)' }} >(Dec. 14, 2021)</em>
+    </p>
   );
 }
 
@@ -173,7 +164,7 @@ export function WelcomePage(props: Props): React.ReactElement {
             <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
               <HelpLinks />
             </div>
-            <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+            <div style={{ marginTop: '9px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
               <UpdatesNotice />
             </div>
           </div>
