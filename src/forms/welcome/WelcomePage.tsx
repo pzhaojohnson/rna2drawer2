@@ -117,14 +117,15 @@ function UpdatesNotice() {
     <div
       className={styles.updatesNotice}
       style={{
-        border: '3px dotted #e1e1ee',
-        borderRadius: '32px',
+        borderStyle: 'solid',
+        borderWidth: '0 1px 0 1px',
+        borderColor: 'rgb(211, 211, 228)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      <p style={{ margin: '10px 28px', fontSize: '14px', fontWeight: 500, color: 'rgb(109, 109, 124)' }} >
+      <p style={{ margin: '2px 32px', fontSize: '14px', fontWeight: 500, color: 'rgb(109, 109, 124)' }} >
         See the <UpdatesLink />! <em style={{ color: 'rgb(115, 115, 135)' }} >(Dec. 14, 2021)</em>
       </p>
     </div>
