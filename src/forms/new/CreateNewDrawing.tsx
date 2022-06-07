@@ -76,7 +76,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
   return (
     <FloatingDrawingsContainer
       contained={
-        <div style={{ width: '942px', height: '574px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '942px', height: '580px', display: 'flex', flexDirection: 'column' }} >
           <Header />
           <div style={{ margin: '0px 130px', flexGrow: 1, display: 'flex', flexDirection: 'column' }} >
             <div style={{ marginTop: '24px' }} >
