@@ -130,7 +130,7 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                 {showingDotBracketParsingDetails ? <DotBracketParsingDetails /> : null}
               </div>
             </div>
-            <div style={{ margin: '24px 0 8px 0', display: 'flex', alignItems: 'center' }} >
+            <div style={{ margin: '24px 0 24px 0', display: 'flex', alignItems: 'center' }} >
               <SolidButton
                 text={'Submit'}
                 onClick={() => {
