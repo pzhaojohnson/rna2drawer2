@@ -2,22 +2,22 @@
   margin: 4px 0px 0px 0px;
   flex-grow: 1;
 
-  border: 1px solid #d8d8e5;
+  border: 1px solid #dedeee;
   border-radius: 2px;
   padding: 3px 6px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #6a6a76;
+  color: #6b6b78;
 }
 
 .textArea:hover {
-  border-color: #414147;
+  border-color: #212125;
 }
 
 .textArea:focus {
-  border-color: #414147;
+  border-color: #212125;
   outline: none;
 }
 

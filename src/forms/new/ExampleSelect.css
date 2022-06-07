@@ -1,5 +1,5 @@
 .option {
-  border: 1px solid #d5d5ed;
+  border: 1px solid #dbdbec;
   border-radius: 40px;
   padding: 2px 0;
   width: 146px;
@@ -9,13 +9,13 @@
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
-  color: #292971;
+  color: #2d2d71;
 
   cursor: pointer;
 }
 
 .option:hover {
-  box-shadow: 0 2px 2px rgb(246, 246, 251);
+  box-shadow: 0 2px 2px rgba(241, 241, 249, 0.62);
   transform: scale(1.0275);
   transition: transform 0.04s;
 }

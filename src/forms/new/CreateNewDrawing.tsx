@@ -36,7 +36,7 @@ let examples = [
 function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p style={{ margin: '0px 100px', fontSize: '24px', fontWeight: 600, color: '#171718' }} >
+      <p style={{ margin: '0px 100px', fontSize: '24px', fontWeight: 600, color: 'rgb(11, 11, 11)' }} >
         Create a New Drawing
       </p>
       <div style={{ marginTop: '8px' }} >
@@ -45,7 +45,7 @@ function Header() {
             height: '0px',
             borderWidth: '0px 0px 1px 0px',
             borderStyle: 'solid',
-            borderColor: '#e0e0ea',
+            borderColor: 'rgb(221, 221, 237)',
           }}
         />
       </div>
