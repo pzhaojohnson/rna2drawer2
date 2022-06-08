@@ -9,7 +9,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { SubsequenceField } from './SubsequenceField';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
+import { PositionToInsertAtField } from './PositionToInsertAtField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
@@ -19,27 +19,6 @@ import { ApplySubstructureForm } from 'Forms/edit/substructures/ApplySubstructur
 
 import { isBlank } from 'Parse/isBlank';
 import { cannotInsert, insert } from './insert';
-
-function InsertPositionField(
-  props: {
-    value: string,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-    onBlur: (event: React.FocusEvent<HTMLInputElement>) => void,
-    onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void,
-  },
-) {
-  return (
-    <TextInputField
-      label='Position to Insert At'
-      value={props.value}
-      onChange={props.onChange}
-      onBlur={props.onBlur}
-      onKeyUp={props.onKeyUp}
-      input={{ style: { width: '48px' } }}
-      style={{ marginTop: '24px', alignSelf: 'start' }}
-    />
-  );
-}
 
 function ErrorMessage(
   props: {
@@ -209,7 +188,7 @@ export function InsertSubsequenceForm(props: Props) {
           style={{ alignSelf: 'start' }}
         />
       </div>
-      <InsertPositionField
+      <PositionToInsertAtField
         value={inputs.positionToInsertAt}
         onChange={event => {
           if (event.target.value.trim() != inputs.positionToInsertAt.trim()) {
