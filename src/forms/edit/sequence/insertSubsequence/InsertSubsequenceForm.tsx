@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import styles from './InsertSubsequenceForm.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
@@ -35,27 +36,6 @@ function SubsequenceField(
         rows={9}
         placeholder='...an RNA or DNA subsequence "CUGCCA"'
       />
-    </label>
-  );
-}
-
-function CheckboxField(
-  props: {
-    label: string,
-    checked: boolean,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  },
-) {
-  return (
-    <label className={`${styles.fieldLabel} ${styles.checkboxFieldLabel}`} >
-      <input
-        type='checkbox'
-        className={styles.checkboxFieldInput}
-        checked={props.checked}
-        onChange={props.onChange}
-      />
-      <div style={{ width: '6px' }} />
-      {props.label}
     </label>
   );
 }
@@ -220,7 +200,7 @@ export function InsertSubsequenceForm(props: Props) {
         }}
         onBlur={() => setInputs(constrainInputs(inputs))}
       />
-      <div style={{ margin: '8px 0px 0px 8px' }} >
+      <div style={{ margin: '8px 0px 0px 8px', display: 'flex', flexDirection: 'column' }} >
         <CheckboxField
           label='Ignore Numbers'
           checked={inputs.ignoreNumbers}
@@ -228,6 +208,7 @@ export function InsertSubsequenceForm(props: Props) {
             setErrorMessage(new String(''));
             setInputs({ ...inputs, ignoreNumbers: event.target.checked });
           }}
+          style={{ alignSelf: 'start' }}
         />
         <div style={{ height: '6px' }} />
         <CheckboxField
@@ -237,6 +218,7 @@ export function InsertSubsequenceForm(props: Props) {
             setErrorMessage(new String(''));
             setInputs({ ...inputs, ignoreNonAUGCTLetters: event.target.checked });
           }}
+          style={{ alignSelf: 'start' }}
         />
         <div style={{ height: '6px' }} />
         <CheckboxField
@@ -246,6 +228,7 @@ export function InsertSubsequenceForm(props: Props) {
             setErrorMessage(new String(''));
             setInputs({ ...inputs, ignoreNonAlphanumerics: event.target.checked });
           }}
+          style={{ alignSelf: 'start' }}
         />
       </div>
       <InsertPositionField
