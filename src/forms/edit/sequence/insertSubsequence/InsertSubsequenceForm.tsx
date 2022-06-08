@@ -9,6 +9,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { SubsequenceField } from './SubsequenceField';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
@@ -28,17 +29,15 @@ function InsertPositionField(
   },
 ) {
   return (
-    <label className={`${styles.fieldLabel} ${styles.insertPositionFieldLabel}`} >
-      <input
-        type='text'
-        className={`${styles.textInput} ${styles.insertPositionFieldInput}`}
-        value={props.value}
-        onChange={props.onChange}
-        onBlur={props.onBlur}
-        onKeyUp={props.onKeyUp}
-      />
-      Position to Insert At
-    </label>
+    <TextInputField
+      label='Position to Insert At'
+      value={props.value}
+      onChange={props.onChange}
+      onBlur={props.onBlur}
+      onKeyUp={props.onKeyUp}
+      input={{ style: { width: '48px' } }}
+      style={{ marginTop: '24px', alignSelf: 'start' }}
+    />
   );
 }
 
