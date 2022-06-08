@@ -25,27 +25,6 @@
   outline: none;
 }
 
-.subsequenceFieldLabel {
-  display: flex;
-  flex-direction: column;
-}
-
-.subsequenceFieldTextarea {
-  margin-top: 4px;
-  border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 2px;
-  padding: 3px 6px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: #4b4b4b;
-}
-
-.subsequenceFieldTextarea::placeholder {
-  font-style: italic;
-  color: #717171;
-}
-
 .insertPositionFieldLabel {
   margin-top: 24px;
   display: flex;

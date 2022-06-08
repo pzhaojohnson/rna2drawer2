@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import styles from './InsertSubsequenceForm.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { SubsequenceField } from './SubsequenceField';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { SolidButton } from 'Forms/buttons/SolidButton';
@@ -17,28 +18,6 @@ import { ApplySubstructureForm } from 'Forms/edit/substructures/ApplySubstructur
 
 import { isBlank } from 'Parse/isBlank';
 import { cannotInsert, insert } from './insert';
-
-function SubsequenceField(
-  props: {
-    value: string,
-    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void,
-    onBlur: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
-  },
-) {
-  return (
-    <label className={`${styles.fieldLabel} ${styles.subsequenceFieldLabel}`} >
-      Subsequence
-      <textarea
-        className={`${styles.textInput} ${styles.subsequenceFieldTextarea}`}
-        value={props.value}
-        onChange={props.onChange}
-        onBlur={props.onBlur}
-        rows={9}
-        placeholder='...an RNA or DNA subsequence "CUGCCA"'
-      />
-    </label>
-  );
-}
 
 function InsertPositionField(
   props: {
