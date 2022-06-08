@@ -15,8 +15,6 @@ import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
 import { DottedNote } from 'Forms/notes/DottedNote';
 
-import { ApplySubstructureForm } from 'Forms/edit/substructures/ApplySubstructureForm';
-
 import { isBlank } from 'Parse/isBlank';
 import { cannotInsert, insert } from './insert';
 
@@ -37,16 +35,6 @@ function ExplanatoryNote() {
     <div style={{ marginTop: '18px' }} >
       <DottedNote>
         The subsequence will be inserted beginning at the specified position.
-      </DottedNote>
-    </div>
-  );
-}
-
-function ApplySubstructureNote() {
-  return (
-    <div style={{ marginTop: '8px' }} >
-      <DottedNote>
-        A substructure can be applied after inserting a subsequence.
       </DottedNote>
     </div>
   );
@@ -96,21 +84,6 @@ function constrainInputs(inputs: Inputs): Inputs {
 }
 
 let prevInputs: Inputs | undefined = undefined;
-
-function ApplySubstructureLink(
-  props: {
-    onClick: () => void,
-  },
-) {
-  return (
-    <p
-      className={styles.applySubstructureLink}
-      onClick={props.onClick}
-    >
-      Have a substructure too?
-    </p>
-  );
-}
 
 export function InsertSubsequenceForm(props: Props) {
   let drawing = props.app.strictDrawing.drawing;
@@ -204,62 +177,47 @@ export function InsertSubsequenceForm(props: Props) {
       <div style={{ height: '6px' }} />
       {!seq ? null : <DisplayableSequenceRange sequence={seq} />}
       <div style={{ marginTop: '32px' }} >
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-          <SolidButton
-            text='Insert'
-            onClick={() => {
-              if (isBlank(inputs.positionToInsertAt)) {
-                setErrorMessage(new String('Specify a position to insert at.'));
-                return;
-              }
+        <SolidButton
+          text='Insert'
+          onClick={() => {
+            if (isBlank(inputs.positionToInsertAt)) {
+              setErrorMessage(new String('Specify a position to insert at.'));
+              return;
+            }
 
-              let positionToInsertAt = Number.parseFloat(inputs.positionToInsertAt);
+            let positionToInsertAt = Number.parseFloat(inputs.positionToInsertAt);
 
-              if (!Number.isFinite(positionToInsertAt)) {
-                setErrorMessage(new String('Position to insert at must be a number.'));
-                return;
-              } else if (!Number.isInteger(positionToInsertAt)) {
-                setErrorMessage(new String('Position to insert at must be an integer.'));
-                return;
-              }
+            if (!Number.isFinite(positionToInsertAt)) {
+              setErrorMessage(new String('Position to insert at must be a number.'));
+              return;
+            } else if (!Number.isInteger(positionToInsertAt)) {
+              setErrorMessage(new String('Position to insert at must be an integer.'));
+              return;
+            }
 
-              let values = {
-                subsequence: inputs.subsequence,
-                insertPosition: positionToInsertAt,
-                ignoreNumbers: inputs.ignoreNumbers,
-                ignoreNonAugctLetters: inputs.ignoreNonAUGCTLetters,
-                ignoreNonAlphanumerics: inputs.ignoreNonAlphanumerics,
-              };
+            let values = {
+              subsequence: inputs.subsequence,
+              insertPosition: positionToInsertAt,
+              ignoreNumbers: inputs.ignoreNumbers,
+              ignoreNonAugctLetters: inputs.ignoreNonAUGCTLetters,
+              ignoreNonAlphanumerics: inputs.ignoreNonAlphanumerics,
+            };
 
-              let message = cannotInsert(props.app.strictDrawing, values);
-              if (message) {
-                setErrorMessage(new String(message));
-                return;
-              }
+            let message = cannotInsert(props.app.strictDrawing, values);
+            if (message) {
+              setErrorMessage(new String(message));
+              return;
+            }
 
-              // insert the subsequence
-              props.app.pushUndo();
-              insert(props.app.strictDrawing, values);
-              props.app.refresh();
-            }}
-          />
-          <ApplySubstructureLink
-            onClick={() => {
-              props.app.formContainer.renderForm(formProps => (
-                <ApplySubstructureForm
-                  {...formProps}
-                  app={props.app}
-                  substructure=''
-                  startPosition={inputs.positionToInsertAt ? inputs.positionToInsertAt : undefined}
-                />
-              ));
-            }}
-          />
-        </div>
+            // insert the subsequence
+            props.app.pushUndo();
+            insert(props.app.strictDrawing, values);
+            props.app.refresh();
+          }}
+        />
       </div>
       {errorMessage.valueOf() ? <ErrorMessage>{errorMessage.valueOf()}</ErrorMessage> : null}
       <ExplanatoryNote />
-      <ApplySubstructureNote />
       <BaseNumberingNote />
     </PartialWidthContainer>
   );
