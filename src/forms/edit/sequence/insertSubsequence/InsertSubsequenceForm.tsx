@@ -13,30 +13,10 @@ import { PositionToInsertAtField } from './PositionToInsertAtField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage } from './ErrorMessage';
-import { DottedNote } from 'Forms/notes/DottedNote';
+import { TrailingNotes } from './TrailingNotes';
 
 import { isBlank } from 'Parse/isBlank';
 import { cannotInsert, insert } from './insert';
-
-function ExplanatoryNote() {
-  return (
-    <div style={{ marginTop: '18px' }} >
-      <DottedNote>
-        The subsequence will be inserted beginning at the specified position.
-      </DottedNote>
-    </div>
-  );
-}
-
-function BaseNumberingNote() {
-  return (
-    <div style={{ marginTop: '8px' }} >
-      <DottedNote>
-        Base numbering must be updated manually after inserting a subsequence.
-      </DottedNote>
-    </div>
-  );
-}
 
 export type Props = {
   unmount: () => void;
@@ -205,8 +185,7 @@ export function InsertSubsequenceForm(props: Props) {
         />
       </div>
       {errorMessage.valueOf() ? <ErrorMessage>{errorMessage.valueOf()}</ErrorMessage> : null}
-      <ExplanatoryNote />
-      <BaseNumberingNote />
+      <TrailingNotes />
     </PartialWidthContainer>
   );
 }
