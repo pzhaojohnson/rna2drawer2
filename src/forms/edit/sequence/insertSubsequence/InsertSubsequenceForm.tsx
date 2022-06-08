@@ -89,9 +89,6 @@ export function InsertSubsequenceForm(props: Props) {
       <SubsequenceField
         value={inputs.subsequence}
         onChange={event => {
-          if (event.target.value.trim() != inputs.subsequence.trim()) {
-            setErrorMessage(new String(''));
-          }
           setInputs({ ...inputs, subsequence: event.target.value });
         }}
         onBlur={() => setInputs(constrainInputs(inputs))}
@@ -101,7 +98,6 @@ export function InsertSubsequenceForm(props: Props) {
           label='Ignore Numbers'
           checked={inputs.ignoreNumbers}
           onChange={event => {
-            setErrorMessage(new String(''));
             setInputs({ ...inputs, ignoreNumbers: event.target.checked });
           }}
           style={{ alignSelf: 'start' }}
@@ -111,7 +107,6 @@ export function InsertSubsequenceForm(props: Props) {
           label='Ignore Non-AUGCT Letters'
           checked={inputs.ignoreNonAUGCTLetters}
           onChange={event => {
-            setErrorMessage(new String(''));
             setInputs({ ...inputs, ignoreNonAUGCTLetters: event.target.checked });
           }}
           style={{ alignSelf: 'start' }}
@@ -121,7 +116,6 @@ export function InsertSubsequenceForm(props: Props) {
           label='Ignore Non-Alphanumerics'
           checked={inputs.ignoreNonAlphanumerics}
           onChange={event => {
-            setErrorMessage(new String(''));
             setInputs({ ...inputs, ignoreNonAlphanumerics: event.target.checked });
           }}
           style={{ alignSelf: 'start' }}
@@ -130,9 +124,6 @@ export function InsertSubsequenceForm(props: Props) {
       <PositionToInsertAtField
         value={inputs.positionToInsertAt}
         onChange={event => {
-          if (event.target.value.trim() != inputs.positionToInsertAt.trim()) {
-            setErrorMessage(new String(''));
-          }
           setInputs({ ...inputs, positionToInsertAt: event.target.value });
         }}
         onBlur={() => setInputs(constrainInputs(inputs))}
