@@ -22,15 +22,13 @@ import { cannotInsert, insert } from './insert';
 
 function ErrorMessage(
   props: {
-    textContent?: string,
+    children?: React.ReactNode,
   },
 ) {
   return (
-    <div style={{ marginTop: '6px' }} >
-      <_ErrorMessage
-        message={props.textContent}
-      />
-    </div>
+    <_ErrorMessage style={{ marginTop: '6px' }} >
+      {props.children}
+    </_ErrorMessage>
   );
 }
 
@@ -259,9 +257,7 @@ export function InsertSubsequenceForm(props: Props) {
           />
         </div>
       </div>
-      {!errorMessage.valueOf() ? null : (
-        <ErrorMessage textContent={errorMessage.valueOf()} />
-      )}
+      {errorMessage.valueOf() ? <ErrorMessage>{errorMessage.valueOf()}</ErrorMessage> : null}
       <ExplanatoryNote />
       <ApplySubstructureNote />
       <BaseNumberingNote />
