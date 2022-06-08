@@ -12,23 +12,11 @@ import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import { PositionToInsertAtField } from './PositionToInsertAtField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { SolidButton } from 'Forms/buttons/SolidButton';
-import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
+import { ErrorMessage } from './ErrorMessage';
 import { DottedNote } from 'Forms/notes/DottedNote';
 
 import { isBlank } from 'Parse/isBlank';
 import { cannotInsert, insert } from './insert';
-
-function ErrorMessage(
-  props: {
-    children?: React.ReactNode,
-  },
-) {
-  return (
-    <_ErrorMessage style={{ marginTop: '6px' }} >
-      {props.children}
-    </_ErrorMessage>
-  );
-}
 
 function ExplanatoryNote() {
   return (
