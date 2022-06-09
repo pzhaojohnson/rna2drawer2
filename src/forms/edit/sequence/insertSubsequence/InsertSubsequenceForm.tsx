@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import { atIndex } from 'Array/at';
+import type { Sequence } from 'Draw/sequences/Sequence';
 
 import * as React from 'react';
 import { useState, useEffect } from 'react';
@@ -55,7 +55,7 @@ export function InsertSubsequenceForm(props: Props) {
     console.error('This form can only insert subsequences into the first sequence of the drawing.');
   }
 
-  let sequence = atIndex(drawing.sequences, 0);
+  let sequence: Sequence | undefined = drawing.sequences[0];
 
   let [subsequence, setSubsequence] = useState(prevState.subsequence);
 
