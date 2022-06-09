@@ -15,8 +15,7 @@ import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage } from './ErrorMessage';
 import { TrailingNotes } from './TrailingNotes';
 
-import { isBlank } from 'Parse/isBlank';
-import { cannotInsert, insert } from './insert';
+import { insertSubsequence } from './insertSubsequence';
 
 export type Props = {
   unmount: () => void;
@@ -139,39 +138,20 @@ export function InsertSubsequenceForm(props: Props) {
         <SolidButton
           text='Insert'
           onClick={() => {
-            if (isBlank(inputs.positionToInsertAt)) {
-              setErrorMessage(new String('Specify a position to insert at.'));
-              return;
+            try {
+              insertSubsequence({
+                app: props.app,
+                subsequence: inputs.subsequence,
+                ignoreNumbers: inputs.ignoreNumbers,
+                ignoreNonAUGCTLetters: inputs.ignoreNonAUGCTLetters,
+                ignoreNonAlphanumerics: inputs.ignoreNonAlphanumerics,
+                positionToInsertAt: inputs.positionToInsertAt,
+              });
+            } catch (error) {
+              setErrorMessage(new String(
+                error instanceof Error ? error.message : error
+              ));
             }
-
-            let positionToInsertAt = Number.parseFloat(inputs.positionToInsertAt);
-
-            if (!Number.isFinite(positionToInsertAt)) {
-              setErrorMessage(new String('Position to insert at must be a number.'));
-              return;
-            } else if (!Number.isInteger(positionToInsertAt)) {
-              setErrorMessage(new String('Position to insert at must be an integer.'));
-              return;
-            }
-
-            let values = {
-              subsequence: inputs.subsequence,
-              insertPosition: positionToInsertAt,
-              ignoreNumbers: inputs.ignoreNumbers,
-              ignoreNonAugctLetters: inputs.ignoreNonAUGCTLetters,
-              ignoreNonAlphanumerics: inputs.ignoreNonAlphanumerics,
-            };
-
-            let message = cannotInsert(props.app.strictDrawing, values);
-            if (message) {
-              setErrorMessage(new String(message));
-              return;
-            }
-
-            // insert the subsequence
-            props.app.pushUndo();
-            insert(props.app.strictDrawing, values);
-            props.app.refresh();
           }}
         />
       </div>
