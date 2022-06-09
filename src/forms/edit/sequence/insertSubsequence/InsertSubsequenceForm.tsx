@@ -46,7 +46,7 @@ let prevState = {
 };
 
 export function InsertSubsequenceForm(props: Props) {
-  let drawing = props.app.strictDrawing.drawing;
+  let drawing = props.app.drawing;
 
   if (drawing.sequences.length > 1) {
     console.error('This form can only be used to insert subsequences into the first sequence of a drawing.');
