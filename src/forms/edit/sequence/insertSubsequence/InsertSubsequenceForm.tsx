@@ -1,20 +1,28 @@
 import type { App } from 'App';
 import type { Sequence } from 'Draw/sequences/Sequence';
 
+import { insertSubsequence } from './insertSubsequence';
+
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
 import styles from './InsertSubsequenceForm.css';
-import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
 import { SubsequenceField } from './SubsequenceField';
+
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
+
 import { PositionToInsertAtField } from './PositionToInsertAtField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage } from './ErrorMessage';
-import { TrailingNotes } from './TrailingNotes';
 
-import { insertSubsequence } from './insertSubsequence';
+import { TrailingNotes } from './TrailingNotes';
 
 export type Props = {
   unmount: () => void;
