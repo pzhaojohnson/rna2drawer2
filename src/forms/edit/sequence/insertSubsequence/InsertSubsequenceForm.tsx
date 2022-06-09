@@ -52,7 +52,7 @@ export function InsertSubsequenceForm(props: Props) {
     console.error('This form can only be used to insert subsequences into the first sequence of a drawing.');
   }
 
-  let seq = atIndex(drawing.sequences, 0);
+  let sequence = atIndex(drawing.sequences, 0);
 
   let [subsequence, setSubsequence] = useState(prevState.subsequence);
 
@@ -127,7 +127,7 @@ export function InsertSubsequenceForm(props: Props) {
         }}
       />
       <div style={{ height: '6px' }} />
-      {!seq ? null : <DisplayableSequenceRange sequence={seq} />}
+      {!sequence ? null : <DisplayableSequenceRange sequence={sequence} />}
       <div style={{ marginTop: '32px' }} >
         <SolidButton
           text='Insert'
