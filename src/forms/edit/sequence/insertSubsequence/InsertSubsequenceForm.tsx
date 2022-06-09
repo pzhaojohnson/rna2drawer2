@@ -24,14 +24,6 @@ import { ErrorMessage } from './ErrorMessage';
 
 import { TrailingNotes } from './TrailingNotes';
 
-export type Props = {
-  unmount: () => void;
-  history: FormHistoryInterface;
-
-  // a reference to the whole app
-  app: App;
-}
-
 function constrainPositionToInsertAt(positionToInsertAt: string): string {
   let n = Number.parseFloat(positionToInsertAt);
 
@@ -52,6 +44,14 @@ let prevState = {
 
   positionToInsertAt: '1',
 };
+
+export type Props = {
+  unmount: () => void;
+  history: FormHistoryInterface;
+
+  // a reference to the whole app
+  app: App;
+}
 
 export function InsertSubsequenceForm(props: Props) {
   let drawing = props.app.drawing;
