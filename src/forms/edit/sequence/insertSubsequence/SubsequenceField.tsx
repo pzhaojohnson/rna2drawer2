@@ -5,7 +5,7 @@ import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 export type Props = {
   value: string,
   onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void,
-  onBlur: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
 };
 
 export function SubsequenceField(props: Props) {

@@ -1,5 +1,4 @@
 import type { App } from 'App';
-import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { atIndex } from 'Array/at';
 
 import * as React from 'react';
@@ -25,32 +24,26 @@ export type Props = {
   app: App;
 }
 
-type Inputs = {
-  subsequence: string;
-  positionToInsertAt: string;
-  ignoreNumbers: boolean;
-  ignoreNonAUGCTLetters: boolean;
-  ignoreNonAlphanumerics: boolean;
-}
+function constrainPositionToInsertAt(positionToInsertAt: string): string {
+  let n = Number.parseFloat(positionToInsertAt);
 
-function constrainPositionInput(position: string): string {
-  let n = Number.parseFloat(position);
   if (!Number.isFinite(n)) {
-    return position.trim();
-  } else {
-    n = Math.floor(n); // make an integer
-    return n.toString();
+    return positionToInsertAt.trim(); // just trim whitespace
   }
+
+  n = Math.floor(n); // make an integer
+  return n.toString();
 }
 
-function constrainInputs(inputs: Inputs): Inputs {
-  return {
-    ...inputs,
-    positionToInsertAt: constrainPositionInput(inputs.positionToInsertAt),
-  };
-}
+let prevState = {
+  subsequence: '',
 
-let prevInputs: Inputs | undefined = undefined;
+  ignoreNumbers: true,
+  ignoreNonAUGCTLetters: false,
+  ignoreNonAlphanumerics: true,
+
+  positionToInsertAt: '1',
+};
 
 export function InsertSubsequenceForm(props: Props) {
   let drawing = props.app.strictDrawing.drawing;
@@ -60,15 +53,18 @@ export function InsertSubsequenceForm(props: Props) {
   }
 
   let seq = atIndex(drawing.sequences, 0);
-  let no = !seq ? 0 : (numberingOffset(seq) ?? 0);
 
-  let [inputs, setInputs] = useState<Inputs>(prevInputs ?? {
-    subsequence: '',
-    positionToInsertAt: !seq ? '' : (no + 1).toString(),
-    ignoreNumbers: true,
-    ignoreNonAUGCTLetters: false,
-    ignoreNonAlphanumerics: true,
-  });
+  let [subsequence, setSubsequence] = useState(prevState.subsequence);
+
+  let [ignoreNumbers, setIgnoreNumbers] = useState(prevState.ignoreNumbers);
+  let [ignoreNonAUGCTLetters, setIgnoreNonAUGCTLetters] = useState(prevState.ignoreNonAUGCTLetters);
+  let [ignoreNonAlphanumerics, setIgnoreNonAlphanumerics] = useState(prevState.ignoreNonAlphanumerics);
+
+  let [positionToInsertAt, setPositionToInsertAt] = useState(prevState.positionToInsertAt);
+
+  let processPositionToInsertAt = () => {
+    setPositionToInsertAt(constrainPositionToInsertAt(positionToInsertAt));
+  };
 
   let [errorMessage, setErrorMessage] = useState('');
 
@@ -76,9 +72,15 @@ export function InsertSubsequenceForm(props: Props) {
   // (to trigger error message animations)
   let [errorMessageKey, setErrorMessageKey] = useState(0);
 
-  // remember inputs
+  // remember certain aspects of state between renderings (such as inputs)
   useEffect(() => {
-    return () => { prevInputs = { ...inputs }; };
+    return () => {
+      prevState = {
+        subsequence,
+        ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
+        positionToInsertAt,
+      };
+    };
   });
 
   return (
@@ -89,49 +91,38 @@ export function InsertSubsequenceForm(props: Props) {
       style={{ width: '372px' }}
     >
       <SubsequenceField
-        value={inputs.subsequence}
-        onChange={event => {
-          setInputs({ ...inputs, subsequence: event.target.value });
-        }}
-        onBlur={() => setInputs(constrainInputs(inputs))}
+        value={subsequence}
+        onChange={event => setSubsequence(event.target.value)}
       />
       <div style={{ margin: '8px 0px 0px 8px', display: 'flex', flexDirection: 'column' }} >
         <CheckboxField
           label='Ignore Numbers'
-          checked={inputs.ignoreNumbers}
-          onChange={event => {
-            setInputs({ ...inputs, ignoreNumbers: event.target.checked });
-          }}
+          checked={ignoreNumbers}
+          onChange={event => setIgnoreNumbers(event.target.checked)}
           style={{ alignSelf: 'start' }}
         />
         <div style={{ height: '6px' }} />
         <CheckboxField
           label='Ignore Non-AUGCT Letters'
-          checked={inputs.ignoreNonAUGCTLetters}
-          onChange={event => {
-            setInputs({ ...inputs, ignoreNonAUGCTLetters: event.target.checked });
-          }}
+          checked={ignoreNonAUGCTLetters}
+          onChange={event => setIgnoreNonAUGCTLetters(event.target.checked)}
           style={{ alignSelf: 'start' }}
         />
         <div style={{ height: '6px' }} />
         <CheckboxField
           label='Ignore Non-Alphanumerics'
-          checked={inputs.ignoreNonAlphanumerics}
-          onChange={event => {
-            setInputs({ ...inputs, ignoreNonAlphanumerics: event.target.checked });
-          }}
+          checked={ignoreNonAlphanumerics}
+          onChange={event => setIgnoreNonAlphanumerics(event.target.checked)}
           style={{ alignSelf: 'start' }}
         />
       </div>
       <PositionToInsertAtField
-        value={inputs.positionToInsertAt}
-        onChange={event => {
-          setInputs({ ...inputs, positionToInsertAt: event.target.value });
-        }}
-        onBlur={() => setInputs(constrainInputs(inputs))}
+        value={positionToInsertAt}
+        onChange={event => setPositionToInsertAt(event.target.value)}
+        onBlur={() => processPositionToInsertAt()}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
-            setInputs(constrainInputs(inputs));
+            processPositionToInsertAt();
           }
         }}
       />
@@ -142,13 +133,12 @@ export function InsertSubsequenceForm(props: Props) {
           text='Insert'
           onClick={() => {
             try {
+              let app = props.app;
               insertSubsequence({
-                app: props.app,
-                subsequence: inputs.subsequence,
-                ignoreNumbers: inputs.ignoreNumbers,
-                ignoreNonAUGCTLetters: inputs.ignoreNonAUGCTLetters,
-                ignoreNonAlphanumerics: inputs.ignoreNonAlphanumerics,
-                positionToInsertAt: inputs.positionToInsertAt,
+                app,
+                subsequence,
+                ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
+                positionToInsertAt,
               });
             } catch (error) {
               setErrorMessage(error instanceof Error ? error.message : String(error));
