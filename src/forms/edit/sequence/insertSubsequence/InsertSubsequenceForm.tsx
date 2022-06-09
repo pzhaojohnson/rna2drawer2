@@ -70,8 +70,11 @@ export function InsertSubsequenceForm(props: Props) {
     ignoreNonAlphanumerics: true,
   });
 
-  // use String object for fade in animation every time the error message is set
-  let [errorMessage, setErrorMessage] = useState<String>(new String(''));
+  let [errorMessage, setErrorMessage] = useState('');
+
+  // to be incremented every time the error message is set
+  // (to trigger error message animations)
+  let [errorMessageKey, setErrorMessageKey] = useState(0);
 
   // remember inputs
   useEffect(() => {
@@ -148,14 +151,15 @@ export function InsertSubsequenceForm(props: Props) {
                 positionToInsertAt: inputs.positionToInsertAt,
               });
             } catch (error) {
-              setErrorMessage(new String(
-                error instanceof Error ? error.message : error
-              ));
+              setErrorMessage(error instanceof Error ? error.message : String(error));
+              setErrorMessageKey(errorMessageKey + 1);
             }
           }}
         />
       </div>
-      {errorMessage.valueOf() ? <ErrorMessage>{errorMessage.valueOf()}</ErrorMessage> : null}
+      {!errorMessage ? null : (
+        <ErrorMessage key={errorMessageKey} >{errorMessage}</ErrorMessage>
+      )}
       <TrailingNotes />
     </PartialWidthContainer>
   );
