@@ -115,7 +115,7 @@ export function InsertSubsequenceForm(props: Props) {
         value={subsequence}
         onChange={event => setSubsequence(event.target.value)}
       />
-      <div style={{ margin: '8px 0px 0px 8px', display: 'flex', flexDirection: 'column' }} >
+      <div style={{ margin: '12px 0px 0px 8px', display: 'flex', flexDirection: 'column' }} >
         <CheckboxField
           label='Ignore Numbers'
           checked={ignoreNumbers}

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styles from './SubstructureTextArea.css';
+import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
 export type Props = {
   value: string,
@@ -16,8 +17,10 @@ export function SubstructureTextArea(props: Props) {
         onChange={props.onChange}
         onBlur={props.onBlur}
         rows={9}
-        placeholder='...in dot-bracket notation "(((...)))"'
       />
+      <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+        ...in dot-bracket notation "(((...)))"
+      </FieldDescription>
     </div>
   );
 }
