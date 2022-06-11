@@ -113,7 +113,7 @@ export function InsertSubsequenceForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Insert Subsequence'
-      style={{ width: '372px' }}
+      style={{ width: '400px' }}
     >
       <SubsequenceField
         value={subsequence}
@@ -168,7 +168,7 @@ export function InsertSubsequenceForm(props: Props) {
           onChange={event => setSubstructure(event.target.value)}
         />
       )}
-      <div style={{ marginTop: '32px' }} >
+      <div style={{ marginTop: '40px' }} >
         <SolidButton
           text='Insert'
           onClick={() => {

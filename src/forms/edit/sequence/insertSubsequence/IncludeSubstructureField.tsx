@@ -12,7 +12,7 @@ export function IncludeSubstructureField(props: Props) {
       label='Include Substructure'
       checked={props.checked}
       onChange={props.onChange}
-      style={{ marginTop: '24px', alignSelf: 'start' }}
+      style={{ marginTop: '38px', alignSelf: 'start' }}
     />
   );
 }
