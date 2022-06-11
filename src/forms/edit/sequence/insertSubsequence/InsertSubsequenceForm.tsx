@@ -14,6 +14,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { SubsequenceField } from './SubsequenceField';
 
+import { OptionsToggle } from './OptionsToggle';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 
 import { PositionToInsertAtField } from './PositionToInsertAtField';
@@ -41,6 +42,7 @@ function constrainPositionToInsertAt(positionToInsertAt: string): string {
 let prevState = {
   subsequence: '',
 
+  showSequenceParsingOptions: false,
   ignoreNumbers: true,
   ignoreNonAUGCTLetters: false,
   ignoreNonAlphanumerics: true,
@@ -73,6 +75,7 @@ export function InsertSubsequenceForm(props: Props) {
 
   let [subsequence, setSubsequence] = useState(prevState.subsequence);
 
+  let [showSequenceParsingOptions, setShowSequenceParsingOptions] = useState(prevState.showSequenceParsingOptions);
   let [ignoreNumbers, setIgnoreNumbers] = useState(prevState.ignoreNumbers);
   let [ignoreNonAUGCTLetters, setIgnoreNonAUGCTLetters] = useState(prevState.ignoreNonAUGCTLetters);
   let [ignoreNonAlphanumerics, setIgnoreNonAlphanumerics] = useState(prevState.ignoreNonAlphanumerics);
@@ -97,6 +100,7 @@ export function InsertSubsequenceForm(props: Props) {
     return () => {
       prevState = {
         subsequence,
+        showSequenceParsingOptions,
         ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
         positionToInsertAt,
         includeSubstructure, substructure,
@@ -115,28 +119,33 @@ export function InsertSubsequenceForm(props: Props) {
         value={subsequence}
         onChange={event => setSubsequence(event.target.value)}
       />
-      <div style={{ margin: '12px 0px 0px 8px', display: 'flex', flexDirection: 'column' }} >
-        <CheckboxField
-          label='Ignore Numbers'
-          checked={ignoreNumbers}
-          onChange={event => setIgnoreNumbers(event.target.checked)}
-          style={{ alignSelf: 'start' }}
-        />
-        <div style={{ height: '6px' }} />
-        <CheckboxField
-          label='Ignore Non-AUGCT Letters'
-          checked={ignoreNonAUGCTLetters}
-          onChange={event => setIgnoreNonAUGCTLetters(event.target.checked)}
-          style={{ alignSelf: 'start' }}
-        />
-        <div style={{ height: '6px' }} />
-        <CheckboxField
-          label='Ignore Non-Alphanumerics'
-          checked={ignoreNonAlphanumerics}
-          onChange={event => setIgnoreNonAlphanumerics(event.target.checked)}
-          style={{ alignSelf: 'start' }}
-        />
-      </div>
+      <OptionsToggle
+        onClick={() => setShowSequenceParsingOptions(!showSequenceParsingOptions)}
+      />
+      {!showSequenceParsingOptions ? null : (
+        <div style={{ margin: '10px 0px 0px 12px', display: 'flex', flexDirection: 'column' }} >
+          <CheckboxField
+            label='Ignore Numbers'
+            checked={ignoreNumbers}
+            onChange={event => setIgnoreNumbers(event.target.checked)}
+            style={{ alignSelf: 'start' }}
+          />
+          <div style={{ height: '6px' }} />
+          <CheckboxField
+            label='Ignore Non-AUGCT Letters'
+            checked={ignoreNonAUGCTLetters}
+            onChange={event => setIgnoreNonAUGCTLetters(event.target.checked)}
+            style={{ alignSelf: 'start' }}
+          />
+          <div style={{ height: '6px' }} />
+          <CheckboxField
+            label='Ignore Non-Alphanumerics'
+            checked={ignoreNonAlphanumerics}
+            onChange={event => setIgnoreNonAlphanumerics(event.target.checked)}
+            style={{ alignSelf: 'start' }}
+          />
+        </div>
+      )}
       <PositionToInsertAtField
         value={positionToInsertAt}
         onChange={event => setPositionToInsertAt(event.target.value)}

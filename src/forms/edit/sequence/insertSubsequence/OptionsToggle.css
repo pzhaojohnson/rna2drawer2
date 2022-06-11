@@ -1,0 +1,29 @@
+.optionsToggle {
+  margin: 6px 0 0 2px;
+  outline: none;
+
+  border: none;
+  border-radius: 40px;
+  padding: 1px 14px;
+  background-color: rgb(242, 242, 255);
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  font-style: normal;
+  color: rgb(20, 20, 98);
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.optionsToggle:hover {
+  background-color: rgb(228, 228, 255);
+  transition: background-color 0.02s;
+}
+
+.optionsToggle:active {
+  outline: none;
+}
