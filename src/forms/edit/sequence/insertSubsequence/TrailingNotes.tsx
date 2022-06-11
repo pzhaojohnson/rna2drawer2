@@ -4,7 +4,7 @@ import { DottedNote } from 'Forms/notes/DottedNote';
 function ExplanatoryNote() {
   return (
     <DottedNote>
-      The subsequence will be inserted beginning at the specified position.
+      The subsequence will be inserted beginning at the position to insert at.
     </DottedNote>
   );
 }
