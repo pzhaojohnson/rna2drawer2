@@ -31,11 +31,16 @@ beforeEach(() => {
 
   args = {
     app,
+
     subsequence: 'AUGCT',
     ignoreNumbers: true,
     ignoreNonAUGCTLetters: false,
     ignoreNonAlphanumerics: true,
+
     positionToInsertAt: '3',
+
+    includeSubstructure: false,
+    substructure: '.....',
   };
 });
 
@@ -178,5 +183,65 @@ describe('insertSubsequence function', () => {
     expect(() => insertSubsequence(args)).not.toThrow();
     args.positionToInsertAt = (sequence.length + 2).toString();
     expect(() => insertSubsequence(args)).toThrow();
+  });
+
+  test('including a substructure', () => {
+    args.subsequence = 'AAAAAAAAAAAA';
+    args.positionToInsertAt = '3';
+    args.includeSubstructure = true;
+    args.substructure = '.(.{..).}.';
+    insertSubsequence(args);
+
+    // adds secondary bonds
+    let secondaryBonds = app.drawing.secondaryBonds;
+    let b4 = sequence.atPosition(4);
+    let b9 = sequence.atPosition(9);
+    expect(secondaryBonds.find(sb => sb.binds(b4) && sb.binds(b9))).toBeTruthy();
+
+    // adds tertiary bonds
+    let tertiaryBonds = app.drawing.tertiaryBonds;
+    let b6 = sequence.atPosition(6);
+    let b11 = sequence.atPosition(11);
+    expect(tertiaryBonds.find(tb => tb.binds(b6) && tb.binds(b11))).toBeTruthy();
+  });
+
+  test('a blank substructure', () => {
+    args.includeSubstructure = true;
+    args.substructure = '...'; // not blank
+    expect(() => insertSubsequence(args)).not.toThrow();
+
+    args.includeSubstructure = true;
+    args.substructure = ''; // empty
+    expect(() => insertSubsequence(args)).toThrow();
+    args.includeSubstructure = false; // should no longer throw
+    expect(() => insertSubsequence(args)).not.toThrow();
+
+    args.includeSubstructure = true;
+    args.substructure = '  \t\n\n\t  '; // whitespace
+    expect(() => insertSubsequence(args)).toThrow();
+    args.includeSubstructure = false; // should no longer throw
+    expect(() => insertSubsequence(args)).not.toThrow();
+  });
+
+  test('an invalid substructure', () => {
+    args.includeSubstructure = true;
+    args.substructure = '....'; // valid
+    expect(() => insertSubsequence(args)).not.toThrow();
+    args.substructure = '.(..'; // unmatched "("
+    expect(() => insertSubsequence(args)).toThrow();
+    args.includeSubstructure = false; // should no longer throw
+    expect(() => insertSubsequence(args)).not.toThrow();
+  });
+
+  test('a substructure longer than the subsequence', () => {
+    args.subsequence = 'AAA';
+    args.includeSubstructure = true;
+    args.substructure = '......'; // longer than subsequence
+    expect(() => insertSubsequence(args)).toThrow();
+    args.includeSubstructure = false; // should no longer throw
+    expect(() => insertSubsequence(args)).not.toThrow();
+    args.includeSubstructure = true;
+    args.subsequence = 'AAAAAAAAAAAA'; // longer than substructure
+    expect(() => insertSubsequence(args)).not.toThrow();
   });
 });

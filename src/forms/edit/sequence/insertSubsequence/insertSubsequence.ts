@@ -9,6 +9,11 @@ import { parseSequence } from 'Parse/parseSequence';
 // the underlying insertSubsequence function
 import { insertSubsequence as _insertSubsequence } from 'Draw/strict/insertSubsequence';
 
+import { parseDotBracket } from 'Parse/parseDotBracket';
+
+import { applySecondarySubstructure } from 'Draw/strict/applySecondarySubstructure';
+import { applyTertiarySubstructure } from 'Draw/strict/applyTertiarySubstructure';
+
 export type Args = {
   app: App; // a reference to the whole app
 
@@ -23,6 +28,13 @@ export type Args = {
   // position to insert the subsequence at (given as a string)
   // (bases for the subsequence will be inserted beginning at this position)
   positionToInsertAt: string;
+
+  // whether to include a substructure with the subsequence to insert
+  includeSubstructure: boolean;
+
+  // a substructure to apply to the inserted subsequence
+  // (given in dot-bracket notation)
+  substructure: string;
 };
 
 /**
@@ -31,6 +43,8 @@ export type Args = {
  *
  * When the position to insert at is set to the sequence length plus one,
  * the provided subsequence is appended to the end of the sequence.
+ *
+ * A substructure may also be included and applied to the inserted subsequence.
  */
 export function insertSubsequence(args: Args): void | never {
   let strictDrawing = args.app.strictDrawing;
@@ -75,6 +89,18 @@ export function insertSubsequence(args: Args): void | never {
     throw new Error('Position to insert at is out of bounds.');
   }
 
+  let substructure = parseDotBracket(args.substructure);
+
+  if (args.includeSubstructure) {
+    if (isBlank(args.substructure)) {
+      throw new Error('Substructure is empty.');
+    } else if (substructure == null) {
+      throw new Error('Dot-bracket notation is invalid.');
+    } else if (substructure.secondaryPartners.length > subsequence.length) {
+      throw new Error('Substructure is longer than subsequence.');
+    }
+  }
+
   args.app.pushUndo();
 
   _insertSubsequence(strictDrawing, {
@@ -82,6 +108,17 @@ export function insertSubsequence(args: Args): void | never {
     characters: subsequence,
     start: positionToInsertAt,
   });
+
+  if (args.includeSubstructure && substructure != null) {
+    applySecondarySubstructure(strictDrawing, {
+      partners: substructure.secondaryPartners,
+      startPosition: positionToInsertAt,
+    });
+    applyTertiarySubstructure(strictDrawing, {
+      partners: substructure.tertiaryPartners,
+      startPosition: positionToInsertAt,
+    });
+  }
 
   args.app.refresh();
 }

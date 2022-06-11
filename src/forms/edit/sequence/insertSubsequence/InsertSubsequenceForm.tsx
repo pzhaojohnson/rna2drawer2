@@ -19,6 +19,9 @@ import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import { PositionToInsertAtField } from './PositionToInsertAtField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
+import { IncludeSubstructureField } from './IncludeSubstructureField';
+import { SubstructureTextArea } from './SubstructureTextArea';
+
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage } from './ErrorMessage';
 
@@ -43,6 +46,9 @@ let prevState = {
   ignoreNonAlphanumerics: true,
 
   positionToInsertAt: '1',
+
+  includeSubstructure: false,
+  substructure: '',
 };
 
 export type Props = {
@@ -73,6 +79,9 @@ export function InsertSubsequenceForm(props: Props) {
 
   let [positionToInsertAt, setPositionToInsertAt] = useState(prevState.positionToInsertAt);
 
+  let [includeSubstructure, setIncludeSubstructure] = useState(prevState.includeSubstructure);
+  let [substructure, setSubstructure] = useState(prevState.substructure);
+
   let processPositionToInsertAt = () => {
     setPositionToInsertAt(constrainPositionToInsertAt(positionToInsertAt));
   };
@@ -90,6 +99,7 @@ export function InsertSubsequenceForm(props: Props) {
         subsequence,
         ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
         positionToInsertAt,
+        includeSubstructure, substructure,
       };
     };
   });
@@ -139,6 +149,16 @@ export function InsertSubsequenceForm(props: Props) {
       />
       <div style={{ height: '6px' }} />
       {!sequence ? null : <DisplayableSequenceRange sequence={sequence} />}
+      <IncludeSubstructureField
+        checked={includeSubstructure}
+        onChange={event => setIncludeSubstructure(event.target.checked)}
+      />
+      {!includeSubstructure ? null : (
+        <SubstructureTextArea
+          value={substructure}
+          onChange={event => setSubstructure(event.target.value)}
+        />
+      )}
       <div style={{ marginTop: '32px' }} >
         <SolidButton
           text='Insert'
@@ -150,6 +170,7 @@ export function InsertSubsequenceForm(props: Props) {
                 subsequence,
                 ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
                 positionToInsertAt,
+                includeSubstructure, substructure,
               });
             } catch (error) {
               setErrorMessage(error instanceof Error ? error.message : String(error));
