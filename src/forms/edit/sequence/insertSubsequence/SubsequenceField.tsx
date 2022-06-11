@@ -12,7 +12,7 @@ export type Props = {
 export function SubsequenceField(props: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <FieldLabel style={{ display: 'flex', flexDirection: 'column' }} >
+      <FieldLabel style={{ display: 'flex', flexDirection: 'column', cursor: 'text' }} >
         Subsequence
         <textarea
           className={styles.subsequenceTextArea}
