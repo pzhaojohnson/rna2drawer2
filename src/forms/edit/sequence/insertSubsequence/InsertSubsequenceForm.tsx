@@ -172,6 +172,7 @@ export function InsertSubsequenceForm(props: Props) {
                 positionToInsertAt,
                 includeSubstructure, substructure,
               });
+              setErrorMessage('');
             } catch (error) {
               setErrorMessage(error instanceof Error ? error.message : String(error));
               setErrorMessageKey(errorMessageKey + 1);
