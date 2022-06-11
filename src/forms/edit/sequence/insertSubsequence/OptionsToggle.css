@@ -1,5 +1,6 @@
 .optionsToggle {
   margin: 8px 0 0 2px;
+  align-self: start;
   outline: none;
 
   border: none;

@@ -115,84 +115,86 @@ export function InsertSubsequenceForm(props: Props) {
       title='Insert Subsequence'
       style={{ width: '400px' }}
     >
-      <SubsequenceField
-        value={subsequence}
-        onChange={event => setSubsequence(event.target.value)}
-      />
-      <OptionsToggle
-        onClick={() => setShowSequenceParsingOptions(!showSequenceParsingOptions)}
-      />
-      {!showSequenceParsingOptions ? null : (
-        <div style={{ margin: '10px 0px 0px 12px', display: 'flex', flexDirection: 'column' }} >
-          <CheckboxField
-            label='Ignore Numbers'
-            checked={ignoreNumbers}
-            onChange={event => setIgnoreNumbers(event.target.checked)}
-            style={{ alignSelf: 'start' }}
-          />
-          <div style={{ height: '6px' }} />
-          <CheckboxField
-            label='Ignore Non-AUGCT Letters'
-            checked={ignoreNonAUGCTLetters}
-            onChange={event => setIgnoreNonAUGCTLetters(event.target.checked)}
-            style={{ alignSelf: 'start' }}
-          />
-          <div style={{ height: '6px' }} />
-          <CheckboxField
-            label='Ignore Non-Alphanumerics'
-            checked={ignoreNonAlphanumerics}
-            onChange={event => setIgnoreNonAlphanumerics(event.target.checked)}
-            style={{ alignSelf: 'start' }}
-          />
-        </div>
-      )}
-      <PositionToInsertAtField
-        value={positionToInsertAt}
-        onChange={event => setPositionToInsertAt(event.target.value)}
-        onBlur={() => processPositionToInsertAt()}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            processPositionToInsertAt();
-          }
-        }}
-      />
-      <div style={{ height: '6px' }} />
-      {!sequence ? null : <DisplayableSequenceRange sequence={sequence} />}
-      <IncludeSubstructureField
-        checked={includeSubstructure}
-        onChange={event => setIncludeSubstructure(event.target.checked)}
-      />
-      {!includeSubstructure ? null : (
-        <SubstructureTextArea
-          value={substructure}
-          onChange={event => setSubstructure(event.target.value)}
+      <div style={{ display: 'flex', flexDirection: 'column' }} >
+        <SubsequenceField
+          value={subsequence}
+          onChange={event => setSubsequence(event.target.value)}
         />
-      )}
-      <div style={{ marginTop: '40px' }} >
-        <SolidButton
-          text='Insert'
-          onClick={() => {
-            try {
-              let app = props.app;
-              insertSubsequence({
-                app,
-                subsequence,
-                ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
-                positionToInsertAt,
-                includeSubstructure, substructure,
-              });
-              setErrorMessage('');
-            } catch (error) {
-              setErrorMessage(error instanceof Error ? error.message : String(error));
-              setErrorMessageKey(errorMessageKey + 1);
+        <OptionsToggle
+          onClick={() => setShowSequenceParsingOptions(!showSequenceParsingOptions)}
+        />
+        {!showSequenceParsingOptions ? null : (
+          <div style={{ margin: '10px 0px 0px 12px', display: 'flex', flexDirection: 'column' }} >
+            <CheckboxField
+              label='Ignore Numbers'
+              checked={ignoreNumbers}
+              onChange={event => setIgnoreNumbers(event.target.checked)}
+              style={{ alignSelf: 'start' }}
+            />
+            <div style={{ height: '6px' }} />
+            <CheckboxField
+              label='Ignore Non-AUGCT Letters'
+              checked={ignoreNonAUGCTLetters}
+              onChange={event => setIgnoreNonAUGCTLetters(event.target.checked)}
+              style={{ alignSelf: 'start' }}
+            />
+            <div style={{ height: '6px' }} />
+            <CheckboxField
+              label='Ignore Non-Alphanumerics'
+              checked={ignoreNonAlphanumerics}
+              onChange={event => setIgnoreNonAlphanumerics(event.target.checked)}
+              style={{ alignSelf: 'start' }}
+            />
+          </div>
+        )}
+        <PositionToInsertAtField
+          value={positionToInsertAt}
+          onChange={event => setPositionToInsertAt(event.target.value)}
+          onBlur={() => processPositionToInsertAt()}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              processPositionToInsertAt();
             }
           }}
         />
+        <div style={{ height: '6px' }} />
+        {!sequence ? null : <DisplayableSequenceRange sequence={sequence} />}
+        <IncludeSubstructureField
+          checked={includeSubstructure}
+          onChange={event => setIncludeSubstructure(event.target.checked)}
+        />
+        {!includeSubstructure ? null : (
+          <SubstructureTextArea
+            value={substructure}
+            onChange={event => setSubstructure(event.target.value)}
+          />
+        )}
+        <div style={{ marginTop: '40px' }} >
+          <SolidButton
+            text='Insert'
+            onClick={() => {
+              try {
+                let app = props.app;
+                insertSubsequence({
+                  app,
+                  subsequence,
+                  ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
+                  positionToInsertAt,
+                  includeSubstructure, substructure,
+                });
+                setErrorMessage('');
+              } catch (error) {
+                setErrorMessage(error instanceof Error ? error.message : String(error));
+                setErrorMessageKey(errorMessageKey + 1);
+              }
+            }}
+          />
+        </div>
+        {!errorMessage ? null : (
+          <ErrorMessage key={errorMessageKey} >{errorMessage}</ErrorMessage>
+        )}
+        <TrailingNotes />
       </div>
-      {!errorMessage ? null : (
-        <ErrorMessage key={errorMessageKey} >{errorMessage}</ErrorMessage>
-      )}
-      <TrailingNotes />
     </PartialWidthContainer>
   );
 }
