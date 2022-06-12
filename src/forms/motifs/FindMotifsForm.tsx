@@ -244,7 +244,7 @@ function OptionsPanel(props: OptionsPanelProps) {
             props.onChange({ target: { value: { ...props.value, IUPAC } } });
           }}
         />
-        <div style={{ height: '6px' }} />
+        <div style={{ height: '8px' }} />
         <AllowedMismatchField
           value={props.value.allowedMismatch}
           onSubmit={event => {
@@ -260,7 +260,7 @@ function OptionsPanel(props: OptionsPanelProps) {
           }} />
         )}
       </div>
-      <div style={{ height: '6px' }} />
+      <div style={{ height: '8px' }} />
       <TreatMotifAsRegExpField
         checked={props.value.treatMotifAsRegExp}
         onChange={event => {
@@ -408,9 +408,9 @@ export class FindMotifsForm extends React.Component<FormProps> {
           <OptionsToggle
             onClick={() => this.setState({ showOptions: !this.state.showOptions })}
           />
-          <div style={{ height: '8px' }} />
+          <div style={{ height: '10px' }} />
           {!this.state.showOptions ? null : (
-            <div style={{ marginLeft: '3px' }} >
+            <div style={{ marginLeft: '12px' }} >
               <OptionsPanel
                 value={this.state.options}
                 onChange={event => this.setState({ options: event.target.value })}
