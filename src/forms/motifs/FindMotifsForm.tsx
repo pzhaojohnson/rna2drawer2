@@ -9,8 +9,8 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 
 import formStyles from './FindMotifsForm.css';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import { TextInput } from 'Forms/inputs/text/TextInput';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
@@ -191,25 +191,22 @@ class AllowedMismatchField extends React.Component<AllowedMismatchFieldProps> {
 
   render() {
     return (
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <input
-          type='text'
-          className={textFieldStyles.input}
-          value={this.state.value}
-          onChange={event => this.setState({ value: event.target.value })}
-          onBlur={() => this.submit()}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              this.submit();
-            }
-          }}
-          spellCheck={false}
-          style={{ width: '5ch', textAlign: 'end' }}
-        />
-        <p className={textFieldStyles.label} style={{ marginLeft: '8px' }} >
-          Mismatch Allowed
-        </p>
-      </div>
+      <TextInputField
+        label='Mismatch Allowed'
+        value={this.state.value}
+        onChange={event => this.setState({ value: event.target.value })}
+        onBlur={() => this.submit()}
+        onKeyUp={event => {
+          if (event.key.toLowerCase() == 'enter') {
+            this.submit();
+          }
+        }}
+        input={{
+          spellCheck: false,
+          style: { width: '5ch', textAlign: 'end' },
+        }}
+        style={{ alignSelf: 'start' }}
+      />
     );
   }
 
@@ -240,7 +237,7 @@ type OptionsPanelProps = {
 function OptionsPanel(props: OptionsPanelProps) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <div style={{ position: 'relative' }} >
+      <div style={{ position: 'relative', display: 'flex', flexDirection: 'column' }} >
         <UTField
           checked={props.value.UT}
           onChange={event => {
