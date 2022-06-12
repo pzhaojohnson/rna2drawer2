@@ -11,6 +11,7 @@ import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 import formStyles from './FindMotifsForm.css';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
+import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
 import { isBlank } from 'Parse/isBlank';
 import { motifsMatch } from './motifsMatch';
@@ -83,19 +84,23 @@ class MotifInput extends React.Component<MotifInputProps> {
 
   render() {
     return (
-      <input
-        className={textFieldStyles.input}
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => this.submit()}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-          }
-        }}
-        spellCheck={false}
-        placeholder=' ...a motif to search for "CUGCCA"'
-      />
+      <div style={{ display: 'flex', flexDirection: 'column' }} >
+        <input
+          className={textFieldStyles.input}
+          value={this.state.value}
+          onChange={event => this.setState({ value: event.target.value })}
+          onBlur={() => this.submit()}
+          onKeyUp={event => {
+            if (event.key.toLowerCase() == 'enter') {
+              this.submit();
+            }
+          }}
+          spellCheck={false}
+        />
+        <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+          ...a motif to search for "CUGCCA"
+        </FieldDescription>
+      </div>
     );
   }
 
@@ -410,7 +415,7 @@ export class FindMotifsForm extends React.Component<FormProps> {
             value={this.state.motif}
             onSubmit={event => this.setState({ motif: event.target.value.trim() })}
           />
-          <div style={{ height: '6px' }} />
+          <div style={{ height: '8px' }} />
           <OptionsToggle
             isToggled={this.state.showOptions}
             onClick={() => this.setState({ showOptions: !this.state.showOptions })}
