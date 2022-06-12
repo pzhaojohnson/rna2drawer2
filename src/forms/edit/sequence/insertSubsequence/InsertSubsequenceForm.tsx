@@ -23,7 +23,7 @@ import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenc
 import { IncludeSubstructureField } from './IncludeSubstructureField';
 import { SubstructureTextArea } from './SubstructureTextArea';
 
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { InsertButton } from './InsertButton';
 import { ErrorMessage } from './ErrorMessage';
 
 import { TrailingNotes } from './TrailingNotes';
@@ -169,27 +169,24 @@ export function InsertSubsequenceForm(props: Props) {
             onChange={event => setSubstructure(event.target.value)}
           />
         )}
-        <div style={{ marginTop: '40px' }} >
-          <SolidButton
-            text='Insert'
-            onClick={() => {
-              try {
-                let app = props.app;
-                insertSubsequence({
-                  app,
-                  subsequence,
-                  ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
-                  positionToInsertAt,
-                  includeSubstructure, substructure,
-                });
-                setErrorMessage('');
-              } catch (error) {
-                setErrorMessage(error instanceof Error ? error.message : String(error));
-                setErrorMessageKey(errorMessageKey + 1);
-              }
-            }}
-          />
-        </div>
+        <InsertButton
+          onClick={() => {
+            try {
+              let app = props.app;
+              insertSubsequence({
+                app,
+                subsequence,
+                ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
+                positionToInsertAt,
+                includeSubstructure, substructure,
+              });
+              setErrorMessage('');
+            } catch (error) {
+              setErrorMessage(error instanceof Error ? error.message : String(error));
+              setErrorMessageKey(errorMessageKey + 1);
+            }
+          }}
+        />
         {!errorMessage ? null : (
           <ErrorMessage key={errorMessageKey} >{errorMessage}</ErrorMessage>
         )}
