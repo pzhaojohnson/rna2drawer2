@@ -7,7 +7,7 @@ import * as React from 'react';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 
-import formStyles from './FindMotifsForm.css';
+import styles from './FindMotifsForm.css';
 import { TextInput } from 'Forms/inputs/text/TextInput';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
@@ -121,8 +121,8 @@ function OptionsToggle(props: OptionsToggleProps) {
   return (
     <p
       className={`
-        ${formStyles.optionsToggle}
-        ${props.isToggled ? formStyles.toggledOptionsToggle : formStyles.untoggledOptionsToggle}
+        ${styles.optionsToggle}
+        ${props.isToggled ? styles.toggledOptionsToggle : styles.untoggledOptionsToggle}
       `}
       onClick={props.onClick}
     >
@@ -295,7 +295,7 @@ type NumMatchesViewProps = {
 function NumMatchesView(props: NumMatchesViewProps) {
   let es = props.matches.length == 1 ? '' : 'es';
   return (
-    <p className={formStyles.numMatchesView} >
+    <p className={styles.numMatchesView} >
       {props.matches.length} Match{es} found.
     </p>
   );
@@ -311,7 +311,7 @@ function NumberingOffsetView(props: NumberingOffsetViewProps) {
   }
 
   return (
-    <p className={formStyles.numberingOffsetView} >
+    <p className={styles.numberingOffsetView} >
       (Numbering offset of {props.numberingOffset}.)
     </p>
   );
@@ -320,10 +320,10 @@ function NumberingOffsetView(props: NumberingOffsetViewProps) {
 function MatchesColumnLabels() {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'end' }} >
-      <p className={formStyles.startPositionColumnLabel} >
+      <p className={styles.startPositionColumnLabel} >
         Start Position
       </p>
-      <p className={formStyles.matchingMotifColumnLabel} >
+      <p className={styles.matchingMotifColumnLabel} >
         Matching Motif
       </p>
     </div>
@@ -347,17 +347,17 @@ function MatchView(props: MatchViewProps) {
 
   return (
     <div
-      className={formStyles.matchView}
+      className={styles.matchView}
       onClick={props.onClick}
       style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
     >
       <p
-        className={formStyles.startPositionView}
+        className={styles.startPositionView}
         style={{ width: props.startPositionViewWidth }}
       >
         {startPosition}
       </p>
-      <p className={formStyles.matchingMotifView} >
+      <p className={styles.matchingMotifView} >
         {matchingMotif}
       </p>
     </div>
