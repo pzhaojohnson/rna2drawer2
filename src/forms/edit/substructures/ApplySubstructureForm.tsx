@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { TextAreaField } from 'Forms/inputs/text/TextAreaField';
+import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
@@ -26,15 +27,17 @@ function SubstructureField(
   },
 ) {
   return (
-    <TextAreaField
-      label='Substructure'
-      value={props.value}
-      onChange={props.onChange}
-      textArea={{
-        rows: 10,
-        placeholder: '...in dot-bracket notation "(((....)))"',
-      }}
-    />
+    <div style={{ display: 'flex', flexDirection: 'column' }} >
+      <TextAreaField
+        label='Substructure'
+        value={props.value}
+        onChange={props.onChange}
+        textArea={{ rows: 10 }}
+      />
+      <FieldDescription style={{ margin: '6px 0 0 16px' }} >
+        ...in dot-bracket notation "(((....)))"
+      </FieldDescription>
+    </div>
   );
 }
 
