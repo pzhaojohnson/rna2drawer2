@@ -6,12 +6,12 @@ import type { Base } from 'Draw/bases/Base';
 import * as React from 'react';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
-import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 
 import formStyles from './FindMotifsForm.css';
 import { TextInput } from 'Forms/inputs/text/TextInput';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
-import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
+import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
+import { Props as CheckboxFieldProps } from 'Forms/inputs/checkbox/CheckboxField';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
 import { isBlank } from 'Parse/isBlank';
@@ -131,41 +131,36 @@ function OptionsToggle(props: OptionsToggleProps) {
   );
 }
 
-type CheckboxFieldProps = {
-  checked: boolean;
-  onChange: (event: { target: { checked: boolean } }) => void;
-};
-
 function TreatMotifAsRegExpField(props: CheckboxFieldProps) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <Checkbox checked={props.checked} onChange={props.onChange} />
-      <p className={checkboxFieldStyles.label} style={{ marginLeft: '6px' }} >
-        Treat Motif as a Regular Expression
-      </p>
-    </div>
+    <CheckboxField
+      label='Treat Motif as a Regular Expression'
+      checked={props.checked}
+      onChange={props.onChange}
+      style={{ alignSelf: 'start' }}
+    />
   );
 }
 
 function UTField(props: CheckboxFieldProps) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <Checkbox checked={props.checked} onChange={props.onChange} />
-      <p className={checkboxFieldStyles.label} style={{ marginLeft: '6px' }} >
-        Match Us and Ts
-      </p>
-    </div>
+    <CheckboxField
+      label='Match Us and Ts'
+      checked={props.checked}
+      onChange={props.onChange}
+      style={{ alignSelf: 'start' }}
+    />
   );
 }
 
 function IUPACField(props: CheckboxFieldProps) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <Checkbox checked={props.checked} onChange={props.onChange} />
-      <p className={checkboxFieldStyles.label} style={{ marginLeft: '6px' }} >
-        Use IUPAC single letter codes
-      </p>
-    </div>
+    <CheckboxField
+      label='Use IUPAC single letter codes'
+      checked={props.checked}
+      onChange={props.onChange}
+      style={{ alignSelf: 'start' }}
+    />
   );
 }
 
