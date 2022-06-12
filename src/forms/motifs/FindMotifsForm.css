@@ -1,26 +1,32 @@
 .optionsToggle {
-  padding: 3px 9px;
-  border-radius: 12px;
+  margin: 8px 0 0 2px;
   align-self: start;
+  outline: none;
+
+  border: none;
+  border-radius: 40px;
+  padding: 1px 14px;
+  background-color: rgb(242, 242, 255);
+
   font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  font-style: italic;
-  text-align: center;
-  color: #080d5e;
+  font-style: normal;
+  color: rgb(20, 20, 98);
+
   cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.toggledOptionsToggle {
-  background-color: #d1e7ff;
+.optionsToggle:hover {
+  background-color: rgb(228, 228, 255);
+  transition: background-color 0.02s;
 }
 
-.untoggledOptionsToggle {
-  background-color: white;
-}
-
-.untoggledOptionsToggle:hover {
-  background-color: #e8f3ff;
+.optionsToggle:active {
+  outline: none;
 }
 
 .numMatchesView {

@@ -113,21 +113,17 @@ class MotifInput extends React.Component<MotifInputProps> {
 }
 
 type OptionsToggleProps = {
-  isToggled: boolean;
   onClick: () => void;
 };
 
 function OptionsToggle(props: OptionsToggleProps) {
   return (
-    <p
-      className={`
-        ${styles.optionsToggle}
-        ${props.isToggled ? styles.toggledOptionsToggle : styles.untoggledOptionsToggle}
-      `}
+    <button
+      className={styles.optionsToggle}
       onClick={props.onClick}
     >
-      Options...
-    </p>
+      Options
+    </button>
   );
 }
 
@@ -410,7 +406,6 @@ export class FindMotifsForm extends React.Component<FormProps> {
           />
           <div style={{ height: '8px' }} />
           <OptionsToggle
-            isToggled={this.state.showOptions}
             onClick={() => this.setState({ showOptions: !this.state.showOptions })}
           />
           <div style={{ height: '8px' }} />
