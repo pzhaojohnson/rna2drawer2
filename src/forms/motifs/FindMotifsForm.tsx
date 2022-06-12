@@ -10,6 +10,7 @@ import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 
 import formStyles from './FindMotifsForm.css';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInput } from 'Forms/inputs/text/TextInput';
 import checkboxFieldStyles from 'Forms/inputs/checkbox/CheckboxField.css';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
@@ -85,8 +86,7 @@ class MotifInput extends React.Component<MotifInputProps> {
   render() {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }} >
-        <input
-          className={textFieldStyles.input}
+        <TextInput
           value={this.state.value}
           onChange={event => this.setState({ value: event.target.value })}
           onBlur={() => this.submit()}
@@ -96,6 +96,7 @@ class MotifInput extends React.Component<MotifInputProps> {
             }
           }}
           spellCheck={false}
+          style={{ width: 'auto' }} // allow element to stretch
         />
         <FieldDescription style={{ margin: '6px 0 0 16px' }} >
           ...a motif to search for "CUGCCA"
