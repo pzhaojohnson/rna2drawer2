@@ -131,19 +131,17 @@ export function InsertSubsequenceForm(props: Props) {
               onChange={event => setIgnoreNumbers(event.target.checked)}
               style={{ alignSelf: 'start' }}
             />
-            <div style={{ height: '6px' }} />
             <CheckboxField
               label='Ignore Non-AUGCT Letters'
               checked={ignoreNonAUGCTLetters}
               onChange={event => setIgnoreNonAUGCTLetters(event.target.checked)}
-              style={{ alignSelf: 'start' }}
+              style={{ margin: '6px 0 0 0', alignSelf: 'start' }}
             />
-            <div style={{ height: '6px' }} />
             <CheckboxField
               label='Ignore Non-Alphanumerics'
               checked={ignoreNonAlphanumerics}
               onChange={event => setIgnoreNonAlphanumerics(event.target.checked)}
-              style={{ alignSelf: 'start' }}
+              style={{ margin: '6px 0 0 0', alignSelf: 'start' }}
             />
           </div>
         )}
