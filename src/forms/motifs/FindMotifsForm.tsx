@@ -9,6 +9,7 @@ import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 
 import styles from './FindMotifsForm.css';
 import { MotifInput } from './MotifInput';
+import { OptionsToggle } from './OptionsToggle';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import { Props as CheckboxFieldProps } from 'Forms/inputs/checkbox/CheckboxField';
@@ -61,21 +62,6 @@ let prevFormState: FormState = {
     allowedMismatch: 0,
   },
 };
-
-type OptionsToggleProps = {
-  onClick: () => void;
-};
-
-function OptionsToggle(props: OptionsToggleProps) {
-  return (
-    <button
-      className={styles.optionsToggle}
-      onClick={props.onClick}
-    >
-      Options
-    </button>
-  );
-}
 
 function TreatMotifAsRegExpField(props: CheckboxFieldProps) {
   return (
