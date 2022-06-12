@@ -29,7 +29,7 @@ import { BasePositionDescription } from './BasePositionDescription';
 import { SelectedElementsDescription } from './SelectedElementsDescription';
 import { detectMacOS } from 'Utilities/detectMacOS';
 
-import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
+import { removeElements } from './removeElements';
 import { userIsTyping } from 'Utilities/userIsTyping';
 
 import { EditingForm } from './EditingForm';
@@ -230,6 +230,44 @@ export class EditingTool {
     this.options.app.refresh();
   }
 
+  /**
+   * Primary bonds cannot be removed using the editing tool,
+   * since there should always be exactly one primary bond
+   * between two consecutive bases in a sequence.
+   */
+  canRemoveSelected(): boolean {
+    return (
+      this._selected.size > 0
+      && (
+        this.editingType == Base
+        || this.editingType == BaseNumbering
+        || this.editingType == SecondaryBond
+        || this.editingType == TertiaryBond
+      )
+    );
+  }
+
+  removeSelected() {
+    if (this._selected.size == 0) {
+      return;
+    }
+
+    this.options.app.pushUndo();
+    removeElements(this.options.strictDrawing, this.selected());
+
+    // update state of interaction
+    if (this._hovered != undefined && this._selected.has(this._hovered)) {
+      this._hovered = undefined;
+    }
+    if (this._activated != undefined && this._selected.has(this._activated)) {
+      this._activated = undefined;
+    }
+    this._selected.clear();
+
+    this.refresh();
+    this.options.app.refresh();
+  }
+
   handleMouseover(event: MouseEvent) {
     if (!(event.target instanceof Node)) {
       return;
@@ -422,14 +460,8 @@ export class EditingTool {
 
     let key = event.key.toLowerCase();
     if (key == 'delete' || key == 'backspace') {
-      if (this.editingType == TertiaryBond && this._selected.size > 0) {
-        this.options.app.pushUndo();
-        this._selected.forEach(id => {
-          removeTertiaryBondById(this.drawing, id);
-          this._selected.delete(id);
-        });
-        this.refresh();
-        this.options.app.refresh();
+      if (this._selected.size > 0 && this.canRemoveSelected()) {
+        this.removeSelected();
       }
     }
   }
@@ -579,13 +611,16 @@ export class EditingTool {
     );
     this.options.overlaidMessageContainer.append(div);
 
+    let actions = document.createElement('p');
+    actions.className = styles.overlaidMessageActions;
+    actions.style.marginLeft = '4px';
     if (this.editingType == TertiaryBond) {
-      let p = document.createElement('p');
-      p.textContent = 'Drag to move. Press Delete to remove.';
-      p.className = styles.overlaidMessageActions;
-      p.style.marginLeft = '4px';
-      this.options.overlaidMessageContainer.append(p);
+      actions.textContent += 'Drag to move. ';
     }
+    if (this.canRemoveSelected()) {
+      actions.textContent += 'Press Delete to remove.';
+    }
+    this.options.overlaidMessageContainer.append(actions);
   }
 
   reset() {
