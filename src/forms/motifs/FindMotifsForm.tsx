@@ -27,7 +27,7 @@ import { motifsMatch } from './motifsMatch';
 import { centerViewOnBases } from './centerViewOnBases';
 import { BaseBlinker } from './BaseBlinker';
 
-export type FormProps = {
+export type Props = {
 
   // a reference to the whole app
   app: App;
@@ -43,21 +43,21 @@ export type Options = {
   allowedMismatch: number;
 };
 
-type FormState = {
+type State = {
   motif: string;
 
   showOptions: boolean;
   options: Options;
 };
 
-function deepCopyFormState(state: FormState): FormState {
+function deepCopyState(state: State): State {
   return {
     ...state,
     options: { ...state.options },
   };
 }
 
-let prevFormState: FormState = {
+let prevState: State = {
   motif: '',
   showOptions: false,
   options: {
@@ -80,17 +80,17 @@ export type Match = {
   startPosition: number;
 };
 
-export class FindMotifsForm extends React.Component<FormProps> {
-  state: FormState;
+export class FindMotifsForm extends React.Component<Props> {
+  state: State;
 
-  constructor(props: FormProps) {
+  constructor(props: Props) {
     super(props);
 
-    this.state = deepCopyFormState(prevFormState);
+    this.state = deepCopyState(prevState);
   }
 
   componentWillUnmount() {
-    prevFormState = deepCopyFormState(this.state);
+    prevState = deepCopyState(this.state);
   }
 
   render() {
