@@ -124,13 +124,15 @@ export class FindMotifsForm extends React.Component<Props> {
           {isBlank(this.state.motif) ? null : (
             <div style={{ display: 'flex', flexDirection: 'column' }} >
               <NumMatchesView matches={matches} />
-              <DisplayableSequenceRange sequence={this.sequence()} style={{ margin: '10px 0 0 0' }} />
               {matches.length == 0 ? null : (
-                <MatchesView
-                  matches={matches}
-                  numberingOffset={this.numberingOffset()}
-                  onMatchSelect={match => this.highlight(match)}
-                />
+                <div style={{ margin: '10px 0 0 0' }} >
+                  <DisplayableSequenceRange sequence={this.sequence()} />
+                  <MatchesView
+                    matches={matches}
+                    numberingOffset={this.numberingOffset()}
+                    onMatchSelect={match => this.highlight(match)}
+                  />
+                </div>
               )}
             </div>
           )}
