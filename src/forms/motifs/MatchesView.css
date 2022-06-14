@@ -2,17 +2,23 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 700;
-  font-style: italic;
-  color: black;
+  font-style: normal;
+  color: rgb(13, 13, 14);
+
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .matchingMotifColumnLabel {
-  margin-left: 6px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
+  margin-left: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13.5px;
   font-weight: 400;
-  font-style: italic;
-  color: #6f6f6f;
+  font-style: normal;
+  color: rgb(33, 33, 36);
+
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .matchView {
