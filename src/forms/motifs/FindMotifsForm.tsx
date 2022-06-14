@@ -101,7 +101,7 @@ export class FindMotifsForm extends React.Component<Props> {
         title='Find Motifs'
         unmount={this.props.unmount}
         history={this.props.history}
-        style={{ width: '372px' }}
+        style={{ width: '382px' }}
       >
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <MotifInput
