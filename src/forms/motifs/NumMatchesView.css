@@ -1,7 +1,10 @@
 .numMatchesView {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   font-style: italic;
-  color: #242424;
+  color: rgb(72, 72, 83);
+
+  user-select: none;
+  -webkit-user-select: none;
 }

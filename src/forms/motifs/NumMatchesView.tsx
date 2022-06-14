@@ -9,9 +9,13 @@ export type Props = {
 
 export function NumMatchesView(props: Props) {
   let es = props.matches.length == 1 ? '' : 'es';
+
   return (
     <p className={styles.numMatchesView} >
-      {props.matches.length} Match{es} found.
+      <span style={{ fontWeight: 700, fontStyle: 'normal', color: 'rgb(17, 17, 18)' }} >
+        {props.matches.length}
+      </span>
+      &nbsp;Match{es} found.
     </p>
   );
 }
