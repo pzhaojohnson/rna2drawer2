@@ -11,6 +11,7 @@ import styles from './FindMotifsForm.css';
 import { MotifInput } from './MotifInput';
 import { OptionsToggle } from './OptionsToggle';
 import { OptionsPanel } from './OptionsPanel';
+import { NumMatchesView } from './NumMatchesView';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
 import { isBlank } from 'Parse/isBlank';
@@ -61,7 +62,7 @@ let prevFormState: FormState = {
   },
 };
 
-type Match = {
+export type Match = {
 
   // the motif that the match was found for
   matchedMotif: string;
@@ -72,19 +73,6 @@ type Match = {
   // the start position of the matching motif in its parent sequence
   startPosition: number;
 };
-
-type NumMatchesViewProps = {
-  matches: Match[];
-};
-
-function NumMatchesView(props: NumMatchesViewProps) {
-  let es = props.matches.length == 1 ? '' : 'es';
-  return (
-    <p className={styles.numMatchesView} >
-      {props.matches.length} Match{es} found.
-    </p>
-  );
-}
 
 function MatchesColumnLabels() {
   return (
