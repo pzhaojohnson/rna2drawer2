@@ -80,7 +80,7 @@ export function MatchesView(props: Props) {
 
   return (
     <div>
-      <div style={{ height: '8px' }} />
+      <div style={{ height: '10px' }} />
       <ColumnLabels />
       <div style={{ marginTop: '4px', display: 'flex', flexDirection: 'column' }} >
         {props.matches.map((match, i) => (

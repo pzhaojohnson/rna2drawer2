@@ -106,20 +106,19 @@ export class FindMotifsForm extends React.Component<FormProps> {
           <OptionsToggle
             onClick={() => this.setState({ showOptions: !this.state.showOptions })}
           />
-          <div style={{ height: '10px' }} />
           {!this.state.showOptions ? null : (
-            <div style={{ marginLeft: '12px' }} >
+            <div style={{ margin: '10px 0 0 12px' }} >
               <OptionsPanel
                 value={this.state.options}
                 onChange={event => this.setState({ options: event.target.value })}
               />
             </div>
           )}
-          <div style={{ height: this.state.showOptions ? '16px' : '4px' }} />
+          <div style={{ height: '40px' }} />
           {isBlank(this.state.motif) ? null : (
             <div style={{ display: 'flex', flexDirection: 'column' }} >
               <NumMatchesView matches={matches} />
-              <DisplayableSequenceRange sequence={this.sequence()} style={{ margin: '8px 0 0 0' }} />
+              <DisplayableSequenceRange sequence={this.sequence()} style={{ margin: '10px 0 0 0' }} />
               {matches.length == 0 ? null : (
                 <MatchesView
                   matches={matches}
