@@ -1,21 +1,27 @@
 import type { App } from 'App';
+
 import type { Sequence } from 'Draw/sequences/Sequence';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
+
 import type { Base } from 'Draw/bases/Base';
 
 import * as React from 'react';
+import styles from './FindMotifsForm.css';
+
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 
-import styles from './FindMotifsForm.css';
 import { MotifInput } from './MotifInput';
+
 import { OptionsToggle } from './OptionsToggle';
 import { OptionsPanel } from './OptionsPanel';
+
 import { NumMatchesView } from './NumMatchesView';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { MatchesView } from './MatchesView';
 
 import { isBlank } from 'Parse/isBlank';
+
 import { motifsMatch } from './motifsMatch';
 
 import { centerViewOnBases } from './centerViewOnBases';
