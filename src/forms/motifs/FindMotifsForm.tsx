@@ -11,6 +11,7 @@ import styles from './FindMotifsForm.css';
 import { MotifInput } from './MotifInput';
 import { OptionsToggle } from './OptionsToggle';
 import { OptionsPanel } from './OptionsPanel';
+import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
 import { isBlank } from 'Parse/isBlank';
 import { motifsMatch } from './motifsMatch';
@@ -81,22 +82,6 @@ function NumMatchesView(props: NumMatchesViewProps) {
   return (
     <p className={styles.numMatchesView} >
       {props.matches.length} Match{es} found.
-    </p>
-  );
-}
-
-type NumberingOffsetViewProps = {
-  numberingOffset?: number;
-};
-
-function NumberingOffsetView(props: NumberingOffsetViewProps) {
-  if (props.numberingOffset == undefined || props.numberingOffset == 0) {
-    return null;
-  }
-
-  return (
-    <p className={styles.numberingOffsetView} >
-      (Numbering offset of {props.numberingOffset}.)
     </p>
   );
 }
@@ -209,11 +194,11 @@ export class FindMotifsForm extends React.Component<FormProps> {
           {isBlank(this.state.motif) ? null : (
             <div style={{ display: 'flex', flexDirection: 'column' }} >
               <NumMatchesView matches={matches} />
+              <DisplayableSequenceRange sequence={this.sequence()} style={{ margin: '8px 0 0 0' }} />
               {matches.length == 0 ? null : (
                 <div>
                   <div style={{ height: '8px' }} />
                   <MatchesColumnLabels />
-                  <NumberingOffsetView numberingOffset={no} />
                   <div style={{ marginTop: '4px', display: 'flex', flexDirection: 'column' }} >
                     {matches.map((match, i) => (
                       <MatchView
