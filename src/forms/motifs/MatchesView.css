@@ -1,0 +1,43 @@
+.startPositionColumnLabel {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: italic;
+  color: black;
+}
+
+.matchingMotifColumnLabel {
+  margin-left: 6px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: italic;
+  color: #6f6f6f;
+}
+
+.matchView {
+  border-radius: 4px;
+  padding: 1px 4px;
+  cursor: pointer;
+}
+
+.matchView:hover {
+  background-color: #e8e8e8;
+}
+
+.startPositionView {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: black;
+  text-align: end;
+  cursor: pointer;
+}
+
+.matchingMotifView {
+  margin-left: 8px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  color: #636363;
+  cursor: pointer;
+}

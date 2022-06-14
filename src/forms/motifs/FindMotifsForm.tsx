@@ -13,10 +13,10 @@ import { OptionsToggle } from './OptionsToggle';
 import { OptionsPanel } from './OptionsPanel';
 import { NumMatchesView } from './NumMatchesView';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { MatchesView } from './MatchesView';
 
 import { isBlank } from 'Parse/isBlank';
 import { motifsMatch } from './motifsMatch';
-import { compareNumbersDescending } from 'Array/sort';
 
 import { centerViewOnBases } from './centerViewOnBases';
 import { BaseBlinker } from './BaseBlinker';
@@ -74,64 +74,6 @@ export type Match = {
   startPosition: number;
 };
 
-function MatchesColumnLabels() {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'end' }} >
-      <p className={styles.startPositionColumnLabel} >
-        Start Position
-      </p>
-      <p className={styles.matchingMotifColumnLabel} >
-        Matching Motif
-      </p>
-    </div>
-  );
-}
-
-type MatchViewProps = {
-  match: Match;
-  startPositionViewWidth: string;
-  numberingOffset: number;
-  onClick: () => void;
-};
-
-function MatchView(props: MatchViewProps) {
-  let startPosition = props.match.startPosition + props.numberingOffset;
-
-  let matchingMotif = props.match.matchingMotif;
-  if (matchingMotif.length > 24) {
-    matchingMotif = matchingMotif.substring(0, 24) + '...';
-  }
-
-  return (
-    <div
-      className={styles.matchView}
-      onClick={props.onClick}
-      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-    >
-      <p
-        className={styles.startPositionView}
-        style={{ width: props.startPositionViewWidth }}
-      >
-        {startPosition}
-      </p>
-      <p className={styles.matchingMotifView} >
-        {matchingMotif}
-      </p>
-    </div>
-  );
-}
-
-// returns NaN for an empty array of start positions
-function longestStartPositionLength(startPositions: number[]): number {
-  if (startPositions.length == 0) {
-    return NaN;
-  }
-
-  let lengths = startPositions.map(p => p.toString().length);
-  lengths.sort(compareNumbersDescending);
-  return lengths[0];
-}
-
 export class FindMotifsForm extends React.Component<FormProps> {
   state: FormState;
 
@@ -147,11 +89,6 @@ export class FindMotifsForm extends React.Component<FormProps> {
 
   render() {
     let matches = this.matches();
-
-    let startPositions = matches.map(match => match.startPosition);
-    let no = this.numberingOffset();
-    let offsetStartPositions = startPositions.map(startPosition => startPosition + no);
-    let startPositionColumnWidth = longestStartPositionLength(offsetStartPositions) + 'ch';
 
     return (
       <PartialWidthContainer
@@ -184,21 +121,11 @@ export class FindMotifsForm extends React.Component<FormProps> {
               <NumMatchesView matches={matches} />
               <DisplayableSequenceRange sequence={this.sequence()} style={{ margin: '8px 0 0 0' }} />
               {matches.length == 0 ? null : (
-                <div>
-                  <div style={{ height: '8px' }} />
-                  <MatchesColumnLabels />
-                  <div style={{ marginTop: '4px', display: 'flex', flexDirection: 'column' }} >
-                    {matches.map((match, i) => (
-                      <MatchView
-                        key={i}
-                        match={match}
-                        startPositionViewWidth={startPositionColumnWidth}
-                        numberingOffset={no}
-                        onClick={() => this.highlight(match)}
-                      />
-                    ))}
-                  </div>
-                </div>
+                <MatchesView
+                  matches={matches}
+                  numberingOffset={this.numberingOffset()}
+                  onMatchSelect={match => this.highlight(match)}
+                />
               )}
             </div>
           )}
