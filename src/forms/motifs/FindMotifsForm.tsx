@@ -43,6 +43,10 @@ export type Options = {
   allowedMismatch: number;
 };
 
+function deepCopyOptions(options: Options): Options {
+  return { ...options };
+}
+
 type State = {
   motif: string;
 
@@ -53,7 +57,7 @@ type State = {
 function deepCopyState(state: State): State {
   return {
     ...state,
-    options: { ...state.options },
+    options: deepCopyOptions(state.options),
   };
 }
 
