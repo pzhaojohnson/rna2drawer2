@@ -133,7 +133,7 @@ export class FindMotifsForm extends React.Component<Props> {
                   <DisplayableSequenceRange sequence={this.sequence()} />
                   <MatchesView
                     matches={matches}
-                    numberingOffset={this.numberingOffset()}
+                    numberingOffset={this.numberingOffset}
                     onMatchSelect={match => this.highlight(match)}
                   />
                 </div>
@@ -151,7 +151,7 @@ export class FindMotifsForm extends React.Component<Props> {
   }
 
   // the numbering offset to use when reporting motif positions
-  numberingOffset(): number {
+  get numberingOffset(): number {
     return numberingOffset(this.sequence()) ?? 0;
   }
 
