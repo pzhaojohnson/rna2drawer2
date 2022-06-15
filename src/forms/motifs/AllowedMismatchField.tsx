@@ -15,7 +15,7 @@ export type Props = {
 
 export class AllowedMismatchField extends React.Component<Props> {
   state: {
-    value: string;
+    value: string; // the allowed mismatch percentage string
   };
 
   constructor(props: Props) {
