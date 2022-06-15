@@ -112,21 +112,17 @@ export class FindMotifsForm extends React.Component<Props> {
             value={this.state.motif}
             onSubmit={event => this.setState({ motif: event.target.value.trim() })}
           />
-          <div style={{ height: '8px' }} />
           <OptionsToggle
             onClick={() => this.setState({ showOptions: !this.state.showOptions })}
           />
           {!this.state.showOptions ? null : (
-            <div style={{ margin: '10px 0 0 12px' }} >
-              <OptionsPanel
-                value={this.state.options}
-                onChange={event => this.setState({ options: event.target.value })}
-              />
-            </div>
+            <OptionsPanel
+              value={this.state.options}
+              onChange={event => this.setState({ options: event.target.value })}
+            />
           )}
-          <div style={{ height: '40px' }} />
           {isBlank(this.state.motif) ? null : (
-            <div style={{ display: 'flex', flexDirection: 'column' }} >
+            <div style={{ margin: '40px 0 0 0', display: 'flex', flexDirection: 'column' }} >
               <NumMatchesView matches={matches} />
               {matches.length == 0 ? null : (
                 <div style={{ margin: '10px 0 0 0' }} >

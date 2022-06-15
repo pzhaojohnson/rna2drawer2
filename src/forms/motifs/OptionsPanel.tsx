@@ -47,7 +47,7 @@ export type Props = {
 
 export function OptionsPanel(props: Props) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }} >
+    <div style={{ margin: '10px 0 0 12px', display: 'flex', flexDirection: 'column' }} >
       <div style={{ position: 'relative', display: 'flex', flexDirection: 'column' }} >
         <UTField
           checked={props.value.UT}
