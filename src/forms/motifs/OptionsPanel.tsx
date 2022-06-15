@@ -24,7 +24,7 @@ function IUPACField(props: CheckboxFieldProps) {
       label='Use IUPAC single letter codes'
       checked={props.checked}
       onChange={props.onChange}
-      style={{ alignSelf: 'start' }}
+      style={{ margin: '6px 0 0 0', alignSelf: 'start' }}
     />
   );
 }
@@ -35,7 +35,7 @@ function TreatMotifAsRegExpField(props: CheckboxFieldProps) {
       label='Treat Motif as a Regular Expression'
       checked={props.checked}
       onChange={props.onChange}
-      style={{ alignSelf: 'start' }}
+      style={{ margin: '8px 0 0 0', alignSelf: 'start' }}
     />
   );
 }
@@ -56,7 +56,6 @@ export function OptionsPanel(props: Props) {
             props.onChange({ target: { value: { ...props.value, UT } } });
           }}
         />
-        <div style={{ height: '6px' }} />
         <IUPACField
           checked={props.value.IUPAC}
           onChange={event => {
@@ -64,7 +63,6 @@ export function OptionsPanel(props: Props) {
             props.onChange({ target: { value: { ...props.value, IUPAC } } });
           }}
         />
-        <div style={{ height: '8px' }} />
         <AllowedMismatchField
           value={props.value.allowedMismatch}
           onSubmit={event => {
@@ -80,7 +78,6 @@ export function OptionsPanel(props: Props) {
           }} />
         )}
       </div>
-      <div style={{ height: '8px' }} />
       <TreatMotifAsRegExpField
         checked={props.value.treatMotifAsRegExp}
         onChange={event => {

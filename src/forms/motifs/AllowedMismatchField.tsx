@@ -42,7 +42,7 @@ export class AllowedMismatchField extends React.Component<Props> {
           spellCheck: false,
           style: { width: '5ch', textAlign: 'end' },
         }}
-        style={{ alignSelf: 'start' }}
+        style={{ margin: '8px 0 0 0', alignSelf: 'start' }}
       />
     );
   }
