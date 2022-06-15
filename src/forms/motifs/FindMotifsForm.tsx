@@ -123,7 +123,7 @@ export class FindMotifsForm extends React.Component<Props> {
           )}
           {isBlank(this.state.motif) ? null : (
             <div style={{ margin: '40px 0 0 0', display: 'flex', flexDirection: 'column' }} >
-              <NumMatchesView matches={matches} />
+              <NumMatchesView numMatches={matches.length} />
               {matches.length == 0 ? null : (
                 <div style={{ margin: '10px 0 0 0' }} >
                   <DisplayableSequenceRange sequence={this.sequence()} />
