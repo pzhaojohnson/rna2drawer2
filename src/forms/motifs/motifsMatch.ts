@@ -10,7 +10,7 @@ export type Options = {
   IUPAC?: boolean;
 
   // the proportion of mismatched pairs allowed before two motifs no longer match
-  // (interpreted as zero if left unspecified)
+  // (precise up to at least two decimal places and interpreted as zero if left unspecified)
   allowedMismatch?: number;
 };
 
