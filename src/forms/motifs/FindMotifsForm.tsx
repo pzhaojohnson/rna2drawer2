@@ -134,7 +134,7 @@ export class FindMotifsForm extends React.Component<Props> {
                   <MatchesView
                     matches={matches}
                     numberingOffset={this.numberingOffset}
-                    onMatchSelect={match => this.highlight(match)}
+                    onMatchSelect={match => this.highlightMatch(match)}
                   />
                 </div>
               )}
@@ -230,7 +230,7 @@ export class FindMotifsForm extends React.Component<Props> {
     return this.sequence().bases.slice(p1 - 1, (p1 - 1) + length);
   }
 
-  highlight(match: Match) {
+  highlightMatch(match: Match) {
     let matchingBases = this.basesOfMatch(match);
     centerViewOnBases(this.props.app.strictDrawing, matchingBases);
 
