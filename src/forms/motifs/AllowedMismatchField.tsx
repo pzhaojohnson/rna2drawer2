@@ -7,7 +7,7 @@ function percentageString(proportion: number): string {
 }
 
 export type Props = {
-  value: number;
+  value: number; // the allowed mismatch proportion
 
   // called on blur and pressing the Enter key
   onSubmit: (event: { target: { value: number } }) => void;
