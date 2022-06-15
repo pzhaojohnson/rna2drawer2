@@ -87,7 +87,7 @@ export function MatchesView(props: Props) {
             onClick={() => props.onMatchSelect(match)}
             startPositionView={{
               style: {
-                width: (maxOffsetStartPositionLength ?? 0) + 'ch',
+                width: (maxOffsetStartPositionLength ?? 5) + 'ch',
               },
             }}
           />
