@@ -1,4 +1,4 @@
-// matches for special IUPAC single letter codes
+// matches involving special IUPAC single letter codes
 // (i.e., codes that are not A, C, G, U or T)
 const specialIUPACMatches: { [c: string]: string[] | undefined } = {
   'R': ['A', 'G'],
