@@ -110,7 +110,7 @@ export class FindMotifsForm extends React.Component<Props> {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <MotifInput
             value={this.state.motif}
-            onSubmit={event => this.setState({ motif: event.target.value.trim() })}
+            onSubmit={event => this.setState({ motif: event.target.value })}
           />
           <OptionsToggle
             onClick={() => this.setState({ showOptions: !this.state.showOptions })}
