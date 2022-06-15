@@ -57,8 +57,7 @@ function MatchView(
 export type Props = {
   matches: Match[];
 
-  numberingOffset: number | undefined;
-
+  numberingOffset: number;
 
   /**
    * Called when a match is selected by the user (e.g., clicked on).
@@ -67,10 +66,8 @@ export type Props = {
 };
 
 export function MatchesView(props: Props) {
-  let numberingOffset = props.numberingOffset ?? 0;
-
   let startPositions = props.matches.map(match => match.startPosition);
-  let offsetStartPositions = startPositions.map(p => p + numberingOffset);
+  let offsetStartPositions = startPositions.map(p => p + props.numberingOffset);
 
   let offsetStartPositionLengths = offsetStartPositions.map(p => p.toString().length);
   offsetStartPositionLengths.sort(compareNumbersDescending);
@@ -87,7 +84,7 @@ export function MatchesView(props: Props) {
           <MatchView
             key={i}
             match={match}
-            numberingOffset={numberingOffset}
+            numberingOffset={props.numberingOffset}
             onClick={() => props.onMatchSelect(match)}
             startPositionView={{
               style: {
