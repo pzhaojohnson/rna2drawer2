@@ -76,8 +76,7 @@ export function MatchesView(props: Props) {
   let maxOffsetStartPositionLength: number | undefined = offsetStartPositionLengths[0];
 
   return (
-    <div>
-      <div style={{ height: '10px' }} />
+    <div style={{ margin: '10px 0 0 0' }} >
       <ColumnLabels />
       <div style={{ marginTop: '4px', display: 'flex', flexDirection: 'column' }} >
         {props.matches.map((match, i) => (
