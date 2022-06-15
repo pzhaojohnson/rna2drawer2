@@ -118,7 +118,7 @@ export class FindMotifsForm extends React.Component<Props> {
           {!this.state.showOptions ? null : (
             <OptionsPanel
               value={this.state.options}
-              onChange={event => this.setState({ options: event.target.value })}
+              onChange={event => this.setState({ options: deepCopyOptions(event.target.value) })}
             />
           )}
           {isBlank(this.state.motif) ? null : (
