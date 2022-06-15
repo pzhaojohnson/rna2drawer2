@@ -37,10 +37,10 @@ export type Props = {
 };
 
 export type Options = {
-  treatMotifAsRegExp: boolean;
   UT: boolean;
   IUPAC: boolean;
   allowedMismatch: number;
+  treatMotifAsRegExp: boolean;
 };
 
 function deepCopyOptions(options: Options): Options {
@@ -65,10 +65,10 @@ let prevState: State = {
   motif: '',
   showOptions: false,
   options: {
-    treatMotifAsRegExp: false,
     UT: true,
     IUPAC: false,
     allowedMismatch: 0,
+    treatMotifAsRegExp: false,
   },
 };
 
