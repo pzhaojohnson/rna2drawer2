@@ -224,14 +224,14 @@ export class FindMotifsForm extends React.Component<Props> {
     return matches;
   }
 
-  matchingBases(match: Match): Base[] {
+  basesOfMatch(match: Match): Base[] {
     let p1 = match.startPosition;
     let length = match.matchingMotif.length;
     return this.sequence().bases.slice(p1 - 1, (p1 - 1) + length);
   }
 
   highlight(match: Match) {
-    let matchingBases = this.matchingBases(match);
+    let matchingBases = this.basesOfMatch(match);
     centerViewOnBases(this.props.app.strictDrawing, matchingBases);
 
     let strictDrawingInteraction = this.props.app.strictDrawingInteraction;
