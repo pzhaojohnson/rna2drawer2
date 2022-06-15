@@ -2,6 +2,10 @@ import * as React from 'react';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { round } from 'Math/round';
 
+function percentageString(proportion: number): string {
+  return round(100 * proportion, 0) + '%';
+}
+
 export type Props = {
   value: number;
 
@@ -18,7 +22,7 @@ export class AllowedMismatchField extends React.Component<Props> {
     super(props);
 
     this.state = {
-      value: this.percentageValue(props.value),
+      value: percentageString(props.value),
     };
   }
 
@@ -43,10 +47,6 @@ export class AllowedMismatchField extends React.Component<Props> {
     );
   }
 
-  percentageValue(proportion: number): string {
-    return round(100 * proportion, 0) + '%';
-  }
-
   submit() {
     let proportion = Number.parseFloat(this.state.value) / 100;
     proportion = round(proportion, 2);
@@ -57,7 +57,7 @@ export class AllowedMismatchField extends React.Component<Props> {
     } else if (proportion > 1) {
       proportion = 1;
     }
-    this.setState({ value: this.percentageValue(proportion) });
+    this.setState({ value: percentageString(proportion) });
     this.props.onSubmit({ target: { value: proportion } });
   }
 }
