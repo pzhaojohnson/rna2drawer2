@@ -25,9 +25,10 @@ export type Args = {
   ignoreNonAUGCTLetters: boolean;
   ignoreNonAlphanumerics: boolean;
 
-  // position to insert the subsequence at (given as a string)
+  // raw input from the user for the position to insert the subsequence at
   // (bases for the subsequence will be inserted beginning at this position)
-  positionToInsertAt: string;
+  // (may also be set to the string "append" to append the subsequence)
+  positionToInsertAt: string | 'append';
 
   // whether to include a substructure with the subsequence to insert
   includeSubstructure: boolean;
@@ -43,6 +44,8 @@ export type Args = {
  *
  * When the position to insert at is set to the sequence length plus one,
  * the provided subsequence is appended to the end of the sequence.
+ * Setting the position to insert at to the string "append" will also cause
+ * the subsequence to be appended.
  *
  * A substructure may also be included and applied to the inserted subsequence.
  */
@@ -73,8 +76,11 @@ export function insertSubsequence(args: Args): void | never {
   }
 
   let positionToInsertAt = Number.parseFloat(args.positionToInsertAt);
+  let no = numberingOffset(sequence) ?? 0;
 
-  if (isBlank(args.positionToInsertAt)) {
+  if (args.positionToInsertAt == 'append') {
+    positionToInsertAt = sequence.length + no + 1;
+  } else if (isBlank(args.positionToInsertAt)) {
     throw new Error('Specify position to insert at.');
   } else if (!Number.isFinite(positionToInsertAt)) {
     throw new Error('Position to insert at must be a number.');
@@ -82,7 +88,6 @@ export function insertSubsequence(args: Args): void | never {
     throw new Error('Position to insert at must be an integer.');
   }
 
-  let no = numberingOffset(sequence) ?? 0;
   positionToInsertAt -= no;
 
   if (positionToInsertAt < 1 || positionToInsertAt > sequence.length + 1) {

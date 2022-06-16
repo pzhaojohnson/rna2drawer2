@@ -17,6 +17,7 @@ import { SubsequenceField } from './SubsequenceField';
 import { OptionsToggle } from './OptionsToggle';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 
+import { AppendSubsequenceField } from './AppendSubsequenceField';
 import { PositionToInsertAtField } from './PositionToInsertAtField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
@@ -26,7 +27,8 @@ import { SubstructureTextArea } from './SubstructureTextArea';
 import { InsertButton } from './InsertButton';
 import { ErrorMessage } from './ErrorMessage';
 
-import { TrailingNotes } from './TrailingNotes';
+import { InsertSubsequenceNote } from './TrailingNotes';
+import { BaseNumberingNote } from './TrailingNotes';
 
 function constrainPositionToInsertAt(positionToInsertAt: string): string {
   let n = Number.parseFloat(positionToInsertAt);
@@ -47,6 +49,7 @@ let prevState = {
   ignoreNonAUGCTLetters: false,
   ignoreNonAlphanumerics: true,
 
+  appendSubsequence: false,
   positionToInsertAt: '1',
 
   includeSubstructure: false,
@@ -80,6 +83,7 @@ export function InsertSubsequenceForm(props: Props) {
   let [ignoreNonAUGCTLetters, setIgnoreNonAUGCTLetters] = useState(prevState.ignoreNonAUGCTLetters);
   let [ignoreNonAlphanumerics, setIgnoreNonAlphanumerics] = useState(prevState.ignoreNonAlphanumerics);
 
+  let [appendSubsequence, setAppendSubsequence] = useState(prevState.appendSubsequence);
   let [positionToInsertAt, setPositionToInsertAt] = useState(prevState.positionToInsertAt);
 
   let [includeSubstructure, setIncludeSubstructure] = useState(prevState.includeSubstructure);
@@ -102,7 +106,7 @@ export function InsertSubsequenceForm(props: Props) {
         subsequence,
         showSequenceParsingOptions,
         ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
-        positionToInsertAt,
+        appendSubsequence, positionToInsertAt,
         includeSubstructure, substructure,
       };
     };
@@ -145,18 +149,26 @@ export function InsertSubsequenceForm(props: Props) {
             />
           </div>
         )}
-        <PositionToInsertAtField
-          value={positionToInsertAt}
-          onChange={event => setPositionToInsertAt(event.target.value)}
-          onBlur={() => processPositionToInsertAt()}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              processPositionToInsertAt();
-            }
-          }}
+        <AppendSubsequenceField
+          checked={appendSubsequence}
+          onChange={event => setAppendSubsequence(event.target.checked)}
         />
-        <div style={{ height: '6px' }} />
-        {!sequence ? null : <DisplayableSequenceRange sequence={sequence} />}
+        {appendSubsequence ? null : (
+          <div style={{ margin: '10px 0 0 0', display: 'flex', flexDirection: 'column' }} >
+            <PositionToInsertAtField
+              value={positionToInsertAt}
+              onChange={event => setPositionToInsertAt(event.target.value)}
+              onBlur={() => processPositionToInsertAt()}
+              onKeyUp={event => {
+                if (event.key.toLowerCase() == 'enter') {
+                  processPositionToInsertAt();
+                }
+              }}
+            />
+            <div style={{ height: '6px' }} />
+            {!sequence ? null : <DisplayableSequenceRange sequence={sequence} />}
+          </div>
+        )}
         <IncludeSubstructureField
           checked={includeSubstructure}
           onChange={event => setIncludeSubstructure(event.target.checked)}
@@ -175,7 +187,7 @@ export function InsertSubsequenceForm(props: Props) {
                 app,
                 subsequence,
                 ignoreNumbers, ignoreNonAUGCTLetters, ignoreNonAlphanumerics,
-                positionToInsertAt,
+                positionToInsertAt: appendSubsequence ? 'append' : positionToInsertAt,
                 includeSubstructure, substructure,
               });
               setErrorMessage('');
@@ -188,7 +200,8 @@ export function InsertSubsequenceForm(props: Props) {
         {!errorMessage ? null : (
           <ErrorMessage key={errorMessageKey} >{errorMessage}</ErrorMessage>
         )}
-        <TrailingNotes />
+        {!appendSubsequence ? <InsertSubsequenceNote /> : <div style={{ height: '10px' }} />}
+        <BaseNumberingNote />
       </div>
     </PartialWidthContainer>
   );

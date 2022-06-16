@@ -20,7 +20,7 @@ export function PositionToInsertAtField(props: Props) {
         spellCheck: false,
         style: { width: `${Math.max(props.value.length, 8)}ch` },
       }}
-      style={{ margin: '38px 8px 0 0', alignSelf: 'start' }}
+      style={{ margin: '0 8px 0 0', alignSelf: 'start' }}
     />
   );
 }

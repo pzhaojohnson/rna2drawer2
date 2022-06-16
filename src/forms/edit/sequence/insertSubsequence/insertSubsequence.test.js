@@ -131,57 +131,66 @@ describe('insertSubsequence function', () => {
     expect(() => insertSubsequence(args)).toThrow();
   });
 
-  test('a nonzero sequence numbering offset', () => {
-    updateBaseNumberings(sequence, { offset: -8, increment: 3, anchor: -2 });
-    expect(numberingOffset(sequence)).toBe(-8);
-
-    let sequenceString = stringifySequence(sequence);
-    args.subsequence = 'AUG';
-    args.positionToInsertAt = '-3';
-    insertSubsequence(args);
-    sequenceString = sequenceString.substring(0, 4) + 'AUG' + sequenceString.substring(4);
-    expect(stringifySequence(sequence)).toBe(sequenceString);
-  });
-
   test('inserting at the beginning', () => {
+    updateBaseNumberings(sequence, { offset: -12, increment: 3, anchor: -2 });
+    expect(numberingOffset(sequence)).toBe(-12); // test with a numbering offset
+
     let sequenceString = stringifySequence(sequence);
     args.subsequence = 'CCTT';
-    args.positionToInsertAt = '1';
+    args.positionToInsertAt = '-11';
     insertSubsequence(args);
     sequenceString = 'CCTT' + sequenceString;
     expect(stringifySequence(sequence)).toBe(sequenceString);
   });
 
   test('inserting in the middle', () => {
+    updateBaseNumberings(sequence, { offset: 23, increment: 2, anchor: 1 });
+    expect(numberingOffset(sequence)).toBe(23); // test with a numbering offset
+
     expect(sequence.length).toBeGreaterThan(10);
     let sequenceString = stringifySequence(sequence);
     args.subsequence = 'gg';
-    args.positionToInsertAt = '7';
+    args.positionToInsertAt = '30';
     insertSubsequence(args);
     sequenceString = sequenceString.substring(0, 6) + 'gg' + sequenceString.substring(6);
     expect(stringifySequence(sequence)).toBe(sequenceString);
   });
 
   test('appending to the end', () => {
+    updateBaseNumberings(sequence, { offset: 9, increment: 4, anchor: -25 });
+    expect(numberingOffset(sequence)).toBe(9); // test with a numbering offset
+
     let sequenceString = stringifySequence(sequence);
     args.subsequence = 'aaAAtu';
-    args.positionToInsertAt = (sequence.length + 1).toString();
+    args.positionToInsertAt = (sequence.length + 9 + 1).toString(); // a position
     insertSubsequence(args);
     sequenceString += 'aaAAtu';
+    expect(stringifySequence(sequence)).toBe(sequenceString);
+
+    args.subsequence = 'TTuuCA';
+    args.positionToInsertAt = 'append'; // the string "append"
+    insertSubsequence(args);
+    sequenceString += 'TTuuCA';
     expect(stringifySequence(sequence)).toBe(sequenceString);
   });
 
   test('trying to insert just below bounds', () => {
-    args.positionToInsertAt = '1';
+    updateBaseNumberings(sequence, { offset: 4, increment: 3, anchor: 2 });
+    expect(numberingOffset(sequence)).toBe(4); // test with a numbering offset
+
+    args.positionToInsertAt = '5';
     expect(() => insertSubsequence(args)).not.toThrow();
-    args.positionToInsertAt = '0';
+    args.positionToInsertAt = '4';
     expect(() => insertSubsequence(args)).toThrow();
   });
 
   test('trying to insert just above bounds', () => {
-    args.positionToInsertAt = (sequence.length + 1).toString();
+    updateBaseNumberings(sequence, { offset: 52, increment: 5, anchor: -11 });
+    expect(numberingOffset(sequence)).toBe(52); // test with a numbering offset
+
+    args.positionToInsertAt = (sequence.length + 52 + 1).toString();
     expect(() => insertSubsequence(args)).not.toThrow();
-    args.positionToInsertAt = (sequence.length + 2).toString();
+    args.positionToInsertAt = (sequence.length + 52 + 2).toString();
     expect(() => insertSubsequence(args)).toThrow();
   });
 
