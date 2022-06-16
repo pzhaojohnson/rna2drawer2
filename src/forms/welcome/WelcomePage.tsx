@@ -164,7 +164,7 @@ export function WelcomePage(props: Props): React.ReactElement {
             <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
               <HelpLinks />
             </div>
-            <div style={{ marginTop: '9px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
+            <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
               <UpdatesNotice />
             </div>
           </div>
