@@ -4,7 +4,7 @@ import { Dropright } from 'Menu/Dropright';
 import { DroppedSeparator } from 'Menu/DroppedSeparator';
 import type { App } from 'App';
 import { EditSequenceIdButton } from './EditSequenceIdButton';
-import { InsertSubsequenceButton } from './InsertSubsequenceButton';
+import { AddSubsequenceButton } from './AddSubsequenceButton';
 import { RemoveSubsequenceButton } from './RemoveSubsequenceButton';
 
 export type Props = {
@@ -22,7 +22,7 @@ export function EditSequenceDropright(props: Props) {
           </div>
           <div className={styles.grayishLeftBorder} >
             <DroppedSeparator />
-            <InsertSubsequenceButton app={props.app} />
+            <AddSubsequenceButton app={props.app} />
             <RemoveSubsequenceButton app={props.app} />
           </div>
         </div>

@@ -7,7 +7,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-import styles from './InsertSubsequenceForm.css';
+import styles from './AddSubsequenceForm.css';
 
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
@@ -24,7 +24,7 @@ import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenc
 import { IncludeSubstructureField } from './IncludeSubstructureField';
 import { SubstructureTextArea } from './SubstructureTextArea';
 
-import { InsertButton } from './InsertButton';
+import { AddButton } from './AddButton';
 import { ErrorMessage } from './ErrorMessage';
 
 import { InsertSubsequenceNote } from './TrailingNotes';
@@ -64,14 +64,14 @@ export type Props = {
   app: App;
 }
 
-export function InsertSubsequenceForm(props: Props) {
+export function AddSubsequenceForm(props: Props) {
   let drawing = props.app.drawing;
 
   if (drawing.sequences.length == 0) {
     console.error('Drawing has no sequences.');
   } else if (drawing.sequences.length > 1) {
     console.error('Drawing has multiple sequences.');
-    console.error('This form can only insert subsequences into the first sequence of the drawing.');
+    console.error('This form can only add subsequences to the first sequence of the drawing.');
   }
 
   let sequence: Sequence | undefined = drawing.sequences[0];
@@ -116,7 +116,7 @@ export function InsertSubsequenceForm(props: Props) {
     <PartialWidthContainer
       unmount={props.unmount}
       history={props.history}
-      title='Insert Subsequence'
+      title='Add Subsequence'
       style={{ width: '400px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
@@ -179,7 +179,7 @@ export function InsertSubsequenceForm(props: Props) {
             onChange={event => setSubstructure(event.target.value)}
           />
         )}
-        <InsertButton
+        <AddButton
           onClick={() => {
             try {
               let app = props.app;
