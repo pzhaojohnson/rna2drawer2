@@ -24,7 +24,7 @@ function nameOfTool(tool: Tool): string {
   if (tool instanceof DraggingTool) {
     return 'Drag';
   } else if (tool instanceof BindingTool) {
-    return 'Bind';
+    return 'Pair';
   } else if (tool instanceof FlatteningTool) {
     return 'Flatten';
   } else if (tool instanceof FlippingTool) {
@@ -42,7 +42,7 @@ function descriptionOfTool(tool: Tool) {
   if (tool instanceof DraggingTool) {
     p.textContent = 'Drag stems and loops.';
   } else if (tool instanceof BindingTool) {
-    p.textContent = 'Bind and unbind bases with secondary and tertiary bonds.';
+    p.textContent = 'Pair and unpair bases with secondary and tertiary bonds.';
   } else if (tool instanceof FlatteningTool) {
     p.textContent = 'Flatten and unflatten loops and straighten and bend consecutive stems.';
   } else if (tool instanceof FlippingTool) {

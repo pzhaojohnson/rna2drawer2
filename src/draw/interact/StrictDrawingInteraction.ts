@@ -137,6 +137,13 @@ export class StrictDrawingInteraction {
     return this.options.strictDrawing;
   }
 
+  /**
+   * An alias for the binding tool.
+   */
+  get pairingTool() {
+    return this.bindingTool;
+  }
+
   get currentTool(): Tool {
     return this._currentTool;
   }

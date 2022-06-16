@@ -21,7 +21,7 @@ function DrawingHasNoTertiaryBondsNotes() {
       </p>
       <div style={{ height: '24px' }} />
       <p className={styles.notesText} >
-        Add tertiary bonds using the binding tool...
+        Add tertiary bonds using the pairing tool...
       </p>
     </div>
   );
