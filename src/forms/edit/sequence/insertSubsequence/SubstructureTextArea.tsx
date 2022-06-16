@@ -19,7 +19,7 @@ export function SubstructureTextArea(props: Props) {
         rows={10}
       />
       <FieldDescription style={{ margin: '6px 0 0 16px' }} >
-        ...in dot-bracket notation "(((...)))"
+        ...in dot-bracket notation "(((....)))"
       </FieldDescription>
     </div>
   );
