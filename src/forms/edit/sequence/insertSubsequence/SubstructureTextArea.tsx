@@ -17,6 +17,7 @@ export function SubstructureTextArea(props: Props) {
         onChange={props.onChange}
         onBlur={props.onBlur}
         rows={10}
+        spellCheck={false}
       />
       <FieldDescription style={{ margin: '6px 0 0 16px' }} >
         ...in dot-bracket notation "(((....)))"

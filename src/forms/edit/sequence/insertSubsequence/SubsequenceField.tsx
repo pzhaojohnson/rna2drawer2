@@ -20,6 +20,7 @@ export function SubsequenceField(props: Props) {
           onChange={props.onChange}
           onBlur={props.onBlur}
           rows={10}
+          spellCheck={false}
         />
       </FieldLabel>
       <FieldDescription style={{ margin: '6px 0 0 16px' }} >

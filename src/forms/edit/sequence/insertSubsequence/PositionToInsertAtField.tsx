@@ -16,7 +16,10 @@ export function PositionToInsertAtField(props: Props) {
       onChange={props.onChange}
       onBlur={props.onBlur}
       onKeyUp={props.onKeyUp}
-      input={{ style: { width: `${Math.max(props.value.length, 8)}ch` } }}
+      input={{
+        spellCheck: false,
+        style: { width: `${Math.max(props.value.length, 8)}ch` },
+      }}
       style={{ margin: '38px 8px 0 0', alignSelf: 'start' }}
     />
   );
