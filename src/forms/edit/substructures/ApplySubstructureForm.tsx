@@ -190,7 +190,7 @@ export class ApplySubstructureForm extends React.Component<Props> {
         unmount={this.props.unmount}
         history={this.props.history}
         title='Apply Substructure'
-        style={{ width: '372px' }}
+        style={{ width: '384px' }}
       >
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <SubstructureField
