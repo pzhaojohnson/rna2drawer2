@@ -24,7 +24,6 @@ export function OpenButton(props: Props) {
           openNewTab();
         }
       }}
-      disabled={!props.app.strictDrawing.isEmpty()}
     />
   );
 }
