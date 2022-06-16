@@ -120,11 +120,6 @@ export type Props = {
 
   // a reference to the whole app
   app: App;
-
-  // optional initial values for inputs
-  // (override any previous inputs when specified)
-  substructure?: string;
-  startPosition?: string;
 };
 
 type Inputs = {
@@ -175,10 +170,6 @@ export class ApplySubstructureForm extends React.Component<Props> {
 
     this.state = {
       ...deepCopyInputs(prevInputs),
-
-      substructure: props.substructure ?? prevInputs.substructure,
-      startPosition: props.startPosition ?? prevInputs.startPosition,
-
       errorMessageKey: 0,
     };
   }
