@@ -53,7 +53,7 @@ function StartPositionField(
       value={props.value}
       onChange={props.onChange}
       input={{ style: { width: '7ch' } }}
-      style={{ marginTop: '16px', alignSelf: 'flex-start' }}
+      style={{ marginTop: '38px', alignSelf: 'flex-start' }}
     />
   );
 }
@@ -69,7 +69,7 @@ function MaintainTertiaryBondsField(
       label='Maintain Preexisting Tertiary Bonds'
       checked={props.checked}
       onChange={props.onChange}
-      style={{ marginTop: '16px', alignSelf: 'flex-start' }}
+      style={{ marginTop: '28px', alignSelf: 'flex-start' }}
     />
   );
 }
@@ -80,7 +80,7 @@ function SubmitButton(
   }
 ) {
   return (
-    <div style={{ marginTop: '32px' }} >
+    <div style={{ marginTop: '40px' }} >
       <SolidButton
         text='Apply'
         onClick={props.onClick}
@@ -91,7 +91,7 @@ function SubmitButton(
 
 function ExplanatoryNote() {
   return (
-    <div style={{ marginTop: '16px' }} >
+    <div style={{ marginTop: '18px' }} >
       <DottedNote>
         The substructure will be applied beginning at
         the provided start position in the sequence.
