@@ -52,8 +52,8 @@ function StartPositionField(
       label='Start Position of Substructure'
       value={props.value}
       onChange={props.onChange}
-      input={{ style: { width: '7ch' } }}
-      style={{ marginTop: '38px', alignSelf: 'flex-start' }}
+      input={{ style: { width: `${Math.max(props.value.length, 7)}ch` } }}
+      style={{ margin: '38px 8px 0 0', alignSelf: 'flex-start' }}
     />
   );
 }
