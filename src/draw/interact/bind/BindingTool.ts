@@ -146,7 +146,7 @@ export class BindingTool {
   constructor(options: Options) {
     this.options = options;
 
-    this.showComplements = false;
+    this.showComplements = true;
 
     this.complementsOptions = {
       allowedGUT: 1,
