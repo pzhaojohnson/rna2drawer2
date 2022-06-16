@@ -32,7 +32,7 @@ function SubstructureField(
         label='Substructure'
         value={props.value}
         onChange={props.onChange}
-        textArea={{ rows: 10 }}
+        textArea={{ rows: 10, spellCheck: false }}
       />
       <FieldDescription style={{ margin: '6px 0 0 16px' }} >
         ...in dot-bracket notation "(((....)))"
@@ -52,7 +52,10 @@ function StartPositionField(
       label='Start Position of Substructure'
       value={props.value}
       onChange={props.onChange}
-      input={{ style: { width: `${Math.max(props.value.length, 7)}ch` } }}
+      input={{
+        spellCheck: false,
+        style: { width: `${Math.max(props.value.length, 7)}ch` },
+      }}
       style={{ margin: '38px 8px 0 0', alignSelf: 'flex-start' }}
     />
   );
