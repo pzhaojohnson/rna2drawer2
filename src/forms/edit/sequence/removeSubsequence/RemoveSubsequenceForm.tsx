@@ -125,8 +125,8 @@ export function RemoveSubsequenceForm(props: Props) {
               setStartPosition(constrainPosition(startPosition));
             }
           }}
-          input={{ style: { width: '8ch' } }}
-          style={{ alignSelf: 'flex-start' }}
+          input={{ style: { width: `${Math.max(startPosition.length, 8)}ch` } }}
+          style={{ alignSelf: 'flex-start', margin: '0 8px 0 0' }}
         />
         <TextInputField
           label='End Position'
@@ -138,8 +138,8 @@ export function RemoveSubsequenceForm(props: Props) {
               setEndPosition(constrainPosition(endPosition));
             }
           }}
-          input={{ style: { width: '8ch' } }}
-          style={{ alignSelf: 'flex-start', marginTop: '8px' }}
+          input={{ style: { width: `${Math.max(endPosition.length, 8)}ch` } }}
+          style={{ alignSelf: 'flex-start', margin: '8px 8px 0 0' }}
         />
       </div>
       {drawing.sequences.length == 0 ? null : (
