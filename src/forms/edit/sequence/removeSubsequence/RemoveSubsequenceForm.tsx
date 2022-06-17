@@ -145,7 +145,7 @@ export function RemoveSubsequenceForm(props: Props) {
       {drawing.sequences.length == 0 ? null : (
         <DisplayableSequenceRange sequence={drawing.sequences[0]} style={{ marginTop: '8px' }} />
       )}
-      <div style={{ marginTop: '32px' }} >
+      <div style={{ marginTop: '40px' }} >
         <SolidButton
           text='Remove'
           onClick={() => {
@@ -168,10 +168,10 @@ export function RemoveSubsequenceForm(props: Props) {
           {errorMessage}
         </ErrorMessage>
       )}
-      <DottedNote style={{ marginTop: '16px' }} >
+      <DottedNote style={{ marginTop: '18px' }} >
         Bases between and including the start and end positions will be removed.
       </DottedNote>
-      <DottedNote style={{ marginTop: '12px' }} >
+      <DottedNote style={{ marginTop: '10px' }} >
         Base numbering must be updated manually after removing a subsequence.
       </DottedNote>
     </PartialWidthContainer>
