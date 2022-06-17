@@ -112,7 +112,7 @@ export function RemoveSubsequenceForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Remove Subsequence'
-      style={{ width: '372px' }}
+      style={{ width: '366px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <TextInputField
