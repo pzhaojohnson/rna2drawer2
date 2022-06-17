@@ -20,7 +20,8 @@
 
 .rna2drawerExtension {
   font-weight: 700;
-  font-style: italic;
+  font-style: normal;
+  color: rgb(7, 7, 70);
 }
 
 .fileInputLabel:hover {
