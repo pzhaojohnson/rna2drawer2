@@ -90,7 +90,7 @@ export function EditBasesByCharacterForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Bases by Character'
-      style={{ width: '364px' }}
+      style={{ width: '360px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <CharacterField
