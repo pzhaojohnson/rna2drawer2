@@ -27,7 +27,7 @@ export function EditSequenceIdForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Sequence ID'
-      style={{ width: '330px' }}
+      style={{ width: '348px' }}
     >
       {drawing.sequences.length == 0 ? (
         'Drawing has no sequences.' // never supposed to happen

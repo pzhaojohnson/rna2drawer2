@@ -20,7 +20,7 @@ export function EditDrawingTitleForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Drawing Title'
-      style={{ width: '330px' }}
+      style={{ width: '348px' }}
     >
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
         <DrawingTitleInput app={props.app} />
