@@ -41,11 +41,11 @@ export function OldFileNotes() {
       <Disclaimer />
       <PreservedAspectsLeadingText />
       <div style={{ margin: '16px 0px 0px 64px' }} >
-        <PreservedAspect>The sequence and its ID</PreservedAspect>
-        <PreservedAspect>The secondary structure</PreservedAspect>
-        <PreservedAspect>Tertiary interactions and their colors</PreservedAspect>
-        <PreservedAspect>Base numbering and the numbering offset</PreservedAspect>
-        <PreservedAspect>Base colors and outlines</PreservedAspect>
+        <PreservedAspect>The sequence and its ID.</PreservedAspect>
+        <PreservedAspect>The secondary structure.</PreservedAspect>
+        <PreservedAspect>Tertiary interactions and their colors.</PreservedAspect>
+        <PreservedAspect>Base numbering and the numbering offset.</PreservedAspect>
+        <PreservedAspect>Base colors and outlines.</PreservedAspect>
       </div>
     </div>
   );
