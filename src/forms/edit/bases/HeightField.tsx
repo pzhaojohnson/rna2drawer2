@@ -55,7 +55,7 @@ export class HeightField extends React.Component<Props> {
           }
         }}
         input={{
-          style: { width: '6ch' },
+          style: { width: '8ch' },
         }}
         style={{ margin: '10px 0 0 10px', alignSelf: 'start' }}
       />
