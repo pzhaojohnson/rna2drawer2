@@ -52,9 +52,9 @@ function DetailsToggle(
   },
 ) {
   return (
-    <p className={formStyles.detailsToggle} onClick={props.onClick} >
-      Details...
-    </p>
+    <button className={formStyles.detailsToggle} onClick={props.onClick} >
+      Details
+    </button>
   );
 }
 
