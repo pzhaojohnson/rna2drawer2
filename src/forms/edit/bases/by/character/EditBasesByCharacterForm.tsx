@@ -45,7 +45,7 @@ function SubmitButton(
     <SolidButton
       text='Select'
       onClick={props.onClick}
-      style={{ marginTop: '32px', alignSelf: 'flex-start' }}
+      style={{ marginTop: '38px', alignSelf: 'flex-start' }}
     />
   );
 }
@@ -135,10 +135,10 @@ export function EditBasesByCharacterForm(props: Props) {
             {errorMessage}
           </ErrorMessage>
         )}
-        <DottedNote style={{ marginTop: '16px' }} >
+        <DottedNote style={{ marginTop: '18px' }} >
           Bases with the specified character will be selected and may then be edited.
         </DottedNote>
-        <DottedNote style={{ marginTop: '12px' }} >
+        <DottedNote style={{ marginTop: '10px' }} >
           Is case-sensitive.
         </DottedNote>
       </div>
