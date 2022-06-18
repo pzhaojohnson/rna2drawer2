@@ -5,14 +5,14 @@
   font-size: 12px;
   font-weight: 600;
   font-style: italic;
-  color: #070843;
+  color: #070844;
   cursor: pointer;
 }
 
 .complementRulesButton:hover {
-  transform: scale(1.03);
+  text-decoration: underline;
 }
 
 .complementRulesButton:active {
-  transform: scale(1);
+  transform: scale(0.97);
 }
