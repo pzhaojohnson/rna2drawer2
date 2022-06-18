@@ -23,13 +23,23 @@
 
 .check {}
 
+.askBeforeLeavingToggle:hover .pillContainer {
+  transform: scale(1.012);
+  transition: transform 0.02s;
+}
+
+.askBeforeLeavingToggle:active .pillContainer {
+  transform: scale(1);
+  transition: transform 0s;
+}
+
 .on .pillContainer {
   border: none;
   background-color: #242428;
 }
 
 .on:hover .pillContainer {
-  box-shadow: 0 0 4px #a4a4b0;
+  box-shadow: 0 3px 3px rgba(193, 193, 212, 0.64);
 }
 
 .on .text {
@@ -51,7 +61,7 @@
 }
 
 .off:hover .pillContainer {
-  box-shadow: 0 0 4px #e5e5ed;
+  box-shadow: 0 3px 3px rgba(222, 222, 236, 0.38);
 }
 
 .off .text {
