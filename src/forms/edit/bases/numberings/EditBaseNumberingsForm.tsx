@@ -21,11 +21,11 @@ import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 function DrawingHasNoBaseNumberingsNotes() {
   return (
-    <div style={{ marginTop: '24px' }} >
+    <div style={{ marginTop: '48px' }} >
       <p className={styles.notesText} >
         Drawing has no numberings...
       </p>
-      <p className={styles.notesText} style={{ marginTop: '14px' }} >
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
         Add numberings by adjusting the numbering anchor and increment...
       </p>
     </div>
@@ -34,14 +34,14 @@ function DrawingHasNoBaseNumberingsNotes() {
 
 function NoBaseNumberingsAreSelectedNotes() {
   return (
-    <div style={{ marginTop: '24px' }} >
+    <div style={{ marginTop: '48px' }} >
       <p className={styles.notesText} >
         No numberings are selected...
       </p>
-      <p className={styles.notesText} style={{ marginTop: '14px' }} >
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
         Select numberings using the editing tool...
       </p>
-      <p className={styles.notesText} style={{ marginTop: '14px' }} >
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
         Or...
       </p>
     </div>
