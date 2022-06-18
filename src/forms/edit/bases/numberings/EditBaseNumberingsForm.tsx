@@ -7,6 +7,7 @@ import styles from './EditBaseNumberings.css';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
+import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { NumberingOffsetField } from './NumberingOffsetField';
 import { NumberingAnchorField } from './NumberingAnchorField';
 import { NumberingIncrementField } from './NumberingIncrementField';
@@ -88,9 +89,11 @@ export interface Props {
 }
 
 export function EditBaseNumberingsForm(props: Props) {
+  let sequence = props.app.strictDrawing.layoutSequence();
+
   let numBaseNumberingsInDrawing = props.app.drawing.bases().filter(b => b.numbering).length;
 
-  let ni = numberingIncrement(props.app.strictDrawing.layoutSequence());
+  let ni = numberingIncrement(sequence);
 
   return (
     <PartialWidthContainer
@@ -101,6 +104,7 @@ export function EditBaseNumberingsForm(props: Props) {
     >
       {props.baseNumberings.length != 0 ? null : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
+          <DisplayableSequenceRange sequence={sequence} />
           <NumberingOffsetField {...props} />
           <NumberingIncrementField {...props} />
           {ni != undefined ? <NumberingAnchorField {...props} /> : null}
