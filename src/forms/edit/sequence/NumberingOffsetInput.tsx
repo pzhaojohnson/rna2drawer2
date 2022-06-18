@@ -48,7 +48,7 @@ export class NumberingOffsetInput extends React.Component<Props> {
             this.props.app.refresh();
           }
         }}
-        style={{ width: '8ch' }}
+        style={{ width: `${Math.max(this.state.value.length, 8)}ch` }}
       />
     );
   }

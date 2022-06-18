@@ -12,7 +12,7 @@ export function NumberingAnchorField(props: Props) {
   return (
     <FieldLabel
       style={{
-        marginTop: '10px', alignSelf: 'start',
+        margin: '10px 8px 0 0', alignSelf: 'start',
         display: 'flex', flexDirection: 'row', alignItems: 'center',
         cursor: 'text',
       }}
