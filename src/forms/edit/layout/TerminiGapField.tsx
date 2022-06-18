@@ -56,7 +56,7 @@ export class TerminiGapField extends React.Component<Props> {
           }
         }}
         input={{
-          style: { width: '6ch' },
+          style: { width: '7ch' },
         }}
         style={{ alignSelf: 'start' }}
       />
