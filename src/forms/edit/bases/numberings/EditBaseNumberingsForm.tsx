@@ -1,5 +1,6 @@
 import type { App } from 'App';
 import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
 
 import * as React from 'react';
 import styles from './EditBaseNumberings.css';
@@ -26,7 +27,7 @@ function DrawingHasNoBaseNumberingsNotes() {
         Drawing has no numberings...
       </p>
       <p className={styles.notesText} style={{ marginTop: '24px' }} >
-        Add numberings by adjusting the numbering anchor and increment...
+        Add numberings by setting the numbering offset or increment...
       </p>
     </div>
   );
@@ -89,6 +90,8 @@ export interface Props {
 export function EditBaseNumberingsForm(props: Props) {
   let numBaseNumberingsInDrawing = props.app.drawing.bases().filter(b => b.numbering).length;
 
+  let ni = numberingIncrement(props.app.strictDrawing.layoutSequence());
+
   return (
     <PartialWidthContainer
       unmount={props.unmount}
@@ -100,7 +103,7 @@ export function EditBaseNumberingsForm(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <NumberingOffsetField {...props} />
           <NumberingIncrementField {...props} />
-          <NumberingAnchorField {...props} />
+          {ni != undefined ? <NumberingAnchorField {...props} /> : null}
         </div>
       )}
       {numBaseNumberingsInDrawing == 0 ? (
