@@ -16,14 +16,11 @@
   user-select: none;
 }
 
-.preservedAspectsLeadingText {
-  margin: 12px 0px 0px 18px;
-
+.preservedAspectsSurroundingText {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  font-weight: 700;
-  font-style: italic;
-  color: #101011;
+  font-weight: 400;
+  color: #1e1e20;
   user-select: none;
 }
 
@@ -39,7 +36,7 @@
   width: 6px;
   height: 6px;
   border-radius: 3px;
-  background-color: #252527;
+  background-color: #202022;
 }
 
 .preservedAspectText {
