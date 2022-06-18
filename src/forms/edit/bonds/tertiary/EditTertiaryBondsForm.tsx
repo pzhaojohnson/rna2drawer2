@@ -84,7 +84,7 @@ export function EditTertiaryBondsForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Tertiary Bonds'
-      style={{ width: '330px' }}
+      style={{ width: '334px' }}
     >
       {props.app.drawing.tertiaryBonds.length == 0 ? (
         <DrawingHasNoTertiaryBondsNotes />
