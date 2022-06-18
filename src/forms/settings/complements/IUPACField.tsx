@@ -21,6 +21,7 @@ export function IUPACField(props: Props) {
         bindingTool.complementsOptions.IUPAC = event.target.checked;
         props.app.refresh();
       }}
+      style={{ alignSelf: 'start' }}
     />
   );
 }

@@ -20,12 +20,14 @@ export function ComplementRules(props: Props) {
       title='Complement Rules'
       style={{ width: '324px' }}
     >
-      <AllowedMismatchField app={props.app} />
-      <div style={{ marginTop: '12px' }} >
-        <AllowedGUTField app={props.app} />
-      </div>
-      <div style={{ marginTop: '12px' }} >
-        <IUPACField app={props.app} />
+      <div style={{ display: 'flex', flexDirection: 'column' }} >
+        <AllowedMismatchField app={props.app} />
+        <div style={{ marginTop: '12px' }} >
+          <AllowedGUTField app={props.app} />
+        </div>
+        <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column' }} >
+          <IUPACField app={props.app} />
+        </div>
       </div>
     </PartialWidthContainer>
   );
