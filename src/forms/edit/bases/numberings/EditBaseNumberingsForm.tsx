@@ -41,6 +41,9 @@ function NoBaseNumberingsAreSelectedNotes() {
       <p className={styles.notesText} style={{ marginTop: '14px' }} >
         Select numberings using the editing tool...
       </p>
+      <p className={styles.notesText} style={{ marginTop: '14px' }} >
+        Or...
+      </p>
     </div>
   );
 }

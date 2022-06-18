@@ -37,6 +37,10 @@ function NoTertiaryBondsAreSelectedNotes() {
       <p className={styles.notesText} >
         Select tertiary bonds using the editing tool...
       </p>
+      <div style={{ height: '24px' }} />
+      <p className={styles.notesText} >
+        Or...
+      </p>
     </div>
   );
 }

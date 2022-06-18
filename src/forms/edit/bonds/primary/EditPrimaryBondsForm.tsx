@@ -29,6 +29,9 @@ function NoPrimaryBondsAreSelectedNotes() {
       <p className={styles.notesText} style={{ marginTop: '24px' }} >
         Select primary bonds using the editing tool...
       </p>
+      <p className={styles.notesText} style={{ marginTop: '24px' }} >
+        Or...
+      </p>
     </div>
   );
 }
