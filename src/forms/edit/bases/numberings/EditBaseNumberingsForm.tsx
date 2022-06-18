@@ -99,8 +99,8 @@ export function EditBaseNumberingsForm(props: Props) {
       {props.baseNumberings.length != 0 ? null : (
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <NumberingOffsetField {...props} />
-          <NumberingAnchorField {...props} />
           <NumberingIncrementField {...props} />
+          <NumberingAnchorField {...props} />
         </div>
       )}
       {numBaseNumberingsInDrawing == 0 ? (
