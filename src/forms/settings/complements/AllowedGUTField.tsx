@@ -4,18 +4,47 @@ import type { BindingTool } from 'Draw/interact/bind/BindingTool';
 import * as React from 'react';
 import { TextInput } from 'Forms/inputs/text/TextInput';
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 
-// returns the binding tool of the app
-function bindingTool(app: App): BindingTool {
-  return app.strictDrawingInteraction.bindingTool;
+class BindingToolWrapper {
+  readonly bindingTool: BindingTool;
+
+  constructor(bindingTool: BindingTool) {
+    this.bindingTool = bindingTool;
+  }
+
+  /**
+   * The allowed GUT complements option of the binding tool.
+   * (Converts an undefined value to a value of zero.)
+   */
+  get allowedGUT(): number {
+    return this.bindingTool.complementsOptions.allowedGUT ?? 0;
+  }
+
+  set allowedGUT(proportion: number) {
+    this.bindingTool.complementsOptions.allowedGUT = proportion;
+  }
 }
 
-// returns the numeric value of the complements option
-// (converts values of undefined to zero)
-function allowedGUT(tool: BindingTool): number {
-  return tool.complementsOptions.allowedGUT ?? 0;
+class AppWrapper {
+  readonly app: App;
+
+  constructor(app: App) {
+    this.app = app;
+  }
+
+  /**
+   * The binding tool of the app.
+   */
+  get bindingTool(): BindingToolWrapper {
+    return new BindingToolWrapper(this.app.drawingInteraction.bindingTool);
+  }
+
+  refresh() {
+    this.app.refresh();
+  }
 }
 
 export type Props = {
@@ -32,9 +61,9 @@ export class AllowedGUTField extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let app = props.app;
+    let app = new AppWrapper(props.app);
 
-    let percentage = 100 * allowedGUT(bindingTool(app));
+    let percentage = 100 * app.bindingTool.allowedGUT;
     percentage = round(percentage, 0);
 
     this.state = {
@@ -43,20 +72,20 @@ export class AllowedGUTField extends React.Component<Props> {
   }
 
   render() {
-    let app = this.props.app;
+    let app = new AppWrapper(this.props.app);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='checkbox'
           id='AllowedGUTCheckbox'
-          checked={allowedGUT(bindingTool(app)) > 0}
+          checked={app.bindingTool.allowedGUT > 0}
           onChange={event => {
-            bindingTool(app).complementsOptions.allowedGUT = event.target.checked ? 1 : 0;
+            app.bindingTool.allowedGUT = event.target.checked ? 1 : 0;
             app.refresh();
           }}
         />
-        {allowedGUT(bindingTool(app)) <= 0 ? null : (
+        {app.bindingTool.allowedGUT <= 0 ? null : (
           <TextInput
             id='AllowedGUTPercentageInput'
             value={this.state.value}
@@ -75,20 +104,20 @@ export class AllowedGUTField extends React.Component<Props> {
           />
         )}
         <FieldLabel
-          htmlFor={allowedGUT(bindingTool(app)) <= 0 ? 'AllowedGUTCheckbox' : 'AllowedGUTPercentageInput' }
+          htmlFor={app.bindingTool.allowedGUT <= 0 ? 'AllowedGUTCheckbox' : 'AllowedGUTPercentageInput' }
           style={{
-            paddingLeft: allowedGUT(bindingTool(app)) <= 0 ? '6px' : '8px',
-            cursor: allowedGUT(bindingTool(app)) <= 0 ? 'pointer' : 'text',
+            paddingLeft: app.bindingTool.allowedGUT <= 0 ? '6px' : '8px',
+            cursor: app.bindingTool.allowedGUT <= 0 ? 'pointer' : 'text',
           }}
         >
-          {allowedGUT(bindingTool(app)) <= 0 ? 'Include GU and GT Pairs' : 'GU and GT Pairs Allowed'}
+          {app.bindingTool.allowedGUT <= 0 ? 'Include GU and GT Pairs' : 'GU and GT Pairs Allowed'}
         </FieldLabel>
       </div>
     );
   }
 
   submit() {
-    let app = this.props.app;
+    let app = new AppWrapper(this.props.app);
 
     if (isBlank(this.state.value)) {
       return;
@@ -101,7 +130,7 @@ export class AllowedGUTField extends React.Component<Props> {
 
     let proportion = percentage / 100;
 
-    if (proportion == allowedGUT(bindingTool(app))) {
+    if (proportion == app.bindingTool.allowedGUT) {
       return;
     }
 
@@ -115,6 +144,6 @@ export class AllowedGUTField extends React.Component<Props> {
     }
 
     // set option
-    bindingTool(app).complementsOptions.allowedGUT = proportion;
+    app.bindingTool.allowedGUT = proportion;
   }
 }
