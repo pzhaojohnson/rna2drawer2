@@ -1,7 +1,9 @@
-import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
 import type { BindingTool } from 'Draw/interact/bind/BindingTool';
+
+import * as React from 'react';
+import { TextInputField } from 'Forms/inputs/text/TextInputField';
+
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 
