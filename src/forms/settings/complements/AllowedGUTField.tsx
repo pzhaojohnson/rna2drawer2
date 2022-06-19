@@ -48,9 +48,7 @@ class AppWrapper {
 }
 
 export type Props = {
-
-  // a reference to the whole app
-  app: App;
+  app: App; // a reference to the whole app
 }
 
 export class AllowedGUTField extends React.Component<Props> {
