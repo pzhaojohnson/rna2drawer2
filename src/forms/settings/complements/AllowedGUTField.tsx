@@ -49,6 +49,7 @@ export class AllowedGUTField extends React.Component<Props> {
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
         <input
           type='checkbox'
+          id='AllowedGUTCheckbox'
           checked={allowedGUT(bindingTool(app)) > 0}
           onChange={event => {
             bindingTool(app).complementsOptions.allowedGUT = event.target.checked ? 1 : 0;
@@ -57,6 +58,7 @@ export class AllowedGUTField extends React.Component<Props> {
         />
         {allowedGUT(bindingTool(app)) <= 0 ? null : (
           <TextInput
+            id='AllowedGUTPercentageInput'
             value={this.state.value}
             onChange={event => this.setState({ value: event.target.value })}
             onBlur={() => {
@@ -73,7 +75,12 @@ export class AllowedGUTField extends React.Component<Props> {
           />
         )}
         <div style={{ width: allowedGUT(bindingTool(app)) <= 0 ? '6px' : '8px' }} />
-        <FieldLabel>
+        <FieldLabel
+          htmlFor={allowedGUT(bindingTool(app)) <= 0 ? 'AllowedGUTCheckbox' : 'AllowedGUTPercentageInput' }
+          style={{
+            cursor: allowedGUT(bindingTool(app)) <= 0 ? 'pointer' : 'text',
+          }}
+        >
           {allowedGUT(bindingTool(app)) <= 0 ? 'Include GU and GT Pairs' : 'GU and GT Pairs Allowed'}
         </FieldLabel>
       </div>
