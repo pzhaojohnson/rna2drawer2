@@ -123,12 +123,15 @@ export class AllowedGUTField extends React.Component<Props> {
       }
 
       let percentage = Number.parseFloat(this.state.value);
+
+      if (!Number.isFinite(percentage)) {
+        throw new Error();
+      }
+
       let proportion = percentage / 100;
       proportion = round(proportion, 2); // removes any floating point imprecision
 
-      if (!Number.isFinite(proportion)) {
-        throw new Error();
-      } else if (proportion == app.bindingTool.allowedGUT) {
+      if (proportion == app.bindingTool.allowedGUT) {
         throw new Error();
       }
 
