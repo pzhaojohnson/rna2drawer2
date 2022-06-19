@@ -14,51 +14,7 @@ import { ErrorMessage } from 'Forms/ErrorMessage';
 
 import { DottedNote } from 'Forms/notes/DottedNote';
 
-import { isBlank } from 'Parse/isBlank';
-import { cannotRemove, remove } from './remove';
-
-/**
- * Removes the specified subsequence from the first sequence
- * in the drawing of the app.
- */
-export function removeSubsequence(
-  args: {
-    app: App, // a reference to the whole app
-    startPosition: string, // start position of the subsequence to remove
-    endPosition: string, // end position of the subsequence to remove
-  },
-): void | never {
-  if (isBlank(args.startPosition)) {
-    throw new Error('Specify a start position.');
-  } else if (isBlank(args.endPosition)) {
-    throw new Error('Specify an end position.');
-  }
-
-  let startPosition = Number.parseFloat(args.startPosition);
-  let endPosition = Number.parseFloat(args.endPosition);
-
-  if (!Number.isFinite(startPosition)) {
-    throw new Error('Start position must be a number.');
-  } else if (!Number.isFinite(endPosition)) {
-    throw new Error('End position must be a number.');
-  }
-
-  if (!Number.isInteger(startPosition)) {
-    throw new Error('Start position must be an integer.');
-  } else if (!Number.isInteger(endPosition)) {
-    throw new Error('End position must be an integer.');
-  }
-
-  let message = cannotRemove(args.app.strictDrawing, { start: startPosition, end: endPosition });
-  if (message) {
-    throw new Error(message);
-  }
-
-  // remove the subsequence
-  args.app.pushUndo();
-  remove(args.app.strictDrawing, { start: startPosition, end: endPosition });
-  args.app.refresh();
-}
+import { removeSubsequence } from './removeSubsequence';
 
 export type Props = {
   app: App;
