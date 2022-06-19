@@ -2,8 +2,8 @@ import type { App } from 'App';
 import type { BindingTool } from 'Draw/interact/bind/BindingTool';
 
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import { TextInput } from 'Forms/inputs/text/TextInput';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 
@@ -73,9 +73,9 @@ export class AllowedGUTField extends React.Component<Props> {
           />
         )}
         <div style={{ width: allowedGUT(bindingTool(app)) <= 0 ? '6px' : '8px' }} />
-        <p className={`${textFieldStyles.label} unselectable`} >
+        <FieldLabel>
           {allowedGUT(bindingTool(app)) <= 0 ? 'Include GU and GT Pairs' : 'GU and GT Pairs Allowed'}
-        </p>
+        </FieldLabel>
       </div>
     );
   }
