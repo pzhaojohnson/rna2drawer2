@@ -11,21 +11,18 @@ export type Props = {
   app: App;
 }
 
-// a percentage
-type Value = string;
-
 type State = {
-  value: Value;
+  value: string; // a percentage string
 }
 
-function allowedMismatchPercentage(bindingTool: BindingTool): Value {
+function allowedMismatchPercentage(bindingTool: BindingTool): string {
   let am = bindingTool.complementsOptions.allowedMismatch ?? 0;
   let amp = 100 * am;
   amp = round(amp, 0);
   return amp + '%';
 }
 
-function areEqual(v1: Value, v2: Value): boolean {
+function areEqual(v1: string, v2: string): boolean {
   return Number.parseFloat(v1) == Number.parseFloat(v2);
 }
 
