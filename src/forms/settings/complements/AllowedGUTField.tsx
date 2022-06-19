@@ -3,6 +3,7 @@ import type { BindingTool } from 'Draw/interact/bind/BindingTool';
 
 import * as React from 'react';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
+import { TextInput } from 'Forms/inputs/text/TextInput';
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 
@@ -55,9 +56,7 @@ export class AllowedGUTField extends React.Component<Props> {
           }}
         />
         {allowedGUT(bindingTool(app)) <= 0 ? null : (
-          <input
-            type='text'
-            className={textFieldStyles.input}
+          <TextInput
             value={this.state.value}
             onChange={event => this.setState({ value: event.target.value })}
             onBlur={() => {
