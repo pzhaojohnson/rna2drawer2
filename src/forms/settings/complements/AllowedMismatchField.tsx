@@ -7,23 +7,51 @@ import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 
+class BindingToolWrapper {
+  readonly bindingTool: BindingTool;
+
+  constructor(bindingTool: BindingTool) {
+    this.bindingTool = bindingTool;
+  }
+
+  /**
+   * The allowed mismatch complements option of the binding tool.
+   * (Converts an undefined value to a value of zero.)
+   */
+  get allowedMismatch(): number {
+    return this.bindingTool.complementsOptions.allowedMismatch ?? 0;
+  }
+
+  set allowedMismatch(proportion: number) {
+    this.bindingTool.complementsOptions.allowedMismatch = proportion;
+  }
+}
+
+class AppWrapper {
+  readonly app: App;
+
+  constructor(app: App) {
+    this.app = app;
+  }
+
+  /**
+   * The binding tool of the app.
+   */
+  get bindingTool(): BindingToolWrapper {
+    return new BindingToolWrapper(this.app.drawingInteraction.bindingTool);
+  }
+
+  refresh() {
+    this.app.refresh();
+  }
+}
+
 export type Props = {
   app: App;
 }
 
 type State = {
   value: string; // a percentage string
-}
-
-function allowedMismatchPercentage(bindingTool: BindingTool): string {
-  let am = bindingTool.complementsOptions.allowedMismatch ?? 0;
-  let amp = 100 * am;
-  amp = round(amp, 0);
-  return amp + '%';
-}
-
-function areEqual(v1: string, v2: string): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
 }
 
 export class AllowedMismatchField extends React.Component<Props> {
@@ -38,7 +66,13 @@ export class AllowedMismatchField extends React.Component<Props> {
   }
 
   get initialValue(): string {
-    return allowedMismatchPercentage(this.props.app.drawingInteraction.bindingTool);
+    let app = new AppWrapper(this.props.app);
+
+    let proportion = app.bindingTool.allowedMismatch;
+    let percentage = 100 * proportion;
+    percentage = round(percentage, 0);
+
+    return percentage + '%';
   }
 
   render() {
@@ -64,12 +98,9 @@ export class AllowedMismatchField extends React.Component<Props> {
   }
 
   submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
+    let app = new AppWrapper(this.props.app);
 
-    let bindingTool = this.props.app.strictDrawingInteraction.bindingTool;
-    if (areEqual(this.state.value, allowedMismatchPercentage(bindingTool))) {
+    if (isBlank(this.state.value)) {
       return;
     }
 
@@ -79,6 +110,10 @@ export class AllowedMismatchField extends React.Component<Props> {
     }
 
     let am = amp / 100;
+
+    if (am == app.bindingTool.allowedMismatch) {
+      return;
+    }
 
     // clamp value
     if (am < 0) {
@@ -90,7 +125,7 @@ export class AllowedMismatchField extends React.Component<Props> {
     am = round(am, 2);
 
     // set value
-    bindingTool.complementsOptions.allowedMismatch = am;
-    this.props.app.refresh();
+    app.bindingTool.allowedMismatch = am;
+    app.refresh();
   }
 }
