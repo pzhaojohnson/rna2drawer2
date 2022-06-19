@@ -2,7 +2,6 @@ import type { App } from 'App';
 import type { BindingTool } from 'Draw/interact/bind/BindingTool';
 
 import * as React from 'react';
-import { Checkbox } from 'Forms/inputs/checkbox/Checkbox';
 import textFieldStyles from 'Forms/inputs/text/TextField.css';
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
@@ -47,7 +46,8 @@ export class AllowedGUTField extends React.Component<Props> {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-        <Checkbox
+        <input
+          type='checkbox'
           checked={allowedGUT(bindingTool(app)) > 0}
           onChange={event => {
             bindingTool(app).complementsOptions.allowedGUT = event.target.checked ? 1 : 0;
