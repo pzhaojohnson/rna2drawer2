@@ -59,14 +59,18 @@ export class AllowedGUTField extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let app = new AppWrapper(props.app);
+    this.state = {
+      value: this.initialValue,
+    };
+  }
+
+  get initialValue(): string {
+    let app = new AppWrapper(this.props.app);
 
     let percentage = 100 * app.bindingTool.allowedGUT;
     percentage = round(percentage, 0);
 
-    this.state = {
-      value: percentage + '%',
-    };
+    return percentage + '%';
   }
 
   render() {
@@ -88,14 +92,10 @@ export class AllowedGUTField extends React.Component<Props> {
             id='AllowedGUTPercentageInput'
             value={this.state.value}
             onChange={event => this.setState({ value: event.target.value })}
-            onBlur={() => {
-              this.submit();
-              app.refresh();
-            }}
+            onBlur={() => this.processValue()}
             onKeyUp={event => {
               if (event.key.toLowerCase() == 'enter') {
-                this.submit();
-                app.refresh();
+                this.processValue();
               }
             }}
             style={{ marginLeft: '8px', width: '32px' }}
@@ -114,34 +114,34 @@ export class AllowedGUTField extends React.Component<Props> {
     );
   }
 
-  submit() {
+  processValue() {
     let app = new AppWrapper(this.props.app);
 
-    if (isBlank(this.state.value)) {
-      return;
+    try {
+      if (isBlank(this.state.value)) {
+        throw new Error();
+      }
+
+      let percentage = Number.parseFloat(this.state.value);
+      let proportion = percentage / 100;
+
+      if (!Number.isFinite(proportion)) {
+        throw new Error();
+      } else if (proportion == app.bindingTool.allowedGUT) {
+        throw new Error();
+      }
+
+      // clamp proportion
+      if (proportion < 0) {
+        proportion = 0;
+      } else if (proportion > 1) {
+        proportion = 1;
+      }
+
+      app.bindingTool.allowedGUT = proportion;
+      app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
     }
-
-    let percentage = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(percentage)) {
-      return;
-    }
-
-    let proportion = percentage / 100;
-
-    if (proportion == app.bindingTool.allowedGUT) {
-      return;
-    }
-
-    proportion = round(proportion, 2);
-
-    // clamp value
-    if (proportion < 0) {
-      proportion = 0;
-    } else if (proportion > 1) {
-      proportion = 1;
-    }
-
-    // set option
-    app.bindingTool.allowedGUT = proportion;
   }
 }
