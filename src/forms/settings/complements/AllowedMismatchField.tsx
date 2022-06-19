@@ -32,11 +32,13 @@ export class AllowedMismatchField extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let bindingTool = props.app.strictDrawingInteraction.bindingTool;
-
     this.state = {
-      value: allowedMismatchPercentage(bindingTool),
+      value: this.initialValue,
     };
+  }
+
+  get initialValue(): string {
+    return allowedMismatchPercentage(this.props.app.drawingInteraction.bindingTool);
   }
 
   render() {
