@@ -74,10 +74,10 @@ export class AllowedGUTField extends React.Component<Props> {
             style={{ marginLeft: '8px', width: '32px' }}
           />
         )}
-        <div style={{ width: allowedGUT(bindingTool(app)) <= 0 ? '6px' : '8px' }} />
         <FieldLabel
           htmlFor={allowedGUT(bindingTool(app)) <= 0 ? 'AllowedGUTCheckbox' : 'AllowedGUTPercentageInput' }
           style={{
+            paddingLeft: allowedGUT(bindingTool(app)) <= 0 ? '6px' : '8px',
             cursor: allowedGUT(bindingTool(app)) <= 0 ? 'pointer' : 'text',
           }}
         >
