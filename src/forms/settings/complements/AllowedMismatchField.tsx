@@ -81,14 +81,10 @@ export class AllowedMismatchField extends React.Component<Props> {
         label='Mismatch Allowed'
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
+        onBlur={() => this.processValue()}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
+            this.processValue();
           }
         }}
         input={{ style: { width: '32px' } }}
@@ -97,35 +93,39 @@ export class AllowedMismatchField extends React.Component<Props> {
     );
   }
 
-  submit() {
+  processValue() {
     let app = new AppWrapper(this.props.app);
 
-    if (isBlank(this.state.value)) {
-      return;
+    try {
+      if (isBlank(this.state.value)) {
+        throw new Error();
+      }
+
+      let percentage = Number.parseFloat(this.state.value);
+
+      if (!Number.isFinite(percentage)) {
+        throw new Error();
+      }
+
+      let proportion = percentage / 100;
+      proportion = round(proportion, 2); // removes any floating point imprecision
+
+      if (proportion == app.bindingTool.allowedMismatch) {
+        throw new Error();
+      }
+
+      // clamp proportion
+      if (proportion < 0) {
+        proportion = 0;
+      } else if (proportion > 1) {
+        proportion = 1;
+      }
+
+      // set the value
+      app.bindingTool.allowedMismatch = proportion;
+      app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
     }
-
-    let amp = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(amp)) {
-      return;
-    }
-
-    let am = amp / 100;
-
-    if (am == app.bindingTool.allowedMismatch) {
-      return;
-    }
-
-    // clamp value
-    if (am < 0) {
-      am = 0;
-    } else if (am > 1) {
-      am = 1;
-    }
-
-    am = round(am, 2);
-
-    // set value
-    app.bindingTool.allowedMismatch = am;
-    app.refresh();
   }
 }
