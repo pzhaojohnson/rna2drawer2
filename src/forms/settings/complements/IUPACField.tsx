@@ -4,9 +4,7 @@ import * as React from 'react';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 
 export type Props = {
-
-  // a reference to the whole app
-  app: App;
+  app: App; // a reference to the whole app
 }
 
 export function IUPACField(props: Props) {
