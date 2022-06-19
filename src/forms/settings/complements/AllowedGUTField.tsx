@@ -53,7 +53,7 @@ export type Props = {
 
 export class AllowedGUTField extends React.Component<Props> {
   state: {
-    value: string;
+    value: string; // a percentage string
   };
 
   constructor(props: Props) {
