@@ -1,10 +1,13 @@
-import * as React from 'react';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import type { App } from 'App';
+
+import * as React from 'react';
+
+import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
+
+import { AllowedMismatchField } from './AllowedMismatchField';
 import { AllowedGUTField } from './AllowedGUTField';
 import { IUPACField } from './IUPACField';
-import { AllowedMismatchField } from './AllowedMismatchField';
 
 export type Props = {
   app: App;
