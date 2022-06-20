@@ -18,10 +18,13 @@ import { DottedNote } from 'Forms/notes/DottedNote';
 import { removeSubsequence } from './removeSubsequence';
 
 export type Props = {
-  app: App;
-
   unmount: () => void;
   history: FormHistoryInterface;
+
+  /**
+   * A reference to the whole app.
+   */
+  app: App;
 }
 
 function constrainPosition(value: string): string {
