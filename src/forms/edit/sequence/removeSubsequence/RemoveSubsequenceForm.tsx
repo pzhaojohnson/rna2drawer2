@@ -45,7 +45,7 @@ let prevInputs = {
 };
 
 export function RemoveSubsequenceForm(props: Props) {
-  let drawing = props.app.strictDrawing.drawing;
+  let drawing = props.app.drawing;
 
   if (drawing.sequences.length == 0) {
     console.error('Drawing has no sequences.');
