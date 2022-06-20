@@ -12,7 +12,7 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-export function ComplementRules(props: Props) {
+export function ComplementRulesForm(props: Props) {
   return (
     <PartialWidthContainer
       unmount={props.unmount}

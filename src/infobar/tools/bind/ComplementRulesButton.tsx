@@ -3,7 +3,7 @@ import type { App } from 'App';
 import * as React from 'react';
 import styles from './ComplementRulesButton.css';
 
-import { ComplementRules } from 'Forms/settings/complements/ComplementRules';
+import { ComplementRulesForm } from 'Forms/settings/complements/ComplementRulesForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
@@ -20,7 +20,7 @@ export function ComplementRulesButton(props: Props) {
       className={styles.complementRulesButton}
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <ComplementRules {...formProps} app={props.app} />
+          <ComplementRulesForm {...formProps} app={props.app} />
         ), { key: complementRulesFormKey });
       }}
     >
