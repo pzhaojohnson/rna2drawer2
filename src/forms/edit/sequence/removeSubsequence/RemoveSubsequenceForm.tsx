@@ -9,7 +9,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { StartPositionField } from './StartPositionField';
 import { EndPositionField } from './EndPositionField';
-import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { SequenceRange } from './SequenceRange';
 
 import { RemoveButton } from './RemoveButton';
 import { ErrorMessage } from './ErrorMessage';
@@ -89,9 +89,7 @@ export function RemoveSubsequenceForm(props: Props) {
           onEnterKeyUp={() => setEndPosition(constrainPosition(endPosition))}
         />
       </div>
-      {drawing.sequences.length == 0 ? null : (
-        <DisplayableSequenceRange sequence={drawing.sequences[0]} style={{ marginTop: '8px' }} />
-      )}
+      <SequenceRange sequence={drawing.sequences[0]} />
       <RemoveButton
         onClick={() => {
           try {
