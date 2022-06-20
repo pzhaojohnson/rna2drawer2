@@ -93,7 +93,7 @@ export function RemoveSubsequenceForm(props: Props) {
     <PartialWidthContainer
       {...props}
       title='Remove Subsequence'
-      style={{ width: '366px' }}
+      style={{ width: '364px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <StartPositionField
