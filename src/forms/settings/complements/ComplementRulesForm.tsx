@@ -29,12 +29,10 @@ export function ComplementRulesForm(props: Props) {
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <AllowedMismatchField app={props.app} />
-        <div style={{ marginTop: '12px' }} >
-          <AllowedGUTField app={props.app} />
-        </div>
-        <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column' }} >
-          <IUPACField app={props.app} />
-        </div>
+        <div style={{ height: '14px' }} />
+        <AllowedGUTField app={props.app} />
+        <div style={{ height: '14px' }} />
+        <IUPACField app={props.app} />
       </div>
     </PartialWidthContainer>
   );
