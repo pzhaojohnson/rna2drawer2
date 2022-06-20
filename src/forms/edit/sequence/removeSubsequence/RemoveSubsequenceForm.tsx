@@ -13,7 +13,7 @@ import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenc
 import { SolidButton } from 'Forms/buttons/SolidButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 
-import { DottedNote } from 'Forms/notes/DottedNote';
+import { TrailingNotes } from './TrailingNotes';
 
 import { removeSubsequence } from './removeSubsequence';
 
@@ -128,12 +128,7 @@ export function RemoveSubsequenceForm(props: Props) {
           {errorMessage}
         </ErrorMessage>
       )}
-      <DottedNote style={{ marginTop: '18px' }} >
-        Bases between and including the start and end positions will be removed.
-      </DottedNote>
-      <DottedNote style={{ marginTop: '10px' }} >
-        Base numbering must be updated manually after removing a subsequence.
-      </DottedNote>
+      <TrailingNotes />
     </PartialWidthContainer>
   );
 }
