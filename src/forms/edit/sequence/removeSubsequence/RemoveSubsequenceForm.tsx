@@ -10,7 +10,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { RemoveButton } from './RemoveButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 
 import { TrailingNotes } from './TrailingNotes';
@@ -105,24 +105,21 @@ export function RemoveSubsequenceForm(props: Props) {
       {drawing.sequences.length == 0 ? null : (
         <DisplayableSequenceRange sequence={drawing.sequences[0]} style={{ marginTop: '8px' }} />
       )}
-      <div style={{ marginTop: '40px' }} >
-        <SolidButton
-          text='Remove'
-          onClick={() => {
-            try {
-              removeSubsequence({
-                app: props.app,
-                startPosition,
-                endPosition,
-              });
-              setErrorMessage('');
-            } catch (error) {
-              setErrorMessage(error instanceof Error ? error.message : String(error));
-              setErrorMessageKey(errorMessageKey + 1);
-            }
-          }}
-        />
-      </div>
+      <RemoveButton
+        onClick={() => {
+          try {
+            removeSubsequence({
+              app: props.app,
+              startPosition,
+              endPosition,
+            });
+            setErrorMessage('');
+          } catch (error) {
+            setErrorMessage(error instanceof Error ? error.message : String(error));
+            setErrorMessageKey(errorMessageKey + 1);
+          }
+        }}
+      />
       {!errorMessage ? null : (
         <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
           {errorMessage}
