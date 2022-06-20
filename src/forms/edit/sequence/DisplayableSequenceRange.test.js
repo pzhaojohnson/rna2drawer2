@@ -46,10 +46,12 @@ describe('DisplayableSequenceRange component', () => {
   test('an empty sequence', () => {
     let sequence = appendSequence(drawing, { id: 'empty', characters: '' });
     expect(sequence.length).toBe(0);
+    // numbering offset will always be undefined for an empty sequence
+    expect(numberingOffset(sequence)).toBeUndefined();
     act(() => {
       render(<DisplayableSequenceRange sequence={sequence} />, container);
     });
-    expect(container.textContent).toBe('Sequence is empty.');
+    expect(container.textContent).toBe(`0...0${nbsp}is the sequence range.`);
   });
 
   test('a sequence of length one with no numbering', () => {
