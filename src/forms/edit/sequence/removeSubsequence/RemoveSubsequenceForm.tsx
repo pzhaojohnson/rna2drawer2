@@ -70,8 +70,7 @@ export function RemoveSubsequenceForm(props: Props) {
 
   return (
     <PartialWidthContainer
-      unmount={props.unmount}
-      history={props.history}
+      {...props}
       title='Remove Subsequence'
       style={{ width: '366px' }}
     >
