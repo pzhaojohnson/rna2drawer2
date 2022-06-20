@@ -24,5 +24,8 @@
 }
 
 .detailsToggle:active {
+  background-color: rgb(209, 209, 255);
+  transition: background-color 0s;
+
   outline: none;
 }
