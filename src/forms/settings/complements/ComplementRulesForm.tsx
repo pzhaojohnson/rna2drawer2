@@ -10,7 +10,11 @@ import { AllowedGUTField } from './AllowedGUTField';
 import { IUPACField } from './IUPACField';
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
+
   unmount: () => void;
   history: FormHistoryInterface;
 }
