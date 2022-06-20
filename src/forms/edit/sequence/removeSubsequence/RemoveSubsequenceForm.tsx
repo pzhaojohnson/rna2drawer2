@@ -1,7 +1,8 @@
 import type { App } from 'App';
 
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
