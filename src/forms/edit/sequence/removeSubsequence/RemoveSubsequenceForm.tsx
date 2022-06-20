@@ -7,7 +7,8 @@ import { useEffect } from 'react';
 import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
+import { StartPositionField } from './StartPositionField';
+import { EndPositionField } from './EndPositionField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
 import { RemoveButton } from './RemoveButton';
@@ -75,31 +76,17 @@ export function RemoveSubsequenceForm(props: Props) {
       style={{ width: '366px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
-        <TextInputField
-          label='Start Position'
+        <StartPositionField
           value={startPosition}
           onChange={event => setStartPosition(event.target.value)}
           onBlur={() => setStartPosition(constrainPosition(startPosition))}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              setStartPosition(constrainPosition(startPosition));
-            }
-          }}
-          input={{ style: { width: `${Math.max(startPosition.length, 8)}ch` } }}
-          style={{ alignSelf: 'flex-start', margin: '0 8px 0 0' }}
+          onEnterKeyUp={() => setStartPosition(constrainPosition(startPosition))}
         />
-        <TextInputField
-          label='End Position'
+        <EndPositionField
           value={endPosition}
           onChange={event => setEndPosition(event.target.value)}
           onBlur={() => setEndPosition(constrainPosition(endPosition))}
-          onKeyUp={event => {
-            if (event.key.toLowerCase() == 'enter') {
-              setEndPosition(constrainPosition(endPosition));
-            }
-          }}
-          input={{ style: { width: `${Math.max(endPosition.length, 8)}ch` } }}
-          style={{ alignSelf: 'flex-start', margin: '8px 8px 0 0' }}
+          onEnterKeyUp={() => setEndPosition(constrainPosition(endPosition))}
         />
       </div>
       {drawing.sequences.length == 0 ? null : (
