@@ -24,7 +24,7 @@ export function ComplementRulesForm(props: Props) {
     <PartialWidthContainer
       {...props}
       title='Complement Rules'
-      style={{ width: '324px' }}
+      style={{ width: '328px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
         <AllowedMismatchField {...props} />
