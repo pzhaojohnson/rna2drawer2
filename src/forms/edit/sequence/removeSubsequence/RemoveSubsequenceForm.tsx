@@ -65,11 +65,21 @@ export function RemoveSubsequenceForm(props: Props) {
   let processStartPosition = () => {
     let value = constrainPosition(startPosition);
     setStartPosition(value);
+
+    // keep start position less than or equal to end position
+    if (Number.parseFloat(value) > Number.parseFloat(endPosition)) {
+      setEndPosition(value);
+    }
   };
 
   let processEndPosition = () => {
     let value = constrainPosition(endPosition);
     setEndPosition(value);
+
+    // keep end position greater than or equal to start position
+    if (Number.parseFloat(value) < Number.parseFloat(startPosition)) {
+      setStartPosition(value);
+    }
   };
 
   // remember inputs
