@@ -12,7 +12,7 @@ import { EndPositionField } from './EndPositionField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 
 import { RemoveButton } from './RemoveButton';
-import { ErrorMessage } from 'Forms/ErrorMessage';
+import { ErrorMessage } from './ErrorMessage';
 
 import { TrailingNotes } from './TrailingNotes';
 
@@ -107,11 +107,7 @@ export function RemoveSubsequenceForm(props: Props) {
           }
         }}
       />
-      {!errorMessage ? null : (
-        <ErrorMessage key={errorMessageKey} style={{ marginTop: '6px' }} >
-          {errorMessage}
-        </ErrorMessage>
-      )}
+      {errorMessage ? <ErrorMessage key={errorMessageKey} >{errorMessage}</ErrorMessage> : null}
       <TrailingNotes />
     </PartialWidthContainer>
   );
