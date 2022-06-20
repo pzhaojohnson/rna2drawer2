@@ -32,6 +32,18 @@ export type Args = {
  * (This function expects the drawing to have exactly one sequence.)
  */
 export function removeSubsequence(args: Args): void | never {
+  let sequence: Sequence | undefined = args.app.drawing.sequences[0];
+
+  if (!sequence) {
+    throw new Error('Drawing has no sequences.');
+  } else if (args.app.drawing.sequences.length > 1) {
+    console.error('Drawing has multiple sequences.');
+  }
+
+  if (sequence.length == 0) {
+    throw new Error('Sequence is already empty.');
+  }
+
   if (isBlank(args.startPosition)) {
     throw new Error('Specify a start position.');
   } else if (isBlank(args.endPosition)) {
@@ -55,14 +67,6 @@ export function removeSubsequence(args: Args): void | never {
 
   if (startPosition > endPosition) {
     throw new Error('Start position is greater than end position.');
-  }
-
-  let sequence: Sequence | undefined = args.app.drawing.sequences[0];
-
-  if (!sequence) {
-    throw new Error('Drawing has no sequences.');
-  } else if (args.app.drawing.sequences.length > 1) {
-    console.error('Drawing has multiple sequences.');
   }
 
   let no = numberingOffset(sequence) ?? 0;

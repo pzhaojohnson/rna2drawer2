@@ -64,6 +64,16 @@ describe('removeSubsequence function', () => {
     expect(stringifySequence(sequence)).toBe(sequenceString);
   });
 
+  test('when sequence is empty', () => {
+    args.startPosition = '1';
+    args.endPosition = sequence.length.toString();
+    removeSubsequence(args);
+    expect(sequence.length).toBe(0);
+    args.startPosition = '0'; // might be considered in range
+    args.endPosition = '0';
+    expect(() => removeSubsequence(args)).toThrow();
+  });
+
   test('blank start and end positions', () => {
     args.startPosition = ''; // empty
     args.endPosition = '3'; // valid
