@@ -50,7 +50,7 @@ export function RemoveSubsequenceForm(props: Props) {
   if (drawing.sequences.length == 0) {
     console.error('Drawing has no sequences.');
   } else if (drawing.sequences.length > 1) {
-    console.error('Unable to handle a drawing with multiple sequences.');
+    console.error('Drawing has multiple sequences.');
   }
 
   let [startPosition, setStartPosition] = useState(prevInputs.startPosition);
