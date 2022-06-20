@@ -62,6 +62,16 @@ export function RemoveSubsequenceForm(props: Props) {
   // (to trigger error message animations)
   let [errorMessageKey, setErrorMessageKey] = useState(0);
 
+  let processStartPosition = () => {
+    let value = constrainPosition(startPosition);
+    setStartPosition(value);
+  };
+
+  let processEndPosition = () => {
+    let value = constrainPosition(endPosition);
+    setEndPosition(value);
+  };
+
   // remember inputs
   useEffect(() => {
     return () => {
@@ -79,14 +89,14 @@ export function RemoveSubsequenceForm(props: Props) {
         <StartPositionField
           value={startPosition}
           onChange={event => setStartPosition(event.target.value)}
-          onBlur={() => setStartPosition(constrainPosition(startPosition))}
-          onEnterKeyUp={() => setStartPosition(constrainPosition(startPosition))}
+          onBlur={() => processStartPosition()}
+          onEnterKeyUp={() => processStartPosition()}
         />
         <EndPositionField
           value={endPosition}
           onChange={event => setEndPosition(event.target.value)}
-          onBlur={() => setEndPosition(constrainPosition(endPosition))}
-          onEnterKeyUp={() => setEndPosition(constrainPosition(endPosition))}
+          onBlur={() => processEndPosition()}
+          onEnterKeyUp={() => processEndPosition()}
         />
       </div>
       <SequenceRange sequence={drawing.sequences[0]} />
