@@ -112,12 +112,9 @@ export function RemoveSubsequenceForm(props: Props) {
       <SequenceRange sequence={drawing.sequences[0]} />
       <RemoveButton
         onClick={() => {
+          let app = props.app;
           try {
-            removeSubsequence({
-              app: props.app,
-              startPosition,
-              endPosition,
-            });
+            removeSubsequence({ app, startPosition, endPosition });
             setErrorMessage('');
           } catch (error) {
             setErrorMessage(error instanceof Error ? error.message : String(error));
