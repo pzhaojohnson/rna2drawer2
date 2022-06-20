@@ -30,12 +30,13 @@ export type Props = {
 
 function constrainPosition(value: string): string {
   let n = Number.parseFloat(value);
+
   if (!Number.isFinite(n)) {
-    return value.trim();
-  } else {
-    n = Math.floor(n); // make an integer
-    return n.toString();
+    return value.trim(); // just trim whitespace
   }
+
+  n = Math.floor(n); // make an integer
+  return n.toString();
 }
 
 let prevInputs = {
