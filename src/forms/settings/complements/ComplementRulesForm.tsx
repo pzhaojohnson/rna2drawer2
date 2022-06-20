@@ -22,17 +22,16 @@ export type Props = {
 export function ComplementRulesForm(props: Props) {
   return (
     <PartialWidthContainer
-      unmount={props.unmount}
-      history={props.history}
+      {...props}
       title='Complement Rules'
       style={{ width: '324px' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column' }} >
-        <AllowedMismatchField app={props.app} />
+        <AllowedMismatchField {...props} />
         <div style={{ height: '14px' }} />
-        <AllowedGUTField app={props.app} />
+        <AllowedGUTField {...props} />
         <div style={{ height: '14px' }} />
-        <IUPACField app={props.app} />
+        <IUPACField {...props} />
       </div>
     </PartialWidthContainer>
   );
