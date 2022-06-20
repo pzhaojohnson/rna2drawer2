@@ -2,6 +2,8 @@ import { App } from 'App';
 import * as SVG from 'Draw/svg/NodeSVG';
 
 import { appendSequence } from 'Draw/sequences/add/sequence';
+import { removeSubsequence } from 'Draw/sequences/remove/subsequence';
+
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 
@@ -156,7 +158,7 @@ describe('insertSubsequence function', () => {
     expect(stringifySequence(sequence)).toBe(sequenceString);
   });
 
-  test('appending to the end', () => {
+  test('appending to the end of a nonempty sequence', () => {
     updateBaseNumberings(sequence, { offset: 9, increment: 4, anchor: -25 });
     expect(numberingOffset(sequence)).toBe(9); // test with a numbering offset
 
@@ -172,6 +174,28 @@ describe('insertSubsequence function', () => {
     insertSubsequence(args);
     sequenceString += 'TTuuCA';
     expect(stringifySequence(sequence)).toBe(sequenceString);
+  });
+
+  test('appending to the end of an empty sequence', () => {
+    removeSubsequence(
+      app.strictDrawing.drawing,
+      { parent: sequence, start: 1, end: sequence.length },
+    );
+    expect(sequence.length).toBe(0);
+    args.subsequence = 'asdf';
+    args.positionToInsertAt = '1'; // a position
+    insertSubsequence(args);
+    expect(stringifySequence(sequence)).toBe('asdf');
+
+    removeSubsequence(
+      app.strictDrawing.drawing,
+      { parent: sequence, start: 1, end: sequence.length },
+    );
+    expect(sequence.length).toBe(0);
+    args.subsequence = 'qwer';
+    args.positionToInsertAt = 'append'; // the string "append"
+    insertSubsequence(args);
+    expect(stringifySequence(sequence)).toBe('qwer');
   });
 
   test('trying to insert just below bounds', () => {
