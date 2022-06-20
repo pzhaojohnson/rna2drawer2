@@ -10,13 +10,13 @@ import { AllowedGUTField } from './AllowedGUTField';
 import { IUPACField } from './IUPACField';
 
 export type Props = {
+  unmount: () => void;
+  history: FormHistoryInterface;
+
   /**
    * A reference to the whole app.
    */
   app: App;
-
-  unmount: () => void;
-  history: FormHistoryInterface;
 }
 
 export function ComplementRulesForm(props: Props) {
