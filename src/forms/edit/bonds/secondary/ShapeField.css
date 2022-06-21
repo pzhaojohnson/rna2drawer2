@@ -21,12 +21,12 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 600;
-  color: #151517;
+  color: #0d0d0e;
 }
 
 .toggledShapeOption {
-  border-color: #eaeaf0;
-  background-color: #eaeaf0;
+  border-color: transparent;
+  background-color: rgba(229, 229, 238, 0.73);
   cursor: auto;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .untoggledShapeOption:hover {
-  border-color: #d0d0da;
+  border-color: rgba(201, 201, 213, 0.94);
 }
 
 .optionsSpacer {
