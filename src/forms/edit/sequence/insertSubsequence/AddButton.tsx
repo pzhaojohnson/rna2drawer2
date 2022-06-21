@@ -10,7 +10,7 @@ export function AddButton(props: Props) {
     <SolidButton
       text='Add'
       onClick={props.onClick}
-      style={{ margin: '40px 0 0 0', alignSelf: 'start' }}
+      style={{ margin: '38px 0 0 0', alignSelf: 'start' }}
     />
   );
 }

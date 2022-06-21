@@ -177,7 +177,7 @@ export function AddSubsequenceForm(props: Props) {
             />
           </div>
         )}
-        <div style={{ height: '6px' }} />
+        <div style={{ height: '10px' }} />
         {!sequence ? null : <DisplayableSequenceRange sequence={sequence} />}
         <AddButton
           onClick={() => {

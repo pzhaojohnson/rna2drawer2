@@ -10,7 +10,7 @@ export function RemoveButton(props: Props) {
     <SolidButton
       text='Remove'
       onClick={props.onClick}
-      style={{ marginTop: '40px' }}
+      style={{ marginTop: '36px' }}
     />
   );
 }
