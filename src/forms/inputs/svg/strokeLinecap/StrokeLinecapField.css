@@ -10,6 +10,9 @@
   font-weight: 600;
   color: #0d0d0e;
   text-align: center;
+
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .toggledOptionButton {

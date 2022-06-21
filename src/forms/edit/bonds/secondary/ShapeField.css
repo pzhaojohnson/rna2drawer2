@@ -22,6 +22,9 @@
   font-size: 12px;
   font-weight: 600;
   color: #0d0d0e;
+
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .toggledShapeOption {
