@@ -149,6 +149,16 @@ export function AddSubsequenceForm(props: Props) {
             />
           </div>
         )}
+        <IncludeSubstructureField
+          checked={includeSubstructure}
+          onChange={event => setIncludeSubstructure(event.target.checked)}
+        />
+        {!includeSubstructure ? null : (
+          <SubstructureTextArea
+            value={substructure}
+            onChange={event => setSubstructure(event.target.value)}
+          />
+        )}
         <AppendSubsequenceField
           checked={appendSubsequence}
           onChange={event => setAppendSubsequence(event.target.checked)}
@@ -168,16 +178,6 @@ export function AddSubsequenceForm(props: Props) {
             <div style={{ height: '6px' }} />
             {!sequence ? null : <DisplayableSequenceRange sequence={sequence} />}
           </div>
-        )}
-        <IncludeSubstructureField
-          checked={includeSubstructure}
-          onChange={event => setIncludeSubstructure(event.target.checked)}
-        />
-        {!includeSubstructure ? null : (
-          <SubstructureTextArea
-            value={substructure}
-            onChange={event => setSubstructure(event.target.value)}
-          />
         )}
         <AddButton
           onClick={() => {
