@@ -1,0 +1,28 @@
+.appName {
+  font-size: 32px;
+  font-weight: 600;
+  color: rgb(18, 18, 19);
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.rightText {
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 600;
+  color: rgb(125, 125, 139);
+  text-align: right;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.underline {
+  margin: 8px 0 0 0;
+
+  height: 0px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #dbdbec;
+}
