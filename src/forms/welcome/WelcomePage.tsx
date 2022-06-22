@@ -74,7 +74,7 @@ function GitHubLink() {
 
 function MoreInfo() {
   return (
-    <p style={{ marginTop: '64px', alignSelf: 'center', fontSize: '16px', fontWeight: 500, color: 'rgb(100, 100, 116)' }} >
+    <p className={styles.moreInfo} >
       Want to learn more? Email <HelpEmailLink /> or visit the <GitHubLink /> for the user guide.
     </p>
   );

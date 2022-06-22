@@ -40,6 +40,15 @@
   transition: transform 0.05s;
 }
 
+.moreInfo {
+  margin: 64px 0 0 0;
+  align-self: center;
+
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(100, 100, 116);
+}
+
 .moreInfoLinks {
   color: #63288e;
   text-decoration-line: none;
