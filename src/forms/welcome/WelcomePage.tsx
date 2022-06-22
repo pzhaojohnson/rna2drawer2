@@ -24,10 +24,10 @@ function AppDescription() {
   );
 }
 
-function NewLink(props: Props) {
+function NewButton(props: Props) {
   return (
     <p
-      className={styles.newAndOpenLinks}
+      className={styles.newAndOpenButtons}
       onClick={() => props.app.formContainer.renderForm(newFormProps => (
         <CreateNewDrawing app={props.app} close={newFormProps.unmount} />
       ))}
@@ -37,10 +37,10 @@ function NewLink(props: Props) {
   );
 }
 
-function OpenLink(props: Props) {
+function OpenButton(props: Props) {
   return (
     <p
-      className={styles.newAndOpenLinks}
+      className={styles.newAndOpenButtons}
       onClick={() => props.app.formContainer.renderForm(openFormProps => (
         <OpenRna2drawer app={props.app} close={openFormProps.unmount} />
       ))}
@@ -133,9 +133,9 @@ export function WelcomePage(props: Props): React.ReactElement {
           <div style={{ margin: '0px 96px', display: 'flex', flexDirection: 'column' }} >
             <AppDescription />
             <div style={{ margin: '64px 44px 0', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
-              <NewLink {...props} />
+              <NewButton {...props} />
               <div style={{ width: '29px' }} ></div>
-              <OpenLink {...props} />
+              <OpenButton {...props} />
             </div>
             <HelpLinks />
             <UpdatesNotice />
