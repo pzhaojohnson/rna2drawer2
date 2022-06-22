@@ -78,6 +78,10 @@
   animation: updatesNoticeEnter 2s ease-in;
 }
 
+.updatesNoticeDate {
+  color: rgb(109, 109, 124);
+}
+
 @keyframes updatesNoticeEnter {
   0% {
     opacity: 0;
