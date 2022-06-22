@@ -1,8 +1,14 @@
-.onTop {
-  animation: onTopEnter 0.6s ease-in-out;
+.topSection {
+  margin: 128px 0 0 0;
+
+  width: 960px;
+  display: flex;
+  flex-direction: column;
+
+  animation: topSectionEnter 0.6s ease-in-out;
 }
 
-@keyframes onTopEnter {
+@keyframes topSectionEnter {
   0% {
     opacity: 0;
     transform: scale(0.75);

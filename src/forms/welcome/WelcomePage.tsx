@@ -123,10 +123,7 @@ export function WelcomePage(props: Props): React.ReactElement {
   return (
     <div style={{ width: '100vw', height: '100%', overflow: 'auto' }} >
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
-        <div
-          className={styles.onTop}
-          style={{ marginTop: '128px', width: '960px', display: 'flex', flexDirection: 'column' }}
-        >
+        <div className={styles.topSection} >
           <Header />
           <div style={{ margin: '0px 96px', display: 'flex', flexDirection: 'column' }} >
             <AppDescription />
