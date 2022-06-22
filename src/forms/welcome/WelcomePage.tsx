@@ -15,7 +15,7 @@ interface Props {
 
 function Description() {
   return (
-    <p style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(100, 100, 116)' }} >
+    <p style={{ marginTop: '32px', fontSize: '16px', fontWeight: 500, color: 'rgb(100, 100, 116)' }} >
       A web app for drawing and exploring nucleic acid structures...
     </p>
   );
@@ -71,11 +71,9 @@ function GitHubPageLink() {
 
 function HelpLinks() {
   return (
-    <div style={{ minHeight: '28px' }} >
-      <p style={{ fontSize: '16px', fontWeight: 500, color: 'rgb(100, 100, 116)' }} >
-        Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
-      </p>
-    </div>
+    <p style={{ marginTop: '64px', alignSelf: 'center', fontSize: '16px', fontWeight: 500, color: 'rgb(100, 100, 116)' }} >
+      Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
+    </p>
   );
 }
 
@@ -94,7 +92,7 @@ function UpdatesNotice() {
   return (
     <p
       className={styles.updatesNotice}
-      style={{ fontSize: '14px', fontWeight: 500, color: 'rgb(100, 100, 111)' }}
+      style={{ marginTop: '8px', alignSelf: 'center', fontSize: '14px', fontWeight: 500, color: 'rgb(100, 100, 111)' }}
     >
       See the <UpdatesLink />! <em style={{ color: 'rgb(109, 109, 124)' }} >(Dec. 14, 2021)</em>
     </p>
@@ -106,6 +104,7 @@ function Slideshow() {
     <div
       className={styles.slideshow}
       style={{
+        marginTop: '48px',
         width: '960px',
         height: '1520px',
         overflow: 'hidden',
@@ -129,25 +128,16 @@ export function WelcomePage(props: Props): React.ReactElement {
         >
           <Header />
           <div style={{ margin: '0px 96px', display: 'flex', flexDirection: 'column' }} >
-            <div style={{ marginTop: '32px' }} >
-              <Description />
+            <Description />
+            <div style={{ margin: '64px 44px 0', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
+              <NewLink {...props} />
+              <div style={{ width: '29px' }} ></div>
+              <OpenLink {...props} />
             </div>
-            <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row' }} >
-              <div style={{ margin: '0px 44px', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
-                <NewLink {...props} />
-                <div style={{ width: '29px' }} ></div>
-                <OpenLink {...props} />
-              </div>
-            </div>
-            <div style={{ marginTop: '64px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-              <HelpLinks />
-            </div>
-            <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'row', justifyContent: 'center' }} >
-              <UpdatesNotice />
-            </div>
+            <HelpLinks />
+            <UpdatesNotice />
           </div>
         </div>
-        <div style={{ height: '48px' }} ></div>
         <Slideshow />
       </div>
     </div>
