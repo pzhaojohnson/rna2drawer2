@@ -1,10 +1,13 @@
 import type { App } from 'App';
+
 import * as React from 'react';
 import styles from './WelcomePage.css';
+
 import { Header } from './Header';
-import { CreateNewDrawing } from '../new/CreateNewDrawing';
-import { OpenRna2drawer } from '../open/OpenRna2drawer';
 import { DrawingSlideshow } from './drawings/DrawingSlideshow';
+
+import { CreateNewDrawing } from 'Forms/new/CreateNewDrawing';
+import { OpenRna2drawer } from 'Forms/open/OpenRna2drawer';
 
 interface Props {
   app: App;
