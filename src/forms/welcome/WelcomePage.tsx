@@ -93,10 +93,7 @@ function UpdatesLink() {
 
 function UpdatesNotice() {
   return (
-    <p
-      className={styles.updatesNotice}
-      style={{ marginTop: '8px', alignSelf: 'center', fontSize: '14px', fontWeight: 500, color: 'rgb(100, 100, 111)' }}
-    >
+    <p className={styles.updatesNotice} >
       See the <UpdatesLink />! <em style={{ color: 'rgb(109, 109, 124)' }} >(Dec. 14, 2021)</em>
     </p>
   );
