@@ -132,7 +132,7 @@ export function WelcomePage(props: Props): React.ReactElement {
             <AppDescription />
             <div style={{ margin: '64px 44px 0', display: 'flex', flexDirection: 'row' }} >
               <NewButton {...props} />
-              <div style={{ width: '29px' }} ></div>
+              <div style={{ width: '28px' }} />
               <OpenButton {...props} />
             </div>
             <MoreInfo />
