@@ -72,7 +72,7 @@ function GitHubLink() {
   );
 }
 
-function HelpLinks() {
+function MoreInfo() {
   return (
     <p style={{ marginTop: '64px', alignSelf: 'center', fontSize: '16px', fontWeight: 500, color: 'rgb(100, 100, 116)' }} >
       Want to learn more? Email <HelpEmailLink /> or visit the <GitHubLink /> for the user guide.
@@ -137,7 +137,7 @@ export function WelcomePage(props: Props): React.ReactElement {
               <div style={{ width: '29px' }} ></div>
               <OpenButton {...props} />
             </div>
-            <HelpLinks />
+            <MoreInfo />
             <UpdatesNotice />
           </div>
         </div>
