@@ -9,7 +9,10 @@ import { DrawingSlideshow } from './drawings/DrawingSlideshow';
 import { CreateNewDrawing } from 'Forms/new/CreateNewDrawing';
 import { OpenRna2drawer } from 'Forms/open/OpenRna2drawer';
 
-interface Props {
+export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 }
 
