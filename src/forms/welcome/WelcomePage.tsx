@@ -28,8 +28,8 @@ function NewButton(props: Props) {
   return (
     <p
       className={styles.newAndOpenButtons}
-      onClick={() => props.app.formContainer.renderForm(newFormProps => (
-        <CreateNewDrawing app={props.app} close={newFormProps.unmount} />
+      onClick={() => props.app.formContainer.renderForm(formProps => (
+        <CreateNewDrawing app={props.app} close={formProps.unmount} />
       ))}
     >
       Create a New Drawing
@@ -41,8 +41,8 @@ function OpenButton(props: Props) {
   return (
     <p
       className={styles.newAndOpenButtons}
-      onClick={() => props.app.formContainer.renderForm(openFormProps => (
-        <OpenRna2drawer app={props.app} close={openFormProps.unmount} />
+      onClick={() => props.app.formContainer.renderForm(formProps => (
+        <OpenRna2drawer app={props.app} close={formProps.unmount} />
       ))}
     >
       Open a Saved Drawing
