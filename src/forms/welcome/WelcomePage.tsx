@@ -53,7 +53,7 @@ function OpenButton(props: Props) {
 function HelpEmailLink() {
   return (
     <a
-      className={styles.helpLinks}
+      className={styles.moreInfoLinks}
       href='mailto:help@rna2drawer.app'
     >
       help@rna2drawer.app
@@ -64,7 +64,7 @@ function HelpEmailLink() {
 function GitHubLink() {
   return (
     <a
-      className={styles.helpLinks}
+      className={styles.moreInfoLinks}
       href='https://github.com/pzhaojohnson/rna2drawer2/blob/main/README.md'
     >
       GitHub page

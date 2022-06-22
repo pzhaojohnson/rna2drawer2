@@ -40,12 +40,12 @@
   transition: transform 0.05s;
 }
 
-.helpLinks {
+.moreInfoLinks {
   color: #63288e;
   text-decoration-line: none;
 }
 
-.helpLinks:hover {
+.moreInfoLinks:hover {
   text-decoration-line: underline;
 }
 
