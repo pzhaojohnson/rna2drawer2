@@ -16,9 +16,9 @@ export type Props = {
   app: App;
 }
 
-function Description() {
+function AppDescription() {
   return (
-    <p style={{ marginTop: '32px', fontSize: '16px', fontWeight: 500, color: 'rgb(100, 100, 116)' }} >
+    <p className={styles.appDescription} >
       A web app for drawing and exploring nucleic acid structures...
     </p>
   );
@@ -131,7 +131,7 @@ export function WelcomePage(props: Props): React.ReactElement {
         >
           <Header />
           <div style={{ margin: '0px 96px', display: 'flex', flexDirection: 'column' }} >
-            <Description />
+            <AppDescription />
             <div style={{ margin: '64px 44px 0', flexGrow: 1, display: 'flex', flexDirection: 'row' }} >
               <NewLink {...props} />
               <div style={{ width: '29px' }} ></div>
