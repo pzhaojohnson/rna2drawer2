@@ -50,7 +50,7 @@ function OpenButton(props: Props) {
   );
 }
 
-function EmailLink() {
+function HelpEmailLink() {
   return (
     <a
       className={styles.helpLinks}
@@ -61,7 +61,7 @@ function EmailLink() {
   );
 }
 
-function GitHubPageLink() {
+function GitHubLink() {
   return (
     <a
       className={styles.helpLinks}
@@ -75,7 +75,7 @@ function GitHubPageLink() {
 function HelpLinks() {
   return (
     <p style={{ marginTop: '64px', alignSelf: 'center', fontSize: '16px', fontWeight: 500, color: 'rgb(100, 100, 116)' }} >
-      Want to learn more? Email <EmailLink /> or visit the <GitHubPageLink /> for the user guide.
+      Want to learn more? Email <HelpEmailLink /> or visit the <GitHubLink /> for the user guide.
     </p>
   );
 }
