@@ -119,7 +119,7 @@ function Slideshow() {
   );
 }
 
-export function WelcomePage(props: Props): React.ReactElement {
+export function WelcomePage(props: Props) {
   return (
     <div style={{ width: '100vw', height: '100%', overflow: 'auto' }} >
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
