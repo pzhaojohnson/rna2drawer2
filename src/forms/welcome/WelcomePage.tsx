@@ -100,25 +100,6 @@ function UpdatesNotice() {
   );
 }
 
-function Slideshow() {
-  return (
-    <div
-      className={styles.slideshow}
-      style={{
-        marginTop: '48px',
-        width: '960px',
-        height: '1520px',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}
-    >
-      <DrawingSlideshow style={{ width: '760px' }} />
-    </div>
-  );
-}
-
 export function WelcomePage(props: Props) {
   return (
     <div style={{ width: '100vw', height: '100%', overflow: 'auto' }} >
@@ -136,7 +117,7 @@ export function WelcomePage(props: Props) {
             <UpdatesNotice />
           </div>
         </div>
-        <Slideshow />
+        <DrawingSlideshow />
       </div>
     </div>
   );

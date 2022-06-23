@@ -1,4 +1,27 @@
-@keyframes fadeInAndOut {
+.drawingSlideshow {
+  margin: 48px 0 0 0;
+
+  width: 960px;
+  height: 1520px;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  animation: drawingSlideshowFadeIn 1.5s ease-in-out;
+}
+
+@keyframes drawingSlideshowFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes drawingFadeInAndOut {
   0% {
     opacity: 0;
   }

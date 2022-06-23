@@ -86,15 +86,18 @@ export function DrawingSlideshow(props: Props) {
   });
 
   return (
-    <img
-      key={key}
-      src={drawingURL}
-      alt='Example Drawing'
-      style={{
-        ...props.style,
-        opacity: 0, // prevents flashing of drawing at end of animation
-        animation: `${styles.fadeInAndOut} ${interval}s ease-in-out`
-      }}
-    />
+    <div className={styles.drawingSlideshow} >
+      <img
+        key={key}
+        src={drawingURL}
+        alt='Example Drawing'
+        style={{
+          ...props.style,
+          width: '760px',
+          opacity: 0, // prevents flashing of drawing at end of animation
+          animation: `${styles.drawingFadeInAndOut} ${interval}s ease-in-out`
+        }}
+      />
+    </div>
   );
 }
