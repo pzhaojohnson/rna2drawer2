@@ -34,15 +34,9 @@ export function BasePositionDescription(props: Props) {
     return <p className={styles.basePositionDescription} style={props.style} />
   }
 
-  let textContent = `Position ${p + no}`;
-  if (no != 0) {
-    textContent += ` (Numbering Offset of ${no})`;
-  }
-  textContent += '.';
-
   return (
     <p className={styles.basePositionDescription} style={props.style} >
-      {textContent}
+      Position {p + no}.
     </p>
   );
 }
