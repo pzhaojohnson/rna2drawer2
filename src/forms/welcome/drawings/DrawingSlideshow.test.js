@@ -1,6 +1,8 @@
-import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import * as React from 'react';
+import { render } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import { unmountComponentAtNode } from 'react-dom';
+
 import { DrawingSlideshow } from './DrawingSlideshow';
 
 let container = null;
