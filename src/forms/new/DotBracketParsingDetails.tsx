@@ -15,7 +15,7 @@ export function DotBracketParsingDetails(): React.ReactElement {
           Matching parentheses "( )" indicate base-pairs in the secondary structure.
         </p>
         <p style={{ marginTop: '8px' }} >
-          {'Pseudoknotted base-pairs are specified by "[ ]", "{ }", or "< >".'}
+          {'Pseudoknotted base-pairs are specified by "[ ]", "{ }" and "< >".'}
         </p>
         <p style={{ marginTop: '8px' }} >
           All other characters and whitespace are ignored.
