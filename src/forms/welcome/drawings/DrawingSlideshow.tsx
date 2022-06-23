@@ -57,7 +57,7 @@ function pickRandomIndex(ceiling: number, previous?: number): number {
   return index;
 }
 
-interface Props {
+export type Props = {
   style?: React.CSSProperties;
 }
 

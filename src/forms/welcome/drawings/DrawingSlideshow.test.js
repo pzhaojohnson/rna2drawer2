@@ -18,8 +18,10 @@ afterEach(() => {
   container = null;
 });
 
-it('renders', () => {
-  act(() => {
-    render(<DrawingSlideshow />, container);
+describe('DrawingSlideshow component', () => {
+  it('renders', () => {
+    act(() => {
+      render(<DrawingSlideshow />, container);
+    });
   });
 });
