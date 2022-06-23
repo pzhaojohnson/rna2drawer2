@@ -18,7 +18,7 @@ export function SequenceRange(props: Props) {
     props.sequence ? (
       <_SequenceRange
         sequence={props.sequence}
-        style={{ marginTop: '12px' }}
+        style={{ marginTop: '10px' }}
       />
     ) : (
       null
