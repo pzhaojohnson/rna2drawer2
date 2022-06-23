@@ -128,7 +128,7 @@ export function AddSubsequenceForm(props: Props) {
           onClick={() => setShowSequenceParsingOptions(!showSequenceParsingOptions)}
         />
         {!showSequenceParsingOptions ? null : (
-          <div style={{ margin: '10px 0px 0px 12px', display: 'flex', flexDirection: 'column' }} >
+          <div style={{ margin: '10px 0px 0px 13px', display: 'flex', flexDirection: 'column' }} >
             <CheckboxField
               label='Ignore Numbers'
               checked={ignoreNumbers}
