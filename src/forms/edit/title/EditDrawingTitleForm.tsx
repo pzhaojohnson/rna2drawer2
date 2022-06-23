@@ -25,7 +25,7 @@ export function EditDrawingTitleForm(props: Props) {
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column' }} >
         <DrawingTitleInput app={props.app} />
       </div>
-      <FieldDescription style={{ margin: '6px 0px 0px 16px' }} >
+      <FieldDescription style={{ margin: '8px 0px 0px 16px' }} >
         ...defaults to the sequence ID
       </FieldDescription>
     </PartialWidthContainer>
