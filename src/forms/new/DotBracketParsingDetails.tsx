@@ -12,10 +12,10 @@ export function DotBracketParsingDetails(): React.ReactElement {
           Periods "." indicate unpaired bases.
         </p>
         <p style={{ marginTop: '8px' }} >
-          Matching parentheses "( )" indicate base pairs in the secondary structure.
+          Matching parentheses "( )" indicate base-pairs in the secondary structure.
         </p>
         <p style={{ marginTop: '8px' }} >
-          {'Pseudoknotted base pairs are specified by "[ ]", "{ }", or "< >".'}
+          {'Pseudoknotted base-pairs are specified by "[ ]", "{ }", or "< >".'}
         </p>
         <p style={{ marginTop: '8px' }} >
           All other characters and whitespace are ignored.
