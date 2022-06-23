@@ -1,5 +1,5 @@
 .showComplementsToggle {
-  width: 158px;
+  width: 152px;
   padding: 2px 0px;
 
   border-width: 1px;
@@ -12,8 +12,6 @@
   align-items: center;
   justify-content: center;
 
-  color: #060634;
-
   background-color: white;
 
   cursor: pointer;
@@ -21,9 +19,10 @@
 
 .text {
   font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 10.5px;
+  font-weight: 700;
   font-style: normal;
+  color: #151517;
   user-select: none;
   cursor: pointer;
 }
@@ -52,6 +51,4 @@
 
 .showComplementsToggle:hover {
   box-shadow: 0 3px 3px rgba(231, 231, 241, 0.8);
-  transform: scale(1.0125);
-  transition: transform 0.02s;
 }

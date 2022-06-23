@@ -27,9 +27,9 @@ function Check() {
     >
       <path
         d="M86.1 15.8 34.9 64.2 10.3 39 1.8 47.1 34.5 80.7 43.1 72.7 94.2 24.2Z"
-        stroke="#0D0D63"
-        strokeWidth="2.25"
-        fill="#0D0D63"
+        stroke="#151517"
+        strokeWidth="4.5"
+        fill="#151517"
       />
     </svg>
   );
