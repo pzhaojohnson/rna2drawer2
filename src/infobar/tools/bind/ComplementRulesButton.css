@@ -1,18 +1,13 @@
 .complementRulesButton {
   padding: 0px 4px;
-  border-radius: 16px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   font-style: italic;
-  color: #070844;
+  color: #03031b;
   cursor: pointer;
 }
 
 .complementRulesButton:hover {
   text-decoration: underline;
-}
-
-.complementRulesButton:active {
-  transform: scale(0.97);
 }
