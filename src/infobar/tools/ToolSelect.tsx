@@ -44,9 +44,9 @@ function descriptionOfTool(tool: Tool) {
   } else if (tool instanceof BindingTool) {
     p.textContent = 'Pair and unpair bases with secondary and tertiary bonds.';
   } else if (tool instanceof FlatteningTool) {
-    p.textContent = 'Flatten and unflatten loops and straighten and bend consecutive stems.';
+    p.textContent = 'Flatten and unflatten loops and straighten and bend stacked stems.';
   } else if (tool instanceof FlippingTool) {
-    p.textContent = 'Flip hairpins, substructures or entire structure.';
+    p.textContent = 'Flip hairpins, substructures and the entire structure.';
   } else if (tool instanceof EditingTool) {
     p.textContent = 'Edit object colors, sizes, fonts and other attributes.';
   } else {
