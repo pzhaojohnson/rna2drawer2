@@ -25,6 +25,7 @@
       "Partners/*": ["src/partners/*"],
       "Undo/*": ["src/undo/*"],
       "Utilities/*": ["src/utilities/*"],
+      "Values/*": ["src/values/*"],
       "App": ["src/App"],
     },
     "module": "es6",
