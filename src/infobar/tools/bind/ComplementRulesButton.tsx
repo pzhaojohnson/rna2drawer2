@@ -24,7 +24,7 @@ export function ComplementRulesButton(props: Props) {
         ), { key: complementRulesFormKey });
       }}
     >
-      Complement Rules...
+      Options
     </p>
   );
 }
