@@ -9,8 +9,8 @@
 }
 
 .crossMark {
-  stroke: #2a2a2a;
-  fill: #2a2a2a;
+  stroke: rgb(16, 16, 17);
+  fill: rgb(16, 16, 17);
 }
 
 .closeButton:hover {
