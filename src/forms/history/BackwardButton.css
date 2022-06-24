@@ -1,8 +1,7 @@
 .backwardButton {}
 
 .backwardIconContainer {
-  border-radius: 2px;
-  padding: 4px 2px;
+  padding: 4px 3px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,19 +15,19 @@
 }
 
 .enabled .backwardIcon {
-  stroke: #262626;
-  fill: #262626;
+  stroke: #252529;
+  fill: #252529;
 }
 
 .disabled .backwardIcon {
-  stroke: #bfbfbf;
-  fill: #bfbfbf;
+  stroke: #b8b8c3;
+  fill: #b8b8c3;
 }
 
 .enabled:hover .backwardIconContainer {
-  background-color: rgb(242 242 242);
+  background-color: rgba(218, 218, 228, 0.37);
 }
 
 .enabled:active .backwardIconContainer {
-  background-color: rgb(222 222 222);
+  background-color: rgba(198, 198, 209, 0.42);
 }
