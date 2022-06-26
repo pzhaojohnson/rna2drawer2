@@ -47,6 +47,7 @@ import type { DrawingOverlay } from 'Draw/interact/DrawingOverlay';
 
 import { SideHighlighting } from './SideHighlighting';
 import { SideHighlightingType } from './SideHighlighting';
+import { mean } from 'Math/mean';
 
 import { SecondaryBondShroud } from './SecondaryBondShroud';
 import { TertiaryBondShroud } from './TertiaryBondShroud';
@@ -650,6 +651,10 @@ export class BindingTool {
     this.options.drawingUnderlay.clear();
     this.options.drawingUnderlay.fitTo(this.options.strictDrawing.drawing);
 
+    let baseWidth = this.options.strictDrawing.baseWidth;
+    let baseHeight = this.options.strictDrawing.baseHeight;
+    let width = 1.48 * mean([baseWidth, baseHeight]); // for side highlightings
+
     let selectedSide = preretrievedState?.selectedSide ?? this.selectedSide();
     let hoveredSide = preretrievedState?.hoveredSide ?? this.hoveredSide();
 
@@ -657,14 +662,14 @@ export class BindingTool {
       let complementarySides = preretrievedState?.complementarySides ?? this.complementarySides();
       complementarySides.forEach(side => {
         if (!hoveredSide || !sidesAreEqual(hoveredSide, side)) {
-          let highlighting = new SideHighlighting({ side, type: 'complementary' });
+          let highlighting = new SideHighlighting({ side, type: 'complementary', width });
           highlighting.appendTo(this.options.drawingUnderlay.svg);
         }
       });
     }
 
     if (selectedSide && (!hoveredSide || !sidesAreEqual(hoveredSide, selectedSide))) {
-      let highlighting = new SideHighlighting({ side: selectedSide, type: 'selected' });
+      let highlighting = new SideHighlighting({ side: selectedSide, type: 'selected', width });
       highlighting.appendTo(this.options.drawingUnderlay.svg);
     }
 
@@ -680,7 +685,7 @@ export class BindingTool {
         type = 'selected';
       }
       if (type != undefined) {
-        let highlighting = new SideHighlighting({ side: hoveredSide, type });
+        let highlighting = new SideHighlighting({ side: hoveredSide, type, width });
         highlighting.appendTo(this.options.drawingUnderlay.svg);
       }
     }

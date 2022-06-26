@@ -17,6 +17,9 @@ export type Options = {
 
   // the type of side
   type: SideHighlightingType;
+
+  // the width of the side highlighting
+  width: number;
 };
 
 const outlineTraceStrokes = {
@@ -51,7 +54,7 @@ export class SideHighlighting {
     this.outlineTrace = new BasesTrace({ bases, close: false });
     this.outlineTrace.path.attr({
       'stroke': outlineTraceStrokes[options.type],
-      'stroke-width': 20,
+      'stroke-width': options.width,
       'stroke-opacity': 1,
       'stroke-linecap': 'round',
       'stroke-linejoin': 'round',
@@ -61,7 +64,7 @@ export class SideHighlighting {
     this.fillTrace = new BasesTrace({ bases, close: false });
     this.fillTrace.path.attr({
       'stroke': fillTraceStrokes[options.type],
-      'stroke-width': 16,
+      'stroke-width': 0.8 * options.width,
       'stroke-opacity': 1,
       'stroke-linecap': 'round',
       'stroke-linejoin': 'round',
