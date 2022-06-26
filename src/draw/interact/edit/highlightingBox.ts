@@ -8,7 +8,7 @@ import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 
-import { bboxOfLine } from './bboxOfLine';
+import { bboxOfLine } from 'Draw/svg/bboxOfLine';
 
 import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
