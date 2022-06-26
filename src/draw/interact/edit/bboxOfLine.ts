@@ -2,6 +2,11 @@ import * as SVG from '@svgdotjs/svg.js';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 import { direction2D as direction } from 'Math/points/direction';
 
+/**
+ * Calculates the bounding box of a line more precisely
+ * than the built-in bbox method, which does not seem
+ * to account for stroke-width and stroke-linecap.
+ */
 export function bboxOfLine(line: SVG.Line): SVG.Box {
   let bbox = line.bbox();
 
