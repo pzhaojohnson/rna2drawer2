@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
+import { interpretNumericValue } from 'Draw/svg/interpretNumericValue';
 import { direction2D as direction } from 'Math/points/direction';
 
 /**
@@ -11,7 +11,7 @@ export function bboxOfLine(line: SVG.Line): SVG.Box {
   let bbox = line.bbox();
 
   // bbox method doesn't seem to account for stroke width
-  let strokeWidth = interpretNumber(line.attr('stroke-width'));
+  let strokeWidth = interpretNumericValue(line.attr('stroke-width'));
   if (strokeWidth) {
     let sw = strokeWidth.valueOf();
     let a = direction({ x: bbox.width, y: bbox.height }) - (Math.PI / 2);
