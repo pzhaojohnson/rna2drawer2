@@ -8,6 +8,7 @@ import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import { interpretNumber } from 'Draw/svg/interpretNumber';
 
+import { bboxOfCircle } from 'Draw/svg/bboxOfCircle';
 import { bboxOfLine } from 'Draw/svg/bboxOfLine';
 
 import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
@@ -51,11 +52,8 @@ function highlightingBoxOfBase(b: Base): Box {
     return expand(textBBox, 6);
   }
 
-  let box: Box = textBBox.merge(b.outline.circle.bbox());
-  let sw = interpretNumber(b.outline.circle.attr('stroke-width'));
-  if (sw) {
-    box = expand(box, sw.convert('px').valueOf());
-  }
+  let box: Box = textBBox.merge(bboxOfCircle(b.outline.circle));
+
   return expand(box, 1);
 }
 
