@@ -1,5 +1,6 @@
 import { Point2D as Point } from 'Math/points/Point';
 import * as SVG from '@svgdotjs/svg.js';
+import { mean } from 'Math/mean';
 
 export type BaseCoordinates = {
   center: Point;
@@ -7,6 +8,10 @@ export type BaseCoordinates = {
 
 export type Layout = {
   baseCoordinates: BaseCoordinates[],
+
+  // the dimensions of bases
+  baseWidth: number;
+  baseHeight: number;
 };
 
 export class LayoutTrace {
@@ -21,14 +26,12 @@ export class LayoutTrace {
 
     this.borderPath.attr({
       'stroke': '#D4DEFF',
-      'stroke-width': 31.5,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
     });
 
     this.fillPath.attr({
       'stroke': 'white',
-      'stroke-width': 20.25,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
       'fill': 'white',
@@ -52,6 +55,10 @@ export class LayoutTrace {
     if (layout.baseCoordinates.length == 0) {
       return;
     }
+
+    let baseSize = mean([layout.baseWidth, layout.baseHeight]);
+    this.borderPath.attr('stroke-width', 2.33 * baseSize);
+    this.fillPath.attr('stroke-width', 1.5 * baseSize);
 
     let c1 = layout.baseCoordinates[0].center;
     let d = `M ${c1.x} ${c1.y}`;

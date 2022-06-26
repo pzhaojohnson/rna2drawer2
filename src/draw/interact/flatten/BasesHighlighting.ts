@@ -1,19 +1,7 @@
 import type { Base } from 'Draw/bases/Base';
 import { BasesTrace } from 'Draw/interact/highlight/BasesTrace';
 import * as SVG from '@svgdotjs/svg.js';
-import { interpretNumber } from 'Draw/svg/interpretNumber';
-
-// returns the maximum font size that any of the text elements has
-function maxFontSize(texts: SVG.Text[]): number {
-  let fontSizes: number[] = [];
-  texts.forEach(t => {
-    let n = interpretNumber(t.attr('font-size'));
-    if (n) {
-      fontSizes.push(n.valueOf());
-    }
-  });
-  return Math.max(...fontSizes);
-}
+import { mean } from 'Math/mean';
 
 export type Options = {
 
@@ -21,6 +9,10 @@ export type Options = {
   // (should be in ascending order by base position in the layout sequence
   // and should contain at least two bases)
   readonly bases: Base[];
+
+  // the dimensions of bases
+  baseWidth: number;
+  baseHeight: number;
 };
 
 export class BasesHighlighting {
@@ -65,12 +57,9 @@ export class BasesHighlighting {
   }
 
   refit() {
-    let fs = maxFontSize(this.options.bases.map(b => b.text));
-    if (!Number.isFinite(fs) || fs < 1) {
-      fs = 1; // guarantee to be finite and at least one
-    }
-    this.borderTrace.path.attr('stroke-width', 3.5 * fs);
-    this.fillTrace.path.attr('stroke-width', 2 * fs);
+    let baseSize = mean([this.options.baseWidth, this.options.baseHeight]);
+    this.borderTrace.path.attr('stroke-width', 2.33 * baseSize);
+    this.fillTrace.path.attr('stroke-width', 1.33 * baseSize);
 
     this.borderTrace.retrace();
     this.fillTrace.retrace();

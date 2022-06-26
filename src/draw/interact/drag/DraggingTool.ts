@@ -541,12 +541,15 @@ export class DraggingTool {
       console.error('Unable to obtain updated base coordinates.');
       return;
     }
+    let baseWidth = this.options.strictDrawing.baseWidth;
+    let baseHeight = this.options.strictDrawing.baseHeight;
+    let layout = { baseCoordinates, baseWidth, baseHeight };
 
     if (!this.layoutTrace) {
-      this.layoutTrace = new LayoutTrace({ baseCoordinates });
+      this.layoutTrace = new LayoutTrace(layout);
       this.layoutTrace.appendTo(this.options.drawingUnderlay.svg);
     } else {
-      this.layoutTrace.retrace({ baseCoordinates });
+      this.layoutTrace.retrace(layout);
     }
 
     if (!this.draggedHighlighting) {
@@ -558,10 +561,10 @@ export class DraggingTool {
       }
       ps = Array.from(new Set(ps));
       sortNumbers(ps);
-      this.draggedHighlighting = new DraggedHighlighting(ps, { baseCoordinates });
+      this.draggedHighlighting = new DraggedHighlighting(ps, layout);
       this.draggedHighlighting.appendTo(this.options.drawingUnderlay.svg);
     } else {
-      this.draggedHighlighting.refit({ baseCoordinates });
+      this.draggedHighlighting.refit(layout);
     }
   }
 

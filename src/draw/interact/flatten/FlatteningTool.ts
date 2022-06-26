@@ -389,7 +389,9 @@ export class FlatteningTool {
       }
     });
 
-    this.basesHighlighting = new BasesHighlighting({ bases });
+    let baseWidth = this.options.strictDrawing.baseWidth;
+    let baseHeight = this.options.strictDrawing.baseHeight;
+    this.basesHighlighting = new BasesHighlighting({ bases, baseWidth, baseHeight });
     this.basesHighlighting.appendTo(this.options.drawingUnderlay.svg);
   }
 

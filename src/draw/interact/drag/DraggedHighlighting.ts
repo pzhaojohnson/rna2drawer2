@@ -1,5 +1,6 @@
 import { Point2D as Point } from 'Math/points/Point';
 import * as SVG from '@svgdotjs/svg.js';
+import { mean } from 'Math/mean';
 
 export type BaseCoordinates = {
   center: Point;
@@ -8,6 +9,10 @@ export type BaseCoordinates = {
 export type Layout = {
   // coordinates for every base
   baseCoordinates: BaseCoordinates[];
+
+  // the dimensions of bases
+  baseWidth: number;
+  baseHeight: number;
 };
 
 export class DraggedHighlighting {
@@ -29,7 +34,6 @@ export class DraggedHighlighting {
 
     this.borderPath.attr({
       'stroke': '#89A2EE',
-      'stroke-width': 31.5,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
       'fill': '#89A2EE',
@@ -38,7 +42,6 @@ export class DraggedHighlighting {
 
     this.fillPath.attr({
       'stroke': 'white',
-      'stroke-width': 18,
       'stroke-opacity': 1,
       'stroke-linejoin': 'round',
       'fill': 'white',
@@ -59,6 +62,10 @@ export class DraggedHighlighting {
   }
 
   refit(layout: Layout) {
+    let baseSize = mean([layout.baseWidth, layout.baseHeight]);
+    this.borderPath.attr('stroke-width', 2.33 * baseSize);
+    this.fillPath.attr('stroke-width', 1.33 * baseSize);
+
     let draggedBaseCoordinates: BaseCoordinates[] = [];
     this.draggedPositions.forEach(p => {
       let bcs: BaseCoordinates | undefined = layout.baseCoordinates[p - 1];
