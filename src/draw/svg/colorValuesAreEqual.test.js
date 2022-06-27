@@ -1,3 +1,5 @@
+import { interpretColorValue } from 'Draw/svg/interpretColorValue';
+
 import { colorValuesAreEqual } from './colorValuesAreEqual';
 
 test('colorValuesAreEqual function', () => {
@@ -22,4 +24,9 @@ test('colorValuesAreEqual function', () => {
 
   // same hex codes but different letter case
   expect(colorValuesAreEqual('#abd553', '#ABD553')).toBeTruthy();
+
+  // uninterpretable color values
+  expect(interpretColorValue('asdf')).toBeFalsy(); // is uninterpretable
+  expect(colorValuesAreEqual('asdf', '#abcdef')).toBeFalsy();
+  expect(colorValuesAreEqual('#abcdef', 'asdf')).toBeFalsy();
 });
