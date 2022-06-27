@@ -26,7 +26,7 @@ function removePerBaseLayoutProps(strictDrawing: StrictDrawing, bs: Base[]) {
 }
 
 export function removeBases(strictDrawing: StrictDrawing, bs: Base[]) {
-  unpair(strictDrawing, bs);
+  unpair(strictDrawing, bs, { updateLayout: false });
   removePerBaseLayoutProps(strictDrawing, bs);
   removeBasesFromDrawing(strictDrawing.drawing, bs);
   strictDrawing.updateLayout();

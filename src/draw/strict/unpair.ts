@@ -19,7 +19,15 @@ import {
   resetPerStemProps as resetPerStemLayoutProps,
 } from 'Draw/strict/layout/PerStemProps';
 
-export function unpair(strictDrawing: StrictDrawing, bs: Base[]) {
+export type Options = {
+  /**
+   * Whether to update the layout after unpairing.
+   * (The layout is updated if left unspecified.)
+   */
+  updateLayout?: boolean;
+};
+
+export function unpair(strictDrawing: StrictDrawing, bs: Base[], options?: Options) {
   let drawing = strictDrawing.drawing;
 
   let seq = strictDrawing.layoutSequence();
@@ -81,5 +89,8 @@ export function unpair(strictDrawing: StrictDrawing, bs: Base[]) {
   });
 
   strictDrawing.setPerBaseLayoutProps(perBaseLayoutProps);
-  strictDrawing.updateLayout();
+
+  if (options?.updateLayout ?? true) {
+    strictDrawing.updateLayout();
+  }
 }
