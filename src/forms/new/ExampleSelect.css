@@ -1,8 +1,8 @@
 .option {
-  border: 1px solid #dbdbec;
+  border: 1px solid rgba(218, 218, 237, 0.98);
   border-radius: 40px;
   padding: 2px 0;
-  width: 164px;
+  width: 166px;
   text-align: center;
 
   font-family: 'Open Sans', sans-serif;
@@ -15,8 +15,8 @@
 }
 
 .option:hover {
-  box-shadow: 0 2px 2px rgba(241, 241, 249, 0.62);
-  transform: scale(1.0275);
+  box-shadow: 0 3px 3px rgba(236, 236, 245, 0.37);
+  transform: scale(1.025);
   transition: transform 0.04s;
 }
 
