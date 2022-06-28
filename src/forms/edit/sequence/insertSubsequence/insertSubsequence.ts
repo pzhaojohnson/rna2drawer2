@@ -112,18 +112,19 @@ export function insertSubsequence(args: Args): void | never {
     parent: sequence,
     characters: subsequence,
     start: positionToInsertAt,
-  });
+  }, { updateLayout: false });
 
   if (args.includeSubstructure && substructure != null) {
     applySecondarySubstructure(strictDrawing, {
       partners: substructure.secondaryPartners,
       startPosition: positionToInsertAt,
-    });
+    }, { updateLayout: false });
     applyTertiarySubstructure(strictDrawing, {
       partners: substructure.tertiaryPartners,
       startPosition: positionToInsertAt,
     });
   }
 
+  strictDrawing.updateLayout();
   args.app.refresh();
 }

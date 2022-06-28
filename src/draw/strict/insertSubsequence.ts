@@ -21,8 +21,16 @@ import {
 
 import { evenOutLinkers } from 'Draw/strict/evenOutLinkers';
 
+export type Options = {
+  /**
+   * Whether to update the layout of the drawing.
+   * (The layout is updated if left unspecified.)
+   */
+  updateLayout?: boolean;
+};
+
 // inserts the specified subsequence into the strict drawing
-export function insertSubsequence(strictDrawing: StrictDrawing, props: SubsequenceProps) {
+export function insertSubsequence(strictDrawing: StrictDrawing, props: SubsequenceProps, options?: Options) {
   let prevSeqLength = props.parent.length;
   let prevLayoutPartners = strictDrawing.layoutPartners();
 
@@ -74,6 +82,10 @@ export function insertSubsequence(strictDrawing: StrictDrawing, props: Subsequen
   }
 
   strictDrawing.setPerBaseLayoutProps(perBaseLayoutProps);
+
   evenOutLinkers(strictDrawing, { updateLayout: false });
-  strictDrawing.updateLayout();
+
+  if (options?.updateLayout ?? true) {
+    strictDrawing.updateLayout();
+  }
 }

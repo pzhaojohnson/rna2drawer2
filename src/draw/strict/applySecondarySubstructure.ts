@@ -17,7 +17,19 @@ export type SecondarySubstructure = {
   startPosition: number;
 };
 
-export function applySecondarySubstructure(strictDrawing: StrictDrawing, substructure: SecondarySubstructure) {
+export type Options = {
+  /**
+   * Whether to update the layout of the drawing.
+   * (The layout is updated if left unspecified.)
+   */
+  updateLayout?: boolean;
+};
+
+export function applySecondarySubstructure(
+  strictDrawing: StrictDrawing,
+  substructure: SecondarySubstructure,
+  options?: Options,
+) {
   if (substructure.partners.length == 0) {
     return;
   }
@@ -49,5 +61,10 @@ export function applySecondarySubstructure(strictDrawing: StrictDrawing, substru
   });
 
   radiateSubstructure(strictDrawing, { startPosition, endPosition }, { updateLayout: false });
-  evenOutLinkers(strictDrawing, { updateLayout: true });
+
+  evenOutLinkers(strictDrawing, { updateLayout: false });
+
+  if (options?.updateLayout ?? true) {
+    strictDrawing.updateLayout();
+  }
 }
