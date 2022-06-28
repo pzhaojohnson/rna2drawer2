@@ -5,7 +5,15 @@ import { unpair as unpairInPartners } from 'Partners/edit';
 import { willUnpair } from 'Draw/strict/layout/stemProps';
 import { evenOutLinkers } from 'Draw/strict/evenOutLinkers';
 
-export function removeSecondaryBonds(strictDrawing: StrictDrawing, secondaryBonds: SecondaryBond[]) {
+export type Options = {
+  /**
+   * Whether to update the layout of the drawing.
+   * (The layout is updated if left unspecified.)
+   */
+  updateLayout?: boolean;
+};
+
+export function removeSecondaryBonds(strictDrawing: StrictDrawing, secondaryBonds: SecondaryBond[], options?: Options) {
   let sequence = strictDrawing.layoutSequence();
   let partners = strictDrawing.layoutPartners();
   let perBaseLayoutProps = strictDrawing.perBaseLayoutProps();
@@ -24,5 +32,8 @@ export function removeSecondaryBonds(strictDrawing: StrictDrawing, secondaryBond
 
   strictDrawing.setPerBaseLayoutProps(perBaseLayoutProps);
   evenOutLinkers(strictDrawing, { updateLayout: false });
-  strictDrawing.updateLayout();
+
+  if (options?.updateLayout ?? true) {
+    strictDrawing.updateLayout();
+  }
 }

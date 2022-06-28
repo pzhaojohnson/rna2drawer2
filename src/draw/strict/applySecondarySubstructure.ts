@@ -37,6 +37,7 @@ export function applySecondarySubstructure(strictDrawing: StrictDrawing, substru
     strictDrawing.drawing.secondaryBonds.filter(bond => (
       bases.has(bond.base1) || bases.has(bond.base2)
     )),
+    { updateLayout: false },
   );
 
   pairsInPartners(substructure.partners).forEach(pair => {
