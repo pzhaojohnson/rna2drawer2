@@ -19,6 +19,8 @@ import {
   resetPerLoopProps as resetPerLoopLayoutProps,
 } from 'Draw/strict/layout/PerLoopProps';
 
+import { evenOutLinkers } from 'Draw/strict/evenOutLinkers';
+
 // inserts the specified subsequence into the strict drawing
 export function insertSubsequence(strictDrawing: StrictDrawing, props: SubsequenceProps) {
   let prevSeqLength = props.parent.length;
@@ -72,5 +74,6 @@ export function insertSubsequence(strictDrawing: StrictDrawing, props: Subsequen
   }
 
   strictDrawing.setPerBaseLayoutProps(perBaseLayoutProps);
+  evenOutLinkers(strictDrawing, { updateLayout: false });
   strictDrawing.updateLayout();
 }

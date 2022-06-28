@@ -2,6 +2,7 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 import { removeSecondaryBonds } from 'Draw/strict/removeSecondaryBonds';
 import { radiateSubstructure } from 'Draw/strict/radiateSubstructure';
+import { evenOutLinkers } from 'Draw/strict/evenOutLinkers';
 
 import type { Partners } from 'Partners/Partners';
 import { pairs as pairsInPartners } from 'Partners/pairs';
@@ -46,5 +47,6 @@ export function applySecondarySubstructure(strictDrawing: StrictDrawing, substru
     }
   });
 
-  radiateSubstructure(strictDrawing, { startPosition, endPosition });
+  radiateSubstructure(strictDrawing, { startPosition, endPosition }, { updateLayout: false });
+  evenOutLinkers(strictDrawing, { updateLayout: true });
 }

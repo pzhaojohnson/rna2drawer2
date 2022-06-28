@@ -2,6 +2,7 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import type { Base } from 'Draw/bases/Base';
 import { unpair } from 'Draw/strict/unpair';
 import { compareNumbersDescending } from 'Array/sort';
+import { evenOutLinkers } from 'Draw/strict/evenOutLinkers';
 import { removeBases as removeBasesFromDrawing } from 'Draw/sequences/remove/bases';
 
 function isNumber(v: unknown): v is number {
@@ -29,5 +30,6 @@ export function removeBases(strictDrawing: StrictDrawing, bs: Base[]) {
   unpair(strictDrawing, bs, { updateLayout: false });
   removePerBaseLayoutProps(strictDrawing, bs);
   removeBasesFromDrawing(strictDrawing.drawing, bs);
+  evenOutLinkers(strictDrawing, { updateLayout: false });
   strictDrawing.updateLayout();
 }

@@ -19,6 +19,8 @@ import {
   resetPerStemProps as resetPerStemLayoutProps,
 } from 'Draw/strict/layout/PerStemProps';
 
+import { evenOutLinkers } from 'Draw/strict/evenOutLinkers';
+
 export type Options = {
   /**
    * Whether to update the layout after unpairing.
@@ -89,6 +91,8 @@ export function unpair(strictDrawing: StrictDrawing, bs: Base[], options?: Optio
   });
 
   strictDrawing.setPerBaseLayoutProps(perBaseLayoutProps);
+
+  evenOutLinkers(strictDrawing, { updateLayout: false });
 
   if (options?.updateLayout ?? true) {
     strictDrawing.updateLayout();
