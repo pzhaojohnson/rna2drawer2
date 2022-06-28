@@ -14,7 +14,7 @@
 }
 
 .currentTypeView:hover {
-  box-shadow: 0px 0px 4px #dddde7;
+  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.52);
 }
 
 .typeOption {
@@ -36,7 +36,7 @@
 }
 
 .toggledTypeOption:hover {
-  box-shadow: 0px 0px 4px #dddde7;
+  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.52);
 }
 
 .untoggledTypeOption {
