@@ -14,7 +14,7 @@ function ForwardIcon() {
         <path
           className={styles.forwardIcon}
           d="M628.06 388.187 623.817 383.945 647.825 359.937 623.816 335.922 628.059 331.68 656.31 359.937 628.06 388.187Z"
-          strokeWidth="2"
+          strokeWidth="1.75"
         />
       </g>
     </svg>

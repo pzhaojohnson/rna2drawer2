@@ -14,7 +14,7 @@ function BackwardIcon() {
         <path
           className={styles.backwardIcon}
           d="M651.947 388.191 623.697 359.935 651.947 331.684 656.19 335.926 632.181 359.935 656.191 383.949 651.947 388.191Z"
-          strokeWidth="2"
+          strokeWidth="1.75"
         />
       </g>
     </svg>
