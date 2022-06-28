@@ -1,10 +1,10 @@
 .showComplementsToggle {
-  width: 152px;
-  padding: 2px 0px;
+  width: 151px;
+  padding: 3px 0px;
 
   border-width: 1px;
   border-style: solid;
-  border-color: rgba(213, 213, 236, 0.92);
+  border-color: rgba(217, 217, 237, 0.92);
   border-radius: 16px;
 
   display: flex;
@@ -19,10 +19,9 @@
 
 .text {
   font-family: 'Open Sans', sans-serif;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   font-style: normal;
-  color: #121213;
   user-select: none;
   cursor: pointer;
 }
@@ -33,12 +32,20 @@
 
 .check {}
 
+.toggled .text {
+  color: #121213;
+}
+
 .toggled .spacer {
   display: block;
 }
 
 .toggled .check {
   display: block;
+}
+
+.untoggled .text {
+  color: rgba(152, 152, 161, 0.98);
 }
 
 .untoggled .spacer {
