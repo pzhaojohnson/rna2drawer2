@@ -15,8 +15,8 @@
 }
 
 .option:hover {
-  box-shadow: 0 3px 3px rgba(236, 236, 245, 0.37);
-  transform: scale(1.025);
+  box-shadow: 0 3px 3px rgba(236, 236, 245, 0.17);
+  transform: scale(1.04);
   transition: transform 0.04s;
 }
 
