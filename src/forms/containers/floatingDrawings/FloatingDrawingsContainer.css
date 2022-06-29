@@ -1,5 +1,5 @@
 .container {
-  animation: enter 0.6s ease-in-out;
+  animation: enter 0.55s ease-in-out;
 }
 
 @keyframes enter {
