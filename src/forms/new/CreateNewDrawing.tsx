@@ -45,7 +45,7 @@ function Header() {
             height: '0px',
             borderWidth: '0px 0px 1px 0px',
             borderStyle: 'solid',
-            borderColor: 'rgb(221, 221, 237)',
+            borderColor: 'rgba(223, 223, 236, 0.93)',
           }}
         />
       </div>

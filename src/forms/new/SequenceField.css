@@ -2,7 +2,7 @@
   margin: 4px 0px 0px 0px;
   flex-grow: 1;
 
-  border: 1px solid #dedeee;
+  border: 1px solid rgba(223, 223, 237, 0.96);
   border-radius: 2px;
   padding: 3px 6px;
 
@@ -13,11 +13,11 @@
 }
 
 .textArea:hover {
-  border-color: #212125;
+  border-color: #171718;
 }
 
 .textArea:focus {
-  border-color: #212125;
+  border-color: #171718;
   outline: none;
 }
 
