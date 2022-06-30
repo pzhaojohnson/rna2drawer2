@@ -20,7 +20,6 @@
 .text {
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
-  font-weight: 600;
   font-style: normal;
   user-select: none;
   cursor: pointer;
@@ -33,6 +32,7 @@
 .check {}
 
 .toggled .text {
+  font-weight: 600;
   color: #121213;
 }
 
@@ -45,7 +45,8 @@
 }
 
 .untoggled .text {
-  color: rgba(152, 152, 161, 0.98);
+  font-weight: 500;
+  color: rgba(149, 149, 158, 0.99);
 }
 
 .untoggled .spacer {
