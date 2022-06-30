@@ -4,7 +4,7 @@
 
   border-width: 1px;
   border-style: solid;
-  border-color: rgba(217, 217, 237, 0.92);
+  border-color: rgba(218, 218, 233, 0.94);
   border-radius: 16px;
 
   display: flex;
@@ -33,7 +33,7 @@
 
 .toggled .text {
   font-weight: 600;
-  color: #121213;
+  color: #141416;
 }
 
 .toggled .spacer {
@@ -58,5 +58,5 @@
 }
 
 .showComplementsToggle:hover {
-  box-shadow: 0 3px 3px rgba(230, 230, 241, 0.74);
+  box-shadow: 0 3px 3px rgba(230, 230, 241, 0.41);
 }
