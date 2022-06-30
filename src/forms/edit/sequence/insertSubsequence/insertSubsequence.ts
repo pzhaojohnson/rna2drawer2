@@ -91,7 +91,7 @@ export function insertSubsequence(args: Args): void | never {
   positionToInsertAt -= no;
 
   if (positionToInsertAt < 1 || positionToInsertAt > sequence.length + 1) {
-    throw new Error('Position to insert at is out of bounds.');
+    throw new Error('Position to insert at is out of range.');
   }
 
   let substructure = parseDotBracket(args.substructure);
