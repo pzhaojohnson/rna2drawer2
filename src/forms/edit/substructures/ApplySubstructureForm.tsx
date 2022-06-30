@@ -255,9 +255,9 @@ export class ApplySubstructureForm extends React.Component<Props> {
     let endPosition = startPosition + parsedDotBracket.secondaryPartners.length - 1;
 
     if (startPosition < 1 || startPosition > sequence.length) {
-      throw new Error('Start position is out of bounds.');
+      throw new Error('Start position is out of range.');
     } else if (endPosition > sequence.length) {
-      throw new Error('Substructure goes out of bounds.');
+      throw new Error('Substructure goes out of range.');
     }
 
     this.props.app.pushUndo();
