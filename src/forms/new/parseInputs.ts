@@ -46,7 +46,7 @@ function parsePartners(dotBracket: string): ParsedDotBracket | string {
 export function parseInputs(inputs: Inputs): Structure | string {
   let sequenceId = inputs.sequenceId.trim();
   if (sequenceId.length == 0) {
-    return 'Sequence ID is empty.';
+    return 'Specify a sequence ID.';
   }
   let sequence = parseSequence(inputs.sequence, {
     ignoreNumbers: inputs.ignoreNumbers,
