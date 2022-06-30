@@ -1,5 +1,7 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { interpretNumber } from 'Draw/svg/interpretNumber';
+import { bboxOfLine } from 'Draw/svg/bboxOfLine';
+import { bboxOfCircle } from 'Draw/svg/bboxOfCircle';
 import { pixelsToInches } from 'Export/units';
 import { round } from 'Math/round';
 import PptxGenJS from 'pptxgenjs';
@@ -15,6 +17,32 @@ function strokeWidth(ele: SVG.Element): number {
   }
 }
 
+/**
+ * Calculates the bounding box of the element more precisely
+ * than the built-in bbox method, which does not seem to account
+ * for stroke width and stroke line cap.
+ */
+function bboxOfElement(ele: SVG.Element): SVG.Box {
+  // use type-specific bbox functions when possible
+  if (ele instanceof SVG.Line) {
+    return bboxOfLine(ele);
+  } else if (ele instanceof SVG.Circle) {
+    return bboxOfCircle(ele);
+  }
+
+  let bbox = ele.bbox();
+
+  // account for stroke width
+  let sw = strokeWidth(ele);
+  let w = bbox.width + sw;
+  let h = bbox.height + sw;
+
+  let x = bbox.cx - (w / 2);
+  let y = bbox.cy - (h / 2);
+
+  return new SVG.Box(x, y, w, h);
+}
+
 export type ImageOptions = {
   data: string;
   x: number;
@@ -24,8 +52,7 @@ export type ImageOptions = {
 }
 
 export function svgImageOptions(ele: SVG.Element): ImageOptions {
-  let bbox = ele.bbox();
-  let sw = strokeWidth(ele);
+  let bbox = bboxOfElement(ele);
 
   let svg = ele.root();
   let nested = svg.nested(); // a nested SVG document
@@ -38,8 +65,8 @@ export function svgImageOptions(ele: SVG.Element): ImageOptions {
 
   // a width or height of less than 1 seems to cause errors
   // (so make at least 2 to be safe)
-  let w = Math.max(2, bbox.width + sw);
-  let h = Math.max(2, bbox.height + sw);
+  let w = Math.max(2, bbox.width);
+  let h = Math.max(2, bbox.height);
 
   let x = bbox.cx - (w / 2);
   let y = bbox.cy - (h / 2);
