@@ -52,7 +52,7 @@ export function exportDrawing(
       scale: scalingFactor,
     });
   } catch {
-    throw new Error('There was an error exporting the drawing.');
+    throw new Error('Unexpected error exporting the drawing.');
   }
 }
 
