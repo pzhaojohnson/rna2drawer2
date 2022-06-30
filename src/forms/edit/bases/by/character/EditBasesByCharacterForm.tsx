@@ -114,7 +114,7 @@ export function EditBasesByCharacterForm(props: Props) {
               let bases = drawing.bases().filter(b => b.text.text() == character);
 
               if (bases.length == 0) {
-                throw new Error('No bases have the specified character.');
+                throw new Error('No bases have the entered character.');
               }
 
               props.unmount();
