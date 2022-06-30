@@ -34,11 +34,11 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   if (isBlank(args.data)) {
     throw new Error('No data entered.');
   } else if (isBlank(args.startPosition)) {
-    throw new Error('Specify a start position.');
+    throw new Error('Specify the start position of the data.');
   } else if (isBlank(args.minValue)) {
-    throw new Error('Specify a minimum value.');
+    throw new Error('Specify the minimum value to select for.');
   } else if (isBlank(args.maxValue)) {
-    throw new Error('Specify a maximum value.');
+    throw new Error('Specify the maximum value to select for.');
   }
 
   let data = splitDataNonempty(args.data).map(v => Number.parseFloat(v));
@@ -47,9 +47,9 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   let maxValue = Number.parseFloat(args.maxValue);
 
   if (data.some(v => !Number.isFinite(v))) {
-    throw new Error('All data values must be a number.');
+    throw new Error('All data values must be numbers.');
   } else if (!Number.isFinite(startPosition)) {
-    throw new Error('Start position must be a number.');
+    throw new Error('Start position of data must be a number.');
   } else if (!Number.isFinite(minValue)) {
     throw new Error('Minimum value must be a number.');
   } else if (!Number.isFinite(maxValue)) {
@@ -71,7 +71,7 @@ export function selectBasesWithValuesInRange(args: Args): void | never {
   startPosition -= no;
 
   if (startPosition < 1 || startPosition > sequence.length) {
-    throw new Error('Start position outside of sequence range.');
+    throw new Error('Start position of data is out of range.');
   } else if (startPosition + data.length - 1 > sequence.length) {
     throw new Error('Data go beyond end of sequence range.');
   }
