@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './SolidButton.css';
 
 interface Props {
-  text: string;
+  text?: string;
   children?: React.ReactNode;
   onClick: () => void;
   disabled?: boolean;
