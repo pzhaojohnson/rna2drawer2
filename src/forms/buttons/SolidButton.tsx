@@ -3,6 +3,7 @@ import styles from './SolidButton.css';
 
 interface Props {
   text: string;
+  children?: React.ReactNode;
   onClick: () => void;
   disabled?: boolean;
   style?: React.CSSProperties;
@@ -16,6 +17,7 @@ export function SolidButton(props: Props): React.ReactElement {
       style={props.style}
     >
       {props.text}
+      {props.children}
     </button>
   );
 }

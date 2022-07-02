@@ -28,6 +28,19 @@ it('renders text', () => {
   expect(container.textContent.includes('Asdf Qwer')).toBeTruthy();
 });
 
+it('renders with provided children', () => {
+  act(() => {
+    render(
+      <SolidButton>
+        <span>12345</span>
+        abCde
+      </SolidButton>,
+      container,
+    );
+  });
+  expect(container.textContent).toBe('12345abCde');
+});
+
 it('binds onClick callback', () => {
   let onClick = jest.fn();
   act(() => render(<SolidButton onClick={onClick} />, container));
