@@ -132,7 +132,6 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
             </div>
             <div style={{ margin: '24px 0 24px 0', display: 'flex', alignItems: 'center' }} >
               <SubmitButton
-                text={'Submit'}
                 onClick={() => {
                   let parsed = parseInputs({
                     sequenceId: sequenceId,
@@ -159,7 +158,9 @@ export function CreateNewDrawing(props: Props): React.ReactElement {
                     props.app.refresh();
                   }
                 }}
-              />
+              >
+                Submit
+              </SubmitButton>
               {!errorMessage ? null : (
                 <ErrorMessage key={errorMessageKey} style={{ marginLeft: '10px' }} >
                   {errorMessage}
