@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { SubmitButton } from 'Forms/buttons/SubmitButton';
 import type { App } from 'App';
 import type { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
@@ -13,8 +13,7 @@ export type Props = {
 
 export function RemoveButton(props: Props) {
   return (
-    <SolidButton
-      text='Remove'
+    <SubmitButton
       onClick={() => {
         if (props.tertiaryBonds.length > 0) {
           props.app.pushUndo();
@@ -25,6 +24,8 @@ export function RemoveButton(props: Props) {
           props.app.refresh();
         }
       }}
-    />
+    >
+      Remove
+    </SubmitButton>
   );
 }
