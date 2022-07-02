@@ -13,7 +13,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { SubmitButton } from 'Forms/buttons/SubmitButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 
 import { DottedNote } from 'Forms/notes/DottedNote';
@@ -83,11 +83,12 @@ function ExportButton(
   },
 ) {
   return (
-    <SolidButton
-      text='Export'
+    <SubmitButton
       onClick={props.onClick}
       style={{ marginTop: '32px' }}
-    />
+    >
+      Export
+    </SubmitButton>
   );
 }
 

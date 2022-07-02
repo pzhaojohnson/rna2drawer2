@@ -16,7 +16,7 @@ import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { SubmitButton as _SubmitButton } from 'Forms/buttons/SubmitButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 import { DottedNote } from 'Forms/notes/DottedNote';
 
@@ -84,10 +84,11 @@ function SubmitButton(
 ) {
   return (
     <div style={{ marginTop: '40px' }} >
-      <SolidButton
-        text='Apply'
+      <_SubmitButton
         onClick={props.onClick}
-      />
+      >
+        Apply
+      </_SubmitButton>
     </div>
   );
 }
