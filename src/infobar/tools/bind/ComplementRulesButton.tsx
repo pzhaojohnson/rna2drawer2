@@ -1,7 +1,7 @@
 import type { App } from 'App';
 
 import * as React from 'react';
-import styles from './ComplementRulesButton.css';
+import { OptionsToggle } from 'Forms/buttons/OptionsToggle';
 
 import { ComplementRulesForm } from 'Forms/settings/complements/ComplementRulesForm';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,15 +16,19 @@ const complementRulesFormKey = uuidv4();
 
 export function ComplementRulesButton(props: Props) {
   return (
-    <p
-      className={styles.complementRulesButton}
+    <OptionsToggle
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
           <ComplementRulesForm {...formProps} app={props.app} />
         ), { key: complementRulesFormKey });
       }}
+      style={{
+        padding: '2px 13px',
+        fontSize: '11px',
+        fontWeight: 500,
+      }}
     >
       Options
-    </p>
+    </OptionsToggle>
   );
 }
