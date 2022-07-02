@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './OptionsToggle.css';
+import { OptionsToggle as _OptionsToggle } from 'Forms/buttons/OptionsToggle';
 
 type Props = {
   onClick: () => void;
@@ -7,11 +7,17 @@ type Props = {
 
 export function OptionsToggle(props: Props) {
   return (
-    <button
-      className={styles.optionsToggle}
+    <_OptionsToggle
       onClick={props.onClick}
+      style={{
+        margin: '12px 0 0 3px',
+        alignSelf: 'start',
+        padding: '1px 14px',
+        fontSize: '11px',
+        fontWeight: 500,
+      }}
     >
       Options
-    </button>
+    </_OptionsToggle>
   );
 }
