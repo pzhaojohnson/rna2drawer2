@@ -8,9 +8,10 @@ export type Props = {
 export function AddButton(props: Props) {
   return (
     <SubmitButton
-      text='Add'
       onClick={props.onClick}
       style={{ margin: '38px 0 0 0', alignSelf: 'start' }}
-    />
+    >
+      Add
+    </SubmitButton>
   );
 }
