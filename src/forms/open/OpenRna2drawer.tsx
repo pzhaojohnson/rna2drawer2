@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import formStyles from './OpenRna2drawer.css';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 import { FloatingDrawingsContainer } from 'Forms/containers/floatingDrawings/FloatingDrawingsContainer';
+import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
 import { OldFileNotes } from './OldFileNotes';
 import type { App } from 'App';
 import { open } from './open';
@@ -52,9 +53,15 @@ function DetailsToggle(
   },
 ) {
   return (
-    <button className={formStyles.detailsToggle} onClick={props.onClick} >
+    <_DetailsToggle
+      onClick={props.onClick}
+      style={{
+        marginRight: '440px', padding: '1px 14px',
+        fontSize: '12px', fontWeight: 500,
+      }}
+    >
       Details
-    </button>
+    </_DetailsToggle>
   );
 }
 
