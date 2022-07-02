@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { SubmitButton } from 'Forms/buttons/SubmitButton';
 
 export type Props = {
   onClick: () => void;
@@ -7,10 +7,11 @@ export type Props = {
 
 export function RemoveButton(props: Props) {
   return (
-    <SolidButton
-      text='Remove'
+    <SubmitButton
       onClick={props.onClick}
       style={{ marginTop: '38px' }}
-    />
+    >
+      Remove
+    </SubmitButton>
   );
 }
