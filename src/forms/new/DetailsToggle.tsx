@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './DetailsToggle.css';
+import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
 
 export type Props = {
   onClick?: () => void;
@@ -9,12 +9,17 @@ export type Props = {
 
 export function DetailsToggle(props: Props) {
   return (
-    <button
-      className={styles.detailsToggle}
+    <_DetailsToggle
       onClick={props.onClick}
-      style={props.style}
+      style={{
+        margin: '0 2px 0 0',
+        padding: '1px 14px',
+        fontSize: '11px',
+        fontWeight: 500,
+        ...props.style,
+      }}
     >
       Details
-    </button>
+    </_DetailsToggle>
   );
 }
