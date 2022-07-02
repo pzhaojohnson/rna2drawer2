@@ -1,0 +1,32 @@
+.optionsToggle {
+  outline: none;
+
+  /* Make large enough to probably guarantee a pill shape
+     for the toggle regardless of other styles. */
+  border-radius: 1000px;
+
+  border: none;
+  padding: 1px 14px;
+  background-color: rgb(242, 242, 255);
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  font-style: normal;
+  color: rgb(16, 16, 87);
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.optionsToggle:hover {
+  background-color: rgb(228, 228, 255);
+}
+
+.optionsToggle:active {
+  background-color: rgb(209, 209, 255);
+
+  outline: none;
+}
