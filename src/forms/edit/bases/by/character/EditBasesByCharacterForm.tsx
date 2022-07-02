@@ -10,7 +10,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { SubmitButton as _SubmitButton } from 'Forms/buttons/SubmitButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 
 import { DottedNote } from 'Forms/notes/DottedNote';
@@ -42,11 +42,12 @@ function SubmitButton(
   },
 ) {
   return (
-    <SolidButton
-      text='Select'
+    <_SubmitButton
       onClick={props.onClick}
       style={{ marginTop: '38px', alignSelf: 'flex-start' }}
-    />
+    >
+      Select
+    </_SubmitButton>
   );
 }
 
