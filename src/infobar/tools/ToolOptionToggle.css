@@ -1,0 +1,61 @@
+.toolOptionToggle {
+  padding: 3px 0px;
+
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(218, 218, 233, 0.94);
+
+  /* Make big enough to probably guarantee a pill shape
+     for the toggle regardless of other styles. */
+  border-radius: 1000px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  background-color: white;
+
+  cursor: pointer;
+}
+
+.text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-style: normal;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.check {
+  margin-left: 6px;
+}
+
+.toggled {}
+
+.toggled .text {
+  font-weight: 600;
+  color: #141416;
+}
+
+.toggled .check {
+  display: block;
+}
+
+.untoggled {}
+
+.untoggled .text {
+  font-weight: 500;
+  color: rgba(149, 149, 158, 0.99);
+}
+
+.untoggled .check {
+  display: none;
+}
+
+.toolOptionToggle:hover {
+  box-shadow: 0 3px 3px rgba(230, 230, 241, 0.41);
+}
