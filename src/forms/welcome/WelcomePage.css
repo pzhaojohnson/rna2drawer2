@@ -20,9 +20,9 @@
 }
 
 .newAndOpenButtons:hover {
-  box-shadow: 0 3px 3px rgba(234, 234, 244, 0.26);
-  transform: scale(1.05);
-  transition: transform 0.025s;
+  box-shadow: 0 3px 3px rgba(234, 234, 244, 0.21);
+  transform: scale(1.06);
+  transition: transform 0.04s;
 }
 
 .moreInfo {

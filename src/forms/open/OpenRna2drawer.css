@@ -25,9 +25,9 @@
 }
 
 .fileInputLabel:hover {
-  transform: scale(1.0175);
-  box-shadow: 0 3px 3px rgba(235, 235, 242, 0.37);
-  transition: transform 0.025s;
+  transform: scale(1.04);
+  box-shadow: 0 3px 3px rgba(235, 235, 242, 0.23);
+  transition: transform 0.04s;
 }
 
 .detailsToggle {
