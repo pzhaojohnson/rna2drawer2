@@ -2,7 +2,6 @@ import * as React from 'react';
 import styles from './SolidButton.css';
 
 interface Props {
-  text?: string;
   children?: React.ReactNode;
   onClick: () => void;
   disabled?: boolean;
@@ -16,7 +15,6 @@ export function SolidButton(props: Props): React.ReactElement {
       onClick={props.disabled ? undefined : () => props.onClick()}
       style={props.style}
     >
-      {props.text}
       {props.children}
     </button>
   );

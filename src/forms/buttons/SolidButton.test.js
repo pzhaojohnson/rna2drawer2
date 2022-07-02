@@ -23,11 +23,6 @@ it('has enabled CSS styles when enabled', () => {
   expect(b.props.className).not.toMatch(/disabled/);
 });
 
-it('renders text', () => {
-  act(() => render(<SolidButton text={'Asdf Qwer'} />, container));
-  expect(container.textContent.includes('Asdf Qwer')).toBeTruthy();
-});
-
 it('renders with provided children', () => {
   act(() => {
     render(
