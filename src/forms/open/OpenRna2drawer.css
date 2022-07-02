@@ -30,6 +30,11 @@
   transition: transform 0.04s;
 }
 
+.fileInputLabel:active {
+  transform: scale(1);
+  transition: transform 0s;
+}
+
 .detailsToggle {
   margin-right: 440px;
 

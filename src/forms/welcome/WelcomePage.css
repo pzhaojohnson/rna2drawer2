@@ -25,6 +25,11 @@
   transition: transform 0.04s;
 }
 
+.newAndOpenButtons:active {
+  transform: scale(1);
+  transition: transform 0s;
+}
+
 .moreInfo {
   margin: 64px 0 0 0;
   align-self: center;
