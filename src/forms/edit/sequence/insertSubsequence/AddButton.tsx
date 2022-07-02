@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SolidButton } from 'Forms/buttons/SolidButton';
+import { SubmitButton } from 'Forms/buttons/SubmitButton';
 
 export type Props = {
   onClick: () => void;
@@ -7,7 +7,7 @@ export type Props = {
 
 export function AddButton(props: Props) {
   return (
-    <SolidButton
+    <SubmitButton
       text='Add'
       onClick={props.onClick}
       style={{ margin: '38px 0 0 0', alignSelf: 'start' }}
