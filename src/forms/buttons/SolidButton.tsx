@@ -3,7 +3,7 @@ import styles from './SolidButton.css';
 
 export type Props = {
   children?: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   style?: React.CSSProperties;
 };
 
