@@ -2,7 +2,7 @@ import * as React from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { fireEvent } from '@testing-library/react';
-import { SolidButton } from './SolidButton';
+import { SubmitButton } from './SubmitButton';
 
 let container = null;
 
@@ -20,10 +20,10 @@ afterEach(() => {
 it('renders with provided children', () => {
   act(() => {
     render(
-      <SolidButton>
+      <SubmitButton>
         <span>12345</span>
         abCde
-      </SolidButton>,
+      </SubmitButton>,
       container,
     );
   });
@@ -32,7 +32,7 @@ it('renders with provided children', () => {
 
 it('binds onClick callback', () => {
   let onClick = jest.fn();
-  act(() => render(<SolidButton onClick={onClick} />, container));
+  act(() => render(<SubmitButton onClick={onClick} />, container));
   expect(onClick).not.toHaveBeenCalled();
   act(() => {
     fireEvent(
@@ -45,7 +45,7 @@ it('binds onClick callback', () => {
 
 it('renders with specified CSS styles', () => {
   act(() => {
-    render(<SolidButton style={{ margin: '0px 0px 12.87px 1px' }} />, container);
+    render(<SubmitButton style={{ margin: '0px 0px 12.87px 1px' }} />, container);
   });
   expect(container.firstChild.style.margin).toBe('0px 0px 12.87px 1px');
 });
