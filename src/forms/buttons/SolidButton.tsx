@@ -7,7 +7,7 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-export function SolidButton(props: Props): React.ReactElement {
+export function SolidButton(props: Props) {
   return (
     <button
       className={styles.solidButton}
