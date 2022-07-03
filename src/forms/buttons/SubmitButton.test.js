@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { render } from 'react-dom';
 import { act } from 'react-dom/test-utils';
-import { fireEvent } from '@testing-library/react';
+import { Simulate } from 'react-dom/test-utils';
+import { unmountComponentAtNode } from 'react-dom';
+
 import { SubmitButton } from './SubmitButton';
 
 let container = null;
@@ -17,35 +19,34 @@ afterEach(() => {
   container = null;
 });
 
-it('renders with provided children', () => {
-  act(() => {
-    render(
-      <SubmitButton>
-        <span>12345</span>
-        abCde
-      </SubmitButton>,
-      container,
-    );
+describe('SubmitButton component', () => {
+  it('renders with provided children', () => {
+    act(() => {
+      render(
+        <SubmitButton>
+          <span>12345</span>
+          abCde
+        </SubmitButton>,
+        container,
+      );
+    });
+    expect(container.textContent).toBe('12345abCde');
   });
-  expect(container.textContent).toBe('12345abCde');
-});
 
-it('binds onClick callback', () => {
-  let onClick = jest.fn();
-  act(() => render(<SubmitButton onClick={onClick} />, container));
-  expect(onClick).not.toHaveBeenCalled();
-  act(() => {
-    fireEvent(
-      container.childNodes[0],
-      new MouseEvent('click', { bubbles: true })
-    );
+  it('binds onClick callback', () => {
+    let onClick = jest.fn();
+    act(() => {
+      render(<SubmitButton onClick={onClick} />, container);
+    });
+    expect(onClick).not.toHaveBeenCalled();
+    Simulate.click(container.firstChild);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
-  expect(onClick).toHaveBeenCalled();
-});
 
-it('renders with specified CSS styles', () => {
-  act(() => {
-    render(<SubmitButton style={{ margin: '0px 0px 12.87px 1px' }} />, container);
+  it('renders with the specified inline CSS styles', () => {
+    act(() => {
+      render(<SubmitButton style={{ margin: '0px 0px 12.87px 1px' }} />, container);
+    });
+    expect(container.firstChild.style.margin).toBe('0px 0px 12.87px 1px');
   });
-  expect(container.firstChild.style.margin).toBe('0px 0px 12.87px 1px');
 });
