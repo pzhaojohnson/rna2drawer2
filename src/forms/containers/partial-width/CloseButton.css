@@ -1,6 +1,7 @@
 .closeButton {
-  width: 24px;
-  height: 24px;
+  margin: 0 0 0 4px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
