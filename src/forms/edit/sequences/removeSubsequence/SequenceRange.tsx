@@ -3,7 +3,7 @@ import type { Sequence } from 'Draw/sequences/Sequence';
 import * as React from 'react';
 
 // the underlying sequence range component
-import { DisplayableSequenceRange as _SequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { DisplayableSequenceRange as _SequenceRange } from 'Forms/edit/sequences/DisplayableSequenceRange';
 
 export type Props = {
   /**

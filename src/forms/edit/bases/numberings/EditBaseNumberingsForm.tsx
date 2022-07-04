@@ -7,7 +7,7 @@ import styles from './EditBaseNumberings.css';
 import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
-import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { DisplayableSequenceRange } from 'Forms/edit/sequences/DisplayableSequenceRange';
 import { NumberingOffsetField } from './NumberingOffsetField';
 import { NumberingAnchorField } from './NumberingAnchorField';
 import { NumberingIncrementField } from './NumberingIncrementField';

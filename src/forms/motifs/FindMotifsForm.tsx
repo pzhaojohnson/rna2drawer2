@@ -17,7 +17,7 @@ import { OptionsToggle } from './OptionsToggle';
 import { OptionsPanel } from './OptionsPanel';
 
 import { NumMatchesView } from './NumMatchesView';
-import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { DisplayableSequenceRange } from 'Forms/edit/sequences/DisplayableSequenceRange';
 import { MatchesView } from './MatchesView';
 
 import { isBlank } from 'Parse/isBlank';

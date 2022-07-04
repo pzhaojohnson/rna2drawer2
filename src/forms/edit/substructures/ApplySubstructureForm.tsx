@@ -14,7 +14,7 @@ import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWid
 import { TextAreaField } from 'Forms/inputs/text/TextAreaField';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
-import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { DisplayableSequenceRange } from 'Forms/edit/sequences/DisplayableSequenceRange';
 import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 import { SubmitButton as _SubmitButton } from 'Forms/buttons/SubmitButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';

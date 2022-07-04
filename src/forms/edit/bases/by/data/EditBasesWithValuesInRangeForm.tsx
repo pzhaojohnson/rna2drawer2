@@ -18,7 +18,7 @@ import { StartPositionField } from './StartPositionField';
 import { MinValueField } from './MinValueField';
 import { MaxValueField } from './MaxValueField';
 
-import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { DisplayableSequenceRange } from 'Forms/edit/sequences/DisplayableSequenceRange';
 
 import { SelectButton } from './SelectButton';
 import { ErrorMessage } from 'Forms/ErrorMessage';

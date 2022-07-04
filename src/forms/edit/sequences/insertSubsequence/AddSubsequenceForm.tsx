@@ -19,7 +19,7 @@ import { CheckboxField } from 'Forms/inputs/checkbox/CheckboxField';
 
 import { AppendSubsequenceField } from './AppendSubsequenceField';
 import { PositionToInsertAtField } from './PositionToInsertAtField';
-import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';
+import { DisplayableSequenceRange } from 'Forms/edit/sequences/DisplayableSequenceRange';
 
 import { IncludeSubstructureField } from './IncludeSubstructureField';
 import { SubstructureTextArea } from './SubstructureTextArea';

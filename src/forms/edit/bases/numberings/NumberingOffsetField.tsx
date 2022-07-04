@@ -2,7 +2,7 @@ import type { App } from 'App';
 
 import * as React from 'react';
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
-import { NumberingOffsetInput } from 'Forms/edit/sequence/NumberingOffsetInput';
+import { NumberingOffsetInput } from 'Forms/edit/sequences/NumberingOffsetInput';
 
 export type Props = {
   app: App; // a reference to the whole app

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { EditSequenceIdForm } from 'Forms/edit/sequence/EditSequenceIdForm';
+import { EditSequenceIdForm } from 'Forms/edit/sequences/EditSequenceIdForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
