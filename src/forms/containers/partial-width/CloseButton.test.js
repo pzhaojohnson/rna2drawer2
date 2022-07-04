@@ -1,6 +1,7 @@
 import React from 'react';
-import { render, unmountComponentAtNode } from 'react-dom';
+import { render } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import { unmountComponentAtNode } from 'react-dom';
 
 import { CloseButton } from './CloseButton';
 
