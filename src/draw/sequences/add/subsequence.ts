@@ -1,5 +1,5 @@
 import type { Drawing } from 'Draw/Drawing';
-import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import type { Sequence } from 'Draw/sequences/Sequence';
 import { Base } from 'Draw/bases/Base';
 import { setValues as setBaseValues } from 'Draw/bases/values';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';

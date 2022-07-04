@@ -1,4 +1,4 @@
-import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import type { Sequence } from 'Draw/sequences/Sequence';
 
 // derives the numbering offset of the sequence from the existing numberings
 // its bases have and returns undefined if the numbering offset cannot be derived

@@ -1,4 +1,4 @@
-import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import type { Sequence } from 'Draw/sequences/Sequence';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 
 // derives the numbering increment of the sequence from the existing numberings

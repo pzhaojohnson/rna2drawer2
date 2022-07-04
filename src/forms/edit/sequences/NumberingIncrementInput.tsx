@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextInput } from 'Forms/inputs/text/TextInput';
 import type { App } from 'App';
-import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import type { Sequence } from 'Draw/sequences/Sequence';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';

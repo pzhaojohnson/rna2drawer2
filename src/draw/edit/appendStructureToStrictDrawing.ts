@@ -9,7 +9,7 @@ import type { Base } from 'Draw/bases/Base';
 import { radiateStems } from 'Draw/strict/layout/radiateStems';
 import { hasKnots } from 'Partners/hasKnots';
 import { removeKnots } from 'Partners/removeKnots';
-import { SequenceInterface as Sequence } from 'Draw/sequences/SequenceInterface';
+import type { Sequence } from 'Draw/sequences/Sequence';
 import { centerView } from 'Draw/view';
 
 function _appendPerBaseLayoutProps(sd: StrictDrawing, structure: Structure) {

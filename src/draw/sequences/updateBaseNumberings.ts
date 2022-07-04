@@ -1,4 +1,4 @@
-import { SequenceInterface as Sequence } from './SequenceInterface';
+import type { Sequence } from './Sequence';
 import { addNumbering } from 'Draw/bases/number/add';
 import { removeNumbering } from 'Draw/bases/number/add';
 

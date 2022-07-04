@@ -1,4 +1,4 @@
-import { SequenceInterface as Sequence } from './SequenceInterface';
+import type { Sequence } from './Sequence';
 import {
   SavableState as SavableBaseState,
   savableState as savableBaseState,
