@@ -27,6 +27,6 @@ describe('CloseButton component', () => {
     });
     expect(onClick).not.toHaveBeenCalled();
     Simulate.click(container.firstChild);
-    expect(onClick.mock.calls.length).toBe(1);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });
