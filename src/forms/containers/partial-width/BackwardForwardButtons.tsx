@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styles from './BackwardForwardButtons.css';
 import { FormHistoryInterface as Props } from 'Forms/history/FormHistoryInterface';
-import { BackwardButton } from 'Forms/history/BackwardButton';
-import { ForwardButton } from 'Forms/history/ForwardButton';
+import { BackwardButton } from './BackwardButton';
+import { ForwardButton } from './ForwardButton';
 
 export function BackwardForwardButtons(props: Props) {
   if (!props.canGoBackward() && !props.canGoForward()) {

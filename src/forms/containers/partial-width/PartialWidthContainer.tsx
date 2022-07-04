@@ -2,7 +2,7 @@ import * as React from 'react';
 import styles from './PartialWidthContainer.css';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { CloseButton } from './CloseButton';
-import { BackwardForwardButtons } from 'Forms/history/BackwardForwardButtons';
+import { BackwardForwardButtons } from './BackwardForwardButtons';
 
 export type Props = {
   unmount: () => void;
