@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { render } from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import { unmountComponentAtNode } from 'react-dom';
