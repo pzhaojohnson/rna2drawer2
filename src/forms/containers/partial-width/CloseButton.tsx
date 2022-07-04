@@ -23,9 +23,9 @@ function CrossMark() {
   );
 }
 
-interface Props {
+export type Props = {
   onClick: () => void;
-}
+};
 
 export class CloseButton extends React.Component<Props> {
   render() {
