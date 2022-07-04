@@ -36,7 +36,7 @@ describe('BackwardAndForwardButtons component', () => {
     act(() => {
       render(<BackwardAndForwardButtons {...history} />, container);
     });
-    expect(container.childNodes.length).toBeGreaterThan(0);
+    expect(container.childNodes.length).toBeGreaterThan(0); // renders
   });
 
   test('when can only go backward', () => {
@@ -45,7 +45,7 @@ describe('BackwardAndForwardButtons component', () => {
     act(() => {
       render(<BackwardAndForwardButtons {...history} />, container);
     });
-    expect(container.childNodes.length).toBeGreaterThan(0);
+    expect(container.childNodes.length).toBeGreaterThan(0); // renders
   });
 
   test('when can only go forward', () => {
@@ -54,7 +54,7 @@ describe('BackwardAndForwardButtons component', () => {
     act(() => {
       render(<BackwardAndForwardButtons {...history} />, container);
     });
-    expect(container.childNodes.length).toBeGreaterThan(0);
+    expect(container.childNodes.length).toBeGreaterThan(0); // renders
   });
 
   test('when cannot go backward or forward', () => {
@@ -63,6 +63,6 @@ describe('BackwardAndForwardButtons component', () => {
     act(() => {
       render(<BackwardAndForwardButtons {...history} />, container);
     });
-    expect(container.childNodes.length).toBe(0);
+    expect(container.childNodes.length).toBe(0); // does not render
   });
 });
