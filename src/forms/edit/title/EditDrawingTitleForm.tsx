@@ -1,7 +1,7 @@
 import type { App } from 'App';
 
 import * as React from 'react';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { DrawingTitleInput } from './DrawingTitleInput';

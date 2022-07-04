@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 
 import styles from './AddSubsequenceForm.css';
 
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { SubsequenceField } from './SubsequenceField';

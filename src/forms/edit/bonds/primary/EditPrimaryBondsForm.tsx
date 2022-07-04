@@ -3,7 +3,7 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 
 import * as React from 'react';
 import styles from './EditPrimaryBondsForm.css';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { StrokeField } from './StrokeField';

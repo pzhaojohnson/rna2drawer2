@@ -3,7 +3,7 @@ import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import * as React from 'react';
 import styles from './EditTertiaryBondsForm.css';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { StrokeField } from './StrokeField';

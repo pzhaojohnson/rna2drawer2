@@ -4,7 +4,7 @@ import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
 
 import * as React from 'react';
 import styles from './EditBaseNumberings.css';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { DisplayableSequenceRange } from 'Forms/edit/sequence/DisplayableSequenceRange';

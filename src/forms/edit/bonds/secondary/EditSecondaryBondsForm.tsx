@@ -3,7 +3,7 @@ import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 
 import * as React from 'react';
 import styles from './EditSecondaryBondsForm.css';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { StrokeField } from './StrokeField';

@@ -10,7 +10,7 @@ import { applyTertiarySubstructure } from 'Draw/strict/applyTertiarySubstructure
 import * as React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { TextAreaField } from 'Forms/inputs/text/TextAreaField';
 import { FieldDescription } from 'Forms/inputs/labels/FieldDescription';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';

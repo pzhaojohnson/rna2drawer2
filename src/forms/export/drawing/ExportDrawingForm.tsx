@@ -7,7 +7,7 @@ import { pointsToPixels } from 'Export/units';
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { TextInputField } from 'Forms/inputs/text/TextInputField';

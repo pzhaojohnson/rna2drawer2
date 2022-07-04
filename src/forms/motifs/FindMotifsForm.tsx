@@ -9,7 +9,7 @@ import * as React from 'react';
 import styles from './FindMotifsForm.css';
 
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 
 import { MotifInput } from './MotifInput';
 

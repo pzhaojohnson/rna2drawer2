@@ -4,7 +4,7 @@ import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnot
 
 import * as React from 'react';
 import styles from './EditBasesForm.css';
-import { PartialWidthContainer } from 'Forms/containers/PartialWidthContainer';
+import { PartialWidthContainer } from 'Forms/containers/partial-width/PartialWidthContainer';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { WidthField } from './WidthField';
