@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { render } from 'react-dom';
 import { unmountComponentAtNode } from 'react-dom';
 
-import { BackwardForwardButtons } from './BackwardForwardButtons';
+import { BackwardAndForwardButtons } from './BackwardAndForwardButtons';
 
 let history = null;
 
@@ -29,12 +29,12 @@ afterEach(() => {
   history = null;
 });
 
-describe('BackwardForwardButtons component', () => {
+describe('BackwardAndForwardButtons component', () => {
   test('when can go backward and forward', () => {
     history.canGoBackward = jest.fn(() => true);
     history.canGoForward = jest.fn(() => true);
     act(() => {
-      render(<BackwardForwardButtons {...history} />, container);
+      render(<BackwardAndForwardButtons {...history} />, container);
     });
     expect(container.childNodes.length).toBeGreaterThan(0);
   });
@@ -43,7 +43,7 @@ describe('BackwardForwardButtons component', () => {
     history.canGoBackward = jest.fn(() => true);
     history.canGoForward = jest.fn(() => false);
     act(() => {
-      render(<BackwardForwardButtons {...history} />, container);
+      render(<BackwardAndForwardButtons {...history} />, container);
     });
     expect(container.childNodes.length).toBeGreaterThan(0);
   });
@@ -52,7 +52,7 @@ describe('BackwardForwardButtons component', () => {
     history.canGoBackward = jest.fn(() => false);
     history.canGoForward = jest.fn(() => true);
     act(() => {
-      render(<BackwardForwardButtons {...history} />, container);
+      render(<BackwardAndForwardButtons {...history} />, container);
     });
     expect(container.childNodes.length).toBeGreaterThan(0);
   });
@@ -61,7 +61,7 @@ describe('BackwardForwardButtons component', () => {
     history.canGoBackward = jest.fn(() => false);
     history.canGoForward = jest.fn(() => false);
     act(() => {
-      render(<BackwardForwardButtons {...history} />, container);
+      render(<BackwardAndForwardButtons {...history} />, container);
     });
     expect(container.childNodes.length).toBe(0);
   });
