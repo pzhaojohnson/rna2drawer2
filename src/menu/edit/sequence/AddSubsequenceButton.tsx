@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { AddSubsequenceForm } from 'Forms/edit/sequences/insertSubsequence/AddSubsequenceForm';
+import { AddSubsequenceForm } from 'Forms/edit/sequences/subsequences/add/AddSubsequenceForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
