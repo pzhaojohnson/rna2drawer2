@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useRef } from 'react';
 import formStyles from './OpenRna2drawer.css';
 import { ErrorMessage } from 'Forms/ErrorMessage';
-import { FloatingDrawingsContainer } from 'Forms/containers/floatingDrawings/FloatingDrawingsContainer';
+import { FloatingDrawingsContainer } from 'Forms/containers/floating-drawings/FloatingDrawingsContainer';
 import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
 import { OldFileNotes } from './OldFileNotes';
 import type { App } from 'App';

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 import type { App } from 'App';
-import { FloatingDrawingsContainer } from '../containers/floatingDrawings/FloatingDrawingsContainer';
+import { FloatingDrawingsContainer } from 'Forms/containers/floating-drawings/FloatingDrawingsContainer';
 import { ExampleSelect } from './ExampleSelect';
 import { SequenceIdField } from './SequenceIdField';
 import { SequenceField } from './SequenceField';
