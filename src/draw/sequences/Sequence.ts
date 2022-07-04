@@ -1,4 +1,3 @@
-import { SequenceInterface } from './SequenceInterface';
 import { Base } from 'Draw/bases/Base';
 
 export type Defaults = {
@@ -6,7 +5,7 @@ export type Defaults = {
   numberingIncrement: number;
 }
 
-export class Sequence implements SequenceInterface {
+export class Sequence {
   static recommendedDefaults: Defaults;
 
   id: string;
