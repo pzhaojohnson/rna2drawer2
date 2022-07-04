@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import { Simulate } from 'react-dom/test-utils';
 import { unmountComponentAtNode } from 'react-dom';
 
 import { CloseButton } from './CloseButton';
@@ -25,9 +26,7 @@ describe('CloseButton component', () => {
       render(<CloseButton onClick={onClick} />, container);
     });
     expect(onClick).not.toHaveBeenCalled();
-    container.firstChild.dispatchEvent(
-      new Event('click', { bubbles: true })
-    );
+    Simulate.click(container.firstChild);
     expect(onClick.mock.calls.length).toBe(1);
   });
 });
