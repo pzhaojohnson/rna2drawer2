@@ -48,4 +48,11 @@ describe('StemWrapper class', () => {
     expect(stem.containsPosition(94)).toBeTruthy();
     expect(stem.containsPosition(200)).toBeFalsy();
   });
+
+  test('enclosesPosition method', () => {
+    let stem = new StemWrapper(createStem({ bottomPair: [102, 125], numPairs: 2 }));
+    expect(stem.enclosesPosition(98)).toBeFalsy();
+    expect(stem.enclosesPosition(111)).toBeTruthy();
+    expect(stem.enclosesPosition(150)).toBeFalsy();
+  });
 });

@@ -7,6 +7,7 @@ import { topPair } from 'Partners/Stem';
 import { stemsAreEqual } from 'Partners/stemsAreEqual';
 
 import { contains as stemContainsPosition } from 'Partners/Stem';
+import { stemEnclosesPosition } from 'Partners/stemEnclosesPosition';
 
 export class StemWrapper {
   /**
@@ -37,6 +38,10 @@ export class StemWrapper {
 
   containsPosition(p: number) {
     return stemContainsPosition(this.stem, p);
+  }
+
+  enclosesPosition(p: number) {
+    return stemEnclosesPosition(this.stem, p);
   }
 }
 
