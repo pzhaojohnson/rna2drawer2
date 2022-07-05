@@ -1,3 +1,6 @@
+/**
+ * A pairing of two positions.
+ */
 export type Pair = [number, number];
 
 /**
