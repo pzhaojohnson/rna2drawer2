@@ -1,7 +1,7 @@
 import { Stem } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
-import { pairsAreEqual } from 'Partners/pairsAreEqual';
+import { pairsAreEqual } from 'Partners/pairs/pairsAreEqual';
 
 export function stemsAreEqual(stem1: Stem, stem2: Stem): boolean {
   return (

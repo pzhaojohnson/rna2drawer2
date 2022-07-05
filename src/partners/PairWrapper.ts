@@ -1,7 +1,7 @@
 import type { Pair } from 'Partners/pairs/Pair';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
-import { pairsAreEqual } from 'Partners/pairsAreEqual';
+import { pairsAreEqual } from 'Partners/pairs/pairsAreEqual';
 
 export class PairWrapper {
   /**
