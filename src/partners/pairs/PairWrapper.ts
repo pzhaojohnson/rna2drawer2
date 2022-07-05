@@ -21,8 +21,9 @@ export class PairWrapper {
     return downstreamPartner(this.pair);
   }
 
-  equals(other: Pair) {
-    return pairsAreEqual(this.pair, other);
+  equals(other: Pair | PairWrapper) {
+    let otherPair = other instanceof PairWrapper ? other.pair : other;
+    return pairsAreEqual(this.pair, otherPair);
   }
 }
 

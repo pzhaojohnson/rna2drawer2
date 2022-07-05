@@ -19,7 +19,11 @@ describe('PairWrapper class', () => {
 
   test('equals method', () => {
     let pair = new PairWrapper([38, 69]);
+
     expect(pair.equals([69, 38])).toBeTruthy(); // different order
+    expect(pair.equals(new PairWrapper([69, 38]))).toBeTruthy();
+
     expect(pair.equals([38, 68])).toBeFalsy(); // one partner different
+    expect(pair.equals(new PairWrapper([38, 68]))).toBeFalsy();
   });
 });
