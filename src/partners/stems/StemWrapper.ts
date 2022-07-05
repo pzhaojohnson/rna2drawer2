@@ -6,6 +6,8 @@ import { topPair } from 'Partners/Stem';
 
 import { stemsAreEqual } from 'Partners/stemsAreEqual';
 
+import { contains as stemContainsPosition } from 'Partners/Stem';
+
 export class StemWrapper {
   /**
    * The wrapped stem.
@@ -31,6 +33,10 @@ export class StemWrapper {
   equals(other: Stem | StemWrapper) {
     let otherStem = other instanceof StemWrapper ? other.stem : other;
     return stemsAreEqual(this.stem, otherStem);
+  }
+
+  containsPosition(p: number) {
+    return stemContainsPosition(this.stem, p);
   }
 }
 
