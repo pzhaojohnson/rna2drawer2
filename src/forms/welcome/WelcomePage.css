@@ -21,7 +21,7 @@
 
 .newAndOpenButtons:hover {
   box-shadow: 0 3px 3px rgba(234, 234, 244, 0.21);
-  transform: scale(1.06);
+  transform: scale(1.055);
   transition: transform 0.04s;
 }
 
