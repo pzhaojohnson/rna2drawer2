@@ -21,6 +21,16 @@ describe('StemWrapper class', () => {
     expect(topPair.downstreamPartner).toBe(72);
   });
 
+  test('pairs method', () => {
+    let stem = new StemWrapper(createStem({ bottomPair: [78, 43], numPairs: 4 }));
+    let pairs = stem.pairs();
+    expect(pairs.length).toBe(4);
+    expect(pairs.find(pair => pair.equals([43, 78]))).toBeTruthy();
+    expect(pairs.find(pair => pair.equals([44, 77]))).toBeTruthy();
+    expect(pairs.find(pair => pair.equals([45, 76]))).toBeTruthy();
+    expect(pairs.find(pair => pair.equals([46, 75]))).toBeTruthy();
+  });
+
   test('numPairs getter', () => {
     let stem = new StemWrapper(createStem({ bottomPair: [1, 100], numPairs: 16 }));
     expect(stem.numPairs).toBe(16);
