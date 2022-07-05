@@ -2,7 +2,7 @@ import type { Partners } from 'Partners/Partners';
 import type { Pair } from 'Partners/pairs/Pair';
 
 /**
- * Returns an array of all pairs in the structure.
+ * Returns an array of all the pairs in the structure.
  */
 export function pairsInPartners(partners: Partners): Pair[] {
   let prs: Pair[] = [];
