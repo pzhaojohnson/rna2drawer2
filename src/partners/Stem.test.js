@@ -21,6 +21,13 @@ test('createStem function', () => {
   )).toStrictEqual(
     { position5: 20, position3: 102, size: 6 }
   );
+
+  // using numPairs specification property
+  expect(createStem(
+    { bottomPair: [38, 17], numPairs: 5 }
+  )).toStrictEqual(
+    { position5: 17, position3: 38, size: 5 }
+  );
 });
 
 describe('pairs function', () => {

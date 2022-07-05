@@ -11,16 +11,20 @@ export type Stem = {
   size: number;
 };
 
-export type StemSpecification = { bottomPair: Pair, size: number };
+export type StemSpecification = (
+  { bottomPair: Pair, size: number }
+  | { bottomPair: Pair, numPairs: number }
+);
 
 // allows for stem objects to be specified in different ways
 // without knowledge of the underlying object structure
 export function createStem(spec: StemSpecification): Stem {
   let bottomPair = new PairWrapper(spec.bottomPair);
+  let size = 'size' in spec ? spec.size : spec.numPairs;
   return {
     position5: bottomPair.upstreamPartner,
     position3: bottomPair.downstreamPartner,
-    size: spec.size,
+    size,
   };
 }
 
