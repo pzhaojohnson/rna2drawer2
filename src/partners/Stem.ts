@@ -1,8 +1,5 @@
-import {
-  Pair,
-  partner5,
-  partner3,
-} from './Pair';
+import { Pair } from './Pair';
+import { PairWrapper } from 'Partners/PairWrapper';
 
 // a consecutive stack of pairs
 export type Stem = {
@@ -19,9 +16,10 @@ export type StemSpecification = { bottomPair: Pair, size: number };
 // allows for stem objects to be specified in different ways
 // without knowledge of the underlying object structure
 export function createStem(spec: StemSpecification): Stem {
+  let bottomPair = new PairWrapper(spec.bottomPair);
   return {
-    position5: partner5(spec.bottomPair),
-    position3: partner3(spec.bottomPair),
+    position5: bottomPair.upstreamPartner,
+    position3: bottomPair.downstreamPartner,
     size: spec.size,
   };
 }
@@ -47,10 +45,10 @@ export function topPair(st: Stem): Pair {
 }
 
 export function contains(st: Stem, p: number): boolean {
-  let bpr = bottomPair(st);
-  let tpr = topPair(st);
+  let bpr = new PairWrapper(bottomPair(st));
+  let tpr = new PairWrapper(topPair(st));
   return (
-    (p >= partner5(bpr) && p <= partner5(tpr))
-    || (p <= partner3(bpr) && p >= partner3(tpr))
+    (p >= bpr.upstreamPartner && p <= tpr.upstreamPartner)
+    || (p <= bpr.downstreamPartner && p >= tpr.downstreamPartner)
   );
 }
