@@ -1,6 +1,6 @@
-import { Pair } from 'Partners/Pair';
-import { upstreamPartner } from 'Partners/Pair';
-import { downstreamPartner } from 'Partners/Pair';
+import { Pair } from 'Partners/pairs/Pair';
+import { upstreamPartner } from 'Partners/pairs/Pair';
+import { downstreamPartner } from 'Partners/pairs/Pair';
 
 export function pairsAreEqual(pair1: Pair, pair2: Pair): boolean {
   return (

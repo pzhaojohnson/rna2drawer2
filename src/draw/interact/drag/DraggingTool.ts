@@ -21,7 +21,7 @@ import { Stem } from 'Partners/Stem';
 import { pairs } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
-import { downstreamPartner, upstreamPartner } from 'Partners/Pair';
+import { downstreamPartner, upstreamPartner } from 'Partners/pairs/Pair';
 import { stems as stemsOfPartners } from 'Partners/stems';
 
 import { stemEnclosesPosition } from 'Partners/stemEnclosesPosition';

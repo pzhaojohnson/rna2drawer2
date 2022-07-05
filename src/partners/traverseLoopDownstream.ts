@@ -3,8 +3,8 @@ import { partnerOf } from 'Partners/Partners';
 
 import { Stem } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
-import { upstreamPartner } from 'Partners/Pair';
-import { downstreamPartner } from 'Partners/Pair';
+import { upstreamPartner } from 'Partners/pairs/Pair';
+import { downstreamPartner } from 'Partners/pairs/Pair';
 
 export type Traversed = {
 

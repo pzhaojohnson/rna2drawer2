@@ -3,8 +3,8 @@ import { Stem } from './Stem';
 import { UnpairedRegion } from './UnpairedRegion';
 import { inBounds } from './bounds';
 import { arePaired, isUnpaired } from './paired';
-import { upstreamPartner } from 'Partners/Pair';
-import { downstreamPartner } from 'Partners/Pair';
+import { upstreamPartner } from 'Partners/pairs/Pair';
+import { downstreamPartner } from 'Partners/pairs/Pair';
 
 // returns the stem containing the given position
 // or undefined if the position isn't in a stem

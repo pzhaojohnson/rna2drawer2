@@ -1,5 +1,5 @@
 import { Partners } from 'Partners/Partners';
-import { Pair } from 'Partners/Pair';
+import { Pair } from 'Partners/pairs/Pair';
 
 // returns all pairs in the partners notation
 export function pairs(partners: Partners): Pair[] {

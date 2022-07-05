@@ -1,4 +1,4 @@
-import { Pair } from './Pair';
+import { Pair } from 'Partners/pairs/Pair';
 import { PairWrapper } from 'Partners/PairWrapper';
 
 // a consecutive stack of pairs

@@ -1,8 +1,8 @@
 import { StrictLayout } from 'Draw/strict/layout/StrictLayout';
 import { Stem } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
-import { upstreamPartner } from 'Partners/Pair';
-import { downstreamPartner } from 'Partners/Pair';
+import { upstreamPartner } from 'Partners/pairs/Pair';
+import { downstreamPartner } from 'Partners/pairs/Pair';
 import { displacement2D as displacement } from 'Math/points/displacement';
 import { direction2D as direction } from 'Math/points/direction';
 import { normalizeAngle } from 'Math/angles/normalize';

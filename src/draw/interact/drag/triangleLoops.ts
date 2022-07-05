@@ -3,8 +3,8 @@ import { StrictLayoutSpecification } from './StrictLayoutSpecification';
 import { Stem } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
-import { upstreamPartner } from 'Partners/Pair';
-import { downstreamPartner } from 'Partners/Pair';
+import { upstreamPartner } from 'Partners/pairs/Pair';
+import { downstreamPartner } from 'Partners/pairs/Pair';
 import { containingStem as stemContainingPosition } from 'Partners/containing';
 
 import { Linker } from 'Partners/Linker';

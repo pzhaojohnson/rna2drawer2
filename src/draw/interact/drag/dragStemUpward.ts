@@ -4,7 +4,7 @@ import { initializeAtPosition } from 'Draw/strict/layout/PerBaseStrictLayoutProp
 
 import { Stem } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
-import { upstreamPartner } from 'Partners/Pair';
+import { upstreamPartner } from 'Partners/pairs/Pair';
 import { nearestStemEnclosingPosition } from './nearestStemEnclosingPosition';
 import { hasTriangleLoop } from './triangleLoops';
 

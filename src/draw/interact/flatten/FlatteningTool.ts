@@ -21,7 +21,7 @@ import { Stem } from 'Partners/Stem';
 import { pairs } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
-import { upstreamPartner } from 'Partners/Pair';
+import { upstreamPartner } from 'Partners/pairs/Pair';
 import { stemIsHairpin } from 'Partners/stemIsHairpin';
 
 import { stemOfBase } from 'Draw/strict/stemOfBase';
