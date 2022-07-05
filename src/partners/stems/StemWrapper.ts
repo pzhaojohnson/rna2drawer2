@@ -1,9 +1,9 @@
 import type { Stem } from 'Partners/Stem';
 import { PairWrapper } from 'Partners/pairs/PairWrapper';
 
+import { pairs as pairsInStem } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
-import { pairs as pairsInStem } from 'Partners/Stem';
 
 import { stemsAreEqual } from 'Partners/stemsAreEqual';
 
@@ -20,14 +20,6 @@ export class StemWrapper {
     this.stem = stem;
   }
 
-  bottomPair(): PairWrapper {
-    return new PairWrapper(bottomPair(this.stem));
-  }
-
-  topPair(): PairWrapper {
-    return new PairWrapper(topPair(this.stem));
-  }
-
   pairs(): PairWrapper[] {
     let pairs = pairsInStem(this.stem);
     return pairs.map(pair => new PairWrapper(pair));
@@ -35,6 +27,14 @@ export class StemWrapper {
 
   get numPairs() {
     return this.stem.size;
+  }
+
+  bottomPair(): PairWrapper {
+    return new PairWrapper(bottomPair(this.stem));
+  }
+
+  topPair(): PairWrapper {
+    return new PairWrapper(topPair(this.stem));
   }
 
   equals(other: Stem | StemWrapper) {
