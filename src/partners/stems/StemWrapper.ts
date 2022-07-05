@@ -33,3 +33,7 @@ export class StemWrapper {
     return stemsAreEqual(this.stem, otherStem);
   }
 }
+
+export {
+  StemWrapper as Stem,
+};
