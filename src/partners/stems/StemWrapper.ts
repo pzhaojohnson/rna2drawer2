@@ -4,6 +4,8 @@ import { PairWrapper } from 'Partners/pairs/PairWrapper';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
 
+import { stemsAreEqual } from 'Partners/stemsAreEqual';
+
 export class StemWrapper {
   /**
    * The wrapped stem.
@@ -24,5 +26,10 @@ export class StemWrapper {
 
   get numPairs() {
     return this.stem.size;
+  }
+
+  equals(other: Stem | StemWrapper) {
+    let otherStem = other instanceof StemWrapper ? other.stem : other;
+    return stemsAreEqual(this.stem, otherStem);
   }
 }

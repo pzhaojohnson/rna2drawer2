@@ -25,4 +25,18 @@ describe('StemWrapper class', () => {
     let stem = new StemWrapper(createStem({ bottomPair: [1, 100], numPairs: 16 }));
     expect(stem.numPairs).toBe(16);
   });
+
+  test('equals method', () => {
+    // bottom pair partners in different orders
+    let stem = new StemWrapper(createStem({ bottomPair: [3, 72], numPairs: 2 }));
+    let otherStem = createStem({ bottomPair: [72, 3], numPairs: 2 });
+    expect(stem.equals(otherStem)).toBeTruthy();
+    expect(stem.equals(new StemWrapper(otherStem))).toBeTruthy();
+
+    // one bottom pair partner different
+    stem = new StemWrapper(createStem({ bottomPair: [4, 200], numPairs: 7 }));
+    otherStem = createStem({ bottomPair: [5, 200], numPairs: 7 });
+    expect(stem.equals(otherStem)).toBeFalsy();
+    expect(stem.equals(new StemWrapper(otherStem))).toBeFalsy();
+  });
 });
