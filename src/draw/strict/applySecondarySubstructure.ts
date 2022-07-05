@@ -5,7 +5,7 @@ import { radiateSubstructure } from 'Draw/strict/radiateSubstructure';
 import { evenOutLinkers } from 'Draw/strict/evenOutLinkers';
 
 import type { Partners } from 'Partners/Partners';
-import { pairs as pairsInPartners } from 'Partners/pairs/pairs';
+import { pairsInPartners } from 'Partners/pairs/pairsInPartners';
 
 export type SecondarySubstructure = {
 

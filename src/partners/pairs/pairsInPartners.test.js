@@ -1,18 +1,18 @@
-import { pairs } from './pairs';
+import { pairsInPartners } from './pairsInPartners';
 
-describe('pairs function', () => {
+describe('pairsInPartners function', () => {
   test('empty partners', () => {
-    expect(pairs([])).toStrictEqual([]);
+    expect(pairsInPartners([])).toStrictEqual([]);
   });
 
   test('unstructured partners', () => {
     let partners = [undefined, null, null, undefined];
-    expect(pairs(partners)).toStrictEqual([]);
+    expect(pairsInPartners(partners)).toStrictEqual([]);
   });
 
   test('multiple stems', () => {
     let partners = [12, 11, null, 8,  7, undefined, 5, 4, undefined, null, 2, 1, null];
-    expect(pairs(partners)).toStrictEqual(
+    expect(pairsInPartners(partners)).toStrictEqual(
       [[1, 12], [2, 11], [4, 8], [5, 7]]
     );
   });
@@ -23,7 +23,7 @@ describe('pairs function', () => {
     // to find this pair
     partners[25 - 1] = 32;
     partners[32 - 1] = 25;
-    expect(pairs(partners)).toStrictEqual(
+    expect(pairsInPartners(partners)).toStrictEqual(
       [[1, 6], [2, 5], [25, 32]]
     );
   });

@@ -4,7 +4,7 @@ import type { Pair } from 'Partners/pairs/Pair';
 /**
  * Returns an array of all pairs in the structure.
  */
-export function pairs(partners: Partners): Pair[] {
+export function pairsInPartners(partners: Partners): Pair[] {
   let prs: Pair[] = [];
   partners.forEach((q, i) => {
     let p = i + 1;

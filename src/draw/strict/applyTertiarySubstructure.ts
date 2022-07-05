@@ -3,7 +3,7 @@ import { addTertiaryBond } from 'Draw/bonds/curved/add';
 import { removeTertiaryBonds } from 'Draw/strict/removeTertiaryBonds';
 
 import type { Partners } from 'Partners/Partners';
-import { pairs as pairsInPartners } from 'Partners/pairs/pairs';
+import { pairsInPartners } from 'Partners/pairs/pairsInPartners';
 
 export type TertiarySubstructure = {
 
