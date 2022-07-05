@@ -36,6 +36,12 @@ describe('StemWrapper class', () => {
     expect(topPair.downstreamPartner).toBe(72);
   });
 
+  test('upstreamSide and downstreamSide methods', () => {
+    let stem = new StemWrapper(createStem({ bottomPair: [37, 84], numPairs: 5 }));
+    expect(stem.upstreamSide()).toStrictEqual([37, 38, 39, 40, 41]);
+    expect(stem.downstreamSide()).toStrictEqual([84, 83, 82, 81, 80]);
+  });
+
   test('equals method', () => {
     // bottom pair partners in different orders
     let stem = new StemWrapper(createStem({ bottomPair: [3, 72], numPairs: 2 }));

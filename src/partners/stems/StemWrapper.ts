@@ -5,6 +5,9 @@ import { pairs as pairsInStem } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
 
+import { upstreamSideOfStem } from 'Partners/upstreamSideOfStem';
+import { downstreamSideOfStem } from 'Partners/downstreamSideOfStem';
+
 import { stemsAreEqual } from 'Partners/stemsAreEqual';
 
 import { contains as stemContainsPosition } from 'Partners/Stem';
@@ -35,6 +38,14 @@ export class StemWrapper {
 
   topPair(): PairWrapper {
     return new PairWrapper(topPair(this.stem));
+  }
+
+  upstreamSide() {
+    return upstreamSideOfStem(this.stem);
+  }
+
+  downstreamSide() {
+    return downstreamSideOfStem(this.stem);
   }
 
   equals(other: Stem | StemWrapper) {
