@@ -1,5 +1,5 @@
 import { Pair } from 'Partners/pairs/Pair';
-import { PairWrapper } from 'Partners/PairWrapper';
+import { PairWrapper } from 'Partners/pairs/PairWrapper';
 
 // a consecutive stack of pairs
 export type Stem = {
