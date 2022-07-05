@@ -3,7 +3,8 @@ import { Stem } from './Stem';
 import { UnpairedRegion } from './UnpairedRegion';
 import { inBounds } from './bounds';
 import { arePaired, isUnpaired } from './paired';
-import { partner5, partner3 } from './Pair';
+import { upstreamPartner } from 'Partners/Pair';
+import { downstreamPartner } from 'Partners/Pair';
 
 // returns the stem containing the given position
 // or undefined if the position isn't in a stem
@@ -11,8 +12,8 @@ export function containingStem(partners: Partners, p: number): Stem | undefined 
   if (inBounds(partners, p)) {
     let q = partnerOf(partners, p);
     if (typeof q == 'number') {
-      let p5 = partner5([p, q]);
-      let p3 = partner3([p, q]);
+      let p5 = upstreamPartner([p, q]);
+      let p3 = downstreamPartner([p, q]);
       while (p5 - 1 > 0 && p3 + 1 <= partners.length && arePaired(partners, p5 - 1, p3 + 1)) {
         p5--;
         p3++;
