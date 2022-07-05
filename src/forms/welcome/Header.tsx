@@ -18,7 +18,7 @@ function RightText() {
       </p>
       <div style={{ height: '4px' }} />
       <p className={styles.rightText} >
-        Last Updated on Dec. 14, 2021
+        Last Updated on July 6, 2022
       </p>
     </div>
   );
