@@ -20,4 +20,9 @@ describe('StemWrapper class', () => {
     expect(topPair.upstreamPartner).toBe(10);
     expect(topPair.downstreamPartner).toBe(72);
   });
+
+  test('numPairs getter', () => {
+    let stem = new StemWrapper(createStem({ bottomPair: [1, 100], numPairs: 16 }));
+    expect(stem.numPairs).toBe(16);
+  });
 });

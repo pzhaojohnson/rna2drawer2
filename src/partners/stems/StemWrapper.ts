@@ -21,4 +21,8 @@ export class StemWrapper {
   topPair(): PairWrapper {
     return new PairWrapper(topPair(this.stem));
   }
+
+  get numPairs() {
+    return this.stem.size;
+  }
 }
