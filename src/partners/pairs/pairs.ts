@@ -1,7 +1,9 @@
 import type { Partners } from 'Partners/Partners';
 import type { Pair } from 'Partners/pairs/Pair';
 
-// returns all pairs in the partners notation
+/**
+ * Returns an array of all pairs in the structure.
+ */
 export function pairs(partners: Partners): Pair[] {
   let prs: Pair[] = [];
   partners.forEach((q, i) => {
