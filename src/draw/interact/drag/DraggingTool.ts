@@ -24,7 +24,7 @@ import { topPair } from 'Partners/Stem';
 import { downstreamPartner, upstreamPartner } from 'Partners/pairs/Pair';
 import { stems as stemsOfPartners } from 'Partners/stems';
 
-import { stemEnclosesPosition } from 'Partners/stemEnclosesPosition';
+import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 import { nearestStemEnclosingPosition } from './nearestStemEnclosingPosition';
 import { stemOfBase } from 'Draw/strict/stemOfBase';
 import { stemOfStraightBond } from 'Draw/strict/stemOfStraightBond';

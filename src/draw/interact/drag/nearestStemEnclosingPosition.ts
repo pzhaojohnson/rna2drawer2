@@ -3,7 +3,7 @@ import { Stem } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { stems } from 'Partners/stems';
-import { stemEnclosesPosition } from 'Partners/stemEnclosesPosition';
+import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 import { compareNumbers } from 'Array/sort';
 
 // returns the nearest stem enclosing the given position or undefined

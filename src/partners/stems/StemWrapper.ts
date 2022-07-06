@@ -11,7 +11,7 @@ import { downstreamSideOfStem } from 'Partners/stems/downstreamSideOfStem';
 import { stemsAreEqual } from 'Partners/stems/stemsAreEqual';
 
 import { contains as stemContainsPosition } from 'Partners/Stem';
-import { stemEnclosesPosition } from 'Partners/stemEnclosesPosition';
+import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 
 export class StemWrapper {
   /**
