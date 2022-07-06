@@ -2,7 +2,7 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
 import { Stem } from 'Partners/Stem';
 import { containingStem } from 'Partners/containing';
-import { stemsAreEqual } from 'Partners/stemsAreEqual';
+import { stemsAreEqual } from 'Partners/stems/stemsAreEqual';
 
 // Returns the stem that a straight bond is in or undefined if the straight bond
 // is not in a stem.

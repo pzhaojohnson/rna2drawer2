@@ -8,7 +8,7 @@ import { topPair } from 'Partners/Stem';
 import { upstreamSideOfStem } from 'Partners/stems/upstreamSideOfStem';
 import { downstreamSideOfStem } from 'Partners/stems/downstreamSideOfStem';
 
-import { stemsAreEqual } from 'Partners/stemsAreEqual';
+import { stemsAreEqual } from 'Partners/stems/stemsAreEqual';
 
 import { contains as stemContainsPosition } from 'Partners/Stem';
 import { stemEnclosesPosition } from 'Partners/stemEnclosesPosition';
