@@ -1,12 +1,12 @@
 # RNA2Drawer 2
 
-A [web app](https://rna2drawer.app) for creating 2-D drawings of nucleic acid structures.
+A [web app](https://rna2drawer.app) for creating 2D drawings of nucleic acid structures.
 The layout, bonds and styling (e.g., colors and fonts) of a drawing
 can all be easily customized within the app.
 Drawings are exported in PPTX and SVG formats
 such that all elements of a drawing (e.g., bases and bonds)
 are exported as individual PPTX and SVG objects,
-allowing for even further manipulation in PowerPoint and vector graphics editors such as Adobe Illustrator.
+allowing for further manipulation in PowerPoint and vector graphics editors such as Adobe Illustrator.
 
 This project is a successor to the [first version](https://github.com/pzhaojohnson/RNA2Drawer#rna2drawer) of RNA2Drawer,
 which was published in the journal <em>RNA Biology</em>.
@@ -15,8 +15,8 @@ which was published in the journal <em>RNA Biology</em>.
 
 &nbsp;&nbsp;&nbsp;&nbsp;<b><em>If you use RNA2Drawer to draw structures in a publication, please cite the above article.</em></b>
 
-If you have questions or experience issues, open an issue thread here on GitHub or email [help@rna2drawer.app](mailto:help@rna2drawer.app).
-General comments and feature requests are also welcome!
+If you have questions or find issues, email [help@rna2drawer.app](mailto:help@rna2drawer.app) or open an issue thread here on GitHub.
+Feature requests are also welcome!
 
 <p align="center" >
   <img src="./demo/example1.svg" width="800px" />
@@ -25,12 +25,11 @@ General comments and feature requests are also welcome!
 &nbsp;&nbsp;&nbsp;&nbsp;[Creating a New Drawing](#creating-a-new-drawing)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Opening a Saved Drawing](#saving-a-drawing-and-opening-a-saved-drawing)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Saving a Drawing](#saving-a-drawing-and-opening-a-saved-drawing)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Modes](#modes)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Dragging Stems](#dragging-stems)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Pairing Bases](#pairing-bases)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Flattening Loops and Flipping Stems](#flattening-loops-and-flipping-stems)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Editing Bases](#editing-bases)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Editing Tertiary Bonds](#editing-tertiary-bonds)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Tools](#tools)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[The Dragging Tool](#the-dragging-tool)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[The Pairing Tool](#the-pairing-tool)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[The Flattening and Flipping Tools](#the-flattening-and-flipping-tools)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[The Editing Tool](#the-editing-tool)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Line Drawings](#line-drawings)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Exporting Your Drawing](#exporting-your-drawing)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Frequently Asked Questions](#frequently-asked-questions)<br>
@@ -41,8 +40,8 @@ General comments and feature requests are also welcome!
 Open the form to create a new drawing via the link on the welcome page
 or via the `File`: `New` menu button.
 In the form,
-enter the sequence and the ID of the sequence
-for your new drawing.
+enter the sequence for your drawing
+and its ID.
 
 The structure for your drawing may also be entered in dot-bracket notation.
 This notation is commonly created by structure prediction programs
@@ -50,9 +49,9 @@ such as Mfold and RNAFold
 and may be referred to as "Vienna" format.
 
 Example inputs can be selected at the top of the form.
-Parameters controlling how the sequence and structure are read in
-can be shown via the toggles at the top right corners of the text boxes
-for the sequence and structure.
+Parameters controlling how the sequence and structure are read in by the program
+can be opened via the details toggles above the top right corners
+of the sequence and structure text boxes.
 
 ## Saving a Drawing and Opening a Saved Drawing
 
@@ -68,34 +67,35 @@ and upload the saved file with `.rna2drawer2` extension.
 
 <b><em>Opening a saved drawing from the first version of RNA2Drawer.</em></b>
 Saved drawings from the first version of RNA2Drawer with `.rna2drawer` extension (missing the trailing "2") can also be opened,
-though not all aspects of a drawing, namely the layout, will be preserved.
-When a drawing from the first version is uploaded,
-a note will appear listing the aspects of the drawing that will be preserved.
+though not all aspects of the drawing, namely the layout, will be preserved.
+Clicking on the details toggle
+will show a list of the drawing aspects that will be preserved.
 
-## Modes
+## Tools
 
-Modes control how you interact with the bases of a drawing.
-Modes can be toggled on and off via the `Mode` dropdown.
+The different tools control how you interact with the drawing.
+Information and options for the current tool are shown in the bottom-left corner,
+which also allows switching between the different tools.
 
-### Dragging Stems
+### The Dragging Tool
 
-In the `Drag Stems` mode,
+With the dragging tool,
 stems can be dragged around circular loops and along flat loops.
-Additionally, stems in a flat loop can be dragged vertically
+The outermost loop may also be rotated using the dragging tool.
+Additionally, stems in flattened inner loops can be dragged vertically
 to adjust the height of the loop.
 
-By default, the unpaired bases that a stem is being dragged towards
+By default, unpaired bases that a stem is being dragged towards
 are compressed.
-This behavior is turned off
-in the `Drag Stems (Expand)` mode.
+This behavior can be turned off
+by toggling the `Only Expand` option towards the bottom-left corner.
 
-<p align="center" >
-  <img src="./demo/dragging.gif" width="880px" />
-</p>
+https://user-images.githubusercontent.com/28662629/177567629-6845bc75-13f8-4647-a2bc-348b813dbd09.mov
 
-### Pairing Bases
+### The Pairing Tool
 
-Bases can be paired and unpaired in the `Force Pair` mode.
+The pairing tool allows bases to be paired and unpaired
+through the addition and removal of secondary and tertiary bonds.
 To select a subsequence of bases,
 click on a base and drag the mouse over the other bases
 that you would like to select.
@@ -103,38 +103,35 @@ The selected bases will be highlighted in yellow.
 Clicking on another subsequence of bases
 will pair it with the selected bases.
 
-If a pairing can be added to the secondary structure without forming knots,
-secondary bonds will be created to form the pairing.
-Otherwise, tertiary bonds will be created to form the pairing.
-If you only want to create tertiary bonds,
-turn on the `Add Tertiary Bonds` mode.
+If a pairing can be added to the secondary structure without forming a pseudoknot,
+secondary bonds will be added to form the pairing.
+Otherwise, tertiary bonds will be added to form the pairing.
+If you only want to add tertiary bonds,
+hold down `Shift` when clicking on the subsequence to pair with.
 
-To remove secondary bonds,
-select bases that are in secondary bonds
-and click them again.
-Bases will be highlighted in red
-when clicking them will remove secondary bonds.
-Note that secondary bonds cannot be removed
-in the `Add Tertiary Bonds` mode.
+To unpair bases,
+select the bases that you wish to unpair.
+Clicking on the selected bases
+will remove all secondary and tertiary bonds with these bases.
+Alternatively, clicking on a secondary or tertiary bond
+connected to the selected bases
+will only remove the bond that was clicked on
+and bonds that were stacked with the bond that was clicked on.
 
-Additionally, in the `Pair Complements` mode,
+Additionally, by toggling the `Show Complements` option,
 subsequences that are complementary to the selected subsequence
-will be highlighted in blue,
+will be highlighted in pink,
 making it easier to find pairing partners.
-Clicking on a highlighted complement
-will form the pairing.
 
 Parameters controlling the highlighting of complements
-can be customized in the `Complement Rules` form
-accessible via the `Settings` dropdown.
+can be found in the `Complement Rules` form
+accessible via the `Options` button next to the `Show Complements` toggle.
 
-<p align="center" >
-  <img src="./demo/pairing.gif" width="880px" />
-</p>
+https://user-images.githubusercontent.com/28662629/177567712-9ccaf002-a914-4a3c-ba8b-42ba2ac3861c.mov
 
-### Flattening Loops and Flipping Stems
+### The Flattening and Flipping Tools
 
-In the `Flatten and Unflatten Loops` mode,
+When using the flattening tool,
 clicking on a loop will flatten or unflatten it.
 Note that hairpin loops cannot be flattened.
 
@@ -145,63 +142,35 @@ Notably, stems in a flat loop can be dragged vertically
 to change the height of the loop.
 
 <em>Flattening a loop with only one inner stem
-will also keep the inner stem parallel to the outer stem of the loop.
+will also keep the inner stem parallel with the outer stem of the loop.
 This is an easy way to "straighten" loops
 with only one inner stem.</em>
 
-In the `Flip Stems` mode,
-clicking on a stem will flip it
-over its bottommost base pair.
+Using the flipping tool,
+clicking on a stem or loop will flip it
+over its bottommost base pair
+(or for the outermost loop
+will flip the entire drawing).
 
-<p align="center" >
-  <img src="./demo/flatteningAndFlipping.gif" width="880px" />
-</p>
+https://user-images.githubusercontent.com/28662629/177567767-d066eb89-b204-4543-9cf8-41c8b373edfc.mov
 
-### Editing Bases
+### The Editing Tool
 
-In the `Edit Bases` mode, clicking on a base will select it
-and clicking on other bases will add them to your selection.
-Multiple bases can be selected at once by clicking on a base
-and dragging the mouse over other bases.
+The editing tool allows for changing the appearances of individual objects
+(such as the colors and sizes of bases and bonds).
 
-To unselect bases, click anywhere on the drawing that is not a base.
-Clicking on a selected base will also unselect that individual base.
+Objects may be selected by clicking on them
+or by dragging the selecting box over them.
+In the bottom-left corner is also a toggle
+that controls the type of objects that are currently being selected and edited.
 
-Turning on this mode will open the form to edit bases.
-To reopen this form if it has been closed,
-select a base and the form will be reopened.
+Once selected, a form will appear on the right side
+with options for editing the object.
 
-In the form,
-you can set the colors of bases
-and add and remove outlines from them.
-The outlines of bases can also be edited in this form.
+To deselect objects that you currently have selected,
+click any empty part of the drawing.
 
-Additionally, when only one base is selected,
-the character of the base can be set.
-
-<p align="center" >
-  <img src="./demo/editingBases.gif" width="880px" />
-</p>
-
-## Editing Tertiary Bonds
-
-Clicking on a tertiary bond will select it.
-Multiple tertiary bonds can be selected
-by clicking on them in succession.
-To unselect tertiary bonds,
-click anywhere on the drawing that is not a tertiary bond.
-
-To adjust the curve of a tertiary bond,
-click on the tertiary bond and drag the mouse.
-
-Double-clicking a tertiary bond
-will open the form to edit tertiary bonds.
-This form can also be opened
-via the `Edit`: `Tertiary Bonds` menu button.
-In the form,
-the colors of tertiary bonds can be set
-along with other parameters
-such as line width and base paddings.
+https://user-images.githubusercontent.com/28662629/177567849-d684c6e3-21e0-448e-8249-ce47c2cc62e4.mov
 
 ## Line Drawings
 
@@ -230,8 +199,10 @@ The forms to export drawings in SVG and PPTX formats
 can be accessed via the `Export` dropdown.
 In both forms,
 the exported drawing can be scaled
-by setting the font size of bases in the exported drawing.
-All other elements are scaled to match the font size of bases in the exported drawing.
+by specifying a scaling factor.
+For example, a scaling factor of 1 would result in no scaling of the exported drawing,
+while a scaling factor of 2 would result in an exported drawing
+that is double the size of what the drawing currently is in the app.
 
 All elements of a drawing are exported as individual SVG and PPTX objects.
 For example, bases are exported as text boxes
@@ -242,7 +213,7 @@ in vector graphics editors and PowerPoint.
 ## Frequently Asked Questions
 
 <em>How do I delete a tertiary bond?</em>
-When selecting a tertiary bond, press the `Delete` key.
+While having the tertiary bond selected using the editing tool, press the `Delete` key.
 
 <em>How do I rotate a drawing?</em>
 The form to edit the layout
@@ -251,25 +222,22 @@ The form to edit the layout
 can be accessed via the `Edit`: `Layout` menu button.
 
 <em>How do I make colors transparent?</em>
-When it is possible to set the transparency of a color,
-the color picker will include a slider and an "A" field
-that allow you to set the opacity of a color.
-Opacity is the opposite of transparency,
-so an opacity of zero corresponds to 100% transparency,
-and vice versa.
+When the transparency of a color can be set,
+a text box will be present next to the color picker.
+This text box controls the opacity of the color,
+which is the opposite of transparency
+(i.e., 100% opacity equals 0% transparency and vice versa).
+By setting the opacity,
+one can control transparency.
 
 <em>How do I change the character of a base?</em>
-In the editing bases mode,
-when only one base is selected,
-the character of the base can be set.
-See section on the [editing bases mode](#editing-bases).
-
-<em>How many undos and redos are possible?</em>
-Up to 60 undos and 60 redos are possible.
+Using the editing tool,
+one can set the character of selected bases
+via the character field in the right side form.
 
 <em>How do I take a screenshot?</em>
-The app itself cannot take screenshots,
-though most operating systems have apps for taking screenshots
+The app itself is unable to take screenshots,
+though most operating systems have built-in ways of taking screenshots
 of the whole screen or just a portion of the screen,
 such as the Snipping Tool on Windows.
 
@@ -277,8 +245,8 @@ such as the Snipping Tool on Windows.
 See section on [line drawings](#line-drawings)
 
 <em>Is there an easy way to "straighten" loops with only one inner stem?</em>
-Flattening loops with only one inner stem effectively "straightens" them.
-See section on the [flattening loops mode](#flattening-loops-and-flipping-stems).
+Flattening loops with only one inner stem is a way to "straighten" them.
+See section on the [flattening tool](#the-flattening-and-flipping-tools).
 
 ## Funding
 
