@@ -5,8 +5,8 @@ import { pairs as pairsInStem } from 'Partners/Stem';
 import { bottomPair } from 'Partners/Stem';
 import { topPair } from 'Partners/Stem';
 
-import { upstreamSideOfStem } from 'Partners/upstreamSideOfStem';
-import { downstreamSideOfStem } from 'Partners/downstreamSideOfStem';
+import { upstreamSideOfStem } from 'Partners/stems/upstreamSideOfStem';
+import { downstreamSideOfStem } from 'Partners/stems/downstreamSideOfStem';
 
 import { stemsAreEqual } from 'Partners/stemsAreEqual';
 
