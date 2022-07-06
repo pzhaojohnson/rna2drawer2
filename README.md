@@ -50,7 +50,7 @@ and may be referred to as "Vienna" format.
 
 Example inputs can be selected at the top of the form.
 Parameters controlling how the sequence and structure are read in by the program
-can be opened via the details toggles above the top right corners
+can be opened via the details toggles above the top-right corners
 of the sequence and structure text boxes.
 
 ## Saving a Drawing and Opening a Saved Drawing
@@ -62,7 +62,7 @@ though this can be changed in your browser settings.
 
 To open a saved drawing,
 navigate to the form to do so via the link on the welcome page
-or via `File`: `Open` menu button
+or via the `File`: `Open` menu button
 and upload the saved file with `.rna2drawer2` extension.
 
 <b><em>Opening a saved drawing from the first version of RNA2Drawer.</em></b>
@@ -74,8 +74,7 @@ will show a list of the drawing aspects that will be preserved.
 ## Tools
 
 The different tools control how you interact with the drawing.
-Information and options for the current tool are shown in the bottom-left corner,
-which also allows switching between the different tools.
+Information and options pertaining to tools are found in the bottom-left corner.
 
 ### The Dragging Tool
 
@@ -103,7 +102,9 @@ The selected bases will be highlighted in yellow.
 Clicking on another subsequence of bases
 will pair it with the selected bases.
 
-If a pairing can be added to the secondary structure without forming a pseudoknot,
+If a pairing can be added to the secondary structure
+without disrupting part of the secondary structure
+or forming a pseudoknot,
 secondary bonds will be added to form the pairing.
 Otherwise, tertiary bonds will be added to form the pairing.
 If you only want to add tertiary bonds,
@@ -148,7 +149,7 @@ with only one inner stem.</em>
 
 Using the flipping tool,
 clicking on a stem or loop will flip it
-over its bottommost base pair
+over its bottommost base-pair
 (or for the outermost loop
 will flip the entire drawing).
 
@@ -223,23 +224,23 @@ can be accessed via the `Edit`: `Layout` menu button.
 
 <em>How do I make colors transparent?</em>
 When the transparency of a color can be set,
-a text box will be present next to the color picker.
+a text box will be present next to its color picker.
 This text box controls the opacity of the color,
 which is the opposite of transparency
 (i.e., 100% opacity equals 0% transparency and vice versa).
-By setting the opacity,
-one can control transparency.
+By setting its opacity,
+one can control the transparency of a color.
 
 <em>How do I change the character of a base?</em>
 Using the editing tool,
-one can set the character of selected bases
-via the character field in the right side form.
+one can set the characters of a selected set of bases
+via the character field in the form that appears on the right side of the app.
 
 <em>How do I take a screenshot?</em>
 The app itself is unable to take screenshots,
 though most operating systems have built-in ways of taking screenshots
 of the whole screen or just a portion of the screen,
-such as the Snipping Tool on Windows.
+such as the Snipping Tool in Windows.
 
 <em>How do I create a line drawing?</em>
 See section on [line drawings](#line-drawings)
