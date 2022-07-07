@@ -1,13 +1,23 @@
 import { Pair } from 'Partners/pairs/Pair';
 import { PairWrapper } from 'Partners/pairs/PairWrapper';
 
-// a consecutive stack of pairs
+/**
+ * A consecutive stack of pairs.
+ */
 export type Stem = {
-  // the 5' most position of the stem
+  /**
+   * The 5' most position of the stem.
+   */
   position5: number;
-  // the 3' most position of the stem
+
+  /**
+   * The 3' most position of the stem.
+   */
   position3: number;
-  // the number of pairs in the stem
+
+  /**
+   * The number of pairs in the stem.
+   */
   size: number;
 };
 
@@ -16,8 +26,10 @@ export type StemSpecification = (
   | { bottomPair: Pair, numPairs: number }
 );
 
-// allows for stem objects to be specified in different ways
-// without knowledge of the underlying object structure
+/**
+ * Allows for stem objects to be specified in different ways
+ * without knowledge of the underlying object structure.
+ */
 export function createStem(spec: StemSpecification): Stem {
   let bottomPair = new PairWrapper(spec.bottomPair);
   let size = 'size' in spec ? spec.size : spec.numPairs;
@@ -28,7 +40,9 @@ export function createStem(spec: StemSpecification): Stem {
   };
 }
 
-// returns the pairs in the stem
+/**
+ * Returns the pairs in the stem.
+ */
 export function pairs(st: Stem): Pair[] {
   let prs: Pair[] = [];
   for (let i = 0; i < st.size; i++) {
