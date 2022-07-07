@@ -27,7 +27,7 @@ import { stemIsHairpin } from 'Partners/stemIsHairpin';
 import { stemOfBase } from 'Draw/strict/stemOfBase';
 import { stemOfStraightBond } from 'Draw/strict/stemOfStraightBond';
 
-import { stems as stemsOfPartners } from 'Partners/stems/stems';
+import { stemsInPartners } from 'Partners/stems/stemsInPartners';
 import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 
 import { traverseLoopDownstream } from 'Partners/traverseLoopDownstream';
@@ -158,7 +158,7 @@ export class FlatteningTool {
 
   nearestStemEnclosingPosition(position: number): Stem | undefined {
     let partners = this.options.strictDrawing.layoutPartners();
-    let stems = stemsOfPartners(partners);
+    let stems = stemsInPartners(partners);
     let enclosing = stems.filter(stem => stemEnclosesPosition(stem, position));
 
     enclosing.sort((a, b) => compareNumbers(
@@ -181,7 +181,7 @@ export class FlatteningTool {
     let p2 = seq.positionOf(straightBond.base2);
 
     let partners = this.options.strictDrawing.layoutPartners();
-    let stems = stemsOfPartners(partners);
+    let stems = stemsInPartners(partners);
     let enclosing = stems.filter(stem => (
       stemEnclosesPosition(stem, p1) || stemEnclosesPosition(stem, p2)
     ));

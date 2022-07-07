@@ -26,7 +26,7 @@ import { upstreamPartner } from 'Partners/pairs/Pair';
 import { stemOfBase } from 'Draw/strict/stemOfBase';
 import { stemOfStraightBond } from 'Draw/strict/stemOfStraightBond';
 
-import { stems as stemsOfPartners } from 'Partners/stems/stems';
+import { stemsInPartners } from 'Partners/stems/stemsInPartners';
 import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 
 import { traverseLoopDownstream } from 'Partners/traverseLoopDownstream';
@@ -160,7 +160,7 @@ export class FlippingTool {
     let p = seq.positionOf(base);
 
     let partners = this.options.strictDrawing.layoutPartners();
-    let stems = stemsOfPartners(partners);
+    let stems = stemsInPartners(partners);
     let enclosing = stems.filter(stem => stemEnclosesPosition(stem, p));
 
     enclosing.sort((a, b) => compareNumbers(
@@ -177,7 +177,7 @@ export class FlippingTool {
     let p2 = seq.positionOf(straightBond.base2);
 
     let partners = this.options.strictDrawing.layoutPartners();
-    let stems = stemsOfPartners(partners);
+    let stems = stemsInPartners(partners);
     let enclosing = stems.filter(stem => (
       stemEnclosesPosition(stem, p1) || stemEnclosesPosition(stem, p2)
     ));

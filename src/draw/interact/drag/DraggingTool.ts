@@ -22,7 +22,7 @@ import { pairsInStem } from 'Partners/stems/Stem';
 import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
 import { downstreamPartner, upstreamPartner } from 'Partners/pairs/Pair';
-import { stems as stemsOfPartners } from 'Partners/stems/stems';
+import { stemsInPartners } from 'Partners/stems/stemsInPartners';
 
 import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 import { nearestStemEnclosingPosition } from './nearestStemEnclosingPosition';
@@ -220,7 +220,7 @@ export class DraggingTool {
     let p2 = seq.positionOf(straightBond.base2);
 
     let partners = this.options.strictDrawing.layoutPartners();
-    let stems = stemsOfPartners(partners);
+    let stems = stemsInPartners(partners);
     let enclosing = stems.filter(stem => (
       stemEnclosesPosition(stem, p1) || stemEnclosesPosition(stem, p2)
     ));

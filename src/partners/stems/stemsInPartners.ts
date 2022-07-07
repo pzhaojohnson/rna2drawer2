@@ -3,7 +3,7 @@ import { Stem } from 'Partners/stems/Stem';
 import { containingStem } from 'Partners/containing';
 
 // returns all stems formed by the pairs in the partners notation
-export function stems(partners: Partners): Stem[] {
+export function stemsInPartners(partners: Partners): Stem[] {
   let sts: Stem[] = [];
   let p = 1;
   while (p <= partners.length) {
