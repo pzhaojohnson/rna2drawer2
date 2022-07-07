@@ -47,12 +47,3 @@ export function topPair(st: Stem): Pair {
     st.position3 - st.size + 1,
   ];
 }
-
-export function contains(st: Stem, p: number): boolean {
-  let bpr = new PairWrapper(bottomPair(st));
-  let tpr = new PairWrapper(topPair(st));
-  return (
-    (p >= bpr.upstreamPartner && p <= tpr.upstreamPartner)
-    || (p <= bpr.downstreamPartner && p >= tpr.downstreamPartner)
-  );
-}
