@@ -1,6 +1,7 @@
 import {
   createStem,
   pairsInStem,
+  numPairs,
   bottomPair,
   topPair,
 } from './Stem';
@@ -43,6 +44,14 @@ describe('pairsInStem function', () => {
       [[8, 19]]
     );
   });
+});
+
+test('numPairs function', () => {
+  let stem = createStem({ bottomPair: [80, 200], numPairs: 1 });
+  expect(numPairs(stem)).toBe(1); // just one pair
+
+  stem = createStem({ bottomPair: [1, 1000], numPairs: 8 });
+  expect(numPairs(stem)).toBe(8); // more than one pair
 });
 
 it('bottomPair function', () => {

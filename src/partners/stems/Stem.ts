@@ -51,6 +51,13 @@ export function pairsInStem(st: Stem): Pair[] {
   return prs;
 }
 
+/**
+ * Returns the number of pairs in the stem.
+ */
+export function numPairs(stem: Stem): number {
+  return stem.size;
+}
+
 export function bottomPair(st: Stem): Pair {
   return [st.position5, st.position3];
 }
