@@ -22,7 +22,7 @@ import { pairs } from 'Partners/stems/Stem';
 import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
 import { downstreamPartner, upstreamPartner } from 'Partners/pairs/Pair';
-import { stems as stemsOfPartners } from 'Partners/stems';
+import { stems as stemsOfPartners } from 'Partners/stems/stems';
 
 import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 import { nearestStemEnclosingPosition } from './nearestStemEnclosingPosition';

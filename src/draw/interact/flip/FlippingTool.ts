@@ -26,7 +26,7 @@ import { upstreamPartner } from 'Partners/pairs/Pair';
 import { stemOfBase } from 'Draw/strict/stemOfBase';
 import { stemOfStraightBond } from 'Draw/strict/stemOfStraightBond';
 
-import { stems as stemsOfPartners } from 'Partners/stems';
+import { stems as stemsOfPartners } from 'Partners/stems/stems';
 import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 
 import { traverseLoopDownstream } from 'Partners/traverseLoopDownstream';

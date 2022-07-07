@@ -1,6 +1,6 @@
-import { Partners } from './Partners';
+import { Partners } from 'Partners/Partners';
 import { Stem } from 'Partners/stems/Stem';
-import { containingStem } from './containing';
+import { containingStem } from 'Partners/containing';
 
 // returns all stems formed by the pairs in the partners notation
 export function stems(partners: Partners): Stem[] {
