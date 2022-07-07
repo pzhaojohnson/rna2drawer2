@@ -1,4 +1,4 @@
-import { Pair } from 'Partners/pairs/Pair';
+import type { Pair } from 'Partners/pairs/Pair';
 import { PairWrapper } from 'Partners/pairs/PairWrapper';
 
 /**
