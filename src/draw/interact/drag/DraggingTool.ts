@@ -18,7 +18,7 @@ import { shiftControlPoint } from 'Draw/bonds/curved/drag';
 import { zoom } from 'Draw/zoom';
 
 import { Stem } from 'Partners/stems/Stem';
-import { pairs } from 'Partners/stems/Stem';
+import { pairsInStem } from 'Partners/stems/Stem';
 import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
 import { downstreamPartner, upstreamPartner } from 'Partners/pairs/Pair';
@@ -557,7 +557,7 @@ export class DraggingTool {
       let traversed = traverseLoopDownstream(partners, stem);
       let ps = traversed.positions;
       if (stem) {
-        ps.push(...pairs(stem).flat());
+        ps.push(...pairsInStem(stem).flat());
       }
       ps = Array.from(new Set(ps));
       sortNumbers(ps);

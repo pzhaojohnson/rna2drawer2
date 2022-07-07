@@ -1,7 +1,7 @@
 import type { Stem } from 'Partners/stems/Stem';
 import { PairWrapper } from 'Partners/pairs/PairWrapper';
 
-import { pairs as pairsInStem } from 'Partners/stems/Stem';
+import { pairsInStem } from 'Partners/stems/Stem';
 import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
 
