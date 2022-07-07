@@ -1,16 +1,16 @@
-import type { Stem } from 'Partners/Stem';
+import type { Stem } from 'Partners/stems/Stem';
 import { PairWrapper } from 'Partners/pairs/PairWrapper';
 
-import { pairs as pairsInStem } from 'Partners/Stem';
-import { bottomPair } from 'Partners/Stem';
-import { topPair } from 'Partners/Stem';
+import { pairs as pairsInStem } from 'Partners/stems/Stem';
+import { bottomPair } from 'Partners/stems/Stem';
+import { topPair } from 'Partners/stems/Stem';
 
 import { upstreamSideOfStem } from 'Partners/stems/upstreamSideOfStem';
 import { downstreamSideOfStem } from 'Partners/stems/downstreamSideOfStem';
 
 import { stemsAreEqual } from 'Partners/stems/stemsAreEqual';
 
-import { contains as stemContainsPosition } from 'Partners/Stem';
+import { contains as stemContainsPosition } from 'Partners/stems/Stem';
 import { stemEnclosesPosition } from 'Partners/stems/stemEnclosesPosition';
 
 export class StemWrapper {

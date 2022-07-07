@@ -1,5 +1,5 @@
 import { Partners } from './Partners';
-import { Stem } from './Stem';
+import { Stem } from 'Partners/stems/Stem';
 import { containingStem } from './containing';
 
 // returns all stems formed by the pairs in the partners notation

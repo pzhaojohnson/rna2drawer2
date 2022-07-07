@@ -2,8 +2,8 @@ import { StrictLayoutSpecification } from './StrictLayoutSpecification';
 import { atPosition } from 'Array/at';
 import { initializeAtPosition } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
-import { Stem } from 'Partners/Stem';
-import { bottomPair } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
+import { bottomPair } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { nearestStemEnclosingPosition } from './nearestStemEnclosingPosition';
 import { hasTriangleLoop } from './triangleLoops';

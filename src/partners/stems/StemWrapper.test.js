@@ -1,4 +1,4 @@
-import { createStem } from 'Partners/Stem';
+import { createStem } from 'Partners/stems/Stem';
 
 import { StemWrapper } from './StemWrapper';
 

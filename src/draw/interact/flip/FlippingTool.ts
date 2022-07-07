@@ -17,10 +17,10 @@ import { zoom } from 'Draw/zoom';
 import { sortNumbers } from 'Array/sortNumbers';
 import { compareNumbers } from 'Array/sort';
 
-import { Stem } from 'Partners/Stem';
-import { pairs } from 'Partners/Stem';
-import { bottomPair } from 'Partners/Stem';
-import { topPair } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
+import { pairs } from 'Partners/stems/Stem';
+import { bottomPair } from 'Partners/stems/Stem';
+import { topPair } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 
 import { stemOfBase } from 'Draw/strict/stemOfBase';

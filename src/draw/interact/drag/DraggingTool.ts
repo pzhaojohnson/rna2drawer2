@@ -17,10 +17,10 @@ import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isIn
 import { shiftControlPoint } from 'Draw/bonds/curved/drag';
 import { zoom } from 'Draw/zoom';
 
-import { Stem } from 'Partners/Stem';
-import { pairs } from 'Partners/Stem';
-import { bottomPair } from 'Partners/Stem';
-import { topPair } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
+import { pairs } from 'Partners/stems/Stem';
+import { bottomPair } from 'Partners/stems/Stem';
+import { topPair } from 'Partners/stems/Stem';
 import { downstreamPartner, upstreamPartner } from 'Partners/pairs/Pair';
 import { stems as stemsOfPartners } from 'Partners/stems';
 

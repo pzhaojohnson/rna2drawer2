@@ -1,6 +1,6 @@
 import { StrictLayoutSpecification } from './StrictLayoutSpecification';
 
-import { Stem } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
 
 import { upstreamBoundingPosition } from 'Partners/Linker';
 import { size as sizeOfLinker } from 'Partners/UnpairedRegion';

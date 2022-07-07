@@ -3,7 +3,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
-import { createStem } from 'Partners/Stem';
+import { createStem } from 'Partners/stems/Stem';
 
 import { stemOfStraightBond } from './stemOfStraightBond';
 

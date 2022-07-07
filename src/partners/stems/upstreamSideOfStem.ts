@@ -1,5 +1,5 @@
-import { Stem } from 'Partners/Stem';
-import { pairs as pairsOfStem } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
+import { pairs as pairsOfStem } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 
 /**

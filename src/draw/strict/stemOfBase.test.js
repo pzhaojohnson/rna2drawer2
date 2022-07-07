@@ -2,7 +2,7 @@ import { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
-import { createStem } from 'Partners/Stem';
+import { createStem } from 'Partners/stems/Stem';
 
 import { stemOfBase } from './stemOfBase';
 

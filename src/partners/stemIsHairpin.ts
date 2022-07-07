@@ -1,6 +1,6 @@
 import { Partners } from 'Partners/Partners';
-import { Stem } from 'Partners/Stem';
-import { topPair as topPairOfStem } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
+import { topPair as topPairOfStem } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 import { containingUnpairedRegion as containingLinker } from 'Partners/containing';

@@ -1,6 +1,6 @@
 import { StrictLayout } from 'Draw/strict/layout/StrictLayout';
-import { Stem } from 'Partners/Stem';
-import { bottomPair } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
+import { bottomPair } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 import { displacement2D as displacement } from 'Math/points/displacement';

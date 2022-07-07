@@ -1,6 +1,6 @@
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
-import { Stem } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
 import { containingStem } from 'Partners/containing';
 import { stemsAreEqual } from 'Partners/stems/stemsAreEqual';
 

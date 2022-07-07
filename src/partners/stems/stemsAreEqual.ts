@@ -1,6 +1,6 @@
-import { Stem } from 'Partners/Stem';
-import { bottomPair } from 'Partners/Stem';
-import { topPair } from 'Partners/Stem';
+import { Stem } from 'Partners/stems/Stem';
+import { bottomPair } from 'Partners/stems/Stem';
+import { topPair } from 'Partners/stems/Stem';
 import { pairsAreEqual } from 'Partners/pairs/pairsAreEqual';
 
 export function stemsAreEqual(stem1: Stem, stem2: Stem): boolean {

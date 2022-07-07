@@ -1,5 +1,5 @@
 import { Partners, partnerOf } from './Partners';
-import { Stem } from './Stem';
+import { Stem } from 'Partners/stems/Stem';
 import { UnpairedRegion } from './UnpairedRegion';
 import { inBounds } from './bounds';
 import { arePaired, isUnpaired } from './paired';
