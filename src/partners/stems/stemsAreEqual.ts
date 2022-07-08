@@ -1,4 +1,4 @@
-import { Stem } from 'Partners/stems/Stem';
+import type { Stem } from 'Partners/stems/Stem';
 import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
 import { pairsAreEqual } from 'Partners/pairs/pairsAreEqual';
