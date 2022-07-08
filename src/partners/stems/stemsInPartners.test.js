@@ -13,7 +13,7 @@ describe('stemsInPartners function', () => {
     expect(stemsInPartners(partners)).toStrictEqual([]);
   });
 
-  test('stems of varying sizes', () => {
+  test('stems with varying numbers of pairs', () => {
     let partners = [
       3, null, 1,
       9, 8, null, null, 5, 4,
