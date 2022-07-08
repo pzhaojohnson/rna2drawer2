@@ -2,7 +2,7 @@ import type { Pair } from 'Partners/pairs/Pair';
 import { PairWrapper } from 'Partners/pairs/PairWrapper';
 
 /**
- * A consecutive stack of pairs.
+ * A stack of consecutive pairs.
  */
 export type Stem = {
   /**
@@ -59,10 +59,16 @@ export function numPairs(stem: Stem): number {
   return stem.size;
 }
 
+/**
+ * Returns the bottom pair of the stem.
+ */
 export function bottomPair(stem: Stem): Pair {
   return [stem.position5, stem.position3];
 }
 
+/**
+ * Returns the top pair of the stem.
+ */
 export function topPair(stem: Stem): Pair {
   return [
     stem.position5 + stem.size - 1,
