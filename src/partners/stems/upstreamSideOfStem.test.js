@@ -1,5 +1,6 @@
-import { upstreamSideOfStem } from './upstreamSideOfStem';
 import { sortNumbers } from 'Array/sortNumbers';
+
+import { upstreamSideOfStem } from './upstreamSideOfStem';
 
 describe('upstreamSideOfStem function', () => {
   test('a stem of size one', () => {
