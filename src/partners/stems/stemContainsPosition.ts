@@ -1,14 +1,21 @@
 import type { Stem } from 'Partners/stems/Stem';
+
 import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
-import { PairWrapper } from 'Partners/pairs/PairWrapper';
+
+import { upstreamPartner } from 'Partners/pairs/Pair';
+import { downstreamPartner } from 'Partners/pairs/Pair';
 
 export function stemContainsPosition(stem: Stem, p: number): boolean {
-  let bp = new PairWrapper(bottomPair(stem));
-  let tp = new PairWrapper(topPair(stem));
-
-  return (
-    (p >= bp.upstreamPartner && p <= tp.upstreamPartner)
-    || (p <= bp.downstreamPartner && p >= tp.downstreamPartner)
+  let isInUpstreamSide = (
+    p >= upstreamPartner(bottomPair(stem))
+    && p <= upstreamPartner(topPair(stem))
   );
+
+  let isInDownstreamSide = (
+    p >= downstreamPartner(topPair(stem))
+    && p <= downstreamPartner(bottomPair(stem))
+  );
+
+  return isInUpstreamSide || isInDownstreamSide;
 }
