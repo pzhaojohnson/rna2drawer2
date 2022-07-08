@@ -1,27 +1,29 @@
+import { createStem } from 'Partners/stems/Stem';
+
 import { stemsAreEqual } from './stemsAreEqual';
 
 test('stemsAreEqual function', () => {
-  // are equal
+  // are equal (and different bottom pair order)
   expect(stemsAreEqual(
-    { position5: 12, position3: 31, size: 6 },
-    { position5: 12, position3: 31, size: 6 },
+    createStem({ bottomPair: [12, 31], numPairs: 6 }),
+    createStem({ bottomPair: [31, 12], numPairs: 6 }),
   )).toBeTruthy();
 
-  // different 5' most positions
+  // different bottom pair upstream partners
   expect(stemsAreEqual(
-    { position5: 12, position3: 31, size: 6 },
-    { position5: 11, position3: 31, size: 6 },
+    createStem({ bottomPair: [12, 31], numPairs: 6 }),
+    createStem({ bottomPair: [11, 31], numPairs: 6 }),
   )).toBeFalsy();
 
-  // different 3' most positions
+  // different bottom pair downstream partners
   expect(stemsAreEqual(
-    { position5: 12, position3: 32, size: 6 },
-    { position5: 12, position3: 31, size: 6 },
+    createStem({ bottomPair: [12, 32], numPairs: 6 }),
+    createStem({ bottomPair: [12, 31], numPairs: 6 }),
   )).toBeFalsy();
 
-  // different sizes
+  // different numbers of pairs
   expect(stemsAreEqual(
-    { position5: 12, position3: 31, size: 6 },
-    { position5: 12, position3: 31, size: 5 },
+    createStem({ bottomPair: [12, 31], numPairs: 6 }),
+    createStem({ bottomPair: [12, 31], numPairs: 5 }),
   )).toBeFalsy();
 });
