@@ -73,7 +73,7 @@ describe('stemsInPartners function', () => {
     ]);
   });
 
-  test('a leading knotted stem', () => {
+  test('a leading pseudoknotted stem', () => {
     let partners = [
       null,
       11, 10, 9,
@@ -91,7 +91,7 @@ describe('stemsInPartners function', () => {
     ]);
   });
 
-  test('a trailing knotted stem', () => {
+  test('a trailing pseudoknotted stem', () => {
     let partners = [
       null,
       11, 10,
