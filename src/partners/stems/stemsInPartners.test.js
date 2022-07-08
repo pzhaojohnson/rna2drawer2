@@ -1,3 +1,4 @@
+import { createStem } from 'Partners/stems/Stem';
 import { unstructuredPartners } from 'Partners/unstructuredPartners';
 
 import { stemsInPartners } from './stemsInPartners';
@@ -20,31 +21,31 @@ describe('stemsInPartners function', () => {
       19, 18, 17, 16, null, null, 13, 12, 11, 10,
     ];
     expect(stemsInPartners(partners)).toStrictEqual([
-      { position5: 1, position3: 3, size: 1 },
-      { position5: 4, position3: 9, size: 2 },
-      { position5: 10, position3: 19, size: 4 },
+      createStem({ bottomPair: [1, 3], numPairs: 1 }),
+      createStem({ bottomPair: [4, 9], numPairs: 2 }),
+      createStem({ bottomPair: [10, 19], numPairs: 4 }),
     ]);
   });
 
   test('a hairpin with a loop that has no unpaired positions', () => {
     let partners = [2, 1];
     expect(stemsInPartners(partners)).toStrictEqual([
-      { position5: 1, position3: 2, size: 1 },
+      createStem({ bottomPair: [1, 2], numPairs: 1 }),
     ]);
   });
 
   test('leading and trailing positions are unpaired', () => {
     let partners = [null, null, 8, 7, null, null, 4, 3, undefined, undefined];
     expect(stemsInPartners(partners)).toStrictEqual([
-      { position5: 3, position3: 8, size: 2 },
+      createStem({ bottomPair: [3, 8], numPairs: 2 }),
     ]);
   });
 
   test('leading and trailing positions are paired', () => {
     let partners = [6, 5, null, null, 2, 1, 12, 11, null, null, 8, 7];
     expect(stemsInPartners(partners)).toStrictEqual([
-      { position5: 1, position3: 6, size: 2 },
-      { position5: 7, position3: 12, size: 2 },
+      createStem({ bottomPair: [1, 6], numPairs: 2 }),
+      createStem({ bottomPair: [7, 12], numPairs: 2 }),
     ]);
   });
 
@@ -55,8 +56,8 @@ describe('stemsInPartners function', () => {
       16, 15, null, null, 12, 11,
     ];
     expect(stemsInPartners(partners)).toStrictEqual([
-      { position5: 1, position3: 6, size: 2 },
-      { position5: 11, position3: 16, size: 2 },
+      createStem({ bottomPair: [1, 6], numPairs: 2 }),
+      createStem({ bottomPair: [11, 16], numPairs: 2 }),
     ]);
   });
 
@@ -68,8 +69,8 @@ describe('stemsInPartners function', () => {
       null, undefined,
     ];
     expect(stemsInPartners(partners)).toStrictEqual([
-      { position5: 3, position3: 8, size: 2 },
-      { position5: 9, position3: 17, size: 3 },
+      createStem({ bottomPair: [3, 8], numPairs: 2 }),
+      createStem({ bottomPair: [9, 17], numPairs: 3 }),
     ]);
   });
 
@@ -86,8 +87,8 @@ describe('stemsInPartners function', () => {
       null,
     ];
     expect(stemsInPartners(partners)).toStrictEqual([
-      { position5: 2, position3: 11, size: 3 },
-      { position5: 6, position3: 14, size: 2 },
+      createStem({ bottomPair: [2, 11], numPairs: 3 }),
+      createStem({ bottomPair: [6, 14], numPairs: 2 }),
     ]);
   });
 
@@ -104,8 +105,8 @@ describe('stemsInPartners function', () => {
       null,
     ];
     expect(stemsInPartners(partners)).toStrictEqual([
-      { position5: 2, position3: 11, size: 2 },
-      { position5: 5, position3: 14, size: 3 },
+      createStem({ bottomPair: [2, 11], numPairs: 2 }),
+      createStem({ bottomPair: [5, 14], numPairs: 3 }),
     ]);
   });
 });
