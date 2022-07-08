@@ -44,10 +44,10 @@ export function createStem(spec: StemSpecification): Stem {
 /**
  * Returns the pairs in the stem.
  */
-export function pairsInStem(st: Stem): Pair[] {
+export function pairsInStem(stem: Stem): Pair[] {
   let prs: Pair[] = [];
-  for (let i = 0; i < st.size; i++) {
-    prs.push([st.position5 + i, st.position3 - i]);
+  for (let i = 0; i < stem.size; i++) {
+    prs.push([stem.position5 + i, stem.position3 - i]);
   }
   return prs;
 }
@@ -59,13 +59,13 @@ export function numPairs(stem: Stem): number {
   return stem.size;
 }
 
-export function bottomPair(st: Stem): Pair {
-  return [st.position5, st.position3];
+export function bottomPair(stem: Stem): Pair {
+  return [stem.position5, stem.position3];
 }
 
-export function topPair(st: Stem): Pair {
+export function topPair(stem: Stem): Pair {
   return [
-    st.position5 + st.size - 1,
-    st.position3 - st.size + 1,
+    stem.position5 + stem.size - 1,
+    stem.position3 - stem.size + 1,
   ];
 }
