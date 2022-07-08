@@ -1,6 +1,25 @@
 import { stemContainsPosition } from './stemContainsPosition';
 
 describe('stemContainsPosition function', () => {
+  test('a stem with just one pair', () => {
+    let st = { position5: 20, position3: 31, size: 1 };
+
+    // contained
+    expect(stemContainsPosition(st, 20)).toBeTruthy();
+    expect(stemContainsPosition(st, 31)).toBeTruthy();
+
+    // just outside edges
+    expect(stemContainsPosition(st, 19)).toBeFalsy();
+    expect(stemContainsPosition(st, 21)).toBeFalsy();
+    expect(stemContainsPosition(st, 32)).toBeFalsy();
+    expect(stemContainsPosition(st, 30)).toBeFalsy();
+
+    // further outside
+    expect(stemContainsPosition(st, 6)).toBeFalsy();
+    expect(stemContainsPosition(st, 27)).toBeFalsy();
+    expect(stemContainsPosition(st, 42)).toBeFalsy();
+  });
+
   test('a stem with more than one pair', () => {
     let st = { position5: 12, position3: 45, size: 3 };
 
@@ -22,25 +41,6 @@ describe('stemContainsPosition function', () => {
     expect(stemContainsPosition(st, 3)).toBeFalsy();
     expect(stemContainsPosition(st, 26)).toBeFalsy();
     expect(stemContainsPosition(st, 88)).toBeFalsy();
-  });
-
-  test('a stem with just one pair', () => {
-    let st = { position5: 20, position3: 31, size: 1 };
-
-    // contained
-    expect(stemContainsPosition(st, 20)).toBeTruthy();
-    expect(stemContainsPosition(st, 31)).toBeTruthy();
-
-    // just outside edges
-    expect(stemContainsPosition(st, 19)).toBeFalsy();
-    expect(stemContainsPosition(st, 21)).toBeFalsy();
-    expect(stemContainsPosition(st, 32)).toBeFalsy();
-    expect(stemContainsPosition(st, 30)).toBeFalsy();
-
-    // further outside
-    expect(stemContainsPosition(st, 6)).toBeFalsy();
-    expect(stemContainsPosition(st, 27)).toBeFalsy();
-    expect(stemContainsPosition(st, 42)).toBeFalsy();
   });
 
   test('invalid positions', () => {
