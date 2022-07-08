@@ -33,6 +33,7 @@ export type StemSpecification = (
 export function createStem(spec: StemSpecification): Stem {
   let bottomPair = new PairWrapper(spec.bottomPair);
   let size = 'size' in spec ? spec.size : spec.numPairs;
+
   return {
     position5: bottomPair.upstreamPartner,
     position3: bottomPair.downstreamPartner,
