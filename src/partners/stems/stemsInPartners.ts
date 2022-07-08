@@ -35,7 +35,9 @@ function pairsAreStacked(pair1?: Pair, pair2?: Pair): boolean {
   );
 }
 
-// returns all stems formed by the pairs in the partners notation
+/**
+ * Returns an array of all the stems in the structure.
+ */
 export function stemsInPartners(partners: Partners): Stem[] {
   let pairs = pairsInPartners(partners);
 
