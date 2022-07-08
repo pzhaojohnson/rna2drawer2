@@ -1,10 +1,8 @@
-import {
-  createStem,
-  pairsInStem,
-  numPairs,
-  bottomPair,
-  topPair,
-} from './Stem';
+import { createStem } from './Stem';
+import { pairsInStem } from './Stem';
+import { numPairs } from './Stem';
+import { bottomPair } from './Stem';
+import { topPair } from './Stem';
 
 test('createStem function', () => {
 
