@@ -1,4 +1,4 @@
-import { Stem } from 'Partners/stems/Stem';
+import type { Stem } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
