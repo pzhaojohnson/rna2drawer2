@@ -3,11 +3,11 @@ import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
 import { PairWrapper } from 'Partners/pairs/PairWrapper';
 
-export function stemContainsPosition(st: Stem, p: number): boolean {
-  let bpr = new PairWrapper(bottomPair(st));
-  let tpr = new PairWrapper(topPair(st));
+export function stemContainsPosition(stem: Stem, p: number): boolean {
+  let bp = new PairWrapper(bottomPair(stem));
+  let tp = new PairWrapper(topPair(stem));
   return (
-    (p >= bpr.upstreamPartner && p <= tpr.upstreamPartner)
-    || (p <= bpr.downstreamPartner && p >= tpr.downstreamPartner)
+    (p >= bp.upstreamPartner && p <= tp.upstreamPartner)
+    || (p <= bp.downstreamPartner && p >= tp.downstreamPartner)
   );
 }
