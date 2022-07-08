@@ -60,6 +60,7 @@ test('topPair function', () => {
   // more than one pair in stem
   let st = { position5: 12, position3: 33, size: 5 };
   expect(topPair(st)).toStrictEqual([16, 29]);
+
   // just one pair in stem
   st = { position5: 18, position3: 26, size: 1 };
   expect(topPair(st)).toStrictEqual([18, 26]);
