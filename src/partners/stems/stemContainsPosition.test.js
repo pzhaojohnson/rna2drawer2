@@ -1,7 +1,7 @@
 import { stemContainsPosition } from './stemContainsPosition';
 
 describe('stemContainsPosition function', () => {
-  it('stem of size greater than one', () => {
+  test('stem of size greater than one', () => {
     let st = { position5: 12, position3: 45, size: 3 };
 
     // contained
@@ -24,7 +24,7 @@ describe('stemContainsPosition function', () => {
     expect(stemContainsPosition(st, 88)).toBeFalsy();
   });
 
-  it('stem of size one', () => {
+  test('stem of size one', () => {
     let st = { position5: 20, position3: 31, size: 1 };
 
     // contained
@@ -43,7 +43,7 @@ describe('stemContainsPosition function', () => {
     expect(stemContainsPosition(st, 42)).toBeFalsy();
   });
 
-  it('invalid positions', () => {
+  test('invalid positions', () => {
     let st = { position5: 6, position3: 30, size: 6 };
     expect(stemContainsPosition(st, 0)).toBeFalsy(); // zero
     expect(stemContainsPosition(st, -1)).toBeFalsy(); // negative
