@@ -5,7 +5,6 @@ import { bottomPair } from './Stem';
 import { topPair } from './Stem';
 
 test('createStem function', () => {
-
   // upstream partner of bottom pair before downstream partner
   expect(createStem(
     { bottomPair: [20, 102], size: 6 }
