@@ -1,8 +1,10 @@
+import { createStem } from 'Partners/stems/Stem';
+
 import { stemContainsPosition } from './stemContainsPosition';
 
 describe('stemContainsPosition function', () => {
   test('a stem with just one pair', () => {
-    let st = { position5: 20, position3: 31, size: 1 };
+    let st = createStem({ bottomPair: [20, 31], numPairs: 1 });
 
     // contained
     expect(stemContainsPosition(st, 20)).toBeTruthy();
@@ -21,7 +23,7 @@ describe('stemContainsPosition function', () => {
   });
 
   test('a stem with more than one pair', () => {
-    let st = { position5: 12, position3: 45, size: 3 };
+    let st = createStem({ bottomPair: [45, 12], numPairs: 3 });
 
     // contained
     expect(stemContainsPosition(st, 12)).toBeTruthy();
@@ -44,7 +46,7 @@ describe('stemContainsPosition function', () => {
   });
 
   test('invalid positions', () => {
-    let st = { position5: 6, position3: 30, size: 6 };
+    let st = createStem({ bottomPair: [6, 30], numPairs: 6 });
     expect(stemContainsPosition(st, 0)).toBeFalsy(); // zero
     expect(stemContainsPosition(st, -1)).toBeFalsy(); // negative
     // nonfinite
