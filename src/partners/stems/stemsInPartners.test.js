@@ -34,14 +34,14 @@ describe('stemsInPartners function', () => {
     ]);
   });
 
-  test('leading and trailing positions are unpaired', () => {
+  test('unpaired leading and trailing positions', () => {
     let partners = [null, null, 8, 7, null, null, 4, 3, undefined, undefined];
     expect(stemsInPartners(partners)).toStrictEqual([
       createStem({ bottomPair: [3, 8], numPairs: 2 }),
     ]);
   });
 
-  test('leading and trailing positions are paired', () => {
+  test('paired leading and trailing positions', () => {
     let partners = [6, 5, null, null, 2, 1, 12, 11, null, null, 8, 7];
     expect(stemsInPartners(partners)).toStrictEqual([
       createStem({ bottomPair: [1, 6], numPairs: 2 }),
