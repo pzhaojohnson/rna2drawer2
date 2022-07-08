@@ -28,14 +28,14 @@ test('createStem function', () => {
 });
 
 describe('pairsInStem function', () => {
-  it('stem of size greater than one', () => {
+  test('a stem with more than one pair', () => {
     let st = { position5: 21, position3: 47, size: 4 };
     expect(pairsInStem(st)).toStrictEqual(
       [[21, 47], [22, 46], [23, 45], [24, 44]]
     );
   });
 
-  it('stem of size one', () => {
+  test('a stem with just one pair', () => {
     let st = { position5: 8, position3: 19, size: 1 };
     expect(pairsInStem(st)).toStrictEqual(
       [[8, 19]]
@@ -51,16 +51,16 @@ test('numPairs function', () => {
   expect(numPairs(stem)).toBe(8); // more than one pair
 });
 
-it('bottomPair function', () => {
+test('bottomPair function', () => {
   let st = { position5: 24, position3: 76, size: 6 };
   expect(bottomPair(st)).toStrictEqual([24, 76]);
 });
 
-it('topPair function', () => {
-  // size greater than one
+test('topPair function', () => {
+  // more than one pair in stem
   let st = { position5: 12, position3: 33, size: 5 };
   expect(topPair(st)).toStrictEqual([16, 29]);
-  // size of one
+  // just one pair in stem
   st = { position5: 18, position3: 26, size: 1 };
   expect(topPair(st)).toStrictEqual([18, 26]);
 });
