@@ -47,8 +47,10 @@ describe('stemContainsPosition function', () => {
 
   test('invalid positions', () => {
     let stem = createStem({ bottomPair: [6, 30], numPairs: 6 });
+
     expect(stemContainsPosition(stem, 0)).toBeFalsy(); // zero
     expect(stemContainsPosition(stem, -1)).toBeFalsy(); // negative
+
     // nonfinite
     expect(stemContainsPosition(stem, NaN)).toBeFalsy();
     expect(stemContainsPosition(stem, Infinity)).toBeFalsy();
