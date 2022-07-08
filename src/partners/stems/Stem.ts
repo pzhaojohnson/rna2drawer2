@@ -45,11 +45,11 @@ export function createStem(spec: StemSpecification): Stem {
  * Returns the pairs in the stem.
  */
 export function pairsInStem(stem: Stem): Pair[] {
-  let prs: Pair[] = [];
+  let pairs: Pair[] = [];
   for (let i = 0; i < stem.size; i++) {
-    prs.push([stem.position5 + i, stem.position3 - i]);
+    pairs.push([stem.position5 + i, stem.position3 - i]);
   }
-  return prs;
+  return pairs;
 }
 
 /**
