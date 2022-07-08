@@ -52,8 +52,13 @@ test('numPairs function', () => {
 });
 
 test('bottomPair function', () => {
+  // more than one pair in stem
   let stem = createStem({ bottomPair: [76, 24], numPairs: 6 });
   expect(bottomPair(stem)).toStrictEqual([24, 76]);
+
+  // just one pair in stem
+  stem = createStem({ bottomPair: [35, 9], numPairs: 1 });
+  expect(bottomPair(stem)).toStrictEqual([9, 35]);
 });
 
 test('topPair function', () => {
