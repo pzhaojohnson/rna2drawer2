@@ -1,7 +1,7 @@
 import { stemContainsPosition } from './stemContainsPosition';
 
 describe('stemContainsPosition function', () => {
-  test('stem of size greater than one', () => {
+  test('a stem with more than one pair', () => {
     let st = { position5: 12, position3: 45, size: 3 };
 
     // contained
@@ -24,7 +24,7 @@ describe('stemContainsPosition function', () => {
     expect(stemContainsPosition(st, 88)).toBeFalsy();
   });
 
-  test('stem of size one', () => {
+  test('a stem with just one pair', () => {
     let st = { position5: 20, position3: 31, size: 1 };
 
     // contained
