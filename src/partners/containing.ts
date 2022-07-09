@@ -1,6 +1,6 @@
 import { Partners, partnerOf } from './Partners';
 import { Stem } from 'Partners/stems/Stem';
-import { UnpairedRegion } from './UnpairedRegion';
+import { Linker as UnpairedRegion } from 'Partners/linkers/Linker';
 import { inBounds } from './bounds';
 import { arePaired, isUnpaired } from './paired';
 import { upstreamPartner } from 'Partners/pairs/Pair';
