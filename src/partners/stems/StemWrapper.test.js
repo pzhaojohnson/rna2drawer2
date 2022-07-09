@@ -3,9 +3,13 @@ import { createStem } from 'Partners/stems/Stem';
 import { StemWrapper } from './StemWrapper';
 
 describe('StemWrapper class', () => {
-  test('stem property', () => {
+  test('constructor and stem property', () => {
     let st = createStem({ bottomPair: [20, 56], numPairs: 3 });
-    let stem = new StemWrapper(st);
+
+    let stem = new StemWrapper(st); // from a stem object
+    expect(stem.stem).toBe(st);
+
+    stem = new StemWrapper(new StemWrapper(stem)); // from another stem wrapper
     expect(stem.stem).toBe(st);
   });
 

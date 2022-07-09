@@ -20,8 +20,8 @@ export class StemWrapper {
    */
   readonly stem: Stem;
 
-  constructor(stem: Stem) {
-    this.stem = stem;
+  constructor(stem: Stem | StemWrapper) {
+    this.stem = stem instanceof StemWrapper ? stem.stem : stem;
   }
 
   /**
