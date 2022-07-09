@@ -10,7 +10,9 @@ type StemSide = {
   mostDownstreamPosition: number;
 }
 
-// returns all linkers formed by the partners notation
+/**
+ * Returns an array of all linkers in the structure.
+ */
 export function linkersInPartners(partners: Partners): Linker[] {
   if (partners.length == 0) {
     return [];
