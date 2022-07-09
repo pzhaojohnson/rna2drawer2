@@ -1,4 +1,4 @@
-import { Linker } from 'Partners/linkers/Linker';
+import type { Linker } from 'Partners/linkers/Linker';
 import { upstreamBoundingPosition } from 'Partners/linkers/Linker';
 import { downstreamBoundingPosition } from 'Partners/linkers/Linker';
 
