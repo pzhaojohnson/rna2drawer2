@@ -24,3 +24,17 @@ export function upstreamBoundingPosition(linker: Linker): number {
 export function downstreamBoundingPosition(linker: Linker): number {
   return linker.boundingPosition3;
 }
+
+/**
+ * Returns an array of the positions in the linker.
+ */
+export function positionsInLinker(linker: Linker): number[] {
+  let ubp = upstreamBoundingPosition(linker);
+  let dbp = downstreamBoundingPosition(linker);
+
+  let ps: number[] = [];
+  for (let p = ubp + 1; p < dbp; p++) {
+    ps.push(p);
+  }
+  return ps;
+}
