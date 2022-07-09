@@ -17,6 +17,10 @@ export function createLinker(spec: LinkerSpecification): Linker {
   };
 }
 
+export function deepCopyLinker(linker: Linker): Linker {
+  return { ...linker };
+}
+
 export function upstreamBoundingPosition(linker: Linker): number {
   return linker.boundingPosition5;
 }

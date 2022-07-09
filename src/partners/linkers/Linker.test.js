@@ -1,4 +1,5 @@
 import { createLinker } from './Linker';
+import { deepCopyLinker } from './Linker';
 import { upstreamBoundingPosition } from './Linker';
 import { downstreamBoundingPosition } from './Linker';
 import { positionsInLinker } from './Linker';
@@ -10,6 +11,13 @@ test('createLinker function', () => {
   )).toStrictEqual(
     { boundingPosition5: 61, boundingPosition3: 88 }
   );
+});
+
+test('deepCopyLinker function', () => {
+  let linker = createLinker({ upstreamBoundingPosition: 58, downstreamBoundingPosition: 112 });
+  let deepCopy = deepCopyLinker(linker);
+  expect(deepCopy).not.toBe(linker); // is a new object
+  expect(deepCopy).toStrictEqual(linker);
 });
 
 test('upstreamBoundingPosition and downstreamBoundingPosition functions', () => {
