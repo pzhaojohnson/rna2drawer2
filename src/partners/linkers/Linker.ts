@@ -6,8 +6,10 @@ export type LinkerSpecification = (
   { upstreamBoundingPosition: number, downstreamBoundingPosition: number }
 );
 
-// allows for linker objects to be specified in different ways
-// without knowledge of the underlying object structure
+/**
+ * Allows for linker objects to be specified in different ways
+ * without knowledge of the underlying object structure.
+ */
 export function createLinker(spec: LinkerSpecification): Linker {
   return {
     boundingPosition5: spec.upstreamBoundingPosition,
