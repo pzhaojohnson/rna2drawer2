@@ -1,7 +1,6 @@
 import { linkersAreEqual } from './linkersAreEqual';
 
 test('linkersAreEqual function', () => {
-
   // are equal
   expect(linkersAreEqual(
     { boundingPosition5: 60, boundingPosition3: 81 },
