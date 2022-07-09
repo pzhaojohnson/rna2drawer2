@@ -41,6 +41,10 @@ export function createStem(spec: StemSpecification): Stem {
   };
 }
 
+export function deepCopyStem(stem: Stem): Stem {
+  return { ...stem };
+}
+
 /**
  * Returns the pairs in the stem.
  */

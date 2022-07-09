@@ -1,4 +1,5 @@
 import { createStem } from './Stem';
+import { deepCopyStem } from './Stem';
 import { pairsInStem } from './Stem';
 import { numPairs } from './Stem';
 import { bottomPair } from './Stem';
@@ -25,6 +26,13 @@ test('createStem function', () => {
   )).toStrictEqual(
     { position5: 17, position3: 38, size: 5 }
   );
+});
+
+test('deepCopyStem function', () => {
+  let stem = { position5: 27, position3: 108, size: 18 };
+  let deepCopy = deepCopyStem(stem);
+  expect(deepCopy).not.toBe(stem); // is a new object
+  expect(deepCopy).toStrictEqual(stem);
 });
 
 describe('pairsInStem function', () => {
