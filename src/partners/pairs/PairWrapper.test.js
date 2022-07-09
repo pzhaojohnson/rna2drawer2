@@ -1,9 +1,13 @@
 import { PairWrapper } from './PairWrapper';
 
 describe('PairWrapper class', () => {
-  test('pair property', () => {
+  test('constructor and pair property', () => {
     let pr = [3, 20];
-    let pair = new PairWrapper(pr);
+
+    let pair = new PairWrapper(pr); // from a pair tuple
+    expect(pair.pair).toBe(pr);
+
+    pair = new PairWrapper(new PairWrapper(pr)); // from another pair wrapper
     expect(pair.pair).toBe(pr);
   });
 

@@ -10,8 +10,8 @@ export class PairWrapper {
    */
   readonly pair: Pair;
 
-  constructor(pair: Pair) {
-    this.pair = pair;
+  constructor(pair: Pair | PairWrapper) {
+    this.pair = pair instanceof PairWrapper ? pair.pair : pair;
   }
 
   /**
