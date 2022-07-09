@@ -4,7 +4,7 @@ import { topPair as topPairOfStem } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 import { containingUnpairedRegion as containingLinker } from 'Partners/containing';
-import { downstreamBoundingPosition } from 'Partners/Linker';
+import { downstreamBoundingPosition } from 'Partners/linkers/Linker';
 
 export function stemIsHairpin(partners: Partners, stem: Stem): boolean {
   let topPair = topPairOfStem(stem);

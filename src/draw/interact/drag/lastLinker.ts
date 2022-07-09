@@ -1,6 +1,6 @@
 import { Partners } from 'Partners/Partners';
-import { Linker } from 'Partners/Linker';
-import { createLinker } from 'Partners/Linker';
+import { Linker } from 'Partners/linkers/Linker';
+import { createLinker } from 'Partners/linkers/Linker';
 import { containingUnpairedRegion as linkerContainingPosition } from 'Partners/containing';
 
 // returns the last linker of the structure

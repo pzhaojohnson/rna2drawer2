@@ -1,7 +1,7 @@
 import { StrictLayoutSpecification } from './StrictLayoutSpecification';
-import { Linker } from 'Partners/Linker';
-import { upstreamBoundingPosition } from 'Partners/Linker';
-import { downstreamBoundingPosition } from 'Partners/Linker';
+import { Linker } from 'Partners/linkers/Linker';
+import { upstreamBoundingPosition } from 'Partners/linkers/Linker';
+import { downstreamBoundingPosition } from 'Partners/linkers/Linker';
 import { atPosition } from 'Array/at';
 import { initializeAtPosition } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 

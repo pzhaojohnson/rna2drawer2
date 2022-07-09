@@ -1,6 +1,6 @@
-import { Linker } from 'Partners/Linker';
-import { upstreamBoundingPosition } from 'Partners/Linker';
-import { downstreamBoundingPosition } from 'Partners/Linker';
+import { Linker } from 'Partners/linkers/Linker';
+import { upstreamBoundingPosition } from 'Partners/linkers/Linker';
+import { downstreamBoundingPosition } from 'Partners/linkers/Linker';
 
 export function linkersAreEqual(linker1: Linker, linker2: Linker): boolean {
   return (

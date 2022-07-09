@@ -7,9 +7,9 @@ import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 import { containingStem as stemContainingPosition } from 'Partners/containing';
 
-import { Linker } from 'Partners/Linker';
-import { upstreamBoundingPosition } from 'Partners/Linker';
-import { downstreamBoundingPosition } from 'Partners/Linker';
+import { Linker } from 'Partners/linkers/Linker';
+import { upstreamBoundingPosition } from 'Partners/linkers/Linker';
+import { downstreamBoundingPosition } from 'Partners/linkers/Linker';
 
 import { atPosition } from 'Array/at';
 

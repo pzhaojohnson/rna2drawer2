@@ -5,8 +5,8 @@ import { bottomPair } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 
-import { Linker } from 'Partners/Linker';
-import { createLinker } from 'Partners/Linker';
+import { Linker } from 'Partners/linkers/Linker';
+import { createLinker } from 'Partners/linkers/Linker';
 import { containingUnpairedRegion as linkerContainingPosition } from 'Partners/containing';
 
 // returns the linker immediately before the stem
