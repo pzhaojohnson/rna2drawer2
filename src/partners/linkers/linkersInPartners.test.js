@@ -1,3 +1,5 @@
+import { createLinker } from 'Partners/linkers/Linker';
+
 import { linkersInPartners } from './linkersInPartners';
 
 describe('linkersInPartners function', () => {
@@ -9,7 +11,7 @@ describe('linkersInPartners function', () => {
   test('unstructured partners of length greater than zero', () => {
     let partners = [undefined, null, undefined, null, undefined];
     expect(linkersInPartners(partners)).toStrictEqual([
-      { boundingPosition5: 0, boundingPosition3: 6 },
+      createLinker({ upstreamBoundingPosition: 0, downstreamBoundingPosition: 6 }),
     ]);
   });
 
@@ -17,7 +19,7 @@ describe('linkersInPartners function', () => {
     let partners = [6, 5, null, null, 2, 1];
     // omits leading and trailing linkers containing zero positions
     expect(linkersInPartners(partners)).toStrictEqual([
-      { boundingPosition5: 2, boundingPosition3: 5 },
+      createLinker({ upstreamBoundingPosition: 2, downstreamBoundingPosition: 5 }),
     ]);
   });
 
@@ -29,9 +31,9 @@ describe('linkersInPartners function', () => {
     ];
     // includes leading and trailing linkers
     expect(linkersInPartners(partners)).toStrictEqual([
-      { boundingPosition5: 0, boundingPosition3: 3 },
-      { boundingPosition5: 4, boundingPosition3: 7 },
-      { boundingPosition5: 8, boundingPosition3: 11 },
+      createLinker({ upstreamBoundingPosition: 0, downstreamBoundingPosition: 3 }),
+      createLinker({ upstreamBoundingPosition: 4, downstreamBoundingPosition: 7 }),
+      createLinker({ upstreamBoundingPosition: 8, downstreamBoundingPosition: 11 }),
     ]);
   });
 
@@ -45,13 +47,13 @@ describe('linkersInPartners function', () => {
       30, 29, null, null, null, undefined, 24, 23,
     ];
     expect(linkersInPartners(partners)).toStrictEqual([
-      { boundingPosition5: 2, boundingPosition3: 5 },
-      { boundingPosition5: 6, boundingPosition3: 7 },
-      { boundingPosition5: 7, boundingPosition3: 9 },
-      { boundingPosition5: 9, boundingPosition3: 11 },
-      { boundingPosition5: 13, boundingPosition3: 16 },
-      { boundingPosition5: 18, boundingPosition3: 23 },
-      { boundingPosition5: 24, boundingPosition3: 29 },
+      createLinker({ upstreamBoundingPosition: 2, downstreamBoundingPosition: 5 }),
+      createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 7 }),
+      createLinker({ upstreamBoundingPosition: 7, downstreamBoundingPosition: 9 }),
+      createLinker({ upstreamBoundingPosition: 9, downstreamBoundingPosition: 11 }),
+      createLinker({ upstreamBoundingPosition: 13, downstreamBoundingPosition: 16 }),
+      createLinker({ upstreamBoundingPosition: 18, downstreamBoundingPosition: 23 }),
+      createLinker({ upstreamBoundingPosition: 24, downstreamBoundingPosition: 29 }),
     ]);
   });
 
@@ -65,9 +67,9 @@ describe('linkersInPartners function', () => {
       6, 5, 4,
     ];
     expect(linkersInPartners(partners)).toStrictEqual([
-      { boundingPosition5: 2, boundingPosition3: 4 },
-      { boundingPosition5: 6, boundingPosition3: 7 },
-      { boundingPosition5: 8, boundingPosition3: 10 },
+      createLinker({ upstreamBoundingPosition: 2, downstreamBoundingPosition: 4 }),
+      createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 7 }),
+      createLinker({ upstreamBoundingPosition: 8, downstreamBoundingPosition: 10 }),
     ]);
   });
 
@@ -81,9 +83,9 @@ describe('linkersInPartners function', () => {
       7, 6, 5,
     ];
     expect(linkersInPartners(partners)).toStrictEqual([
-      { boundingPosition5: 2, boundingPosition3: 5 },
-      { boundingPosition5: 7, boundingPosition3: 10 },
-      { boundingPosition5: 11, boundingPosition3: 12 },
+      createLinker({ upstreamBoundingPosition: 2, downstreamBoundingPosition: 5 }),
+      createLinker({ upstreamBoundingPosition: 7, downstreamBoundingPosition: 10 }),
+      createLinker({ upstreamBoundingPosition: 11, downstreamBoundingPosition: 12 }),
     ]);
   });
 });
