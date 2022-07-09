@@ -7,6 +7,14 @@ describe('PairWrapper class', () => {
     expect(pair.pair).toBe(pr);
   });
 
+  test('deepCopy method', () => {
+    let pair = new PairWrapper([511, 712]);
+    let deepCopy = pair.deepCopy();
+    expect(deepCopy).not.toBe(pair); // created a new pair wrapper
+    expect(deepCopy.pair).not.toBe(pair.pair); // created a new wrapped pair
+    expect(deepCopy.equals(pair)).toBeTruthy(); // is a copy
+  });
+
   test('upstreamPartner and downstreamPartner getters', () => {
     let pair = new PairWrapper([5, 12]);
     expect(pair.upstreamPartner).toBe(5);

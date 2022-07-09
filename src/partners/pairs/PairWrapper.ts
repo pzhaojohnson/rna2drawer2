@@ -1,4 +1,5 @@
 import type { Pair } from 'Partners/pairs/Pair';
+import { deepCopyPair } from 'Partners/pairs/Pair';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 import { pairsAreEqual } from 'Partners/pairs/pairsAreEqual';
@@ -11,6 +12,13 @@ export class PairWrapper {
 
   constructor(pair: Pair) {
     this.pair = pair;
+  }
+
+  /**
+   * Deep copies the wrapped pair as well as the pair wrapper.
+   */
+  deepCopy(): PairWrapper {
+    return new PairWrapper(deepCopyPair(this.pair));
   }
 
   get upstreamPartner() {
