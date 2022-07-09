@@ -1,13 +1,23 @@
 import type { Partners } from 'Partners/Partners';
-import type { Linker } from 'Partners/linkers/Linker';
 import { areUnstructured } from 'Partners/areUnstructured';
-import { containingStem } from 'Partners/containing';
-import { atIndex } from 'Array/at';
 
-// represents one side of a stem
+import { stemsInPartners } from 'Partners/stems/stemsInPartners';
+import { bottomPair } from 'Partners/stems/Stem';
+import { topPair } from 'Partners/stems/Stem';
+import { upstreamPartner } from 'Partners/pairs/Pair';
+import { downstreamPartner } from 'Partners/pairs/Pair';
+
+import { Linker } from 'Partners/linkers/Linker';
+import { createLinker } from 'Partners/linkers/Linker';
+import { upstreamBoundingPosition as upstreamBoundingPositionOfLinker } from 'Partners/linkers/Linker';
+import { downstreamBoundingPosition as downstreamBoundingPositionOfLinker } from 'Partners/linkers/Linker';
+
+/**
+ * One side of a stem.
+ */
 type StemSide = {
-  mostUpstreamPosition: number;
-  mostDownstreamPosition: number;
+  startPosition: number;
+  endPosition: number;
 }
 
 /**
@@ -17,48 +27,50 @@ export function linkersInPartners(partners: Partners): Linker[] {
   if (partners.length == 0) {
     return [];
   } else if (areUnstructured(partners)) {
-    return [{ boundingPosition5: 0, boundingPosition3: partners.length + 1 }];
+    let upstreamBoundingPosition = 0;
+    let downstreamBoundingPosition = partners.length + 1;
+    return [createLinker({ upstreamBoundingPosition, downstreamBoundingPosition })];
   }
 
-  let stemSides: StemSide[] = [];
-  let p = 1;
-  while (p <= partners.length) {
-    let st = containingStem(partners, p);
-    if (!st) { // position is unpaired
-      p++;
-    } else {
-      stemSides.push({
-        mostUpstreamPosition: p,
-        mostDownstreamPosition: p + st.size - 1,
-      });
-      p = Math.max(
-        p + st.size,
-        p + 1, // just in case to prevent infinite looping
-      );
-    }
-  }
+  let stems = stemsInPartners(partners);
+
+  let upstreamStemSides = stems.map(stem => ({
+    startPosition: upstreamPartner(bottomPair(stem)),
+    endPosition: upstreamPartner(topPair(stem)),
+  }));
+
+  let downstreamStemSides = stems.map(stem => ({
+    startPosition: downstreamPartner(topPair(stem)),
+    endPosition: downstreamPartner(bottomPair(stem)),
+  }));
+
+  let stemSides = upstreamStemSides.concat(downstreamStemSides);
+
+  // sort in ascending order by start position
+  stemSides.sort((side1, side2) => side1.startPosition - side2.startPosition);
 
   let linkers: Linker[] = [];
+
   let prevStemSide: StemSide | undefined = undefined;
   stemSides.forEach(currStemSide => {
-    linkers.push({
-      boundingPosition5: !prevStemSide ? 0 : prevStemSide.mostDownstreamPosition,
-      boundingPosition3: currStemSide.mostUpstreamPosition,
-    });
+    let upstreamBoundingPosition = !prevStemSide ? 0 : prevStemSide.endPosition;
+    let downstreamBoundingPosition = currStemSide.startPosition;
+    linkers.push(createLinker({ upstreamBoundingPosition, downstreamBoundingPosition}));
     prevStemSide = currStemSide;
   });
-  let lastStemSide = atIndex(stemSides, stemSides.length - 1);
-  if (lastStemSide) {
-    linkers.push({
-      boundingPosition5: lastStemSide.mostDownstreamPosition,
-      boundingPosition3: partners.length + 1,
-    });
+
+  // add the last linker
+  if (stemSides.length > 0) {
+    let lastStemSide = stemSides[stemSides.length - 1];
+    let upstreamBoundingPosition = lastStemSide.endPosition;
+    let downstreamBoundingPosition = partners.length + 1;
+    linkers.push(createLinker({ upstreamBoundingPosition, downstreamBoundingPosition}));
   }
 
-  // remove empty linkers at beginning and end
+  // remove empty linkers at beginning and end if present
   linkers = linkers.filter(linker => (
-    linker.boundingPosition3 != 1
-    && linker.boundingPosition5 != partners.length
+    downstreamBoundingPositionOfLinker(linker) != 1
+    && upstreamBoundingPositionOfLinker(linker) != partners.length
   ));
 
   return linkers;
