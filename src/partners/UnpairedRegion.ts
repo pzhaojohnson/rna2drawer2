@@ -19,7 +19,3 @@ export function positions(ur: UnpairedRegion): number[] {
   }
   return ps;
 }
-
-export function contains(ur: UnpairedRegion, p: number): boolean {
-  return p > ur.boundingPosition5 && p < ur.boundingPosition3;
-}
