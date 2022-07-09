@@ -1,8 +1,24 @@
-// a group of consecutive unpaired positions
+/**
+ * A (possibly empty) set of consecutive unpaired positions
+ * connecting two stems together or connecting a stem
+ * with the very beginning or end of the structure.
+ *
+ * A linker will contain zero positions if its two bounding
+ * positions are only one apart from each other.
+ */
 export type Linker = {
-  // the position immediately 5' to the unpaired region
+  /**
+   * The position immediately 5' of the linker
+   * (may be zero if the linker is at the very beginning
+   * of the structure).
+   */
   boundingPosition5: number;
-  // the position immediately 3' to the unpaired region
+
+  /**
+   * The position immediately 3' of the linker
+   * (may be one more than the structure length
+   * if the linker is at the very end of the structure).
+   */
   boundingPosition3: number;
 };
 
