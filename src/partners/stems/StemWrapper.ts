@@ -1,6 +1,7 @@
 import type { Stem } from 'Partners/stems/Stem';
-import { PairWrapper } from 'Partners/pairs/PairWrapper';
+import { deepCopyStem } from 'Partners/stems/Stem';
 
+import { PairWrapper } from 'Partners/pairs/PairWrapper';
 import { pairsInStem } from 'Partners/stems/Stem';
 import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
@@ -21,6 +22,13 @@ export class StemWrapper {
 
   constructor(stem: Stem) {
     this.stem = stem;
+  }
+
+  /**
+   * Deep copies the wrapped stem as well as the stem wrapper.
+   */
+  deepCopy(): StemWrapper {
+    return new StemWrapper(deepCopyStem(this.stem));
   }
 
   pairs(): PairWrapper[] {

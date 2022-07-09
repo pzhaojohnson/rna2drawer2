@@ -9,6 +9,14 @@ describe('StemWrapper class', () => {
     expect(stem.stem).toBe(st);
   });
 
+  test('deepCopy method', () => {
+    let stem = new StemWrapper(createStem({ bottomPair: [1012, 2009], numPairs: 44 }));
+    let deepCopy = stem.deepCopy();
+    expect(deepCopy).not.toBe(stem); // created a new stem wrapper
+    expect(deepCopy.stem).not.toBe(stem.stem); // created a new wrapped stem
+    expect(deepCopy.equals(stem)).toBeTruthy(); // is a copy
+  });
+
   test('pairs method', () => {
     let stem = new StemWrapper(createStem({ bottomPair: [78, 43], numPairs: 4 }));
     let pairs = stem.pairs();
