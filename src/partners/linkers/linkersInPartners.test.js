@@ -13,7 +13,7 @@ describe('linkersInPartners function', () => {
     ]);
   });
 
-  test('first and last positions are in stems', () => {
+  test('when first and last positions are in stems', () => {
     let partners = [6, 5, null, null, 2, 1];
     // omits leading and trailing linkers containing zero positions
     expect(linkersInPartners(partners)).toStrictEqual([
@@ -21,7 +21,7 @@ describe('linkersInPartners function', () => {
     ]);
   });
 
-  test('first and last positions are unpaired', () => {
+  test('when first and last positions are unpaired', () => {
     let partners = [
       null, null,
       8, 7, undefined, undefined, 4, 3,
