@@ -1,4 +1,4 @@
-import { Partners } from 'Partners/Partners';
+import type { Partners } from 'Partners/Partners';
 import type { Linker } from 'Partners/linkers/Linker';
 import { areUnstructured } from 'Partners/areUnstructured';
 import { containingStem } from 'Partners/containing';
