@@ -1,5 +1,18 @@
+import { deepCopyPair } from './Pair';
 import { upstreamPartner } from './Pair';
 import { downstreamPartner } from './Pair';
+
+test('deepCopyPair function', () => {
+  let pair = [37, 909];
+  let deepCopy = deepCopyPair(pair);
+  expect(deepCopy).not.toBe(pair); // is a new object
+  expect(deepCopy).toStrictEqual(pair); // is a copy
+
+  pair = [55, 2]; // upstream and downstream partners reversed
+  deepCopy = deepCopyPair(pair);
+  expect(deepCopy).not.toBe(pair); // is a new object
+  expect(deepCopy).toStrictEqual(pair); // is a copy
+});
 
 test('upstreamPartner function', () => {
   // upstream partner is first

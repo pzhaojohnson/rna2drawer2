@@ -3,6 +3,10 @@
  */
 export type Pair = [number, number];
 
+export function deepCopyPair(pair: Pair): Pair {
+  return [...pair];
+}
+
 /**
  * Returns the upstream partner of the pair.
  */
