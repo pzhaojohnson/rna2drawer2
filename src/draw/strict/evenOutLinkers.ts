@@ -1,7 +1,7 @@
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
 import type { Partners } from 'Partners/Partners';
-import { unpairedRegions as linkersInPartners } from 'Partners/unpairedRegions';
+import { linkersInPartners } from 'Partners/linkers/linkersInPartners';
 
 import { evenOutStretch } from 'Draw/strict/layout/stretch';
 

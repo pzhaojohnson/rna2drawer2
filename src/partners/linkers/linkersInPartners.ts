@@ -1,5 +1,5 @@
 import { Partners } from 'Partners/Partners';
-import { UnpairedRegion } from 'Partners/UnpairedRegion';
+import type { Linker } from 'Partners/linkers/Linker';
 import { areUnstructured } from 'Partners/areUnstructured';
 import { containingStem } from 'Partners/containing';
 import { atIndex } from 'Array/at';
@@ -10,8 +10,8 @@ type StemSide = {
   mostDownstreamPosition: number;
 }
 
-// returns all unpaired regions formed by the partners notation
-export function unpairedRegions(partners: Partners): UnpairedRegion[] {
+// returns all linkers formed by the partners notation
+export function linkersInPartners(partners: Partners): Linker[] {
   if (partners.length == 0) {
     return [];
   } else if (areUnstructured(partners)) {
@@ -35,11 +35,11 @@ export function unpairedRegions(partners: Partners): UnpairedRegion[] {
       );
     }
   }
-  
-  let urs: UnpairedRegion[] = [];
+
+  let linkers: Linker[] = [];
   let prevStemSide: StemSide | undefined = undefined;
   stemSides.forEach(currStemSide => {
-    urs.push({
+    linkers.push({
       boundingPosition5: !prevStemSide ? 0 : prevStemSide.mostDownstreamPosition,
       boundingPosition3: currStemSide.mostUpstreamPosition,
     });
@@ -47,17 +47,17 @@ export function unpairedRegions(partners: Partners): UnpairedRegion[] {
   });
   let lastStemSide = atIndex(stemSides, stemSides.length - 1);
   if (lastStemSide) {
-    urs.push({
+    linkers.push({
       boundingPosition5: lastStemSide.mostDownstreamPosition,
       boundingPosition3: partners.length + 1,
     });
   }
 
-  // remove empty unpaired regions at beginning and end
-  urs = urs.filter(ur => (
-    ur.boundingPosition3 != 1
-    && ur.boundingPosition5 != partners.length
+  // remove empty linkers at beginning and end
+  linkers = linkers.filter(linker => (
+    linker.boundingPosition3 != 1
+    && linker.boundingPosition5 != partners.length
   ));
 
-  return urs;
+  return linkers;
 }

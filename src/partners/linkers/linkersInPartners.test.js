@@ -1,22 +1,22 @@
-import { unpairedRegions } from './unpairedRegions';
+import { linkersInPartners } from './linkersInPartners';
 
-describe('unpairedRegions function', () => {
+describe('linkersInPartners function', () => {
   test('empty partners', () => {
     let partners = [];
-    expect(unpairedRegions(partners)).toStrictEqual([]);
+    expect(linkersInPartners(partners)).toStrictEqual([]);
   });
 
   test('unstructured partners of length greater than zero', () => {
     let partners = [undefined, null, undefined, null, undefined];
-    expect(unpairedRegions(partners)).toStrictEqual([
+    expect(linkersInPartners(partners)).toStrictEqual([
       { boundingPosition5: 0, boundingPosition3: 6 },
     ]);
   });
 
   test('first and last positions are in stems', () => {
     let partners = [6, 5, null, null, 2, 1];
-    // omits leading and trailing unpaired regions of size zero
-    expect(unpairedRegions(partners)).toStrictEqual([
+    // omits leading and trailing linkers containing zero positions
+    expect(linkersInPartners(partners)).toStrictEqual([
       { boundingPosition5: 2, boundingPosition3: 5 },
     ]);
   });
@@ -27,15 +27,15 @@ describe('unpairedRegions function', () => {
       8, 7, undefined, undefined, 4, 3,
       undefined, undefined,
     ];
-    // includes leading and trailing unpaired regions
-    expect(unpairedRegions(partners)).toStrictEqual([
+    // includes leading and trailing linkers
+    expect(linkersInPartners(partners)).toStrictEqual([
       { boundingPosition5: 0, boundingPosition3: 3 },
       { boundingPosition5: 4, boundingPosition3: 7 },
       { boundingPosition5: 8, boundingPosition3: 11 },
     ]);
   });
 
-  test('internal unpaired regions of varying sizes', () => {
+  test('internal linkers with varying numbers of positions', () => {
     let partners = [
       6, 5, null, undefined, 2, 1,
       9, null, 7,
@@ -44,7 +44,7 @@ describe('unpairedRegions function', () => {
       undefined, undefined, null, undefined,
       30, 29, null, null, null, undefined, 24, 23,
     ];
-    expect(unpairedRegions(partners)).toStrictEqual([
+    expect(linkersInPartners(partners)).toStrictEqual([
       { boundingPosition5: 2, boundingPosition3: 5 },
       { boundingPosition5: 6, boundingPosition3: 7 },
       { boundingPosition5: 7, boundingPosition3: 9 },
@@ -64,7 +64,7 @@ describe('unpairedRegions function', () => {
       undefined,
       6, 5, 4,
     ];
-    expect(unpairedRegions(partners)).toStrictEqual([
+    expect(linkersInPartners(partners)).toStrictEqual([
       { boundingPosition5: 2, boundingPosition3: 4 },
       { boundingPosition5: 6, boundingPosition3: 7 },
       { boundingPosition5: 8, boundingPosition3: 10 },
@@ -80,7 +80,7 @@ describe('unpairedRegions function', () => {
       2, 1,
       7, 6, 5,
     ];
-    expect(unpairedRegions(partners)).toStrictEqual([
+    expect(linkersInPartners(partners)).toStrictEqual([
       { boundingPosition5: 2, boundingPosition3: 5 },
       { boundingPosition5: 7, boundingPosition3: 10 },
       { boundingPosition5: 11, boundingPosition3: 12 },
