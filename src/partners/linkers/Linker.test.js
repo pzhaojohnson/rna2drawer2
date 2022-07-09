@@ -2,6 +2,7 @@ import { createLinker } from './Linker';
 import { upstreamBoundingPosition } from './Linker';
 import { downstreamBoundingPosition } from './Linker';
 import { positionsInLinker } from './Linker';
+import { numPositionsInLinker } from './Linker';
 
 test('createLinker function', () => {
   expect(createLinker(
@@ -27,4 +28,14 @@ describe('positionsInLinker function', () => {
     let linker = createLinker({ upstreamBoundingPosition: 8, downstreamBoundingPosition: 9 });
     expect(positionsInLinker(linker)).toStrictEqual([]);
   });
+});
+
+test('numPositionsInLinker function', () => {
+  // multiple positions in linker
+  let linker = createLinker({ upstreamBoundingPosition: 101, downstreamBoundingPosition: 112 });
+  expect(numPositionsInLinker(linker)).toBe(10);
+
+  // zero positions in linker
+  linker = createLinker({ upstreamBoundingPosition: 66, downstreamBoundingPosition: 67 });
+  expect(numPositionsInLinker(linker)).toBe(0);
 });

@@ -3,7 +3,7 @@ import { StrictLayoutSpecification } from './StrictLayoutSpecification';
 import { Stem } from 'Partners/stems/Stem';
 
 import { upstreamBoundingPosition } from 'Partners/linkers/Linker';
-import { size as sizeOfLinker } from 'Partners/UnpairedRegion';
+import { numPositionsInLinker as sizeOfLinker } from 'Partners/linkers/Linker';
 import { linkersAreEqual } from 'Partners/linkers/linkersAreEqual';
 
 import { leadingLinker as leadingLinkerOfStem } from './neighboringLinkers';

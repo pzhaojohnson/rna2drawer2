@@ -38,3 +38,12 @@ export function positionsInLinker(linker: Linker): number[] {
   }
   return ps;
 }
+
+/**
+ * Returns the number of positions in the linker
+ * (i.e., the number of positions between the upstream
+ * and downstream bounding positions).
+ */
+export function numPositionsInLinker(linker: Linker): number {
+  return downstreamBoundingPosition(linker) - upstreamBoundingPosition(linker) - 1;
+}
