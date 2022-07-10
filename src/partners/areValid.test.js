@@ -91,7 +91,7 @@ describe('assertAreValid function', () => {
   });
 
   test('invalid partners', () => {
-    // downstream partner is out of bounds
+    // downstream partner is an unassigned position
     let partners = [undefined, 60, null, null];
     expect(
       () => assertAreValid(partners)
