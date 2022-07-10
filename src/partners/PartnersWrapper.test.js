@@ -26,4 +26,15 @@ describe('PartnersWrapper class', () => {
     let partners = new PartnersWrapper(partnersArray);
     expect(partners.length).toBe(7);
   });
+
+  test('pair and unpair methods', () => {
+    let partnersArray = [null, null, null, null, null, null, null, null];
+    let partners = new PartnersWrapper(partnersArray);
+
+    partners.pair(3, 7);
+    expect(partners.partners).toStrictEqual([null, null, 7, null, null, null, 3, null]);
+
+    partners.unpair(7);
+    expect(partners.partners).toStrictEqual([null, null, null, null, null, null, null, null]);
+  });
 });

@@ -1,6 +1,9 @@
 import type { Partners } from 'Partners/Partners';
 import { partnerOf } from 'Partners/Partners';
 
+import { pair } from 'Partners/edit';
+import { unpair } from 'Partners/edit';
+
 export class PartnersWrapper {
   /**
    * The wrapped partners.
@@ -17,6 +20,14 @@ export class PartnersWrapper {
 
   get length() {
     return this.partners.length;
+  }
+
+  pair(p: number, q: number) {
+    pair(this.partners, p, q);
+  }
+
+  unpair(p: number) {
+    unpair(this.partners, p);
   }
 }
 
