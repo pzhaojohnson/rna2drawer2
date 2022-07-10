@@ -16,6 +16,16 @@ describe('PartnersWrapper class', () => {
     expect(partners.partners).toBe(partnersArray);
   });
 
+  test('areValid method', () => {
+    let partnersArray = [null, 5, null, null, 2]; // valid
+    let partners = new PartnersWrapper(partnersArray);
+    expect(partners.areValid()).toBeTruthy();
+
+    partnersArray = [null, 4, null, null, null]; // unmatched partner
+    partners = new PartnersWrapper(partnersArray);
+    expect(partners.areValid()).toBeFalsy();
+  });
+
   test('partnerOf method', () => {
     let partnersArray = [null, 5, undefined, undefined, 2, undefined];
     let partners = new PartnersWrapper(partnersArray);

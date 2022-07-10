@@ -1,6 +1,8 @@
 import type { Partners } from 'Partners/Partners';
 import { partnerOf } from 'Partners/Partners';
 
+import { areValid } from 'Partners/areValid';
+
 import { isUnpaired } from 'Partners/paired';
 import { isPaired } from 'Partners/paired';
 import { arePaired } from 'Partners/paired';
@@ -26,6 +28,10 @@ export class PartnersWrapper {
 
   constructor(partners: Partners | PartnersWrapper) {
     this.partners = partners instanceof PartnersWrapper ? partners.partners : partners;
+  }
+
+  areValid() {
+    return areValid(this.partners);
   }
 
   partnerOf(p: number) {
