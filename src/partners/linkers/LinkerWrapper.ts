@@ -54,3 +54,7 @@ export class LinkerWrapper {
     return linkersAreEqual(this.linker, otherLinker);
   }
 }
+
+export {
+  LinkerWrapper as Linker,
+};
