@@ -13,8 +13,7 @@ describe('isPaired function', () => {
   });
 
   test('positions that are out of range', () => {
-    // since the position is out of range, it cannot
-    // be paired
+    // since the position is out of range, it cannot be paired
     expect(isPaired(partners, 0)).toBeFalsy();
     expect(isPaired(partners, -1)).toBeFalsy();
     expect(isPaired(partners, partners.length + 2)).toBeFalsy();
@@ -30,8 +29,8 @@ describe('isUnpaired function', () => {
   });
 
   test('positions that are out of range', () => {
-    // since the position is out of range, it cannot
-    // be paired and therefore is unpaired
+    // since the position is out of range, it cannot be paired
+    // (and therefore is unpaired)
     expect(isUnpaired(partners, 0)).toBeTruthy();
     expect(isUnpaired(partners, -1)).toBeTruthy();
     expect(isUnpaired(partners, partners.length + 3)).toBeTruthy();
