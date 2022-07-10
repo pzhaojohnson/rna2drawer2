@@ -1,4 +1,4 @@
-import { Partners } from 'Partners/Partners';
+import type { Partners } from 'Partners/Partners';
 
 export function unstructuredPartners(length=0): Partners {
   let partners: Partners = [];
