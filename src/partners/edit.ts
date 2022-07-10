@@ -11,7 +11,7 @@ export function pair(partners: Partners, p: number, q: number) {
 export function unpair(partners: Partners, p: number) {
   let q = partnerOf(partners, p);
   partners[p - 1] = null;
-  if (typeof q == 'number') {
+  if (q != undefined) {
     partners[q - 1] = null;
   }
 }
