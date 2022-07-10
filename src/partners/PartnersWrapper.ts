@@ -6,6 +6,7 @@ import { areValid } from 'Partners/areValid';
 import { isUnpaired } from 'Partners/paired';
 import { isPaired } from 'Partners/paired';
 import { arePaired } from 'Partners/paired';
+
 import { areUnstructured } from 'Partners/areUnstructured';
 
 import { pair } from 'Partners/edit';
