@@ -1,4 +1,4 @@
-import { Partners } from './Partners';
+import type { Partners } from './Partners';
 
 export function areValid(partners: Partners): boolean {
   let valid = true;
