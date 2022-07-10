@@ -3,9 +3,9 @@ import { partnerOf } from 'Partners/Partners';
 
 import { areValid } from 'Partners/areValid';
 
-import { isUnpaired } from 'Partners/paired';
-import { isPaired } from 'Partners/paired';
-import { arePaired } from 'Partners/paired';
+import { isUnpaired } from 'Partners/isPaired';
+import { isPaired } from 'Partners/isPaired';
+import { arePaired } from 'Partners/isPaired';
 
 import { areUnstructured } from 'Partners/areUnstructured';
 
