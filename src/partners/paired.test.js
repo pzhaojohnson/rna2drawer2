@@ -2,7 +2,6 @@ import {
   isPaired,
   isUnpaired,
   arePaired,
-  areUnstructured,
 } from './paired';
 
 let partners = [null, undefined, 11, 10, 9, null, undefined, undefined, 5, 4, 3, null];
@@ -69,40 +68,5 @@ describe('arePaired function', () => {
     expect(arePaired(partners, -2, partners.length + 2)).toBeFalsy();
     // first is above range and second is below range
     expect(arePaired(partners, partners.length + 3, -5)).toBeFalsy();
-  });
-});
-
-describe('areUnstructured function', () => {
-  describe('are unstructured', () => {
-    it('empty', () => {
-      expect(areUnstructured([])).toBeTruthy();
-    });
-
-    it('entirely unpaired', () => {
-      let partners = [undefined, null, null, undefined, undefined];
-      expect(areUnstructured(partners)).toBeTruthy();
-    });
-
-    it('has unassigned positions', () => {
-      let partners = [null, undefined, null];
-      partners[15] = null;
-      partners[25] = undefined;
-      expect(areUnstructured(partners)).toBeTruthy();
-    });
-  });
-
-  describe('are structured', () => {
-    it('has pairs', () => {
-      let partners = [null, 8, 7, undefined, null, undefined, 3, 2];
-      expect(areUnstructured(partners)).toBeFalsy();
-    });
-
-    it('has unassigned positions', () => {
-      let partners = [null, null, undefined];
-      partners[16 - 1] = 29;
-      partners[29 - 1] = 16;
-      partners.length = 50;
-      expect(areUnstructured(partners)).toBeFalsy();
-    });
   });
 });
