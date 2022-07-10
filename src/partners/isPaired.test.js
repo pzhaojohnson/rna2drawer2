@@ -1,8 +1,6 @@
-import {
-  isPaired,
-  isUnpaired,
-  arePaired,
-} from './isPaired';
+import { isPaired } from './isPaired';
+import { isUnpaired } from './isPaired';
+import { arePaired } from './isPaired';
 
 let partners = [null, undefined, 11, 10, 9, null, undefined, undefined, 5, 4, 3, null];
 
