@@ -7,6 +7,7 @@ describe('areUnstructured function', () => {
   });
 
   test('unstructured partners of length greater than zero', () => {
+    // test null and undefined values
     let partners = [undefined, null, undefined, null];
     expect(areUnstructured(partners)).toBeTruthy();
   });
