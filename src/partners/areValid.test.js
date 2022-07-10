@@ -92,7 +92,7 @@ describe('assertAreValid function', () => {
 
   test('invalid partners', () => {
     // downstream partner is out of bounds
-    let partner = [undefined, 60, null, null];
+    let partners = [undefined, 60, null, null];
     expect(
       () => assertAreValid(partners)
     ).toThrow();
