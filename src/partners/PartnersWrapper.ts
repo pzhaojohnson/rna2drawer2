@@ -14,6 +14,10 @@ export class PartnersWrapper {
   partnerOf(p: number) {
     return partnerOf(this.partners, p);
   }
+
+  get length() {
+    return this.partners.length;
+  }
 }
 
 export {

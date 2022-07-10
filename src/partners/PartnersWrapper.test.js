@@ -20,4 +20,10 @@ describe('PartnersWrapper class', () => {
     expect(partners.partnerOf(2)).toBe(5);
     expect(partners.partnerOf(4)).toBeUndefined();
   });
+
+  test('length getter', () => {
+    let partnersArray = [undefined, null, undefined, null, null, null, null];
+    let partners = new PartnersWrapper(partnersArray);
+    expect(partners.length).toBe(7);
+  });
 });
