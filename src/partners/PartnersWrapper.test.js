@@ -1,3 +1,6 @@
+import { createStem } from 'Partners/stems/Stem';
+import { createLinker } from 'Partners/linkers/Linker';
+
 import { PartnersWrapper } from './PartnersWrapper';
 
 describe('PartnersWrapper class', () => {
@@ -50,5 +53,36 @@ describe('PartnersWrapper class', () => {
 
     partners.unpair(7);
     expect(partners.partners).toStrictEqual([null, null, null, null, null, null, null, null]);
+  });
+
+  test('pairs method', () => {
+    let partnersArray = [null, 6, null, 8, null, 2, null, 4, null];
+    let partners = new PartnersWrapper(partnersArray);
+    let pairs = partners.pairs();
+    let pairTuples = pairs.map(pair => pair.pair);
+    expect(pairTuples).toStrictEqual([[2, 6], [4, 8]]);
+  });
+
+  test('stems method', () => {
+    let partnersArray = [null, 10, 9, 8, null, null, null, 4, 3, 2, 13, null, 11];
+    let partners = new PartnersWrapper(partnersArray);
+    let stems = partners.stems();
+    let stemObjects = stems.map(stem => stem.stem);
+    expect(stemObjects).toStrictEqual([
+      createStem({ bottomPair: [2, 10], numPairs: 3 }),
+      createStem({ bottomPair: [11, 13], numPairs: 1 }),
+    ]);
+  });
+
+  test('linkers method', () => {
+    let partnersArray = [null, null, 8, 7, null, null, 4, 3, null];
+    let partners = new PartnersWrapper(partnersArray);
+    let linkers = partners.linkers();
+    let linkerObjects = linkers.map(linker => linker.linker);
+    expect(linkerObjects).toStrictEqual([
+      createLinker({ upstreamBoundingPosition: 0, downstreamBoundingPosition: 3 }),
+      createLinker({ upstreamBoundingPosition: 4, downstreamBoundingPosition: 7 }),
+      createLinker({ upstreamBoundingPosition: 8, downstreamBoundingPosition: 10 }),
+    ]);
   });
 });

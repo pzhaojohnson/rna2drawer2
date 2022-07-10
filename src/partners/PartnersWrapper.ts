@@ -8,6 +8,15 @@ import { arePaired } from 'Partners/paired';
 import { pair } from 'Partners/edit';
 import { unpair } from 'Partners/edit';
 
+import { PairWrapper } from 'Partners/pairs/PairWrapper';
+import { pairsInPartners } from 'Partners/pairs/pairsInPartners';
+
+import { StemWrapper } from 'Partners/stems/StemWrapper';
+import { stemsInPartners } from 'Partners/stems/stemsInPartners';
+
+import { LinkerWrapper } from 'Partners/linkers/LinkerWrapper';
+import { linkersInPartners } from 'Partners/linkers/linkersInPartners';
+
 export class PartnersWrapper {
   /**
    * The wrapped partners.
@@ -44,6 +53,21 @@ export class PartnersWrapper {
 
   unpair(p: number) {
     unpair(this.partners, p);
+  }
+
+  pairs(): PairWrapper[] {
+    let pairs = pairsInPartners(this.partners);
+    return pairs.map(pair => new PairWrapper(pair));
+  }
+
+  stems(): StemWrapper[] {
+    let stems = stemsInPartners(this.partners);
+    return stems.map(stem => new StemWrapper(stem));
+  }
+
+  linkers(): LinkerWrapper[] {
+    let linkers = linkersInPartners(this.partners);
+    return linkers.map(linker => new LinkerWrapper(linker));
   }
 }
 
