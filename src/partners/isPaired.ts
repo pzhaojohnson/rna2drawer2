@@ -2,7 +2,7 @@ import type { Partners } from 'Partners/Partners';
 import { partnerOf } from 'Partners/Partners';
 
 export function isPaired(partners: Partners, p: number): boolean {
-  return typeof partnerOf(partners, p) == 'number';
+  return partnerOf(partners, p) != undefined;
 }
 
 export function isUnpaired(partners: Partners, p: number): boolean {
