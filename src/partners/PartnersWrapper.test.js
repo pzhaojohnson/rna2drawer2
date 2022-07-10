@@ -38,6 +38,16 @@ describe('PartnersWrapper class', () => {
     expect(partners.arePaired(1, 7)).toBeFalsy();
   });
 
+  test('areUnstructured method', () => {
+    let partnersArray = [undefined, null, undefined];
+    let partners = new PartnersWrapper(partnersArray);
+    expect(partners.areUnstructured()).toBeTruthy();
+
+    partnersArray = [5, null, undefined, null, 1];
+    partners = new PartnersWrapper(partnersArray);
+    expect(partners.areUnstructured()).toBeFalsy();
+  });
+
   test('length getter', () => {
     let partnersArray = [undefined, null, undefined, null, null, null, null];
     let partners = new PartnersWrapper(partnersArray);

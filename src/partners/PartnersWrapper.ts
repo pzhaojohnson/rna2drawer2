@@ -4,6 +4,7 @@ import { partnerOf } from 'Partners/Partners';
 import { isUnpaired } from 'Partners/paired';
 import { isPaired } from 'Partners/paired';
 import { arePaired } from 'Partners/paired';
+import { areUnstructured } from 'Partners/areUnstructured';
 
 import { pair } from 'Partners/edit';
 import { unpair } from 'Partners/edit';
@@ -41,6 +42,10 @@ export class PartnersWrapper {
 
   arePaired(p: number, q: number) {
     return arePaired(this.partners, p, q);
+  }
+
+  areUnstructured() {
+    return areUnstructured(this.partners);
   }
 
   get length() {
