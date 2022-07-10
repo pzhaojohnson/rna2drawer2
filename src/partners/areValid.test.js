@@ -1,7 +1,5 @@
-import {
-  areValid,
-  assertAreValid,
-} from './areValid';
+import { areValid } from './areValid';
+import { assertAreValid } from './areValid';
 
 describe('areValid function', () => {
   describe('valid partners', () => {
