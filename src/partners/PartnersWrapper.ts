@@ -1,6 +1,10 @@
 import type { Partners } from 'Partners/Partners';
 import { partnerOf } from 'Partners/Partners';
 
+import { isUnpaired } from 'Partners/paired';
+import { isPaired } from 'Partners/paired';
+import { arePaired } from 'Partners/paired';
+
 import { pair } from 'Partners/edit';
 import { unpair } from 'Partners/edit';
 
@@ -16,6 +20,18 @@ export class PartnersWrapper {
 
   partnerOf(p: number) {
     return partnerOf(this.partners, p);
+  }
+
+  isUnpaired(p: number) {
+    return isUnpaired(this.partners, p);
+  }
+
+  isPaired(p: number) {
+    return isPaired(this.partners, p);
+  }
+
+  arePaired(p: number, q: number) {
+    return arePaired(this.partners, p, q);
   }
 
   get length() {

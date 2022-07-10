@@ -21,6 +21,20 @@ describe('PartnersWrapper class', () => {
     expect(partners.partnerOf(4)).toBeUndefined();
   });
 
+  test('isUnpaired, isPaired and arePaired methods', () => {
+    let partnersArray = [8, 7, null, null, null, null, 2, 1, null];
+    let partners = new PartnersWrapper(partnersArray);
+
+    expect(partners.isUnpaired(2)).toBeFalsy();
+    expect(partners.isUnpaired(3)).toBeTruthy();
+
+    expect(partners.isPaired(2)).toBeTruthy();
+    expect(partners.isPaired(3)).toBeFalsy();
+
+    expect(partners.arePaired(2, 7)).toBeTruthy();
+    expect(partners.arePaired(1, 7)).toBeFalsy();
+  });
+
   test('length getter', () => {
     let partnersArray = [undefined, null, undefined, null, null, null, null];
     let partners = new PartnersWrapper(partnersArray);
