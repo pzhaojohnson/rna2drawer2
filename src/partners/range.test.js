@@ -4,7 +4,7 @@ import { positionIsOutOfRange } from './range';
 describe('positionIsInRange and positionIsOutOfRange functions', () => {
   let partners = [6, 5, null, null, 2, 1, undefined, undefined];
 
-  it('integer positions', () => {
+  test('integer positions', () => {
     let areInBounds = [
       1, // the very first position
       partners.length, // the very last position
@@ -29,27 +29,27 @@ describe('positionIsInRange and positionIsOutOfRange functions', () => {
     });
   });
 
-  it('non-integer positions', () => {
+  test('non-integer positions', () => {
     [0.99, 1.2, 2.001].forEach(p => {
       expect(positionIsInRange(partners, p)).toBeFalsy();
       expect(positionIsOutOfRange(partners, p)).toBeTruthy();
     });
   });
 
-  it('nonfinite positions', () => {
+  test('nonfinite positions', () => {
     [NaN, Infinity, -Infinity].forEach(p => {
       expect(positionIsInRange(partners, p)).toBeFalsy();
       expect(positionIsOutOfRange(partners, p)).toBeTruthy();
     });
   });
 
-  it('empty partners', () => {
+  test('empty partners', () => {
     let partners = [];
     expect(positionIsInRange(partners, 1)).toBeFalsy();
     expect(positionIsOutOfRange(partners, 1)).toBeTruthy();
   });
 
-  it('unassigned positions in partners', () => {
+  test('unassigned positions in partners', () => {
     let partners = [null, null, null];
     // partners length is now 19
     partners[18] = undefined;
