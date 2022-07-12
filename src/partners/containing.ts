@@ -1,7 +1,7 @@
 import { Partners, partnerOf } from './Partners';
 import { Stem } from 'Partners/stems/Stem';
 import { Linker as UnpairedRegion } from 'Partners/linkers/Linker';
-import { inBounds } from 'Partners/range';
+import { positionIsInRange } from 'Partners/range';
 import { arePaired, isUnpaired } from 'Partners/isPaired';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
@@ -9,7 +9,7 @@ import { downstreamPartner } from 'Partners/pairs/Pair';
 // returns the stem containing the given position
 // or undefined if the position isn't in a stem
 export function containingStem(partners: Partners, p: number): Stem | undefined {
-  if (inBounds(partners, p)) {
+  if (positionIsInRange(partners, p)) {
     let q = partnerOf(partners, p);
     if (typeof q == 'number') {
       let p5 = upstreamPartner([p, q]);

@@ -1,6 +1,6 @@
-import { inBounds, outOfBounds } from './range';
+import { positionIsInRange, positionIsOutOfRange } from './range';
 
-describe('inBounds and outOfBounds functions', () => {
+describe('positionIsInRange and positionIsOutOfRange functions', () => {
   let partners = [6, 5, null, null, 2, 1, undefined, undefined];
 
   it('integer positions', () => {
@@ -12,8 +12,8 @@ describe('inBounds and outOfBounds functions', () => {
     // check that position 3 is in the middle
     expect(partners.length).toBeGreaterThan(3);
     areInBounds.forEach(p => {
-      expect(inBounds(partners, p)).toBeTruthy();
-      expect(outOfBounds(partners, p)).toBeFalsy();
+      expect(positionIsInRange(partners, p)).toBeTruthy();
+      expect(positionIsOutOfRange(partners, p)).toBeFalsy();
     });
 
     let areOutOfBounds = [
@@ -23,29 +23,29 @@ describe('inBounds and outOfBounds functions', () => {
       partners.length + 6, // well beyond partners length
     ];
     areOutOfBounds.forEach(p => {
-      expect(inBounds(partners, p)).toBeFalsy();
-      expect(outOfBounds(partners, p)).toBeTruthy();
+      expect(positionIsInRange(partners, p)).toBeFalsy();
+      expect(positionIsOutOfRange(partners, p)).toBeTruthy();
     });
   });
 
   it('non-integer positions', () => {
     [0.99, 1.2, 2.001].forEach(p => {
-      expect(inBounds(partners, p)).toBeFalsy();
-      expect(outOfBounds(partners, p)).toBeTruthy();
+      expect(positionIsInRange(partners, p)).toBeFalsy();
+      expect(positionIsOutOfRange(partners, p)).toBeTruthy();
     });
   });
 
   it('nonfinite positions', () => {
     [NaN, Infinity, -Infinity].forEach(p => {
-      expect(inBounds(partners, p)).toBeFalsy();
-      expect(outOfBounds(partners, p)).toBeTruthy();
+      expect(positionIsInRange(partners, p)).toBeFalsy();
+      expect(positionIsOutOfRange(partners, p)).toBeTruthy();
     });
   });
 
   it('empty partners', () => {
     let partners = [];
-    expect(inBounds(partners, 1)).toBeFalsy();
-    expect(outOfBounds(partners, 1)).toBeTruthy();
+    expect(positionIsInRange(partners, 1)).toBeFalsy();
+    expect(positionIsOutOfRange(partners, 1)).toBeTruthy();
   });
 
   it('unassigned positions in partners', () => {
@@ -54,15 +54,15 @@ describe('inBounds and outOfBounds functions', () => {
     partners[18] = undefined;
 
     // an unassigned position
-    expect(inBounds(partners, 15)).toBeTruthy();
-    expect(outOfBounds(partners, 15)).toBeFalsy();
+    expect(positionIsInRange(partners, 15)).toBeTruthy();
+    expect(positionIsOutOfRange(partners, 15)).toBeFalsy();
 
     // the partners length
-    expect(inBounds(partners, 19)).toBeTruthy();
-    expect(outOfBounds(partners, 19)).toBeFalsy();
+    expect(positionIsInRange(partners, 19)).toBeTruthy();
+    expect(positionIsOutOfRange(partners, 19)).toBeFalsy();
 
     // just beyond partners length
-    expect(inBounds(partners, 20)).toBeFalsy();
-    expect(outOfBounds(partners, 20)).toBeTruthy();
+    expect(positionIsInRange(partners, 20)).toBeFalsy();
+    expect(positionIsOutOfRange(partners, 20)).toBeTruthy();
   });
 });
