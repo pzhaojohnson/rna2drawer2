@@ -1,4 +1,5 @@
-import { positionIsInRange, positionIsOutOfRange } from './range';
+import { positionIsInRange } from './range';
+import { positionIsOutOfRange } from './range';
 
 describe('positionIsInRange and positionIsOutOfRange functions', () => {
   let partners = [6, 5, null, null, 2, 1, undefined, undefined];
