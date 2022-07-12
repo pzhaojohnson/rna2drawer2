@@ -49,7 +49,7 @@ describe('positionIsInRange and positionIsOutOfRange functions', () => {
     expect(positionIsOutOfRange(partners, 1)).toBeTruthy();
   });
 
-  test('unassigned positions in partners', () => {
+  test('when there are unassigned positions', () => {
     let partners = [null, null, null];
     // partners length is now 19
     partners[18] = undefined;
