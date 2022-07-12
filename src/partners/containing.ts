@@ -1,7 +1,7 @@
 import { Partners, partnerOf } from './Partners';
 import { Stem } from 'Partners/stems/Stem';
 import { Linker as UnpairedRegion } from 'Partners/linkers/Linker';
-import { inBounds } from './bounds';
+import { inBounds } from 'Partners/range';
 import { arePaired, isUnpaired } from 'Partners/isPaired';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';

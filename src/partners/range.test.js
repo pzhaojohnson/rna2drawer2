@@ -1,4 +1,4 @@
-import { inBounds, outOfBounds } from './bounds';
+import { inBounds, outOfBounds } from './range';
 
 describe('inBounds and outOfBounds functions', () => {
   let partners = [6, 5, null, null, 2, 1, undefined, undefined];
@@ -52,7 +52,7 @@ describe('inBounds and outOfBounds functions', () => {
     let partners = [null, null, null];
     // partners length is now 19
     partners[18] = undefined;
-    
+
     // an unassigned position
     expect(inBounds(partners, 15)).toBeTruthy();
     expect(outOfBounds(partners, 15)).toBeFalsy();
