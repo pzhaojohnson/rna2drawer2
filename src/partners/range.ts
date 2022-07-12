@@ -1,4 +1,4 @@
-import { Partners } from './Partners';
+import type { Partners } from 'Partners/Partners';
 
 export function inBounds(partners: Partners, p: number): boolean {
   return (
