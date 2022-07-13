@@ -12,7 +12,7 @@ export function stemIsHairpin(partners: Partners, stem: Stem): boolean {
   let topPair = topPairOfStem(stem);
 
   if (upstreamPartner(topPair) == downstreamPartner(topPair) - 1) {
-    return true; // loop of size zero
+    return true; // no enclosed positions
   }
 
   let linker = containingLinker(
@@ -21,7 +21,7 @@ export function stemIsHairpin(partners: Partners, stem: Stem): boolean {
   );
 
   if (!linker) {
-    return false; // the first enclosed position is paired
+    return false; // the first enclosed position is paired in an enclosed stem
   }
 
   return downstreamBoundingPosition(linker) == downstreamPartner(topPair);
