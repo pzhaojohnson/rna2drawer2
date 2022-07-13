@@ -31,6 +31,7 @@ import { containingLinker } from 'Partners/linkers/containingLinker';
 import { stemIsHairpin } from 'Partners/stemIsHairpin';
 
 import { isTree } from 'Partners/isTree';
+import { treeify } from 'Partners/treeify';
 
 export type ContainingStemMethodArgs = { position: number };
 
@@ -122,6 +123,10 @@ export class PartnersWrapper {
 
   isTree() {
     return isTree(this.partners);
+  }
+
+  treeify(): PartnersWrapper {
+    return new PartnersWrapper(treeify(this.partners));
   }
 }
 

@@ -179,4 +179,12 @@ describe('PartnersWrapper class', () => {
     partners = new PartnersWrapper(partnersArray);
     expect(partners.isTree()).toBeFalsy();
   });
+
+  test('treeify method', () => {
+    let partnersArray = [10, 9, 8, null, 13, 12, null, 3, 2, 1, null, 6, 5];
+    let partners = new PartnersWrapper(partnersArray);
+    expect(partners.isTree()).toBeFalsy();
+    partners = partners.treeify();
+    expect(partners.isTree()).toBeTruthy();
+  });
 });
