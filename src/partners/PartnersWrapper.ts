@@ -21,7 +21,10 @@ import { stemsInPartners } from 'Partners/stems/stemsInPartners';
 import { LinkerWrapper } from 'Partners/linkers/LinkerWrapper';
 import { linkersInPartners } from 'Partners/linkers/linkersInPartners';
 
+import { containingStem } from 'Partners/containing';
 import { containingLinker } from 'Partners/linkers/containingLinker';
+
+export type ContainingStemMethodArgs = { position: number };
 
 export type ContainingLinkerMethodArgs = { position: number };
 
@@ -79,6 +82,11 @@ export class PartnersWrapper {
   stems(): StemWrapper[] {
     let stems = stemsInPartners(this.partners);
     return stems.map(stem => new StemWrapper(stem));
+  }
+
+  containingStem(args: ContainingStemMethodArgs): StemWrapper | undefined {
+    let stem = containingStem(this.partners, args.position);
+    return stem ? new StemWrapper(stem) : undefined;
   }
 
   linkers(): LinkerWrapper[] {

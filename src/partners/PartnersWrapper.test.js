@@ -94,6 +94,19 @@ describe('PartnersWrapper class', () => {
     ]);
   });
 
+  test('containingStem method', () => {
+    let partnersArray = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
+    let partners = new PartnersWrapper(partnersArray);
+
+    // position is in a stem
+    let stem = partners.containingStem({ position: 2 });
+    let stemObject = stem.stem;
+    expect(stemObject).toStrictEqual(createStem({ bottomPair: [1, 12], numPairs: 2 }));
+
+    // position is not in a stem
+    expect(partners.containingStem({ position: 3 })).toBeUndefined();
+  });
+
   test('linkers method', () => {
     let partnersArray = [null, null, 8, 7, null, null, 4, 3, null];
     let partners = new PartnersWrapper(partnersArray);
