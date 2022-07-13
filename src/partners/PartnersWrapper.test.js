@@ -64,6 +64,23 @@ describe('PartnersWrapper class', () => {
     expect(partners.length).toBe(7);
   });
 
+  test('positionIsInRange and positionIsOutOfRange methods', () => {
+    let partnersArray = [6, 5, null, null, 2, 1, null, undefined];
+    let partners = new PartnersWrapper(partnersArray);
+
+    // in the middle
+    expect(partners.positionIsInRange(3)).toBeTruthy();
+    expect(partners.positionIsOutOfRange(3)).toBeFalsy();
+
+    // the last position
+    expect(partners.positionIsInRange(8)).toBeTruthy();
+    expect(partners.positionIsOutOfRange(8)).toBeFalsy();
+
+    // one more than the last position
+    expect(partners.positionIsInRange(9)).toBeFalsy();
+    expect(partners.positionIsOutOfRange(9)).toBeTruthy();
+  });
+
   test('pair and unpair methods', () => {
     let partnersArray = [null, null, null, null, null, null, null, null];
     let partners = new PartnersWrapper(partnersArray);

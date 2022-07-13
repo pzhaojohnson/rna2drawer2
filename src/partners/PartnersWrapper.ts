@@ -9,6 +9,9 @@ import { arePaired } from 'Partners/isPaired';
 
 import { areUnstructured } from 'Partners/areUnstructured';
 
+import { positionIsInRange } from 'Partners/range';
+import { positionIsOutOfRange } from 'Partners/range';
+
 import { pair } from 'Partners/edit';
 import { unpair } from 'Partners/edit';
 
@@ -64,6 +67,14 @@ export class PartnersWrapper {
 
   get length() {
     return this.partners.length;
+  }
+
+  positionIsInRange(p: number) {
+    return positionIsInRange(this.partners, p);
+  }
+
+  positionIsOutOfRange(p: number) {
+    return positionIsOutOfRange(this.partners, p);
   }
 
   pair(p: number, q: number) {
