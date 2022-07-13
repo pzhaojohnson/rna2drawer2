@@ -167,4 +167,16 @@ describe('PartnersWrapper class', () => {
     // position is not in a linker
     expect(partners.containingLinker({ position: 9 })).toBeUndefined();
   });
+
+  test('isTree method', () => {
+    // has a tree shape
+    let partnersArray = [9, 8, 7, null, undefined, null, 3, 2, 1];
+    let partners = new PartnersWrapper(partnersArray);
+    expect(partners.isTree()).toBeTruthy();
+
+    // does not have a tree shape
+    partnersArray = [9, 8, 7, 12, 11, 10, 3, 2, 1, 6, 5, 4];
+    partners = new PartnersWrapper(partnersArray);
+    expect(partners.isTree()).toBeFalsy();
+  });
 });

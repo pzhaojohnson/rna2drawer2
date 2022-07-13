@@ -30,6 +30,8 @@ import { containingLinker } from 'Partners/linkers/containingLinker';
 
 import { stemIsHairpin } from 'Partners/stemIsHairpin';
 
+import { isTree } from 'Partners/isTree';
+
 export type ContainingStemMethodArgs = { position: number };
 
 export type ContainingLinkerMethodArgs = { position: number };
@@ -116,6 +118,10 @@ export class PartnersWrapper {
   containingLinker(args: ContainingLinkerMethodArgs): LinkerWrapper | undefined {
     let linker = containingLinker(this.partners, args);
     return linker ? new LinkerWrapper(linker) : undefined;
+  }
+
+  isTree() {
+    return isTree(this.partners);
   }
 }
 
