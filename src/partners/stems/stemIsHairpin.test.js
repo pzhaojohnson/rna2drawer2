@@ -62,13 +62,12 @@ describe('stemIsHairpin function', () => {
       let partners = [
         null, null,
         14, 13,
-        null, null,
+        null, null, null, null,
         18, 17, 16, 15,
-        null, null,
         4, 3,
-        10, 9, 8, 7,
+        12, 11, 10, 9,
       ];
-      let stem = createStem({ bottomPair: [7, 18], numPairs: 4 });
+      let stem = createStem({ bottomPair: [3, 14], numPairs: 2 });
       expect(stemIsHairpin(partners, stem)).toBeFalsy();
     });
   });
