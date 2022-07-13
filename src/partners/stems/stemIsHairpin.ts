@@ -12,10 +12,10 @@ import { downstreamBoundingPosition } from 'Partners/linkers/Linker';
  * Returns true if every position between the two sides of the stem
  * is unpaired and false otherwise.
  *
- * This means that this function will return false if there are any
- * pseudoknots between the loop of the stem and positions not enclosed
- * by the stem. (This behavior is not firmly defined, though, and may
- * change in the future.)
+ * This means that this function currently returns false if there are
+ * any pseudoknots between the loop of the stem and positions not
+ * enclosed by the stem. (This behavior is not firmly defined, though,
+ * and may change in the future.)
  */
 export function stemIsHairpin(partners: Partners, stem: Stem): boolean {
   let topPair = topPairOfStem(stem);
