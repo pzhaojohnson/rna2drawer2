@@ -1,3 +1,5 @@
+import { createStem } from 'Partners/stems/Stem';
+
 import { stemIsHairpin } from './stemIsHairpin';
 
 describe('stemIsHairpin function', () => {
@@ -8,7 +10,7 @@ describe('stemIsHairpin function', () => {
       6, 5, 4,
       null, null,
     ];
-    let stem = { position5: 4, position3: 9, size: 3 };
+    let stem = createStem({ bottomPair: [4, 9], numPairs: 3 });
     expect(stemIsHairpin(partners, stem)).toBeTruthy();
   });
 
@@ -20,7 +22,7 @@ describe('stemIsHairpin function', () => {
       6, 5, 4,
       null, null,
     ];
-    let stem = { position5: 4, position3: 14, size: 3 };
+    let stem = createStem({ bottomPair: [4, 14], numPairs: 3 });
     expect(stemIsHairpin(partners, stem)).toBeTruthy();
   });
 
@@ -34,7 +36,7 @@ describe('stemIsHairpin function', () => {
       null, null,
       10, 9, 8, 7,
     ];
-    let stem = { position5: 7, position3: 18, size: 4 };
+    let stem = createStem({ bottomPair: [7, 18], numPairs: 4 });
     expect(stemIsHairpin(partners, stem)).toBeFalsy();
   });
 
@@ -48,7 +50,7 @@ describe('stemIsHairpin function', () => {
       4, 3,
       10, 9, 8, 7,
     ];
-    let stem = { position5: 7, position3: 18, size: 4 };
+    let stem = createStem({ bottomPair: [7, 18], numPairs: 4 });
     expect(stemIsHairpin(partners, stem)).toBeFalsy();
   });
 });
