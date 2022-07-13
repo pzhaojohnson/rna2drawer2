@@ -105,4 +105,19 @@ describe('PartnersWrapper class', () => {
       createLinker({ upstreamBoundingPosition: 8, downstreamBoundingPosition: 10 }),
     ]);
   });
+
+  test('containingLinker method', () => {
+    let partnersArray = [10, 9, 8, null, undefined, null, undefined, 3, 2, 1, null];
+    let partners = new PartnersWrapper(partnersArray);
+
+    // position is in a linker
+    let linker = partners.containingLinker({ position: 7 });
+    let linkerObject = linker.linker;
+    expect(linkerObject).toStrictEqual(
+      createLinker({ upstreamBoundingPosition: 3, downstreamBoundingPosition: 8 })
+    );
+
+    // position is not in a linker
+    expect(partners.containingLinker({ position: 9 })).toBeUndefined();
+  });
 });
