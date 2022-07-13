@@ -187,4 +187,25 @@ describe('PartnersWrapper class', () => {
     partners = partners.treeify();
     expect(partners.isTree()).toBeTruthy();
   });
+
+  test('traverseLoopDownstream method', () => {
+    let partnersArray = [null, null, 8, 7, null, null, 4, 3, null];
+    let partners = new PartnersWrapper(partnersArray);
+    let closingStem = createStem({ bottomPair: [3, 8], numPairs: 2 });
+
+    // a closing stem object
+    let spec = { closingStem };
+    let traversed = partners.traverseLoopDownstream(spec);
+    expect(traversed.positions).toStrictEqual([4, 5, 6, 7]);
+
+    // a wrapped closing stem
+    spec = { closingStem: new StemWrapper(closingStem) };
+    traversed = partners.traverseLoopDownstream(spec);
+    expect(traversed.positions).toStrictEqual([4, 5, 6, 7]);
+
+    // omitting the loop specification
+    traversed = partners.traverseLoopDownstream();
+    // traversed the outermost loop
+    expect(traversed.positions).toStrictEqual([1, 2, 3, 8, 9]);
+  });
 });

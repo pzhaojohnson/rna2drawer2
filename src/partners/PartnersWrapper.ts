@@ -33,9 +33,13 @@ import { stemIsHairpin } from 'Partners/stemIsHairpin';
 import { isTree } from 'Partners/isTree';
 import { treeify } from 'Partners/treeify';
 
+import { traverseLoopDownstream } from 'Partners/traverseLoopDownstream';
+
 export type ContainingStemMethodArgs = { position: number };
 
 export type ContainingLinkerMethodArgs = { position: number };
+
+export type LoopSpecification = { closingStem: Stem | StemWrapper };
 
 export class PartnersWrapper {
   /**
@@ -127,6 +131,16 @@ export class PartnersWrapper {
 
   treeify(): PartnersWrapper {
     return new PartnersWrapper(treeify(this.partners));
+  }
+
+  /**
+   * Omitting the loop specification specifies that the outermost loop
+   * be traversed.
+   */
+  traverseLoopDownstream(spec?: LoopSpecification) {
+    let closingStem = spec?.closingStem;
+    let closingStemObject = closingStem instanceof StemWrapper ? closingStem.stem : closingStem;
+    return traverseLoopDownstream(this.partners, closingStemObject);
   }
 }
 
