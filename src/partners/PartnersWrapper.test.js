@@ -188,7 +188,7 @@ describe('PartnersWrapper class', () => {
     expect(partners.isTree()).toBeTruthy();
   });
 
-  test('traverseLoopDownstream method', () => {
+  test('traverseLoopDownstream and traverseOutermostLoopDownstream methods', () => {
     let partnersArray = [null, null, 8, 7, null, null, 4, 3, null];
     let partners = new PartnersWrapper(partnersArray);
     let closingStem = createStem({ bottomPair: [3, 8], numPairs: 2 });
@@ -206,6 +206,10 @@ describe('PartnersWrapper class', () => {
     // omitting the loop specification
     traversed = partners.traverseLoopDownstream();
     // traversed the outermost loop
+    expect(traversed.positions).toStrictEqual([1, 2, 3, 8, 9]);
+
+    // using the traverseOutermostLoopDownstream method
+    traversed = partners.traverseOutermostLoopDownstream();
     expect(traversed.positions).toStrictEqual([1, 2, 3, 8, 9]);
   });
 });

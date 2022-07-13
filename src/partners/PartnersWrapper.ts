@@ -142,6 +142,10 @@ export class PartnersWrapper {
     let closingStemObject = closingStem instanceof StemWrapper ? closingStem.stem : closingStem;
     return traverseLoopDownstream(this.partners, closingStemObject);
   }
+
+  traverseOutermostLoopDownstream() {
+    return this.traverseLoopDownstream();
+  }
 }
 
 export {
