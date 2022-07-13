@@ -29,6 +29,21 @@ describe('stemIsHairpin function', () => {
   });
 
   describe('when the stem is not a hairpin', () => {
+    test('when the stem encloses another stem completely', () => {
+      let partners = [
+        undefined,
+        14, 13,
+        null,
+        11, 10,
+        null, undefined, null,
+        6, 5,
+        undefined,
+        3, 2,
+      ];
+      let stem = createStem({ bottomPair: [2, 14], numPairs: 2 });
+      expect(stemIsHairpin(partners, stem)).toBeFalsy();
+    });
+
     test('a leading pseudoknot', () => {
       let partners = [
         null, null,
