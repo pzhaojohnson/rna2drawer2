@@ -18,6 +18,7 @@ import { unpair } from 'Partners/edit';
 import { PairWrapper } from 'Partners/pairs/PairWrapper';
 import { pairsInPartners } from 'Partners/pairs/pairsInPartners';
 
+import type { Stem } from 'Partners/stems/Stem';
 import { StemWrapper } from 'Partners/stems/StemWrapper';
 import { stemsInPartners } from 'Partners/stems/stemsInPartners';
 
@@ -26,6 +27,8 @@ import { linkersInPartners } from 'Partners/linkers/linkersInPartners';
 
 import { containingStem } from 'Partners/containing';
 import { containingLinker } from 'Partners/linkers/containingLinker';
+
+import { stemIsHairpin } from 'Partners/stemIsHairpin';
 
 export type ContainingStemMethodArgs = { position: number };
 
@@ -98,6 +101,11 @@ export class PartnersWrapper {
   containingStem(args: ContainingStemMethodArgs): StemWrapper | undefined {
     let stem = containingStem(this.partners, args.position);
     return stem ? new StemWrapper(stem) : undefined;
+  }
+
+  stemIsHairpin(stem: Stem | StemWrapper) {
+    let stemObject = stem instanceof StemWrapper ? stem.stem : stem;
+    return stemIsHairpin(this.partners, stemObject);
   }
 
   linkers(): LinkerWrapper[] {

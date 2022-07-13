@@ -1,4 +1,6 @@
 import { createStem } from 'Partners/stems/Stem';
+import { StemWrapper } from 'Partners/stems/StemWrapper';
+
 import { createLinker } from 'Partners/linkers/Linker';
 
 import { PartnersWrapper } from './PartnersWrapper';
@@ -122,6 +124,21 @@ describe('PartnersWrapper class', () => {
 
     // position is not in a stem
     expect(partners.containingStem({ position: 3 })).toBeUndefined();
+  });
+
+  test('stemIsHairpin method', () => {
+    let partnersArray = [12, 11, null, 9, 8, null, null, 5, 4, null, 2, 1];
+    let partners = new PartnersWrapper(partnersArray);
+
+    // is a hairpin
+    let stem = createStem({ bottomPair: [4, 9], numPairs: 2 });
+    expect(partners.stemIsHairpin(stem)).toBeTruthy();
+    expect(partners.stemIsHairpin(new StemWrapper(stem))).toBeTruthy();
+
+    // is not a hairpin
+    stem = createStem({ bottomPair: [1, 12], numPairs: 2 });
+    expect(partners.stemIsHairpin(stem)).toBeFalsy();
+    expect(partners.stemIsHairpin(new StemWrapper(stem))).toBeFalsy();
   });
 
   test('linkers method', () => {
