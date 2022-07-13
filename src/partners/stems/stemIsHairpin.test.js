@@ -4,7 +4,7 @@ import { stemIsHairpin } from './stemIsHairpin';
 
 describe('stemIsHairpin function', () => {
   describe('when the stem is a hairpin', () => {
-    test('when there are no enclosed positions', () => {
+    test('when there are no positions between the two sides of the stem', () => {
       let partners = [
         null, null, null,
         9, 8, 7,
@@ -15,7 +15,7 @@ describe('stemIsHairpin function', () => {
       expect(stemIsHairpin(partners, stem)).toBeTruthy();
     });
 
-    test('when there are multiple enclosed positions', () => {
+    test('when there are multiple positions between the two sides of the stem', () => {
       let partners = [
         null, null, null,
         14, 13, 12,
