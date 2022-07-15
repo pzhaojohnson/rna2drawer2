@@ -8,7 +8,7 @@ import { linkersAreEqual } from 'Partners/linkers/linkersAreEqual';
 
 import { leadingLinker as leadingLinkerOfStem } from './neighboringLinkers';
 import { trailingLinker as trailingLinkerOfStem } from './neighboringLinkers';
-import { lastLinker } from './lastLinker';
+import { lastLinkerInPartners as lastLinker } from 'Partners/linkers/lastLinkerInPartners';
 
 import { isFirstLinkerInTriangleLoop } from './triangleLoops';
 import { isLastLinkerInTriangleLoop } from './triangleLoops';
