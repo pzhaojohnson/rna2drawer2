@@ -3,36 +3,36 @@ import { createLinker } from 'Partners/linkers/Linker';
 import { containingLinker } from './containingLinker';
 
 describe('containingLinker function', () => {
-  describe('when the position is in a linker', () => {
-    test('when the position is in a hairpin loop', () => {
+  describe('when a position is in a linker', () => {
+    test('when a position is in a hairpin loop', () => {
       let partners = [9, 8, null, undefined, null, undefined, undefined, 2, 1];
       expect(containingLinker(partners, { position: 6 })).toStrictEqual(
         createLinker({ upstreamBoundingPosition: 2, downstreamBoundingPosition: 8 })
       );
     });
 
-    test('when the position is between two stems', () => {
+    test('when a position is between two stems', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, null, null, 15, 14, null, null, 11, 10];
       expect(containingLinker(partners, { position: 8 })).toStrictEqual(
         createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 10 })
       );
     });
 
-    test('when the position is immediately downstream of a stem', () => {
+    test('when a position is immediately downstream of a stem', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, null, null, 15, 14, null, null, 11, 10];
       expect(containingLinker(partners, { position: 7 })).toStrictEqual(
         createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 10 })
       );
     });
 
-    test('when the position is immediately upstream of a stem', () => {
+    test('when a position is immediately upstream of a stem', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, null, null, 15, 14, null, null, 11, 10];
       expect(containingLinker(partners, { position: 9 })).toStrictEqual(
         createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 10 })
       );
     });
 
-    test('when the position is in the first linker in the structure', () => {
+    test('when a position is in the first linker in the structure', () => {
       let partners = [undefined, null, null, undefined, 11, 10, undefined, null, null, 6, 5];
 
       // not the first position
@@ -46,7 +46,7 @@ describe('containingLinker function', () => {
       );
     });
 
-    test('when the position is in the last linker in the structure', () => {
+    test('when a position is in the last linker in the structure', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, undefined, null];
 
       // not the last position
@@ -68,7 +68,7 @@ describe('containingLinker function', () => {
     });
   });
 
-  test('when the position is not in a linker', () => {
+  test('when a position is not in a linker', () => {
     let partners = [null, 10, 9, 8, null, null, null, 4, 3, 2, null, undefined];
     expect(containingLinker(partners, { position: 2 })).toBeUndefined();
     expect(containingLinker(partners, { position: 4 })).toBeUndefined();
@@ -76,8 +76,8 @@ describe('containingLinker function', () => {
     expect(containingLinker(partners, { position: 10 })).toBeUndefined();
   });
 
-  describe('when the position is invalid', () => {
-    test('when the position is out of range', () => {
+  describe('when a position is invalid', () => {
+    test('when a position is out of range', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       expect(containingLinker(partners, { position: 0 })).toBeUndefined();
       expect(containingLinker(partners, { position: -1 })).toBeUndefined();
