@@ -32,29 +32,29 @@ describe('containingLinker function', () => {
       );
     });
 
-    test('when the position is in the upstreammost linker', () => {
+    test('when the position is in the first linker in the structure', () => {
       let partners = [undefined, null, null, undefined, 11, 10, undefined, null, null, 6, 5];
+
+      // not the first position
       expect(containingLinker(partners, { position: 3 })).toStrictEqual(
         createLinker({ upstreamBoundingPosition: 0, downstreamBoundingPosition: 5 })
       );
-    });
 
-    test('when the position is in the downstreammost linker', () => {
-      let partners = [6, 5, null, null, 2, 1, undefined, undefined, null];
-      expect(containingLinker(partners, { position: 8 })).toStrictEqual(
-        createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 10 })
-      );
-    });
-
-    test('when position is the first position', () => {
-      let partners = [undefined, null, null, undefined, 11, 10, undefined, null, null, 6, 5];
+      // the first position
       expect(containingLinker(partners, { position: 1 })).toStrictEqual(
         createLinker({ upstreamBoundingPosition: 0, downstreamBoundingPosition: 5 })
       );
     });
 
-    test('when the position is the last position', () => {
+    test('when the position is in the last linker in the structure', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, undefined, null];
+
+      // not the last position
+      expect(containingLinker(partners, { position: 8 })).toStrictEqual(
+        createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 10 })
+      );
+
+      // the last position
       expect(containingLinker(partners, { position: 9 })).toStrictEqual(
         createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 10 })
       );
