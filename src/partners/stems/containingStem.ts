@@ -26,15 +26,15 @@ export function containingStem(partners: Partners, p: number): Stem | undefined 
     return undefined;
   }
 
-  let p5 = upstreamPartner([p, q]);
-  let p3 = downstreamPartner([p, q]);
-  while (p5 - 1 > 0 && p3 + 1 <= partners.length && arePaired(partners, p5 - 1, p3 + 1)) {
-    p5--;
-    p3++;
+  let up = upstreamPartner([p, q]);
+  let dp = downstreamPartner([p, q]);
+  while (up - 1 > 0 && dp + 1 <= partners.length && arePaired(partners, up - 1, dp + 1)) {
+    up--;
+    dp++;
   }
   let s = 1;
-  while (p5 + s < p3 - s && arePaired(partners, p5 + s, p3 - s)) {
+  while (up + s < dp - s && arePaired(partners, up + s, dp - s)) {
     s++;
   }
-  return createStem({ bottomPair: [p5, p3], numPairs: s });
+  return createStem({ bottomPair: [up, dp], numPairs: s });
 }
