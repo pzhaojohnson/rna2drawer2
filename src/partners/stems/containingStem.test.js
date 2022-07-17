@@ -1,3 +1,5 @@
+import { createStem } from 'Partners/stems/Stem';
+
 import { containingStem } from './containingStem';
 
 describe('containingStem function', () => {
@@ -6,7 +8,7 @@ describe('containingStem function', () => {
       let partners = [null, null, 11, 10, 9, null, undefined, null, 5, 4, 3, null, undefined];
       [3, 4, 5, 9, 10, 11].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
-          { position5: 3, position3: 11, size: 3 }
+          createStem({ bottomPair: [3, 11], numPairs: 3 })
         );
       });
     });
@@ -15,7 +17,7 @@ describe('containingStem function', () => {
       let partners = [4, 3, 2, 1, 10, 9, null, null, 6, 5, 14, 13, 12, 11];
       [5, 6, 9, 10].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
-          { position5: 5, position3: 10, size: 2 }
+          createStem({ bottomPair: [5, 10], numPairs: 2 })
         );
       });
     });
@@ -24,7 +26,7 @@ describe('containingStem function', () => {
       let partners = [16, 15, 14, 13, 8, 7, 6, 5, 12, 11, 10, 9, 4, 3, 2, 1];
       [1, 2, 3, 4, 13, 14, 15, 16].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
-          { position5: 1, position3: 16, size: 4 }
+          createStem({ bottomPair: [1, 16], numPairs: 4 })
         );
       });
     });
@@ -33,7 +35,7 @@ describe('containingStem function', () => {
       let partners = [undefined, 5, null, undefined, 2, null];
       [2, 5].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
-          { position5: 2, position3: 5, size: 1 }
+          createStem({ bottomPair: [2, 5], numPairs: 1 })
         );
       });
     });
@@ -42,7 +44,7 @@ describe('containingStem function', () => {
       let partners = [6, 5, 4, 3, 2, 1];
       [1, 2, 3, 4, 5, 6].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
-          { position5: 1, position3: 6, size: 3 }
+          createStem({ bottomPair: [1, 6], numPairs: 3 })
         );
       });
     });
@@ -51,7 +53,7 @@ describe('containingStem function', () => {
       let partners = [9, 8, 7, undefined, null, null, 3, 2, 1, undefined, null];
       [1, 2, 3, 7, 8, 9].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
-          { position5: 1, position3: 9, size: 3 }
+          createStem({ bottomPair: [1, 9], numPairs: 3 })
         );
       });
     });
@@ -60,7 +62,7 @@ describe('containingStem function', () => {
       let partners = [null, undefined, 8, 7, null, null, 4, 3];
       [3, 4, 7, 8].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
-          { position5: 3, position3: 8, size: 2 }
+          createStem({ bottomPair: [3, 8], numPairs: 2 })
         );
       });
     });
