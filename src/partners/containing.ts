@@ -1,8 +1,7 @@
 import { Partners, partnerOf } from './Partners';
 import { Stem } from 'Partners/stems/Stem';
-import { Linker as UnpairedRegion } from 'Partners/linkers/Linker';
 import { positionIsInRange } from 'Partners/range';
-import { arePaired, isUnpaired } from 'Partners/isPaired';
+import { arePaired } from 'Partners/isPaired';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 
@@ -24,26 +23,5 @@ export function containingStem(partners: Partners, p: number): Stem | undefined 
       }
       return { position5: p5, position3: p3, size: s };
     }
-  }
-}
-
-// returns the unpaired region containing the given position
-// or undefined if the position isn't in an unpaired region
-export function containingUnpairedRegion(partners: Partners, p: number): UnpairedRegion | undefined {
-  let inBounds = (
-    Number.isFinite(p)
-    && p > 0
-    && p <= partners.length
-  );
-  if (inBounds && isUnpaired(partners, p)) {
-    let bp5 = p - 1;
-    while (bp5 > 0 && isUnpaired(partners, bp5)) {
-      bp5--;
-    }
-    let bp3 = p + 1;
-    while (bp3 <= partners.length && isUnpaired(partners, bp3)) {
-      bp3++;
-    }
-    return { boundingPosition5: bp5, boundingPosition3: bp3 };
   }
 }
