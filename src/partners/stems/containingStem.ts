@@ -32,9 +32,9 @@ export function containingStem(partners: Partners, p: number): Stem | undefined 
     up--;
     dp++;
   }
-  let s = 1;
-  while (up + s < dp - s && arePaired(partners, up + s, dp - s)) {
-    s++;
+  let numPairs = 1;
+  while (up + numPairs < dp - numPairs && arePaired(partners, up + numPairs, dp - numPairs)) {
+    numPairs++;
   }
-  return createStem({ bottomPair: [up, dp], numPairs: s });
+  return createStem({ bottomPair: [up, dp], numPairs });
 }
