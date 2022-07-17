@@ -11,11 +11,18 @@ import { arePaired } from 'Partners/isPaired';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 
+export type Args = (
+  { position: number }
+  | number // a position
+);
+
 /**
  * Returns the stem containing the given position
  * or undefined if the position is not in a stem.
  */
-export function containingStem(partners: Partners, p: number): Stem | undefined {
+export function containingStem(partners: Partners, args: Args): Stem | undefined {
+  let p = typeof args == 'number' ? args : args.position;
+
   if (!positionIsInRange(partners, p)) {
     return undefined;
   }

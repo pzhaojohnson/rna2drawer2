@@ -3,6 +3,14 @@ import { createStem } from 'Partners/stems/Stem';
 import { containingStem } from './containingStem';
 
 describe('containingStem function', () => {
+  test('inputting a position object', () => {
+    let partners = [9, 8, 7, null, null, null, 3, 2, 1];
+    expect(containingStem(partners, { position: 5 })).toBeUndefined();
+    expect(containingStem(partners, { position: 2 })).toStrictEqual(
+      createStem({ bottomPair: [1, 9], numPairs: 3 })
+    );
+  });
+
   describe('when a position is in a stem', () => {
     test('a hairpin stem', () => {
       let partners = [null, null, 11, 10, 9, null, undefined, null, 5, 4, 3, null, undefined];
