@@ -3,8 +3,8 @@ import { createStem } from 'Partners/stems/Stem';
 import { containingStem } from './containingStem';
 
 describe('containingStem function', () => {
-  describe('position is in a stem', () => {
-    it('a hairpin', () => {
+  describe('when a position is in a stem', () => {
+    test('a hairpin stem', () => {
       let partners = [null, null, 11, 10, 9, null, undefined, null, 5, 4, 3, null, undefined];
       [3, 4, 5, 9, 10, 11].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -13,7 +13,7 @@ describe('containingStem function', () => {
       });
     });
 
-    it('neighboring stems', () => {
+    test('three immediately neighboring stems', () => {
       let partners = [4, 3, 2, 1, 10, 9, null, null, 6, 5, 14, 13, 12, 11];
       [5, 6, 9, 10].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -22,7 +22,7 @@ describe('containingStem function', () => {
       });
     });
 
-    it('inner stems', () => {
+    test('enclosed stems', () => {
       let partners = [16, 15, 14, 13, 8, 7, 6, 5, 12, 11, 10, 9, 4, 3, 2, 1];
       [1, 2, 3, 4, 13, 14, 15, 16].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -31,7 +31,7 @@ describe('containingStem function', () => {
       });
     });
 
-    it('stem of size one', () => {
+    test('a stem containing one pair', () => {
       let partners = [undefined, 5, null, undefined, 2, null];
       [2, 5].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -40,7 +40,7 @@ describe('containingStem function', () => {
       });
     });
 
-    it('hairpin loop of size zero', () => {
+    test('a hairpin with no unpaired positions in its loop', () => {
       let partners = [6, 5, 4, 3, 2, 1];
       [1, 2, 3, 4, 5, 6].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -49,7 +49,7 @@ describe('containingStem function', () => {
       });
     });
 
-    it("stem is at the 5' end", () => {
+    test('a stem at the very beginning of the structure', () => {
       let partners = [9, 8, 7, undefined, null, null, 3, 2, 1, undefined, null];
       [1, 2, 3, 7, 8, 9].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -58,7 +58,7 @@ describe('containingStem function', () => {
       });
     });
 
-    it("stem is at the 3' end", () => {
+    test('a stem at the very end of the structure', () => {
       let partners = [null, undefined, 8, 7, null, null, 4, 3];
       [3, 4, 7, 8].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -68,15 +68,15 @@ describe('containingStem function', () => {
     });
   });
 
-  it("position isn't in a stem", () => {
+  test('when a position is not in a stem', () => {
     let partners = [undefined, null, 8, 7, undefined, null, 4, 3, null];
     [1, 2, 5, 6, 9].forEach(p => {
       expect(containingStem(partners, p)).toBeUndefined();
     });
   });
 
-  describe('position is invalid', () => {
-    it('out of bounds position', () => {
+  describe('when a position is invalid', () => {
+    test('out of range positions', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       [
         0, // zero
@@ -88,14 +88,14 @@ describe('containingStem function', () => {
       });
     });
 
-    it('non-integer position', () => {
+    test('non-integer positions', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       [1.001, 2.2, 1.99].forEach(p => {
         expect(containingStem(partners, p)).toBeUndefined();
       });
     });
 
-    it('nonfinite position', () => {
+    test('nonfinite positions', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       [NaN, Infinity, -Infinity].forEach(p => {
         expect(containingStem(partners, p)).toBeUndefined();
