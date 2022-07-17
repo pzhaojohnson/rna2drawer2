@@ -81,8 +81,8 @@ describe('containingStem function', () => {
       [
         0, // zero
         -2, // negative
-        partners.length + 1, // just beyond partners length
-        partners.length + 8, // well beyond partners length
+        9, // just beyond partners length
+        16, // well beyond partners length
       ].forEach(p => {
         expect(containingStem(partners, p)).toBeUndefined();
       });
