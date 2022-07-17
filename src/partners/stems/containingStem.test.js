@@ -71,7 +71,7 @@ describe('containingStem function', () => {
   it("position isn't in a stem", () => {
     let partners = [undefined, null, 8, 7, undefined, null, 4, 3, null];
     [1, 2, 5, 6, 9].forEach(p => {
-      expect(containingStem(partners, p)).toBeFalsy();
+      expect(containingStem(partners, p)).toBeUndefined();
     });
   });
 
@@ -85,19 +85,19 @@ describe('containingStem function', () => {
         partners.length + 1, // just beyond partners length
         partners.length + 8, // well beyond partners length
       ].forEach(p => {
-        expect(containingStem(partners, p)).toBeFalsy();
+        expect(containingStem(partners, p)).toBeUndefined();
       });
     });
 
     it('non-integer position', () => {
       [1.001, 2.2, 1.99].forEach(p => {
-        expect(containingStem(partners, p)).toBeFalsy();
+        expect(containingStem(partners, p)).toBeUndefined();
       });
     });
 
     it('nonfinite position', () => {
       [NaN, Infinity, -Infinity].forEach(p => {
-        expect(containingStem(partners, p)).toBeFalsy();
+        expect(containingStem(partners, p)).toBeUndefined();
       });
     });
   });
