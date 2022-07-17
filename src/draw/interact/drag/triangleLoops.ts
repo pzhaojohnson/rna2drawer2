@@ -5,7 +5,7 @@ import { bottomPair } from 'Partners/stems/Stem';
 import { topPair } from 'Partners/stems/Stem';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
-import { containingStem as stemContainingPosition } from 'Partners/containing';
+import { containingStem as stemContainingPosition } from 'Partners/stems/containingStem';
 
 import { Linker } from 'Partners/linkers/Linker';
 import { upstreamBoundingPosition } from 'Partners/linkers/Linker';

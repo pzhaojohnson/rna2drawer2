@@ -1,6 +1,6 @@
 import { Partners, partnerOf } from 'Partners/Partners';
 import { Stem } from 'Partners/stems/Stem';
-import { containingStem } from 'Partners/containing';
+import { containingStem } from 'Partners/stems/containingStem';
 
 export function closestPairOuterTo(partners: Partners, p: number): [number, number] | undefined {
   let r = p - 1;

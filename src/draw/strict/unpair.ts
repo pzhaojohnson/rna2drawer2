@@ -3,7 +3,7 @@ import type { Base } from 'Draw/bases/Base';
 import { removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 
 import { unpair as unpairInPartners } from 'Partners/edit';
-import { containingStem } from 'Partners/containing';
+import { containingStem } from 'Partners/stems/containingStem';
 
 import { atPosition } from 'Array/at';
 import { initializeAtPosition } from 'Draw/strict/layout/PerBaseStrictLayoutProps';

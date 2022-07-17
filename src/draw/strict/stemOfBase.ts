@@ -1,7 +1,7 @@
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import type { Base } from 'Draw/bases/Base';
 import { Stem } from 'Partners/stems/Stem';
-import { containingStem } from 'Partners/containing';
+import { containingStem } from 'Partners/stems/containingStem';
 
 // returns the stem that the base is in or undefined if the base
 // is not in a stem

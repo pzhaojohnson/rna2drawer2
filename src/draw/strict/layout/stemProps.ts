@@ -4,7 +4,7 @@ import {
 } from './PerBaseStrictLayoutProps';
 import { Partners } from 'Partners/Partners';
 import { pair, unpair } from 'Partners/edit';
-import { containingStem } from 'Partners/containing';
+import { containingStem } from 'Partners/stems/containingStem';
 
 export function resetStemProps(props: PerBaseProps) {
   let defaults = new PerBaseProps();

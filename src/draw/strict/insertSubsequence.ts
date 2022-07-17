@@ -5,7 +5,7 @@ import {
 } from 'Draw/sequences/add/subsequence';
 
 import { partnerOf } from 'Partners/Partners';
-import { containingStem } from 'Partners/containing';
+import { containingStem } from 'Partners/stems/containingStem';
 
 import { atPosition } from 'Array/at';
 import {

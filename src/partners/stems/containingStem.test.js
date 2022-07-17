@@ -1,4 +1,4 @@
-import { containingStem } from './containing';
+import { containingStem } from './containingStem';
 
 describe('containingStem function', () => {
   describe('position is in a stem', () => {

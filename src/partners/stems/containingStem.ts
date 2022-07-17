@@ -1,4 +1,4 @@
-import { Partners, partnerOf } from './Partners';
+import { Partners, partnerOf } from 'Partners/Partners';
 import { Stem } from 'Partners/stems/Stem';
 import { positionIsInRange } from 'Partners/range';
 import { arePaired } from 'Partners/isPaired';

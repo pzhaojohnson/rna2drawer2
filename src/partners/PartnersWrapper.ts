@@ -25,7 +25,7 @@ import { stemsInPartners } from 'Partners/stems/stemsInPartners';
 import { LinkerWrapper } from 'Partners/linkers/LinkerWrapper';
 import { linkersInPartners } from 'Partners/linkers/linkersInPartners';
 
-import { containingStem } from 'Partners/containing';
+import { containingStem } from 'Partners/stems/containingStem';
 import { containingLinker } from 'Partners/linkers/containingLinker';
 
 import { stemIsHairpin } from 'Partners/stems/stemIsHairpin';
