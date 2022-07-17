@@ -1,7 +1,11 @@
-import { Partners, partnerOf } from 'Partners/Partners';
-import { Stem } from 'Partners/stems/Stem';
+import type { Partners } from 'Partners/Partners';
+import type { Stem } from 'Partners/stems/Stem';
+
 import { positionIsInRange } from 'Partners/range';
+
+import { partnerOf } from 'Partners/Partners';
 import { arePaired } from 'Partners/isPaired';
+
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 
