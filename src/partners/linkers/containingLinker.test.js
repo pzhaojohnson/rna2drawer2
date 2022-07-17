@@ -70,27 +70,27 @@ describe('containingLinker function', () => {
 
   it("position isn't in an unpaired region", () => {
     let partners = [null, 10, 9, 8, null, null, null, 4, 3, 2, null, undefined];
-    expect(containingLinker(partners, { position: 2 })).toBeFalsy();
-    expect(containingLinker(partners, { position: 4 })).toBeFalsy();
-    expect(containingLinker(partners, { position: 9 })).toBeFalsy();
-    expect(containingLinker(partners, { position: 10 })).toBeFalsy();
+    expect(containingLinker(partners, { position: 2 })).toBeUndefined();
+    expect(containingLinker(partners, { position: 4 })).toBeUndefined();
+    expect(containingLinker(partners, { position: 9 })).toBeUndefined();
+    expect(containingLinker(partners, { position: 10 })).toBeUndefined();
   });
 
   describe('invalid position', () => {
     let partners = [6, 5, null, null, 2, 1, undefined, undefined];
 
     it('position is out of bounds', () => {
-      expect(containingLinker(partners, { position: 0 })).toBeFalsy();
-      expect(containingLinker(partners, { position: -1 })).toBeFalsy();
-      expect(containingLinker(partners, { position: -6 })).toBeFalsy();
-      expect(containingLinker(partners, { position: partners.length + 1 })).toBeFalsy();
-      expect(containingLinker(partners, { position: partners.length + 6 })).toBeFalsy();
+      expect(containingLinker(partners, { position: 0 })).toBeUndefined();
+      expect(containingLinker(partners, { position: -1 })).toBeUndefined();
+      expect(containingLinker(partners, { position: -6 })).toBeUndefined();
+      expect(containingLinker(partners, { position: partners.length + 1 })).toBeUndefined();
+      expect(containingLinker(partners, { position: partners.length + 6 })).toBeUndefined();
     });
 
     it('nonfinite position', () => {
-      expect(containingLinker(partners, { position: NaN })).toBeFalsy();
-      expect(containingLinker(partners, { position: Infinity })).toBeFalsy();
-      expect(containingLinker(partners, { position: -Infinity })).toBeFalsy();
+      expect(containingLinker(partners, { position: NaN })).toBeUndefined();
+      expect(containingLinker(partners, { position: Infinity })).toBeUndefined();
+      expect(containingLinker(partners, { position: -Infinity })).toBeUndefined();
     });
   });
 });
