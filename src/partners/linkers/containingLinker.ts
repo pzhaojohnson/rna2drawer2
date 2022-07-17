@@ -1,7 +1,9 @@
 import type { Partners } from 'Partners/Partners';
 import { positionIsInRange } from 'Partners/range';
 import { isUnpaired } from 'Partners/isPaired';
+
 import type { Linker } from 'Partners/linkers/Linker';
+import { createLinker } from 'Partners/linkers/Linker';
 
 export type Args = { position: number };
 
@@ -16,13 +18,13 @@ export function containingLinker(partners: Partners, args: Args): Linker | undef
     return undefined;
   }
 
-  let bp5 = args.position - 1;
-  while (bp5 > 0 && isUnpaired(partners, bp5)) {
-    bp5--;
+  let ubp = args.position - 1;
+  while (ubp > 0 && isUnpaired(partners, ubp)) {
+    ubp--;
   }
-  let bp3 = args.position + 1;
-  while (bp3 <= partners.length && isUnpaired(partners, bp3)) {
-    bp3++;
+  let dbp = args.position + 1;
+  while (dbp <= partners.length && isUnpaired(partners, dbp)) {
+    dbp++;
   }
-  return { boundingPosition5: bp5, boundingPosition3: bp3 };
+  return createLinker({ upstreamBoundingPosition: ubp, downstreamBoundingPosition: dbp });
 }
