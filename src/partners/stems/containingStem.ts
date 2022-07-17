@@ -9,8 +9,10 @@ import { arePaired } from 'Partners/isPaired';
 import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 
-// returns the stem containing the given position
-// or undefined if the position isn't in a stem
+/**
+ * Returns the stem containing the given position
+ * or undefined if the position is not in a stem.
+ */
 export function containingStem(partners: Partners, p: number): Stem | undefined {
   if (positionIsInRange(partners, p)) {
     let q = partnerOf(partners, p);
