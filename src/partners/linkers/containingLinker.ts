@@ -4,8 +4,10 @@ import type { Linker } from 'Partners/linkers/Linker';
 
 export type Args = { position: number };
 
-// returns the linker containing the given position
-// or undefined if the position isn't in a linker
+/**
+ * Returns the linker containing the given position
+ * or undefined if the position is not in a linker.
+ */
 export function containingLinker(partners: Partners, args: Args): Linker | undefined {
   let inBounds = (
     Number.isFinite(args.position)
