@@ -1,4 +1,5 @@
 import type { Partners } from 'Partners/Partners';
+import { positionIsInRange } from 'Partners/range';
 import { isUnpaired } from 'Partners/isPaired';
 import type { Linker } from 'Partners/linkers/Linker';
 
@@ -9,12 +10,7 @@ export type Args = { position: number };
  * or undefined if the position is not in a linker.
  */
 export function containingLinker(partners: Partners, args: Args): Linker | undefined {
-  let inBounds = (
-    Number.isFinite(args.position)
-    && args.position > 0
-    && args.position <= partners.length
-  );
-  if (inBounds && isUnpaired(partners, args.position)) {
+  if (positionIsInRange(partners, args.position) && isUnpaired(partners, args.position)) {
     let bp5 = args.position - 1;
     while (bp5 > 0 && isUnpaired(partners, bp5)) {
       bp5--;
