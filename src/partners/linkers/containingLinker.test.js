@@ -77,9 +77,8 @@ describe('containingLinker function', () => {
   });
 
   describe('when the position is invalid', () => {
-    let partners = [6, 5, null, null, 2, 1, undefined, undefined];
-
     test('when the position is out of range', () => {
+      let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       expect(containingLinker(partners, { position: 0 })).toBeUndefined();
       expect(containingLinker(partners, { position: -1 })).toBeUndefined();
       expect(containingLinker(partners, { position: -6 })).toBeUndefined();
@@ -88,6 +87,7 @@ describe('containingLinker function', () => {
     });
 
     test('nonfinite positions', () => {
+      let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       expect(containingLinker(partners, { position: NaN })).toBeUndefined();
       expect(containingLinker(partners, { position: Infinity })).toBeUndefined();
       expect(containingLinker(partners, { position: -Infinity })).toBeUndefined();
