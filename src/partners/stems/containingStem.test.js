@@ -76,9 +76,8 @@ describe('containingStem function', () => {
   });
 
   describe('position is invalid', () => {
-    let partners = [6, 5, null, null, 2, 1, undefined, undefined];
-
     it('out of bounds position', () => {
+      let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       [
         0, // zero
         -2, // negative
@@ -90,12 +89,14 @@ describe('containingStem function', () => {
     });
 
     it('non-integer position', () => {
+      let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       [1.001, 2.2, 1.99].forEach(p => {
         expect(containingStem(partners, p)).toBeUndefined();
       });
     });
 
     it('nonfinite position', () => {
+      let partners = [6, 5, null, null, 2, 1, undefined, undefined];
       [NaN, Infinity, -Infinity].forEach(p => {
         expect(containingStem(partners, p)).toBeUndefined();
       });
