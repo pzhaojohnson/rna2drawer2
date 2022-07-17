@@ -1,5 +1,7 @@
 import type { Partners } from 'Partners/Partners';
+
 import type { Stem } from 'Partners/stems/Stem';
+import { createStem } from 'Partners/stems/Stem';
 
 import { positionIsInRange } from 'Partners/range';
 
@@ -34,5 +36,5 @@ export function containingStem(partners: Partners, p: number): Stem | undefined 
   while (p5 + s < p3 - s && arePaired(partners, p5 + s, p3 - s)) {
     s++;
   }
-  return { position5: p5, position3: p3, size: s };
+  return createStem({ bottomPair: [p5, p3], numPairs: s });
 }
