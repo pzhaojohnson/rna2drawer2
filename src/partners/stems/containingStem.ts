@@ -20,7 +20,7 @@ export function containingStem(partners: Partners, p: number): Stem | undefined 
 
   let q = partnerOf(partners, p);
 
-  if (typeof q != 'number') {
+  if (q == undefined) {
     return undefined;
   }
 
