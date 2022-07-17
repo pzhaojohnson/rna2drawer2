@@ -55,7 +55,7 @@ describe('containingLinker function', () => {
 
     test('when the position is the last position', () => {
       let partners = [6, 5, null, null, 2, 1, undefined, undefined, null];
-      expect(containingLinker(partners, { position: partners.length })).toStrictEqual(
+      expect(containingLinker(partners, { position: 9 })).toStrictEqual(
         createLinker({ upstreamBoundingPosition: 6, downstreamBoundingPosition: 10 })
       );
     });
@@ -82,8 +82,8 @@ describe('containingLinker function', () => {
       expect(containingLinker(partners, { position: 0 })).toBeUndefined();
       expect(containingLinker(partners, { position: -1 })).toBeUndefined();
       expect(containingLinker(partners, { position: -6 })).toBeUndefined();
-      expect(containingLinker(partners, { position: partners.length + 1 })).toBeUndefined();
-      expect(containingLinker(partners, { position: partners.length + 6 })).toBeUndefined();
+      expect(containingLinker(partners, { position: 9 })).toBeUndefined();
+      expect(containingLinker(partners, { position: 14 })).toBeUndefined();
     });
 
     test('nonfinite positions', () => {
