@@ -2,11 +2,13 @@ import type { Partners } from 'Partners/Partners';
 import { unstructuredPartners } from 'Partners/unstructuredPartners';
 import { pair } from 'Partners/edit';
 
-// Returns a new partners notation with no knots
-// (doesn't modify the original partners notation).
-//
-// May not remove knots optimally (i.e., may remove
-// more pairs than necessary).
+/**
+ * Returns a new partners notation with no knots
+ * (doesn't modify the original partners notation).
+ *
+ * May not remove knots optimally (i.e., may remove
+ * more pairs than necessary).
+ */
 export function removeKnots(partners: Partners): Partners {
   let noKnots = unstructuredPartners(partners.length);
   // a stack of 5' partners
