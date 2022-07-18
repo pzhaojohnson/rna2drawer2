@@ -1,4 +1,4 @@
-import { Partners } from './Partners';
+import type { Partners } from 'Partners/Partners';
 
 export function hasKnots(partners: Partners): boolean {
   let knots = false;
