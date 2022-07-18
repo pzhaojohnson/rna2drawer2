@@ -12,7 +12,7 @@ describe('containingStem function', () => {
   });
 
   describe('when a position is in a stem', () => {
-    test('a hairpin stem', () => {
+    test('a hairpin whose neighboring positions are unpaired', () => {
       let partners = [null, null, 11, 10, 9, null, undefined, null, 5, 4, 3, null, undefined];
       [3, 4, 5, 9, 10, 11].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -21,7 +21,7 @@ describe('containingStem function', () => {
       });
     });
 
-    test('three immediately neighboring stems', () => {
+    test('a hairpin whose neighboring positions are paired', () => {
       let partners = [4, 3, 2, 1, 10, 9, null, null, 6, 5, 14, 13, 12, 11];
       [5, 6, 9, 10].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
@@ -30,7 +30,7 @@ describe('containingStem function', () => {
       });
     });
 
-    test('enclosed stems', () => {
+    test('a stem that encloses two other stems', () => {
       let partners = [16, 15, 14, 13, 8, 7, 6, 5, 12, 11, 10, 9, 4, 3, 2, 1];
       [1, 2, 3, 4, 13, 14, 15, 16].forEach(p => {
         expect(containingStem(partners, p)).toStrictEqual(
