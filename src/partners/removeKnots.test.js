@@ -23,16 +23,9 @@ describe('removeKnots function', () => {
 
   test('a knot involving a hairpin loop', () => {
     let partners = [9, 8, null, 13, 12, 11, null, 2, 1, null, 6, 5, 4];
-    // keeps the knot and removes the hairpin with the current implementation
+    // maintains the stem that was earlier in the structure
     expect(removeKnots(partners)).toStrictEqual(
       [9, 8, null, null, null, null, null, 2, 1, null, null, null, null]
-    );
-  });
-
-  test('knot between hairpin loop and downstream positions', () => {
-    let partners = [10, 9, 8, null, 13, 12, null, 3, 2, 1, null, 6, 5];
-    expect(removeKnots(partners)).toStrictEqual(
-      [10, 9, 8, null, null, null, null, 3, 2, 1, null, null, null]
     );
   });
 
