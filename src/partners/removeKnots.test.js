@@ -18,7 +18,9 @@ describe('removeKnots function', () => {
 
   test('a hairpin', () => {
     let partners = [6, 5, null, null, 2, 1];
-    expect(removeKnots(partners)).toStrictEqual(partners);
+    expect(removeKnots(partners)).toStrictEqual(
+      [6, 5, null, null, 2, 1]
+    );
   });
 
   test('a knot involving a hairpin loop', () => {
