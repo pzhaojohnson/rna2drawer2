@@ -1,7 +1,8 @@
-import { removeKnots } from './removeKnots';
 import { unstructuredPartners } from 'Partners/unstructuredPartners';
-import { pair } from './edit';
-import { hasKnots } from './hasKnots';
+import { pair } from 'Partners/edit';
+import { hasKnots } from 'Partners/hasKnots';
+
+import { removeKnots } from './removeKnots';
 
 describe('removeKnots function', () => {
   it('empty partners', () => {
