@@ -8,7 +8,7 @@ import PerBaseStrictLayoutProps from 'Draw/strict/layout/PerBaseStrictLayoutProp
 import type { Base } from 'Draw/bases/Base';
 import { radiateStems } from 'Draw/strict/layout/radiateStems';
 import { hasKnots } from 'Partners/hasKnots';
-import { removeKnots } from 'Partners/removeKnots';
+import { treeify } from 'Partners/treeify';
 import type { Sequence } from 'Draw/sequences/Sequence';
 import { centerView } from 'Draw/view';
 
@@ -40,7 +40,7 @@ function _radiateStructure(sd: StrictDrawing, structure: Structure) {
     return;
   }
   if (hasKnots(secondaryPartners)) {
-    secondaryPartners = removeKnots(secondaryPartners);
+    secondaryPartners = treeify(secondaryPartners);
   }
   let stretches3 = radiateStems(secondaryPartners);
   let seq = sd.drawing.getSequenceById(structure.id) as Sequence;
