@@ -12,23 +12,26 @@ import { pair } from 'Partners/edit';
  */
 export function removeKnots(partners: Partners): Partners {
   let noKnots = unstructuredPartners(partners.length);
-  // a stack of 5' partners
-  let p5s: number[] = [];
+
+  // a stack of upstream partners
+  let ups: number[] = [];
+
   partners.forEach((q, i) => {
     let p = i + 1;
     if (q == undefined) {
       // nothing to do
     } else if (p < q) {
-      p5s.push(p);
+      ups.push(p);
     } else {
-      while (p5s.length > 0 && p5s[p5s.length - 1] > q) {
-        p5s.pop();
+      while (ups.length > 0 && ups[ups.length - 1] > q) {
+        ups.pop();
       }
-      if (p5s.length > 0 && p5s[p5s.length - 1] == q) {
-        p5s.pop();
+      if (ups.length > 0 && ups[ups.length - 1] == q) {
+        ups.pop();
         pair(noKnots, p, q);
       }
     }
   });
+
   return noKnots;
 }
