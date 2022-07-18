@@ -16,17 +16,17 @@ export function removeKnots(partners: Partners): Partners {
   let p5s: number[] = [];
   partners.forEach((q, i) => {
     let p = i + 1;
-    if (typeof q == 'number') {
-      if (p < q) {
-        p5s.push(p);
-      } else {
-        while (p5s.length > 0 && p5s[p5s.length - 1] > q) {
-          p5s.pop();
-        }
-        if (p5s.length > 0 && p5s[p5s.length - 1] == q) {
-          p5s.pop();
-          pair(noKnots, p, q);
-        }
+    if (typeof q != 'number') {
+      // nothing to do
+    } else if (p < q) {
+      p5s.push(p);
+    } else {
+      while (p5s.length > 0 && p5s[p5s.length - 1] > q) {
+        p5s.pop();
+      }
+      if (p5s.length > 0 && p5s[p5s.length - 1] == q) {
+        p5s.pop();
+        pair(noKnots, p, q);
       }
     }
   });
