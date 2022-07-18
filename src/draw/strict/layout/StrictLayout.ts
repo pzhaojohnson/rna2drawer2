@@ -1,6 +1,6 @@
 import { Partners } from 'Partners/Partners';
 import { hasKnots } from 'Partners/hasKnots';
-import { removeKnots } from 'Partners/removeKnots';
+import { treeify } from 'Partners/treeify';
 import Stem from './Stem';
 import { StemLayout } from './StemLayout';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
@@ -56,7 +56,7 @@ export class StrictLayout {
       }
     }
     if (hasKnots(this._partners)) {
-      this._partners = removeKnots(this._partners);
+      this._partners = treeify(this._partners);
     }
   }
 
