@@ -5,23 +5,23 @@ import { hasKnots } from 'Partners/hasKnots';
 import { removeKnots } from './removeKnots';
 
 describe('removeKnots function', () => {
-  it('empty partners', () => {
+  test('empty partners', () => {
     expect(removeKnots([])).toStrictEqual([]);
   });
 
-  it('unstructured partners', () => {
+  test('unstructured partners', () => {
     let partners = [undefined, null, null];
     expect(removeKnots(partners)).toStrictEqual(
       [null, null, null]
     );
   });
 
-  it('no knots', () => {
+  test('a hairpin', () => {
     let partners = [6, 5, null, null, 2, 1];
     expect(removeKnots(partners)).toStrictEqual(partners);
   });
 
-  it('knot between hairpin loop and upstream positions', () => {
+  test('a knot involving a hairpin loop', () => {
     let partners = [9, 8, null, 13, 12, 11, null, 2, 1, null, 6, 5, 4];
     // keeps the knot and removes the hairpin with the current implementation
     expect(removeKnots(partners)).toStrictEqual(
@@ -29,14 +29,14 @@ describe('removeKnots function', () => {
     );
   });
 
-  it('knot between hairpin loop and downstream positions', () => {
+  test('knot between hairpin loop and downstream positions', () => {
     let partners = [10, 9, 8, null, 13, 12, null, 3, 2, 1, null, 6, 5];
     expect(removeKnots(partners)).toStrictEqual(
       [10, 9, 8, null, null, null, null, 3, 2, 1, null, null, null]
     );
   });
 
-  it('smoke test', () => {
+  test('smoke test', () => {
     for (let i = 0; i < 1000; i++) {
       let partners = unstructuredPartners(200);
       for (let j = 0; j < 50; j++) {
