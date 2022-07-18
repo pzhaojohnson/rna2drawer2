@@ -3,7 +3,7 @@ import { Partners } from 'Partners/Partners';
 import type { Drawing } from 'Draw/Drawing';
 import { pair } from 'Partners/edit';
 import { hasKnots } from 'Partners/hasKnots';
-import { removeKnots } from 'Partners/removeKnots';
+import { treeify } from 'Partners/treeify';
 
 function _idsToPositions(drawing: Drawing): { [id: string]: number } {
   let dict = {} as { [id: string]: number };
@@ -38,7 +38,7 @@ function _overallSecondaryPartners(drawing: Drawing) {
 function layoutPartnersOfStrictDrawing(sd: StrictDrawing): Partners {
   let partners = _overallSecondaryPartners(sd.drawing);
   if (hasKnots(partners)) {
-    partners = removeKnots(partners);
+    partners = treeify(partners);
   }
   return partners;
 }
