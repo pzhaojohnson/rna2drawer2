@@ -27,13 +27,8 @@ describe('hasKnots function', () => {
   });
 
   describe('when the structure has knots', () => {
-    test('a leading pseudoknot', () => {
+    test('a pseudoknot involving a hairpin loop', () => {
       let partners = [null, 12, 11, 10, null, 15, 14, 13, null, 4, 3, 2, 8, 7, 6, undefined];
-      expect(hasKnots(partners)).toBeTruthy();
-    });
-
-    test('a trailing pseudoknot', () => {
-      let partners = [10, 9, 8, 15, 14, 13, null, 3, 2, 1, undefined, null, 6, 5, 4];
       expect(hasKnots(partners)).toBeTruthy();
     });
 
