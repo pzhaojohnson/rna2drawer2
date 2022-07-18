@@ -16,7 +16,7 @@ export function removeKnots(partners: Partners): Partners {
   let p5s: number[] = [];
   partners.forEach((q, i) => {
     let p = i + 1;
-    if (typeof q != 'number') {
+    if (q == undefined) {
       // nothing to do
     } else if (p < q) {
       p5s.push(p);
