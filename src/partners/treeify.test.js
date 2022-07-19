@@ -23,7 +23,7 @@ describe('treeify function', () => {
     );
   });
 
-  test('a knot involving a hairpin loop', () => {
+  test('a pseudoknot involving a hairpin loop', () => {
     let partners = [9, 8, null, 13, 12, 11, null, 2, 1, null, 6, 5, 4];
     // maintains the stem that was earlier in the structure
     expect(treeify(partners)).toStrictEqual(

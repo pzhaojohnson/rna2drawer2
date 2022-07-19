@@ -3,11 +3,11 @@ import { unstructuredPartners } from 'Partners/unstructuredPartners';
 import { pair } from 'Partners/edit';
 
 /**
- * Returns a new partners array with all pairs creating knots
+ * Returns a new partners array with all pairs creating pseudoknots
  * having been removed.
  * (Does not modify the input partners array.)
  *
- * May not remove knots optimally (i.e., may remove more pairs
+ * May not remove pseudoknots optimally (i.e., may remove more pairs
  * than necessary).
  */
 export function treeify(partners: Partners): Partners {
