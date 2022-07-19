@@ -1,7 +1,7 @@
 import { isTree } from './isTree';
 
 describe('isTree function', () => {
-  describe('when the structure has no knots', () => {
+  describe('when the structure has a tree shape', () => {
     test('empty partners', () => {
       expect(isTree([])).toBeTruthy();
     });
@@ -26,7 +26,7 @@ describe('isTree function', () => {
     });
   });
 
-  describe('when the structure has knots', () => {
+  describe('when the structure does not have a tree shape', () => {
     test('a pseudoknot involving a hairpin loop', () => {
       let partners = [null, 12, 11, 10, null, 15, 14, 13, null, 4, 3, 2, 8, 7, 6, undefined];
       expect(isTree(partners)).toBeFalsy();
