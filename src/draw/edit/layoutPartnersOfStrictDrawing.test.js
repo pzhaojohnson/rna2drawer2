@@ -4,7 +4,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
 
 import { assertAreValid as assertPartnersAreValid } from 'Partners/areValid';
-import { hasKnots } from 'Partners/hasKnots';
+import { isTree } from 'Partners/isTree';
 
 it('handles no secondary bonds', () => {
   let sd = new StrictDrawing({ SVG: { SVG: NodeSVG } });
@@ -61,7 +61,7 @@ it('removes knots', () => {
   );
   let partners = layoutPartnersOfStrictDrawing(sd);
   expect(() => assertPartnersAreValid(partners)).not.toThrow();
-  expect(hasKnots(partners)).toBeFalsy();
+  expect(isTree(partners)).toBeTruthy();
 });
 
 it('handles secondary bonds that share bases', () => {
