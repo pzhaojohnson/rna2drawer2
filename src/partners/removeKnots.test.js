@@ -1,6 +1,6 @@
 import { unstructuredPartners } from 'Partners/unstructuredPartners';
 import { pair } from 'Partners/edit';
-import { hasKnots } from 'Partners/hasKnots';
+import { isTree } from 'Partners/isTree';
 
 import { removeKnots } from './removeKnots';
 
@@ -41,7 +41,7 @@ describe('removeKnots function', () => {
           pair(partners, p, q);
         }
         let noKnots = removeKnots(partners);
-        expect(hasKnots(noKnots)).toBeFalsy();
+        expect(isTree(noKnots)).toBeTruthy();
       }
     }
   });
