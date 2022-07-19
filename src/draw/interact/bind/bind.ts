@@ -7,7 +7,7 @@ import { sidesOverlap } from './Side';
 
 import { secondaryBondsBindingSide } from './bondsBindingSide';
 import { pair as pairInPartners } from 'Partners/edit';
-import { hasKnots } from 'Partners/hasKnots';
+import { isTree } from 'Partners/isTree';
 import { willPair } from 'Draw/strict/layout/stemProps';
 
 import { addSecondaryBond } from 'Draw/bonds/straight/add';
@@ -44,7 +44,7 @@ export function canBindWithSecondaryBonds(strictDrawing: StrictDrawing, side1: S
     p1++;
     p2--;
   }
-  return !hasKnots(partners);
+  return isTree(partners);
 }
 
 // does nothing if unable to bind the two sides with secondary bonds
