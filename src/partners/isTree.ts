@@ -4,7 +4,7 @@ import type { Partners } from 'Partners/Partners';
  * A structure has a tree shape if it contains no pseudoknots.
  */
 export function isTree(partners: Partners): boolean {
-  let knots = false;
+  let pseudoknots = false;
   let upstreamPartners: number[] = [];
   partners.forEach((q, i) => {
     let p = i + 1;
@@ -13,8 +13,8 @@ export function isTree(partners: Partners): boolean {
     } else if (p < q) {
       upstreamPartners.push(p);
     } else if (q != upstreamPartners.pop()) {
-      knots = true;
+      pseudoknots = true;
     }
   });
-  return !knots;
+  return !pseudoknots;
 }
