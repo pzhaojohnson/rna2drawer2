@@ -11,7 +11,7 @@ import { pair } from 'Partners/edit';
  * than necessary).
  */
 export function treeify(partners: Partners): Partners {
-  let noKnots = unstructuredPartners(partners.length);
+  let treePartners = unstructuredPartners(partners.length);
 
   // a stack of upstream partners
   let ups: number[] = [];
@@ -28,10 +28,10 @@ export function treeify(partners: Partners): Partners {
       }
       if (ups.length > 0 && ups[ups.length - 1] == q) {
         ups.pop();
-        pair(noKnots, p, q);
+        pair(treePartners, p, q);
       }
     }
   });
 
-  return noKnots;
+  return treePartners;
 }

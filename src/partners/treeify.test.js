@@ -40,8 +40,8 @@ describe('treeify function', () => {
         if (p != q) {
           pair(partners, p, q);
         }
-        let noKnots = treeify(partners);
-        expect(isTree(noKnots)).toBeTruthy();
+        let treePartners = treeify(partners);
+        expect(isTree(treePartners)).toBeTruthy();
       }
     }
   });
