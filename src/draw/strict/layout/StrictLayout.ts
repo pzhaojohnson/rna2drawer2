@@ -1,5 +1,5 @@
 import { Partners } from 'Partners/Partners';
-import { hasKnots } from 'Partners/hasKnots';
+import { isTree } from 'Partners/isTree';
 import { treeify } from 'Partners/treeify';
 import Stem from './Stem';
 import { StemLayout } from './StemLayout';
@@ -55,7 +55,7 @@ export class StrictLayout {
         this._partners[i] = null;
       }
     }
-    if (hasKnots(this._partners)) {
+    if (!isTree(this._partners)) {
       this._partners = treeify(this._partners);
     }
   }
