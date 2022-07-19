@@ -5,7 +5,7 @@ import Stem from './Stem';
 import UnpairedRegion from './UnpairedRegion';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
-import { hasKnots } from 'Partners/hasKnots';
+import { isTree } from 'Partners/isTree';
 
 function _radialAngle(st: StemInterface, structureLength: number): number {
   if (structureLength === 0) {
@@ -178,7 +178,7 @@ function _radiateLoop(st: Stem, stretches3: number[]) {
 function radiateStems(partners: Partners): number[] {
   let stretches3 = [] as number[];
   partners.forEach(p => stretches3.push(0));
-  if (!hasKnots(partners)) {
+  if (isTree(partners)) {
     let gps = new GeneralStrictLayoutProps();
     let pbps: PerBaseStrictLayoutProps[] = [];
     partners.forEach(p => pbps.push(new PerBaseStrictLayoutProps()));
