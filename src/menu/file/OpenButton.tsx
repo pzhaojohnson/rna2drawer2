@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
 import { OpenRna2drawer } from 'Forms/open/OpenRna2drawer';
-import { openNewTab } from 'Utilities/openNewTab';
+import { openNewTabOfApp } from 'Utilities/openNewTabOfApp';
 
 export type Props = {
   app: App;
@@ -21,7 +21,7 @@ export function OpenButton(props: Props) {
             />
           ));
         } else {
-          openNewTab();
+          openNewTabOfApp();
         }
       }}
     />

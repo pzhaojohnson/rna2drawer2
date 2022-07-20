@@ -1,6 +1,6 @@
 /**
  * Opens a new tab of the app.
  */
-export function openNewTab() {
+export function openNewTabOfApp() {
   window.open(document.URL);
 }

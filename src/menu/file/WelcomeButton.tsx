@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
 import { WelcomePage } from 'Forms/welcome/WelcomePage';
-import { openNewTab } from 'Utilities/openNewTab';
+import { openNewTabOfApp } from 'Utilities/openNewTabOfApp';
 
 export type Props = {
   app: App;
@@ -18,7 +18,7 @@ export function WelcomeButton(props: Props) {
             <WelcomePage app={props.app} />
           ));
         } else {
-          openNewTab();
+          openNewTabOfApp();
         }
       }}
     />
