@@ -33,7 +33,7 @@ describe('isTree function', () => {
     });
 
     test('a pseudoknot involving an internal loop', () => {
-      let partners = [19, 18, 17, null, 13, 12, 11, null, undefined, null, 7, 6, 5, 21, 20, null, 3, 2, 1, 15, 14]
+      let partners = [19, 18, 17, null, 13, 12, 11, null, undefined, null, 7, 6, 5, 21, 20, null, 3, 2, 1, 15, 14];
       expect(isTree(partners)).toBeFalsy();
     });
 
