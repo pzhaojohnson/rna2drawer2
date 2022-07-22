@@ -87,22 +87,6 @@ export class Drawing {
     container.appendChild(this.node);
   }
 
-  get scrollLeft(): number {
-    return this.svgContainer.scrollLeft;
-  }
-
-  set scrollLeft(sl) {
-    this.svgContainer.scrollLeft = sl;
-  }
-
-  get scrollTop(): number {
-    return this.svgContainer.scrollTop;
-  }
-
-  set scrollTop(st) {
-    this.svgContainer.scrollTop = st;
-  }
-
   get width(): number {
     return this.svg.viewbox().width;
   }
