@@ -60,6 +60,10 @@ test('appendTo method', () => {
   expect(container.lastChild).toBe(drawing.node);
 });
 
+test('scroll property', () => {
+  expect(drawing.scroll.element).toBe(drawing.node);
+});
+
 it('isEmpty method', () => {
   let drawing = new Drawing({ SVG: { SVG: NodeSVG } });
   let container = document.createElement('div');

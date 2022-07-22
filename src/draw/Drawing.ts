@@ -1,4 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
+import { ScrollInterface } from 'Draw/ScrollInterface';
 import { centerView } from 'Draw/view';
 import { resize } from 'Draw/dimensions';
 import { Sequence } from 'Draw/sequences/Sequence';
@@ -50,6 +51,8 @@ export class Drawing {
   svgContainer!: HTMLElement;
   svg!: SVG.Svg;
 
+  readonly scroll: ScrollInterface;
+
   sequences: Sequence[];
   primaryBonds: PrimaryBond[];
   secondaryBonds: SecondaryBond[];
@@ -67,6 +70,8 @@ export class Drawing {
     let height = 2 * window.screen.height;
     this.svg.viewbox(0, 0, width, height);
     this.svg.attr({ 'width': width, 'height': height });
+
+    this.scroll = new ScrollInterface(this.svgContainer);
 
     this.sequences = [];
     this.primaryBonds = [];
