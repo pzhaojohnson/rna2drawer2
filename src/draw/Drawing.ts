@@ -199,12 +199,6 @@ export class Drawing {
     return bs;
   }
 
-  baseIds(): string[] {
-    let ids = [] as string[];
-    this.forEachBase((b: Base) => ids.push(b.id));
-    return ids;
-  }
-
   basesByIds(): BasesByIds {
     let map = {} as BasesByIds;
     this.forEachBase(b => map[b.id] = b);

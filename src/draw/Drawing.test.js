@@ -168,13 +168,6 @@ describe('sequence and base attributes', () => {
     expect(bs.length).toBe(n);
   });
 
-  it('baseIds method handles multiple sequences', () => {
-    let ids = drawing.baseIds();
-    ids.forEach((id, i) => {
-      expect(id).toBe(drawing.getBaseAtOverallPosition(i + 1).id);
-    });
-  });
-
   it('basesByIds method', () => {
     expect(drawing.numBases).toBeGreaterThan(3);
     expect(drawing.numSequences).toBeGreaterThan(1); // handles multiple sequences
