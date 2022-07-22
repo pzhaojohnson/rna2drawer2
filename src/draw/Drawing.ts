@@ -34,10 +34,6 @@ export type Options = {
   }
 }
 
-export interface BasesByIds {
-  [id: string]: Base | undefined;
-}
-
 export interface DrawingSavableState {
   className: string;
   svg: string;
@@ -197,12 +193,6 @@ export class Drawing {
     let bs: Base[] = [];
     this.forEachBase(b => bs.push(b));
     return bs;
-  }
-
-  basesByIds(): BasesByIds {
-    let map = {} as BasesByIds;
-    this.forEachBase(b => map[b.id] = b);
-    return map;
   }
 
   sequenceOfBase(b: Base): (Sequence | undefined) {
