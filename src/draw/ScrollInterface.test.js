@@ -22,6 +22,10 @@ afterEach(() => {
 });
 
 describe('ScrollInterface class', () => {
+  test('element property', () => {
+    expect(scroll.element).toBe(mockElement);
+  });
+
   test('left getter and setter', () => {
     scroll.left = 782; // use setter
     expect(scroll.left).toBe(782); // use getter
