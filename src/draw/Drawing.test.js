@@ -92,13 +92,6 @@ describe('sequence and base attributes', () => {
     expect(drawing.getSequenceById('nonexistent ID')).toBeFalsy();
   });
 
-  it('getSequenceAtIndex method', () => {
-    expect(drawing.getSequenceAtIndex(0).id).toBe('asdf');
-    expect(drawing.getSequenceAtIndex(1).id).toBe('qwer');
-    expect(drawing.getSequenceAtIndex(2).id).toBe('zxcv');
-    expect(drawing.getSequenceAtIndex(100)).toBeFalsy(); // out of range
-  });
-
   it('forEachSequence method', () => {
     let ids = ['asdf', 'qwer', 'zxcv'];
     let i = 0;
@@ -229,7 +222,7 @@ describe('appendSequence method', () => {
     expect(seq.id).toBe('zxcvbnm');
     expect(seq.characters).toBe('zxcvbnmqq');
     expect(drawing.numSequences).toBe(n + 1);
-    expect(drawing.getSequenceAtIndex(n).id).toBe(seq.id);
+    expect(drawing.sequences[n].id).toBe(seq.id);
   });
 });
 

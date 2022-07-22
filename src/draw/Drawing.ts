@@ -107,10 +107,6 @@ export class Drawing {
     return this.sequences.find(seq => seq.id === id);
   }
 
-  getSequenceAtIndex(i: number): (Sequence | undefined) {
-    return this.sequences[i];
-  }
-
   forEachSequence(f: (seq: Sequence) => void) {
     this.sequences.forEach(seq => f(seq));
   }
