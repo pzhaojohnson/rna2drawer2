@@ -95,20 +95,12 @@ export class Drawing {
     this.svgContainer.scrollLeft = sl;
   }
 
-  get scrollWidth(): number {
-    return this.svgContainer.scrollWidth;
-  }
-
   get scrollTop(): number {
     return this.svgContainer.scrollTop;
   }
 
   set scrollTop(st) {
     this.svgContainer.scrollTop = st;
-  }
-
-  get scrollHeight(): number {
-    return this.svgContainer.scrollHeight;
   }
 
   get width(): number {
