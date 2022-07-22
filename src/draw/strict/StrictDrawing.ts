@@ -67,6 +67,10 @@ export class StrictDrawing {
     return this.drawing.svg;
   }
 
+  get scroll() {
+    return this.drawing.scroll;
+  }
+
   get sequences() {
     return this.drawing.sequences;
   }

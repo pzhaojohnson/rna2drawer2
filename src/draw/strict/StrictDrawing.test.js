@@ -55,6 +55,10 @@ test('appendTo method', () => {
   expect(container.lastChild).toBe(strictDrawing.node);
 });
 
+test('scroll getter', () => {
+  expect(sd.scroll).toBe(sd.drawing.scroll);
+});
+
 test('layoutSequence method', () => {
   // test with multiple sequences
   expect(sd.drawing.sequences.length).toBeGreaterThan(1);
