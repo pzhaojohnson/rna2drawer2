@@ -34,6 +34,6 @@ export function centerViewOnBases(strictDrawing: StrictDrawing, bases: Base[]) {
   let drawingClientCenter = centerOfRect(drawingClientRect);
 
   let shift = displacement(drawingClientCenter, textClientCentroid);
-  strictDrawing.drawing.svgContainer.scrollLeft += shift.x;
-  strictDrawing.drawing.svgContainer.scrollTop += shift.y;
+  strictDrawing.drawing.scroll.left += shift.x;
+  strictDrawing.drawing.scroll.top += shift.y;
 }
