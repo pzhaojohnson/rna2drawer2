@@ -23,7 +23,7 @@ export function updateLayout(strictDrawing: StrictDrawing, spec: StrictLayoutSpe
   };
   // check for finiteness just to be safe
   if (Number.isFinite(shift.x) && Number.isFinite(shift.y)) {
-    strictDrawing.drawing.scrollLeft += shift.x;
-    strictDrawing.drawing.scrollTop += shift.y;
+    strictDrawing.drawing.scroll.left += shift.x;
+    strictDrawing.drawing.scroll.top += shift.y;
   }
 }
