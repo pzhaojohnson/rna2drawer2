@@ -49,7 +49,7 @@ export interface DrawingSavableState {
 
 export class Drawing {
   svgContainer!: HTMLElement;
-  svg!: SVG.Svg;
+  svg: SVG.Svg;
 
   readonly scroll: ScrollInterface;
 
