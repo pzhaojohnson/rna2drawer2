@@ -168,13 +168,6 @@ describe('sequence and base attributes', () => {
     expect(bs.length).toBe(n);
   });
 
-  it('sequenceOfBase method', () => {
-    let b2 = seq2.getBaseAtPosition(3);
-    expect(drawing.sequenceOfBase(b2)).toBe(seq2);
-    let b3 = Base.create(drawing.svg, 'q', 4, 5); // not in drawing
-    expect(drawing.sequenceOfBase(b3)).toBeFalsy();
-  });
-
   it('createBases method', () => {
     let characters = 'asdfqwerZXCV';
     let bs = drawing.createBases(characters);

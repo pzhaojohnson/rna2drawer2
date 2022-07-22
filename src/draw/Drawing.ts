@@ -195,10 +195,6 @@ export class Drawing {
     return bs;
   }
 
-  sequenceOfBase(b: Base): (Sequence | undefined) {
-    return this.sequences.find(seq => seq.bases.includes(b));
-  }
-
   createBases(characters: string): Base[] {
     let bs = [] as Base[];
     let x = 0;
