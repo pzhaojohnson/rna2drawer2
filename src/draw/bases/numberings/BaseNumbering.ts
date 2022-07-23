@@ -2,7 +2,7 @@ import * as SVG from '@svgdotjs/svg.js';
 import { Values } from './values';
 import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Math/distance';
-import { position } from './position';
+import { reposition } from './reposition';
 import { assignUuid } from 'Draw/svg/assignUuid';
 
 export type Repositioning = {
@@ -110,7 +110,7 @@ export class BaseNumbering {
 
   reposition(rp?: Repositioning) {
     let defaults = BaseNumbering.recommendedDefaults;
-    position(this, {
+    reposition(this, {
       baseCenter: rp?.baseCenter ?? this._baseCenter,
       basePadding: rp?.basePadding ?? this.basePadding ?? defaults.basePadding ?? 8,
       lineAngle: rp?.lineAngle ?? this.lineAngle ?? 0,

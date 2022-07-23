@@ -1,4 +1,4 @@
-import { position } from './position';
+import { reposition } from './reposition';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
@@ -23,7 +23,7 @@ beforeEach(() => {
 afterEach(() => {
   numbering = null;
   base = null;
-  
+
   svg.clear();
   svg.remove();
   svg = null;
@@ -32,10 +32,10 @@ afterEach(() => {
   container = null;
 });
 
-describe('position function', () => {
-  it('positions line and text', () => {
+describe('reposition function', () => {
+  it('repositions line and text', () => {
     numbering.text.attr({ 'font-size': 18 });
-    position(numbering, {
+    reposition(numbering, {
       baseCenter: { x: 112, y: 902 },
       basePadding: 16,
       lineAngle: 3,
@@ -66,7 +66,7 @@ describe('position function', () => {
       };
       numbering.text.attr({ 'font-size': fs });
       expect(
-        () => position(numbering, p)
+        () => reposition(numbering, p)
       ).not.toThrow();
     }
   });

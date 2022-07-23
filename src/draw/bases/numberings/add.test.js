@@ -3,7 +3,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 
 import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
-import { position } from 'Draw/bases/numberings/position';
+import { reposition } from 'Draw/bases/numberings/reposition';
 
 import { round } from 'Math/round';
 
@@ -73,7 +73,7 @@ describe('addNumbering function', () => {
   it('positions the numbering', () => {
     addNumbering(base, 500);
     let rp1 = getRoundedPositioning(base.numbering);
-    position(base.numbering, {
+    reposition(base.numbering, {
       baseCenter: base.center(),
       basePadding: BaseNumbering.recommendedDefaults.basePadding,
       lineAngle: base.numbering.lineAngle,

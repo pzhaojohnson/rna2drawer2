@@ -10,7 +10,7 @@ export type Positioning = {
   textPadding: number;
 }
 
-function positionLine(bn: BaseNumbering, p: Positioning) {
+function repositionLine(bn: BaseNumbering, p: Positioning) {
   let d1 = p.basePadding;
   let d2 = p.basePadding + p.lineLength;
   bn.line.attr({
@@ -59,7 +59,7 @@ function textPositioning(bn: BaseNumbering, p: Positioning): TextPositioning | u
   }
 }
 
-function positionText(bn: BaseNumbering, p: Positioning) {
+function repositionText(bn: BaseNumbering, p: Positioning) {
   let tp = textPositioning(bn, p);
   if (tp) {
     bn.text.attr({
@@ -70,7 +70,7 @@ function positionText(bn: BaseNumbering, p: Positioning) {
   }
 }
 
-export function position(bn: BaseNumbering, p: Positioning) {
-  positionLine(bn, p);
-  positionText(bn, p);
+export function reposition(bn: BaseNumbering, p: Positioning) {
+  repositionLine(bn, p);
+  repositionText(bn, p);
 }

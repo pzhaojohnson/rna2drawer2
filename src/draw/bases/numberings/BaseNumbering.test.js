@@ -4,7 +4,7 @@ import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
 import { normalizeAngle } from 'Math/angles/normalize';
 import { round } from 'Math/round';
-import { position } from './position';
+import { reposition } from './reposition';
 import { uuidRegex } from 'Draw/svg/assignUuid';
 
 let container = null;
@@ -117,7 +117,7 @@ describe('BaseNumbering class', () => {
     expect(numbering.lineLength).toBeCloseTo(26.6);
     // check actual positioning
     let rp1 = getRoundedPositioning(numbering);
-    position(numbering, {
+    reposition(numbering, {
       baseCenter: { x: 25.5, y: 256 },
       basePadding: 18.07,
       lineAngle: 4.2,
@@ -136,7 +136,7 @@ describe('BaseNumbering class', () => {
       numbering.lineLength = 18.25;
       numbering.reposition();
       let rp1 = getRoundedPositioning(numbering);
-      position(numbering, {
+      reposition(numbering, {
         baseCenter: { x: 520, y: 465 },
         basePadding: 16.6,
         lineAngle: 2.8,
@@ -156,7 +156,7 @@ describe('BaseNumbering class', () => {
         lineLength: 8.22,
       });
       let rp1 = getRoundedPositioning(numbering);
-      position(numbering, {
+      reposition(numbering, {
         baseCenter: { x: 15, y: 1012 },
         basePadding: 25.2,
         lineAngle: 15.5,
@@ -172,7 +172,7 @@ describe('BaseNumbering class', () => {
       numbering.reposition({ baseCenter: { x: 421, y: 328 } });
       numbering.reposition({ basePadding: 82 });
       let rp1 = getRoundedPositioning(numbering);
-      position(numbering, {
+      reposition(numbering, {
         baseCenter: { x: 421, y: 328 },
         basePadding: 82,
         lineAngle: numbering.lineAngle,
