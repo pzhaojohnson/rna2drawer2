@@ -1,5 +1,5 @@
 import { Drawing } from 'Draw/Drawing';
-import { NodeSVG } from 'Draw/svg/NodeSVG';
+import * as SVG from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addNumbering } from 'Draw/bases/numberings/add';
 import { removeNumbering } from 'Draw/bases/numberings/add';
@@ -16,7 +16,7 @@ beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
 
-  drawing = new Drawing({ SVG: { SVG: NodeSVG } });
+  drawing = new Drawing({ SVG });
   drawing.appendTo(container);
 
   sequence = appendSequence(drawing, { id: 'asdf', characters: 'asdfASDF' });
