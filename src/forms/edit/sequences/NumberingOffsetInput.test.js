@@ -9,7 +9,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addNumbering } from 'Draw/bases/numberings/add';
 import { removeNumbering } from 'Draw/bases/numberings/add';
-import { areUnnumbered } from 'Draw/bases/numberings/areUnnumbered';
+import { areAllUnnumbered } from 'Draw/bases/numberings/areAllUnnumbered';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
@@ -78,7 +78,7 @@ describe('NumberingOffsetInput component', () => {
   });
 
   it('renders when the numbering offset is undefined', () => {
-    expect(areUnnumbered(sequence.bases)).toBeTruthy();
+    expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
     expect(numberingOffset(sequence)).toBeUndefined();
     act(() => {
       render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
@@ -132,7 +132,7 @@ describe('NumberingOffsetInput component', () => {
   describe('when there are already base numberings present', () => {
     it('only edits existing base numberings', () => {
       let sequence = appendSequence(drawing, { id: '12', characters: 'asdfASDFqwer' });
-      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
       // results in both the numbering offset and increment being undefined
       addNumbering(sequence.atPosition(1), 5);
       addNumbering(sequence.atPosition(3), 9);
@@ -151,7 +151,7 @@ describe('NumberingOffsetInput component', () => {
       let numberedBases = [1, 3, 7, 8, 11].map(p => sequence.atPosition(p));
       expect(numberedBases.every(b => b.numbering)).toBeTruthy();
       let unnumberedBases = [2, 4, 5, 6, 9, 10, 12].map(p => sequence.atPosition(p));
-      expect(areUnnumbered(unnumberedBases)).toBeTruthy();
+      expect(areAllUnnumbered(unnumberedBases)).toBeTruthy();
     });
   });
 
@@ -162,7 +162,7 @@ describe('NumberingOffsetInput component', () => {
         characters: 'asdfASDFqwerQWERzxcvZXCVasdfASDFqwerQWERzxcvZXCV',
       });
       sequence.bases.forEach(b => removeNumbering(b)); // remove any base numberings
-      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
       act(() => {
         render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
       });
@@ -177,7 +177,7 @@ describe('NumberingOffsetInput component', () => {
     test('when the sequence length is less than 20 (and greater than zero)', () => {
       let sequence = appendSequence(drawing, { id: 'one', characters: 'A' });
       expect(sequence.length).toBe(1);
-      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
       act(() => {
         render(<NumberingOffsetInput app={app} sequence={sequence} />, container);
       });

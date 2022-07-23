@@ -4,7 +4,7 @@ import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addNumbering } from 'Draw/bases/numberings/add';
 import { removeNumbering } from 'Draw/bases/numberings/add';
 
-import { areUnnumbered } from './areUnnumbered';
+import { areAllUnnumbered } from './areAllUnnumbered';
 
 let container = null;
 let drawing = null;
@@ -25,7 +25,7 @@ afterEach(() => {
   container = null;
 });
 
-test('areUnnumbered function', () => {
+test('areAllUnnumbered function', () => {
   let seq = appendSequence(drawing, { id: 'asdf', characters: 'asdfASDFqwerQWER' });
 
   // remove any numberings that were added automatically
@@ -38,14 +38,14 @@ test('areUnnumbered function', () => {
   addNumbering(seq.atPosition(16), 15);
 
   // an empty array
-  expect(areUnnumbered([])).toBeTruthy();
+  expect(areAllUnnumbered([])).toBeTruthy();
 
   // one base
-  expect(areUnnumbered([seq.atPosition(1)])).toBeTruthy();
-  expect(areUnnumbered([seq.atPosition(2)])).toBeFalsy();
+  expect(areAllUnnumbered([seq.atPosition(1)])).toBeTruthy();
+  expect(areAllUnnumbered([seq.atPosition(2)])).toBeFalsy();
 
   // multiple unnumbered bases
-  expect(areUnnumbered([
+  expect(areAllUnnumbered([
     seq.atPosition(1),
     seq.atPosition(4),
     seq.atPosition(5),
@@ -55,7 +55,7 @@ test('areUnnumbered function', () => {
   ])).toBeTruthy();
 
   // multiple numbered bases
-  expect(areUnnumbered([
+  expect(areAllUnnumbered([
     seq.atPosition(2),
     seq.atPosition(3),
     seq.atPosition(8),
@@ -63,7 +63,7 @@ test('areUnnumbered function', () => {
   ])).toBeFalsy();
 
   // multiple bases (only some numbered)
-  expect(areUnnumbered([
+  expect(areAllUnnumbered([
     seq.atPosition(1),
     seq.atPosition(4),
     seq.atPosition(8),

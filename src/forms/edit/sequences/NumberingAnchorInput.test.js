@@ -8,7 +8,7 @@ import { App } from 'App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { removeNumbering } from 'Draw/bases/numberings/add';
-import { areUnnumbered } from 'Draw/bases/numberings/areUnnumbered';
+import { areAllUnnumbered } from 'Draw/bases/numberings/areAllUnnumbered';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
@@ -138,7 +138,7 @@ describe('NumberingAnchorInput component', () => {
 
   describe('when the numbering offset and increment are undefined', () => {
     it('uses a numbering offset of zero and a numbering increment of 20', () => {
-      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
       act(() => {
         render(<NumberingAnchorInput app={app} sequence={sequence} />, container);
       });

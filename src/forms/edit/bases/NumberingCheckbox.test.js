@@ -8,7 +8,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addNumbering } from 'Draw/bases/numberings/add';
 import { removeNumbering } from 'Draw/bases/numberings/add';
-import { areUnnumbered } from 'Draw/bases/numberings/areUnnumbered';
+import { areAllUnnumbered } from 'Draw/bases/numberings/areAllUnnumbered';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 
@@ -113,7 +113,7 @@ describe('NumberingCheckbox component', () => {
     test('when the numbering offset is undefined', () => {
       // remove any base numberings
       sequence.bases.forEach(b => removeNumbering(b));
-      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
       expect(numberingOffset(sequence)).toBeUndefined();
       let base = sequence.atPosition(6);
       expect(base.numbering).toBeFalsy();

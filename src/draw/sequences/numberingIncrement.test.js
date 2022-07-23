@@ -3,7 +3,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addNumbering } from 'Draw/bases/numberings/add';
 import { removeNumbering } from 'Draw/bases/numberings/add';
-import { areUnnumbered } from 'Draw/bases/numberings/areUnnumbered';
+import { areAllUnnumbered } from 'Draw/bases/numberings/areAllUnnumbered';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 
 import { numberingIncrement } from './numberingIncrement';
@@ -63,13 +63,13 @@ describe('numberingIncrement function', () => {
 
     test('when no bases are numbered', () => {
       let seq = appendSequence(drawing, { id: '1234', characters: '1234as' });
-      expect(areUnnumbered(seq.bases)).toBeTruthy();
+      expect(areAllUnnumbered(seq.bases)).toBeTruthy();
       expect(numberingIncrement(seq)).toBeUndefined();
     });
 
     test('when only one base is numbered', () => {
       let seq = appendSequence(drawing, { id: 'QWER', characters: 'QWERzxcv' });
-      expect(areUnnumbered(seq.bases)).toBeTruthy();
+      expect(areAllUnnumbered(seq.bases)).toBeTruthy();
       addNumbering(seq.atPosition(3), 3);
       expect(numberingOffset(seq)).toBe(0);
       expect(numberingIncrement(seq)).toBeUndefined();
@@ -84,7 +84,7 @@ describe('numberingIncrement function', () => {
 
     test('when the increment between base numberings is inconsistent', () => {
       let seq = appendSequence(drawing, { id: '12', characters: '1234qwerASDF' });
-      expect(areUnnumbered(seq.bases)).toBeTruthy();
+      expect(areAllUnnumbered(seq.bases)).toBeTruthy();
       addNumbering(seq.atPosition(2), 5);
       addNumbering(seq.atPosition(6), 9);
       addNumbering(seq.atPosition(10), 13);
@@ -96,7 +96,7 @@ describe('numberingIncrement function', () => {
 
     test('when leading bases are missing numberings', () => {
       let seq = appendSequence(drawing, { id: 'zxcv', characters: 'zcxvZXCV' });
-      expect(areUnnumbered(seq.bases)).toBeTruthy();
+      expect(areAllUnnumbered(seq.bases)).toBeTruthy();
       addNumbering(seq.atPosition(1), -3);
       addNumbering(seq.atPosition(4), 0);
       addNumbering(seq.atPosition(7), 3);
@@ -108,7 +108,7 @@ describe('numberingIncrement function', () => {
 
     test('when trailing bases are missing numberings', () => {
       let seq = appendSequence(drawing, { id: 'ZXCV', characters: 'ZXCVxzcv' });
-      expect(areUnnumbered(seq.bases)).toBeTruthy();
+      expect(areAllUnnumbered(seq.bases)).toBeTruthy();
       addNumbering(seq.atPosition(8), 10);
       addNumbering(seq.atPosition(5), 7);
       addNumbering(seq.atPosition(2), 4);
@@ -121,7 +121,7 @@ describe('numberingIncrement function', () => {
     describe('when the numbering offset is undefined', () => {
       test('when base numberings have inconsistent offsets', () => {
         let seq = appendSequence(drawing, { id: 'QWER', characters: 'qwerQW' });
-        expect(areUnnumbered(seq.bases)).toBeTruthy();
+        expect(areAllUnnumbered(seq.bases)).toBeTruthy();
         addNumbering(seq.atPosition(2), 7);
         addNumbering(seq.atPosition(6), 11);
         expect(numberingOffset(seq)).toBe(5);
@@ -133,7 +133,7 @@ describe('numberingIncrement function', () => {
 
       test('when a base is not numbered with an integer', () => {
         let seq = appendSequence(drawing, { id: 'asDF', characters: 'asDFAS' });
-        expect(areUnnumbered(seq.bases)).toBeTruthy();
+        expect(areAllUnnumbered(seq.bases)).toBeTruthy();
         addNumbering(seq.atPosition(1), -2);
         addNumbering(seq.atPosition(5), 2);
         expect(numberingOffset(seq)).toBe(-3);

@@ -9,7 +9,7 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addNumbering } from 'Draw/bases/numberings/add';
 import { removeNumbering } from 'Draw/bases/numberings/add';
-import { areUnnumbered } from 'Draw/bases/numberings/areUnnumbered';
+import { areAllUnnumbered } from 'Draw/bases/numberings/areAllUnnumbered';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
@@ -60,7 +60,7 @@ describe('NumberingIncrementInput component', () => {
   });
 
   it('renders when the numbering increment is undefined', () => {
-    expect(areUnnumbered(sequence.bases)).toBeTruthy();
+    expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
     expect(numberingIncrement(sequence)).toBeUndefined();
     act(() => {
       render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
@@ -114,7 +114,7 @@ describe('NumberingIncrementInput component', () => {
   describe('when there are no base numberings already present', () => {
     test('when the input numbering increment is greater than the sequence length', () => {
       let sequence = appendSequence(drawing, { id: '12', characters: 'asdfASDFqwer' });
-      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
       act(() => {
         render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
       });
@@ -128,7 +128,7 @@ describe('NumberingIncrementInput component', () => {
 
     test('when the input numbering increment is not greater than the sequence length', () => {
       let sequence = appendSequence(drawing, { id: '12', characters: 'asdfASDFqwer' });
-      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
       act(() => {
         render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
       });
@@ -142,7 +142,7 @@ describe('NumberingIncrementInput component', () => {
 
     test('when the sequence has a length of one', () => {
       let sequence = appendSequence(drawing, { id: '1', characters: 'A' });
-      expect(areUnnumbered(sequence.bases)).toBeTruthy();
+      expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
       act(() => {
         render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
       });
@@ -157,7 +157,7 @@ describe('NumberingIncrementInput component', () => {
   });
 
   test('when there are base numberings already present', () => {
-    expect(areUnnumbered(sequence.bases)).toBeTruthy();
+    expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
     addNumbering(sequence.atPosition(5), 12);
     addNumbering(sequence.atPosition(7), -2);
     addNumbering(sequence.atPosition(8), 200);
@@ -188,7 +188,7 @@ describe('NumberingIncrementInput component', () => {
   });
 
   it('converts negative inputs to positive increments', () => {
-    expect(areUnnumbered(sequence.bases)).toBeTruthy();
+    expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
     act(() => {
       render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
     });
@@ -215,19 +215,19 @@ describe('NumberingIncrementInput component', () => {
   });
 
   it('ignores inputs of zero', () => {
-    expect(areUnnumbered(sequence.bases)).toBeTruthy();
+    expect(areAllUnnumbered(sequence.bases)).toBeTruthy();
     act(() => {
       render(<NumberingIncrementInput app={app} sequence={sequence} />, container);
     });
     container.firstChild.value = '0';
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(areUnnumbered(sequence.bases)).toBeTruthy(); // ignored input
+    expect(areAllUnnumbered(sequence.bases)).toBeTruthy(); // ignored input
     expect(app.canUndo()).toBeFalsy(); // did not push undo
     container.firstChild.value = '0.55'; // floors to zero
     Simulate.change(container.firstChild);
     Simulate.blur(container.firstChild);
-    expect(areUnnumbered(sequence.bases)).toBeTruthy(); // ignored input
+    expect(areAllUnnumbered(sequence.bases)).toBeTruthy(); // ignored input
     expect(app.canUndo()).toBeFalsy(); // did not push undo
   });
 

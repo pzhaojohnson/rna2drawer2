@@ -2,7 +2,7 @@ import { Drawing } from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addNumbering } from 'Draw/bases/numberings/add';
-import { areUnnumbered } from 'Draw/bases/numberings/areUnnumbered';
+import { areAllUnnumbered } from 'Draw/bases/numberings/areAllUnnumbered';
 
 import { updateBaseNumberings } from './updateBaseNumberings';
 
@@ -35,9 +35,9 @@ describe('updateBaseNumberings function', () => {
 
   it('adds base numberings according to the specified numbering properties', () => {
     let seq = appendSequence(drawing, { id: 'Asdf', characters: 'asdfASDF' });
-    expect(areUnnumbered(seq.bases)).toBeTruthy();
+    expect(areAllUnnumbered(seq.bases)).toBeTruthy();
     updateBaseNumberings(seq, { offset: -2, increment: 3, anchor: 2 });
-    expect(areUnnumbered(
+    expect(areAllUnnumbered(
       [1, 3, 4, 6, 7].map(p => seq.atPosition(p))
     )).toBeTruthy();
     expect(seq.atPosition(2).numbering.text.text()).toBe('0');
@@ -47,7 +47,7 @@ describe('updateBaseNumberings function', () => {
 
   it('removes and replaces base numberings', () => {
     let seq = appendSequence(drawing, { id: 'Qwer', characters: 'zxcvQWERasdf' });
-    expect(areUnnumbered(seq.bases)).toBeTruthy();
+    expect(areAllUnnumbered(seq.bases)).toBeTruthy();
     addNumbering(seq.atPosition(3), 5); // should be removed
     addNumbering(seq.atPosition(6), 8); // should be replaced
     updateBaseNumberings(seq, { offset: 10, increment: 5, anchor: 1 });
@@ -59,7 +59,7 @@ describe('updateBaseNumberings function', () => {
     let seq = appendSequence(drawing, { id: 'zx', characters: 'zxcvXZCVqwerQWER' });
     // may loop infinitely if the numbering increment is used directly to increment a loop
     updateBaseNumberings(seq, { offset: 0, increment: -5, anchor: 0 });
-    expect(areUnnumbered(
+    expect(areAllUnnumbered(
       [1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 16].map(p => seq.atPosition(p))
     )).toBeTruthy();
     expect(seq.atPosition(5).numbering.text.text()).toBe('5');
@@ -72,14 +72,14 @@ describe('updateBaseNumberings function', () => {
     addNumbering(seq.atPosition(3), 3);
     addNumbering(seq.atPosition(6), 6);
     updateBaseNumberings(seq, { offset: 0, increment: 20, anchor: -1 });
-    expect(areUnnumbered(seq.bases)).toBeTruthy();
+    expect(areAllUnnumbered(seq.bases)).toBeTruthy();
   });
 
   test('when there should only be one base numbering in the end', () => {
     let seq = appendSequence(drawing, { id: 'A', characters: 'QWER' });
-    expect(areUnnumbered(seq.bases)).toBeTruthy();
+    expect(areAllUnnumbered(seq.bases)).toBeTruthy();
     updateBaseNumberings(seq, { offset: 12, increment: 6, anchor: -3 });
-    expect(areUnnumbered(
+    expect(areAllUnnumbered(
       [1, 2, 4].map(p => seq.atPosition(p))
     )).toBeTruthy();
     expect(seq.atPosition(3).numbering.text.text()).toBe('15');
