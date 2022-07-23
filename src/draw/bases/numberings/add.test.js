@@ -1,8 +1,8 @@
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
-import { BaseNumbering } from './BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { round } from 'Math/round';
-import { position } from './position';
+import { position } from 'Draw/bases/numberings/position';
 
 import { addNumbering } from './add';
 import { removeNumbering } from './add';
