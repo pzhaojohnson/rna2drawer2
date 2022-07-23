@@ -6,7 +6,6 @@ import { setValues } from 'Draw/bases/numberings/values';
 import * as SVG from '@svgdotjs/svg.js';
 
 function createTextForNumbering(svg: SVG.Svg, n: number): SVG.Text {
-
   // input an empty function instead of an empty string
   // in case an empty string results in an empty tspan
   // being added
