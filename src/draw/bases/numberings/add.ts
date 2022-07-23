@@ -35,11 +35,7 @@ export function addNumbering(b: Base, n: number) {
 
   let text = addText(svg, n);
   let line = svg.line(0, 0, 1, 1);
-  let bn = new BaseNumbering(
-    text,
-    line,
-    { x: b.xCenter, y: b.yCenter },
-  );
+  let bn = new BaseNumbering(text, line, b.center());
   setValues(bn, BaseNumbering.recommendedDefaults);
   bn.reposition();
   b.numbering = bn;
