@@ -15,18 +15,15 @@ function getRoundedPositioning(bn) {
     text: {},
     line: {},
   };
-  ['x', 'y', 'text-anchor'].forEach(attr => {
+  ['x', 'y'].forEach(attr => {
     let v = bn.text.attr(attr);
-    if (typeof v == 'number') {
-      v = round(v, 3);
-    }
+    v = round(v, 3);
     rp.text[attr] = v;
   });
+  rp.text['text-anchor'] = bn.text.attr('text-anchor');
   ['x1', 'y1', 'x2', 'y2'].forEach(attr => {
     let v = bn.line.attr(attr);
-    if (typeof v == 'number') {
-      v = round(v, 3);
-    }
+    v = round(v, 3);
     rp.line[attr] = v;
   });
   return rp;
