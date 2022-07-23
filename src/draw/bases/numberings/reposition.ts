@@ -1,5 +1,6 @@
 import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { Point2D as Point } from 'Math/points/Point';
+import { interpretNumericValue } from 'Draw/svg/interpretNumericValue';
 import { normalizeAngle } from 'Math/angles/normalize';
 
 export type Positioning = {
@@ -34,29 +35,25 @@ function textPositioning(bn: BaseNumbering, p: Positioning): TextPositioning | u
     y: p.baseCenter.y + (d * Math.sin(p.lineAngle)),
     textAnchor: 'start',
   };
-  let fs = bn.text.attr('font-size');
-  if (typeof fs != 'number') {
-    console.error('Font size must be a number to position text of base numbering.');
+  let fs = interpretNumericValue(bn.text.attr('font-size'))?.valueOf() ?? 0;
+  fs *= 0.8; // helps vertical centering
+  let la = normalizeAngle(p.lineAngle, 0);
+  if (la < Math.PI / 4) {
+    tp.y += fs / 2;
+    tp.textAnchor = 'start';
+  } else if (la < 3 * Math.PI / 4) {
+    tp.y += fs;
+    tp.textAnchor = 'middle';
+  } else if (la < 5 * Math.PI / 4) {
+    tp.y += fs / 2;
+    tp.textAnchor = 'end';
+  } else if (la < 7 * Math.PI / 4) {
+    tp.textAnchor = 'middle';
   } else {
-    fs *= 0.8; // helps vertical centering
-    let la = normalizeAngle(p.lineAngle, 0);
-    if (la < Math.PI / 4) {
-      tp.y += fs / 2;
-      tp.textAnchor = 'start';
-    } else if (la < 3 * Math.PI / 4) {
-      tp.y += fs;
-      tp.textAnchor = 'middle';
-    } else if (la < 5 * Math.PI / 4) {
-      tp.y += fs / 2;
-      tp.textAnchor = 'end';
-    } else if (la < 7 * Math.PI / 4) {
-      tp.textAnchor = 'middle';
-    } else {
-      tp.y += fs / 2;
-      tp.textAnchor = 'start';
-    }
-    return tp;
+    tp.y += fs / 2;
+    tp.textAnchor = 'start';
   }
+  return tp;
 }
 
 function repositionText(bn: BaseNumbering, p: Positioning) {
