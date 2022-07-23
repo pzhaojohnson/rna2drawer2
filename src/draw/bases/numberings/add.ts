@@ -18,6 +18,11 @@ function addText(svg: SVG.Svg, n: number): SVG.Text {
   return text;
 }
 
+/**
+ * Adds numbering to the base with the given number.
+ *
+ * (Removes any preexisting numbering that the base has if present.)
+ */
 export function addNumbering(b: Base, n: number) {
   removeNumbering(b);
   let svg = b.text.root();
@@ -37,6 +42,11 @@ export function addNumbering(b: Base, n: number) {
   }
 }
 
+/**
+ * Removes any numbering that the base has if present.
+ *
+ * (Has no effect if the base has no numbering.)
+ */
 export function removeNumbering(b: Base) {
   if (b.numbering) {
     b.numbering.text.remove();
