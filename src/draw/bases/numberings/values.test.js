@@ -41,7 +41,7 @@ afterEach(() => {
 });
 
 describe('values function', () => {
-  it('returns values', () => {
+  it('returns the correct values', () => {
     // make all values different to test if values are mixed up
     numbering.text.attr({
       'font-family': 'Consolas',
@@ -88,7 +88,7 @@ describe('values function', () => {
 });
 
 describe('setValues function', () => {
-  it('sets values', () => {
+  it('sets values correctly', () => {
     // make all values different to test if values are mixed up
     let vs1 = {
       text: {
