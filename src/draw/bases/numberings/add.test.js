@@ -105,7 +105,7 @@ describe('removeNumbering function', () => {
     expect(wasRemoved(bn)).toBeTruthy();
   });
 
-  it('handles an unnumbered base', () => {
+  it('does nothing for an unnumbered base', () => {
     expect(base.numbering).toBe(undefined);
     expect(
       () => removeNumbering(base)
