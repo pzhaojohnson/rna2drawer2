@@ -1,4 +1,4 @@
-import type { BaseNumbering } from './BaseNumbering';
+import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { Point2D as Point } from 'Math/points/Point';
 import { normalizeAngle } from 'Math/angles/normalize';
 
