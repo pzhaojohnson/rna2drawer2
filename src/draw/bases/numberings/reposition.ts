@@ -24,7 +24,7 @@ function repositionLine(bn: BaseNumbering, p: Positioning) {
 
 function repositionText(bn: BaseNumbering, p: Positioning) {
   let d = p.basePadding + p.lineLength + p.textPadding;
-  let tp = {
+  let textPositioning = {
     x: p.baseCenter.x + (d * Math.cos(p.lineAngle)),
     y: p.baseCenter.y + (d * Math.sin(p.lineAngle)),
     textAnchor: 'start',
@@ -35,25 +35,25 @@ function repositionText(bn: BaseNumbering, p: Positioning) {
 
   let la = normalizeAngle(p.lineAngle, 0);
   if (la < Math.PI / 4) {
-    tp.y += fs / 2;
-    tp.textAnchor = 'start';
+    textPositioning.y += fs / 2;
+    textPositioning.textAnchor = 'start';
   } else if (la < 3 * Math.PI / 4) {
-    tp.y += fs;
-    tp.textAnchor = 'middle';
+    textPositioning.y += fs;
+    textPositioning.textAnchor = 'middle';
   } else if (la < 5 * Math.PI / 4) {
-    tp.y += fs / 2;
-    tp.textAnchor = 'end';
+    textPositioning.y += fs / 2;
+    textPositioning.textAnchor = 'end';
   } else if (la < 7 * Math.PI / 4) {
-    tp.textAnchor = 'middle';
+    textPositioning.textAnchor = 'middle';
   } else {
-    tp.y += fs / 2;
-    tp.textAnchor = 'start';
+    textPositioning.y += fs / 2;
+    textPositioning.textAnchor = 'start';
   }
 
   bn.text.attr({
-    'x': tp.x,
-    'y': tp.y,
-    'text-anchor': tp.textAnchor,
+    'x': textPositioning.x,
+    'y': textPositioning.y,
+    'text-anchor': textPositioning.textAnchor,
   });
 }
 
