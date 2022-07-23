@@ -1,4 +1,4 @@
-import type { BaseNumbering } from './BaseNumbering';
+import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
 export type Values = {
   text: {
