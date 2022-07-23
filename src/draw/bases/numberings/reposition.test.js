@@ -55,7 +55,7 @@ describe('reposition function', () => {
     expect(numbering.text.attr('text-anchor')).toBe('end');
   });
 
-  it('smoke test', () => {
+  test('smoke test', () => {
     for (let i = 0; i < 200; i++) {
       let fs = (30 * Math.random()) + 3;
       let p = {
