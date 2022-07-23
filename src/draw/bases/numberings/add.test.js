@@ -48,7 +48,9 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  base = Base.create(svg, 'A', 100, 200);
+  let text = svg.text('A');
+  text.center(100, 200);
+  base = new Base(text);
 });
 
 afterEach(() => {
