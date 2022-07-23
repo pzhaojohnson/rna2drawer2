@@ -1,6 +1,6 @@
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
-import { addNumbering } from './add';
+import { addNumbering } from 'Draw/bases/numberings/add';
 import { round } from 'Math/round';
 
 import { values } from './values';
