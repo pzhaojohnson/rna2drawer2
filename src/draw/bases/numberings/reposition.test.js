@@ -1,7 +1,8 @@
-import { reposition } from './reposition';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
-import { addNumbering } from './add';
+import { addNumbering } from 'Draw/bases/numberings/add';
+
+import { reposition } from './reposition';
 
 let container = null;
 let svg = null;
