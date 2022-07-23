@@ -27,20 +27,22 @@ export function addNumbering(b: Base, n: number) {
   removeNumbering(b); // remove any preexisting numbering
 
   let svg = b.text.root();
+
   if (!(svg instanceof SVG.Svg)) {
     console.error('Unable to retrieve root SVG element of base.');
-  } else {
-    let text = addText(svg, n);
-    let line = svg.line(0, 0, 1, 1);
-    let bn = new BaseNumbering(
-      text,
-      line,
-      { x: b.xCenter, y: b.yCenter },
-    );
-    setValues(bn, BaseNumbering.recommendedDefaults);
-    bn.reposition();
-    b.numbering = bn;
+    return;
   }
+
+  let text = addText(svg, n);
+  let line = svg.line(0, 0, 1, 1);
+  let bn = new BaseNumbering(
+    text,
+    line,
+    { x: b.xCenter, y: b.yCenter },
+  );
+  setValues(bn, BaseNumbering.recommendedDefaults);
+  bn.reposition();
+  b.numbering = bn;
 }
 
 /**
