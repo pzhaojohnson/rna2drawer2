@@ -26,9 +26,9 @@ function addText(svg: SVG.Svg, n: number): SVG.Text {
 export function addNumbering(b: Base, n: number) {
   removeNumbering(b); // remove any preexisting numbering
 
-  let svg = b.text.root();
+  let svg: SVG.Svg | null = b.text.root();
 
-  if (!(svg instanceof SVG.Svg)) {
+  if (!svg) {
     console.error('Unable to retrieve root SVG element of base.');
     return;
   }
