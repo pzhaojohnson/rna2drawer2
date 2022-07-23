@@ -1,9 +1,11 @@
-import { addNumbering, removeNumbering } from './add';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { BaseNumbering } from './BaseNumbering';
 import { round } from 'Math/round';
 import { position } from './position';
+
+import { addNumbering } from './add';
+import { removeNumbering } from './add';
 
 function getRoundedPositioning(bn) {
   let rp = {
