@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
 export type Props = {
   app: App;

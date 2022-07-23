@@ -4,7 +4,7 @@ import type { App } from 'App';
 import type { Sequence } from 'Draw/sequences/Sequence';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
-import { orientBaseNumberings } from 'Draw/bases/number/orient';
+import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 import { isBlank } from 'Parse/isBlank';
 
 export type Props = {

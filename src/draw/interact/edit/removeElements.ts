@@ -3,7 +3,7 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { DrawingElementInterface as DrawingElement } from './DrawingElementInterface';
 
 import { Base } from 'Draw/bases/Base';
-import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
@@ -13,7 +13,7 @@ import { removePrimaryBonds } from 'Draw/strict/removePrimaryBonds';
 import { removeSecondaryBonds } from 'Draw/strict/removeSecondaryBonds';
 import { removeTertiaryBonds } from 'Draw/strict/removeTertiaryBonds';
 
-import { removeNumbering } from 'Draw/bases/number/add';
+import { removeNumbering } from 'Draw/bases/numberings/add';
 
 function isBase(v: unknown): v is Base {
   return v instanceof Base;

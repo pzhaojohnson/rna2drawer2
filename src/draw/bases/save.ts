@@ -6,7 +6,7 @@ import {
 import {
   SavableState as SavableNumberingState,
   savableState as savableNumberingState,
-} from 'Draw/bases/number/save';
+} from 'Draw/bases/numberings/save';
 
 export type SavableState = {
   className: 'Base';

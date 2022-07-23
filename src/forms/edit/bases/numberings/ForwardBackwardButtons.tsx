@@ -1,8 +1,8 @@
 import type { App } from 'App';
 
-import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
-import { bringToFront } from 'Draw/bases/number/z';
-import { sendToBack } from 'Draw/bases/number/z';
+import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
+import { bringToFront } from 'Draw/bases/numberings/z';
+import { sendToBack } from 'Draw/bases/numberings/z';
 
 import * as React from 'react';
 import { ForwardBackwardButtons as _ForwardBackwardButtons } from 'Forms/buttons/ForwardBackwardButtons';

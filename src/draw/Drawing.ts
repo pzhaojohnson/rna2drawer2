@@ -10,7 +10,7 @@ import {
 } from 'Draw/sequences/save';
 import { appendSavedSequence } from 'Draw/sequences/saved';
 import { Base } from 'Draw/bases/Base';
-import { orientBaseNumberings } from 'Draw/bases/number/orient';
+import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import {

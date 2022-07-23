@@ -7,7 +7,7 @@ import { createStrictLayout } from './createStrictLayout';
 import { updateLayout } from './updateLayout';
 
 import { Base } from 'Draw/bases/Base';
-import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';

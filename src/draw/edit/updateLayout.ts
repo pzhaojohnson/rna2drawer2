@@ -5,7 +5,7 @@ import type { Drawing } from 'Draw/Drawing';
 import { resize } from 'Draw/dimensions';
 import type { Base } from 'Draw/bases/Base';
 import { Point2D as Point } from 'Math/points/Point';
-import { orientBaseNumberings } from 'Draw/bases/number/orient';
+import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 
 export interface Options {
 

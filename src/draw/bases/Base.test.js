@@ -2,7 +2,7 @@ import { Base } from './Base';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { normalizeAngle } from 'Math/angles/normalize';
 import { addCircleHighlighting, addCircleOutline } from 'Draw/bases/annotate/circle/add';
-import { addNumbering } from 'Draw/bases/number/add';
+import { addNumbering } from 'Draw/bases/numberings/add';
 
 let svg = NodeSVG();
 
@@ -98,7 +98,7 @@ describe('Base class', () => {
       expect(b.text.cx()).toBeCloseTo(103.7);
       expect(b.text.cy()).toBeCloseTo(222.6);
     });
-    
+
     /* By testing highlighting, outline and numbering separately,
     we test that the if clauses of the moveTo method work correctly. */
 

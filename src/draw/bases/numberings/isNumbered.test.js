@@ -1,8 +1,8 @@
 import { Drawing } from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
-import { addNumbering } from 'Draw/bases/number/add';
-import { removeNumbering } from 'Draw/bases/number/add';
+import { addNumbering } from 'Draw/bases/numberings/add';
+import { removeNumbering } from 'Draw/bases/numberings/add';
 
 import { isNumbered } from './isNumbered';
 

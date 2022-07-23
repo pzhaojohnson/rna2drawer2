@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import type { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
 import * as React from 'react';
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';

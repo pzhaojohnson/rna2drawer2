@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
 import * as SVG from '@svgdotjs/svg.js';
 import { fill } from 'Forms/inputs/svg/fill/fill';

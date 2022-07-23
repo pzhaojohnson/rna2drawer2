@@ -1,5 +1,5 @@
 import type { App } from 'App';
-import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
 
 import * as React from 'react';

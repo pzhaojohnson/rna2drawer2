@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
-import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { round } from 'Math/round';
 
 export type Props = {

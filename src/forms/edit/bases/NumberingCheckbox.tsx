@@ -1,12 +1,12 @@
 import type { App } from 'App';
 
 import type { Base } from 'Draw/bases/Base';
-import { addNumbering } from 'Draw/bases/number/add';
-import { removeNumbering } from 'Draw/bases/number/add';
+import { addNumbering } from 'Draw/bases/numberings/add';
+import { removeNumbering } from 'Draw/bases/numberings/add';
 
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 
-import { orientBaseNumberings } from 'Draw/bases/number/orient';
+import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 
 import * as React from 'react';
 

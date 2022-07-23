@@ -6,14 +6,14 @@ import { addPrimaryBond } from 'Draw/bonds/straight/add';
 import { removePrimaryBondById, removeSecondaryBondById } from 'Draw/bonds/straight/remove';
 import { removeTertiaryBondById } from 'Draw/bonds/curved/remove';
 import { removeCircleOutline, removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
-import { removeNumbering } from 'Draw/bases/number/add';
+import { removeNumbering } from 'Draw/bases/numberings/add';
 import { atPosition } from 'Array/at';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
 import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
 import { SequenceNumbering } from 'Draw/sequences/updateBaseNumberings';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
-import { orientBaseNumberings } from 'Draw/bases/number/orient';
+import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 
 // removes all bonds with the bases
 function removeBondsWith(drawing: Drawing, bs: Base[]) {

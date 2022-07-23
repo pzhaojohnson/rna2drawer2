@@ -6,7 +6,7 @@ import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
 import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
-import { orientBaseNumberings } from 'Draw/bases/number/orient';
+import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 import { isBlank } from 'Parse/isBlank';
 
 export type Props = {

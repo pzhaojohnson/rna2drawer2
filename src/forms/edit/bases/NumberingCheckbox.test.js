@@ -6,9 +6,9 @@ import { unmountComponentAtNode } from 'react-dom';
 import { App } from 'App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { appendSequence } from 'Draw/sequences/add/sequence';
-import { addNumbering } from 'Draw/bases/number/add';
-import { removeNumbering } from 'Draw/bases/number/add';
-import { areUnnumbered } from 'Draw/bases/number/areUnnumbered';
+import { addNumbering } from 'Draw/bases/numberings/add';
+import { removeNumbering } from 'Draw/bases/numberings/add';
+import { areUnnumbered } from 'Draw/bases/numberings/areUnnumbered';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 

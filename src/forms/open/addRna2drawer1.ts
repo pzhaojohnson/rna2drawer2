@@ -7,7 +7,7 @@ import {
   sendToBack as sendOutlineToBack,
 } from 'Draw/bases/annotate/circle/z';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
-import { orientBaseNumberings } from 'Draw/bases/number/orient';
+import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 
 function addTertiaryInteractions(sd: StrictDrawing, rna2drawer1: Rna2drawer1) {
   let seq = sd.drawing.getSequenceById(rna2drawer1.sequenceId);

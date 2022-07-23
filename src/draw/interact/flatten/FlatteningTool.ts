@@ -4,7 +4,7 @@ import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 import { initializeAtPosition } from 'Draw/strict/layout/PerBaseStrictLayoutProps';
 
 import { Base } from 'Draw/bases/Base';
-import { BaseNumbering } from 'Draw/bases/number/BaseNumbering';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';

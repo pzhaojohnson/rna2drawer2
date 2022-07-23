@@ -5,8 +5,8 @@ import { appendSequence } from 'Draw/sequences/add/sequence';
 import { uuidRegex } from 'Draw/svg/assignUuid';
 import { addCircleHighlighting, addCircleOutline } from 'Draw/bases/annotate/circle/add';
 import { savableState as savableCircleAnnotationState } from 'Draw/bases/annotate/circle/save';
-import { addNumbering } from 'Draw/bases/number/add';
-import { savableState as savableNumberingState } from 'Draw/bases/number/save';
+import { addNumbering } from 'Draw/bases/numberings/add';
+import { savableState as savableNumberingState } from 'Draw/bases/numberings/save';
 
 let container = null;
 let drawing = null;
