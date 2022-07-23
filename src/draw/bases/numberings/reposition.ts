@@ -28,7 +28,7 @@ type TextPositioning = {
   textAnchor: string;
 }
 
-function textPositioning(bn: BaseNumbering, p: Positioning): TextPositioning | undefined {
+function repositionText(bn: BaseNumbering, p: Positioning) {
   let d = p.basePadding + p.lineLength + p.textPadding;
   let tp = {
     x: p.baseCenter.x + (d * Math.cos(p.lineAngle)),
@@ -53,18 +53,12 @@ function textPositioning(bn: BaseNumbering, p: Positioning): TextPositioning | u
     tp.y += fs / 2;
     tp.textAnchor = 'start';
   }
-  return tp;
-}
 
-function repositionText(bn: BaseNumbering, p: Positioning) {
-  let tp = textPositioning(bn, p);
-  if (tp) {
-    bn.text.attr({
-      'x': tp.x,
-      'y': tp.y,
-      'text-anchor': tp.textAnchor,
-    });
-  }
+  bn.text.attr({
+    'x': tp.x,
+    'y': tp.y,
+    'text-anchor': tp.textAnchor,
+  });
 }
 
 export function reposition(bn: BaseNumbering, p: Positioning) {
