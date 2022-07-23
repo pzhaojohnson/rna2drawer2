@@ -1,7 +1,7 @@
 import type { Base } from 'Draw/bases/Base';
 import * as SVG from '@svgdotjs/svg.js';
-import { BaseNumbering } from './BaseNumbering';
-import { setValues } from './values';
+import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
+import { setValues } from 'Draw/bases/numberings/values';
 
 function addText(svg: SVG.Svg, n: number): SVG.Text {
 
