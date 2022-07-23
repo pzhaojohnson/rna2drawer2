@@ -5,7 +5,7 @@ import { setValues } from 'Draw/bases/numberings/values';
 
 import * as SVG from '@svgdotjs/svg.js';
 
-function addText(svg: SVG.Svg, n: number): SVG.Text {
+function createTextForNumbering(svg: SVG.Svg, n: number): SVG.Text {
 
   // input an empty function instead of an empty string
   // in case an empty string results in an empty tspan
@@ -33,7 +33,7 @@ export function addNumbering(b: Base, n: number) {
     return;
   }
 
-  let text = addText(svg, n);
+  let text = createTextForNumbering(svg, n);
   let line = svg.line(0, 0, 1, 1);
   let bn = new BaseNumbering(text, line, b.center());
   setValues(bn, BaseNumbering.recommendedDefaults);
