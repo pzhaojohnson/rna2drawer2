@@ -22,12 +22,6 @@ function repositionLine(bn: BaseNumbering, p: Positioning) {
   });
 }
 
-type TextPositioning = {
-  x: number;
-  y: number;
-  textAnchor: string;
-}
-
 function repositionText(bn: BaseNumbering, p: Positioning) {
   let d = p.basePadding + p.lineLength + p.textPadding;
   let tp = {
