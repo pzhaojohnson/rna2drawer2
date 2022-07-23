@@ -29,8 +29,10 @@ function repositionText(bn: BaseNumbering, p: Positioning) {
     y: p.baseCenter.y + (d * Math.sin(p.lineAngle)),
     textAnchor: 'start',
   };
+
   let fs = interpretNumericValue(bn.text.attr('font-size'))?.valueOf() ?? 0;
   fs *= 0.8; // helps vertical centering
+
   let la = normalizeAngle(p.lineAngle, 0);
   if (la < Math.PI / 4) {
     tp.y += fs / 2;
