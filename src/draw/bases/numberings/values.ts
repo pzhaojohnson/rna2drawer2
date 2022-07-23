@@ -19,16 +19,16 @@ export type Values = {
 
 export function values(bn: BaseNumbering): Values {
   let textAttrs = {
-    'font-family': bn.text.attr('font-family'),
-    'font-size': bn.text.attr('font-size'),
-    'font-weight': bn.text.attr('font-weight'),
-    'fill': bn.text.attr('fill'),
-    'fill-opacity': bn.text.attr('fill-opacity'),
+    'font-family': bn.text.attr('font-family') as unknown,
+    'font-size': bn.text.attr('font-size') as unknown,
+    'font-weight': bn.text.attr('font-weight') as unknown,
+    'fill': bn.text.attr('fill') as unknown,
+    'fill-opacity': bn.text.attr('fill-opacity') as unknown,
   };
   let lineAttrs = {
-    'stroke': bn.line.attr('stroke'),
-    'stroke-width': bn.line.attr('stroke-width'),
-    'stroke-opacity': bn.line.attr('stroke-opacity'),
+    'stroke': bn.line.attr('stroke') as unknown,
+    'stroke-width': bn.line.attr('stroke-width') as unknown,
+    'stroke-opacity': bn.line.attr('stroke-opacity') as unknown,
   };
   let vs: Values = {
     text: {},
