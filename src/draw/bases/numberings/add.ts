@@ -32,7 +32,7 @@ export function addNumbering(b: Base, n: number) {
   let svg: SVG.Svg | null = b.text.root();
 
   if (!svg) {
-    console.error('Unable to retrieve root SVG element of base.');
+    console.error('Unable to retrieve the SVG document that the base is in.');
     return;
   }
 
