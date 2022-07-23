@@ -16,7 +16,10 @@ beforeEach(() => {
   svg = NodeSVG();
   svg.addTo(container);
 
-  base = Base.create(svg, 'G', 20, 200);
+  let text = svg.text('G');
+  text.center(20, 200);
+  base = new Base(text);
+
   addNumbering(base, 1012);
   numbering = base.numbering;
 });
