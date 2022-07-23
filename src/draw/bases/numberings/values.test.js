@@ -1,8 +1,10 @@
-import { values, setValues } from './values';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
 import { round } from 'Math/round';
+
+import { values } from './values';
+import { setValues } from './values';
 
 function roundBasePaddingAndLineLength(vs, places=3) {
   vs.basePadding = round(vs.basePadding, places);
