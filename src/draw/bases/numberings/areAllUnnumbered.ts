@@ -1,4 +1,5 @@
 import type { Base } from 'Draw/bases/Base';
+import { isNumbered } from 'Draw/bases/numberings/isNumbered';
 
 /**
  * Returns true if none of the given bases have numberings
@@ -9,5 +10,5 @@ import type { Base } from 'Draw/bases/Base';
  * for an empty array.
  */
 export function areAllUnnumbered(bs: Base[]): boolean {
-  return bs.every(b => !b.numbering);
+  return !bs.some(isNumbered);
 }
