@@ -1,11 +1,14 @@
 import * as SVG from '@svgdotjs/svg.js';
-import type { Values } from 'Draw/bases/numberings/values';
+import { assignUuid } from 'Draw/svg/assignUuid';
+
 import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Draw/svg/math/distance';
 import { displacement2D as displacement } from 'Draw/svg/math/points/displacement';
 import { direction2D as direction } from 'Math/points/direction';
+
 import { reposition } from 'Draw/bases/numberings/reposition';
-import { assignUuid } from 'Draw/svg/assignUuid';
+
+import type { Values } from 'Draw/bases/numberings/values';
 
 export type Repositioning = {
   baseCenter?: Point;
