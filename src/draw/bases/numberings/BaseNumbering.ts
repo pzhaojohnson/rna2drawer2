@@ -2,6 +2,8 @@ import * as SVG from '@svgdotjs/svg.js';
 import { Values } from './values';
 import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Draw/svg/math/distance';
+import { displacement2D as displacement } from 'Draw/svg/math/points/displacement';
+import { direction2D as direction } from 'Math/points/direction';
 import { reposition } from './reposition';
 import { assignUuid } from 'Draw/svg/assignUuid';
 
@@ -65,14 +67,8 @@ export class BaseNumbering {
     let ly1 = this.line.attr('y1');
     let lx2 = this.line.attr('x2');
     let ly2 = this.line.attr('y2');
-    if (
-      typeof lx1 == 'number'
-      && typeof ly1 == 'number'
-      && typeof lx2 == 'number'
-      && typeof ly2 == 'number'
-    ) {
-      return Math.atan2(ly2 - ly1, lx2 - lx1);
-    }
+    let d = displacement({ x: lx1, y: ly1 }, { x: lx2, y: ly2 });
+    return d ? direction(d) : undefined;
   }
 
   set lineAngle(la) {
