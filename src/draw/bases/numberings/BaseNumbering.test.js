@@ -61,7 +61,7 @@ function getRoundedPositioning(bn) {
 
 describe('BaseNumbering class', () => {
   describe('constructor', () => {
-    it('initializes falsy text and line IDs with UUIDs', () => {
+    it('will initialize text and line element IDs with UUIDs', () => {
       [undefined, ''].forEach(v => {
         let t = svg.text('5');
         let l = svg.line(5, 15, 22, 300);
@@ -77,7 +77,7 @@ describe('BaseNumbering class', () => {
       });
     });
 
-    it("doesn't overwrite text and line IDs", () => {
+    it('does not overwrite preexisting text and line element IDs', () => {
       // it is important that IDs aren't overwritten when
       // opening a saved drawing since elements in the
       // drawing may reference other elements using saved
@@ -92,14 +92,14 @@ describe('BaseNumbering class', () => {
     });
   });
 
-  it('id getter', () => {
+  test('id getter', () => {
     let t = svg.text('6');
     let l = svg.line(10, 20, 30, 40);
     let bn = new BaseNumbering(t, l, { x: 10, y: 20 });
     expect(bn.id).toBe(t.id());
   });
 
-  it('basePadding, lineAngle and lineLength properties', () => {
+  test('basePadding, lineAngle and lineLength getters and setters', () => {
     numbering.reposition({ baseCenter: { x: 25.5, y: 256 } })
     // use setters
     numbering.basePadding = 18.07;
@@ -161,7 +161,7 @@ describe('BaseNumbering class', () => {
       expect(rp1).toEqual(rp2);
     });
 
-    it('stores base center when provided', () => {
+    it('caches base center when provided', () => {
       numbering.reposition({ baseCenter: { x: 65, y: 19 } });
       numbering.reposition({ baseCenter: { x: 421, y: 328 } });
       numbering.reposition({ basePadding: 82 });
