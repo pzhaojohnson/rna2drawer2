@@ -1,11 +1,15 @@
-import { BaseNumbering } from './BaseNumbering';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { addNumbering } from './add';
-import { normalizeAngle } from 'Math/angles/normalize';
-import { round } from 'Math/round';
-import { reposition } from './reposition';
+
 import { uuidRegex } from 'Draw/svg/assignUuid';
+
+import { reposition } from './reposition';
+
+import { round } from 'Math/round';
+import { normalizeAngle } from 'Math/angles/normalize';
+
+import { BaseNumbering } from './BaseNumbering';
 
 let container = null;
 let svg = null;
