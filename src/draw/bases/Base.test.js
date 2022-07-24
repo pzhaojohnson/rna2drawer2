@@ -23,10 +23,6 @@ describe('Base class', () => {
     });
 
     describe('validates text', () => {
-      it('missing argument', () => {
-        expect(() => new Base()).toThrow();
-      });
-
       it('initializes ID', () => {
         let t = svg.text(add => add.tspan('T'));
         expect(t.attr('id')).toBe(undefined);
