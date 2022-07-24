@@ -16,10 +16,35 @@ describe('Base class', () => {
   });
 
   describe('constructor', () => {
-    it('stores text element', () => {
-      let t = svg.text(add => add.tspan('w'));
-      let b = new Base(t);
-      expect(b.text).toBe(t);
+    test('inputting a text element directly', () => {
+      let text = svg.text('w');
+      let base = new Base(text);
+      expect(base.text).toBe(text); // stored the text element
+    });
+
+    test('inputting a text element wrapped in an arguments object', () => {
+      let text = svg.text('w');
+      let base = new Base({ text });
+      expect(base.text).toBe(text); // stored the text element
+    });
+
+    test('providing a center point', () => {
+      let text = svg.text('A');
+      text.center(99, 1012);
+      // different from the text element center point
+      let center = { x: 54, y: 14 };
+      let base = new Base({ text, center });
+      expect(base.center().x).toBeCloseTo(54);
+      expect(base.center().y).toBeCloseTo(14);
+    });
+
+    test('not providing a center point', () => {
+      let text = svg.text('A');
+      text.center(39, 102);
+      let base = new Base({ text });
+      // uses the text element center point as its own center point
+      expect(base.center().x).toBeCloseTo(39);
+      expect(base.center().y).toBeCloseTo(102);
     });
 
     it('initializes text element ID', () => {

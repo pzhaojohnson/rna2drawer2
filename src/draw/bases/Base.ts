@@ -4,6 +4,15 @@ import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnot
 import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { Values, setValues } from './values';
 import { Point2D as Point } from 'Math/points/Point';
+import { deepCopyPoint2D as deepCopyPoint } from 'Math/points/Point';
+
+export type ConstructorArgs = (
+  Svg.Text
+  | {
+    text: Svg.Text,
+    center?: Point,
+  }
+);
 
 export class Base {
   static recommendedDefaults: Values;
@@ -27,8 +36,12 @@ export class Base {
   /**
    * Throws if the content of the text element is not a single character.
    */
-  constructor(text: Svg.Text) {
-    this.text = text;
+  constructor(args: ConstructorArgs) {
+    if (args instanceof Svg.Text) {
+      this.text = args;
+    } else {
+      this.text = args.text;
+    }
 
     // use the attr method to check if the ID is already initialized
     // since the id method itself will initialize the ID (to a non-UUID)
@@ -36,8 +49,12 @@ export class Base {
       assignUuid(this.text);
     }
 
-    let bbox = text.bbox();
-    this._center = { x: bbox.cx, y: bbox.cy };
+    if (!(args instanceof Svg.Text) && args.center) {
+      this._center = deepCopyPoint(args.center);
+    } else {
+      let bbox = this.text.bbox();
+      this._center = { x: bbox.cx, y: bbox.cy };
+    }
   }
 
   get id(): string {
