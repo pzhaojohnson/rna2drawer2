@@ -29,23 +29,15 @@ export class Base {
    */
   constructor(text: Svg.Text) {
     this.text = text;
-    this._validateText();
 
-    let bbox = text.bbox();
-    this._center = { x: bbox.cx, y: bbox.cy };
-  }
-
-  /**
-   * Throws if the text element is not actually a text element.
-   *
-   * Initializes the ID of the text if it is not already initialized.
-   */
-  _validateText() {
     // use the attr method to check if the ID is already initialized
     // since the id method itself will initialize the ID (to a non-UUID)
     if (!this.text.attr('id')) {
       assignUuid(this.text);
     }
+
+    let bbox = text.bbox();
+    this._center = { x: bbox.cx, y: bbox.cy };
   }
 
   get id(): string {

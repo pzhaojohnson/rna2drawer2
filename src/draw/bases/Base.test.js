@@ -22,13 +22,11 @@ describe('Base class', () => {
       expect(b.text).toBe(t);
     });
 
-    describe('validates text', () => {
-      it('initializes ID', () => {
-        let t = svg.text(add => add.tspan('T'));
-        expect(t.attr('id')).toBe(undefined);
-        let b = new Base(t);
-        expect(t.attr('id')).toBeTruthy();
-      });
+    it('initializes text element ID', () => {
+      let t = svg.text(add => add.tspan('T'));
+      expect(t.attr('id')).toBe(undefined);
+      let b = new Base(t);
+      expect(t.attr('id')).toBeTruthy();
     });
   });
 
