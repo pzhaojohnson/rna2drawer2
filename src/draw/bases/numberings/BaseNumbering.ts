@@ -1,7 +1,7 @@
 import * as SVG from '@svgdotjs/svg.js';
 import { Values } from './values';
 import { Point2D as Point } from 'Math/points/Point';
-import { distance2D as distance } from 'Math/distance';
+import { distance2D as distance } from 'Draw/svg/math/distance';
 import { reposition } from './reposition';
 import { assignUuid } from 'Draw/svg/assignUuid';
 
@@ -51,9 +51,7 @@ export class BaseNumbering {
   get basePadding(): number | undefined {
     let lx1 = this.line.attr('x1');
     let ly1 = this.line.attr('y1');
-    if (typeof lx1 == 'number' && typeof ly1 == 'number') {
-      return distance(this._baseCenter.x, this._baseCenter.y, lx1, ly1);
-    }
+    return distance(this._baseCenter.x, this._baseCenter.y, lx1, ly1);
   }
 
   set basePadding(bp) {
@@ -88,14 +86,7 @@ export class BaseNumbering {
     let ly1 = this.line.attr('y1');
     let lx2 = this.line.attr('x2');
     let ly2 = this.line.attr('y2');
-    if (
-      typeof lx1 == 'number'
-      && typeof ly1 == 'number'
-      && typeof lx2 == 'number'
-      && typeof ly2 == 'number'
-    ) {
-      return distance(lx1, ly1, lx2, ly2);
-    }
+    return distance(lx1, ly1, lx2, ly2);
   }
 
   set lineLength(ll) {
