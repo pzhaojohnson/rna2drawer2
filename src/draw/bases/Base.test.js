@@ -16,7 +16,7 @@ describe('Base class', () => {
   });
 
   describe('constructor', () => {
-    it('stores text', () => {
+    it('stores text element', () => {
       let t = svg.text(add => add.tspan('w'));
       let b = new Base(t);
       expect(b.text).toBe(t);
