@@ -2,6 +2,7 @@ import type { Drawing } from 'Draw/Drawing';
 import { Sequence } from 'Draw/sequences/Sequence';
 import { Base } from 'Draw/bases/Base';
 import { findTextByUniqueId } from 'Draw/saved/svg';
+import { isPoint2D as isPoint } from 'Math/points/Point';
 import { addSavedCircleHighlighting, addSavedCircleOutline } from 'Draw/bases/annotate/circle/save';
 import { addSavedNumbering } from 'Draw/bases/numberings/save';
 import { values as baseValues } from 'Draw/bases/values';
@@ -22,8 +23,9 @@ function assertIsSavedBase(saved: SavedState): void | never {
 
 function recreateBase(drawing: Drawing, saved: SavedState): Base | never {
   assertIsSavedBase(saved);
-  let t = findTextByUniqueId(drawing.svg, saved.textId);
-  let b = new Base(t);
+  let text = findTextByUniqueId(drawing.svg, saved.textId);
+  let center = isPoint(saved.center) ? saved.center : undefined;
+  let b = new Base({ text, center });
   if (saved.highlighting) {
     addSavedCircleHighlighting(b, saved.highlighting as SavedState);
   }

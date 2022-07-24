@@ -45,6 +45,13 @@ describe('savableState function', () => {
     expect(saved.textId).toMatch(uuidRegex); // check is defined
   });
 
+  it('includes center point', () => {
+    base.recenter({ x: 182.1, y: 900.8 });
+    let saved = savableState(base);
+    expect(saved.center.x).toBeCloseTo(182.1);
+    expect(saved.center.y).toBeCloseTo(900.8);
+  });
+
   it('includes highlighting if present', () => {
     expect(base.highlighting).toBeFalsy(); // no highlighting
     let saved = savableState(base);

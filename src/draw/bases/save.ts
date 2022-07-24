@@ -1,4 +1,5 @@
 import type { Base } from 'Draw/bases/Base';
+import type { Point2D as Point } from 'Math/points/Point';
 import {
   SavableState as SavableCircleAnnotationState,
   savableState as savableCircleAnnotationState,
@@ -11,6 +12,7 @@ import {
 export type SavableState = {
   className: 'Base';
   textId: string;
+  center?: Point;
   highlighting?: SavableCircleAnnotationState;
   outline?: SavableCircleAnnotationState;
   numbering?: SavableNumberingState;
@@ -20,6 +22,7 @@ export function savableState(b: Base): SavableState {
   let saved: SavableState = {
     className: 'Base',
     textId: String(b.text.id()),
+    center: b.center(),
   };
   if (b.highlighting) {
     saved.highlighting = savableCircleAnnotationState(b.highlighting);
