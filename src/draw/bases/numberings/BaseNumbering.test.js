@@ -54,19 +54,6 @@ function getRoundedPositioning(bn) {
 
 describe('BaseNumbering class', () => {
   describe('constructor', () => {
-    it('checks passed element types', () => {
-      let t = svg.text('a');
-      let l = svg.line(1, 5, 8, 12);
-      let c = svg.circle(20);
-      let bc = { x: 3, y: 8 };
-      expect(
-        () => new BaseNumbering(c, l, bc)
-      ).toThrow();
-      expect(
-        () => new BaseNumbering(t, c, bc)
-      ).toThrow();
-    });
-
     it('initializes falsy text and line IDs with UUIDs', () => {
       [undefined, ''].forEach(v => {
         let t = svg.text('5');

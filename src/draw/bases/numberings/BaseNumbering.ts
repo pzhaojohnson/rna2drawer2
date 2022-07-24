@@ -26,13 +26,6 @@ export class BaseNumbering {
   _baseCenter: Point;
 
   constructor(text: SVG.Text, line: SVG.Line, baseCenter: Point) {
-    if (text.type != 'text') {
-      throw new Error('Element is not a text.');
-    }
-    if (line.type != 'line') {
-      throw new Error('Element is not a line.');
-    }
-
     this.text = text;
     this.line = line;
 
