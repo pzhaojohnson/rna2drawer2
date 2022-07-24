@@ -51,9 +51,9 @@ export class BaseNumbering {
   }
 
   get basePadding(): number | undefined {
-    let lx1 = this.line.attr('x1');
-    let ly1 = this.line.attr('y1');
-    return distance(this._baseCenter.x, this._baseCenter.y, lx1, ly1);
+    let x1 = this.line.attr('x1');
+    let y1 = this.line.attr('y1');
+    return distance(this._baseCenter.x, this._baseCenter.y, x1, y1);
   }
 
   set basePadding(bp) {
@@ -63,11 +63,11 @@ export class BaseNumbering {
   }
 
   get lineAngle(): number | undefined {
-    let lx1 = this.line.attr('x1');
-    let ly1 = this.line.attr('y1');
-    let lx2 = this.line.attr('x2');
-    let ly2 = this.line.attr('y2');
-    let d = displacement({ x: lx1, y: ly1 }, { x: lx2, y: ly2 });
+    let x1 = this.line.attr('x1');
+    let y1 = this.line.attr('y1');
+    let x2 = this.line.attr('x2');
+    let y2 = this.line.attr('y2');
+    let d = displacement({ x: x1, y: y1 }, { x: x2, y: y2 });
     return d ? direction(d) : undefined;
   }
 
@@ -78,11 +78,11 @@ export class BaseNumbering {
   }
 
   get lineLength(): number | undefined {
-    let lx1 = this.line.attr('x1');
-    let ly1 = this.line.attr('y1');
-    let lx2 = this.line.attr('x2');
-    let ly2 = this.line.attr('y2');
-    return distance(lx1, ly1, lx2, ly2);
+    let x1 = this.line.attr('x1');
+    let y1 = this.line.attr('y1');
+    let x2 = this.line.attr('x2');
+    let y2 = this.line.attr('y2');
+    return distance(x1, y1, x2, y2);
   }
 
   set lineLength(ll) {
