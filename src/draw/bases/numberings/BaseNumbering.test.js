@@ -1,10 +1,10 @@
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
-import { addNumbering } from './add';
+import { addNumbering } from 'Draw/bases/numberings/add';
 
 import { uuidRegex } from 'Draw/svg/assignUuid';
 
-import { reposition } from './reposition';
+import { reposition } from 'Draw/bases/numberings/reposition';
 
 import { round } from 'Math/round';
 import { normalizeAngle } from 'Math/angles/normalize';
