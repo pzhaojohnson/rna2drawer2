@@ -1,5 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
-import { Values } from 'Draw/bases/numberings/values';
+import type { Values } from 'Draw/bases/numberings/values';
 import { Point2D as Point } from 'Math/points/Point';
 import { distance2D as distance } from 'Draw/svg/math/distance';
 import { displacement2D as displacement } from 'Draw/svg/math/points/displacement';
