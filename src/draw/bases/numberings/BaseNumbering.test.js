@@ -68,7 +68,7 @@ describe('BaseNumbering class', () => {
         t.attr({ 'id': v });
         l.attr({ 'id': v });
         // use the attr method to check the value of an ID
-        // since the id method itself will initialize an ID
+        // since the id method will itself initialize an ID
         expect(t.attr('id')).toBe(v);
         expect(l.attr('id')).toBe(v);
         let bn = new BaseNumbering(t, l, { x: 12, y: 24 });
@@ -78,10 +78,8 @@ describe('BaseNumbering class', () => {
     });
 
     it('does not overwrite preexisting text and line element IDs', () => {
-      // it is important that IDs aren't overwritten when
-      // opening a saved drawing since elements in the
-      // drawing may reference other elements using saved
-      // IDs (e.g., bonds referencing their bases)
+      // it is important not to overwrite IDs when opening a saved drawing
+      // since elements may reference each other using saved IDs
       let t = svg.text('1');
       let l = svg.line(1, 5, 8, 12);
       t.attr({ 'id': 'textId1234' });
