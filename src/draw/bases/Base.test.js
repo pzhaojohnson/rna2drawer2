@@ -27,11 +27,6 @@ describe('Base class', () => {
         expect(() => new Base()).toThrow();
       });
 
-      it('wrong element type', () => {
-        let c = svg.circle(20);
-        expect(() => new Base(c)).toThrow();
-      });
-
       it('initializes ID', () => {
         let t = svg.text(add => add.tspan('T'));
         expect(t.attr('id')).toBe(undefined);

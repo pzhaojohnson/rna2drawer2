@@ -41,10 +41,6 @@ export class Base {
    * Initializes the ID of the text if it is not already initialized.
    */
   _validateText() {
-    if (this.text.type !== 'text') {
-      throw new Error('Passed SVG element is not text.');
-    }
-
     // use the attr method to check if the ID is already initialized
     // since the id method itself will initialize the ID (to a non-UUID)
     if (!this.text.attr('id')) {
