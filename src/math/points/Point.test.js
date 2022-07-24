@@ -1,4 +1,5 @@
 import { isPoint2D } from './Point';
+import { deepCopyPoint2D } from './Point';
 
 describe('isPoint2D function', () => {
   it('returns true for 2D points', () => {
@@ -32,4 +33,11 @@ describe('isPoint2D function', () => {
       ).toBeFalsy();
     });
   });
+});
+
+test('deepCopyPoint2D function', () => {
+  let p1 = { x: -311.7, y: 812.5 };
+  let p2 = deepCopyPoint2D(p1);
+  expect(p2).not.toBe(p1); // is a new point
+  expect(p2).toStrictEqual(p1);
 });
