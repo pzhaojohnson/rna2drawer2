@@ -28,6 +28,16 @@ describe('Base class', () => {
       let b = new Base(t);
       expect(t.attr('id')).toBeTruthy();
     });
+
+    it('does not overwrite preexisting text element IDs', () => {
+      // it is important not to overwrite preexisting IDs when opening
+      // a saved drawing since elements may use IDs to reference each other
+      // and may depend on IDs remaining the same
+      let text = svg.text('A');
+      text.id('asdfQWERzzxx');
+      let base = new Base(text);
+      expect(text.id()).toBe('asdfQWERzzxx'); // was not changed
+    });
   });
 
   it('id getter', () => {
