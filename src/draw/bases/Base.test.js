@@ -29,16 +29,6 @@ describe('Base class', () => {
         let b = new Base(t);
         expect(t.attr('id')).toBeTruthy();
       });
-
-      it('no characters', () => {
-        let t = svg.text(add => add.tspan(''));
-        expect(() => new Base(t)).toThrow();
-      });
-
-      it('too many characters', () => {
-        let t = svg.text(add => add.tspan('qwe'));
-        expect(() => new Base(t)).toThrow();
-      });
     });
   });
 

@@ -46,10 +46,6 @@ export class Base {
     if (!this.text.attr('id')) {
       assignUuid(this.text);
     }
-
-    if (this.text.text().length !== 1) {
-      throw new Error('Text content must be a single character.');
-    }
   }
 
   get id(): string {
