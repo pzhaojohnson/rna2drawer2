@@ -107,7 +107,7 @@ export class BaseNumbering {
       lineLength: rp?.lineLength ?? this.lineLength ?? defaults.lineLength ?? 8,
       textPadding: this.textPadding,
     });
-    if (rp && rp.baseCenter) {
+    if (rp?.baseCenter) {
       this._baseCenter = { ...rp.baseCenter };
     }
   }
