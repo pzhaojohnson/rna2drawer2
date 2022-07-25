@@ -1,4 +1,5 @@
-import { Point2D, Point2D as Vector2D } from 'Math/points/Point';
+import { Point2D } from 'Math/points/Point';
+import { Point2D as Vector2D } from 'Math/points/Point';
 
 /**
  * Subtracts point 2 from point 1.
