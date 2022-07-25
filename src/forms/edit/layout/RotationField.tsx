@@ -73,7 +73,7 @@ export class RotationField extends React.Component<Props> {
     let radians = degreesToRadians(degrees);
 
     let strictDrawing = this.props.app.strictDrawing;
-    if (anglesAreClose(radians, strictDrawing.generalLayoutProps.rotation, 6)) {
+    if (anglesAreClose(radians, strictDrawing.generalLayoutProps.rotation, { places: 6 })) {
       return;
     }
 
