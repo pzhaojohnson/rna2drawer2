@@ -1,4 +1,4 @@
-import { sum } from './sum';
+import { sum } from 'Math/sum';
 
 /**
  * It is not firmly defined what is returned
