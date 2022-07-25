@@ -14,8 +14,8 @@ describe('round function', () => {
   });
 
   it('can round to an integer', () => {
-    expect(round(3.8)).toBe(4);
-    expect(round(11.0923)).toBe(11);
+    expect(round(3.8, 0)).toBe(4);
+    expect(round(11.0923, 0)).toBe(11);
   });
 
   it('rounds to an integer by default', () => {
