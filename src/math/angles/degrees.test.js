@@ -1,4 +1,5 @@
-import { radiansToDegrees, degreesToRadians } from './degrees';
+import { radiansToDegrees } from './degrees';
+import { degreesToRadians } from './degrees';
 
 test('radiansToDegrees function', () => {
   expect(radiansToDegrees(0)).toBeCloseTo(0);
