@@ -1,4 +1,4 @@
-import { areClose } from './close';
+import { areClose } from './areClose';
 
 it('positive numbers', () => {
   let n1 = 8;
