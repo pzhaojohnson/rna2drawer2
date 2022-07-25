@@ -1,4 +1,4 @@
-import { anglesAreClose } from './close';
+import { anglesAreClose } from './anglesAreClose';
 
 describe('normalize angles are far away from 0 and 2 * Math.PI', () => {
   it('angle 1 is slightly clockwise to angle 2', () => {
