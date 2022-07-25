@@ -1,7 +1,7 @@
 import { areClose } from './areClose';
 
 describe('areClose function', () => {
-  it('positive numbers', () => {
+  test('positive numbers', () => {
     let n1 = 8;
     let n2 = 8 + 1e-6;
     expect(areClose(n1, n2)).toBeTruthy();
@@ -15,7 +15,7 @@ describe('areClose function', () => {
     expect(areClose(n1, n2, { places: 11 })).toBeTruthy();
   });
 
-  it('negative numbers', () => {
+  test('negative numbers', () => {
     let n1 = -50.2 + 1e-5;
     let n2 = -50.2;
     expect(areClose(n1, n2)).toBeTruthy();
@@ -29,7 +29,7 @@ describe('areClose function', () => {
     expect(areClose(n1, n2, { places: 9 })).toBeTruthy();
   });
 
-  it('close to zero', () => {
+  test('numbers close to zero', () => {
     let n1 = 0;
     let n2 = 1e-10;
     expect(areClose(n1, n2)).toBeTruthy();
