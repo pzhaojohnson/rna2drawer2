@@ -1,7 +1,5 @@
-import {
-  subtract2D,
-  displacement2D,
-} from './displacement';
+import { subtract2D } from './displacement';
+import { displacement2D } from './displacement';
 
 test('subtract2D and displacement2D functions', () => {
   [
