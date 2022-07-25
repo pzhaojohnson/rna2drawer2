@@ -1,5 +1,6 @@
-import { direction2D } from './direction';
 import { normalizeAngle } from 'Math/angles/normalize';
+
+import { direction2D } from './direction';
 
 test('direction2D function', () => {
   [
