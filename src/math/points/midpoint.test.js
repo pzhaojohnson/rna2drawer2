@@ -8,7 +8,7 @@ function round2D(p, places=3) {
   };
 }
 
-it('midpoint2D function', () => {
+test('midpoint2D function', () => {
   [
     {
       p1: { x: 10, y: 5 },
