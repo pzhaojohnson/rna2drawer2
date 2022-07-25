@@ -13,23 +13,23 @@ describe('round function', () => {
     expect(round(8.0901026, 3)).toBe(8.09);
   });
 
-  it('can round to integer', () => {
+  it('can round to an integer', () => {
     expect(round(3.8)).toBe(4);
     expect(round(11.0923)).toBe(11);
   });
 
-  it('rounds to integer by default', () => {
+  it('rounds to an integer by default', () => {
     expect(round(1.2553)).toBe(1);
     expect(round(5)).toBe(5);
     expect(round(2.9)).toBe(3);
   });
 
-  it('can round to more places than number has', () => {
+  it('can round to more places than the number has', () => {
     // 1.528 has fewer than 8 decimal places
     expect(round(1.526, 8)).toBe(1.526);
   });
 
-  it('handles negative numbers', () => {
+  it('can round negative numbers', () => {
     expect(round(-12.03)).toBe(-12);
     expect(round(-8.239, 2)).toBe(-8.24);
   });
