@@ -1,8 +1,9 @@
 import { sum } from 'Math/sum';
 
 /**
- * It is not firmly defined what is returned
- * for an empty array of numbers.
+ * Returns the mean of the numbers.
+ *
+ * Returns NaN for an empty array of numbers.
  */
 export function mean(nums: number[]): number {
   if (nums.length == 0) {
