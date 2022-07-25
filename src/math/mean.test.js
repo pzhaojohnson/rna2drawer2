@@ -1,7 +1,7 @@
 import { mean } from './mean';
 
 describe('mean function', () => {
-  test('an empty array of numbers`', () => {
+  test('an empty array of numbers', () => {
     expect(mean([])).toBe(NaN);
   });
 
