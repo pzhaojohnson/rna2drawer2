@@ -1,7 +1,7 @@
 import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import { Point2D as Point } from 'Math/points/Point';
 import { interpretNumericValue } from 'Draw/svg/interpretNumericValue';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 export type Positioning = {
   baseCenter: Point;

@@ -1,4 +1,4 @@
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 // returns true if the angles 1 and 2 are within the specified angular distance
 export function anglesAreWithin(angle1: number, angle2: number, angularDistance: number): boolean {

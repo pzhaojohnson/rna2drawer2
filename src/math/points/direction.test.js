@@ -1,4 +1,4 @@
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 import { direction2D } from './direction';
 

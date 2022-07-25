@@ -17,7 +17,7 @@ import parseDotBracket from 'Parse/parseDotBracket';
 import GeneralStrictLayoutProps from './GeneralStrictLayoutProps';
 import PerBaseStrictLayoutProps from './PerBaseStrictLayoutProps';
 import Stem from './Stem';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 function defaultPerBaseProps(length) {
   let perBaseProps = [];

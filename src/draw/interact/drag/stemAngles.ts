@@ -5,7 +5,7 @@ import { upstreamPartner } from 'Partners/pairs/Pair';
 import { downstreamPartner } from 'Partners/pairs/Pair';
 import { displacement2D as displacement } from 'Math/points/displacement';
 import { direction2D as direction } from 'Math/points/direction';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 // returns the upstream angle of the stem in the given strict layout
 // or NaN if unable to determine the upstream angle of the stem

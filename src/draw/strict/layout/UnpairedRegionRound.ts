@@ -1,5 +1,5 @@
 import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 import { circleCenter } from './circleCenter';
 import { distance2D as distance } from 'Math/distance';
 import { displacement2D as displacement } from 'Math/points/displacement';

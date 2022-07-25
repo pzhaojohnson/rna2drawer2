@@ -1,5 +1,5 @@
 import NormalizedBaseCoordinates from './NormalizedBaseCoordinates';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 it('given coordinates', () => {
   let xLeft = 1;

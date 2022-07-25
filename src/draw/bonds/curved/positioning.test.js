@@ -2,7 +2,7 @@ import { positioning } from './positioning';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { QuadraticBezierBond } from './QuadraticBezierBond';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 import { round } from 'Math/round';
 
 function roundPositioning(p, places=3) {

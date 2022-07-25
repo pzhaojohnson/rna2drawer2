@@ -7,7 +7,7 @@ import { uuidRegex } from 'Draw/svg/assignUuid';
 import { reposition } from 'Draw/bases/numberings/reposition';
 
 import { round } from 'Math/round';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 import { BaseNumbering } from './BaseNumbering';
 

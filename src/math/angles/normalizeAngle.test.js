@@ -1,4 +1,4 @@
-import { normalizeAngle } from './normalize';
+import { normalizeAngle } from './normalizeAngle';
 
 it('below minimum angle', () => {
   expect(normalizeAngle(-Math.PI, 0)).toBeCloseTo(Math.PI, 6);

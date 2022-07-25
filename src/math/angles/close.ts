@@ -1,4 +1,4 @@
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 export function anglesAreClose(a1: number, a2: number, places=3): boolean {
   a1 = normalizeAngle(a1);

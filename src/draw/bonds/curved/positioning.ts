@@ -1,7 +1,7 @@
 import type { QuadraticBezierBond } from './QuadraticBezierBond';
 import { midpoint2D as midpoint } from 'Math/points/midpoint';
 import { distance2D as distance } from 'Math/distance';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 // relative to the midpoint between the centers
 // of bases 1 and 2 of a bond

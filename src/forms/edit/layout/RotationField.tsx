@@ -5,7 +5,7 @@ import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
 import { radiansToDegrees } from 'Math/angles/degrees';
 import { degreesToRadians } from 'Math/angles/degrees';
-import { normalizeAngle } from 'Math/angles/normalize';
+import { normalizeAngle } from 'Math/angles/normalizeAngle';
 import { anglesAreClose } from 'Math/angles/close';
 import { round } from 'Math/round';
 
