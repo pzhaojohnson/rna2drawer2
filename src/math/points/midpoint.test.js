@@ -1,5 +1,6 @@
-import { midpoint2D } from './midpoint';
 import { round } from 'Math/round';
+
+import { midpoint2D } from './midpoint';
 
 function round2D(p, places=3) {
   return {
