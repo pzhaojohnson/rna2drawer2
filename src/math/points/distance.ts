@@ -1,5 +1,5 @@
 import { Point2D } from 'Math/points/Point';
-import { subtract2D } from 'Math/points/displacement';
+import { subtract2D } from 'Math/points/subtract';
 import { magnitude2D } from 'Math/points/magnitude';
 
 /**
