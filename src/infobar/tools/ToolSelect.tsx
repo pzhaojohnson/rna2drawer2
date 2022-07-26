@@ -154,7 +154,7 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
               isToggled={true}
               onClick={() => this.close()}
               onMouseOver={() => this.showToolDescription(currentTool)}
-              onMouseOut={() => this.hideToolDescription()}
+              onMouseOut={() => this.hideOverlaidMessage()}
             />
             {tools.filter(tool => tool != currentTool).map((tool, i) => (
               <ToolButton
@@ -163,7 +163,7 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
                 isToggled={false}
                 onClick={() => this.select(tool)}
                 onMouseOver={() => this.showToolDescription(tool)}
-                onMouseOut={() => this.hideToolDescription()}
+                onMouseOut={() => this.hideOverlaidMessage()}
               />
             ))}
           </div>
@@ -206,13 +206,17 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
   }
 
   showToolDescription(tool: Tool) {
+    this.showOverlaidMessage(descriptionOfTool(tool));
+  }
+
+  showOverlaidMessage(message: HTMLParagraphElement) {
     let strictDrawingInteraction = this.props.app.strictDrawingInteraction;
     let overlaidMessageContainer = strictDrawingInteraction.overlaidMessageContainer;
     overlaidMessageContainer.clear();
-    overlaidMessageContainer.append(descriptionOfTool(tool));
+    overlaidMessageContainer.append(message);
   }
 
-  hideToolDescription() {
+  hideOverlaidMessage() {
     let strictDrawingInteraction = this.props.app.strictDrawingInteraction;
     let overlaidMessageContainer = strictDrawingInteraction.overlaidMessageContainer;
     overlaidMessageContainer.clear();
