@@ -24,12 +24,15 @@
 }
 
 .currentToolView {
-  padding-left: 4px;
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 12px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
-  color: #3d3d46;
+  color: white;
+  background-color: #38383d;
   cursor: pointer;
 }
 
