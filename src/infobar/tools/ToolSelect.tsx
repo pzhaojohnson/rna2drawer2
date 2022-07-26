@@ -223,6 +223,7 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
     let strictDrawingInteraction = this.props.app.strictDrawingInteraction;
     let overlaidMessageContainer = strictDrawingInteraction.overlaidMessageContainer;
     overlaidMessageContainer.clear();
+    overlaidMessageContainer.placeOver(this.props.app.strictDrawing.drawing);
     overlaidMessageContainer.append(message);
   }
 
