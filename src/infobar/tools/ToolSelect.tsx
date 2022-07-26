@@ -20,6 +20,10 @@ export type ToolSelectProps = {
   onClose?: () => void;
 };
 
+let switchToolMessage = document.createElement('p');
+switchToolMessage.className = styles.overlaidMessage;
+switchToolMessage.textContent = 'Click to switch to another tool.';
+
 function nameOfTool(tool: Tool): string {
   if (tool instanceof DraggingTool) {
     return 'Drag';
@@ -139,6 +143,12 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
             this.open();
           }
         }}
+        onMouseOver={() => {
+          if (!this.state.isOpen) {
+            this.showOverlaidMessage(switchToolMessage);
+          }
+        }}
+        onMouseOut={() => this.hideOverlaidMessage()}
         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
       >
         <ToolLabel
