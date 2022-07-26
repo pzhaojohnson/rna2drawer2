@@ -38,7 +38,7 @@ function nameOfTool(tool: Tool): string {
 
 function descriptionOfTool(tool: Tool) {
   let p = document.createElement('p');
-  p.className = styles.toolDescription;
+  p.className = styles.overlaidMessage;
   if (tool instanceof DraggingTool) {
     p.textContent = 'Drag stems and loops.';
   } else if (tool instanceof BindingTool) {
