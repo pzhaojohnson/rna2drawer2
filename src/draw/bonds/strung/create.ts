@@ -1,4 +1,5 @@
 import * as SVG from '@svgdotjs/svg.js';
+import { assignUuid } from 'Draw/svg/assignUuid';
 
 import type { StrungText } from 'Draw/bonds/strung/StrungElement';
 import type { StrungCircle } from 'Draw/bonds/strung/StrungElement';
@@ -27,6 +28,7 @@ export function createStrungText(options: StrungTextOptions): StrungText {
     displacementFromCenter: 0,
     displacementFromCurve: { x: 0, y: 0 },
   };
+  assignUuid(text.text);
   text.text.text(options.text);
   // reposition after setting the text content
   repositionStrungElement(text, {
@@ -43,6 +45,7 @@ export function createStrungCircle(options: StrungElementOptions): StrungCircle 
     displacementFromCenter: 0,
     displacementFromCurve: { x: 0, y: 0 },
   };
+  assignUuid(circle.circle);
   repositionStrungElement(circle, {
     curve: options.curve,
     curveLength: options.curveLength,
@@ -61,6 +64,7 @@ export function createStrungTriangle(options: StrungElementOptions): StrungTrian
     displacementFromCenter: 0,
     displacementFromCurve: { x: 0, y: 0 },
   };
+  assignUuid(triangle.path);
   repositionStrungElement(triangle, {
     curve: options.curve,
     curveLength: options.curveLength,
@@ -79,6 +83,7 @@ export function createStrungRectangle(options: StrungElementOptions): StrungRect
     displacementFromCenter: 0,
     displacementFromCurve: { x: 0, y: 0 },
   };
+  assignUuid(rectangle.path);
   repositionStrungElement(rectangle, {
     curve: options.curve,
     curveLength: options.curveLength,
