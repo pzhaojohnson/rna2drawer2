@@ -1,9 +1,15 @@
 import * as SVG from '@svgdotjs/svg.js';
 
 import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
+import type { StrungText } from 'Draw/bonds/strung/StrungElement';
+import type { StrungCircle } from 'Draw/bonds/strung/StrungElement';
+import type { StrungTriangle } from 'Draw/bonds/strung/StrungElement';
+import type { StrungRectangle } from 'Draw/bonds/strung/StrungElement';
 
 import { isNumber } from 'Utilities/isNumber';
 import { isPoint2D as isVector } from 'Math/points/Point';
+
+import { updateDefaultValues } from 'Draw/bonds/strung/defaults';
 
 function findSVGElement(svg: SVG.Svg, id: unknown): SVG.Element | never {
   if (typeof id != 'string') {
@@ -76,25 +82,29 @@ export function fromSpecification(args: Args): StrungElement | never {
   }
 
   if (spec.type == 'StrungText') {
-    return {
+    let text: StrungText = {
       type: 'StrungText',
       text: findSVGText(svg, spec.textId),
       displacementFromCenter,
       displacementFromCurve,
     };
+    updateDefaultValues(text);
+    return text;
   }
 
   if (spec.type == 'StrungCircle') {
-    return {
+    let circle: StrungCircle = {
       type: 'StrungCircle',
       circle: findSVGCircle(svg, spec.circleId),
       displacementFromCenter,
       displacementFromCurve,
     };
+    updateDefaultValues(circle);
+    return circle;
   }
 
   if (spec.type == 'StrungTriangle') {
-    return {
+    let triangle: StrungTriangle = {
       type: 'StrungTriangle',
       path: findSVGPath(svg, spec.pathId),
       width,
@@ -104,10 +114,12 @@ export function fromSpecification(args: Args): StrungElement | never {
       displacementFromCenter,
       displacementFromCurve,
     };
+    updateDefaultValues(triangle);
+    return triangle;
   }
 
   if (spec.type == 'StrungRectangle') {
-    return {
+    let rectangle: StrungRectangle = {
       type: 'StrungRectangle',
       path: findSVGPath(svg, spec.pathId),
       width,
@@ -117,6 +129,8 @@ export function fromSpecification(args: Args): StrungElement | never {
       displacementFromCenter,
       displacementFromCurve,
     };
+    updateDefaultValues(rectangle);
+    return rectangle;
   }
 
   throw new Error(`Unrecognized strung element type: ${spec.type}.`);
