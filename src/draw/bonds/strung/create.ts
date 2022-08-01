@@ -6,6 +6,11 @@ import type { StrungCircle } from 'Draw/bonds/strung/StrungElement';
 import type { StrungTriangle } from 'Draw/bonds/strung/StrungElement';
 import type { StrungRectangle } from 'Draw/bonds/strung/StrungElement';
 
+import { strungTextDefaultValues } from 'Draw/bonds/strung/defaults';
+import { strungCircleDefaultValues } from 'Draw/bonds/strung/defaults';
+import { strungTriangleDefaultValues } from 'Draw/bonds/strung/defaults';
+import { strungRectangleDefaultValues } from 'Draw/bonds/strung/defaults';
+
 import { repositionStrungElement } from 'Draw/bonds/strung/repositionStrungElement';
 import type { BezierCurve } from 'Draw/bonds/strung/BezierCurve';
 
@@ -29,6 +34,7 @@ export function createStrungText(options: StrungTextOptions): StrungText {
     displacementFromCurve: { x: 0, y: 0 },
   };
   assignUuid(text.text);
+  text.text.attr(strungTextDefaultValues.text);
   text.text.text(options.text);
   // reposition after setting the text content
   repositionStrungElement(text, {
@@ -46,6 +52,7 @@ export function createStrungCircle(options: StrungElementOptions): StrungCircle 
     displacementFromCurve: { x: 0, y: 0 },
   };
   assignUuid(circle.circle);
+  circle.circle.attr(strungCircleDefaultValues.circle);
   repositionStrungElement(circle, {
     curve: options.curve,
     curveLength: options.curveLength,
@@ -57,14 +64,15 @@ export function createStrungTriangle(options: StrungElementOptions): StrungTrian
   let triangle: StrungTriangle = {
     type: 'StrungTriangle',
     path: new SVG.Path(),
-    width: 9,
-    height: 9,
-    tailsHeight: 0,
+    width: strungTriangleDefaultValues.width,
+    height: strungTriangleDefaultValues.height,
+    tailsHeight: strungTriangleDefaultValues.tailsHeight,
     rotation: 0,
     displacementFromCenter: 0,
     displacementFromCurve: { x: 0, y: 0 },
   };
   assignUuid(triangle.path);
+  triangle.path.attr(strungTriangleDefaultValues.path);
   repositionStrungElement(triangle, {
     curve: options.curve,
     curveLength: options.curveLength,
@@ -76,14 +84,15 @@ export function createStrungRectangle(options: StrungElementOptions): StrungRect
   let rectangle: StrungRectangle = {
     type: 'StrungRectangle',
     path: new SVG.Path(),
-    width: 9,
-    height: 9,
-    borderRadius: 0,
+    width: strungRectangleDefaultValues.width,
+    height: strungRectangleDefaultValues.height,
+    borderRadius: strungRectangleDefaultValues.borderRadius,
     rotation: 0,
     displacementFromCenter: 0,
     displacementFromCurve: { x: 0, y: 0 },
   };
   assignUuid(rectangle.path);
+  rectangle.path.attr(strungRectangleDefaultValues.path);
   repositionStrungElement(rectangle, {
     curve: options.curve,
     curveLength: options.curveLength,
