@@ -1,5 +1,6 @@
 import * as SVG from '@svgdotjs/svg.js';
 import type { Base } from 'Draw/bases/Base';
+import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
 import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import {
@@ -13,6 +14,8 @@ export class QuadraticBezierBond {
   readonly path: SVG.Path;
   readonly base1: Base;
   readonly base2: Base;
+
+  strungElements: StrungElement[];
 
   _positioning: Positioning;
 
@@ -28,6 +31,8 @@ export class QuadraticBezierBond {
     this.base2 = b2;
 
     this.path = path;
+
+    this.strungElements = [];
 
     // use the attr method to check if the ID is already
     // initialized since the id method itself will initialize

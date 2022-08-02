@@ -1,5 +1,6 @@
 import * as SVG from '@svgdotjs/svg.js';
 import type { Base } from 'Draw/bases/Base';
+import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
 import { distance2D as distance } from 'Math/distance';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { position } from './position';
@@ -8,6 +9,8 @@ export class StraightBond {
   readonly line: SVG.Line;
   readonly base1: Base;
   readonly base2: Base;
+
+  strungElements: StrungElement[];
 
   _basePadding1: number;
   _basePadding2: number;
@@ -20,6 +23,8 @@ export class StraightBond {
     this.line = line;
     this.base1 = base1;
     this.base2 = base2;
+
+    this.strungElements = [];
 
     // use the attr method to check if the ID
     // is initialized since the id method itself
