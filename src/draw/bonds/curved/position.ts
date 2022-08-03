@@ -1,6 +1,7 @@
 import type { QuadraticBezierBond } from './QuadraticBezierBond';
 import { Positioning } from './positioning';
 import { midpoint2D as midpoint } from 'Math/points/midpoint';
+import { repositionStrungElementsOfBond } from 'Draw/bonds/strung/repositionStrungElementsOfBond';
 
 export function position(bond: QuadraticBezierBond, p: Positioning) {
   try {
@@ -32,6 +33,8 @@ export function position(bond: QuadraticBezierBond, p: Positioning) {
       'Q', controlPoint.x, controlPoint.y, endPoint.x, endPoint.y,
     ].join(' ');
     bond.path.plot(d);
+
+    repositionStrungElementsOfBond(bond);
 
   } catch (error) {
     console.error(error);

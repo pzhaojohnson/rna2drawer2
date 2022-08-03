@@ -1,5 +1,6 @@
 import type { StraightBond } from './StraightBond';
 import { distance2D as distance } from 'Math/distance';
+import { repositionStrungElementsOfBond } from 'Draw/bonds/strung/repositionStrungElementsOfBond';
 
 export type Positioning = {
   basePadding1: number;
@@ -25,4 +26,6 @@ export function position(sb: StraightBond, p: Positioning) {
   } else {
     sb.line.attr({ 'opacity': 1 });
   }
+
+  repositionStrungElementsOfBond(sb);
 }
