@@ -1,12 +1,12 @@
-import { StraightBond } from 'Draw/bonds/straight/StraightBond';
-import { QuadraticBezierBond } from 'Draw/bonds/curved/QuadraticBezierBond';
+import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
+import type { QuadraticBezierBond } from 'Draw/bonds/curved/QuadraticBezierBond';
 
 import { distance2D as distance } from 'Draw/svg/math/distance';
 
 export type Bond = StraightBond | QuadraticBezierBond;
 
 export function curveLengthOfBond(bond: Bond): number {
-  if (bond instanceof QuadraticBezierBond) {
+  if ('path' in bond) {
     return bond.path.length();
   } else {
     // could just use SVGLineElement getTotalLength method, but this method
