@@ -3,8 +3,8 @@ import type { BezierCurve } from 'Draw/bonds/strung/BezierCurve';
 import { isLinearBezierCurve } from 'Math/curves/LinearBezierCurve';
 import { isQuadraticBezierCurve } from 'Math/curves/QuadraticBezierCurve';
 
-import { StraightBond } from 'Draw/bonds/straight/StraightBond';
-import { QuadraticBezierBond } from 'Draw/bonds/curved/QuadraticBezierBond';
+import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
+import type { QuadraticBezierBond } from 'Draw/bonds/curved/QuadraticBezierBond';
 
 import { interpretNumericValue } from 'Draw/svg/interpretNumericValue';
 
@@ -58,7 +58,7 @@ function curveOfQuadraticBezierBond(bond: QuadraticBezierBond) {
  * Returns undefined if the curve of the bond cannot be interpreted.
  */
 export function curveOfBond(bond: Bond): BezierCurve | undefined {
-  if (bond instanceof StraightBond) {
+  if ('line' in bond) {
     return curveOfStraightBond(bond);
   } else {
     return curveOfQuadraticBezierBond(bond);
