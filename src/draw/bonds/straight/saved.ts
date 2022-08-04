@@ -5,6 +5,7 @@ import { SecondaryBond } from './SecondaryBond';
 import { findLineByUniqueId } from 'Draw/saved/svg';
 import type { Base } from 'Draw/bases/Base';
 import { basesByUniqueId } from 'Draw/saved/bases';
+import { fromSpecifications as strungElementsFromSpecifications } from 'Draw/bonds/strung/save/fromSpecifications';
 import { atIndex } from 'Array/at';
 import { values } from './values';
 
@@ -42,7 +43,14 @@ export function addSavedPrimaryBonds(drawing: Drawing, saveds: SavedState[]): Pr
     let line = findLineByUniqueId(drawing.svg, saved.lineId);
     let base1 = getBaseById(bases, saved.baseId1);
     let base2 = getBaseById(bases, saved.baseId2);
-    pbs.push(new PrimaryBond(line, base1, base2));
+    let pb = new PrimaryBond(line, base1, base2);
+
+    pb.strungElements = strungElementsFromSpecifications({
+      svg: drawing.svg,
+      specifications: saved.strungElements,
+    });
+
+    pbs.push(pb);
   });
   drawing.primaryBonds.push(...pbs);
   updateRecommendedDefaultsForPrimaryBonds(pbs);
@@ -69,6 +77,12 @@ export function addSavedSecondaryBonds(drawing: Drawing, saveds: SavedState[]): 
     let base1 = getBaseById(bases, saved.baseId1);
     let base2 = getBaseById(bases, saved.baseId2);
     let sb = new SecondaryBond(line, base1, base2);
+
+    sb.strungElements = strungElementsFromSpecifications({
+      svg: drawing.svg,
+      specifications: saved.strungElements,
+    });
+
     sbs.push(sb);
   });
   drawing.secondaryBonds.push(...sbs);

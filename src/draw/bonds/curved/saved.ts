@@ -3,6 +3,7 @@ import { findPathByUniqueId } from 'Draw/saved/svg';
 import { basesByUniqueId } from 'Draw/saved/bases';
 import type { Base } from 'Draw/bases/Base';
 import { TertiaryBond } from './TertiaryBond';
+import { fromSpecifications as strungElementsFromSpecifications } from 'Draw/bonds/strung/save/fromSpecifications';
 import { atIndex } from 'Array/at';
 import { values } from './values';
 
@@ -33,7 +34,14 @@ export function addSavedTertiaryBonds(drawing: Drawing, saveds: SavedState[]): T
     let path = findPathByUniqueId(drawing.svg, saved.pathId);
     let base1 = getBaseById(bases, saved.baseId1);
     let base2 = getBaseById(bases, saved.baseId2);
-    tbs.push(new TertiaryBond(path, base1, base2));
+    let tb = new TertiaryBond(path, base1, base2);
+
+    tb.strungElements = strungElementsFromSpecifications({
+      svg: drawing.svg,
+      specifications: saved.strungElements,
+    });
+
+    tbs.push(tb);
   });
   drawing.tertiaryBonds.push(...tbs);
 

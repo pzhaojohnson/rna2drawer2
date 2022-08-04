@@ -5,6 +5,13 @@ import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addPrimaryBond, addSecondaryBond } from './add';
 import { savableState } from './save';
 
+import { createStrungTriangle } from 'Draw/bonds/strung/create';
+import { createStrungRectangle } from 'Draw/bonds/strung/create';
+import { addStrungElementToBond } from 'Draw/bonds/strung/addToBond';
+
+import { curveOfBond } from 'Draw/bonds/strung/curveOfBond';
+import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
+
 function areSameLine(line1, line2) {
   return (
     line1.id() // check that ID is truthy
@@ -69,6 +76,20 @@ describe.each`
       expect(areSameBase(bond1.base1, bond2.base1)).toBeTruthy();
       expect(areSameBase(bond1.base2, bond2.base2)).toBeTruthy();
     });
+  });
+
+  it('recreates saved strung elements', () => {
+    let [bond1] = drawing[arrayName].splice(0, 1);
+    let curve = curveOfBond(bond1);
+    let curveLength = curveLengthOfBond(bond1);
+    let strungTriangle = createStrungTriangle({ curve, curveLength });
+    let strungRectangle = createStrungRectangle({ curve, curveLength });
+    addStrungElementToBond({ bond: bond1, strungElement: strungTriangle });
+    addStrungElementToBond({ bond: bond1, strungElement: strungRectangle });
+    let saved = savableState(bond1);
+    let [bond2] = f(drawing, [saved]);
+    // recreated the strung elements
+    expect(bond2.strungElements).toEqual([strungTriangle, strungRectangle]);
   });
 
   it('adds recreated bonds to bonds array', () => {

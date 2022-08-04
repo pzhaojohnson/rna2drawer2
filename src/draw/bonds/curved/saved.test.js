@@ -5,6 +5,13 @@ import { appendSequence } from 'Draw/sequences/add/sequence';
 import { addTertiaryBond } from './add';
 import { savableState } from './save';
 
+import { createStrungText } from 'Draw/bonds/strung/create';
+import { createStrungCircle } from 'Draw/bonds/strung/create';
+import { addStrungElementToBond } from 'Draw/bonds/strung/addToBond';
+
+import { curveOfBond } from 'Draw/bonds/strung/curveOfBond';
+import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
+
 function areSamePath(path1, path2) {
   return (
     path1.id() // check that ID is truthy
@@ -72,6 +79,20 @@ describe('addSavedTertiaryBonds function', () => {
       expect(areSameBase(tb1.base1, tb2.base1)).toBeTruthy();
       expect(areSameBase(tb1.base2, tb2.base2)).toBeTruthy();
     });
+  });
+
+  it('recreates saved strung elements', () => {
+    let [tb1] = drawing.tertiaryBonds.splice(0, 1);
+    let curve = curveOfBond(tb1);
+    let curveLength = curveLengthOfBond(tb1);
+    let strungText = createStrungText({ text: 'A', curve, curveLength });
+    let strungCircle = createStrungCircle({ curve, curveLength });
+    addStrungElementToBond({ bond: tb1, strungElement: strungText });
+    addStrungElementToBond({ bond: tb1, strungElement: strungCircle });
+    let saved = savableState(tb1);
+    let [tb2] = addSavedTertiaryBonds(drawing, [saved]);
+    // recreated the strung elements
+    expect(tb2.strungElements).toEqual([strungText, strungCircle]);
   });
 
   it('adds recreated bonds to tertiary bonds array', () => {
