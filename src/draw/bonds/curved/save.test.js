@@ -40,37 +40,31 @@ afterEach(() => {
   container = null;
 });
 
-describe('savableState function', () => {
-  it('returns savable states with correct values', () => {
-    let curve = curveOfBond(bond);
-    let curveLength = curveLengthOfBond(bond);
-    let strungText = createStrungText({ text: 'B', curve, curveLength });
-    let strungRectangle = createStrungRectangle({ curve, curveLength });
-    addStrungElementToBond({ bond, strungElement: strungText });
-    addStrungElementToBond({ bond, strungElement: strungRectangle });
+test('savableState function', () => {
+  let curve = curveOfBond(bond);
+  let curveLength = curveLengthOfBond(bond);
+  let strungText = createStrungText({ text: 'B', curve, curveLength });
+  let strungRectangle = createStrungRectangle({ curve, curveLength });
+  addStrungElementToBond({ bond, strungElement: strungText });
+  addStrungElementToBond({ bond, strungElement: strungRectangle });
 
-    let saved = savableState(bond);
-    expect(saved).toEqual({
-      className: 'QuadraticBezierBond',
-      pathId: bond.path.id(),
-      baseId1: bond.base1.id,
-      baseId2: bond.base2.id,
-      strungElements: [
-        strungElementToSpecification(strungText),
-        strungElementToSpecification(strungRectangle),
-      ],
-    });
-
-    // check that all IDs are defined
-    expect(saved.pathId).toBeTruthy();
-    expect(saved.baseId1).toBeTruthy();
-    expect(saved.baseId2).toBeTruthy();
+  let saved1 = savableState(bond);
+  expect(saved1).toEqual({
+    className: 'QuadraticBezierBond',
+    pathId: bond.path.id(),
+    baseId1: bond.base1.id,
+    baseId2: bond.base2.id,
+    strungElements: [
+      strungElementToSpecification(strungText),
+      strungElementToSpecification(strungRectangle),
+    ],
   });
 
-  it('returns savable states that can be converted to and from JSON', () => {
-    let saved1 = savableState(bond);
-    let string1 = JSON.stringify(saved1);
-    let saved2 = JSON.parse(string1);
-    expect(saved2).toEqual(saved1);
-  });
+  // check that all IDs are defined
+  expect(saved1.pathId).toBeTruthy();
+  expect(saved1.baseId1).toBeTruthy();
+  expect(saved1.baseId2).toBeTruthy();
+
+  let saved2 = JSON.parse(JSON.stringify(saved1));
+  expect(saved2).toEqual(saved1);
 });

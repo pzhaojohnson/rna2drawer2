@@ -40,39 +40,33 @@ afterEach(() => {
   container = null;
 });
 
-describe('savableState function', () => {
-  it('returns savable states', () => {
-    let lineId = bond.line.id();
-    let baseId1 = bond.base1.id;
-    let baseId2 = bond.base2.id;
-    expect(lineId).toBeTruthy();
-    expect(baseId1).toBeTruthy();
-    expect(baseId2).toBeTruthy();
+test('savableState function', () => {
+  let lineId = bond.line.id();
+  let baseId1 = bond.base1.id;
+  let baseId2 = bond.base2.id;
+  expect(lineId).toBeTruthy();
+  expect(baseId1).toBeTruthy();
+  expect(baseId2).toBeTruthy();
 
-    let curve = curveOfBond(bond);
-    let curveLength = curveLengthOfBond(bond);
-    let strungCircle = createStrungCircle({ curve, curveLength });
-    let strungTriangle = createStrungTriangle({ curve, curveLength });
-    addStrungElementToBond({ bond, strungElement: strungCircle });
-    addStrungElementToBond({ bond, strungElement: strungTriangle });
+  let curve = curveOfBond(bond);
+  let curveLength = curveLengthOfBond(bond);
+  let strungCircle = createStrungCircle({ curve, curveLength });
+  let strungTriangle = createStrungTriangle({ curve, curveLength });
+  addStrungElementToBond({ bond, strungElement: strungCircle });
+  addStrungElementToBond({ bond, strungElement: strungTriangle });
 
-    let saved = savableState(bond);
-    expect(saved).toEqual({
-      className: 'StraightBond',
-      lineId: lineId,
-      baseId1: baseId1,
-      baseId2: baseId2,
-      strungElements: [
-        strungElementToSpecification(strungCircle),
-        strungElementToSpecification(strungTriangle),
-      ],
-    });
+  let saved1 = savableState(bond);
+  expect(saved1).toEqual({
+    className: 'StraightBond',
+    lineId: lineId,
+    baseId1: baseId1,
+    baseId2: baseId2,
+    strungElements: [
+      strungElementToSpecification(strungCircle),
+      strungElementToSpecification(strungTriangle),
+    ],
   });
 
-  it('returns savable states that can be converted to and from JSON', () => {
-    let saved1 = savableState(bond);
-    let string1 = JSON.stringify(saved1);
-    let saved2 = JSON.parse(string1);
-    expect(saved2).toEqual(saved1);
-  });
+  let saved2 = JSON.parse(JSON.stringify(saved1));
+  expect(saved2).toEqual(saved1);
 });
