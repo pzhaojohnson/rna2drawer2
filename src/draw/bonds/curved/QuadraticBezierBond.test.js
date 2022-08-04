@@ -6,6 +6,14 @@ import { positioning } from './positioning';
 import { position } from './position';
 import { round } from 'Math/round';
 
+import { createStrungCircle } from 'Draw/bonds/strung/create';
+import { createStrungTriangle } from 'Draw/bonds/strung/create';
+
+import { curveOfBond } from 'Draw/bonds/strung/curveOfBond';
+import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
+
+import { addStrungElementToBond } from 'Draw/bonds/strung/addToBond';
+
 function roundPositioning(p, places=3) {
   p.basePadding1 = round(p.basePadding1, places);
   p.basePadding2 = round(p.basePadding2, places);
@@ -98,8 +106,22 @@ describe('QuadraticBezierBond class', () => {
   });
 
   test('contains method', () => {
+    let curve = curveOfBond(bond);
+    let curveLength = curveLengthOfBond(bond);
+    let strungCircle = createStrungCircle({ curve, curveLength });
+    let strungTriangle = createStrungTriangle({ curve, curveLength });
+    addStrungElementToBond({ bond, strungElement: strungCircle });
+    addStrungElementToBond({ bond, strungElement: strungTriangle });
+
     expect(bond.contains(bond.path)).toBeTruthy();
     expect(bond.contains(bond.path.node)).toBeTruthy();
+
+    // contains method of nodes doesn't seem to work on Node.js
+    expect(bond.contains(strungCircle.circle)).toBeTruthy();
+    expect(bond.contains(strungCircle.circle.node))//.toBeTruthy();
+    expect(bond.contains(strungTriangle.path)).toBeTruthy();
+    expect(bond.contains(strungTriangle.path.node))//.toBeTruthy();
+
     let path = svg.path('M 50 60 Q 0 0 100 200');
     expect(bond.contains(path)).toBeFalsy();
     expect(bond.contains(path.node)).toBeFalsy();

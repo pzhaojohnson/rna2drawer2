@@ -1,6 +1,7 @@
 import * as SVG from '@svgdotjs/svg.js';
 import type { Base } from 'Draw/bases/Base';
 import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
+import { strungElementsContainNode } from 'Draw/bonds/strung/strungElementContainsNode';
 import { isQuadraticBezierCurve } from './QuadraticBezierCurve';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import {
@@ -56,6 +57,9 @@ export class QuadraticBezierBond {
   }
 
   contains(node: SVG.Element | Node): boolean {
+    if (strungElementsContainNode(this.strungElements, node)) {
+      return true;
+    }
     if (node instanceof SVG.Element) {
       node = node.node;
     }
