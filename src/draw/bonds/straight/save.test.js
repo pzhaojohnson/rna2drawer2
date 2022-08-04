@@ -3,6 +3,15 @@ import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { StraightBond } from './StraightBond';
 
+import { createStrungCircle } from 'Draw/bonds/strung/create';
+import { createStrungTriangle } from 'Draw/bonds/strung/create';
+import { addStrungElementToBond } from 'Draw/bonds/strung/addToBond';
+
+import { curveOfBond } from 'Draw/bonds/strung/curveOfBond';
+import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
+
+import { toSpecification as strungElementToSpecification } from 'Draw/bonds/strung/save/toSpecification';
+
 let container = null;
 let svg = null;
 let bond = null;
@@ -39,12 +48,24 @@ describe('savableState function', () => {
     expect(lineId).toBeTruthy();
     expect(baseId1).toBeTruthy();
     expect(baseId2).toBeTruthy();
+
+    let curve = curveOfBond(bond);
+    let curveLength = curveLengthOfBond(bond);
+    let strungCircle = createStrungCircle({ curve, curveLength });
+    let strungTriangle = createStrungTriangle({ curve, curveLength });
+    addStrungElementToBond({ bond, strungElement: strungCircle });
+    addStrungElementToBond({ bond, strungElement: strungTriangle });
+
     let saved = savableState(bond);
     expect(saved).toEqual({
       className: 'StraightBond',
       lineId: lineId,
       baseId1: baseId1,
       baseId2: baseId2,
+      strungElements: [
+        strungElementToSpecification(strungCircle),
+        strungElementToSpecification(strungTriangle),
+      ],
     });
   });
 
