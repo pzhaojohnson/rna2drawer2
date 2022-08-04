@@ -46,11 +46,11 @@ export class StraightBond {
   contains(node: SVG.Element | Node): boolean {
     if (strungElementsContainNode(this.strungElements, node)) {
       return true;
+    } else if (node instanceof SVG.Element) {
+      return node == this.line;
+    } else {
+      return this.line.node.contains(node);
     }
-    if (node instanceof SVG.Element) {
-      node = node.node;
-    }
-    return this.line.node == node || this.line.node.contains(node);
   }
 
   binds(b: Base): boolean {
