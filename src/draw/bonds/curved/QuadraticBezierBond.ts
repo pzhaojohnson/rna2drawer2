@@ -11,6 +11,13 @@ import {
 } from './positioning';
 import { position } from './position';
 
+export type NodeLike = (
+  Node
+  | SVG.Element
+  | QuadraticBezierBond
+  | StrungElement
+);
+
 export class QuadraticBezierBond {
   readonly path: SVG.Path;
   readonly base1: Base;
@@ -56,13 +63,17 @@ export class QuadraticBezierBond {
     return String(this.path.id());
   }
 
-  contains(node: SVG.Element | Node): boolean {
-    if (strungElementsContainNode(this.strungElements, node)) {
+  contains(node: NodeLike): boolean {
+    if (node instanceof QuadraticBezierBond) {
+      return node == this;
+    } else if (strungElementsContainNode(this.strungElements, node)) {
       return true;
     } else if (node instanceof SVG.Element) {
       return node == this.path;
-    } else {
+    } else if (node instanceof Node) {
       return this.path.node.contains(node);
+    } else {
+      return false;
     }
   }
 

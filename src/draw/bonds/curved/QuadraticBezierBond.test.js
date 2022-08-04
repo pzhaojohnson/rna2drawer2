@@ -8,6 +8,7 @@ import { round } from 'Math/round';
 
 import { createStrungCircle } from 'Draw/bonds/strung/create';
 import { createStrungTriangle } from 'Draw/bonds/strung/create';
+import { createStrungRectangle } from 'Draw/bonds/strung/create';
 
 import { curveOfBond } from 'Draw/bonds/strung/curveOfBond';
 import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
@@ -110,22 +111,32 @@ describe('QuadraticBezierBond class', () => {
     let curveLength = curveLengthOfBond(bond);
     let strungCircle = createStrungCircle({ curve, curveLength });
     let strungTriangle = createStrungTriangle({ curve, curveLength });
+    let strungRectangle = createStrungRectangle({ curve, curveLength });
     addStrungElementToBond({ bond, strungElement: strungCircle });
     addStrungElementToBond({ bond, strungElement: strungTriangle });
+    // don't add the strung rectangle
 
     // contains method of nodes doesn't seem to work on Node.js
+    expect(bond.contains(bond)).toBeTruthy();
     expect(bond.contains(bond.path)).toBeTruthy();
     expect(bond.contains(bond.path.node))//.toBeTruthy();
 
     // contains method of nodes doesn't seem to work on Node.js
+    expect(bond.contains(strungCircle)).toBeTruthy();
     expect(bond.contains(strungCircle.circle)).toBeTruthy();
     expect(bond.contains(strungCircle.circle.node))//.toBeTruthy();
+    expect(bond.contains(strungTriangle)).toBeTruthy();
     expect(bond.contains(strungTriangle.path)).toBeTruthy();
     expect(bond.contains(strungTriangle.path.node))//.toBeTruthy();
+    expect(bond.contains(strungRectangle)).toBeFalsy();
+    expect(bond.contains(strungRectangle.path)).toBeFalsy();
+    expect(bond.contains(strungRectangle.path.node)).toBeFalsy();
 
     let path = svg.path('M 50 60 Q 0 0 100 200');
     expect(bond.contains(path)).toBeFalsy();
     expect(bond.contains(path.node)).toBeFalsy();
+    let otherBond = new QuadraticBezierBond(path, base1, base2);
+    expect(bond.contains(otherBond)).toBeFalsy();
   });
 
   it('binds method', () => {

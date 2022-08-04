@@ -7,6 +7,7 @@ import { position } from './position';
 
 import { createStrungText } from 'Draw/bonds/strung/create';
 import { createStrungRectangle } from 'Draw/bonds/strung/create';
+import { createStrungCircle } from 'Draw/bonds/strung/create';
 
 import { curveOfBond } from 'Draw/bonds/strung/curveOfBond';
 import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
@@ -125,22 +126,32 @@ describe('StraightBond class', () => {
     let curveLength = curveLengthOfBond(bond);
     let strungText = createStrungText({ text: 'W', curve, curveLength });
     let strungRectangle = createStrungRectangle({ curve, curveLength });
+    let strungCircle = createStrungCircle({ curve, curveLength });
     addStrungElementToBond({ bond, strungElement: strungText });
     addStrungElementToBond({ bond, strungElement: strungRectangle });
+    // don't add the strung circle
 
     // contains method of nodes doesn't seem to work on Node.js
+    expect(bond.contains(bond)).toBeTruthy();
     expect(bond.contains(bond.line)).toBeTruthy();
     expect(bond.contains(bond.line.node))//.toBeTruthy();
 
     // contains method of nodes doesn't seem to work on Node.js
+    expect(bond.contains(strungText)).toBeTruthy();
     expect(bond.contains(strungText.text)).toBeTruthy();
     expect(bond.contains(strungText.text.node))//.toBeTruthy();
+    expect(bond.contains(strungRectangle)).toBeTruthy();
     expect(bond.contains(strungRectangle.path)).toBeTruthy();
     expect(bond.contains(strungRectangle.path.node))//.toBeTruthy();
+    expect(bond.contains(strungCircle)).toBeFalsy();
+    expect(bond.contains(strungCircle.circle)).toBeFalsy();
+    expect(bond.contains(strungCircle.circle.node)).toBeFalsy();
 
     let line = svg.line(1, 20, 300, 4000);
     expect(bond.contains(line)).toBeFalsy();
     expect(bond.contains(line.node)).toBeFalsy();
+    let otherBond = new StraightBond(line, base1, base2);
+    expect(bond.contains(otherBond)).toBeFalsy();
   });
 
   it('binds method', () => {

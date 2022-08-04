@@ -6,6 +6,13 @@ import { distance2D as distance } from 'Math/distance';
 import { assignUuid } from 'Draw/svg/assignUuid';
 import { position } from './position';
 
+export type NodeLike = (
+  Node
+  | SVG.Element
+  | StraightBond
+  | StrungElement
+);
+
 export class StraightBond {
   readonly line: SVG.Line;
   readonly base1: Base;
@@ -43,13 +50,17 @@ export class StraightBond {
     return String(this.line.id());
   }
 
-  contains(node: SVG.Element | Node): boolean {
-    if (strungElementsContainNode(this.strungElements, node)) {
+  contains(node: NodeLike): boolean {
+    if (node instanceof StraightBond) {
+      return node == this;
+    } else if (strungElementsContainNode(this.strungElements, node)) {
       return true;
     } else if (node instanceof SVG.Element) {
       return node == this.line;
-    } else {
+    } else if (node instanceof Node) {
       return this.line.node.contains(node);
+    } else {
+      return false;
     }
   }
 
