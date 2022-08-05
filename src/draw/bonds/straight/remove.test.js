@@ -3,6 +3,15 @@ import Drawing from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addPrimaryBond, addSecondaryBond } from './add';
 
+import { createStrungText } from 'Draw/bonds/strung/create';
+import { createStrungCircle } from 'Draw/bonds/strung/create';
+import { createStrungTriangle } from 'Draw/bonds/strung/create';
+import { createStrungRectangle } from 'Draw/bonds/strung/create';
+import { addStrungElementToBond } from 'Draw/bonds/strung/addToBond';
+
+import { curveOfBond } from 'Draw/bonds/strung/curveOfBond';
+import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
+
 function lineWasRemoved(line) {
   return line.root() ? false : true;
 }
@@ -47,6 +56,22 @@ describe('removePrimaryBondById function', () => {
     expect(lineWasRemoved(pb.line)).toBeTruthy();
   });
 
+  it('removes strung elements', () => {
+    let pb = drawing.primaryBonds[0];
+    let curve = curveOfBond(pb);
+    let curveLength = curveLengthOfBond(pb);
+    let strungText = createStrungText({ text: 'W', curve, curveLength });
+    let strungTriangle = createStrungTriangle({ curve, curveLength });
+    addStrungElementToBond({ bond: pb, strungElement: strungText });
+    addStrungElementToBond({ bond: pb, strungElement: strungTriangle });
+
+    expect(strungText.text.root()).toBe(drawing.svg);
+    expect(strungTriangle.path.root()).toBe(drawing.svg);
+    removePrimaryBondById(drawing, pb.id);
+    expect(strungText.text.root()).toBeFalsy(); // was removed
+    expect(strungTriangle.path.root()).toBeFalsy(); // was removed
+  });
+
   it('removes from primary bonds array', () => {
     expect(drawing.primaryBonds.length).toBeGreaterThanOrEqual(6);
     let n = drawing.primaryBonds.length;
@@ -80,6 +105,22 @@ describe('removeSecondaryBondById function', () => {
     expect(lineWasRemoved(sb.line)).toBeFalsy();
     removeSecondaryBondById(drawing, sb.id);
     expect(lineWasRemoved(sb.line)).toBeTruthy();
+  });
+
+  it('removes strung elements', () => {
+    let sb = drawing.secondaryBonds[0];
+    let curve = curveOfBond(sb);
+    let curveLength = curveLengthOfBond(sb);
+    let strungCircle = createStrungCircle({ curve, curveLength });
+    let strungRectangle = createStrungRectangle({ curve, curveLength });
+    addStrungElementToBond({ bond: sb, strungElement: strungCircle });
+    addStrungElementToBond({ bond: sb, strungElement: strungRectangle });
+
+    expect(strungCircle.circle.root()).toBe(drawing.svg);
+    expect(strungRectangle.path.root()).toBe(drawing.svg);
+    removeSecondaryBondById(drawing, sb.id);
+    expect(strungCircle.circle.root()).toBeFalsy(); // was removed
+    expect(strungRectangle.path.root()).toBeFalsy(); // was removed
   });
 
   it('removes from secondary bonds array', () => {

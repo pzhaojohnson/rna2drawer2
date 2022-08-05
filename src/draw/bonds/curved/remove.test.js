@@ -3,6 +3,13 @@ import Drawing from 'Draw/Drawing';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { addTertiaryBond } from './add';
 
+import { createStrungText } from 'Draw/bonds/strung/create';
+import { createStrungTriangle } from 'Draw/bonds/strung/create';
+import { addStrungElementToBond } from 'Draw/bonds/strung/addToBond';
+
+import { curveOfBond } from 'Draw/bonds/strung/curveOfBond';
+import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
+
 function pathWasRemoved(tb) {
   return tb.path.root() ? false : true;
 }
@@ -51,6 +58,22 @@ describe('removeTertiaryBondById function', () => {
     expect(pathWasRemoved(tb)).toBeFalsy();
     removeTertiaryBondById(drawing, tb.id);
     expect(pathWasRemoved(tb)).toBeTruthy();
+  });
+
+  it('removes strung elements', () => {
+    let tb = drawing.tertiaryBonds[0];
+    let curve = curveOfBond(tb);
+    let curveLength = curveLengthOfBond(tb);
+    let strungText = createStrungText({ text: 'B', curve, curveLength });
+    let strungTriangle = createStrungTriangle({ curve, curveLength });
+    addStrungElementToBond({ bond: tb, strungElement: strungText });
+    addStrungElementToBond({ bond: tb, strungElement: strungTriangle });
+
+    expect(strungText.text.root()).toBe(drawing.svg);
+    expect(strungTriangle.path.root()).toBe(drawing.svg);
+    removeTertiaryBondById(drawing, tb.id);
+    expect(strungText.text.root()).toBeFalsy(); // was removed
+    expect(strungTriangle.path.root()).toBeFalsy(); // was removed
   });
 
   it('removes from tertiary bonds array', () => {
