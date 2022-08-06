@@ -67,7 +67,7 @@ export type Props = {
   style?: React.CSSProperties;
 };
 
-export class OpacityInput extends React.Component<Props> {
+export class OpacityAttributeInput extends React.Component<Props> {
   state: {
     value: string;
   };
