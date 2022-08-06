@@ -123,14 +123,14 @@ export class OpacityAttributeInput extends React.Component<Props> {
    * The displayed percentage string for the current value of the
    * opacity attribute for the elements.
    *
-   * Is an empty string if the elements do not all have the same value
-   * for their opacity attributes.
+   * Is just a percentage sign if the elements do not all have the same
+   * value for their opacity attributes.
    */
   get initialValue(): string {
     let oldValue = this.oldValue;
 
     if (isNullish(oldValue)) {
-      return '';
+      return '%';
     } else {
       let percentage = 100 * oldValue;
       percentage = round(percentage, this.percentagePlaces);
