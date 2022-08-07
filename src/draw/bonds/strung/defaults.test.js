@@ -7,10 +7,10 @@ import { createStrungRectangle } from 'Draw/bonds/strung/create';
 
 import { appendStrungElement } from 'Draw/bonds/strung/add';
 
-import { strungTextDefaultValues } from './defaults';
-import { strungCircleDefaultValues } from './defaults';
-import { strungTriangleDefaultValues } from './defaults';
-import { strungRectangleDefaultValues } from './defaults';
+import { defaultStrungTextValues } from './defaults';
+import { defaultStrungCircleValues } from './defaults';
+import { defaultStrungTriangleValues } from './defaults';
+import { defaultStrungRectangleValues } from './defaults';
 
 import { updateDefaultValues } from './defaults';
 
@@ -55,7 +55,7 @@ describe('updateDefaultValues function', () => {
     });
 
     updateDefaultValues(text);
-    expect(strungTextDefaultValues).toStrictEqual({
+    expect(defaultStrungTextValues).toStrictEqual({
       text: {
         'font-family': 'Consolas',
         'font-size': 18.6,
@@ -75,7 +75,7 @@ describe('updateDefaultValues function', () => {
     });
 
     updateDefaultValues(text);
-    expect(strungTextDefaultValues).toStrictEqual({
+    expect(defaultStrungTextValues).toStrictEqual({
       text: {
         'font-family': 'Consolas', // unchanged
         'font-size': 18.6, // unchanged
@@ -99,7 +99,7 @@ describe('updateDefaultValues function', () => {
     });
 
     updateDefaultValues(circle);
-    expect(strungCircleDefaultValues).toStrictEqual({
+    expect(defaultStrungCircleValues).toStrictEqual({
       circle: {
         'r': 19.2,
         'stroke': '#bb446a',
@@ -121,7 +121,7 @@ describe('updateDefaultValues function', () => {
     });
 
     updateDefaultValues(circle);
-    expect(strungCircleDefaultValues).toStrictEqual({
+    expect(defaultStrungCircleValues).toStrictEqual({
       circle: {
         'r': 0, // built-in default value
         'stroke': '#000000', // built-in default value
@@ -148,7 +148,7 @@ describe('updateDefaultValues function', () => {
     triangle.tailsHeight = 0.85;
 
     updateDefaultValues(triangle);
-    expect(strungTriangleDefaultValues).toStrictEqual({
+    expect(defaultStrungTriangleValues).toStrictEqual({
       path: {
         'stroke': '#ff497c',
         'stroke-width': 3.09,
@@ -171,7 +171,7 @@ describe('updateDefaultValues function', () => {
     });
 
     updateDefaultValues(triangle);
-    expect(strungTriangleDefaultValues).toStrictEqual({
+    expect(defaultStrungTriangleValues).toStrictEqual({
       path: {
         'stroke': '#000000', // built-in default value
         'stroke-width': 0, // built-in default value
@@ -200,7 +200,7 @@ describe('updateDefaultValues function', () => {
     rectangle.borderRadius = 1.67;
 
     updateDefaultValues(rectangle);
-    expect(strungRectangleDefaultValues).toStrictEqual({
+    expect(defaultStrungRectangleValues).toStrictEqual({
       path: {
         'stroke': '#ff321b',
         'stroke-width': 2.79,
@@ -223,7 +223,7 @@ describe('updateDefaultValues function', () => {
     });
 
     updateDefaultValues(rectangle);
-    expect(strungRectangleDefaultValues).toStrictEqual({
+    expect(defaultStrungRectangleValues).toStrictEqual({
       path: {
         'stroke': '#000000', // built-in default value
         'stroke-width': 0, // built-in default value

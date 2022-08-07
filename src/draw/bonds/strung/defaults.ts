@@ -9,11 +9,11 @@ import { isNullish } from 'Utilities/isNullish';
  */
 export type SVGElementAttributes = { [attributeName: string]: unknown };
 
-export type StrungTextDefaultValues = {
+export type DefaultStrungTextValues = {
   text: SVGElementAttributes;
 };
 
-export const strungTextDefaultValues: StrungTextDefaultValues = {
+export const defaultStrungTextValues: DefaultStrungTextValues = {
   text: {
     'font-family': 'Arial',
     'font-size': 8,
@@ -23,11 +23,11 @@ export const strungTextDefaultValues: StrungTextDefaultValues = {
   },
 };
 
-export type StrungCircleDefaultValues = {
+export type DefaultStrungCircleValues = {
   circle: SVGElementAttributes;
 };
 
-export const strungCircleDefaultValues: StrungCircleDefaultValues = {
+export const defaultStrungCircleValues: DefaultStrungCircleValues = {
   circle: {
     'r': 9,
     'stroke': '#000000',
@@ -38,14 +38,14 @@ export const strungCircleDefaultValues: StrungCircleDefaultValues = {
   },
 };
 
-export type StrungTriangleDefaultValues = {
+export type DefaultStrungTriangleValues = {
   path: SVGElementAttributes;
   width: number;
   height: number;
   tailsHeight: number;
 };
 
-export const strungTriangleDefaultValues: StrungTriangleDefaultValues = {
+export const defaultStrungTriangleValues: DefaultStrungTriangleValues = {
   path: {
     'stroke': '#000000',
     'stroke-width': 1,
@@ -58,14 +58,14 @@ export const strungTriangleDefaultValues: StrungTriangleDefaultValues = {
   tailsHeight: 0,
 };
 
-export type StrungRectangleDefaultValues = {
+export type DefaultStrungRectangleValues = {
   path: SVGElementAttributes;
   width: number;
   height: number;
   borderRadius: number;
 };
 
-export const strungRectangleDefaultValues: StrungRectangleDefaultValues = {
+export const defaultStrungRectangleValues: DefaultStrungRectangleValues = {
   path: {
     'stroke': '#000000',
     'stroke-width': 1,
@@ -97,13 +97,13 @@ export function updateDefaultValues(ele: StrungElement) {
 
   let defaultSVGElementAttributes: SVGElementAttributes;
   if (ele.type == 'StrungText') {
-    defaultSVGElementAttributes = strungTextDefaultValues.text;
+    defaultSVGElementAttributes = defaultStrungTextValues.text;
   } else if (ele.type == 'StrungCircle') {
-    defaultSVGElementAttributes = strungCircleDefaultValues.circle;
+    defaultSVGElementAttributes = defaultStrungCircleValues.circle;
   } else if (ele.type == 'StrungTriangle') {
-    defaultSVGElementAttributes = strungTriangleDefaultValues.path;
+    defaultSVGElementAttributes = defaultStrungTriangleValues.path;
   } else {
-    defaultSVGElementAttributes = strungRectangleDefaultValues.path;
+    defaultSVGElementAttributes = defaultStrungRectangleValues.path;
   }
 
   Object.keys(defaultSVGElementAttributes).forEach((name: string) => {
@@ -114,14 +114,14 @@ export function updateDefaultValues(ele: StrungElement) {
   });
 
   if (ele.type == 'StrungTriangle') {
-    let defaultValues = strungTriangleDefaultValues;
+    let defaultValues = defaultStrungTriangleValues;
     defaultValues.width = ele.width;
     defaultValues.height = ele.height;
     defaultValues.tailsHeight = ele.tailsHeight;
   }
 
   if (ele.type == 'StrungRectangle') {
-    let defaultValues = strungRectangleDefaultValues;
+    let defaultValues = defaultStrungRectangleValues;
     defaultValues.width = ele.width;
     defaultValues.height = ele.height;
     defaultValues.borderRadius = ele.borderRadius;
