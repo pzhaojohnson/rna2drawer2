@@ -1,5 +1,7 @@
 import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
+import { NumbersWrapper } from 'Values/NumbersWrapper';
+
 import { isNullish } from 'Utilities/isNullish';
 
 export type Nullish = null | undefined;
@@ -15,6 +17,15 @@ export type NormalizeOptions = {
    * Defaults to zero if left unspecified.
    */
   angleFloor?: number;
+};
+
+export type RoundOptions = {
+  /**
+   * The number of decimal places to round to.
+   *
+   * Defaults to zero.
+   */
+  places?: number;
 };
 
 /**
@@ -45,5 +56,17 @@ export class AnglesWrapper {
         }
       })
     );
+  }
+
+  /**
+   * Returns a new angles wrapper of the rounded angles.
+   */
+  round(options?: RoundOptions): AnglesWrapper {
+    let angles = new NumbersWrapper(this.angles);
+
+    let places = options?.places ?? 0;
+    angles = angles.round(places);
+
+    return new AnglesWrapper(angles.values);
   }
 }

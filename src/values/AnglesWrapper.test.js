@@ -50,4 +50,21 @@ describe('AnglesWrapper class', () => {
       expect(angles.angles[2]).toBeUndefined();
     });
   });
+
+  test('round method', () => {
+    let angles = new AnglesWrapper(
+      // include some nullish values
+      [1, 5.912684, 3.22, null, undefined, -9.194829]
+    );
+
+    // specifying places
+    expect(angles.round({ places: 4 }).angles).toStrictEqual(
+      [1, 5.9127, 3.22, null, undefined, -9.1948]
+    );
+
+    // leaving places unspecified
+    expect(angles.round().angles).toStrictEqual(
+      [1, 6, 3, null, undefined, -9]
+    );
+  });
 });
