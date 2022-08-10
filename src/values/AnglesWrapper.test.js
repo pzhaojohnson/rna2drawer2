@@ -1,3 +1,5 @@
+import { isNullish } from 'Utilities/isNullish';
+
 import { AnglesWrapper } from './AnglesWrapper';
 
 describe('AnglesWrapper class', () => {
@@ -66,5 +68,23 @@ describe('AnglesWrapper class', () => {
     expect(angles.round().angles).toStrictEqual(
       [1, 6, 3, null, undefined, -9]
     );
+  });
+
+  test('commonValue getter', () => {
+    // all the same value
+    let angles = new AnglesWrapper([1.12, 1.12, 1.12, 1.12]);
+    expect(angles.commonValue).toBe(1.12);
+
+    // one value is different
+    angles = new AnglesWrapper([1.12, 1.12, 1.11, 1.12]);
+    expect(isNullish(angles.commonValue)).toBeTruthy();
+
+    // a null value
+    angles = new AnglesWrapper([1.12, null, 1.12, 1.12]);
+    expect(isNullish(angles.commonValue)).toBeTruthy();
+
+    // an undefined value
+    angles = new AnglesWrapper([1.12, 1.12, 1.12, undefined]);
+    expect(isNullish(angles.commonValue)).toBeTruthy();
   });
 });

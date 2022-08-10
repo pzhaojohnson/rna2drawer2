@@ -69,4 +69,13 @@ export class AnglesWrapper {
 
     return new AnglesWrapper(angles.values);
   }
+
+  /**
+   * Returns a nullish value if not all angles are the same
+   * or if the angles array contains a nullish value.
+   */
+  get commonValue(): number | Nullish {
+    let angles = new NumbersWrapper(this.angles);
+    return angles.commonValue;
+  }
 }
