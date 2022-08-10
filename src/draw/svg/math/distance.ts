@@ -2,7 +2,7 @@
 import { distance2D as _distance2D } from 'Math/distance';
 
 import { interpretNumericValue } from 'Draw/svg/interpretNumericValue';
-import { isNullish } from 'Utilities/isNullish';
+import { isNullish } from 'Values/isNullish';
 
 /**
  * Calculates the distance between the two points whose coordinates

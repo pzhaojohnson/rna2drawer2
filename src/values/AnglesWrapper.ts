@@ -2,7 +2,7 @@ import { normalizeAngle } from 'Math/angles/normalizeAngle';
 
 import { NumbersWrapper } from 'Values/NumbersWrapper';
 
-import { isNullish } from 'Utilities/isNullish';
+import { isNullish } from 'Values/isNullish';
 
 export type Nullish = null | undefined;
 

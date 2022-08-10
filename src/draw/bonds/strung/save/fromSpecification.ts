@@ -6,7 +6,7 @@ import type { StrungCircle } from 'Draw/bonds/strung/StrungElement';
 import type { StrungTriangle } from 'Draw/bonds/strung/StrungElement';
 import type { StrungRectangle } from 'Draw/bonds/strung/StrungElement';
 
-import { isNumber } from 'Utilities/isNumber';
+import { isNumber } from 'Values/isNumber';
 import { isPoint2D as isVector } from 'Math/points/Point';
 
 import { updateDefaultValues } from 'Draw/bonds/strung/defaults';

@@ -1,4 +1,4 @@
-import { isNullish } from 'Utilities/isNullish';
+import { isNullish } from 'Values/isNullish';
 
 import { AnglesWrapper } from './AnglesWrapper';
 

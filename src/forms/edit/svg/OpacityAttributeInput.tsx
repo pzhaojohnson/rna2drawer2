@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { TextInput } from 'Forms/inputs/text/TextInput';
 
-import { isNullish } from 'Utilities/isNullish';
+import { isNullish } from 'Values/isNullish';
 import { round } from 'Math/round';
 import { isBlank } from 'Parse/isBlank';
 
