@@ -1,0 +1,46 @@
+.typeSelect {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+  border: 1px solid #c8c8d4;
+  border-radius: 10px;
+
+  padding: 4px 4px;
+}
+
+.typeButton {
+  border-width: 1px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 50px;
+
+  padding: 2px 8px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  outline: none;
+  box-shadow: none;
+}
+
+.toggledTypeButton {
+  color: white;
+  background-color: #18181f;
+}
+
+.untoggledTypeButton {
+  color: #121215;
+  background-color: transparent;
+}
+
+.untoggledTypeButton:hover {
+  border-color: #a4a4b6;
+}
