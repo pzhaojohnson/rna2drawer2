@@ -1,0 +1,32 @@
+.strungElementsSectionHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.text {
+  margin-left: 6px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1b1b1d;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.strungElementsSectionHeader:hover .text {
+  text-decoration: underline;
+}
+
+.strungElementsSectionHeader:active .text {
+  transform: scale(0.96);
+}
