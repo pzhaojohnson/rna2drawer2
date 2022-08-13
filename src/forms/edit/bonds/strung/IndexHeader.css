@@ -1,4 +1,4 @@
-.strungElementsSectionHeader {
+.indexHeader {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -23,10 +23,10 @@
   -webkit-user-select: none;
 }
 
-.strungElementsSectionHeader:hover .text {
+.indexHeader:hover .text {
   text-decoration: underline;
 }
 
-.strungElementsSectionHeader:active .text {
+.indexHeader:active .text {
   transform: scale(0.96);
 }

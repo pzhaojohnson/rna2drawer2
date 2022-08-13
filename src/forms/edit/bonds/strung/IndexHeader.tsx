@@ -2,7 +2,7 @@ import type { Bond } from 'Forms/edit/bonds/strung/Bond';
 import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
 
 import * as React from 'react';
-import styles from './StrungElementsSectionHeader.css';
+import styles from './IndexHeader.css';
 
 function RightBracket() {
   return (
@@ -67,10 +67,10 @@ export type Props = {
   style?: React.CSSProperties;
 };
 
-export function StrungElementsSectionHeader(props: Props) {
+export function IndexHeader(props: Props) {
   return (
     <div
-      className={styles.strungElementsSectionHeader}
+      className={styles.indexHeader}
       onClick={props.onClick}
       style={props.style}
     >
