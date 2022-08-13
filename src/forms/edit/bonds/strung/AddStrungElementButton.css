@@ -1,0 +1,36 @@
+.addStrungElementButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid #c0c0d9;
+  border-radius: 60px;
+
+  padding: 4px 0px;
+  width: 186px;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.addStrungElementButton:hover {
+  box-shadow: 0px 3px 3px #d2d2ec96;
+  transform: scale(1.04);
+  transition: transform 0.04s;
+}
+
+.addStrungElementButtonText {
+  margin-left: 4px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #050544;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
