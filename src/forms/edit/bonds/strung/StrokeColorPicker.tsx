@@ -67,8 +67,8 @@ export class StrokeColorPicker extends React.Component<Props> {
       <ColorAttributePicker
         elements={svgElements}
         attributeName='stroke'
-        onBeforeEdit={this.onBeforeEdit}
-        onEdit={this.onEdit}
+        onBeforeEdit={event => this.onBeforeEdit(event)}
+        onEdit={event => this.onEdit(event)}
       />
     );
   }

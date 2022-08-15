@@ -69,8 +69,8 @@ export class FillColorPicker extends React.Component<Props> {
       <ColorAttributePicker
         elements={svgElements}
         attributeName='fill'
-        onBeforeEdit={this.onBeforeEdit}
-        onEdit={this.onEdit}
+        onBeforeEdit={event => this.onBeforeEdit(event)}
+        onEdit={event => this.onEdit(event)}
       />
     );
   }

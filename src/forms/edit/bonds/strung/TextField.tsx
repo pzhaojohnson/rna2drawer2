@@ -74,7 +74,7 @@ export class TextField extends React.Component<Props> {
         label='Text'
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
-        onBlur={this.processValue}
+        onBlur={() => this.processValue()}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.processValue();

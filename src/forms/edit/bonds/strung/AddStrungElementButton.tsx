@@ -56,7 +56,7 @@ export class AddStrungElementButton extends React.Component<Props> {
     return (
       <div
         className={styles.addStrungElementButton}
-        onClick={this.handleClick}
+        onClick={() => this.handleClick()}
         style={this.props.style}
       >
         <PlusIcon />

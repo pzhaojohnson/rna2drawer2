@@ -72,8 +72,8 @@ export class BorderRadiusField extends React.Component<Props> {
           propertyName='borderRadius'
           minValue={0}
           places={2}
-          onBeforeEdit={this.onBeforeEdit}
-          onEdit={this.onEdit}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '8px' }} >
           Border Radius

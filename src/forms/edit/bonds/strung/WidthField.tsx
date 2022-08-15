@@ -81,8 +81,8 @@ export class WidthField extends React.Component<Props> {
           propertyName='width'
           minValue={0}
           places={2}
-          onBeforeEdit={this.onBeforeEdit}
-          onEdit={this.onEdit}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '8px' }} >
           Width

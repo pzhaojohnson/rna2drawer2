@@ -67,8 +67,8 @@ export class FillOpacityInput extends React.Component<Props> {
         elements={svgElements}
         attributeName='fill-opacity'
         places={2}
-        onBeforeEdit={this.onBeforeEdit}
-        onEdit={this.onEdit}
+        onBeforeEdit={event => this.onBeforeEdit(event)}
+        onEdit={event => this.onEdit(event)}
         style={this.props.style}
       />
     );

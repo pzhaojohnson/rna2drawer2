@@ -54,8 +54,8 @@ export class FontFamilySelect extends React.Component<Props> {
     return (
       <_FontFamilySelect
         elements={svgElements}
-        onBeforeEdit={this.onBeforeEdit}
-        onEdit={this.onEdit}
+        onBeforeEdit={event => this.onBeforeEdit(event)}
+        onEdit={event => this.onEdit(event)}
       />
     );
   }

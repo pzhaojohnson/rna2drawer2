@@ -62,8 +62,8 @@ class DisplacementFromCurveXField extends React.Component<Props> {
           objects={strungElements.map(ele => ele.displacementFromCurve)}
           propertyName='x'
           places={2}
-          onBeforeEdit={this.onBeforeEdit}
-          onEdit={this.onEdit}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '8px' }} >
           X
@@ -98,8 +98,8 @@ class DisplacementFromCurveYField extends React.Component<Props> {
           objects={strungElements.map(ele => ele.displacementFromCurve)}
           propertyName='y'
           places={2}
-          onBeforeEdit={this.onBeforeEdit}
-          onEdit={this.onEdit}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '8px' }} >
           Y

@@ -62,8 +62,8 @@ export class FontSizeField extends React.Component<Props> {
           attributeName='font-size'
           minValue={1}
           places={1}
-          onBeforeEdit={this.onBeforeEdit}
-          onEdit={this.onEdit}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '8px' }} >
           Font Size

@@ -148,7 +148,7 @@ class TypeButton extends React.Component<TypeButtonProps> {
 
   render() {
     return (
-      <button className={this.className} onClick={this.handleClick} >
+      <button className={this.className} onClick={() => this.handleClick()} >
         {this.textContent}
       </button>
     );

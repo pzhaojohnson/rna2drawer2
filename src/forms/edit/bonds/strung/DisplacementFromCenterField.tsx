@@ -60,8 +60,8 @@ export class DisplacementFromCenterField extends React.Component<Props> {
           objects={this.props.strungElements}
           propertyName='displacementFromCenter'
           places={2}
-          onBeforeEdit={this.onBeforeEdit}
-          onEdit={this.onEdit}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '8px' }} >
           Displacement From Center

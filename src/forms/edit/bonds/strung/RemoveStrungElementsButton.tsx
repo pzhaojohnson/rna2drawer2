@@ -66,7 +66,7 @@ export class RemoveStrungElementsButton extends React.Component<Props> {
     return (
       <div
         className={styles.removeStrungElementsButton}
-        onClick={this.handleClick}
+        onClick={() => this.handleClick()}
         style={this.props.style}
       >
         <MinusIcon />

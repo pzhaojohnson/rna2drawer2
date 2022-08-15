@@ -59,8 +59,8 @@ export class FontWeightField extends React.Component<Props> {
       <FieldLabel>
         <FontWeightInput
           elements={svgElements}
-          onBeforeEdit={this.onBeforeEdit}
-          onEdit={this.onEdit}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '6px' }} >
           Bold

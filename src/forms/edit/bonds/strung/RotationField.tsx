@@ -67,8 +67,8 @@ export class RotationField extends React.Component<Props> {
           angleFloor={0}
           places={2}
           displayedPlaces={0}
-          onBeforeEdit={this.onBeforeEdit}
-          onEdit={this.onEdit}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '8px' }} >
           Rotation
