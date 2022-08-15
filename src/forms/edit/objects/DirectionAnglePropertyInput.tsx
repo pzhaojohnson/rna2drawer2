@@ -148,7 +148,7 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
       <TextInput
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
-        onBlur={this.processValue}
+        onBlur={() => this.processValue()}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.processValue();

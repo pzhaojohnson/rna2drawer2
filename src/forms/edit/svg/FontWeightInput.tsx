@@ -66,7 +66,7 @@ export class FontWeightInput extends React.Component<Props> {
       <input
         type='checkbox'
         checked={this.oldValue == 700}
-        onChange={this.handleChange}
+        onChange={event => this.handleChange(event)}
         style={this.props.style}
       />
     );

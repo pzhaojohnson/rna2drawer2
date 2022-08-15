@@ -69,7 +69,7 @@ export class FontFamilySelect extends React.Component<Props> {
     return (
       <_FontFamilySelect
         value={this.oldValue}
-        onChange={this.handleChange}
+        onChange={event => this.handleChange(event)}
       />
     );
   }

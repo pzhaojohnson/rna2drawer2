@@ -79,7 +79,7 @@ export class ColorAttributePicker extends React.Component<Props> {
     return (
       <ColorPicker
         value={this.oldValue}
-        onClose={this.handleClose}
+        onClose={event => this.handleClose(event)}
         disableAlpha={true}
       />
     );
