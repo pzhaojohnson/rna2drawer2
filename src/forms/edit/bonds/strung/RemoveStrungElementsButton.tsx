@@ -16,7 +16,7 @@ function MinusIcon() {
       xmlns="http://www.w3.org/2000/svg" version="1.1"
       width="10px" height="10px"
     >
-      <path d="M 1 5 H 9" stroke="#ac4b4b" stroke-width="2" />
+      <path d="M 1 5 H 9" stroke="#ac4b4b" strokeWidth="2" />
     </svg>
   );
 }
