@@ -14,6 +14,8 @@ import { StrokeLinecapField } from './StrokeLinecapField';
 import { ShapeField } from './ShapeField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
+import { StrungElementsSection } from 'Forms/edit/bonds/strung/StrungElementsSection';
+
 function DrawingHasNoSecondaryBondsNotes() {
   return (
     <div>
@@ -190,6 +192,8 @@ export function EditSecondaryBondsForm(props: Props) {
           <StrokeLinecapField {...props} />
           <ShapeField {...props} />
           <ForwardBackwardButtons {...props} />
+          <div style={{ height: '20px' }} />
+          <StrungElementsSection {...props} bonds={props.secondaryBonds} />
         </div>
       )}
     </PartialWidthContainer>
