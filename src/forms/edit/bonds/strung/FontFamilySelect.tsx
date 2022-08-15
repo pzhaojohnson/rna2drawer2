@@ -52,11 +52,13 @@ export class FontFamilySelect extends React.Component<Props> {
     let svgElements = strungElements.map(svgElementOfStrungElement);
 
     return (
-      <_FontFamilySelect
-        elements={svgElements}
-        onBeforeEdit={event => this.onBeforeEdit(event)}
-        onEdit={event => this.onEdit(event)}
-      />
+      <div style={{ marginTop: '8px' }} >
+        <_FontFamilySelect
+          elements={svgElements}
+          onBeforeEdit={event => this.onBeforeEdit(event)}
+          onEdit={event => this.onEdit(event)}
+        />
+      </div>
     );
   }
 }

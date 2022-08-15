@@ -57,10 +57,14 @@ export function IndexSection(props: Props) {
   );
 
   let removeButton = (
-    <RemoveStrungElementsButton {...props} strungElements={strungElements} />
+    <RemoveStrungElementsButton
+      {...props}
+      strungElements={strungElements}
+      style={{ marginLeft: '8px' }}
+    />
   );
 
-  let fields = <IndexFields {...props} />;
+  let fields = <IndexFields {...props} style={{ margin: '6px 0 0 6px' }} />;
 
   useEffect(() => {
     return () => {

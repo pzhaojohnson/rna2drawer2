@@ -75,7 +75,7 @@ export class HeightField extends React.Component<Props> {
 
   render() {
     return (
-      <FieldLabel>
+      <FieldLabel style={{ marginTop: '6px' }} >
         <NumberPropertyInput
           objects={this.props.strungElements}
           propertyName='height'

@@ -34,7 +34,7 @@ export type Props = {
  */
 export function StrokeColorField(props: Props) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }} >
+    <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center' }} >
       <StrokeColorPicker {...props} />
       <FieldLabel
         style={{ marginLeft: '6px', display: 'flex', alignItems: 'center' }}

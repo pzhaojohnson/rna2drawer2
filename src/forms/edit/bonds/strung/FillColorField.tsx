@@ -28,7 +28,7 @@ export type Props = {
  */
 export function FillColorField(props: Props) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }} >
+    <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center' }} >
       <FillColorPicker {...props} />
       <FieldLabel style={{ marginLeft: '6px' }} >
         <FillOpacityInput {...props} />

@@ -56,7 +56,7 @@ export class FontSizeField extends React.Component<Props> {
     let svgElements = strungElements.map(svgElementOfStrungElement);
 
     return (
-      <FieldLabel>
+      <FieldLabel style={{ marginTop: '6px' }} >
         <NumericAttributeInput
           elements={svgElements}
           attributeName='font-size'

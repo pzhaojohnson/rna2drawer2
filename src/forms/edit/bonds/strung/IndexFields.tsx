@@ -119,10 +119,10 @@ export function IndexFields(props: Props) {
   };
 
   return (
-    <div style={props.style} >
+    <div style={{ display: 'flex', flexDirection: 'column', ...props.style }} >
       <TypeSelect {...fieldProps} />
       {strungTexts.length < strungElements.length ? null : (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
           <TextField {...fieldProps} strungElements={strungTexts} />
           <FontFamilySelect {...fieldProps} strungElements={strungTexts} />
           <FontSizeField {...fieldProps} strungElements={strungTexts} />
@@ -134,7 +134,7 @@ export function IndexFields(props: Props) {
         <RadiusField {...fieldProps} strungElements={strungCircles} />
       )}
       {haveWidthAndHeight.length < strungElements.length ? null : (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
           <WidthField {...fieldProps} strungElements={haveWidthAndHeight} />
           <HeightField {...fieldProps} strungElements={haveWidthAndHeight} />
         </div>
@@ -146,7 +146,7 @@ export function IndexFields(props: Props) {
         <BorderRadiusField {...fieldProps} strungElements={strungRectangles} />
       )}
       {haveStroke.length < strungElements.length ? null : (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeColorField {...fieldProps} strungElements={haveStroke} />
           <StrokeWidthField {...fieldProps} strungElements={haveStroke} />
         </div>

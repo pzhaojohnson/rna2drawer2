@@ -112,6 +112,7 @@ class DisplacementFromCurveYField extends React.Component<Props> {
 export class DisplacementFromCurveField extends React.Component<Props> {
   render() {
     let style = {
+      marginTop: '8px',
       display: 'flex', alignItems: 'center',
       ...this.props.style,
     };

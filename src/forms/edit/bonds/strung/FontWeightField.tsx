@@ -56,7 +56,7 @@ export class FontWeightField extends React.Component<Props> {
     let svgElements = strungElements.map(svgElementOfStrungElement);
 
     return (
-      <FieldLabel>
+      <FieldLabel style={{ marginTop: '8px' }} >
         <FontWeightInput
           elements={svgElements}
           onBeforeEdit={event => this.onBeforeEdit(event)}

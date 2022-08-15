@@ -75,7 +75,7 @@ export class WidthField extends React.Component<Props> {
 
   render() {
     return (
-      <FieldLabel>
+      <FieldLabel style={{ marginTop: '8px' }} >
         <NumberPropertyInput
           objects={this.props.strungElements}
           propertyName='width'

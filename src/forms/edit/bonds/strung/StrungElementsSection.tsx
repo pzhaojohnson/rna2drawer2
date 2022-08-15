@@ -38,7 +38,7 @@ export function StrungElementsSection(props: Props) {
   return (
     <div>
       {indices.map(i => (
-        <div key={i} style={{ marginBottom: '20px' }} >
+        <div key={i} style={{ marginBottom: '24px' }} >
           <IndexSection {...props} strungElementsIndex={i} />
         </div>
       ))}
