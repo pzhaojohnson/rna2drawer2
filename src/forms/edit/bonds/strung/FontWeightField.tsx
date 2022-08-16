@@ -55,7 +55,11 @@ export class FontWeightField extends React.Component<Props> {
     let strungElements = this.props.strungElements;
     let svgElements = strungElements.map(svgElementOfStrungElement);
 
-    let style = { marginTop: '8px', alignSelf: 'start', cursor: 'pointer' };
+    let style = {
+      marginTop: '8px',
+      alignSelf: 'start', display: 'flex', alignItems: 'center',
+      cursor: 'pointer',
+    };
 
     return (
       <FieldLabel style={style} >
