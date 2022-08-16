@@ -76,7 +76,7 @@ export class BorderRadiusField extends React.Component<Props> {
           onEdit={event => this.onEdit(event)}
         />
         <span style={{ marginLeft: '8px' }} >
-          Border Radius
+          Corner Radius
         </span>
       </FieldLabel>
     );

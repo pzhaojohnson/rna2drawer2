@@ -125,7 +125,7 @@ export class DisplacementFromCurveField extends React.Component<Props> {
           <DisplacementFromCurveYField {...this.props} />
         </div>
         <FieldLabel style={{ marginLeft: '8px' }} >
-          Displacement From Curve
+          Displacement From Line
         </FieldLabel>
       </div>
     );
