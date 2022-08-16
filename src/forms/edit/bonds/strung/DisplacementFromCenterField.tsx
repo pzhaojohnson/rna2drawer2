@@ -55,8 +55,7 @@ export class DisplacementFromCenterField extends React.Component<Props> {
 
   render() {
     let style = {
-      marginTop: '8px',
-      cursor: 'text',
+      marginTop: '8px', alignSelf: 'start', cursor: 'text',
       ...this.props.style,
     };
 

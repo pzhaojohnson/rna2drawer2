@@ -63,8 +63,10 @@ export class StrokeWidthField extends React.Component<Props> {
     let strungElements = this.props.strungElements;
     let svgElements = strungElements.map(svgElementOfStrungElement);
 
+    let style = { marginTop: '8px', alignSelf: 'start', cursor: 'text' };
+
     return (
-      <FieldLabel style={{ marginTop: '8px', cursor: 'text' }} >
+      <FieldLabel style={style} >
         <NumericAttributeInput
           elements={svgElements}
           attributeName='stroke-width'
