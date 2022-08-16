@@ -38,6 +38,8 @@ import { RotationField } from 'Forms/edit/bonds/strung/RotationField';
 import { DisplacementFromCenterField } from 'Forms/edit/bonds/strung/DisplacementFromCenterField';
 import { DisplacementFromCurveField } from 'Forms/edit/bonds/strung/DisplacementFromCurveField';
 
+import { ForwardAndBackwardButtons } from 'Forms/edit/bonds/strung/ForwardAndBackwardButtons';
+
 function categorizeStrungElements(strungElements: StrungElement[]) {
   let strungTexts: StrungText[] = [];
   let strungCircles: StrungCircle[] = [];
@@ -156,6 +158,7 @@ export function IndexFields(props: Props) {
       )}
       <DisplacementFromCenterField {...fieldProps} />
       <DisplacementFromCurveField {...fieldProps} />
+      <ForwardAndBackwardButtons {...fieldProps} />
     </div>
   );
 }
