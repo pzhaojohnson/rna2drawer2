@@ -17,8 +17,8 @@ export const defaultStrungTextValues: DefaultStrungTextValues = {
   text: {
     'font-family': 'Arial',
     'font-size': 8,
-    'font-weight': 400,
-    'fill': '#808080',
+    'font-weight': 700,
+    'fill': '#000000',
     'fill-opacity': 1,
   },
 };
@@ -29,7 +29,7 @@ export type DefaultStrungCircleValues = {
 
 export const defaultStrungCircleValues: DefaultStrungCircleValues = {
   circle: {
-    'r': 9,
+    'r': 3,
     'stroke': '#000000',
     'stroke-width': 1,
     'stroke-opacity': 1,
@@ -53,8 +53,8 @@ export const defaultStrungTriangleValues: DefaultStrungTriangleValues = {
     'fill': '#000000',
     'fill-opacity': 1,
   },
-  width: 9,
-  height: 9,
+  width: 6.5,
+  height: 6.5,
   tailsHeight: 0,
 };
 
@@ -73,8 +73,8 @@ export const defaultStrungRectangleValues: DefaultStrungRectangleValues = {
     'fill': '#000000',
     'fill-opacity': 1,
   },
-  width: 9,
-  height: 9,
+  width: 5.5,
+  height: 5.5,
   borderRadius: 0,
 };
 
