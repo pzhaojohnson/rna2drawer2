@@ -13,6 +13,8 @@ import { BasePadding1Field } from './BasePadding1Field';
 import { BasePadding2Field } from './BasePadding2Field';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
+import { StrungElementsSection } from 'Forms/edit/bonds/strung/StrungElementsSection';
+
 function DrawingHasNoTertiaryBondsNotes() {
   return (
     <div>
@@ -101,6 +103,8 @@ export function EditTertiaryBondsForm(props: Props) {
           <BasePadding1Field {...props} />
           <BasePadding2Field {...props} />
           <ForwardBackwardButtons {...props} />
+          <div style={{ height: '32px' }} />
+          <StrungElementsSection {...props} bonds={props.tertiaryBonds} />
         </div>
       )}
     </PartialWidthContainer>
