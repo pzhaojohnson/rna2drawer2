@@ -54,8 +54,14 @@ export class DisplacementFromCenterField extends React.Component<Props> {
   }
 
   render() {
+    let style = {
+      marginTop: '8px',
+      cursor: 'text',
+      ...this.props.style,
+    };
+
     return (
-      <FieldLabel style={{ marginTop: '8px', ...this.props.style }} >
+      <FieldLabel style={style} >
         <NumberPropertyInput
           objects={this.props.strungElements}
           propertyName='displacementFromCenter'

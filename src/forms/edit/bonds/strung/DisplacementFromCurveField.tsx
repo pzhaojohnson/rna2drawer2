@@ -57,7 +57,7 @@ class DisplacementFromCurveXField extends React.Component<Props> {
     let strungElements = this.props.strungElements;
 
     return (
-      <FieldLabel style={this.props.style} >
+      <FieldLabel style={{ cursor: 'text', ...this.props.style }} >
         <NumberPropertyInput
           objects={strungElements.map(ele => ele.displacementFromCurve)}
           propertyName='x'
@@ -93,7 +93,7 @@ class DisplacementFromCurveYField extends React.Component<Props> {
     let strungElements = this.props.strungElements;
 
     return (
-      <FieldLabel style={this.props.style} >
+      <FieldLabel style={{ cursor: 'text', ...this.props.style }} >
         <NumberPropertyInput
           objects={strungElements.map(ele => ele.displacementFromCurve)}
           propertyName='y'

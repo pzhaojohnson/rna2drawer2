@@ -80,7 +80,7 @@ export class TextField extends React.Component<Props> {
             this.processValue();
           }
         }}
-        style={{ marginTop: '8px', ...this.props.style }}
+        style={{ marginTop: '8px', cursor: 'text', ...this.props.style }}
       />
     );
   }

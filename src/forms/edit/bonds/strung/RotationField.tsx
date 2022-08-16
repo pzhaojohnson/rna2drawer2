@@ -59,8 +59,14 @@ export class RotationField extends React.Component<Props> {
   }
 
   render() {
+    let style = {
+      marginTop: '8px',
+      cursor: 'text',
+      ...this.props.style,
+    };
+
     return (
-      <FieldLabel style={{ marginTop: '8px', ...this.props.style }} >
+      <FieldLabel style={style} >
         <DirectionAnglePropertyInput
           objects={this.props.strungElements}
           propertyName='rotation'

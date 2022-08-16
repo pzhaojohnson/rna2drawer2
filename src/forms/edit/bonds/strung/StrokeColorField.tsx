@@ -37,7 +37,11 @@ export function StrokeColorField(props: Props) {
     <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center' }} >
       <StrokeColorPicker {...props} />
       <FieldLabel
-        style={{ marginLeft: '6px', display: 'flex', alignItems: 'center' }}
+        style={{
+          marginLeft: '6px',
+          display: 'flex', alignItems: 'center',
+          cursor: 'text',
+        }}
       >
         <StrokeOpacityInput {...props} />
         <span style={{ marginLeft: '8px' }} >

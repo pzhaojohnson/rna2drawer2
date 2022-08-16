@@ -66,7 +66,7 @@ export class BorderRadiusField extends React.Component<Props> {
 
   render() {
     return (
-      <FieldLabel style={{ marginTop: '8px' }} >
+      <FieldLabel style={{ marginTop: '8px', cursor: 'text' }} >
         <NumberPropertyInput
           objects={this.props.strungElements}
           propertyName='borderRadius'
