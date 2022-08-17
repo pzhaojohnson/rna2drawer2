@@ -74,7 +74,7 @@ export class HeightField extends React.Component<Props> {
   }
 
   render() {
-    let style = { marginTop: '6px', alignSelf: 'start', cursor: 'text' };
+    let style = { marginTop: '8px', alignSelf: 'start', cursor: 'text' };
 
     return (
       <FieldLabel style={style} >

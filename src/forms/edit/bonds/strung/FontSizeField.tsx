@@ -55,7 +55,7 @@ export class FontSizeField extends React.Component<Props> {
     let strungElements = this.props.strungElements;
     let svgElements = strungElements.map(svgElementOfStrungElement);
 
-    let style = { marginTop: '6px', alignSelf: 'start', cursor: 'text' };
+    let style = { marginTop: '8px', alignSelf: 'start', cursor: 'text' };
 
     return (
       <FieldLabel style={style} >

@@ -121,7 +121,7 @@ export class DisplacementFromCurveField extends React.Component<Props> {
       <div style={style} >
         <div>
           <DisplacementFromCurveXField {...this.props} />
-          <div style={{ height: '6px' }} />
+          <div style={{ height: '8px' }} />
           <DisplacementFromCurveYField {...this.props} />
         </div>
         <FieldLabel style={{ marginLeft: '8px' }} >
