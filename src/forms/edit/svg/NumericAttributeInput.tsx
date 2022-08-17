@@ -121,7 +121,10 @@ export class NumericAttributeInput extends React.Component<Props> {
             this.processValue();
           }
         }}
-        style={this.props.style}
+        style={{
+          width: `${Math.max(this.state.value.length, 6)}ch`,
+          ...this.props.style,
+        }}
       />
     );
   }
