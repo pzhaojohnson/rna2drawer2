@@ -69,6 +69,11 @@ export class TextField extends React.Component<Props> {
   }
 
   render() {
+    // in units of "ch"
+    let inputWidth = Math.max(this.state.value.length, 6);
+    // hard coded to prevent overflow of this field in a form
+    inputWidth = Math.min(inputWidth, 28);
+
     return (
       <TextInputField
         label='Text'
@@ -80,6 +85,7 @@ export class TextField extends React.Component<Props> {
             this.processValue();
           }
         }}
+        input={{ style: { width: inputWidth + 'ch' } }}
         style={{
           marginTop: '8px', alignSelf: 'start', cursor: 'text',
           ...this.props.style,
