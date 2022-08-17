@@ -21,6 +21,11 @@
   transition: transform 0.04s;
 }
 
+.addStrungElementButton:active {
+  transform: scale(1);
+  transition: transform 0s;
+}
+
 .addStrungElementButtonText {
   margin-left: 4px;
 
