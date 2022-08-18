@@ -40,12 +40,19 @@ export class AddStrungElementButton extends React.Component<Props> {
   handleClick() {
     this.props.app.pushUndo();
 
-    this.props.bonds.forEach(bond => {
-      let curve = curveOfBond(bond);
-      let curveLength = curveLengthOfBond(bond);
-      if (curve) {
-        let strungElement = createStrungRectangle({ curve, curveLength });
-        addStrungElementToBond({ bond, strungElement });
+    let bonds = this.props.bonds;
+    let arrayLengths = bonds.map(bond => bond.strungElements.length);
+    let minArrayLength = Math.min(...arrayLengths);
+
+    bonds.forEach(bond => {
+      if (bond.strungElements.length <= minArrayLength) {
+        let curve = curveOfBond(bond);
+        let curveLength = curveLengthOfBond(bond);
+        if (curve) {
+          let strungElement = createStrungRectangle({ curve, curveLength });
+          let index = minArrayLength;
+          addStrungElementToBond({ bond, strungElement, index });
+        }
       }
     });
 
