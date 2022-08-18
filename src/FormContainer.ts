@@ -3,6 +3,40 @@ import * as ReactDOM from 'react-dom';
 import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { TrackedOptionalValue } from 'History/TrackedOptionalValue';
 
+type ScrollPositions = {
+  scrollLeft: number;
+  scrollTop: number;
+};
+
+/**
+ * Returns undefined if the element argument is not actually an element.
+ */
+function scrollPositionsOfElement(
+  element: unknown,
+): ScrollPositions | undefined
+{
+  if (!(element instanceof Element)) {
+    return undefined;
+  } else {
+    return {
+      scrollLeft: element.scrollLeft,
+      scrollTop: element.scrollTop,
+    };
+  }
+}
+
+/**
+ * Sets the scroll positions of the element to the provided scroll
+ * positions.
+ */
+function setScrollPositionsOfElement(
+  element: Element,
+  scrollPositions: ScrollPositions,
+) {
+  element.scrollLeft = scrollPositions.scrollLeft;
+  element.scrollTop = scrollPositions.scrollTop;
+}
+
 export type FormProps = {
   unmount: () => void;
   history: FormHistoryInterface;
@@ -96,12 +130,20 @@ export class FormContainer {
   }
 
   refresh() {
-    if (this._renderedForm.current) {
-      this._rerenderForm(this._renderedForm.current);
-    } else {
-      // form should already be unmounted in this case
-      // but can call just to be safe
+    if (!this._renderedForm.current) {
+      // form should already be unmounted but can call just to be safe
       this.unmountForm();
+      return;
+    }
+
+    // remember scroll positions of form
+    let scrollPositions = scrollPositionsOfElement(this.node.firstChild);
+
+    this._rerenderForm(this._renderedForm.current);
+
+    // restore scroll positions of form
+    if (this.node.firstChild instanceof Element && scrollPositions) {
+      setScrollPositionsOfElement(this.node.firstChild, scrollPositions);
     }
   }
 
