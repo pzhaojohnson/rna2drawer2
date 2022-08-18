@@ -12,6 +12,8 @@ import * as React from 'react';
 
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
+import { isBlank } from 'Parse/isBlank';
+
 export type Nullish = null | undefined;
 
 export type Props = {
@@ -99,7 +101,9 @@ export class TextField extends React.Component<Props> {
     // trim leading and trailing whitespace
     newValue = newValue.trim();
 
-    if (newValue == this.oldValue) {
+    if (isBlank(newValue)) {
+      return;
+    } else if (newValue == this.oldValue) {
       return;
     }
 
