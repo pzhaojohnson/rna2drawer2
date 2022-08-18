@@ -1,9 +1,13 @@
 import type { App } from 'App';
 
+import type { Bond } from 'Forms/edit/bonds/strung/Bond';
 import type { StrungText } from 'Draw/bonds/strung/StrungElement';
+
 import { defaultStrungTextValues } from 'Draw/bonds/strung/defaults';
 
 import { svgElementOfStrungElement } from 'Forms/edit/bonds/strung/svgElementOfStrungElement';
+
+import { repositionStrungElementAtIndex } from 'Forms/edit/bonds/strung/repositionStrungElementAtIndex';
 
 import * as React from 'react';
 
@@ -26,6 +30,17 @@ export type Props = {
    * The strung elements to edit.
    */
   strungElements: StrungText[];
+
+  /**
+   * The bonds possessing the strung elements.
+   */
+  bonds: Bond[];
+
+  /**
+   * The index that each of the strung elements is at in the strung
+   * elements array of the bond that possesses it.
+   */
+  strungElementsIndex: number;
 };
 
 /**
@@ -47,6 +62,13 @@ export class FontWeightField extends React.Component<Props> {
         defaultSVGElementAttributes[t]['font-weight'] = newValue;
       });
     }
+
+    this.props.bonds.forEach(bond => {
+      repositionStrungElementAtIndex({
+        bond,
+        index: this.props.strungElementsIndex,
+      });
+    });
 
     this.props.app.refresh();
   }
