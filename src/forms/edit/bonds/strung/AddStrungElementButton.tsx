@@ -45,6 +45,7 @@ export class AddStrungElementButton extends React.Component<Props> {
     let minArrayLength = Math.min(...arrayLengths);
 
     bonds.forEach(bond => {
+      // don't add a strung element if the bond already has more than others
       if (bond.strungElements.length <= minArrayLength) {
         let curve = curveOfBond(bond);
         let curveLength = curveLengthOfBond(bond);
