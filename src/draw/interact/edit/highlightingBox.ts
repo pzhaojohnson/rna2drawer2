@@ -54,25 +54,49 @@ function scaleBox(box: SVG.Box, factor: number): SVG.Box {
   return scaleBoxY(box, factor);
 }
 
-function highlightingBoxOfBase(b: Base): SVG.Box {
-  let textBBox = b.text.bbox();
+function highlightingBoxOfSVGText(text: SVG.Text): SVG.Box {
+  let box = text.bbox();
+  // two pixels of padding on each side
+  box = scaleBoxX(box, 1 + (4 / box.width));
+  return scaleBoxY(box, 1 + (4 / box.height));
+}
 
-  if (!b.outline) {
-    return scaleBox(textBBox, 1 + (6 / textBBox.width));
+function highlightingBoxOfSVGLine(line: SVG.Line): SVG.Box {
+  return bboxOfLine(line);
+}
+
+function highlightingBoxOfSVGCircle(circle: SVG.Circle): SVG.Box {
+  let box = bboxOfCircle(circle);
+  // half a pixel of padding on each side
+  let factor = 1 + (1 / box.width);
+  return scaleBox(box, factor);
+}
+
+function highlightingBoxOfSVGPath(path: SVG.Path): SVG.Box {
+  let box = path.bbox();
+
+  let sw = interpretNumericValue(path.attr('stroke-width'))?.valueOf();
+  if (typeof sw == 'number') {
+    box = scaleBoxX(box, 1 + (sw / box.width));
+    box = scaleBoxY(box, 1 + (sw / box.height));
   }
 
-  let box = textBBox.merge(bboxOfCircle(b.outline.circle));
+  return box;
+}
 
-  return scaleBox(box, 1 + (1 / box.width));
+function highlightingBoxOfBase(b: Base): SVG.Box {
+  let box = highlightingBoxOfSVGText(b.text);
+
+  if (b.outline) {
+    box = box.merge(highlightingBoxOfSVGCircle(b.outline.circle));
+  }
+
+  return box;
 }
 
 function highlightingBoxOfBaseNumbering(bn: BaseNumbering): SVG.Box {
-  let textBox = bn.text.bbox();
-  textBox = scaleBox(textBox, 1 + (4 / textBox.width));
-
-  let lineBox = bboxOfLine(bn.line);
-
-  return textBox.merge(lineBox);
+  let box = highlightingBoxOfSVGText(bn.text);
+  return box.merge(highlightingBoxOfSVGLine(bn.line));
 }
 
 function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
@@ -87,16 +111,11 @@ function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
     );
   }
 
-  return bboxOfLine(sb.line);
+  return highlightingBoxOfSVGLine(sb.line);
 }
 
 function highlightingBoxOfTertiaryBond(tb: TertiaryBond): SVG.Box {
-  let box = tb.path.bbox();
-  let sw = interpretNumericValue(tb.path.attr('stroke-width'))?.valueOf();
-  if (typeof sw == 'number') {
-    box = scaleBox(box, 1 + (sw / box.width));
-  }
-  return box;
+  return highlightingBoxOfSVGPath(tb.path);
 }
 
 // Returns the box to be encompassed by the highlighting rect element
