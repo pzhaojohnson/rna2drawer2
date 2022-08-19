@@ -16,15 +16,19 @@ import { bboxOfLine } from 'Draw/svg/bboxOfLine';
 import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
-// returns a new box with the same center coordinates as the given box
-// but with longer width and height (obtained by adding the given length
-// to both the width and height)
-function expand(box: SVG.Box, length: number): SVG.Box {
+/**
+ * Returns a new box whose width and height have been scaled by the
+ * provided factor and whose center coordinates remain the same as the
+ * provided box.
+ */
+function scaleBox(box: SVG.Box, factor: number): SVG.Box {
+  let width = factor * box.width;
+  let height = factor * box.height;
   return new SVG.Box(
-    box.x - (length / 2),
-    box.y - (length / 2),
-    box.width + length,
-    box.height + length,
+    box.cx - (width / 2),
+    box.cy - (height / 2),
+    width,
+    height,
   );
 }
 
@@ -32,17 +36,17 @@ function highlightingBoxOfBase(b: Base): SVG.Box {
   let textBBox = b.text.bbox();
 
   if (!b.outline) {
-    return expand(textBBox, 6);
+    return scaleBox(textBBox, 1 + (6 / textBBox.width));
   }
 
   let box = textBBox.merge(bboxOfCircle(b.outline.circle));
 
-  return expand(box, 1);
+  return scaleBox(box, 1 + (1 / box.width));
 }
 
 function highlightingBoxOfBaseNumbering(bn: BaseNumbering): SVG.Box {
   let textBox = bn.text.bbox();
-  textBox = expand(textBox, 4);
+  textBox = scaleBox(textBox, 1 + (4 / textBox.width));
 
   let lineBox = bboxOfLine(bn.line);
 
@@ -66,9 +70,9 @@ function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
 
 function highlightingBoxOfTertiaryBond(tb: TertiaryBond): SVG.Box {
   let box = tb.path.bbox();
-  let sw = interpretNumericValue(tb.path.attr('stroke-width'));
-  if (sw) {
-    box = expand(box, sw.convert('px').valueOf());
+  let sw = interpretNumericValue(tb.path.attr('stroke-width'))?.valueOf();
+  if (typeof sw == 'number') {
+    box = scaleBox(box, 1 + (sw / box.width));
   }
   return box;
 }
