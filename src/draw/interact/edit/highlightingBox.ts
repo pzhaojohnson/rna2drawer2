@@ -51,8 +51,8 @@ function highlightingBoxOfBaseNumbering(bn: BaseNumbering): SVG.Box {
 
 function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
   if (straightBondIsInvisible(sb)) {
-    let bc1 = { x: sb.base1.xCenter, y: sb.base1.yCenter };
-    let bc2 = { x: sb.base2.xCenter, y: sb.base2.yCenter };
+    let bc1 = sb.base1.center();
+    let bc2 = sb.base2.center();
     return new SVG.Box(
       Math.min(bc1.x, bc2.x),
       Math.min(bc1.y, bc2.y),
