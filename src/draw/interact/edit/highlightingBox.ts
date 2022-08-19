@@ -17,19 +17,41 @@ import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
 /**
+ * Returns a new box whose width has been scaled by the provided factor
+ * and whose center coordinates remain the same as the provided box.
+ */
+ function scaleBoxX(box: SVG.Box, factor: number): SVG.Box {
+  let width = factor * box.width;
+  return new SVG.Box(
+    box.cx - (width / 2),
+    box.y,
+    width,
+    box.height,
+  );
+}
+
+/**
+ * Returns a new box whose height has been scaled by the provided factor
+ * and whose center coordinates remain the same as the provided box.
+ */
+ function scaleBoxY(box: SVG.Box, factor: number): SVG.Box {
+  let height = factor * box.height;
+  return new SVG.Box(
+    box.x,
+    box.cy - (height / 2),
+    box.width,
+    height,
+  );
+}
+
+/**
  * Returns a new box whose width and height have been scaled by the
  * provided factor and whose center coordinates remain the same as the
  * provided box.
  */
 function scaleBox(box: SVG.Box, factor: number): SVG.Box {
-  let width = factor * box.width;
-  let height = factor * box.height;
-  return new SVG.Box(
-    box.cx - (width / 2),
-    box.cy - (height / 2),
-    width,
-    height,
-  );
+  box = scaleBoxX(box, factor);
+  return scaleBoxY(box, factor);
 }
 
 function highlightingBoxOfBase(b: Base): SVG.Box {
