@@ -8,6 +8,8 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
+import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
+
 import { interpretNumericValue } from 'Draw/svg/interpretNumericValue';
 
 import { bboxOfCircle } from 'Draw/svg/bboxOfCircle';
@@ -118,18 +120,45 @@ function highlightingBoxOfBaseNumbering(bn: BaseNumbering): SVG.Box {
   return box.merge(highlightingBoxOfSVGLine(bn.line));
 }
 
+function highlightingBoxOfStrungElement(
+  strungElement: StrungElement,
+): SVG.Box
+{
+  if (strungElement.type == 'StrungText') {
+    return highlightingBoxOfSVGText(strungElement.text);
+  } else if (strungElement.type == 'StrungCircle') {
+    return highlightingBoxOfSVGCircle(strungElement.circle);
+  } else {
+    return highlightingBoxOfSVGPath(strungElement.path);
+  }
+}
+
 function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
+  let box: SVG.Box;
+
   if (straightBondIsInvisible(sb)) {
     let bc1 = sb.base1.center();
     let bc2 = sb.base2.center();
-    return createBox({ point1: bc1, point2: bc2 });
+    box = createBox({ point1: bc1, point2: bc2 });
+  } else {
+    box = highlightingBoxOfSVGLine(sb.line);
   }
 
-  return highlightingBoxOfSVGLine(sb.line);
+  sb.strungElements.forEach(strungElement => {
+    box = box.merge(highlightingBoxOfStrungElement(strungElement));
+  });
+
+  return box;
 }
 
 function highlightingBoxOfTertiaryBond(tb: TertiaryBond): SVG.Box {
-  return highlightingBoxOfSVGPath(tb.path);
+  let box = highlightingBoxOfSVGPath(tb.path);
+
+  tb.strungElements.forEach(strungElement => {
+    box = box.merge(highlightingBoxOfStrungElement(strungElement));
+  });
+
+  return box;
 }
 
 // Returns the box to be encompassed by the highlighting rect element
