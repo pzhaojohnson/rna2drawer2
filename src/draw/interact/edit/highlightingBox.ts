@@ -16,6 +16,25 @@ import { bboxOfLine } from 'Draw/svg/bboxOfLine';
 import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
+import type { Point2D as Point } from 'Math/points/Point';
+
+/**
+ * Creates a new box using the two provided points as diagonal corners.
+ */
+function createBox(args: (
+  { point1: Point, point2: Point }
+)): SVG.Box
+{
+  let point1 = args.point1;
+  let point2 = args.point2;
+  return new SVG.Box(
+    Math.min(point1.x, point2.x),
+    Math.min(point1.y, point2.y),
+    Math.abs(point1.x - point2.x),
+    Math.abs(point1.y - point2.y),
+  );
+}
+
 /**
  * Returns a new box whose width has been scaled by the provided factor
  * and whose center coordinates remain the same as the provided box.
@@ -103,12 +122,7 @@ function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
   if (straightBondIsInvisible(sb)) {
     let bc1 = sb.base1.center();
     let bc2 = sb.base2.center();
-    return new SVG.Box(
-      Math.min(bc1.x, bc2.x),
-      Math.min(bc1.y, bc2.y),
-      Math.abs(bc1.x - bc2.x),
-      Math.abs(bc1.y - bc2.y),
-    );
+    return createBox({ point1: bc1, point2: bc2 });
   }
 
   return highlightingBoxOfSVGLine(sb.line);
