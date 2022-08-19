@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
 
-  border: 1px solid #b84a4a;
+  border: 1px solid #a44343;
   border-radius: 60px;
 
   padding: 2px 0px;
@@ -17,7 +17,7 @@
 }
 
 .removeStrungElementsButton:hover {
-  box-shadow: 0px 3px 3px #d5c7c7b8;
+  box-shadow: 0 3px 3px #e7d4d4a6;
   transform: scale(1.04);
   transition: transform 0.04s;
 }
@@ -33,7 +33,7 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
   font-weight: 500;
-  color: #984343;
+  color: #813232;
 
   cursor: pointer;
 
