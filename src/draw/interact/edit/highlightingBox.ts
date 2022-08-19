@@ -28,18 +28,6 @@ function expand(box: SVG.Box, length: number): SVG.Box {
   );
 }
 
-// returns a new box that is the bounding box of both boxes
-function merge(box1: SVG.Box, box2: SVG.Box): SVG.Box {
-  let x = Math.min(box1.x, box2.x);
-  let y = Math.min(box1.y, box2.y);
-  return new SVG.Box(
-    x,
-    y,
-    Math.max(box1.x + box1.width, box2.x + box2.width) - x,
-    Math.max(box1.y + box1.height, box2.y + box2.height) - y,
-  );
-}
-
 function highlightingBoxOfBase(b: Base): SVG.Box {
   let textBBox = b.text.bbox();
 
@@ -58,7 +46,7 @@ function highlightingBoxOfBaseNumbering(bn: BaseNumbering): SVG.Box {
 
   let lineBox = bboxOfLine(bn.line);
 
-  return merge(textBox, lineBox);
+  return textBox.merge(lineBox);
 }
 
 function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
