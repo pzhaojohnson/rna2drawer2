@@ -8,7 +8,7 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
-import { interpretNumber } from 'Draw/svg/interpretNumber';
+import { interpretNumericValue } from 'Draw/svg/interpretNumericValue';
 
 import { bboxOfCircle } from 'Draw/svg/bboxOfCircle';
 import { bboxOfLine } from 'Draw/svg/bboxOfLine';
@@ -66,7 +66,7 @@ function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
 
 function highlightingBoxOfTertiaryBond(tb: TertiaryBond): SVG.Box {
   let box = tb.path.bbox();
-  let sw = interpretNumber(tb.path.attr('stroke-width'));
+  let sw = interpretNumericValue(tb.path.attr('stroke-width'));
   if (sw) {
     box = expand(box, sw.convert('px').valueOf());
   }
