@@ -59,7 +59,8 @@ function parseSequenceId(prunedLines: string[]): string {
   }
 
   let sequenceId = headerLine.substring(secondItemIndex);
-  sequenceId = sequenceId.trim(); // trim any leading or trailing whitespace
+  // trim any leading or trailing whitespace
+  sequenceId = sequenceId.trim();
   return sequenceId;
 }
 
