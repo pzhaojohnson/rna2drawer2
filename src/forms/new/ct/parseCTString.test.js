@@ -155,7 +155,7 @@ describe('parseCTString function', () => {
   test('invalid partner positions', () => {
     let ctString = readValidExampleFileSync('invalid-partner-positions.ct');
     let ctData = parseCTString(ctString);
-    // extra position lines should be ignored
+    // invalid partner positions should be ignored
     expect(ctData).toStrictEqual({
       sequenceId: 'dG = -12.70 [Initially -12.70] QWER',
       sequence: 'gccgacagcguacucguuacgcucaagccgucgagcagcu',
