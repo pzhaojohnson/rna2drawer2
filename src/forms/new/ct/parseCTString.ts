@@ -115,8 +115,8 @@ function parseSequence(prunedLines: string[]): string | never {
 }
 
 /**
- * Given the line for a position in the structure, parses the specified
- * partner position (i.e., the fifth item in the line).
+ * Given the line for a position in the structure, parses the partner
+ * position specified by the line (i.e., the fifth item in the line).
  *
  * Returns undefined if the partner position cannot be parsed or the
  * position that the line is for is unpaired (i.e., the fifth item in
