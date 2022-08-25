@@ -192,7 +192,7 @@ export type CTData = {
   sequence: string;
 
   /**
-   * Specifies all pairs in the structure.
+   * Specifies all base-pairs in the structure.
    */
   partners: Partners;
 
