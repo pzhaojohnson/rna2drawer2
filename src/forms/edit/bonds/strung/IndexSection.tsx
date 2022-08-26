@@ -5,15 +5,11 @@ import type { Bond } from 'Forms/edit/bonds/strung/Bond';
 import { strungElementsAtIndex } from 'Forms/edit/bonds/strung/strungElementsAtIndex';
 
 import * as React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 import { IndexHeader } from 'Forms/edit/bonds/strung/IndexHeader';
 import { RemoveButton } from 'Forms/edit/bonds/strung/RemoveButton';
 
 import { IndexFields } from 'Forms/edit/bonds/strung/IndexFields';
-
-let collapsedIndices = new Set<number>();
 
 export type Props = {
   /**
@@ -32,6 +28,9 @@ export type Props = {
    */
   strungElementsIndex: number;
 
+  isCollapsed?: boolean;
+  onHeaderClick?: () => void;
+
   onRemoveButtonClick?: () => void;
 };
 
@@ -45,16 +44,12 @@ export function IndexSection(props: Props) {
     index: props.strungElementsIndex,
   });
 
-  let [isCollapsed, setIsCollapsed] = useState(
-    collapsedIndices.has(props.strungElementsIndex)
-  );
-
   let header = (
     <IndexHeader
       {...props}
       strungElements={strungElements}
-      bracketDirection={isCollapsed ? 'right' : 'down'}
-      onClick={() => setIsCollapsed(!isCollapsed)}
+      bracketDirection={props.isCollapsed ? 'right' : 'down'}
+      onClick={props.onHeaderClick}
     />
   );
 
@@ -67,23 +62,13 @@ export function IndexSection(props: Props) {
 
   let fields = <IndexFields {...props} style={{ margin: '6px 0 0 6px' }} />;
 
-  useEffect(() => {
-    return () => {
-      if (isCollapsed) {
-        collapsedIndices.add(props.strungElementsIndex);
-      } else {
-        collapsedIndices.delete(props.strungElementsIndex);
-      }
-    };
-  });
-
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center' }} >
         {header}
         {removeButton}
       </div>
-      {isCollapsed ? null : fields}
+      {props.isCollapsed ? null : fields}
     </div>
   );
 }

@@ -10,6 +10,16 @@ import { IndexSection } from 'Forms/edit/bonds/strung/IndexSection';
 
 import { AddStrungElementButton } from 'Forms/edit/bonds/strung/AddStrungElementButton';
 
+// specifies which index sections are collapsed
+let collapsedIndices = new Set<number>();
+
+type IndexSectionHeaderClick = {
+  /**
+   * The index of the index section.
+   */
+  index: number;
+};
+
 type IndexSectionRemoveButtonClick = {
   /**
    * The index of the index section.
@@ -33,6 +43,33 @@ export type Props = {
  * A section for editing the strung elements of bonds.
  */
 export class StrungElementsSection extends React.Component<Props> {
+  state: {
+    collapsedIndices: Set<number>;
+  };
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      collapsedIndices: new Set<number>(collapsedIndices),
+    };
+  }
+
+  componentWillUnmount() {
+    collapsedIndices = new Set(this.state.collapsedIndices);
+  }
+
+  handleIndexSectionHeaderClick(event: IndexSectionHeaderClick) {
+    let index = event.index;
+    let collapsedIndices = new Set(this.state.collapsedIndices);
+    if (collapsedIndices.has(index)) {
+      collapsedIndices.delete(index);
+    } else {
+      collapsedIndices.add(index);
+    }
+    this.setState({ collapsedIndices });
+  }
+
   handleIndexSectionRemoveButtonClick(event: IndexSectionRemoveButtonClick) {
     this.props.app.pushUndo();
     let bonds = this.props.bonds;
@@ -60,6 +97,10 @@ export class StrungElementsSection extends React.Component<Props> {
             <IndexSection
               {...this.props}
               strungElementsIndex={i}
+              isCollapsed={this.state.collapsedIndices.has(i)}
+              onHeaderClick={() => {
+                this.handleIndexSectionHeaderClick({ index: i });
+              }}
               onRemoveButtonClick={() => {
                 this.handleIndexSectionRemoveButtonClick({ index: i });
               }}
