@@ -23,26 +23,28 @@ export type Props = {
 /**
  * A section for editing the strung elements of bonds.
  */
-export function StrungElementsSection(props: Props) {
-  let strungElementsArrayLengths = props.bonds.map(
-    bond => bond.strungElements.length
-  );
+export class StrungElementsSection extends React.Component<Props> {
+  render() {
+    let strungElementsArrayLengths = this.props.bonds.map(
+      bond => bond.strungElements.length
+    );
 
-  let minStrungElementsArrayLength = Math.min(...strungElementsArrayLengths);
+    let minStrungElementsArrayLength = Math.min(...strungElementsArrayLengths);
 
-  let indices: number[] = [];
-  for (let i = 0; i < minStrungElementsArrayLength; i++) {
-    indices.push(i);
+    let indices: number[] = [];
+    for (let i = 0; i < minStrungElementsArrayLength; i++) {
+      indices.push(i);
+    }
+
+    return (
+      <div>
+        {indices.map(i => (
+          <div key={i} style={{ marginBottom: '24px' }} >
+            <IndexSection {...this.props} strungElementsIndex={i} />
+          </div>
+        ))}
+        <AddStrungElementButton {...this.props} />
+      </div>
+    );
   }
-
-  return (
-    <div>
-      {indices.map(i => (
-        <div key={i} style={{ marginBottom: '24px' }} >
-          <IndexSection {...props} strungElementsIndex={i} />
-        </div>
-      ))}
-      <AddStrungElementButton {...props} />
-    </div>
-  );
 }
