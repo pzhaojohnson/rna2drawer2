@@ -1,10 +1,3 @@
-import type { App } from 'App';
-
-import type { Bond } from 'Forms/edit/bonds/strung/Bond';
-import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
-
-import { removeStrungElementsAtIndex } from 'Forms/edit/bonds/strung/removeStrungElementsAtIndex';
-
 import * as React from 'react';
 import styles from './RemoveButton.css';
 
@@ -20,47 +13,17 @@ function MinusIcon() {
 }
 
 export type Props = {
-  /**
-   * A reference to the whole app.
-   */
-  app: App;
-
-  /**
-   * The strung elements to edit.
-   */
-  strungElements: StrungElement[];
-
-  /**
-   * The bonds possessing the strung elements.
-   */
-  bonds: Bond[];
-
-  /**
-   * The index that each strung element is at in the strung elements
-   * array of the bond that possesses it.
-   */
-  strungElementsIndex: number;
+  onClick?: () => void;
 
   style?: React.CSSProperties;
 };
 
 export class RemoveButton extends React.Component<Props> {
-  handleClick() {
-    this.props.app.pushUndo();
-
-    removeStrungElementsAtIndex({
-      bonds: this.props.bonds,
-      index: this.props.strungElementsIndex,
-    });
-
-    this.props.app.refresh();
-  }
-
   render() {
     return (
       <div
         className={styles.removeButton}
-        onClick={() => this.handleClick()}
+        onClick={this.props.onClick}
         style={this.props.style}
       >
         <MinusIcon />

@@ -31,6 +31,8 @@ export type Props = {
    * bonds are to be edited.
    */
   strungElementsIndex: number;
+
+  onRemoveButtonClick?: () => void;
 };
 
 /**
@@ -58,8 +60,7 @@ export function IndexSection(props: Props) {
 
   let removeButton = (
     <RemoveButton
-      {...props}
-      strungElements={strungElements}
+      onClick={props.onRemoveButtonClick}
       style={{ marginLeft: '8px' }}
     />
   );
