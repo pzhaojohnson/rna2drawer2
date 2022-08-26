@@ -1,4 +1,4 @@
-.removeStrungElementsButton {
+.removeButton {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -16,18 +16,18 @@
   -webkit-user-select: none;
 }
 
-.removeStrungElementsButton:hover {
+.removeButton:hover {
   box-shadow: 0 3px 3px #e7d4d4a6;
   transform: scale(1.04);
   transition: transform 0.04s;
 }
 
-.removeStrungElementsButton:active {
+.removeButton:active {
   transform: scale(1);
   transition: transform 0s;
 }
 
-.removeStrungElementsButtonText {
+.removeButtonText {
   margin-left: 4px;
 
   font-family: 'Open Sans', sans-serif;

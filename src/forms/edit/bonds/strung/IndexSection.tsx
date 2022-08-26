@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 import { IndexHeader } from 'Forms/edit/bonds/strung/IndexHeader';
-import { RemoveStrungElementsButton } from 'Forms/edit/bonds/strung/RemoveStrungElementsButton';
+import { RemoveButton } from 'Forms/edit/bonds/strung/RemoveButton';
 
 import { IndexFields } from 'Forms/edit/bonds/strung/IndexFields';
 
@@ -57,7 +57,7 @@ export function IndexSection(props: Props) {
   );
 
   let removeButton = (
-    <RemoveStrungElementsButton
+    <RemoveButton
       {...props}
       strungElements={strungElements}
       style={{ marginLeft: '8px' }}

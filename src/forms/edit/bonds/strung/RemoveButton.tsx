@@ -6,7 +6,7 @@ import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
 import { removeStrungElementsAtIndex } from 'Forms/edit/bonds/strung/removeStrungElementsAtIndex';
 
 import * as React from 'react';
-import styles from './RemoveStrungElementsButton.css';
+import styles from './RemoveButton.css';
 
 function MinusIcon() {
   return (
@@ -44,7 +44,7 @@ export type Props = {
   style?: React.CSSProperties;
 };
 
-export class RemoveStrungElementsButton extends React.Component<Props> {
+export class RemoveButton extends React.Component<Props> {
   handleClick() {
     this.props.app.pushUndo();
 
@@ -59,12 +59,12 @@ export class RemoveStrungElementsButton extends React.Component<Props> {
   render() {
     return (
       <div
-        className={styles.removeStrungElementsButton}
+        className={styles.removeButton}
         onClick={() => this.handleClick()}
         style={this.props.style}
       >
         <MinusIcon />
-        <p className={styles.removeStrungElementsButtonText} >
+        <p className={styles.removeButtonText} >
           Remove
         </p>
       </div>
