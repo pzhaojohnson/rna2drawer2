@@ -3,9 +3,7 @@ import type { App } from 'App';
 import type { Bond } from 'Forms/edit/bonds/strung/Bond';
 import type { StrungElement } from 'Draw/bonds/strung/StrungElement';
 
-import { removeStrungElementFromBond } from 'Draw/bonds/strung/addToBond';
-
-import { atIndex } from 'Array/at';
+import { removeStrungElementsAtIndex } from 'Forms/edit/bonds/strung/removeStrungElementsAtIndex';
 
 import * as React from 'react';
 import styles from './RemoveStrungElementsButton.css';
@@ -50,13 +48,9 @@ export class RemoveStrungElementsButton extends React.Component<Props> {
   handleClick() {
     this.props.app.pushUndo();
 
-    this.props.bonds.forEach(bond => {
-      let strungElement: StrungElement | undefined;
-      let strungElementIndex = this.props.strungElementsIndex;
-      strungElement = atIndex(bond.strungElements, strungElementIndex);
-      if (strungElement) {
-        removeStrungElementFromBond({ bond, strungElement });
-      }
+    removeStrungElementsAtIndex({
+      bonds: this.props.bonds,
+      index: this.props.strungElementsIndex,
     });
 
     this.props.app.refresh();
