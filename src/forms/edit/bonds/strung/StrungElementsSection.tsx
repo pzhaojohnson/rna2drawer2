@@ -47,12 +47,19 @@ export class StrungElementsSection extends React.Component<Props> {
     collapsedIndices: Set<number>;
   };
 
+  /**
+   * Refs to the divs containing each index section in order by index.
+   */
+  indexSectionContainerRefs: React.RefObject<HTMLDivElement>[];
+
   constructor(props: Props) {
     super(props);
 
     this.state = {
       collapsedIndices: new Set<number>(collapsedIndices),
     };
+
+    this.indexSectionContainerRefs = [];
   }
 
   componentWillUnmount() {
@@ -85,15 +92,17 @@ export class StrungElementsSection extends React.Component<Props> {
 
     let minStrungElementsArrayLength = Math.min(...strungElementsArrayLengths);
 
-    let indices: number[] = [];
     for (let i = 0; i < minStrungElementsArrayLength; i++) {
-      indices.push(i);
+      if (!this.indexSectionContainerRefs[i]) {
+        this.indexSectionContainerRefs[i] = React.createRef();
+      }
     }
+    this.indexSectionContainerRefs.length = minStrungElementsArrayLength;
 
     return (
       <div>
-        {indices.map(i => (
-          <div key={i} >
+        {this.indexSectionContainerRefs.map((ref, i) => (
+          <div key={i} ref={ref} >
             <IndexSection
               {...this.props}
               strungElementsIndex={i}
