@@ -93,7 +93,7 @@ export class StrungElementsSection extends React.Component<Props> {
     return (
       <div>
         {indices.map(i => (
-          <div key={i} style={{ marginBottom: '24px' }} >
+          <div key={i} >
             <IndexSection
               {...this.props}
               strungElementsIndex={i}
@@ -105,6 +105,7 @@ export class StrungElementsSection extends React.Component<Props> {
                 this.handleIndexSectionRemoveButtonClick({ index: i });
               }}
             />
+            <div style={{ height: '24px' }} />
           </div>
         ))}
         <AddStrungElementButton {...this.props} />
