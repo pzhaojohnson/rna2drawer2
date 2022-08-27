@@ -5,13 +5,42 @@ import type { Bond } from 'Forms/edit/bonds/strung/Bond';
 import { removeStrungElementsAtIndex } from 'Forms/edit/bonds/strung/removeStrungElementsAtIndex';
 
 import * as React from 'react';
+import styles from './StrungElementsSection.css';
 
 import { IndexSection } from 'Forms/edit/bonds/strung/IndexSection';
 
 import { AddStrungElementButton } from 'Forms/edit/bonds/strung/AddStrungElementButton';
 
+import { isNullish } from 'Values/isNullish';
+import { atIndex } from 'Array/at';
+
 // specifies which index sections are collapsed
 let collapsedIndices = new Set<number>();
+
+let smushAnimation = document.createElement('style');
+document.head.appendChild(smushAnimation);
+
+// include a trailing UUID to ensure uniqueness
+let smushAnimationName = 'smush_7d94a751fdde4ca49fe4664f09d7fbe5';
+
+let smushAnimationDuration = 0.75; // in seconds
+
+let smushAnimationKeyFrames = `
+  @keyframes ${smushAnimationName} {
+    0% {
+      max-height: START_HEIGHT;
+    }
+    66% {
+      max-height: 0px;
+    }
+    100% {
+      max-height: 0px;
+    }
+  }
+`;
+
+// hard coded to be taller than any index section container
+let indexSectionContainerHeightCeiling = '1000px';
 
 type IndexSectionHeaderClick = {
   /**
@@ -45,6 +74,17 @@ export type Props = {
 export class StrungElementsSection extends React.Component<Props> {
   state: {
     collapsedIndices: Set<number>;
+
+    /**
+     * The index that is about to be removed.
+     */
+    indexToBeRemoved?: number;
+
+    /**
+     * The height of the index section container for the index that is
+     * about to be removed.
+     */
+    heightToBeRemoved?: string;
   };
 
   /**
@@ -64,6 +104,15 @@ export class StrungElementsSection extends React.Component<Props> {
 
   componentWillUnmount() {
     collapsedIndices = new Set(this.state.collapsedIndices);
+
+    if (!isNullish(this.state.indexToBeRemoved)) {
+      let indexToBeRemoved = this.state.indexToBeRemoved;
+      collapsedIndices.delete(indexToBeRemoved);
+      // decrement indices greater than the index to be removed
+      collapsedIndices = new Set(
+        Array.from(collapsedIndices).map(i => i > indexToBeRemoved ? i - 1 : i)
+      );
+    }
   }
 
   handleIndexSectionHeaderClick(event: IndexSectionHeaderClick) {
@@ -78,11 +127,21 @@ export class StrungElementsSection extends React.Component<Props> {
   }
 
   handleIndexSectionRemoveButtonClick(event: IndexSectionRemoveButtonClick) {
-    this.props.app.pushUndo();
-    let bonds = this.props.bonds;
     let index = event.index;
-    removeStrungElementsAtIndex({ bonds, index });
-    this.props.app.refresh();
+
+    let heightToBeRemoved: string | undefined = undefined;
+    let container = atIndex(this.indexSectionContainerRefs, index)?.current;
+    if (container) {
+      heightToBeRemoved = window.getComputedStyle(container).height;
+    }
+
+    this.setState({ indexToBeRemoved: index, heightToBeRemoved });
+
+    setTimeout(() => {
+      this.props.app.pushUndo();
+      removeStrungElementsAtIndex({ bonds: this.props.bonds, index });
+      this.props.app.refresh();
+    }, 1000 * smushAnimationDuration);
   }
 
   render() {
@@ -99,10 +158,26 @@ export class StrungElementsSection extends React.Component<Props> {
     }
     this.indexSectionContainerRefs.length = minStrungElementsArrayLength;
 
+    let indexToBeRemoved = this.state.indexToBeRemoved;
+
+    if (!isNullish(indexToBeRemoved)) {
+      smushAnimation.innerHTML = smushAnimationKeyFrames.replace(
+        'START_HEIGHT',
+        this.state.heightToBeRemoved ?? indexSectionContainerHeightCeiling,
+      );
+    }
+
     return (
       <div>
         {this.indexSectionContainerRefs.map((ref, i) => (
-          <div key={i} ref={ref} >
+          <div key={i} ref={ref}
+            className={i == indexToBeRemoved ? styles.smushed : undefined}
+            style={{
+              animation: i != indexToBeRemoved ? undefined : (
+                `${smushAnimationName} ${smushAnimationDuration}s`
+              ),
+            }}
+          >
             <IndexSection
               {...this.props}
               strungElementsIndex={i}
