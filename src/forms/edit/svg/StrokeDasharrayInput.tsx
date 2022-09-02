@@ -42,6 +42,8 @@ export type EditEvent = {
 };
 
 export type Props = {
+  id?: string;
+
   /**
    * The SVG elements to edit.
    */
@@ -158,6 +160,7 @@ export class StrokeDasharrayInput extends React.Component<Props> {
   render() {
     return (
       <TextInput
+        id={this.props.id}
         value={this.state.value}
         onChange={event => this.handleChange(event)}
         onBlur={() => this.submit()}

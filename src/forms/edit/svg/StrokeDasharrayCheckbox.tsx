@@ -10,6 +10,8 @@ import * as React from 'react';
 export type StrokeDasharrayValue = string;
 
 export type Props = {
+  id?: string;
+
   /**
    * The SVG elements to edit.
    */
@@ -84,6 +86,7 @@ export class StrokeDasharrayCheckbox extends React.Component<Props> {
     return (
       <input
         type='checkbox'
+        id={this.props.id}
         checked={this.checked}
         onChange={event => this.handleChange(event)}
         style={this.props.style}
