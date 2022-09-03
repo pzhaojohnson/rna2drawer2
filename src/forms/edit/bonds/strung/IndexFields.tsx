@@ -32,6 +32,7 @@ import { BorderRadiusField } from 'Forms/edit/bonds/strung/BorderRadiusField';
 
 import { StrokeColorField } from 'Forms/edit/bonds/strung/StrokeColorField';
 import { StrokeWidthField } from 'Forms/edit/bonds/strung/StrokeWidthField';
+import { StrokeDasharrayField } from 'Forms/edit/bonds/strung/StrokeDasharrayField';
 
 import { RotationField } from 'Forms/edit/bonds/strung/RotationField';
 
@@ -151,6 +152,7 @@ export function IndexFields(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeColorField {...fieldProps} strungElements={haveStroke} />
           <StrokeWidthField {...fieldProps} strungElements={haveStroke} />
+          <StrokeDasharrayField {...fieldProps} strungElements={haveStroke} />
         </div>
       )}
       {haveRotation.length < strungElements.length ? null : (
