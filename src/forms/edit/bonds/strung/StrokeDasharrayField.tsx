@@ -43,6 +43,7 @@ export class StrokeDasharrayField extends React.Component<Props> {
       <_StrokeDasharrayField
         label='Dashed Line'
         elements={svgElements}
+        defaultDashedValue='3 1'
         onBeforeEdit={() => this.handleBeforeEdit()}
         onEdit={() => this.handleEdit()}
         style={{
