@@ -18,6 +18,8 @@ export function InfoLink(props: Props) {
     <a
       className={styles.infoLink}
       href={props.href}
+      target='_blank'
+      rel='noopener noreferrer'
       title={props.title}
       style={props.style}
     >
