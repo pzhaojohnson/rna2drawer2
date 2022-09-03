@@ -25,6 +25,8 @@ export type Props = {
 
   label?: string;
 
+  defaultDashedValue?: string;
+
   /**
    * Edit events are passed to the callbacks if provided by the
    * underlying components of this field.
@@ -43,6 +45,7 @@ export function StrokeDasharrayField(props: Props) {
     <StrokeDasharrayCheckbox
       id={checkboxId}
       elements={props.elements}
+      defaultDashedValue={props.defaultDashedValue}
       onEdit={props.onEdit}
       onBeforeEdit={props.onBeforeEdit}
     />
