@@ -57,7 +57,7 @@ export function StrokeDasharrayField(props: Props) {
         elements={props.elements}
         onEdit={props.onEdit}
         onBeforeEdit={props.onBeforeEdit}
-        style={{ margin: '0 4px 0 6px' }}
+        style={{ margin: '0 5px 0 8px' }}
       />
     )
   );
@@ -72,7 +72,7 @@ export function StrokeDasharrayField(props: Props) {
     <FieldLabel
       htmlFor={input ? inputId : checkboxId}
       style={{
-        paddingLeft: input ? '8px' : '6px',
+        paddingLeft: input ? '7px' : '6px',
         cursor: input ? 'text' : 'pointer',
       }}
     >
