@@ -5,7 +5,7 @@ export function StrokeDasharrayInfoLink() {
   return (
     <InfoLink
       href='https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray'
-      title='Learn more about dash arrays.'
+      title='Learn about dash arrays.'
     />
   );
 }
