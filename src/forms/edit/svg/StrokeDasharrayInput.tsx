@@ -169,7 +169,10 @@ export class StrokeDasharrayInput extends React.Component<Props> {
             this.submit();
           }
         }}
-        style={this.props.style}
+        style={{
+          width: `${Math.max(this.state.value.length, 6)}ch`,
+          ...this.props.style,
+        }}
       />
     );
   }
