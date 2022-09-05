@@ -10,6 +10,7 @@ import { StrokeField } from './StrokeField';
 import { BaseSpacingField } from './BaseSpacingField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
+import { StrokeDasharrayField } from './StrokeDasharrayField';
 import { StrokeLinecapField } from './StrokeLinecapField';
 import { ShapeField } from './ShapeField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
@@ -188,6 +189,7 @@ export function EditSecondaryBondsForm(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeField {...props} />
           <StrokeWidthField {...props} />
+          <StrokeDasharrayField {...props} />
           <BasePaddingField {...props} />
           <StrokeLinecapField {...props} />
           <ShapeField {...props} />
