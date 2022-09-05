@@ -45,6 +45,7 @@ describe('values function', () => {
       'stroke-width': 8.57,
       'stroke-opacity': 0.62,
       'stroke-linecap': 'square',
+      'stroke-dasharray': '0.25 6.1 7',
     });
     bond.basePadding1 = 18.3;
     bond.basePadding2 = 9.7;
@@ -56,6 +57,7 @@ describe('values function', () => {
         'stroke-width': 8.57,
         'stroke-opacity': 0.62,
         'stroke-linecap': 'square',
+        'stroke-dasharray': '0.25 6.1 7',
       },
       basePadding1: 18.3,
       basePadding2: 9.7,
@@ -72,6 +74,7 @@ describe('setValues function', () => {
         'stroke-width': 12.02,
         'stroke-opacity': 0.24,
         'stroke-linecap': 'round',
+        'stroke-dasharray': '5.03 8 9.21',
       },
       basePadding1: 9.8,
       basePadding2: 12.1,
@@ -89,6 +92,7 @@ describe('setValues function', () => {
         'stroke-width': 9.3,
         'stroke-opacity': 0.28,
         'stroke-linecap': 'square',
+        'stroke-dasharray': '1.9 3.68',
       },
       basePadding1: 12.6,
       basePadding2: 3.2,
