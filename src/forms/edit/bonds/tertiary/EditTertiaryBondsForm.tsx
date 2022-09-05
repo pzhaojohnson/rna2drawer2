@@ -8,7 +8,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
-import { DashedField } from './DashedField';
+import { StrokeDasharrayField } from './StrokeDasharrayField';
 import { BasePadding1Field } from './BasePadding1Field';
 import { BasePadding2Field } from './BasePadding2Field';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
@@ -99,7 +99,7 @@ export function EditTertiaryBondsForm(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeField {...props} />
           <StrokeWidthField {...props} />
-          <DashedField {...props} />
+          <StrokeDasharrayField {...props} />
           <BasePadding1Field {...props} />
           <BasePadding2Field {...props} />
           <ForwardBackwardButtons {...props} />
