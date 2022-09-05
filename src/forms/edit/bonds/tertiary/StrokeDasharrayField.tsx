@@ -101,7 +101,7 @@ export class StrokeDasharrayField extends React.Component<Props> {
         onBeforeEdit={() => this.handleBeforeEdit()}
         onEdit={() => this.handleEdit()}
         style={{
-          marginTop: '8px',
+          marginTop: '10px',
           minHeight: '22px',
           alignSelf: 'start',
         }}
