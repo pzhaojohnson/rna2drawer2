@@ -60,14 +60,14 @@ export function StrokeDasharrayField(props: Props) {
         elements={props.elements}
         onEdit={props.onEdit}
         onBeforeEdit={props.onBeforeEdit}
-        style={{ margin: '0 5px 0 8px' }}
+        style={{ margin: '0 0 0 8px' }}
       />
     )
   );
 
   let infoLink = !input ? null : (
-    <div style={{ marginBottom: '6px' }} >
-      <StrokeDasharrayInfoLink />
+    <div style={{ marginBottom: '5px' }} >
+      <StrokeDasharrayInfoLink style={{ padding: '0 7px 5px 5px' }} />
     </div>
   );
 
@@ -75,7 +75,7 @@ export function StrokeDasharrayField(props: Props) {
     <FieldLabel
       htmlFor={input ? inputId : checkboxId}
       style={{
-        paddingLeft: input ? '7px' : '6px',
+        paddingLeft: input ? '0' : '6px',
         cursor: input ? 'text' : 'pointer',
       }}
     >
