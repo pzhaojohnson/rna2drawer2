@@ -66,7 +66,7 @@ export class StrokeDasharrayField extends React.Component<Props> {
     return !equalsNone(recommendedDefaultValue) ? (
       recommendedDefaultValue
     ) : (
-      TertiaryBond.dashedStrokeDasharray
+      '8 2'
     );
   }
 

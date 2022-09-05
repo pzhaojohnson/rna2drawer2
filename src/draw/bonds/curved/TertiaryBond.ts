@@ -3,11 +3,7 @@ import { Values } from './values';
 
 export class TertiaryBond extends QuadraticBezierBond {
   static recommendedDefaults: Values;
-
-  static dashedStrokeDasharray: string;
 }
-
-TertiaryBond.dashedStrokeDasharray = '8 2';
 
 TertiaryBond.recommendedDefaults = {
   path: {
