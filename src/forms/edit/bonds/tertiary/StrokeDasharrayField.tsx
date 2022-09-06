@@ -23,6 +23,9 @@ type StrokeDasharrayValue = unknown;
  */
 type StringStrokeDasharrayValue = string;
 
+// cached value
+let lastDefaultDashedValue: StringStrokeDasharrayValue | undefined = '8 2';
+
 export type Props = {
   /**
    * A reference to the whole app.
@@ -66,7 +69,7 @@ export class StrokeDasharrayField extends React.Component<Props> {
     return !equalsNone(recommendedDefaultValue) ? (
       recommendedDefaultValue
     ) : (
-      '8 2'
+      lastDefaultDashedValue
     );
   }
 
@@ -93,11 +96,14 @@ export class StrokeDasharrayField extends React.Component<Props> {
   }
 
   render() {
+    let defaultDashedValue = this.defaultDashedValue;
+    lastDefaultDashedValue = defaultDashedValue; // cache
+
     return (
       <_StrokeDasharrayField
         label='Dashed'
         elements={this.props.tertiaryBonds.map(tb => tb.path)}
-        defaultDashedValue={this.defaultDashedValue}
+        defaultDashedValue={defaultDashedValue}
         onBeforeEdit={() => this.handleBeforeEdit()}
         onEdit={() => this.handleEdit()}
         style={{
