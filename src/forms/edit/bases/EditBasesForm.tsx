@@ -20,6 +20,7 @@ import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import { StrokeField as OutlineStrokeField } from './outlines/StrokeField';
 import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
 import { FillField as OutlineFillField } from './outlines/FillField';
+import { StrokeDasharrayField as OutlineStrokeDasharrayField } from './outlines/StrokeDasharrayField';
 import { NumberingField } from './NumberingField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
@@ -124,6 +125,7 @@ export function EditBasesForm(props: Props) {
               <OutlineRadiusField {...props} outlines={outlines} />
               <OutlineStrokeField {...props} outlines={outlines} />
               <OutlineStrokeWidthField {...props} outlines={outlines} />
+              <OutlineStrokeDasharrayField {...props} outlines={outlines} />
             </div>
           )}
           <NumberingField {...props} />
