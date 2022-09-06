@@ -52,7 +52,7 @@ export function StrokeDasharrayField(props: Props) {
   );
 
   let input = (
-    elements.length == 0 || values.every(equalsNone) ? (
+    elements.length == 0 || values.some(equalsNone) ? (
       null
     ) : (
       <StrokeDasharrayInput
