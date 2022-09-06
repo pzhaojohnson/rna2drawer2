@@ -12,6 +12,7 @@ export type Values = {
     'stroke'?: string;
     'stroke-width'?: number;
     'stroke-opacity'?: number;
+    'stroke-dasharray'?: string;
   }
   basePadding?: number;
   lineLength?: number;
@@ -29,6 +30,7 @@ export function values(bn: BaseNumbering): Values {
     'stroke': bn.line.attr('stroke') as unknown,
     'stroke-width': bn.line.attr('stroke-width') as unknown,
     'stroke-opacity': bn.line.attr('stroke-opacity') as unknown,
+    'stroke-dasharray': bn.line.attr('stroke-dasharray') as unknown,
   };
   let vs: Values = {
     text: {},
@@ -57,6 +59,9 @@ export function values(bn: BaseNumbering): Values {
   }
   if (typeof lineAttrs['stroke-opacity'] == 'number') {
     vs.line['stroke-opacity'] = lineAttrs['stroke-opacity'];
+  }
+  if (typeof lineAttrs['stroke-dasharray'] == 'string') {
+    vs.line['stroke-dasharray'] = lineAttrs['stroke-dasharray'];
   }
   vs.basePadding = bn.basePadding;
   vs.lineLength = bn.lineLength;
@@ -90,6 +95,9 @@ export function setValues(bn: BaseNumbering, vs: Values) {
     }
     if (typeof vs.line['stroke-opacity'] == 'number') {
       bn.line.attr({ 'stroke-opacity': vs.line['stroke-opacity'] });
+    }
+    if (typeof vs.line['stroke-dasharray'] == 'string') {
+      bn.line.attr({ 'stroke-dasharray': vs.line['stroke-dasharray'] });
     }
   }
   if (typeof vs.basePadding == 'number') {

@@ -118,6 +118,7 @@ BaseNumbering.recommendedDefaults = {
     'stroke': '#808080',
     'stroke-width': 1,
     'stroke-opacity': 1,
+    'stroke-dasharray': 'none',
   },
   basePadding: 8,
   lineLength: 8,

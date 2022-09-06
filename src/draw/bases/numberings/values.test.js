@@ -57,6 +57,7 @@ describe('values function', () => {
       'stroke': '#78acd2',
       'stroke-width': 8.19,
       'stroke-opacity': 0.191,
+      'stroke-dasharray': '1 0.22 3 4.05',
     });
     numbering.basePadding = 23.95;
     numbering.lineLength = 35.6;
@@ -74,6 +75,7 @@ describe('values function', () => {
         'stroke': '#78acd2',
         'stroke-width': 8.19,
         'stroke-opacity': 0.191,
+        'stroke-dasharray': '1 0.22 3 4.05',
       },
       basePadding: 23.95,
       lineLength: 35.6,
@@ -105,6 +107,7 @@ describe('setValues function', () => {
         'stroke': '#45bb1f',
         'stroke-width': 6.32,
         'stroke-opacity': 0.603,
+        'stroke-dasharray': '9 0.12 0.73',
       },
       basePadding: 90.1,
       lineLength: 15.4,
@@ -128,6 +131,7 @@ describe('setValues function', () => {
         'stroke': '#1903aa',
         'stroke-width': 6.33,
         'stroke-opacity': 0.439,
+        'stroke-dasharray': '3 2.9 0.78',
       },
       basePadding: 17.2,
       lineLength: 27.7,
