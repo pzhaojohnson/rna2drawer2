@@ -8,6 +8,7 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 
 import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
+import { StrokeDasharrayField } from './StrokeDasharrayField';
 import { BasePaddingField } from './BasePaddingField';
 import { StrokeLinecapField } from './StrokeLinecapField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
@@ -88,6 +89,7 @@ export function EditPrimaryBondsForm(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column' }} >
           <StrokeField {...props} />
           <StrokeWidthField {...props} />
+          <StrokeDasharrayField {...props} />
           <BasePaddingField {...props} />
           <StrokeLinecapField {...props} />
           <ForwardBackwardButtons {...props} />
