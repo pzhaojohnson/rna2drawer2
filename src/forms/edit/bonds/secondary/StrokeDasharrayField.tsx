@@ -65,6 +65,9 @@ function stringStrokeDasharrayValuesOf
   return strokeDasharrayValuesOf(secondaryBonds).filter(isString);
 }
 
+// cached value
+let lastDefaultDashedValue: StringStrokeDasharrayValue = '3 1';
+
 export type Props = {
   /**
    * A reference to the whole app.
@@ -129,7 +132,7 @@ export class StrokeDasharrayField extends React.Component<Props> {
     return !isNullish(defaultValue) && !equalsNone(defaultValue) ? (
       defaultValue
     ) : (
-      '3 1'
+      lastDefaultDashedValue
     );
   }
 
@@ -173,11 +176,14 @@ export class StrokeDasharrayField extends React.Component<Props> {
   }
 
   render() {
+    let defaultDashedValue = this.defaultDashedValue;
+    lastDefaultDashedValue = defaultDashedValue; // cache
+
     return (
       <_StrokeDasharrayField
         label='Dashed'
         elements={this.props.secondaryBonds.map(sb => sb.line)}
-        defaultDashedValue={this.defaultDashedValue}
+        defaultDashedValue={defaultDashedValue}
         onBeforeEdit={() => this.handleBeforeEdit()}
         onEdit={() => this.handleEdit()}
         style={{
