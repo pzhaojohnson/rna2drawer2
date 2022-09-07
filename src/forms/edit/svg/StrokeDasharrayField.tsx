@@ -6,14 +6,19 @@ import * as React from 'react';
 import styles from './StrokeDasharrayField.css';
 
 import { StrokeDasharrayCheckbox } from 'Forms/edit/svg/StrokeDasharrayCheckbox';
+import { EditEvent as CheckboxEditEvent } from 'Forms/edit/svg/StrokeDasharrayCheckbox';
 
 import { StrokeDasharrayInput } from 'Forms/edit/svg/StrokeDasharrayInput';
-import { EditEvent } from 'Forms/edit/svg/StrokeDasharrayInput';
+import { EditEvent as InputEditEvent } from 'Forms/edit/svg/StrokeDasharrayInput';
 
 import { StrokeDasharrayInfoLink } from 'Forms/edit/svg/StrokeDasharrayInfoLink';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 import { v4 as uuidv4 } from 'uuid';
+
+export type EditEvent = CheckboxEditEvent | InputEditEvent;
+
+export type BeforeEditEvent = InputEditEvent;
 
 export type Props = {
   /**
@@ -29,8 +34,8 @@ export type Props = {
    * Edit events are passed to the callbacks if provided by the
    * underlying components of this field.
    */
-  onEdit?: (event?: EditEvent) => void;
-  onBeforeEdit?: (event?: EditEvent) => void;
+  onEdit?: (event: EditEvent) => void;
+  onBeforeEdit?: (event?: BeforeEditEvent) => void;
 
   style?: React.CSSProperties;
 };
