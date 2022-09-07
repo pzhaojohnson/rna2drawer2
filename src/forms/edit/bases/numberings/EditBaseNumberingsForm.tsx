@@ -18,6 +18,7 @@ import { BoldField } from './BoldField';
 import { ColorField } from './ColorField';
 import { LineWidthField } from './LineWidthField';
 import { LineLengthField } from './LineLengthField';
+import { LineStrokeDasharrayField } from './LineStrokeDasharrayField';
 import { BasePaddingField } from './BasePaddingField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
@@ -126,6 +127,7 @@ export function EditBaseNumberingsForm(props: Props) {
           <ColorField {...props} />
           <LineWidthField {...props} />
           <LineLengthField {...props} />
+          <LineStrokeDasharrayField {...props} />
           <BasePaddingField {...props} />
           <ForwardBackwardButtons {...props} />
         </div>
