@@ -9,6 +9,25 @@ import * as React from 'react';
  */
 export type StrokeDasharrayValue = string;
 
+export type EditEvent = {
+  /**
+   * The new value assigned to the stroke-dasharray attributes of at
+   * least some of the provided SVG elements.
+   *
+   * Not all of the provided SVG elements may have been edited since
+   * this checkbox component will not override preexisting dashed values
+   * when checked (i.e., when the new value is also a dashed value).
+   */
+  newValue: StrokeDasharrayValue;
+
+  /**
+   * The SVG elements that were edited.
+   *
+   * (Is a subset of the provided SVG elements.)
+   */
+  elements: SVG.Element[];
+};
+
 export type Props = {
   id?: string;
 
@@ -34,7 +53,7 @@ export type Props = {
    * Called immediately after changing the stroke-dasharray attributes
    * of the elements.
    */
-  onEdit?: () => void;
+  onEdit?: (event: EditEvent) => void;
 
   /**
    * Called immediately before changing the stroke-dasharray values of
@@ -68,6 +87,7 @@ export class StrokeDasharrayCheckbox extends React.Component<Props> {
     let defaultDashedValue = this.props.defaultDashedValue ?? '3 1';
 
     let newValue = event.target.checked ? defaultDashedValue : 'none';
+    let editEvent: EditEvent = { newValue, elements: [] };
 
     if (this.props.onBeforeEdit) {
       this.props.onBeforeEdit();
@@ -77,10 +97,11 @@ export class StrokeDasharrayCheckbox extends React.Component<Props> {
       // don't replace a dashed value with another dashed value
       if (equalsNone(oldValue) || equalsNone(newValue)) {
         ele.attr('stroke-dasharray', newValue);
+        editEvent.elements.push(ele);
       }
     });
     if (this.props.onEdit) {
-      this.props.onEdit();
+      this.props.onEdit(editEvent);
     }
   }
 
