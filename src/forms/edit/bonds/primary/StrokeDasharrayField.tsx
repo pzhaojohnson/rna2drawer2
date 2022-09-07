@@ -8,15 +8,9 @@ import * as React from 'react';
 
 // the underlying component
 import { StrokeDasharrayField as _StrokeDasharrayField } from 'Forms/edit/svg/StrokeDasharrayField';
+import { EditEvent } from 'Forms/edit/svg/StrokeDasharrayField';
 
 import { isNullish } from 'Values/isNullish';
-import { isString } from 'Values/isString';
-
-/**
- * A value that the stroke-dasharray attribute of an SVG element can
- * have.
- */
-type StrokeDasharrayValue = unknown;
 
 /**
  * A value that the stroke-dasharray attribute of an SVG element can
@@ -25,9 +19,9 @@ type StrokeDasharrayValue = unknown;
 type StringStrokeDasharrayValue = string;
 
 /**
- * The most recent default dashed value.
+ * To be remembered between mountings and unmountings.
  */
-let lastDefaultDashedValue: StringStrokeDasharrayValue = '3 1';
+let lastNewDashedValue: StringStrokeDasharrayValue = '3 1';
 
 export type Props = {
   /**
@@ -43,27 +37,6 @@ export type Props = {
 
 export class StrokeDasharrayField extends React.Component<Props> {
   /**
-   * Values cached in reponse to a before edit event.
-   */
-  _oldValues?: Set<StrokeDasharrayValue>;
-
-  /**
-   * The stroke-dasharray values of the primary bond line elements.
-   */
-  get values(): StrokeDasharrayValue[] {
-    let primaryBonds = this.props.primaryBonds;
-    return primaryBonds.map(pb => pb.line.attr('stroke-dasharray'));
-  }
-
-  /**
-   * The stroke-dasharray values of the primary bond line elements that
-   * are strings.
-   */
-  get stringValues(): StringStrokeDasharrayValue[] {
-    return this.values.filter(isString);
-  }
-
-  /**
    * The default value for the stroke-dasharray attribute of the primary
    * bond line elements.
    */
@@ -77,42 +50,32 @@ export class StrokeDasharrayField extends React.Component<Props> {
     return !isNullish(defaultValue) && !equalsNone(defaultValue) ? (
       defaultValue
     ) : (
-      lastDefaultDashedValue
+      lastNewDashedValue
     );
   }
 
   handleBeforeEdit() {
-    this._oldValues = new Set(this.values);
-
     this.props.app.pushUndo();
   }
 
-  handleEdit() {
-    // ignore nullish values
-    let newValues = this.stringValues;
-    // remove old values
-    newValues = newValues.filter(v => !this._oldValues?.has(v));
+  handleEdit(event: EditEvent) {
+    PrimaryBond.recommendedDefaults.line['stroke-dasharray'] = event.newValue;
 
-    if (newValues.length > 0) {
-      PrimaryBond.recommendedDefaults.line['stroke-dasharray'] = newValues[0];
+    if (!equalsNone(event.newValue)) {
+      lastNewDashedValue = event.newValue;
     }
-
-    this._oldValues = undefined; // reset
 
     this.props.app.refresh(); // refresh after updating all values
   }
 
   render() {
-    let defaultDashedValue = this.defaultDashedValue;
-    lastDefaultDashedValue = defaultDashedValue; // cache
-
     return (
       <_StrokeDasharrayField
         label='Dashed'
         elements={this.props.primaryBonds.map(pb => pb.line)}
-        defaultDashedValue={defaultDashedValue}
+        defaultDashedValue={this.defaultDashedValue}
         onBeforeEdit={() => this.handleBeforeEdit()}
-        onEdit={() => this.handleEdit()}
+        onEdit={event => this.handleEdit(event)}
         style={{
           marginTop: '10px',
           minHeight: '22px',
