@@ -67,15 +67,17 @@ export class StrokeDasharrayCheckbox extends React.Component<Props> {
     // use the string "3 1" if not provided as a prop
     let defaultDashedValue = this.props.defaultDashedValue ?? '3 1';
 
+    let newValue = event.target.checked ? defaultDashedValue : 'none';
+
     if (this.props.onBeforeEdit) {
       this.props.onBeforeEdit();
     }
     this.props.elements.forEach(ele => {
       let oldValue: unknown = ele.attr('stroke-dasharray');
-      // don't override preexisting dashed values
-      let dashedValue = !equalsNone(oldValue) ? oldValue : defaultDashedValue;
-      let newValue = event.target.checked ? dashedValue : 'none';
-      ele.attr('stroke-dasharray', newValue);
+      // don't replace a dashed value with another dashed value
+      if (equalsNone(oldValue) || equalsNone(newValue)) {
+        ele.attr('stroke-dasharray', newValue);
+      }
     });
     if (this.props.onEdit) {
       this.props.onEdit();
