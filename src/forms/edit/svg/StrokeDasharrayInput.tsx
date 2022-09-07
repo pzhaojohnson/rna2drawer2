@@ -24,12 +24,18 @@ function isPositive(n: number): boolean {
  */
 export type StrokeDasharrayValue = unknown;
 
+/**
+ * A value that the stroke-dasharray attribute of an SVG element can
+ * have that is a string.
+ */
+export type StringStrokeDasharrayValue = string;
+
 export type EditEvent = {
   /**
    * The new value that was or will be assigned to the stroke-dasharray
    * attributes of the SVG elements.
    */
-  newValue: StrokeDasharrayValue;
+  newValue: StringStrokeDasharrayValue;
 
   /**
    * The previous value that the stroke-dasharray attributes of the SVG
