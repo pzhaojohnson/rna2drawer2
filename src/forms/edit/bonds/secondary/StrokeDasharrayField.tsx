@@ -11,7 +11,7 @@ import { StrokeDasharrayField as _StrokeDasharrayField } from 'Forms/edit/svg/St
 import { EditEvent } from 'Forms/edit/svg/StrokeDasharrayField';
 
 import { isNullish } from 'Values/isNullish';
-import { isString } from 'Values/isString';
+import { ValuesWrapper } from 'Values/ValuesWrapper';
 
 /**
  * A value that the stroke-dasharray attribute of an SVG element can
@@ -37,42 +37,21 @@ export type Props = {
 };
 
 export class StrokeDasharrayField extends React.Component<Props> {
-  /**
-   * The default value for the stroke-dasharray attributes of the
-   * secondary bond line elements.
-   *
-   * Is based on the recommended default values for the types of
-   * secondary bonds present.
-   *
-   * Is undefined if the recommended default values for the types of
-   * secondary bonds present are not all the same.
-   */
-  get defaultValue(): StringStrokeDasharrayValue | undefined {
+  get defaultDashedValue(): StringStrokeDasharrayValue {
     let types = this.props.secondaryBonds.map(sb => sb.type);
 
-    let recommendedDefaultValues = types.map(t => (
-      SecondaryBond.recommendedDefaults[t].line['stroke-dasharray']
+    let defaultValues = new ValuesWrapper(types.map(
+      t => SecondaryBond.recommendedDefaults[t].line['stroke-dasharray']
     ));
 
-    // remove nullish values
-    recommendedDefaultValues = recommendedDefaultValues.filter(isString);
+    let commonDefaultValue = defaultValues.commonValue;
 
-    let recommendedDefaultValuesSet = new Set(recommendedDefaultValues);
-
-    return recommendedDefaultValuesSet.size == 1 ? (
-      recommendedDefaultValues[0]
-    ) : (
-      undefined
-    );
-  }
-
-  get defaultDashedValue(): StringStrokeDasharrayValue {
-    let defaultValue = this.defaultValue;
-
-    return !isNullish(defaultValue) && !equalsNone(defaultValue) ? (
-      defaultValue
-    ) : (
+    return isNullish(commonDefaultValue) ? (
       lastNewDashedValue
+    ) : equalsNone(commonDefaultValue) ? (
+      lastNewDashedValue
+    ) : (
+      commonDefaultValue
     );
   }
 
