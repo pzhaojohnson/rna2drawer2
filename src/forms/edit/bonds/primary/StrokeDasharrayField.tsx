@@ -36,16 +36,10 @@ export type Props = {
 };
 
 export class StrokeDasharrayField extends React.Component<Props> {
-  /**
-   * The default value for the stroke-dasharray attribute of the primary
-   * bond line elements.
-   */
-  get defaultValue(): StringStrokeDasharrayValue | undefined {
-    return PrimaryBond.recommendedDefaults.line['stroke-dasharray'];
-  }
-
   get defaultDashedValue(): StringStrokeDasharrayValue {
-    let defaultValue = this.defaultValue;
+    let defaultValue = (
+      PrimaryBond.recommendedDefaults.line['stroke-dasharray']
+    );
 
     return !isNullish(defaultValue) && !equalsNone(defaultValue) ? (
       defaultValue
