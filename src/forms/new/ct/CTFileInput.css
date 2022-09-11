@@ -1,0 +1,62 @@
+.ctFileInput {
+  border: 1px solid #d1d1e7;
+  border-radius: 60px;
+
+  width: 600px;
+
+  padding: 12px 0px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.ctFileInput:hover {
+  transform: scale(1.04);
+  box-shadow: 0 3px 3px rgba(235, 235, 242, 0.23);
+  transition: transform 0.04s;
+}
+
+.ctFileInput:active {
+  transform: scale(1);
+  transition: transform 0s;
+}
+
+.defaultText {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: normal;
+  color: #050562;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.CT {
+  font-weight: 700;
+}
+
+.fileName {
+  width: 510px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: normal;
+  color: #050562;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  user-select: none;
+  -webkit-user-select: none;
+}

@@ -1,0 +1,18 @@
+.openCTFileSection {
+  margin: 40px 116px 0px 116px;
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detailsText {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #2a2a2d;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
