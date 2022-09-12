@@ -58,7 +58,7 @@ interface Props {
   close: () => void;
 }
 
-export function CreateNewDrawing(props: Props): React.ReactElement {
+export function EnterDotBracketForm(props: Props): React.ReactElement {
   let [sequenceId, setSequenceId] = useState('');
   let [sequence, setSequence] = useState('');
   let [dotBracket, setDotBracket] = useState('');

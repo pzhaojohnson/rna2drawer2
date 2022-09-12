@@ -6,7 +6,7 @@ import styles from './WelcomePage.css';
 import { Header } from './Header';
 import { DrawingSlideshow } from './drawings/DrawingSlideshow';
 
-import { CreateNewDrawing } from 'Forms/new/CreateNewDrawing';
+import { EnterDotBracketForm } from 'Forms/new/EnterDotBracketForm';
 import { OpenRna2drawer } from 'Forms/open/OpenRna2drawer';
 
 export type Props = {
@@ -29,7 +29,7 @@ function NewButton(props: Props) {
     <p
       className={styles.newAndOpenButtons}
       onClick={() => props.app.formContainer.renderForm(formProps => (
-        <CreateNewDrawing app={props.app} close={formProps.unmount} />
+        <EnterDotBracketForm app={props.app} close={formProps.unmount} />
       ))}
     >
       Create a New Drawing

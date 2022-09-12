@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { CreateNewDrawing } from 'Forms/new/CreateNewDrawing';
+import { EnterDotBracketForm } from 'Forms/new/EnterDotBracketForm';
 import { openNewTabOfApp } from 'Utilities/openNewTabOfApp';
 
 export type Props = {
@@ -15,7 +15,7 @@ export function NewButton(props: Props) {
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
           props.app.formContainer.renderForm(formProps => (
-            <CreateNewDrawing
+            <EnterDotBracketForm
               app={props.app}
               close={formProps.unmount}
             />
