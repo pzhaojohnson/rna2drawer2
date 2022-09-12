@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { EnterDotBracketForm } from 'Forms/new/EnterDotBracketForm';
+import { EnterDotBracketForm } from 'Forms/new/dot-bracket/EnterDotBracketForm';
 import { openNewTabOfApp } from 'Utilities/openNewTabOfApp';
 
 export type Props = {

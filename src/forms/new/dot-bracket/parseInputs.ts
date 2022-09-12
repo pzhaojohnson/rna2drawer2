@@ -1,10 +1,10 @@
-import { parseSequence } from '../../parse/parseSequence';
+import { parseSequence } from 'Parse/parseSequence';
 import {
   parseDotBracket,
   ParsedDotBracket,
   lastUnmatchedUpPartner,
   lastUnmatchedDownPartner,
-} from '../../parse/parseDotBracket';
+} from 'Parse/parseDotBracket';
 
 interface Inputs {
   sequenceId: string;

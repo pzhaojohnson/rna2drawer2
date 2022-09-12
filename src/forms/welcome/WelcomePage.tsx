@@ -6,7 +6,7 @@ import styles from './WelcomePage.css';
 import { Header } from './Header';
 import { DrawingSlideshow } from './drawings/DrawingSlideshow';
 
-import { EnterDotBracketForm } from 'Forms/new/EnterDotBracketForm';
+import { EnterDotBracketForm } from 'Forms/new/dot-bracket/EnterDotBracketForm';
 import { OpenRna2drawer } from 'Forms/open/OpenRna2drawer';
 
 export type Props = {
