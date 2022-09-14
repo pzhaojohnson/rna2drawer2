@@ -28,14 +28,15 @@ function ErrorMessage(
 
 function Details() {
   return (
-    <div style={{ marginTop: '40px' }} >
+    <div className={styles.details} >
       <p className={styles.detailsText} >
-        CT files are produced by some RNA structure prediction programs&nbsp;
+        CT "Connectivity Table" files
+        are produced by some RNA structure prediction programs
         such as Mfold.
       </p>
-      <p className={styles.detailsText} style={{ marginTop: '8px' }} >
-        If a CT file contains multiple structures,&nbsp;
-        only the first structure in the CT file will be drawn.
+      <p className={styles.detailsText} style={{ marginTop: '20px' }} >
+        If a CT file contains multiple structures,
+        only the first structure in the CT file is drawn.
       </p>
     </div>
   );

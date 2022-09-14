@@ -7,11 +7,19 @@
   align-items: center;
 }
 
+.details {
+  margin-top: 64px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .detailsText {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  font-weight: 400;
-  color: #2a2a2d;
+  font-weight: 500;
+  color: #2a2a2e;
 
   user-select: none;
   -webkit-user-select: none;
