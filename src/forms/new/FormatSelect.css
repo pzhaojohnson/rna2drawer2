@@ -1,0 +1,58 @@
+.formatSelect {
+  margin-right: 98px;
+
+  border: 1px solid rgba(213, 213, 228, 0.97);
+  border-radius: 60px;
+
+  width: 144px;
+
+  padding: 4px 6px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.formatButton {
+  margin: 0; /* necessary for Safari */
+  border: none;
+  outline: none;
+
+  padding: 3px 9px;
+  border-radius: 60px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  font-style: normal;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.formatButton:active {
+  outline: none;
+}
+
+.toggledFormatButton {
+  color: white;
+  background-color: #141416;
+
+  cursor: default;
+}
+
+.untoggledFormatButton {
+  color: rgb(11, 11, 11);
+  background-color: white;
+
+  cursor: pointer;
+}
+
+.untoggledFormatButton:hover {
+  background-color: #e0e0ec8c;
+}
+
+.untoggledFormatButton:active {
+  background-color: #e0e0ecd4;
+}

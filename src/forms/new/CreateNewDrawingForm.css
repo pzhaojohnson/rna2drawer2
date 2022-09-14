@@ -1,0 +1,43 @@
+.title {
+  margin: 0px 106px;
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: rgb(11, 11, 11);
+}
+
+.headerUnderline {
+  margin-top: 8px;
+
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgba(223, 223, 236, 0.93);
+
+  height: 0px;
+}
+
+.header {
+  width: 960px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  height: 551px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes bodyEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
