@@ -25,7 +25,7 @@ export type Args = {
  * Fails for invalid CT files.
  */
 export function openCTFile(args: Args) {
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve, reject) => {
     let ctFile = args.ctFile;
     let app = args.app;
     let drawing = app.drawing;
@@ -73,6 +73,6 @@ export function openCTFile(args: Args) {
       }
 
       resolve();
-    });
+    }).catch(reject);
   });
 }
