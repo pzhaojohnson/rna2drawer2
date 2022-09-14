@@ -51,6 +51,7 @@
   font-style: normal;
   color: #050562;
 
+  text-align: center;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
