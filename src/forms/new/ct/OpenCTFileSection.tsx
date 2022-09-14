@@ -12,9 +12,6 @@ import { CTFileInput } from './CTFileInput';
 // the underlying error message component
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
 
-// the underlying details toggle component
-import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
-
 function ErrorMessage(
   props: {
     children?: React.ReactNode,
@@ -26,24 +23,6 @@ function ErrorMessage(
     >
       {props.children}
     </_ErrorMessage>
-  );
-}
-
-function DetailsToggle(
-  props: {
-    onClick: () => void,
-  },
-) {
-  return (
-    <_DetailsToggle
-      onClick={props.onClick}
-      style={{
-        margin: '40px 440px 0px 0px', padding: '1px 14px',
-        fontSize: '12px', fontWeight: 500,
-      }}
-    >
-      Details
-    </_DetailsToggle>
   );
 }
 
@@ -106,8 +85,6 @@ export function OpenCTFileSection(props: Props) {
   let [errorMessageString, setErrorMessageString] = useState('');
   let [errorMessageKey, setErrorMessageKey] = useState(0);
 
-  let [showDetails, setShowDetails] = useState(false);
-
   let waitOverlay = createWaitOverlay();
 
   let handleSuccess = () => {
@@ -143,16 +120,11 @@ export function OpenCTFileSection(props: Props) {
     </ErrorMessage>
   ) : null;
 
-  let detailsToggle = (
-    <DetailsToggle onClick={() => setShowDetails(!showDetails)} />
-  );
-
   return (
     <div className={styles.openCTFileSection} >
       {ctFileInput}
       {errorMessage}
-      {detailsToggle}
-      {showDetails ? <Details /> : null}
+      <Details />
     </div>
   );
 }
