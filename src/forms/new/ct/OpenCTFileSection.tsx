@@ -19,7 +19,10 @@ function ErrorMessage(
 ) {
   return (
     <_ErrorMessage
-      style={{ marginTop: '12px', fontSize: '16px', color: '#d71111' }}
+      style={{
+        marginTop: '12px', height: '52px',
+        fontSize: '16px', color: '#d71111',
+      }}
     >
       {props.children}
     </_ErrorMessage>
@@ -124,7 +127,7 @@ export function OpenCTFileSection(props: Props) {
   return (
     <div className={styles.openCTFileSection} >
       {ctFileInput}
-      {errorMessage}
+      {errorMessage ? errorMessage : <div style={{ height: '64px' }} />}
       <Details />
     </div>
   );
