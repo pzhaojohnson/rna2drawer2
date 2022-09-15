@@ -7,6 +7,15 @@
   align-items: center;
 }
 
+.predictionProgramLink {
+  color: #551a8c;
+  text-decoration: none;
+}
+
+.predictionProgramLink:hover {
+  text-decoration: underline;
+}
+
 .details {
   display: flex;
   flex-direction: column;

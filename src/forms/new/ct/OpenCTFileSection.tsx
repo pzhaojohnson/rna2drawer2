@@ -29,13 +29,53 @@ function ErrorMessage(
   );
 }
 
+function PredictionProgramLink(
+  props: {
+    href: string,
+    children: string,
+  },
+) {
+  return (
+    <a
+      className={styles.predictionProgramLink}
+      href={props.href}
+      target='_blank'
+      rel='noopener noreferrer'
+    >
+      {props.children}
+    </a>
+  );
+}
+
+function MfoldLink() {
+  return (
+    <PredictionProgramLink
+      href='http://www.unafold.org/mfold/applications/rna-folding-form.php'
+    >
+      Mfold
+    </PredictionProgramLink>
+  );
+}
+
+function RNAfoldLink() {
+  return (
+    <PredictionProgramLink
+      href='http://rna.tbi.univie.ac.at/cgi-bin/RNAWebSuite/RNAfold.cgi'
+    >
+      RNAfold
+    </PredictionProgramLink>
+  );
+}
+
 function Details() {
+  let Mfold = <MfoldLink />;
+  let RNAfold = <RNAfoldLink />;
   return (
     <div className={styles.details} >
       <p className={styles.detailsText} >
         CT "Connectivity Table" files
         are produced by RNA structure prediction programs
-        such as Mfold and RNAfold.
+        such as {Mfold} and {RNAfold}.
       </p>
       <p className={styles.detailsText} style={{ marginTop: '20px' }} >
         If a CT file contains multiple structures,
