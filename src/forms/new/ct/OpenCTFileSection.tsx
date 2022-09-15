@@ -32,6 +32,7 @@ function ErrorMessage(
 function PredictionProgramLink(
   props: {
     href: string,
+    title?: string,
     children: string,
   },
 ) {
@@ -41,6 +42,7 @@ function PredictionProgramLink(
       href={props.href}
       target='_blank'
       rel='noopener noreferrer'
+      title={props.title}
     >
       {props.children}
     </a>
@@ -51,6 +53,7 @@ function MfoldLink() {
   return (
     <PredictionProgramLink
       href='http://www.unafold.org/mfold/applications/rna-folding-form.php'
+      title='Go to Mfold web server.'
     >
       Mfold
     </PredictionProgramLink>
@@ -61,6 +64,7 @@ function RNAfoldLink() {
   return (
     <PredictionProgramLink
       href='http://rna.tbi.univie.ac.at/cgi-bin/RNAWebSuite/RNAfold.cgi'
+      title='Go to RNAfold web server.'
     >
       RNAfold
     </PredictionProgramLink>
