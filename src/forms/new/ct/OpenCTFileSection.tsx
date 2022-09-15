@@ -34,8 +34,8 @@ function Details() {
     <div className={styles.details} >
       <p className={styles.detailsText} >
         CT "Connectivity Table" files
-        are produced by some RNA structure prediction programs
-        such as Mfold.
+        are produced by RNA structure prediction programs
+        such as Mfold and RNAfold.
       </p>
       <p className={styles.detailsText} style={{ marginTop: '20px' }} >
         If a CT file contains multiple structures,
