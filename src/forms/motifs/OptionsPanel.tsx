@@ -7,6 +7,8 @@ import { Props as CheckboxFieldProps } from 'Forms/inputs/checkbox/CheckboxField
 
 import { AllowedMismatchField } from './AllowedMismatchField';
 
+import { InfoLink } from 'Forms/info/InfoLink';
+
 function UTField(props: CheckboxFieldProps) {
   return (
     <CheckboxField
@@ -30,13 +32,25 @@ function IUPACField(props: CheckboxFieldProps) {
 }
 
 function TreatMotifAsRegExpField(props: CheckboxFieldProps) {
+  let style: React.CSSProperties = {
+    margin: '8px 0 0 0',
+    alignSelf: 'start',
+    display: 'flex',
+    flexDirection: 'row',
+  };
   return (
-    <CheckboxField
-      label='Treat Motif as a Regular Expression'
-      checked={props.checked}
-      onChange={props.onChange}
-      style={{ margin: '8px 0 0 0', alignSelf: 'start' }}
-    />
+    <div style={style} >
+      <CheckboxField
+        label='Treat Motif as a Regular Expression'
+        checked={props.checked}
+        onChange={props.onChange}
+      />
+      <InfoLink
+        href='https://regexone.com/'
+        title='Learn about Regular Expressions.'
+        style={{ padding: '0 7px 0 5px', fontSize: '11px' }}
+      />
+    </div>
   );
 }
 
