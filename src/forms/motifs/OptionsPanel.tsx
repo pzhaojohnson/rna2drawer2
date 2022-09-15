@@ -23,7 +23,7 @@ function UTField(props: CheckboxFieldProps) {
 function IUPACField(props: CheckboxFieldProps) {
   return (
     <CheckboxField
-      label='Use IUPAC single letter codes'
+      label='Use IUPAC Single Letter Codes'
       checked={props.checked}
       onChange={props.onChange}
       style={{ margin: '6px 0 0 0', alignSelf: 'start' }}
