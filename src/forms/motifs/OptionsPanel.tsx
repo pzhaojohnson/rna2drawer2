@@ -21,13 +21,25 @@ function UTField(props: CheckboxFieldProps) {
 }
 
 function IUPACField(props: CheckboxFieldProps) {
+  let style: React.CSSProperties = {
+    margin: '6px 0 0 0',
+    alignSelf: 'start',
+    display: 'flex',
+    flexDirection: 'row',
+  };
   return (
-    <CheckboxField
-      label='Use IUPAC Single Letter Codes'
-      checked={props.checked}
-      onChange={props.onChange}
-      style={{ margin: '6px 0 0 0', alignSelf: 'start' }}
-    />
+    <div style={style} >
+      <CheckboxField
+        label='Use IUPAC Single Letter Codes'
+        checked={props.checked}
+        onChange={props.onChange}
+      />
+      <InfoLink
+        href='https://www.bioinformatics.org/sms/iupac.html'
+        title='View IUPAC single letter codes.'
+        style={{ padding: '0 7px 0 5px', fontSize: '11px' }}
+      />
+    </div>
   );
 }
 
