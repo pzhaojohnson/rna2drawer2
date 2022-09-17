@@ -138,15 +138,13 @@ export class StrokeDasharrayInput extends React.Component<Props> {
   }
 
   submit() {
-    if (!this.props.elements || this.props.elements.length == 0) {
-      return;
-    }
-
     let newValue = this.newValue;
     let oldValue = this.oldValue;
 
     try {
-      if (newValue == oldValue) {
+      if (!this.props.elements || this.props.elements.length == 0) {
+        return;
+      } else if (newValue == oldValue) {
         throw new Error();
       } else if (equalsNone(newValue)) {
         throw new Error();
