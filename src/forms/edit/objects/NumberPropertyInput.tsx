@@ -126,6 +126,12 @@ export class NumberPropertyInput extends React.Component<Props> {
 
   processValue() {
     let newValue = Number.parseFloat(this.state.value);
+
+    let minValue = this.props.minValue ?? -Infinity;
+    let maxValue = this.props.maxValue ?? Infinity;
+    newValue = Math.max(newValue, minValue);
+    newValue = Math.min(newValue, maxValue);
+
     let oldValue = this.oldValue;
 
     try {
@@ -142,11 +148,6 @@ export class NumberPropertyInput extends React.Component<Props> {
       this.setState({ value: this.initialValue });
       return;
     }
-
-    let minValue = this.props.minValue ?? -Infinity;
-    let maxValue = this.props.maxValue ?? Infinity;
-    newValue = Math.max(newValue, minValue);
-    newValue = Math.min(newValue, maxValue);
 
     let editEvent = { newValue, oldValue };
     if (this.props.onBeforeEdit) {
