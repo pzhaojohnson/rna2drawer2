@@ -158,12 +158,6 @@ export class OpacityAttributeInput extends React.Component<Props> {
   }
 
   processValue() {
-    if (!this.props.elements || !this.props.attributeName) {
-      return;
-    } else if (isBlank(this.state.value)) {
-      return;
-    }
-
     let newValue = Number.parseFloat(this.state.value);
     newValue /= 100;
     newValue = Math.max(newValue, 0); // cannot be negative
@@ -172,7 +166,11 @@ export class OpacityAttributeInput extends React.Component<Props> {
     let oldValue = this.oldValue;
 
     try {
-      if (!Number.isFinite(newValue)) {
+      if (!this.props.elements || !this.props.attributeName) {
+        throw new Error();
+      } else if (isBlank(this.state.value)) {
+        throw new Error();
+      } else if (!Number.isFinite(newValue)) {
         throw new Error();
       } else if (newValue == oldValue) {
         throw new Error();
