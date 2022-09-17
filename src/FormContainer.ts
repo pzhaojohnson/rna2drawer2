@@ -98,6 +98,24 @@ export class FormContainer {
     this.node.remove();
   }
 
+  get activeElement() {
+    let activeElement = document.activeElement;
+    if (activeElement && this.node.contains(activeElement)) {
+      return activeElement;
+    } else {
+      return null;
+    }
+  }
+
+  focusElementById(id?: string) {
+    if (!id) return; // ignore undefined and empty IDs
+
+    let ele = document.getElementById(id);
+    if (ele && this.node.contains(ele)) {
+      ele.focus();
+    }
+  }
+
   renderForm(formFactory: FormFactory, options?: RenderFormOptions) {
     // seems to be necessary to update the displayed values of input elements
     ReactDOM.unmountComponentAtNode(this.node);
@@ -139,12 +157,16 @@ export class FormContainer {
     // remember scroll positions of form
     let scrollPositions = scrollPositionsOfElement(this.node.firstChild);
 
+    let activeElementId = this.activeElement?.id;
+
     this._rerenderForm(this._renderedForm.current);
 
     // restore scroll positions of form
     if (this.node.firstChild instanceof Element && scrollPositions) {
       setScrollPositionsOfElement(this.node.firstChild, scrollPositions);
     }
+
+    this.focusElementById(activeElementId); // refocus
   }
 
   _goBackward() {
