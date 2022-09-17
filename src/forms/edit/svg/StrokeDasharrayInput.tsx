@@ -151,9 +151,10 @@ export class StrokeDasharrayInput extends React.Component<Props> {
       }
     } catch {
       this.setState({ value: this.initialValue });
-      return;
+      return; // don't edit the SVG elements
     }
 
+    // edit the SVG elements
     let editEvent = { newValue, oldValue };
     if (this.props.onBeforeEdit) {
       this.props.onBeforeEdit(editEvent);
