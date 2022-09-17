@@ -148,10 +148,10 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
       <TextInput
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => this.processValue()}
+        onBlur={() => this.submit()}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
-            this.processValue();
+            this.submit();
           }
         }}
         style={{
@@ -162,7 +162,7 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
     );
   }
 
-  processValue() {
+  submit() {
     let degrees = Number.parseFloat(this.state.value);
     let newValue = degreesToRadians(degrees);
     let oldValue = this.oldValue;
