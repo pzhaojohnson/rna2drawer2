@@ -169,9 +169,14 @@ export class OpacityAttributeInput extends React.Component<Props> {
 
     let oldValue = this.oldValue;
 
-    if (!Number.isFinite(newValue)) {
-      return;
-    } else if (newValue == oldValue) {
+    try {
+      if (!Number.isFinite(newValue)) {
+        throw new Error();
+      } else if (newValue == oldValue) {
+        throw new Error();
+      }
+    } catch {
+      this.setState({ value: this.initialValue });
       return;
     }
 
