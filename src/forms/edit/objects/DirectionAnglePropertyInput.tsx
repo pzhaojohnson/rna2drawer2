@@ -163,10 +163,6 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
   }
 
   processValue() {
-    if (!this.props.objects || !this.props.propertyName) {
-      return;
-    }
-
     let degrees = Number.parseFloat(this.state.value);
     let newValue = degreesToRadians(degrees);
     let oldValue = this.oldValue;
@@ -180,7 +176,9 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
     }
 
     try {
-      if (!Number.isFinite(newValue)) {
+      if (!this.props.objects || !this.props.propertyName) {
+        throw new Error();
+      } else if (!Number.isFinite(newValue)) {
         throw new Error();
       } else if (!isNullish(values.commonValue)) {
         throw new Error(); // new and old values are the same
