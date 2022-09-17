@@ -172,7 +172,6 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
     if (Number.isFinite(newValue) && Number.isFinite(oldValue)) {
       newValue = normalizeAngle(newValue, this.angleFloor);
       values = values.normalize({ angleFloor: this.angleFloor });
-      values = values.round({ places: this.places });
     }
 
     try {
