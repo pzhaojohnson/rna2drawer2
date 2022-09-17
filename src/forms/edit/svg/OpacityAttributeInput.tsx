@@ -166,6 +166,8 @@ export class OpacityAttributeInput extends React.Component<Props> {
 
     let newValue = Number.parseFloat(this.state.value);
     newValue /= 100;
+    newValue = Math.max(newValue, 0); // cannot be negative
+    newValue = Math.min(newValue, 1); // cannot be more than 1
 
     let oldValue = this.oldValue;
 
@@ -179,9 +181,6 @@ export class OpacityAttributeInput extends React.Component<Props> {
       this.setState({ value: this.initialValue });
       return;
     }
-
-    newValue = Math.max(newValue, 0); // cannot be negative
-    newValue = Math.min(newValue, 1); // cannot be more than 1
 
     let editEvent = { newValue, oldValue };
     if (this.props.onBeforeEdit) {
