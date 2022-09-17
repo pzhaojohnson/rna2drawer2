@@ -110,10 +110,10 @@ export class NumberPropertyInput extends React.Component<Props> {
       <TextInput
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => this.processValue()}
+        onBlur={() => this.submit()}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
-            this.processValue();
+            this.submit();
           }
         }}
         style={{
@@ -124,7 +124,7 @@ export class NumberPropertyInput extends React.Component<Props> {
     );
   }
 
-  processValue() {
+  submit() {
     let newValue = Number.parseFloat(this.state.value);
 
     let minValue = this.props.minValue ?? -Infinity;
