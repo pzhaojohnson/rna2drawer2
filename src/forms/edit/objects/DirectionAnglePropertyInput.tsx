@@ -169,21 +169,25 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
 
     let degrees = Number.parseFloat(this.state.value);
     let newValue = degreesToRadians(degrees);
+    let oldValue = this.oldValue;
+    let values = new AnglesWrapper([newValue, oldValue]);
 
     // trying to normalize a nonfinite angle might loop infinitely
-    if (!Number.isFinite(newValue)) {
-      return;
+    if (Number.isFinite(newValue) && Number.isFinite(oldValue)) {
+      newValue = normalizeAngle(newValue, this.angleFloor);
+      values = values.normalize({ angleFloor: this.angleFloor });
+      values = values.round({ places: this.places });
     }
 
-    newValue = normalizeAngle(newValue, this.angleFloor);
-    let oldValue = this.oldValue;
-
-    let values = new AnglesWrapper([newValue, oldValue]);
-    values = values.normalize({ angleFloor: this.angleFloor });
-    values = values.round({ places: this.places });
-
-    if (!isNullish(values.commonValue)) {
-      return; // new and old values are the same
+    try {
+      if (!Number.isFinite(newValue)) {
+        throw new Error();
+      } else if (!isNullish(values.commonValue)) {
+        throw new Error(); // new and old values are the same
+      }
+    } catch {
+      this.setState({ value: this.initialValue });
+      return;
     }
 
     let editEvent = { newValue, oldValue };
