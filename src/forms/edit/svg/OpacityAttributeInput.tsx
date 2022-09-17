@@ -143,10 +143,10 @@ export class OpacityAttributeInput extends React.Component<Props> {
       <TextInput
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => this.processValue()}
+        onBlur={() => this.submit()}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
-            this.processValue();
+            this.submit();
           }
         }}
         style={{
@@ -157,7 +157,7 @@ export class OpacityAttributeInput extends React.Component<Props> {
     );
   }
 
-  processValue() {
+  submit() {
     let newValue = Number.parseFloat(this.state.value);
     newValue /= 100;
     newValue = Math.max(newValue, 0); // cannot be negative
