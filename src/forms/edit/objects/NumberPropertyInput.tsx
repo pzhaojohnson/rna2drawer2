@@ -125,17 +125,15 @@ export class NumberPropertyInput extends React.Component<Props> {
   }
 
   processValue() {
-    if (!this.props.objects || !this.props.propertyName) {
-      return;
-    } else if (isBlank(this.state.value)) {
-      return;
-    }
-
     let newValue = Number.parseFloat(this.state.value);
     let oldValue = this.oldValue;
 
     try {
-      if (!Number.isFinite(newValue)) {
+      if (!this.props.objects || !this.props.propertyName) {
+        throw new Error();
+      } else if (isBlank(this.state.value)) {
+        throw new Error();
+      } else if (!Number.isFinite(newValue)) {
         throw new Error();
       } else if (newValue == oldValue) {
         throw new Error();
