@@ -146,9 +146,10 @@ export class NumberPropertyInput extends React.Component<Props> {
       }
     } catch {
       this.setState({ value: this.initialValue });
-      return;
+      return; // don't edit the objects
     }
 
+    // edit the objects
     let editEvent = { newValue, oldValue };
     if (this.props.onBeforeEdit) {
       this.props.onBeforeEdit(editEvent);
