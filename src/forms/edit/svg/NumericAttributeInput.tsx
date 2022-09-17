@@ -130,12 +130,6 @@ export class NumericAttributeInput extends React.Component<Props> {
   }
 
   processValue() {
-    if (!this.props.elements || !this.props.attributeName) {
-      return;
-    } else if (isBlank(this.state.value)) {
-      return;
-    }
-
     let newValue = Number.parseFloat(this.state.value);
 
     let minValue = this.props.minValue ?? -Infinity;
@@ -146,7 +140,11 @@ export class NumericAttributeInput extends React.Component<Props> {
     let oldValue = this.oldValue;
 
     try {
-      if (!Number.isFinite(newValue)) {
+      if (!this.props.elements || !this.props.attributeName) {
+        throw new Error();
+      } else if (isBlank(this.state.value)) {
+        throw new Error();
+      } else if (!Number.isFinite(newValue)) {
         throw new Error();
       } else if (newValue == oldValue) {
         throw new Error();
