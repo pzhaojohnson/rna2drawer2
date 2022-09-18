@@ -12,6 +12,7 @@ export type Props = {
 
   // for specifying attributes of the text input element of the field
   input?: {
+    id?: string;
     placeholder?: string;
     spellCheck?: boolean | 'true' | 'false';
     style?: React.CSSProperties;
@@ -35,6 +36,7 @@ export function TextInputField(props: Props) {
       }}
     >
       <TextInput
+        id={props.input?.id}
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}

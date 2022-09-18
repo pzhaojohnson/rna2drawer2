@@ -80,6 +80,14 @@ describe('TextInputField component', () => {
     expect(onKeyUp.mock.calls[0][0].key).toBe('Enter');
   });
 
+  it('renders with specified input element ID', () => {
+    act(() => {
+      render(<TextInputField input={{ id: 'ASDF qw1234' }} />, container);
+    });
+    let input = container.getElementsByTagName('input')[0];
+    expect(input.id).toBe('ASDF qw1234');
+  });
+
   it('passes specified placeholder text to the input element', () => {
     act(() => {
       render(<TextInputField input={{ placeholder: 'Blah bleh zxcv.' }} />, container);
