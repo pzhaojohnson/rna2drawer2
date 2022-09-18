@@ -4,6 +4,7 @@ import { parseCTString } from './parseCTString';
 import { splitSecondaryAndTertiaryPairs } from './splitSecondaryAndTertiaryPairs';
 
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
+import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 
 import { removeFileExtension } from 'Parse/parseFileExtension';
 import { isBlank } from 'Parse/isBlank';
@@ -55,6 +56,7 @@ export function openCTFile(args: Args) {
           increment: numberingIncrement,
           anchor: Math.min(numberingIncrement, sequence.length),
         });
+        orientBaseNumberings(drawing.drawing);
       }
 
       // only explicitly specify the drawing title if necessary
