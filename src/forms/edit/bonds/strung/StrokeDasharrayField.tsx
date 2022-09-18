@@ -14,6 +14,10 @@ import * as React from 'react';
 import { StrokeDasharrayField as _StrokeDasharrayField } from 'Forms/edit/svg/StrokeDasharrayField';
 import { EditEvent } from 'Forms/edit/svg/StrokeDasharrayField';
 
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
+const inputId = generateHTMLSafeUUID();
+
 /**
  * Should be updated on edit and persist between mountings and
  * unmountings.
@@ -59,6 +63,7 @@ export class StrokeDasharrayField extends React.Component<Props> {
         defaultDashedValue={defaultDashedValue}
         onBeforeEdit={() => this.handleBeforeEdit()}
         onEdit={event => this.handleEdit(event)}
+        input={{ id: inputId }}
         style={{
           marginTop: '8px',
           minHeight: '22px',

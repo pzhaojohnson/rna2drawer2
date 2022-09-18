@@ -15,11 +15,15 @@ import * as React from 'react';
 import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
 import { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
 
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
 const defaultSVGElementAttributes = {
   'StrungCircle': defaultStrungCircleValues.circle,
   'StrungTriangle': defaultStrungTriangleValues.path,
   'StrungRectangle': defaultStrungRectangleValues.path,
 };
+
+const id = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -65,6 +69,7 @@ export class StrokeOpacityInput extends React.Component<Props> {
 
     return (
       <OpacityAttributeInput
+        id={id}
         elements={svgElements}
         attributeName='stroke-opacity'
         places={2}

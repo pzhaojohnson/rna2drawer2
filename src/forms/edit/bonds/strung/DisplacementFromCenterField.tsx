@@ -12,6 +12,10 @@ import { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
+const inputId = generateHTMLSafeUUID();
+
 export type Props = {
   /**
    * A reference to the whole app.
@@ -62,6 +66,7 @@ export class DisplacementFromCenterField extends React.Component<Props> {
     return (
       <FieldLabel style={style} >
         <NumberPropertyInput
+          id={inputId}
           objects={this.props.strungElements}
           propertyName='displacementFromCenter'
           places={2}

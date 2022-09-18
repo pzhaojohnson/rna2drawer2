@@ -17,11 +17,15 @@ import { EditEvent } from 'Forms/edit/svg/NumericAttributeInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
 const defaultSVGElementAttributes = {
   'StrungCircle': defaultStrungCircleValues.circle,
   'StrungTriangle': defaultStrungTriangleValues.path,
   'StrungRectangle': defaultStrungRectangleValues.path,
 };
+
+const inputId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -68,6 +72,7 @@ export class StrokeWidthField extends React.Component<Props> {
     return (
       <FieldLabel style={style} >
         <NumericAttributeInput
+          id={inputId}
           elements={svgElements}
           attributeName='stroke-width'
           minValue={0}

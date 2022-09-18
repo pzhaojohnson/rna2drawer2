@@ -14,6 +14,10 @@ import { EditEvent } from 'Forms/edit/objects/DirectionAnglePropertyInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
+const inputId = generateHTMLSafeUUID();
+
 export type Props = {
   /**
    * A reference to the whole app.
@@ -67,6 +71,7 @@ export class RotationField extends React.Component<Props> {
     return (
       <FieldLabel style={style} >
         <DirectionAnglePropertyInput
+          id={inputId}
           objects={this.props.strungElements}
           propertyName='rotation'
           angleFloor={0}

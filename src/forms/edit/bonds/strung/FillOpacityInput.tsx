@@ -14,12 +14,16 @@ import * as React from 'react';
 import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
 import { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
 
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
 const defaultSVGElementAttributes = {
   'StrungText': defaultStrungTextValues.text,
   'StrungCircle': defaultStrungCircleValues.circle,
   'StrungTriangle': defaultStrungTriangleValues.path,
   'StrungRectangle': defaultStrungRectangleValues.path,
 };
+
+const id = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -64,6 +68,7 @@ export class FillOpacityInput extends React.Component<Props> {
 
     return (
       <OpacityAttributeInput
+        id={id}
         elements={svgElements}
         attributeName='fill-opacity'
         places={2}

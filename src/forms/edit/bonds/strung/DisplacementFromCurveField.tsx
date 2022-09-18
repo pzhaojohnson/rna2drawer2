@@ -12,6 +12,11 @@ import { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
+const inputXId = generateHTMLSafeUUID();
+const inputYId = generateHTMLSafeUUID();
+
 export type Props = {
   /**
    * A reference to the whole app.
@@ -59,6 +64,7 @@ class DisplacementFromCurveXField extends React.Component<Props> {
     return (
       <FieldLabel style={{ cursor: 'text', ...this.props.style }} >
         <NumberPropertyInput
+          id={inputXId}
           objects={strungElements.map(ele => ele.displacementFromCurve)}
           propertyName='x'
           places={2}
@@ -95,6 +101,7 @@ class DisplacementFromCurveYField extends React.Component<Props> {
     return (
       <FieldLabel style={{ cursor: 'text', ...this.props.style }} >
         <NumberPropertyInput
+          id={inputYId}
           objects={strungElements.map(ele => ele.displacementFromCurve)}
           propertyName='y'
           places={2}
