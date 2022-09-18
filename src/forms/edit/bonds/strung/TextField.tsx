@@ -12,9 +12,13 @@ import * as React from 'react';
 
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
 import { isBlank } from 'Parse/isBlank';
 
 export type Nullish = null | undefined;
+
+const inputId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -87,7 +91,10 @@ export class TextField extends React.Component<Props> {
             this.processValue();
           }
         }}
-        input={{ style: { width: inputWidth + 'ch' } }}
+        input={{
+          id: inputId,
+          style: { width: inputWidth + 'ch' },
+        }}
         style={{
           marginTop: '8px', alignSelf: 'start', cursor: 'text',
           ...this.props.style,
