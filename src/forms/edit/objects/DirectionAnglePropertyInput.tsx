@@ -32,6 +32,8 @@ export type EditEvent = {
 };
 
 export type Props = {
+  id?: string;
+
   /**
    * The objects to edit.
    */
@@ -146,6 +148,7 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
   render() {
     return (
       <TextInput
+        id={this.props.id}
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => this.submit()}

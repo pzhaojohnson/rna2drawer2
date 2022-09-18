@@ -30,6 +30,8 @@ export type EditEvent = {
 };
 
 export type Props = {
+  id?: string;
+
   /**
    * The elements to edit.
    */
@@ -141,6 +143,7 @@ export class OpacityAttributeInput extends React.Component<Props> {
   render() {
     return (
       <TextInput
+        id={this.props.id}
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => this.submit()}
