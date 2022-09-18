@@ -37,6 +37,10 @@ export type Props = {
   onEdit?: (event: EditEvent) => void;
   onBeforeEdit?: (event?: BeforeEditEvent) => void;
 
+  input?: {
+    id?: string;
+  };
+
   style?: React.CSSProperties;
 };
 
@@ -46,7 +50,7 @@ export function StrokeDasharrayField(props: Props) {
 
   // make unique since multiple instances of this field may coexist
   let checkboxId = generateHTMLSafeUUID();
-  let inputId = generateHTMLSafeUUID();
+  let inputId = props.input?.id ?? generateHTMLSafeUUID();
 
   let checkbox = (
     <StrokeDasharrayCheckbox
