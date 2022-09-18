@@ -177,6 +177,9 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
       values = values.normalize({ angleFloor: this.angleFloor });
     }
 
+    // necessary after normalizing calculations floating point errors
+    values = values.round({ places: this.places });
+
     try {
       if (!this.props.objects || !this.props.propertyName) {
         throw new Error();
