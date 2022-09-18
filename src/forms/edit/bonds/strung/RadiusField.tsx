@@ -52,7 +52,7 @@ export class RadiusField extends React.Component<Props> {
       });
     }
 
-    this.props.app.pushUndo();
+    this.props.app.refresh();
   }
 
   render() {

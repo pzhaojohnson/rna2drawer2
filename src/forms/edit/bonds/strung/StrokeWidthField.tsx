@@ -60,7 +60,7 @@ export class StrokeWidthField extends React.Component<Props> {
       defaultSVGElementAttributes[t]['stroke-width'] = newValue;
     });
 
-    this.props.app.pushUndo();
+    this.props.app.refresh();
   }
 
   render() {
