@@ -52,12 +52,12 @@ export type RenderFormOptions = {
 
 type RenderedForm = {
   formFactory: FormFactory;
-  options?: RenderFormOptions;
+  key?: string;
 }
 
 function renderedFormsAreEqual(rf1: RenderedForm, rf2: RenderedForm): boolean {
-  if (rf1.options?.key != undefined && rf2.options?.key != undefined) {
-    return rf1.options.key == rf2.options.key;
+  if (rf1.key != undefined && rf2.key != undefined) {
+    return rf1.key == rf2.key;
   } else {
     return rf1.formFactory == rf2.formFactory;
   }
@@ -132,14 +132,14 @@ export class FormContainer {
 
     // set before rendering so that the form history is
     // up-to-date when rendering
-    this._renderedForm.current = { formFactory, options };
+    this._renderedForm.current = { formFactory, key: options?.key };
 
     ReactDOM.render(formFactory(props), this.node);
   }
 
   // helps make code for going backward and forward and refreshing simpler
   _rerenderForm(rf: RenderedForm) {
-    this.renderForm(rf.formFactory, rf.options);
+    this.renderForm(rf.formFactory, { key: rf.key });
   }
 
   unmountForm() {
