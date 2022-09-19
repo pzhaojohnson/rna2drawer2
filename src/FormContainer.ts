@@ -173,14 +173,16 @@ export class FormContainer {
 
     let activeElementId = this.activeElement?.id;
 
-    this._rerenderForm(this._renderedForm.current);
+    let callback = () => {
+      // restore scroll positions of form
+      if (this.node.firstChild instanceof Element && scrollPositions) {
+        setScrollPositionsOfElement(this.node.firstChild, scrollPositions);
+      }
 
-    // restore scroll positions of form
-    if (this.node.firstChild instanceof Element && scrollPositions) {
-      setScrollPositionsOfElement(this.node.firstChild, scrollPositions);
-    }
+      this.focusElementById(activeElementId); // refocus
+    };
 
-    this.focusElementById(activeElementId); // refocus
+    this._rerenderForm(this._renderedForm.current, { callback });
   }
 
   _goBackward() {
