@@ -48,6 +48,18 @@ export type RenderFormOptions = {
   // may be used to specify when two different form factories
   // produce the same form (i.e., by giving them the same key)
   key?: string;
+
+  /**
+   * A callback function to be called after rendering the form.
+   */
+  callback?: () => void;
+}
+
+type RerenderFormOptions = {
+  /**
+   * A callback function to be called after rerendering the form.
+   */
+  callback?: () => void;
 }
 
 type RenderedForm = {
@@ -134,12 +146,14 @@ export class FormContainer {
     // up-to-date when rendering
     this._renderedForm.current = { formFactory, key: options?.key };
 
-    ReactDOM.render(formFactory(props), this.node);
+    ReactDOM.render(formFactory(props), this.node, options?.callback);
   }
 
   // helps make code for going backward and forward and refreshing simpler
-  _rerenderForm(rf: RenderedForm) {
-    this.renderForm(rf.formFactory, { key: rf.key });
+  _rerenderForm(rf: RenderedForm, options?: RerenderFormOptions) {
+    let key = rf.key;
+    let callback = options?.callback;
+    this.renderForm(rf.formFactory, { key, callback });
   }
 
   unmountForm() {
