@@ -14,6 +14,9 @@ import { curveLengthOfBond } from 'Draw/bonds/strung/curveLengthOfBond';
 import { addStrungElementToBond } from 'Draw/bonds/strung/addToBond';
 import { removeStrungElementFromBond } from 'Draw/bonds/strung/addToBond';
 
+import { repositionStrungElementAtIndex } from 'Forms/edit/bonds/strung/repositionStrungElementAtIndex';
+import { deepCopyPoint2D as deepCopyPoint } from 'Math/points/Point';
+
 import * as React from 'react';
 import styles from './TypeSelect.css';
 
@@ -74,9 +77,14 @@ function replaceStrungElement(args: {
    */
   newStrungElementType: StrungElementType
 }) {
+  let displacementFromCenter = 0;
+  let displacementFromCurve = { x: 0, y: 0 };
+
   let strungElement: StrungElement | undefined;
   strungElement = atIndex(args.bond.strungElements, args.strungElementIndex);
   if (strungElement) {
+    displacementFromCenter = strungElement.displacementFromCenter;
+    displacementFromCurve = deepCopyPoint(strungElement.displacementFromCurve);
     removeStrungElementFromBond({ bond: args.bond, strungElement });
   }
 
@@ -87,11 +95,12 @@ function replaceStrungElement(args: {
   });
 
   if (newStrungElement) {
-    addStrungElementToBond({
-      bond: args.bond,
-      index: args.strungElementIndex,
-      strungElement: newStrungElement,
-    });
+    let bond = args.bond;
+    let index = args.strungElementIndex;
+    addStrungElementToBond({ bond, index, strungElement: newStrungElement });
+    newStrungElement.displacementFromCenter = displacementFromCenter;
+    newStrungElement.displacementFromCurve = displacementFromCurve;
+    repositionStrungElementAtIndex({ bond, index });
   }
 }
 
