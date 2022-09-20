@@ -14,8 +14,8 @@ import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
 import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
 
-const inputXId = generateHTMLSafeUUID();
-const inputYId = generateHTMLSafeUUID();
+const baseInputXId = generateHTMLSafeUUID();
+const baseInputYId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -43,6 +43,11 @@ export type Props = {
 };
 
 class DisplacementFromCurveXField extends React.Component<Props> {
+  get inputId(): string {
+    // make different for each strung elements index
+    return baseInputXId + this.props.strungElementsIndex;
+  }
+
   onBeforeEdit(event: EditEvent) {
     this.props.app.pushUndo();
   }
@@ -64,7 +69,7 @@ class DisplacementFromCurveXField extends React.Component<Props> {
     return (
       <FieldLabel style={{ cursor: 'text', ...this.props.style }} >
         <NumberPropertyInput
-          id={inputXId}
+          id={this.inputId}
           objects={strungElements.map(ele => ele.displacementFromCurve)}
           propertyName='x'
           places={2}
@@ -80,6 +85,11 @@ class DisplacementFromCurveXField extends React.Component<Props> {
 }
 
 class DisplacementFromCurveYField extends React.Component<Props> {
+  get inputId(): string {
+    // make different for each strung elements index
+    return baseInputYId + this.props.strungElementsIndex;
+  }
+
   onBeforeEdit(event: EditEvent) {
     this.props.app.pushUndo();
   }
@@ -101,7 +111,7 @@ class DisplacementFromCurveYField extends React.Component<Props> {
     return (
       <FieldLabel style={{ cursor: 'text', ...this.props.style }} >
         <NumberPropertyInput
-          id={inputYId}
+          id={this.inputId}
           objects={strungElements.map(ele => ele.displacementFromCurve)}
           propertyName='y'
           places={2}

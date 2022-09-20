@@ -23,7 +23,7 @@ const defaultSVGElementAttributes = {
   'StrungRectangle': defaultStrungRectangleValues.path,
 };
 
-const id = generateHTMLSafeUUID();
+const baseId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -36,6 +36,12 @@ export type Props = {
    */
   strungElements: StrungElement[];
 
+  /**
+   * The index that the strung elements are at in the strung elements
+   * arrays of the bonds possessing them.
+   */
+  strungElementsIndex: number;
+
   style?: React.CSSProperties;
 };
 
@@ -44,6 +50,11 @@ export type Props = {
  * each strung element.
  */
 export class FillOpacityInput extends React.Component<Props> {
+  get id(): string {
+    // make different for each strung elements index
+    return baseId + this.props.strungElementsIndex;
+  }
+
   onBeforeEdit(event: EditEvent) {
     this.props.app.pushUndo();
   }
@@ -68,7 +79,7 @@ export class FillOpacityInput extends React.Component<Props> {
 
     return (
       <OpacityAttributeInput
-        id={id}
+        id={this.id}
         elements={svgElements}
         attributeName='fill-opacity'
         places={2}

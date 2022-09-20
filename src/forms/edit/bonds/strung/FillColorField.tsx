@@ -18,6 +18,12 @@ export type Props = {
    * The strung elements to edit.
    */
   strungElements: StrungElement[];
+
+  /**
+   * The index that the strung elements are at in the strung elements
+   * arrays of the bonds possessing them.
+   */
+  strungElementsIndex: number;
 };
 
 /**

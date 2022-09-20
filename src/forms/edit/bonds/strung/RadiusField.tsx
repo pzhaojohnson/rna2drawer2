@@ -19,7 +19,7 @@ const defaultSVGElementAttributes = {
   'StrungCircle': defaultStrungCircleValues.circle,
 };
 
-const inputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -31,12 +31,23 @@ export type Props = {
    * The strung elements to edit.
    */
   strungElements: StrungCircle[];
+
+  /**
+   * The index that the strung elements are at in the strung elements
+   * arrays of the bonds possessing them.
+   */
+  strungElementsIndex: number;
 };
 
 /**
  * Allows editing of the "r" attribute of strung SVG circle elements.
  */
 export class RadiusField extends React.Component<Props> {
+  get inputId(): string {
+    // make different for each strung elements index
+    return baseInputId + this.props.strungElementsIndex;
+  }
+
   onBeforeEdit(event: EditEvent) {
     this.props.app.pushUndo();
   }
@@ -64,7 +75,7 @@ export class RadiusField extends React.Component<Props> {
     return (
       <FieldLabel style={style} >
         <NumericAttributeInput
-          id={inputId}
+          id={this.inputId}
           elements={svgElements}
           attributeName='r'
           minValue={0}

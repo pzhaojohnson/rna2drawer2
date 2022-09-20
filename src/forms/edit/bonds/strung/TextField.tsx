@@ -18,7 +18,7 @@ import { isBlank } from 'Parse/isBlank';
 
 export type Nullish = null | undefined;
 
-const inputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -61,6 +61,11 @@ export class TextField extends React.Component<Props> {
     };
   }
 
+  get inputId(): string {
+    // make different for each strung elements index
+    return baseInputId + this.props.strungElementsIndex;
+  }
+
   get oldValue(): string | Nullish {
     let texts = new ValuesWrapper(
       this.props.strungElements.map(ele => ele.text.text())
@@ -92,7 +97,7 @@ export class TextField extends React.Component<Props> {
           }
         }}
         input={{
-          id: inputId,
+          id: this.inputId,
           style: { width: inputWidth + 'ch' },
         }}
         style={{

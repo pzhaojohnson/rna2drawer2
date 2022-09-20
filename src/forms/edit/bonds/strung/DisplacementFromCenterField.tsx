@@ -14,7 +14,7 @@ import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
 import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
 
-const inputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -42,6 +42,11 @@ export type Props = {
 };
 
 export class DisplacementFromCenterField extends React.Component<Props> {
+  get inputId(): string {
+    // make different for each strung elements index
+    return baseInputId + this.props.strungElementsIndex;
+  }
+
   onBeforeEdit(event: EditEvent) {
     this.props.app.pushUndo();
   }
@@ -66,7 +71,7 @@ export class DisplacementFromCenterField extends React.Component<Props> {
     return (
       <FieldLabel style={style} >
         <NumberPropertyInput
-          id={inputId}
+          id={this.inputId}
           objects={this.props.strungElements}
           propertyName='displacementFromCenter'
           places={2}

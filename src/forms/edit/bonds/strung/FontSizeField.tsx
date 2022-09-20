@@ -22,7 +22,7 @@ const defaultSVGElementAttributes = {
   'StrungText': defaultStrungTextValues.text,
 };
 
-const inputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -52,6 +52,11 @@ export type Props = {
  * each of the strung elements.
  */
 export class FontSizeField extends React.Component<Props> {
+  get inputId(): string {
+    // make different for each strung elements index
+    return baseInputId + this.props.strungElementsIndex;
+  }
+
   onBeforeEdit(event: EditEvent) {
     this.props.app.pushUndo();
   }
@@ -86,7 +91,7 @@ export class FontSizeField extends React.Component<Props> {
     return (
       <FieldLabel style={style} >
         <NumericAttributeInput
-          id={inputId}
+          id={this.inputId}
           elements={svgElements}
           attributeName='font-size'
           minValue={1}

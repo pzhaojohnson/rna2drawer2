@@ -25,7 +25,7 @@ const defaultSVGElementAttributes = {
   'StrungRectangle': defaultStrungRectangleValues.path,
 };
 
-const inputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLSafeUUID();
 
 export type Props = {
   /**
@@ -41,6 +41,12 @@ export type Props = {
     | StrungTriangle
     | StrungRectangle
   )[];
+
+  /**
+   * The index that the strung elements are at in the strung elements
+   * arrays of the bonds that possess them.
+   */
+  strungElementsIndex: number;
 };
 
 /**
@@ -48,6 +54,11 @@ export type Props = {
  * strung elements.
  */
 export class StrokeWidthField extends React.Component<Props> {
+  get inputId(): string {
+    // make different for each strung elements index
+    return baseInputId + this.props.strungElementsIndex;
+  }
+
   onBeforeEdit(event: EditEvent) {
     this.props.app.pushUndo();
   }
@@ -72,7 +83,7 @@ export class StrokeWidthField extends React.Component<Props> {
     return (
       <FieldLabel style={style} >
         <NumericAttributeInput
-          id={inputId}
+          id={this.inputId}
           elements={svgElements}
           attributeName='stroke-width'
           minValue={0}

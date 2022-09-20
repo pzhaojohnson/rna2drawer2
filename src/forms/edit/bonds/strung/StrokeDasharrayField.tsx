@@ -16,7 +16,7 @@ import { EditEvent } from 'Forms/edit/svg/StrokeDasharrayField';
 
 import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
 
-const inputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLSafeUUID();
 
 /**
  * Should be updated on edit and persist between mountings and
@@ -38,9 +38,20 @@ export type Props = {
     | StrungTriangle
     | StrungRectangle
   )[];
+
+  /**
+   * The index that the strung elements are at in the strung elements
+   * arrays of the bonds that possess them.
+   */
+  strungElementsIndex: number;
 };
 
 export class StrokeDasharrayField extends React.Component<Props> {
+  get inputId(): string {
+    // make different for each strung elements index
+    return baseInputId + this.props.strungElementsIndex;
+  }
+
   handleBeforeEdit() {
     this.props.app.pushUndo();
   }
@@ -63,7 +74,7 @@ export class StrokeDasharrayField extends React.Component<Props> {
         defaultDashedValue={defaultDashedValue}
         onBeforeEdit={() => this.handleBeforeEdit()}
         onEdit={event => this.handleEdit(event)}
-        input={{ id: inputId }}
+        input={{ id: this.inputId }}
         style={{
           marginTop: '8px',
           minHeight: '22px',

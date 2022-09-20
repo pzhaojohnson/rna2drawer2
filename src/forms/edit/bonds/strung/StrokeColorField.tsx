@@ -24,6 +24,12 @@ export type Props = {
     | StrungTriangle
     | StrungRectangle
   )[];
+
+  /**
+   * The index that the strung elements are at in the strung elements
+   * arrays of the bonds possessing them.
+   */
+  strungElementsIndex: number;
 };
 
 /**
