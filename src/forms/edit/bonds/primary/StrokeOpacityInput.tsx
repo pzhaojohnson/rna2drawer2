@@ -1,84 +1,57 @@
 import type { App } from 'App';
+
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 
-import * as SVG from '@svgdotjs/svg.js';
-import { strokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
-import { setStrokeOpacity } from 'Forms/inputs/svg/strokeOpacity/strokeOpacity';
-import { displayablePercentageString } from 'Forms/inputs/numbers/displayablePercentageString';
-import { isBlank } from 'Parse/isBlank';
-import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
-
 import * as React from 'react';
-import { TextInput } from 'Forms/inputs/text/TextInput';
 
-// returns the line elements of the primary bonds
-function lines(primaryBonds: PrimaryBond[]): SVG.Line[] {
-  return primaryBonds.map(primaryBond => primaryBond.line);
-}
+import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
+import type { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
+
+import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const id = generateHTMLSafeUUID();
 
 export type Props = {
-
-  // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the primary bonds to edit
+  /**
+   * The primary bonds to edit.
+   */
   primaryBonds: PrimaryBond[];
 }
 
 export class StrokeOpacityInput extends React.Component<Props> {
-  state: {
-    value: string;
-  };
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
 
-    this.state = {
-      value: displayablePercentageString(strokeOpacity(lines(props.primaryBonds)), { places: 0 }),
-    };
+    // don't make primary bonds too hard to see by default
+    if (newValue >= 0.25) {
+      PrimaryBond.recommendedDefaults.line['stroke-opacity'] = newValue;
+    }
+
+    this.props.app.refresh();
   }
 
   render() {
     return (
-      <TextInput
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
+      <OpacityAttributeInput
+        id={id}
+        elements={this.props.primaryBonds.map(pb => pb.line)}
+        attributeName='stroke-opacity'
+        places={2}
+        onBeforeEdit={event => this.handleBeforeEdit(event)}
+        onEdit={event => this.handleEdit(event)}
         style={{ marginRight: '8px', width: '32px', textAlign: 'end' }}
       />
-    );
-  }
-
-  submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
-
-    let value = parsePercentageString(this.state.value);
-    if (!Number.isFinite(value)) {
-      return;
-    } else if (value == strokeOpacity(lines(this.props.primaryBonds))) {
-      return;
-    }
-
-    this.props.app.pushUndo();
-    setStrokeOpacity(lines(this.props.primaryBonds), value);
-
-    // may be different from the value that was specified
-    let constrainedValue = strokeOpacity(lines(this.props.primaryBonds));
-
-    PrimaryBond.recommendedDefaults.line['stroke-opacity'] = (
-      constrainedValue
-      ?? PrimaryBond.recommendedDefaults.line['stroke-opacity']
     );
   }
 }
