@@ -1,87 +1,71 @@
 import type { App } from 'App';
+
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
-import * as SVG from '@svgdotjs/svg.js';
-import { strokeWidth } from 'Forms/inputs/svg/strokeWidth/strokeWidth';
-import { setStrokeWidth } from 'Forms/inputs/svg/strokeWidth/strokeWidth';
-import { numberToDisplayableString as displayableString } from 'Forms/inputs/numbers/numberToDisplayableString';
-import { isBlank } from 'Parse/isBlank';
-
 import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
-// returns the path elements of the tertiary bonds
-function paths(tertiaryBonds: TertiaryBond[]): SVG.Path[] {
-  return tertiaryBonds.map(bond => bond.path);
-}
+import { NumericAttributeInput } from 'Forms/edit/svg/NumericAttributeInput';
+import type { EditEvent } from 'Forms/edit/svg/NumericAttributeInput';
+
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const inputId = generateHTMLCompatibleUUID();
 
 export type Props = {
-
-  // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the tertiary bonds to edit
+  /**
+   * The tertiary bonds to edit.
+   */
   tertiaryBonds: TertiaryBond[];
 }
 
 export class StrokeWidthField extends React.Component<Props> {
-  state: {
-    value: string;
-  };
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
 
-    this.state = {
-      value: displayableString(strokeWidth(paths(props.tertiaryBonds)), { places: 2 }),
-    };
+    // don't make tertiary bonds too hard to see by default
+    if (newValue >= 0.5) {
+      TertiaryBond.recommendedDefaults.path['stroke-width'] = newValue;
+    }
+
+    this.props.app.refresh(); // refresh after updating all values
   }
 
   render() {
+    let style: React.CSSProperties = {
+      marginTop: '14px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
     return (
-      <TextInputField
-        label='Line Width'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '36px' },
-        }}
-        style={{ marginTop: '14px', alignSelf: 'start' }}
-      />
-    );
-  }
-
-  submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
-
-    let value = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(value)) {
-      return;
-    } else if (value == strokeWidth(paths(this.props.tertiaryBonds))) {
-      return;
-    }
-
-    this.props.app.pushUndo();
-    setStrokeWidth(paths(this.props.tertiaryBonds), value);
-
-    // may be different from the value that was specified
-    let constrainedValue = strokeWidth(paths(this.props.tertiaryBonds));
-
-    TertiaryBond.recommendedDefaults.path['stroke-width'] = (
-      constrainedValue
-      ?? TertiaryBond.recommendedDefaults.path['stroke-width']
+      <FieldLabel style={style} >
+        <NumericAttributeInput
+          id={inputId}
+          elements={this.props.tertiaryBonds.map(tb => tb.path)}
+          attributeName='stroke-width'
+          minValue={0}
+          places={2}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '36px' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Line Width
+        </span>
+      </FieldLabel>
     );
   }
 }
