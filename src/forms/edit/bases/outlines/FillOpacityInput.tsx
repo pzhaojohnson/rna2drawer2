@@ -1,85 +1,57 @@
 import type { App } from 'App';
-import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
-import * as SVG from '@svgdotjs/svg.js';
-import { fillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
-import { setFillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
-import { displayablePercentageString } from 'Forms/inputs/numbers/displayablePercentageString';
-import { isBlank } from 'Parse/isBlank';
-import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
+import { CircleBaseAnnotation as BaseOutline } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 
-function circles(outlines: CircleBaseAnnotation[]): SVG.Circle[] {
-  return outlines.map(outline => outline.circle);
-}
+import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
+import type { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const id = generateHTMLCompatibleUUID();
 
 export type Props = {
-
-  // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the outlines to edit
-  outlines: CircleBaseAnnotation[];
+  /**
+   * The base outlines to edit.
+   */
+  outlines: BaseOutline[];
 }
 
 export class FillOpacityInput extends React.Component<Props> {
-  state: {
-    value: string;
-  };
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
 
-    this.state = {
-      value: displayablePercentageString(fillOpacity(circles(props.outlines)), { places: 0 }),
-    };
+    // don't make base outlines too hard to see by default
+    if (newValue >= 0.25) {
+      BaseOutline.recommendedDefaults.circle['fill-opacity'] = newValue;
+    }
+
+    this.props.app.refresh(); // refresh after updating all values
   }
 
   render() {
     return (
-      <input
-        type='text'
-        className={textFieldStyles.input}
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
+      <OpacityAttributeInput
+        id={id}
+        elements={this.props.outlines.map(o => o.circle)}
+        attributeName='fill-opacity'
+        places={2}
+        onBeforeEdit={event => this.handleBeforeEdit(event)}
+        onEdit={event => this.handleEdit(event)}
         style={{ width: '32px', textAlign: 'end' }}
       />
-    );
-  }
-
-  submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
-
-    let value = parsePercentageString(this.state.value);
-    if (!Number.isFinite(value)) {
-      return;
-    } else if (value == fillOpacity(circles(this.props.outlines))) {
-      return;
-    }
-
-    this.props.app.pushUndo();
-    setFillOpacity(circles(this.props.outlines), value);
-
-    // may be different from the value that was specified
-    let constrainedValue = fillOpacity(circles(this.props.outlines));
-
-    CircleBaseAnnotation.recommendedDefaults.circle['fill-opacity'] = (
-      constrainedValue
-      ?? CircleBaseAnnotation.recommendedDefaults.circle['fill-opacity']
     );
   }
 }
