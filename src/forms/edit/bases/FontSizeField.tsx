@@ -1,98 +1,118 @@
 import type { App } from 'App';
+
 import { Base } from 'Draw/bases/Base';
 
-import * as SVG from '@svgdotjs/svg.js';
-import { fontSize } from 'Forms/inputs/svg/fontSize/fontSize';
-import { setFontSize } from 'Forms/inputs/svg/fontSize/fontSize';
-import { numberToDisplayableString as displayableString } from 'Forms/inputs/numbers/numberToDisplayableString';
-import { isBlank } from 'Parse/isBlank';
-
 import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
-// returns the text elements of the bases
-function texts(bases: Base[]): SVG.Text[] {
-  return bases.map(base => base.text);
+import { NumericAttributeInput } from 'Forms/edit/svg/NumericAttributeInput';
+import type { EditEvent } from 'Forms/edit/svg/NumericAttributeInput';
+
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+type Point = {
+  x: number;
+  y: number;
+};
+
+class BasesWrapper {
+  readonly bases: Base[];
+
+  constructor(bases: Base[]) {
+    this.bases = bases;
+  }
+
+  get textCenters(): Map<Base, Point> {
+    let textCenters = new Map<Base, Point>();
+    this.bases.forEach(b => {
+      let textBBox = b.text.bbox();
+      let textCenter = { x: textBBox.cx, y: textBBox.cy };
+      textCenters.set(b, textCenter);
+    });
+    return textCenters;
+  }
+
+  set textCenters(textCenters: Map<Base, Point>) {
+    this.bases.forEach(b => {
+      let textCenter = textCenters.get(b);
+      if (textCenter) {
+        b.text.center(textCenter.x, textCenter.y);
+      }
+    });
+  }
 }
 
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const inputId = generateHTMLCompatibleUUID();
+
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the bases to edit
+  /**
+   * The bases to edit.
+   */
   bases: Base[];
 }
 
 export class FontSizeField extends React.Component<Props> {
-  state: {
-    value: string;
-  };
+  // to be cached on before edit
+  _textCenters?: Map<Base, Point>;
 
-  constructor(props: Props) {
-    super(props);
+  get bases() {
+    return new BasesWrapper(this.props.bases);
+  }
 
-    this.state = {
-      value: displayableString(fontSize(texts(props.bases)), { places: 1 }),
-    };
+  handleBeforeEdit(event: EditEvent) {
+    this._textCenters = this.bases.textCenters; // cache
+
+    this.props.app.pushUndo();
+  }
+
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
+
+    // recenter bases text elements
+    if (this._textCenters) {
+      this.bases.textCenters = this._textCenters;
+      this._textCenters = undefined; // reset
+    }
+
+    // don't make bases too hard to see by default
+    if (newValue >= 1) {
+      Base.recommendedDefaults.text['font-size'] = newValue;
+    }
+
+    this.props.app.refresh(); // refresh after updating all values
   }
 
   render() {
+    let style: React.CSSProperties = {
+      marginTop: '10px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
     return (
-      <TextInputField
-        label='Font Size'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '36px' },
-        }}
-        style={{ marginTop: '10px', alignSelf: 'start' }}
-      />
-    );
-  }
-
-  submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
-
-    let value = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(value)) {
-      return;
-    } else if (value == fontSize(texts(this.props.bases))) {
-      return;
-    }
-
-    this.props.app.pushUndo();
-
-    // remember center coordinates
-    let centers = texts(this.props.bases).map(text => {
-      let bbox = text.bbox();
-      return { x: bbox.cx, y: bbox.cy };
-    });
-
-    setFontSize(texts(this.props.bases), value);
-
-    // recenter
-    texts(this.props.bases).forEach((text, i) => {
-      let center = centers[i];
-      text.center(center.x, center.y);
-    });
-
-    // may be different from the value that was specified
-    let constrainedValue = fontSize(texts(this.props.bases));
-
-    Base.recommendedDefaults.text['font-size'] = (
-      constrainedValue
-      ?? Base.recommendedDefaults.text['font-size']
+      <FieldLabel style={style} >
+        <NumericAttributeInput
+          id={inputId}
+          elements={this.props.bases.map(b => b.text)}
+          attributeName='font-size'
+          minValue={1}
+          places={1}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '36px' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Font Size
+        </span>
+      </FieldLabel>
     );
   }
 }
