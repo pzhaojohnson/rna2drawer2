@@ -1,76 +1,50 @@
 import type { App } from 'App';
+
 import type { Base } from 'Draw/bases/Base';
 
-import * as SVG from '@svgdotjs/svg.js';
-import { fillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
-import { setFillOpacity } from 'Forms/inputs/svg/fillOpacity/fillOpacity';
-import { displayablePercentageString } from 'Forms/inputs/numbers/displayablePercentageString';
-import { isBlank } from 'Parse/isBlank';
-import { parsePercentageString } from 'Forms/inputs/numbers/parsePercentageString';
-
 import * as React from 'react';
-import textFieldStyles from 'Forms/inputs/text/TextField.css';
 
-// returns the text elements of the bases
-function texts(bases: Base[]): SVG.Text[] {
-  return bases.map(base => base.text);
-}
+import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
+import type { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const id = generateHTMLCompatibleUUID();
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the bases to edit
+  /**
+   * The bases to edit.
+   */
   bases: Base[];
 }
 
 export class FillOpacityInput extends React.Component<Props> {
-  state: {
-    value: string;
-  };
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      value: displayablePercentageString(fillOpacity(texts(props.bases)), { places: 0 }),
-    };
+  handleEdit(event: EditEvent) {
+    this.props.app.refresh();
   }
 
   render() {
     return (
-      <input
-        type='text'
-        className={textFieldStyles.input}
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
+      <OpacityAttributeInput
+        id={id}
+        elements={this.props.bases.map(b => b.text)}
+        attributeName='fill-opacity'
+        places={2}
+        onBeforeEdit={event => this.handleBeforeEdit(event)}
+        onEdit={event => this.handleEdit(event)}
         style={{ width: '32px', textAlign: 'end' }}
       />
     );
-  }
-
-  submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
-
-    let proportion = parsePercentageString(this.state.value);
-    if (!Number.isFinite(proportion)) {
-      return;
-    } else if (proportion == fillOpacity(texts(this.props.bases))) {
-      return;
-    }
-
-    this.props.app.pushUndo();
-    setFillOpacity(texts(this.props.bases), proportion);
   }
 }
