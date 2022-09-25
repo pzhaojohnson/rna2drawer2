@@ -1,107 +1,79 @@
-import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
+
 import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
-import { round } from 'Math/round';
+
+import * as React from 'react';
+
+import { NumberPropertyInput } from 'Forms/edit/objects/NumberPropertyInput';
+import type { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
+
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const inputId = generateHTMLCompatibleUUID();
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the base numberings to edit
+  /**
+   * The base numberings to edit.
+   */
   baseNumberings: BaseNumbering[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty base numberings array
-// or if not all base numberings have the same line length
-function currLineLength(baseNumberings: BaseNumbering[]): Value {
-  let lls = new Set<Value>();
-  baseNumberings.forEach(bn => {
-    let ll = bn.lineLength;
-    if (typeof ll == 'number') {
-      ll = round(ll, 2);
-      lls.add(ll.toString());
-    }
-  });
-  if (lls.size == 1) {
-    return lls.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainLineLength(ll: number): number {
-  if (!Number.isFinite(ll)) {
-    return 8;
-  } else if (ll < 0) {
-    return 0;
-  } else {
-    return ll;
-  }
-}
-
 export class LineLengthField extends React.Component<Props> {
-  state: State;
+  get objects() {
+    return this.props.baseNumberings.map(bn => (
+      { lineLength: bn.lineLength }
+    ));
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-    this.state = {
-      value: currLineLength(props.baseNumberings),
-    };
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
+
+    // update the actual line length properties of the base numberings
+    this.props.baseNumberings.forEach(bn => {
+      bn.lineLength = newValue;
+    });
+
+    BaseNumbering.recommendedDefaults.lineLength = newValue;
+
+    this.props.app.refresh(); // refresh after updating all values
   }
 
   render() {
-    return (
-      <TextInputField
-        label='Line Length'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '32px' },
-        }}
-        style={{ marginTop: '8px', alignSelf: 'start' }}
-      />
-    );
-  }
+    let style: React.CSSProperties = {
+      marginTop: '8px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
 
-  submit() {
-    if (!isBlank(this.state.value)) {
-      let ll = Number.parseFloat(this.state.value);
-      if (Number.isFinite(ll)) {
-        if (!areEqual(this.state.value, currLineLength(this.props.baseNumberings))) {
-          this.props.app.pushUndo();
-          ll = constrainLineLength(ll);
-          this.props.baseNumberings.forEach(bn => {
-            bn.lineLength = ll;
-          });
-          BaseNumbering.recommendedDefaults.lineLength = ll;
-          this.props.app.refresh();
-        }
-      }
-    }
+    return (
+      <FieldLabel style={style} >
+        <NumberPropertyInput
+          id={inputId}
+          objects={this.objects}
+          propertyName='lineLength'
+          minValue={0}
+          places={2}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '32px' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Line Length
+        </span>
+      </FieldLabel>
+    );
   }
 }
