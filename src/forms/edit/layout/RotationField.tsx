@@ -1,88 +1,91 @@
 import type { App } from 'App';
 
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
+
 import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
-import { radiansToDegrees } from 'Math/angles/degrees';
-import { degreesToRadians } from 'Math/angles/degrees';
-import { normalizeAngle } from 'Math/angles/normalizeAngle';
-import { anglesAreClose } from 'Math/angles/anglesAreClose';
-import { round } from 'Math/round';
+import { DirectionAnglePropertyInput } from 'Forms/edit/objects/DirectionAnglePropertyInput';
+import type { EditEvent } from 'Forms/edit/objects/DirectionAnglePropertyInput';
 
-import { isBlank } from 'Parse/isBlank';
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
-export type Props = {
-  app: App; // a reference to the whole app
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+/**
+ * Meant to make getting and setting the rotation of the drawing easier.
+ */
+class DrawingWrapper {
+  readonly drawing: StrictDrawing;
+
+  constructor(drawing: StrictDrawing) {
+    this.drawing = drawing;
+  }
+
+  get rotation(): number {
+    return this.drawing.generalLayoutProps.rotation;
+  }
+
+  set rotation(rotation: number) {
+    this.drawing.generalLayoutProps.rotation = rotation;
+    this.drawing.updateLayout();
+  }
 }
 
-type State = {
-  value: string;
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const inputId = generateHTMLCompatibleUUID();
+
+export type Props = {
+  /**
+   * A reference to the whole app.
+   */
+  app: App;
 }
 
 export class RotationField extends React.Component<Props> {
-  state: State;
+  get drawing() {
+    return new DrawingWrapper(this.props.app.drawing);
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps;
-    let radians = generalLayoutProps.rotation;
-    radians = normalizeAngle(radians, 0);
-    let degrees = radiansToDegrees(radians);
-    degrees = round(degrees, 1);
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
 
-    this.state = {
-      value: degrees + '\xB0',
-    };
+    // update the actual rotation of the drawing
+    this.drawing.rotation = newValue;
+
+    this.props.app.refresh(); // refresh after updating everything
   }
 
   render() {
+    // the actual rotation of the drawing should be updated on edit
+    let objects = [{ rotation: this.drawing.rotation }];
+
+    let style: React.CSSProperties = {
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
     return (
-      <TextInputField
-        label='Rotation'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '7ch' },
-        }}
-        style={{ alignSelf: 'start' }}
-      />
+      <FieldLabel style={style} >
+        <DirectionAnglePropertyInput
+          id={inputId}
+          objects={objects}
+          propertyName='rotation'
+          angleFloor={0}
+          places={6}
+          displayedPlaces={1}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '7ch' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Rotation
+        </span>
+      </FieldLabel>
     );
-  }
-
-  submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
-
-    let degrees = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(degrees)) {
-      return;
-    }
-
-    let radians = degreesToRadians(degrees);
-
-    let strictDrawing = this.props.app.strictDrawing;
-    if (anglesAreClose(radians, strictDrawing.generalLayoutProps.rotation, { places: 6 })) {
-      return;
-    }
-
-    this.props.app.pushUndo();
-
-    // set rotation
-    radians = normalizeAngle(radians, 0);
-    radians = round(radians, 6);
-    strictDrawing.generalLayoutProps.rotation = radians;
-    strictDrawing.updateLayout();
   }
 }
