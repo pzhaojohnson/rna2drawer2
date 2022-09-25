@@ -1,108 +1,79 @@
-import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
+
 import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
-import { round } from 'Math/round';
+
+import * as React from 'react';
+
+import { NumberPropertyInput } from 'Forms/edit/objects/NumberPropertyInput';
+import type { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
+
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const inputId = generateHTMLCompatibleUUID();
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the base numberings to edit
+  /**
+   * The base numberings to edit.
+   */
   baseNumberings: BaseNumbering[];
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-// returns an empty string value for an empty base numberings array
-// or if not all base numberings have the same base padding
-function currBasePadding(baseNumberings: BaseNumbering[]): Value {
-  let bps = new Set<Value>();
-  baseNumberings.forEach(bn => {
-    let bp = bn.basePadding;
-    if (typeof bp == 'number') {
-      bp = round(bp, 0);
-      bps.add(bp.toString());
-    }
-  });
-  if (bps.size == 1) {
-    return bps.values().next().value;
-  } else {
-    return '';
-  }
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function areEqual(v1: Value, v2: Value): boolean {
-  return Number.parseFloat(v1) == Number.parseFloat(v2);
-}
-
-function constrainBasePadding(bp: number): number {
-  if (!Number.isFinite(bp)) {
-    return 8;
-  } else if (bp < 0) {
-    return 0;
-  } else {
-    return bp;
-  }
-}
-
 export class BasePaddingField extends React.Component<Props> {
-  state: State;
+  get objects() {
+    return this.props.baseNumberings.map(bn => (
+      { basePadding: bn.basePadding }
+    ));
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-    this.state = {
-      value: currBasePadding(props.baseNumberings),
-    };
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
+
+    // update the actual base padding properties of the base numberings
+    this.props.baseNumberings.forEach(bn => {
+      bn.basePadding = newValue;
+    });
+
+    BaseNumbering.recommendedDefaults.basePadding = newValue;
+
+    this.props.app.refresh(); // refresh after updating all values
   }
 
   render() {
-    return (
-      <TextInputField
-        label='Base Padding'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '32px' },
-        }}
-        style={{ marginTop: '8px', alignSelf: 'start' }}
-      />
-    );
-  }
+    let style: React.CSSProperties = {
+      marginTop: '8px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
 
-  submit() {
-    if (!isBlank(this.state.value)) {
-      if (!areEqual(this.state.value, currBasePadding(this.props.baseNumberings))) {
-        let bp = Number.parseFloat(this.state.value);
-        if (Number.isFinite(bp)) {
-          this.props.app.pushUndo();
-          bp = constrainBasePadding(bp);
-          bp = round(bp, 0);
-          this.props.baseNumberings.forEach(bn => {
-            bn.basePadding = bp;
-          });
-          BaseNumbering.recommendedDefaults.basePadding = bp;
-          this.props.app.refresh();
-        }
-      }
-    }
+    return (
+      <FieldLabel style={style} >
+        <NumberPropertyInput
+          id={inputId}
+          objects={this.objects}
+          propertyName='basePadding'
+          minValue={0}
+          places={0}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '32px' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Base Padding
+        </span>
+      </FieldLabel>
+    );
   }
 }
