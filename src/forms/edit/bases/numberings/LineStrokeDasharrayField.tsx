@@ -10,6 +10,8 @@ import * as React from 'react';
 import { StrokeDasharrayField } from 'Forms/edit/svg/StrokeDasharrayField';
 import { EditEvent } from 'Forms/edit/svg/StrokeDasharrayField';
 
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
 import { isNullish } from 'Values/isNullish';
 
 /**
@@ -17,6 +19,10 @@ import { isNullish } from 'Values/isNullish';
  * have that is a string.
  */
 type StringStrokeDasharrayValue = string;
+
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const inputId = generateHTMLCompatibleUUID();
 
 /**
  * To be remembered between mountings and unmountings.
@@ -71,6 +77,7 @@ export class LineStrokeDasharrayField extends React.Component<Props> {
         defaultDashedValue={this.defaultDashedValue}
         onBeforeEdit={() => this.handleBeforeEdit()}
         onEdit={event => this.handleEdit(event)}
+        input={{ id: inputId }}
         style={{
           marginTop: '10px',
           minHeight: '22px',
