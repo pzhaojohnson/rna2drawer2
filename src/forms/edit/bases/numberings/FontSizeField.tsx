@@ -1,86 +1,74 @@
 import type { App } from 'App';
+
 import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
-import * as SVG from '@svgdotjs/svg.js';
-import { fontSize } from 'Forms/inputs/svg/fontSize/fontSize';
-import { setFontSize } from 'Forms/inputs/svg/fontSize/fontSize';
-import { numberToDisplayableString as displayableString } from 'Forms/inputs/numbers/numberToDisplayableString';
-import { isBlank } from 'Parse/isBlank';
-
 import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
-// returns the text elements of the base numberings
-function texts(baseNumberings: BaseNumbering[]): SVG.Text[] {
-  return baseNumberings.map(bn => bn.text);
-}
+import { NumericAttributeInput } from 'Forms/edit/svg/NumericAttributeInput';
+import type { EditEvent } from 'Forms/edit/svg/NumericAttributeInput';
+
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const inputId = generateHTMLCompatibleUUID();
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the base numberings to edit
+  /**
+   * The base numberings to edit.
+   */
   baseNumberings: BaseNumbering[];
 }
 
 export class FontSizeField extends React.Component<Props> {
-  state: {
-    value: string;
-  };
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
 
-    this.state = {
-      value: displayableString(fontSize(texts(props.baseNumberings)), { places: 1 }),
-    };
+    // reposition the base numberings
+    this.props.baseNumberings.forEach(bn => bn.reposition());
+
+    // don't make text elements too hard to see by default
+    if (newValue >= 1) {
+      BaseNumbering.recommendedDefaults.text['font-size'] = newValue;
+    }
+
+    this.props.app.refresh(); // refresh after updating all values
   }
 
   render() {
+    let style: React.CSSProperties = {
+      marginTop: '8px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
     return (
-      <TextInputField
-        label='Font Size'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '32px' },
-        }}
-        style={{ marginTop: '8px', alignSelf: 'start' }}
-      />
-    );
-  }
-
-  submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
-
-    let value = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(value)) {
-      return;
-    } else if (value == fontSize(texts(this.props.baseNumberings))) {
-      return;
-    }
-
-    this.props.app.pushUndo();
-    setFontSize(texts(this.props.baseNumberings), value);
-    this.props.baseNumberings.forEach(bn => bn.reposition());
-
-    // may be different from the value that was specified
-    let constrainedValue = fontSize(texts(this.props.baseNumberings));
-
-    BaseNumbering.recommendedDefaults.text['font-size'] = (
-      constrainedValue
-      ?? BaseNumbering.recommendedDefaults.text['font-size']
+      <FieldLabel style={style} >
+        <NumericAttributeInput
+          id={inputId}
+          elements={this.props.baseNumberings.map(bn => bn.text)}
+          attributeName='font-size'
+          minValue={1}
+          places={1}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '32px' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Font Size
+        </span>
+      </FieldLabel>
     );
   }
 }
