@@ -12,10 +12,10 @@ import { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
-const baseInputXId = generateHTMLSafeUUID();
-const baseInputYId = generateHTMLSafeUUID();
+const baseInputXId = generateHTMLCompatibleUUID();
+const baseInputYId = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**

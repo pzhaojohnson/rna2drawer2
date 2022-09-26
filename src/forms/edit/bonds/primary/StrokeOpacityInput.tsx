@@ -7,11 +7,11 @@ import * as React from 'react';
 import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
 import type { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 // should be stable across mountings and unmountings
 // (to facilitate refocusing when the app is refreshed)
-const id = generateHTMLSafeUUID();
+const id = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**

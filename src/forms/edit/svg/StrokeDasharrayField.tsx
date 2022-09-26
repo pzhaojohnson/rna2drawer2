@@ -14,7 +14,7 @@ import { EditEvent as InputEditEvent } from 'Forms/edit/svg/StrokeDasharrayInput
 import { StrokeDasharrayInfoLink } from 'Forms/edit/svg/StrokeDasharrayInfoLink';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 export type EditEvent = CheckboxEditEvent | InputEditEvent;
 
@@ -49,8 +49,8 @@ export function StrokeDasharrayField(props: Props) {
   let values: unknown[] = elements.map(ele => ele.attr('stroke-dasharray'));
 
   // make unique since multiple instances of this field may coexist
-  let checkboxId = generateHTMLSafeUUID();
-  let inputId = props.input?.id ?? generateHTMLSafeUUID();
+  let checkboxId = generateHTMLCompatibleUUID();
+  let inputId = props.input?.id ?? generateHTMLCompatibleUUID();
 
   let checkbox = (
     <StrokeDasharrayCheckbox

@@ -16,13 +16,13 @@ import { EditEvent } from 'Forms/edit/svg/NumericAttributeInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 const defaultSVGElementAttributes = {
   'StrungText': defaultStrungTextValues.text,
 };
 
-const baseInputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**

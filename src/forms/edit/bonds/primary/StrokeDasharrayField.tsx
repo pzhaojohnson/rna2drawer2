@@ -10,7 +10,7 @@ import * as React from 'react';
 import { StrokeDasharrayField as _StrokeDasharrayField } from 'Forms/edit/svg/StrokeDasharrayField';
 import { EditEvent } from 'Forms/edit/svg/StrokeDasharrayField';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 import { isNullish } from 'Values/isNullish';
 
@@ -22,7 +22,7 @@ type StringStrokeDasharrayValue = string;
 
 // should be stable across mountings and unmountings
 // (to facilitate refocusing when the app is refreshed)
-const inputId = generateHTMLSafeUUID();
+const inputId = generateHTMLCompatibleUUID();
 
 /**
  * To be remembered between mountings and unmountings.

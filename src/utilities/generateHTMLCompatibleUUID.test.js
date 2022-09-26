@@ -7,8 +7,10 @@ const uuidRegExp = (
 test('generateHTMLCompatibleUUID function', () => {
   let id = generateHTMLCompatibleUUID();
 
-  // first character must be a letter
-  expect(id.charAt(0)).toMatch(/[A-Za-z]/);
+  // first character must be a letter to be a valid HTML element ID
+  expect(id.charAt(0)).toBe('i');
 
+  // is a UUID
   expect(id).toMatch(uuidRegExp);
+  expect(id.length).toBe(37);
 });

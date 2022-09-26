@@ -16,14 +16,14 @@ import { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 const defaultValues = {
   'StrungTriangle': defaultStrungTriangleValues,
   'StrungRectangle': defaultStrungRectangleValues,
 };
 
-const baseInputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**

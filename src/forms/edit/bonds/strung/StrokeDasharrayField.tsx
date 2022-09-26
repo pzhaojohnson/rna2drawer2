@@ -14,9 +14,9 @@ import * as React from 'react';
 import { StrokeDasharrayField as _StrokeDasharrayField } from 'Forms/edit/svg/StrokeDasharrayField';
 import { EditEvent } from 'Forms/edit/svg/StrokeDasharrayField';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
-const baseInputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLCompatibleUUID();
 
 /**
  * Should be updated on edit and persist between mountings and

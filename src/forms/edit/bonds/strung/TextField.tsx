@@ -12,13 +12,13 @@ import * as React from 'react';
 
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 import { isBlank } from 'Parse/isBlank';
 
 export type Nullish = null | undefined;
 
-const baseInputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**

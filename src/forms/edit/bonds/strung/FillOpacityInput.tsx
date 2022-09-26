@@ -14,7 +14,7 @@ import * as React from 'react';
 import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
 import { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 const defaultSVGElementAttributes = {
   'StrungText': defaultStrungTextValues.text,
@@ -23,7 +23,7 @@ const defaultSVGElementAttributes = {
   'StrungRectangle': defaultStrungRectangleValues.path,
 };
 
-const baseId = generateHTMLSafeUUID();
+const baseId = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**

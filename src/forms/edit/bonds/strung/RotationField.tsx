@@ -14,9 +14,9 @@ import { EditEvent } from 'Forms/edit/objects/DirectionAnglePropertyInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
-const baseInputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**

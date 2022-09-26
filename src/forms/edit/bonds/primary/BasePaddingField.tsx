@@ -9,11 +9,11 @@ import type { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 // should be stable across mountings and unmountings
 // (to facilitate refocusing when the app is refreshed)
-const inputId = generateHTMLSafeUUID();
+const inputId = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**

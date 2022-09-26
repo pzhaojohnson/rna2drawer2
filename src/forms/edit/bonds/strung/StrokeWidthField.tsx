@@ -17,7 +17,7 @@ import { EditEvent } from 'Forms/edit/svg/NumericAttributeInput';
 
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
-import { generateHTMLSafeUUID } from 'Utilities/generateHTMLSafeUUID';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 const defaultSVGElementAttributes = {
   'StrungCircle': defaultStrungCircleValues.circle,
@@ -25,7 +25,7 @@ const defaultSVGElementAttributes = {
   'StrungRectangle': defaultStrungRectangleValues.path,
 };
 
-const baseInputId = generateHTMLSafeUUID();
+const baseInputId = generateHTMLCompatibleUUID();
 
 export type Props = {
   /**
