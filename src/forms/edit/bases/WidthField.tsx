@@ -1,80 +1,91 @@
-import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
-import { round } from 'Math/round';
+
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
+
+import * as React from 'react';
+
+import { NumberPropertyInput } from 'Forms/edit/objects/NumberPropertyInput';
+import type { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
+
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+/**
+ * Meant to help make getting and setting the width of bases in the
+ * drawing easier.
+ */
+class DrawingWrapper {
+  readonly drawing: StrictDrawing;
+
+  constructor(drawing: StrictDrawing) {
+    this.drawing = drawing;
+  }
+
+  get baseWidth(): number {
+    return this.drawing.baseWidth;
+  }
+
+  set baseWidth(baseWidth: number) {
+    this.drawing.baseWidth = baseWidth;
+    this.drawing.updateLayout();
+  }
+}
+
+// keep stable to help refocus the input element on app refresh
+const inputId = generateHTMLCompatibleUUID();
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function constrainWidth(w: number): number {
-  if (!Number.isFinite(w)) {
-    return 13.5;
-  } else if (w < 0) {
-    return 0;
-  } else {
-    return w;
-  }
-}
-
 export class WidthField extends React.Component<Props> {
-  state: State;
+  get drawing() {
+    return new DrawingWrapper(this.props.app.drawing);
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-    this.state = {
-      value: props.app.strictDrawing.baseWidth.toString(),
-    }
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
+
+    // update the drawing
+    this.drawing.baseWidth = newValue;
+
+    this.props.app.refresh(); // refresh after updating everything else
   }
 
   render() {
-    return (
-      <TextInputField
-        label='Width'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '8ch' },
-        }}
-        style={{ margin: '10px 0 0 10px', alignSelf: 'start' }}
-      />
-    );
-  }
+    // should update the drawing itself on edit
+    let objects = [{ baseWidth: this.drawing.baseWidth }];
 
-  submit() {
-    if (!isBlank(this.state.value)) {
-      let w = Number.parseFloat(this.state.value);
-      if (Number.isFinite(w)) {
-        if (w != this.props.app.strictDrawing.baseWidth) {
-          this.props.app.pushUndo();
-          w = constrainWidth(w);
-          w = round(w, 2);
-          this.props.app.strictDrawing.baseWidth = w;
-          this.props.app.strictDrawing.updateLayout();
-          this.props.app.refresh();
-        }
-      }
-    }
+    let style: React.CSSProperties = {
+      margin: '10px 0 0 10px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
+    return (
+      <FieldLabel style={style} >
+        <NumberPropertyInput
+          id={inputId}
+          objects={objects}
+          propertyName='baseWidth'
+          minValue={0}
+          places={2}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '8ch' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Width
+        </span>
+      </FieldLabel>
+    );
   }
 }

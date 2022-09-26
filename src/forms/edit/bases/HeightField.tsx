@@ -1,80 +1,91 @@
-import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 import type { App } from 'App';
-import { round } from 'Math/round';
+
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
+
+import * as React from 'react';
+
+import { NumberPropertyInput } from 'Forms/edit/objects/NumberPropertyInput';
+import type { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
+
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
+
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+/**
+ * Meant to help make getting and setting the height of bases in the
+ * drawing easier.
+ */
+class DrawingWrapper {
+  readonly drawing: StrictDrawing;
+
+  constructor(drawing: StrictDrawing) {
+    this.drawing = drawing;
+  }
+
+  get baseHeight(): number {
+    return this.drawing.baseHeight;
+  }
+
+  set baseHeight(baseHeight: number) {
+    this.drawing.baseHeight = baseHeight;
+    this.drawing.updateLayout();
+  }
+}
+
+// keep stable to help refocus the input element on app refresh
+const inputId = generateHTMLCompatibleUUID();
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 }
 
-type Value = string;
-
-type State = {
-  value: Value;
-}
-
-function isBlank(v: Value): boolean {
-  return v.trim().length == 0;
-}
-
-function constrainHeight(h: number): number {
-  if (!Number.isFinite(h)) {
-    return 13.5;
-  } else if (h < 0) {
-    return 0;
-  } else {
-    return h;
-  }
-}
-
 export class HeightField extends React.Component<Props> {
-  state: State;
+  get drawing() {
+    return new DrawingWrapper(this.props.app.drawing);
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-    this.state = {
-      value: props.app.strictDrawing.baseHeight.toString(),
-    }
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
+
+    // update the drawing
+    this.drawing.baseHeight = newValue;
+
+    this.props.app.refresh(); // refresh after updating everything else
   }
 
   render() {
-    return (
-      <TextInputField
-        label='Height'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '8ch' },
-        }}
-        style={{ margin: '10px 0 0 10px', alignSelf: 'start' }}
-      />
-    );
-  }
+    // should update the drawing itself on edit
+    let objects = [{ baseHeight: this.drawing.baseHeight }];
 
-  submit() {
-    if (!isBlank(this.state.value)) {
-      let h = Number.parseFloat(this.state.value);
-      if (Number.isFinite(h)) {
-        if (h != this.props.app.strictDrawing.baseHeight) {
-          this.props.app.pushUndo();
-          h = constrainHeight(h);
-          h = round(h, 2);
-          this.props.app.strictDrawing.baseHeight = h;
-          this.props.app.strictDrawing.updateLayout();
-          this.props.app.refresh();
-        }
-      }
-    }
+    let style: React.CSSProperties = {
+      margin: '10px 0 0 10px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
+    return (
+      <FieldLabel style={style} >
+        <NumberPropertyInput
+          id={inputId}
+          objects={objects}
+          propertyName='baseHeight'
+          minValue={0}
+          places={2}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '8ch' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Height
+        </span>
+      </FieldLabel>
+    );
   }
 }
