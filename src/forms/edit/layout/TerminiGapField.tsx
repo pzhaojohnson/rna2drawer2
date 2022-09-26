@@ -1,89 +1,91 @@
 import type { App } from 'App';
 
+import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
+
 import * as React from 'react';
-import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
-import { round } from 'Math/round';
-import { isBlank } from 'Parse/isBlank';
+import { NumberPropertyInput } from 'Forms/edit/objects/NumberPropertyInput';
+import type { EditEvent } from 'Forms/edit/objects/NumberPropertyInput';
 
-export type Props = {
-  app: App; // a reference to the whole app
-}
+import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
-type State = {
-  value: string;
-}
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
-function constrainTerminiGap(value: number): number {
-  if (!Number.isFinite(value)) {
-    return 0;
-  } else if (value < 0) {
-    return 0;
-  } else {
-    return value;
+/**
+ * Meant to help make getting and setting the termini gap of the drawing
+ * easier.
+ */
+class DrawingWrapper {
+  readonly drawing: StrictDrawing;
+
+  constructor(drawing: StrictDrawing) {
+    this.drawing = drawing;
+  }
+
+  get terminiGap(): number {
+    return this.drawing.generalLayoutProps.terminiGap;
+  }
+
+  set terminiGap(terminiGap: number) {
+    this.drawing.generalLayoutProps.terminiGap = terminiGap;
+    this.drawing.updateLayout();
   }
 }
 
+// should be stable across mountings and unmountings
+// (to facilitate refocusing when the app is refreshed)
+const inputId = generateHTMLCompatibleUUID();
+
+export type Props = {
+  /**
+   * A reference to the whole app.
+   */
+  app: App;
+};
+
 export class TerminiGapField extends React.Component<Props> {
-  state: State;
+  get drawing() {
+    return new DrawingWrapper(this.props.app.drawing);
+  }
 
-  constructor(props: Props) {
-    super(props);
+  handleBeforeEdit(event: EditEvent) {
+    this.props.app.pushUndo();
+  }
 
-    let generalLayoutProps = props.app.strictDrawing.generalLayoutProps;
-    let terminiGap = generalLayoutProps.terminiGap;
-    terminiGap = round(terminiGap, 2);
+  handleEdit(event: EditEvent) {
+    let newValue = event.newValue;
 
-    this.state = {
-      value: terminiGap.toString(),
-    };
+    // update the actual termini gap of the drawing
+    this.drawing.terminiGap = newValue;
+
+    this.props.app.refresh(); // refresh after updating everything
   }
 
   render() {
+    // the actual termini gap of the drawing should be updated on edit
+    let objects = [{ terminiGap: this.drawing.terminiGap }];
+
+    let style: React.CSSProperties = {
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
     return (
-      <TextInputField
-        label='Termini Gap'
-        value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
-        onKeyUp={event => {
-          if (event.key.toLowerCase() == 'enter') {
-            this.submit();
-            this.props.app.refresh();
-          }
-        }}
-        input={{
-          style: { width: '7ch' },
-        }}
-        style={{ alignSelf: 'start' }}
-      />
+      <FieldLabel style={style} >
+        <NumberPropertyInput
+          id={inputId}
+          objects={objects}
+          propertyName='terminiGap'
+          minValue={0}
+          places={2}
+          onBeforeEdit={event => this.handleBeforeEdit(event)}
+          onEdit={event => this.handleEdit(event)}
+          style={{ width: '7ch' }}
+        />
+        <span style={{ paddingLeft: '8px' }} >
+          Termini Gap
+        </span>
+      </FieldLabel>
     );
-  }
-
-  submit() {
-    if (isBlank(this.state.value)) {
-      return;
-    }
-
-    let value = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(value)) {
-      return;
-    }
-
-    let strictDrawing = this.props.app.strictDrawing;
-    if (value == strictDrawing.generalLayoutProps.terminiGap) {
-      return;
-    }
-
-    this.props.app.pushUndo();
-
-    // set termini gap
-    value = constrainTerminiGap(value);
-    value = round(value, 2);
-    strictDrawing.generalLayoutProps.terminiGap = value;
-    strictDrawing.updateLayout();
   }
 }
