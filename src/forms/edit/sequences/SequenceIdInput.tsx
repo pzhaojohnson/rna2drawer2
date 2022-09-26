@@ -4,7 +4,12 @@ import type { Sequence } from 'Draw/sequences/Sequence';
 import * as React from 'react';
 import styles from './SequenceIdInput.css';
 
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
 import { isBlank } from 'Parse/isBlank';
+
+// keep stable to help with refocusing the input element on app refresh
+const id = generateHTMLCompatibleUUID();
 
 export type Props = {
   app: App; // a reference to the whole app
@@ -32,6 +37,7 @@ export class SequenceIdInput extends React.Component<Props> {
     return (
       <input
         type='text'
+        id={id}
         className={styles.sequenceIdInput}
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}

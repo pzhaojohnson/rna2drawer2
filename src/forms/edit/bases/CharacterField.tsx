@@ -4,6 +4,11 @@ import type { Base } from 'Draw/bases/Base';
 import * as React from 'react';
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+// keep stable to help with refocusing the input element on app refresh
+const inputId = generateHTMLCompatibleUUID();
+
 export type Props = {
   app: App;
 
@@ -55,6 +60,7 @@ export class CharacterField extends React.Component<Props> {
           }
         }}
         input={{
+          id: inputId,
           style: { width: '2ch', textAlign: 'center' },
         }}
         style={{ marginBottom: '14px', alignSelf: 'start' }}

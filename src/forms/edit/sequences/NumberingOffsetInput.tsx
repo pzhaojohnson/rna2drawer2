@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { TextInput } from 'Forms/inputs/text/TextInput';
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 import type { App } from 'App';
 import type { Sequence } from 'Draw/sequences/Sequence';
 import { numberingOffset } from 'Draw/sequences/numberingOffset';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 import { isBlank } from 'Parse/isBlank';
+
+// keep stable to help with refocusing the input element on app refresh
+const id = generateHTMLCompatibleUUID();
 
 export type Props = {
   app: App;
@@ -36,6 +40,7 @@ export class NumberingOffsetInput extends React.Component<Props> {
   render() {
     return (
       <TextInput
+        id={id}
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {

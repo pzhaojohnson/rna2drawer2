@@ -4,6 +4,11 @@ import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 import * as React from 'react';
 import { TextInput } from 'Forms/inputs/text/TextInput';
 
+import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+// keep stable to help with refocusing the input element on app refresh
+const id = generateHTMLCompatibleUUID();
+
 export type Props = {
   app: App;
 
@@ -41,6 +46,7 @@ export class NumberInput extends React.Component<Props> {
   render() {
     return (
       <TextInput
+        id={id}
         value={this.state.value}
         onChange={event => {
           this.setState({ value: event.target.value });
