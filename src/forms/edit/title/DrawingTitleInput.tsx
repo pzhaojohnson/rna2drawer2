@@ -67,7 +67,7 @@ export class DrawingTitleInput extends React.Component<Props> {
       } else if (isBlank(value)) {
         app.drawingTitle.unspecify();
       } else if (value == app.drawingTitle.value) {
-        throw new Error();
+        throw new Error(); // drawing title already equals value
       } else {
         app.drawingTitle.value = value;
       }
