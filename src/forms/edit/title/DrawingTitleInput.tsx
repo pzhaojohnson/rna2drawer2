@@ -6,6 +6,7 @@ import styles from './DrawingTitleInput.css';
 import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 import { isBlank } from 'Parse/isBlank';
+import { isNullish } from 'Values/isNullish';
 
 // keep stable to help with refocusing the input element on app refresh
 const id = generateHTMLCompatibleUUID();
@@ -51,21 +52,23 @@ export class DrawingTitleInput extends React.Component<Props> {
   }
 
   submit() {
+    let app = this.props.app;
+
     let value = this.state.value;
     value = value.trim(); // remove leading and trailing whitespace
 
     try {
-      if (value == this.props.app.drawingTitle.value) {
+      if (isBlank(value) && isNullish(app.drawingTitle.specifiedValue)) {
+        throw new Error(); // drawing title is already unspecified
+      } else if (isBlank(value)) {
+        app.drawingTitle.unspecify();
+      } else if (value == app.drawingTitle.value) {
         throw new Error();
+      } else {
+        app.drawingTitle.value = value;
       }
 
-      // update the drawing title
-      if (isBlank(value)) {
-        this.props.app.drawingTitle.unspecify();
-      } else if (value != this.props.app.drawingTitle.value) {
-        this.props.app.drawingTitle.value = value;
-      }
-      this.props.app.refresh();
+      this.props.app.refresh(); // the drawing title was changed
     } catch {
       this.setState({ value: this.props.app.drawingTitle.value });
     }
