@@ -29,8 +29,12 @@ export class DrawingTitleInput extends React.Component<Props> {
     super(props);
 
     this.state = {
-      value: props.app.drawingTitle.value,
+      value: this.initialValue,
     };
+  }
+
+  get initialValue(): string {
+    return this.props.app.drawingTitle.value;
   }
 
   render() {
@@ -70,7 +74,7 @@ export class DrawingTitleInput extends React.Component<Props> {
 
       this.props.app.refresh(); // the drawing title was changed
     } catch {
-      this.setState({ value: this.props.app.drawingTitle.value });
+      this.setState({ value: this.initialValue });
     }
   }
 }
