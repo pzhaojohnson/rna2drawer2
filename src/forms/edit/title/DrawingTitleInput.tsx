@@ -40,14 +40,10 @@ export class DrawingTitleInput extends React.Component<Props> {
         className={styles.drawingTitleInput}
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
-        onBlur={() => {
-          this.submit();
-          this.props.app.refresh();
-        }}
+        onBlur={() => this.submit()}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.refresh();
           }
         }}
       />
@@ -58,10 +54,20 @@ export class DrawingTitleInput extends React.Component<Props> {
     let value = this.state.value;
     value = value.trim(); // remove leading and trailing whitespace
 
-    if (isBlank(value)) {
-      this.props.app.drawingTitle.unspecify();
-    } else if (value != this.props.app.drawingTitle.value) {
-      this.props.app.drawingTitle.value = value;
+    try {
+      if (value == this.props.app.drawingTitle.value) {
+        throw new Error();
+      }
+
+      // update the drawing title
+      if (isBlank(value)) {
+        this.props.app.drawingTitle.unspecify();
+      } else if (value != this.props.app.drawingTitle.value) {
+        this.props.app.drawingTitle.value = value;
+      }
+      this.props.app.refresh();
+    } catch {
+      this.setState({ value: this.props.app.drawingTitle.value });
     }
   }
 }
