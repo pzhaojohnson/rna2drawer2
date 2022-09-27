@@ -11,7 +11,10 @@ import { isBlank } from 'Parse/isBlank';
 const id = generateHTMLCompatibleUUID();
 
 export type Props = {
-  app: App; // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
+  app: App;
 }
 
 type State = {
