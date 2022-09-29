@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { EditDrawingTitleForm } from 'Forms/edit/title/EditDrawingTitleForm';
+import { DrawingTitleForm } from 'Forms/edit/drawing-title/DrawingTitleForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export type Props = {
@@ -16,7 +16,7 @@ export function EditDrawingTitleButton(props: Props) {
       text='Drawing Title'
       onClick={() => {
         props.app.formContainer.renderForm(formProps => (
-          <EditDrawingTitleForm {...formProps} app={props.app} />
+          <DrawingTitleForm {...formProps} app={props.app} />
         ), { key: formKey });
       }}
     />

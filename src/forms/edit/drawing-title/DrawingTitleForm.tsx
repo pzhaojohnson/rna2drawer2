@@ -14,7 +14,7 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-export function EditDrawingTitleForm(props: Props) {
+export function DrawingTitleForm(props: Props) {
   return (
     <PartialWidthContainer
       unmount={props.unmount}
