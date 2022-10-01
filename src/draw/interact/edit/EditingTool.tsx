@@ -9,9 +9,12 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
+import { isBond } from 'Draw/bonds/Bond';
+
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
-import { shiftControlPoint } from 'Draw/bonds/curved/drag';
+import { handleDragOnBonds } from 'Draw/interact/handleDragOnBonds';
+
 import { zoom } from 'Draw/zoom';
 
 import { spannedBases } from 'Draw/strict/spannedBases';
@@ -76,6 +79,11 @@ export class EditingTool {
   _hovered?: ElementId;
   _activated?: ElementId;
   _selected: Set<ElementId>;
+
+  /**
+   * The most recently handled mouse down event.
+   */
+  _lastMousedown?: MouseEvent;
 
   // used to indicate if the selected elements have been dragged at all
   // since an element was activated
@@ -308,6 +316,8 @@ export class EditingTool {
   }
 
   handleMousedown(event: MouseEvent) {
+    this._lastMousedown = event;
+
     if (!(event.target instanceof Node)) {
       return;
     } else if (!this.drawing.svg.node.contains(event.target)) {
@@ -377,8 +387,8 @@ export class EditingTool {
 
     let activated = this.activated;
     if (activated) {
-      if (activated instanceof TertiaryBond) {
-        this._handleMousemoveWhenDraggingTertiaryBonds(event);
+      if (isBond(activated)) {
+        this._handleMousemoveWhenDraggingBonds(event);
       } else {
         this._dragged = true;
       }
@@ -396,38 +406,30 @@ export class EditingTool {
     this.refresh();
   }
 
-  _handleMousemoveWhenDraggingTertiaryBonds(event: MouseEvent) {
+  _handleMousemoveWhenDraggingBonds(event: MouseEvent) {
     let activated = this.activated;
-    if (!(activated instanceof TertiaryBond)) {
-      console.error('No tertiary bonds are currently being dragged.');
+    if (!isBond(activated)) {
+      console.error('No bonds are currently being dragged.');
       return;
     }
 
     if (!this._dragged) {
       this.options.app.pushUndo();
+      this._dragged = true;
     }
 
-    let tbs = new Set<TertiaryBond>(); // the tertiary bonds to drag
-    tbs.add(activated);
-    this.selected().forEach(ele => {
-      if (ele instanceof TertiaryBond) {
-        tbs.add(ele);
-      }
-    });
+    // the bonds being dragged
+    let bonds = new Set(this.selected().filter(isBond));
+    bonds.add(activated); // ensure is included
 
-    // drag the tertiary bonds
-    let z = zoom(this.drawing) ?? 1;
-    tbs.forEach(tb => {
-      shiftControlPoint(tb, {
-        x: 2 * event.movementX / z,
-        y: 2 * event.movementY / z,
-      });
+    handleDragOnBonds({
+      mouseMove: event,
+      activeEventTarget: this._lastMousedown?.target,
+      bonds: Array.from(bonds),
+      drawing: this.options.app.drawing,
     });
-
-    this._dragged = true;
 
     this.refresh();
-    this.options.app.refresh();
   }
 
   handleMouseup(event: MouseEvent) {
@@ -445,7 +447,7 @@ export class EditingTool {
 
     if (this._activated != undefined) {
       this._activated = undefined;
-      this.refresh();
+      this.options.app.refresh();
     }
   }
 
