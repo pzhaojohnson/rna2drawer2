@@ -9,10 +9,12 @@ import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
+import { isBond } from 'Draw/bonds/Bond';
+import { isStraightBond } from 'Draw/bonds/straight/StraightBond';
+
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
-import { shiftControlPoint } from 'Draw/bonds/curved/drag';
-import { zoom } from 'Draw/zoom';
+import { handleDragOnBonds } from 'Draw/interact/handleDragOnBonds';
 
 import { Side } from './Side';
 import { sidesAreEqual } from './Side';
@@ -55,6 +57,8 @@ import { TertiaryBondShroud } from './TertiaryBondShroud';
 import type { OverlaidMessageContainer } from 'Draw/interact/OverlaidMessageContainer';
 import styles from './BindingTool.css';
 import { detectMacOS } from 'Utilities/detectMacOS';
+
+import { isNullish } from 'Values/isNullish';
 
 export type Options = {
 
@@ -133,6 +137,11 @@ export class BindingTool {
 
   // store specification to remember after undo and redo
   _selectedSide?: SideSpecification;
+
+  /**
+   * The most recently handled mouse down event.
+   */
+  _lastMousedown?: MouseEvent;
 
   // used to indicate if the activated element has been dragged at all
   // since becoming activated
@@ -537,6 +546,8 @@ export class BindingTool {
   }
 
   handleMousedown(event: MouseEvent) {
+    this._lastMousedown = event;
+
     let drawing = this.options.strictDrawing.drawing;
     if (!(event.target instanceof Node) || !drawing.svg.node.contains(event.target)) {
       return; // ignore clicks outside of the drawing
@@ -546,6 +557,7 @@ export class BindingTool {
     let hoveredSide = this.hoveredSide();
 
     this._activatedElement = hoveredElement;
+    this._activatedElementWasDragged = false;
 
     if (!hoveredElement) {
       this.deselect();
@@ -592,22 +604,34 @@ export class BindingTool {
 
   handleMousemove(event: MouseEvent) {
     let activatedElement = this.activatedElement;
-    if (activatedElement instanceof TertiaryBond) {
-      if (!this._activatedElementWasDragged) {
-        this.options.app.pushUndo();
-        this._activatedElementWasDragged = true;
-      }
-      let z = zoom(this.options.strictDrawing.drawing) ?? 1;
-      shiftControlPoint(activatedElement, {
-        x: 2 * event.movementX / z,
-        y: 2 * event.movementY / z,
-      });
+
+    if (!isBond(activatedElement)) {
+      return; // cannot drag elements that are not bonds
     }
+
+    if (isStraightBond(activatedElement)) {
+      if (activatedElement.line.node == this._lastMousedown?.target) {
+        return; // cannot drag straight bond line elements
+      }
+    }
+
+    if (!this._activatedElementWasDragged) {
+      this.options.app.pushUndo();
+      this._activatedElementWasDragged = true;
+    }
+    handleDragOnBonds({
+      mouseMove: event,
+      activeEventTarget: this._lastMousedown?.target,
+      bonds: [activatedElement],
+      drawing: this.options.app.drawing,
+    });
   }
 
   handleMouseup(event: MouseEvent) {
-    this._activatedElement = undefined;
-    this.refresh();
+    if (!isNullish(this._activatedElement)) {
+      this._activatedElement = undefined;
+      this.options.app.refresh();
+    }
   }
 
   handleDblclick(event: MouseEvent) {
