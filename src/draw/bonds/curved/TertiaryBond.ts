@@ -19,3 +19,7 @@ TertiaryBond.recommendedDefaults = {
   basePadding1: 8,
   basePadding2: 8,
 };
+
+export function isTertiaryBond(value: unknown): value is TertiaryBond {
+  return value instanceof TertiaryBond;
+}
