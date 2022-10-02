@@ -1,4 +1,5 @@
 import { StraightBond } from './StraightBond';
+import { isStraightBond } from './StraightBond';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { uuidRegex } from 'Draw/svg/assignUuid';
@@ -220,4 +221,18 @@ describe('StraightBond class', () => {
       expect(rp1).toEqual(rp2); // used cached base paddings 1 and 2
     });
   });
+});
+
+test('isStraightBond function', () => {
+  expect(isStraightBond(bond)).toBe(true);
+
+  expect(isStraightBond(base1)).toBe(false);
+  expect(isStraightBond(base2)).toBe(false);
+
+  expect(isStraightBond(undefined)).toBe(false);
+  expect(isStraightBond(null)).toBe(false);
+  expect(isStraightBond(1)).toBe(false);
+  expect(isStraightBond('StraightBond')).toBe(false);
+  expect(isStraightBond(true)).toBe(false);
+  expect(isStraightBond({})).toBe(false);
 });

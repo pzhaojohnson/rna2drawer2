@@ -108,3 +108,7 @@ export class StraightBond {
     });
   }
 }
+
+export function isStraightBond(value: unknown): value is StraightBond {
+  return value instanceof StraightBond;
+}
