@@ -11,8 +11,8 @@ import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
-import { shiftControlPoint } from 'Draw/bonds/curved/drag';
-import { zoom } from 'Draw/zoom';
+
+import { handleDragOnBonds } from 'Draw/interact/handleDragOnBonds';
 
 import { sortNumbers } from 'Array/sortNumbers';
 import { compareNumbers } from 'Array/sort';
@@ -36,6 +36,8 @@ import { BasesHighlighting } from './BasesHighlighting';
 
 import { OverlaidMessageContainer } from 'Draw/interact/OverlaidMessageContainer';
 import styles from './FlippingTool.css';
+
+import { isNullish } from 'Values/isNullish';
 
 type DrawingElement = (
   Base
@@ -86,6 +88,11 @@ export class FlippingTool {
 
   _hovered?: ElementId;
   _activated?: ElementId;
+
+  /**
+   * The most recently handled mouse down event.
+   */
+  _lastMousedown?: MouseEvent;
 
   // used to indicate if the activated element has been dragged
   // since being activated
@@ -241,6 +248,8 @@ export class FlippingTool {
   }
 
   handleMousedown(event: MouseEvent) {
+    this._lastMousedown = event;
+
     let hovered = this.hovered;
     if (!hovered) {
       return;
@@ -284,17 +293,20 @@ export class FlippingTool {
         this.options.app.pushUndo();
         this._dragged = true;
       }
-      let z = zoom(this.options.strictDrawing.drawing) ?? 1;
-      shiftControlPoint(activated, {
-        x: 2 * event.movementX / z,
-        y: 2 * event.movementY / z,
+      handleDragOnBonds({
+        mouseMove: event,
+        activeEventTarget: this._lastMousedown?.target,
+        bonds: [activated],
+        drawing: this.options.app.drawing,
       });
     }
   }
 
   handleMouseup(event: MouseEvent) {
-    this._activated = undefined;
-    this.refresh();
+    if (!isNullish(this._activated)) {
+      this._activated = undefined;
+      this.options.app.refresh();
+    }
   }
 
   handleDblclick(event: MouseEvent) {
