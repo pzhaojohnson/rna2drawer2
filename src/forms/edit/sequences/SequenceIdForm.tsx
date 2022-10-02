@@ -13,7 +13,7 @@ export type Props = {
   history: FormHistoryInterface;
 }
 
-export function EditSequenceIdForm(props: Props) {
+export function SequenceIdForm(props: Props) {
   let drawing = props.app.drawing;
 
   if (drawing.sequences.length == 0) {
