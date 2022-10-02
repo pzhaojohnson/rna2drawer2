@@ -1,4 +1,5 @@
 import { QuadraticBezierBond } from './QuadraticBezierBond';
+import { isQuadraticBezierBond } from './QuadraticBezierBond';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import { Base } from 'Draw/bases/Base';
 import { uuidRegex } from 'Draw/svg/assignUuid';
@@ -217,4 +218,18 @@ describe('QuadraticBezierBond class', () => {
       expect(d1).toBe(d2);
     });
   });
+});
+
+test('isQuadraticBezierBond function', () => {
+  expect(isQuadraticBezierBond(bond)).toBe(true);
+
+  expect(isQuadraticBezierBond(base1)).toBe(false);
+  expect(isQuadraticBezierBond(base2)).toBe(false);
+
+  expect(isQuadraticBezierBond(undefined)).toBe(false);
+  expect(isQuadraticBezierBond(null)).toBe(false);
+  expect(isQuadraticBezierBond(1)).toBe(false);
+  expect(isQuadraticBezierBond('QuadraticBezierBond')).toBe(false);
+  expect(isQuadraticBezierBond(true)).toBe(false);
+  expect(isQuadraticBezierBond({})).toBe(false);
 });

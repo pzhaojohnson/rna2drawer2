@@ -112,3 +112,11 @@ export class QuadraticBezierBond {
     position(this, this._positioning);
   }
 }
+
+export function isQuadraticBezierBond
+(
+  value: unknown
+): value is QuadraticBezierBond
+{
+  return value instanceof QuadraticBezierBond;
+}
