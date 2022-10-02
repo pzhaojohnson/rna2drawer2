@@ -14,8 +14,7 @@ import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
-import { shiftControlPoint } from 'Draw/bonds/curved/drag';
-import { zoom } from 'Draw/zoom';
+import { handleDragOnBonds } from 'Draw/interact/handleDragOnBonds';
 
 import { Stem } from 'Partners/stems/Stem';
 import { pairsInStem } from 'Partners/stems/Stem';
@@ -126,6 +125,11 @@ export class DraggingTool {
 
   _hovered?: ElementId;
   _activated?: ElementId;
+
+  /**
+   * The most recently handled mouse down event.
+   */
+  _lastMousedown?: MouseEvent;
 
   // used to indicate if the activated element has been dragged
   // since being activated
@@ -300,6 +304,8 @@ export class DraggingTool {
   }
 
   handleMousedown(event: MouseEvent) {
+    this._lastMousedown = event;
+
     let hovered = this.hovered;
     if (!hovered) {
       return;
@@ -455,27 +461,30 @@ export class DraggingTool {
       this.options.app.pushUndo();
       this._activatedWasDragged = true;
     }
-    let z = zoom(this.options.strictDrawing.drawing) ?? 1;
-    shiftControlPoint(activated, {
-      x: 2 * event.movementX / z,
-      y: 2 * event.movementY / z,
+    handleDragOnBonds({
+      mouseMove: event,
+      activeEventTarget: this._lastMousedown?.target,
+      bonds: [activated],
+      drawing: this.options.app.drawing,
     });
-    this.refresh();
   }
 
   handleMouseup(event: MouseEvent) {
     let activated = this.activated;
-    let layoutWasDragged = this._activatedWasDragged && isDraggedWithLayout(activated);
     this._activated = undefined;
+
+    let layoutWasDragged = this._activatedWasDragged && isDraggedWithLayout(activated);
 
     let spec = this._draggedStrictLayoutSpecification;
     this._draggedStrictLayoutSpecification = undefined;
 
-    this.refresh();
-
     if (layoutWasDragged && spec) {
       this.options.app.pushUndo();
       updateLayout(this.options.strictDrawing, spec);
+      this.options.app.refresh();
+    }
+
+    if (activated instanceof TertiaryBond && this._activatedWasDragged) {
       this.options.app.refresh();
     }
   }
