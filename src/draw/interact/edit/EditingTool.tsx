@@ -10,6 +10,7 @@ import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import { isBond } from 'Draw/bonds/Bond';
+import { isStraightBond } from 'Draw/bonds/straight/StraightBond';
 
 import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
 
@@ -411,6 +412,11 @@ export class EditingTool {
     if (!isBond(activated)) {
       console.error('No bonds are currently being dragged.');
       return;
+    }
+
+    let straightBond = isStraightBond(activated) ? activated : undefined;
+    if (straightBond?.line.node == this._lastMousedown?.target) {
+      return; // straight bond lines cannot be dragged with this tool
     }
 
     if (!this._dragged) {
