@@ -1,7 +1,9 @@
 import type { App } from 'App';
+
 import type { Base } from 'Draw/bases/Base';
 
 import * as React from 'react';
+
 import { TextInputField } from 'Forms/inputs/text/TextInputField';
 
 import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
