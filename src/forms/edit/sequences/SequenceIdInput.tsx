@@ -1,4 +1,5 @@
 import type { App } from 'App';
+
 import type { Sequence } from 'Draw/sequences/Sequence';
 
 import * as React from 'react';
