@@ -50,7 +50,9 @@ export class SequenceIdInput extends React.Component<Props> {
         id={id}
         className={styles.sequenceIdInput}
         value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
+        onChange={event => {
+          this.setState({ value: event.target.value });
+        }}
         onBlur={() => {
           this.submit();
         }}
