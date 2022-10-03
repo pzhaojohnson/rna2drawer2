@@ -53,12 +53,10 @@ export class SequenceIdInput extends React.Component<Props> {
         onChange={event => this.setState({ value: event.target.value })}
         onBlur={() => {
           this.submit();
-          this.props.app.refresh();
         }}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.refresh();
           }
         }}
       />
@@ -66,17 +64,22 @@ export class SequenceIdInput extends React.Component<Props> {
   }
 
   submit() {
-    let value = this.state.value;
-    value = value.trim(); // remove leading and trailing whitespace
+    try {
+      let value = this.state.value;
+      value = value.trim(); // remove leading and trailing whitespace
 
-    if (isBlank(value)) {
-      return;
-    } else if (value == this.props.sequence.id) {
-      return;
+      if (isBlank(value)) {
+        throw new Error();
+      } else if (value == this.props.sequence.id) {
+        throw new Error();
+      }
+
+      // set the ID of the sequence
+      this.props.app.pushUndo();
+      this.props.sequence.id = value;
+      this.props.app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
     }
-
-    // set ID
-    this.props.app.pushUndo();
-    this.props.sequence.id = value;
   }
 }
