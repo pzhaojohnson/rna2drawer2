@@ -13,9 +13,14 @@ import { isBlank } from 'Parse/isBlank';
 const id = generateHTMLCompatibleUUID();
 
 export type Props = {
-  app: App; // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
+  app: App;
 
-  // the sequence to edit
+  /**
+   * The sequence to edit.
+   */
   sequence: Sequence;
 }
 
