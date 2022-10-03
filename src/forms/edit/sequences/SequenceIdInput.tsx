@@ -35,8 +35,12 @@ export class SequenceIdInput extends React.Component<Props> {
     super(props);
 
     this.state = {
-      value: props.sequence.id,
+      value: this.initialValue,
     };
+  }
+
+  get initialValue() {
+    return this.props.sequence.id;
   }
 
   render() {
