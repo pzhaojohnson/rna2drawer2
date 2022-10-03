@@ -12,9 +12,14 @@ import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID
 const inputId = generateHTMLCompatibleUUID();
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the bases to edit
+  /**
+   * The bases to edit.
+   */
   bases: Base[];
 }
 
