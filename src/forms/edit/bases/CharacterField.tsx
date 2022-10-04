@@ -124,12 +124,10 @@ export class CharacterField extends React.Component<Props> {
         }}
         onBlur={() => {
           this.submit();
-          this.props.app.refresh();
         }}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.refresh();
           }
         }}
         input={{
@@ -142,18 +140,23 @@ export class CharacterField extends React.Component<Props> {
   }
 
   submit() {
-    let c = this.state.value;
-    c = c.trim(); // remove leading and trailing whitespace
+    try {
+      let value = this.state.value;
+      value = value.trim(); // remove leading and trailing whitespace
 
-    if (c.length == 0) {
-      return;
-    } else if (c == this.initialValue) {
-      return;
+      if (value.length == 0) {
+        throw new Error();
+      } else if (value == this.initialValue) {
+        throw new Error();
+      }
+
+      let bases = new BasesWrapper(this.props.bases);
+
+      this.props.app.pushUndo();
+      bases.commonCharacter = value;
+      this.props.app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
     }
-
-    let bases = new BasesWrapper(this.props.bases);
-
-    this.props.app.pushUndo();
-    bases.commonCharacter = c;
   }
 }
