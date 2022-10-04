@@ -119,7 +119,9 @@ export class CharacterField extends React.Component<Props> {
       <TextInputField
         label='Character'
         value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
+        onChange={event => {
+          this.setState({ value: event.target.value });
+        }}
         onBlur={() => {
           this.submit();
           this.props.app.refresh();
