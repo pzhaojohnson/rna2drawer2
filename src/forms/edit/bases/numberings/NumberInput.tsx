@@ -109,7 +109,9 @@ export class NumberInput extends React.Component<Props> {
 
   submit() {
     try {
-      let baseNumberings = new BaseNumberingsWrapper(this.props.baseNumberings);
+      let baseNumberings = (
+        new BaseNumberingsWrapper(this.props.baseNumberings)
+      );
 
       if (baseNumberings.length == 0) {
         throw new Error();
