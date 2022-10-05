@@ -2,8 +2,8 @@ import type { App } from 'App';
 
 import type { Sequence } from 'Draw/sequences/Sequence';
 
-import { numberingOffset } from 'Draw/sequences/numberingOffset';
-import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { numberingOffset as deriveNumberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingIncrement as deriveNumberingIncrement } from 'Draw/sequences/numberingIncrement';
 
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
@@ -41,7 +41,7 @@ export class NumberingIncrementInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let ni = numberingIncrement(props.sequence);
+    let ni = deriveNumberingIncrement(props.sequence);
 
     this.state = {
       value: ni == undefined ? '' : ni.toString(),
@@ -84,7 +84,7 @@ export class NumberingIncrementInput extends React.Component<Props> {
       // convert negatives to positives
       ni *= -1;
     }
-    if (ni == numberingIncrement(this.props.sequence)) {
+    if (ni == deriveNumberingIncrement(this.props.sequence)) {
       return;
     }
 
@@ -102,7 +102,7 @@ export class NumberingIncrementInput extends React.Component<Props> {
     // update base numberings
     this.props.app.pushUndo();
     updateBaseNumberings(this.props.sequence, {
-      offset: numberingOffset(this.props.sequence) ?? 0, // default to 0
+      offset: deriveNumberingOffset(this.props.sequence) ?? 0, // default to 0
       increment: ni,
       anchor: na,
     });
