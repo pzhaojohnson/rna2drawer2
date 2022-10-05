@@ -117,18 +117,22 @@ export class NumberingOffsetInput extends React.Component<Props> {
     if (isBlank(this.state.value)) {
       return;
     }
-    let no = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(no)) {
+
+    let numberingOffset = Number.parseFloat(this.state.value);
+
+    if (!Number.isFinite(numberingOffset)) {
       return;
     }
-    no = Math.floor(no);
-    if (no == sequence.numberingOffset) {
+
+    numberingOffset = Math.floor(numberingOffset);
+
+    if (numberingOffset == sequence.numberingOffset) {
       return;
     }
 
     // update base numberings
     this.props.app.pushUndo();
-    sequence.numberingOffset = no;
+    sequence.numberingOffset = numberingOffset;
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
   }
