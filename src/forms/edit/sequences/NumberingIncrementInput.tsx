@@ -85,11 +85,14 @@ export class NumberingIncrementInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let sequence = new SequenceWrapper(props.sequence);
-
     this.state = {
-      value: sequence.numberingIncrement?.toString() ?? '',
+      value: this.initialValue,
     };
+  }
+
+  get initialValue(): string {
+    let sequence = new SequenceWrapper(this.props.sequence);
+    return sequence.numberingIncrement?.toString() ?? '';
   }
 
   render() {
