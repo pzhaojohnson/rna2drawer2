@@ -33,26 +33,25 @@ class SequenceWrapper {
       return; // ignore undefined values
     }
 
-    // only edit preexisting base numberings if possible
-    if (this.sequence.bases.some(b => b.numbering)) {
-      this.sequence.bases.forEach((b, i) => {
-        let p = i + 1; // the position of the base in the sequence
-        if (b.numbering) {
-          b.numbering.text.text(`${p + numberingOffset}`);
-        }
-      });
-    }
-
-    // if there are no base numberings already present
+    // if there are no base numberings present
     if (this.sequence.bases.every(b => !b.numbering)) {
-      let offset = numberingOffset;
+      let offset = 0;
       let increment = 20; // default value
 
-      // ensure that at least one base will be numbered
+      // ensure at least one base gets numbered
       let anchor = Math.min(increment, this.sequence.length);
 
+      // add some base numberings
       updateBaseNumberings(this.sequence, { offset, increment, anchor });
     }
+
+    // only edit preexisting base numberings if possible
+    this.sequence.bases.forEach((b, i) => {
+      let p = i + 1; // the position of the base in the sequence
+      if (b.numbering) {
+        b.numbering.text.text(`${p + numberingOffset}`);
+      }
+    });
   }
 }
 
