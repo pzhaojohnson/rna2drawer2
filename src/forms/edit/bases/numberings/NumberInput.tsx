@@ -1,7 +1,9 @@
 import type { App } from 'App';
+
 import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
 import * as React from 'react';
+
 import { TextInput } from 'Forms/inputs/text/TextInput';
 
 import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
