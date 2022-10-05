@@ -135,15 +135,14 @@ export class NumberingIncrementInput extends React.Component<Props> {
       if (ni == 0) {
         throw new Error();
       } else if (ni < 0) {
-        // convert negatives to positives
-        ni *= -1;
+        ni *= -1; // convert negatives to positives
       }
 
       if (ni == deriveNumberingIncrement(this.props.sequence)) {
         throw new Error();
       }
 
-      // update base numberings
+      // update the numbering increment
       this.props.app.pushUndo();
       sequence.numberingIncrement = ni;
       orientBaseNumberings(this.props.app.strictDrawing.drawing);
