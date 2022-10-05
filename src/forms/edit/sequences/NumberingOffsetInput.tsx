@@ -124,13 +124,13 @@ export class NumberingOffsetInput extends React.Component<Props> {
       return;
     }
 
-    numberingOffset = Math.floor(numberingOffset);
+    numberingOffset = Math.floor(numberingOffset); // make an integer
 
     if (numberingOffset == sequence.numberingOffset) {
       return;
     }
 
-    // update base numberings
+    // update the numbering offset
     this.props.app.pushUndo();
     sequence.numberingOffset = numberingOffset;
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
