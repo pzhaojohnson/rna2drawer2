@@ -15,6 +15,7 @@ import { TextInput } from 'Forms/inputs/text/TextInput';
 
 import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
+import { isNullish } from 'Values/isNullish';
 import { isBlank } from 'Parse/isBlank';
 
 class SequenceWrapper {
@@ -77,16 +78,21 @@ export class NumberingAnchorInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let sequence = new SequenceWrapper(props.sequence);
-    let na = sequence.numberingAnchor;
-    let no = sequence.numberingOffset;
-    if (na != undefined && no != undefined) {
-      na += no;
-    }
-
     this.state = {
-      value: na == undefined ? '' : na.toString(),
+      value: this.initialValue,
     };
+  }
+
+  get initialValue(): string {
+    let sequence = new SequenceWrapper(this.props.sequence);
+    let numberingOffset = sequence.numberingOffset ?? 0;
+    let numberingAnchor = sequence.numberingAnchor;
+
+    if (isNullish(numberingAnchor)) {
+      return '';
+    } else {
+      return `${numberingAnchor + numberingOffset}`;
+    }
   }
 
   render() {
