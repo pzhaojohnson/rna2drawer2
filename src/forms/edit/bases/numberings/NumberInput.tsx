@@ -20,6 +20,10 @@ class BaseNumberingsWrapper {
     this.baseNumberings = baseNumberngs;
   }
 
+  get length(): number {
+    return this.baseNumberings.length;
+  }
+
   /**
    * The number of a base numbering is defined here as the text content
    * of its text element, which is expected to be the string of a
@@ -106,6 +110,10 @@ export class NumberInput extends React.Component<Props> {
   submit() {
     try {
       let baseNumberings = new BaseNumberingsWrapper(this.props.baseNumberings);
+
+      if (baseNumberings.length == 0) {
+        throw new Error();
+      }
 
       let number = Number.parseFloat(this.state.value);
 
