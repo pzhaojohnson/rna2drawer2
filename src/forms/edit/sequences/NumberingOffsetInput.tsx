@@ -2,7 +2,7 @@ import type { App } from 'App';
 
 import type { Sequence } from 'Draw/sequences/Sequence';
 
-import { numberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingOffset as getNumberingOffset } from 'Draw/sequences/numberingOffset';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 
@@ -13,6 +13,48 @@ import { TextInput } from 'Forms/inputs/text/TextInput';
 import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
 import { isBlank } from 'Parse/isBlank';
+
+class SequenceWrapper {
+  /**
+   * The wrapped sequence.
+   */
+  readonly sequence: Sequence;
+
+  constructor(sequence: Sequence) {
+    this.sequence = sequence;
+  }
+
+  get numberingOffset(): number | undefined {
+    return getNumberingOffset(this.sequence);
+  }
+
+  set numberingOffset(numberingOffset: number | undefined) {
+    if (numberingOffset == undefined) {
+      return; // ignore undefined values
+    }
+
+    // only edit preexisting base numberings if possible
+    if (this.sequence.bases.some(b => b.numbering)) {
+      this.sequence.bases.forEach((b, i) => {
+        let p = i + 1; // the position of the base in the sequence
+        if (b.numbering) {
+          b.numbering.text.text(`${p + numberingOffset}`);
+        }
+      });
+    }
+
+    // if there are no base numberings already present
+    if (this.sequence.bases.every(b => !b.numbering)) {
+      let offset = numberingOffset;
+      let increment = 20; // default value
+
+      // ensure that at least one base will be numbered
+      let anchor = Math.min(increment, this.sequence.length);
+
+      updateBaseNumberings(this.sequence, { offset, increment, anchor });
+    }
+  }
+}
 
 // keep stable to help with refocusing the input element on app refresh
 const id = generateHTMLCompatibleUUID();
@@ -39,10 +81,10 @@ export class NumberingOffsetInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let no = numberingOffset(props.sequence);
+    let sequence = new SequenceWrapper(props.sequence);
 
     this.state = {
-      value: no == undefined ? '' : no.toString(),
+      value: sequence.numberingOffset?.toString() ?? '',
     };
   }
 
@@ -68,6 +110,8 @@ export class NumberingOffsetInput extends React.Component<Props> {
   }
 
   submit() {
+    let sequence = new SequenceWrapper(this.props.sequence);
+
     if (isBlank(this.state.value)) {
       return;
     }
@@ -76,28 +120,13 @@ export class NumberingOffsetInput extends React.Component<Props> {
       return;
     }
     no = Math.floor(no);
-    if (no == numberingOffset(this.props.sequence)) {
+    if (no == sequence.numberingOffset) {
       return;
     }
 
     // update base numberings
     this.props.app.pushUndo();
-    let updated = false;
-    this.props.sequence.bases.forEach((b, i) => {
-      let p = i + 1;
-      let n = p + no;
-      if (b.numbering) {
-        b.numbering.text.text(n.toString());
-        updated = true;
-      }
-    });
-    if (!updated) { // there are no base numberings already present
-      let ni = 20; // a good default
-      // ensures that at least one base will be numbered for a nonempty sequence
-      let na = Math.min(ni, this.props.sequence.length);
-      let sequenceNumbering = { offset: no, increment: ni, anchor: na };
-      updateBaseNumberings(this.props.sequence, sequenceNumbering);
-    }
+    sequence.numberingOffset = no;
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
   }
