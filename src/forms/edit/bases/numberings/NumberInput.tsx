@@ -119,7 +119,7 @@ export class NumberInput extends React.Component<Props> {
         throw new Error();
       }
 
-      // update number
+      // update the numbers of the base numberings
       this.props.app.pushUndo();
       baseNumberings.number = number.toString();
       this.props.app.refresh();
