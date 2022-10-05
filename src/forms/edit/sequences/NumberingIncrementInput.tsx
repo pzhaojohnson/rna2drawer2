@@ -130,6 +130,7 @@ export class NumberingIncrementInput extends React.Component<Props> {
         throw new Error();
       }
 
+      // make an integer
       numberingIncrement = Math.floor(numberingIncrement);
 
       if (numberingIncrement == 0) {
