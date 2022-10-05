@@ -2,9 +2,9 @@ import type { App } from 'App';
 
 import type { Sequence } from 'Draw/sequences/Sequence';
 
-import { numberingOffset } from 'Draw/sequences/numberingOffset';
-import { numberingIncrement } from 'Draw/sequences/numberingIncrement';
-import { numberingAnchor } from 'Draw/sequences/numberingAnchor';
+import { numberingOffset as deriveNumberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingIncrement as deriveNumberingIncrement } from 'Draw/sequences/numberingIncrement';
+import { numberingAnchor as deriveNumberingAnchor } from 'Draw/sequences/numberingAnchor';
 
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
@@ -39,8 +39,8 @@ export class NumberingAnchorInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let na = numberingAnchor(props.sequence);
-    let no = numberingOffset(props.sequence);
+    let na = deriveNumberingAnchor(props.sequence);
+    let no = deriveNumberingOffset(props.sequence);
     if (na != undefined && no != undefined) {
       na += no;
     }
@@ -80,19 +80,19 @@ export class NumberingAnchorInput extends React.Component<Props> {
       return;
     }
     na = Math.floor(na);
-    let no = numberingOffset(this.props.sequence);
+    let no = deriveNumberingOffset(this.props.sequence);
     if (no != undefined) {
       na -= no;
     }
-    if (na == numberingAnchor(this.props.sequence)) {
+    if (na == deriveNumberingAnchor(this.props.sequence)) {
       return;
     }
 
     // update base numberings
     this.props.app.pushUndo();
     updateBaseNumberings(this.props.sequence, {
-      offset: numberingOffset(this.props.sequence) ?? 0, // default to 0
-      increment: numberingIncrement(this.props.sequence) ?? 20, // default to 20
+      offset: deriveNumberingOffset(this.props.sequence) ?? 0, // default to 0
+      increment: deriveNumberingIncrement(this.props.sequence) ?? 20, // default to 20
       anchor: na,
     });
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
