@@ -101,12 +101,10 @@ export class NumberingOffsetInput extends React.Component<Props> {
         }}
         onBlur={() => {
           this.submit();
-          this.props.app.refresh();
         }}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.refresh();
           }
         }}
         style={{ width: `${Math.max(this.state.value.length, 8)}ch` }}
@@ -115,28 +113,32 @@ export class NumberingOffsetInput extends React.Component<Props> {
   }
 
   submit() {
-    let sequence = new SequenceWrapper(this.props.sequence);
+    try {
+      let sequence = new SequenceWrapper(this.props.sequence);
 
-    if (isBlank(this.state.value)) {
-      return;
+      if (isBlank(this.state.value)) {
+        throw new Error();
+      }
+
+      let numberingOffset = Number.parseFloat(this.state.value);
+
+      if (!Number.isFinite(numberingOffset)) {
+        throw new Error();
+      }
+
+      numberingOffset = Math.floor(numberingOffset); // make an integer
+
+      if (numberingOffset == sequence.numberingOffset) {
+        throw new Error();
+      }
+
+      // update the numbering offset
+      this.props.app.pushUndo();
+      sequence.numberingOffset = numberingOffset;
+      orientBaseNumberings(this.props.app.strictDrawing.drawing);
+      this.props.app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
     }
-
-    let numberingOffset = Number.parseFloat(this.state.value);
-
-    if (!Number.isFinite(numberingOffset)) {
-      return;
-    }
-
-    numberingOffset = Math.floor(numberingOffset); // make an integer
-
-    if (numberingOffset == sequence.numberingOffset) {
-      return;
-    }
-
-    // update the numbering offset
-    this.props.app.pushUndo();
-    sequence.numberingOffset = numberingOffset;
-    orientBaseNumberings(this.props.app.strictDrawing.drawing);
-    this.props.app.refresh();
   }
 }
