@@ -31,10 +31,8 @@ export type Props = {
   sequence: Sequence;
 }
 
-type Value = string;
-
 type State = {
-  value: Value;
+  value: string;
 }
 
 export class NumberingIncrementInput extends React.Component<Props> {
