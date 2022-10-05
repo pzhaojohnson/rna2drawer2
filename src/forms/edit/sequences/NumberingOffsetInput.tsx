@@ -2,7 +2,7 @@ import type { App } from 'App';
 
 import type { Sequence } from 'Draw/sequences/Sequence';
 
-import { numberingOffset as getNumberingOffset } from 'Draw/sequences/numberingOffset';
+import { numberingOffset as deriveNumberingOffset } from 'Draw/sequences/numberingOffset';
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 
@@ -25,7 +25,7 @@ class SequenceWrapper {
   }
 
   get numberingOffset(): number | undefined {
-    return getNumberingOffset(this.sequence);
+    return deriveNumberingOffset(this.sequence);
   }
 
   set numberingOffset(numberingOffset: number | undefined) {
