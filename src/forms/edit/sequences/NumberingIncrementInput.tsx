@@ -124,27 +124,27 @@ export class NumberingIncrementInput extends React.Component<Props> {
         throw new Error();
       }
 
-      let ni = Number.parseFloat(this.state.value);
+      let numberingIncrement = Number.parseFloat(this.state.value);
 
-      if (!Number.isFinite(ni)) {
+      if (!Number.isFinite(numberingIncrement)) {
         throw new Error();
       }
 
-      ni = Math.floor(ni);
+      numberingIncrement = Math.floor(numberingIncrement);
 
-      if (ni == 0) {
+      if (numberingIncrement == 0) {
         throw new Error();
-      } else if (ni < 0) {
-        ni *= -1; // convert negatives to positives
+      } else if (numberingIncrement < 0) {
+        numberingIncrement *= -1; // convert negatives to positives
       }
 
-      if (ni == deriveNumberingIncrement(this.props.sequence)) {
+      if (numberingIncrement == deriveNumberingIncrement(this.props.sequence)) {
         throw new Error();
       }
 
       // update the numbering increment
       this.props.app.pushUndo();
-      sequence.numberingIncrement = ni;
+      sequence.numberingIncrement = numberingIncrement;
       orientBaseNumberings(this.props.app.strictDrawing.drawing);
       this.props.app.refresh();
     } catch {
