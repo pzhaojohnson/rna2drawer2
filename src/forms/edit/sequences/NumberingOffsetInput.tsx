@@ -81,11 +81,14 @@ export class NumberingOffsetInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let sequence = new SequenceWrapper(props.sequence);
-
     this.state = {
-      value: sequence.numberingOffset?.toString() ?? '',
+      value: this.initialValue,
     };
+  }
+
+  get initialValue(): string {
+    let sequence = new SequenceWrapper(this.props.sequence);
+    return sequence.numberingOffset?.toString() ?? '';
   }
 
   render() {
