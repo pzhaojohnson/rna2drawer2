@@ -16,6 +16,50 @@ import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID
 
 import { isBlank } from 'Parse/isBlank';
 
+class SequenceWrapper {
+  /**
+   * The wrapped sequence.
+   */
+  readonly sequence: Sequence;
+
+  constructor(sequence: Sequence) {
+    this.sequence = sequence;
+  }
+
+  get numberingOffset(): number | undefined {
+    return deriveNumberingOffset(this.sequence);
+  }
+
+  get numberingIncrement(): number | undefined {
+    return deriveNumberingIncrement(this.sequence);
+  }
+
+  set numberingIncrement(numberingIncrement: number | undefined) {
+    if (numberingIncrement == undefined) {
+      return; // ignore undefined values
+    }
+
+    // use as the numbering anchor if possible
+    let firstNumberedPosition = (
+      this.sequence.bases.findIndex(b => b.numbering) + 1
+    );
+
+    let numberingAnchor = firstNumberedPosition >= 1 ? (
+      firstNumberedPosition
+    ) : numberingIncrement <= this.sequence.length ? (
+      numberingIncrement
+    ) : ( // if numbering increment is larger than the sequence length
+      this.sequence.length
+    );
+
+    updateBaseNumberings(this.sequence, {
+      offset: this.numberingOffset ?? 0,
+      increment: numberingIncrement,
+      anchor: numberingAnchor,
+    });
+  }
+}
+
 // keep stable to help with refocusing the input element on app refresh
 const id = generateHTMLCompatibleUUID();
 
@@ -41,10 +85,10 @@ export class NumberingIncrementInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let ni = deriveNumberingIncrement(props.sequence);
+    let sequence = new SequenceWrapper(props.sequence);
 
     this.state = {
-      value: ni == undefined ? '' : ni.toString(),
+      value: sequence.numberingIncrement?.toString() ?? '',
     };
   }
 
@@ -70,6 +114,8 @@ export class NumberingIncrementInput extends React.Component<Props> {
   }
 
   submit() {
+    let sequence = new SequenceWrapper(this.props.sequence);
+
     if (isBlank(this.state.value)) {
       return;
     }
@@ -88,24 +134,9 @@ export class NumberingIncrementInput extends React.Component<Props> {
       return;
     }
 
-    // ensure that at least the last base will be numbered
-    // if the input numbering increment is greater than the sequence length
-    let na = Math.min(ni, this.props.sequence.length);
-
-    let firstNumberedPosition = this.props.sequence.bases.findIndex(b => b.numbering) + 1;
-    if (firstNumberedPosition > 0) {
-      // use the first numbered position as the numbering anchor
-      // if there are base numberings already present
-      na = firstNumberedPosition;
-    }
-
     // update base numberings
     this.props.app.pushUndo();
-    updateBaseNumberings(this.props.sequence, {
-      offset: deriveNumberingOffset(this.props.sequence) ?? 0, // default to 0
-      increment: ni,
-      anchor: na,
-    });
+    sequence.numberingIncrement = ni;
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
   }
