@@ -124,27 +124,27 @@ export class NumberingAnchorInput extends React.Component<Props> {
         throw new Error();
       }
 
-      let na = Number.parseFloat(this.state.value);
+      let numberingAnchor = Number.parseFloat(this.state.value);
 
-      if (!Number.isFinite(na)) {
+      if (!Number.isFinite(numberingAnchor)) {
         throw new Error();
       }
 
-      na = Math.floor(na);
+      numberingAnchor = Math.floor(numberingAnchor);
 
-      let no = sequence.numberingOffset;
+      let numberingOffset = sequence.numberingOffset;
 
-      if (no != undefined) {
-        na -= no;
+      if (numberingOffset != undefined) {
+        numberingAnchor -= numberingOffset;
       }
 
-      if (na == sequence.numberingAnchor) {
+      if (numberingAnchor == sequence.numberingAnchor) {
         throw new Error();
       }
 
       // update base numberings
       this.props.app.pushUndo();
-      sequence.numberingAnchor = na;
+      sequence.numberingAnchor = numberingAnchor;
       orientBaseNumberings(this.props.app.strictDrawing.drawing);
       this.props.app.refresh();
     } catch {
