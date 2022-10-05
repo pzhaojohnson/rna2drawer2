@@ -105,12 +105,10 @@ export class NumberingAnchorInput extends React.Component<Props> {
         }}
         onBlur={() => {
           this.submit();
-          this.props.app.refresh();
         }}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.refresh();
           }
         }}
         style={{ width: `${Math.max(this.state.value.length, 8)}ch` }}
@@ -119,28 +117,32 @@ export class NumberingAnchorInput extends React.Component<Props> {
   }
 
   submit() {
-    let sequence = new SequenceWrapper(this.props.sequence);
+    try {
+      let sequence = new SequenceWrapper(this.props.sequence);
 
-    if (isBlank(this.state.value)) {
-      return;
-    }
-    let na = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(na)) {
-      return;
-    }
-    na = Math.floor(na);
-    let no = sequence.numberingOffset;
-    if (no != undefined) {
-      na -= no;
-    }
-    if (na == sequence.numberingAnchor) {
-      return;
-    }
+      if (isBlank(this.state.value)) {
+        throw new Error();
+      }
+      let na = Number.parseFloat(this.state.value);
+      if (!Number.isFinite(na)) {
+        throw new Error();
+      }
+      na = Math.floor(na);
+      let no = sequence.numberingOffset;
+      if (no != undefined) {
+        na -= no;
+      }
+      if (na == sequence.numberingAnchor) {
+        throw new Error();
+      }
 
-    // update base numberings
-    this.props.app.pushUndo();
-    sequence.numberingAnchor = na;
-    orientBaseNumberings(this.props.app.strictDrawing.drawing);
-    this.props.app.refresh();
+      // update base numberings
+      this.props.app.pushUndo();
+      sequence.numberingAnchor = na;
+      orientBaseNumberings(this.props.app.strictDrawing.drawing);
+      this.props.app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
+    }
   }
 }
