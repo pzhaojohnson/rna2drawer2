@@ -58,6 +58,10 @@ class BasesWrapper {
     this.bases = bases.map(b => new BaseWrapper(b));
   }
 
+  get length(): number {
+    return this.bases.length;
+  }
+
   /**
    * Returns undefined if the bases do not all have the same character.
    */
@@ -141,6 +145,12 @@ export class CharacterField extends React.Component<Props> {
 
   submit() {
     try {
+      let bases = new BasesWrapper(this.props.bases);
+
+      if (bases.length == 0) {
+        throw new Error();
+      }
+
       let value = this.state.value;
       value = value.trim(); // remove leading and trailing whitespace
 
@@ -149,8 +159,6 @@ export class CharacterField extends React.Component<Props> {
       } else if (value == this.initialValue) {
         throw new Error();
       }
-
-      let bases = new BasesWrapper(this.props.bases);
 
       this.props.app.pushUndo();
       bases.commonCharacter = value;
