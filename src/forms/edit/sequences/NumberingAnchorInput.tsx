@@ -17,6 +17,41 @@ import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID
 
 import { isBlank } from 'Parse/isBlank';
 
+class SequenceWrapper {
+  /**
+   * The wrapped sequence.
+   */
+  readonly sequence: Sequence;
+
+  constructor(sequence: Sequence) {
+    this.sequence = sequence;
+  }
+
+  get numberingOffset(): number | undefined {
+    return deriveNumberingOffset(this.sequence);
+  }
+
+  get numberingIncrement(): number | undefined {
+    return deriveNumberingIncrement(this.sequence);
+  }
+
+  get numberingAnchor(): number | undefined {
+    return deriveNumberingAnchor(this.sequence);
+  }
+
+  set numberingAnchor(numberingAnchor: number | undefined) {
+    if (numberingAnchor == undefined) {
+      return; // ignore undefined values
+    }
+
+    updateBaseNumberings(this.sequence, {
+      offset: this.numberingOffset ?? 0,
+      increment: this.numberingIncrement ?? 20, // default to 20
+      anchor: numberingAnchor,
+    });
+  }
+}
+
 // keep stable to help with refocusing the input element on app refresh
 const id = generateHTMLCompatibleUUID();
 
@@ -42,8 +77,9 @@ export class NumberingAnchorInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let na = deriveNumberingAnchor(props.sequence);
-    let no = deriveNumberingOffset(props.sequence);
+    let sequence = new SequenceWrapper(props.sequence);
+    let na = sequence.numberingAnchor;
+    let no = sequence.numberingOffset;
     if (na != undefined && no != undefined) {
       na += no;
     }
@@ -75,6 +111,8 @@ export class NumberingAnchorInput extends React.Component<Props> {
   }
 
   submit() {
+    let sequence = new SequenceWrapper(this.props.sequence);
+
     if (isBlank(this.state.value)) {
       return;
     }
@@ -83,21 +121,17 @@ export class NumberingAnchorInput extends React.Component<Props> {
       return;
     }
     na = Math.floor(na);
-    let no = deriveNumberingOffset(this.props.sequence);
+    let no = sequence.numberingOffset;
     if (no != undefined) {
       na -= no;
     }
-    if (na == deriveNumberingAnchor(this.props.sequence)) {
+    if (na == sequence.numberingAnchor) {
       return;
     }
 
     // update base numberings
     this.props.app.pushUndo();
-    updateBaseNumberings(this.props.sequence, {
-      offset: deriveNumberingOffset(this.props.sequence) ?? 0, // default to 0
-      increment: deriveNumberingIncrement(this.props.sequence) ?? 20, // default to 20
-      anchor: na,
-    });
+    sequence.numberingAnchor = na;
     orientBaseNumberings(this.props.app.strictDrawing.drawing);
     this.props.app.refresh();
   }
