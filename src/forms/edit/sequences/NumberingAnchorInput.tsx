@@ -139,7 +139,7 @@ export class NumberingAnchorInput extends React.Component<Props> {
         throw new Error();
       }
 
-      // update base numberings
+      // update the numbering anchor
       this.props.app.pushUndo();
       sequence.numberingAnchor = numberingAnchor;
       orientBaseNumberings(this.props.app.strictDrawing.drawing);
