@@ -132,11 +132,8 @@ export class NumberingAnchorInput extends React.Component<Props> {
 
       numberingAnchor = Math.floor(numberingAnchor);
 
-      let numberingOffset = sequence.numberingOffset;
-
-      if (numberingOffset != undefined) {
-        numberingAnchor -= numberingOffset;
-      }
+      let numberingOffset = sequence.numberingOffset ?? 0;
+      numberingAnchor -= numberingOffset;
 
       if (numberingAnchor == sequence.numberingAnchor) {
         throw new Error();
