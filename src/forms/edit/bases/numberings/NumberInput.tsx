@@ -90,12 +90,10 @@ export class NumberInput extends React.Component<Props> {
         }}
         onBlur={() => {
           this.submit();
-          this.props.app.refresh();
         }}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.refresh();
           }
         }}
         style={{
@@ -106,23 +104,27 @@ export class NumberInput extends React.Component<Props> {
   }
 
   submit() {
-    let baseNumberings = new BaseNumberingsWrapper(this.props.baseNumberings);
+    try {
+      let baseNumberings = new BaseNumberingsWrapper(this.props.baseNumberings);
 
-    let number = Number.parseFloat(this.state.value);
+      let number = Number.parseFloat(this.state.value);
 
-    if (!Number.isFinite(number)) {
-      return;
+      if (!Number.isFinite(number)) {
+        throw new Error();
+      }
+
+      number = Math.floor(number); // make an integer
+
+      if (number.toString() == baseNumberings.number) {
+        throw new Error();
+      }
+
+      // update number
+      this.props.app.pushUndo();
+      baseNumberings.number = number.toString();
+      this.props.app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
     }
-
-    number = Math.floor(number); // make an integer
-
-    if (number.toString() == baseNumberings.number) {
-      return;
-    }
-
-    // update number
-    this.props.app.pushUndo();
-    baseNumberings.number = number.toString();
-    this.props.app.refresh();
   }
 }
