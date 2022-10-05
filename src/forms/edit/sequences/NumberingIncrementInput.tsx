@@ -105,12 +105,10 @@ export class NumberingIncrementInput extends React.Component<Props> {
         }}
         onBlur={() => {
           this.submit();
-          this.props.app.refresh();
         }}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.refresh();
           }
         }}
         style={{ width: `${Math.max(this.state.value.length, 8)}ch` }}
@@ -119,30 +117,34 @@ export class NumberingIncrementInput extends React.Component<Props> {
   }
 
   submit() {
-    let sequence = new SequenceWrapper(this.props.sequence);
+    try {
+      let sequence = new SequenceWrapper(this.props.sequence);
 
-    if (isBlank(this.state.value)) {
-      return;
-    }
-    let ni = Number.parseFloat(this.state.value);
-    if (!Number.isFinite(ni)) {
-      return;
-    }
-    ni = Math.floor(ni);
-    if (ni == 0) {
-      return;
-    } else if (ni < 0) {
-      // convert negatives to positives
-      ni *= -1;
-    }
-    if (ni == deriveNumberingIncrement(this.props.sequence)) {
-      return;
-    }
+      if (isBlank(this.state.value)) {
+        throw new Error();
+      }
+      let ni = Number.parseFloat(this.state.value);
+      if (!Number.isFinite(ni)) {
+        throw new Error();
+      }
+      ni = Math.floor(ni);
+      if (ni == 0) {
+        throw new Error();
+      } else if (ni < 0) {
+        // convert negatives to positives
+        ni *= -1;
+      }
+      if (ni == deriveNumberingIncrement(this.props.sequence)) {
+        throw new Error();
+      }
 
-    // update base numberings
-    this.props.app.pushUndo();
-    sequence.numberingIncrement = ni;
-    orientBaseNumberings(this.props.app.strictDrawing.drawing);
-    this.props.app.refresh();
+      // update base numberings
+      this.props.app.pushUndo();
+      sequence.numberingIncrement = ni;
+      orientBaseNumberings(this.props.app.strictDrawing.drawing);
+      this.props.app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
+    }
   }
 }
