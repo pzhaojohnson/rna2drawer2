@@ -31,20 +31,20 @@ class BaseNumberingsWrapper {
    *
    * Returns undefined if not all base numberings have the same number.
    */
-  get number(): string | undefined {
+  get commonNumber(): string | undefined {
     let numbers = new ValuesWrapper(
       this.baseNumberings.map(bn => bn.text.text())
     );
     return numbers.commonValue;
   }
 
-  set number(number: string | undefined) {
-    if (number == undefined) {
+  set commonNumber(commonNumber: string | undefined) {
+    if (commonNumber == undefined) {
       return; // ignore undefined values
     }
 
     this.baseNumberings.forEach(bn => {
-      bn.text.text(number);
+      bn.text.text(commonNumber);
     });
   }
 }
@@ -81,7 +81,7 @@ export class NumberInput extends React.Component<Props> {
 
   get initialValue(): string {
     let baseNumberings = new BaseNumberingsWrapper(this.props.baseNumberings);
-    return baseNumberings.number ?? '';
+    return baseNumberings.commonNumber ?? '';
   }
 
   render() {
@@ -123,13 +123,13 @@ export class NumberInput extends React.Component<Props> {
 
       number = Math.floor(number); // make an integer
 
-      if (number.toString() == baseNumberings.number) {
+      if (number.toString() == baseNumberings.commonNumber) {
         throw new Error();
       }
 
       // update the numbers of the base numberings
       this.props.app.pushUndo();
-      baseNumberings.number = number.toString();
+      baseNumberings.commonNumber = number.toString();
       this.props.app.refresh();
     } catch {
       this.setState({ value: this.initialValue });
