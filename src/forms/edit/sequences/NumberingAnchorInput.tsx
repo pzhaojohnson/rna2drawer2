@@ -123,15 +123,21 @@ export class NumberingAnchorInput extends React.Component<Props> {
       if (isBlank(this.state.value)) {
         throw new Error();
       }
+
       let na = Number.parseFloat(this.state.value);
+
       if (!Number.isFinite(na)) {
         throw new Error();
       }
+
       na = Math.floor(na);
+
       let no = sequence.numberingOffset;
+
       if (no != undefined) {
         na -= no;
       }
+
       if (na == sequence.numberingAnchor) {
         throw new Error();
       }
