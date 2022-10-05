@@ -100,7 +100,9 @@ export class NumberingAnchorInput extends React.Component<Props> {
       <TextInput
         id={id}
         value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
+        onChange={event => {
+          this.setState({ value: event.target.value });
+        }}
         onBlur={() => {
           this.submit();
           this.props.app.refresh();
