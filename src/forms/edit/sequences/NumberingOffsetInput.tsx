@@ -3,6 +3,7 @@ import type { App } from 'App';
 import type { Sequence } from 'Draw/sequences/Sequence';
 
 import { numberingOffset as deriveNumberingOffset } from 'Draw/sequences/numberingOffset';
+
 import { updateBaseNumberings } from 'Draw/sequences/updateBaseNumberings';
 import { orientBaseNumberings } from 'Draw/bases/numberings/orient';
 
@@ -45,7 +46,7 @@ class SequenceWrapper {
       updateBaseNumberings(this.sequence, { offset, increment, anchor });
     }
 
-    // only edit preexisting base numberings if possible
+    // only edit preexisting base numberings
     this.sequence.bases.forEach((b, i) => {
       let p = i + 1; // the position of the base in the sequence
       if (b.numbering) {
