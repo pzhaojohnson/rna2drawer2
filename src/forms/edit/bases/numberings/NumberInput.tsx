@@ -12,9 +12,14 @@ import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID
 const id = generateHTMLCompatibleUUID();
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the base numberings to edit
+  /**
+   * The base numberings to edit.
+   */
   baseNumberings: BaseNumbering[];
 }
 
