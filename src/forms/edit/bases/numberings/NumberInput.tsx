@@ -2,11 +2,48 @@ import type { App } from 'App';
 
 import type { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
+import { ValuesWrapper } from 'Values/ValuesWrapper';
+
 import * as React from 'react';
 
 import { TextInput } from 'Forms/inputs/text/TextInput';
 
 import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
+
+class BaseNumberingsWrapper {
+  /**
+   * The wrapped base numberings.
+   */
+  readonly baseNumberings: BaseNumbering[];
+
+  constructor(baseNumberngs: BaseNumbering[]) {
+    this.baseNumberings = baseNumberngs;
+  }
+
+  /**
+   * The number of a base numbering is defined here as the text content
+   * of its text element, which is expected to be the string of a
+   * number.
+   *
+   * Returns undefined if not all base numberings have the same number.
+   */
+  get number(): string | undefined {
+    let numbers = new ValuesWrapper(
+      this.baseNumberings.map(bn => bn.text.text())
+    );
+    return numbers.commonValue;
+  }
+
+  set number(number: string | undefined) {
+    if (number == undefined) {
+      return; // ignore undefined values
+    }
+
+    this.baseNumberings.forEach(bn => {
+      bn.text.text(number);
+    });
+  }
+}
 
 // keep stable to help with refocusing the input element on app refresh
 const id = generateHTMLCompatibleUUID();
@@ -39,15 +76,8 @@ export class NumberInput extends React.Component<Props> {
   }
 
   get initialValue(): string {
-    let texts = new Set(
-      this.props.baseNumberings.map(bn => bn.text.text())
-    );
-
-    if (texts.size == 1) {
-      return texts.values().next().value;
-    } else {
-      return '';
-    }
+    let baseNumberings = new BaseNumberingsWrapper(this.props.baseNumberings);
+    return baseNumberings.number ?? '';
   }
 
   render() {
@@ -76,21 +106,23 @@ export class NumberInput extends React.Component<Props> {
   }
 
   submit() {
-    let n = Number.parseFloat(this.state.value);
+    let baseNumberings = new BaseNumberingsWrapper(this.props.baseNumberings);
 
-    if (!Number.isFinite(n)) {
+    let number = Number.parseFloat(this.state.value);
+
+    if (!Number.isFinite(number)) {
       return;
     }
 
-    n = Math.floor(n); // make an integer
+    number = Math.floor(number); // make an integer
 
-    if (n == Number.parseFloat(this.initialValue)) {
+    if (number.toString() == baseNumberings.number) {
       return;
     }
 
     // update number
     this.props.app.pushUndo();
-    this.props.baseNumberings.forEach(bn => bn.text.text(n.toString()));
+    baseNumberings.number = number.toString();
     this.props.app.refresh();
   }
 }
