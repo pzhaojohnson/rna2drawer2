@@ -16,8 +16,8 @@ class BaseNumberingsWrapper {
    */
   readonly baseNumberings: BaseNumbering[];
 
-  constructor(baseNumberngs: BaseNumbering[]) {
-    this.baseNumberings = baseNumberngs;
+  constructor(baseNumberings: BaseNumbering[]) {
+    this.baseNumberings = baseNumberings;
   }
 
   get length(): number {
