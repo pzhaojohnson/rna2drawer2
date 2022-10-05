@@ -138,7 +138,7 @@ export class NumberingIncrementInput extends React.Component<Props> {
         numberingIncrement *= -1; // convert negatives to positives
       }
 
-      if (numberingIncrement == deriveNumberingIncrement(this.props.sequence)) {
+      if (numberingIncrement == sequence.numberingIncrement) {
         throw new Error();
       }
 
