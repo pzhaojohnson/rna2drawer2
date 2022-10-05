@@ -32,10 +32,8 @@ export type Props = {
   sequence: Sequence;
 }
 
-type Value = string;
-
 type State = {
-  value: Value;
+  value: string;
 }
 
 export class NumberingAnchorInput extends React.Component<Props> {
