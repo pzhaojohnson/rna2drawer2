@@ -132,6 +132,28 @@ describe('CharacterField component', () => {
       expect(bases.map(b => b.text.text()).join('')).toBe('555555');
     });
 
+    test('maintaining text element center coordinates', () => {
+      drawing.appendSequence({ id: 'A', sequence: 'z' });
+      let base = drawing.sequences[0].bases[0];
+      base.text.center(33.9, 412.6);
+
+      act(() => render(
+        <CharacterField app={app} bases={[base]} />,
+        container,
+      ));
+
+      let input = container.getElementsByTagName('input')[0];
+      input.value = 'H'; // is taller than lowercase 'z'
+      Simulate.change(input);
+      Simulate.blur(input);
+
+      expect(base.text.text()).toBe('H'); // character was changed
+
+      // center coordinates were maintained
+      expect(base.text.bbox().cx).toBeCloseTo(33.9);
+      expect(base.text.bbox().cy).toBeCloseTo(412.6);
+    });
+
     test('blank inputs', () => {
       drawing.appendSequence({ id: '1', sequence: 'ddddd' });
       let bases = [...drawing.sequences[0].bases];
