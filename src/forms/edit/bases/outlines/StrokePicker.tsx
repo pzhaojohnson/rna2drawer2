@@ -1,45 +1,39 @@
 import type { App } from 'App';
-import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
-import * as SVG from '@svgdotjs/svg.js';
-import { stroke } from 'Forms/inputs/svg/stroke/stroke';
-import { strokeEquals } from 'Forms/inputs/svg/stroke/stroke';
-import { setStroke } from 'Forms/inputs/svg/stroke/stroke';
+import { CircleBaseAnnotation as BaseOutline } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
 import * as React from 'react';
-import { ColorPicker } from 'Forms/inputs/color/ColorPicker';
 
-// returns the circle elements of the outlines
-function circles(outlines: CircleBaseAnnotation[]): SVG.Circle[] {
-  return outlines.map(outline => outline.circle);
-}
+import { ColorAttributePicker } from 'Forms/edit/svg/ColorAttributePicker';
 
 export type Props = {
-
-  // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the outlines to edit
-  outlines: CircleBaseAnnotation[];
+  /**
+   * The base outlines to edit.
+   */
+  outlines: BaseOutline[];
 }
 
 export function StrokePicker(props: Props) {
   return (
-    <ColorPicker
-      value={stroke(circles(props.outlines))}
-      onClose={event => {
-        if (!event.target.value) {
-          return;
-        } else if (strokeEquals(circles(props.outlines), event.target.value.color)) {
-          return;
-        }
-
+    <ColorAttributePicker
+      elements={props.outlines.map(o => o.circle)}
+      attributeName='stroke'
+      onBeforeEdit={() => {
         props.app.pushUndo();
-        setStroke(circles(props.outlines), event.target.value.color);
-        CircleBaseAnnotation.recommendedDefaults.circle['stroke'] = event.target.value.color.toHex();
-        props.app.refresh();
       }}
-      disableAlpha={true}
+      onEdit={event => {
+        let newValue = event.newValue;
+        let newValueHexCode = newValue.toHex();
+
+        BaseOutline.recommendedDefaults.circle['stroke'] = newValueHexCode;
+
+        props.app.refresh(); // refresh after updating all values
+      }}
     />
   );
 }
