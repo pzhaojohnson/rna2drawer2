@@ -1,54 +1,60 @@
 import type { App } from 'App';
+
 import { BaseNumbering } from 'Draw/bases/numberings/BaseNumbering';
 
-import * as SVG from '@svgdotjs/svg.js';
-import { fill } from 'Forms/inputs/svg/fill/fill';
-import { fillEquals } from 'Forms/inputs/svg/fill/fill';
-import { setFill } from 'Forms/inputs/svg/fill/fill';
-import { setStroke } from 'Forms/inputs/svg/stroke/stroke';
-
 import * as React from 'react';
-import { ColorPicker as _ColorPicker } from 'Forms/inputs/color/ColorPicker';
 
-// returns the text elements of the base numberings
-function texts(baseNumberings: BaseNumbering[]): SVG.Text[] {
-  return baseNumberings.map(bn => bn.text);
-}
+import { ColorAttributePicker } from 'Forms/edit/svg/ColorAttributePicker';
 
-// returns the line elements of the base numberings
-function lines(baseNumberings: BaseNumbering[]): SVG.Line[] {
-  return baseNumberings.map(bn => bn.line);
+import { colorValuesAreEqual } from 'Draw/svg/colorValuesAreEqual';
+
+/**
+ * Returns true if the color is white.
+ */
+function isWhite(color: unknown): boolean {
+  return colorValuesAreEqual(color, '#ffffff');
 }
 
 export type Props = {
-
-  // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the base numberings to edit
+  /**
+   * The base numberings to edit.
+   */
   baseNumberings: BaseNumbering[];
 }
 
 export function ColorPicker(props: Props) {
+  // this component assumes that text fill is the same as line stroke
+  let elements = props.baseNumberings.map(bn => bn.text);
+
   return (
-    <_ColorPicker
-      // assumes that texts fill is the same as lines stroke
-      value={fill(texts(props.baseNumberings))}
-      onClose={event => {
-        if (!event.target.value) {
-          return;
-        } else if (fillEquals(texts(props.baseNumberings), event.target.value.color)) {
-          return;
+    <ColorAttributePicker
+      elements={elements}
+      attributeName='fill'
+      onBeforeEdit={() => {
+        props.app.pushUndo();
+      }}
+      onEdit={event => {
+        let newValue = event.newValue;
+        let newValueHexCode = newValue.toHex();
+
+        // update line strokes
+        props.baseNumberings.forEach(bn => {
+          bn.line.attr('stroke', newValueHexCode);
+        });
+
+        // don't make the same color as the background by default
+        if (!isWhite(newValueHexCode)) {
+          BaseNumbering.recommendedDefaults.text['fill'] = newValueHexCode;
+          BaseNumbering.recommendedDefaults.line['stroke'] = newValueHexCode;
         }
 
-        props.app.pushUndo();
-        setFill(texts(props.baseNumberings), event.target.value.color);
-        setStroke(lines(props.baseNumberings), event.target.value.color);
-        BaseNumbering.recommendedDefaults.text['fill'] = event.target.value.color.toHex();
-        BaseNumbering.recommendedDefaults.line['stroke'] = event.target.value.color.toHex();
-        props.app.refresh();
+        props.app.refresh(); // refresh after updating all values
       }}
-      disableAlpha={true}
     />
   );
 }
