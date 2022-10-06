@@ -1,45 +1,52 @@
 import type { App } from 'App';
-import { CircleBaseAnnotation } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
+
+import { CircleBaseAnnotation as BaseOutline } from 'Draw/bases/annotate/circle/CircleBaseAnnotation';
 
 import * as SVG from '@svgdotjs/svg.js';
-import { fill } from 'Forms/inputs/svg/fill/fill';
-import { fillEquals } from 'Forms/inputs/svg/fill/fill';
-import { setFill } from 'Forms/inputs/svg/fill/fill';
 
 import * as React from 'react';
-import { ColorPicker } from 'Forms/inputs/color/ColorPicker';
 
-// returns the circle elements of the outlines
-function circles(outlines: CircleBaseAnnotation[]): SVG.Circle[] {
-  return outlines.map(outline => outline.circle);
+import { ColorAttributePicker } from 'Forms/edit/svg/ColorAttributePicker';
+
+import { colorValuesAreEqual } from 'Draw/svg/colorValuesAreEqual';
+
+/**
+ * Returns true if the color is white.
+ */
+function isWhite(color: SVG.Color): boolean {
+  return colorValuesAreEqual(color.toHex(), '#ffffff');
 }
 
 export type Props = {
-
-  // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the outlines to edit
-  outlines: CircleBaseAnnotation[];
+  /**
+   * The base outlines to edit.
+   */
+  outlines: BaseOutline[];
 }
 
 export function FillPicker(props: Props) {
   return (
-    <ColorPicker
-      value={fill(circles(props.outlines))}
-      onClose={event => {
-        if (!event.target.value) {
-          return;
-        } else if (fillEquals(circles(props.outlines), event.target.value.color)) {
-          return;
+    <ColorAttributePicker
+      elements={props.outlines.map(o => o.circle)}
+      attributeName='fill'
+      onBeforeEdit={() => {
+        props.app.pushUndo();
+      }}
+      onEdit={event => {
+        let newValue = event.newValue;
+
+        // don't make the same color as the background by default
+        if (!isWhite(newValue)) {
+          BaseOutline.recommendedDefaults.circle['fill'] = newValue.toHex();
         }
 
-        props.app.pushUndo();
-        setFill(circles(props.outlines), event.target.value.color);
-        CircleBaseAnnotation.recommendedDefaults.circle['fill'] = event.target.value.color.toHex();
-        props.app.refresh();
+        props.app.refresh(); // refresh after updating all values
       }}
-      disableAlpha={true}
     />
   );
 }
