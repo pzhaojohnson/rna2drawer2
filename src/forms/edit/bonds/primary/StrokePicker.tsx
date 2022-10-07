@@ -1,45 +1,52 @@
 import type { App } from 'App';
+
 import { PrimaryBond } from 'Draw/bonds/straight/PrimaryBond';
 
 import * as SVG from '@svgdotjs/svg.js';
-import { stroke } from 'Forms/inputs/svg/stroke/stroke';
-import { strokeEquals } from 'Forms/inputs/svg/stroke/stroke';
-import { setStroke } from 'Forms/inputs/svg/stroke/stroke';
 
 import * as React from 'react';
-import { ColorPicker } from 'Forms/inputs/color/ColorPicker';
 
-// returns the line elements of the primary bonds
-function lines(primaryBonds: PrimaryBond[]): SVG.Line[] {
-  return primaryBonds.map(primaryBond => primaryBond.line);
+import { ColorAttributePicker } from 'Forms/edit/svg/ColorAttributePicker';
+
+import { colorValuesAreEqual } from 'Draw/svg/colorValuesAreEqual';
+
+/**
+ * Returns true if the color is white.
+ */
+function isWhite(color: SVG.Color): boolean {
+  return colorValuesAreEqual(color.toHex(), '#ffffff');
 }
 
 export type Props = {
-
-  // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the primary bonds to edit
+  /**
+   * The primary bonds to edit.
+   */
   primaryBonds: PrimaryBond[];
 }
 
 export function StrokePicker(props: Props) {
   return (
-    <ColorPicker
-      value={stroke(lines(props.primaryBonds))}
-      onClose={event => {
-        if (!event.target.value) {
-          return;
-        } else if (strokeEquals(lines(props.primaryBonds), event.target.value.color)) {
-          return;
+    <ColorAttributePicker
+      elements={props.primaryBonds.map(pb => pb.line)}
+      attributeName='stroke'
+      onBeforeEdit={() => {
+        props.app.pushUndo();
+      }}
+      onEdit={event => {
+        let newValue = event.newValue;
+
+        // don't make the same color as the background by default
+        if (!isWhite(newValue)) {
+          PrimaryBond.recommendedDefaults.line['stroke'] = newValue.toHex();
         }
 
-        props.app.pushUndo();
-        setStroke(lines(props.primaryBonds), event.target.value.color);
-        PrimaryBond.recommendedDefaults.line['stroke'] = event.target.value.color.toHex();
-        props.app.refresh();
+        props.app.refresh(); // refresh after updating all values
       }}
-      disableAlpha={true}
     />
   );
 }
