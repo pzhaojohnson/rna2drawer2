@@ -1,50 +1,57 @@
 import type { App } from 'App';
+
 import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 
 import * as SVG from '@svgdotjs/svg.js';
-import { stroke } from 'Forms/inputs/svg/stroke/stroke';
-import { strokeEquals } from 'Forms/inputs/svg/stroke/stroke';
-import { setStroke } from 'Forms/inputs/svg/stroke/stroke';
 
 import * as React from 'react';
-import { ColorPicker } from 'Forms/inputs/color/ColorPicker';
 
-// returns the line elements of the secondary bonds
-function lines(secondaryBonds: SecondaryBond[]): SVG.Line[] {
-  return secondaryBonds.map(secondaryBond => secondaryBond.line);
+import { ColorAttributePicker } from 'Forms/edit/svg/ColorAttributePicker';
+
+import { colorValuesAreEqual } from 'Draw/svg/colorValuesAreEqual';
+
+/**
+ * Returns true if the color is white.
+ */
+function isWhite(color: SVG.Color): boolean {
+  return colorValuesAreEqual(color.toHex(), '#ffffff');
 }
 
 export type Props = {
-
-  // a reference to the whole app
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
-  // the secondary bonds to edit
+  /**
+   * The secondary bonds to edit.
+   */
   secondaryBonds: SecondaryBond[];
 }
 
 export function StrokePicker(props: Props) {
   return (
-    <ColorPicker
-      value={stroke(lines(props.secondaryBonds))}
-      onClose={event => {
-        if (!event.target.value) {
-          return;
-        } else if (strokeEquals(lines(props.secondaryBonds), event.target.value.color)) {
-          return;
+    <ColorAttributePicker
+      elements={props.secondaryBonds.map(sb => sb.line)}
+      attributeName='stroke'
+      onBeforeEdit={() => {
+        props.app.pushUndo();
+      }}
+      onEdit={event => {
+        let newValue = event.newValue;
+
+        let types = new Set(props.secondaryBonds.map(sb => sb.type));
+
+        // don't make the same color as the background by default
+        if (!isWhite(newValue)) {
+          types.forEach(t => {
+            let recommendedDefaults = SecondaryBond.recommendedDefaults[t];
+            recommendedDefaults.line['stroke'] = newValue.toHex();
+          });
         }
 
-        props.app.pushUndo();
-        setStroke(lines(props.secondaryBonds), event.target.value.color);
-
-        let hex = event.target.value.color.toHex();
-        props.secondaryBonds.forEach(secondaryBond => {
-          SecondaryBond.recommendedDefaults[secondaryBond.type].line['stroke'] = hex;
-        });
-
-        props.app.refresh();
+        props.app.refresh(); // refresh after updating all values
       }}
-      disableAlpha={true}
     />
   );
 }
