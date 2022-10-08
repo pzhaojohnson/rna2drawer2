@@ -2,22 +2,22 @@
   margin: 0 0 0 8px; /* margins are nonzero by default for Safari */
   flex-grow: 1;
 
-  border: 1px solid rgba(223, 223, 237, 0.96);
+  border: 1px solid rgba(208, 208, 226, 1);
   border-radius: 2px;
   padding: 3px 6px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #4e4e54;
+  color: #43434a;
 }
 
 .textInput:hover {
-  border-color: #171718;
+  border-color: #101011;
 }
 
 .textInput:focus {
-  border-color: #171718;
+  border-color: #101011;
   outline: none;
 }
 
