@@ -2,25 +2,26 @@
   margin: 32px 0 0 0;
   font-size: 16px;
   font-weight: 500;
-  color: rgb(100, 100, 115);
+  color: rgb(96, 96, 108);
 
   user-select: none;
   -webkit-user-select: none;
 }
 
 .newAndOpenButtons {
-  border: 1px solid rgba(209, 209, 231, 0.95);
+  border: 1px solid rgba(208, 208, 230, 1);
   border-radius: 24px;
+  box-shadow: 0 2px 2px rgba(227, 227, 240, 0.31);
   flex-grow: 1;
   padding: 9px 0px;
   font-size: 20px;
-  color: #1d1d6b;
+  color: #1d1d66;
   text-align: center;
   cursor: pointer;
 }
 
 .newAndOpenButtons:hover {
-  box-shadow: 0 3px 3px rgba(234, 234, 244, 0.21);
+  box-shadow: 0 3px 3px rgba(223, 223, 238, 0.32);
   transform: scale(1.055);
   transition: transform 0.04s;
 }
@@ -36,7 +37,7 @@
 
   font-size: 16px;
   font-weight: 500;
-  color: rgb(100, 100, 115);
+  color: rgb(96, 96, 108);
 }
 
 .moreInfoLinks {
@@ -63,13 +64,13 @@
 
   font-size: 14px;
   font-weight: 500;
-  color: rgb(100, 100, 111);
+  color: rgb(96, 96, 106);
 
   animation: updatesNoticeFadeIn 2s ease-in;
 }
 
 .updatesNoticeDate {
-  color: rgb(108, 108, 121);
+  color: rgb(101, 101, 112);
 }
 
 @keyframes updatesNoticeFadeIn {
