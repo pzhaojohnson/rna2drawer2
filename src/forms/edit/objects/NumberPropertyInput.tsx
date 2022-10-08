@@ -138,7 +138,9 @@ export class NumberPropertyInput extends React.Component<Props> {
     let oldValue = this.oldValue;
 
     try {
-      if (!this.props.objects || !this.props.propertyName) {
+      if (!this.props.objects || this.props.objects.length == 0) {
+        throw new Error();
+      } else if (!this.props.propertyName) {
         throw new Error();
       } else if (isBlank(this.state.value)) {
         throw new Error();
