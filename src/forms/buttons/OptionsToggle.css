@@ -7,13 +7,13 @@
 
   border: none;
   padding: 1px 14px;
-  background-color: rgba(241, 241, 255, 0.99);
+  background-color: rgba(240, 240, 255, 1);
 
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
   font-weight: 500;
   font-style: normal;
-  color: rgb(15, 15, 84);
+  color: rgb(15, 15, 80);
 
   cursor: pointer;
 
@@ -22,11 +22,13 @@
 }
 
 .optionsToggle:hover {
-  background-color: rgba(228, 228, 255, 0.99);
+  background-color: rgba(224, 224, 255, 1);
+  color: rgb(13, 13, 74);
 }
 
 .optionsToggle:active {
-  background-color: rgba(208, 208, 255, 0.98);
+  background-color: rgba(205, 205, 255, 1);
+  color: rgb(13, 13, 66);
 
   outline: none;
 }
