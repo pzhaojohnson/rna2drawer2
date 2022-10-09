@@ -46,7 +46,7 @@ export function IgnoreNonAlphanumericsCheckbox(props: Props): React.ReactElement
 
 export function SequenceParsingDetails(props: Props): React.ReactElement {
   return (
-    <div className={styles.parsingDetails} style={{ width: '360px', margin: '24px 0px 0px 12px' }} >
+    <div className={styles.parsingDetails} style={{ width: '364px', margin: '24px 0px 0px 12px' }} >
       <h3 className={styles.header} >
         Sequence Parsing Details
       </h3>

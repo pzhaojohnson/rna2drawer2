@@ -3,7 +3,7 @@ import styles from './ParsingDetails.css';
 
 export function DotBracketParsingDetails(): React.ReactElement {
   return (
-    <div className={styles.parsingDetails} style={{ width: '360px', margin: '24px 0px 0px 12px' }} >
+    <div className={styles.parsingDetails} style={{ width: '364px', margin: '24px 0px 0px 12px' }} >
       <h3 className={styles.header} >
         Structure Parsing Details
       </h3>
