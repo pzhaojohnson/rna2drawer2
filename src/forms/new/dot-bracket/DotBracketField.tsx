@@ -31,7 +31,7 @@ interface Props {
 export function DotBracketField(props: Props): React.ReactElement {
   return (
     <div style={{ flexGrow: props.flexGrow, display: 'flex', flexDirection: 'column' }} >
-      <div style={{ marginTop: '24px', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ marginTop: '25px', display: 'flex', flexDirection: 'row' }} >
         <label
           className={fieldLabelStyles.fieldLabel}
           htmlFor='structure'

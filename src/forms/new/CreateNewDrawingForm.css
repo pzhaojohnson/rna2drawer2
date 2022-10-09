@@ -1,5 +1,5 @@
 .title {
-  margin: 0px 106px;
+  margin: 0px 108px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 24px;
@@ -18,14 +18,14 @@
 }
 
 .header {
-  width: 960px;
+  width: 1000px;
 
   display: flex;
   flex-direction: column;
 }
 
 .body {
-  height: 551px;
+  height: 560px;
 
   display: flex;
   flex-direction: column;
