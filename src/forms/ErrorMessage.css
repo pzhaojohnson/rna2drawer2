@@ -2,7 +2,7 @@
   font-size: 14px;
   font-weight: 700;
   font-style: normal;
-  color: #dd0f0f;
+  color: #d71a1a;
 }
 
 .fadesIn {
@@ -19,7 +19,7 @@
 }
 
 .blinksIn {
-  animation: blinkIn 1.25s;
+  animation: blinkIn 1.5s;
 }
 
 @keyframes blinkIn {
