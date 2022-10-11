@@ -9,11 +9,12 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #43434a;
+  color: #434347;
 }
 
 .textInput:hover {
-  border-color: #101011;
+  border-color: #0a0a0a;
+  transition: border-color 0.5s;
 }
 
 .textInput:focus {
