@@ -1,12 +1,12 @@
 .formatSelect {
-  margin-right: 98px;
+  margin-right: 100px;
 
-  border: 1px solid rgba(213, 213, 228, 0.97);
+  border: 1px solid rgba(217, 217, 233, 1);
   border-radius: 60px;
 
-  width: 140px;
+  width: 150px;
 
-  padding: 4px 16px;
+  padding: 4px 20px;
 
   display: flex;
   flex-direction: row;
@@ -19,7 +19,7 @@
   border: none;
   outline: none;
 
-  padding: 3px 9px;
+  padding: 3px 12px;
   border-radius: 60px;
 
   font-family: 'Open Sans', sans-serif;
@@ -37,22 +37,24 @@
 
 .toggledFormatButton {
   color: white;
-  background-color: #0d0d0e;
+  background-color: #0c0c0d;
 
   cursor: default;
 }
 
 .untoggledFormatButton {
-  color: rgb(11, 11, 11);
+  color: rgb(12, 12, 13);
   background-color: white;
 
   cursor: pointer;
 }
 
 .untoggledFormatButton:hover {
-  background-color: #e0e0ec8c;
+  color: rgb(11, 11, 11);
+  background-color: #e0e0f091;
 }
 
 .untoggledFormatButton:active {
-  background-color: #e0e0ecd4;
+  color: rgb(7, 7, 8);
+  background-color: #ddddecc7;
 }
