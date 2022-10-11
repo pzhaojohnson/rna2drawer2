@@ -1,7 +1,7 @@
 .fileInputLabel {
   width: 600px;
 
-  border: 1px solid #d1d1e7;
+  border: 1px solid #d3d3e8;
   border-radius: 60px;
   box-shadow: 0 3px 3px rgba(233, 233, 244, 0.2);
 
@@ -9,7 +9,7 @@
 
   font-size: 18px;
   font-style: normal;
-  color: #050562;
+  color: #07075d;
   text-align: center;
 
   text-overflow: ellipsis;
@@ -22,7 +22,7 @@
 .rna2drawerExtension {
   font-weight: 700;
   font-style: normal;
-  color: rgb(7, 7, 70);
+  color: rgb(6, 6, 57);
 }
 
 .fileInputLabel:hover {

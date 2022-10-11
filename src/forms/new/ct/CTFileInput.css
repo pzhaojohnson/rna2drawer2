@@ -1,5 +1,5 @@
 .ctFileInput {
-  border: 1px solid #d1d1e7;
+  border: 1px solid #d3d3e7;
   border-radius: 60px;
   box-shadow: 0 3px 3px rgba(233, 233, 244, 0.2);
 
@@ -30,7 +30,7 @@
   font-size: 18px;
   font-weight: 400;
   font-style: normal;
-  color: #050562;
+  color: #07075d;
 
   cursor: pointer;
 
@@ -40,6 +40,7 @@
 
 .CT {
   font-weight: 700;
+  color: #08084b;
 }
 
 .fileName {
@@ -49,7 +50,7 @@
   font-size: 18px;
   font-weight: 400;
   font-style: normal;
-  color: #050562;
+  color: #090958;
 
   text-align: center;
   text-overflow: ellipsis;

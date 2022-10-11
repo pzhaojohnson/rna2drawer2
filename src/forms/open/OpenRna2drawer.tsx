@@ -157,7 +157,7 @@ export function OpenRna2drawer(props: Props) {
                 onClick={() => hiddenFileInput.current?.click()}
                 style={{
                   // make file name text a slightly different color
-                  color: firstFile(hiddenFileInput) ? '#070766' : undefined,
+                  color: firstFile(hiddenFileInput) ? '#09095d' : undefined,
                 }}
               >
                 {firstFile(hiddenFileInput)?.name ?? (
