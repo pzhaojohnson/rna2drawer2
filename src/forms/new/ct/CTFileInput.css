@@ -1,6 +1,7 @@
 .ctFileInput {
   border: 1px solid #d1d1e7;
   border-radius: 60px;
+  box-shadow: 0 3px 3px rgba(233, 233, 244, 0.2);
 
   width: 600px;
 
@@ -15,9 +16,8 @@
 }
 
 .ctFileInput:hover {
-  transform: scale(1.04);
-  box-shadow: 0 3px 3px rgba(235, 235, 242, 0.23);
-  transition: transform 0.04s;
+  transform: scale(1.05);
+  transition: transform 0.25s;
 }
 
 .ctFileInput:active {
