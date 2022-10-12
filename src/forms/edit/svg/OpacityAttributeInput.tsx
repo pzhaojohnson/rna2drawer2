@@ -169,7 +169,9 @@ export class OpacityAttributeInput extends React.Component<Props> {
     let oldValue = this.oldValue;
 
     try {
-      if (!this.props.elements || !this.props.attributeName) {
+      if (!this.props.elements || this.props.elements.length == 0) {
+        throw new Error();
+      } else if (!this.props.attributeName) {
         throw new Error();
       } else if (isBlank(this.state.value)) {
         throw new Error();
