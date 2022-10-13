@@ -181,7 +181,9 @@ export class DirectionAnglePropertyInput extends React.Component<Props> {
     values = values.round({ places: this.places });
 
     try {
-      if (!this.props.objects || !this.props.propertyName) {
+      if (!this.props.objects || this.props.objects.length == 0) {
+        throw new Error();
+      } else if (!this.props.propertyName) {
         throw new Error();
       } else if (!Number.isFinite(newValue)) {
         throw new Error();
