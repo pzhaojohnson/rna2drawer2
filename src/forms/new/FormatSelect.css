@@ -24,7 +24,7 @@
 
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
 
   user-select: none;
@@ -36,16 +36,16 @@
 }
 
 .toggledFormatButton {
-  border: 1px solid #0d0d0e;
+  border: 1px solid #0c0c0d;
   color: white;
-  background-color: #0d0d0e;
+  background-color: #0c0c0d;
 
   cursor: default;
 }
 
 .untoggledFormatButton {
   border: 1px solid white;
-  color: rgb(13, 13, 14);
+  color: rgb(7, 7, 8);
   background-color: white;
 
   cursor: pointer;
