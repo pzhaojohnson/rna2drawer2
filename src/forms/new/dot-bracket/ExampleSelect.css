@@ -1,7 +1,7 @@
 .option {
-  border: 1px solid rgba(205, 205, 227, 0.99);
+  border: 1px solid rgba(205, 205, 227, 0.98);
   border-radius: 40px;
-  box-shadow: 0 2px 2px rgba(228, 228, 241, 0.13);
+  box-shadow: 0 2px 2px rgba(228, 228, 241, 0.12);
   padding: 2px 0;
   width: 168px;
   text-align: center;
@@ -10,7 +10,7 @@
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
-  color: #1c1c45;
+  color: #1d1d46;
 
   cursor: pointer;
 }
