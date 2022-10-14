@@ -1,7 +1,7 @@
 .formatSelect {
   margin-right: 102px;
 
-  border: 1px solid rgba(218, 218, 235, 1);
+  border: 1px solid rgba(216, 216, 233, 0.99);
   border-radius: 60px;
 
   width: 160px;
@@ -52,9 +52,9 @@
 }
 
 .untoggledFormatButton:hover {
-  border-color: rgb(205, 205, 224);
+  border-color: rgba(204, 204, 221, 0.99);
 }
 
 .untoggledFormatButton:active {
-  border-color: rgb(186, 186, 199);
+  border-color: rgb(180, 180, 190);
 }
