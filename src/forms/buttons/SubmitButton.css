@@ -1,35 +1,56 @@
 .submitButton {
-  border: none;
   margin: 0px;
+
+  border: none;
+
   padding: 4px 32px 4px 32px;
-  box-shadow: 0 3px 3px rgba(213, 213, 255, 0.53);
-  background-color: #0d0d82;
+  border-radius: 2px;
+
+  /* use before pseudo-element for background */
+  background-color: transparent;
+  position: relative;
+  isolation: isolate;
+
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 600;
   font-style: normal;
   color: white;
-  border-radius: 2px;
-  transition-duration: 0s;
+
+  cursor: pointer;
 
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
 
-  cursor: pointer;
+.submitButton::before {
+  content: "";
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+
+  border-radius: 2px;
+  background-color: #0d0d82;
+  box-shadow: 0 3px 3px rgba(213, 213, 255, 0.53);
+
+  z-index: -1;
 }
 
 .submitButton:focus {
   outline: none;
 }
 
-.submitButton:hover {
+.submitButton:hover::before {
   transform: scale(1.04);
   transition: transform 0.25s;
 }
 
-.submitButton:active {
+.submitButton:active::before {
   transform: scale(1);
-  transition-duration: 0s;
+  transition: transform 0s;
 }
