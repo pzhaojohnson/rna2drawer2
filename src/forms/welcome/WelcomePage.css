@@ -9,23 +9,40 @@
 }
 
 .newAndOpenButtons {
-  border: 1px solid rgba(208, 208, 230, 1);
+  position: relative;
+  isolation: isolate;
   border-radius: 24px;
-  box-shadow: 0 2px 2px rgba(224, 224, 240, 0.24);
   flex-grow: 1;
   padding: 9px 0px;
   font-size: 20px;
   color: #1d1d66;
   text-align: center;
+  background-color: transparent;
   cursor: pointer;
 }
 
-.newAndOpenButtons:hover {
+.newAndOpenButtons::before {
+  content: "";
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+
+  border: 1px solid rgba(208, 208, 230, 1);
+  border-radius: 24px;
+  box-shadow: 0 2px 2px rgba(224, 224, 240, 0.24);
+
+  z-index: -1;
+}
+
+.newAndOpenButtons:hover::before {
   transform: scale(1.04);
   transition: transform 0.25s;
 }
 
-.newAndOpenButtons:active {
+.newAndOpenButtons:active::before {
   transform: scale(1);
   transition: transform 0s;
 }
