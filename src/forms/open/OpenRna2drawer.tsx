@@ -112,7 +112,7 @@ export function OpenRna2drawer(props: Props) {
               alignItems: 'center',
             }}
           >
-            <div style={{ marginTop: '42px' }} >
+            <div className={formStyles.fileInput} >
               <input
                 ref={hiddenFileInput}
                 type='file'

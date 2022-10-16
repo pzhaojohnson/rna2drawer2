@@ -1,11 +1,36 @@
-.fileInputLabel {
-  width: 600px;
+.fileInput {
+  margin-top: 42px;
+
+  border-radius: 60px;
+
+  padding: 12px 24px;
+
+  /* use before pseudo-element for border and box shadow */
+  background-color: transparent;
+  position: relative;
+  isolation: isolate;
+
+  cursor: pointer;
+}
+
+.fileInput::before {
+  content: "";
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 
   border: 1px solid #d3d3e8;
   border-radius: 60px;
   box-shadow: 0 3px 3px rgba(233, 233, 244, 0.2);
 
-  padding: 12px 24px;
+  z-index: -1;
+}
+
+.fileInputLabel {
+  width: 600px;
 
   font-size: 18px;
   font-style: normal;
@@ -25,12 +50,12 @@
   color: rgb(6, 6, 57);
 }
 
-.fileInputLabel:hover {
+.fileInput:hover::before {
   transform: scale(1.04);
   transition: transform 0.25s;
 }
 
-.fileInputLabel:active {
+.fileInput:active::before {
   transform: scale(1);
   transition: transform 0s;
 }
