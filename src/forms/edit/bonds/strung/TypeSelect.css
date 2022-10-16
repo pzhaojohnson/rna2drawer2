@@ -4,23 +4,23 @@
   justify-content: space-evenly;
   align-items: center;
 
-  border: 1px solid #c8c8d4;
-  border-radius: 10px;
+  border: 1px solid #cbcbd7;
+  border-radius: 12px;
 
-  padding: 4px 4px;
+  padding: 4px 12px;
 }
 
 .typeButton {
+  margin: 0px; /* necessary for Safari */
+
   border-width: 1px;
   border-style: solid;
-  border-color: white;
   border-radius: 50px;
 
-  padding: 2px 8px;
+  min-width: 48px;
+  min-height: 24px;
 
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  background-color: white;
 
   cursor: pointer;
 
@@ -32,15 +32,69 @@
 }
 
 .toggledTypeButton {
-  color: white;
-  background-color: #18181f;
+  border-color: #121216;
 }
 
 .untoggledTypeButton {
-  color: #121215;
-  background-color: transparent;
+  border-color: white;
 }
 
 .untoggledTypeButton:hover {
-  border-color: #a4a4b6;
+  border-color: #a2a2b3;
+}
+
+.untoggledTypeButton:active {
+  border-color: #7d7d88;
+}
+
+.textButton {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #0a0a0a;
+  text-align: center;
+}
+
+.shapeButton {
+  position: relative;
+}
+
+.shapeButton::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.circleButton::before {
+  border-width: 0px;
+  width: 12px;
+  height: 12px;
+  border-radius: 60px;
+  background-color: #1d1d20;
+  margin-top: -6px;
+  margin-left: -6px;
+}
+
+.triangleButton::before {
+  border-top-width: 1px;
+  border-right-width: 7px;
+  border-bottom-width: 11px;
+  border-left-width: 7px;
+  border-style: solid;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: #1d1d20;
+  border-left-color: transparent;
+  margin-top: -6px;
+  margin-left: -7px;
+}
+
+.rectangleButton::before {
+  border-width: 0px;
+  width: 16px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -8px;
+  background-color: #1d1d20;
 }

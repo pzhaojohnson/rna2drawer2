@@ -137,21 +137,32 @@ class TypeButton extends React.Component<TypeButtonProps> {
 
   get className(): string {
     let isToggled = this.isToggled();
+
+    let isTextButton = this.props.type == 'StrungText';
+    let isCircleButton = this.props.type == 'StrungCircle';
+    let isTriangleButton = this.props.type == 'StrungTriangle';
+    let isRectangleButton = this.props.type == 'StrungRectangle';
+
+    let isShapeButton = (
+      isCircleButton || isTriangleButton || isRectangleButton
+    );
+
     return `
       ${styles.typeButton}
       ${isToggled ? styles.toggledTypeButton : styles.untoggledTypeButton}
+      ${isTextButton ? styles.textButton : ''}
+      ${isCircleButton ? styles.circleButton : ''}
+      ${isTriangleButton ? styles.triangleButton : ''}
+      ${isRectangleButton ? styles.rectangleButton : ''}
+      ${isShapeButton ? styles.shapeButton : ''}
     `;
   }
 
   get textContent(): string {
     if (this.props.type == 'StrungText') {
       return 'Text';
-    } else if (this.props.type == 'StrungCircle') {
-      return 'Circle';
-    } else if (this.props.type == 'StrungTriangle') {
-      return 'Triangle';
     } else {
-      return 'Rectangle';
+      return '';
     }
   }
 
