@@ -158,6 +158,29 @@ class TypeButton extends React.Component<TypeButtonProps> {
     `;
   }
 
+  get title() {
+    if (this.isToggled()) {
+      return undefined;
+    }
+
+    let s = this.props.strungElements.length == 1 ? (
+      ''
+    ) : this.props.type == 'StrungText' ? (
+      ''
+    ) : (
+      's'
+    );
+
+    let element = ({
+      'StrungText': 'text',
+      'StrungCircle': 'circle',
+      'StrungTriangle': 'triangle',
+      'StrungRectangle': 'rectangle',
+    })[this.props.type];
+
+    return `Convert to ${element}${s}.`;
+  }
+
   get textContent(): string {
     if (this.props.type == 'StrungText') {
       return 'Text';
@@ -167,8 +190,10 @@ class TypeButton extends React.Component<TypeButtonProps> {
   }
 
   render() {
+    let className = this.className;
+    let title = this.title;
     return (
-      <button className={this.className} onClick={() => this.handleClick()} >
+      <button {...{ className, title }} onClick={() => this.handleClick()} >
         {this.textContent}
       </button>
     );
