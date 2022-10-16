@@ -12,7 +12,6 @@ import { BasePaddingField } from './BasePaddingField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { StrokeDasharrayField } from './StrokeDasharrayField';
 import { StrokeLinecapField } from './StrokeLinecapField';
-import { ShapeField } from './ShapeField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 import { StrungElementsSection } from 'Forms/edit/bonds/strung/StrungElementsSection';
@@ -192,7 +191,6 @@ export function EditSecondaryBondsForm(props: Props) {
           <StrokeDasharrayField {...props} />
           <BasePaddingField {...props} />
           <StrokeLinecapField {...props} />
-          <ShapeField {...props} />
           <ForwardBackwardButtons {...props} />
           <div style={{ height: '30px' }} />
           <StrungElementsSection {...props} bonds={props.secondaryBonds} />
