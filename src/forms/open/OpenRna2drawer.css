@@ -51,7 +51,7 @@
 }
 
 .fileInput:hover::before {
-  transform: scale(1.04);
+  transform: scale(1.05);
   transition: transform 0.25s;
 }
 
