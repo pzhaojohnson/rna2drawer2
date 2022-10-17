@@ -2,12 +2,6 @@ import type { App } from 'App';
 
 import type { StrictDrawing } from 'Draw/strict/StrictDrawing';
 
-import { isDot } from 'Draw/bonds/straight/dotify';
-import { dotify } from 'Draw/bonds/straight/dotify';
-
-import { isSquare } from 'Draw/bonds/straight/dotify';
-import { squarify } from 'Draw/bonds/straight/dotify';
-
 import * as React from 'react';
 
 import { NumberPropertyInput } from 'Forms/edit/objects/NumberPropertyInput';
@@ -33,17 +27,9 @@ class DrawingWrapper {
   }
 
   set basePairBondLength(basePairBondLength: number) {
-    // remember which secondary bonds were dots and squares
-    let dotSecondaryBonds = this.drawing.secondaryBonds.filter(isDot);
-    let squareSecondaryBonds = this.drawing.secondaryBonds.filter(isSquare);
-
     // update the base-pair bond length
     this.drawing.generalLayoutProps.basePairBondLength = basePairBondLength;
     this.drawing.updateLayout();
-
-    // make sure are still dots and squares
-    dotSecondaryBonds.forEach(dotify);
-    squareSecondaryBonds.forEach(squarify);
   }
 }
 
