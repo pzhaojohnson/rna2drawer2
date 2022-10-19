@@ -17,11 +17,11 @@ let options: Option[] = [
   },
   {
     value: 'round',
-    textContent: 'Round',
+    textContent: '',
   },
   {
     value: 'square',
-    textContent: 'Square',
+    textContent: '',
   },
 ];
 
@@ -32,11 +32,18 @@ type OptionButtonProps = {
 };
 
 function OptionButton(props: OptionButtonProps) {
+  let isButtButton = props.option.value == 'butt';
+  let isRoundButton = props.option.value == 'round';
+  let isSquareButton = props.option.value == 'square';
+
   return (
     <p
       className={`
         ${styles.optionButton}
         ${props.isToggled ? styles.toggledOptionButton : styles.untoggledOptionButton}
+        ${isButtButton ? styles.buttButton : ''}
+        ${isRoundButton ? styles.roundButton : ''}
+        ${isSquareButton ? styles.squareButton : ''}
       `}
       onClick={props.onClick}
     >
@@ -83,9 +90,10 @@ export type StrokeLinecapFieldProps = (
 export function StrokeLinecapField(props: StrokeLinecapFieldProps) {
   return (
     <div className={styles.strokeLinecapField} style={props.style} >
-      <FieldLabel style={{ marginRight: '6px' }} >
-        Line Cap:
+      <FieldLabel>
+        Line Cap
       </FieldLabel>
+      <div className={styles.labelSeperator} />
       <StrokeLinecapSelect {...props} />
     </div>
   );

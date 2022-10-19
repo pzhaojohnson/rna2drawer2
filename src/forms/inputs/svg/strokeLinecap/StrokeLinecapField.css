@@ -1,46 +1,93 @@
 .optionButton {
-  margin: 0 2px;
-  min-width: 55px;
+  margin: 0px;
+
   border-width: 1px;
   border-style: solid;
-  border-radius: 12px;
-  padding: 1px 0px;
+  border-radius: 60px;
+
+  min-width: 44px;
+  min-height: 21px;
+
   font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 600;
-  color: #1a1a1d;
-  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: #0a0a0a;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
   user-select: none;
   -webkit-user-select: none;
 }
 
 .toggledOptionButton {
-  border-color: transparent;
-  background-color: rgba(229, 229, 238, 0.73);
+  border-color: rgb(19, 19, 20);
   cursor: auto;
 }
 
 .untoggledOptionButton {
   border-color: white;
-  background-color: white;
   cursor: pointer;
 }
 
 .untoggledOptionButton:hover {
-  border-color: rgba(201, 201, 213, 0.94);
+  border-color: rgba(189, 189, 201, 0.97);
+}
+
+.untoggledOptionButton:active {
+  border-color: rgba(117, 117, 125, 1);
+}
+
+.roundButton::before {
+  content: "";
+  width: 16px;
+  height: 0px;
+  border-width: 8px 0px 0px 0px;
+  border-style: solid;
+  border-color: #1f1f22;
+  border-radius: 8px 8px 0px 0px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -4px;
+  margin-left: -8px;
+}
+
+.squareButton::before {
+  content: "";
+  width: 16px;
+  height: 8px;
+  background-color: #1f1f22;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -4px;
+  margin-left: -8px;
 }
 
 .strokeLinecapSelect {
-  min-width: 172px;
+  min-width: 150px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
+.labelSeperator {
+  width: 1px;
+  height: 18px;
+  background-color: #7c7c86;
+  margin: 0px 8px 0px 10px;
+}
+
 .strokeLinecapField {
   display: flex;
   flex-direction: row;
+  align-self: start;
   align-items: center;
+  justify-content: space-between;
 }
