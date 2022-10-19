@@ -23,19 +23,14 @@ export type Args = {
   text: string;
 
   /**
-   * The font family that the text is to be rendered in.
+   * The font properties that the text is to be rendered with.
+   *
+   * Should be directly assignable to the style object of an element.
    */
   fontFamily: string;
-
-  /**
-   * The font size that the text is to be rendered at.
-   */
   fontSize: string;
-
-  /**
-   * The font weight that the text is to be rendered with.
-   */
   fontWeight: string;
+  fontStyle: string;
 };
 
 /**
@@ -43,20 +38,18 @@ export type Args = {
  *
  * Returns the width in pixels.
  *
- * Font properties input to this function should be directly assignable
- * to the style object of an element.
- *
  * Uses a DOM-based approach to measure the width of text, which makes
  * this function difficult to unit test on Node.js.
  *
  * (This function always seems to return zero on Node.js.)
  */
 export function measureTextWidth(args: Args): number {
-  let { text, fontFamily, fontSize, fontWeight } = args;
+  let { text, fontFamily, fontSize, fontWeight, fontStyle } = args;
 
   div.style.fontFamily = fontFamily;
   div.style.fontSize = fontSize;
   div.style.fontWeight = fontWeight;
+  div.style.fontStyle = fontStyle;
   div.textContent = text;
 
   return div.getBoundingClientRect().width;
