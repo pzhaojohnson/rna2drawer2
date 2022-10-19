@@ -7,20 +7,24 @@ import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 
 type Option = {
   value: StrokeLinecapValue;
+  title: string;
   textContent: string;
 };
 
 let options: Option[] = [
   {
     value: 'butt',
+    title: 'No line caps.',
     textContent: 'None',
   },
   {
     value: 'round',
+    title: 'Round line caps.',
     textContent: '',
   },
   {
     value: 'square',
+    title: 'Square line caps.',
     textContent: '',
   },
 ];
@@ -45,6 +49,7 @@ function OptionButton(props: OptionButtonProps) {
         ${isRoundButton ? styles.roundButton : ''}
         ${isSquareButton ? styles.squareButton : ''}
       `}
+      title={props.option.title}
       onClick={props.onClick}
     >
       {props.option.textContent}
@@ -91,7 +96,7 @@ export function StrokeLinecapField(props: StrokeLinecapFieldProps) {
   return (
     <div className={styles.strokeLinecapField} style={props.style} >
       <FieldLabel>
-        Line Cap
+        Line Caps
       </FieldLabel>
       <div className={styles.labelSeperator} />
       <StrokeLinecapSelect {...props} />
