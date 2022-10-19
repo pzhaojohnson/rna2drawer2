@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FieldLabel } from 'Forms/inputs/labels/FieldLabel';
 import { TextInput } from 'Forms/inputs/text/TextInput';
+import type { CSSProperties as InputCSSProperties } from 'Forms/inputs/text/TextInput';
 
 export type Props = {
   label?: string;
@@ -15,7 +16,7 @@ export type Props = {
     id?: string;
     placeholder?: string;
     spellCheck?: boolean | 'true' | 'false';
-    style?: React.CSSProperties;
+    style?: InputCSSProperties;
   };
 
   style?: React.CSSProperties;

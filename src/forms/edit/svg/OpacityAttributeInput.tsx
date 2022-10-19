@@ -4,6 +4,7 @@ import { SVGElementsWrapper } from 'Draw/svg/SVGElementsWrapper';
 import * as React from 'react';
 
 import { TextInput } from 'Forms/inputs/text/TextInput';
+import type { CSSProperties } from 'Forms/inputs/text/TextInput';
 
 import { isNullish } from 'Values/isNullish';
 import { round } from 'Math/round';
@@ -28,6 +29,8 @@ export type EditEvent = {
    */
   oldValue: number | Nullish;
 };
+
+export { CSSProperties };
 
 export type Props = {
   id?: string;
@@ -66,7 +69,7 @@ export type Props = {
    */
   onBeforeEdit?: (event: EditEvent) => void;
 
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 };
 
 export class OpacityAttributeInput extends React.Component<Props> {

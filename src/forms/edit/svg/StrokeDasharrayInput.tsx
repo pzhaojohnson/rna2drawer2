@@ -9,6 +9,7 @@ import { strokeDasharrayValueEqualsNone as equalsNone } from 'Values/svg/strokeD
 import * as React from 'react';
 
 import { TextInput } from 'Forms/inputs/text/TextInput';
+import type { CSSProperties } from 'Forms/inputs/text/TextInput';
 
 function isNotBlank(s: string): boolean {
   return !isBlank(s);
@@ -67,7 +68,7 @@ export type Props = {
    */
   onBeforeEdit?: (event: EditEvent) => void;
 
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 };
 
 /**

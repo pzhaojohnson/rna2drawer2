@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { act } from 'react-dom/test-utils';
+
 import { render } from 'react-dom';
-import { Simulate } from 'react-dom/test-utils';
 import { unmountComponentAtNode } from 'react-dom';
+
+import { act } from 'react-dom/test-utils';
+import { Simulate } from 'react-dom/test-utils';
 
 import { TextInput } from './TextInput';
 
@@ -32,6 +34,13 @@ describe('TextInput component', () => {
       render(<TextInput value='1234 zzxx' />, container);
     });
     expect(container.firstChild.value).toBe('1234 zzxx');
+  });
+
+  it('renders when value is not specified', () => {
+    act(() => {
+      render(<TextInput />, container);
+    });
+    expect(container.firstChild.value).toBe('');
   });
 
   it('passes onChange callback to the underlying text input element', () => {
@@ -95,10 +104,52 @@ describe('TextInput component', () => {
     expect(container.firstChild.outerHTML).toMatch(/spellcheck="false"/);
   });
 
-  it('renders with specified CSS styles', () => {
-    act(() => {
-      render(<TextInput style={{ marginRight: '6.92px' }} />, container);
+  describe('style prop', () => {
+    test('some non-font properties', () => {
+      let style = {
+        marginRight: '6.92px',
+        minWidth: '219px',
+      };
+      act(() => render(<TextInput style={style} />, container));
+      expect(container.firstChild.style.marginRight).toBe('6.92px');
+      expect(container.firstChild.style.minWidth).toBe('219px');
     });
-    expect(container.firstChild.style.marginRight).toBe('6.92px');
+
+    test('when font properties are specified', () => {
+      let style = {
+        fontFamily: 'Courier New',
+        fontSize: '37px',
+        fontWeight: 'lighter',
+        fontStyle: 'oblique',
+      };
+      act(() => render(<TextInput style={style} />, container));
+      expect(container.firstChild.style.fontFamily).toBe('Courier New');
+      expect(container.firstChild.style.fontSize).toBe('37px');
+      expect(container.firstChild.style.fontWeight).toBe('lighter');
+      expect(container.firstChild.style.fontStyle).toBe('oblique');
+    });
+
+    test('when font properties are not specified', () => {
+      act(() => render(<TextInput />, container));
+      // check default values
+      let style = container.firstChild.style;
+      expect(style.fontFamily).toBe('"Open Sans", sans-serif');
+      expect(style.fontSize).toBe('12px');
+      expect(style.fontWeight).toBe('500');
+      expect(style.fontStyle).toBe('normal');
+    });
+
+    test('when width is specified', () => {
+      act(() => render(<TextInput style={{ width: '152px' }} />, container));
+      // renders with the specified width
+      expect(container.firstChild.style.width).toBe('152px');
+    });
+
+    test('when width is not specified', () => {
+      act(() => render(<TextInput value='asdfASDf' />, container));
+      // should use measureTextWidth function to determine width
+      // (which always seems to return zero on Node.js...)
+      expect(container.firstChild.style.width).toBe('0px');
+    });
   });
 });

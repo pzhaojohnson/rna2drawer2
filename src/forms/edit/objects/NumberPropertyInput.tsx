@@ -3,6 +3,7 @@ import { ObjectsWrapper } from 'Values/ObjectsWrapper';
 import * as React from 'react';
 
 import { TextInput } from 'Forms/inputs/text/TextInput';
+import type { CSSProperties } from 'Forms/inputs/text/TextInput';
 
 import { isNullish } from 'Values/isNullish';
 import { isBlank } from 'Parse/isBlank';
@@ -58,7 +59,7 @@ export type Props = {
    */
   onBeforeEdit?: (event: EditEvent) => void;
 
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 };
 
 /**

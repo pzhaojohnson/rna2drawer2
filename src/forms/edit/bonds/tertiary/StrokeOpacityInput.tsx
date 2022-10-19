@@ -6,6 +6,7 @@ import * as React from 'react';
 
 import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
 import type { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
+import type { CSSProperties } from 'Forms/edit/svg/OpacityAttributeInput';
 
 import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
@@ -42,7 +43,7 @@ export class StrokeOpacityInput extends React.Component<Props> {
   }
 
   render() {
-    let style: React.CSSProperties = {
+    let style: CSSProperties = {
       marginRight: '8px',
       width: '32px',
       textAlign: 'end',

@@ -14,6 +14,7 @@ import * as React from 'react';
 
 import { OpacityAttributeInput } from 'Forms/edit/svg/OpacityAttributeInput';
 import { EditEvent } from 'Forms/edit/svg/OpacityAttributeInput';
+import { CSSProperties } from 'Forms/edit/svg/OpacityAttributeInput';
 
 import { generateHTMLCompatibleUUID } from 'Utilities/generateHTMLCompatibleUUID';
 
@@ -46,7 +47,7 @@ export type Props = {
    */
   strungElementsIndex: number;
 
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 };
 
 /**
