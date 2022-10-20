@@ -49,7 +49,7 @@ export function StrokeColorField(props: Props) {
           cursor: 'text',
         }}
       >
-        <StrokeOpacityInput {...props} />
+        <StrokeOpacityInput {...props} style={{ textAlign: 'end' }} />
         <span style={{ marginLeft: '8px' }} >
           Line Color
         </span>

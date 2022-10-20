@@ -37,7 +37,7 @@ export function FillColorField(props: Props) {
     <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center' }} >
       <FillColorPicker {...props} />
       <FieldLabel style={{ marginLeft: '6px', cursor: 'text' }} >
-        <FillOpacityInput {...props} />
+        <FillOpacityInput {...props} style={{ textAlign: 'end' }} />
         <span style={{ marginLeft: '8px' }} >
           Fill Color
         </span>
