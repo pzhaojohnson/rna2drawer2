@@ -1,5 +1,5 @@
 .forwardBackwardButton {
-  width: 116px;
+  width: 108px;
 
   /* use before pseudo-element for border and box-shadow */
   border: none;
@@ -8,13 +8,13 @@
   position: relative;
   isolation: isolate;
 
-  padding: 3px 0px;
+  padding: 4px 0px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
-  color: #050564;
+  color: rgba(8, 8, 60, 1);
 
   background-color: transparent;
 
@@ -26,9 +26,9 @@
 
 .forwardBackwardButton::before {
   content: "";
-  border: 1px solid #d4d4e6;
+  border: 1px solid #cbcbdb;
   border-radius: 40px;
-  box-shadow: 0px 2px 2px #f5f5fb;
+  box-shadow: 0 2px 2px rgba(230, 230, 242, 0.24);
 
   position: absolute;
   top: 0px;
@@ -38,8 +38,8 @@
 }
 
 .forwardBackwardButton:hover::before {
-  transform: scale(1.03);
-  transition: transform 0.04s;
+  transform: scale(1.05);
+  transition: transform 0.25s;
 }
 
 .forwardBackwardButton:active::before {
