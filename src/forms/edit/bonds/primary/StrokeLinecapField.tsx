@@ -42,7 +42,7 @@ export function StrokeLinecapField(props: Props) {
           props.app.refresh();
         }
       }}
-      style={{ marginTop: '16px' }}
+      style={{ marginTop: '10px' }}
     />
   );
 }

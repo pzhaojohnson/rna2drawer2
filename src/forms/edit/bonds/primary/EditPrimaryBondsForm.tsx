@@ -9,8 +9,8 @@ import { FormHistoryInterface } from 'Forms/history/FormHistoryInterface';
 import { StrokeField } from './StrokeField';
 import { StrokeWidthField } from './StrokeWidthField';
 import { StrokeDasharrayField } from './StrokeDasharrayField';
-import { BasePaddingField } from './BasePaddingField';
 import { StrokeLinecapField } from './StrokeLinecapField';
+import { BasePaddingField } from './BasePaddingField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 function DrawingHasNoPrimaryBondsNotes() {
@@ -90,8 +90,8 @@ export function EditPrimaryBondsForm(props: Props) {
           <StrokeField {...props} />
           <StrokeWidthField {...props} />
           <StrokeDasharrayField {...props} />
-          <BasePaddingField {...props} />
           <StrokeLinecapField {...props} />
+          <BasePaddingField {...props} />
           <ForwardBackwardButtons {...props} />
         </div>
       )}
