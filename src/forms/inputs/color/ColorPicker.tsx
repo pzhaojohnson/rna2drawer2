@@ -44,14 +44,14 @@ function toValue(result: ColorResult): Value | undefined {
 
 type SwatchProps = {
   value?: Value;
-  onClick: () => void;
+  onMouseDown: () => void;
 }
 
 function Swatch(props: SwatchProps) {
   return (
     <div
       className={styles.swatch}
-      onClick={() => props.onClick()}
+      onMouseDown={() => props.onMouseDown()}
     >
       <div
         className={styles.swatchColoring}
@@ -86,7 +86,7 @@ export function ColorPicker(props: Props) {
     <div className={isOpen ? styles.isOpen : undefined} >
       <Swatch
         value={value}
-        onClick={() => setIsOpen(!isOpen)}
+        onMouseDown={() => setIsOpen(!isOpen)}
       />
       {!isOpen ? null : (
         <div style={{ position: 'absolute', zIndex: 2 }} >
