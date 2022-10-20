@@ -3,10 +3,14 @@
   justify-content: center;
   align-items: center;
 
-  border: 1px solid #c0c0d9;
+  /* use before pseudo-element for border and box-shadow */
+  border: none;
   border-radius: 60px;
+  box-shadow: none;
+  position: relative;
+  isolation: isolate;
 
-  padding: 4px 0px;
+  padding: 6px 0px;
   width: 186px;
 
   cursor: pointer;
@@ -15,24 +19,36 @@
   -webkit-user-select: none;
 }
 
-.addStrungElementButton:hover {
-  box-shadow: 0px 3px 3px #d2d2ec96;
-  transform: scale(1.04);
-  transition: transform 0.04s;
+.addStrungElementButton::before {
+  content: "";
+  border: 1px solid #c9c9da;
+  border-radius: 60px;
+  box-shadow: 0 2px 2px #dbdbeb2b;
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.addStrungElementButton:active {
+.addStrungElementButton:hover::before {
+  transform: scale(1.05);
+  transition: transform 0.25s;
+}
+
+.addStrungElementButton:active::before {
   transform: scale(1);
   transition: transform 0s;
 }
 
 .addStrungElementButtonText {
-  margin-left: 4px;
+  margin-left: 5px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
-  color: #050544;
+  color: #07073c;
 
   cursor: pointer;
 
