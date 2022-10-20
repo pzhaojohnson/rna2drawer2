@@ -144,6 +144,9 @@ export class OpacityAttributeInput extends React.Component<Props> {
   }
 
   render() {
+    // hard coded to match the width of a value of "100%"
+    let minWidth = '31px';
+
     return (
       <TextInput
         id={this.props.id}
@@ -156,7 +159,7 @@ export class OpacityAttributeInput extends React.Component<Props> {
           }
         }}
         style={{
-          minWidth: '32px',
+          minWidth,
           ...this.props.style,
         }}
       />
