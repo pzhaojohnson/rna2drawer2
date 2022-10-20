@@ -80,7 +80,7 @@ export class TerminiGapField extends React.Component<Props> {
           places={2}
           onBeforeEdit={event => this.handleBeforeEdit(event)}
           onEdit={event => this.handleEdit(event)}
-          style={{ width: '7ch' }}
+          style={{ minWidth: '7ch' }}
         />
         <span style={{ paddingLeft: '8px' }} >
           Termini Gap

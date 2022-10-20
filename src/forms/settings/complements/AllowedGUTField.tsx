@@ -98,7 +98,7 @@ export class AllowedGUTField extends React.Component<Props> {
                 this.processValue();
               }
             }}
-            style={{ marginLeft: '8px', width: '32px' }}
+            style={{ marginLeft: '8px', minWidth: '32px' }}
           />
         )}
         <FieldLabel

@@ -21,7 +21,7 @@ export function StartPositionField(props: Props) {
           props.onEnterKeyUp(event);
         }
       }}
-      input={{ style: { width: `${Math.max(valueLength, 8)}ch` } }}
+      input={{ style: { minWidth: '8ch' } }}
       style={{ alignSelf: 'flex-start', margin: '0 8px 0 0' }}
     />
   );

@@ -50,7 +50,7 @@ export class FillOpacityInput extends React.Component<Props> {
         places={2}
         onBeforeEdit={event => this.handleBeforeEdit(event)}
         onEdit={event => this.handleEdit(event)}
-        style={{ width: '32px', textAlign: 'end' }}
+        style={{ minWidth: '32px', textAlign: 'end' }}
       />
     );
   }

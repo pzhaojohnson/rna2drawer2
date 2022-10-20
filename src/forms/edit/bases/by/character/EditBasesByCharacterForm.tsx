@@ -30,7 +30,7 @@ function CharacterField(
       onChange={props.onChange}
       onBlur={props.onBlur}
       onKeyUp={props.onKeyUp}
-      input={{ style: { width: '2ch', textAlign: 'center' } }}
+      input={{ style: { minWidth: '2ch', textAlign: 'center' } }}
       style={{ alignSelf: 'flex-start' }}
     />
   );

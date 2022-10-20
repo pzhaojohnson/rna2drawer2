@@ -54,7 +54,7 @@ function StartPositionField(
       onChange={props.onChange}
       input={{
         spellCheck: false,
-        style: { width: `${Math.max(props.value.length, 7)}ch` },
+        style: { minWidth: '7ch' },
       }}
       style={{ margin: '38px 8px 0 0', alignSelf: 'flex-start' }}
     />

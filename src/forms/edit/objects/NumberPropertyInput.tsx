@@ -121,7 +121,7 @@ export class NumberPropertyInput extends React.Component<Props> {
           }
         }}
         style={{
-          width: `${Math.max(this.state.value.length, 6)}ch`,
+          minWidth: '6ch',
           ...this.props.style,
         }}
       />

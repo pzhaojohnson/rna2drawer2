@@ -80,7 +80,7 @@ export class RotationField extends React.Component<Props> {
           displayedPlaces={1}
           onBeforeEdit={event => this.handleBeforeEdit(event)}
           onEdit={event => this.handleEdit(event)}
-          style={{ width: '7ch' }}
+          style={{ minWidth: '7ch' }}
         />
         <span style={{ paddingLeft: '8px' }} >
           Rotation

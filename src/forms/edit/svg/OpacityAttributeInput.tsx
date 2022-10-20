@@ -156,7 +156,7 @@ export class OpacityAttributeInput extends React.Component<Props> {
           }
         }}
         style={{
-          width: '32px',
+          minWidth: '32px',
           ...this.props.style,
         }}
       />

@@ -111,7 +111,7 @@ export class NumberingAnchorInput extends React.Component<Props> {
             this.submit();
           }
         }}
-        style={{ width: `${Math.max(this.state.value.length, 8)}ch` }}
+        style={{ minWidth: '8ch' }}
       />
     );
   }

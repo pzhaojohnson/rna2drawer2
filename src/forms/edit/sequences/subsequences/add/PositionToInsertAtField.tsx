@@ -18,7 +18,7 @@ export function PositionToInsertAtField(props: Props) {
       onKeyUp={props.onKeyUp}
       input={{
         spellCheck: false,
-        style: { width: `${Math.max(props.value.length, 8)}ch` },
+        style: { minWidth: '8ch' },
       }}
       style={{ margin: '0 8px 0 0', alignSelf: 'start' }}
     />

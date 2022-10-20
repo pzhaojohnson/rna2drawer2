@@ -57,7 +57,7 @@ export class LineWidthField extends React.Component<Props> {
           places={2}
           onBeforeEdit={event => this.handleBeforeEdit(event)}
           onEdit={event => this.handleEdit(event)}
-          style={{ width: '32px' }}
+          style={{ minWidth: '32px' }}
         />
         <span style={{ paddingLeft: '8px' }} >
           Line Width

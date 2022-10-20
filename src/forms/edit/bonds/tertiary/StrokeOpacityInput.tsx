@@ -45,7 +45,7 @@ export class StrokeOpacityInput extends React.Component<Props> {
   render() {
     let style: CSSProperties = {
       marginRight: '8px',
-      width: '32px',
+      minWidth: '32px',
       textAlign: 'end',
     };
 
