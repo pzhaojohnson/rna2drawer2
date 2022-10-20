@@ -50,7 +50,7 @@ export class StrokeOpacityInput extends React.Component<Props> {
         places={2}
         onBeforeEdit={event => this.handleBeforeEdit(event)}
         onEdit={event => this.handleEdit(event)}
-        style={{ marginRight: '8px', minWidth: '32px', textAlign: 'end' }}
+        style={{ marginRight: '8px', textAlign: 'end' }}
       />
     );
   }
