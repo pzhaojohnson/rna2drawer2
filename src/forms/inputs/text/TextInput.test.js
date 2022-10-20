@@ -104,6 +104,12 @@ describe('TextInput component', () => {
     expect(container.firstChild.outerHTML).toMatch(/spellcheck="false"/);
   });
 
+  it('renders with a spellCheck attribute of false by default', () => {
+    act(() => render(<TextInput />, container));
+    // checking the spellcheck property doesn't seem to work...
+    expect(container.firstChild.outerHTML).toMatch(/spellcheck="false"/);
+  });
+
   describe('style prop', () => {
     test('some non-font properties', () => {
       let style = {

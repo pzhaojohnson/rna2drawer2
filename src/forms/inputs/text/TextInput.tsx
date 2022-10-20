@@ -69,7 +69,7 @@ export function TextInput(props: Props) {
       onBlur={props.onBlur}
       onKeyUp={props.onKeyUp}
       placeholder={props.placeholder}
-      spellCheck={props.spellCheck}
+      spellCheck={props.spellCheck ?? false}
       style={{
         fontFamily,
         fontSize,
