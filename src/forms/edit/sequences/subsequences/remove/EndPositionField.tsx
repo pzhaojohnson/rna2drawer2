@@ -10,8 +10,6 @@ export type Props = (
 );
 
 export function EndPositionField(props: Props) {
-  let valueLength = props.value?.length ?? 0;
-
   return (
     <TextInputField
       {...props}
