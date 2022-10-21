@@ -16,7 +16,7 @@ export function StrokeField(props: Props) {
   return (
     <div
       style={{
-        paddingBottom: '8px', alignSelf: 'start',
+        alignSelf: 'start',
         display: 'flex', flexDirection: 'row', alignItems: 'center',
       }}
     >
