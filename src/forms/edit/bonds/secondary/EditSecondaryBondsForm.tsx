@@ -173,7 +173,7 @@ export function EditSecondaryBondsForm(props: Props) {
       unmount={props.unmount}
       history={props.history}
       title='Secondary Bonds'
-      style={{ width: '334px' }}
+      style={{ width: '329px' }}
     >
       {props.app.drawing.secondaryBonds.length == 0 ? (
         <DrawingHasNoSecondaryBondsNotes />

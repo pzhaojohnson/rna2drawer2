@@ -62,7 +62,7 @@ export function IndexSection(props: Props) {
 
   let fields = (
     <IndexFields
-      {...props} style={{ margin: '7px 0 0 4px', width: '234px' }}
+      {...props} style={{ margin: '7px 0 0 4px', width: '233px' }}
     />
   );
 
