@@ -181,7 +181,7 @@ export class StrokeDasharrayInput extends React.Component<Props> {
           }
         }}
         style={{
-          minWidth: '6ch',
+          minWidth: '41px',
           ...this.props.style,
         }}
       />
