@@ -1,5 +1,5 @@
 .forwardBackwardButton {
-  width: 107px;
+  width: 108px;
 
   /* use before pseudo-element for border and box-shadow */
   border: none;
@@ -14,7 +14,7 @@
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
-  color: rgba(8, 8, 60, 1);
+  color: rgba(11, 11, 77, 1);
 
   background-color: transparent;
 
@@ -28,7 +28,7 @@
   content: "";
   border: 1px solid #cbcbdb;
   border-radius: 40px;
-  box-shadow: 0 2px 2px rgba(230, 230, 242, 0.24);
+  box-shadow: 0 2px 2px rgba(230, 230, 242, 0.22);
 
   position: absolute;
   top: 0px;
