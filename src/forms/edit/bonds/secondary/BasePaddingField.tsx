@@ -58,8 +58,14 @@ export class BasePaddingField extends React.Component<Props> {
   }
 
   render() {
+    let style: React.CSSProperties = {
+      marginTop: '8px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
     return (
-      <FieldLabel style={{ marginTop: '8px', alignSelf: 'start' }} >
+      <FieldLabel {...{ style }} >
         <NumberPropertyInput
           id={inputId}
           objects={this.objects}

@@ -47,8 +47,14 @@ export class StrokeWidthField extends React.Component<Props> {
   }
 
   render() {
+    let style: React.CSSProperties = {
+      marginTop: '8px',
+      alignSelf: 'start',
+      cursor: 'text',
+    };
+
     return (
-      <FieldLabel style={{ marginTop: '8px', alignSelf: 'start' }} >
+      <FieldLabel {...{ style }} >
         <NumericAttributeInput
           id={inputId}
           elements={this.props.secondaryBonds.map(sb => sb.line)}
