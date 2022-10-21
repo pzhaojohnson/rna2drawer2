@@ -193,7 +193,7 @@ export class StrungElementsSection extends React.Component<Props> {
                 this.handleIndexSectionRemoveButtonClick({ index: i });
               }}
             />
-            <div style={{ height: '24px' }} />
+            <div style={{ height: '39px' }} />
           </div>
         ))}
         {addStrungElementButton}

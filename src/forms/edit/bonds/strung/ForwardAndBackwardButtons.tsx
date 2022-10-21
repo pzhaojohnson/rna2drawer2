@@ -40,7 +40,7 @@ export function ForwardAndBackwardButtons(props: Props) {
         });
         props.app.refresh();
       }}
-      style={{ marginTop: '12px' }}
+      style={{ margin: '11px 0px 0px 1px' }}
     />
   );
 }

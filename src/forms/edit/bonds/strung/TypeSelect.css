@@ -1,13 +1,13 @@
 .typeSelect {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 
   border: 1px solid #cbcbd7;
   border-radius: 12px;
 
-  padding: 4px 12px;
+  padding: 4px 11px;
 }
 
 .typeButton {

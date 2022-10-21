@@ -56,11 +56,15 @@ export function IndexSection(props: Props) {
   let removeButton = (
     <RemoveButton
       onClick={props.onRemoveButtonClick}
-      style={{ marginLeft: '8px' }}
+      style={{ marginLeft: '9px' }}
     />
   );
 
-  let fields = <IndexFields {...props} style={{ margin: '6px 0 0 6px' }} />;
+  let fields = (
+    <IndexFields
+      {...props} style={{ margin: '7px 0 0 4px', width: '234px' }}
+    />
+  );
 
   return (
     <div>
