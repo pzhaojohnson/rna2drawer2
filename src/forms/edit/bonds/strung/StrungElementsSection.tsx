@@ -167,6 +167,10 @@ export class StrungElementsSection extends React.Component<Props> {
       );
     }
 
+    let addStrungElementButton = (
+      <AddStrungElementButton {...this.props} style={{ marginLeft: '1px' }} />
+    );
+
     return (
       <div>
         {this.indexSectionContainerRefs.map((ref, i) => (
@@ -192,7 +196,7 @@ export class StrungElementsSection extends React.Component<Props> {
             <div style={{ height: '24px' }} />
           </div>
         ))}
-        <AddStrungElementButton {...this.props} />
+        {addStrungElementButton}
       </div>
     );
   }

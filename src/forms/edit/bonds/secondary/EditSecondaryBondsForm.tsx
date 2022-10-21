@@ -192,7 +192,7 @@ export function EditSecondaryBondsForm(props: Props) {
           <BasePaddingField {...props} />
           <StrokeLinecapField {...props} />
           <ForwardBackwardButtons {...props} />
-          <div style={{ height: '30px' }} />
+          <div style={{ height: '39px' }} />
           <StrungElementsSection {...props} bonds={props.secondaryBonds} />
         </div>
       )}
