@@ -45,7 +45,7 @@ export class StrokeWidthField extends React.Component<Props> {
 
   render() {
     let style: React.CSSProperties = {
-      marginTop: '14px',
+      marginTop: '8px',
       alignSelf: 'start',
       cursor: 'text',
     };
@@ -60,7 +60,7 @@ export class StrokeWidthField extends React.Component<Props> {
           places={2}
           onBeforeEdit={event => this.handleBeforeEdit(event)}
           onEdit={event => this.handleEdit(event)}
-          style={{ minWidth: '36px' }}
+          style={{ minWidth: '39px' }}
         />
         <span style={{ paddingLeft: '8px' }} >
           Line Width
