@@ -381,7 +381,7 @@ export class BindingTool {
 
     this.options.app.pushUndo();
     bindWithTertiaryBonds(this.options.strictDrawing, selectedSide, side);
-    this.options.app.refresh();
+    this.deselect();
   }
 
   // binds the side to the selected side (with secondary bonds
@@ -402,7 +402,7 @@ export class BindingTool {
 
     this.options.app.pushUndo();
     bindWithSecondaryBonds(this.options.strictDrawing, selectedSide, side);
-    this.options.app.refresh();
+    this.deselect();
   }
 
   bondBindsSelectedSide(bond: Bond): boolean {
@@ -504,7 +504,7 @@ export class BindingTool {
     this.options.app.pushUndo();
     removeSecondaryBonds(this.options.strictDrawing, secondaryBonds);
     removeTertiaryBonds(this.options.strictDrawing, tertiaryBonds);
-    this.options.app.refresh();
+    this.deselect();
   }
 
   reset() {
