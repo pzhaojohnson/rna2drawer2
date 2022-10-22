@@ -12,7 +12,7 @@ import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 import { isBond } from 'Draw/bonds/Bond';
 import { isStraightBond } from 'Draw/bonds/straight/StraightBond';
 
-import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
+import { basePaddingsOverlap } from 'Draw/bonds/straight/basePaddingsOverlap';
 
 import { handleDragOnBonds } from 'Draw/interact/handleDragOnBonds';
 
@@ -523,10 +523,13 @@ export class BindingTool {
 
     if (!hoveredElement) {
       return;
-    } else if (hoveredElement instanceof PrimaryBond && straightBondIsInvisible(hoveredElement)) {
-      return; // ignore invisible primary bonds
-    } else if (hoveredElement instanceof SecondaryBond && straightBondIsInvisible(hoveredElement)) {
-      return; // ignore invisible secondary bonds
+    }
+
+    if (isStraightBond(hoveredElement)) {
+      let line = hoveredElement.line;
+      if (event.target == line.node && basePaddingsOverlap(hoveredElement)) {
+        return; // line element should not be interacted with
+      }
     }
 
     this._hoveredElement = hoveredElement;
