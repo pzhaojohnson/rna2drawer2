@@ -63,7 +63,6 @@ export class OpacityInput extends React.Component<Props> {
         onEdit={event => this.handleEdit(event)}
         style={{
           marginRight: '8px',
-          minWidth: '32px',
           textAlign: 'end',
         }}
       />
