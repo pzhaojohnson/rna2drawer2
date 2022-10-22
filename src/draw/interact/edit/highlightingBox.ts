@@ -16,7 +16,7 @@ import { bboxOfCircle } from 'Draw/svg/bboxOfCircle';
 import { bboxOfLine } from 'Draw/svg/bboxOfLine';
 
 import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
-import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
+import { basePaddingsOverlap } from 'Draw/bonds/straight/basePaddingsOverlap';
 
 import type { Point2D as Point } from 'Math/points/Point';
 
@@ -136,7 +136,7 @@ function highlightingBoxOfStrungElement(
 function highlightingBoxOfStraightBond(sb: StraightBond): SVG.Box {
   let box: SVG.Box;
 
-  if (straightBondIsInvisible(sb)) {
+  if (basePaddingsOverlap(sb)) {
     let bc1 = sb.base1.center();
     let bc2 = sb.base2.center();
     box = createBox({ point1: bc1, point2: bc2 });

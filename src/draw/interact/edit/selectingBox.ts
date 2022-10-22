@@ -7,7 +7,7 @@ import { SecondaryBond } from 'Draw/bonds/straight/SecondaryBond';
 import { TertiaryBond } from 'Draw/bonds/curved/TertiaryBond';
 
 import type { StraightBond } from 'Draw/bonds/straight/StraightBond';
-import { isInvisible as straightBondIsInvisible } from 'Draw/bonds/straight/isInvisible';
+import { basePaddingsOverlap } from 'Draw/bonds/straight/basePaddingsOverlap';
 
 export type Box = {
   x: number;
@@ -17,7 +17,7 @@ export type Box = {
 }
 
 function selectingBoxOfStraightBond(sb: StraightBond): Box {
-  if (straightBondIsInvisible(sb)) {
+  if (basePaddingsOverlap(sb)) {
     let bc1 = { x: sb.base1.xCenter, y: sb.base1.yCenter };
     let bc2 = { x: sb.base2.xCenter, y: sb.base2.yCenter };
     return {
