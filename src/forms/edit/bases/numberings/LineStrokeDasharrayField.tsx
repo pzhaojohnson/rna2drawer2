@@ -79,8 +79,8 @@ export class LineStrokeDasharrayField extends React.Component<Props> {
         onEdit={event => this.handleEdit(event)}
         input={{ id: inputId }}
         style={{
-          marginTop: '10px',
-          minHeight: '22px',
+          marginTop: '8px',
+          minHeight: '20px',
           alignSelf: 'start',
         }}
       />

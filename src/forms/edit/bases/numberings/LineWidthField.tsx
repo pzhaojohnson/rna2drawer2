@@ -42,7 +42,7 @@ export class LineWidthField extends React.Component<Props> {
 
   render() {
     let style: React.CSSProperties = {
-      marginTop: '16px',
+      marginTop: '8px',
       alignSelf: 'start',
       cursor: 'text',
     };
