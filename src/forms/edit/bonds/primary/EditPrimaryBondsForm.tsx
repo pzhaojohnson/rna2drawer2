@@ -13,6 +13,8 @@ import { BasePaddingField } from './BasePaddingField';
 import { StrokeLinecapField } from './StrokeLinecapField';
 import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
+import { StrungElementsSection } from 'Forms/edit/bonds/strung/StrungElementsSection';
+
 function DrawingHasNoPrimaryBondsNotes() {
   return (
     <p className={styles.notesText} >
@@ -93,6 +95,8 @@ export function EditPrimaryBondsForm(props: Props) {
           <BasePaddingField {...props} />
           <StrokeLinecapField {...props} />
           <ForwardBackwardButtons {...props} />
+          <div style={{ height: '39px' }} />
+          <StrungElementsSection {...props} bonds={props.primaryBonds} />
         </div>
       )}
     </PartialWidthContainer>
