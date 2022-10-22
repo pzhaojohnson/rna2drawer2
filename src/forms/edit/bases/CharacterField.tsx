@@ -138,7 +138,7 @@ export class CharacterField extends React.Component<Props> {
           id: inputId,
           style: { minWidth: '2ch', textAlign: 'center' },
         }}
-        style={{ marginBottom: '14px', alignSelf: 'start' }}
+        style={{ marginBottom: '8px', alignSelf: 'start' }}
       />
     );
   }

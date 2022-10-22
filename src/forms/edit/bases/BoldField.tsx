@@ -57,7 +57,7 @@ export function BoldField(props: Props) {
         Base.recommendedDefaults.text['font-weight'] = fw;
         props.app.refresh();
       }}
-      style={{ marginTop: '10px', alignSelf: 'start' }}
+      style={{ marginTop: '8px', alignSelf: 'start' }}
     />
   );
 }

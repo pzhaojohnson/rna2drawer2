@@ -45,7 +45,7 @@ export class RadiusField extends React.Component<Props> {
 
   render() {
     let style: React.CSSProperties = {
-      marginTop: '10px',
+      marginTop: '8px',
       alignSelf: 'start',
       cursor: 'text',
     };
