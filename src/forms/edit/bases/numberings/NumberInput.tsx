@@ -101,7 +101,7 @@ export class NumberInput extends React.Component<Props> {
           }
         }}
         style={{
-          minWidth: '5ch',
+          minWidth: '39px',
         }}
       />
     );
