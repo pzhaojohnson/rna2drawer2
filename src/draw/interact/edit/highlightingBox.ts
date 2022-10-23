@@ -166,17 +166,28 @@ function highlightingBoxOfTertiaryBond(tb: TertiaryBond): SVG.Box {
 //
 // Returns undefined for an unrecognized element type.
 export function highlightingBox(ele: DrawingElement): SVG.Box | undefined {
-  if (ele instanceof Base) {
-    return highlightingBoxOfBase(ele);
-  } else if (ele instanceof BaseNumbering) {
-    return highlightingBoxOfBaseNumbering(ele);
-  } else if (ele instanceof PrimaryBond) {
-    return highlightingBoxOfStraightBond(ele);
-  } else if (ele instanceof SecondaryBond) {
-    return highlightingBoxOfStraightBond(ele);
-  } else if (ele instanceof TertiaryBond) {
-    return highlightingBoxOfTertiaryBond(ele);
-  } else {
-    return undefined;
+  let box = ele instanceof Base ? (
+    highlightingBoxOfBase(ele)
+  ) : ele instanceof BaseNumbering ? (
+    highlightingBoxOfBaseNumbering(ele)
+  ) : ele instanceof PrimaryBond ? (
+    highlightingBoxOfStraightBond(ele)
+  ) : ele instanceof SecondaryBond ? (
+    highlightingBoxOfStraightBond(ele)
+  ) : ele instanceof TertiaryBond ? (
+    highlightingBoxOfTertiaryBond(ele)
+  ) : (
+    undefined
+  );
+
+  // ensure width and height are at least 2
+  // (to prevent the highlighting box from being invisible)
+  if (box && box.width < 2) {
+    box = new SVG.Box(box.cx - 1, box.y, 2, box.height);
   }
+  if (box && box.height < 2) {
+    box = new SVG.Box(box.x, box.cy - 1, box.width, 2);
+  }
+
+  return box;
 }
