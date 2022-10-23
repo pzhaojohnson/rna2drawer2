@@ -5,20 +5,36 @@
   flex-direction: row;
   align-items: center;
 
-  padding: 2px 24px;
-  border: 1px solid #cdcdeb;
+  padding: 3px 25px;
+
+  /* use before pseudo-element for border and box shadow */
+  border: none;
   border-radius: 30px;
+  position: relative;
+  isolation: isolate;
 
   cursor: pointer;
 }
 
-.findMotifsButton:hover {
-  box-shadow: 0 3px 3px rgba(223, 223, 236, 0.66);
-  transform: scale(1.0125);
-  transition: transform 0.02s;
+.findMotifsButton::before {
+  content: "";
+  border: 1px solid #d1d1e4;
+  border-radius: 30px;
+  box-shadow: 0 3px 3px rgba(225, 225, 238, 0.32);
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.findMotifsButton:active {
+.findMotifsButton:hover::before {
+  transform: scale(1.05);
+  transition: transform 0.25s;
+}
+
+.findMotifsButton:active::before {
   transform: scale(1);
   transition: transform 0s;
 }
@@ -30,7 +46,7 @@
   font-size: 12px;
   font-weight: 600;
   font-style: normal;
-  color: #07074b;
+  color: #0a0a45;
 
   cursor: pointer;
   user-select: none;
