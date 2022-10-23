@@ -37,63 +37,25 @@ function createBox(args: (
   );
 }
 
-/**
- * Returns a new box whose width has been scaled by the provided factor
- * and whose center coordinates remain the same as the provided box.
- */
- function scaleBoxX(box: SVG.Box, factor: number): SVG.Box {
-  let width = factor * box.width;
-  return new SVG.Box(
-    box.cx - (width / 2),
-    box.y,
-    width,
-    box.height,
-  );
-}
-
-/**
- * Returns a new box whose height has been scaled by the provided factor
- * and whose center coordinates remain the same as the provided box.
- */
- function scaleBoxY(box: SVG.Box, factor: number): SVG.Box {
-  let height = factor * box.height;
-  return new SVG.Box(
-    box.x,
-    box.cy - (height / 2),
-    box.width,
-    height,
-  );
-}
-
-/**
- * Returns a new box whose width and height have been scaled by the
- * provided factor and whose center coordinates remain the same as the
- * provided box.
- */
-function scaleBox(box: SVG.Box, factor: number): SVG.Box {
-  box = scaleBoxX(box, factor);
-  return scaleBoxY(box, factor);
-}
-
 function highlightingBoxOfSVGText(text: SVG.Text): SVG.Box {
   let box = text.bbox();
+
   // two pixels of padding on each side
-  box = scaleBoxX(box, 1 + (4 / box.width));
-  return scaleBoxY(box, 1 + (4 / box.height));
+  return new SVG.Box(box.x - 2, box.y - 2, box.width + 4, box.height + 4);
 }
 
 function highlightingBoxOfSVGLine(line: SVG.Line): SVG.Box {
   let box = bboxOfLine(line);
+
   // an extra half a pixel of padding on each side
-  box = scaleBoxX(box, 1 + (1 / box.width));
-  return scaleBoxY(box, 1 + (1 / box.height));
+  return new SVG.Box(box.x - 0.5, box.y - 0.5, box.width + 1, box.height + 1);
 }
 
 function highlightingBoxOfSVGCircle(circle: SVG.Circle): SVG.Box {
   let box = bboxOfCircle(circle);
+
   // half a pixel of padding on each side
-  let factor = 1 + (1 / box.width);
-  return scaleBox(box, factor);
+  return new SVG.Box(box.x - 0.5, box.y - 0.5, box.width + 1, box.height + 1);
 }
 
 function highlightingBoxOfSVGPath(path: SVG.Path): SVG.Box {
@@ -101,13 +63,15 @@ function highlightingBoxOfSVGPath(path: SVG.Path): SVG.Box {
 
   let sw = interpretNumericValue(path.attr('stroke-width'))?.valueOf();
   if (typeof sw == 'number') {
-    box = scaleBoxX(box, 1 + (sw / box.width));
-    box = scaleBoxY(box, 1 + (sw / box.height));
+    let x = box.x - (sw / 2);
+    let y = box.y - (sw / 2);
+    let width = box.width + sw;
+    let height = box.height + sw;
+    box = new SVG.Box(x, y, width, height);
   }
 
   // an extra half a pixel of padding on each side
-  box = scaleBoxX(box, 1 + (1 / box.width));
-  box = scaleBoxY(box, 1 + (1 / box.height));
+  box = new SVG.Box(box.x - 0.5, box.y - 0.5, box.width + 1, box.height + 1);
 
   return box;
 }
