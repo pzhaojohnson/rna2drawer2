@@ -17,13 +17,18 @@
 }
 
 .selectSecondaryBondsButton {
-  margin: 0px 0px 12px 6px;
-  padding: 3px 0px;
-  width: 232px;
+  margin: 0px 0px 14px 6px;
+  padding: 4px 0px;
+  width: 225px;
   text-align: center;
 
-  border: 1px solid #d3d3e5;
+  /* use before pseudo-element for border and box shadow */
+  border: none;
   border-radius: 40px;
+  outline: none;
+  box-shadow: none;
+  position: relative;
+  isolation: isolate;
 
   background-color: transparent;
 
@@ -31,14 +36,31 @@
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
-  color: #202060;
+  color: #0c0c63;
 
   cursor: pointer;
   user-select: none;
 }
 
-.selectSecondaryBondsButton:hover {
-  transform: scale(1.02);
-  box-shadow: 0px 2px 2px #eeeef5;
-  transition: transform 0.04s;
+.selectSecondaryBondsButton::before {
+  content: "";
+  border: 1px solid rgba(210, 210, 230, 0.99);
+  border-radius: 40px;
+  box-shadow: 0 3px 3px rgba(227, 227, 241, 0.18);
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.selectSecondaryBondsButton:hover::before {
+  transform: scale(1.05);
+  transition: transform 0.25s;
+}
+
+.selectSecondaryBondsButton:active::before {
+  transform: scale(1);
+  transition: transform 0s;
 }
