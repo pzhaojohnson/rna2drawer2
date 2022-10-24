@@ -1,13 +1,12 @@
 .toolOptionToggle {
   padding: 3px 0px;
 
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(218, 218, 233, 0.94);
-
-  /* Make big enough to probably guarantee a pill shape
-     for the toggle regardless of other styles. */
+  /* use before pseudo-element for border and box shadow */
+  border: none;
   border-radius: 1000px;
+  box-shadow: none;
+  position: relative;
+  isolation: isolate;
 
   display: flex;
   flex-direction: row;
@@ -26,13 +25,26 @@
   -webkit-user-select: none;
 }
 
+.toolOptionToggle::before {
+  content: "";
+  border: 1px solid rgba(209, 209, 227, 0.99);
+  border-radius: 1000px;
+  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.21);
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
 .check {
   margin-left: 6px;
 }
 
 .toggled {
   font-weight: 600;
-  color: #141416;
+  color: rgba(18, 18, 19, 0.94);
 }
 
 .toggled .check {
@@ -41,13 +53,19 @@
 
 .untoggled {
   font-weight: 500;
-  color: rgba(149, 149, 158, 0.99);
+  color: rgba(136, 136, 149, 0.95);
 }
 
 .untoggled .check {
   display: none;
 }
 
-.toolOptionToggle:hover {
-  box-shadow: 0 3px 3px rgba(230, 230, 241, 0.41);
+.toolOptionToggle:hover::before {
+  transform: scale(1.05);
+  transition: transform 0.25s;
+}
+
+.toolOptionToggle:active::before {
+  transform: scale(1);
+  transition: transform 0s;
 }
