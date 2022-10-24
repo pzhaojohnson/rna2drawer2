@@ -9,8 +9,8 @@
 
 .selectAllBasesButton {
   margin: 12px 0px 0px 6px;
-  width: 216px;
-  padding: 3px 0px;
+  width: 204px;
+  padding: 4px 0px;
   text-align: center;
 
   /* use before pseudo-element for border and box shadow */
@@ -36,7 +36,7 @@
   content: "";
   border: 1px solid #d2d2e9;
   border-radius: 40px;
-  box-shadow: 0 3px 3px rgba(227, 227, 241, 0.21);
+  box-shadow: 0 3px 3px rgba(227, 227, 241, 0.2);
 
   position: absolute;
   top: 0px;
