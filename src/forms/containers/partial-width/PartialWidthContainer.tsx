@@ -38,7 +38,7 @@ export function PartialWidthContainer(props: Props) {
           {props.title}
         </p>
       </div>
-      <div style={{ margin: '8px 20px 0px 18px' }} >
+      <div style={{ margin: '8px 20px 0px 20px' }} >
         <div className={`${styles.titleUnderline}`} />
       </div>
       <div style={{ margin: '24px 40px 24px 40px' }} >
