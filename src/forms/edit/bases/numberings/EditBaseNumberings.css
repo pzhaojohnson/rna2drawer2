@@ -9,8 +9,8 @@
 
 .selectAllBaseNumberingsButton {
   margin: 12px 0px 0px 6px;
-  width: 216px;
-  padding: 3px 0px;
+  width: 213px;
+  padding: 4px 0px;
   text-align: center;
 
   /* use before pseudo-element for border and box shadow */
@@ -27,7 +27,7 @@
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
-  color: #060668;
+  color: #0c0c63;
 
   cursor: pointer;
   user-select: none;
