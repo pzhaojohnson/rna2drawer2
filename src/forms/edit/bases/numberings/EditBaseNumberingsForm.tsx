@@ -28,9 +28,6 @@ function DrawingHasNoBaseNumberingsNotes() {
       <p className={styles.notesText} >
         Drawing has no numberings...
       </p>
-      <p className={styles.notesText} style={{ marginTop: '26px' }} >
-        Add numberings by setting the numbering offset or increment...
-      </p>
     </div>
   );
 }
