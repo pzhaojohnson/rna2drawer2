@@ -80,7 +80,7 @@ export class HeightField extends React.Component<Props> {
           places={2}
           onBeforeEdit={event => this.handleBeforeEdit(event)}
           onEdit={event => this.handleEdit(event)}
-          style={{ minWidth: '8ch' }}
+          style={{ minWidth: '52px' }}
         />
         <span style={{ paddingLeft: '8px' }} >
           Height
