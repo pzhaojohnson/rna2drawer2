@@ -21,7 +21,7 @@ function DrawingHasNoTertiaryBondsNotes() {
       <p className={styles.notesText} >
         Drawing has no tertiary bonds...
       </p>
-      <div style={{ height: '24px' }} />
+      <div style={{ height: '26px' }} />
       <p className={styles.notesText} >
         Add tertiary bonds using the pairing tool...
       </p>
@@ -35,11 +35,11 @@ function NoTertiaryBondsAreSelectedNotes() {
       <p className={styles.notesText} >
         No tertiary bonds are selected...
       </p>
-      <div style={{ height: '24px' }} />
+      <div style={{ height: '26px' }} />
       <p className={styles.notesText} >
         Select tertiary bonds using the editing tool...
       </p>
-      <div style={{ height: '24px' }} />
+      <div style={{ height: '26px' }} />
       <p className={styles.notesText} >
         Or...
       </p>
