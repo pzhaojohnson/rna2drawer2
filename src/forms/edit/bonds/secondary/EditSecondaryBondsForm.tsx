@@ -94,7 +94,7 @@ function SelectAUTSecondaryBondsButton(props: { app: App }) {
   return (
     props.app.drawing.secondaryBonds.some(sb => sb.type == 'AUT') ? (
       <SelectSecondaryBondsButton {...props} type='AUT' >
-        AU and AT Secondary Bonds
+        AU and AT Bonds
       </SelectSecondaryBondsButton>
     ) : (
       null
@@ -106,7 +106,7 @@ function SelectGCSecondaryBondsButton(props: { app: App }) {
   return (
     props.app.drawing.secondaryBonds.some(sb => sb.type == 'GC') ? (
       <SelectSecondaryBondsButton {...props} type='GC' >
-        GC Secondary Bonds
+        GC Bonds
       </SelectSecondaryBondsButton>
     ) : (
       null
@@ -118,7 +118,7 @@ function SelectGUTSecondaryBondsButton(props: { app: App }) {
   return (
     props.app.drawing.secondaryBonds.some(sb => sb.type == 'GUT') ? (
       <SelectSecondaryBondsButton {...props} type='GUT' >
-        GU and GT Secondary Bonds
+        GU and GT Bonds
       </SelectSecondaryBondsButton>
     ) : (
       null
