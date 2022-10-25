@@ -36,7 +36,7 @@
   content: "";
   border: 1px solid #d2d2e9;
   border-radius: 40px;
-  box-shadow: 0 3px 3px rgba(227, 227, 241, 0.2);
+  box-shadow: 0 3px 3px rgba(227, 227, 241, 0.18);
 
   position: absolute;
   top: 0px;
