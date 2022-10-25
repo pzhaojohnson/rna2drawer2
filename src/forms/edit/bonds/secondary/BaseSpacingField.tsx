@@ -67,7 +67,7 @@ export class BaseSpacingField extends React.Component<Props> {
     let objects = [{ basePairBondLength: this.drawing.basePairBondLength }];
 
     let style: React.CSSProperties = {
-      margin: '10px 0 0 10px',
+      margin: '10px 0 0 8px',
       alignSelf: 'start',
       cursor: 'text',
     };

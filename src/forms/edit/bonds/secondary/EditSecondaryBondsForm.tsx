@@ -22,7 +22,7 @@ function DrawingHasNoSecondaryBondsNotes() {
       <p className={styles.notesText} >
         Drawing has no secondary bonds...
       </p>
-      <p className={styles.notesText} style={{ marginTop: '24px' }} >
+      <p className={styles.notesText} style={{ marginTop: '26px' }} >
         Add secondary bonds using the pairing tool...
       </p>
     </div>
@@ -39,11 +39,11 @@ function ForAllSecondaryBondsLabel() {
 
 function NoSecondaryBondsAreSelectedNotes() {
   return (
-    <div style={{ marginTop: '32px' }} >
+    <div style={{ marginTop: '44px' }} >
       <p className={styles.notesText} >
         No secondary bonds are selected...
       </p>
-      <p className={styles.notesText} style={{ marginTop: '24px' }} >
+      <p className={styles.notesText} style={{ marginTop: '26px' }} >
         Select secondary bonds using the editing tool...
       </p>
     </div>
@@ -142,11 +142,11 @@ function SelectOtherSecondaryBondsButton(props: { app: App }) {
 
 function SelectSecondaryBondsButtons(props: { app: App }) {
   return (
-    <div style={{ marginTop: '24px' }} >
+    <div style={{ marginTop: '26px' }} >
       <p className={styles.notesText} >
         Or select...
       </p>
-      <div style={{ marginTop: '12px', display: 'flex', flexDirection: 'column' }} >
+      <div style={{ marginTop: '11px', display: 'flex', flexDirection: 'column' }} >
         <SelectAllSecondaryBondsButton {...props} />
         <SelectAUTSecondaryBondsButton {...props} />
         <SelectGCSecondaryBondsButton {...props} />
