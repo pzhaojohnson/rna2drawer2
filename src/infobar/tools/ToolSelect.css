@@ -60,6 +60,16 @@
   z-index: -1;
 }
 
+.closedToolSelect:hover .currentToolView::before {
+  transform: scale(1.03);
+  transition: transform 0.3s;
+}
+
+.closedToolSelect:active .currentToolView::before {
+  transform: scale(1);
+  transition: transform 0.05s;
+}
+
 .toolButton {
   margin-left: 6px;
   padding: 1px 9px;
