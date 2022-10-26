@@ -10,7 +10,7 @@ export type Props = {
 export function EditingToolControls(props: Props) {
   return (
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-      <div style={{ width: '4px' }} />
+      <div style={{ width: '5px' }} />
       <EditingTypeSelect app={props.app} />
     </div>
   );
