@@ -22,16 +22,13 @@
   border-style: solid;
   border-color: #d7d7e1;
   border-radius: 12px;
+  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.52);
 
   position: absolute;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
-}
-
-.currentTypeView:hover {
-  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.52);
 }
 
 .typeOption {
