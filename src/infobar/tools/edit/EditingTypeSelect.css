@@ -50,9 +50,6 @@
 
 .toggledTypeOption::before {
   border-color: #d7d7e1;
-}
-
-.toggledTypeOption:hover {
   box-shadow: 0 3px 3px rgba(224, 224, 237, 0.52);
 }
 
