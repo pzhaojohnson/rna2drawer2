@@ -42,7 +42,8 @@ function TypeOption(
   props: {
     type: Function,
     isToggled: boolean;
-    onClick: () => void,
+    onClick?: () => void,
+    onMouseDown?: () => void,
     style?: React.CSSProperties,
   },
 ) {
@@ -53,6 +54,7 @@ function TypeOption(
         ${props.isToggled ? styles.toggledTypeOption : styles.untoggledTypeOption}
       `}
       onClick={props.onClick}
+      onMouseDown={props.onMouseDown}
       style={props.style}
     >
       {typeLabels.get(props.type) ?? props.type.name}
