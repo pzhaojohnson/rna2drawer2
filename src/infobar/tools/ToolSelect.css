@@ -25,18 +25,39 @@
 
 .currentToolView {
   margin-left: 8px;
-  padding: 1px 9px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #38383d;
+  padding: 2px 10px;
+
+  /* use before pseudo-element for border and background color */
+  border: none;
   border-radius: 12px;
+  background-color: transparent;
+  position: relative;
+  isolation: isolate;
+
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
   color: white;
-  background-color: #38383d;
   cursor: pointer;
+}
+
+.currentToolView::before {
+  content: "";
+  border-width: 1px;
+  border-style: solid;
+  border-color: #38383d;
+  border-radius: 12px;
+
+  background-color: #38383d;
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+
+  z-index: -1;
 }
 
 .toolButton {
