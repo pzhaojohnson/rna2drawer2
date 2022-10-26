@@ -66,7 +66,7 @@ type ToolLabelProps = {
 function ToolLabel(props: ToolLabelProps) {
   return (
     <p className={styles.toolLabel} onClick={props.onClick} >
-      Tool:
+      Tool
     </p>
   );
 }
