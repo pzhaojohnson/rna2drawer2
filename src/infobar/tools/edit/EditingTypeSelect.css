@@ -5,7 +5,7 @@
   position: relative;
   isolation: isolate;
 
-  padding: 3px 14px;
+  padding: 4px 13px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
@@ -20,7 +20,7 @@
   content: "";
   border-width: 1px;
   border-style: solid;
-  border-color: #d9d9e7;
+  border-color: #c4c4d5;
   border-radius: 12px;
   box-shadow: 0 3px 3px rgba(224, 224, 238, 0.2);
 
@@ -42,7 +42,7 @@
 }
 
 .typeOption {
-  padding: 3px 14px;
+  padding: 4px 13px;
 
   /* use before pseudo-element for border */
   border: none;
@@ -73,7 +73,7 @@
 }
 
 .toggledTypeOption::before {
-  border-color: #d9d9e7;
+  border-color: #c4c4d5;
   box-shadow: 0 3px 3px rgba(224, 224, 238, 0.2);
 }
 
@@ -92,6 +92,6 @@
 }
 
 .untoggledTypeOption:hover::before {
-  border-color: #cecee0;
+  border-color: #c4c4d5;
   transition: border-color 0.1s;
 }
