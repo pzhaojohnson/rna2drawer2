@@ -86,7 +86,8 @@ function CurrentToolView(props: CurrentToolViewProps) {
 type ToolButtonProps = {
   toolName: string;
   isToggled: boolean;
-  onClick: () => void;
+  onClick?: () => void;
+  onMouseDown?: () => void;
   onMouseOver?: () => void;
   onMouseOut?: () => void;
 };
@@ -99,6 +100,7 @@ function ToolButton(props: ToolButtonProps) {
         ${props.isToggled ? styles.toggledToolButton : styles.untoggledToolButton}
       `}
       onClick={props.onClick}
+      onMouseDown={props.onMouseDown}
       onMouseOver={props.onMouseOver}
       onMouseOut={props.onMouseOut}
     >
