@@ -20,9 +20,9 @@
   content: "";
   border-width: 1px;
   border-style: solid;
-  border-color: #d7d7e1;
+  border-color: #d9d9e7;
   border-radius: 12px;
-  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.52);
+  box-shadow: 0 3px 3px rgba(224, 224, 238, 0.2);
 
   position: absolute;
   top: 0px;
@@ -73,8 +73,8 @@
 }
 
 .toggledTypeOption::before {
-  border-color: #d7d7e1;
-  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.52);
+  border-color: #d9d9e7;
+  box-shadow: 0 3px 3px rgba(224, 224, 238, 0.2);
 }
 
 .toggledTypeOption:hover::before {
@@ -92,6 +92,6 @@
 }
 
 .untoggledTypeOption:hover::before {
-  border-color: #d7d7e1;
+  border-color: #cecee0;
   transition: border-color 0.05s;
 }
