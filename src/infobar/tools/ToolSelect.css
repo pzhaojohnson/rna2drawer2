@@ -65,7 +65,7 @@
 }
 
 .untoggledToolButton:hover {
-  border-color: rgba(224, 224, 233, 0.7);
+  border-color: rgb(218 218 230 / 97%);
 }
 
 .overlaidMessage {
