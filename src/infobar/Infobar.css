@@ -5,7 +5,7 @@
 
   /* use min-height instead of height so that height can increase
   if scrollbars appear */
-  min-height: 35px;
+  min-height: 36px;
 
   background-color: white;
 
