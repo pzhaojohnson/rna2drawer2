@@ -27,9 +27,11 @@
   margin-left: 7px;
   padding: 3px 10px;
 
-  /* use before pseudo-element for border and background color */
+  /* use before pseudo-element for border, box shadow and background
+  color */
   border: none;
   border-radius: 12px;
+  box-shadow: none;
   background-color: transparent;
   position: relative;
   isolation: isolate;
@@ -48,6 +50,8 @@
   border-style: solid;
   border-color: #38383d;
   border-radius: 12px;
+
+  box-shadow: 0 3px 3px rgba(216, 216, 233, 0.35);
 
   background-color: #38383d;
 
