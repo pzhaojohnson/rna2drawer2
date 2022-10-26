@@ -25,7 +25,10 @@
 
 .currentToolView {
   margin-left: 8px;
-  padding: 2px 10px;
+  padding: 1px 9px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #38383d;
   border-radius: 12px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
@@ -38,7 +41,9 @@
 
 .toolButton {
   margin-left: 6px;
-  padding: 2px 10px;
+  padding: 1px 9px;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 12px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
@@ -48,16 +53,19 @@
 }
 
 .toggledToolButton {
+  border-color: #38383d;
   background-color: #38383d;
   color: white;
 }
 
 .untoggledToolButton {
+  border-color: white;
   background-color: white;
   color: #1e1e20;
 }
 
 .untoggledToolButton:hover {
+  border-color: rgba(224, 224, 233, 0.7);
   background-color: rgba(224, 224, 233, 0.7);
 }
 
