@@ -92,7 +92,7 @@ export function EditingTypeSelect(props: Props) {
             key={i}
             type={t}
             isToggled={false}
-            onClick={() => {
+            onMouseDown={() => {
               editingTool.editingType = t;
               editingTool.renderForm();
               setIsOpen(false);
