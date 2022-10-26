@@ -93,5 +93,5 @@
 
 .untoggledTypeOption:hover::before {
   border-color: #cecee0;
-  transition: border-color 0.05s;
+  transition: border-color 0.1s;
 }
