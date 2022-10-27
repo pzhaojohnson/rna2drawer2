@@ -20,9 +20,9 @@
   content: "";
   border-width: 1px;
   border-style: solid;
-  border-color: #c5c5d9;
+  border-color: #c4c4d7;
   border-radius: 12px;
-  box-shadow: 0 3px 3px rgba(224, 224, 238, 0.2);
+  box-shadow: 0 3px 3px rgba(224, 224, 238, 0.19);
 
   position: absolute;
   top: 0px;
@@ -73,8 +73,8 @@
 }
 
 .toggledTypeOption::before {
-  border-color: #c5c5d9;
-  box-shadow: 0 3px 3px rgba(224, 224, 238, 0.2);
+  border-color: #c4c4d7;
+  box-shadow: 0 3px 3px rgba(224, 224, 238, 0.18);
 }
 
 .toggledTypeOption:hover::before {
