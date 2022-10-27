@@ -160,7 +160,6 @@ export class ToolSelect extends React.Component<ToolSelectProps> {
           <CurrentToolView currentTool={currentTool} />
         ) : (
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
-            <div style={{ width: '1px' }} />
             <ToolButton
               toolName={nameOfTool(currentTool)}
               isToggled={true}
