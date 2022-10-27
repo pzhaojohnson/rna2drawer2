@@ -56,9 +56,9 @@
 }
 
 .on .pillContainer::before {
-  border-color: #1c1c1f;
-  background-color: #1c1c1f;
-  box-shadow: 0 3px 3px rgba(208, 208, 226, 0.29);
+  border-color: #1e1e21;
+  background-color: #1e1e21;
+  box-shadow: 0 3px 3px rgba(208, 208, 226, 0.25);
 }
 
 .on .text {
