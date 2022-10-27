@@ -11,7 +11,7 @@
 }
 
 .closedToolSelect:hover {
-  background-color: rgba(230, 230, 240, 0.55);
+  background-color: rgba(230, 230, 240, 0.52);
 }
 
 .toolLabel {
@@ -65,8 +65,8 @@
 }
 
 .closedToolSelect:hover .currentToolView::before {
-  transform: scale(1.03);
-  transition: transform 0.3s;
+  transform: scale(1.05);
+  transition: transform 0.25s;
 }
 
 .closedToolSelect:active .currentToolView::before {
