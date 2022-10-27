@@ -113,6 +113,7 @@
 
 .toggledToolButton::before {
   border-color: #38383d;
+  box-shadow: 0 3px 3px rgba(216, 216, 233, 0.35);
   background-color: #38383d;
 }
 
