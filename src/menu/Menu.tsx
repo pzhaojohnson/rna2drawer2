@@ -20,7 +20,7 @@ export function Menu(props: Props) {
       <ExportDropdown app={props.app} />
       <div style={{ flexGrow: 1 }} />
       {props.app.strictDrawing.isEmpty() ? null : (
-        <div style={{ marginRight: '9px' }} >
+        <div style={{ marginRight: '10px' }} >
           <AskBeforeLeavingToggle app={props.app} />
         </div>
       )}
