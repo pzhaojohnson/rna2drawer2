@@ -100,7 +100,7 @@
 }
 
 .untoggledToolButton:hover {
-  border-color: rgb(218 218 230 / 97%);
+  border-color: rgba(190, 190, 210, 1);
   transition: border-color 0.05s;
 }
 
