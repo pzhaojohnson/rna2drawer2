@@ -1,5 +1,5 @@
 .findMotifsButton {
-  margin-right: 13px;
+  margin: 0px 13px 0px 8px;
 
   display: flex;
   flex-direction: row;
@@ -47,6 +47,9 @@
   font-weight: 600;
   font-style: normal;
   color: #0a0a45;
+
+  /* for when the infobar is larger than its container */
+  white-space: nowrap;
 
   cursor: pointer;
   user-select: none;
