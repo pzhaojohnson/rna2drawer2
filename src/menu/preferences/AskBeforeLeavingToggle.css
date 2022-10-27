@@ -46,13 +46,13 @@
 .check {}
 
 .askBeforeLeavingToggle:hover .pillContainer::before {
-  transform: scale(1.05);
+  transform: scale(1.03);
   transition: transform 0.25s;
 }
 
 .askBeforeLeavingToggle:active .pillContainer::before {
   transform: scale(1);
-  transition: transform 0s;
+  transition: transform 0.05s;
 }
 
 .on .pillContainer::before {
