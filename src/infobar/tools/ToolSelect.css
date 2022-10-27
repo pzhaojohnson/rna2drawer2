@@ -138,7 +138,7 @@
 
 .untoggledToolButton:hover::before {
   border-color: rgba(192, 192, 212, 1);
-  transition: border-color 0.05s;
+  transition: border-color 0.1s;
 }
 
 .overlaidMessage {
