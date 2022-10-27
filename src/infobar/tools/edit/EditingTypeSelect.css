@@ -20,7 +20,7 @@
   content: "";
   border-width: 1px;
   border-style: solid;
-  border-color: #c4c4d5;
+  border-color: #c5c5d9;
   border-radius: 12px;
   box-shadow: 0 3px 3px rgba(224, 224, 238, 0.2);
 
@@ -73,7 +73,7 @@
 }
 
 .toggledTypeOption::before {
-  border-color: #c4c4d5;
+  border-color: #c5c5d9;
   box-shadow: 0 3px 3px rgba(224, 224, 238, 0.2);
 }
 
@@ -92,6 +92,6 @@
 }
 
 .untoggledTypeOption:hover::before {
-  border-color: #c4c4d5;
+  border-color: #c4c4d7;
   transition: border-color 0.1s;
 }
