@@ -97,7 +97,7 @@ export function EditingTypeSelect(props: Props) {
               editingTool.renderForm();
               setIsOpen(false);
             }}
-            style={{ marginLeft: '4px' }}
+            style={{ marginLeft: '5px' }}
           />
         ))}
       </div>
