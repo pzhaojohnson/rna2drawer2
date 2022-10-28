@@ -52,5 +52,6 @@
 }
 
 .untoggledFormatButton:hover {
-  border-color: rgba(204, 204, 221, 0.99);
+  border-color: rgba(94, 94, 102, 1);
+  transition: border-color 0.1s;
 }
