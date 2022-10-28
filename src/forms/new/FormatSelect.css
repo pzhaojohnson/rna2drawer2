@@ -54,7 +54,3 @@
 .untoggledFormatButton:hover {
   border-color: rgba(204, 204, 221, 0.99);
 }
-
-.untoggledFormatButton:active {
-  border-color: rgb(180, 180, 190);
-}

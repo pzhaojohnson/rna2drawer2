@@ -15,7 +15,7 @@ function FormatButton(
   props: {
     isToggled: boolean,
     title?: string;
-    onClick: () => void,
+    onMouseDown: () => void,
     children: React.ReactNode,
   },
 ) {
@@ -28,7 +28,7 @@ function FormatButton(
         ${props.isToggled ? toggledStyles : untoggledStyles}
       `}
       title={props.title}
-      onClick={props.onClick}
+      onMouseDown={props.onMouseDown}
     >
       {props.children}
     </button>
@@ -55,7 +55,7 @@ export function FormatSelect(props: Props) {
       key={i}
       isToggled={format == value}
       title={formatButtonTitles[format]}
-      onClick={() => {
+      onMouseDown={() => {
         if (format != value) {
           setValue(format);
           props.onChange({ target: { value: format } });
