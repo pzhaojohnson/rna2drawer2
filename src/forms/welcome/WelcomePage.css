@@ -2,7 +2,7 @@
   margin: 32px 0 0 0;
   font-size: 16px;
   font-weight: 500;
-  color: rgb(96, 96, 108);
+  color: rgb(87, 87, 96);
 
   user-select: none;
   -webkit-user-select: none;
@@ -15,7 +15,7 @@
   flex-grow: 1;
   padding: 9px 0px;
   font-size: 20px;
-  color: #1d1d66;
+  color: #050554;
   text-align: center;
   background-color: transparent;
   cursor: pointer;
@@ -53,11 +53,11 @@
 
   font-size: 16px;
   font-weight: 500;
-  color: rgb(96, 96, 108);
+  color: rgb(87, 87, 96);
 }
 
 .moreInfoLinks {
-  color: #63288e;
+  color: #60288a;
   text-decoration-line: none;
 }
 
@@ -66,7 +66,7 @@
 }
 
 .updatesLink {
-  color: #632c8b;
+  color: #5e2a83;
   text-decoration-line: none;
 }
 
@@ -80,13 +80,13 @@
 
   font-size: 14px;
   font-weight: 500;
-  color: rgb(96, 96, 106);
+  color: rgb(87, 87, 94);
 
   animation: updatesNoticeFadeIn 2s ease-in;
 }
 
 .updatesNoticeDate {
-  color: rgb(101, 101, 112);
+  color: rgb(93, 93, 101);
 }
 
 @keyframes updatesNoticeFadeIn {
