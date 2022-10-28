@@ -75,7 +75,7 @@ function GitHubLink() {
 function MoreInfo() {
   return (
     <p className={styles.moreInfo} >
-      Want to learn more? Email <HelpEmailLink /> or visit the <GitHubLink /> for the user guide.
+      Want to learn more? Email <HelpEmailLink /> or visit the <GitHubLink />.
     </p>
   );
 }
