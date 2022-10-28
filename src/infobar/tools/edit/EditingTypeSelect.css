@@ -5,7 +5,9 @@
   position: relative;
   isolation: isolate;
 
-  padding: 4px 14px;
+  height: 22px;
+  line-height: 22px;
+  padding: 0px 14px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
@@ -42,7 +44,9 @@
 }
 
 .typeOption {
-  padding: 4px 14px;
+  height: 22px;
+  line-height: 22px;
+  padding: 0px 14px;
 
   /* use before pseudo-element for border */
   border: none;
