@@ -11,12 +11,11 @@ function AppName() {
 }
 
 function RightText() {
+  let style: React.CSSProperties = {
+    display: 'flex', flexDirection: 'column', alignSelf: 'end',
+  };
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p className={styles.rightText} >
-        Developed by Philip Johnson and Anne Simon
-      </p>
-      <div style={{ height: '4px' }} />
+    <div {...{ style }} >
       <p className={styles.rightText} >
         Last Updated on July 6, 2022
       </p>
@@ -34,7 +33,7 @@ export function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
       <div style={{
-        margin: '0px 64px',
+        margin: '0px 54px 0px 64px',
         display: 'flex', flexDirection: 'row', alignItems: 'center',
       }} >
         <AppIcon />
