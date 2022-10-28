@@ -39,8 +39,6 @@ export function Header() {
         <AppIcon />
         <div style={{ width: '14px' }} />
         <AppName />
-        <div style={{ flexGrow: 1 }} />
-        <RightText />
       </div>
       <Underline />
     </div>
