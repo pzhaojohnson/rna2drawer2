@@ -145,7 +145,7 @@
 }
 
 .untoggledToolButton:hover::before {
-  border-color: rgba(192, 192, 212, 1);
+  border-color: rgba(21, 21, 23, 1);
   transition: border-color 0.1s;
 }
 
