@@ -26,7 +26,7 @@ interface Props {
 export function SequenceField(props: Props): React.ReactElement {
   return (
     <div style={{ flexGrow: props.flexGrow, display: 'flex', flexDirection: 'column' }} >
-      <div style={{ marginTop: '25px', display: 'flex', flexDirection: 'row' }} >
+      <div style={{ marginTop: '26px', display: 'flex', flexDirection: 'row' }} >
         <label
           className={fieldLabelStyles.fieldLabel}
           htmlFor='sequence'
