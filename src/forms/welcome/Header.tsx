@@ -33,11 +33,11 @@ export function Header() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
       <div style={{
-        margin: '0px 54px 0px 64px',
+        margin: '0px 54px 0px 67px',
         display: 'flex', flexDirection: 'row', alignItems: 'center',
       }} >
         <AppIcon />
-        <div style={{ width: '14px' }} />
+        <div style={{ width: '16px' }} />
         <AppName />
       </div>
       <Underline />
