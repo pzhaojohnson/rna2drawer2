@@ -50,13 +50,13 @@ function OpenButton(props: Props) {
   );
 }
 
-function HelpEmailLink() {
+function ContactEmailLink() {
   return (
     <a
       className={styles.moreInfoLinks}
-      href='mailto:help@rna2drawer.app'
+      href='mailto:contact@rna2drawer.app'
     >
-      help@rna2drawer.app
+      contact@rna2drawer.app
     </a>
   );
 }
@@ -73,9 +73,11 @@ function GitHubLink() {
 }
 
 function MoreInfo() {
+  let contactEmailLink = <ContactEmailLink />;
+  let gitHubLink = <GitHubLink />;
   return (
     <p className={styles.moreInfo} >
-      Want to learn more? Email <HelpEmailLink /> or visit the <GitHubLink />.
+      Want to learn more? Email {contactEmailLink} or visit the {gitHubLink}.
     </p>
   );
 }
