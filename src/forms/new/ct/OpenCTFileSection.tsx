@@ -83,7 +83,7 @@ function Details() {
       </p>
       <p className={styles.detailsText} style={{ marginTop: '20px' }} >
         If a CT file contains multiple structures,
-        only the first structure in the CT file is drawn.
+        only the first structure in the CT file will be drawn.
       </p>
     </div>
   );
