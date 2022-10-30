@@ -15,9 +15,9 @@
 }
 
 .zoomOutButton:hover {
-  background-color: #e6e6ed;
+  background-color: rgba(224, 224, 238, 0.65);
 }
 
 .zoomOutButton:active {
-  background-color: #d6d6dc;
+  background-color: rgba(190, 190, 210, 0.65);
 }
