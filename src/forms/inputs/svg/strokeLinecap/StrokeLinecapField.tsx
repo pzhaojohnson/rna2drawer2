@@ -95,10 +95,10 @@ export type StrokeLinecapFieldProps = (
 export function StrokeLinecapField(props: StrokeLinecapFieldProps) {
   return (
     <div className={styles.strokeLinecapField} style={props.style} >
-      <FieldLabel style={{ marginRight: '9px' }} >
+      <StrokeLinecapSelect {...props} />
+      <FieldLabel style={{ marginLeft: '8px' }} >
         Line Caps
       </FieldLabel>
-      <StrokeLinecapSelect {...props} />
     </div>
   );
 }
