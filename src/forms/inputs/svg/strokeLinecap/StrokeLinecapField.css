@@ -36,10 +36,6 @@
   border-color: rgba(189, 189, 201, 0.97);
 }
 
-.untoggledOptionButton:active {
-  border-color: rgba(117, 117, 125, 1);
-}
-
 .roundButton::before {
   content: "";
   width: 16px;
