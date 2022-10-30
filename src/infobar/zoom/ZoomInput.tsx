@@ -68,7 +68,7 @@ export class ZoomInput extends React.Component<Props> {
           margin: '0px 2px', // margins are nonzero by default for Safari
           border: 'none',
           padding: '0px',
-          width: width + 'px',
+          width: Math.ceil(width) + 'px',
           fontFamily,
           fontSize,
           fontStyle,
