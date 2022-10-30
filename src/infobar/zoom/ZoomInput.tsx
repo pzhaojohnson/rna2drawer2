@@ -2,6 +2,7 @@ import * as React from 'react';
 import type { App } from 'App';
 import { zoom, setZoom } from 'Draw/zoom';
 import { round } from 'Math/round';
+import { measureTextWidth } from 'Utilities/measureTextWidth';
 
 export type Props = {
   app: App;
@@ -37,6 +38,16 @@ export class ZoomInput extends React.Component<Props> {
   }
 
   render() {
+    let fontFamily = '"Open Sans", sans-serif';
+    let fontSize = '12px';
+    let fontStyle = 'normal';
+    let fontWeight = '600';
+
+    let width = measureTextWidth({
+      text: this.state.value,
+      fontFamily, fontSize, fontStyle, fontWeight,
+    });
+
     return (
       <input
         type='text'
@@ -57,11 +68,11 @@ export class ZoomInput extends React.Component<Props> {
           margin: '0px 2px', // margins are nonzero by default for Safari
           border: 'none',
           padding: '0px',
-          width: (this.state.value.length + 1) + 'ch',
-          fontFamily: "'Open Sans', sans-serif",
-          fontSize: '12px',
-          fontStyle: 'normal',
-          fontWeight: 600,
+          width: width + 'px',
+          fontFamily,
+          fontSize,
+          fontStyle,
+          fontWeight,
           color: '#28282b',
           textAlign: 'center',
         }}
