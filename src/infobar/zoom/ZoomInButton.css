@@ -20,5 +20,4 @@
 
 .zoomInButton:active {
   background-color: #d6d6dc;
-  transform: scale(0.95);
 }
