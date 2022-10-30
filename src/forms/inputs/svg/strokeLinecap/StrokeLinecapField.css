@@ -70,11 +70,14 @@
 }
 
 .strokeLinecapSelect {
+  border: 1px solid rgb(211, 211, 228);
+  border-radius: 2px;
   min-width: 149px;
+  min-height: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .strokeLinecapField {
