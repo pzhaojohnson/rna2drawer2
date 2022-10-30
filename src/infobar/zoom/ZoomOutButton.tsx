@@ -30,11 +30,11 @@ function zoomOut(drawing: Drawing) {
 function MinusIcon() {
   return (
     <svg
-      width="9px" height="9px" viewBox="0 0 9 9"
+      width="10px" height="10px" viewBox="0 0 10 10"
       xmlns="http://www.w3.org/2000/svg" overflow="hidden"
     >
       <rect
-        x="0" y="3.75" width="9" height="1.5"
+        x="0" y="4" width="10" height="2" rx="1"
         fill="#1a1a1c"
       />
     </svg>

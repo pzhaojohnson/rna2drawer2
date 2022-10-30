@@ -1,5 +1,5 @@
 .zoomInput {
-  margin: 0px 1px; /* margins are nonzero by default in Safari */
+  margin: 0px 2px; /* margins are nonzero by default in Safari */
 
   border-width: 2px;
   border-style: solid;

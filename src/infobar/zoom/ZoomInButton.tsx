@@ -30,12 +30,12 @@ function zoomIn(drawing: Drawing) {
 function PlusIcon() {
   return (
     <svg
-      width="9px" height="9px" viewBox="0 0 9 9"
+      width="10px" height="10px" viewBox="0 0 10 10"
       xmlns="http://www.w3.org/2000/svg" overflow="hidden"
     >
       <path
-        d="M 0 4.5 L 9 4.5 M 4.5 0 L 4.5 9"
-        strokeWidth="1.5" stroke="#1a1a1c"
+        d="M 1 5 L 9 5 M 5 1 L 5 9"
+        strokeWidth="2" stroke="#1a1a1c" strokeLinecap="round"
       />
     </svg>
   );
