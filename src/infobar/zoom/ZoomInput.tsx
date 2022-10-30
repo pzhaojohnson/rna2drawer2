@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from './ZoomInput.css';
 import type { App } from 'App';
 import { zoom, setZoom } from 'Draw/zoom';
 import { round } from 'Math/round';
@@ -51,6 +52,7 @@ export class ZoomInput extends React.Component<Props> {
     return (
       <input
         type='text'
+        className={styles.zoomInput}
         value={this.state.value}
         onChange={event => this.setState({ value: event.target.value })}
         onFocus={event => event.target.select()}
@@ -65,16 +67,11 @@ export class ZoomInput extends React.Component<Props> {
           }
         }}
         style={{
-          margin: '0px 1px', // margins are nonzero by default for Safari
-          border: 'none',
-          padding: '1px 2px',
           width: Math.ceil(width) + 'px',
           fontFamily,
           fontSize,
           fontStyle,
           fontWeight,
-          color: '#28282b',
-          textAlign: 'center',
         }}
       />
     );

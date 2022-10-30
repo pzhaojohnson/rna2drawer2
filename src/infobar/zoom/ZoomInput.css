@@ -1,0 +1,25 @@
+.zoomInput {
+  margin: 0px 1px; /* margins are nonzero by default in Safari */
+
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 3px;
+
+  padding: 1px 3px;
+
+  color: #28282b;
+  text-align: center;
+
+  outline: none;
+}
+
+.zoomInput:hover {
+  border-color: rgb(136, 136, 207);
+}
+
+.zoomInput:focus {
+  border-color: rgb(82, 82, 175);
+
+  outline: none;
+}
