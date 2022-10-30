@@ -5,8 +5,8 @@
   border-style: solid;
   border-radius: 60px;
 
-  min-width: 44px;
-  min-height: 21px;
+  min-width: 42px;
+  min-height: 18px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 11px;
@@ -72,12 +72,12 @@
 .strokeLinecapSelect {
   border: 1px solid rgb(211, 211, 228);
   border-radius: 2px;
-  min-width: 149px;
+  min-width: 151px;
   min-height: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .strokeLinecapField {
