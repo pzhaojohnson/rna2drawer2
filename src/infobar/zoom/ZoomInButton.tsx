@@ -49,6 +49,7 @@ export function ZoomInButton(props: Props) {
   return (
     <div
       className={styles.zoomInButton}
+      title='Zoom in.'
       onClick={() => {
         zoomIn(props.app.strictDrawing.drawing);
         props.app.refresh();

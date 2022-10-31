@@ -49,6 +49,7 @@ export function ZoomOutButton(props: Props) {
   return (
     <div
       className={styles.zoomOutButton}
+      title='Zoom out.'
       onClick={() => {
         zoomOut(props.app.strictDrawing.drawing);
         props.app.refresh();
