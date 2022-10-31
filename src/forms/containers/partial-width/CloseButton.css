@@ -1,7 +1,7 @@
 .closeButton {
   margin: 0 0 0 4px;
-  width: 22px;
-  height: 22px;
+  width: 23px;
+  height: 23px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,8 +10,7 @@
 }
 
 .crossMark {
-  stroke: rgb(16, 16, 17);
-  fill: rgb(16, 16, 17);
+  stroke: rgb(21, 21, 23);
 }
 
 .closeButton:hover {
@@ -20,5 +19,12 @@
 
 .closeButton:hover .crossMark {
   stroke: #ffffff;
-  fill: #ffffff;
+}
+
+.closeButton:active {
+  background-color: rgb(207, 31, 31);
+}
+
+.closeButton:active .crossMark {
+  stroke: #ffffff;
 }

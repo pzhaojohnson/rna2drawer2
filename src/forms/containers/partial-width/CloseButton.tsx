@@ -2,23 +2,25 @@ import * as React from 'react';
 import styles from './CloseButton.css';
 
 function CrossMark() {
+  let props = {
+    xmlns: 'http://www.w3.org/2000/svg',
+    width: '11px',
+    height: '11px',
+    viewBox: '0 0 11 11',
+  };
+
+  let path = (
+    <path
+      className={styles.crossMark}
+      d='M 0.5 0.5 L 10.5 10.5 M 10.5 0.5 L 0.5 10.5'
+      strokeWidth='1'
+      strokeLinecap='round'
+    />
+  );
+
   return (
-    <svg
-      width="14px" height="14px" viewBox="0 0 96 96" overflow="hidden"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <clipPath id="clip0" >
-          <rect x="592" y="312" width="96" height="96" />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#clip0)" transform="translate(-592 -312)" >
-        <path
-          className={styles.crossMark}
-          d="M608.707 391.707 639 361.414 670.293 392.707 671.707 391.293 640.414 360 671.707 328.707 670.293 327.293 639 358.586 608.707 328.293 607.293 329.707 637.586 360 607.293 390.293 608.707 391.707Z"
-          strokeWidth="2.75"
-        />
-      </g>
+    <svg {...props} >
+      {path}
     </svg>
   );
 }
