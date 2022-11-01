@@ -35,6 +35,7 @@ export function BackwardButton(props: Props) {
         ${styles.backwardButton}
         ${props.canGoBackward() ? styles.enabled : styles.disabled}
       `}
+      title={props.canGoBackward() ? 'Go to previous form.' : undefined}
       onClick={() => {
         if (props.canGoBackward()) {
           props.goBackward();

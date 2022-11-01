@@ -34,6 +34,7 @@ export class CloseButton extends React.Component<Props> {
     return (
       <div
         className={styles.closeButton}
+        title='Close form.'
         onClick={this.props.onClick}
       >
         <CrossMark />

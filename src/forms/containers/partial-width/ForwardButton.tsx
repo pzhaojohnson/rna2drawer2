@@ -35,6 +35,7 @@ export function ForwardButton(props: Props) {
         ${styles.forwardButton}
         ${props.canGoForward() ? styles.enabled : styles.disabled}
       `}
+      title={props.canGoForward() ? 'Go to next form.' : undefined}
       onClick={() => {
         if (props.canGoForward()) {
           props.goForward();
