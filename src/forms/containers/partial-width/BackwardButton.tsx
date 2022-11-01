@@ -3,20 +3,27 @@ import styles from './BackwardButton.css';
 import { FormHistoryInterface as Props } from 'Forms/history/FormHistoryInterface';
 
 function BackwardIcon() {
+  let props = {
+    xmlns: 'http://www.w3.org/2000/svg',
+    width: '8px',
+    height: '12px',
+    viewBox: '0 0 8 12',
+  };
+
+  let path = (
+    <path
+      className={styles.backwardIcon}
+      d='M 6.25 1.75 L 1.75 6 L 6.25 10.25'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      fillOpacity='0'
+    />
+  );
+
   return (
-    <svg width="14px" height="14px" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" overflow="hidden" >
-      <defs>
-        <clipPath id="clip0" >
-          <rect x="592" y="312" width="96" height="96" />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#clip0)" transform="translate(-592 -312)" >
-        <path
-          className={styles.backwardIcon}
-          d="M651.947 388.191 623.697 359.935 651.947 331.684 656.19 335.926 632.181 359.935 656.191 383.949 651.947 388.191Z"
-          strokeWidth="2.5"
-        />
-      </g>
+    <svg {...props} >
+      {path}
     </svg>
   );
 }
