@@ -7,6 +7,6 @@
 .grayishLeftBorder {
   border-width: 0px 0px 0px 1px;
   border-style: solid;
-  border-color: #dedee4;
+  border-color: rgba(207, 207, 221, 0.95);
   border-radius: 0px 0px 0px 5px;
 }

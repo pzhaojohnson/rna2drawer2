@@ -20,7 +20,7 @@
 
 .droppedContainer {
   border-style: solid;
-  border-color: #dedee4;
+  border-color: rgba(207, 207, 221, 0.95);
   border-width: 1px 1px 1px 0px;
   border-radius: 0px 5px 5px 5px;
 
