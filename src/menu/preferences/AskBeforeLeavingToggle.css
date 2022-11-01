@@ -75,14 +75,14 @@
 }
 
 .off .pillContainer::before {
-  border-color: rgba(201, 201, 219, 0.99);
+  border-color: rgba(193, 193, 207, 0.99);
   background-color: white;
-  box-shadow: 0 3px 3px rgba(221, 221, 235, 0.16);
+  box-shadow: 0 3px 3px rgba(221, 221, 235, 0.09);
 }
 
 .off .text {
   font-weight: 500;
-  color: rgba(122, 122, 134, 0.99);
+  color: rgba(112, 112, 121, 0.99);
 }
 
 .off .spacer {
