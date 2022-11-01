@@ -9,7 +9,12 @@
   border-style: solid;
   border-color: white;
 
-  padding: 6px 24px;
+  height: 30px;
+  padding: 0px 24px;
+
+  display: flex;
+  align-items: center;
+
   background-color: transparent;
 }
 
