@@ -20,26 +20,26 @@
 }
 
 .enabled .text {
-  color: #151516;
+  color: #121213;
   cursor: pointer;
 }
 
 .disabled .text {
-  color: #a7a7b3;
+  color: #9999a3;
 }
 
 .keyBinding {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   user-select: none;
 }
 
 .enabled .keyBinding {
-  color: #505055;
+  color: #121213;
   cursor: pointer;
 }
 
 .disabled .keyBinding {
-  color: #c3c3ce;
+  color: #9999a3;
 }
