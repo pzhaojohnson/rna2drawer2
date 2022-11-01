@@ -23,7 +23,7 @@ export function EditDropdown(props: Props) {
     <Dropdown
       name='Edit'
       dropped={(
-        <div style={{ width: '297px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '301px', display: 'flex', flexDirection: 'column' }} >
           <UndoButton app={props.app} />
           <RedoButton app={props.app} />
           <DroppedSeparator />
