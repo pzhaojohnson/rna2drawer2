@@ -42,6 +42,7 @@ export function UsToTsButton(props: Props) {
           props.app.refresh();
         }
       }}
+      style={{ borderRadius: '0px 0px 4px 4px' }}
     />
   );
 }

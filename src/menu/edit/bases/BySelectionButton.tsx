@@ -17,6 +17,7 @@ export function BySelectionButton(props: Props) {
         drawingInteraction.editingTool.editingType = Base;
         drawingInteraction.editingTool.renderForm();
       }}
+      style={{ borderRadius: '0px 4px 0px 0px' }}
     />
   );
 }

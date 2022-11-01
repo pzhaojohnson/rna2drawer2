@@ -36,6 +36,7 @@ export function ExportLayoutStructureButton(props: Props) {
           contents: '>' + ids + '\n' + seq + '\n' + dtbr,
         });
       }}
+      style={{ borderRadius: '0px 0px 4px 4px' }}
     />
   );
 }

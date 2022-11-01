@@ -20,6 +20,7 @@ export function SaveButton(props: Props) {
         });
       }}
       disabled={props.app.strictDrawing.isEmpty()}
+      style={{ borderRadius: '0px 0px 4px 4px' }}
     />
   );
 }

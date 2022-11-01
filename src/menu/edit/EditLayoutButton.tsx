@@ -19,6 +19,7 @@ export function EditLayoutButton(props: Props) {
           <EditLayoutForm {...formProps} app={props.app} />
         ), { key: formKey });
       }}
+      style={{ borderRadius: '0px 0px 4px 4px' }}
     />
   );
 }

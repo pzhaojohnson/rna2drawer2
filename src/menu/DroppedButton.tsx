@@ -20,9 +20,15 @@ export type Props = {
   keyBinding?: string;
   checked?: boolean;
   disabled?: boolean;
+  style?: React.CSSProperties;
 }
 
 export function DroppedButton(props: Props) {
+  let style: React.CSSProperties = {
+    display: 'flex', flexDirection: 'row', alignItems: 'center',
+    ...props.style,
+  };
+
   return (
     <div
       className={`
@@ -34,7 +40,7 @@ export function DroppedButton(props: Props) {
           props.onClick();
         }
       }}
-      style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+      style={style}
     >
       <p className={styles.text} >
         {props.text}

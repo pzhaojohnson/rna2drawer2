@@ -19,6 +19,7 @@ export function EditSequenceIdButton(props: Props) {
           <SequenceIdForm {...formProps} app={props.app} />
         ), { key: formKey });
       }}
+      style={{ borderRadius: '0px 4px 0px 0px' }}
     />
   );
 }
