@@ -9,7 +9,7 @@
   border-style: solid;
   border-color: white;
 
-  padding: 6px 20px;
+  padding: 6px 24px;
   background-color: transparent;
 }
 
@@ -25,12 +25,12 @@
 }
 
 .enabled .buttonText {
-  color: #313135;
+  color: rgb(19, 19, 20);
   cursor: pointer;
 }
 
 .disabled .buttonText {
-  color: #95959f;
+  color: rgba(146, 146, 157, 0.8);
 }
 
 .enabled:hover .button {
