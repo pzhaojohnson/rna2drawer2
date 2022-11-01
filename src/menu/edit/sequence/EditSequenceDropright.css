@@ -1,7 +1,7 @@
 .lightGrayishLeftBorder {
   border-width: 0px 0px 0px 1px;
   border-style: solid;
-  border-color: #f7f7f7;
+  border-color: rgba(219, 219, 232, 0.23);
 }
 
 .grayishLeftBorder {

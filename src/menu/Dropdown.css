@@ -39,7 +39,7 @@
 }
 
 .enabled:hover .button {
-  background-color: #f7f7f7;
+  background-color: rgba(219, 219, 232, 0.23);
 }
 
 .droppedContainer {
