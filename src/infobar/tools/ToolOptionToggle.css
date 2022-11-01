@@ -27,9 +27,9 @@
 
 .toolOptionToggle::before {
   content: "";
-  border: 1px solid rgba(209, 209, 227, 0.99);
+  border: 1px solid rgba(196, 196, 212, 0.99);
   border-radius: 1000px;
-  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.21);
+  box-shadow: 0 3px 3px rgba(224, 224, 237, 0.1);
 
   position: absolute;
   top: 0px;
