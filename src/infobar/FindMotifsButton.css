@@ -40,13 +40,13 @@
 }
 
 .findMotifsButtonText {
-  margin-left: 4px;
+  margin-left: 5px;
 
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   font-style: normal;
-  color: #0a0a45;
+  color: #050530;
 
   /* for when the infobar is larger than its container */
   white-space: nowrap;
