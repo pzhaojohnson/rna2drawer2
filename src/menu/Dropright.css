@@ -3,7 +3,8 @@
 }
 
 .button {
-  padding: 8px 20px;
+  height: 36px;
+  padding: 0px 20px;
   background-color: white;
   cursor: pointer;
 }
