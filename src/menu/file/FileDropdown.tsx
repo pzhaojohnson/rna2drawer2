@@ -16,7 +16,7 @@ export function FileDropdown(props: Props) {
     <Dropdown
       name='File'
       dropped={
-        <div style={{ width: '297px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '299px', display: 'flex', flexDirection: 'column' }} >
           <WelcomeButton app={props.app} />
           <DroppedSeparator />
           <NewButton app={props.app} />

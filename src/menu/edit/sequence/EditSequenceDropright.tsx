@@ -16,7 +16,7 @@ export function EditSequenceDropright(props: Props) {
     <Dropright
       name='Sequence'
       dropped={
-        <div style={{ width: '292px', display: 'flex', flexDirection: 'column' }} >
+        <div style={{ width: '294px', display: 'flex', flexDirection: 'column' }} >
           <div className={styles.lightGrayishLeftBorder} >
             <EditSequenceIdButton app={props.app} />
           </div>
