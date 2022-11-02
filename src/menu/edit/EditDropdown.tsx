@@ -33,9 +33,9 @@ export function EditDropdown(props: Props) {
           <EditBasesDropright app={props.app} />
           <DroppedSeparator />
           <EditPrimaryBondsButton app={props.app} />
-          <DroppedSeparator />
           <EditSecondaryBondsButton app={props.app} />
           <EditTertiaryBondsButton app={props.app} />
+          <DroppedSeparator />
           <ApplySubstructureButton app={props.app} />
           <DroppedSeparator />
           <EditNumberingButton app={props.app} />
