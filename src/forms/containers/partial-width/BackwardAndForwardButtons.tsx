@@ -12,6 +12,7 @@ export function BackwardAndForwardButtons(props: Props) {
   return (
     <div className={`${styles.backwardAndForwardButtons}`} >
       <BackwardButton {...props} />
+      <div style={{ width: '2px' }} />
       <ForwardButton {...props} />
     </div>
   );
