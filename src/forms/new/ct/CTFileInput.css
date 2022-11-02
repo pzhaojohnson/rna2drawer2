@@ -21,9 +21,9 @@
 .ctFileInput::before {
   content: "";
 
-  border: 1px solid #d3d3e7;
+  border: 1px solid #cbcbdd;
   border-radius: 60px;
-  box-shadow: 0 3px 3px rgba(233, 233, 244, 0.2);
+  box-shadow: 0 3px 3px rgba(233, 233, 244, 0.1);
 
   position: absolute;
   top: 0px;
