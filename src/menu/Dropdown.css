@@ -21,7 +21,7 @@
 .buttonText {
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   user-select: none;
 }
 
@@ -30,12 +30,12 @@
 }
 
 .enabled .buttonText {
-  color: rgb(19, 19, 20);
+  color: #121213;
   cursor: pointer;
 }
 
 .disabled .buttonText {
-  color: rgba(146, 146, 157, 0.8);
+  color: #9999a3;
 }
 
 .enabled:hover .button {
