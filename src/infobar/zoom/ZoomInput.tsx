@@ -87,8 +87,12 @@ export class ZoomInput extends React.Component<Props> {
         type='text'
         className={styles.zoomInput}
         value={this.state.value}
-        onChange={event => this.setState({ value: event.target.value })}
-        onFocus={event => event.target.select()}
+        onChange={event => {
+          this.setState({ value: event.target.value });
+        }}
+        onFocus={event => {
+          event.target.select();
+        }}
         onBlur={() => {
           this.submit();
           this.props.app.refresh();
