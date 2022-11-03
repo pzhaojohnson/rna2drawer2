@@ -18,11 +18,8 @@ export type Props = {
   app: App;
 }
 
-// a zoom percentage
-type Value = string;
-
 type State = {
-  value: Value;
+  value: string;
 }
 
 export class ZoomInput extends React.Component<Props> {
