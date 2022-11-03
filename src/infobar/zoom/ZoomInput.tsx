@@ -115,22 +115,22 @@ export class ZoomInput extends React.Component<Props> {
   }
 
   submit() {
-    let v = Number.parseFloat(this.state.value);
+    let zoomPercentage = Number.parseFloat(this.state.value);
 
-    if (!Number.isFinite(v)) {
+    if (!Number.isFinite(zoomPercentage)) {
       return;
     }
 
-    v = round(v, 0);
+    zoomPercentage = round(zoomPercentage, 0);
 
     // check after rounding
-    if (v <= 0) {
+    if (zoomPercentage <= 0) {
       return;
     }
 
     // set zoom
     let drawing = new DrawingWrapper(this.props.app.drawing);
-    let zoom = v / 100;
+    let zoom = zoomPercentage / 100;
     zoom = round(zoom, 2);
     drawing.zoom = zoom;
   }
