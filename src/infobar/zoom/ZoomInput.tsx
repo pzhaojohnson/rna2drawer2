@@ -68,9 +68,7 @@ export class ZoomInput extends React.Component<Props> {
       value = zoomPercentage + '%';
     }
 
-    this.state = {
-      value: value,
-    };
+    this.state = { value };
   }
 
   render() {
