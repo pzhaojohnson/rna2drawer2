@@ -99,12 +99,10 @@ export class ZoomInput extends React.Component<Props> {
         }}
         onBlur={() => {
           this.submit();
-          this.props.app.refresh();
         }}
         onKeyUp={event => {
           if (event.key.toLowerCase() == 'enter') {
             this.submit();
-            this.props.app.refresh();
           }
         }}
         style={{
@@ -119,23 +117,28 @@ export class ZoomInput extends React.Component<Props> {
   }
 
   submit() {
-    let zoomPercentage = Number.parseFloat(this.state.value);
+    try {
+      let zoomPercentage = Number.parseFloat(this.state.value);
 
-    if (!Number.isFinite(zoomPercentage)) {
-      return;
+      if (!Number.isFinite(zoomPercentage)) {
+        throw new Error();
+      }
+
+      zoomPercentage = round(zoomPercentage, 0);
+
+      // check after rounding
+      if (zoomPercentage <= 0) {
+        throw new Error();
+      }
+
+      // set the zoom of the drawing
+      let drawing = new DrawingWrapper(this.props.app.drawing);
+      let zoom = zoomPercentage / 100;
+      zoom = round(zoom, 2);
+      drawing.zoom = zoom;
+      this.props.app.refresh();
+    } catch {
+      this.setState({ value: this.initialValue });
     }
-
-    zoomPercentage = round(zoomPercentage, 0);
-
-    // check after rounding
-    if (zoomPercentage <= 0) {
-      return;
-    }
-
-    // set the zoom of the drawing
-    let drawing = new DrawingWrapper(this.props.app.drawing);
-    let zoom = zoomPercentage / 100;
-    zoom = round(zoom, 2);
-    drawing.zoom = zoom;
   }
 }
