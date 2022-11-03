@@ -117,6 +117,8 @@ export class ZoomInput extends React.Component<Props> {
   }
 
   submit() {
+    let drawing = new DrawingWrapper(this.props.app.drawing);
+
     try {
       let zoomPercentage = Number.parseFloat(this.state.value);
 
@@ -132,7 +134,6 @@ export class ZoomInput extends React.Component<Props> {
       }
 
       // set the zoom of the drawing
-      let drawing = new DrawingWrapper(this.props.app.drawing);
       let zoom = zoomPercentage / 100;
       zoom = round(zoom, 2);
       drawing.zoom = zoom;
