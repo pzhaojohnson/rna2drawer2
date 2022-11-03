@@ -1,15 +1,44 @@
 import type { App } from 'App';
 
-import { zoom } from 'Draw/zoom';
-import { setZoom } from 'Draw/zoom';
+import * as Zoom from 'Draw/zoom';
 
 import * as React from 'react';
 
 import styles from './ZoomInput.css';
 
+import { isNullish } from 'Values/isNullish';
+
 import { round } from 'Math/round';
 
 import { measureTextWidth } from 'Utilities/measureTextWidth';
+
+type Drawing = typeof App.prototype.drawing;
+
+class DrawingWrapper {
+  /**
+   * The wrapped drawing.
+   */
+  readonly drawing: Drawing;
+
+  constructor(drawing: Drawing) {
+    this.drawing = drawing;
+  }
+
+  get zoom() {
+    return Zoom.zoom(this.drawing.drawing);
+  }
+
+  /**
+   * Does nothing if the provided value is nullish or nonfinite.
+   */
+  set zoom(zoom: ReturnType<typeof Zoom.zoom>) {
+    if (isNullish(zoom) || !Number.isFinite(zoom)) {
+      return;
+    }
+
+    Zoom.setZoom(this.drawing.drawing, zoom);
+  }
+}
 
 export type Props = {
   /**
@@ -28,15 +57,15 @@ export class ZoomInput extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    let drawing = props.app.strictDrawing.drawing;
-    let z = zoom(drawing);
+    let drawing = new DrawingWrapper(props.app.drawing);
+    let zoom = drawing.zoom;
 
     let value = '';
 
-    if (typeof z == 'number' && Number.isFinite(z)) {
-      let v = 100 * z;
-      v = round(v, 0);
-      value = v + '%';
+    if (typeof zoom == 'number' && Number.isFinite(zoom)) {
+      let zoomPercentage = 100 * zoom;
+      zoomPercentage = round(zoomPercentage, 0);
+      value = zoomPercentage + '%';
     }
 
     this.state = {
@@ -98,9 +127,9 @@ export class ZoomInput extends React.Component<Props> {
     }
 
     // set zoom
-    let drawing = this.props.app.strictDrawing.drawing;
-    let z = v / 100;
-    z = round(z, 2);
-    setZoom(drawing, z);
+    let drawing = new DrawingWrapper(this.props.app.drawing);
+    let zoom = v / 100;
+    zoom = round(zoom, 2);
+    drawing.zoom = zoom;
   }
 }
