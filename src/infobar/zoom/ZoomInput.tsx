@@ -1,8 +1,14 @@
-import * as React from 'react';
-import styles from './ZoomInput.css';
 import type { App } from 'App';
-import { zoom, setZoom } from 'Draw/zoom';
+
+import { zoom } from 'Draw/zoom';
+import { setZoom } from 'Draw/zoom';
+
+import * as React from 'react';
+
+import styles from './ZoomInput.css';
+
 import { round } from 'Math/round';
+
 import { measureTextWidth } from 'Utilities/measureTextWidth';
 
 export type Props = {
