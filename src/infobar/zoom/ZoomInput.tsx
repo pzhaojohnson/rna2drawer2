@@ -128,7 +128,7 @@ export class ZoomInput extends React.Component<Props> {
       return;
     }
 
-    // set zoom
+    // set the zoom of the drawing
     let drawing = new DrawingWrapper(this.props.app.drawing);
     let zoom = zoomPercentage / 100;
     zoom = round(zoom, 2);
