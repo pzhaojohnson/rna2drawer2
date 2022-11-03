@@ -133,9 +133,10 @@ export class ZoomInput extends React.Component<Props> {
         throw new Error();
       }
 
-      // set the zoom of the drawing
       let zoom = zoomPercentage / 100;
       zoom = round(zoom, 2);
+
+      // update the zoom of the drawing
       drawing.zoom = zoom;
       this.props.app.refresh();
     } catch {
