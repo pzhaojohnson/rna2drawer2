@@ -60,7 +60,7 @@ export class ZoomInput extends React.Component<Props> {
     let drawing = new DrawingWrapper(props.app.drawing);
     let zoom = drawing.zoom;
 
-    let value = '';
+    let value = ''; // default value
 
     if (typeof zoom == 'number' && Number.isFinite(zoom)) {
       let zoomPercentage = 100 * zoom;
