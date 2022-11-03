@@ -12,6 +12,9 @@ import { round } from 'Math/round';
 import { measureTextWidth } from 'Utilities/measureTextWidth';
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 }
 
