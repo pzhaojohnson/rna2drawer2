@@ -54,7 +54,7 @@ export function OnlyExpandToggle(props: Props) {
       onMouseLeave={() => {
         drawingInteraction.overlaidMessageContainer.clear();
       }}
-      style={{ width: '117px' }}
+      style={{ width: '119px' }}
     >
       Only Expand
     </ToolOptionToggle>
