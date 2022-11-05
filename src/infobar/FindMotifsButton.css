@@ -1,11 +1,11 @@
 .findMotifsButton {
-  margin: 0px 16px 0px 8px;
+  margin: 0px 17px 0px 8px;
 
   display: flex;
   flex-direction: row;
   align-items: center;
 
-  padding: 3px 25px;
+  padding: 3px 26px;
 
   /* use before pseudo-element for border and box shadow */
   border: none;
