@@ -6,7 +6,6 @@ function RightCaret() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 3.89 6.72"
-      overflow="hidden"
       style={{ height: '12px' }}
     >
       <path
