@@ -73,7 +73,7 @@
 }
 
 .closedToolSelect:hover .currentToolView::before {
-  transform: scale(1.05);
+  transform: scale(1.06);
   transition: transform 0.25s;
 }
 
@@ -126,7 +126,7 @@
 }
 
 .toggledToolButton:hover::before {
-  transform: scale(1.05);
+  transform: scale(1.06);
   transition: transform 0.25s;
 }
 
