@@ -17,10 +17,10 @@ export function EditSequenceDropright(props: Props) {
       name='Sequence'
       dropped={
         <div style={{ width: '294px', display: 'flex', flexDirection: 'column' }} >
-          <div className={styles.lightGrayishLeftBorder} >
+          <div className={styles.topContainer} >
             <EditSequenceIdButton app={props.app} />
           </div>
-          <div className={styles.grayishLeftBorder} >
+          <div className={styles.bottomContainer} >
             <DroppedSeparator />
             <AddSubsequenceButton app={props.app} />
             <RemoveSubsequenceButton app={props.app} />

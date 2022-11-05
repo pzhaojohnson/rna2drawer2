@@ -21,10 +21,10 @@ export function EditBasesDropright(props: Props) {
       name='Bases'
       dropped={
         <div style={{ width: '298px', display: 'flex', flexDirection: 'column' }} >
-          <div className={styles.lightGrayishLeftBorder} >
+          <div className={styles.topContainer} >
             <BySelectionButton app={props.app} />
           </div>
-          <div className={styles.grayishLeftBorder} >
+          <div className={styles.bottomContainer} >
             <DroppedSeparator />
             <ByCharacterButton app={props.app} />
             <ByDataButton app={props.app} />

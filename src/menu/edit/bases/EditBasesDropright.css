@@ -1,12 +1,15 @@
-.lightGrayishLeftBorder {
-  border-width: 0px 0px 0px 1px;
+.topContainer {
+  border-width: 1px 1px 0px 1px;
   border-style: solid;
-  border-color: rgba(219, 219, 232, 0.19);
+  border-top-color: rgba(207, 207, 221, 0.95);
+  border-right-color: rgba(207, 207, 221, 0.95);
+  border-left-color: rgba(219, 219, 232, 0.19);
+  border-radius: 0px 5px 0px 0px;
 }
 
-.grayishLeftBorder {
-  border-width: 0px 0px 0px 1px;
+.bottomContainer {
+  border-width: 0px 1px 1px 1px;
   border-style: solid;
   border-color: rgba(207, 207, 221, 0.95);
-  border-radius: 0px 0px 0px 5px;
+  border-radius: 0px 0px 5px 5px;
 }
