@@ -46,7 +46,7 @@
 .check {}
 
 .askBeforeLeavingToggle:hover .pillContainer::before {
-  transform: scale(1.03);
+  transform: scale(1.035);
   transition: transform 0.25s;
 }
 
