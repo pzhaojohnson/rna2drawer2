@@ -5,12 +5,12 @@ function RightCaret() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 3.89 6.72"
-      style={{ height: '12px' }}
+      width="7px" height="12px"
+      viewBox="0 0 7 12"
     >
       <path
-        d="M 0.53 0.53 L 3.36 3.36 L 0.53 6.19"
-        stroke="#38383c" strokeWidth="0.75"
+        d="M 1.25 1 L 6.25 6 L 1.25 11"
+        stroke="#38383c" strokeWidth="1.5"
         strokeLinecap="round" strokeLinejoin="round"
         fillOpacity="0"
       />
