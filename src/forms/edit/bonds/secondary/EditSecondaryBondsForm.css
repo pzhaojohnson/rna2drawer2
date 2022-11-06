@@ -36,7 +36,7 @@
   font-size: 12px;
   font-weight: 500;
   font-style: normal;
-  color: #0c0c63;
+  color: #0c0c60;
 
   cursor: pointer;
   user-select: none;
@@ -44,9 +44,9 @@
 
 .selectSecondaryBondsButton::before {
   content: "";
-  border: 1px solid rgba(210, 210, 230, 0.99);
+  border: 1px solid rgba(201, 201, 221, 0.99);
   border-radius: 40px;
-  box-shadow: 0 3px 3px rgba(227, 227, 241, 0.18);
+  box-shadow: 0 3px 3px rgba(224, 224, 238, 0.05);
 
   position: absolute;
   top: 0px;
