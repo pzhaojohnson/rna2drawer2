@@ -28,6 +28,10 @@
   cursor: pointer;
 }
 
+.enabled:hover .text {
+  text-decoration: underline;
+}
+
 .disabled .text {
   color: #9999a3;
 }

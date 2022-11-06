@@ -39,6 +39,10 @@
   background-color: rgba(219, 219, 232, 0.18);
 }
 
+.dropright:hover .buttonText {
+  text-decoration: underline;
+}
+
 .dropright:hover .droppedContainer {
   display: block;
 }

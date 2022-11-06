@@ -34,6 +34,10 @@
   cursor: pointer;
 }
 
+.enabled:hover .buttonText {
+  text-decoration: underline;
+}
+
 .disabled .buttonText {
   color: #9999a3;
 }
