@@ -9,11 +9,11 @@
 }
 
 .enabled:hover {
-  background-color: rgba(219, 219, 232, 0.18);
+  background-color: rgba(219, 219, 232, 0.17);
 }
 
 .enabled:active {
-  background-color: rgba(205, 205, 221, 0.33);
+  background-color: rgba(204, 204, 221, 0.26);
 }
 
 .text {
