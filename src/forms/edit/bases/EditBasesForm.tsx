@@ -22,6 +22,7 @@ import { StrokeField as OutlineStrokeField } from './outlines/StrokeField';
 import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWidthField';
 import { FillField as OutlineFillField } from './outlines/FillField';
 import { StrokeDasharrayField as OutlineStrokeDasharrayField } from './outlines/StrokeDasharrayField';
+import { ForwardBackwardButtons as OutlineForwardBackwardButtons } from './outlines/ForwardBackwardButtons';
 import { NumberingField } from './NumberingField';
 
 function DrawingHasNoBasesNotes() {
@@ -127,6 +128,7 @@ export function EditBasesForm(props: Props) {
               <OutlineStrokeField {...props} outlines={outlines} />
               <OutlineStrokeWidthField {...props} outlines={outlines} />
               <OutlineStrokeDasharrayField {...props} outlines={outlines} />
+              <OutlineForwardBackwardButtons {...{ ...props, outlines }} />
             </div>
           )}
           <NumberingField {...props} />
