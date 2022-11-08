@@ -15,6 +15,7 @@ import { FillField } from './FillField';
 import { FontFamilyField } from './FontFamilyField';
 import { FontSizeField } from './FontSizeField';
 import { BoldField } from './BoldField';
+import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 import { OutlineField } from './OutlineField';
 import { RadiusField as OutlineRadiusField } from './outlines/RadiusField';
 import { StrokeField as OutlineStrokeField } from './outlines/StrokeField';
@@ -22,7 +23,6 @@ import { StrokeWidthField as OutlineStrokeWidthField } from './outlines/StrokeWi
 import { FillField as OutlineFillField } from './outlines/FillField';
 import { StrokeDasharrayField as OutlineStrokeDasharrayField } from './outlines/StrokeDasharrayField';
 import { NumberingField } from './NumberingField';
-import { ForwardBackwardButtons } from './ForwardBackwardButtons';
 
 function DrawingHasNoBasesNotes() {
   return (
@@ -118,6 +118,7 @@ export function EditBasesForm(props: Props) {
           <FontFamilyField {...props} />
           <FontSizeField {...props} />
           <BoldField {...props} />
+          <ForwardBackwardButtons {...props} />
           <OutlineField {...props} />
           {!props.bases.every(b => b.outline) ? null : (
             <div style={{ margin: '8px 0 0 12px', display: 'flex', flexDirection: 'column' }} >
@@ -129,7 +130,6 @@ export function EditBasesForm(props: Props) {
             </div>
           )}
           <NumberingField {...props} />
-          <ForwardBackwardButtons {...props} />
         </div>
       )}
     </PartialWidthContainer>

@@ -4,9 +4,6 @@ import type { Base } from 'Draw/bases/Base';
 import * as React from 'react';
 import { ForwardBackwardButtons as _ForwardBackwardButtons } from 'Forms/buttons/ForwardBackwardButtons';
 
-import { bringToFront } from 'Draw/bases/z';
-import { sendToBack } from 'Draw/bases/z';
-
 export type Props = {
   app: App; // a reference to the whole app
 
@@ -18,15 +15,15 @@ export function ForwardBackwardButtons(props: Props) {
     <_ForwardBackwardButtons
       bringToFront={() => {
         props.app.pushUndo();
-        props.bases.forEach(b => bringToFront(b));
+        props.bases.forEach(b => b.text.front());
         props.app.refresh();
       }}
       sendToBack={() => {
         props.app.pushUndo();
-        props.bases.forEach(b => sendToBack(b));
+        props.bases.forEach(b => b.text.back());
         props.app.refresh();
       }}
-      style={{ margin: '24px 0px 0px 1px' }}
+      style={{ margin: '9px 0px 0px 1px' }}
     />
   );
 }
