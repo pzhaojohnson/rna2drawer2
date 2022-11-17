@@ -68,7 +68,7 @@ export function EnterDotBracketSection(props: Props): React.ReactElement {
           }}
         />
       </div>
-      <div style={{ marginTop: '24px' }} >
+      <div style={{ marginTop: '23px' }} >
         <SequenceIdField
           initialValue={sequenceId}
           set={id => setSequenceId(id)}
