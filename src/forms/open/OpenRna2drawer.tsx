@@ -112,7 +112,7 @@ export function OpenRna2drawer(props: Props) {
               alignItems: 'center',
             }}
           >
-            <div className={formStyles.fileInput} >
+            <div className={formStyles.fileInput} onClick={() => hiddenFileInput.current?.click()} >
               <input
                 ref={hiddenFileInput}
                 type='file'
@@ -154,7 +154,6 @@ export function OpenRna2drawer(props: Props) {
               />
               <p
                 className={formStyles.fileInputLabel}
-                onClick={() => hiddenFileInput.current?.click()}
                 style={{
                   // make file name text a slightly different color
                   color: firstFile(hiddenFileInput) ? '#09095d' : undefined,
