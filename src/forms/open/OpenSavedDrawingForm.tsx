@@ -14,7 +14,7 @@ import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
 
 import { OldFileNotes } from './OldFileNotes';
 
-import parseFileExtension from 'Parse/parseFileExtension';
+import { parseFileExtension } from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
 
 import { open } from './open';
