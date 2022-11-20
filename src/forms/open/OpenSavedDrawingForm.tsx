@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useRef } from 'react';
 
-import formStyles from './OpenSavedDrawingForm.css';
+import styles from './OpenSavedDrawingForm.css';
 
 import { FloatingDrawingsContainer } from 'Forms/containers/floating-drawings/FloatingDrawingsContainer';
 
@@ -154,7 +154,7 @@ export function OpenSavedDrawingForm(props: Props) {
               alignItems: 'center',
             }}
           >
-            <div className={formStyles.fileInput} onClick={() => hiddenFileInput.current?.click()} >
+            <div className={styles.fileInput} onClick={() => hiddenFileInput.current?.click()} >
               <input
                 ref={hiddenFileInput}
                 type='file'
@@ -195,7 +195,7 @@ export function OpenSavedDrawingForm(props: Props) {
                 style={{ display: 'none' }}
               />
               <p
-                className={formStyles.fileInputLabel}
+                className={styles.fileInputLabel}
                 style={{
                   // make file name text a slightly different color
                   color: firstFile(hiddenFileInput) ? '#09095d' : undefined,
@@ -204,7 +204,7 @@ export function OpenSavedDrawingForm(props: Props) {
                 {firstFile(hiddenFileInput)?.name ?? (
                   <span>
                     Upload a file with
-                    <span className={formStyles.rna2drawerExtension} >&nbsp;.rna2drawer&nbsp;</span>
+                    <span className={styles.rna2drawerExtension} >&nbsp;.rna2drawer&nbsp;</span>
                     extension...
                   </span>
                 )}
