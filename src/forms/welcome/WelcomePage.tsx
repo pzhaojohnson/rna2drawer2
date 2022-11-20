@@ -7,7 +7,7 @@ import { Header } from './Header';
 import { DrawingSlideshow } from './drawings/DrawingSlideshow';
 
 import { CreateNewDrawingForm } from 'Forms/new/CreateNewDrawingForm';
-import { OpenRna2drawer } from 'Forms/open/OpenRna2drawer';
+import { OpenSavedDrawingForm } from 'Forms/open/OpenSavedDrawingForm';
 
 export type Props = {
   /**
@@ -42,7 +42,7 @@ function OpenButton(props: Props) {
     <p
       className={styles.newAndOpenButtons}
       onClick={() => props.app.formContainer.renderForm(formProps => (
-        <OpenRna2drawer app={props.app} close={formProps.unmount} />
+        <OpenSavedDrawingForm app={props.app} close={formProps.unmount} />
       ))}
     >
       Open a Saved Drawing

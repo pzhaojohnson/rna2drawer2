@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
-import formStyles from './OpenRna2drawer.css';
+import formStyles from './OpenSavedDrawingForm.css';
 import { ErrorMessage } from 'Forms/ErrorMessage';
 import { FloatingDrawingsContainer } from 'Forms/containers/floating-drawings/FloatingDrawingsContainer';
 import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
@@ -72,7 +72,7 @@ export type Props = {
   close: () => void;
 }
 
-export function OpenRna2drawer(props: Props) {
+export function OpenSavedDrawingForm(props: Props) {
   let hiddenFileInput = useRef<HTMLInputElement>(null);
 
   let [errorMessage, setErrorMessage] = useState('');

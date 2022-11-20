@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DroppedButton } from 'Menu/DroppedButton';
 import type { App } from 'App';
-import { OpenRna2drawer } from 'Forms/open/OpenRna2drawer';
+import { OpenSavedDrawingForm } from 'Forms/open/OpenSavedDrawingForm';
 import { openNewTabOfApp } from 'Utilities/openNewTabOfApp';
 
 export type Props = {
@@ -15,7 +15,7 @@ export function OpenButton(props: Props) {
       onClick={() => {
         if (props.app.strictDrawing.isEmpty()) {
           props.app.formContainer.renderForm(formProps => (
-            <OpenRna2drawer
+            <OpenSavedDrawingForm
               app={props.app}
               close={formProps.unmount}
             />

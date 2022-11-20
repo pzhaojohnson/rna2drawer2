@@ -2,7 +2,7 @@ import { App } from 'App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import React from 'react';
 import { mount } from 'enzyme';
-import { OpenRna2drawer } from './OpenRna2drawer';
+import { OpenSavedDrawingForm } from './OpenSavedDrawingForm';
 
 let app = null;
 
@@ -11,5 +11,5 @@ beforeEach(() => {
 });
 
 it('renders', () => {
-  mount(<OpenRna2drawer app={app} close={jest.fn()} />);
+  mount(<OpenSavedDrawingForm app={app} close={jest.fn()} />);
 });
