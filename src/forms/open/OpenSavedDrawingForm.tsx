@@ -106,7 +106,7 @@ export function OpenSavedDrawingForm(props: Props) {
 
   let [errorMessageString, setErrorMessageString] = useState('');
 
-  // should be incremented every time the error message is set
+  // to be incremented when the error message is set
   // (to trigger error message animations)
   let [errorMessageKey, setErrorMessageKey] = useState(0);
 
