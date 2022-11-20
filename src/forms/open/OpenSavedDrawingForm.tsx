@@ -1,14 +1,24 @@
-import * as React from 'react';
-import { useState, useRef } from 'react';
-import formStyles from './OpenSavedDrawingForm.css';
-import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
-import { FloatingDrawingsContainer } from 'Forms/containers/floating-drawings/FloatingDrawingsContainer';
-import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
-import { OldFileNotes } from './OldFileNotes';
 import type { App } from 'App';
-import { open } from './open';
+
+import * as React from 'react';
+import { useState } from 'react';
+import { useRef } from 'react';
+
+import formStyles from './OpenSavedDrawingForm.css';
+
+import { FloatingDrawingsContainer } from 'Forms/containers/floating-drawings/FloatingDrawingsContainer';
+
+import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
+
+import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
+
+import { OldFileNotes } from './OldFileNotes';
+
 import parseFileExtension from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
+
+import { open } from './open';
+
 import { createWaitOverlay } from 'Utilities/createWaitOverlay';
 
 /**
