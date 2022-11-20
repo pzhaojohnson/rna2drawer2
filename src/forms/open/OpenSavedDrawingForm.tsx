@@ -112,6 +112,12 @@ export function OpenSavedDrawingForm(props: Props) {
 
   let [showDetails, setShowDetails] = useState(false);
 
+  let errorMessage = errorMessageString ? (
+    <ErrorMessage key={errorMessageKey} >
+      {errorMessageString}
+    </ErrorMessage>
+  ) : null;
+
   let detailsToggleSpacer = (
     <div style={{ height: errorMessageString ? '18px' : '42px' }} />
   );
@@ -194,11 +200,7 @@ export function OpenSavedDrawingForm(props: Props) {
                 )}
               </p>
             </div>
-            {!errorMessageString ? null : (
-              <ErrorMessage key={errorMessageKey} >
-                {errorMessageString}
-              </ErrorMessage>
-            )}
+            {errorMessage}
             {detailsToggleSpacer}
             {detailsToggle}
             {oldFileNotes}
