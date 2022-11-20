@@ -29,21 +29,33 @@ function updateDrawingTitle(app: App, fileName: string) {
 }
 
 function Header() {
+  let title = (
+    <p
+      style={{
+        margin: '0px 92px',
+        fontSize: '24px', fontWeight: 600, color: '#151516',
+      }}
+    >
+      Open a Saved Drawing
+    </p>
+  );
+
+  let underline = (
+    <div
+      style={{
+        marginTop: '8px',
+        height: '0px',
+        borderWidth: '0px 0px 1px 0px',
+        borderStyle: 'solid',
+        borderColor: 'hsla(240, 23%, 88%, 1)',
+      }}
+    />
+  );
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
-      <p style={{ margin: '0px 92px', fontSize: '24px', fontWeight: 600, color: '#151516' }} >
-        Open a Saved Drawing
-      </p>
-      <div style={{ marginTop: '8px' }} >
-        <div
-          style={{
-            height: '0px',
-            borderWidth: '0px 0px 1px 0px',
-            borderStyle: 'solid',
-            borderColor: 'hsla(240, 23%, 88%, 1)',
-          }}
-        />
-      </div>
+      {title}
+      {underline}
     </div>
   );
 }
