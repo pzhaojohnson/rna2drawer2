@@ -1,15 +1,41 @@
 import { App } from 'App';
-import { NodeSVG } from 'Draw/svg/NodeSVG';
-import React from 'react';
-import { mount } from 'enzyme';
+
+import * as SVG from 'Draw/svg/NodeSVG';
+
+import * as React from 'react';
+
+import { render } from 'react-dom';
+import { unmountComponentAtNode } from 'react-dom';
+
 import { OpenSavedDrawingForm } from './OpenSavedDrawingForm';
 
 let app = null;
 
+let container = null;
+
 beforeEach(() => {
-  app = new App({ SVG: { SVG: NodeSVG } });
+  app = new App({ SVG });
+  app.appendTo(document.body);
+
+  container = document.createElement('div');
+  document.body.appendChild(container);
 });
 
-it('renders', () => {
-  mount(<OpenSavedDrawingForm app={app} close={jest.fn()} />);
+afterEach(() => {
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+
+  app.remove();
+  app = null;
+});
+
+describe('OpenSavedDrawingForm component', () => {
+  it('renders', () => {
+    let props = {
+      app,
+      close: jest.fn(),
+    };
+    render(<OpenSavedDrawingForm {...props} />, container);
+  });
 });
