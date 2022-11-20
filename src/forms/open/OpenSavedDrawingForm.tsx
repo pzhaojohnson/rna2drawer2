@@ -104,7 +104,7 @@ export type Props = {
 export function OpenSavedDrawingForm(props: Props) {
   let hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  let [errorMessage, setErrorMessage] = useState('');
+  let [errorMessageString, setErrorMessageString] = useState('');
 
   // should be incremented every time the error message is set
   // (to trigger error message animations)
@@ -113,7 +113,7 @@ export function OpenSavedDrawingForm(props: Props) {
   let [showDetails, setShowDetails] = useState(false);
 
   let detailsToggleSpacer = (
-    <div style={{ height: errorMessage ? '18px' : '42px' }} />
+    <div style={{ height: errorMessageString ? '18px' : '42px' }} />
   );
 
   let detailsToggle = (
@@ -170,7 +170,7 @@ export function OpenSavedDrawingForm(props: Props) {
                     props.app.formContainer.clearHistory();
                     props.app.refresh();
                   }).catch(error => {
-                    setErrorMessage(error instanceof Error ? error.message : String(error));
+                    setErrorMessageString(error instanceof Error ? error.message : String(error));
                     setErrorMessageKey(errorMessageKey + 1);
                   }).finally(() => {
                     waitOverlay.remove();
@@ -194,9 +194,9 @@ export function OpenSavedDrawingForm(props: Props) {
                 )}
               </p>
             </div>
-            {!errorMessage ? null : (
+            {!errorMessageString ? null : (
               <ErrorMessage key={errorMessageKey} >
-                {errorMessage}
+                {errorMessageString}
               </ErrorMessage>
             )}
             {detailsToggleSpacer}
