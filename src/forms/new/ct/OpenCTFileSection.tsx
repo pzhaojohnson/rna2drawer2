@@ -12,6 +12,8 @@ import { CTFileInput } from './CTFileInput';
 // the underlying error message component
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
 
+import { createWaitOverlay } from 'Utilities/createWaitOverlay';
+
 function ErrorMessage(
   props: {
     children?: React.ReactNode,
@@ -87,22 +89,6 @@ function Details() {
       </p>
     </div>
   );
-}
-
-/**
- * Creates a div element that can be appended to the document body to
- * block all pointer interaction with the rest of the app and change the
- * cursor style to "wait".
- */
-function createWaitOverlay() {
-  let waitOverlay = document.createElement('div');
-  waitOverlay.style.position = 'fixed';
-  waitOverlay.style.top = '0px';
-  waitOverlay.style.right = '0px';
-  waitOverlay.style.bottom = '0px';
-  waitOverlay.style.left = '0px';
-  waitOverlay.style.cursor = 'wait';
-  return waitOverlay;
 }
 
 /**
