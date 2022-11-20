@@ -145,15 +145,7 @@ export function OpenSavedDrawingForm(props: Props) {
       contained={
         <div style={{ width: '920px', height: '524px', display: 'flex', flexDirection: 'column' }} >
           <Header />
-          <div
-            style={{
-              margin: '0px 116px',
-              flexGrow: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
+          <div className={styles.body} >
             <div className={styles.fileInput} onClick={() => hiddenFileInput.current?.click()} >
               <input
                 ref={hiddenFileInput}
