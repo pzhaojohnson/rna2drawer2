@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
 import formStyles from './OpenSavedDrawingForm.css';
-import { ErrorMessage } from 'Forms/ErrorMessage';
+import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
 import { FloatingDrawingsContainer } from 'Forms/containers/floating-drawings/FloatingDrawingsContainer';
 import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
 import { OldFileNotes } from './OldFileNotes';
@@ -57,6 +57,23 @@ function Header() {
       {title}
       {underline}
     </div>
+  );
+}
+
+function ErrorMessage(
+  props: {
+    children?: React.ReactNode,
+  },
+) {
+  return (
+    <_ErrorMessage
+      style={{
+        marginTop: '12px',
+        fontSize: '16px', color: '#d71111',
+      }}
+    >
+      {props.children}
+    </_ErrorMessage>
   );
 }
 
@@ -166,7 +183,7 @@ export function OpenSavedDrawingForm(props: Props) {
               </p>
             </div>
             {!errorMessage ? null : (
-              <ErrorMessage key={errorMessageKey} style={{ marginTop: '12px', fontSize: '16px', color: '#d71111' }} >
+              <ErrorMessage key={errorMessageKey} >
                 {errorMessage}
               </ErrorMessage>
             )}
