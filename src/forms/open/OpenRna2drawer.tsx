@@ -9,6 +9,7 @@ import type { App } from 'App';
 import { open } from './open';
 import parseFileExtension from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
+import { createWaitOverlay } from 'Utilities/createWaitOverlay';
 
 /**
  * Returns the first file stored in the referenced file input
@@ -63,22 +64,6 @@ function DetailsToggle(
       Details
     </_DetailsToggle>
   );
-}
-
-/**
- * Creates an element that when appended to the document body
- * blocks all user interaction with the app and changes the cursor
- * style to wait.
- */
-function createWaitOverlay() {
-  let waitOverlay = document.createElement('div');
-  waitOverlay.style.position = 'fixed';
-  waitOverlay.style.top = '0px';
-  waitOverlay.style.right = '0px';
-  waitOverlay.style.bottom = '0px';
-  waitOverlay.style.left = '0px';
-  waitOverlay.style.cursor = 'wait';
-  return waitOverlay;
 }
 
 export type Props = {
