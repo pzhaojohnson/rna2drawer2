@@ -1,4 +1,4 @@
-function parseFileExtension(fileName: string): string {
+export function parseFileExtension(fileName: string): string {
   if (fileName.includes('.')) {
     let ext = fileName.split('.').pop();
     return ext ?? '';
