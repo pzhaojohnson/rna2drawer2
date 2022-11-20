@@ -112,6 +112,18 @@ export function OpenSavedDrawingForm(props: Props) {
 
   let [showDetails, setShowDetails] = useState(false);
 
+  let detailsToggleSpacer = (
+    <div style={{ height: errorMessage ? '18px' : '42px' }} />
+  );
+
+  let detailsToggle = (
+    <DetailsToggle
+      onClick={() => setShowDetails(!showDetails)}
+    />
+  );
+
+  let oldFileNotes = showDetails ? <OldFileNotes /> : null;
+
   return (
     <FloatingDrawingsContainer
       contained={
@@ -187,9 +199,9 @@ export function OpenSavedDrawingForm(props: Props) {
                 {errorMessage}
               </ErrorMessage>
             )}
-            <div style={{ height: errorMessage ? '18px' : '42px' }} />
-            <DetailsToggle onClick={() => setShowDetails(!showDetails)} />
-            {showDetails ? <OldFileNotes /> : null}
+            {detailsToggleSpacer}
+            {detailsToggle}
+            {oldFileNotes}
           </div>
         </div>
       }
