@@ -1,5 +1,6 @@
 import * as React from 'react';
-import styles from './OldFileNotes.css';
+
+import styles from './OldDrawingNotes.css';
 
 function Disclaimer() {
   return (
@@ -49,9 +50,9 @@ function PreservedAspectsTrailingText() {
   );
 }
 
-export function OldFileNotes() {
+export function OldDrawingNotes() {
   return (
-    <div className={styles.oldFileNotes} >
+    <div className={styles.oldDrawingNotes} >
       <Disclaimer />
       <div style={{ margin: '14px 0 0 28px' }} >
         <PreservedAspectsLeadingText />

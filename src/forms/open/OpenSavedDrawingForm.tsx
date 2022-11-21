@@ -13,7 +13,7 @@ import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
 
 import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
 
-import { OldFileNotes } from './OldFileNotes';
+import { OldDrawingNotes } from './OldDrawingNotes';
 
 import { parseFileExtension } from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
@@ -120,7 +120,7 @@ export function OpenSavedDrawingForm(props: Props) {
     />
   );
 
-  let oldFileNotes = showDetails ? <OldFileNotes /> : null;
+  let oldDrawingNotes = showDetails ? <OldDrawingNotes /> : null;
 
   return (
     <FloatingDrawingsContainer
@@ -167,7 +167,7 @@ export function OpenSavedDrawingForm(props: Props) {
             {errorMessage}
             {detailsToggleSpacer}
             {detailsToggle}
-            {oldFileNotes}
+            {oldDrawingNotes}
           </div>
         </div>
       }
