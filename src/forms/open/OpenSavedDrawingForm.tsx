@@ -134,7 +134,7 @@ export function OpenSavedDrawingForm(props: Props) {
   return (
     <FloatingDrawingsContainer
       contained={
-        <div style={{ width: '920px', height: '524px', display: 'flex', flexDirection: 'column' }} >
+        <div className={styles.content} >
           <Header />
           <div className={styles.body} >
             <DrawingFileInput
