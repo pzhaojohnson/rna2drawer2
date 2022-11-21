@@ -84,8 +84,14 @@ function DetailsToggle(
 }
 
 export type Props = {
+  /**
+   * A reference to the whole app.
+   */
   app: App;
 
+  /**
+   * A callback to close the form.
+   */
   close: () => void;
 }
 
