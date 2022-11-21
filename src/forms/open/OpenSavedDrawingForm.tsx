@@ -48,6 +48,17 @@ function Header() {
   );
 }
 
+/**
+ * Creates an error message string from a thrown value.
+ */
+function createErrorMessageString(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  } else {
+    return String(error);
+  }
+}
+
 function ErrorMessage(
   props: {
     children?: React.ReactNode,
@@ -157,7 +168,7 @@ export function OpenSavedDrawingForm(props: Props) {
                   props.app.formContainer.clearHistory();
                   props.app.refresh();
                 }).catch(error => {
-                  setErrorMessageString(error instanceof Error ? error.message : String(error));
+                  setErrorMessageString(createErrorMessageString(error));
                   setErrorMessageKey(errorMessageKey + 1);
                 }).finally(() => {
                   waitOverlay.remove();
