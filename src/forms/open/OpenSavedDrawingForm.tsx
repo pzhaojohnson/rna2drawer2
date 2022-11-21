@@ -2,11 +2,12 @@ import type { App } from 'App';
 
 import * as React from 'react';
 import { useState } from 'react';
-import { useRef } from 'react';
 
 import styles from './OpenSavedDrawingForm.css';
 
 import { FloatingDrawingsContainer } from 'Forms/containers/floating-drawings/FloatingDrawingsContainer';
+
+import { DrawingFileInput } from './DrawingFileInput';
 
 import { ErrorMessage as _ErrorMessage } from 'Forms/ErrorMessage';
 
@@ -20,14 +21,6 @@ import { removeFileExtension } from 'Parse/parseFileExtension';
 import { open } from './open';
 
 import { createWaitOverlay } from 'Utilities/createWaitOverlay';
-
-/**
- * Returns the first file stored in the referenced file input
- * or undefined if there are no files stored in the referenced file input.
- */
-function firstFile(fileInputRef: React.RefObject<HTMLInputElement>): File | undefined {
-  return fileInputRef.current?.files ? fileInputRef.current.files[0] : undefined;
-}
 
 function updateDrawingTitle(app: App, fileName: string) {
   let titleFromFileName = removeFileExtension(fileName).trim();
@@ -112,8 +105,6 @@ export type Props = {
 }
 
 export function OpenSavedDrawingForm(props: Props) {
-  let hiddenFileInput = useRef<HTMLInputElement>(null);
-
   let [errorMessageString, setErrorMessageString] = useState('');
 
   // to be incremented when the error message is set
@@ -146,62 +137,42 @@ export function OpenSavedDrawingForm(props: Props) {
         <div style={{ width: '920px', height: '524px', display: 'flex', flexDirection: 'column' }} >
           <Header />
           <div className={styles.body} >
-            <div className={styles.fileInput} onClick={() => hiddenFileInput.current?.click()} >
-              <input
-                ref={hiddenFileInput}
-                type='file'
-                onChange={event => {
-                  let f: File | undefined = event.target.files ? event.target.files[0] : undefined;
-                  if (!f) {
-                    return;
+            <DrawingFileInput
+              onChange={event => {
+                let f = event.target.file;
+                if (!f) {
+                  return;
+                }
+
+                let fileName = f.name;
+
+                let waitOverlay = createWaitOverlay();
+                document.body.appendChild(waitOverlay);
+
+                f.text().then(text => {
+                  let fileExtension = parseFileExtension(fileName);
+                  if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
+                    throw new Error('File must have .rna2drawer extension.');
                   }
 
-                  let fileName = f.name;
+                  let opened = open(props.app, { extension: fileExtension, contents: text });
+                  if (!opened) {
+                    throw new Error('Invalid .rna2drawer file.');
+                  }
 
-                  let waitOverlay = createWaitOverlay();
-                  document.body.appendChild(waitOverlay);
-
-                  f.text().then(text => {
-                    let fileExtension = parseFileExtension(fileName);
-                    if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
-                      throw new Error('File must have .rna2drawer extension.');
-                    }
-
-                    let opened = open(props.app, { extension: fileExtension, contents: text });
-                    if (!opened) {
-                      throw new Error('Invalid .rna2drawer file.');
-                    }
-
-                    updateDrawingTitle(props.app, fileName);
-                    props.close();
-                    // prevent coming back to this form or preceding forms
-                    props.app.formContainer.clearHistory();
-                    props.app.refresh();
-                  }).catch(error => {
-                    setErrorMessageString(error instanceof Error ? error.message : String(error));
-                    setErrorMessageKey(errorMessageKey + 1);
-                  }).finally(() => {
-                    waitOverlay.remove();
-                  });
-                }}
-                style={{ display: 'none' }}
-              />
-              <p
-                className={styles.fileInputLabel}
-                style={{
-                  // make file name text a slightly different color
-                  color: firstFile(hiddenFileInput) ? '#09095d' : undefined,
-                }}
-              >
-                {firstFile(hiddenFileInput)?.name ?? (
-                  <span>
-                    Upload a file with
-                    <span className={styles.rna2drawerExtension} >&nbsp;.rna2drawer&nbsp;</span>
-                    extension...
-                  </span>
-                )}
-              </p>
-            </div>
+                  updateDrawingTitle(props.app, fileName);
+                  props.close();
+                  // prevent coming back to this form or preceding forms
+                  props.app.formContainer.clearHistory();
+                  props.app.refresh();
+                }).catch(error => {
+                  setErrorMessageString(error instanceof Error ? error.message : String(error));
+                  setErrorMessageKey(errorMessageKey + 1);
+                }).finally(() => {
+                  waitOverlay.remove();
+                });
+              }}
+            />
             {errorMessage}
             {detailsToggleSpacer}
             {detailsToggle}
