@@ -167,7 +167,7 @@ export function OpenSavedDrawingForm(props: Props) {
                   // prevent coming back to this form or preceding forms
                   props.app.formContainer.clearHistory();
                   props.app.refresh();
-                }).catch(error => {
+                }).catch((error: unknown) => {
                   setErrorMessageString(createErrorMessageString(error));
                   setErrorMessageKey(errorMessageKey + 1);
                 }).finally(() => {
