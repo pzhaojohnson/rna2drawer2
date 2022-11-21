@@ -33,32 +33,17 @@ function updateDrawingTitle(app: App, fileName: string) {
 
 function Header() {
   let title = (
-    <p
-      style={{
-        margin: '0px 92px',
-        fontSize: '24px', fontWeight: 600, color: '#151516',
-      }}
-    >
+    <p className={styles.title} >
       Open a Saved Drawing
     </p>
   );
 
-  let underline = (
-    <div
-      style={{
-        marginTop: '8px',
-        height: '0px',
-        borderWidth: '0px 0px 1px 0px',
-        borderStyle: 'solid',
-        borderColor: 'hsla(240, 23%, 88%, 1)',
-      }}
-    />
-  );
+  let titleUnderline = <div className={styles.titleUnderline} />;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} >
       {title}
-      {underline}
+      {titleUnderline}
     </div>
   );
 }

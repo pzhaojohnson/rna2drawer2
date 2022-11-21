@@ -6,6 +6,24 @@
   flex-direction: column;
 }
 
+.title {
+  margin: 0px 92px;
+
+  font-size: 24px;
+  font-weight: 600;
+  color: #151516;
+}
+
+.titleUnderline {
+  margin-top: 8px;
+
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: hsla(240, 23%, 88%, 1);
+
+  height: 0px;
+}
+
 .body {
   margin: 0px 116px;
   flex-grow: 1;
