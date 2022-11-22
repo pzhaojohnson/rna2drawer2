@@ -106,7 +106,7 @@ let drawingImg7 = (
     alt='Example Drawing 7'
     style={{
       width: '700px',
-      marginLeft: '6px',
+      marginLeft: '8px',
     }}
   />
 );
