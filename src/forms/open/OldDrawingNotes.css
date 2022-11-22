@@ -12,7 +12,7 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #1e1e20;
+  color: hsl(240, 3%, 8%);
   user-select: none;
 }
 
@@ -20,7 +20,7 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #1e1e20;
+  color: hsl(240, 3%, 8%);
   user-select: none;
 }
 
@@ -36,13 +36,13 @@
   width: 6px;
   height: 6px;
   border-radius: 3px;
-  background-color: #202022;
+  background-color: hsl(240, 3%, 5%);
 }
 
 .preservedAspectText {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
-  color: #2a2a2d;
+  color: hsl(240, 3%, 8%);
   user-select: none;
 }
