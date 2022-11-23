@@ -107,6 +107,8 @@ export type Props = {
 }
 
 export function OpenSavedDrawingForm(props: Props) {
+  let app = props.app;
+
   let [errorMessageString, setErrorMessageString] = useState('');
 
   // to be incremented when the error message is set
@@ -157,16 +159,16 @@ export function OpenSavedDrawingForm(props: Props) {
                     throw new Error('File must have .rna2drawer extension.');
                   }
 
-                  let opened = openSavedDrawing(props.app, { extension: fileExtension, contents: text });
+                  let opened = openSavedDrawing(app, { extension: fileExtension, contents: text });
                   if (!opened) {
                     throw new Error('Invalid .rna2drawer file.');
                   }
 
-                  updateDrawingTitle(props.app, fileName);
+                  updateDrawingTitle(app, fileName);
                   props.close();
                   // prevent coming back to this form or preceding forms
-                  props.app.formContainer.clearHistory();
-                  props.app.refresh();
+                  app.formContainer.clearHistory();
+                  app.refresh();
                 }).catch((error: unknown) => {
                   setErrorMessageString(createErrorMessageString(error));
                   setErrorMessageKey(errorMessageKey + 1);
