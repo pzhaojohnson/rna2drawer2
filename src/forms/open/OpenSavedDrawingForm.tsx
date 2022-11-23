@@ -117,6 +117,17 @@ export function OpenSavedDrawingForm(props: Props) {
 
   let [showDetails, setShowDetails] = useState(false);
 
+  // to be called when a saved drawing is successfully opened
+  let handleSuccess = (args: { fileName: string }) => {
+    props.close();
+
+    // prevent coming back to this form or preceding forms
+    app.formContainer.clearHistory();
+
+    updateDrawingTitle(app, args.fileName);
+    app.refresh();
+  };
+
   let errorMessage = errorMessageString ? (
     <ErrorMessage key={errorMessageKey} >
       {errorMessageString}
@@ -164,11 +175,7 @@ export function OpenSavedDrawingForm(props: Props) {
                     throw new Error('Invalid .rna2drawer file.');
                   }
 
-                  updateDrawingTitle(app, fileName);
-                  props.close();
-                  // prevent coming back to this form or preceding forms
-                  app.formContainer.clearHistory();
-                  app.refresh();
+                  handleSuccess({ fileName });
                 }).catch((error: unknown) => {
                   setErrorMessageString(createErrorMessageString(error));
                   setErrorMessageKey(errorMessageKey + 1);
