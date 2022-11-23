@@ -8,24 +8,21 @@ import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawing';
 
 import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 
+import { parseFileExtension } from 'Parse/parseFileExtension';
+
 // no highlightings from user interaction should carry over
 // when opening a saved drawing
 function removeAllBaseHighlightings(drawing: Drawing | StrictDrawing) {
   drawing.bases().forEach(b => removeCircleHighlighting(b));
 }
 
-export type Args = {
-  /**
-   * A reference to the whole app.
-   */
-  app: App;
-
-  extension: string;
-  contents: string;
-}
-
-function openRna2drawer1(args: Args): boolean {
-  let { app, extension, contents } = args;
+function openRna2drawer1(
+  args: {
+    app: App,
+    contents: string,
+  },
+): boolean {
+  let { app, contents } = args;
 
   let rna2drawer1 = parseRna2drawer1(contents);
   if (rna2drawer1) {
@@ -36,8 +33,13 @@ function openRna2drawer1(args: Args): boolean {
   return false;
 }
 
-function openRna2drawer2(args: Args): boolean {
-  let { app, extension, contents } = args;
+function openRna2drawer2(
+  args: {
+    app: App,
+    contents: string,
+  },
+): boolean {
+  let { app, contents } = args;
 
   try {
     let savedState = JSON.parse(contents);
@@ -51,27 +53,45 @@ function openRna2drawer2(args: Args): boolean {
   return false;
 }
 
+export type Args = {
+  /**
+   * A reference to the whole app.
+   */
+  app: App;
+
+  savedDrawing: File;
+}
+
 /**
- * Throws if the saved drawing is invalid.
+ * Asynchronously opens the saved drawing.
+ *
+ * Fails if the saved drawing is invalid (i.e., the returned promise is
+ * rejected).
  */
-export function openSavedDrawing(args: Args): void | never {
-  let { app, extension, contents } = args;
+export function openSavedDrawing(args: Args) {
+  let { app, savedDrawing } = args;
 
-  let fe = extension.toLowerCase();
+  let fileName = savedDrawing.name;
+  let fileExtension = parseFileExtension(fileName);
 
-  if (fe.toLowerCase().indexOf('rna2drawer') != 0) {
-    throw new Error('File must have .rna2drawer extension.');
-  }
+  return new Promise<void>((resolve, reject) => {
+    if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
+      reject(new Error('File must have .rna2drawer extension.'));
+    }
 
-  let opened = false;
+    savedDrawing.text().then(text => {
+      let opened = false;
+      if (fileExtension.toLowerCase() == 'rna2drawer') {
+        opened = openRna2drawer1({ app, contents: text });
+      } else if (fileExtension.toLowerCase() == 'rna2drawer2') {
+        opened = openRna2drawer2({ app, contents: text });
+      }
 
-  if (fe == 'rna2drawer') {
-    opened = openRna2drawer1(args);
-  } else if (fe == 'rna2drawer2') {
-    opened = openRna2drawer2(args);
-  }
+      if (!opened) {
+        throw new Error('Invalid .rna2drawer file.');
+      }
 
-  if (!opened) {
-    throw new Error('Invalid .rna2drawer file.');
-  }
+      resolve();
+    }).catch(reject);
+  });
 }

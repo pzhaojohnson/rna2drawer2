@@ -15,7 +15,6 @@ import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
 
 import { OldDrawingNotes } from './OldDrawingNotes';
 
-import { parseFileExtension } from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
 
 import { openSavedDrawing } from './openSavedDrawing';
@@ -169,15 +168,10 @@ export function OpenSavedDrawingForm(props: Props) {
                 let waitOverlay = createWaitOverlay();
                 document.body.appendChild(waitOverlay);
 
-                f.text().then(text => {
-                  let fileExtension = parseFileExtension(fileName);
-                  openSavedDrawing({ app, extension: fileExtension, contents: text });
-                  handleSuccess({ fileName });
-                }).catch((error: unknown) => {
-                  handleFailure(error);
-                }).finally(() => {
-                  waitOverlay.remove();
-                });
+                openSavedDrawing({ app, savedDrawing: f })
+                  .then(() => handleSuccess({ fileName }))
+                  .catch(handleFailure)
+                  .finally(() => waitOverlay.remove());
               }}
             />
             {errorMessage}

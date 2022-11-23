@@ -4,6 +4,8 @@ import * as SVG from 'Draw/svg/NodeSVG';
 
 import * as fs from 'fs';
 
+import { removeFileExtension } from 'Parse/parseFileExtension';
+
 import { parseRna2drawer1 } from './parseRna2drawer1';
 
 import { openSavedDrawing } from './openSavedDrawing';
@@ -14,6 +16,20 @@ function readRna2drawer1(name) {
 
 function readRna2drawer2(name) {
   return fs.readFileSync('testinput/rna2drawer2/' + name + '.rna2drawer2', 'utf8');
+}
+
+/**
+ * Mocks a file object for a drawing.
+ *
+ * (The text method of File instances doesn't seem to work on Node.js.)
+ */
+function createDrawingFile(args) {
+  let { fileName, fileContents } = args;
+
+  return {
+    name: fileName,
+    text: () => new Promise(resolve => resolve(fileContents)),
+  };
 }
 
 // needed for parseRna2drawer1 function to run
@@ -38,55 +54,81 @@ afterEach(() => {
 describe('openSavedDrawing function', () => {
   describe('opening drawings from before the web app', () => {
     test('a valid drawing file', () => {
-      let contents = readRna2drawer1('hairpin');
-      expect(parseRna2drawer1(contents)).toBeTruthy(); // is parsable
-      expect(() => {
-        openSavedDrawing({ app, extension: 'rna2drawer', contents: contents });
-      }).not.toThrow();
-      expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was added
+      let fileName = 'hairpin.rna2drawer';
+      let fileContents = readRna2drawer1(removeFileExtension(fileName));
+      expect(parseRna2drawer1(fileContents)).toBeTruthy(); // is parsable
+      let savedDrawing = createDrawingFile({ fileName, fileContents });
+
+      return openSavedDrawing({ app, savedDrawing }).then(() => {
+        expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was added
+      }).catch(error => {
+        throw error; // should not have thrown
+      });
     });
 
     test('an invalid drawing file', () => {
-      let contents = readRna2drawer1('baseOutlineWithInvalidStrokeWidth');
-      expect(contents).toBeTruthy(); // file was read
-      expect(parseRna2drawer1(contents)).toBeFalsy(); // unparsable
-      expect(() => {
-        openSavedDrawing({ app, extension: 'rna2drawer', contents: contents });
-      }).toThrow();
-      expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
+      let fileName = 'baseOutlineWithInvalidStrokeWidth.rna2drawer';
+      let fileContents = readRna2drawer1(removeFileExtension(fileName));
+      expect(fileContents).toBeTruthy(); // file was read
+      expect(parseRna2drawer1(fileContents)).toBeFalsy(); // unparsable
+      let savedDrawing = createDrawingFile({ fileName, fileContents });
+
+      return openSavedDrawing({ app, savedDrawing }).then(() => {
+        throw new Error(); // should have thrown
+      }).catch(() => {
+        expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
+      });
     });
   });
 
   describe('opening drawings produced by the web app', () => {
     test('a valid drawing file', () => {
-      let contents = readRna2drawer2('hairpins');
-      expect(() => {
-        openSavedDrawing({ app, extension: 'rna2drawer2', contents: contents });
-      }).not.toThrow();
-      expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was applied
+      let fileName = 'hairpins.rna2drawer2';
+      let fileContents = readRna2drawer2(removeFileExtension(fileName));
+      let savedDrawing = createDrawingFile({ fileName, fileContents });
+
+      return openSavedDrawing({ app, savedDrawing }).then(() => {
+        expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was applied
+      }).catch(error => {
+        throw error; // should not have thrown
+      });
     });
 
     test('invalid JSON', () => {
-      let contents = '{ asdf: 2, qwer: 5 ';
-      expect(() => {
-        openSavedDrawing({ app, extension: 'rna2drawer2', contents: contents });
-      }).toThrow();
-      expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
+      let fileName = 'InvalidJSON.rna2drawer2';
+      let fileContents = '{ asdf: 2, qwer: 5 ';
+      let savedDrawing = createDrawingFile({ fileName, fileContents });
+
+      return openSavedDrawing({ app, savedDrawing }).then(() => {
+        throw new Error(); // should have thrown
+      }).catch(() => {
+        expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
+      });
     });
 
     test('when the saved state in unable to be applied', () => {
-      let contents = readRna2drawer2('invalidBaseTextId');
-      expect(JSON.parse(contents)).toBeTruthy(); // is parsable
-      expect(() => {
-        openSavedDrawing({ app, extension: 'rna2drawer2', contents: contents });
-      }).toThrow();
-      expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
+      let fileName = 'invalidBaseTextId.rna2drawer2';
+      let fileContents = readRna2drawer2(removeFileExtension(fileName));
+      expect(JSON.parse(fileContents)).toBeTruthy(); // is parsable
+      let savedDrawing = createDrawingFile({ fileName, fileContents });
+
+      return openSavedDrawing({ app, savedDrawing }).then(() => {
+        throw new Error(); // should have thrown
+      }).catch(() => {
+        expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
+      });
     });
   });
 
   test('a file with an unrecognized extension', () => {
-    expect(() => {
-      openSavedDrawing({ app, extension: 'asdf', contents: 'asdfasdf' });
-    }).toThrow();
+    let fileName = 'asdfqwer.asdf';
+    let fileContents = 'asdfasdf';
+    let savedDrawing = createDrawingFile({ fileName, fileContents });
+
+    return openSavedDrawing({ app, savedDrawing }).then(() => {
+      throw new Error(); // should have thrown
+    }).catch(() => {
+      // threw as expected
+    });
   });
 });
