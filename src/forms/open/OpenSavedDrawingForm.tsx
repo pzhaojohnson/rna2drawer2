@@ -148,17 +148,14 @@ export function OpenSavedDrawingForm(props: Props) {
           <div className={styles.body} >
             <DrawingFileInput
               onChange={event => {
-                let f = event.target.file;
-                if (!f) {
-                  return;
+                let savedDrawing = event.target.file;
+                if (savedDrawing) {
+                  document.body.appendChild(waitOverlay);
+                  openSavedDrawing({ app, savedDrawing })
+                    .then(handleSuccess)
+                    .catch(handleFailure)
+                    .finally(() => waitOverlay.remove());
                 }
-
-                document.body.appendChild(waitOverlay);
-
-                openSavedDrawing({ app, savedDrawing: f })
-                  .then(handleSuccess)
-                  .catch(handleFailure)
-                  .finally(() => waitOverlay.remove());
               }}
             />
             {errorMessage}
