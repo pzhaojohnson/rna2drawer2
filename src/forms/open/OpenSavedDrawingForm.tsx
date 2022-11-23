@@ -18,7 +18,7 @@ import { OldDrawingNotes } from './OldDrawingNotes';
 import { parseFileExtension } from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
 
-import { open } from './open';
+import { openSavedDrawing } from './openSavedDrawing';
 
 import { createWaitOverlay } from 'Utilities/createWaitOverlay';
 
@@ -157,7 +157,7 @@ export function OpenSavedDrawingForm(props: Props) {
                     throw new Error('File must have .rna2drawer extension.');
                   }
 
-                  let opened = open(props.app, { extension: fileExtension, contents: text });
+                  let opened = openSavedDrawing(props.app, { extension: fileExtension, contents: text });
                   if (!opened) {
                     throw new Error('Invalid .rna2drawer file.');
                   }

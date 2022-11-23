@@ -42,7 +42,7 @@ function openRna2drawer2(app: App, saved: Saved): boolean {
   return false;
 }
 
-export function open(app: App, saved: Saved): boolean {
+export function openSavedDrawing(app: App, saved: Saved): boolean {
   let fe = saved.extension.toLowerCase();
   if (fe == 'rna2drawer') {
     return openRna2drawer1(app, saved);

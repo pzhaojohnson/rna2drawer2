@@ -1,7 +1,7 @@
 import { App } from 'App';
 import { NodeSVG } from 'Draw/svg/NodeSVG';
 import * as fs from 'fs';
-import { open } from './open';
+import { openSavedDrawing } from './openSavedDrawing';
 import { parseRna2drawer1 } from './parseRna2drawer1';
 
 function readRna2drawer1(name) {
@@ -29,7 +29,7 @@ describe('opening a .rna2drawer file', () => {
   it('valid file', () => {
     let contents = readRna2drawer1('hairpin');
     expect(parseRna2drawer1(contents)).toBeTruthy(); // is parsable
-    let opened = open(app, { extension: 'rna2drawer', contents: contents });
+    let opened = openSavedDrawing(app, { extension: 'rna2drawer', contents: contents });
     expect(opened).toBeTruthy();
     expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was added
   });
@@ -38,7 +38,7 @@ describe('opening a .rna2drawer file', () => {
     let contents = readRna2drawer1('baseOutlineWithInvalidStrokeWidth');
     expect(contents).toBeTruthy(); // file was read
     expect(parseRna2drawer1(contents)).toBeFalsy(); // unparsable
-    let opened = open(app, { extension: 'rna2drawer', contents: contents });
+    let opened = openSavedDrawing(app, { extension: 'rna2drawer', contents: contents });
     expect(opened).toBeFalsy();
     expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
   });
@@ -47,14 +47,14 @@ describe('opening a .rna2drawer file', () => {
 describe('opening a .rna2drawer2 file', () => {
   it('valid file', () => {
     let contents = readRna2drawer2('hairpins');
-    let opened = open(app, { extension: 'rna2drawer2', contents: contents });
+    let opened = openSavedDrawing(app, { extension: 'rna2drawer2', contents: contents });
     expect(opened).toBeTruthy();
     expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was applied
   });
 
   it('invalid JSON string', () => {
     let contents = '{ asdf: 2, qwer: 5 ';
-    let opened = open(app, { extension: 'rna2drawer2', contents: contents });
+    let opened = openSavedDrawing(app, { extension: 'rna2drawer2', contents: contents });
     expect(opened).toBeFalsy();
     expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
   });
@@ -62,13 +62,13 @@ describe('opening a .rna2drawer2 file', () => {
   it('saved state in unable to be applied', () => {
     let contents = readRna2drawer2('invalidBaseTextId');
     expect(JSON.parse(contents)).toBeTruthy(); // is parsable
-    let opened = open(app, { extension: 'rna2drawer2', contents: contents });
+    let opened = openSavedDrawing(app, { extension: 'rna2drawer2', contents: contents });
     expect(opened).toBeFalsy();
     expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
   });
 });
 
 it('opening a file with an unrecognized extension', () => {
-  let opened = open(app, { extension: 'asdf', contents: 'asdfasdf' });
+  let opened = openSavedDrawing(app, { extension: 'asdf', contents: 'asdfasdf' });
   expect(opened).toBeFalsy();
 });
