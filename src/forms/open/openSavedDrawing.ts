@@ -58,6 +58,11 @@ export function openSavedDrawing(args: Args): void | never {
   let { app, extension, contents } = args;
 
   let fe = extension.toLowerCase();
+
+  if (fe.toLowerCase().indexOf('rna2drawer') != 0) {
+    throw new Error('File must have .rna2drawer extension.');
+  }
+
   let opened = false;
 
   if (fe == 'rna2drawer') {

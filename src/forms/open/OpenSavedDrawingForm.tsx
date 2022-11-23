@@ -171,12 +171,7 @@ export function OpenSavedDrawingForm(props: Props) {
 
                 f.text().then(text => {
                   let fileExtension = parseFileExtension(fileName);
-                  if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
-                    throw new Error('File must have .rna2drawer extension.');
-                  }
-
                   openSavedDrawing({ app, extension: fileExtension, contents: text });
-
                   handleSuccess({ fileName });
                 }).catch((error: unknown) => {
                   handleFailure(error);
