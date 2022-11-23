@@ -111,7 +111,7 @@ export function OpenSavedDrawingForm(props: Props) {
 
   let [errorMessageString, setErrorMessageString] = useState('');
 
-  // to be incremented when the error message is set
+  // to be incremented whenever the error message is set
   // (to trigger error message animations)
   let [errorMessageKey, setErrorMessageKey] = useState(0);
 
@@ -121,7 +121,7 @@ export function OpenSavedDrawingForm(props: Props) {
   let handleSuccess = (args: { fileName: string }) => {
     props.close();
 
-    // prevent coming back to this form or preceding forms
+    // prevent coming back to this form and preceding forms
     app.formContainer.clearHistory();
 
     updateDrawingTitle(app, args.fileName);
