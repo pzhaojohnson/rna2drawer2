@@ -138,6 +138,8 @@ export function OpenSavedDrawingForm(props: Props) {
 
   let oldDrawingNotes = showDetails ? <OldDrawingNotes /> : null;
 
+  let waitOverlay = createWaitOverlay();
+
   return (
     <FloatingDrawingsContainer
       contained={
@@ -151,7 +153,6 @@ export function OpenSavedDrawingForm(props: Props) {
                   return;
                 }
 
-                let waitOverlay = createWaitOverlay();
                 document.body.appendChild(waitOverlay);
 
                 openSavedDrawing({ app, savedDrawing: f })
