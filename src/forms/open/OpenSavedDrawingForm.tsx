@@ -120,6 +120,25 @@ export function OpenSavedDrawingForm(props: Props) {
     setErrorMessageKey(errorMessageKey + 1);
   };
 
+  let waitOverlay = createWaitOverlay();
+
+  let drawingFileInput = (
+    <DrawingFileInput
+      onChange={event => {
+        let savedDrawing = event.target.file;
+
+        if (savedDrawing) {
+          document.body.appendChild(waitOverlay);
+
+          openSavedDrawing({ app, savedDrawing })
+            .then(handleSuccess)
+            .catch(handleFailure)
+            .finally(() => waitOverlay.remove());
+        }
+      }}
+    />
+  );
+
   let errorMessage = errorMessageString ? (
     <ErrorMessage key={errorMessageKey} >
       {errorMessageString}
@@ -138,26 +157,13 @@ export function OpenSavedDrawingForm(props: Props) {
 
   let oldDrawingNotes = showDetails ? <OldDrawingNotes /> : null;
 
-  let waitOverlay = createWaitOverlay();
-
   return (
     <FloatingDrawingsContainer
       contained={
         <div className={styles.content} >
           <Header />
           <div className={styles.body} >
-            <DrawingFileInput
-              onChange={event => {
-                let savedDrawing = event.target.file;
-                if (savedDrawing) {
-                  document.body.appendChild(waitOverlay);
-                  openSavedDrawing({ app, savedDrawing })
-                    .then(handleSuccess)
-                    .catch(handleFailure)
-                    .finally(() => waitOverlay.remove());
-                }
-              }}
-            />
+            {drawingFileInput}
             {errorMessage}
             {detailsToggleSpacer}
             {detailsToggle}
