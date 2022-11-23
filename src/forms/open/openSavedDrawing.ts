@@ -87,7 +87,7 @@ export function openSavedDrawing(args: Args) {
   let fileExtension = parseFileExtension(fileName);
 
   let hasRNA2DrawerExtension = (
-    fileExtension.toLowerCase().indexOf('rna2drawer') == 0
+    fileExtension.toLowerCase().includes('rna2drawer')
   );
 
   return new Promise<void>((resolve, reject) => {
