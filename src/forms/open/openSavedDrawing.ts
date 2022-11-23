@@ -9,6 +9,7 @@ import { StrictDrawingSavableState } from 'Draw/strict/StrictDrawing';
 import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 
 import { parseFileExtension } from 'Parse/parseFileExtension';
+import { removeFileExtension } from 'Parse/parseFileExtension';
 
 // no highlightings from user interaction should carry over
 // when opening a saved drawing
@@ -53,6 +54,15 @@ function openRna2drawer2(
   return false;
 }
 
+function updateDrawingTitle(app: App, fileName: string) {
+  let titleFromFileName = removeFileExtension(fileName).trim();
+  if (titleFromFileName != app.drawingTitle.unspecifiedValue) {
+    // only specify if necessary since a specified title doesn't update
+    // automatically as the drawing changes
+    app.drawingTitle.value = titleFromFileName;
+  }
+}
+
 export type Args = {
   /**
    * A reference to the whole app.
@@ -90,6 +100,8 @@ export function openSavedDrawing(args: Args) {
       if (!opened) {
         throw new Error('Invalid .rna2drawer file.');
       }
+
+      updateDrawingTitle(app, fileName);
 
       resolve();
     }).catch(reject);

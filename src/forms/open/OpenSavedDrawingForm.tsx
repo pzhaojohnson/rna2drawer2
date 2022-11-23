@@ -15,20 +15,9 @@ import { DetailsToggle as _DetailsToggle } from 'Forms/buttons/DetailsToggle';
 
 import { OldDrawingNotes } from './OldDrawingNotes';
 
-import { removeFileExtension } from 'Parse/parseFileExtension';
-
 import { openSavedDrawing } from './openSavedDrawing';
 
 import { createWaitOverlay } from 'Utilities/createWaitOverlay';
-
-function updateDrawingTitle(app: App, fileName: string) {
-  let titleFromFileName = removeFileExtension(fileName).trim();
-  if (titleFromFileName != app.drawingTitle.unspecifiedValue) {
-    // only specify if necessary since a specified title doesn't update
-    // automatically as the drawing changes
-    app.drawingTitle.value = titleFromFileName;
-  }
-}
 
 function Header() {
   let title = (
@@ -117,13 +106,12 @@ export function OpenSavedDrawingForm(props: Props) {
   let [showDetails, setShowDetails] = useState(false);
 
   // to be called when a saved drawing is successfully opened
-  let handleSuccess = (args: { fileName: string }) => {
+  let handleSuccess = () => {
     props.close();
 
     // prevent coming back to this form and preceding forms
     app.formContainer.clearHistory();
 
-    updateDrawingTitle(app, args.fileName);
     app.refresh();
   };
 
@@ -163,13 +151,11 @@ export function OpenSavedDrawingForm(props: Props) {
                   return;
                 }
 
-                let fileName = f.name;
-
                 let waitOverlay = createWaitOverlay();
                 document.body.appendChild(waitOverlay);
 
                 openSavedDrawing({ app, savedDrawing: f })
-                  .then(() => handleSuccess({ fileName }))
+                  .then(handleSuccess)
                   .catch(handleFailure)
                   .finally(() => waitOverlay.remove());
               }}
