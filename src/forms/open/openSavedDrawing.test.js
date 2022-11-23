@@ -1,8 +1,12 @@
 import { App } from 'App';
-import { NodeSVG } from 'Draw/svg/NodeSVG';
+
+import * as SVG from 'Draw/svg/NodeSVG';
+
 import * as fs from 'fs';
-import { openSavedDrawing } from './openSavedDrawing';
+
 import { parseRna2drawer1 } from './parseRna2drawer1';
+
+import { openSavedDrawing } from './openSavedDrawing';
 
 function readRna2drawer1(name) {
   return fs.readFileSync('testinput/rna2drawer1/' + name + '.rna2drawer', 'utf8');
@@ -22,7 +26,7 @@ Object.defineProperty(window, 'getComputedStyle', {
 let app = null;
 
 beforeEach(() => {
-  app = new App({ SVG: { SVG: NodeSVG } });
+  app = new App({ SVG });
 });
 
 describe('opening a .rna2drawer file', () => {
