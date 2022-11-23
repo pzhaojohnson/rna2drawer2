@@ -11,6 +11,8 @@ import { removeCircleHighlighting } from 'Draw/bases/annotate/circle/add';
 import { parseFileExtension } from 'Parse/parseFileExtension';
 import { removeFileExtension } from 'Parse/parseFileExtension';
 
+import { isJSON } from 'Utilities/isJSON';
+
 // no highlightings from user interaction should carry over
 // when opening a saved drawing
 function removeAllBaseHighlightings(drawing: Drawing | StrictDrawing) {
@@ -84,17 +86,27 @@ export function openSavedDrawing(args: Args) {
   let fileName = savedDrawing.name;
   let fileExtension = parseFileExtension(fileName);
 
+  let hasRNA2DrawerExtension = (
+    fileExtension.toLowerCase().indexOf('rna2drawer') == 0
+  );
+
   return new Promise<void>((resolve, reject) => {
-    if (fileExtension.toLowerCase().indexOf('rna2drawer') != 0) {
+    if (!hasRNA2DrawerExtension) {
       reject(new Error('File must have .rna2drawer extension.'));
     }
 
     savedDrawing.text().then(text => {
       let opened = false;
-      if (fileExtension.toLowerCase() == 'rna2drawer') {
-        opened = openRna2drawer1({ app, contents: text });
-      } else if (fileExtension.toLowerCase() == 'rna2drawer2') {
+
+      /* Some users might lose the trailing "2" in the .rna2drawer2 file
+      extension if they were to open the file in a text editor and type
+      in the name and extension of the file themselves when saving. Best
+      to check the actual contents of drawing files to differentiate
+      between drawing formats. */
+      if (isJSON(text)) {
         opened = openRna2drawer2({ app, contents: text });
+      } else {
+        opened = openRna2drawer1({ app, contents: text });
       }
 
       if (!opened) {
