@@ -37,7 +37,7 @@ afterEach(() => {
 
 describe('openSavedDrawing function', () => {
   describe('opening a .rna2drawer file', () => {
-    it('valid file', () => {
+    test('valid file', () => {
       let contents = readRna2drawer1('hairpin');
       expect(parseRna2drawer1(contents)).toBeTruthy(); // is parsable
       let opened = openSavedDrawing(app, { extension: 'rna2drawer', contents: contents });
@@ -45,7 +45,7 @@ describe('openSavedDrawing function', () => {
       expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was added
     });
 
-    it('file is unparsable', () => {
+    test('file is unparsable', () => {
       let contents = readRna2drawer1('baseOutlineWithInvalidStrokeWidth');
       expect(contents).toBeTruthy(); // file was read
       expect(parseRna2drawer1(contents)).toBeFalsy(); // unparsable
@@ -56,21 +56,21 @@ describe('openSavedDrawing function', () => {
   });
 
   describe('opening a .rna2drawer2 file', () => {
-    it('valid file', () => {
+    test('valid file', () => {
       let contents = readRna2drawer2('hairpins');
       let opened = openSavedDrawing(app, { extension: 'rna2drawer2', contents: contents });
       expect(opened).toBeTruthy();
       expect(app.strictDrawing.isEmpty()).toBeFalsy(); // saved drawing was applied
     });
 
-    it('invalid JSON string', () => {
+    test('invalid JSON string', () => {
       let contents = '{ asdf: 2, qwer: 5 ';
       let opened = openSavedDrawing(app, { extension: 'rna2drawer2', contents: contents });
       expect(opened).toBeFalsy();
       expect(app.strictDrawing.isEmpty()).toBeTruthy(); // drawing is unchanged
     });
 
-    it('saved state in unable to be applied', () => {
+    test('saved state in unable to be applied', () => {
       let contents = readRna2drawer2('invalidBaseTextId');
       expect(JSON.parse(contents)).toBeTruthy(); // is parsable
       let opened = openSavedDrawing(app, { extension: 'rna2drawer2', contents: contents });
@@ -79,7 +79,7 @@ describe('openSavedDrawing function', () => {
     });
   });
 
-  it('opening a file with an unrecognized extension', () => {
+  test('opening a file with an unrecognized extension', () => {
     let opened = openSavedDrawing(app, { extension: 'asdf', contents: 'asdfasdf' });
     expect(opened).toBeFalsy();
   });
