@@ -175,7 +175,7 @@ export function OpenSavedDrawingForm(props: Props) {
                     throw new Error('File must have .rna2drawer extension.');
                   }
 
-                  let opened = openSavedDrawing(app, { extension: fileExtension, contents: text });
+                  let opened = openSavedDrawing({ app, extension: fileExtension, contents: text });
                   if (!opened) {
                     throw new Error('Invalid .rna2drawer file.');
                   }

@@ -14,13 +14,20 @@ function removeAllBaseHighlightings(drawing: Drawing | StrictDrawing) {
   drawing.bases().forEach(b => removeCircleHighlighting(b));
 }
 
-interface Saved {
+export type Args = {
+  /**
+   * A reference to the whole app.
+   */
+  app: App;
+
   extension: string;
   contents: string;
 }
 
-function openRna2drawer1(app: App, saved: Saved): boolean {
-  let rna2drawer1 = parseRna2drawer1(saved.contents);
+function openRna2drawer1(args: Args): boolean {
+  let { app, extension, contents } = args;
+
+  let rna2drawer1 = parseRna2drawer1(contents);
   if (rna2drawer1) {
     addRna2drawer1(app.strictDrawing, rna2drawer1);
     app.refresh();
@@ -29,9 +36,11 @@ function openRna2drawer1(app: App, saved: Saved): boolean {
   return false;
 }
 
-function openRna2drawer2(app: App, saved: Saved): boolean {
+function openRna2drawer2(args: Args): boolean {
+  let { app, extension, contents } = args;
+
   try {
-    let savedState = JSON.parse(saved.contents);
+    let savedState = JSON.parse(contents);
     let applied = app.strictDrawing.applySavedState(savedState as StrictDrawingSavableState);
     if (applied) {
       app.strictDrawing.updateLayout(); // adjust padding of drawing for current screen
@@ -42,12 +51,14 @@ function openRna2drawer2(app: App, saved: Saved): boolean {
   return false;
 }
 
-export function openSavedDrawing(app: App, saved: Saved): boolean {
-  let fe = saved.extension.toLowerCase();
+export function openSavedDrawing(args: Args): boolean {
+  let { app, extension, contents } = args;
+
+  let fe = extension.toLowerCase();
   if (fe == 'rna2drawer') {
-    return openRna2drawer1(app, saved);
+    return openRna2drawer1(args);
   } else if (fe == 'rna2drawer2') {
-    return openRna2drawer2(app, saved);
+    return openRna2drawer2(args);
   } else {
     return false;
   }
