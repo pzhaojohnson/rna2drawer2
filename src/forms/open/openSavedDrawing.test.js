@@ -27,6 +27,12 @@ let app = null;
 
 beforeEach(() => {
   app = new App({ SVG });
+  app.appendTo(document.body);
+});
+
+afterEach(() => {
+  app.remove();
+  app = null;
 });
 
 describe('opening a .rna2drawer file', () => {
