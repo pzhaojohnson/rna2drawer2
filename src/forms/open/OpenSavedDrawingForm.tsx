@@ -128,6 +128,11 @@ export function OpenSavedDrawingForm(props: Props) {
     app.refresh();
   };
 
+  let handleFailure = (error: unknown) => {
+    setErrorMessageString(createErrorMessageString(error));
+    setErrorMessageKey(errorMessageKey + 1);
+  };
+
   let errorMessage = errorMessageString ? (
     <ErrorMessage key={errorMessageKey} >
       {errorMessageString}
@@ -177,8 +182,7 @@ export function OpenSavedDrawingForm(props: Props) {
 
                   handleSuccess({ fileName });
                 }).catch((error: unknown) => {
-                  setErrorMessageString(createErrorMessageString(error));
-                  setErrorMessageKey(errorMessageKey + 1);
+                  handleFailure(error);
                 }).finally(() => {
                   waitOverlay.remove();
                 });
