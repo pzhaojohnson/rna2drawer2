@@ -51,15 +51,22 @@ function openRna2drawer2(args: Args): boolean {
   return false;
 }
 
-export function openSavedDrawing(args: Args): boolean {
+/**
+ * Throws if the saved drawing is invalid.
+ */
+export function openSavedDrawing(args: Args): void | never {
   let { app, extension, contents } = args;
 
   let fe = extension.toLowerCase();
+  let opened = false;
+
   if (fe == 'rna2drawer') {
-    return openRna2drawer1(args);
+    opened = openRna2drawer1(args);
   } else if (fe == 'rna2drawer2') {
-    return openRna2drawer2(args);
-  } else {
-    return false;
+    opened = openRna2drawer2(args);
+  }
+
+  if (!opened) {
+    throw new Error('Invalid .rna2drawer file.');
   }
 }
