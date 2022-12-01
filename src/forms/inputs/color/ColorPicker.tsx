@@ -7,16 +7,16 @@ import { PresetColorsList } from './PresetColorsList';
 import { interpretColors } from './interpretColors';
 
 let fixedColors = interpretColors([
-  '#800000', '#ff0000', '#f5a623', '#fff000', '#c56200', '#8b572a', '#194d33', '#228b22',
-  '#7ed321', '#b8e986', '#fda1ff', '#bd10e0', '#9013fe', '#4a148c', '#111dd6', '#009ce0',
-  '#73d8ff', '#50e3c2', '#000000', '#4a4a4a', '#9b9b9b', '#d3d3d3', '#ffffff',
+  '#000000', '#262626', '#595959', '#7f7f7f', '#a6a6a6', '#bfbfbf', '#d9d9d9', '#ffffff',
+  '#c00000', '#ff0000', '#ed7d31', '#ffc000', '#ffff00', '#d5fc79', '#008f00', '#00fdff',
+  '#521b93', '#bd10e0', '#fda1ff', '#945200', '#c4a484', '#76d6ff', '#011893', '#0432ff',
 ]);
 
 let presetColorsPerRow = 8;
 
 let presetColors = new PresetColorsList({
   fixedColors: fixedColors,
-  maxRecentColors: (2 * presetColorsPerRow) + (presetColorsPerRow - (fixedColors.length % presetColorsPerRow)),
+  maxRecentColors: presetColorsPerRow + (presetColorsPerRow - (fixedColors.length % presetColorsPerRow)),
 });
 
 export type Value = {
