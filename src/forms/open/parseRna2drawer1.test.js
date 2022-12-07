@@ -2,7 +2,7 @@ import { parseRna2drawer1 } from './parseRna2drawer1';
 import * as fs from 'fs';
 
 function readRna2drawer1(name) {
-  return fs.readFileSync('testinput/rna2drawer1/' + name + '.rna2drawer', 'utf8');
+  return fs.readFileSync('src/forms/open/testinput/rna2drawer1/' + name + '.rna2drawer', 'utf8');
 }
 
 Object.defineProperty(window, 'getComputedStyle', {
@@ -146,7 +146,7 @@ describe('parsing base outlines', () => {
     let bo = rna2drawer1.baseOutlines[4];
     expect(bo).toBe(null);
   });
-  
+
   it('handles invalid relative radius or stroke width', () => {
     let invalidRr = parseRna2drawer1(readRna2drawer1('baseOutlineWithInvalidRelativeRadius'));
     expect(invalidRr).toBe(null);
