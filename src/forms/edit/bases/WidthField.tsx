@@ -76,7 +76,7 @@ export class WidthField extends React.Component<Props> {
           id={inputId}
           objects={objects}
           propertyName='baseWidth'
-          minValue={0}
+          minValue={0.01}
           places={2}
           onBeforeEdit={event => this.handleBeforeEdit(event)}
           onEdit={event => this.handleEdit(event)}
