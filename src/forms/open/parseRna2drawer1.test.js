@@ -2,7 +2,7 @@ import { parseRna2drawer1 } from './parseRna2drawer1';
 import * as fs from 'fs';
 
 function readRna2drawer1(name) {
-  return fs.readFileSync('src/forms/open/testinput/rna2drawer1/' + name + '.rna2drawer', 'utf8');
+  return fs.readFileSync('src/forms/open/test-inputs/rna2drawer1/' + name + '.rna2drawer', 'utf8');
 }
 
 Object.defineProperty(window, 'getComputedStyle', {

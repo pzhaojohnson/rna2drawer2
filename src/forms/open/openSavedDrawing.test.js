@@ -11,11 +11,11 @@ import { parseRna2drawer1 } from './parseRna2drawer1';
 import { openSavedDrawing } from './openSavedDrawing';
 
 function readRna2drawer1(name) {
-  return fs.readFileSync('src/forms/open/testinput/rna2drawer1/' + name + '.rna2drawer', 'utf8');
+  return fs.readFileSync('src/forms/open/test-inputs/rna2drawer1/' + name + '.rna2drawer', 'utf8');
 }
 
 function readRna2drawer2(name) {
-  return fs.readFileSync('src/forms/open/testinput/rna2drawer2/' + name + '.rna2drawer2', 'utf8');
+  return fs.readFileSync('src/forms/open/test-inputs/rna2drawer2/' + name + '.rna2drawer2', 'utf8');
 }
 
 /**
