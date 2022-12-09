@@ -22,9 +22,9 @@
   bottom: 0px;
   left: 0px;
 
-  border: 1px solid hsl(240, 23%, 80%);
+  border: 1px solid hsl(240, 23%, 77%);
   border-radius: 60px;
-  box-shadow: 0 3px 3px rgba(233, 233, 244, 0.1);
+  box-shadow: 0 3px 3px rgba(233, 233, 244, 0.06);
 
   z-index: -1;
 }
