@@ -35,7 +35,7 @@
 }
 
 .option:hover::before {
-  transform: scale(1.065);
+  transform: scale(1.07);
   transition: transform 0.25s;
 }
 
