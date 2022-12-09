@@ -9,7 +9,7 @@
   font-size: 11px;
   font-weight: 500;
   font-style: normal;
-  color: #1a1a47;
+  color: hsl(240, 46%, 11%);
 
   /* use before pseudo-element for background and border */
   background-color: transparent;
