@@ -23,7 +23,7 @@ export function ExampleSelect(props: Props): React.ReactElement {
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} >
       <p
         className='unselectable'
-        style={{ fontSize: '14px', fontWeight: 500, fontStyle: 'italic', color: 'rgba(68, 68, 75, 1)' }}
+        style={{ fontSize: '14px', fontWeight: 500, fontStyle: 'italic', color: 'hsl(240, 5%, 25%)' }}
       >
         Examples...
       </p>
