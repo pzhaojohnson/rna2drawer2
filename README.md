@@ -2,7 +2,7 @@
 
 ### <em>This project is to be renamed to RNAcanvas!</em>
 
-### <em>All further updates will be made in the [RNAcanvas repository](https://github.com/pzhaojohnson/rnacanvas/blob/main/README.md).</em>
+### <em>All further updates will be made in the [RNAcanvas repository](https://github.com/pzhaojohnson/rnacanvas/blob/main/README.md)...</em>
 
 A [web app](https://rna2drawer.app) for the interactive drawing of nucleic acid structures.
 Bases are automatically arranged to convey stems and loops
